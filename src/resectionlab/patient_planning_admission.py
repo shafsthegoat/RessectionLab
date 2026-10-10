@@ -69,11 +69,14 @@ def validate_select_checkpoint_lineage(value, *, learning_protocol_hash=None):
 
 The owning runner binds the original TRAIN release/terminal receipts before
 supplying external pins. This metadata validator does not prove their provenance.
+The exact64 endpoint also requires the balanced sequential protocol at the
+inference loader; a digest-only lineage cannot authenticate that objective.
 """
     lineage = _fields(value, CHECKPOINT_LINEAGE_FIELDS, "exact_SELECT_checkpoint_lineage_required")
     _need(lineage["version"] == "frozen-TRAIN-checkpoint-lineage-v1"
           and lineage["method"] in {"IL", "RL"}
-          and type(lineage["completed_updates"]) is int and 1 <= lineage["completed_updates"] <= 32
+          and type(lineage["completed_updates"]) is int
+          and (1 <= lineage["completed_updates"] <= 32 or lineage["completed_updates"] == 64)
           and type(lineage["optimizer_updates_on_SELECT"]) is int
           and lineage["optimizer_updates_on_SELECT"] == 0,
           "frozen_TRAIN_endpoint_zero_SELECT_updates_required")

@@ -1,0 +1,25 @@
+Fixed64 balanced-teacher optimization contrast
+
+This admits exactly64 updates only for the existing balanced teacher objective.
+All existing1..8 protocols, weights, model, loss equations, optimizer and data
+remain unchanged. Canonical validation passes133 tests in7.14s, including all
+sixteen old protocol identities, exact initialization,64 checkpoint reload,
+wrong protocol refusal and zero-gradient SELECT separation. Independent source
+review found no blocking issue. This is preparation, not a training result.
+
+The historical conservative two-method context derives128 optimizer updates,
+18,624 forwards and7,297,920 previews at this endpoint. The separately owned
+IL-only experiment enforces the tighter actual limits:64 IL updates, zero RL
+updates, zero new search,320 loss forwards,5 teacher readouts, at most96 final
+greedy forwards,268 source visits and2,347,680 previews. External caps remain
+3GiB sampled tree RSS,128MiB output,3540s worker/3600s parent and one CPU thread.
+Only final64 is evaluated; first8 must match every prior numerical update and
+tensor hash. All four complete native rollouts remain the primary outcome.
+
+The SELECT lineage interface also accepts exactly64; the checkpoint loader
+still validates the complete balanced protocol and exact terminal provenance
+must be supplied by the owning runner. Intermediate33..63 and larger endpoints
+remain rejected. No SELECT gradient, EVAL admission or data-role change follows.
+
+Success would demonstrate fit on five TRAIN states, not useful unseen-patient
+planning. Loss/gradient dynamics and all negative routes will be retained.

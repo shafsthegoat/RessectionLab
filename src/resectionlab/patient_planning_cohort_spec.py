@@ -19,8 +19,11 @@ CLOSED = {'SELECT': ('ReMIND-013', 'ReMIND-037'), 'EVAL': ('ReMIND-067',)}
 def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
         retention_mode='return_plus_opening_depth_v1', il_teacher_weighting=None):
     from .patient_planning_learning import PREFLIGHT_PROTOCOL
-    if type(updates) is not int or not 1 <= updates <= 8:
-        raise ValueError('Explicit 1..8 shared updates per method required')
+    # The sole longer endpoint is a fixed balanced-teacher optimization contrast.
+    # Existing 1..8 protocols retain their exact records and bounds.
+    if (type(updates) is not int or not (1 <= updates <= 8
+            or updates == 64 and il_teacher_weighting == BALANCED_TEACHER_CE)):
+        raise ValueError('Explicit 1..8 updates or balanced-teacher fixed64 endpoint required')
     if type(max_steps) is not int or not 1 <= max_steps <= 24:
         raise ValueError('Explicit horizon in 1..24 required')
     if il_teacher_weighting is not None and il_teacher_weighting != BALANCED_TEACHER_CE:
@@ -116,11 +119,18 @@ def validate_limits(protocol, limits):
     if set(limits) != keys or any(type(limits[k]) is not int or limits[k] <= 0 for k in keys-{'search'}):
         raise ValueError('Exact positive bounded sequential limits required')
     sizing = preview_budget_sizing(protocol)
+    # This is the conservative two-method context envelope, not permission to
+    # execute both methods. The owned IL-only contrast enforces its smaller
+    # actual counters separately. Extend only to this protocol's derived size.
+    long_balanced = (protocol['updates_per_method'] == 64
+        and protocol['cohort_execution'].get('il_teacher_weighting') == BALANCED_TEACHER_CE)
+    preview_ceiling = max(4194304, sizing['suggested_preview_cap']) if long_balanced else 4194304
+    forward_ceiling = max(4096, sizing['suggested_forward_cap']) if long_balanced else 4096
     if (limits['max_steps'] != protocol['cohort_execution']['max_steps']
             or limits['search'] != protocol['cohort_execution']['search']
             or limits['max_optimizer_updates'] != 2*protocol['updates_per_method']
-            or not sizing['suggested_preview_cap'] <= limits['max_native_previews'] <= 4194304
-            or not sizing['suggested_forward_cap'] <= limits['max_policy_forwards'] <= 4096
+            or not sizing['suggested_preview_cap'] <= limits['max_native_previews'] <= preview_ceiling
+            or not sizing['suggested_forward_cap'] <= limits['max_policy_forwards'] <= forward_ceiling
             or limits['worker_seconds'] > 3600 or limits['memory_bytes'] > 3*1024**3
             or limits['threads'] != 1 or not 16*1024**2 <= limits['output_bytes'] <= 256*1024**2
             or limits['checkpoint_bytes'] != 8*1024**2):

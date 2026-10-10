@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "tests": 133,
+  "seconds": 7.14,
+  "source_review": "independent GO; no blocking findings",
+  "files": {
+    "src/resectionlab/patient_planning_cohort_spec.py": "46de01f87c4ebc063421e56db7317173d4a938f96948be3e3cf830e142a38e42",
+    "src/resectionlab/patient_planning_admission.py": "2953e80ef841ea1b4664da6caec68c41df6087b6a9d32eb94e391e5c1e3d2ea0",
+    "tests/test_patient_balanced_teacher_64.py": "e483bb03184dc4dd6e72c028fe17bf08bc32d67f21109865c15d7ce8446dd877"
+  },
+  "test_files": [
+    "tests/test_patient_balanced_teacher_64.py",
+    "tests/test_patient_balanced_teacher_loss.py",
+    "tests/test_patient_cohort_sequential.py",
+    "tests/test_patient_planning_admission.py",
+    "tests/test_patient_select_inference.py"
+  ],
+  "patient_execution": false
+}
