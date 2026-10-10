@@ -1238,3 +1238,10 @@ The [same-case successor smoke](../artifacts/contact-learning-canonical-smoke-v2
 ## Contact-family desktop backend source integration
 
 [Result](../artifacts/contact-family-backend-integration-v1/RESULT.md): 21 canonical tests pass; independently reviewed catalog, role locks, fixed-source owned worker and v3 native export are now callable. IL/RL publication remains disabled pending exact completed-pilot review. Planned transport/UI validation follows separately; the stale-test STOP incident remains retained.
+
+
+## Fixed generated IL/RL32 pilot: negative result
+
+[Actual result](../artifacts/contact-learning-pilot-negative-v1/RESULT.md): both final32 checkpoints, all24 TRAIN teachers,32 SELECT and64 MEASUREMENT_EVAL method episodes complete. Independent saved-only audit verifies exact identities and accounting. SEARCH12/16 held-out tasks; IL/RL0/16, allSTOP. Eight independent generated layouts, two correlated goals each; no patient or clinical evidence. Next learning work is a TRAIN-only diagnosis, not another measurement sweep. Runtime183.464s, sampled401.6MB; no missing/capped rows. The original outputs and previous failures remain.
+
+Acquisition independently continues: 6,215 verified files /217,055,647,324B at03:14:27UTC, original worker/lock live, failures unchanged, capacity adequate. No QC or recovery run.

@@ -1,0 +1,35 @@
+Saved pilot audit — attempt-01
+
+Both IL and scratch RL completed the fixed 32 updates from identical fresh initialization. All 32 SELECT and 64 MEASUREMENT_EVAL rows completed. Both learned policies chose STOP on every online task, with zero return and zero retained-goal contacts. SEARCH achieved 12/16 held-out contacts. This is a completed integration experiment with a negative learned-policy result.
+
+Held-out MEASUREMENT_EVAL (eight layouts, both goals, one frozen pass):
+| Method | Goal | Contacts | Mean return | Mean removal mm3 | Total online seconds |
+|---|---|---:|---:|---:|---:|
+| STOP | surface | 0/8 | 0.0000 | 0.000 | 1.090 |
+| STOP | deep | 0/8 | 0.0000 | 0.000 | 1.106 |
+| SEARCH | surface | 6/8 | 0.5025 | 0.875 | 11.966 |
+| SEARCH | deep | 6/8 | 0.1440 | 2.625 | 13.485 |
+| IL | surface | 0/8 | 0.0000 | 0.000 | 6.192 |
+| IL | deep | 0/8 | 0.0000 | 0.000 | 6.236 |
+| RL | surface | 0/8 | 0.0000 | 0.000 | 5.991 |
+| RL | deep | 0/8 | 0.0000 | 0.000 | 6.059 |
+
+SEARCH returned aspirate→probe on six layouts for each goal; pcf-03 and pcf-12 returned STOP for both goals. SELECT SEARCH achieved 3/4 surface and 2/4 deep contacts (mean returns 0.326 and 0.119); IL/RL/STOP remained zero. The generated surface/deep goals are separate public objectives, not clinical labels.
+
+Training and bottleneck:
+- All 24 TRAIN teachers completed: 16 successful aspirate→probe strategies and eight STOP strategies; 40 labels (16 aspirate, 16 probe, eight STOP). Search used 1,346 transitions across TRAIN. No call/time cap or beam pruning affected any of the 48 TRAIN/SELECT/MEASUREMENT search tasks.
+- IL made 128 supervised draws, with mode counts recorded in summary.json; all 32 updates changed parameters. Minibatch loss was 1.9442 first and 1.9233 last, but these different batches are not a fixed fit evaluation. The observed failure is conversion of available demonstrations into a useful greedy actor; the saved evidence alone does not identify a loss bug or prove insufficient capacity.
+- RL collected 128 TRAIN episodes and 164 transitions. It contacted the goal twice: update 2 pcf-19 surface returned +0.092, while update 5 pcf-13 surface returned −0.724 because removal cost outweighed completion. Only one episode had positive return. There were 92 STOP-only episodes overall and 64/64 in the last 16 updates; final minibatch entropy was 0.00013258. Sparse positive feedback and collapse toward STOP are visible; causal math/representation diagnosis needs a separate TRAIN-only review.
+
+Budgets and costs:
+- Shared source, public objective, candidate inventory, two-step horizon and native replay were fixed across methods. SEARCH had up to 256 transitions, beam 96 and four seconds per task; actual held-out search used 2–163 calls per task, 1,038 total. Both learned methods used 32 updates × batch four and the same optimizer/seed; RL had a separate 256-transition collection cap. These are declared method budgets, not equal total offline compute.
+- Worker wall 180.974s; parent-supervised wall 183.464s. Sampled owned-tree peak 401,571,840 bytes; worker lifetime peak 398,966,784 bytes. Limits were 1 GiB sampled tree, 1,500s total, teacher 120s, each learner 60s and each online row 12s. One thread, no retry, exit zero, no remaining owned processes.
+- IL last update elapsed 11.037s; RL last update elapsed 53.773s. Teacher search occupied 24.414s; RL collection replay occupied 22.130s, compared with 0.304s inclusive actor-forward time in collection. Inclusive subcall timings must not be added. Online table totals include source/inventory, planning, replay/export and per-row writes; role checkpoint loads (SELECT 1.266s, measurement separately recorded) and final result write are separate. Costs are observational; no speed claim follows from STOP-only learned behavior.
+- Aggregate counters: 20,968 geometry previews, 3,678 native transitions (3,184 non-STOP commits), 504 actor forwards, 448 geometry audits and 3,088 task clones. These include teachers, collection, planning and repeated verification; non-STOP commits are a subset of transitions, not extra actions.
+
+Identity and audit:
+- Experiment sha256:a01e6ba30fbf1e6efabf70f9637d42c0813931624cb50d2d393858029d4fd894; executed HEAD 46d5a47928d4749fbd62faed609e3bab8e3e0388.
+- IL final SHA-256 5295add15d4504db9148a307deaaf503ee8fadbf070a03ffd0968ce7e06ae719; parameter sha256:4dcbb6fb39976f80d635c571c5f4679b0831daab310a9c2d2529a499613015f7.
+- RL final SHA-256 adc27f7bfb3498fb13953d853d4b0e41a0b927f66c3dd93cccd51b60c52424ce; parameter sha256:d220d73c9aed40f1385bcc06839b48a5046e17efd5d229ddd1b295fbea64b53a.
+- Both final files contain 32-update declared lineage. All saved learned episode authorship binds those final files; all online optimizer counts are zero. The smoke partial was not used. File hashes, result/episode equality, cohort completeness and saved audit records were checked without decoding a checkpoint or rerunning any native/model work.
+- summary.json contains all teacher outcomes, RL trajectory outcomes, detailed counters, protocol, binding checks and limitations. online-rows.csv/json preserves all 96 outcomes; updates.json preserves all 64 update summaries. index.json pins every consumed evidence file and report artifact. Original failure/smoke/pilot outputs remain untouched. This is one generated experiment, with no patient or clinical transfer evidence.
