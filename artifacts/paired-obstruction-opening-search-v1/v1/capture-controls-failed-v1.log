@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/paired-obstruction-opening-search-v1/check_capture.py", line 20, in <module>
+    with PlanningBudget(NativeResectionEngine,max_native_previews=4096,seconds=20) as budget:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/planning_budget.py", line 189, in __exit__
+    self._raise_failure()
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/planning_budget.py", line 98, in _raise_failure
+    raise PlanningBudgetViolation(self._failure, self.snapshot())
+resectionlab.planning_budget.PlanningBudgetViolation: complete_history_not_declared

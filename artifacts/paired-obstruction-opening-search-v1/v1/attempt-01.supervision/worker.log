@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/paired-obstruction-opening-search-v1/search_worker.py", line 318, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/paired-obstruction-opening-search-v1/search_worker.py", line 304, in main
+    result=execute(release,args.release_sha256,output,progress)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/paired-obstruction-opening-search-v1/search_worker.py", line 260, in execute
+    raise RuntimeError('Unresolved arm: all eight planned rows retained; paired attempt is not complete')
+RuntimeError: Unresolved arm: all eight planned rows retained; paired attempt is not complete

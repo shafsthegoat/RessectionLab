@@ -1,0 +1,167 @@
+{
+  "SELECT_EVAL_opened": false,
+  "arms": [
+    {
+      "arm_wall_seconds": 0.0002727080136537552,
+      "condition": "original_13_axes",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-008"
+    },
+    {
+      "arm_wall_seconds": 0.0002907079178839922,
+      "condition": "obstruction_opening",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-008"
+    },
+    {
+      "arm_wall_seconds": 0.0002602080348879099,
+      "condition": "original_13_axes",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-010"
+    },
+    {
+      "arm_wall_seconds": 0.0002733329311013222,
+      "condition": "obstruction_opening",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-010"
+    },
+    {
+      "arm_wall_seconds": 0.0002799159847199917,
+      "condition": "original_13_axes",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-020"
+    },
+    {
+      "arm_wall_seconds": 0.00036816694773733616,
+      "condition": "obstruction_opening",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-020"
+    },
+    {
+      "arm_wall_seconds": 0.00026541692204773426,
+      "condition": "original_13_axes",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-025"
+    },
+    {
+      "arm_wall_seconds": 0.00024312501773238182,
+      "condition": "obstruction_opening",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-025"
+    }
+  ],
+  "attempt_failure": {
+    "message": "Unresolved arm: all eight planned rows retained; paired attempt is not complete",
+    "type": "RuntimeError"
+  },
+  "checkpoint_loads": 0,
+  "complete_wall_seconds": 0.11889883293770254,
+  "global_resource_failure": null,
+  "interpretation": "Both arms use the same explicit S union T rigid-material assumption; only proposal discovery differs, not clinical truth",
+  "native_counts": {
+    "replay": 0,
+    "rollout": 0,
+    "search": 0
+  },
+  "negative_preparatory_moves": "not explored by existing greedy selector; STOP is not an impossibility proof",
+  "optimizer_updates": 0,
+  "policy_forwards": 0,
+  "private_reference_reads": 0,
+  "status": "failed_or_unresolved"
+}

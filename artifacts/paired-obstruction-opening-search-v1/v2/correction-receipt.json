@@ -1,0 +1,23 @@
+{
+  "status": "pass",
+  "old_worker_only_local_name_shadowing_repair": true,
+  "parent_exact_unchanged": true,
+  "science_and_caps_unchanged": true,
+  "old_runtime_files_unchanged": {
+    "pilot_contract.py": "5da47c64ec21bcfd83c54b106b7262bb3c62bbe0ca37592ae448038ef4f2ea7c",
+    "search_worker.py": "a1968f7f356e9d5bdf7c4f2a0dd55515d5cca04d9f651465661904a975584656",
+    "run_owned.py": "c6331c871c2b8a8a4f4bddd76111121af0ac21460b331108fbadfdb88f3dce12",
+    "freeze-runtime.py": "5c623ac1e13dc25ad720248a84965bf7e45c70717d56dc89f1b6219aa6de663f"
+  },
+  "new_runtime_files": {
+    "pilot_contract.py": "8ebb89dce5c851041c8743a2afdae0b48d69c02dc039c292af42ea91e5df020b",
+    "search_worker.py": "e9f8aad4e1ab2b32a65365a3bf766ac11589187f4270ec256d69207e2176a485",
+    "run_owned.py": "c6331c871c2b8a8a4f4bddd76111121af0ac21460b331108fbadfdb88f3dce12",
+    "freeze-runtime.py": "2029f066b6e4c413cf6bed06a9bb26d9083636d8fcc02f9a3d5a9d4965719b65"
+  },
+  "input_index_sha256": "aa2930fccf3e8a5812403e28725b6c2ec5e99a363de26796ef1cc3a909e17efc",
+  "generated_full_execute_control_sha256": "782c35890dff668bcefd29ce2cbd13d7b9dcd49ec628ba8f73de08348d00a979",
+  "failed_result_sha256": "feb0c77623999cfd0f4a5c0bcc19f1ba06aa3547f1a8b2f9fea7ee3ef81c2cb3",
+  "failed_parent_receipt_sha256": "678618502947234767f87eb7cb1cffe868c759aa15f3932f546c529273462908",
+  "no_actual_diagnostic_launch": true
+}

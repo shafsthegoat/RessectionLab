@@ -1,0 +1,218 @@
+{
+  "arms": [
+    {
+      "arm_wall_seconds": 0.0002727080136537552,
+      "condition": "original_13_axes",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-008"
+    },
+    {
+      "arm_wall_seconds": 0.0002907079178839922,
+      "condition": "obstruction_opening",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-008"
+    },
+    {
+      "arm_wall_seconds": 0.0002602080348879099,
+      "condition": "original_13_axes",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-010"
+    },
+    {
+      "arm_wall_seconds": 0.0002733329311013222,
+      "condition": "obstruction_opening",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-010"
+    },
+    {
+      "arm_wall_seconds": 0.0002799159847199917,
+      "condition": "original_13_axes",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-020"
+    },
+    {
+      "arm_wall_seconds": 0.00036816694773733616,
+      "condition": "obstruction_opening",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-020"
+    },
+    {
+      "arm_wall_seconds": 0.00026541692204773426,
+      "condition": "original_13_axes",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-025"
+    },
+    {
+      "arm_wall_seconds": 0.00024312501773238182,
+      "condition": "obstruction_opening",
+      "failure": {
+        "message": "cannot access local variable 'selected' where it is not associated with a value",
+        "type": "UnboundLocalError"
+      },
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      },
+      "native_previews": 0,
+      "phase": "source",
+      "source_released": true,
+      "status": "failed_or_unresolved",
+      "subject": "ReMIND-025"
+    }
+  ],
+  "attempt_complete": false,
+  "audit_peak_rss_bytes": 21397504,
+  "audit_seconds": 0.015541709,
+  "checks": 1303,
+  "costs": {
+    "complete_wall_seconds": 0.11889883293770254,
+    "count_scope": "attempted existing native transitions including failed calls; search,rollout,replay separate",
+    "native_budget": {
+      "blocked_preview_attempts": 0,
+      "cache_hits": null,
+      "counting_reliable": true,
+      "elapsed_seconds": 0.11886912491172552,
+      "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+      "failure": "arm_raised_RuntimeError",
+      "history_complete_caller_attestation": null,
+      "independent_audit": "outside_this_guard_not_verified",
+      "limits": {
+        "native_preview_entries": 100000,
+        "planning_execution_seconds": 600.0
+      },
+      "native_preview_entries": 0,
+      "native_preview_profile": {
+        "phases": {},
+        "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+        "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+      },
+      "observed_admissions_before_accounting_failure": 0,
+      "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+      "requests": {},
+      "score": null,
+      "status": "failed",
+      "time_overshoot_seconds": 0.0,
+      "version": "native-planning-budget-v1",
+      "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+    },
+    "native_counts": {
+      "replay": 0,
+      "rollout": 0,
+      "search": 0
+    },
+    "prohibited_calls": {
+      "checkpoint_loads": 0,
+      "optimizer_updates": 0,
+      "policy_forwards": 0
+    },
+    "source_visits_attempted": 8
+  },
+  "input_count": 110,
+  "limitations": [
+    "Saved scalar/history/seal audit; no arrays, checkpoints, geometry or model rerun.",
+    "Only public T is scored. S union T is an explicit unvalidated simulation occupancy, not anatomical correction.",
+    "Greedy scores the currently emitted legal catalog; STOP does not prove absence of a negative-preparation route.",
+    "Equal120 capacity is not equal work: original rows retain priority; additions use remaining slots. Every captured state retains cap and discovery limits.",
+    "Complete-arm and parent costs include source preparation and replay; search selection time alone is not comparable with full learning/search runs.",
+    "Eight paired TRAIN arms do not establish transfer, patient benefit, clinical safety or validated material semantics."
+  ],
+  "metadata_files": 23,
+  "parent": {
+    "cleanup_errors": [],
+    "elapsed_seconds": 2.25607941695489,
+    "final_owned_pids": [],
+    "output_bytes": 10242,
+    "sampled_peak_rss_bytes": 252002304,
+    "status": "failed_or_unresolved"
+  },
+  "release_sha256": "54bc54cd94e0ad45d34523dec5a0ebb5bc64f84bfa364b00059a2017a70c89b3",
+  "result_sha256": "feb0c77623999cfd0f4a5c0bcc19f1ba06aa3547f1a8b2f9fea7ee3ef81c2cb3",
+  "result_status": "failed_or_unresolved",
+  "source_files": 80,
+  "status": "PASS_saved_metadata_audit"
+}

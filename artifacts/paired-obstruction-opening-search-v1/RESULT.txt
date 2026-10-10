@@ -1,0 +1,51 @@
+A reusable clearing rule improves one of four TRAIN routes
+October 10, 2026; executed source ec909a5e41a5aeacbcc81777a351a93e8b609b40
+
+Eight matched runs completed using the same public MRI/target/support, explicit
+S OR T rigid-material assumption, fixed access, tools, reward, normalization,
+24-step horizon and120-candidate cap. Only public blocker-directed approach
+proposals differed. Existing greedy search scored every emitted legal option.
+All original physical candidate rows and their order were preserved; historical
+baseline identities and full initial inventories matched exactly.
+
+TRAIN case    Original return    Added approaches return    Target / non-target mm3
+008           0                  0                          0 / 0
+010           0                  0                          0 / 0
+020           0                  0                          0 / 0
+025           0                  +2.758329                  2.861024 / 0
+
+025 takes two added clearing approaches (+0.920745 each), one original exposed
+approach (+0.916839), then STOP. All three fully removed cells belong to the
+supplied target. This removes only0.003669186% of its full target: a reproducible
+local action-discovery improvement, not useful surgical resection performance.
+Other patients still STOP; no negative preparation or lookahead was explored.
+
+The new initial legal actions are4/0/6/4 for008/010/020/025; only025 has positive
+target-removing additions.010 retains two old cap omissions in both conditions;
+020 gains two capped additions.025 has no omission in any of its four states.
+No recorded evidence truncation or selected-cell omission occurs, but discovery
+is bounded to original rays' first failures and is never exhaustive path search.
+Equal cap means equal capacity, not equal work. Changed IDs do not change greedy
+insertion-order ties; original prefix comes first and STOP wins zero ties.
+
+All eight complete plans were sealed, freshly replayed and independently checked
+against complete-tool geometry. Owned runtime30.967906459s, sampled peak
+1677000704B,2848 native previews,11 search+11 rollout+11 replay transitions.
+025 uses1224 previews and6.516s versus208 and1.317s for its baseline. Zero model
+forwards, checkpoint loads, optimizer updates, private inputs or held-out cases.
+Independent saved-only audit passed2899 checks across197 inputs in0.050s;
+all80 source and26 metadata bindings stayed fixed. Clean child exit/reap.
+
+The first attempt failed before patient-array loading: a local selected variable
+shadowed the case lookup. All eight rows are failed, not STOP. It used0 previews
+and0 transitions,2.256s/252002304B, with clean reap. The original result and exact
+source are retained. The only worker correction renames that local variable;
+a full generated execution-path regression reproduced the failure and passed the
+corrected eight-row flow. Earlier native capture controls show no extra previews.
+
+Source-derived material is not validated anatomy or tissue mechanics; full target
+is not prescribed resection, missing neurological/vessel information stays unknown,
+and clinical probabilities remain null. No RL improvement or patient transfer is
+established. The next matched learning test should use these same choices and
+world assumptions; the existing policy can encode their continuous geometry.
+Full repeated candidate inventories, arrays and models stay outside Git.

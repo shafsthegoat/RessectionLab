@@ -1,0 +1,215 @@
+{
+  "actual_model_work_permitted": false,
+  "baseline_union_identity_verified": false,
+  "common_public_world": {
+    "S_intersect_T_voxels": 12115,
+    "S_voxels": 6799033,
+    "T_minus_S_voxels": 6394,
+    "access": {
+      "center_mm": [
+        57.81281617159064,
+        -28.73810767915333,
+        39.01393683913569
+      ],
+      "normal_inward": [
+        -0.9999990906797902,
+        0.0011870757218137345,
+        -0.0006399147001963637
+      ],
+      "radius_mm": 6.0,
+      "window_id": "fixed-public-target-side-axis0-v1"
+    },
+    "domain_hash": "sha256:850780cac64387d8467a8b1c77acd0494e3265dbf8b7c4b1565f4401e5301991",
+    "full_target_mm3": 2386.3732360519107,
+    "full_target_voxels": 18509,
+    "max_steps": 24,
+    "native_frame_hash": "sha256:482d5aeb0bd7373c9aa5bda7d85c22696f03ab728e2a1c9b7ad5f0a82117279c",
+    "occupancy_hash": "sha256:8ca0ab6cd22bbdff31f601f7b852c3ec7be9564f4b02c672965fe539056712ef",
+    "original_frame_hash": "sha256:3c365ecbf9a8a2c876ed02b58e6c862eadd91fa81dced712bdd7bdd182a19767",
+    "raw_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+    "raw_occupancy_target_fraction_upper_bound": 0.6545464368685504,
+    "reward": {
+      "action_cost": 0.03,
+      "graph_edge_cost": 0.0,
+      "language_per_mm3": 0.0,
+      "motion_per_mm": 0.001,
+      "motor_per_mm3": 0.0,
+      "normal_per_mm3": 0.2,
+      "target_per_mm3": 1.0,
+      "tool_change_cost": 0.03
+    },
+    "source_files": {
+      "image": "43a2d5962a194cb5f626cf61e57ede946801206709a3647665ca82c35416f123",
+      "supplied_support": "173d61a6fe3f7544d46d5e2e826390f3f963c0ea44ca6ae0c159495a867a6d3b",
+      "supplied_whole_tumor": "0e5f691084d6cf1c4867a96dca675fea7e4d230982ced9be1e7c2610827e272e",
+      "whole_tumor_domain": "37fe4ff635a4f925942065efd16bbf8c020dd294c9224f5922a29539ccd7dd91"
+    },
+    "target_hash": "sha256:4baef404b917bb118489574de83304db164e38b566ac86759eba9b7cdf0cdea8",
+    "tools": [
+      {
+        "max_access_angle_deg": 45.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 1.4,
+        "tip_length_mm": 3.0,
+        "tip_radius_mm": 1.0,
+        "tool_id": "generic_suction",
+        "working_length_mm": 100.0
+      },
+      {
+        "max_access_angle_deg": 45.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 2.7,
+        "tip_length_mm": 4.0,
+        "tip_radius_mm": 1.7,
+        "tool_id": "generic_aspirator",
+        "working_length_mm": 90.0
+      }
+    ]
+  },
+  "condition": "obstruction_opening",
+  "context_hash": "sha256:52ca34679b340c1255606fb3f483dd885a142d58d90a5a768668d185cf5d76fe",
+  "decision_model_hash": "sha256:5183ef1961fb8c7f23479507b1253d12c98c83f4a6ec60a65d51eb4f7cb293ca",
+  "derived_occupancy": {
+    "added_region_hash": "sha256:0e3c08d56afc5cfaeb26ad04f62fe1994344ca29db3b54db4216311def2f9e14",
+    "added_region_positive_voxels": 6394,
+    "anatomical_or_material_validation": false,
+    "condition": "cerebrum_plus_supplied_tumor_assumption",
+    "derived_occupancy_hash": "sha256:8ca0ab6cd22bbdff31f601f7b852c3ec7be9564f4b02c672965fe539056712ef",
+    "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+    "operation": "S OR (T > 0)",
+    "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+    "source_support_hash": "sha256:fb5770bdc87e08eecbe5382aafd197e5756f323136a26e743a52717e8d97ba22",
+    "source_support_positive_voxels": 6799033,
+    "source_support_unchanged": true,
+    "supplied_target_hash": "sha256:4baef404b917bb118489574de83304db164e38b566ac86759eba9b7cdf0cdea8",
+    "target_unchanged": true,
+    "version": "supplied-support-target-union-v1"
+  },
+  "initial_observation_hash": "sha256:4dcb655d761d377befdac6ccfc91908cd430762499a03efff6a007c74282330e",
+  "normalization": {
+    "clip": [
+      0.0,
+      1.0
+    ],
+    "crop_used_for_statistics": false,
+    "lower": 1014.0,
+    "method": "support_percentile_1_99",
+    "percentile_method": "linear",
+    "percentiles": [
+      1.0,
+      99.0
+    ],
+    "raw_source_preserved": true,
+    "reference_labels_used": false,
+    "source_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+    "statistics_scope": "entire_permitted_support",
+    "statistics_voxels": 6805427,
+    "support_hash": "sha256:8ca0ab6cd22bbdff31f601f7b852c3ec7be9564f4b02c672965fe539056712ef",
+    "upper": 2688.0
+  },
+  "pairing": {
+    "no_clinical_or_material_validation": true,
+    "normalization_equal": true,
+    "original_initial_prefix_equal_except_ids": true,
+    "unchanged_public_world": true
+  },
+  "phase": "source",
+  "proposal_config": {
+    "intermediate_opening_mm": 1.0,
+    "max_candidates": 120,
+    "nominal_min_membership": 0.0,
+    "obstruction_opening": true,
+    "offsets_source_voxels": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "tool_footprint_opening": true
+  },
+  "proposal_rule_hash": "sha256:fd662062d44a86e45d04fc982685723d07dc7538289433924e60029e108635a0",
+  "source_hash": "sha256:edef8a766db0dee64f29557394f5641b78f56ad9e4a4b97e5302f85c389a233e",
+  "source_released": true,
+  "status": "running",
+  "subject": "ReMIND-008",
+  "supplied_goal_extent": {
+    "condition": "PARTIAL_TARGET_PROGRESS",
+    "derived_occupancy": true,
+    "fraction_denominator": "entire_unchanged_supplied_region",
+    "full_region_membership_mm3": 2386.3732360519107,
+    "full_region_positive_voxels": 18509,
+    "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+    "occupancy_derivation": {
+      "added_region_hash": "sha256:0e3c08d56afc5cfaeb26ad04f62fe1994344ca29db3b54db4216311def2f9e14",
+      "added_region_positive_voxels": 6394,
+      "anatomical_or_material_validation": false,
+      "condition": "cerebrum_plus_supplied_tumor_assumption",
+      "derived_occupancy_hash": "sha256:8ca0ab6cd22bbdff31f601f7b852c3ec7be9564f4b02c672965fe539056712ef",
+      "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+      "operation": "S OR (T > 0)",
+      "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+      "source_support_hash": "sha256:fb5770bdc87e08eecbe5382aafd197e5756f323136a26e743a52717e8d97ba22",
+      "source_support_positive_voxels": 6799033,
+      "source_support_unchanged": true,
+      "supplied_target_hash": "sha256:4baef404b917bb118489574de83304db164e38b566ac86759eba9b7cdf0cdea8",
+      "target_unchanged": true,
+      "version": "supplied-support-target-union-v1"
+    },
+    "occupancy_modified": true,
+    "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+    "supported_region_membership_mm3": 2386.3732360519107,
+    "target_modified": false,
+    "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+    "unsupported_region_membership_mm3": 0.0,
+    "unsupported_region_positive_voxels": 0,
+    "unsupported_region_removable": false
+  }
+}

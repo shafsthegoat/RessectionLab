@@ -1,0 +1,79 @@
+--- build/paired-obstruction-opening-search-v1/pilot_contract.py
++++ build/paired-obstruction-opening-search-v2/pilot_contract.py
+@@ -4,7 +4,7 @@
+ from pathlib import Path
+ import subprocess
+ HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
+-OUTPUT='build/paired-obstruction-opening-search-v1/attempt-01'
++OUTPUT='build/paired-obstruction-opening-search-v2/attempt-02'
+ TRAIN=('ReMIND-008','ReMIND-010','ReMIND-020','ReMIND-025')
+ CONDITIONS=('original_13_axes','obstruction_opening')
+ OCCUPANCY='cerebrum_plus_supplied_tumor_assumption'
+@@ -12,8 +12,8 @@
+ CLOSED={'SELECT':['ReMIND-013','ReMIND-037'],'EVAL':['ReMIND-067']}
+ WORKER_SECONDS=600;PARENT_SECONDS=660;MEMORY_BYTES=3*1024**3
+ OUTPUT_BYTES=64*1024**2;SUPERVISION_BYTES=16*1024**2
+-INPUT_INDEX='build/paired-obstruction-opening-search-v1/input-index.json'
+-INPUT_SHA='31f00f50cd59f62178d7972778b5de0bcb3847439d898ba8a43fda308181ea99'
++INPUT_INDEX='build/paired-obstruction-opening-search-v2/input-index.json'
++INPUT_SHA='aa2930fccf3e8a5812403e28725b6c2ec5e99a363de26796ef1cc3a909e17efc'
+ EXECUTION={'arms':8,'max_steps':24,'candidate_cap':120,'search_seconds_per_arm':45,
+     'max_native_previews':100000,'max_search_commits':192,'max_execution_replay_commits':384,
+     'max_native_transition_calls':576,'policy_forwards':0,'optimizer_updates':0,'checkpoint_loads':0,
+@@ -68,14 +68,17 @@
+ 
+ def release_template(head,index_sha):
+     records,refs=inputs()
+-    return {'version':'paired-TRAIN-obstruction-opening-search-release-v1','status':'pending_root_release',
++    return {'version':'paired-TRAIN-obstruction-opening-search-release-v2','status':'pending_root_release',
+         'expected_head':head,'output':OUTPUT,'TRAIN':list(TRAIN),'closed_roles':CLOSED,'SELECT_EVAL_execution':False,
+-        'attempts':1,'automatic_retry':False,'parent_seconds':PARENT_SECONDS,'worker_seconds':WORKER_SECONDS,
++        'attempts':1,'automatic_retry':False,'manual_corrected_attempt_ordinal':2,
++        'correction':{'scope':'local selected_action rename only; no task/config/cap change',
++            'prior_failed_result':refs['failed_result'],'prior_parent_receipt':refs['failed_receipt'],
++            'prior_source_index':refs['failed_source_index']},'parent_seconds':PARENT_SECONDS,'worker_seconds':WORKER_SECONDS,
+         'memory_bytes':MEMORY_BYTES,'output_bytes':OUTPUT_BYTES,'supervision_bytes':SUPERVISION_BYTES,
+         'execution_limits':EXECUTION,'planned_arms':list(ARMS),'occupancy_condition':OCCUPANCY,
+         'condition_admission':{c:condition_admission(c) for c in CONDITIONS},
+         'input_index':{'path':INPUT_INDEX,'sha256':INPUT_SHA},
+-        'source_index':{'path':'build/paired-obstruction-opening-search-v1/source-index.json','sha256':index_sha},
++        'source_index':{'path':'build/paired-obstruction-opening-search-v2/source-index.json','sha256':index_sha},
+         'recipe':{'baseline_config':records['release']['learning_protocol']['cohort_execution']['proposal_config'],
+             'only_treatment_change':{'obstruction_opening':True},'domain':'unchanged default actor crop; no optional domain extension',
+             'selector':'existing observed_greedy_search; STOP wins zero ties; no negative preparation/lookahead',
+@@ -98,7 +101,7 @@
+     head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True,timeout=5).strip();ref=release['source_index']
+     if head!=release['expected_head'] or sha(ROOT/ref['path'])!=ref['sha256']:raise ValueError('HEAD/source index changed')
+     index=small(ROOT/ref['path'])
+-    if index['head']!=head or index['version']!='paired-TRAIN-obstruction-opening-search-runtime-v1':raise ValueError('Wrong runtime index')
++    if index['head']!=head or index['version']!='paired-TRAIN-obstruction-opening-search-runtime-v2':raise ValueError('Wrong runtime index')
+     for section in ('source_files','metadata_files'):
+         for relative,digest in index[section].items():
+             p=Path(relative)
+--- build/paired-obstruction-opening-search-v1/search_worker.py
++++ build/paired-obstruction-opening-search-v2/search_worker.py
+@@ -184,10 +184,10 @@
+             saved=next(r for r in inventory_records if r['summary']['cavity_state_hash']==decision['source_state_hash'])
+             inv=json.loads((dest/saved['file']).read_text());by_action={r['action_id']:r for r in inv['ledger'] if r['feasible']}
+             added=[r for r in decision['scores'] if r['action_id']!='STOP' and by_action[r['action_id']]['family']=='obstruction_opening']
+-            selected=decision['selected_action_id']
++            selected_action=decision['selected_action_id']
+             decision_summaries.append({'step':decision['step'],'state_hash':decision['source_state_hash'],
+-                'selected_action_id':selected,'selected_family':'STOP' if selected=='STOP' else by_action[selected]['family'],
+-                'selected_score':next(r for r in decision['scores'] if r['action_id']==selected),
++                'selected_action_id':selected_action,'selected_family':'STOP' if selected_action=='STOP' else by_action[selected_action]['family'],
++                'selected_score':next(r for r in decision['scores'] if r['action_id']==selected_action),
+                 'added_legal_count':len(added),'added_target_removing_count':sum(r['target_removed_mm3']>0 for r in added),
+                 'added_nonT_removing_count':sum(r['normal_removed_mm3']>0 for r in added),
+                 'added_positive_reward_count':sum(r['reward']>0 for r in added),'added_scores':added,
+--- build/paired-obstruction-opening-search-v1/freeze-runtime.py
++++ build/paired-obstruction-opening-search-v2/freeze-runtime.py
+@@ -58,7 +58,7 @@
+     for rel in sources:
+         if rel.startswith('src/') and subprocess.check_output(['git','show',head+':'+rel],cwd=ROOT,timeout=5)!=(ROOT/rel).read_bytes():
+             raise ValueError('Uncommitted canonical source: '+rel)
+-    index={'version':'paired-TRAIN-obstruction-opening-search-runtime-v1','head':head,'source_files':sources,'metadata_files':metadata,
++    index={'version':'paired-TRAIN-obstruction-opening-search-runtime-v2','head':head,'source_files':sources,'metadata_files':metadata,
+         'closure_scope':'conservative static Python import closure including lazy imports; helpers pinned explicitly; no scientific imports'}
+     raw=(json.dumps(index,indent=2,sort_keys=True,allow_nan=False)+'\n').encode();digest=hashlib.sha256(raw).hexdigest()
+     release=release_template(head,digest)

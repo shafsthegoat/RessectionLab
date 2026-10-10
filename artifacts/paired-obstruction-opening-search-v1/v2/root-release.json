@@ -1,0 +1,224 @@
+{
+  "SELECT_EVAL_execution": false,
+  "TRAIN": [
+    "ReMIND-008",
+    "ReMIND-010",
+    "ReMIND-020",
+    "ReMIND-025"
+  ],
+  "attempts": 1,
+  "automatic_retry": false,
+  "checkpoint_loads": 0,
+  "closed_roles": {
+    "EVAL": [
+      "ReMIND-067"
+    ],
+    "SELECT": [
+      "ReMIND-013",
+      "ReMIND-037"
+    ]
+  },
+  "completion": "eight fixed complete plans sealed/replayed/independently audited; any failed arm makes whole attempt unresolved",
+  "condition_admission": {
+    "obstruction_opening": {
+      "actual_model_optimizer_checkpoint_calls": 0,
+      "initialization_performed": false,
+      "learning_protocol_hash": "sha256:33349613d5ae9e16454504644ba2e6f60b5ad43879e3f5b544294f5c79e6cbfe",
+      "limits": {
+        "max_native_previews": 7297920,
+        "max_optimizer_updates": 0,
+        "max_policy_forwards": 0,
+        "max_steps": 24,
+        "memory_bytes": 3221225472,
+        "search": {
+          "beam_width": 2,
+          "max_calls": 5640,
+          "seconds": 300
+        },
+        "threads": 1,
+        "worker_seconds": 3540
+      }
+    },
+    "original_13_axes": {
+      "actual_model_optimizer_checkpoint_calls": 0,
+      "initialization_performed": false,
+      "learning_protocol_hash": "sha256:33349613d5ae9e16454504644ba2e6f60b5ad43879e3f5b544294f5c79e6cbfe",
+      "limits": {
+        "max_native_previews": 7297920,
+        "max_optimizer_updates": 0,
+        "max_policy_forwards": 0,
+        "max_steps": 24,
+        "memory_bytes": 3221225472,
+        "search": {
+          "beam_width": 2,
+          "max_calls": 5640,
+          "seconds": 300
+        },
+        "threads": 1,
+        "worker_seconds": 3540
+      }
+    }
+  },
+  "correction": {
+    "prior_failed_result": {
+      "bytes": 4921,
+      "path": "build/paired-obstruction-opening-search-v1/attempt-01/result.json",
+      "sha256": "feb0c77623999cfd0f4a5c0bcc19f1ba06aa3547f1a8b2f9fea7ee3ef81c2cb3"
+    },
+    "prior_parent_receipt": {
+      "bytes": 1640,
+      "path": "build/paired-obstruction-opening-search-v1/attempt-01.supervision/receipt.json",
+      "sha256": "678618502947234767f87eb7cb1cffe868c759aa15f3932f546c529273462908"
+    },
+    "prior_source_index": {
+      "bytes": 12929,
+      "path": "build/paired-obstruction-opening-search-v1/source-index.json",
+      "sha256": "1c38b7157d2fe07713b4026212e1889d18efa597ef6d5c9309b2560042cbd2d6"
+    },
+    "scope": "local selected_action rename only; no task/config/cap change"
+  },
+  "discovery": "bounded first-failure evidence and selected cells; cap/truncation counts preserved; never all paths",
+  "execution_limits": {
+    "arms": 8,
+    "candidate_cap": 120,
+    "checkpoint_loads": 0,
+    "max_execution_replay_commits": 384,
+    "max_native_previews": 100000,
+    "max_native_transition_calls": 576,
+    "max_search_commits": 192,
+    "max_steps": 24,
+    "optimizer_updates": 0,
+    "policy_forwards": 0,
+    "search_method": "observed_greedy_search",
+    "search_seconds_per_arm": 45,
+    "threads": 1
+  },
+  "expected_head": "ec909a5e41a5aeacbcc81777a351a93e8b609b40",
+  "input_index": {
+    "path": "build/paired-obstruction-opening-search-v2/input-index.json",
+    "sha256": "aa2930fccf3e8a5812403e28725b6c2ec5e99a363de26796ef1cc3a909e17efc"
+  },
+  "manual_corrected_attempt_ordinal": 2,
+  "memory_bytes": 3221225472,
+  "model_forwards": 0,
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+  "optimizer_updates": 0,
+  "output": "build/paired-obstruction-opening-search-v2/attempt-02",
+  "output_bytes": 67108864,
+  "parent_seconds": 660,
+  "planned_arms": [
+    {
+      "condition": "original_13_axes",
+      "subject": "ReMIND-008"
+    },
+    {
+      "condition": "obstruction_opening",
+      "subject": "ReMIND-008"
+    },
+    {
+      "condition": "original_13_axes",
+      "subject": "ReMIND-010"
+    },
+    {
+      "condition": "obstruction_opening",
+      "subject": "ReMIND-010"
+    },
+    {
+      "condition": "original_13_axes",
+      "subject": "ReMIND-020"
+    },
+    {
+      "condition": "obstruction_opening",
+      "subject": "ReMIND-020"
+    },
+    {
+      "condition": "original_13_axes",
+      "subject": "ReMIND-025"
+    },
+    {
+      "condition": "obstruction_opening",
+      "subject": "ReMIND-025"
+    }
+  ],
+  "private_reference_reads": 0,
+  "recipe": {
+    "baseline_config": {
+      "intermediate_opening_mm": 1.0,
+      "max_candidates": 120,
+      "nominal_min_membership": 0.0,
+      "offsets_source_voxels": [
+        [
+          0,
+          0
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          -2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          -2,
+          -2
+        ],
+        [
+          -2,
+          2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          -3,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          -3
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "tool_footprint_opening": true
+    },
+    "domain": "unchanged default actor crop; no optional domain extension",
+    "initial_prefix": "all original physical rows/dispositions unchanged except source-bound IDs",
+    "only_treatment_change": {
+      "obstruction_opening": true
+    },
+    "selector": "existing observed_greedy_search; STOP wins zero ties; no negative preparation/lookahead",
+    "state_inventory_capture": "existing search inventories once per native state; assert zero additional preview entries",
+    "tie_rule": "greedy preserves inventory insertion order; original prefix first, additions win only strictly higher reward; STOP wins zero ties"
+  },
+  "scope": "post-hoc TRAIN action-space comparison; not selection, generalization or clinical validation",
+  "source_index": {
+    "path": "build/paired-obstruction-opening-search-v2/source-index.json",
+    "sha256": "688c320d979eaa919a1cd04d3fd57afd1480429a99d5aa1d7d0dde8761b639ce"
+  },
+  "status": "released_one_attempt",
+  "supervision_bytes": 16777216,
+  "unchanged": "S union T, full supplied T/domain, source MRI/frame, fixed access, tools, reward, horizon, cap and normalization",
+  "version": "paired-TRAIN-obstruction-opening-search-release-v2",
+  "worker_seconds": 600
+}

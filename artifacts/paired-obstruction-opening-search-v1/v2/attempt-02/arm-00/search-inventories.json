@@ -1,0 +1,68 @@
+[
+  {
+    "file": "search-inventory-00.json",
+    "sha256": "cb13108eb2adf895b714c9147913e4fc2f5533e1b16c2e502747972f90786a84",
+    "summary": {
+      "accepted_count": 45,
+      "cavity_state_hash": "sha256:679cfc4cecfc768ef74cda0996a99c2147081eb5fb274913a54ef23b3d398c16",
+      "complete": true,
+      "decision_model_hash": "sha256:6f3af1adfdc88149e70ab9fa79f321dbd5541ab76885f17842d97a89f8c297ba",
+      "declared_slots": 130,
+      "duplicate_count": 14,
+      "emitted_count": 116,
+      "families": {
+        "distal_nominal": {
+          "dispositions": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 26
+          },
+          "emitted": 26,
+          "legal": 0,
+          "slots": 26
+        },
+        "exposed_opening": {
+          "dispositions": {
+            "NATIVE_CONNECTED_STROKE": 20,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 6
+          },
+          "emitted": 26,
+          "legal": 20,
+          "slots": 26
+        },
+        "intermediate_opening": {
+          "dispositions": {
+            "DUPLICATE_GEOMETRY": 2,
+            "NATIVE_CONNECTED_STROKE": 9,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 15
+          },
+          "emitted": 24,
+          "legal": 9,
+          "slots": 26
+        },
+        "proximal_nominal": {
+          "dispositions": {
+            "DUPLICATE_GEOMETRY": 2,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 24
+          },
+          "emitted": 24,
+          "legal": 0,
+          "slots": 26
+        },
+        "tool_footprint_opening": {
+          "dispositions": {
+            "DUPLICATE_GEOMETRY": 10,
+            "NATIVE_CONNECTED_STROKE": 16
+          },
+          "emitted": 16,
+          "legal": 16,
+          "slots": 26
+        }
+      },
+      "ledger_complete": true,
+      "omitted_count": 0,
+      "provider_version": "permitted-nominal-cavity-tool-footprint-opening-v1",
+      "rejected_count": 71,
+      "source_hash": "sha256:2a50e735980b8d00422096f398f4edf07a7cff9a61bb51e6577d677bef668140",
+      "unavailable_count": 0
+    }
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "SELECT_EVAL_execution": false,
+  "automatic_retry": false,
+  "canonical_result_status": "failed_or_unresolved",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 660,
+    "output_bytes": 67108864,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 600,
+    "worker_log_bytes": 8388608
+  },
+  "checkpoint_loads": 0,
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 2.25607941695489,
+  "endpoint_control_sha256": null,
+  "exit_code": 1,
+  "final_owned_pids": [],
+  "output_bytes": 10242,
+  "private_reference_execution": false,
+  "release_sha256": "54bc54cd94e0ad45d34523dec5a0ebb5bc64f84bfa364b00059a2017a70c89b3",
+  "result_sha256": "feb0c77623999cfd0f4a5c0bcc19f1ba06aa3547f1a8b2f9fea7ee3ef81c2cb3",
+  "sampled_peak_rss_bytes": 252002304,
+  "samples": 10,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/paired-obstruction-opening-search-v1/source-index.json",
+    "sha256": "1c38b7157d2fe07713b4026212e1889d18efa597ef6d5c9309b2560042cbd2d6"
+  },
+  "status": "failed_or_unresolved",
+  "stop_reason": "final_guard:ValueError:Incomplete fixed-four pilot endpoint",
+  "supervision_bytes_before_receipt": 17189,
+  "worker_final_sha256": "2ed73a255a21523eb2e28d83b43aee8a3792fb881ddfcf5597b00c3d673bf4a7",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

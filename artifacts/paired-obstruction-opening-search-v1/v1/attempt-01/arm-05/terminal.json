@@ -1,0 +1,18 @@
+{
+  "arm_wall_seconds": 0.00036816694773733616,
+  "condition": "obstruction_opening",
+  "failure": {
+    "message": "cannot access local variable 'selected' where it is not associated with a value",
+    "type": "UnboundLocalError"
+  },
+  "native_counts": {
+    "replay": 0,
+    "rollout": 0,
+    "search": 0
+  },
+  "native_previews": 0,
+  "phase": "source",
+  "source_released": true,
+  "status": "failed_or_unresolved",
+  "subject": "ReMIND-020"
+}

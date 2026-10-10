@@ -1,0 +1,14 @@
+Corrected paired opening comparison — manually authorized attempt02
+
+Attempt01 remains byte-preserved. It failed every arm in run_arm before the factory, because later assignment selected=decision[...] made selected local and shadowed the outer patient manifest mapping. Zero patient arrays, previews, transitions or model work were reached. Original result SHA feb0c77623999cfd0f4a5c0bcc19f1ba06aa3547f1a8b2f9fea7ee3ef81c2cb3; independent failed-output audit at build/paired-obstruction-opening-independent-v1/audit-result.json.
+
+The only worker repair renames that decision variable and its three uses to selected_action. Contract/freezer use a new directory/version/output attempt02 and bind the failed result/parent receipt/source index as explicit manual correction provenance. Scientific configuration,8arm order,S union T/default domain,targets/access/tools/reward/greedy/h24/cap120 and all resource caps remain exact. Parent logic and completion statuses remain unchanged. No automatic retry.
+
+The exact old and new execute/run_arm/execution_counters bodies were exercised with tiny generated runtime doubles and the real exclusive OutputBudget class. Old:8 lookup failures,0 factory calls/steps. Corrected:8 factory calls in fixedorder,12 fake search+12 rollout+12 replay, baselineSTOP and generalizedmovement+STOP, correct added-target/selected-family summaries, exact seals/replayed histories, releasedsources. PASS0.185s. This is orchestration validation, not physics; earlier actual-native capture controls remain applicable because that body is unchanged. No patient/native physics/model/optimizer/checkpoint work in this correction.
+
+Source-level pending/released declarations and historical preservation are checked in correction-receipt.json. Reviewer remind_header_pilot_review owns exact delta GO. Root alone metadata-freezes and launches:
+  python3 build/paired-obstruction-opening-search-v2/freeze-runtime.py --head <current full root HEAD>
+  Copy release-template.json to root-release.json with status released_one_attempt, hash it.
+  <scientific-python> -I -B build/paired-obstruction-opening-search-v2/run_owned.py --release build/paired-obstruction-opening-search-v2/root-release.json --release-sha256 <exact SHA>
+
+Fresh output build/paired-obstruction-opening-search-v2/attempt-02; no outputs from failed attempt01 are overwritten or used as successful results. Complete result still requires all8 owned authoritative histories and independent audits. No driver launch by author.

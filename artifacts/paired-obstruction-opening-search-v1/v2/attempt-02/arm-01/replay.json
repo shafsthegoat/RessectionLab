@@ -1,0 +1,301 @@
+{
+  "independent_geometry": {
+    "accepted": true,
+    "committed_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+    "complete_episode": true,
+    "decision_model_hash": "sha256:5183ef1961fb8c7f23479507b1253d12c98c83f4a6ec60a65d51eb4f7cb293ca",
+    "distance_backend": "batch",
+    "distance_batch_size": 256,
+    "evaluation_seconds": 0.34101950004696846,
+    "geometry": {
+      "action_count": 0,
+      "checker_version": "independent-native-sequence-v2",
+      "claimed_source_tissue_volume_mm3": 0.0,
+      "complete_tool_checked": true,
+      "contained_source_tissue_volume_mm3": 0.0,
+      "failures": [],
+      "feasible": true,
+      "first_failed_action": null,
+      "first_unsupported_position_mm": null,
+      "first_unsupported_source_voxel": null,
+      "frontier_checked": true,
+      "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+      "source_case_hash": "sha256:edef8a766db0dee64f29557394f5641b78f56ad9e4a4b97e5302f85c389a233e",
+      "source_voxel_volume_mm3": 0.1289304249852456,
+      "unsupported_source_tissue_volume_mm3": 0.0
+    },
+    "invalid_action_attempts": null,
+    "invalid_action_attempts_reason": "caller must count rejected requests; committed history contains accepted transitions only",
+    "minimum_positive_target_source_cells": 1,
+    "outcomes": {
+      "clinical_deficit_probability": null,
+      "complete_tool_path_length_mm": 0.0,
+      "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+      "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+      "language_surrogate": null,
+      "motor_surrogate": null,
+      "nonstop_actions": 0,
+      "normal_removed_mm3": 0.0,
+      "partial_contact_reward_weight": 0.0,
+      "positive_target_source_cells_removed": 0,
+      "reference_target_fraction_removed": 0.0,
+      "simulated_removed_volume_mm3": 0.0,
+      "target_removed_mm3": 0.0,
+      "tool_changes": 0,
+      "total_reference_target_mm3": 2386.3732360519107,
+      "total_reward": 0.0
+    },
+    "reference_hash": "sha256:d4418fb96b169eee6f855f021c37a54343e7b1224c922beccbbf7604f4c9af18",
+    "schema": "native-spatial-independent-episode-v1",
+    "scope": "geometric annotation/estimate-conditioned task, not physical surgery or clinical outcome prediction",
+    "source_hash": "sha256:edef8a766db0dee64f29557394f5641b78f56ad9e4a4b97e5302f85c389a233e",
+    "target_access_success": false
+  },
+  "metrics": {
+    "assumptions": [
+      "rigid_fully_contained_native_cell_removal",
+      "hypothetical_intracranial_aperture",
+      "no_deformation_or_force_model",
+      "geometric_objective_does_not_optimize_function_or_partial_contact"
+    ],
+    "clinical_deficit_probability": null,
+    "clinical_probability_reason": "no_validated_clinical_outcome_model",
+    "crop": {
+      "basis": "scan_frame_and_declared_access_only",
+      "native_geometry_resampled": false,
+      "origin_voxels": [
+        187,
+        174,
+        84
+      ],
+      "shape": [
+        64,
+        64,
+        64
+      ]
+    },
+    "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+    "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+    "decision_model_hash": "sha256:5183ef1961fb8c7f23479507b1253d12c98c83f4a6ec60a65d51eb4f7cb293ca",
+    "function_unassessed_removed_volume_mm3": 0.0,
+    "functional_evidence_available": {
+      "language": false,
+      "motor": false
+    },
+    "history": [
+      {
+        "action_id": "STOP",
+        "complete_tool_path_length_mm": 0.0,
+        "insertion_distance_mm": 0.0,
+        "normal_removed_mm3": 0.0,
+        "reward": 0.0,
+        "target_removed_mm3": 0.0
+      }
+    ],
+    "intensity_normalization": {
+      "clip": [
+        0.0,
+        1.0
+      ],
+      "crop_used_for_statistics": false,
+      "lower": 1014.0,
+      "method": "support_percentile_1_99",
+      "percentile_method": "linear",
+      "percentiles": [
+        1.0,
+        99.0
+      ],
+      "raw_source_preserved": true,
+      "reference_labels_used": false,
+      "source_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+      "statistics_scope": "entire_permitted_support",
+      "statistics_voxels": 6805427,
+      "support_hash": "sha256:8ca0ab6cd22bbdff31f601f7b852c3ec7be9564f4b02c672965fe539056712ef",
+      "upper": 2688.0
+    },
+    "language_surrogate": null,
+    "motor_surrogate": null,
+    "native_grid_reconciliation": {
+      "corner_domain": "full_source_cell_extent_minus_half_to_shape_minus_half",
+      "derived_affine_hash": "sha256:482d5aeb0bd7373c9aa5bda7d85c22696f03ab728e2a1c9b7ad5f0a82117279c",
+      "derived_affine_ras_mm": [
+        [
+          0.5077995460264906,
+          -0.0006029567482700632,
+          0.00031966596030809553,
+          -67.27264414662629
+        ],
+        [
+          -0.0006027970459639079,
+          -0.5077995764945451,
+          -0.00024605809521439345,
+          76.04573734852269
+        ],
+        [
+          0.0003249492006982536,
+          0.0002495109768910661,
+          -0.4999998531103661,
+          96.88242078608342
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "derived_spacing_mm": [
+        0.5078000077796097,
+        0.5077999957666476,
+        0.5000000158412998
+      ],
+      "handedness_preserved": true,
+      "maximum_allowed_corner_displacement_mm": 1e-06,
+      "maximum_allowed_gram_error": 1e-08,
+      "maximum_corner_displacement_mm": 3.3859260444514545e-07,
+      "method": "orthogonal_roundoff_1e-6mm",
+      "native_and_actor_physical_grid": "derived_affine_ras_mm",
+      "origin_preserved": true,
+      "original_affine_hash": "sha256:3c365ecbf9a8a2c876ed02b58e6c862eadd91fa81dced712bdd7bdd182a19767",
+      "original_affine_ras_mm": [
+        [
+          0.5077995460268,
+          -0.0006029567334039999,
+          0.00031966646286164964,
+          -67.27264414662629
+        ],
+        [
+          -0.000602797060772,
+          -0.5077995764948,
+          -0.00024605857126659,
+          76.04573734852269
+        ],
+        [
+          0.000324948689738,
+          0.0002495104940286,
+          -0.49999985310981065,
+          96.88242078608342
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "original_spacing_mm": [
+        0.5078000077796097,
+        0.5077999957666476,
+        0.5000000158412999
+      ],
+      "proposal_and_crop_indices_basis": "original_source_affine",
+      "resampled": false,
+      "shape": [
+        251,
+        331,
+        250
+      ],
+      "source_axis_gram_max_error": 2.01247509414688e-09,
+      "source_image_hash": "sha256:c58e05f308338e80d04699510bc03b6c5dd216a709dcbd6406531770ac16ef13",
+      "support_hash": "sha256:8ca0ab6cd22bbdff31f601f7b852c3ec7be9564f4b02c672965fe539056712ef"
+    },
+    "normal_removed_mm3": 0.0,
+    "observation_track": "annotation_assisted",
+    "partial_contact_weight": 0.0,
+    "planning_estimator_only": false,
+    "proposal_mode": "nominal_cavity_v1",
+    "proposal_rule_hash": "sha256:fd662062d44a86e45d04fc982685723d07dc7538289433924e60029e108635a0",
+    "reference_hash": "sha256:d4418fb96b169eee6f855f021c37a54343e7b1224c922beccbbf7604f4c9af18",
+    "reference_target_outside_observed_support_mm3": 0.0,
+    "simulated_removed_volume_mm3": 0.0,
+    "source_hash": "sha256:edef8a766db0dee64f29557394f5641b78f56ad9e4a4b97e5302f85c389a233e",
+    "steps": 1,
+    "supplied_goal_region": {
+      "condition": "PARTIAL_TARGET_PROGRESS",
+      "derived_occupancy": true,
+      "fraction_denominator": "entire_unchanged_supplied_region",
+      "fraction_of_full_region_removed": 0.0,
+      "full_region_membership_mm3": 2386.3732360519107,
+      "full_region_positive_voxels": 18509,
+      "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+      "occupancy_derivation": {
+        "added_region_hash": "sha256:0e3c08d56afc5cfaeb26ad04f62fe1994344ca29db3b54db4216311def2f9e14",
+        "added_region_positive_voxels": 6394,
+        "anatomical_or_material_validation": false,
+        "condition": "cerebrum_plus_supplied_tumor_assumption",
+        "derived_occupancy_hash": "sha256:8ca0ab6cd22bbdff31f601f7b852c3ec7be9564f4b02c672965fe539056712ef",
+        "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+        "operation": "S OR (T > 0)",
+        "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+        "source_support_hash": "sha256:fb5770bdc87e08eecbe5382aafd197e5756f323136a26e743a52717e8d97ba22",
+        "source_support_positive_voxels": 6799033,
+        "source_support_unchanged": true,
+        "supplied_target_hash": "sha256:4baef404b917bb118489574de83304db164e38b566ac86759eba9b7cdf0cdea8",
+        "target_unchanged": true,
+        "version": "supplied-support-target-union-v1"
+      },
+      "occupancy_modified": true,
+      "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+      "simulated_supported_goal_removed_mm3": 0.0,
+      "supported_region_membership_mm3": 2386.3732360519107,
+      "target_modified": false,
+      "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+      "unsupported_region_membership_mm3": 0.0,
+      "unsupported_region_positive_voxels": 0,
+      "unsupported_region_removable": false
+    },
+    "support_provenance": {
+      "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+      "occupancy_unchanged": false,
+      "public_access_rule": {
+        "access_index": [
+          246.5,
+          206.0,
+          116.0
+        ],
+        "access_side": "positive_source_axis0",
+        "annotation_domain_hash": "sha256:850780cac64387d8467a8b1c77acd0494e3265dbf8b7c4b1565f4401e5301991",
+        "annotation_domain_meaning": "outside source annotation domain remains unknown anatomy",
+        "estimated_support_zeros": "simulation occupancy assumption, not certified empty anatomy",
+        "goal_membership_meaning": "exact supplied positive region; outside this region is not normal anatomy truth",
+        "private_reference_used": false,
+        "public_target_positive_voxels": 18509,
+        "radius_mm": 6.0,
+        "route_search": false,
+        "rule": "fixed_source_axis0_target_centroid_side_of_support_extent",
+        "source_voxel_entry_offset": 0.5,
+        "support_extent_axis0": [
+          0,
+          250
+        ],
+        "target_centroid_source_voxels": [
+          202.8438057161381,
+          206.16764817115998,
+          116.2542006591388
+        ],
+        "task_condition": "PARTIAL_TARGET_PROGRESS",
+        "tools": "existing geometry.GENERIC_TOOLS; generic research geometry, not device validation",
+        "transverse_rounding": "numpy_rint_ties_to_even",
+        "unsupported_target_positive_voxels": 6394
+      },
+      "public_manifest_sha256": "57b9588c2a72874cae1cd6555fcd58cfada543ac63cda7f1e6b41fefa5b2163b",
+      "raw_support_array_hash": "sha256:fb5770bdc87e08eecbe5382aafd197e5756f323136a26e743a52717e8d97ba22",
+      "source_QC_scope": "unchanged supplied annotations and frame; derived occupancy is not anatomically validated",
+      "supplied_support_file_sha256": "173d61a6fe3f7544d46d5e2e826390f3f963c0ea44ca6ae0c159495a867a6d3b",
+      "supplied_target_file_sha256": "0e5f691084d6cf1c4867a96dca675fea7e4d230982ced9be1e7c2610827e272e",
+      "target_domain_binary_hash": "sha256:e52f13f2a4a830cf64b10c95b027bd3f0e18d588712382e6d03d9ede37cd70bc",
+      "target_domain_file_sha256": "37fe4ff635a4f925942065efd16bbf8c020dd294c9224f5922a29539ccd7dd91",
+      "target_domain_hash": "sha256:850780cac64387d8467a8b1c77acd0494e3265dbf8b7c4b1565f4401e5301991",
+      "target_unchanged": true
+    },
+    "target_removed_mm3": 0.0,
+    "task_version": "native-spatial-observed-openings-v1",
+    "terminated": true,
+    "total_reward": 0.0,
+    "unknowns": [
+      "motor_evidence_unavailable",
+      "language_evidence_unavailable",
+      "vascular_coverage_unassessed"
+    ]
+  }
+}

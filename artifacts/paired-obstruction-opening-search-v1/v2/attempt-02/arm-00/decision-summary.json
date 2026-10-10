@@ -1,0 +1,27 @@
+[
+  {
+    "added_legal_count": 0,
+    "added_nonT_removing_count": 0,
+    "added_positive_reward_count": 0,
+    "added_scores": [],
+    "added_target_removing_count": 0,
+    "candidate_cap_omitted_count": 0,
+    "inventory_file": "search-inventory-00.json",
+    "inventory_sha256": "cb13108eb2adf895b714c9147913e4fc2f5533e1b16c2e502747972f90786a84",
+    "obstruction_accounting": null,
+    "obstruction_selection_omitted_count": 0,
+    "omitted_count": 0,
+    "selected_action_id": "STOP",
+    "selected_family": "STOP",
+    "selected_score": {
+      "action_id": "STOP",
+      "complete_tool_path_length_mm": 0.0,
+      "insertion_distance_mm": 0.0,
+      "normal_removed_mm3": 0.0,
+      "reward": 0.0,
+      "target_removed_mm3": 0.0
+    },
+    "state_hash": "sha256:679cfc4cecfc768ef74cda0996a99c2147081eb5fb274913a54ef23b3d398c16",
+    "step": 0
+  }
+]

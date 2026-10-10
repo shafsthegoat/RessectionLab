@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "elapsed_seconds": 0.18525033304467797,
+  "controls": [
+    {
+      "version": "v1",
+      "status": "failed_or_unresolved",
+      "source_visits": 0,
+      "native_counts": {
+        "replay": 0,
+        "rollout": 0,
+        "search": 0
+      }
+    },
+    {
+      "version": "v2",
+      "status": "complete_paired_TRAIN_search",
+      "source_visits": 8,
+      "native_counts": {
+        "search": 12,
+        "rollout": 12,
+        "replay": 12
+      }
+    }
+  ],
+  "worker_sha256": "e9f8aad4e1ab2b32a65365a3bf766ac11589187f4270ec256d69207e2176a485",
+  "scope": "Exact execute/run_arm/counters with generated runtime doubles and real exclusive OutputBudget; no patient/native physics/model execution",
+  "patient_reads": 0,
+  "real_native_steps": 0,
+  "model_forwards": 0,
+  "optimizer_updates": 0
+}

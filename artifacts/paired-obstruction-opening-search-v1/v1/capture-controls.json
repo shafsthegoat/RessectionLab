@@ -1,0 +1,64 @@
+{
+  "status": "pass",
+  "elapsed_seconds": 0.8217432091478258,
+  "controls": [
+    {
+      "positive_fixture": false,
+      "obstruction_opening": false,
+      "actions": [
+        "STOP"
+      ],
+      "captured_states": 1,
+      "planning_transitions": 1,
+      "capture_previews": 0,
+      "uninstrumented_previews": 0,
+      "zero_extra_previews": true
+    },
+    {
+      "positive_fixture": false,
+      "obstruction_opening": true,
+      "actions": [
+        "STOP"
+      ],
+      "captured_states": 1,
+      "planning_transitions": 1,
+      "capture_previews": 0,
+      "uninstrumented_previews": 0,
+      "zero_extra_previews": true
+    },
+    {
+      "positive_fixture": true,
+      "obstruction_opening": false,
+      "actions": [
+        "nominal-cavity-97b4807f34c57703b5e3765f",
+        "nominal-cavity-e5c8e54836585488fd847391",
+        "STOP"
+      ],
+      "captured_states": 3,
+      "planning_transitions": 3,
+      "capture_previews": 13,
+      "uninstrumented_previews": 13,
+      "zero_extra_previews": true
+    },
+    {
+      "positive_fixture": true,
+      "obstruction_opening": true,
+      "actions": [
+        "nominal-cavity-ffb782ad086b5be1b5e7f14c",
+        "nominal-cavity-d61289b209d547e26ddbf21b",
+        "STOP"
+      ],
+      "captured_states": 3,
+      "planning_transitions": 3,
+      "capture_previews": 13,
+      "uninstrumented_previews": 13,
+      "zero_extra_previews": true
+    }
+  ],
+  "worker_sha256": "a1968f7f356e9d5bdf7c4f2a0dd55515d5cca04d9f651465661904a975584656",
+  "scope": "Generated existing-native capture comparison only; no patient arrays, models, checkpoint or optimizer",
+  "patient_reads": 0,
+  "model_forwards": 0,
+  "checkpoint_loads": 0,
+  "optimizer_updates": 0
+}

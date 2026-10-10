@@ -1,0 +1,68 @@
+[
+  {
+    "file": "search-inventory-00.json",
+    "sha256": "019e69d7ddcf258ef513021074f3b9b241907096dcc242e5ad0c6f9fa3949df5",
+    "summary": {
+      "accepted_count": 28,
+      "cavity_state_hash": "sha256:149a1aacb80364c7b6165cbc044edbf082b078a4b7c58573b424d5871523f79d",
+      "complete": false,
+      "decision_model_hash": "sha256:cb4142042ebb7df2d23d2b7383ca0a11124b51042760227d0cdfadfae541be6a",
+      "declared_slots": 130,
+      "duplicate_count": 8,
+      "emitted_count": 120,
+      "families": {
+        "distal_nominal": {
+          "dispositions": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 26
+          },
+          "emitted": 26,
+          "legal": 0,
+          "slots": 26
+        },
+        "exposed_opening": {
+          "dispositions": {
+            "NATIVE_CONNECTED_STROKE": 11,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 15
+          },
+          "emitted": 26,
+          "legal": 11,
+          "slots": 26
+        },
+        "intermediate_opening": {
+          "dispositions": {
+            "NATIVE_CONNECTED_STROKE": 4,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 22
+          },
+          "emitted": 26,
+          "legal": 4,
+          "slots": 26
+        },
+        "proximal_nominal": {
+          "dispositions": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 26
+          },
+          "emitted": 26,
+          "legal": 0,
+          "slots": 26
+        },
+        "tool_footprint_opening": {
+          "dispositions": {
+            "CANDIDATE_CAP": 2,
+            "DUPLICATE_GEOMETRY": 8,
+            "NATIVE_CONNECTED_STROKE": 13,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 3
+          },
+          "emitted": 16,
+          "legal": 13,
+          "slots": 26
+        }
+      },
+      "ledger_complete": true,
+      "omitted_count": 2,
+      "provider_version": "permitted-nominal-cavity-tool-footprint-opening-v1",
+      "rejected_count": 92,
+      "source_hash": "sha256:2d7b172212588952adad7d4400ccedaf1358006468afae98d1e08c40aeb61fee",
+      "unavailable_count": 0
+    }
+  }
+]
