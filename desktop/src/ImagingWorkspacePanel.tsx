@@ -18,7 +18,7 @@ export function ImagingWorkspacePanel(props:{caseHash:string;series:DisplaySerie
     </select></label>
     <button disabled={props.busy||!props.importAvailable||props.series.length>=4} onClick={()=>props.onImport({caseHash:props.caseHash,modality,annotationKind})}>Add image for inspection</button>
     {!props.importAvailable && <p className="muted-note">This engine does not provide additional-image import.</p>}
-    <p className="muted-note">Additional scans are session-only. Originals remain separate; saved planning cases do not yet include these attachments.</p>
+    <p className="muted-note">Save preserves attached images and their view settings. Sources keep separate native frames; saving does not establish registration or planning suitability.</p>
     {props.series.map(s=><details key={s.descriptor.seriesId}><summary>{s.descriptor.modality} · {s.descriptor.annotationKind==='none'?'imported image':s.descriptor.annotationKind+' labels'}</summary>
       <p>{s.volume.shape.join(' × ')} · {s.volume.frame} · mm. {s.descriptor.registration.reason}</p>
       <p>{s.descriptor.annotationCoverage}. Acquisition time unknown. Display only; not a planning or evaluation input.</p>

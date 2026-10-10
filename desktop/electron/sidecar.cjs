@@ -6,6 +6,7 @@ const { EventEmitter } = require('node:events');
 const path = require('node:path');
 const fs = require('node:fs/promises');
 const { episodeRequest, validateEpisodeResult } = require('./development-episode.cjs');
+const { validateWorkspaceResult } = require('./workspace-session.cjs');
 const { AssetRegistry } = require('./assets.cjs');
 const { observedRequest, validateObservedEvent } = require('./observed-landmark-contract.cjs');
 
@@ -87,6 +88,7 @@ class Sidecar extends EventEmitter {
     if (observed) validateObservedEvent(message, pending.observedArgs);
     if (message.event === 'result') {
       if (pending.op === 'executeDevelopmentEpisode') validateEpisodeResult(message.result, pending.episodeArgs);
+      if (pending.op === 'loadCase') validateWorkspaceResult(message.result);
       if (['loadCase', 'importNifti', 'importStructuralEvidence', 'createSyntheticCase', 'executeDevelopmentEpisode'].includes(pending.op)) this.assets.clear();
       if (!observed) message.result = await this.assets.expose(message.result);
     }

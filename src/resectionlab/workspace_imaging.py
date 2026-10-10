@@ -4,10 +4,10 @@ Native grids remain independent until a separately reviewed registration exists.
 An explicit user association is not a verified same-person or same-time claim.
 """
 from __future__ import annotations
-from dataclasses import replace
+from dataclasses import dataclass, replace
 import math
 import numpy as np
-from .core import semantic_digest, thaw_json
+from .core import CaseData, semantic_digest, thaw_json
 from .imaging import inspect_nifti, load_nifti_case
 from .structural_evidence import structural_frame_hash
 
@@ -71,11 +71,68 @@ def import_display_series(session, args, request, progress):
         display=display.revised(source_refs=tuple(replace(source,provenance='estimated')
             if source.source_id=='supplied_target_annotation' else source for source in display.source_refs))
     request.check()
-    source_refs=[s.to_dict() for s in display.source_refs]
-    identity={'referenceCaseHash':parent.case.semantic_hash,'sourceCaseHash':display.semantic_hash,
-              'modality':modality,'annotationKind':kind}
-    series_id=semantic_digest(identity)
+    source=DisplaySource(display,modality,kind)
+    series_id=source.identity(parent.case)
     if series_id in parent.display_series:return parent.display_series[series_id]
+    result=display_descriptor(session,parent.case,source)
+    from .workspace_bundle import view_state
+    state=view_state(parent.case,list(parent.display_sources.values()),parent.imaging_state)
+    state['states'][series_id]=view_state(parent.case,[source])['states'][series_id]
+    state['selectedSeriesId']=series_id
+    request.begin_commit();parent.display_sources[series_id]=source;parent.display_series[series_id]=result
+    parent.imaging_state=state;parent.workspace_hash=None
+    if parent.episode_selection is not None:
+        parent.episode_selection={**parent.episode_selection,'visible':False}
+    session.prune_transfers()
+    return result
+
+
+@dataclass(frozen=True)
+class DisplaySource:
+    """Actual immutable source arrays; descriptors/transfer paths are never storage."""
+    case: CaseData
+    modality: str
+    annotation_kind: str
+
+    def __post_init__(self):
+        c=self.case
+        if self.modality not in MODALITIES or self.annotation_kind not in ANNOTATION_KINDS:
+            raise ValueError('Unknown display source modality/provenance')
+        if (c.mri.nbytes>MAX_IMAGE_BYTES or len(c.compartments)>MAX_LABELS or
+                c.brain_mask is not None or c.structural_evidence or c.prior_proposals or
+                c.critical_evidence or c.functional_evidence is not None or c.context is not None):
+            raise ValueError('Auxiliary source exceeds its image/label-only display scope')
+        if set(c.source_compartments)!=set(c.compartments) or any(
+                not np.array_equal(c.compartments[k],c.source_compartments[k]) for k in c.compartments):
+            raise ValueError('Display source labels cannot contain edited planning compartments')
+        images=[r for r in c.source_refs if r.source_id=='structural']
+        if (len(images)!=1 or images[0].sha256 is None or images[0].provenance!='observed'
+                or any(r.source_id not in {'structural','supplied_target_annotation'} for r in c.source_refs)):
+            raise ValueError('Display source requires its original observed image identity')
+        refs=[r for r in c.source_refs if r.source_id=='supplied_target_annotation']
+        if self.annotation_kind=='none':
+            if c.compartments or refs:raise ValueError('Unlabelled display source contains annotations')
+        elif not c.compartments or len(refs)!=1 or refs[0].provenance!=('estimated' if self.annotation_kind=='estimated' else 'observed'):
+            raise ValueError('Display annotation provenance differs from original source identity')
+
+    @property
+    def expanded_bytes(self):
+        return self.case.mri.size*(4+2*len(self.case.compartments))
+
+    def identity(self,parent):
+        return semantic_digest({'referenceCaseHash':parent.semantic_hash,'sourceCaseHash':self.case.semantic_hash,
+                                'modality':self.modality,'annotationKind':self.annotation_kind})
+
+    def manifest(self,parent):
+        return {'seriesId':self.identity(parent),'sourceCaseHash':self.case.semantic_hash,
+                'sourceFrameHash':structural_frame_hash(self.case),'modality':self.modality,
+                'annotationKind':self.annotation_kind,'scope':'display-only-native-grid'}
+
+
+def display_descriptor(session,parent_case,source):
+    display=source.case;modality=source.modality;kind=source.annotation_kind;expanded=source.expanded_bytes
+    source_refs=[s.to_dict() for s in display.source_refs]
+    series_id=source.identity(parent_case)
     volume={'caseId':display.case_id,'caseHash':display.semantic_hash,'frame':display.frame,
         'affine':display.affine.tolist(),'shape':list(display.mri.shape),'spacingMm':list(display.spacing_mm),
         'mri':session.transfers.array(display.mri,'float32'),
@@ -90,8 +147,8 @@ def import_display_series(session, args, request, progress):
             'modality_origin':'user_declared','annotation_kind':kind,'annotation_use':'display_only',
             'model_identity':None,'model_lineage':'not_supplied' if kind=='estimated' else 'not_applicable'},
         'sourceRefs':source_refs}
-    result={'schema':'workspace-display-series-v1','seriesId':series_id,'referenceCaseHash':parent.case.semantic_hash,
-        'referenceFrameHash':structural_frame_hash(parent.case),
+    result={'schema':'workspace-display-series-v1','seriesId':series_id,'referenceCaseHash':parent_case.semantic_hash,
+        'referenceFrameHash':structural_frame_hash(parent_case),
         'sourceFrameHash':structural_frame_hash(display),
         'association':{'kind':'explicit_user_selected','samePersonVerified':False,'sameTimeVerified':False},
         'registration':{'status':'unreviewed','reason':'No accepted source-to-reference registration has been supplied.',
@@ -100,6 +157,4 @@ def import_display_series(session, args, request, progress):
         'modality':modality,'modalityOrigin':'user_declared','annotationKind':kind,
         'annotationCoverage':'unreviewed; unlabelled voxels are unknown','acquisitionDatetime':None,
         'expandedBytes':expanded,'volume':volume}
-    request.begin_commit();parent.display_series[series_id]=result
-    session.prune_transfers()
     return result

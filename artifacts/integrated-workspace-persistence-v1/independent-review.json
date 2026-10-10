@@ -1,0 +1,27 @@
+{
+  "actual_Electron_UI_observation": "root_pending",
+  "actual_generated_backend_asset_renderer_path": "PASS",
+  "backend_test_count": 18,
+  "candidate_files_all_match_final_indexes": true,
+  "desktop_test_count": 28,
+  "limits": "Display-only auxiliary sources and fixed generated episode persistence only; no actor input schema change or scientific admission.",
+  "patient_or_checkpoint_reads": 0,
+  "source_bindings": {
+    "build/integrated-workspace-persistence-desktop-v1/App.commit.tsx": "8beb3d30eea6b1d6b4251aa62863691d993cd2899b975da781d4d4e0dd19681d",
+    "build/integrated-workspace-persistence-desktop-v1/desktop-commit.patch": "f225f18c0d6db014a3ae1a7c8ae9502d18a149f16361a32c83653621cf3ec8f5",
+    "build/integrated-workspace-persistence-desktop-v1/desktop-worktree.patch": "bb0986b17f117f4de5d8448c308a94655cf88840e8e06e3ca054b375a65a3059",
+    "build/integrated-workspace-persistence-desktop-v1/source-index.json": "3ee1c23c88078844d0976cb50d21cf954b51045876956880b74d244da1bce8d2",
+    "build/integrated-workspace-persistence-review-v1/REPORT.md": "3635ac84aa9d141706caa23e062456bdb875a2a11abee7e57a060f4dea9597df",
+    "build/integrated-workspace-persistence-review-v1/backend-review.json": "0e048d60f27973c6a16943d302c2962361751647b139eeaf7e85f580859c21c6",
+    "build/integrated-workspace-persistence-review-v1/backend-tests.txt": "a26c77bfe197a971bae5e6efa8880f9356e744efa92d718daa4c578d6c759cb0",
+    "build/integrated-workspace-persistence-review-v1/crossstack.txt": "9b4444694b3e17a2644431dd912d01b74ce13512fd71e8cdcf74cb193c5c2aca",
+    "build/integrated-workspace-persistence-review-v1/desktop-tests.txt": "e2882f89bd996a65da6d567598df75a2e3e937e4f6f8d37fa1f62784ecb05adc",
+    "build/integrated-workspace-persistence-v1/generated-reopen/payload.json": "136434e24b452d5145c87f67a408c06073bae3ec129becca9c8fdf3370501d32",
+    "build/integrated-workspace-persistence-v1/source-index.json": "55eca0e203dc010cbe67dece8495aa2a2d8f8a4797db93f02b5c1566225448c9",
+    "build/integrated-workspace-persistence-v1/source.patch": "742f0d64745bcdeb9518ffd95a758f25426490ce8c292dc28428f9276dbc9bcb"
+  },
+  "source_unchanged_during_backend_tests": true,
+  "status": "GO_generated_integration",
+  "torch_imported_in_backend_review": false,
+  "tracked_edits": 0
+}

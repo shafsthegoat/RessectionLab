@@ -1,0 +1,22 @@
+{
+  "baseline": "e19564e65c2a4eef6d9e71d0b55737205e6efce4",
+  "files": {
+    "desktop/electron/sidecar.cjs": "8db3c5b8d12f12a31d1a80c25dc579bb80032e5048c3d0f6efabc6d3df9e68c0",
+    "desktop/electron/workspace-session.cjs": "ffdf64a350c2003cf9fee6f6956ec4ba73fc5108adafe44e2b54acfd61bb2df5",
+    "desktop/electron/workspace-session.test.cjs": "4e6ffb027a48c75284f4df6fb89ec0121d0c4c4d37098334145dcab9d264fcab",
+    "desktop/src/App.tsx": "69b1692f9c82ba9ab619f90ebac90955021487d14ce2fc06625673e68a822412",
+    "desktop/src/ImagingWorkspacePanel.tsx": "d83f2bc16cc572f898573d4b08f38040660032524dc59b264a92e6bda06b440a",
+    "desktop/src/types.ts": "b703b384587a8e07b6bbdc73e865b6a092fbc7978a436862988efe79441ff117",
+    "desktop/src/use-workspace-imaging.ts": "24f017ac298892ef306547dd7c8e4fe2c161cde48b4a8a16def5555d670ef3ef",
+    "desktop/src/workspace-session-types.ts": "1655d054583e8943849d0484f59c7a724e2590fafe81749f6bacd89f97d4bb3b",
+    "desktop/src/workspace-session.ts": "bcd6133d88e413c1ffbfe038829f4706a4ab6e3bf5d3233b75a4206b58ceba18",
+    "desktop/tests/workspace-session-crossstack.mjs": "9218357a726e4a5be16752115bb828734a2507ed10f26390e3c913acfbca8c17",
+    "desktop/tests/workspace-session.test.mjs": "8ad43d559efa9320f2b1f030d7634bab8ccadb98d240053e0025a351402b0bb4",
+    "src/resectionlab/desktop_bridge.py": "cccd45f33796359deb35b857f803f30116d24fea3a4b7143e79eb04a960b8a95",
+    "src/resectionlab/imaging.py": "45df035c47f9c509fef91ebc02f1c3bef40266c052dbd1de6d133815a5af6afa",
+    "src/resectionlab/workspace_bundle.py": "32d1a051a92ab6f908df357e44c202e5e6068d9a60ce6f4b140f019cb1eb5dd2",
+    "src/resectionlab/workspace_imaging.py": "932718dcc287366121b7d583384691a6274908a3af444239e70e2ff580b94501",
+    "tests/test_workspace_persistence.py": "200a0c54d8e5c7e3112c11e2262d013af1d6bf91ffdba87fbfb68b6950bf75be"
+  },
+  "note": "App index deliberately excludes unrelated neighboring-inspection WIP; exact staged desktop projection builds."
+}

@@ -1,6 +1,7 @@
 import { ImagingWorkspacePanel } from "./ImagingWorkspacePanel";
 import { useWorkspaceImaging } from "./use-workspace-imaging";
 import { workspaceDisplay } from "./workspace-imaging-data";
+import { hydrateWorkspace } from "./workspace-session";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Tabs from "@radix-ui/react-tabs";
@@ -30,7 +31,6 @@ import {
 } from "lucide-react";
 import {
   annotationCenter,
-  hydrateCase,
   initialCursor,
   readableName,
   rasPoint,
@@ -611,6 +611,7 @@ export default function App() {
   const busy = !!operation || hydrating || episodePending || imaging.pending;
   const readonly = !!api?.readOnly;
   const controlsBlocked = busy || engineStopped || !display.planningInteractionPermitted;
+  const fileNavigationBlocked = !api || busy || engineStopped || readonly;
   const restoreSourceView = () => {
     resetDisplayToPrimary();
     setEpisodeVisible(false);
@@ -654,13 +655,17 @@ export default function App() {
   }, []);
 
   const installCase = useCallback(
-    async (source: CasePayload, runtime: ResectionApi) => {
-      const generation = ++caseGeneration.current;
+    async (sourceInput: CasePayload, runtime: ResectionApi, requestedGeneration?: number) => {
+      const generation = requestedGeneration ?? ++caseGeneration.current;
+      if (generation !== caseGeneration.current) return false;
+      imaging.invalidate();
       setEpisodeVisible(false);
       setHydrating(true);
       setError(null);
       try {
-        const loaded = await hydrateCase(source, runtime);
+        const reopened = await hydrateWorkspace(sourceInput, runtime,
+          () => mounted.current && generation === caseGeneration.current);
+        const { source, volume: loaded } = reopened;
         if (!mounted.current || generation !== caseGeneration.current)
           return false;
         activeCaseHash.current = source.caseHash;
@@ -752,7 +757,18 @@ export default function App() {
             ),
           ),
         );
+        imaging.restore(source.caseHash, reopened.series, reopened.imagingState);
+        if (reopened.imagingState) {
+          setCursor(reopened.imagingState.states.primary.cursor);
+          setVisibleLayers(reopened.imagingState.states.primary.visibleLayers);
+        }
+        setEpisodeView(reopened.episodeView);
+        setEpisodeStep(reopened.episodeStep);
+        setEpisodeVisible(reopened.episodeVisible);
+        if (reopened.episodeView) setEpisodeSelector(reopened.episodeView.episode.selector);
+        if (reopened.episodeVisible) { setCameraMode("instruments"); setPlanningTab("episode"); }
         setMessage(
+          reopened.session ? `Workspace reopened · native image views restored${reopened.episodeView ? " · saved replay revalidated" : ""}` :
           `${source.metadata.is_synthetic ? "Synthetic fixture" : source.caseId} ready · Source imaging preserved`,
         );
         return true;
@@ -910,9 +926,12 @@ export default function App() {
   };
   const load = (kind: "openCase" | "importNifti" | "createSyntheticCase") =>
     act(async () => {
-      if (!api) return;
+      if (!api || fileNavigationBlocked) return;
+      const generation = ++caseGeneration.current;
+      imaging.invalidate();
       const source = await api[kind]();
-      if (source) await installCase(source, api);
+      if (source && mounted.current && generation === caseGeneration.current)
+        await installCase(source, api, generation);
     });
   const viewPrior = async (proposalId: string) => {
     if (!payload || !caseData || !api || episodeVisible || certifiedReplay || controlsBlocked)
@@ -1055,23 +1074,34 @@ export default function App() {
           visibleLayers,
           overlayOpacity,
           cursor,
+          imaging: imaging.snapshot({cursor, visibleLayers}),
+          episodeReplay: episodeView?.source.caseHash === payload.caseHash ? {
+            episodeId: episodeView.episode.episodeId, frameIndex: episodeStep,
+            visible: episodeVisible && !imaging.selected,
+          } : null,
         },
       });
-      if (result?.saved) setMessage("Case and comparison saved locally");
+      if (result?.saved) setMessage("Workspace saved locally · images, views and recorded replay preserved");
     });
 
   useEffect(() => {
     if (!api) return;
     return api.onEvent((event) => {
-      if (event.event !== "menuAction" || controlsBlocked || readonly) return;
+      if (event.event !== "menuAction" || busy || engineStopped || readonly) return;
       if (event.action === "openCase") void load("openCase");
       if (event.action === "saveCase" && payload) void save();
     });
   }, [
     api,
-    controlsBlocked,
+    busy,
+    engineStopped,
     readonly,
     payload,
+    imaging.snapshot,
+    imaging.selected,
+    episodeView,
+    episodeStep,
+    episodeVisible,
     routeA,
     routeB,
     category,
@@ -1187,7 +1217,7 @@ export default function App() {
         <button
           className="header-button"
           onClick={() => load("openCase")}
-          disabled={!api || controlsBlocked || readonly}
+          disabled={fileNavigationBlocked}
         >
           <FolderOpen size={15} />
           <span>Open case</span>
@@ -1196,7 +1226,7 @@ export default function App() {
         <button
           className="header-button"
           onClick={() => load("importNifti")}
-          disabled={!api || controlsBlocked || readonly}
+          disabled={fileNavigationBlocked}
         >
           <ArrowUpFromLine size={15} />
           <span>Import MRI</span>
@@ -1204,7 +1234,7 @@ export default function App() {
         <button
           className="header-button save-button"
           onClick={save}
-          disabled={!payload || controlsBlocked || readonly}
+          disabled={!payload || busy || engineStopped || readonly}
         >
           <ArrowDownToLine size={15} />
           <span>Save</span>
@@ -1549,7 +1579,7 @@ export default function App() {
               </p>
               <button
                 className="primary-button"
-                disabled={!api || readonly || controlsBlocked}
+                disabled={fileNavigationBlocked}
                 onClick={() => load("openCase")}
               >
                 <FolderOpen size={16} /> Open a case

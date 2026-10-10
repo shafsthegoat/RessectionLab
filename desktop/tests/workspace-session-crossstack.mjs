@@ -1,0 +1,36 @@
+// Actual generated save -> fresh backend reopen -> host asset boundary -> viewer.
+// Input is the backend generated control JSON {payload, transferRoot}; no patient sources.
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {createRequire} from 'node:module';
+import {hydrateWorkspace} from '../src/workspace-session.ts';
+import {workspaceDisplay} from '../src/workspace-imaging-data.ts';
+import {recordedToolDisplay} from '../src/viewer/recordedTool.ts';
+const require=createRequire(import.meta.url);
+const {AssetRegistry}=require('../electron/assets.cjs');
+const {validateWorkspaceResult}=require('../electron/workspace-session.cjs');
+const fixture=JSON.parse(await readFile(process.argv[2],'utf8'));
+validateWorkspaceResult(fixture.payload);
+const assets=new AssetRegistry(fixture.transferRoot),payload=await assets.expose(fixture.payload);
+assert.equal('path' in payload.mri,false);
+assert.equal('path' in payload.workspaceSession.displaySeries[0].volume.mri,false);
+const v=await hydrateWorkspace(payload,{readAsset:id=>assets.read(id)});
+assert.equal(v.series.length,1);assert.equal(v.episodeView.episode.selector,'scripted');
+assert.equal(v.episodeView.frames.length,96);assert.equal(v.episodeStep,3);assert.equal(v.episodeVisible,false);
+assert.equal(v.imagingState.selectedSeriesId,v.series[0].descriptor.seriesId);
+assert.deepEqual(v.imagingState,payload.workspaceSession.imagingState);
+assert.equal(v.series[0].descriptor.registration.status,'unreviewed');
+assert.equal(v.series[0].descriptor.planningEligible,false);
+assert.equal(v.series[0].descriptor.annotationKind,'estimated');
+assert.equal(v.series[0].volume.compartments.length,1);
+assert.deepEqual(v.series[0].volume.shape,[4,5,6]);
+assert.equal(v.series[0].volume.affine[0][3],100);
+assert.equal(v.session.evidenceInventory[1].sourceKind,'estimated_annotation');
+assert.equal(v.session.evidenceInventory[1].planningInput,false);
+const aux=workspaceDisplay(v.volume,v.series[0]);assert.equal(aux.primaryOverlaysPermitted,false);assert.equal(aux.planningInteractionPermitted,false);
+const primary=workspaceDisplay(v.volume,null);assert.equal(primary.primaryOverlaysPermitted,true);
+const tool=recordedToolDisplay(primary.caseData,v.episodeView.frames[v.episodeStep]);
+assert.deepEqual(tool.tip,v.episodeView.episode.replayFrames[3].tipRasMm);
+assert.equal(v.episodeView.frames.at(-1).removedTargetVolumeMm3,2);
+assert.equal(v.episodeView.frames.at(-1).removedNormalVolumeMm3,3);
+process.stdout.write('Actual generated save/reopen -> host assets -> full replay checks -> distinct native source views passed\n');

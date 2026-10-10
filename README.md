@@ -28,8 +28,10 @@ inspecting evidence, comparing routes, refinement, replay and local saving.
 The [current development app](artifacts/integration-first-shared-episode-v1/RESULT.md)
 has been exercised on this Mac with generated sequential aspiration/probe episodes,
 exact full-tool replay, and public RESECT T1/FLAIR display in separate native frames.
-Additional images are display-only; opening them does not register them or make
-them policy inputs. A legacy trained actor runs through the shared backend, while
+The [saved workspace](artifacts/integrated-workspace-persistence-v1/RESULT.md) now
+retains those images, source frames, individual view settings and generated replay
+position across restarts. Additional images remain display-only; opening or saving
+them does not register them or make them policy inputs. A legacy trained actor runs through the shared backend, while
 the desktop episode selector currently offers scripted and SEARCH execution.
 The [matched generated search control](artifacts/shared-search-width4-generated-v1/RESULT.md)
 slightly outperforms that actor on one fixed task. No patient generalization is established.

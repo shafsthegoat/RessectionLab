@@ -118,6 +118,7 @@ export interface PriorLayerView {
 }
 
 export interface CasePayload {
+  workspaceSession?: import("./workspace-session-types").WorkspaceSessionPayload;
   caseId: string;
   caseHash: string;
   planningHash?: string;

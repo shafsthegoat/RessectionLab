@@ -459,13 +459,19 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
 def _read_bundle(path: str | Path) -> tuple[dict[str, Any], bytes]:
     try:
         with ZipFile(path, "r") as archive:
-            if sorted(archive.namelist()) != ["arrays.npz", "manifest.json"]:
-                raise ImagingError("INVALID_BUNDLE_MEMBERS", "Bundle must contain exactly manifest.json and arrays.npz.")
+            names=archive.namelist()
+            if sorted(names) != ["arrays.npz", "manifest.json"]:
+                if "workspace.json" not in names:
+                    raise ImagingError("INVALID_BUNDLE_MEMBERS", "Bundle must contain the case pair or a bounded workspace extension.")
+                from .workspace_bundle import extension_layout
+                extension_layout(archive)
             if archive.getinfo("manifest.json").file_size > 16 * 1024 * 1024:
                 raise ImagingError("BUNDLE_SIZE_LIMIT", "Manifest exceeds the 16 MiB local import limit.")
             if archive.getinfo("arrays.npz").file_size > 2 * 1024 ** 3:
                 raise ImagingError("BUNDLE_SIZE_LIMIT", "Array payload exceeds the 2 GiB local import limit.")
             manifest = json.loads(archive.read("manifest.json"))
+            if "workspace_sha256" in manifest and "workspace.json" not in names:
+                raise ImagingError("INVALID_BUNDLE_MEMBERS", "Bound workspace metadata is missing.")
             payload = archive.read("arrays.npz")
         if manifest.get("schema") != BUNDLE_SCHEMA:
             raise ImagingError("UNSUPPORTED_BUNDLE_VERSION", "This case uses an unsupported bundle schema.")

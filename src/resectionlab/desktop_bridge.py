@@ -12,7 +12,7 @@ from .data_policy import DataPolicyError, LEGACY_OPERATION_EXCLUSIONS, historica
 import argparse
 from collections import OrderedDict
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, replace
 import hashlib
 import hmac
 import json
@@ -194,6 +194,11 @@ class _CaseEntry:
     artifacts: Any
     routes: Any = None
     display_series: dict[str, dict] = field(default_factory=dict)
+    display_sources: dict[str, Any] = field(default_factory=dict)
+    imaging_state: dict | None = None
+    episode: dict | None = None
+    episode_selection: dict | None = None
+    workspace_hash: str | None = None
 
 
 @dataclass
@@ -304,19 +309,40 @@ class BridgeSession:
                 "source": item.source.to_dict(), "metadata": thaw_json(item.metadata),
                 "provenanceRecord": manifest}
 
-    def _install_case(self, case: CaseData, artifacts: dict, request: _Request) -> dict:
+    def _workspace_fields(self, case: CaseData, saved: dict | None) -> dict:
+        if saved is None:return {}
+        from .workspace_imaging import display_descriptor
+        try:
+            sources={source.identity(case):source for source in saved['sources']}
+            return {'display_sources':sources,'display_series':{key:display_descriptor(self,case,source) for key,source in sources.items()},
+                    'imaging_state':saved['imagingState'],'episode':saved['episode'],
+                    'episode_selection':saved['selection'],'workspace_hash':saved['sessionHash']}
+        except Exception:
+            self.prune_transfers()
+            raise
+
+    @staticmethod
+    def _workspace_payload(entry: _CaseEntry) -> dict:
+        if not (entry.display_sources or entry.episode or entry.imaging_state):return {}
+        from .workspace_bundle import session_descriptor
+        return {'workspaceSession':session_descriptor(entry)}
+
+    def _install_case(self, case: CaseData, artifacts: dict, request: _Request, *, workspace=None) -> dict:
         request.check()
         if case.mri.size * 4 > MAX_ARRAY_BYTES:
             raise BridgeError("ARRAY_SIZE_LIMIT", "Selected MRI is too large for this desktop view")
         if (len(case.compartments) > 32 or len(case.structural_evidence) > 8 or len(case.critical_evidence) > 3
                 or len(case.prior_proposals) > MAX_PRIOR_PROPOSALS or self._case_array_bytes(case) > MAX_CASE_BYTES):
             raise BridgeError("CASE_SIZE_LIMIT", "Expanded case arrays exceed the desktop cache limit")
+        restored=self._workspace_fields(case,workspace)
         if case.semantic_hash in self.cases:
-            entry = self.cases[case.semantic_hash]
+            entry=replace(self.cases[case.semantic_hash],artifacts=freeze_json(artifacts),**restored)
+            extra=self._workspace_payload(entry)
             request.begin_commit()
-            entry.artifacts = freeze_json(artifacts)
+            self.cases[case.semantic_hash]=entry
             self.cases.move_to_end(case.semantic_hash)
-            return {**entry.descriptor, "artifacts": self._display_artifacts(entry)}
+            self.prune_transfers()
+            return {**entry.descriptor,"artifacts":self._display_artifacts(entry),**extra}
         # Native voxels stay unchanged. The affine explicitly declares RAS or
         # LPS physical coordinates; renderers must respect that declaration.
         from .structural_evidence import planning_brain_support
@@ -363,13 +389,14 @@ class BridgeSession:
             "clinicalDeficitProbability": None, "clinicalRiskReason": "no_validated_clinical_outcome_model",
             "clinicalUseStatus": "research_only",
         }
+        entry = _CaseEntry(case, descriptor, freeze_json(artifacts),**restored)
+        extra=self._workspace_payload(entry)
         request.begin_commit()
-        entry = _CaseEntry(case, descriptor, freeze_json(artifacts))
         self.cases[case.semantic_hash] = entry
         while len(self.cases) > self.max_cases:
             self.cases.popitem(last=False)
         self.prune_transfers()
-        return {**descriptor, "artifacts": self._display_artifacts(entry)}
+        return {**descriptor, "artifacts": self._display_artifacts(entry),**extra}
 
     def prune_transfers(self) -> None:
         """Discard generated arrays belonging to failed or cancelled imports."""
@@ -910,7 +937,14 @@ class BridgeSession:
                                    sort_keys=True, separators=(",", ":"), allow_nan=False)
             if "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest() != episode.get("episodeId"):
                 raise BridgeError("EPISODE_DIGEST_MISMATCH", "Generated episode identity changed before publication")
-            return {"case": self._install_case(case, {}, request), "episode": episode, "episodeCanonicalJson": canonical}
+            installed=self._install_case(case, {}, request)
+            entry=self.cases[case.semantic_hash]
+            entry.episode=json.loads(json.dumps({'episode':episode,'episodeCanonicalJson':canonical}))
+            entry.episode_selection={'episodeId':episode['episodeId'],'frameIndex':0,'visible':True}
+            if entry.imaging_state is not None:
+                entry.imaging_state={**entry.imaging_state,'selectedSeriesId':None}
+            entry.workspace_hash=None
+            return {"case": {**installed,**self._workspace_payload(entry)}, "episode": episode, "episodeCanonicalJson": canonical}
         if operation == "createSyntheticCase":
             _keys(args, {"shape"})
             shape = args.get("shape", [64, 64, 64])
@@ -922,10 +956,12 @@ class BridgeSession:
             _keys(args, {"path"})
             path = _path(args.get("path"), kind="case")
             progress(0.1, "Checking saved imaging and source versions")
-            case = load_case(path)
+            from .workspace_bundle import load_workspace
+            case,artifacts,saved=load_workspace(path,cancelled=request.cancelled.is_set)
             request.check()
-            artifacts = read_case_artifacts(path)
-            return self._install_case(case, artifacts, request)
+            if saved is None:
+                saved={'sources':[],'imagingState':None,'episode':None,'selection':None,'sessionHash':None}
+            return self._install_case(case, artifacts, request,workspace=saved)
         if operation == "importDisplaySeries":
             from .workspace_imaging import import_display_series
             return import_display_series(self, args, request, progress)
@@ -1102,8 +1138,12 @@ class BridgeSession:
             workspace = args.get("workspace", {})
             if not isinstance(workspace, dict) or len(json.dumps(workspace, allow_nan=False).encode()) > MAX_WORKSPACE_BYTES:
                 raise BridgeError("INVALID_ARGUMENT", "Workspace must be a bounded JSON object")
-            if "routes" in workspace or "training_report" in workspace or "selection_replay" in workspace:
-                raise BridgeError("INVALID_ARGUMENT", "Evaluator results cannot be supplied by the renderer")
+            if set(workspace)&{'routes','training_report','selection_replay','episode','episodeCanonicalJson','workspaceSession','displaySeries','evidenceInventory'}:
+                raise BridgeError("INVALID_ARGUMENT", "Evaluator/source records cannot be supplied by the renderer")
+            from .workspace_bundle import save_workspace,view_state,replay_state
+            workspace=dict(workspace)
+            imaging=view_state(entry.case,list(entry.display_sources.values()),workspace.pop('imaging',entry.imaging_state))
+            selection=replay_state(entry.episode,workspace.pop('episodeReplay',entry.episode_selection))
             artifacts = thaw_json(entry.artifacts)
             prior_workspace = artifacts.get("workspace", {})
             if prior_workspace.get("case_hash") != entry.case.semantic_hash:
@@ -1117,11 +1157,14 @@ class BridgeSession:
             request.check()
             progress(0.2, "Saving imaging, source versions, and evaluated routes")
             with tempfile.TemporaryDirectory(prefix=".resection-save-", dir=destination.parent) as temporary:
-                staged = save_case(entry.case, Path(temporary) / "case.ressectionlab", artifacts=artifacts)
+                staged=Path(temporary)/'case.ressectionlab'
+                workspace_hash=save_workspace(entry.case,staged,sources=entry.display_sources.values(),
+                    imaging=imaging,episode=entry.episode,selection=selection,artifacts=artifacts)
                 request.begin_commit()
-                os.replace(staged, destination)
-            entry.artifacts = freeze_json(artifacts)
-            return {"caseHash": entry.case.semantic_hash, "path": str(destination), "saved": True}
+                os.replace(staged,destination)
+            entry.artifacts=freeze_json(artifacts);entry.imaging_state=imaging
+            entry.episode_selection=selection;entry.workspace_hash=workspace_hash
+            return {"caseHash":entry.case.semantic_hash,"path":str(destination),"saved":True,"sessionHash":workspace_hash}
         if operation in {"nativeTraining", "trainPatient"}:
             return self._train_patient(args, request, progress)
         if operation == "listRuns":

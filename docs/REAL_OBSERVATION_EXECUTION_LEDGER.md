@@ -795,3 +795,23 @@ The [test-only repair](../artifacts/shared-integration-fixture-repair-v1/RESULT.
 ### October 9: stronger matched observed search resolves the STOP diagnostic
 
 One [width-4 generated control](../artifacts/shared-search-width4-generated-v1/RESULT.md) uses the same source, native environment and initial permitted observation as the saved RL256 rollout. With all other configured search inputs unchanged, it retains all four initial prefixes, evaluates 15/24 transitions without pruning or caps, and selects a route scoring **1.100**, versus RL's saved 1.098. It removes the same two target and four other-tissue mm³ with a 10 mm rather than 12 mm complete tool path. The earlier width-2 STOP result remains preserved; its narrower beam discarded useful negative prefixes. The new observed-input baseline is separate from the older privileged complete-tree reference. Independent saved-record audit verifies all 22 motion microsteps, state chains and arithmetic without rerunning search. Supervision completes in 1.444 seconds at 235,945,984 sampled RSS bytes with clean reaping. This is a fixed generated-task diagnostic with zero new checkpoint loads, policy forwards or training, not unseen-patient evidence.
+
+
+### October 9: one saved multimodal workspace with exact generated replay
+
+The [persistence slice](../artifacts/integrated-workspace-persistence-v1/RESULT.md)
+now connects immutable source storage, separate native frames, per-image view
+state and backend-owned episode replay through native Save and fresh Mac app
+reopen. Canonical checks pass 55 backend/imaging and 310 desktop; the exact staged
+desktop builds. Independent review checked tampering, old-bundle state clearing,
+private-input separation and the complete asset/replay hydration path. Root
+exercised generated auxiliary-selected and visible frame-3 replay restarts, then
+public RESECT Case4 T1/FLAIR save/reopen. The 29,960,302-byte real bundle retains
+both images and unchanged primary identities; no array is committed. Largest
+sampled owned UI tree RSS was 1,132,740,608 bytes; all five sessions exited normally.
+A live navigation defect was fixed without weakening planning guards. Camera,
+contrast/layout persistence, registered fusion, anatomical orientation review,
+patient planning admission, mode-aware learned behavior and physical validation
+remain open. No policy update or clinical/generalization claim occurred. The next
+shared-system slice is post-seal vascular encounter accounting displayed on the
+same instrument episode; private annotations remain outside planning inputs.

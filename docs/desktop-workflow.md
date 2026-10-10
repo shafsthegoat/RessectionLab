@@ -2,6 +2,11 @@
 
 RessectionLab is a local research app. This guide follows the current Electron interface; [project status](../PROJECT_STATUS.md) and the [packaging records](electron-packaging.md) identify which app snapshots have been tested. A modeled geometry check does not establish clinical suitability.
 
+The [workspace persistence follow-up](../artifacts/integrated-workspace-persistence-v1/RESULT.md)
+passes 310 desktop and 55 relevant backend/imaging checks. Actual native Save and
+fresh-process reopen were checked for generated replay and public RESECT T1/FLAIR.
+Its exact staged desktop builds; the app has not been repackaged.
+
 The [October 9 shared-episode integration](../artifacts/integration-first-shared-episode-v1/RESULT.md)
 was built and exercised in the actual Electron app with generated replay and
 public RESECT T1/FLAIR display. Its exact staged desktop builds; the worktree
@@ -32,7 +37,12 @@ with aligned source-provided or estimated annotations. Select a modality and use
 **Inspect scan** to view each native grid. Source association, acquisition time,
 registration and annotation coverage remain unverified. Primary routes and
 simulation overlays are hidden while a separate grid is displayed. These
-attachments are session-only in this version; a save/reopen extension is in progress.
+attachments are now preserved by **Save**, together with their native frames,
+source/estimated label provenance, selected image, individual cursors and layer
+visibility. Reopening restores those settings without requiring the original
+image paths. Generated Episode history and its selected replay frame are also
+saved and revalidated. Camera pose, layout, contrast and global opacity are not
+persisted by this extension. See the [save/reopen checks](../artifacts/integrated-workspace-persistence-v1/RESULT.md).
 
 Check the loaded identifier in the fixed central header; it stays visible when the left panel scrolls and changes when another case opens. It identifies the research bundle, not a verified clinical patient match. The left panel shows the source badge, image dimensions and target annotation labels. **Inspect evidence** shows source provenance, transforms, unresolved inputs and any recorded annotation threshold. A public mirror remains identified as a mirror.
 

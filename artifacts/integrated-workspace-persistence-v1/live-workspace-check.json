@@ -1,0 +1,209 @@
+{
+  "schema": "workspace-live-observation-v1",
+  "method": "Root operated actual Electron via cua_repl; observations are manual, not an automated screenshot oracle.",
+  "observations": [
+    "Actual native Save wrote generated auxiliary-selected workspace; fresh app reopened MRA native grid 4x5x6, RAS 103/6/10 and source label visibility.",
+    "Switch to primary restored RAS6/6/4 and hidden target layer; Episode restored frame3/95; Show this episode rendered recorded tool at RAS6/6/2 with zero target and1mm3 other removal.",
+    "Actual Save with primary replay visible reopened directly to Episode frame3/95, same episode/source/state hashes and full tool.",
+    "Public RESECT Case4 primary T1 plus FLAIR imported through native chooser, saved through native Save; fresh app reopened FLAIR256x256x192 at RAS6.5/6.8/-33.3. Primary remains retained; source-reported distinct frames unregistered.",
+    "Navigation fix verified on actual selected FLAIR: Open case/Import MRI enabled when idle; both disabled during Save then reenabled.",
+    "Actual screenshots viewed for generated recorded replay and reopened real FLAIR; no screenshot file committed. The previously identified anatomical-orientation question remains unreviewed, not resolved by persistence."
+  ],
+  "sessions": [
+    {
+      "session": "generated-ui-first",
+      "elapsed_seconds": 173.160950666992,
+      "sampled_peak_tree_rss_bytes": 657227776,
+      "samples": 325,
+      "reason": null,
+      "exit_code": 0,
+      "worker_reaped": true,
+      "transient_peaks_and_gpu_memory_measured": false
+    },
+    {
+      "session": "generated-ui-reopen",
+      "elapsed_seconds": 49.79215129208751,
+      "sampled_peak_tree_rss_bytes": 601751552,
+      "samples": 94,
+      "reason": null,
+      "exit_code": 0,
+      "worker_reaped": true,
+      "transient_peaks_and_gpu_memory_measured": false
+    },
+    {
+      "session": "generated-ui-visible-reopen",
+      "elapsed_seconds": 14.846752292010933,
+      "sampled_peak_tree_rss_bytes": 668581888,
+      "samples": 28,
+      "reason": null,
+      "exit_code": 0,
+      "worker_reaped": true,
+      "transient_peaks_and_gpu_memory_measured": false
+    },
+    {
+      "session": "real-ui-save",
+      "elapsed_seconds": 76.25798483309336,
+      "sampled_peak_tree_rss_bytes": 1064468480,
+      "samples": 144,
+      "reason": null,
+      "exit_code": 0,
+      "worker_reaped": true,
+      "transient_peaks_and_gpu_memory_measured": false
+    },
+    {
+      "session": "real-ui-reopen",
+      "elapsed_seconds": 31.3040040419437,
+      "sampled_peak_tree_rss_bytes": 1132740608,
+      "samples": 59,
+      "reason": null,
+      "exit_code": 0,
+      "worker_reaped": true,
+      "transient_peaks_and_gpu_memory_measured": false
+    }
+  ],
+  "saved_bundles": [
+    {
+      "path": "build/integrated-workspace-persistence-root/generated-ui-saved.ressectionlab",
+      "bytes": 369731,
+      "sha256": "baf6c26ed20aabbb2a5ef292a6eea6669453ee9a5d0324057156bb7e3b23e163",
+      "referenceCaseHash": "sha256:6946fad14898d0040ad6f4b1368d52a54100d213d587e81dfa79eed82a22d6eb",
+      "primaryPlanningHash": "sha256:e6c31b59f7f65d10b2712c9650f66de6664cd67faf39effc3487e00c87b0a7ed",
+      "sessionHash": "sha256:af25418ef916ed84f1db13d985d3d9c526072ce4b46d34eb218adc9e35575020",
+      "images": [
+        {
+          "annotationKind": "estimated",
+          "modality": "MRA",
+          "scope": "display-only-native-grid",
+          "seriesId": "sha256:29d10f812ec2a5e71cc8933c48ef7d1fc2c9eb2a8185fe47ed4ad999952aab5b",
+          "sourceCaseHash": "sha256:0d25faa6c86b6e64cb5689d1751f2ac9cb710443bcd3b8dc0be088baeba2f47f",
+          "sourceFrameHash": "sha256:447975d37abaaf383844c124c38784a1f3d4e01a303f477a96f05c76fc02db22"
+        }
+      ],
+      "imagingState": {
+        "selectedSeriesId": "sha256:29d10f812ec2a5e71cc8933c48ef7d1fc2c9eb2a8185fe47ed4ad999952aab5b",
+        "states": {
+          "primary": {
+            "cursor": [
+              6,
+              6,
+              4
+            ],
+            "visibleLayers": {
+              "generated_nominal_target": false
+            }
+          },
+          "sha256:29d10f812ec2a5e71cc8933c48ef7d1fc2c9eb2a8185fe47ed4ad999952aab5b": {
+            "cursor": [
+              103,
+              6,
+              10
+            ],
+            "visibleLayers": {
+              "source_label_1": true
+            }
+          }
+        }
+      },
+      "episodeSelection": {
+        "episodeId": "sha256:cd8874c97a3847a1225e1b741f4b786b28783e1dbb3f749cb70162ca9538377d",
+        "frameIndex": 3,
+        "visible": false
+      }
+    },
+    {
+      "path": "build/integrated-workspace-persistence-root/generated-ui-visible.ressectionlab",
+      "bytes": 369661,
+      "sha256": "facd9c6ad102f00d22efa90806cad569d8c36846d5f4458da03a76a1a5acdd52",
+      "referenceCaseHash": "sha256:6946fad14898d0040ad6f4b1368d52a54100d213d587e81dfa79eed82a22d6eb",
+      "primaryPlanningHash": "sha256:e6c31b59f7f65d10b2712c9650f66de6664cd67faf39effc3487e00c87b0a7ed",
+      "sessionHash": "sha256:4e0dc09ee69979f8767084084d46aab88f289a7ace3e5dea3e96e32e64e7646e",
+      "images": [
+        {
+          "annotationKind": "estimated",
+          "modality": "MRA",
+          "scope": "display-only-native-grid",
+          "seriesId": "sha256:29d10f812ec2a5e71cc8933c48ef7d1fc2c9eb2a8185fe47ed4ad999952aab5b",
+          "sourceCaseHash": "sha256:0d25faa6c86b6e64cb5689d1751f2ac9cb710443bcd3b8dc0be088baeba2f47f",
+          "sourceFrameHash": "sha256:447975d37abaaf383844c124c38784a1f3d4e01a303f477a96f05c76fc02db22"
+        }
+      ],
+      "imagingState": {
+        "selectedSeriesId": null,
+        "states": {
+          "primary": {
+            "cursor": [
+              6,
+              6,
+              4
+            ],
+            "visibleLayers": {
+              "generated_nominal_target": false
+            }
+          },
+          "sha256:29d10f812ec2a5e71cc8933c48ef7d1fc2c9eb2a8185fe47ed4ad999952aab5b": {
+            "cursor": [
+              103,
+              6,
+              10
+            ],
+            "visibleLayers": {
+              "source_label_1": true
+            }
+          }
+        }
+      },
+      "episodeSelection": {
+        "episodeId": "sha256:cd8874c97a3847a1225e1b741f4b786b28783e1dbb3f749cb70162ca9538377d",
+        "frameIndex": 3,
+        "visible": true
+      }
+    },
+    {
+      "path": "build/integrated-workspace-persistence-root/resect-case4-ui-workspace.ressectionlab",
+      "bytes": 29960302,
+      "sha256": "81e32ed25b309a36c4b25b371679c3adcad286f0ec666ba487c130896aeb8e44",
+      "referenceCaseHash": "sha256:0b340accf802a857e1a97d59779fae2f31756874157f0063b589e2b36742f559",
+      "primaryPlanningHash": "sha256:b6a8a34ddcebbe2de58da060e93efa278f1b784ac3205a21d3ee6378cd040359",
+      "sessionHash": "sha256:892c63d67f61cf5abc87af75d3378ae9fe83b8666abcf9588f430083d8aa703a",
+      "images": [
+        {
+          "annotationKind": "none",
+          "modality": "FLAIR",
+          "scope": "display-only-native-grid",
+          "seriesId": "sha256:7d92fdf0a1fea5b97292f38eeea489681794fdce13d57e228762c9a8492150ed",
+          "sourceCaseHash": "sha256:6a144a7ce098785c3c96bd46f8324e6cff09e095ff611b27d23ad03d8483f7c8",
+          "sourceFrameHash": "sha256:3698c9abdf0d3669f43bbe32a70b67acb446c574bb932d0634ece2102657aaf6"
+        }
+      ],
+      "imagingState": {
+        "selectedSeriesId": "sha256:7d92fdf0a1fea5b97292f38eeea489681794fdce13d57e228762c9a8492150ed",
+        "states": {
+          "primary": {
+            "cursor": [
+              8.39265143405646,
+              7.241630211530719,
+              -27.87478011293848
+            ],
+            "visibleLayers": {}
+          },
+          "sha256:7d92fdf0a1fea5b97292f38eeea489681794fdce13d57e228762c9a8492150ed": {
+            "cursor": [
+              6.503605268895626,
+              6.817932192236185,
+              -33.26148507464677
+            ],
+            "visibleLayers": {}
+          }
+        }
+      },
+      "episodeSelection": null
+    }
+  ],
+  "limits": [
+    "Development Electron source, not a newly packaged signed app.",
+    "Patient arrays and generated bundle bytes remain outside Git.",
+    "Saved workspace is display/replay storage, not anatomical or physical validation.",
+    "No training, model forward, patient planning, private outcome evaluation or patient role changes in this slice.",
+    "GPU memory and sub-sample transient RSS peaks not measured."
+  ]
+}
