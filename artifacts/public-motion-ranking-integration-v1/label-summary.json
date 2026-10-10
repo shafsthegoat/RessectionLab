@@ -1,0 +1,44 @@
+{
+  "added_arrays_or_policy_input_channels": 0,
+  "cases": [
+    {
+      "exact_tied_motion_pairs": 0,
+      "legal_score_rows": 22,
+      "motion_states": 0,
+      "states": 1,
+      "strict_motion_pairs_per_update": 0,
+      "subject": "ReMIND-002"
+    },
+    {
+      "exact_tied_motion_pairs": 871,
+      "legal_score_rows": 271,
+      "motion_states": 13,
+      "states": 14,
+      "strict_motion_pairs_per_update": 2516,
+      "subject": "ReMIND-015"
+    },
+    {
+      "exact_tied_motion_pairs": 0,
+      "legal_score_rows": 18,
+      "motion_states": 0,
+      "states": 1,
+      "strict_motion_pairs_per_update": 0,
+      "subject": "ReMIND-018"
+    },
+    {
+      "exact_tied_motion_pairs": 348,
+      "legal_score_rows": 221,
+      "motion_states": 12,
+      "states": 13,
+      "strict_motion_pairs_per_update": 2454,
+      "subject": "ReMIND-045"
+    }
+  ],
+  "corpus_hash": "sha256:5147c784a1e4aee38ffd2cf95881c40914f9807727d54eeaa4dce618100da0be",
+  "fixed_updates": 64,
+  "loss_forwards_per_update": 29,
+  "new_native_previews_for_labels": 0,
+  "scope": "metadata joins only; no new scientific execution",
+  "states": 29,
+  "strict_motion_pairs_per_update": 4970
+}

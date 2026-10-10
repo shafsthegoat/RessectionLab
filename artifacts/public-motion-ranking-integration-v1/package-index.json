@@ -1,0 +1,130 @@
+{
+  "status": "217_canonical_controls_passed_patient_training_pending",
+  "files": [
+    {
+      "source": "build/public-motion-ranking-v1/HANDOFF.txt",
+      "packaged": "HANDOFF.txt",
+      "bytes": 7429,
+      "sha256": "55092cecd8dc271d74edd30ece11c6b2b53201a0ca8e017dd7edc7d4a0997f6a"
+    },
+    {
+      "source": "build/public-motion-ranking-v1/promotion-index.json",
+      "packaged": "promotion-index.json",
+      "bytes": 2427,
+      "sha256": "0453797402c940bc3f7382d18186c194c83876512642f8b8b3163c413132625f"
+    },
+    {
+      "source": "build/public-motion-ranking-v1/prepare_saved_labels.py",
+      "packaged": "prepare_saved_labels.py",
+      "bytes": 6101,
+      "sha256": "637d5f5cbf5bae78e7fa4044dc38e51acb89fd1c780ec3c60186dbcc1cd52a45"
+    },
+    {
+      "source": "build/public-motion-ranking-v1/input-pins.json",
+      "packaged": "input-pins.json",
+      "bytes": 3147,
+      "sha256": "7048bbb3e64b5d36e3429da690e37093bf141b9f49625f4b5f500f0f36a50665"
+    },
+    {
+      "source": "build/public-motion-ranking-v1/label-summary.json",
+      "packaged": "label-summary.json",
+      "bytes": 1179,
+      "sha256": "8571e0f16520fa72662a4d66d7f9ac41cb08939cd360f17542e0798428a0013e"
+    },
+    {
+      "source": "build/public-motion-ranking-v1/public-score-corpus.json",
+      "packaged": "public-score-corpus.json",
+      "bytes": 69794,
+      "sha256": "d4c9ade78e50171544ebc9076a6332d864586bdf3cfdd334944be058486781a4"
+    },
+    {
+      "source": "build/public-motion-ranking-v1/motion-reward-spreads.json",
+      "packaged": "motion-reward-spreads.json",
+      "bytes": 5275,
+      "sha256": "15ae9eb0187727c8e90d309627285ad7662c9c77b624ffd67b977b8da820a08b"
+    },
+    {
+      "source": "build/public-motion-ranking-v1/canonical-attempt-01.xml",
+      "packaged": "canonical-attempt-01.xml",
+      "bytes": 31327,
+      "sha256": "ff24fc7fe69ffa334aab549e2507580d89b66f3f31bbf049e55a5b7f07d43c17"
+    },
+    {
+      "source": "build/public-motion-ranking-v1/canonical-attempt-01.log",
+      "packaged": "canonical-attempt-01.log",
+      "bytes": 340,
+      "sha256": "f5c802675dab45ec5348637a82539bfe4400646c9b6f7bd61a2170b2d066a5a7"
+    },
+    {
+      "source": "build/public-motion-ranking-v1/generated-attempt-01/receipt.json",
+      "packaged": "generated-attempt-01/receipt.json",
+      "bytes": 3550,
+      "sha256": "f5964aa5a451d57dfca5529b1149ac37ca5bfdbd995b9d59ad5ea2129bd97940"
+    },
+    {
+      "source": "build/public-motion-ranking-v1/generated-attempt-01/tests.log",
+      "packaged": "generated-attempt-01/tests.log",
+      "bytes": 2270,
+      "sha256": "09acbbd0c7528a0ab9f6a0bf2415125954578f0a2c163a9d6b869013e839d0c9"
+    },
+    {
+      "source": "build/public-motion-ranking-v1/generated-attempt-02/receipt.json",
+      "packaged": "generated-attempt-02/receipt.json",
+      "bytes": 3297,
+      "sha256": "1ffe63efd3f17fb3e478c7211f1e4e597562db2c7a76b72fd4c09b1201bdbac5"
+    },
+    {
+      "source": "build/public-motion-ranking-v1/generated-attempt-02/tests.log",
+      "packaged": "generated-attempt-02/tests.log",
+      "bytes": 98,
+      "sha256": "c3015b35bbe497af98bf5a2b3ceb02f809f7f7feb0377d20d0fae299787ed553"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-v1/pilot_contract.py",
+      "packaged": "runner/pilot_contract.py",
+      "bytes": 29848,
+      "sha256": "130be4f52979eb40a0919492a806eb4b2a71e6f76b2ba1173065677492a1fa58"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-v1/cohort_worker.py",
+      "packaged": "runner/cohort_worker.py",
+      "bytes": 29423,
+      "sha256": "9e626dd6fc565ccf023abf0cd6b4539aeac6e1d5d7c2ec9a37cf50f53a139f9d"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-v1/run_owned.py",
+      "packaged": "runner/run_owned.py",
+      "bytes": 13169,
+      "sha256": "fe497e162411919ff49d889fed1264ea15004fad52230c0effb6c56a84089806"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-v1/freeze-runtime.py",
+      "packaged": "runner/freeze-runtime.py",
+      "bytes": 8017,
+      "sha256": "8336b98b797e1587efdfa467eab1bf81c58adcdc544ed5d4548d345728910544"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-v1/test_driver_scalar.py",
+      "packaged": "runner/test_driver_scalar.py",
+      "bytes": 2408,
+      "sha256": "5c2493459d898aa37cee903d63f6685debcdec817309f93a1d4c095f628591dc"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-v1/HANDOFF.txt",
+      "packaged": "runner/HANDOFF.txt",
+      "bytes": 4545,
+      "sha256": "261ef90cc6b1c8af165f193f9445417e79c24364a4f8d68cbbae0ce159ad3c9c"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-v1/source-pins.json",
+      "packaged": "runner/source-pins.json",
+      "bytes": 1233,
+      "sha256": "22556f6489028da6a99586a237f5f6857824bb1efa5822ae45ebce22e4014689"
+    }
+  ],
+  "arrays_or_checkpoint_weights_included": false,
+  "numerical_intervention": "conditional_motion_winner_CE_to_public_gap_ranking_only",
+  "tests_passed": 217,
+  "tests_skipped": 0,
+  "driver_independent_source_review": "GO: sole ranking objective, exact original initialization/29states/64updates, measured pair accounting, all four complete outcomes required without favorable result gate; generic SELECT API remains protocol aware, owned run closes SELECT/EVAL."
+}

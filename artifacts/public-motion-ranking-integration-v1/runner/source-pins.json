@@ -1,0 +1,37 @@
+{
+  "driver_patch_sha256": "5fb3b7e7f9c4701270a855c046ec4970696a0091ae5a0a1fbcd6e26a4ea3ea2d",
+  "files": {
+    "HANDOFF.txt": {
+      "bytes": 4545,
+      "sha256": "261ef90cc6b1c8af165f193f9445417e79c24364a4f8d68cbbae0ce159ad3c9c"
+    },
+    "cohort_worker.py": {
+      "bytes": 29423,
+      "sha256": "9e626dd6fc565ccf023abf0cd6b4539aeac6e1d5d7c2ec9a37cf50f53a139f9d"
+    },
+    "freeze-runtime.py": {
+      "bytes": 8017,
+      "sha256": "8336b98b797e1587efdfa467eab1bf81c58adcdc544ed5d4548d345728910544"
+    },
+    "pilot_contract.py": {
+      "bytes": 29848,
+      "sha256": "130be4f52979eb40a0919492a806eb4b2a71e6f76b2ba1173065677492a1fa58"
+    },
+    "prepare_driver.py": {
+      "bytes": 20944,
+      "sha256": "a60a44bb505e0293b2502d4e3198cee4a99fd202e9bc2e4ba464b2728afa8c47"
+    },
+    "run_owned.py": {
+      "bytes": 13169,
+      "sha256": "fe497e162411919ff49d889fed1264ea15004fad52230c0effb6c56a84089806"
+    },
+    "test_driver_scalar.py": {
+      "bytes": 2408,
+      "sha256": "5c2493459d898aa37cee903d63f6685debcdec817309f93a1d4c095f628591dc"
+    }
+  },
+  "patient_or_model_execution": false,
+  "status": "source_only_not_frozen_or_released",
+  "supervisor_byte_identical_to_original": true,
+  "tests": "unrun"
+}

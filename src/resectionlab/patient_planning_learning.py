@@ -165,6 +165,8 @@ class PatientTrainSession:
             raise ValueError("One context per canonical patient in a learning session")
         if type(policy) is not SpatialPolicy or method not in ("IL", "RL"):
             raise ValueError("Existing spatial architecture and IL/RL method required")
+        if method != 'IL' and self.protocol.get('cohort_execution', {}).get('il_motion_supervision') is not None:
+            raise ValueError('Public motion ranking is an IL-only contrast, not fresh RL data')
         expected = _INITIALIZATIONS.pop(policy, None)
         if expected != (initial_parameter_hash, policy.architecture_hash,
                 semantic_digest(self.protocol), tuple(c.fingerprint for c in self.contexts)) or parameter_hash(policy) != initial_parameter_hash:
@@ -236,6 +238,8 @@ groups must exist before loss/gradient work. No logits or inference masks change
 def patient_imitation_loss(session, samples):
     if type(session) is not PatientTrainSession:
         raise TypeError("Exact patient learning session required")
+    if session.protocol.get('cohort_execution', {}).get('il_motion_supervision') is not None:
+        raise ValueError('Ranking requires complete score-bound accumulation, not winner-only sample loss')
     session.require("IL"); samples = tuple(samples)
     if not samples: raise ValueError("Empty patient imitation batch")
     balanced = session.protocol.get('cohort_execution', {}).get('il_teacher_weighting') is not None

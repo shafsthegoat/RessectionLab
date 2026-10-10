@@ -1,0 +1,32 @@
+One opt-in public motion-ranking objective, October 10
+
+Failure addressed: original imitation used24 movements to remove the same51
+target cells as the12-movement teacher onTRAIN045; scratchRL additionally failed
+discretionary stopping and ranked none of25 teacher motions first. This contrast
+uses the same four TRAIN subjects,29 teacher observations and fixed64 updates.
+It changes conditional winner cross-entropy into normalized public immediate-
+reward-gap pair ranking. STOP cross-entropy and the motion gate keep their
+original direct expressions and balanced weighting. Shared gradients change;
+stopping behavior is not guaranteed unchanged. No actor input, model architecture,
+reward, world, tool, action inventory or private-reference label is added.
+
+The prior saved public greedy score vectors supply532 legal scalar scores and
+4,970 ordered motion pairs per update. Pair weights are relative within a state;
+all25 motion states have substantive reward spread. Labels never enter forward
+inputs. Corpus identity joins the exact complete replayed teacher observations.
+The old protocol is unchanged when the option is absent. New checkpoints bind
+the full new protocol; they cannot be represented as the original objective.
+Generic SELECT APIs are protocol-aware; the existing owned SELECT comparison
+pins original endpoints, and this new owned training experiment closes SELECT/EVAL.
+
+Canonical integration and scalar driver checks:217 passed in8.13s, no skips.
+Coverage includes STOP expression and ordering gradients, ties/masks, exact
+legacy behavior, cache/gradient/checkpoint parity, role/source mismatches and
+a generated accumulated update. Earlier staged test-only float-equality failure
+and its corrected targeted check remain preserved; this final suite passed.
+
+Success requires better complete action/path/tool efficiency while retaining
+target outcomes and appropriate STOP on002/018. Teacher ranking alone is not
+adequate. A single64-update experiment is prepared; no new model result is claimed.
+SELECT013 construction failed before inference and supplied no tuning scores.
+Physics, source occupancy and functional/vascular evidence remain unvalidated.

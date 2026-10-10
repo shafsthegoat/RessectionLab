@@ -1,0 +1,45 @@
+{
+  "acquired_array_reads": 0,
+  "canonical_writes": false,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-c",
+    "/dev/null",
+    "--rootdir=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/public-motion-ranking-v1/generated-attempt-01/overlay",
+    "tests/test_public_motion_ranking.py",
+    "tests/test_post_exposure_learning.py::test_exact29_cache_fresh_common_policy_and_readable_checkpoint",
+    "tests/test_patient_cohort_sequential.py::test_pinned_weight_roundtrip_preserves_old_and_new_protocols",
+    "tests/test_patient_teacher_trace_cache.py::test_two_updates_exact_gradients_parameters_and_Adam_state",
+    "--junitxml=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/public-motion-ranking-v1/generated-attempt-01/tests.xml"
+  ],
+  "released_checkpoint_reads": 0,
+  "returncode": 1,
+  "scope": "generated DTO/format/loss/optimizer and tiny synthetic admission controls only",
+  "source_hashes_after": {
+    "build/public-motion-ranking-v1/stage/resectionlab/patient_planning_accumulation.py": "2fc5d6a14f9de3176d4ef75d5a58f5b075b15f861d6282ed2e97705da1f17307",
+    "build/public-motion-ranking-v1/stage/resectionlab/patient_planning_cohort_spec.py": "9ae21d7bb7e437464e46e5e805ef7ea84e9675e5dd90e7b8149821c06f92a3a4",
+    "build/public-motion-ranking-v1/stage/resectionlab/patient_planning_learning.py": "9ea8387ef825051e0a6ba0c34bcbb3f15866615da2f8ea479068a44a28d36e87",
+    "build/public-motion-ranking-v1/stage/resectionlab/public_motion_ranking.py": "fa5f25a3a35743000936c1e8422ebce34db7446966bf76cbacd6f4f6a99b3dcc",
+    "build/public-motion-ranking-v1/stage/tests/test_public_motion_ranking.py": "41ba397b26331e0f106e06f618a083667bc554fbb3d17f8e2613bc697654c65d",
+    "src/resectionlab/patient_planning_accumulation.py": "cebdcff7fe69ce7cb3c54e5e3c309b2a80a0550c5c43c12fe5eedf68008bf27b",
+    "src/resectionlab/patient_planning_cohort_spec.py": "37b2f9d49df322fb27eb4c4090a32126b50255d8d29c8e9a36dfa536eebe5b10",
+    "src/resectionlab/patient_planning_learning.py": "0185544a4484a0c1c2b7e49fa3adda75fc31abb636d8956e65dfb4643e4c29f0"
+  },
+  "source_hashes_before": {
+    "build/public-motion-ranking-v1/stage/resectionlab/patient_planning_accumulation.py": "2fc5d6a14f9de3176d4ef75d5a58f5b075b15f861d6282ed2e97705da1f17307",
+    "build/public-motion-ranking-v1/stage/resectionlab/patient_planning_cohort_spec.py": "9ae21d7bb7e437464e46e5e805ef7ea84e9675e5dd90e7b8149821c06f92a3a4",
+    "build/public-motion-ranking-v1/stage/resectionlab/patient_planning_learning.py": "9ea8387ef825051e0a6ba0c34bcbb3f15866615da2f8ea479068a44a28d36e87",
+    "build/public-motion-ranking-v1/stage/resectionlab/public_motion_ranking.py": "fa5f25a3a35743000936c1e8422ebce34db7446966bf76cbacd6f4f6a99b3dcc",
+    "build/public-motion-ranking-v1/stage/tests/test_public_motion_ranking.py": "41ba397b26331e0f106e06f618a083667bc554fbb3d17f8e2613bc697654c65d",
+    "src/resectionlab/patient_planning_accumulation.py": "cebdcff7fe69ce7cb3c54e5e3c309b2a80a0550c5c43c12fe5eedf68008bf27b",
+    "src/resectionlab/patient_planning_cohort_spec.py": "37b2f9d49df322fb27eb4c4090a32126b50255d8d29c8e9a36dfa536eebe5b10",
+    "src/resectionlab/patient_planning_learning.py": "0185544a4484a0c1c2b7e49fa3adda75fc31abb636d8956e65dfb4643e4c29f0"
+  },
+  "status": "failed",
+  "threads": 1,
+  "wall_limit_seconds": 30,
+  "wall_seconds": 2.250111
+}

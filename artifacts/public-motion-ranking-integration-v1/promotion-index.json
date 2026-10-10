@@ -1,0 +1,49 @@
+{
+  "files": [
+    {
+      "base_sha256": "cebdcff7fe69ce7cb3c54e5e3c309b2a80a0550c5c43c12fe5eedf68008bf27b",
+      "bytes": 15342,
+      "destination": "src/resectionlab/patient_planning_accumulation.py",
+      "sha256": "2fc5d6a14f9de3176d4ef75d5a58f5b075b15f861d6282ed2e97705da1f17307",
+      "staged": "build/public-motion-ranking-v1/stage/resectionlab/patient_planning_accumulation.py"
+    },
+    {
+      "base_sha256": "37b2f9d49df322fb27eb4c4090a32126b50255d8d29c8e9a36dfa536eebe5b10",
+      "bytes": 14997,
+      "destination": "src/resectionlab/patient_planning_cohort_spec.py",
+      "sha256": "9ae21d7bb7e437464e46e5e805ef7ea84e9675e5dd90e7b8149821c06f92a3a4",
+      "staged": "build/public-motion-ranking-v1/stage/resectionlab/patient_planning_cohort_spec.py"
+    },
+    {
+      "base_sha256": "0185544a4484a0c1c2b7e49fa3adda75fc31abb636d8956e65dfb4643e4c29f0",
+      "bytes": 19661,
+      "destination": "src/resectionlab/patient_planning_learning.py",
+      "sha256": "e4d73d3286799cfb78bf415f85b2275ab7dbb60c051fbf683c2e96ca4967e90f",
+      "staged": "build/public-motion-ranking-v1/stage/resectionlab/patient_planning_learning.py"
+    },
+    {
+      "base_sha256": null,
+      "bytes": 8922,
+      "destination": "src/resectionlab/public_motion_ranking.py",
+      "sha256": "46ff5677029683c9cc52aebabebc9ab49c594afe5bf3aa0550ecaf0a98f53085",
+      "staged": "build/public-motion-ranking-v1/stage/resectionlab/public_motion_ranking.py"
+    },
+    {
+      "base_sha256": null,
+      "bytes": 10577,
+      "destination": "tests/test_public_motion_ranking.py",
+      "sha256": "981305a7ef554bba9ace133a536a2fd07299840769a5f6362b98d22fdfcbc7d4",
+      "staged": "build/public-motion-ranking-v1/stage/tests/test_public_motion_ranking.py"
+    }
+  ],
+  "generated_evidence": [
+    "generated-attempt-01/receipt.json",
+    "generated-attempt-01/tests.log",
+    "generated-attempt-02/receipt.json",
+    "generated-attempt-02/tests.log"
+  ],
+  "label_corpus_hash": "sha256:5147c784a1e4aee38ffd2cf95881c40914f9807727d54eeaa4dce618100da0be",
+  "patch_sha256": "e30a52b85a9df3d9ff0963bca471ab8122589c2379e13f0ce8164ebc0c52d320",
+  "post_test_source_review": "Restored original invalid-session type guard ordering; clarified relative-only gap weighting and masked-logit precondition. No numerical loss/forward/optimizer change or further execution.",
+  "scope": "source/test proposal only; no canonical or training release"
+}

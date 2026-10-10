@@ -16,12 +16,21 @@ from .spatial_policy import parameter_hash
 
 
 class PatientGradientAccumulator:
-    def __init__(self, session, *, teacher_pins=None, rl_diagnostics=False):
+    def __init__(self, session, *, teacher_pins=None, rl_diagnostics=False, motion_ranking=None):
         if type(session) is not PatientTrainSession:
             raise TypeError('Exact admitted patient learning session required')
         session.require(session.method)
         if type(rl_diagnostics) is not bool or (rl_diagnostics and session.method != 'RL'):
             raise ValueError('RL decision diagnostics require an explicit boolean and an RL session')
+        self.motion_ranking = motion_ranking
+        ranking_spec = session.protocol.get('cohort_execution', {}).get('il_motion_supervision')
+        if ranking_spec is not None:
+            from .public_motion_ranking import PublicMotionRankingCorpus
+            if (session.method != 'IL' or type(motion_ranking) is not PublicMotionRankingCorpus
+                    or motion_ranking.require().fingerprint != ranking_spec['corpus_hash']):
+                raise ValueError('Exact protocol-bound public motion score corpus required')
+        elif motion_ranking is not None:
+            raise ValueError('Ranking labels need explicit prospective protocol opt-in')
         self.rl_diagnostics = rl_diagnostics
         if session._permit is not None:
             raise ValueError('An admitted loss or accumulation already owns this update')
@@ -100,6 +109,8 @@ remain until finish. Reconstructed teachers must match the initial trace seal.
                     raise ValueError('Reconstructed complete teacher differs from its frozen plan')
                 if self.balanced and sum(row.action_id == 'STOP' for row in trace.transitions) != pin['stop_steps']:
                     raise ValueError('Reconstructed complete teacher STOP count differs from its pin')
+                ranking_rows = (None if self.motion_ranking is None
+                                else self.motion_ranking.require_trace(trace))
                 targets = [None]*count
             else:
                 if trace.behavior_parameter_hash != self.before:
@@ -116,8 +127,15 @@ remain until finish. Reconstructed teachers must match the initial trace seal.
                 logits, value = self.session.policy(row.observation)
                 index = _index(row.observation, row.action_id)
                 if self.session.method == 'IL':
-                    term = (-logits.log_softmax(-1)[index]*self.group_weights['STOP' if row.action_id=='STOP' else 'motion']
-                            if self.balanced else -logits.log_softmax(-1)[index]/self.action_count)
+                    if self.motion_ranking is not None:
+                        from .public_motion_ranking import motion_ranking_loss
+                        labels = ranking_rows[step]
+                        term = motion_ranking_loss(logits, action_ids=labels['action_ids'],
+                            action_mask=labels['action_mask'], rewards=labels['rewards'],
+                            teacher_action=row.action_id)*self.group_weights['STOP' if row.action_id=='STOP' else 'motion']
+                    else:
+                        term = (-logits.log_softmax(-1)[index]*self.group_weights['STOP' if row.action_id=='STOP' else 'motion']
+                                if self.balanced else -logits.log_softmax(-1)[index]/self.action_count)
                 else:
                     distribution = torch.distributions.Categorical(logits=logits)
                     actor = -(self.session.protocol['gamma']**step)*distribution.log_prob(
@@ -209,7 +227,11 @@ remain until finish. Reconstructed teachers must match the initial trace seal.
                 'patient_adaptation': False, 'loss': self.loss,
                 'loss_forward_calls': sum(r['steps'] for r in self.rows),
                 'actor_loss': self.actor, 'value_loss': self.value, 'entropy': self.entropy,
-                'IL_reduction': 'balanced_STOP_motion_CE_v1' if self.balanced else 'mean_all_teacher_actions',
+                'IL_reduction': ('balanced_STOP_gate_public_nominal_motion_gap_ranking_v1' if self.motion_ranking is not None
+                    else 'balanced_STOP_motion_CE_v1' if self.balanced else 'mean_all_teacher_actions'),
+                **({'public_motion_ranking_corpus_hash': self.motion_ranking.fingerprint,
+                    'supervision': 'saved_public_nominal_scores_training_only_no_added_forwards_or_previews'}
+                   if self.motion_ranking is not None else {}),
                 **({'teacher_group_counts': self.group_counts,
                     'teacher_group_weights': self.group_weights} if self.balanced else {}),
                 'RL_reduction': 'mean_episodes_of_actor_sum_and_value_entropy_step_means',

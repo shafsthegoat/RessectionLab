@@ -1,0 +1,25 @@
+.F..................                                                     [100%]
+=================================== FAILURES ===================================
+_______ test_motion_gate_preserves_STOP_gradient_and_STOP_rows_exact_CE ________
+
+    def test_motion_gate_preserves_STOP_gradient_and_STOP_rows_exact_CE():
+        z=torch.tensor([-.3,.2,-.4,1.1],dtype=torch.float64,requires_grad=True)
+        new=loss(z);old=-z.log_softmax(-1)[1]
+        gn=torch.autograd.grad(new,z,retain_graph=True)[0];go=torch.autograd.grad(old,z)[0]
+        assert torch.allclose(gn[0],go[0],atol=1e-15,rtol=0)
+        stop=loss(z,teacher='STOP');assert torch.equal(stop,-z.log_softmax(-1)[0])
+>       assert torch.equal(torch.autograd.grad(stop,z)[0],torch.softmax(z.detach(),0)-torch.tensor([1.,0.,0.,0.]))
+E       assert False
+E        +  where False = <built-in method equal of type object at 0x10eff53a0>(tensor([-0.8686,  0.2167,  0.1189,  0.5330], dtype=torch.float64), (tensor([0.1314, 0.2167, 0.1189, 0.5330], dtype=torch.float64) - tensor([1., 0., 0., 0.])))
+E        +    where <built-in method equal of type object at 0x10eff53a0> = torch.equal
+E        +    and   tensor([0.1314, 0.2167, 0.1189, 0.5330], dtype=torch.float64) = <built-in method softmax of type object at 0x10eff53a0>(tensor([-0.3000,  0.2000, -0.4000,  1.1000], dtype=torch.float64), 0)
+E        +      where <built-in method softmax of type object at 0x10eff53a0> = torch.softmax
+E        +      and   tensor([-0.3000,  0.2000, -0.4000,  1.1000], dtype=torch.float64) = <built-in method detach of Tensor object at 0x11255bed0>()
+E        +        where <built-in method detach of Tensor object at 0x11255bed0> = tensor([-0.3000,  0.2000, -0.4000,  1.1000], dtype=torch.float64,\n       requires_grad=True).detach
+E        +    and   tensor([1., 0., 0., 0.]) = <built-in method tensor of type object at 0x10eff53a0>([1.0, 0.0, 0.0, 0.0])
+E        +      where <built-in method tensor of type object at 0x10eff53a0> = torch.tensor
+
+tests/test_public_motion_ranking.py:52: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_public_motion_ranking.py::test_motion_gate_preserves_STOP_gradient_and_STOP_rows_exact_CE
+1 failed, 19 passed in 1.91s

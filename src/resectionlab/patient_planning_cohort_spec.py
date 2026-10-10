@@ -24,7 +24,7 @@ CLOSED = {'SELECT': ('ReMIND-013', 'ReMIND-037'), 'EVAL': ('ReMIND-067',)}
 def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
         retention_mode='return_plus_opening_depth_v1', il_teacher_weighting=None,
         teacher_observations=RECOLLECT_TEACHERS, teacher_cache_payload_bytes=None, occupancy_condition=None,
-        post_exposure_condition=None):
+        post_exposure_condition=None, il_motion_supervision=None):
     from .patient_planning_learning import PREFLIGHT_PROTOCOL
     # The sole longer endpoint is a fixed balanced-teacher optimization contrast.
     # Existing 1..8 protocols retain their exact records and bounds.
@@ -69,6 +69,13 @@ def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
                 or proposal_config.obstruction_opening is not True
                 or proposal_config.max_candidates != 120 or max_steps != 24):
             raise ValueError('Only explicit old-four TRAIN S-union-T obstruction h24/cap120 learning is admitted')
+    if il_motion_supervision is not None:
+        from .public_motion_ranking import supervision_record
+        if (post_exposure_condition is None or updates != 64
+                or il_teacher_weighting != BALANCED_TEACHER_CE
+                or semantic_digest(il_motion_supervision) != semantic_digest(
+                    supervision_record(il_motion_supervision.get('corpus_hash')))):
+            raise ValueError('Ranking requires exact new-four IL64 public teacher corpus')
     candidates = proposal_config.max_candidates
     search = thaw_json(freeze_json(search))
     if (set(search) != {'max_calls', 'beam_width', 'seconds'}
@@ -104,6 +111,8 @@ def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
         record['cohort_execution']['il_teacher_weighting'] = il_teacher_weighting
     if teacher_observations == CACHED_TEACHERS:
         record['cohort_execution']['teacher_cache_payload_bytes'] = teacher_cache_payload_bytes
+    if il_motion_supervision is not None:
+        record['cohort_execution']['il_motion_supervision'] = thaw_json(freeze_json(il_motion_supervision))
     return freeze_json(record)
 
 
@@ -119,7 +128,8 @@ def validate_sequential_protocol(protocol):
         teacher_observations=execution.get('teacher_observations'),
         teacher_cache_payload_bytes=execution.get('teacher_cache_payload_bytes'),
         occupancy_condition=execution.get('occupancy_condition'),
-        post_exposure_condition=execution.get('post_exposure_condition'))
+        post_exposure_condition=execution.get('post_exposure_condition'),
+        il_motion_supervision=execution.get('il_motion_supervision'))
     if semantic_digest(expected) != semantic_digest(protocol):
         raise ValueError('Sequential objective, scheduling or task options changed')
     return expected

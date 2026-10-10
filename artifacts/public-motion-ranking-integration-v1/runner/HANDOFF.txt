@@ -1,0 +1,67 @@
+SOURCE PREPARED ONLY — ONE FIXED TRAIN RANKING IL64 CONTRAST
+
+Runtime files: pilot_contract.py, cohort_worker.py, run_owned.py, freeze-runtime.py.
+The owned supervisor is byte-identical to the existing post-exposure IL64 parent.
+No canonical edit, runtime freeze, release, test, acquired-array/weight read,
+native preview, model call or training execution occurred in this preparation.
+
+Only numerical intervention: the already reviewed public_nominal_motion_gap_
+ranking_v1 supervision key/corpus replaces conditional winner CE with normalized
+public immediate-reward-gap pair ranking. The motion gate and STOP CE retain the
+balanced0.5/0.5 reduction. Same four ordered TRAIN002/015/018/045, same29 replayed
+teacher states (25motion/4STOP), fresh initial tensors, fixed64 shared updates,
+cached256MiB traces, one-action graphs, optimizer/clip, model, observation,
+post-exposure occupancy/domain,13axes/cap120/h24/tools/reward. The projected new
+protocol must equal the original full IL protocol after removing only the new
+supervision field. Actual initial parameter hash must equal the original IL.
+No RL/search rerun, extra labels, loss tuning, intermediate selection or sweep.
+
+Bounds are the previous IL limits: worker900s/parent960s, sampled3GiB,1thread,
+128MiB output/16MiB supervision,70080 native previews,8 source visits,256 cache
+uses,1856 loss forwards,29 endpoint readouts,at most96 final greedy forwards:
+at most1981 total forwards. One final checkpoint save/reload and four complete
+TRAIN plans/replays. Pair work:4970/update,318080 confirmed terms after completed
+contributions;9940 scalar endpoint pair evaluations compare both saved-original
+and new logits without further model forwards. Pair work is separately labeled;
+it is not an assertion of equal compute. Wall/RSS, label validation, backward,
+optimizer, construction and full deployment costs remain measured. Historical
+public teacher scoring is prior work, not free online ranking information.
+
+Corpus bytes/provenance are pinned to public-motion-ranking-v1 and its16 saved
+score/trace/plan/replay files; every actual replay/cache trace joins the corpus
+through the reviewed core guard. These labels never reach policy.forward.
+The freezer checks the exact four reviewed ranking production source pins and
+requires all executing canonical code committed. It remains non-executable.
+
+Fixed outputs include all29 teacher ranks/STOP margins, old/new per-state public
+nominal regret and pair ordering, balanced ranking objective plus original CE,
+all64 loss/gradient/parameter diagnostics, and all four reloaded full outcomes.
+Path length, tool changes, target/outside-target removal and complete routes are
+retained, including negative or alternative valid actions. No metric improvement
+is needed to call an executed run complete. Better fixed-state rankings alone
+are insufficient evidence of better routes. Relative gap weighting and loss
+limitations remain those of the reviewed source proposal.
+
+Baseline is the exact original failed IL attempt plus the separately accepted
+045 recovery, never a relabeled original success. Its original727.792s cost and
+additional38.406s recovery remain separate. No old checkpoint is loaded just to
+compare saved logits. New final weights use the existing bounded loader.
+
+SELECT013 baseline failed before any arm on EMPTY_FIXED_K, as root reported;
+root is diagnosing its in-grid exposure qualification separately. There were
+no SELECT scores to use in this contrast.037 remains held and067 EVAL closed.
+No access fallback, SELECT construction, transfer admission or claim is added.
+The TRAIN contrast is ready for root's profile/promotion controls; unavailable
+transfer is not an indefinite preparation hold or a reason to retune the loss.
+
+Pending root actions: source review; promote exact reviewed ranking core; run
+the bounded generated controls/worker smoke and profile; final committed HEAD
+freeze; explicit one-attempt release. test_driver_scalar.py has four unrun
+scalar/accounting controls. Existing core evidence is separately preserved.
+No test result is claimed here. Runtime expectation is approximately the old
+IL parent727.8s plus bounded pair work;900/960s are hard caps, not a guarantee.
+
+After root's checks, the existing launch pattern is:
+.venv/bin/python -B build/public-motion-ranking-il64-v1/freeze-runtime.py --head FINAL_HEAD --method IL
+Then root alone prepares IL64/root-release.json from the non-executable template
+and runs run_owned.py with --release and --release-sha256. No release exists now.
