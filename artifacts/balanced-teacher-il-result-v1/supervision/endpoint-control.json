@@ -1,0 +1,165 @@
+{
+  "status": "complete_matched_initialization_and_fixed_teachers",
+  "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+  "baseline": {
+    "release": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/root-release.json",
+      "sha256": "c1cde8eb92f9df5d85ccb91ed0e591adb1da70e011582f3be116d237fecf72db"
+    },
+    "result": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/result.json",
+      "sha256": "b75bd91d284cacba2c980283424586ca506799919f6850175b6f4eeea4315aeb"
+    },
+    "parent": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01.supervision/receipt.json",
+      "sha256": "e1f18ca5dae011057f0c945690d71e9ba909041f7aa495e5ce4493e57f805fa2"
+    },
+    "source_index": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/source-index.json",
+      "sha256": "3bf24bf5038c20b04e44281df76411b61588efd207c75c0fddc518d969c04ea6"
+    },
+    "teacher_ReMIND-008": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/teachers/ReMIND-008/plan.json",
+      "sha256": "8b3cd2f7aad5308481534154cf55a400c8791dc4e18ba0275756a52a4bb2d502"
+    },
+    "state_ReMIND-008_0": {
+      "path": "build/five-state-policy-diagnostic-v1/attempt-01/ReMIND-008/state-00.json",
+      "sha256": "73d3f459f4a93b5d6851b60b36ad3268d4c5ecb6f9e279cc836e73a8a7b5e855"
+    },
+    "teacher_ReMIND-010": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/teachers/ReMIND-010/plan.json",
+      "sha256": "1e862c792a8dafaf1102ffe2968b24b6272eb249426889efe1231eda53f49d68"
+    },
+    "state_ReMIND-010_0": {
+      "path": "build/five-state-policy-diagnostic-v1/attempt-01/ReMIND-010/state-00.json",
+      "sha256": "2c7cec5c1e6e7c3fb481b3c23a30fc4fa362b78a5ef5a96e9d4594176a322653"
+    },
+    "teacher_ReMIND-020": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/teachers/ReMIND-020/plan.json",
+      "sha256": "7e5c5ee0a1068e88d171180622f705be68bd913032acdc78eaef070d20637e7e"
+    },
+    "state_ReMIND-020_0": {
+      "path": "build/five-state-policy-diagnostic-v1/attempt-01/ReMIND-020/state-00.json",
+      "sha256": "f5d823d22855cb4ca2afbb631ad0efbc486a04f94e9d5311cbd2b2ff467c2e29"
+    },
+    "teacher_ReMIND-025": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/teachers/ReMIND-025/plan.json",
+      "sha256": "843c09b795a684147dab7d479bcc00b45dcbee8fb4f7054da57a1f25f0ba90bb"
+    },
+    "state_ReMIND-025_0": {
+      "path": "build/five-state-policy-diagnostic-v1/attempt-01/ReMIND-025/state-00.json",
+      "sha256": "13fa5914bcf4cb88d0c593390acc2bae818fd000cf793e209fd268153118f5ae"
+    },
+    "state_ReMIND-025_1": {
+      "path": "build/five-state-policy-diagnostic-v1/attempt-01/ReMIND-025/state-01.json",
+      "sha256": "3f5aca840d6bb790a4bad950eac24bb03adba4ed59c73a01582c4108ae04e2a5"
+    },
+    "diagnostic_result": {
+      "path": "build/five-state-policy-diagnostic-v1/attempt-01/result.json",
+      "sha256": "9b3bfa60e67277091f6b04c35eea6697013e6cbbca211cb94a5229ec4ac73420"
+    }
+  },
+  "only_objective_change": "balanced_STOP_motion_CE_v1",
+  "teacher_labels": 5,
+  "loss_forwards": 40,
+  "comparison_scope": "same initialization/world/labels/update count; objective deliberately differs",
+  "unweighted_TRAIN_greedy": {
+    "ReMIND-008": {
+      "actions": [
+        "STOP"
+      ],
+      "complete": true,
+      "plan_seal": "sha256:2c6274ea85acd26adb91e1cec9ba8fd10a4bce0068d1adaa97f82170801f942f",
+      "public_return": 0.0,
+      "steps": 1
+    },
+    "ReMIND-010": {
+      "actions": [
+        "STOP"
+      ],
+      "complete": true,
+      "plan_seal": "sha256:060794d8db8e33e19e8479d6b4cf89983d6ab4933fab426ce10339adf76f3f5b",
+      "public_return": 0.0,
+      "steps": 1
+    },
+    "ReMIND-020": {
+      "actions": [
+        "STOP"
+      ],
+      "complete": true,
+      "plan_seal": "sha256:3d152b1710eadb152311dc46c100b6b3ecde31759187a2461dc14ede24816d0c",
+      "public_return": 0.0,
+      "steps": 1
+    },
+    "ReMIND-025": {
+      "actions": [
+        "STOP"
+      ],
+      "complete": true,
+      "plan_seal": "sha256:b4252cac2d1590ca1606d2fcde8ab9991ccac9ec80de30d46c581d663258d665",
+      "public_return": 0.0,
+      "steps": 1
+    }
+  },
+  "balanced_TRAIN_greedy": {
+    "ReMIND-008": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:d4798fe46aace695252b5d258f74b858e3d5942f3358044c68935771caffd0ee",
+      "plan_seal": "sha256:9c41e0473a4f017207069c5019ef7c0a5946f7fd5407e576081167e54ba87a82",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "ReMIND-010": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:d4798fe46aace695252b5d258f74b858e3d5942f3358044c68935771caffd0ee",
+      "plan_seal": "sha256:136df477b5f0d3b245644751c232e649fb991d4576b53cfe4d09c0d2ad184a18",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "ReMIND-020": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:d4798fe46aace695252b5d258f74b858e3d5942f3358044c68935771caffd0ee",
+      "plan_seal": "sha256:95d38f7b2f891c1653f78f05b782c14f2c9b98b8ad0c4ff341335ce73fb9272f",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    },
+    "ReMIND-025": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:d4798fe46aace695252b5d258f74b858e3d5942f3358044c68935771caffd0ee",
+      "plan_seal": "sha256:5f475457fddb46474218c3c9e268f21ff9152fd21e9c04e8576979b721e5bbd7",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    }
+  },
+  "unweighted_parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+  "balanced_parameter_hash": "sha256:d4798fe46aace695252b5d258f74b858e3d5942f3358044c68935771caffd0ee",
+  "heldout_or_clinical_claim": false
+}

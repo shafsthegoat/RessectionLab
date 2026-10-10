@@ -1,0 +1,42 @@
+Balanced teacher loss improves movement ranking, but all complete plans still STOP
+October 10, 2026
+
+This fixed eight-update contrast changes only IL teacher weighting: the one
+movement label receives half the loss and the four STOP labels share half.
+Architecture, initial tensors, five teacher states, optimizer, task, reward,
+patient roles and final endpoint are unchanged. No new search or RL was run.
+
+The useful 025 movement improves from rank 10 to rank 1 among 16 movements.
+Its conditional probability rises only 6.19% to 6.54% (uniform is 6.25%). It
+still loses to STOP by 3.499 logit units; STOP probability is 68.38%. All four
+checkpoint-reloaded greedy episodes immediately STOP, with zero return and
+zero target/outside-target removal. Existing SEARCH and cheap native greedy
+retain the positive 025 action followed by STOP (+0.916838857). The useful
+action removes one modeled source cell, not a substantial tumor resection.
+
+Endpoint group-balanced CE improves 2.444552 to 2.237167 against unweighted IL8.
+Motion NLL improves 4.486855 to 3.878891; STOP NLL worsens .402249 to .595442.
+The last pre-update loss is 2.228367, slightly lower than the post-update
+endpoint. Eight steps do not demonstrate convergence. The changed objective
+has improved ordering without recovering useful behavior; no forced STOP
+threshold or action-mask change is justified by these results.
+
+The next fixed contrast tests 64 updates of the same balanced objective and
+architecture from the same fresh initialization. The first eight updates must
+match this run. Its endpoint is fixed in advance, with complete four-patient
+rollouts and all five teacher-state diagnostics. This tests optimization and
+fit capacity on the TRAIN examples; success would not demonstrate transfer.
+There will be no automatic budget extension or post hoc endpoint selection.
+
+Owned run: 144.704 seconds, 2,393,980,928 B sampled peak, 11,102 previews,
+49 forwards, 44 released patient visits, one authenticated checkpoint reload,
+eight IL and zero RL updates. Clean exit and no remaining owned processes.
+Teacher-generation cost is historical and separate, not free or included here.
+Independent saved audit passes 3,912 checks; exact evidence and executed source
+are indexed alongside this record. Full excluded output hashes are retained;
+patient arrays and weights are outside Git. Source anatomy with simulated
+actions is not observed surgery or evidence of physical/clinical transfer.
+
+Executed HEAD c7f75d17d00b0176a500d068675a32fe4c7a8b32.
+Result SHA256 e183018bc21400cc87b377b7cc7ee87eb0a8943ea09b88ff9b40b10cc10bebd3.
+SELECT/EVAL/private model reads: zero. All four cases remain in the denominator.

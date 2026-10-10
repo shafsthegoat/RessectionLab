@@ -1,0 +1,49 @@
+{
+  "SELECT_EVAL_execution": false,
+  "automatic_retry": false,
+  "canonical_result_status": "complete_balanced_IL_TRAIN_only",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 3600,
+    "output_bytes": 134217728,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 3540,
+    "worker_log_bytes": 8388608
+  },
+  "checkpoints": {
+    "IL": {
+      "bytes": 137635,
+      "parameter_hash": "sha256:d4798fe46aace695252b5d258f74b858e3d5942f3358044c68935771caffd0ee",
+      "path": "IL-final.psckpt",
+      "sha256": "12122ba1b01823557adb753a24bf45d3227054845c942354e2ec1e788dfc6a3b"
+    }
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 144.7035794579424,
+  "endpoint_control_sha256": "c0418e46cb7db66560ae505244d4d2f8ddec858c5bdf06a7fe73587c4c6d2771",
+  "exit_code": 0,
+  "final_owned_pids": [],
+  "output_bytes": 3582488,
+  "private_reference_execution": false,
+  "release_sha256": "63acce8556bda8a23552e8007b6851e11d80a022c4920ca3838104df6117e8f3",
+  "result_sha256": "e183018bc21400cc87b377b7cc7ee87eb0a8943ea09b88ff9b40b10cc10bebd3",
+  "sampled_peak_rss_bytes": 2393980928,
+  "samples": 691,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/balanced-teacher-il-v1/source-index.json",
+    "sha256": "6bfcaa037b3c9a350e181580f4c3d9dd09c8c9afc8e6675fde6d9a9187d18911"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 23451,
+  "worker_final_sha256": "357297934e38a032537179a52c56dc5b476919cb8028606f1ac252eb09944a01",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

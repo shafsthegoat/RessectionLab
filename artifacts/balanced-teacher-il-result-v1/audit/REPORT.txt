@@ -1,0 +1,32 @@
+Independent balanced-IL saved-result audit: PASS
+
+Result SHA-256 e183018bc21400cc87b377b7cc7ee87eb0a8943ea09b88ff9b40b10cc10bebd3
+Root release SHA-256 63acce8556bda8a23552e8007b6851e11d80a022c4920ca3838104df6117e8f3
+Runtime source index SHA-256 6bfcaa037b3c9a350e181580f4c3d9dd09c8c9afc8e6675fde6d9a9187d18911
+
+The prepared stdlib-only audit passed on its first execution: 3,912 assertions in0.059s with24,674,304B peak RSS. All84 source pins,20 metadata pins and296 read-input identities remained unchanged. No failure occurred. No arrays, checkpoint contents, model, optimizer or geometry replay was executed by the audit.
+
+Verified: all44 complete visits (4 fixed teachers +32 four-case update contributions +4 endpoint teacher replays +4 greedy replays), eight shared IL updates, all four exact context contributions in order at every update,40 loss forwards, five endpoint-logit forwards, one saved checkpoint reload and49 total forwards. Search and RL updates are zero. The exact five historical labels/observations/inventories remain unchanged; only the declared objective changes. Source/parent/worker/control joins, complete trace and plan seals, nominal/native history equality except outcome_scope, saved independent full-tool audit hashes, reward/removal sums and full target denominators all reconcile. Saved geometry acceptance was authenticated, not recomputed.
+
+Weighting arithmetic: four STOP examples each receive0.125, the sole movement example0.5; group mass is0.5/0.5 instead of the old0.8/0.2. Counts and40 loss forwards do not change. The initial weighted loss3.129884332 matches the original INITIAL logits; every update loss equals the sum of all four stored weighted contributions. The eight pre-step weighted losses are:
+3.129884332,3.041562647,2.935851842,2.805980235,2.678684205,2.534611553,2.369655147,2.228367016.
+The final post-update objective2.237166837 is slightly above the eighth pre-step value; these are distinct measurements. Later training receipts do not expose the two separate per-label losses within025, so a full per-update STOP/movement loss decomposition cannot independently be recovered from these records. Endpoint group losses are independently recomputed from all five complete saved score vectors.
+
+Endpoint comparison on the same five labels:
+Metric                         Unweighted IL8   Balanced IL8
+Mean STOP NLL (4 labels)        0.402248532      0.595442206
+Movement NLL (1 label)          4.486855030      3.878891468
+Unweighted five-label CE        1.219169831      1.252132058
+Balanced group CE               2.444551781      2.237166837
+
+At025's initial state, the useful target-cell movement improves from movement rank10 to1 (all-action rank11 to2). Its conditional probability among16 movements increases0.061907690→0.065386884; uniform would be0.0625, so the restored ordering is weak separation. Its full probability increases0.011255989→0.020673729 while STOP decreases0.818181098→0.683824480. The useful movement still trails STOP by3.498837471 logit units. This is a narrower positive change in ordering and loss, not recovered behavior or evidence that further identical updates will solve the task.
+
+All five saved states still select STOP under balanced IL8. Balanced STOP probabilities are008 .395244896,010 .517675817,020 .641359746,025 initial .683824480,025 post-target .704020202. Ranks and index tie rules agree exactly; softmax/CE/conditional probabilities agree with independent scalar reconstruction within declared float32 roundoff tolerances (2e-7 probabilities,2e-6 CE,1e-6 margins).
+
+All four checkpoint-reloaded complete greedy episodes (008,010,020,025) are immediate STOP: one step, return0, target removal0, outside-supplied-goal removal0, target cells0. They equal unweighted IL8's physical outcomes. The known025 SEARCH/native-greedy teacher still attains+0.916838857 by one target-cell action then STOP. Balancing therefore has not recovered useful task execution. No case is excluded from the denominator. Outside-goal removal is not verified normal anatomy, unsupported target remains in the full denominator, and no clinical/generalization/held-out inference is warranted.
+
+Fixed reload lineage: trained and reloaded parameter identity both sha256:d4798fe46aace695252b5d258f74b858e3d5942f3358044c68935771caffd0ee. Saved checkpoint SHA-25612122ba1b01823557adb753a24bf45d3227054845c942354e2ec1e788dfc6a3b,137,635B. Parent verified checkpoint bytes; this audit verifies the saved joins, not the tensor bytes. This run's four greedy episodes actually use that reloaded endpoint, unlike the earlier in-memory-only endpoint runs.
+
+Resources: parent144.703579458s <3600s, worker144.132625959s <3540s, sampled peak2,393,980,928B <3GiB, output3,582,488B <128MiB. Clean exit0, termination confirmed, no owned PIDs/errors/retry.11,102 previews <385,440;40 loss +5 logits +4 greedy forwards =49 <141. All44 source visits released. Runtime does not include prior teacher search/training; nested inclusive costs must not be summed. Sampled RSS cannot exclude transient unsampled peaks. SELECT/EVAL/private reads remain zero.
+
+Compact values: audit-result.json. Exact read-source/evidence identities: input-hashes.json. First successful audit output: audit-run-01.txt. Prepared source: audit_saved.py. No additional execution is needed.

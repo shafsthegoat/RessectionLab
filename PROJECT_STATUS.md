@@ -5,8 +5,9 @@ planning experiment on qualified acquired anatomy. Preserve the negative learned
 results below; additional generated-task architecture sweeps and mechanics format
 work are deferred. The controlled eight-update run is complete: both learners now stop on all four
 TRAIN cases, avoiding harmful continuation but losing the one useful teacher action.
-Exact-state readout now confirms both weak movement discrimination and increased
-STOP preference. The next experiment tests balanced teacher loss with all else fixed.
+Balanced teacher loss restores the useful movement to first among movements, but
+all four complete policies still STOP. The next fixed 64-update contrast tests
+undertraining before any architecture change; eight updates are not convergence.
 ReMIND preoperative MRI uses a supplied tumor region and automatic tissue support;
 source ventricular estimates remain separate from deployment inputs. Those automatic
 Brainlab estimates are not manual ground truth or evidence of neurological injury.
@@ -15,9 +16,9 @@ See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cr
 
 Current integrated results, October 10:
 
-- **The targeted loss change is integrated and tested:** [optional balanced teacher learning](artifacts/balanced-teacher-loss-v1/RESULT.txt) keeps all examples but splits IL loss equally between movement and STOP groups. The model, rewards and inference masks remain unchanged. Canonical checks pass 96 tests and nine subtests, including exact default identity, gradient arithmetic, sequential parity and checkpoint reload. Its fixed eight-update patient comparison is next; no benefit is claimed from source tests.
+- **Balanced training improves ordering but not complete plans:** [the fixed eight-update contrast](artifacts/balanced-teacher-il-result-v1/RESULT.txt) moves the useful025 action from tenth to first among movements, yet STOP still wins and all four greedy returns remain zero. Balanced endpoint loss improves 2.44455→2.23717 versus unweighted IL8. The 144.704-second run passes 3,912 independent saved checks, with actual checkpoint reload and complete native replay. The next fixed64 contrast tests whether training is insufficient, preserving the model, data and objective; no learned route or held-out benefit is established. The [loss integration](artifacts/balanced-teacher-loss-v1/RESULT.txt) remains covered by 96 tests and nine subtests.
 
-- **Exact-state readout identifies the next model change:** [25 frozen-policy readouts](artifacts/five-state-policy-diagnostic-v1/RESULT.txt) confirm the useful025 movement falls from first among motions after one update to tenth for IL and last for RL after eight. Its target input is present. Existing cheap greedy search reproduces all four longer-search plans exactly (129 candidate scores, five selected commits), with complete native replay. The 19.553-second diagnostic passes independent scalar audit. Next: test balanced teacher loss at the same eight-update endpoint; no model/clinical gain is claimed yet.
+- **Exact-state readout identifies the next model change:** [25 frozen-policy readouts](artifacts/five-state-policy-diagnostic-v1/RESULT.txt) confirm the useful025 movement falls from first among motions after one update to tenth for IL and last for RL after eight. Its target input is present. Existing cheap greedy search reproduces all four longer-search plans exactly (129 candidate scores, five selected commits), with complete native replay. The 19.553-second diagnostic passes independent scalar audit. The balanced eight-update result above follows this diagnosis; no clinical gain is claimed.
 
 - **SELECT source review leaves one qualified condition and one held case:** [public-source qualification](artifacts/remind-select-public-qc-v1/STATUS.txt) preserves the planned two-patient denominator. 013 has verified geometry but 95.52% of its supplied target lies outside automatic support; it qualifies only for that disclosed partial-target condition. 037 remains held because striping is present in the original encoded support mask; 2,513,280 crop voxels match source bit addresses. The separate selected-frame decoder failure is retained. No SELECT model evaluation, source repair or replacement patient has occurred. The preceding [372-object intake](artifacts/remind-select-public-intake-v1/RESULT.txt) remains byte verified.
 
