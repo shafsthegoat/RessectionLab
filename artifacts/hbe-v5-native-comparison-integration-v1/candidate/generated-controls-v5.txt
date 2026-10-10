@@ -1,0 +1,354 @@
+......................................................................FF [ 90%]
+FFFFFFF.                                                                 [100%]
+=================================== FAILURES ===================================
+_ test_full_generated_public_orchestration_compares_without_raw_io_or_permission _
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_full_generated_public_orc0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1092de5a0>
+
+    def test_full_generated_public_orchestration_compares_without_raw_io_or_permission(tmp_path,monkeypatch):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:346: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:325: in orchestration_fixture
+    charge['aggregate_with_extension']=n.remaining._check_aggregate(prev,3.,1.,2.5,closed+1048576,1)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+previous = {'sha256': ['3fb9467d8568f95c711f7ef2f4029f5490c02e9dd03cbfb0c05d46e3bbefdca7', 'c033ecc318261ca11b0b370a354f928e2d423...d06ac9cb6bc4b6d82982a90783852db0d849', ...], 'native_seconds': 24.0, 'readout_seconds': 8.0, 'prep_seconds': 16.0, ...}
+native = 3.0, readout = 1.0, prep = 2.5, output = 1216959, calls = 1
+
+    def _check_aggregate(previous: dict, native: float, readout: float,
+                         prep: float, output: int, calls: int) -> dict:
+        values = {'aggregate_native_wall_seconds': previous['native_seconds'] + native,
+                  'aggregate_readout_wall_seconds': previous['readout_seconds'] + readout,
+                  'aggregate_prep_wall_seconds': previous['prep_seconds'] + prep,
+                  'aggregate_output_bytes': previous['output_bytes'] + output,
+>                 'aggregate_native_calls': previous['native_calls'] + calls,
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^
+                  'aggregate_supplement_replay_wall_seconds':
+                      previous['supplement_readout_seconds'],
+                  'aggregate_supplement_prep_wall_seconds':
+                      previous['supplement_prep_seconds'],
+                  'aggregate_supplement_replay_calls':
+                      previous['supplement_replay_calls']}
+E       KeyError: 'native_calls'
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:592: KeyError
+_______ test_late_bound_metadata_mutation_refuses_full_result[manifest] ________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109339160>
+target = 'manifest'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:360: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:325: in orchestration_fixture
+    charge['aggregate_with_extension']=n.remaining._check_aggregate(prev,3.,1.,2.5,closed+1048576,1)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+previous = {'sha256': ['3fb9467d8568f95c711f7ef2f4029f5490c02e9dd03cbfb0c05d46e3bbefdca7', 'c033ecc318261ca11b0b370a354f928e2d423...d06ac9cb6bc4b6d82982a90783852db0d849', ...], 'native_seconds': 24.0, 'readout_seconds': 8.0, 'prep_seconds': 16.0, ...}
+native = 3.0, readout = 1.0, prep = 2.5, output = 1216959, calls = 1
+
+    def _check_aggregate(previous: dict, native: float, readout: float,
+                         prep: float, output: int, calls: int) -> dict:
+        values = {'aggregate_native_wall_seconds': previous['native_seconds'] + native,
+                  'aggregate_readout_wall_seconds': previous['readout_seconds'] + readout,
+                  'aggregate_prep_wall_seconds': previous['prep_seconds'] + prep,
+                  'aggregate_output_bytes': previous['output_bytes'] + output,
+>                 'aggregate_native_calls': previous['native_calls'] + calls,
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^
+                  'aggregate_supplement_replay_wall_seconds':
+                      previous['supplement_readout_seconds'],
+                  'aggregate_supplement_prep_wall_seconds':
+                      previous['supplement_prep_seconds'],
+                  'aggregate_supplement_replay_calls':
+                      previous['supplement_replay_calls']}
+E       KeyError: 'native_calls'
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:592: KeyError
+________ test_late_bound_metadata_mutation_refuses_full_result[readout] ________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b744350>
+target = 'readout'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:360: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:325: in orchestration_fixture
+    charge['aggregate_with_extension']=n.remaining._check_aggregate(prev,3.,1.,2.5,closed+1048576,1)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+previous = {'sha256': ['3fb9467d8568f95c711f7ef2f4029f5490c02e9dd03cbfb0c05d46e3bbefdca7', 'c033ecc318261ca11b0b370a354f928e2d423...d06ac9cb6bc4b6d82982a90783852db0d849', ...], 'native_seconds': 24.0, 'readout_seconds': 8.0, 'prep_seconds': 16.0, ...}
+native = 3.0, readout = 1.0, prep = 2.5, output = 1216959, calls = 1
+
+    def _check_aggregate(previous: dict, native: float, readout: float,
+                         prep: float, output: int, calls: int) -> dict:
+        values = {'aggregate_native_wall_seconds': previous['native_seconds'] + native,
+                  'aggregate_readout_wall_seconds': previous['readout_seconds'] + readout,
+                  'aggregate_prep_wall_seconds': previous['prep_seconds'] + prep,
+                  'aggregate_output_bytes': previous['output_bytes'] + output,
+>                 'aggregate_native_calls': previous['native_calls'] + calls,
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^
+                  'aggregate_supplement_replay_wall_seconds':
+                      previous['supplement_readout_seconds'],
+                  'aggregate_supplement_prep_wall_seconds':
+                      previous['supplement_prep_seconds'],
+                  'aggregate_supplement_replay_calls':
+                      previous['supplement_replay_calls']}
+E       KeyError: 'native_calls'
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:592: KeyError
+______ test_late_bound_metadata_mutation_refuses_full_result[work_order] _______
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109359be0>
+target = 'work_order'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:360: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:325: in orchestration_fixture
+    charge['aggregate_with_extension']=n.remaining._check_aggregate(prev,3.,1.,2.5,closed+1048576,1)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+previous = {'sha256': ['3fb9467d8568f95c711f7ef2f4029f5490c02e9dd03cbfb0c05d46e3bbefdca7', 'c033ecc318261ca11b0b370a354f928e2d423...d06ac9cb6bc4b6d82982a90783852db0d849', ...], 'native_seconds': 24.0, 'readout_seconds': 8.0, 'prep_seconds': 16.0, ...}
+native = 3.0, readout = 1.0, prep = 2.5, output = 1216959, calls = 1
+
+    def _check_aggregate(previous: dict, native: float, readout: float,
+                         prep: float, output: int, calls: int) -> dict:
+        values = {'aggregate_native_wall_seconds': previous['native_seconds'] + native,
+                  'aggregate_readout_wall_seconds': previous['readout_seconds'] + readout,
+                  'aggregate_prep_wall_seconds': previous['prep_seconds'] + prep,
+                  'aggregate_output_bytes': previous['output_bytes'] + output,
+>                 'aggregate_native_calls': previous['native_calls'] + calls,
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^
+                  'aggregate_supplement_replay_wall_seconds':
+                      previous['supplement_readout_seconds'],
+                  'aggregate_supplement_prep_wall_seconds':
+                      previous['supplement_prep_seconds'],
+                  'aggregate_supplement_replay_calls':
+                      previous['supplement_replay_calls']}
+E       KeyError: 'native_calls'
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:592: KeyError
+________ test_late_bound_metadata_mutation_refuses_full_result[review] _________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b7475c0>
+target = 'review'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:360: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:325: in orchestration_fixture
+    charge['aggregate_with_extension']=n.remaining._check_aggregate(prev,3.,1.,2.5,closed+1048576,1)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+previous = {'sha256': ['3fb9467d8568f95c711f7ef2f4029f5490c02e9dd03cbfb0c05d46e3bbefdca7', 'c033ecc318261ca11b0b370a354f928e2d423...d06ac9cb6bc4b6d82982a90783852db0d849', ...], 'native_seconds': 24.0, 'readout_seconds': 8.0, 'prep_seconds': 16.0, ...}
+native = 3.0, readout = 1.0, prep = 2.5, output = 1216959, calls = 1
+
+    def _check_aggregate(previous: dict, native: float, readout: float,
+                         prep: float, output: int, calls: int) -> dict:
+        values = {'aggregate_native_wall_seconds': previous['native_seconds'] + native,
+                  'aggregate_readout_wall_seconds': previous['readout_seconds'] + readout,
+                  'aggregate_prep_wall_seconds': previous['prep_seconds'] + prep,
+                  'aggregate_output_bytes': previous['output_bytes'] + output,
+>                 'aggregate_native_calls': previous['native_calls'] + calls,
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^
+                  'aggregate_supplement_replay_wall_seconds':
+                      previous['supplement_readout_seconds'],
+                  'aggregate_supplement_prep_wall_seconds':
+                      previous['supplement_prep_seconds'],
+                  'aggregate_supplement_replay_calls':
+                      previous['supplement_replay_calls']}
+E       KeyError: 'native_calls'
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:592: KeyError
+________ test_late_bound_metadata_mutation_refuses_full_result[sidecar] ________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1093385f0>
+target = 'sidecar'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:360: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:325: in orchestration_fixture
+    charge['aggregate_with_extension']=n.remaining._check_aggregate(prev,3.,1.,2.5,closed+1048576,1)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+previous = {'sha256': ['3fb9467d8568f95c711f7ef2f4029f5490c02e9dd03cbfb0c05d46e3bbefdca7', 'c033ecc318261ca11b0b370a354f928e2d423...d06ac9cb6bc4b6d82982a90783852db0d849', ...], 'native_seconds': 24.0, 'readout_seconds': 8.0, 'prep_seconds': 16.0, ...}
+native = 3.0, readout = 1.0, prep = 2.5, output = 1216959, calls = 1
+
+    def _check_aggregate(previous: dict, native: float, readout: float,
+                         prep: float, output: int, calls: int) -> dict:
+        values = {'aggregate_native_wall_seconds': previous['native_seconds'] + native,
+                  'aggregate_readout_wall_seconds': previous['readout_seconds'] + readout,
+                  'aggregate_prep_wall_seconds': previous['prep_seconds'] + prep,
+                  'aggregate_output_bytes': previous['output_bytes'] + output,
+>                 'aggregate_native_calls': previous['native_calls'] + calls,
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^
+                  'aggregate_supplement_replay_wall_seconds':
+                      previous['supplement_readout_seconds'],
+                  'aggregate_supplement_prep_wall_seconds':
+                      previous['supplement_prep_seconds'],
+                  'aggregate_supplement_replay_calls':
+                      previous['supplement_replay_calls']}
+E       KeyError: 'native_calls'
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:592: KeyError
+_______ test_late_bound_metadata_mutation_refuses_full_result[envelope] ________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109338d70>
+target = 'envelope'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:360: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:325: in orchestration_fixture
+    charge['aggregate_with_extension']=n.remaining._check_aggregate(prev,3.,1.,2.5,closed+1048576,1)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+previous = {'sha256': ['3fb9467d8568f95c711f7ef2f4029f5490c02e9dd03cbfb0c05d46e3bbefdca7', 'c033ecc318261ca11b0b370a354f928e2d423...d06ac9cb6bc4b6d82982a90783852db0d849', ...], 'native_seconds': 24.0, 'readout_seconds': 8.0, 'prep_seconds': 16.0, ...}
+native = 3.0, readout = 1.0, prep = 2.5, output = 1216959, calls = 1
+
+    def _check_aggregate(previous: dict, native: float, readout: float,
+                         prep: float, output: int, calls: int) -> dict:
+        values = {'aggregate_native_wall_seconds': previous['native_seconds'] + native,
+                  'aggregate_readout_wall_seconds': previous['readout_seconds'] + readout,
+                  'aggregate_prep_wall_seconds': previous['prep_seconds'] + prep,
+                  'aggregate_output_bytes': previous['output_bytes'] + output,
+>                 'aggregate_native_calls': previous['native_calls'] + calls,
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^
+                  'aggregate_supplement_replay_wall_seconds':
+                      previous['supplement_readout_seconds'],
+                  'aggregate_supplement_prep_wall_seconds':
+                      previous['supplement_prep_seconds'],
+                  'aggregate_supplement_replay_calls':
+                      previous['supplement_replay_calls']}
+E       KeyError: 'native_calls'
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:592: KeyError
+______ test_late_bound_metadata_mutation_refuses_full_result[supplement] _______
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10933a4e0>
+target = 'supplement'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:360: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:325: in orchestration_fixture
+    charge['aggregate_with_extension']=n.remaining._check_aggregate(prev,3.,1.,2.5,closed+1048576,1)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+previous = {'sha256': ['3fb9467d8568f95c711f7ef2f4029f5490c02e9dd03cbfb0c05d46e3bbefdca7', 'c033ecc318261ca11b0b370a354f928e2d423...d06ac9cb6bc4b6d82982a90783852db0d849', ...], 'native_seconds': 24.0, 'readout_seconds': 8.0, 'prep_seconds': 16.0, ...}
+native = 3.0, readout = 1.0, prep = 2.5, output = 1216959, calls = 1
+
+    def _check_aggregate(previous: dict, native: float, readout: float,
+                         prep: float, output: int, calls: int) -> dict:
+        values = {'aggregate_native_wall_seconds': previous['native_seconds'] + native,
+                  'aggregate_readout_wall_seconds': previous['readout_seconds'] + readout,
+                  'aggregate_prep_wall_seconds': previous['prep_seconds'] + prep,
+                  'aggregate_output_bytes': previous['output_bytes'] + output,
+>                 'aggregate_native_calls': previous['native_calls'] + calls,
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^
+                  'aggregate_supplement_replay_wall_seconds':
+                      previous['supplement_readout_seconds'],
+                  'aggregate_supplement_prep_wall_seconds':
+                      previous['supplement_prep_seconds'],
+                  'aggregate_supplement_replay_calls':
+                      previous['supplement_replay_calls']}
+E       KeyError: 'native_calls'
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:592: KeyError
+______ test_late_bound_metadata_mutation_refuses_full_result[source_map] _______
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b7464e0>
+target = 'source_map'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:360: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:325: in orchestration_fixture
+    charge['aggregate_with_extension']=n.remaining._check_aggregate(prev,3.,1.,2.5,closed+1048576,1)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+previous = {'sha256': ['3fb9467d8568f95c711f7ef2f4029f5490c02e9dd03cbfb0c05d46e3bbefdca7', 'c033ecc318261ca11b0b370a354f928e2d423...d06ac9cb6bc4b6d82982a90783852db0d849', ...], 'native_seconds': 24.0, 'readout_seconds': 8.0, 'prep_seconds': 16.0, ...}
+native = 3.0, readout = 1.0, prep = 2.5, output = 1216959, calls = 1
+
+    def _check_aggregate(previous: dict, native: float, readout: float,
+                         prep: float, output: int, calls: int) -> dict:
+        values = {'aggregate_native_wall_seconds': previous['native_seconds'] + native,
+                  'aggregate_readout_wall_seconds': previous['readout_seconds'] + readout,
+                  'aggregate_prep_wall_seconds': previous['prep_seconds'] + prep,
+                  'aggregate_output_bytes': previous['output_bytes'] + output,
+>                 'aggregate_native_calls': previous['native_calls'] + calls,
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^
+                  'aggregate_supplement_replay_wall_seconds':
+                      previous['supplement_readout_seconds'],
+                  'aggregate_supplement_prep_wall_seconds':
+                      previous['supplement_prep_seconds'],
+                  'aggregate_supplement_replay_calls':
+                      previous['supplement_replay_calls']}
+E       KeyError: 'native_calls'
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:592: KeyError
+=========================== short test summary info ============================
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_full_generated_public_orchestration_compares_without_raw_io_or_permission
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[manifest]
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[readout]
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[work_order]
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[review]
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[sidecar]
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[envelope]
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[supplement]
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[source_map]
+9 failed, 71 passed in 4.23s

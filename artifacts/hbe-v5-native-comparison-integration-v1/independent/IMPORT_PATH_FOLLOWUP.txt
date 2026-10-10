@@ -1,0 +1,15 @@
+Independent import-path follow-up — source promotion GO retained
+
+The ordinal9 launcher finding does not establish a comparator execution defect. Frozen remaining.validate_release performs the restrictive launcher import audit after its bulk predecessor check. The proposed compare_native_rows entry never calls validate_release: it calls read-only remaining.validate_prior_chain twice and supplement.verify_exact twice, under its own before/after 30-source guard.
+
+Independent AST checks confirmed those calls. validate_prior_chain has no audit_imports call; the exact supplement passes audit_loaded_imports=False to replay.validate_original. That function's only audit call is guarded by this argument; its inspect_readout helper has no audit. This is the existing saved-evidence scope, not a new bypass.
+
+I independently reran the author's canonical import probe from a byte-identical copy in this review directory. It copied all 30 bound sources into a separate ignored canonical root, imported the actual adapter, and passed the real comparator source guard with 24 loaded canonical origins before/after. The unchanged 20-source launcher audit correctly refused scripts.mechanics_hbe_mesh; ten separately bound comparator/math modules are outside that launcher closure. No module was hidden, no private loader introduced, and no allowlist changed.
+
+Three focused regression controls passed in 0.20 seconds. The independent source-path check passed. Both execution probes denied original mechanics-file reads and process/network launches with an audit hook. No native solve, saved-stream replay, bulk verifier, patient payload, or physical response was accessed. These checks do not claim a full12 evidence run.
+
+Disposition: retain original scoped GO for exact source promotion; add only the regression test patch if desired. No executing-source repair is warranted. A future separately supervised comparator worker must invoke compare_native_rows with its bound manifest/runtime rather than substitute a native launch validator. Both full chain passes still require their later explicit resource budget.
+
+Frozen author follow-up: source-index.json 1317916423952bbb3a7445d51bde50d01187d3bfd5fcb1a6729d0e82082598a3; regression-only.patch 8b97a23e4eef0487b9dc13c99749967104c1cda2cef05bf69033c9605728f6eb. All eight follow-up files and all 11 original candidate pins rechecked. Original REPORT.txt remains 63dadc89702303e470bd5e7ae8a8b7585e16a87aef3a81656c602b4dc9d20cd1; original candidate-pins.json remains 98bf65a921dc0df9e0fe91838e0dc52794207a2c9797a2c5f75cb528c21b514d. Initial author test-helper failure is preserved separately in its follow-up index.
+
+Independent commands: python -B import-path-source-check.py; one-thread python -B canonical-import-probe.py; one-thread pytest of stage/tests/test_mechanics_hbe_v5_native_import_boundary.py with candidate scripts path first, plugin autoload/cache disabled and original mechanics/process/network audit denial. No broader tests were repeated.

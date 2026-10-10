@@ -1,0 +1,46 @@
+{
+  "comparison-source-inventory.json": {
+    "bytes": 5959,
+    "sha256": "a2f8c400b7ae2110a2014180922f115ff6cf08e0fb8e882acf652825bbf38792"
+  },
+  "existing-evidence-mapping.json": {
+    "bytes": 12320,
+    "sha256": "b4550c1c98d793f2e62e4c891f3e32b39825932949c54b558dc27f304b70c8d6"
+  },
+  "generated-controls-v9.txt": {
+    "bytes": 179,
+    "sha256": "e91f8184055986bf15b8ed46ae4c56c811ad1ef471740cd0b31e4817d81c0995"
+  },
+  "promotion-paths.json": {
+    "bytes": 655,
+    "sha256": "473f59f01098c9556faa18d66e34f2c9b0285a2f36ed512313b6fe8c8982709c"
+  },
+  "run_controls.py": {
+    "bytes": 739,
+    "sha256": "7bc95c320030731e16577ea77d4567891b0b9531b85322062a166db5f658103f"
+  },
+  "shared-extraction.json": {
+    "bytes": 531,
+    "sha256": "ba73594ed1d60088aac3061e21ea992b477885d6f2eedc141d894018c0d8cea1"
+  },
+  "source.patch": {
+    "bytes": 64526,
+    "sha256": "1aac9fb16194191a72cd682b96872ac0d013580ee303e50231e9328290b42071"
+  },
+  "stage/scripts/mechanics_hbe_v5_comparison.py": {
+    "bytes": 19890,
+    "sha256": "895b294ecfc83847e0484f39ac0b9e1a5cda57a4853324a435c238e4c6649fb9"
+  },
+  "stage/scripts/mechanics_hbe_v5_native_comparison.py": {
+    "bytes": 31014,
+    "sha256": "a00d3f0eb81033acce815905d6f275c8892d5dbf7b2f31d99b78556738d82631"
+  },
+  "stage/tests/test_mechanics_hbe_v5_native_comparison.py": {
+    "bytes": 28833,
+    "sha256": "5ff0f49c3ccd72fec9a4d63ad6f8798cb541e24ed7fc8c88a25935c4033a9a6d"
+  },
+  "test_generated.py": {
+    "bytes": 28936,
+    "sha256": "0a10977c010a0e10258634649c305c08de85ef541f8d4535e98a9548978db0cb"
+  }
+}

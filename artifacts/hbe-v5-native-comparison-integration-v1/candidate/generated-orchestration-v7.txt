@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_full_generated_public_orchestration_compares_without_raw_io_or_permission _
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-current/test_full_generated_public_orc0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10d5c4470>
+
+    def test_full_generated_public_orchestration_compares_without_raw_io_or_permission(tmp_path,monkeypatch):
+        manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+>       result=n.compare_native_rows(tmp_path,binding)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:347: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/stage/scripts/mechanics_hbe_v5_native_comparison.py:421: in compare_native_rows
+    views[run_id], individual[run_id] = validate_native_row(study, prior, run_id,
+build/hbe-v5-native-comparison-preparation-v1/stage/scripts/mechanics_hbe_v5_native_comparison.py:351: in validate_native_row
+    _need(exact_supplement is None and receipt.get('status') == 'passed_numerical_software_only'
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, reason = 'passed_native_receipt_required'
+
+    def _need(condition, reason):
+        if not condition:
+>           raise ValueError(reason)
+E           ValueError: passed_native_receipt_required
+
+build/hbe-v5-native-comparison-preparation-v1/stage/scripts/mechanics_hbe_v5_native_comparison.py:37: ValueError
+=========================== short test summary info ============================
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_full_generated_public_orchestration_compares_without_raw_io_or_permission
+1 failed, 79 deselected in 0.42s

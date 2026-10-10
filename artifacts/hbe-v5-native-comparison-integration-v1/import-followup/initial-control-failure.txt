@@ -1,0 +1,22 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+_____ test_native_entry_uses_read_only_verifiers_not_native_release_audit ______
+
+    def test_native_entry_uses_read_only_verifiers_not_native_release_audit():
+        entry=calls(native.compare_native_rows)
+        assert entry.count('remaining.validate_prior_chain')==2
+        assert entry.count('supplement.verify_exact')==2
+        assert 'remaining.validate_release' not in entry
+        assert not any(name.endswith('audit_imports') for name in entry)
+        # These are actual unchanged function bodies, not mocked chain call graphs.
+        chain=calls(native.remaining.validate_prior_chain)
+        assert 'admission.verify_exact' in chain
+        assert not any(name.endswith(('audit_imports','validate_release')) for name in chain)
+>       inspection=calls(native.supplement.replay.inspect_readout)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.mechanics_hbe_v5_n12_saved_replay' has no attribute 'inspect_readout'
+
+build/hbe-v5-native-comparison-import-boundary-v2/stage/tests/test_mechanics_hbe_v5_native_import_boundary.py:27: AttributeError
+=========================== short test summary info ============================
+FAILED build/hbe-v5-native-comparison-import-boundary-v2/stage/tests/test_mechanics_hbe_v5_native_import_boundary.py::test_native_entry_uses_read_only_verifiers_not_native_release_audit
+1 failed, 2 passed, 88 deselected in 0.21s

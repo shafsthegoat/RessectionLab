@@ -1,0 +1,172 @@
+{
+  "measured_responses_accessed": false,
+  "missing_native_rows": [
+    "tension:N16:S60:reference",
+    "tension:N24:S60:reference",
+    "tension:N24:S120:reference"
+  ],
+  "native_or_replay_calls": 0,
+  "note": "Exact existing prose reviews are sufficient; this map creates no review, qualification, or permission. No separate readout files or raw primitive files were opened; numerical arrays were not interpreted.",
+  "original_N8_timing_gap": "Historical N8 readout and preparation wall time were not recorded.",
+  "rows": {
+    "compression:N12:S60:reference": {
+      "adapted_deck_sha256": "4da9b4483fb23b3ac5fa710f9af6581ca36dcf4345d4ada7087314232b23023f",
+      "comparison_scope": "entire_readout_json",
+      "evidence_kind": "archived_prose_exact_replay",
+      "exception_policy": {
+        "historical_guard_gap": "Original post-run source/runtime guards were not recorded after parent packaging failure.",
+        "original_status": "failed_or_incomplete",
+        "supplement_receipt_sha256": "8985a0e23b5d3a3d0029c5d69b48caaa6aff54c0628e40dabd1ea33aa6f3bb24"
+      },
+      "native_mesh_sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033",
+      "native_receipt_sha256": "9020e6c7ea1f01360dc8d02e5efd16e4a29591c2f566d0194415b03d8b68bbc2",
+      "readout_sha256": "960c7a4fdfb37b0823b07f88c19fe280b72583169fc73825a90b0dfe8c86772f",
+      "release_sha256": "b9e765529e98668e8fe675b61bc7084d48efddb1f431221174801d3bfe50acad",
+      "review_binding": {
+        "path": "artifacts/hbe-v5-n12-saved-replay-v1/INDEPENDENT_REVIEW.md",
+        "sha256": "39e832c7ccfb6f941e5e4db584f2849fa64d45cdd101ff7417cbc9db73fd0458"
+      },
+      "run_id": "compression:N12:S60:reference",
+      "source_deck_sha256": "0860b181fc427979b463f516d83fdbd10e9357b90390138f2b2b6c2212101440",
+      "supporting_passage": "The entire `replay.json` is **byte-for-byte identical** to the original 539,665-byte `readout.json` (not merely equivalent parsed JSON)."
+    },
+    "compression:N16:S60:reference": {
+      "adapted_deck_sha256": "3d78afd48c68384cf941527fee8236aecac220c2c06e8692bc50fc4ce1aabeb5",
+      "comparison_scope": "entire_readout_json",
+      "evidence_kind": "archived_prose_exact_replay",
+      "exception_policy": null,
+      "native_mesh_sha256": "5fefdc7e0ba068461ea5d64074e11fe734a6460552798487fb2794ff65075f6b",
+      "native_receipt_sha256": "9c5fb86a1264c1ff3bea06800b16fef7b3248908971d88cc543bcee0692d0f96",
+      "readout_sha256": "d8af76cca9c40231fa6750bc71abae849c2dbce6ec23412799c58c39d00a21e0",
+      "release_sha256": "1bdbaf36926ea96aed1b0ce4d0772337ddaf36faafcd580b05359fd138c373e0",
+      "review_binding": {
+        "path": "artifacts/hbe-v5-n16-numerical-v1/INDEPENDENT_REVIEW.md",
+        "sha256": "3e675cdc6437b98e67ff1481372d281a3166bbf1797407b9a054e94e4e81c11c"
+      },
+      "run_id": "compression:N16:S60:reference",
+      "source_deck_sha256": "706a323f0bc0a6b34264b34c4f137529f4583aff7375416286925c773005ef7b",
+      "supporting_passage": "A fresh read-only `mechanics_hbe_v5_stream.read_bound_run` over its six bound raw inputs produced **exactly** the saved full `readout.json` object"
+    },
+    "compression:N24:S60:reference": {
+      "adapted_deck_sha256": "d2ef1695e2702a096ec2052821df0f288d2769c22ef3f6ba350b658992fe3e32",
+      "comparison_scope": "entire_readout_json",
+      "evidence_kind": "archived_prose_exact_replay",
+      "exception_policy": null,
+      "native_mesh_sha256": "f8a934c3e035fbf478583719b901490f72478579b72d0b4d8b0a6dea1a3b99a2",
+      "native_receipt_sha256": "823ab0b8260a56d62147dd4cc44dcc2e37ef2bf72092aa4c206d576f3831097d",
+      "readout_sha256": "6a8ee5db83518652949744a605774f23c3d0304d2c20e72367bf65fe35817761",
+      "release_sha256": "e0392ed3bf7288e8cc64052fa58aeebc21301e6dc133f1b3b5ca764429390841",
+      "review_binding": {
+        "path": "artifacts/hbe-v5-n24-numerical-v1/INDEPENDENT_REVIEW.md",
+        "sha256": "c5c88278070ff8447d5441fbe1c3c2598d3fc8e9b2c1ed5e31ac24d75e897898"
+      },
+      "run_id": "compression:N24:S60:reference",
+      "source_deck_sha256": "d6b87f944d3cc2f9ab1d5849a806cfa762f6d810ddde88308ec8c9906fd98706",
+      "supporting_passage": "A fresh read-only `mechanics_hbe_v5_stream.read_bound_run` over the six bound inputs reproduced the **entire** saved `readout.json` object"
+    },
+    "compression:N32:S60:reference": {
+      "adapted_deck_sha256": "67516a08209e5369dc6c5551b9b8a52877eba477f7e500b152519bccd58f4e91",
+      "comparison_scope": "entire_readout_json",
+      "evidence_kind": "archived_prose_exact_replay",
+      "exception_policy": null,
+      "native_mesh_sha256": "edbb95dd61e2f1ba94faf405bbd263a2d995dcc87ebd298a8e072595ecc6009a",
+      "native_receipt_sha256": "f6830c11c551f548b22152f1b2582f151072163f65e8250e40a41be768194168",
+      "readout_sha256": "223ea86bdaa88ce7f6a596db0dda753d286cef7410c0323f99338ac84c0f3539",
+      "release_sha256": "9381e5d53db431f53509cd726e90d60babe6dd78e1471961a52de39c12a86c70",
+      "review_binding": {
+        "path": "artifacts/hbe-v5-n32-numerical-v1/INDEPENDENT_REVIEW.md",
+        "sha256": "c573a5b3923b85bcdf073e23df214262393334fe113ce3bef1f46e7953c34c55"
+      },
+      "run_id": "compression:N32:S60:reference",
+      "source_deck_sha256": "f481b4bb872ad1982eddd16544e579bef3caf96bbf1a91a2e2ad01f9446740e3",
+      "supporting_passage": "A fresh read-only `mechanics_hbe_v5_stream.read_bound_run` over those six bound raw inputs reproduced the **entire** saved `readout.json` object."
+    },
+    "compression:N36:S120:reference": {
+      "adapted_deck_sha256": "343676258c2c49d91f78eba55c5a41185f59975ba5d1708213f9ccaa751b8f4b",
+      "comparison_scope": "entire_readout_json",
+      "evidence_kind": "archived_prose_exact_replay",
+      "exception_policy": null,
+      "native_mesh_sha256": "8e7ad0e636151e007ab9fd8af0d043abfcf889b960c53e726766126691c3c075",
+      "native_receipt_sha256": "a1357ecb8cd129e10923d2d3a0837b62d892bf8b4bdb7d83ccb12cb7b6d041f4",
+      "readout_sha256": "14ca49981b0bf68df1a2a1d75489b9e8966c017635d3c4ba20a794e64a8eb18b",
+      "release_sha256": "1ea9f55f9d1db13cb214e8eac649713fb39b2492d0721c8bed9921d4cd886a58",
+      "review_binding": {
+        "path": "artifacts/hbe-v5-n36-s120-numerical-v1/INDEPENDENT_REVIEW.md",
+        "sha256": "3d490c4be33eedf9374318b98240e85574d34623c77d17dfead4c49bff036aab"
+      },
+      "run_id": "compression:N36:S120:reference",
+      "source_deck_sha256": "93e02fff10bb680c7f60b93161a217bd47146b4d0dba34316003510df1008847",
+      "supporting_passage": "**Decision: GO for the completed numerical specimen-fixture row and a passing S60/S120 load-step diagnostic.** One independently supervised replay reproduced all **121 frames and 120 solver states** and the entire saved JSON byte for byte. The frozen comparison passed at **all 61 common states and all 75 probes**. This does not qualify the full twelve-row study, spatial convergence, measured force, material calibration, or patient mechanics."
+    },
+    "compression:N36:S60:reference": {
+      "adapted_deck_sha256": "3b30c25d63be4d5346398808bed2e76c705894621cee6ba700e300c1ec6d49b8",
+      "comparison_scope": "entire_readout_json",
+      "evidence_kind": "archived_prose_exact_replay",
+      "exception_policy": null,
+      "native_mesh_sha256": "8e7ad0e636151e007ab9fd8af0d043abfcf889b960c53e726766126691c3c075",
+      "native_receipt_sha256": "b7f59dada629cd1fb8e61eac48a6eda86724b755055bdb7aa5dbf812d83fb013",
+      "readout_sha256": "093777276e6270cea6ab76c8dc6d9e615acde78fedaa1517b2a8c04555398a48",
+      "release_sha256": "ffe757b78dfcf82ff81ceb3016ab724615a8338d84283335831f984ac7449034",
+      "review_binding": {
+        "path": "artifacts/hbe-v5-n36-numerical-v1/INDEPENDENT_REVIEW.md",
+        "sha256": "b406918b7ecd592fb8899667f37919a8acdd5dc50bc1f590645ccb03db6e5be4"
+      },
+      "run_id": "compression:N36:S60:reference",
+      "source_deck_sha256": "93e02fff10bb680c7f60b93161a217bd47146b4d0dba34316003510df1008847",
+      "supporting_passage": "The fresh call to `mechanics_hbe_v5_stream.read_bound_run` reproduced the **entire** saved JSON object and a byte-identical serialized file, SHA-256 `093777276e6270cea6ab76c8dc6d9e615acde78fedaa1517b2a8c04555398a48`. This is independent execution of the existing reader, not an independently implemented constitutive solver. Direct streaming counts additionally confirm 61 ordered node frames of **39,610 nodes** and 61 ordered element frames of **34,992 Hex8 elements**, with every ID in sequence and header times within `3.334e-10` of `i/60`."
+    },
+    "compression:N8:S60:reference": {
+      "adapted_deck_sha256": "3cf4156b19191918841498490bc448f88a61b656b566d5d6a3d36db817d0a724",
+      "comparison_scope": "all_non_provenance_fields",
+      "evidence_kind": "archived_prose_exact_replay",
+      "exception_policy": null,
+      "native_mesh_sha256": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9",
+      "native_receipt_sha256": "8099c438caadf120d7269c14025fb92932fdda12a05f5ac8e8ade981cb20d45d",
+      "readout_sha256": "8099c438caadf120d7269c14025fb92932fdda12a05f5ac8e8ade981cb20d45d",
+      "release_sha256": "417f34c234ed5c79eeaab4f9e060cd7e3a49b67acbe1de63730f018aa3afaad3",
+      "review_binding": {
+        "path": "build/hbe-v5-n8-result-independent/REPORT.md",
+        "sha256": "9a9351bd5bc63b4efa12bbffef48dcad9bc197225c6104a017d913923e40db00"
+      },
+      "run_id": "compression:N8:S60:reference",
+      "source_deck_sha256": "b0191042df6fccc4c4dc317bb9145f0a077880a7e5589cd471b9ac93452a2506",
+      "supporting_passage": "Every non-provenance readout field reproduced the receipt exactly."
+    },
+    "tension:N12:S60:reference": {
+      "adapted_deck_sha256": "6dbf980c8d60309f62d4d6e8e395d881b4bacfd1be73796eedfad6112f9505a9",
+      "comparison_scope": "entire_readout_json",
+      "evidence_kind": "archived_prose_exact_replay",
+      "exception_policy": null,
+      "native_mesh_sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033",
+      "native_receipt_sha256": "67f7b82dca721d6d36b16e80e77c5d126b0ea9f9f510f8c2dd54b64716206a8e",
+      "readout_sha256": "699d70d887ed4e17cc554cf18c8f1bd3e86e4adc00f1b981b2ea2e848dd42db8",
+      "release_sha256": "7f41865a1bfef4a785b4be262832af6d92d79472abd808a905773dc7ddc181d8",
+      "review_binding": {
+        "path": "artifacts/hbe-v5-tension-n12-nocache-v2-result-v1/RESULT.md",
+        "sha256": "6fb89ad0e7b132796554f285ece490d5a20c45c9f031a067174d7b8ca4abd56e"
+      },
+      "run_id": "tension:N12:S60:reference",
+      "source_deck_sha256": "b3cbf26b826b700aab89273f13324852690be09947d087acff6bebd92b218294",
+      "supporting_passage": "Its decoded result exactly matched the retained `readout.json`"
+    },
+    "tension:N8:S60:reference": {
+      "adapted_deck_sha256": "027327aa62e1bb620b6264cf55abbd44633319281be7ed37d345b3c1dd11cb0b",
+      "comparison_scope": "entire_readout_json",
+      "evidence_kind": "archived_prose_exact_replay",
+      "exception_policy": null,
+      "native_mesh_sha256": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9",
+      "native_receipt_sha256": "3499f1787dacca9d24e463cc09ec539437c1046252b616041a00b89f91ce08b5",
+      "readout_sha256": "7e572166c5734bbdab14c468c18d8bb6253e6525c70505935bc7ff55d5127bd6",
+      "release_sha256": "c91e41806e70093644714072e7a22d24642aae40b8f10310f8cf8bc8bd69a843",
+      "review_binding": {
+        "path": "artifacts/hbe-v5-tension-n8-s60-numerical-v1/INDEPENDENT_REVIEW.md",
+        "sha256": "8a4b8814a5d2a333b056ba9289197b23fd3786a3409b947a5f1f8a9eb9478985"
+      },
+      "run_id": "tension:N8:S60:reference",
+      "source_deck_sha256": "474c1f0fdfa5769ab53c0dd72933e63961a90da4db922e57e8b51695b0149a5a",
+      "supporting_passage": "**Decision: GO for the completed ordinal-7 numerical specimen-fixture row only.** The one bounded independent replay reproduced the entire saved **61-frame** readout byte for byte, including all **60 solver states and 75 displacement probes**. No native rerun occurred. This first tension row does not establish tension mesh convergence, measured-force accuracy, material calibration, full twelve-row qualification, or patient mechanics."
+    }
+  },
+  "schema": "hbe-v5-existing-independent-evidence-mapping-v1",
+  "status": "existing_evidence_mapped_no_new_review_or_release"
+}

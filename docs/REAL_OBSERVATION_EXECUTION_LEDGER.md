@@ -985,3 +985,15 @@ audit command failed on a final bookkeeping import. The stale `started`
 supervisor status is preserved and explained, rather than silently corrected.
 No solver or saved-stream replay was retried. Original receipts and thresholds
 remain unchanged; row 10 requires separate continuation admission.
+
+### October 10: native twelve-row comparator integrated without executing it
+
+The [source integration](../artifacts/hbe-v5-native-comparison-integration-v1/RESULT.md)
+passes 91 canonical tests. Independent review confirms unchanged shared math,
+six whole-result parity controls and the separate comparator import guard.
+The original generated-only entry point and native launcher allowlist remain
+unchanged. Native admission binds receipts, readouts, original supplemental
+evidence and the full chain before and after comparison. This slice ran no
+native process or actual bulk verifier. The original nine-row mapping remains
+historical; N16 now makes ten complete rows, with two executions and the complete
+comparison still outstanding. Measured-force and patient validation remain open.

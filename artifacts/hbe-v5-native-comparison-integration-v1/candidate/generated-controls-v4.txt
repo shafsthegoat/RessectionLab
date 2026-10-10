@@ -1,0 +1,246 @@
+......................................................................FF [ 90%]
+FFFFFFF.                                                                 [100%]
+=================================== FAILURES ===================================
+_ test_full_generated_public_orchestration_compares_without_raw_io_or_permission _
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_full_generated_public_orc0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x106fdafc0>
+
+    def test_full_generated_public_orchestration_compares_without_raw_io_or_permission(tmp_path,monkeypatch):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:343: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:277: in orchestration_fixture
+    caps=n.remaining.caps(i),prior_receipt_sha256=list(previous['sha256']))
+         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+index = 0
+
+    def caps(index: int) -> dict:
+        if index not in range(1, 12):
+>           raise ValueError('Undeclared remaining index')
+E           ValueError: Undeclared remaining index
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:93: ValueError
+_______ test_late_bound_metadata_mutation_refuses_full_result[manifest] ________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10949b3e0>
+target = 'manifest'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:357: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:277: in orchestration_fixture
+    caps=n.remaining.caps(i),prior_receipt_sha256=list(previous['sha256']))
+         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+index = 0
+
+    def caps(index: int) -> dict:
+        if index not in range(1, 12):
+>           raise ValueError('Undeclared remaining index')
+E           ValueError: Undeclared remaining index
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:93: ValueError
+________ test_late_bound_metadata_mutation_refuses_full_result[readout] ________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10949ce90>
+target = 'readout'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:357: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:277: in orchestration_fixture
+    caps=n.remaining.caps(i),prior_receipt_sha256=list(previous['sha256']))
+         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+index = 0
+
+    def caps(index: int) -> dict:
+        if index not in range(1, 12):
+>           raise ValueError('Undeclared remaining index')
+E           ValueError: Undeclared remaining index
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:93: ValueError
+______ test_late_bound_metadata_mutation_refuses_full_result[work_order] _______
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1094980b0>
+target = 'work_order'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:357: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:277: in orchestration_fixture
+    caps=n.remaining.caps(i),prior_receipt_sha256=list(previous['sha256']))
+         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+index = 0
+
+    def caps(index: int) -> dict:
+        if index not in range(1, 12):
+>           raise ValueError('Undeclared remaining index')
+E           ValueError: Undeclared remaining index
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:93: ValueError
+________ test_late_bound_metadata_mutation_refuses_full_result[review] _________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10949edb0>
+target = 'review'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:357: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:277: in orchestration_fixture
+    caps=n.remaining.caps(i),prior_receipt_sha256=list(previous['sha256']))
+         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+index = 0
+
+    def caps(index: int) -> dict:
+        if index not in range(1, 12):
+>           raise ValueError('Undeclared remaining index')
+E           ValueError: Undeclared remaining index
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:93: ValueError
+________ test_late_bound_metadata_mutation_refuses_full_result[sidecar] ________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10949bc80>
+target = 'sidecar'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:357: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:277: in orchestration_fixture
+    caps=n.remaining.caps(i),prior_receipt_sha256=list(previous['sha256']))
+         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+index = 0
+
+    def caps(index: int) -> dict:
+        if index not in range(1, 12):
+>           raise ValueError('Undeclared remaining index')
+E           ValueError: Undeclared remaining index
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:93: ValueError
+_______ test_late_bound_metadata_mutation_refuses_full_result[envelope] ________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10949afc0>
+target = 'envelope'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:357: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:277: in orchestration_fixture
+    caps=n.remaining.caps(i),prior_receipt_sha256=list(previous['sha256']))
+         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+index = 0
+
+    def caps(index: int) -> dict:
+        if index not in range(1, 12):
+>           raise ValueError('Undeclared remaining index')
+E           ValueError: Undeclared remaining index
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:93: ValueError
+______ test_late_bound_metadata_mutation_refuses_full_result[supplement] _______
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10949b8f0>
+target = 'supplement'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:357: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:277: in orchestration_fixture
+    caps=n.remaining.caps(i),prior_receipt_sha256=list(previous['sha256']))
+         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+index = 0
+
+    def caps(index: int) -> dict:
+        if index not in range(1, 12):
+>           raise ValueError('Undeclared remaining index')
+E           ValueError: Undeclared remaining index
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:93: ValueError
+______ test_late_bound_metadata_mutation_refuses_full_result[source_map] _______
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1/test_late_bound_metadata_mutat7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109498560>
+target = 'source_map'
+
+    @pytest.mark.parametrize('target',['manifest','readout','work_order','review','sidecar','envelope','supplement','source_map'])
+    def test_late_bound_metadata_mutation_refuses_full_result(tmp_path,monkeypatch,target):
+>       manifest,binding,events=orchestration_fixture(tmp_path,monkeypatch)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:357: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hbe-v5-native-comparison-preparation-v1/test_generated.py:277: in orchestration_fixture
+    caps=n.remaining.caps(i),prior_receipt_sha256=list(previous['sha256']))
+         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+index = 0
+
+    def caps(index: int) -> dict:
+        if index not in range(1, 12):
+>           raise ValueError('Undeclared remaining index')
+E           ValueError: Undeclared remaining index
+
+scripts/mechanics_hbe_v5_remaining_one_shot.py:93: ValueError
+=========================== short test summary info ============================
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_full_generated_public_orchestration_compares_without_raw_io_or_permission
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[manifest]
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[readout]
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[work_order]
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[review]
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[sidecar]
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[envelope]
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[supplement]
+FAILED build/hbe-v5-native-comparison-preparation-v1/test_generated.py::test_late_bound_metadata_mutation_refuses_full_result[source_map]
+9 failed, 71 passed in 4.39s

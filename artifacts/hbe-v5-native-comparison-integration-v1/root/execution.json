@@ -1,0 +1,16 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_hbe_v5_comparison.py",
+    "tests/test_mechanics_hbe_v5_native_comparison.py",
+    "tests/test_mechanics_hbe_v5_native_import_boundary.py"
+  ],
+  "returncode": 0,
+  "wall_seconds": 6.971297834068537,
+  "native_calls": 0,
+  "actual_full_chain_verifications": 0
+}

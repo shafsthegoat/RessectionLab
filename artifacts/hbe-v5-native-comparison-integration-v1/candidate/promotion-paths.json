@@ -1,0 +1,17 @@
+{
+  "scripts/mechanics_hbe_v5_comparison.py": {
+    "bytes": 19890,
+    "candidate_sha256": "895b294ecfc83847e0484f39ac0b9e1a5cda57a4853324a435c238e4c6649fb9",
+    "original_sha256": "a8c6a985ba5db35547cb2a1204396cbdd20af6122d15c4cf846f21532bd777b1"
+  },
+  "scripts/mechanics_hbe_v5_native_comparison.py": {
+    "bytes": 31014,
+    "candidate_sha256": "a00d3f0eb81033acce815905d6f275c8892d5dbf7b2f31d99b78556738d82631",
+    "original_sha256": null
+  },
+  "tests/test_mechanics_hbe_v5_native_comparison.py": {
+    "bytes": 28833,
+    "candidate_sha256": "5ff0f49c3ccd72fec9a4d63ad6f8798cb541e24ed7fc8c88a25935c4033a9a6d",
+    "original_sha256": null
+  }
+}

@@ -1,0 +1,229 @@
+{
+  "all_copies_byte_identical": true,
+  "file_count": 35,
+  "files": [
+    {
+      "bytes": 5833,
+      "path": "candidate/RESULT.txt",
+      "sha256": "9e34822cf49b9fd1aff08ac173a358b3e526d739fba4c6dd4bffc1c2830909be",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/RESULT.txt"
+    },
+    {
+      "bytes": 64526,
+      "path": "candidate/source.patch",
+      "sha256": "1aac9fb16194191a72cd682b96872ac0d013580ee303e50231e9328290b42071",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/source.patch"
+    },
+    {
+      "bytes": 1570,
+      "path": "candidate/candidate-pins.json",
+      "sha256": "98bf65a921dc0df9e0fe91838e0dc52794207a2c9797a2c5f75cb528c21b514d",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/candidate-pins.json"
+    },
+    {
+      "bytes": 655,
+      "path": "candidate/promotion-paths.json",
+      "sha256": "473f59f01098c9556faa18d66e34f2c9b0285a2f36ed512313b6fe8c8982709c",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/promotion-paths.json"
+    },
+    {
+      "bytes": 531,
+      "path": "candidate/shared-extraction.json",
+      "sha256": "ba73594ed1d60088aac3061e21ea992b477885d6f2eedc141d894018c0d8cea1",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/shared-extraction.json"
+    },
+    {
+      "bytes": 5959,
+      "path": "candidate/comparison-source-inventory.json",
+      "sha256": "a2f8c400b7ae2110a2014180922f115ff6cf08e0fb8e882acf652825bbf38792",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/comparison-source-inventory.json"
+    },
+    {
+      "bytes": 12320,
+      "path": "candidate/existing-evidence-mapping.json",
+      "sha256": "b4550c1c98d793f2e62e4c891f3e32b39825932949c54b558dc27f304b70c8d6",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/existing-evidence-mapping.json"
+    },
+    {
+      "bytes": 4550,
+      "path": "candidate/map_existing_evidence.py",
+      "sha256": "eb0802ed624f872023d32a26582e45b86fa3d2a9145fd9ea4ff8cfaf6b4e37cf",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/map_existing_evidence.py"
+    },
+    {
+      "bytes": 3948,
+      "path": "candidate/extract_shared.py",
+      "sha256": "9ce73e735e3e02d9ec830ba53f267340a610f100710304a9b3295aeadbd98d8c",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/extract_shared.py"
+    },
+    {
+      "bytes": 28936,
+      "path": "candidate/test_generated.py",
+      "sha256": "0a10977c010a0e10258634649c305c08de85ef541f8d4535e98a9548978db0cb",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/test_generated.py"
+    },
+    {
+      "bytes": 739,
+      "path": "candidate/run_controls.py",
+      "sha256": "7bc95c320030731e16577ea77d4567891b0b9531b85322062a166db5f658103f",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/run_controls.py"
+    },
+    {
+      "bytes": 3737,
+      "path": "candidate/freeze_candidate.py",
+      "sha256": "7cb85cc5acbc6e2871aac65e7903c2b8d448b38ee507e6205edf1829dda2dffd",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/freeze_candidate.py"
+    },
+    {
+      "bytes": 19890,
+      "path": "candidate/stage/scripts/mechanics_hbe_v5_comparison.py",
+      "sha256": "895b294ecfc83847e0484f39ac0b9e1a5cda57a4853324a435c238e4c6649fb9",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/stage/scripts/mechanics_hbe_v5_comparison.py"
+    },
+    {
+      "bytes": 31014,
+      "path": "candidate/stage/scripts/mechanics_hbe_v5_native_comparison.py",
+      "sha256": "a00d3f0eb81033acce815905d6f275c8892d5dbf7b2f31d99b78556738d82631",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/stage/scripts/mechanics_hbe_v5_native_comparison.py"
+    },
+    {
+      "bytes": 28833,
+      "path": "candidate/stage/tests/test_mechanics_hbe_v5_native_comparison.py",
+      "sha256": "5ff0f49c3ccd72fec9a4d63ad6f8798cb541e24ed7fc8c88a25935c4033a9a6d",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/stage/tests/test_mechanics_hbe_v5_native_comparison.py"
+    },
+    {
+      "bytes": 372,
+      "path": "candidate/generated-controls-v1.txt",
+      "sha256": "40705e7247a1864ded389567a0a751f78638c5b449b2e8230dec3d5b6f288016",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/generated-controls-v1.txt"
+    },
+    {
+      "bytes": 99,
+      "path": "candidate/generated-controls-v2.txt",
+      "sha256": "9f4fb10aeb7178e1d6b357b8b8739cb6e8d32c7b4f1db978941f45ee26af813e",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/generated-controls-v2.txt"
+    },
+    {
+      "bytes": 99,
+      "path": "candidate/generated-controls-v3.txt",
+      "sha256": "4f13146a5f62f22419de336db30a6d37a447a440314cc5cc586b93629d54e6bc",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/generated-controls-v3.txt"
+    },
+    {
+      "bytes": 14558,
+      "path": "candidate/generated-controls-v4.txt",
+      "sha256": "99ff4c1c44a490d3ee400d2653fdf56abd5eeaea80ca77e1886c14a53e09a682",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/generated-controls-v4.txt"
+    },
+    {
+      "bytes": 25772,
+      "path": "candidate/generated-controls-v5.txt",
+      "sha256": "8f66f7302070ef98acdb6d892bfa52624220fabc0ac35e602fccc1c0b24568df",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/generated-controls-v5.txt"
+    },
+    {
+      "bytes": 30317,
+      "path": "candidate/generated-controls-v6.txt",
+      "sha256": "066e153b1d19f8df50ab7aad2f0b1cd3a71c166df7aba9c9fcbb5a7386b4f99b",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/generated-controls-v6.txt"
+    },
+    {
+      "bytes": 179,
+      "path": "candidate/generated-controls-v9.txt",
+      "sha256": "e91f8184055986bf15b8ed46ae4c56c811ad1ef471740cd0b31e4817d81c0995",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/generated-controls-v9.txt"
+    },
+    {
+      "bytes": 2093,
+      "path": "candidate/generated-orchestration-v7.txt",
+      "sha256": "ea63764b8228e646d502d32b02a92a287cbded3a7cf2e04a9bcccfb6e72ddc6c",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/generated-orchestration-v7.txt"
+    },
+    {
+      "bytes": 113,
+      "path": "candidate/generated-orchestration-v8.txt",
+      "sha256": "40da448b5aba9a0726f23dbbf292eabed7a1c7d4da6466d12ea62039d0e6a369",
+      "source_path": "build/hbe-v5-native-comparison-preparation-v1/generated-orchestration-v8.txt"
+    },
+    {
+      "bytes": 5841,
+      "path": "independent/REPORT.txt",
+      "sha256": "63dadc89702303e470bd5e7ae8a8b7585e16a87aef3a81656c602b4dc9d20cd1",
+      "source_path": "build/hbe-v5-native-comparison-independent-v1/REPORT.txt"
+    },
+    {
+      "bytes": 1035,
+      "path": "independent/math-parity.json",
+      "sha256": "d0e44ba376738997482ce71ee69402c3c6ce6852f100563321fd7705334208c0",
+      "source_path": "build/hbe-v5-native-comparison-independent-v1/math-parity.json"
+    },
+    {
+      "bytes": 179,
+      "path": "independent/generated-controls.txt",
+      "sha256": "969910b7b7aa01d03292df002d27fefbe113492da0480067ddbf8cdd08592e4d",
+      "source_path": "build/hbe-v5-native-comparison-independent-v1/generated-controls.txt"
+    },
+    {
+      "bytes": 415,
+      "path": "independent/promotion-check.json",
+      "sha256": "f44bead527be3ff1b69d550309d9e0a0e6a4e7e84b1b6d6aae64714a8b7451a7",
+      "source_path": "build/hbe-v5-native-comparison-independent-v1/promotion-check.json"
+    },
+    {
+      "bytes": 3786,
+      "path": "independent/check_math.py",
+      "sha256": "13d663707199348170ec079171839daf3958af09581af9a084c43793cf52ad12",
+      "source_path": "build/hbe-v5-native-comparison-independent-v1/check_math.py"
+    },
+    {
+      "bytes": 1193,
+      "path": "independent/run_controls.py",
+      "sha256": "4ceeb4a3d9fd2622bb2c5e23fb8fad971b9f0597ad527b425ba6d3fb1efcddd3",
+      "source_path": "build/hbe-v5-native-comparison-independent-v1/run_controls.py"
+    },
+    {
+      "bytes": 2481,
+      "path": "independent/extra_generated.py",
+      "sha256": "4cf24708f53adb661f0f1d1c0fcb9d3082877ccc453fa85b6e0de266cc1dd3bc",
+      "source_path": "build/hbe-v5-native-comparison-independent-v1/extra_generated.py"
+    },
+    {
+      "bytes": 454,
+      "path": "independent/prep-clock-probe.json",
+      "sha256": "17ae2d90bb585807eaf0a4370dacbfec8922a37d590bd6beab5d2ba1192d0f08",
+      "source_path": "build/hbe-v5-native-comparison-independent-v1/prep-clock-probe.json"
+    },
+    {
+      "bytes": 178,
+      "path": "independent/output-cap-probe.json",
+      "sha256": "f811db7a1e35c18436225d3ee4b0e8c7caefaf720c3d6e64bcfd93cc95aa0b0a",
+      "source_path": "build/hbe-v5-native-comparison-independent-v1/output-cap-probe.json"
+    },
+    {
+      "bytes": 516,
+      "path": "independent/output-cap-interpretation.txt",
+      "sha256": "7c54e4b0880cfed8136041df1a0472ef663847e4d63eca786b0b784da381b26c",
+      "source_path": "build/hbe-v5-native-comparison-independent-v1/output-cap-interpretation.txt"
+    },
+    {
+      "bytes": 286,
+      "path": "independent/initial-harness-failure.txt",
+      "sha256": "5239f9181d0dc135ec065ee0cec60c026b3d0e8a5791485d1ab501364d6a7362",
+      "source_path": "build/hbe-v5-native-comparison-independent-v1/initial-harness-failure.txt"
+    }
+  ],
+  "generated_array_scratch_included": false,
+  "independent_report_sha256": "63dadc89702303e470bd5e7ae8a8b7585e16a87aef3a81656c602b4dc9d20cd1",
+  "measured_responses_accessed": false,
+  "native_calls": 0,
+  "note": "Copies of compact candidate source, generated controls and independent review. Existing numerical evidence is mapped by exact hash; its raw artifacts are not copied. All12 comparison remains unexecuted; root alone may integrate.",
+  "original_raw_streams_accessed": false,
+  "patch_sha256": "1aac9fb16194191a72cd682b96872ac0d013580ee303e50231e9328290b42071",
+  "patient_data_accessed": false,
+  "runtime_binaries_included": false,
+  "saved_stream_replays": 0,
+  "schema": "hbe-v5-native-comparison-source-evidence-index-v1",
+  "status": "source_candidate_independently_reviewed_no_native_execution",
+  "total_file_bytes": 303007
+}

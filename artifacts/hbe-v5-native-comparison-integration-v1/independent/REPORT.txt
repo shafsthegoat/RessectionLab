@@ -1,0 +1,93 @@
+Independent source-promotion review: HBE v5 native twelve-row comparator
+
+Decision: GO for promotion of the exact three-file source patch below. This is
+source/generated review only. It does not authorize native execution, saved raw
+stream replay, bulk hashing, calibration, or measured-response access. The actual
+twelve-row numerical comparison remains unexecuted and incomplete.
+
+Reviewed pins
+
+Candidate root: build/hbe-v5-native-comparison-preparation-v1
+source.patch: 1aac9fb16194191a72cd682b96872ac0d013580ee303e50231e9328290b42071
+candidate-pins.json: 98bf65a921dc0df9e0fe91838e0dc52794207a2c9797a2c5f75cb528c21b514d
+scripts/mechanics_hbe_v5_comparison.py:
+  895b294ecfc83847e0484f39ac0b9e1a5cda57a4853324a435c238e4c6649fb9
+scripts/mechanics_hbe_v5_native_comparison.py:
+  a00d3f0eb81033acce815905d6f275c8892d5dbf7b2f31d99b78556738d82631
+tests/test_mechanics_hbe_v5_native_comparison.py:
+  5ff0f49c3ccd72fec9a4d63ad6f8798cb541e24ed7fc8c88a25935c4033a9a6d
+
+All 11 indexed candidate files and all 30 declared repository source bindings
+match. git apply --check succeeds. The canonical test differs from the exercised
+ignored test only in ROOT relocation and removal of the ignored namespace loader.
+There are no dependencies on an ignored fixture path in the promoted test.
+
+Independent checks and findings
+
+The original comparison source is SHA a8c6a985ba5db35547cb2a1204396cbdd20af6122d15c4cf846f21532bd777b1.
+I independently compared constants, helper ASTs, and extracted numerical-statement
+ASTs: unchanged. Six independently selected generated cases give identical whole
+results or identical refusals before/after extraction: baseline, coarse sign,
+odd S120 spike, probe error, inconsistent numerical flag, and native provenance.
+Generated input still cannot become native evidence or numerical qualification
+through compare_generated_rows; no provenance field is relabeled to reuse it.
+
+The final control run passed 95 tests in 8.44 seconds (author 88 plus independent
+7). An added Python audit hook rejected process launches and any open under the
+actual data/mechanics or outputs/mechanics trees, including os.open. The public
+native entry was exercised only with small generated JSON and explicit stubs for
+raw-chain, historical-Git, preparation-location and loaded-origin I/O seams.
+Its byte ledger, row validation, frozen mathematics, cumulative sidecar charges
+and both-pass orchestration ran. No actual-native comparator call occurred.
+
+The native adapter requires all twelve exact ordered rows, authenticates the
+original receipt/output chain before and after comparison, and retains the fixed
+failed-N12 receipt plus its exact saved supplement. It checks source/mesh/adapted
+deck and work-order identities without turning an unverified stream origin into
+a native one. It rechecks bound manifest/readout/work-order/review/sidecar/envelope
+bytes and loaded repository source identities before returning. The historical
+N8 timing gap and N12 guard gap remain visible; numerical acceptance does not
+assert a continuum error bound, calibration permission or physical validation.
+
+Existing independent prose is consumed with an explicit identity mapping and
+exact hash/passage binding. I authenticated all nine currently mapped review
+files/passages; the three unexecuted tension rows remain absent. The code does not
+manufacture a human-review certificate. Semantic correctness of a future mapping
+belongs to review of the root-supplied manifest hash, which is the trust anchor.
+
+One independently reproduced accounting defect was repaired before this GO:
+contradictory launcher elapsed/terminal clocks previously passed with unchanged
+preparation charge. Final code enforces the original launcher reserve equation,
+terminal limit, per-row prep cap and exact one-call sidecar counters. Negative
+controls pass. Extension overhead and reserved sidecar output are added once,
+including previous extension charges. Native-directory and sidecar caps remain
+separate and their sum is charged to aggregate, matching the existing wrapper.
+My initially suggested combined per-row output cap was withdrawn after checking
+that policy; the accepted synthetic probe and correction remain saved here.
+
+Runtime limits of this GO
+
+The caller must supply a genuinely reviewed complete manifest, every continuation
+sidecar, and a fresh supervised interpreter/runtime/cache policy. Source-file and
+loaded-origin checks are not bytecode or full scientific-runtime authentication.
+The native entry rehashes large saved files in BOTH chain passes, including
+repeated exact-N12 verification; a later explicit bounded read-only release must
+budget that work. No such release or execution is supplied by this report. The
+ordinal-9 launcher and all original numerical thresholds/receipts stay unchanged.
+
+Evidence in this directory
+
+math-parity.json; generated-controls.txt; promotion-check.json; check_math.py;
+run_controls.py; extra_generated.py; prep-clock-probe.json; output-cap-probe.json;
+output-cap-interpretation.txt; initial-harness-failure.txt.
+
+Exact successful commands (repository root):
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -B build/hbe-v5-native-comparison-independent-v1/check_math.py
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -B build/hbe-v5-native-comparison-independent-v1/run_controls.py
+git apply --check build/hbe-v5-native-comparison-preparation-v1/source.patch
+
+The first independent math harness failed before candidate execution because a
+Python namespace path lacks list.insert; only the ignored harness was repaired.
+The author's earlier synthetic-fixture setup failures remain in its candidate
+folder. All writes from this review are in this ignored directory; no tracked
+file, measured response, native log, release or prior negative was changed.

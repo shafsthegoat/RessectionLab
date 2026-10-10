@@ -1,0 +1,8 @@
+{
+  "all_candidate_pins_verified": 11,
+  "comparison_source_bindings_verified": 30,
+  "canonical_test_changes": "only ROOT parent and removal of ignored candidate namespace loader",
+  "patch_sha256": "1aac9fb16194191a72cd682b96872ac0d013580ee303e50231e9328290b42071",
+  "source_patch_check": "git apply --check exit0",
+  "candidate_pins_sha256": "98bf65a921dc0df9e0fe91838e0dc52794207a2c9797a2c5f75cb528c21b514d"
+}

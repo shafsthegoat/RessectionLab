@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-native-comparison-preparation-v1/run_controls.py", line 8, in <module>
+    scripts.__path__.insert(0,str(HERE/'stage/scripts'))
+    ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: '_NamespacePath' object has no attribute 'insert'

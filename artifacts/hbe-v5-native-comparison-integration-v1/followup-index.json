@@ -1,0 +1,75 @@
+{
+  "files": [
+    {
+      "path": "import-followup/RESULT.txt",
+      "bytes": 2707,
+      "sha256": "4ff1efce8c87c54fc45bacc37a610c658c9570fa5bc17a553473b3b022d681ec"
+    },
+    {
+      "path": "import-followup/canonical-import-console.txt",
+      "bytes": 188,
+      "sha256": "763e44a36af2180c13d7253a9feca0d06709ac5af946e88b0bb85bd72e05b6ca"
+    },
+    {
+      "path": "import-followup/canonical-import-result.json",
+      "bytes": 3847,
+      "sha256": "0bc75f1b35bb284a390faad7726d4e5220c0842e26898e5439cf4b881e50cc54"
+    },
+    {
+      "path": "import-followup/canonical_import_probe.py",
+      "bytes": 3600,
+      "sha256": "9ca72fc98dbc9689e41d5a8b111c98256322a74cd1bab3ce0605ad75fb6839c4"
+    },
+    {
+      "path": "import-followup/generated-controls.txt",
+      "bytes": 113,
+      "sha256": "7ef5ab537c21b75ef83f5d22ecc8e15829dff575a53acbb512f2e108f22c9d88"
+    },
+    {
+      "path": "import-followup/initial-control-failure.txt",
+      "bytes": 1590,
+      "sha256": "77d481b57d48dba9998574b6630baa87bb37e9529c7611e03c7fbd06c0e2f2b7"
+    },
+    {
+      "path": "import-followup/regression-only.patch",
+      "bytes": 3277,
+      "sha256": "8b97a23e4eef0487b9dc13c99749967104c1cda2cef05bf69033c9605728f6eb"
+    },
+    {
+      "path": "import-followup/stage/tests/test_mechanics_hbe_v5_native_import_boundary.py",
+      "bytes": 3123,
+      "sha256": "1df6c1c4c3635898cf199828d820b764ca9ed3cc517ddced859b59962ffc87f0"
+    },
+    {
+      "path": "import-followup/source-index.json",
+      "bytes": 1489,
+      "sha256": "1317916423952bbb3a7445d51bde50d01187d3bfd5fcb1a6729d0e82082598a3",
+      "source_path": "build/hbe-v5-native-comparison-import-boundary-v2/source-index.json"
+    },
+    {
+      "path": "independent/IMPORT_PATH_FOLLOWUP.txt",
+      "bytes": 3004,
+      "sha256": "67e32a9a3b93cd756274c95177b41668be1077bb83141f6e8124424dee24713e",
+      "source_path": "build/hbe-v5-native-comparison-independent-v1/IMPORT_PATH_FOLLOWUP.txt"
+    },
+    {
+      "path": "independent/import-followup-index.json",
+      "bytes": 1229,
+      "sha256": "6cf5bf3eea292cd9311488d314ef01a796bd164153fd5c6082f1d3d80cdc4f6b",
+      "source_path": "build/hbe-v5-native-comparison-independent-v1/import-followup-index.json"
+    },
+    {
+      "path": "root/tests.txt",
+      "bytes": 179,
+      "sha256": "88c5841d9a2c309e4c1ee550329fb8fc2b9fd7ecc09d500e02d65727f25616f7",
+      "source_path": "build/hbe-v5-native-comparison-root-integration-v1/tests.txt"
+    },
+    {
+      "path": "root/execution.json",
+      "bytes": 373,
+      "sha256": "44449e109742cd906e0c64e60bb0a34a18abeb3bcfda74415a8eaf0afac3696b",
+      "source_path": "build/hbe-v5-native-comparison-root-integration-v1/execution.json"
+    }
+  ],
+  "note": "Root integration adds canonical generated tests; no actual twelve-row chain executed."
+}

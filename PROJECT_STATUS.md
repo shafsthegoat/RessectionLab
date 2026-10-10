@@ -2,6 +2,8 @@
 
 Current integrated results, October 9:
 
+- **Numerical comparison preparation:** the [separate native comparator](artifacts/hbe-v5-native-comparison-integration-v1/RESULT.md) is integrated with 91 passing canonical checks, unchanged mathematical thresholds and explicit source/receipt authentication. The original generated comparator remains generated-only. Actual twelve-row comparison is pending the final two runs; no physical validation follows from these software checks.
+
 - **Physical-measurement follow-up:** the [public methods audit](artifacts/menichetti-physical-protocol-investigation-v1/README.md) corroborates brain-level trial grouping and the nominal indentation protocol. Per-trial timing, actual indentation and stored-force preprocessing remain missing, so constitutive validation remains a data dependency. No protected force responses were opened and no fit was run.
 
 - **Aspiration-only transfer interface:** the [reviewed adapter](artifacts/legacy-aspiration-projection-integration-v2/RESULT.md) now gives the legacy actor and search the same STOP/aspiration inventory on the fixed generated desktop task, retaining scan fields and rejecting prior probe history or changed policy bindings. Root canonical checks pass 20; 17 independent controls pass. This adds no model updates or trained-transfer result. Actual checkpoint loading, a distinct desktop selector and imported-authorship handling are next.

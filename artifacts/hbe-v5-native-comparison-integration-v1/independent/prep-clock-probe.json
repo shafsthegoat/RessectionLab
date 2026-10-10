@@ -1,0 +1,17 @@
+{
+  "scope": "synthetic mutated compact sidecar metadata only",
+  "cases": [
+    {
+      "changed_field": "launcher_elapsed_seconds_at_check",
+      "added_elapsed_seconds": 10.0,
+      "unchanged_prep_charge": 10.3559902489651,
+      "result": "accepted"
+    },
+    {
+      "changed_field": "launcher_elapsed_seconds_terminal",
+      "added_elapsed_seconds": 10.0,
+      "unchanged_prep_charge": 10.3559902489651,
+      "result": "accepted"
+    }
+  ]
+}

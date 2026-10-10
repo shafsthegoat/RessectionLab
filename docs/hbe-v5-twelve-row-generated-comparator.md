@@ -10,4 +10,22 @@ The original three-level mesh metrics are reported for four compression triplets
 
 Every adjacent mesh difference is also retained, with a separate list of exceedances that are **not** frozen pairwise gates. For example, a generated tension N8 sign reversal can exceed the N8→N12 pair limit while both co-primary trend groups pass. The comparator reports that limitation rather than inventing a sign or coarse-adjacent acceptance rule. A passing generated screen is never a force-fidelity or physical-validation result.
 
-This is a source-only diagnostic slice. A later, separately reviewed native-admission layer must bind each supervised execution receipt and independently replay the raw node, element and solver files before a numerical specimen claim is possible. Even a successful twelve-row numerical study would still need separate measured-force calibration and withheld same-specimen torsion evaluation. Neither validates patient retraction, cutting, neurological injury or clinical route decisions.
+This generated entry point remains a source-only diagnostic. Even a successful twelve-row numerical study would still need separate measured-force calibration and withheld same-specimen torsion evaluation. Neither validates patient retraction, cutting, neurological injury or clinical route decisions.
+
+## Separate native entry point
+
+`scripts/mechanics_hbe_v5_native_comparison.py` now exposes
+`compare_native_rows(repository_root, manifest_binding)`, where the binding has
+`path` and `sha256`. It requires the complete twelve-row manifest, authenticates
+the supervised receipts, source/deck bindings, saved readouts and original
+supplemental evidence, and verifies the complete old chain before and after the
+unchanged comparison math. Its separate source guard checks the broader read-only
+comparison namespace without modifying the native launch allowlist. The original
+per-row output limit and separate sidecar reserves retain their existing meanings.
+
+The [integration evidence](../artifacts/hbe-v5-native-comparison-integration-v1/RESULT.md)
+records 91 passing canonical controls and independent parity/import checks.
+No actual twelve-row comparison has run. Ten rows are complete; the remaining
+two executions and an authenticated complete input manifest are prerequisites.
+Execute the eventual comparison with its own bounded process and fresh cache
+policy. Native provenance cannot turn a simulated force into physical evidence.
