@@ -1,0 +1,321 @@
+{
+  "status": "complete_fixed_five_state_readout_and_native_greedy",
+  "policy_forwards": 25,
+  "checkpoint_loads": 4,
+  "optimizer_updates": 0,
+  "teacher_states": 5,
+  "complete_greedy_replays": 4,
+  "SELECT_EVAL_opened": false,
+  "private_reference_reads": 0,
+  "patients": {
+    "ReMIND-008": {
+      "actions": [
+        "STOP"
+      ],
+      "return_value": 0.0,
+      "saved_SEARCH_actions": [
+        "STOP"
+      ],
+      "actions_equal_SEARCH": true,
+      "candidate_scores": 45,
+      "selection_commits": 1,
+      "plan_seal": "sha256:d11945f524e0bea1f5798600e59f0b45498c58f17582d2bf867dc55734064d1f"
+    },
+    "ReMIND-010": {
+      "actions": [
+        "STOP"
+      ],
+      "return_value": 0.0,
+      "saved_SEARCH_actions": [
+        "STOP"
+      ],
+      "actions_equal_SEARCH": true,
+      "candidate_scores": 30,
+      "selection_commits": 1,
+      "plan_seal": "sha256:05831777fd22e52a306aecedcd6c2d504483147c0acf766581fd8acf9f1f3376"
+    },
+    "ReMIND-020": {
+      "actions": [
+        "STOP"
+      ],
+      "return_value": 0.0,
+      "saved_SEARCH_actions": [
+        "STOP"
+      ],
+      "actions_equal_SEARCH": true,
+      "candidate_scores": 23,
+      "selection_commits": 1,
+      "plan_seal": "sha256:3480304b806e2b400bab00cc51a2440acb6da03d0c1e115e77bb5c9c31b1ba78"
+    },
+    "ReMIND-025": {
+      "actions": [
+        "nominal-cavity-968f3758c3de3eab8c99ca99",
+        "STOP"
+      ],
+      "return_value": 0.9168388572207332,
+      "saved_SEARCH_actions": [
+        "nominal-cavity-968f3758c3de3eab8c99ca99",
+        "STOP"
+      ],
+      "actions_equal_SEARCH": true,
+      "candidate_scores": 31,
+      "selection_commits": 2,
+      "plan_seal": "sha256:d20fc8a3f843ad6290b18a69725b81f2d7a407d7855473f91a0567830849fc6e"
+    }
+  },
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "torch": "2.14.1",
+    "numpy": "2.5.3",
+    "threads": 1,
+    "interop_threads": 1,
+    "device": "cpu",
+    "dtype": "float32"
+  },
+  "wall_seconds": 18.949710875051096,
+  "costs": {
+    "ReMIND-008.public_reconstruction": {
+      "inventory_request_calls": 2,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_returned": 2,
+      "inventory_request_inclusive_seconds": 1.1813585839699954,
+      "complete_wall_seconds": 2.7693302088882774,
+      "native_preview_entries": 108
+    },
+    "setup": {
+      "task_clone_calls": 4,
+      "task_clone_returned": 4,
+      "task_clone_inclusive_seconds": 0.0046764579601585865
+    },
+    "ReMIND-008.fixed_teacher_states": {
+      "inventory_request_calls": 2,
+      "inventory_request_returned": 2,
+      "inventory_request_inclusive_seconds": 0.0007699588313698769,
+      "policy_forward_calls": 5,
+      "policy_forward_returned": 5,
+      "policy_forward_inclusive_seconds": 0.7059717492666095,
+      "native_transition_calls": 1,
+      "native_transition_returned": 1,
+      "native_transition_inclusive_seconds": 0.0004852078855037689,
+      "complete_wall_seconds": 0.7643206249922514,
+      "native_preview_entries": 0
+    },
+    "ReMIND-008.native_greedy_selection": {
+      "task_clone_calls": 1,
+      "task_clone_returned": 1,
+      "task_clone_inclusive_seconds": 0.0010045841336250305,
+      "inventory_request_calls": 2,
+      "inventory_request_returned": 2,
+      "inventory_request_inclusive_seconds": 0.000681916018947959,
+      "native_transition_calls": 1,
+      "native_transition_returned": 1,
+      "native_transition_inclusive_seconds": 0.0003929578233510256,
+      "complete_wall_seconds": 0.03262691595591605,
+      "native_preview_entries": 0
+    },
+    "ReMIND-008.native_greedy_collection_replay": {
+      "task_clone_calls": 1,
+      "task_clone_returned": 1,
+      "task_clone_inclusive_seconds": 0.00092879100702703,
+      "inventory_request_calls": 6,
+      "inventory_request_returned": 6,
+      "inventory_request_inclusive_seconds": 1.1335175407584757,
+      "native_transition_calls": 2,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "native_transition_returned": 2,
+      "native_transition_inclusive_seconds": 0.03832974983379245,
+      "complete_wall_seconds": 2.33928587497212,
+      "native_preview_entries": 108
+    },
+    "ReMIND-010.public_reconstruction": {
+      "inventory_request_calls": 2,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_returned": 2,
+      "inventory_request_inclusive_seconds": 0.8294436659198254,
+      "complete_wall_seconds": 1.6179642078932375,
+      "native_preview_entries": 106
+    },
+    "ReMIND-010.fixed_teacher_states": {
+      "inventory_request_calls": 2,
+      "inventory_request_returned": 2,
+      "inventory_request_inclusive_seconds": 0.0011811249423772097,
+      "policy_forward_calls": 5,
+      "policy_forward_returned": 5,
+      "policy_forward_inclusive_seconds": 0.5257020010612905,
+      "native_transition_calls": 1,
+      "native_transition_returned": 1,
+      "native_transition_inclusive_seconds": 0.0006933328695595264,
+      "complete_wall_seconds": 0.570791665930301,
+      "native_preview_entries": 0
+    },
+    "ReMIND-010.native_greedy_selection": {
+      "task_clone_calls": 1,
+      "task_clone_returned": 1,
+      "task_clone_inclusive_seconds": 0.001222332939505577,
+      "inventory_request_calls": 2,
+      "inventory_request_returned": 2,
+      "inventory_request_inclusive_seconds": 0.0011550411581993103,
+      "native_transition_calls": 1,
+      "native_transition_returned": 1,
+      "native_transition_inclusive_seconds": 0.0006396668031811714,
+      "complete_wall_seconds": 0.020537666976451874,
+      "native_preview_entries": 0
+    },
+    "ReMIND-010.native_greedy_collection_replay": {
+      "task_clone_calls": 1,
+      "task_clone_returned": 1,
+      "task_clone_inclusive_seconds": 0.0011145409662276506,
+      "inventory_request_calls": 6,
+      "inventory_request_returned": 6,
+      "inventory_request_inclusive_seconds": 0.8271761683281511,
+      "native_transition_calls": 2,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "native_transition_returned": 2,
+      "native_transition_inclusive_seconds": 0.032466458855196834,
+      "complete_wall_seconds": 1.4886173331178725,
+      "native_preview_entries": 106
+    },
+    "ReMIND-020.public_reconstruction": {
+      "inventory_request_calls": 2,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_returned": 2,
+      "inventory_request_inclusive_seconds": 0.26303991698659956,
+      "complete_wall_seconds": 0.5033384580165148,
+      "native_preview_entries": 94
+    },
+    "ReMIND-020.fixed_teacher_states": {
+      "inventory_request_calls": 2,
+      "inventory_request_returned": 2,
+      "inventory_request_inclusive_seconds": 0.001205790787935257,
+      "policy_forward_calls": 5,
+      "policy_forward_returned": 5,
+      "policy_forward_inclusive_seconds": 0.5278035819064826,
+      "native_transition_calls": 1,
+      "native_transition_returned": 1,
+      "native_transition_inclusive_seconds": 0.0007047089748084545,
+      "complete_wall_seconds": 0.5544152918737382,
+      "native_preview_entries": 0
+    },
+    "ReMIND-020.native_greedy_selection": {
+      "task_clone_calls": 1,
+      "task_clone_returned": 1,
+      "task_clone_inclusive_seconds": 0.0011626251507550478,
+      "inventory_request_calls": 2,
+      "inventory_request_returned": 2,
+      "inventory_request_inclusive_seconds": 0.0011093749199062586,
+      "native_transition_calls": 1,
+      "native_transition_returned": 1,
+      "native_transition_inclusive_seconds": 0.0006002499721944332,
+      "complete_wall_seconds": 0.009703624993562698,
+      "native_preview_entries": 0
+    },
+    "ReMIND-020.native_greedy_collection_replay": {
+      "task_clone_calls": 1,
+      "task_clone_returned": 1,
+      "task_clone_inclusive_seconds": 0.0010910830460488796,
+      "inventory_request_calls": 6,
+      "inventory_request_returned": 6,
+      "inventory_request_inclusive_seconds": 0.26345129078254104,
+      "native_transition_calls": 2,
+      "inventory_build_or_terminal_empty_calls": 3,
+      "native_transition_returned": 2,
+      "native_transition_inclusive_seconds": 0.027581251226365566,
+      "complete_wall_seconds": 0.47927312506362796,
+      "native_preview_entries": 94
+    },
+    "ReMIND-025.public_reconstruction": {
+      "inventory_request_calls": 2,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_returned": 2,
+      "inventory_request_inclusive_seconds": 0.4739001248963177,
+      "complete_wall_seconds": 0.6878507919609547,
+      "native_preview_entries": 103
+    },
+    "ReMIND-025.fixed_teacher_states": {
+      "inventory_request_calls": 4,
+      "inventory_request_returned": 4,
+      "inventory_request_inclusive_seconds": 0.4155763331800699,
+      "policy_forward_calls": 10,
+      "policy_forward_returned": 10,
+      "policy_forward_inclusive_seconds": 1.0280611275229603,
+      "native_transition_calls": 2,
+      "native_transition_returned": 2,
+      "native_transition_inclusive_seconds": 0.0069107909221202135,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "complete_wall_seconds": 1.4958574580959976,
+      "native_preview_entries": 103
+    },
+    "ReMIND-025.native_greedy_selection": {
+      "task_clone_calls": 1,
+      "task_clone_returned": 1,
+      "task_clone_inclusive_seconds": 0.0011515419464558363,
+      "inventory_request_calls": 4,
+      "inventory_request_returned": 4,
+      "inventory_request_inclusive_seconds": 0.42715387558564544,
+      "native_transition_calls": 2,
+      "native_transition_returned": 2,
+      "native_transition_inclusive_seconds": 0.007125749951228499,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "complete_wall_seconds": 0.4420895001385361,
+      "native_preview_entries": 103
+    },
+    "ReMIND-025.native_greedy_collection_replay": {
+      "task_clone_calls": 1,
+      "task_clone_returned": 1,
+      "task_clone_inclusive_seconds": 0.0011663748882710934,
+      "inventory_request_calls": 11,
+      "inventory_request_returned": 11,
+      "inventory_request_inclusive_seconds": 1.326539417495951,
+      "native_transition_calls": 4,
+      "inventory_build_or_terminal_empty_calls": 5,
+      "native_transition_returned": 4,
+      "native_transition_inclusive_seconds": 0.9104358332697302,
+      "complete_wall_seconds": 1.7988453330472112,
+      "native_preview_entries": 309
+    }
+  },
+  "native_budget": {
+    "version": "native-planning-budget-v1",
+    "status": "complete_history_awaiting_independent_audit",
+    "failure": null,
+    "limits": {
+      "native_preview_entries": 16000,
+      "planning_execution_seconds": 240.0
+    },
+    "native_preview_entries": 1234,
+    "observed_admissions_before_accounting_failure": 1234,
+    "counting_reliable": true,
+    "blocked_preview_attempts": 0,
+    "elapsed_seconds": 15.778965624980628,
+    "time_overshoot_seconds": 0.0,
+    "history_complete_caller_attestation": true,
+    "score": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "requests": {},
+    "cache_hits": null,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "native_preview_profile": {
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "phases": {
+        "unclassified": {
+          "started": 1234,
+          "returned": 1234,
+          "raised": 0,
+          "seconds": 5.443162573734298,
+          "feasible": 288,
+          "rejected": 946,
+          "returned_microsteps": 6604,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 946
+          }
+        }
+      },
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "cost_scope": "historical training costs separate; current checkpoint/readout, source, selection and complete replay measured; nested costs are inclusive",
+  "historical_context_scope": "exact prior eight-update context replayed for identity; current owned execution authorizes zero updates only"
+}

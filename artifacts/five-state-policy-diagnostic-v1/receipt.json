@@ -1,0 +1,34 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "checkpoint_loads": 4,
+    "greedy_seconds_per_case": 60,
+    "memory_bytes": 3221225472,
+    "native_previews": 16000,
+    "optimizer_updates": 0,
+    "output_bytes": 33554432,
+    "parent_seconds": 270,
+    "policy_forwards": 25,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_seconds": 240
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 19.552724334178492,
+  "exit_code": 0,
+  "final_owned_pids": [],
+  "release_sha256": "66410818fe58de376c5e17558627d14a2e9f18e8c854f69e88be9022d0f85ad8",
+  "result_sha256": "9b3bfa60e67277091f6b04c35eea6697013e6cbbca211cb94a5229ec4ac73420",
+  "result_status": "complete_fixed_five_state_readout_and_native_greedy",
+  "sampled_peak_rss_bytes": 2339504128,
+  "samples": 93,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/five-state-policy-diagnostic-v1/source-index.json",
+    "sha256": "e5dd29678a3ed8447ad6c22346f5121deabf33691a0a6dd2f1ee5455f5598c16"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "worker_termination_confirmed": true
+}

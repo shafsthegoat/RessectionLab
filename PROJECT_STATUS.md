@@ -5,7 +5,8 @@ planning experiment on qualified acquired anatomy. Preserve the negative learned
 results below; additional generated-task architecture sweeps and mechanics format
 work are deferred. The controlled eight-update run is complete: both learners now stop on all four
 TRAIN cases, avoiding harmful continuation but losing the one useful teacher action.
-The next diagnostic inspects useful-action ranking versus STOP on the five teacher states.
+Exact-state readout now confirms both weak movement discrimination and increased
+STOP preference. The next experiment tests balanced teacher loss with all else fixed.
 ReMIND preoperative MRI uses a supplied tumor region and automatic tissue support;
 source ventricular estimates remain separate from deployment inputs. Those automatic
 Brainlab estimates are not manual ground truth or evidence of neurological injury.
@@ -13,6 +14,8 @@ Existing patient roles remain fixed. No patient model benefit has been demonstra
 See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cross-patient-experiment-priority-october-10).
 
 Current integrated results, October 10:
+
+- **Exact-state readout identifies the next model change:** [25 frozen-policy readouts](artifacts/five-state-policy-diagnostic-v1/RESULT.txt) confirm the useful025 movement falls from first among motions after one update to tenth for IL and last for RL after eight. Its target input is present. Existing cheap greedy search reproduces all four longer-search plans exactly (129 candidate scores, five selected commits), with complete native replay. The 19.553-second diagnostic passes independent scalar audit. Next: test balanced teacher loss at the same eight-update endpoint; no model/clinical gain is claimed yet.
 
 - **Both fixed SELECT public cases are downloaded:** [byte-verified intake](artifacts/remind-select-public-intake-v1/RESULT.txt) completes 372/372 objects, 61,657,062 bytes, using verified TLS and checksums. Only MRI, supplied whole-tumor and automatic cerebrum are included. Independent metadata reconciliation passes; no private/EVAL inputs or patient-role changes. The data remain unreviewed pending separate geometry and intended-use qualification.
 

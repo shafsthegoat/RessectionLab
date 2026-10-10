@@ -1,0 +1,42 @@
+{
+  "SELECT_EVAL_execution": false,
+  "TRAIN": [
+    "ReMIND-008",
+    "ReMIND-010",
+    "ReMIND-020",
+    "ReMIND-025"
+  ],
+  "attempts": 1,
+  "automatic_retry": false,
+  "baseline": "NativeSpatialTask.observed_greedy_search through unchanged horizon24; complete replay",
+  "caps": {
+    "checkpoint_loads": 4,
+    "greedy_seconds_per_case": 60,
+    "memory_bytes": 3221225472,
+    "native_previews": 16000,
+    "optimizer_updates": 0,
+    "output_bytes": 33554432,
+    "parent_seconds": 270,
+    "policy_forwards": 25,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_seconds": 240
+  },
+  "expected_head": "70a16966145c9b4247c261f37d7045cc63514df8",
+  "historical_training": "separate completed 1/8 runs, no optimizer state or updates admitted here",
+  "output": "build/five-state-policy-diagnostic-v1/attempt-01",
+  "private_reference_execution": false,
+  "readouts": [
+    "INITIAL",
+    "IL_1",
+    "RL_1",
+    "IL_8",
+    "RL_8"
+  ],
+  "source_index": {
+    "path": "build/five-state-policy-diagnostic-v1/source-index.json",
+    "sha256": "e5dd29678a3ed8447ad6c22346f5121deabf33691a0a6dd2f1ee5455f5598c16"
+  },
+  "status": "released_one_attempt",
+  "teacher_states": 5
+}

@@ -1,0 +1,27 @@
+Independent five-state saved diagnostic audit: PASS
+
+Result SHA-256: 9b3bfa60e67277091f6b04c35eea6697013e6cbbca211cb94a5229ec4ac73420
+Release SHA-256: 66410818fe58de376c5e17558627d14a2e9f18e8c854f69e88be9022d0f85ad8
+Source index SHA-256: e5dd29678a3ed8447ad6c22346f5121deabf33691a0a6dd2f1ee5455f5598c16
+
+First execution passed 1,764 saved-record assertions in 0.023 seconds, with 23,183,360 bytes audit peak RSS. All 88 source pins, 36 metadata pins and 150 read-input identities remained unchanged. No failure occurred. This audit used only stdlib scalar arithmetic, saved JSON and source text; it did not load checkpoints, arrays or a model, reconstruct a patient, or rerun geometry.
+
+All 25 saved logit vectors (five fixed teacher states × INITIAL/IL1/RL1/IL8/RL8) were independently converted to stable scalar softmax and cross-entropy. Probabilities and CE agree within recorded float32 roundoff; maximum absolute errors: probability1.17670305e-7, CE2.80067965e-7, logit-difference2.38418579e-7. Comparison bounds were2e-7/2e-6/1e-6 respectively. Teacher rank, movement-only rank, greedy action and index-based tie ordering agree exactly. Every state/action inventory/observation hash matches both retained training traces. INITIAL parameter identity and all four decoded-checkpoint metadata identities match their completed1/8-update training records. Actual diagnostic counts are25 forwards,4 checkpoint loads,0 optimizer updates. Model execution itself was not independently repeated.
+
+The consequential negative is at025's initial state, where the teacher action removes one target source cell and native reward is+0.916838857:
+Model    Teacher p    STOP p      Teacher rank(all / 16 movements)  Teacher CE
+INITIAL  .059763405   .049354102   9 / 9                            2.817361832
+IL1      .059504539   .059025053   1 / 1                            2.821702719
+RL1      .059769105   .053418264   1 / 1                            2.817266464
+IL8      .011255989   .818181098  11 /10                            4.486855030
+RL8      .039206371   .366261929  17 /16                            3.238915920
+
+The failure is therefore more than a raised STOP preference: conditional ordering among movement candidates also deteriorates. Simply excluding or lowering STOP would still not make the beneficial movement the top choice at eight updates. This does not identify the cause of the ranking change, establish a feature-attribution claim, or validate a policy modification.
+
+Aggregate five-label CE decreases: INITIAL3.317397833, IL1 3.171264791, RL1 3.211760473, IL8 1.219169831, RL8 1.725384009. Four of five labels are STOP. At IL8 their mean CE is0.402248532 while the sole positive movement CE worsens to4.486855030. At RL8 these values are1.347001031 and3.238915920. Thus the aggregate loss masks failure on the useful minority action. These are post-update frozen readouts; e.g. IL8 CE1.219169831 is not the update8 pre-step training loss1.465587534. At025's post-target teacher state, IL1 and RL1 still prefer another movement, explaining their earlier continuation outside the goal; both eight-update models prefer STOP there and at all initial states. This five-state slice is not a full policy evaluation or held-out result.
+
+Native greedy control: all four complete action sequences and entire physical histories equal the saved SEARCH teacher histories (ignoring only nominal/replay outcome_scope), with exact current plan seals and saved independent full-tool audit hashes.008/010/020 immediately STOP;025 executes the same beneficial action then STOP, return+0.916838857. All129 non-STOP candidate scores and5 selection commits reconcile (there are additionally5 zero-valued STOP score baselines). Each selected action is the exact maximum saved reward under the existing first-in-order tie rule. This is complete execution of these four greedy plans, not global trajectory optimality or proof that greedy is generally sufficient.
+
+Costs:1,234 native preview entries,25 policy forwards,0 updates. Parent19.552724334s, sampled peak2,339,504,128B (<3GiB), worker18.949710875s, clean exit0 with no owned PIDs/cleanup errors. The summed native-greedy selection phase is0.504957708s; public reconstruction5.578483667s, fixed-state readout3.385385041s, and greedy collection/replay6.106021666s are separate. The0.505s figure must not be presented as full diagnosis or end-to-end search cost. Historical teacher-search/training runtimes are also excluded; no speedup claim is established by comparing selection-only time with a full prior search. Phase timings are inclusive and need not sum to worker wall. Sampling cannot rule out transient unsampled peaks.
+
+Scope remains four TRAIN people with public supplied target/support, zero SELECT/EVAL/private-reference access and no clinical claim. The actual run demonstrates checkpoint decoding and frozen five-state forward readout for the four saved endpoints; it does not establish checkpoint-reloaded full-trajectory greedy evaluation. Compact exact values and cost scopes are in audit-result.json; all read identities are in input-hashes.json. audit-run-01.txt preserves the first successful audit output.

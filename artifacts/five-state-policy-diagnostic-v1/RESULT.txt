@@ -1,0 +1,65 @@
+Exact-state diagnosis: movement ranking deteriorates; cheap baseline matches search
+October 10, 2026
+
+All five frozen TRAIN teacher states were reconstructed exactly. A common initial
+model and four authenticated checkpoints (IL/RL after one/eight updates) produced
+25 no-gradient readouts. No fitting, SELECT/EVAL or private inputs were used. All
+checkpoint parameter/protocol/context identities and complete historical teacher
+observations/actions/masks/histories match. This is actual checkpoint reload,
+not the earlier in-memory endpoint evaluation.
+
+On 025's useful root action, movement rank changes as follows (16 legal motions):
+                    Initial      one update      eight updates
+IL                     9              1               10
+RL                     9              1               16
+
+At eight updates, the useful movement is 4.286 logit units below STOP for IL and
+2.235 below for RL. Its IL probability falls 0.05950 to 0.01126; STOP rises 0.05903
+to 0.81818. At the teacher's next, correct-STOP state, IL STOP probability is 0.83130.
+The movement's early first rank was weak: conditional on a motion, its IL
+probability is about 6.32% after one update and 6.19% after eight, near 6.25% uniform.
+This does not establish a specific encoder defect or justify masking STOP.
+
+The 025 target is present in the policy crop:80,007 positive cells and 97.85% of
+supplied target mass. All five samples on each legal root ray are in bounds.
+Missing local target input cannot explain this case's failure. The target channel
+is unchanged after the one-cell removal; the cavity and tiny committed-target
+fraction provide the changed state.010 still has no local target positives but
+receives the previously added global supplied-target context. These are input
+presence checks, not causal feature attribution or clinical segmentation accuracy.
+
+The existing NativeSpatialTask.observed_greedy_search, with no new algorithm,
+reproduces every longer SEARCH action sequence, return, physical history and
+replayed plan seal. It evaluates 129 non-STOP certificates and commits five selected
+actions including STOP across four patients. All complete native geometry replays
+pass. Only 025 has a positive action (+0.916838857), followed by STOP. This baseline
+must accompany learned comparisons; it does not explore negative preparatory
+moves or prove a whole-horizon optimum.
+
+Full owned diagnostic:19.552724s,2,339,504,128B sampled peak RSS,25 forwards,
+four checkpoint loads,1,234 native previews,zero updates,clean exit 0 and no
+remaining processes. Selection alone totals 0.504958s; this excludes public-source
+construction, model readouts and collection/independent replay and must not be
+presented as an end-to-end deployment speedup. costs in result.json retain those
+separate scopes. Four source-reconstruction scopes total 5.578484s and four
+collection/replay scopes 6.106022s; shared diagnostic setup/readouts are extra.
+
+Independent saved-result audit passes 1,764 checks, including probabilities,
+cross-entropy, ranks, exact plan/history parity and counts. Maximum probability
+reconstruction error is 1.18e-7 and CE error 2.80e-7 (float 32 reporting). It reads no
+arrays or model/checkpoint contents. Source/input hashes remain unchanged.
+
+Next controlled contrast: balanced teacher cross-entropy with the unchanged
+architecture, initialization, task, reward, optimizer and eight-update endpoint.
+The one motion label gets half the total loss; the four STOP labels share half.
+This is an optimization sensitivity test, including movement discrimination,
+not a threshold override or proof that weighting is the cause. No RL rerun or
+additional search labels are needed for this one-variable test.
+
+Executed HEAD 70a16966145c9b4247c261f37d7045cc63514df8, result SHA256
+9b3bfa60e67277091f6b04c35eea6697013e6cbbca211cb94a5229ec4ac73420.
+Drivers, source/index pins and compact readouts are retained. local-output-index
+binds full excluded native replay files. Restore original driver paths from the
+index for reproduction; never overwrite the existing attempt. No weights or
+patient arrays are in Git. All outcomes are geometric simulator behavior on
+acquired TRAIN anatomy; no useful learned, physical or clinical benefit is shown.
