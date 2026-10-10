@@ -1,0 +1,102 @@
+{
+  "checkpoint_payloads_or_arrays_included": false,
+  "files": [
+    {
+      "bytes": 4806,
+      "path": "NEXT-EXPERIMENT.txt",
+      "sha256": "e46bac929f0b2526481ed7b81d1b2391088391fc34e9449383e0bdab034a707d"
+    },
+    {
+      "bytes": 4648,
+      "path": "REPORT.txt",
+      "sha256": "de0f4dd6a74d5e61e82f8ad225c056f9563225e5164e67551aa63ab88b09f793"
+    },
+    {
+      "bytes": 30841,
+      "path": "STOP-diagnosis.json",
+      "sha256": "22a8ff0d3c65d4debcbe1292f9fa194fbc6562616c4bddbe26425ec13b2dec5f"
+    },
+    {
+      "bytes": 5824,
+      "path": "diagnose_saved_source.py",
+      "sha256": "735ceda94f5bc54914381aa23d2efc5486437d4e8956c64d90ff382e9976273b"
+    },
+    {
+      "bytes": 1643,
+      "path": "independent/AUDIT-SCOPE.txt",
+      "sha256": "1125e1c3175a7c8c0a919515514b75d3c048032521bb7e1c2456944c648f9901"
+    },
+    {
+      "bytes": 5938,
+      "path": "independent/REPORT.txt",
+      "sha256": "ab5daa1f93b6297079b0d38b0d93918e2f5284a9ee73806a7fd9596096648bc2"
+    },
+    {
+      "bytes": 3191,
+      "path": "independent/audit-console.txt",
+      "sha256": "746fcb3ae46ca684665bb80d88ce21d53e9f0eaaad2b06efcb3ef8f613238b32"
+    },
+    {
+      "bytes": 21854,
+      "path": "independent/audit.json",
+      "sha256": "b3903790821d0c91c75121bb46ed4aeaf20e8af5d5320a38b2e57e3776f1a662"
+    },
+    {
+      "bytes": 19989,
+      "path": "independent/audit_saved.py",
+      "sha256": "29f5068b28947bdacad352cdfaccc89705ef2b9c693805c03716b29ed9535154"
+    },
+    {
+      "bytes": 1369,
+      "path": "independent/index.json",
+      "sha256": "560c51b18c392ddf44048cb83803ecdc3c4a7b5a8031b5fe722f98275d871ae2"
+    },
+    {
+      "bytes": 9928,
+      "path": "independent/package_review.py",
+      "sha256": "7bb48a3198b9a572fa0a948f0795c2ffcbbdab84c29757bcb214db612129044c"
+    },
+    {
+      "bytes": 5203,
+      "path": "independent/result-summary.json",
+      "sha256": "77be3b08eed1b05bd026088f63abdce532b77ca23f928807407f8d0f67235ec0"
+    },
+    {
+      "bytes": 49144,
+      "path": "independent/source-and-output-hashes.json",
+      "sha256": "27029d1f098aa66c1d5eddb454821508e4534632f03075d7a7107f210145ff9c"
+    },
+    {
+      "bytes": 5225,
+      "path": "owned-declaration.json",
+      "sha256": "7fbd2e89517bd57cad243cac6a748f6b2d3604354df510a13375a57cd0731609"
+    },
+    {
+      "bytes": 823,
+      "path": "owned-supervision.json",
+      "sha256": "0da4fef6cf7556db95a77c1191c6e5f895a130f710110579bc719b6a3e51f179"
+    },
+    {
+      "bytes": 8813,
+      "path": "producer-summary.json",
+      "sha256": "0937c4f1fdb8852cdfed39ba8e3d732d9c01cf459ee00e7f26ab02f6b43e8ade"
+    },
+    {
+      "bytes": 2336,
+      "path": "proposed-status-ledger.json",
+      "sha256": "cc92d21c281d7ff376789b3386c8b24c9180cb196ebd3932b9ac8e7547fc4f01"
+    },
+    {
+      "bytes": 63151,
+      "path": "saved-TRAIN-state-comparison.json",
+      "sha256": "d6db5f40a5c75422af5f91fe87657ded09b49799f8e6589d751af5e3cdb34a26"
+    }
+  ],
+  "new_model_native_optimizer_calls": 0,
+  "new_scientific_claim": "none; source-only interpretation and separately proposed controlled diagnostic",
+  "source_receipt_sha256": "0da4fef6cf7556db95a77c1191c6e5f895a130f710110579bc719b6a3e51f179",
+  "source_result_sha256": "4eed507e1ceb9160714cfe3e64101415fa7d26ae62b80406633e8f93ab2e70db",
+  "status": "AUDITED_COMPLETE_MIXED_NEGATIVE",
+  "total_bytes_excluding_index": 244726,
+  "version": "public-goal-relation-fit-result-package-v1"
+}

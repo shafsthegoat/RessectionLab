@@ -1,0 +1,70 @@
+Public goal-relation fit: completed, audited, mixed/negative for greedy decisions
+
+The fixed relation arm reduces mean teacher-state CE from the old full40 endpoint
+1.700327130 to1.670608912, but exact greedy agreement falls28/40 to26/40. Root
+aspiration agreement falls4/16 to2/16 and premature STOP rises10/16 to12/16.
+Both pcf19 goals switch from the correct aspiration to STOP; the other22/24 root
+choices are unchanged. All8 true STOP states and16 teacher-produced probe states
+remain correct. Conditional movement-only teacher rank1 improves24/32 to25/32.
+STOP is never removed from the actual policy. This is not a better-policy result.
+
+Why loss improves while greedy decisions worsen:
+  Eight already-correct STOP states: mean CE .900580388 -> .797883702;
+      contribution to the all40 mean change: -.020539337.
+  Sixteen already-correct probe states:1.811080770 ->1.787063463;
+      contribution: -.009606923.
+  Sixteen aspiration roots:1.989446860 ->1.990516966;
+      contribution: +.000428043.
+These sum to-.029718217. Smooth average CE rewards increased confidence on
+correct examples even when a few other examples cross an argmax boundary.
+Aspiration-root mean teacher probability falls .149530 -> .148854 and STOP
+probability rises .162196 -> .173314. pcf19's STOP-minus-best-movement margins
+change -.005921 -> .089699 (surface) and -.025013 -> .075764 (deep). Its teacher
+still ranks first among movements. The complete40-row table is retained.
+
+The code uses ordinary unweighted mean categorical CE over all40 fixed labels,
+fresh Adam .001,32 full40 updates and a norm5 cap. Recorded gradient norms stay
+below .488, so clipping is not the recorded bottleneck. Last pre-update losses
+are1.697728 at31 and1.684292 at32; the post32 readout is1.670609. This does not
+show convergence. Raw saved-logit derivatives have the correct CE direction:
+dL/dzSTOP = pSTOP -1[teacher=STOP]. On positive roots it is positive, meaning
+gradient descent would lower an independently adjustable STOP logit. Shared
+weights and mean loss can trade gains across states. No sign or source bug has
+been established; producer gradient records are not a new backward execution.
+
+The categorical inventory distributes probability among several movements.
+All16 positive roots assign less than .5 to STOP despite12 choosing STOP by
+argmax. But six of eight true STOP examples also assign less than .5 to STOP.
+Replacing the decision with total movement mass would therefore break negatives.
+A saved-score-only feasibility calculation finds an extremely narrow relation
+margin gap (.295394525 positive maximum versus .295787096 negative minimum).
+No bias was selected or applied; this ~.000393 gap is not a robust calibration
+claim and is not a proposed manual threshold. The old full40 margins overlap.
+
+One next controlled experiment is proposed in NEXT-EXPERIMENT.txt: two fixed
+STOP-head-only conditions, differing only in categorical versus direct greedy
+STOP/movement margin loss. The matched categorical condition distinguishes the
+effect of more head optimization from objective alignment. No experiment is
+released, implemented or run here; desktop inspection of the existing oldfull40
+refit remains the integration priority. No new feature or inference rule is
+promoted as better, and no new native rollout follows from this package.
+
+Executed relation fit evidence:
+  HEAD d2c68559288196bb571a7016fe4aadcb9eda9a99
+  Experiment sha256:770de4707a3cde985c57fc214964b47c460ed5efd1985d83e6cf4277e3ff54a1
+ 32 updates;1280 loss +80 readout forwards;760 previews;40 original teacher
+ steps;24 geometry checks;one reload of its new final checkpoint;zero prior
+ checkpoint loads,new SEARCH,SELECT/MEASUREMENT or patient task reads.
+ Exact shared initialization and704 zero added weights are producer records;
+ independent saved outputs verify initial-logit parity within7.45e-9.
+ Parent113.679588s, worker113.098730s, sampled owned-tree RSS401,162,240B;
+ exit0, no stop reason/cleanup errors/remaining PIDs. Costs are a single recorded
+ run, not a timing superiority claim or equal total compute despite equal forward
+ and update counts. All source, supervision, artifact metadata and limitations
+ are preserved in the producer and independent summaries.
+
+No checkpoint was opened, model forwarded, native task/replay run, optimizer
+called or held-out/patient record read during this packaging/diagnosis. Arithmetic
+uses complete saved TRAIN JSON only. No result claims on-policy contact, removal,
+return or generalization for the relation checkpoint. The old refit's6/24 native
+contacts belong only to its old checkpoint and cannot transfer to this one.

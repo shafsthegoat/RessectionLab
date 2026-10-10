@@ -1369,3 +1369,16 @@ The [original terminal and recovery start](../artifacts/tractoinferno-original-t
 The exact saved Case4 DEVELOPMENT display output was connected to a separate local Electron inspection layer, with source-file, descriptor, NIfTI, grid and transfer checks. The renderer preserves output-unknown voxels and suppresses planning overlays. The original independent source review passed, then generated BridgeRuntime checks revealed two failures: a constant fixture image correctly failed primary-image import, and an unsupported descriptor path-kind caused the first real import operation to fail before reading the descriptor. Both failed logs are retained. A nonconstant generated fixture and one strict existing-path-mode correction yielded 9/9 Python controls; 13/13 pure Node and 28/28 focused Node controls also passed. Working-tree and exact-index clean-App builds completed.
 
 The first actual live Electron import then failed to display the saved layer: BridgeRuntime's post-request prune removed newly returned binary transfers before Electron could read them. The app itself exited cleanly; the ENOENT log and terminal receipt are retained. A narrow latest-pair transfer retention repair now passes 11/11 generated Python controls. An expanded desktop suite separately found two extracted App fixtures lacking `diagnostic.clear`; the original failed suite is retained, the test-only fix was reviewed, and the working-tree rerun passes 514/514 tests. A second actual live attempt succeeded: the local app process exited 0 after 293.74 seconds, root visually verified the saved estimate in all three MRI planes, opacity and hide toggles, unknown cursor state, primary-series suppression, and fresh auxiliary-series reload. The final exact staged-index snapshot initially failed because the isolated checkout lacked its local Python runtime link; that log is preserved. With the snapshot-only runtime link and Python import path restored, its 504/504 tests and TypeScript/production build pass. The 10 additional working-tree renderer tests are unfinished neighboring route work outside the staged source. No model rerun, clinical accuracy test, planning admission or patient-data export occurred in this integration checkpoint.
+
+## October 10, 2026 — Public goal relation fit retains a negative decision result
+
+The fixed 40-state, 32-update relation fit completed in 113.680 seconds at
+401,162,240 bytes sampled owned-tree RSS. Independent saved-output arithmetic
+confirms lower categorical loss (1.67061 versus 1.70033) alongside worse exact
+choices (26/40 versus 28/40) and more premature aspiration-root STOP choices
+(12/16 versus 10/16). All original rows and failures are retained. Saved-score
+decomposition attributes the aggregate gain to confidence on already-correct
+STOP and second-step probe examples. No new trajectory, patient, held-out or
+clinical result follows. A paired STOP-head objective diagnostic is proposed only;
+no new training is launched by that proposal. See
+[complete evidence](../artifacts/public-goal-relation-fit-v1/REPORT.txt).

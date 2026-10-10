@@ -1,0 +1,62 @@
+{
+  "do_not_reinterpret_old_results": true,
+  "no_new_source_or_release_authorized_by_this_ledger": true,
+  "rows": [
+    {
+      "artifact_replacement": false,
+      "item": "original_fixed32_IL_RL_pilot",
+      "scope": "original pilot remains authoritative for its original selectors",
+      "status": "retain_completed_negative_original_artifacts"
+    },
+    {
+      "STOP_only_episodes": 18,
+      "TRAIN_native_contacts": {
+        "denominator": 24,
+        "numerator": 6
+      },
+      "TRAIN_teacher_exact": {
+        "denominator": 40,
+        "numerator": 28
+      },
+      "checkpoint_sha256": "5d7151397141c92ff82d8684814b9a0caed111f1809268bd448b8c1ea26d6bf7",
+      "item": "old_architecture_full40_refit",
+      "next_priority": "finish distinct IL_TRAIN_REFIT desktop integration; preserve all negative outcomes",
+      "saved_SEARCH_contacts": {
+        "denominator": 24,
+        "numerator": 16
+      },
+      "status": "retain_audited_TRAIN_native_result"
+    },
+    {
+      "TRAIN_native_contacts": null,
+      "TRAIN_teacher_exact": {
+        "denominator": 40,
+        "numerator": 26
+      },
+      "checkpoint_sha256": "84bf5a0b3a01e27c2f3047508b49d3dd88144126f22f5c6d13779b3c93585e04",
+      "desktop_release": false,
+      "experiment_hash": "sha256:770de4707a3cde985c57fc214964b47c460ed5efd1985d83e6cf4277e3ff54a1",
+      "feature_superiority": false,
+      "interpretation": "better average CE but worse greedy root initiation; no new native evidence",
+      "item": "public_goal_relation_full40_fit",
+      "mean_teacher_CE": 1.6706089120609735,
+      "parameter_hash": "sha256:7a1200baaf5dab84fab6d537c792890a78db2156c49672c493564808149df7fc",
+      "status": "complete_audited_mixed_negative_greedy_result"
+    },
+    {
+      "SELECT_MEASUREMENT_patient_reads": false,
+      "additional_loss_forwards_total": 2560,
+      "additional_readout_forwards_total": 160,
+      "additional_updates_total": 64,
+      "conditions": [
+        "matched_frozen_head_categorical_CE",
+        "frozen_head_binary_greedy_margin_CE"
+      ],
+      "item": "paired_STOP_head_objective_diagnostic",
+      "native_greedy_rollout_authorized": false,
+      "status": "PROPOSED_ONLY_NOT_IMPLEMENTED_NOT_RELEASED"
+    }
+  ],
+  "status": "PROPOSED_ROOT_LEDGER_UPDATE",
+  "version": "public-contact-learning-status-proposal-v1"
+}

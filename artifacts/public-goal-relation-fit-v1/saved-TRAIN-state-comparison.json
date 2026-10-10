@@ -1,0 +1,1605 @@
+{
+  "rows": [
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.37205372005701065,
+        "STOP_probability": 0.5919551362347221,
+        "correct": true,
+        "cross_entropy": 0.5243244303571312,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.40804486376527793,
+        "raw_CE_teacher_logit_gradient": -0.40804486376527793,
+        "teacher_minus_best_other_margin": 0.37205372005701065,
+        "teacher_probability": 0.5919551362347221,
+        "teacher_rank_among_legal_movements": null
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-06",
+      "legal_actions": 2,
+      "movement_inventory_counts": {
+        "aspirate": 1,
+        "probe": 0
+      },
+      "observation_hash": "sha256:7f5e9bede19b5ea67899e921e282ed91fd7dbd3197c1e86afe29c5e9e1d71c38",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.5696578919887543,
+        "STOP_probability": 0.6386842317638026,
+        "correct": true,
+        "cross_entropy": 0.4483451067359398,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.3613157682361974,
+        "raw_CE_teacher_logit_gradient": -0.3613157682361974,
+        "teacher_minus_best_other_margin": 0.5696578919887543,
+        "teacher_probability": 0.6386842317638026,
+        "teacher_rank_among_legal_movements": null
+      },
+      "state_index": 0,
+      "step": 0,
+      "teacher_action": "STOP",
+      "teacher_mode": "stop"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.37221652269363403,
+        "STOP_probability": 0.5919944596871787,
+        "correct": true,
+        "cross_entropy": 0.5242580027784461,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.4080055403128213,
+        "raw_CE_teacher_logit_gradient": -0.4080055403128213,
+        "teacher_minus_best_other_margin": 0.37221652269363403,
+        "teacher_probability": 0.5919944596871787,
+        "teacher_rank_among_legal_movements": null
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-06",
+      "legal_actions": 2,
+      "movement_inventory_counts": {
+        "aspirate": 1,
+        "probe": 0
+      },
+      "observation_hash": "sha256:814a5ed00afbcb6f94ddecbfb826ff4d62a8b9ce7fd5663142a5e155b744c814",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.6092730462551117,
+        "STOP_probability": 0.6477749562749262,
+        "correct": true,
+        "cross_entropy": 0.4342119326480838,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.3522250437250738,
+        "raw_CE_teacher_logit_gradient": -0.3522250437250738,
+        "teacher_minus_best_other_margin": 0.6092730462551117,
+        "teacher_probability": 0.6477749562749262,
+        "teacher_rank_among_legal_movements": null
+      },
+      "state_index": 1,
+      "step": 0,
+      "teacher_action": "STOP",
+      "teacher_mode": "stop"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.12802619487047195,
+        "STOP_probability": 0.3667890568079796,
+        "correct": true,
+        "cross_entropy": 1.0029683732652157,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.6332109431920204,
+        "raw_CE_teacher_logit_gradient": -0.6332109431920204,
+        "teacher_minus_best_other_margin": 0.12802619487047195,
+        "teacher_probability": 0.3667890568079796,
+        "teacher_rank_among_legal_movements": null
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-09",
+      "legal_actions": 3,
+      "movement_inventory_counts": {
+        "aspirate": 2,
+        "probe": 0
+      },
+      "observation_hash": "sha256:a1e77866ef0caf48640fd405a1f569eea02e854e89ca355e489fd38afb25430f",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.29578709602355957,
+        "STOP_probability": 0.4082507659038424,
+        "correct": true,
+        "cross_entropy": 0.8958736710675724,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.5917492340961577,
+        "raw_CE_teacher_logit_gradient": -0.5917492340961577,
+        "teacher_minus_best_other_margin": 0.29578709602355957,
+        "teacher_probability": 0.4082507659038424,
+        "teacher_rank_among_legal_movements": null
+      },
+      "state_index": 2,
+      "step": 0,
+      "teacher_action": "STOP",
+      "teacher_mode": "stop"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.13746990263462067,
+        "STOP_probability": 0.3687553461144613,
+        "correct": true,
+        "cross_entropy": 0.9976218734956793,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.6312446538855387,
+        "raw_CE_teacher_logit_gradient": -0.6312446538855387,
+        "teacher_minus_best_other_margin": 0.13746990263462067,
+        "teacher_probability": 0.3687553461144613,
+        "teacher_rank_among_legal_movements": null
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-09",
+      "legal_actions": 3,
+      "movement_inventory_counts": {
+        "aspirate": 2,
+        "probe": 0
+      },
+      "observation_hash": "sha256:fea41f20ff4b7ce3ebf2a5495aa4a748c2d4b76f632d4fe9502683476593be7d",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.3212997019290924,
+        "STOP_probability": 0.4143388412081626,
+        "correct": true,
+        "cross_entropy": 0.8810711828855842,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.5856611587918374,
+        "raw_CE_teacher_logit_gradient": -0.5856611587918374,
+        "teacher_minus_best_other_margin": 0.3212997019290924,
+        "teacher_probability": 0.4143388412081626,
+        "teacher_rank_among_legal_movements": null
+      },
+      "state_index": 3,
+      "step": 0,
+      "teacher_action": "STOP",
+      "teacher_mode": "stop"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.181631900370121,
+        "STOP_probability": 0.24425012446405178,
+        "correct": false,
+        "cross_entropy": 1.645151245117373,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.24425012446405178,
+        "raw_CE_teacher_logit_gradient": -0.8070166272064744,
+        "teacher_minus_best_other_margin": -0.23558876663446426,
+        "teacher_probability": 0.19298337279352562,
+        "teacher_rank_among_legal_movements": 3
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-10",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 4,
+        "probe": 0
+      },
+      "observation_hash": "sha256:461bb163203c3ffd50678b8ddd2eba72ea73bc5adcb8168c46bcf31f8ed97539",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.22939424216747284,
+        "STOP_probability": 0.2553764743740923,
+        "correct": false,
+        "cross_entropy": 1.6499758730538705,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.2553764743740923,
+        "raw_CE_teacher_logit_gradient": -0.8079454577455489,
+        "teacher_minus_best_other_margin": -0.28495942056179047,
+        "teacher_probability": 0.1920545422544511,
+        "teacher_rank_among_legal_movements": 3
+      },
+      "state_index": 4,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:8665e3c2d0b9f15057036ff8",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.2046365961432457,
+        "STOP_probability": 0.1931700276469748,
+        "correct": true,
+        "cross_entropy": 1.439547909498192,
+        "greedy_action": "NATIVE-SPATIAL:2a6585f500954c1ad9fa90bb",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.1931700276469748,
+        "raw_CE_teacher_logit_gradient": -0.7629651043125769,
+        "teacher_minus_best_other_margin": 0.12002214789390564,
+        "teacher_probability": 0.23703489568742306,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-10",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 3,
+        "probe": 1
+      },
+      "observation_hash": "sha256:8578158e2eec1a0320a384f8b8e12f2cf89712458227400e72f4c837efdf31df",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.23147568106651306,
+        "STOP_probability": 0.19095590160104073,
+        "correct": true,
+        "cross_entropy": 1.424237078196214,
+        "greedy_action": "NATIVE-SPATIAL:2a6585f500954c1ad9fa90bb",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.19095590160104073,
+        "raw_CE_teacher_logit_gradient": -0.7593079776293409,
+        "teacher_minus_best_other_margin": 0.12174811959266663,
+        "teacher_probability": 0.2406920223706591,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 5,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:2a6585f500954c1ad9fa90bb",
+      "teacher_mode": "probe"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.1759452149271965,
+        "STOP_probability": 0.24324119173538084,
+        "correct": false,
+        "cross_entropy": 1.5948536585849225,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.24324119173538084,
+        "raw_CE_teacher_logit_gradient": -0.7970617754034324,
+        "teacher_minus_best_other_margin": -0.1811518892645836,
+        "teacher_probability": 0.20293822459656766,
+        "teacher_rank_among_legal_movements": 2
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-10",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 4,
+        "probe": 0
+      },
+      "observation_hash": "sha256:b7ae86704f8893b39dbe048f5a7140dd56bf63ee3137d272db22ad178b52067d",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.29539452493190765,
+        "STOP_probability": 0.26772583701477354,
+        "correct": false,
+        "cross_entropy": 1.6131863432344826,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.26772583701477354,
+        "raw_CE_teacher_logit_gradient": -0.8007482828406927,
+        "teacher_minus_best_other_margin": -0.29539452493190765,
+        "teacher_probability": 0.1992517171593073,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 6,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:24ac36b8880ed825fc759d3c",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.29322995990514755,
+        "STOP_probability": 0.17505972199572664,
+        "correct": true,
+        "cross_entropy": 1.4493981348253315,
+        "greedy_action": "NATIVE-SPATIAL:cf03907f1e1252c2cebb0f27",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.17505972199572664,
+        "raw_CE_teacher_logit_gradient": -0.7652884897246933,
+        "teacher_minus_best_other_margin": 0.014221817255020142,
+        "teacher_probability": 0.23471151027530668,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-10",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 1,
+        "probe": 3
+      },
+      "observation_hash": "sha256:74cf6382798bd27e88015f41a2617aa0644a122a731f79bec99b77fcf49987d8",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.3859819024801254,
+        "STOP_probability": 0.16434704838628944,
+        "correct": true,
+        "cross_entropy": 1.41979303586982,
+        "greedy_action": "NATIVE-SPATIAL:cf03907f1e1252c2cebb0f27",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.16434704838628944,
+        "raw_CE_teacher_logit_gradient": -0.7582359517945396,
+        "teacher_minus_best_other_margin": 0.02714955061674118,
+        "teacher_probability": 0.24176404820546038,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 7,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:cf03907f1e1252c2cebb0f27",
+      "teacher_mode": "probe"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.11162026226520538,
+        "STOP_probability": 0.09766528704702135,
+        "correct": false,
+        "cross_entropy": 2.5875176204648604,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.09766528704702135,
+        "raw_CE_teacher_logit_gradient": -0.9247935003665069,
+        "teacher_minus_best_other_margin": -0.26130853593349457,
+        "teacher_probability": 0.07520649963349318,
+        "teacher_rank_among_legal_movements": 5
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-11",
+      "legal_actions": 13,
+      "movement_inventory_counts": {
+        "aspirate": 12,
+        "probe": 0
+      },
+      "observation_hash": "sha256:38f247c6b31350ff5de1d3e94566b6d287fafcec7c8f24b8be9f2e3af66d196f",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.1387835443019867,
+        "STOP_probability": 0.1019538361267822,
+        "correct": false,
+        "cross_entropy": 2.580996506008735,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.1019538361267822,
+        "raw_CE_teacher_logit_gradient": -0.9243014676172523,
+        "teacher_minus_best_other_margin": -0.29776135087013245,
+        "teacher_probability": 0.07569853238274765,
+        "teacher_rank_among_legal_movements": 6
+      },
+      "state_index": 8,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:a08c0f0766a59719f2f101da",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.1789172887802124,
+        "STOP_probability": 0.07759643210191006,
+        "correct": true,
+        "cross_entropy": 2.3773165421379447,
+        "greedy_action": "NATIVE-SPATIAL:4c7c828a7fe54dcc30314b30",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.07759643210191006,
+        "raw_CE_teacher_logit_gradient": -0.907200733390673,
+        "teacher_minus_best_other_margin": 0.06533362716436386,
+        "teacher_probability": 0.09279926660932705,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-11",
+      "legal_actions": 13,
+      "movement_inventory_counts": {
+        "aspirate": 11,
+        "probe": 1
+      },
+      "observation_hash": "sha256:a782ed1b1434f3972dcd5305cd0a3770290ac34450571a2496d80dd9e6ee384b",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.22164073586463928,
+        "STOP_probability": 0.0757336521457597,
+        "correct": true,
+        "cross_entropy": 2.358891935276349,
+        "greedy_action": "NATIVE-SPATIAL:4c7c828a7fe54dcc30314b30",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.0757336521457597,
+        "raw_CE_teacher_logit_gradient": -0.9054750950988332,
+        "teacher_minus_best_other_margin": 0.06385529041290283,
+        "teacher_probability": 0.09452490490116684,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 9,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:4c7c828a7fe54dcc30314b30",
+      "teacher_mode": "probe"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.08713626116514206,
+        "STOP_probability": 0.0976986586201716,
+        "correct": false,
+        "cross_entropy": 2.413003710771385,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.0976986586201716,
+        "raw_CE_teacher_logit_gradient": -0.9104540798315641,
+        "teacher_minus_best_other_margin": -0.08713626116514206,
+        "teacher_probability": 0.08954592016843586,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-11",
+      "legal_actions": 13,
+      "movement_inventory_counts": {
+        "aspirate": 12,
+        "probe": 0
+      },
+      "observation_hash": "sha256:737ee806f08f2f32ad16b6354fb3c1a5235390dc8971f462bea7ae8824e27076",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.1331678107380867,
+        "STOP_probability": 0.10373786948893554,
+        "correct": false,
+        "cross_entropy": 2.399055858033734,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.10373786948893554,
+        "raw_CE_teacher_logit_gradient": -0.9091963556378897,
+        "teacher_minus_best_other_margin": -0.1331678107380867,
+        "teacher_probability": 0.09080364436211028,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 10,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:c215a36b272c454149fefcc3",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.38019072264432907,
+        "STOP_probability": 0.07613387593768674,
+        "correct": true,
+        "cross_entropy": 2.1950712402220507,
+        "greedy_action": "NATIVE-SPATIAL:3e03bc051eff37f288b23c7e",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.07613387593768674,
+        "raw_CE_teacher_logit_gradient": -0.8886493714211612,
+        "teacher_minus_best_other_margin": 0.08318030834197998,
+        "teacher_probability": 0.1113506285788388,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-11",
+      "legal_actions": 13,
+      "movement_inventory_counts": {
+        "aspirate": 10,
+        "probe": 2
+      },
+      "observation_hash": "sha256:dbd46e525c0158423c9d180b8d38aca2387649c22f8566abff8b9072fa7bd97c",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.47601747512817383,
+        "STOP_probability": 0.07149609844352633,
+        "correct": true,
+        "cross_entropy": 2.1620949228662543,
+        "greedy_action": "NATIVE-SPATIAL:3e03bc051eff37f288b23c7e",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.07149609844352633,
+        "raw_CE_teacher_logit_gradient": -0.8849162233078934,
+        "teacher_minus_best_other_margin": 0.09642000496387482,
+        "teacher_probability": 0.11508377669210652,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 11,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:3e03bc051eff37f288b23c7e",
+      "teacher_mode": "probe"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.052327219396829605,
+        "STOP_probability": 0.22125252111213345,
+        "correct": false,
+        "cross_entropy": 1.5636982833799693,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.22125252111213345,
+        "raw_CE_teacher_logit_gradient": -0.7906396362617492,
+        "teacher_minus_best_other_margin": -0.05524768307805061,
+        "teacher_probability": 0.20936036373825084,
+        "teacher_rank_among_legal_movements": 2
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-13",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 4,
+        "probe": 0
+      },
+      "observation_hash": "sha256:115ddbde63aef0459c64b0e1d02fd2537d1178e6631ba111ee2c9cf9f21b1dc8",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.14232167601585388,
+        "STOP_probability": 0.23959755771476157,
+        "correct": false,
+        "cross_entropy": 1.5782045557494262,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.23959755771476157,
+        "raw_CE_teacher_logit_gradient": -0.7936547527977735,
+        "teacher_minus_best_other_margin": -0.1494099497795105,
+        "teacher_probability": 0.2063452472022264,
+        "teacher_rank_among_legal_movements": 2
+      },
+      "state_index": 12,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:e61bdb26c64172df15230212",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.41101884841918945,
+        "STOP_probability": 0.1654658170594246,
+        "correct": true,
+        "cross_entropy": 1.387971800526451,
+        "greedy_action": "NATIVE-SPATIAL:888436b2e3dc8ed097f306ea",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.1654658170594246,
+        "raw_CE_teacher_logit_gradient": -0.7504190083228534,
+        "teacher_minus_best_other_margin": 0.11309814453125,
+        "teacher_probability": 0.24958099167714667,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-13",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 2,
+        "probe": 2
+      },
+      "observation_hash": "sha256:e90d1c3c3f1863b1d0dc78fdb593bedb80c14e54ee8f49746ea20da16eb68369",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.4225468933582306,
+        "STOP_probability": 0.16551632393035312,
+        "correct": true,
+        "cross_entropy": 1.3761385616505433,
+        "greedy_action": "NATIVE-SPATIAL:888436b2e3dc8ed097f306ea",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.16551632393035312,
+        "raw_CE_teacher_logit_gradient": -0.7474481138441089,
+        "teacher_minus_best_other_margin": 0.12998869270086288,
+        "teacher_probability": 0.252551886155891,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 13,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:888436b2e3dc8ed097f306ea",
+      "teacher_mode": "probe"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.024314939975738525,
+        "STOP_probability": 0.22068175889673428,
+        "correct": false,
+        "cross_entropy": 1.5353485602358785,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.22068175889673428,
+        "raw_CE_teacher_logit_gradient": -0.7846193950300016,
+        "teacher_minus_best_other_margin": -0.024314939975738525,
+        "teacher_probability": 0.2153806049699985,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-13",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 4,
+        "probe": 0
+      },
+      "observation_hash": "sha256:3967962bbcb4e7c0e8fdc6418352fc1dcfa060fd22ecd95ab7a4600d77904787",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.12855316698551178,
+        "STOP_probability": 0.24318501384747107,
+        "correct": false,
+        "cross_entropy": 1.5424859184672342,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.24318501384747107,
+        "raw_CE_teacher_logit_gradient": -0.7861511706454873,
+        "teacher_minus_best_other_margin": -0.12855316698551178,
+        "teacher_probability": 0.2138488293545127,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 14,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:a350f3656bf9cae164867066",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.4502428472042084,
+        "STOP_probability": 0.15751152348740438,
+        "correct": true,
+        "cross_entropy": 1.398013811189276,
+        "greedy_action": "NATIVE-SPATIAL:1d8b99ae65b276968dfdb118",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.15751152348740438,
+        "raw_CE_teacher_logit_gradient": -0.7529127611998107,
+        "teacher_minus_best_other_margin": 0.060623615980148315,
+        "teacher_probability": 0.24708723880018932,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-13",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 1,
+        "probe": 3
+      },
+      "observation_hash": "sha256:da5f9f5903634d940bc0cd8bed4ab1f262d69e55904b6b6cce86da675c0698f1",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.5530660003423691,
+        "STOP_probability": 0.14739231605485686,
+        "correct": true,
+        "cross_entropy": 1.36159143012898,
+        "greedy_action": "NATIVE-SPATIAL:1d8b99ae65b276968dfdb118",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.14739231605485686,
+        "raw_CE_teacher_logit_gradient": -0.7437473558962204,
+        "teacher_minus_best_other_margin": 0.08557695150375366,
+        "teacher_probability": 0.25625264410377957,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 15,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:1d8b99ae65b276968dfdb118",
+      "teacher_mode": "probe"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.03809889405965805,
+        "STOP_probability": 0.09211643581025485,
+        "correct": false,
+        "cross_entropy": 2.4803646607097813,
+        "greedy_action": "NATIVE-SPATIAL:d57c8f281475e9d57aefe78e",
+        "greedy_mode": "aspirate",
+        "raw_CE_STOP_logit_gradient": 0.09211643581025485,
+        "raw_CE_teacher_logit_gradient": -0.916287306704585,
+        "teacher_minus_best_other_margin": -0.13376165926456451,
+        "teacher_probability": 0.08371269329541497,
+        "teacher_rank_among_legal_movements": 5
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-14",
+      "legal_actions": 12,
+      "movement_inventory_counts": {
+        "aspirate": 11,
+        "probe": 0
+      },
+      "observation_hash": "sha256:97f461c46f28a8512c6f1e5f0fb6dbf747a94e950796665abe476797c15009c1",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.05193047225475311,
+        "STOP_probability": 0.09243122613432984,
+        "correct": false,
+        "cross_entropy": 2.4878519985091736,
+        "greedy_action": "NATIVE-SPATIAL:d57c8f281475e9d57aefe78e",
+        "greedy_mode": "aspirate",
+        "raw_CE_STOP_logit_gradient": 0.09243122613432984,
+        "raw_CE_teacher_logit_gradient": -0.9169117512864181,
+        "teacher_minus_best_other_margin": -0.1584920585155487,
+        "teacher_probability": 0.08308824871358193,
+        "teacher_rank_among_legal_movements": 5
+      },
+      "state_index": 16,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:14dd227662bb68df1476934b",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.344602108001709,
+        "STOP_probability": 0.0668855322870013,
+        "correct": true,
+        "cross_entropy": 2.3601704860227675,
+        "greedy_action": "NATIVE-SPATIAL:f04ca92f71df79fa63f459e5",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.0668855322870013,
+        "raw_CE_teacher_logit_gradient": -0.9055958727599125,
+        "teacher_minus_best_other_margin": 0.08315818011760712,
+        "teacher_probability": 0.09440412724008755,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-14",
+      "legal_actions": 13,
+      "movement_inventory_counts": {
+        "aspirate": 11,
+        "probe": 1
+      },
+      "observation_hash": "sha256:0aa5f761d4db0c1519aca715fe1818376924caae7175472a3325f39a8e9abd4b",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.41709306836128235,
+        "STOP_probability": 0.06231141941176595,
+        "correct": true,
+        "cross_entropy": 2.358517504485215,
+        "greedy_action": "NATIVE-SPATIAL:f04ca92f71df79fa63f459e5",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.06231141941176595,
+        "raw_CE_teacher_logit_gradient": -0.905439695436961,
+        "teacher_minus_best_other_margin": 0.06420904397964478,
+        "teacher_probability": 0.09456030456303899,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 17,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:f04ca92f71df79fa63f459e5",
+      "teacher_mode": "probe"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.06900706142187119,
+        "STOP_probability": 0.09203398153675618,
+        "correct": true,
+        "cross_entropy": 2.316590344179552,
+        "greedy_action": "NATIVE-SPATIAL:22e4bfcac59734d04ffafb39",
+        "greedy_mode": "aspirate",
+        "raw_CE_STOP_logit_gradient": 0.09203398153675618,
+        "raw_CE_teacher_logit_gradient": -0.9013907633904674,
+        "teacher_minus_best_other_margin": 0.05544896423816681,
+        "teacher_probability": 0.09860923660953252,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-14",
+      "legal_actions": 12,
+      "movement_inventory_counts": {
+        "aspirate": 11,
+        "probe": 0
+      },
+      "observation_hash": "sha256:cc44d8a107a9658edd93af8edc73bdf27cd9024e7f088e53e2b99e24f5612232",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.03283892571926117,
+        "STOP_probability": 0.0972306336489687,
+        "correct": true,
+        "cross_entropy": 2.297830530451657,
+        "greedy_action": "NATIVE-SPATIAL:22e4bfcac59734d04ffafb39",
+        "greedy_mode": "aspirate",
+        "raw_CE_STOP_logit_gradient": 0.0972306336489687,
+        "raw_CE_teacher_logit_gradient": -0.8995234116590314,
+        "teacher_minus_best_other_margin": 0.03283892571926117,
+        "teacher_probability": 0.10047658834096859,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 18,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:22e4bfcac59734d04ffafb39",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.535951554775238,
+        "STOP_probability": 0.07139725940911043,
+        "correct": true,
+        "cross_entropy": 2.103544239223935,
+        "greedy_action": "NATIVE-SPATIAL:841950062db8a39a360d86df",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.07139725940911043,
+        "raw_CE_teacher_logit_gradient": -0.8779768184048325,
+        "teacher_minus_best_other_margin": 0.12907081842422485,
+        "teacher_probability": 0.1220231815951675,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-14",
+      "legal_actions": 12,
+      "movement_inventory_counts": {
+        "aspirate": 9,
+        "probe": 2
+      },
+      "observation_hash": "sha256:cab6ef723c05d0c5063683f151e67341341bd26f33fc3f73a34864f2e3cd515e",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.6420705616474152,
+        "STOP_probability": 0.06664974612585202,
+        "correct": true,
+        "cross_entropy": 2.0662334797817445,
+        "greedy_action": "NATIVE-SPATIAL:841950062db8a39a360d86df",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.06664974612585202,
+        "raw_CE_teacher_logit_gradient": -0.8733380407937679,
+        "teacher_minus_best_other_margin": 0.15484732389450073,
+        "teacher_probability": 0.1266619592062322,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 19,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:841950062db8a39a360d86df",
+      "teacher_mode": "probe"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.3307265266776085,
+        "STOP_probability": 0.41590846415432614,
+        "correct": true,
+        "cross_entropy": 0.8772900810233684,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.5840915358456739,
+        "raw_CE_teacher_logit_gradient": -0.5840915358456739,
+        "teacher_minus_best_other_margin": 0.3307265266776085,
+        "teacher_probability": 0.41590846415432614,
+        "teacher_rank_among_legal_movements": null
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-15",
+      "legal_actions": 3,
+      "movement_inventory_counts": {
+        "aspirate": 2,
+        "probe": 0
+      },
+      "observation_hash": "sha256:ec3abe2f458bc26e4fe3ca37ff24fb6092ab61034f7f6a8279e6272dcf6abb07",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.5101564675569534,
+        "STOP_probability": 0.4606543560829274,
+        "correct": true,
+        "cross_entropy": 0.7751072870886936,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.5393456439170726,
+        "raw_CE_teacher_logit_gradient": -0.5393456439170726,
+        "teacher_minus_best_other_margin": 0.5101564675569534,
+        "teacher_probability": 0.4606543560829274,
+        "teacher_rank_among_legal_movements": null
+      },
+      "state_index": 20,
+      "step": 0,
+      "teacher_action": "STOP",
+      "teacher_mode": "stop"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.3402136489748955,
+        "STOP_probability": 0.4179757415956764,
+        "correct": true,
+        "cross_entropy": 0.8723318826015495,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.5820242584043236,
+        "raw_CE_teacher_logit_gradient": -0.5820242584043236,
+        "teacher_minus_best_other_margin": 0.3402136489748955,
+        "teacher_probability": 0.4179757415956764,
+        "teacher_rank_among_legal_movements": null
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-15",
+      "legal_actions": 3,
+      "movement_inventory_counts": {
+        "aspirate": 2,
+        "probe": 0
+      },
+      "observation_hash": "sha256:a8904c327445abd30f742c61b5cd779c70349f5c23da4f232f8224efc6917907",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.5357113182544708,
+        "STOP_probability": 0.4669177297644634,
+        "correct": true,
+        "cross_entropy": 0.7616022043604771,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.5330822702355367,
+        "raw_CE_teacher_logit_gradient": -0.5330822702355367,
+        "teacher_minus_best_other_margin": 0.5357113182544708,
+        "teacher_probability": 0.4669177297644634,
+        "teacher_rank_among_legal_movements": null
+      },
+      "state_index": 21,
+      "step": 0,
+      "teacher_action": "STOP",
+      "teacher_mode": "stop"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.00592079758644104,
+        "STOP_probability": 0.21125011015086942,
+        "correct": true,
+        "cross_entropy": 1.5487916937343147,
+        "greedy_action": "NATIVE-SPATIAL:b360523f9dccee3ca0e013b2",
+        "greedy_mode": "aspirate",
+        "raw_CE_STOP_logit_gradient": 0.21125011015086942,
+        "raw_CE_teacher_logit_gradient": -0.7874954106127299,
+        "teacher_minus_best_other_margin": 0.00592079758644104,
+        "teacher_probability": 0.2125045893872701,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-19",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 4,
+        "probe": 0
+      },
+      "observation_hash": "sha256:727a8c941bdcadb4fe33e8b73a2a8fc83792e9fac01e889083d1956b1a197f90",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.08969908952713013,
+        "STOP_probability": 0.2292995337093963,
+        "correct": false,
+        "cross_entropy": 1.5624252121869602,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.2292995337093963,
+        "raw_CE_teacher_logit_gradient": -0.7903729358854533,
+        "teacher_minus_best_other_margin": -0.08969908952713013,
+        "teacher_probability": 0.2096270641145467,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 22,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:b360523f9dccee3ca0e013b2",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.480892539024353,
+        "STOP_probability": 0.15030623494747342,
+        "correct": true,
+        "cross_entropy": 1.4141879607094756,
+        "greedy_action": "NATIVE-SPATIAL:36631e81ae203ac6f0600c3d",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.15030623494747342,
+        "raw_CE_teacher_logit_gradient": -0.7568770412932551,
+        "teacher_minus_best_other_margin": 0.04284211993217468,
+        "teacher_probability": 0.24312295870674497,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-19",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 1,
+        "probe": 3
+      },
+      "observation_hash": "sha256:f5f41b2930edf47b3c23c92325db5e194df4847bb129e1c0828413cfc614798a",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.5400704592466354,
+        "STOP_probability": 0.14429680180033022,
+        "correct": true,
+        "cross_entropy": 1.3958125177471665,
+        "greedy_action": "NATIVE-SPATIAL:36631e81ae203ac6f0600c3d",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.14429680180033022,
+        "raw_CE_teacher_logit_gradient": -0.7523682505874685,
+        "teacher_minus_best_other_margin": 0.04520858824253082,
+        "teacher_probability": 0.24763174941253158,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 23,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:36631e81ae203ac6f0600c3d",
+      "teacher_mode": "probe"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.025013260543346405,
+        "STOP_probability": 0.21079615702453924,
+        "correct": true,
+        "cross_entropy": 1.5318504323716344,
+        "greedy_action": "NATIVE-SPATIAL:7c447a4bf55da09f684d0057",
+        "greedy_mode": "aspirate",
+        "raw_CE_STOP_logit_gradient": 0.21079615702453924,
+        "raw_CE_teacher_logit_gradient": -0.783864646801081,
+        "teacher_minus_best_other_margin": 0.025013260543346405,
+        "teacher_probability": 0.2161353531989189,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-19",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 4,
+        "probe": 0
+      },
+      "observation_hash": "sha256:e0d53dd586fecf0aa3f2c8ab288a3ec672e71789e9c42c80105b27d1803ecafe",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.07576389610767365,
+        "STOP_probability": 0.23050289567878943,
+        "correct": false,
+        "cross_entropy": 1.5432557501342312,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.23050289567878943,
+        "raw_CE_teacher_logit_gradient": -0.7863157348947623,
+        "teacher_minus_best_other_margin": -0.07576389610767365,
+        "teacher_probability": 0.2136842651052378,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 24,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:7c447a4bf55da09f684d0057",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.5002827346324921,
+        "STOP_probability": 0.14987489241531105,
+        "correct": true,
+        "cross_entropy": 1.3976716488316754,
+        "greedy_action": "NATIVE-SPATIAL:0248990fe717d1aa5f056968",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.14987489241531105,
+        "raw_CE_teacher_logit_gradient": -0.7528282027821209,
+        "teacher_minus_best_other_margin": 0.06474530696868896,
+        "teacher_probability": 0.24717179721787902,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-19",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 1,
+        "probe": 3
+      },
+      "observation_hash": "sha256:b17a72dbf11763a15ce0e33164b8bbf155faa60c3f03f2783350c72077912c9b",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.6058154702186584,
+        "STOP_probability": 0.1388372667839616,
+        "correct": true,
+        "cross_entropy": 1.3686373040486448,
+        "greedy_action": "NATIVE-SPATIAL:0248990fe717d1aa5f056968",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.1388372667839616,
+        "raw_CE_teacher_logit_gradient": -0.7455465338842808,
+        "teacher_minus_best_other_margin": 0.0782807469367981,
+        "teacher_probability": 0.2544534661157191,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 25,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:0248990fe717d1aa5f056968",
+      "teacher_mode": "probe"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.12243787944316864,
+        "STOP_probability": 0.10736358820313997,
+        "correct": false,
+        "cross_entropy": 2.5531148772826033,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.10736358820313997,
+        "raw_CE_teacher_logit_gradient": -0.922161170407313,
+        "teacher_minus_best_other_margin": -0.3215806931257248,
+        "teacher_probability": 0.07783882959268693,
+        "teacher_rank_among_legal_movements": 8
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-20",
+      "legal_actions": 12,
+      "movement_inventory_counts": {
+        "aspirate": 11,
+        "probe": 0
+      },
+      "observation_hash": "sha256:051c34df10741851e45e12340a74fc3419f3889409e52d25ef9ea8930aa1cb2e",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.11106108129024506,
+        "STOP_probability": 0.10718790879078578,
+        "correct": false,
+        "cross_entropy": 2.5507762355056767,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.10718790879078578,
+        "raw_CE_teacher_logit_gradient": -0.9219789202427003,
+        "teacher_minus_best_other_margin": -0.3176044076681137,
+        "teacher_probability": 0.07802107975729963,
+        "teacher_rank_among_legal_movements": 8
+      },
+      "state_index": 26,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:e120ea52022f06c66dbcb3c4",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.12209893018007278,
+        "STOP_probability": 0.08539242869177789,
+        "correct": true,
+        "cross_entropy": 2.3383989089427475,
+        "greedy_action": "NATIVE-SPATIAL:8fe4a31d8de1542259fa3521",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.08539242869177789,
+        "raw_CE_teacher_logit_gradient": -0.9035180089158565,
+        "teacher_minus_best_other_margin": 0.020810171961784363,
+        "teacher_probability": 0.09648199108414342,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-20",
+      "legal_actions": 12,
+      "movement_inventory_counts": {
+        "aspirate": 10,
+        "probe": 1
+      },
+      "observation_hash": "sha256:79795a5df387f85969005475203d8d0923b5bd89da2fe854e530e92c898f1023",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.2125241756439209,
+        "STOP_probability": 0.07907334885165819,
+        "correct": true,
+        "cross_entropy": 2.3248552151528985,
+        "greedy_action": "NATIVE-SPATIAL:8fe4a31d8de1542259fa3521",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.07907334885165819,
+        "raw_CE_teacher_logit_gradient": -0.9022023973627042,
+        "teacher_minus_best_other_margin": 0.019377171993255615,
+        "teacher_probability": 0.0977976026372957,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 27,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:8fe4a31d8de1542259fa3521",
+      "teacher_mode": "probe"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.09433751553297043,
+        "STOP_probability": 0.10702346880956942,
+        "correct": false,
+        "cross_entropy": 2.32904464943466,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.10702346880956942,
+        "raw_CE_teacher_logit_gradient": -0.9026112569486808,
+        "teacher_minus_best_other_margin": -0.09433751553297043,
+        "teacher_probability": 0.09738874305131918,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-20",
+      "legal_actions": 12,
+      "movement_inventory_counts": {
+        "aspirate": 11,
+        "probe": 0
+      },
+      "observation_hash": "sha256:82f1b82ec923f58729f0607c2cd02a849d1fa40c476a43ecc0ee571eff565bd7",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.13705214858055115,
+        "STOP_probability": 0.11302491752406203,
+        "correct": false,
+        "cross_entropy": 2.3171991240964016,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.11302491752406203,
+        "raw_CE_teacher_logit_gradient": -0.9014507764441069,
+        "teacher_minus_best_other_margin": -0.13705214858055115,
+        "teacher_probability": 0.09854922355589316,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 28,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:3cd5c719cf365f85643e82c1",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.37344224005937576,
+        "STOP_probability": 0.08330593822853741,
+        "correct": true,
+        "cross_entropy": 2.111793205033428,
+        "greedy_action": "NATIVE-SPATIAL:ce228cb508e014d2219805cd",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.08330593822853741,
+        "raw_CE_teacher_logit_gradient": -0.8789792432892806,
+        "teacher_minus_best_other_margin": 0.13394415378570557,
+        "teacher_probability": 0.1210207567107194,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-20",
+      "legal_actions": 12,
+      "movement_inventory_counts": {
+        "aspirate": 9,
+        "probe": 2
+      },
+      "observation_hash": "sha256:7506ccfefa9b0941ad259bcc0edcd90ee69211fedd56ebcc00b82f6573c765d7",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.47167447209358215,
+        "STOP_probability": 0.07792169119307597,
+        "correct": true,
+        "cross_entropy": 2.0803764435665544,
+        "greedy_action": "NATIVE-SPATIAL:ce228cb508e014d2219805cd",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.07792169119307597,
+        "raw_CE_teacher_logit_gradient": -0.8751168081252635,
+        "teacher_minus_best_other_margin": 0.14783638715744019,
+        "teacher_probability": 0.1248831918747365,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 29,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:ce228cb508e014d2219805cd",
+      "teacher_mode": "probe"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.20784840732812881,
+        "STOP_probability": 0.29975187817160326,
+        "correct": true,
+        "cross_entropy": 1.204800219300638,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.7002481218283967,
+        "raw_CE_teacher_logit_gradient": -0.7002481218283967,
+        "teacher_minus_best_other_margin": 0.20784840732812881,
+        "teacher_probability": 0.29975187817160326,
+        "teacher_rank_among_legal_movements": null
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-21",
+      "legal_actions": 4,
+      "movement_inventory_counts": {
+        "aspirate": 3,
+        "probe": 0
+      },
+      "observation_hash": "sha256:6d30b719718082ac090c97c5e32e30d8992d6aa13b62d1c4c6cc5c33d19ed812",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.3550073504447937,
+        "STOP_probability": 0.333869304837213,
+        "correct": true,
+        "cross_entropy": 1.097005665466983,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.666130695162787,
+        "raw_CE_teacher_logit_gradient": -0.666130695162787,
+        "teacher_minus_best_other_margin": 0.3550073504447937,
+        "teacher_probability": 0.333869304837213,
+        "teacher_rank_among_legal_movements": null
+      },
+      "state_index": 30,
+      "step": 0,
+      "teacher_action": "STOP",
+      "teacher_mode": "stop"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.2179695963859558,
+        "STOP_probability": 0.30087865202311714,
+        "correct": true,
+        "cross_entropy": 1.2010482449446984,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.6991213479768829,
+        "raw_CE_teacher_logit_gradient": -0.6991213479768829,
+        "teacher_minus_best_other_margin": 0.2179695963859558,
+        "teacher_probability": 0.30087865202311714,
+        "teacher_rank_among_legal_movements": null
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-21",
+      "legal_actions": 4,
+      "movement_inventory_counts": {
+        "aspirate": 3,
+        "probe": 0
+      },
+      "observation_hash": "sha256:c3eaff6d092c527b8bac346e4ab98b57e129f6177c912118f81cc7a0b410f21a",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.36974816024303436,
+        "STOP_probability": 0.3362660679414324,
+        "correct": true,
+        "cross_entropy": 1.0898525635083611,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": -0.6637339320585676,
+        "raw_CE_teacher_logit_gradient": -0.6637339320585676,
+        "teacher_minus_best_other_margin": 0.36974816024303436,
+        "teacher_probability": 0.3362660679414324,
+        "teacher_rank_among_legal_movements": null
+      },
+      "state_index": 31,
+      "step": 0,
+      "teacher_action": "STOP",
+      "teacher_mode": "stop"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.056765347719192505,
+        "STOP_probability": 0.2251866886457801,
+        "correct": false,
+        "cross_entropy": 1.5973751737295594,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.2251866886457801,
+        "raw_CE_teacher_logit_gradient": -0.7975728426075487,
+        "teacher_minus_best_other_margin": -0.10654968023300171,
+        "teacher_probability": 0.2024271573924513,
+        "teacher_rank_among_legal_movements": 2
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-22",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 4,
+        "probe": 0
+      },
+      "observation_hash": "sha256:0283f0188427dc6a939509801314782c387f0ddee4496414d475b480fd704871",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.10518485307693481,
+        "STOP_probability": 0.23620156066123,
+        "correct": false,
+        "cross_entropy": 1.6036367832783274,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.23620156066123,
+        "raw_CE_teacher_logit_gradient": -0.7988364023419159,
+        "teacher_minus_best_other_margin": -0.1605670154094696,
+        "teacher_probability": 0.20116359765808406,
+        "teacher_rank_among_legal_movements": 2
+      },
+      "state_index": 32,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:e9a9dadaa4e048ce2ae22403",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.3609166517853737,
+        "STOP_probability": 0.16880513726732016,
+        "correct": true,
+        "cross_entropy": 1.4180936114499076,
+        "greedy_action": "NATIVE-SPATIAL:6d5d5217e4a876b0c5fb2f19",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.16880513726732016,
+        "raw_CE_teacher_logit_gradient": -0.7578247427567879,
+        "teacher_minus_best_other_margin": 0.09219790995121002,
+        "teacher_probability": 0.24217525724321207,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-22",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 2,
+        "probe": 2
+      },
+      "observation_hash": "sha256:20b061b3b2a0bc6d1e4e80e75d4752635afff8f46315bcf6f9754266916a91ee",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.42778003215789795,
+        "STOP_probability": 0.16100801574226636,
+        "correct": true,
+        "cross_entropy": 1.3985210958600727,
+        "greedy_action": "NATIVE-SPATIAL:6d5d5217e4a876b0c5fb2f19",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.16100801574226636,
+        "raw_CE_teacher_logit_gradient": -0.7530380729813433,
+        "teacher_minus_best_other_margin": 0.10702505707740784,
+        "teacher_probability": 0.2469619270186567,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 33,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:6d5d5217e4a876b0c5fb2f19",
+      "teacher_mode": "probe"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": 0.025907643139362335,
+        "STOP_probability": 0.22452479958136157,
+        "correct": false,
+        "cross_entropy": 1.519676755198838,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.22452479958136157,
+        "raw_CE_teacher_logit_gradient": -0.7812174041398479,
+        "teacher_minus_best_other_margin": -0.025907643139362335,
+        "teacher_probability": 0.21878259586015217,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-22",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 4,
+        "probe": 0
+      },
+      "observation_hash": "sha256:fe9254991f56935aee99adb8be25dd090d6af65bfe5527473fe7ca012ed3a7e9",
+      "relation": {
+        "STOP_minus_best_movement_margin": 0.12403273582458496,
+        "STOP_probability": 0.24600950312529615,
+        "correct": false,
+        "cross_entropy": 1.5264178490298665,
+        "greedy_action": "STOP",
+        "greedy_mode": "stop",
+        "raw_CE_STOP_logit_gradient": 0.24600950312529615,
+        "raw_CE_teacher_logit_gradient": -0.7826872783011101,
+        "teacher_minus_best_other_margin": -0.12403273582458496,
+        "teacher_probability": 0.21731272169888996,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 34,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:da65efd40316be9ae86320f0",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.4492075815796852,
+        "STOP_probability": 0.16048973192050442,
+        "correct": true,
+        "cross_entropy": 1.3803177324520868,
+        "greedy_action": "NATIVE-SPATIAL:031deda128945a6a0beff8a6",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.16048973192050442,
+        "raw_CE_teacher_logit_gradient": -0.7485013689132249,
+        "teacher_minus_best_other_margin": 0.11111283302307129,
+        "teacher_probability": 0.251498631086775,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-22",
+      "legal_actions": 5,
+      "movement_inventory_counts": {
+        "aspirate": 1,
+        "probe": 3
+      },
+      "observation_hash": "sha256:6def2d752fd45afe0e24dd31d9fbd17d4e5e2af95d79ef2acd799be0c2520d11",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.5574328005313873,
+        "STOP_probability": 0.14943589476733898,
+        "correct": true,
+        "cross_entropy": 1.343454975122847,
+        "greedy_action": "NATIVE-SPATIAL:031deda128945a6a0beff8a6",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.14943589476733898,
+        "raw_CE_teacher_logit_gradient": -0.7390574406822699,
+        "teacher_minus_best_other_margin": 0.13670822232961655,
+        "teacher_probability": 0.26094255931773014,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 35,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:031deda128945a6a0beff8a6",
+      "teacher_mode": "probe"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.05464771389961243,
+        "STOP_probability": 0.1000120090704358,
+        "correct": false,
+        "cross_entropy": 2.3862811727418625,
+        "greedy_action": "NATIVE-SPATIAL:811c0385e09535b488116e59",
+        "greedy_mode": "aspirate",
+        "raw_CE_STOP_logit_gradient": 0.1000120090704358,
+        "raw_CE_teacher_logit_gradient": -0.9080289267658563,
+        "teacher_minus_best_other_margin": -0.13846387714147568,
+        "teacher_probability": 0.09197107323414368,
+        "teacher_rank_among_legal_movements": 4
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-23",
+      "legal_actions": 11,
+      "movement_inventory_counts": {
+        "aspirate": 10,
+        "probe": 0
+      },
+      "observation_hash": "sha256:6e31a1ce4b24333e99ddce2fde4214942f7781c58889d5d89787e5067458fa3e",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.025560200214385986,
+        "STOP_probability": 0.1043923873939743,
+        "correct": false,
+        "cross_entropy": 2.382204264898478,
+        "greedy_action": "NATIVE-SPATIAL:811c0385e09535b488116e59",
+        "greedy_mode": "aspirate",
+        "raw_CE_STOP_logit_gradient": 0.1043923873939743,
+        "raw_CE_teacher_logit_gradient": -0.9076532038024885,
+        "teacher_minus_best_other_margin": -0.14816594123840332,
+        "teacher_probability": 0.09234679619751154,
+        "teacher_rank_among_legal_movements": 5
+      },
+      "state_index": 36,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:dc4a9ed87fb2f335258d3ef8",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.3470921814441681,
+        "STOP_probability": 0.07937389683667334,
+        "correct": true,
+        "cross_entropy": 2.186493538542344,
+        "greedy_action": "NATIVE-SPATIAL:d99c979d737c24927a73ba32",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.07937389683667334,
+        "raw_CE_teacher_logit_gradient": -0.8876901307888667,
+        "teacher_minus_best_other_margin": 0.06473051011562347,
+        "teacher_probability": 0.11230986921113328,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "surface",
+      "layout_id": "pcf-23",
+      "legal_actions": 11,
+      "movement_inventory_counts": {
+        "aspirate": 9,
+        "probe": 1
+      },
+      "observation_hash": "sha256:6c3df2adc12a86af861ca6a93faf2e0c9d7b88766ef0b76c85bc2deb4c577622",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.3851902335882187,
+        "STOP_probability": 0.0775425159838056,
+        "correct": true,
+        "cross_entropy": 2.1717386661175047,
+        "greedy_action": "NATIVE-SPATIAL:d99c979d737c24927a73ba32",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.0775425159838056,
+        "raw_CE_teacher_logit_gradient": -0.8860207273658615,
+        "teacher_minus_best_other_margin": 0.06040869653224945,
+        "teacher_probability": 0.1139792726341385,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 37,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:d99c979d737c24927a73ba32",
+      "teacher_mode": "probe"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.0737728551030159,
+        "STOP_probability": 0.10003253695304752,
+        "correct": true,
+        "cross_entropy": 2.2284869212817413,
+        "greedy_action": "NATIVE-SPATIAL:6e23099a754e04ddf6420ae3",
+        "greedy_mode": "aspirate",
+        "raw_CE_STOP_logit_gradient": 0.10003253695304752,
+        "raw_CE_teacher_logit_gradient": -0.8923087477346732,
+        "teacher_minus_best_other_margin": 0.0737728551030159,
+        "teacher_probability": 0.10769125226532687,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-23",
+      "legal_actions": 11,
+      "movement_inventory_counts": {
+        "aspirate": 10,
+        "probe": 0
+      },
+      "observation_hash": "sha256:fc8ff434abd9ee870cfefbd62423ce0a5e61fd8ddc73fb2cccb3852fc3f92e9b",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.03936292231082916,
+        "STOP_probability": 0.10517479667323744,
+        "correct": true,
+        "cross_entropy": 2.212768660419911,
+        "greedy_action": "NATIVE-SPATIAL:6e23099a754e04ddf6420ae3",
+        "greedy_mode": "aspirate",
+        "raw_CE_STOP_logit_gradient": 0.10517479667323744,
+        "raw_CE_teacher_logit_gradient": -0.890602655261743,
+        "teacher_minus_best_other_margin": 0.03936292231082916,
+        "teacher_probability": 0.109397344738257,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 38,
+      "step": 0,
+      "teacher_action": "NATIVE-SPATIAL:6e23099a754e04ddf6420ae3",
+      "teacher_mode": "aspirate"
+    },
+    {
+      "baseline": {
+        "STOP_minus_best_movement_margin": -0.5381583571434021,
+        "STOP_probability": 0.07750135176189493,
+        "correct": true,
+        "cross_entropy": 2.019301543542578,
+        "greedy_action": "NATIVE-SPATIAL:ef9696a6b58d60a4a18b086c",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.07750135176189493,
+        "raw_CE_teacher_logit_gradient": -0.8672518484887306,
+        "teacher_minus_best_other_margin": 0.17698106169700623,
+        "teacher_probability": 0.13274815151126937,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "goal_id": "deep",
+      "layout_id": "pcf-23",
+      "legal_actions": 11,
+      "movement_inventory_counts": {
+        "aspirate": 8,
+        "probe": 2
+      },
+      "observation_hash": "sha256:b535886c1051d21cfa277c9dfb34c9c87ab947ed76614a3b918baea6cafab708",
+      "relation": {
+        "STOP_minus_best_movement_margin": -0.6480534374713898,
+        "STOP_probability": 0.07206587287295402,
+        "correct": true,
+        "cross_entropy": 1.9821212397482781,
+        "greedy_action": "NATIVE-SPATIAL:ef9696a6b58d60a4a18b086c",
+        "greedy_mode": "probe",
+        "raw_CE_STOP_logit_gradient": 0.07206587287295402,
+        "raw_CE_teacher_logit_gradient": -0.8622233302306519,
+        "teacher_minus_best_other_margin": 0.20652498304843903,
+        "teacher_probability": 0.13777666976934808,
+        "teacher_rank_among_legal_movements": 1
+      },
+      "state_index": 39,
+      "step": 1,
+      "teacher_action": "NATIVE-SPATIAL:ef9696a6b58d60a4a18b086c",
+      "teacher_mode": "probe"
+    }
+  ],
+  "scope": "complete40_saved_TRAIN_score_arithmetic_only"
+}

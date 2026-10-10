@@ -1,0 +1,154 @@
+{
+  "audit_resources": {
+    "files_rechecked": 264,
+    "observed_peak_self_rss_bytes": 26083328,
+    "observed_rss_limit_bytes": 536870912,
+    "wall_limit_seconds": 60,
+    "wall_seconds": 0.10145920910872519
+  },
+  "audit_sha256": "b3903790821d0c91c75121bb46ed4aeaf20e8af5d5320a38b2e57e3776f1a662",
+  "classes": {
+    "STOP8": {
+      "baseline_STOP": 8,
+      "baseline_correct": 8,
+      "baseline_cross_entropy": 0.9005803884708409,
+      "n": 8,
+      "new_STOP": 8,
+      "new_correct": 8,
+      "new_cross_entropy": 0.7978837017202118
+    },
+    "all40": {
+      "baseline_STOP": 18,
+      "baseline_correct": 28,
+      "baseline_cross_entropy": 1.7003271295033966,
+      "n": 40,
+      "new_STOP": 20,
+      "new_correct": 26,
+      "new_cross_entropy": 1.6706089120609735
+    },
+    "aspiration_root16": {
+      "baseline_STOP": 10,
+      "baseline_correct": 4,
+      "baseline_cross_entropy": 1.9894468599511834,
+      "n": 16,
+      "new_STOP": 12,
+      "new_correct": 2,
+      "new_cross_entropy": 1.9905169664411353
+    },
+    "movement32": {
+      "baseline_STOP": 10,
+      "baseline_correct": 20,
+      "baseline_cross_entropy": 1.9002638147615352,
+      "n": 32,
+      "new_STOP": 12,
+      "new_correct": 18,
+      "new_cross_entropy": 1.8887902146461641
+    },
+    "root24": {
+      "baseline_STOP": 18,
+      "baseline_correct": 12,
+      "baseline_cross_entropy": 1.6264913694577359,
+      "n": 24,
+      "new_STOP": 20,
+      "new_correct": 10,
+      "new_cross_entropy": 1.592972544867494
+    },
+    "second16": {
+      "baseline_STOP": 0,
+      "baseline_correct": 16,
+      "baseline_cross_entropy": 1.811080769571887,
+      "n": 16,
+      "new_STOP": 0,
+      "new_correct": 16,
+      "new_cross_entropy": 1.7870634628511928
+    }
+  },
+  "conditional_movement_rank1": {
+    "STOP_policy_removed": false,
+    "baseline": 24,
+    "denominator": 32,
+    "new": 25
+  },
+  "costs": {
+    "added_parameters": 704,
+    "matched_total_compute_claim": false,
+    "new_parent_wall_seconds": 113.6795876249671,
+    "new_sampled_peak_rss_bytes": 401162240,
+    "new_worker_wall_seconds": 113.09872974990867,
+    "old_parent_wall_seconds": 110.95483941701241,
+    "old_sampled_peak_rss_bytes": 399704064,
+    "old_worker_wall_seconds": 110.51591654191725,
+    "parent_wall_delta_seconds": 2.72474820795469,
+    "same_loss_forwards": 1280,
+    "same_readout_forwards": 80,
+    "same_updates": 32,
+    "sampled_peak_rss_delta_bytes": 1458176
+  },
+  "counts": {
+    "SELECT_or_MEASUREMENT_reads": 0,
+    "geometry_previews": 760,
+    "loss_forward_calls": 1280,
+    "native_teacher_steps": 40,
+    "new_checkpoint_loads": 1,
+    "optimizer_updates": 32,
+    "patient_reads": 0,
+    "prior_checkpoint_loads": 0,
+    "readout_forward_calls": 80,
+    "search_calls": 0
+  },
+  "decision": "PASS_SAVED_JSON_ARITHMETIC",
+  "experiment_hash": "sha256:770de4707a3cde985c57fc214964b47c460ed5efd1985d83e6cf4277e3ff54a1",
+  "initial_function_parity": {
+    "declared_tolerance": 1e-06,
+    "logit_max_abs_difference": 7.450580596923828e-09,
+    "value_max_abs_difference": 0.0
+  },
+  "initial_tensor_evidence": {
+    "independent_tensor_read": false,
+    "producer_added_zero_parameters": 704,
+    "producer_shared_exact": true
+  },
+  "limitations": "Saved logits and metadata only; no checkpoint/tensor decode, native reconstruction, gradient or trajectory reexecution. Shared/zero tensor and gradient claims are source-bound producer records.",
+  "new_aspiration_roots": {
+    "STOP": 12,
+    "denominator": 16,
+    "different_aspiration": 2,
+    "exact_teacher_aspiration": 2
+  },
+  "paired_root_tasks": {
+    "changed_choice_vs_baseline": 2,
+    "changed_rows": [
+      {
+        "baseline_choice": "NATIVE-SPATIAL:b360523f9dccee3ca0e013b2",
+        "baseline_correct": true,
+        "goal_id": "surface",
+        "layout_id": "pcf-19",
+        "new_STOP_margin": 0.08969908952713013,
+        "new_choice": "STOP",
+        "new_correct": false,
+        "teacher_action": "NATIVE-SPATIAL:b360523f9dccee3ca0e013b2"
+      },
+      {
+        "baseline_choice": "NATIVE-SPATIAL:7c447a4bf55da09f684d0057",
+        "baseline_correct": true,
+        "goal_id": "deep",
+        "layout_id": "pcf-19",
+        "new_STOP_margin": 0.07576389610767365,
+        "new_choice": "STOP",
+        "new_correct": false,
+        "teacher_action": "NATIVE-SPATIAL:7c447a4bf55da09f684d0057"
+      }
+    ],
+    "cross_goal_action_id_caveat": "Action identities include source/task/engine state; differing IDs across goals do not establish differing physical geometry. Paired comparison here uses each goal's unchanged before/after/baseline inventory.",
+    "goals_per_layout": 2,
+    "layouts": 12,
+    "unchanged_choice_vs_baseline": 22
+  },
+  "performance_improvement_established": false,
+  "receipt_sha256": "0da4fef6cf7556db95a77c1191c6e5f895a130f710110579bc719b6a3e51f179",
+  "result_sha256": "4eed507e1ceb9160714cfe3e64101415fa7d26ae62b80406633e8f93ab2e70db",
+  "run_head": "d2c68559288196bb571a7016fe4aadcb9eda9a99",
+  "schema": "public-goal-relation-fit-saved-review-v1",
+  "source_index_sha256": "c2feb9288dcd15f4feeb85cb999d86fa4c190600c80069ac11cde3352b39274c",
+  "trajectory_or_clinical_validation": false
+}

@@ -1,0 +1,723 @@
+{
+  "all32_parameter_updates_chained": true,
+  "audit_elapsed_seconds": 0.10145920910872519,
+  "audit_peak_self_rss_bytes": 26083328,
+  "baseline_summaries": {
+    "after": {
+      "STOP8": {
+        "accuracy": 1.0,
+        "correct_count": 8,
+        "greedy_STOP": 8,
+        "greedy_modes": {
+          "aspirate": 0,
+          "probe": 0,
+          "stop": 8
+        },
+        "mean_STOP_probability": 0.4192510918486331,
+        "mean_cross_entropy": 0.9005803884708409,
+        "n": 8,
+        "teacher_movement_rank1": 0
+      },
+      "all40": {
+        "accuracy": 0.7,
+        "correct_count": 28,
+        "greedy_STOP": 18,
+        "greedy_modes": {
+          "aspirate": 6,
+          "probe": 16,
+          "stop": 18
+        },
+        "mean_STOP_probability": 0.19718519636112608,
+        "mean_cross_entropy": 1.7003271295033966,
+        "n": 40,
+        "teacher_movement_rank1": 24
+      },
+      "aspiration_root16": {
+        "accuracy": 0.25,
+        "correct_count": 4,
+        "greedy_STOP": 10,
+        "greedy_modes": {
+          "aspirate": 6,
+          "probe": 0,
+          "stop": 10
+        },
+        "mean_STOP_probability": 0.16219558235382797,
+        "mean_cross_entropy": 1.9894468599511834,
+        "n": 16,
+        "teacher_movement_rank1": 8
+      },
+      "movement32": {
+        "accuracy": 0.625,
+        "correct_count": 20,
+        "greedy_STOP": 10,
+        "greedy_modes": {
+          "aspirate": 6,
+          "probe": 16,
+          "stop": 10
+        },
+        "mean_STOP_probability": 0.14166872248924933,
+        "mean_cross_entropy": 1.9002638147615352,
+        "n": 32,
+        "teacher_movement_rank1": 24
+      },
+      "root24": {
+        "accuracy": 0.5,
+        "correct_count": 12,
+        "greedy_STOP": 18,
+        "greedy_modes": {
+          "aspirate": 6,
+          "probe": 0,
+          "stop": 18
+        },
+        "mean_STOP_probability": 0.24788075218542968,
+        "mean_cross_entropy": 1.6264913694577359,
+        "n": 24,
+        "teacher_movement_rank1": 8
+      },
+      "second16": {
+        "accuracy": 1.0,
+        "correct_count": 16,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 0,
+          "probe": 16,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.12114186262467072,
+        "mean_cross_entropy": 1.811080769571887,
+        "n": 16,
+        "teacher_movement_rank1": 16
+      }
+    },
+    "before": {
+      "STOP8": {
+        "accuracy": 0.0,
+        "correct_count": 0,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 8,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.3455508106360374,
+        "mean_cross_entropy": 1.0937191708739107,
+        "n": 8,
+        "teacher_movement_rank1": 0
+      },
+      "all40": {
+        "accuracy": 0.025,
+        "correct_count": 1,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 40,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.17901157579639562,
+        "mean_cross_entropy": 1.8617800560226367,
+        "n": 40,
+        "teacher_movement_rank1": 1
+      },
+      "aspiration_root16": {
+        "accuracy": 0.0625,
+        "correct_count": 1,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 16,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.13736389059612034,
+        "mean_cross_entropy": 2.041838281106285,
+        "n": 16,
+        "teacher_movement_rank1": 1
+      },
+      "movement32": {
+        "accuracy": 0.03125,
+        "correct_count": 1,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 32,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.1373767670864852,
+        "mean_cross_entropy": 2.0537952773098183,
+        "n": 32,
+        "teacher_movement_rank1": 1
+      },
+      "root24": {
+        "accuracy": 0.041666666666666664,
+        "correct_count": 1,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 24,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.206759530609426,
+        "mean_cross_entropy": 1.7257985776954936,
+        "n": 24,
+        "teacher_movement_rank1": 1
+      },
+      "second16": {
+        "accuracy": 0.0,
+        "correct_count": 0,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 16,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.13738964357685005,
+        "mean_cross_entropy": 2.0657522735133513,
+        "n": 16,
+        "teacher_movement_rank1": 0
+      }
+    }
+  },
+  "blocked_access_attempts": [],
+  "checkpoint_reads": 0,
+  "clinical_validation": false,
+  "clipping_triggered_updates": 0,
+  "cost_comparison": {
+    "added_parameters": 704,
+    "matched_total_compute_claim": false,
+    "new_parent_wall_seconds": 113.6795876249671,
+    "new_sampled_peak_rss_bytes": 401162240,
+    "new_worker_wall_seconds": 113.09872974990867,
+    "old_parent_wall_seconds": 110.95483941701241,
+    "old_sampled_peak_rss_bytes": 399704064,
+    "old_worker_wall_seconds": 110.51591654191725,
+    "same_loss_forwards": 1280,
+    "same_readout_forwards": 80,
+    "same_updates": 32
+  },
+  "counts": {
+    "SELECT_or_MEASUREMENT_reads": 0,
+    "geometry_previews": 760,
+    "loss_forward_calls": 1280,
+    "native_teacher_steps": 40,
+    "new_checkpoint_loads": 1,
+    "optimizer_updates": 32,
+    "patient_reads": 0,
+    "prior_checkpoint_loads": 0,
+    "readout_forward_calls": 80,
+    "search_calls": 0
+  },
+  "experiment_hash": "sha256:770de4707a3cde985c57fc214964b47c460ed5efd1985d83e6cf4277e3ff54a1",
+  "gradient_norm_range": [
+    0.18945729732513428,
+    0.4878551959991455
+  ],
+  "initial_function_max_logit_difference": 7.450580596923828e-09,
+  "initial_function_max_value_difference": 0.0,
+  "limitations": "Saved logits and metadata only; no checkpoint/tensor decode, native reconstruction, gradient or trajectory reexecution. Shared/zero tensor and gradient claims are source-bound producer records.",
+  "on_policy_trajectory_evidence": false,
+  "ordered_manifest_hash": "sha256:4cda20c67489dce1c6df4f49fe41da9aa31a5fef4bdaed03bc10b697618ccd77",
+  "paired_roots": [
+    {
+      "baseline_same_greedy_action_id": true,
+      "goals": [
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": true,
+          "goal_id": "surface",
+          "new_STOP_margin": 0.5696578919887543,
+          "new_choice": "STOP",
+          "new_correct": true,
+          "teacher_action": "STOP"
+        },
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": true,
+          "goal_id": "deep",
+          "new_STOP_margin": 0.6092730462551117,
+          "new_choice": "STOP",
+          "new_correct": true,
+          "teacher_action": "STOP"
+        }
+      ],
+      "layout_id": "pcf-06",
+      "maximum_common_legal_score_difference": 0.0334700345993042,
+      "same_greedy_action_id": true
+    },
+    {
+      "baseline_same_greedy_action_id": true,
+      "goals": [
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": true,
+          "goal_id": "surface",
+          "new_STOP_margin": 0.29578709602355957,
+          "new_choice": "STOP",
+          "new_correct": true,
+          "teacher_action": "STOP"
+        },
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": true,
+          "goal_id": "deep",
+          "new_STOP_margin": 0.3212997019290924,
+          "new_choice": "STOP",
+          "new_correct": true,
+          "teacher_action": "STOP"
+        }
+      ],
+      "layout_id": "pcf-09",
+      "maximum_common_legal_score_difference": 0.018651336431503296,
+      "same_greedy_action_id": true
+    },
+    {
+      "baseline_same_greedy_action_id": true,
+      "goals": [
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": false,
+          "goal_id": "surface",
+          "new_STOP_margin": 0.22939424216747284,
+          "new_choice": "STOP",
+          "new_correct": false,
+          "teacher_action": "NATIVE-SPATIAL:8665e3c2d0b9f15057036ff8"
+        },
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": false,
+          "goal_id": "deep",
+          "new_STOP_margin": 0.29539452493190765,
+          "new_choice": "STOP",
+          "new_correct": false,
+          "teacher_action": "NATIVE-SPATIAL:24ac36b8880ed825fc759d3c"
+        }
+      ],
+      "layout_id": "pcf-10",
+      "maximum_common_legal_score_difference": 0.08189553022384644,
+      "same_greedy_action_id": true
+    },
+    {
+      "baseline_same_greedy_action_id": true,
+      "goals": [
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": false,
+          "goal_id": "surface",
+          "new_STOP_margin": 0.1387835443019867,
+          "new_choice": "STOP",
+          "new_correct": false,
+          "teacher_action": "NATIVE-SPATIAL:a08c0f0766a59719f2f101da"
+        },
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": false,
+          "goal_id": "deep",
+          "new_STOP_margin": 0.1331678107380867,
+          "new_choice": "STOP",
+          "new_correct": false,
+          "teacher_action": "NATIVE-SPATIAL:c215a36b272c454149fefcc3"
+        }
+      ],
+      "layout_id": "pcf-11",
+      "maximum_common_legal_score_difference": 0.03504542261362076,
+      "same_greedy_action_id": true
+    },
+    {
+      "baseline_same_greedy_action_id": true,
+      "goals": [
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": false,
+          "goal_id": "surface",
+          "new_STOP_margin": 0.14232167601585388,
+          "new_choice": "STOP",
+          "new_correct": false,
+          "teacher_action": "NATIVE-SPATIAL:e61bdb26c64172df15230212"
+        },
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": false,
+          "goal_id": "deep",
+          "new_STOP_margin": 0.12855316698551178,
+          "new_choice": "STOP",
+          "new_correct": false,
+          "teacher_action": "NATIVE-SPATIAL:a350f3656bf9cae164867066"
+        }
+      ],
+      "layout_id": "pcf-13",
+      "maximum_common_legal_score_difference": 0.03961677849292755,
+      "same_greedy_action_id": true
+    },
+    {
+      "baseline_same_greedy_action_id": false,
+      "goals": [
+        {
+          "baseline_choice": "NATIVE-SPATIAL:d57c8f281475e9d57aefe78e",
+          "baseline_correct": false,
+          "goal_id": "surface",
+          "new_STOP_margin": -0.05193047225475311,
+          "new_choice": "NATIVE-SPATIAL:d57c8f281475e9d57aefe78e",
+          "new_correct": false,
+          "teacher_action": "NATIVE-SPATIAL:14dd227662bb68df1476934b"
+        },
+        {
+          "baseline_choice": "NATIVE-SPATIAL:22e4bfcac59734d04ffafb39",
+          "baseline_correct": true,
+          "goal_id": "deep",
+          "new_STOP_margin": -0.03283892571926117,
+          "new_choice": "NATIVE-SPATIAL:22e4bfcac59734d04ffafb39",
+          "new_correct": true,
+          "teacher_action": "NATIVE-SPATIAL:22e4bfcac59734d04ffafb39"
+        }
+      ],
+      "layout_id": "pcf-14",
+      "maximum_common_legal_score_difference": 0.06432652473449707,
+      "same_greedy_action_id": false
+    },
+    {
+      "baseline_same_greedy_action_id": true,
+      "goals": [
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": true,
+          "goal_id": "surface",
+          "new_STOP_margin": 0.5101564675569534,
+          "new_choice": "STOP",
+          "new_correct": true,
+          "teacher_action": "STOP"
+        },
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": true,
+          "goal_id": "deep",
+          "new_STOP_margin": 0.5357113182544708,
+          "new_choice": "STOP",
+          "new_correct": true,
+          "teacher_action": "STOP"
+        }
+      ],
+      "layout_id": "pcf-15",
+      "maximum_common_legal_score_difference": 0.018725350499153137,
+      "same_greedy_action_id": true
+    },
+    {
+      "baseline_same_greedy_action_id": false,
+      "goals": [
+        {
+          "baseline_choice": "NATIVE-SPATIAL:b360523f9dccee3ca0e013b2",
+          "baseline_correct": true,
+          "goal_id": "surface",
+          "new_STOP_margin": 0.08969908952713013,
+          "new_choice": "STOP",
+          "new_correct": false,
+          "teacher_action": "NATIVE-SPATIAL:b360523f9dccee3ca0e013b2"
+        },
+        {
+          "baseline_choice": "NATIVE-SPATIAL:7c447a4bf55da09f684d0057",
+          "baseline_correct": true,
+          "goal_id": "deep",
+          "new_STOP_margin": 0.07576389610767365,
+          "new_choice": "STOP",
+          "new_correct": false,
+          "teacher_action": "NATIVE-SPATIAL:7c447a4bf55da09f684d0057"
+        }
+      ],
+      "layout_id": "pcf-19",
+      "maximum_common_legal_score_difference": 0.021117672324180603,
+      "same_greedy_action_id": true
+    },
+    {
+      "baseline_same_greedy_action_id": true,
+      "goals": [
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": false,
+          "goal_id": "surface",
+          "new_STOP_margin": 0.11106108129024506,
+          "new_choice": "STOP",
+          "new_correct": false,
+          "teacher_action": "NATIVE-SPATIAL:e120ea52022f06c66dbcb3c4"
+        },
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": false,
+          "goal_id": "deep",
+          "new_STOP_margin": 0.13705214858055115,
+          "new_choice": "STOP",
+          "new_correct": false,
+          "teacher_action": "NATIVE-SPATIAL:3cd5c719cf365f85643e82c1"
+        }
+      ],
+      "layout_id": "pcf-20",
+      "maximum_common_legal_score_difference": 0.07682310044765472,
+      "same_greedy_action_id": true
+    },
+    {
+      "baseline_same_greedy_action_id": true,
+      "goals": [
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": true,
+          "goal_id": "surface",
+          "new_STOP_margin": 0.3550073504447937,
+          "new_choice": "STOP",
+          "new_correct": true,
+          "teacher_action": "STOP"
+        },
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": true,
+          "goal_id": "deep",
+          "new_STOP_margin": 0.36974816024303436,
+          "new_choice": "STOP",
+          "new_correct": true,
+          "teacher_action": "STOP"
+        }
+      ],
+      "layout_id": "pcf-21",
+      "maximum_common_legal_score_difference": 0.008312389254570007,
+      "same_greedy_action_id": true
+    },
+    {
+      "baseline_same_greedy_action_id": true,
+      "goals": [
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": false,
+          "goal_id": "surface",
+          "new_STOP_margin": 0.10518485307693481,
+          "new_choice": "STOP",
+          "new_correct": false,
+          "teacher_action": "NATIVE-SPATIAL:e9a9dadaa4e048ce2ae22403"
+        },
+        {
+          "baseline_choice": "STOP",
+          "baseline_correct": false,
+          "goal_id": "deep",
+          "new_STOP_margin": 0.12403273582458496,
+          "new_choice": "STOP",
+          "new_correct": false,
+          "teacher_action": "NATIVE-SPATIAL:da65efd40316be9ae86320f0"
+        }
+      ],
+      "layout_id": "pcf-22",
+      "maximum_common_legal_score_difference": 0.0640784204006195,
+      "same_greedy_action_id": true
+    },
+    {
+      "baseline_same_greedy_action_id": false,
+      "goals": [
+        {
+          "baseline_choice": "NATIVE-SPATIAL:811c0385e09535b488116e59",
+          "baseline_correct": false,
+          "goal_id": "surface",
+          "new_STOP_margin": -0.025560200214385986,
+          "new_choice": "NATIVE-SPATIAL:811c0385e09535b488116e59",
+          "new_correct": false,
+          "teacher_action": "NATIVE-SPATIAL:dc4a9ed87fb2f335258d3ef8"
+        },
+        {
+          "baseline_choice": "NATIVE-SPATIAL:6e23099a754e04ddf6420ae3",
+          "baseline_correct": true,
+          "goal_id": "deep",
+          "new_STOP_margin": -0.03936292231082916,
+          "new_choice": "NATIVE-SPATIAL:6e23099a754e04ddf6420ae3",
+          "new_correct": true,
+          "teacher_action": "NATIVE-SPATIAL:6e23099a754e04ddf6420ae3"
+        }
+      ],
+      "layout_id": "pcf-23",
+      "maximum_common_legal_score_difference": 0.02129100263118744,
+      "same_greedy_action_id": false
+    }
+  ],
+  "receipt_sha256": "0da4fef6cf7556db95a77c1191c6e5f895a130f710110579bc719b6a3e51f179",
+  "result_sha256": "4eed507e1ceb9160714cfe3e64101415fa7d26ae62b80406633e8f93ab2e70db",
+  "run_head": "d2c68559288196bb571a7016fe4aadcb9eda9a99",
+  "shared_initialization_receipt": {
+    "added_input_columns_zero": true,
+    "added_parameters": 704,
+    "baseline_parameter_hash": "sha256:e7215950e221045b8e9612e4482837f9b1ff2c52278454b26efc746598cf1487",
+    "baseline_parameters": 39099,
+    "expanded_parameter_hash": "sha256:c61be39bfdf4d26e8682009982e25214e540bfc443cc399592100abb7cd28e24",
+    "expanded_parameters": 39803,
+    "shared_tensors_exact": true,
+    "version": "public-goal-relation-shared-initialization-v1"
+  },
+  "source_and_result_files_unchanged": 264,
+  "source_index_sha256": "c2feb9288dcd15f4feeb85cb999d86fa4c190600c80069ac11cde3352b39274c",
+  "status": "PASS_SAVED_JSON_ONLY",
+  "summaries": {
+    "after": {
+      "STOP8": {
+        "accuracy": 1.0,
+        "correct_count": 8,
+        "greedy_STOP": 8,
+        "greedy_modes": {
+          "aspirate": 0,
+          "probe": 0,
+          "stop": 8
+        },
+        "mean_STOP_probability": 0.4633445317220963,
+        "mean_cross_entropy": 0.7978837017202118,
+        "n": 8,
+        "teacher_movement_rank1": 0
+      },
+      "all40": {
+        "accuracy": 0.65,
+        "correct_count": 26,
+        "greedy_STOP": 20,
+        "greedy_modes": {
+          "aspirate": 4,
+          "probe": 16,
+          "stop": 20
+        },
+        "mean_STOP_probability": 0.2081093029944623,
+        "mean_cross_entropy": 1.6706089120609735,
+        "n": 40,
+        "teacher_movement_rank1": 25
+      },
+      "aspiration_root16": {
+        "accuracy": 0.125,
+        "correct_count": 2,
+        "greedy_STOP": 12,
+        "greedy_modes": {
+          "aspirate": 4,
+          "probe": 0,
+          "stop": 12
+        },
+        "mean_STOP_probability": 0.1733144969941804,
+        "mean_cross_entropy": 1.9905169664411353,
+        "n": 16,
+        "teacher_movement_rank1": 9
+      },
+      "movement32": {
+        "accuracy": 0.5625,
+        "correct_count": 18,
+        "greedy_STOP": 12,
+        "greedy_modes": {
+          "aspirate": 4,
+          "probe": 16,
+          "stop": 12
+        },
+        "mean_STOP_probability": 0.1443004958125538,
+        "mean_cross_entropy": 1.8887902146461641,
+        "n": 32,
+        "teacher_movement_rank1": 25
+      },
+      "root24": {
+        "accuracy": 0.4166666666666667,
+        "correct_count": 10,
+        "greedy_STOP": 20,
+        "greedy_modes": {
+          "aspirate": 4,
+          "probe": 0,
+          "stop": 20
+        },
+        "mean_STOP_probability": 0.269991175236819,
+        "mean_cross_entropy": 1.592972544867494,
+        "n": 24,
+        "teacher_movement_rank1": 9
+      },
+      "second16": {
+        "accuracy": 1.0,
+        "correct_count": 16,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 0,
+          "probe": 16,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.1152864946309272,
+        "mean_cross_entropy": 1.7870634628511928,
+        "n": 16,
+        "teacher_movement_rank1": 16
+      }
+    },
+    "before": {
+      "STOP8": {
+        "accuracy": 0.0,
+        "correct_count": 0,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 8,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.345550810403279,
+        "mean_cross_entropy": 1.093719171350871,
+        "n": 8,
+        "teacher_movement_rank1": 0
+      },
+      "all40": {
+        "accuracy": 0.025,
+        "correct_count": 1,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 40,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.17901157574984394,
+        "mean_cross_entropy": 1.8617800561180289,
+        "n": 40,
+        "teacher_movement_rank1": 1
+      },
+      "aspiration_root16": {
+        "accuracy": 0.0625,
+        "correct_count": 1,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 16,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.13736389059612034,
+        "mean_cross_entropy": 2.041838281106285,
+        "n": 16,
+        "teacher_movement_rank1": 1
+      },
+      "movement32": {
+        "accuracy": 0.03125,
+        "correct_count": 1,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 32,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.1373767670864852,
+        "mean_cross_entropy": 2.0537952773098183,
+        "n": 32,
+        "teacher_movement_rank1": 1
+      },
+      "root24": {
+        "accuracy": 0.041666666666666664,
+        "correct_count": 1,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 24,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.2067595305318399,
+        "mean_cross_entropy": 1.7257985778544807,
+        "n": 24,
+        "teacher_movement_rank1": 1
+      },
+      "second16": {
+        "accuracy": 0.0,
+        "correct_count": 0,
+        "greedy_STOP": 0,
+        "greedy_modes": {
+          "aspirate": 16,
+          "probe": 0,
+          "stop": 0
+        },
+        "mean_STOP_probability": 0.13738964357685005,
+        "mean_cross_entropy": 2.0657522735133513,
+        "n": 16,
+        "teacher_movement_rank1": 0
+      }
+    }
+  },
+  "tensor_recomparison_by_audit": false
+}

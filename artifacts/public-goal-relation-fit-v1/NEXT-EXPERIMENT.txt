@@ -1,0 +1,70 @@
+PROPOSED ONLY: one fixed paired STOP-head calibration diagnostic
+
+Question: is the remaining STOP-versus-movement failure helped by aligning the
+training loss with the actual greedy comparison, beyond equal extra optimization
+of the same STOP head? This is a single prespecified two-condition experiment,
+not a hyperparameter sweep, a new architecture or an evaluation benchmark.
+
+Common start: bounded-decode the relation final checkpoint whose producer record
+is84bf5a0b3a01e27c2f3047508b49d3dd88144126f22f5c6d13779b3c93585e04,
+parameter hash sha256:7a1200baaf5dab84fab6d537c792890a78db2156c49672c493564808149df7fc.
+Make two exact parameter copies. Freeze encoder, movement actor and critic; only
+the existing STOP head may change. Initial outputs for both conditions must equal
+the saved final40 readouts within1e-6 before updates. This explicitly uses a
+trained parent; it is not fresh initialization or comparable to scratch RL.
+
+Same original ordered40 TRAIN observations/actions, including8 real STOP labels.
+Use the same public inputs, masks, source/goal/context/seals and same24 original
+tasks. No new search/teacher, no replacement states, no SELECT/MEASUREMENT/patient
+read. Reconstruct each original teacher history once, then create exact arm-bound
+TRAIN samples. Conditional movement logits/ranks must remain bitwise unchanged.
+
+Condition A (matched extra-optimization control): unchanged mean categorical CE
+on the teacher action; only STOP-head parameters receive gradients.
+Condition B (one candidate objective): define m = zSTOP - max(z_j) over permitted
+legal non-STOP candidates, y=1 for teacher STOP and0 otherwise. Minimize the mean
+binary cross-entropy-with-logits(m,y), with all40 states weighted equally. Movement
+scores are frozen/detached. If a state has only STOP, retain it as a reported
+deterministic state with zero decision loss; none of this fixed40 corpus is such
+a state. No goal-distance threshold, global hand-picked bias, STOP penalty,
+reward shaping, temperature, class reweighting or masking is introduced.
+
+Both conditions:32 full40 updates, fresh separate Adam states with the existing
+.001/.9/.999/1e-8 settings and norm5 cap, deterministic fixed order, one fixed
+endpoint and no selection. Exact all-nonSTOP parameter hashes and candidate
+logits must stay unchanged before/after every update. Inference remains the same
+flat masked argmax, including STOP; the binary loss does not replace the action
+distribution or decoder. Separate versioned training admission must explicitly
+permit a frozen parameter subset and parent checkpoint, instead of weakening the
+current fresh-common-initialization/full-parameter session checks.
+
+Counts for this one paired experiment:64 head updates total;2560 loss forwards
+plus160 before/after readout forwards;one parent checkpoint load and two new final
+verification reloads;one reconstruction of24 tasks/40 original steps;zero new
+SEARCH/native greedy rollout. Proposed hard bounds:one attempt,300s total,
+1GiB sampled owned-tree RSS,one thread,2048 previews. Existing owned monitor and
+failure/partial retention suffice; no new process framework. Each artifact must
+record32 parent full-model updates plus32 additional head-only updates, parent
+hash/lineage, exact frozen modules, arm objective and costs. It must not masquerade
+as a new ordinary final32 checkpoint or inherit a desktop release.
+
+Primary fixed readout: premature STOP among16 aspiration roots, unwanted movement
+among8 STOP labels, and lost movement among16 probe-second states. Also report
+all40 exact choices, unchanged conditional movement rank, per-state margins,
+original categorical CE and binary loss for both conditions. Fixed movement
+ranking caps exact teacher matches at25/32 movement states; STOP calibration
+cannot repair the remaining wrong movement choices or prove native success.
+
+A useful result for the candidate objective requires fewer premature root STOPs
+than A while preserving all8 true STOP choices and all16 probe choices; otherwise
+report mixed/negative, including every state. If both conditions improve equally,
+extra STOP-head optimization is sufficient at this budget and the new objective
+is not supported. If neither helps, do not infer representation impossibility.
+No third arm, extra steps, threshold or endpoint is chosen from the result.
+A subsequent native pass, if separately released, must contain all24 TRAIN tasks.
+
+Before implementation, stage tiny source/unit controls for loss values and signs,
+legal-mask/empty-group behavior, exact frozen-module gradients/hashes, common
+parent initialization, and distinct lineage/refusal under original release. Root
+must approve this separate protocol; nothing here authorizes source promotion,
+checkpoint decode, further training, native rollout or desktop substitution.
