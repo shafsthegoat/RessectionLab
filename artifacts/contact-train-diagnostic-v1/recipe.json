@@ -1,0 +1,48 @@
+{
+  "checkpoint_set": {
+    "IL": {
+      "kind": "final",
+      "parameter_hash": "sha256:4dcbb6fb39976f80d635c571c5f4679b0831daab310a9c2d2529a499613015f7",
+      "path": "outputs/learning/public-contact-v1/attempt-01/IL-final.gmckpt",
+      "sha256": "5295add15d4504db9148a307deaaf503ee8fadbf070a03ffd0968ce7e06ae719"
+    },
+    "INITIAL": {
+      "kind": "initial",
+      "parameter_hash": "sha256:e7215950e221045b8e9612e4482837f9b1ff2c52278454b26efc746598cf1487",
+      "path": "outputs/learning/public-contact-v1/attempt-01/common-initial.gmckpt",
+      "sha256": "f96d73659ce8789b7e496c4a5eb000696a0de25dde67e067f1ddedb0f671d376"
+    },
+    "RL": {
+      "kind": "final",
+      "parameter_hash": "sha256:d220d73c9aed40f1385bcc06839b48a5046e17efd5d229ddd1b295fbea64b53a",
+      "path": "outputs/learning/public-contact-v1/attempt-01/RL-final.gmckpt",
+      "sha256": "adc27f7bfb3498fb13953d853d4b0e41a0b927f66c3dd93cccd51b60c52424ce"
+    }
+  },
+  "command": ".venv/bin/python build/goal-conditioned-policy-v1/run_train_diagnostic_owned.py --expected-head 6a3241002f02fee8d4a919a3c361d770d80d5be4 --source-index build/goal-conditioned-policy-v1/train-diagnostic-source-index.json --source-index-sha256 46a262245eb04e7b9ec3457cf95d0a0f136392195246a18a17fd69c9e4d88411",
+  "command_argv": [
+    ".venv/bin/python",
+    "build/goal-conditioned-policy-v1/run_train_diagnostic_owned.py",
+    "--expected-head",
+    "6a3241002f02fee8d4a919a3c361d770d80d5be4",
+    "--source-index",
+    "build/goal-conditioned-policy-v1/train-diagnostic-source-index.json",
+    "--source-index-sha256",
+    "46a262245eb04e7b9ec3457cf95d0a0f136392195246a18a17fd69c9e4d88411"
+  ],
+  "expected_head": "6a3241002f02fee8d4a919a3c361d770d80d5be4",
+  "forward_mode": "eval no_grad; no sampled/greedy action executed",
+  "fresh_test_rule": "Existing exposed measurement outcomes may not be reused as an untouched test for a tuned successor.",
+  "input_index_sha256": "b0119bd2a9e9f15031a0c0725ec6c1dd233c0845c62150f355c240a485c93554",
+  "no_new_teacher_or_search": true,
+  "on_cap": "Preserve per-state/per-task evidence and parent receipt; no retry, raised budget or alternate subset.",
+  "output": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1",
+  "proposal": "build/contact-learning-train-diagnosis-v1/next-diagnostic.json",
+  "prospective_metadata_exception": "Canonical experiment identity may reconstruct the prospective all-role source manifest; no SELECT/MEASUREMENT task, observation, outcome, result or episode is consumed.",
+  "purpose": "TRAIN underfit vs actor/readout diagnosis, not a new benchmark",
+  "reconstruction": "Same native TRAIN factory/planning_clone; apply only saved40 teacher actions. Check exact fingerprints, binding, native history, strategy seal and saved independent geometry audit. No duplicate seal replay.",
+  "same40_observations_for_all3_checkpoints": true,
+  "source_index_sha256": "46a262245eb04e7b9ec3457cf95d0a0f136392195246a18a17fd69c9e4d88411",
+  "status": "SOURCE_PREPARED_NOT_EXECUTED_REQUIRES_ROOT_RELEASE",
+  "version": "fixed40-TRAIN-forward-recipe-v1"
+}

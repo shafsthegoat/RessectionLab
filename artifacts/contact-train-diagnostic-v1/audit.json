@@ -1,0 +1,1199 @@
+{
+  "checkpoint_loads_reported": 3,
+  "forwards_reported_and_metered": 120,
+  "geometry_previews": 760,
+  "input_index_sha256": "b0119bd2a9e9f15031a0c0725ec6c1dd233c0845c62150f355c240a485c93554",
+  "limits": "Checkpoint byte validity and native reconstruction are corroborated by reviewed worker receipts and recorded hashes; this saved-only review does not rerun either. Conditional movement rank is score analysis only, not a new executed selector.",
+  "methods": {
+    "IL": {
+      "additional_TRAIN_arithmetic": {
+        "root_aspiration16": {
+          "STOP_margin_max": 0.28732119500637054,
+          "STOP_margin_min": 0.2561206668615341,
+          "count": 16,
+          "mean_CE": 2.086593678747175,
+          "mean_STOP_probability": 0.1775947022325197,
+          "mean_teacher_probability": 0.1351923710870206,
+          "movement_only_teacher_correct_count": 6,
+          "movement_score_range_mean": 0.014778127893805504
+        },
+        "second_probe16": {
+          "STOP_margin_max": 0.10254430025815964,
+          "STOP_margin_min": 0.07073883712291718,
+          "count": 16,
+          "mean_CE": 2.0215445618792116,
+          "mean_STOP_probability": 0.15718365895527409,
+          "mean_teacher_probability": 0.14427449488944097,
+          "movement_only_teacher_correct_count": 16,
+          "movement_score_range_mean": 0.08557838713750243
+        },
+        "teacher_STOP8": {
+          "STOP_margin_max": 0.29742391407489777,
+          "STOP_margin_min": 0.26548831164836884,
+          "count": 8,
+          "mean_CE": 0.8969538341939349,
+          "mean_STOP_probability": 0.4186242242118586,
+          "mean_teacher_probability": 0.4186242242118586,
+          "movement_only_teacher_correct_count": 0,
+          "movement_score_range_mean": 0.00037015601992607117
+        },
+        "teacher_movement32": {
+          "STOP_margin_max": 0.28732119500637054,
+          "STOP_margin_min": 0.07073883712291718,
+          "count": 32,
+          "mean_CE": 2.0540691203131933,
+          "mean_STOP_probability": 0.1673891805938969,
+          "mean_teacher_probability": 0.13973343298823077,
+          "movement_only_teacher_correct_count": 22,
+          "movement_score_range_mean": 0.05017825751565397
+        }
+      },
+      "verified_summary": {
+        "all40": {
+          "accuracy": 0.2,
+          "count": 40,
+          "greedy_STOP_count": 40,
+          "mean_STOP_probability": 0.21763618931748924,
+          "mean_cross_entropy": 1.8226460630893415,
+          "mean_teacher_probability": 0.19551159123295633
+        },
+        "root24": {
+          "accuracy": 0.3333333333333333,
+          "count": 24,
+          "greedy_STOP_count": 24,
+          "mean_STOP_probability": 0.2579378762256327,
+          "mean_cross_entropy": 1.690047063896095,
+          "mean_teacher_probability": 0.2296696554619666
+        },
+        "second16": {
+          "accuracy": 0,
+          "count": 16,
+          "greedy_STOP_count": 16,
+          "mean_STOP_probability": 0.15718365895527409,
+          "mean_cross_entropy": 2.0215445618792116,
+          "mean_teacher_probability": 0.14427449488944097
+        }
+      }
+    },
+    "INITIAL": {
+      "additional_TRAIN_arithmetic": {
+        "root_aspiration16": {
+          "STOP_margin_max": -0.03852170705795288,
+          "STOP_margin_min": -0.04286384955048561,
+          "count": 16,
+          "mean_CE": 2.041838281106285,
+          "mean_STOP_probability": 0.13736389059612034,
+          "mean_teacher_probability": 0.14261359926878348,
+          "movement_only_teacher_correct_count": 1,
+          "movement_score_range_mean": 0.0062393927946686745
+        },
+        "second_probe16": {
+          "STOP_margin_max": -0.0520099475979805,
+          "STOP_margin_min": -0.0558638870716095,
+          "count": 16,
+          "mean_CE": 2.0657522735133513,
+          "mean_STOP_probability": 0.13738964357685005,
+          "mean_teacher_probability": 0.13993310544080373,
+          "movement_only_teacher_correct_count": 0,
+          "movement_score_range_mean": 0.0400155084207654
+        },
+        "teacher_STOP8": {
+          "STOP_margin_max": -0.03047981485724449,
+          "STOP_margin_min": -0.04768358916044235,
+          "count": 8,
+          "mean_CE": 1.0937191708739107,
+          "mean_STOP_probability": 0.3455508106360374,
+          "mean_teacher_probability": 0.3455508106360374,
+          "movement_only_teacher_correct_count": 0,
+          "movement_score_range_mean": 0.0007852977141737938
+        },
+        "teacher_movement32": {
+          "STOP_margin_max": -0.03852170705795288,
+          "STOP_margin_min": -0.0558638870716095,
+          "count": 32,
+          "mean_CE": 2.0537952773098183,
+          "mean_STOP_probability": 0.1373767670864852,
+          "mean_teacher_probability": 0.1412733523547936,
+          "movement_only_teacher_correct_count": 1,
+          "movement_score_range_mean": 0.023127450607717037
+        }
+      },
+      "verified_summary": {
+        "all40": {
+          "accuracy": 0.025,
+          "count": 40,
+          "greedy_STOP_count": 0,
+          "mean_STOP_probability": 0.17901157579639562,
+          "mean_cross_entropy": 1.8617800560226367,
+          "mean_teacher_probability": 0.18212884401104237
+        },
+        "root24": {
+          "accuracy": 0.041666666666666664,
+          "count": 24,
+          "greedy_STOP_count": 0,
+          "mean_STOP_probability": 0.206759530609426,
+          "mean_cross_entropy": 1.7257985776954938,
+          "mean_teacher_probability": 0.21025933639120145
+        },
+        "second16": {
+          "accuracy": 0,
+          "count": 16,
+          "greedy_STOP_count": 0,
+          "mean_STOP_probability": 0.13738964357685005,
+          "mean_cross_entropy": 2.0657522735133513,
+          "mean_teacher_probability": 0.13993310544080373
+        }
+      }
+    },
+    "RL": {
+      "additional_TRAIN_arithmetic": {
+        "root_aspiration16": {
+          "STOP_margin_max": 13.426807880401611,
+          "STOP_margin_min": 13.311856269836426,
+          "count": 16,
+          "mean_CE": 13.448688375379605,
+          "mean_STOP_probability": 0.9999891943198471,
+          "mean_teacher_probability": 1.445661541548488e-06,
+          "movement_only_teacher_correct_count": 3,
+          "movement_score_range_mean": 0.16268718242645264
+        },
+        "second_probe16": {
+          "STOP_margin_max": 13.442532539367676,
+          "STOP_margin_min": 13.344827651977539,
+          "count": 16,
+          "mean_CE": 13.459929618274126,
+          "mean_STOP_probability": 0.9999894172294546,
+          "mean_teacher_probability": 1.4293618875142917e-06,
+          "movement_only_teacher_correct_count": 3,
+          "movement_score_range_mean": 0.17354577779769897
+        },
+        "teacher_STOP8": {
+          "STOP_margin_max": 13.323212146759033,
+          "STOP_margin_min": 13.311241626739502,
+          "count": 8,
+          "mean_CE": 3.1312244505032893e-06,
+          "mean_STOP_probability": 0.99999686878099,
+          "mean_teacher_probability": 0.99999686878099,
+          "movement_only_teacher_correct_count": 0,
+          "movement_score_range_mean": 0.07812726497650146
+        },
+        "teacher_movement32": {
+          "STOP_margin_max": 13.442532539367676,
+          "STOP_margin_min": 13.311856269836426,
+          "count": 32,
+          "mean_CE": 13.454308996826866,
+          "mean_STOP_probability": 0.9999893057746508,
+          "mean_teacher_probability": 1.4375117145313899e-06,
+          "movement_only_teacher_correct_count": 6,
+          "movement_score_range_mean": 0.1681164801120758
+        }
+      },
+      "verified_summary": {
+        "all40": {
+          "accuracy": 0.2,
+          "count": 40,
+          "greedy_STOP_count": 40,
+          "mean_STOP_probability": 0.9999908183759186,
+          "mean_cross_entropy": 10.763447823706382,
+          "mean_teacher_probability": 0.20000052376556965
+        },
+        "root24": {
+          "accuracy": 0.3333333333333333,
+          "count": 24,
+          "greedy_STOP_count": 24,
+          "mean_STOP_probability": 0.9999917524735614,
+          "mean_cross_entropy": 8.965793293994553,
+          "mean_teacher_probability": 0.3333332533680244
+        },
+        "second16": {
+          "accuracy": 0,
+          "count": 16,
+          "greedy_STOP_count": 16,
+          "mean_STOP_probability": 0.9999894172294546,
+          "mean_cross_entropy": 13.459929618274126,
+          "mean_teacher_probability": 1.4293618875142917e-06
+        }
+      }
+    }
+  },
+  "native_nonstop_commits": 32,
+  "native_steps": 40,
+  "output_bytes": 240735,
+  "output_files": 145,
+  "output_inventory": [
+    {
+      "bytes": 1202,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-00.json",
+      "sha256": "f9660f968bd7abb1bb8c6b81ef4eacce2c2465150bb400e64eff334785115a17"
+    },
+    {
+      "bytes": 1200,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-01.json",
+      "sha256": "f97d51a4c82a077d38b0787cd06f74a63b7dafb23bf57c5ec73146ccc5b2add9"
+    },
+    {
+      "bytes": 1307,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-02.json",
+      "sha256": "7c9303a880723936187bb2e0b8d9ac204354b467995026865bb8c953f140a788"
+    },
+    {
+      "bytes": 1300,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-03.json",
+      "sha256": "6afbd5e12a6cb0276a2bc3e352b79724a367a4cddb0c4c6db688df1631f91c78"
+    },
+    {
+      "bytes": 1539,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-04.json",
+      "sha256": "16cacce23e7a17ff0eed8dae58b2c9efa6a5091d7e41c72efdd3faeaa6aacc04"
+    },
+    {
+      "bytes": 1534,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-05.json",
+      "sha256": "eca524103a58b58116bc4a62b3a31a32570fec7ed7f0b9cabbdabd3e5c9482b2"
+    },
+    {
+      "bytes": 1538,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-06.json",
+      "sha256": "1cae28df303151c71033b86b18a03c6e54f96f47d88fb3be7544eb13d326f4cc"
+    },
+    {
+      "bytes": 1524,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-07.json",
+      "sha256": "dcb63f562ee4301fc76caf589abee2b99dbb9cf05f10b00b5ee7404afa27dec1"
+    },
+    {
+      "bytes": 2339,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-08.json",
+      "sha256": "e09f2e41a6d287e8cf03f61d37d62b4f4432e6c14e659bb149e68b2c02ee1e49"
+    },
+    {
+      "bytes": 2322,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-09.json",
+      "sha256": "3cdc93835e58ba595a79d9bc2adb9d4258f1eb8205cd35f48317d1bbd9824ab0"
+    },
+    {
+      "bytes": 2335,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-10.json",
+      "sha256": "6cff442c1936e8ded71af9866eead883d22c49bc55fc5d2eff28819703f23af8"
+    },
+    {
+      "bytes": 2314,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-11.json",
+      "sha256": "c7cc0e205e9954c17e6971403c1a574ca012c02b7c7d9b2b4f101c6d7f239eab"
+    },
+    {
+      "bytes": 1540,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-12.json",
+      "sha256": "13acf1a1b3eb04fb6b0f575f7319d0e56b272fe1e1b8dc75687b064d54d66afd"
+    },
+    {
+      "bytes": 1527,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-13.json",
+      "sha256": "d9178c45dadf78d6adc76945d8151bdddd78d14be7ef57ce2247fe66d2f8a439"
+    },
+    {
+      "bytes": 1539,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-14.json",
+      "sha256": "24a7144383d47d116059a4d4e84e7a34b5919b8ad60ec583dec33eedc70ecb6f"
+    },
+    {
+      "bytes": 1520,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-15.json",
+      "sha256": "e0809d2cfd3b8508af5b4bf9ddc2910f61e2887d1018c72bab9bd1666d94f405"
+    },
+    {
+      "bytes": 2241,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-16.json",
+      "sha256": "97e498849498b40c140a4b31734bfb519b15fb5a8b157d9d871ee8d098770697"
+    },
+    {
+      "bytes": 2318,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-17.json",
+      "sha256": "a0c1347220a710482ad7c79a69f5631ac39f869a15d338e3ca1a657d5e208239"
+    },
+    {
+      "bytes": 2244,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-18.json",
+      "sha256": "f81be4161f2a3599a5fe4ed84f6498d0584a81df337eee51040ebef763618724"
+    },
+    {
+      "bytes": 2215,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-19.json",
+      "sha256": "deb44df3db649c38a082211e2f8f72b5411e3de1ebb30da5da4916c27a3dcdb4"
+    },
+    {
+      "bytes": 1303,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-20.json",
+      "sha256": "37adb9628d88e4275e286c17212571c14eefd32dc9195ff993c4a42edbcb3890"
+    },
+    {
+      "bytes": 1300,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-21.json",
+      "sha256": "6ecfeef5a667cbb97ae97ef551eeba7b8f7dea23093b5925fdb3a868e7ead461"
+    },
+    {
+      "bytes": 1541,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-22.json",
+      "sha256": "22ec76946527407b97e256d3057d40922f8125c43f3a872958757940804e267c"
+    },
+    {
+      "bytes": 1519,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-23.json",
+      "sha256": "0aeb7e6e098a80887930ca5491d1b3d42942bd76f867c5fe3a00b8f9cfa8e914"
+    },
+    {
+      "bytes": 1535,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-24.json",
+      "sha256": "c947b011892cc5ce689833535ca576855f5e12d514212819d6ca16610d649d4e"
+    },
+    {
+      "bytes": 1520,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-25.json",
+      "sha256": "0b8214b667a89ed420fafa9f42783b31525d1256f2f0324348d8925a3c46f31f"
+    },
+    {
+      "bytes": 2245,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-26.json",
+      "sha256": "2aeb6c3c09002d0bfa14cdcb1207dbc7f22778b694ef7afecec9576bc19d67ca"
+    },
+    {
+      "bytes": 2221,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-27.json",
+      "sha256": "2b2b8efa0a4300d7ea66a817ca14da90dd43b5e554e927e667d319d7e37d8dea"
+    },
+    {
+      "bytes": 2243,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-28.json",
+      "sha256": "d3e2ee720f383560a3e3d07ab0e87002ff2edd7ac12d180136115d7ee211f8f0"
+    },
+    {
+      "bytes": 2214,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-29.json",
+      "sha256": "df12b65362098bce418e5a423ebdc76c28409ed1410ca3112981b0f5451dd076"
+    },
+    {
+      "bytes": 1405,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-30.json",
+      "sha256": "16c1237050f9066836e79824e0390dcf1d22f5e28686f15ae85de227b78c7251"
+    },
+    {
+      "bytes": 1400,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-31.json",
+      "sha256": "0281cc26b1cb47ddebeb28f45a4cebc705352a4aec2af142e421f4d2a6adeba0"
+    },
+    {
+      "bytes": 1546,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-32.json",
+      "sha256": "6110acac68b58255584400de7f91a59024cb96b4a708e560a9e02cdd7daa56dc"
+    },
+    {
+      "bytes": 1528,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-33.json",
+      "sha256": "5661fa065312fb8ff49df26ad7caaa9f09b0561be9439b7e6042274b689f654a"
+    },
+    {
+      "bytes": 1540,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-34.json",
+      "sha256": "06491e73044e0a0e6acc10ed122858804c50b694655b9319209685ac6d65dd01"
+    },
+    {
+      "bytes": 1524,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-35.json",
+      "sha256": "41efdc9476d51727679729d4f9f6d8de8a1322fe37b9459223908a3b79baa45d"
+    },
+    {
+      "bytes": 2137,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-36.json",
+      "sha256": "bb73abadd998035eedce0b9f5a3c60c859f231edf6ad21bde7e98baa001ae406"
+    },
+    {
+      "bytes": 2119,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-37.json",
+      "sha256": "c2550b2a02d6e0c13868a29e01c6f646aa370d03abe13d5ef832ee403872efbc"
+    },
+    {
+      "bytes": 2132,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-38.json",
+      "sha256": "8cdc23df35c45e221407b98eca052e2649cef09ff59d5ec4025460364b9e3b39"
+    },
+    {
+      "bytes": 2117,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-39.json",
+      "sha256": "5a76cab9708a61e0e8b6b7e15315f066d2c299c0561f00b6ff09021588837e8b"
+    },
+    {
+      "bytes": 1249,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-00.json",
+      "sha256": "3e98f687f576621728106c6de9153efac6e1947fa8ebfffed6c3d35d77183a5f"
+    },
+    {
+      "bytes": 1248,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-01.json",
+      "sha256": "fa4a0b5803945c6745d240568bee302c99e09959384fd7ba3cd84fce2f344b8f"
+    },
+    {
+      "bytes": 1350,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-02.json",
+      "sha256": "bf3a4667ea9be0cc9b606009823c8e3fd1628f6259ef9c5e811a149006f0723e"
+    },
+    {
+      "bytes": 1346,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-03.json",
+      "sha256": "42dc3e4fe642a95215f1be43fffe39591378d56909fab997784a8489a9ded004"
+    },
+    {
+      "bytes": 1579,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-04.json",
+      "sha256": "a4e222908f5af29460f908cc2c4d550ed3ac76471c06486427a9c8735a68d42e"
+    },
+    {
+      "bytes": 1579,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-05.json",
+      "sha256": "49a23240820b7ac9ea5f74fe0f74649dc449745c580912ff3d46da7ef774e8a0"
+    },
+    {
+      "bytes": 1575,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-06.json",
+      "sha256": "95b938455ba74af3fbdf745b7cda7fb30574418a9b64051d268d9966ff1f8d77"
+    },
+    {
+      "bytes": 1566,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-07.json",
+      "sha256": "ed5944eaff626f1b9f1df78a121d9d2f984eb99ddd200b16646878f2703f174e"
+    },
+    {
+      "bytes": 2364,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-08.json",
+      "sha256": "ed509e4c1f1be8c38cbf6ee03c16ce554c6f39ec1e53232b4e4b7c4ecb6aaaf2"
+    },
+    {
+      "bytes": 2355,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-09.json",
+      "sha256": "aa102f4367a62eb587d2fb701cfd24332483a7c771a2223626a26272cc67b002"
+    },
+    {
+      "bytes": 2360,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-10.json",
+      "sha256": "540838fe78d681b6175a30d7d55ee4ef70915d6aa246b6701a3576fa0bd92c30"
+    },
+    {
+      "bytes": 2356,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-11.json",
+      "sha256": "9b9ec762f1574f03fa747f8692b578f75327d7b40c55d16807238b605421f3e6"
+    },
+    {
+      "bytes": 1580,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-12.json",
+      "sha256": "94ac07f916b7083ea9fe7df2f47f17fa1223bf8777edcb4393a382823c0dc911"
+    },
+    {
+      "bytes": 1576,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-13.json",
+      "sha256": "8e1c22306e5e51213689b39b55d32925943e494e79b6a7c563f3a541bcb08e9f"
+    },
+    {
+      "bytes": 1578,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-14.json",
+      "sha256": "eaa1801d381a367038894fcd1485bf6f1186e7356f554de39c6d0473fa5b5364"
+    },
+    {
+      "bytes": 1568,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-15.json",
+      "sha256": "57d8e08c5a8948a3deaeb6286c08c469881af4fbe1cad32d60ac4df0e1f68e64"
+    },
+    {
+      "bytes": 2264,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-16.json",
+      "sha256": "ba30ba234d276b4f9c1b86f2a26b705dd6cd8d5af56d2c7edb35a2a53c119b59"
+    },
+    {
+      "bytes": 2361,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-17.json",
+      "sha256": "c3d8e93aa2f44a51e73b4941255c339d401ae7a44daa2d35cf4c700ed06ca225"
+    },
+    {
+      "bytes": 2263,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-18.json",
+      "sha256": "4d38ca96dd3b61c79d2da49351b7d1c4e3a284132171cd627a4fecdab4689749"
+    },
+    {
+      "bytes": 2253,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-19.json",
+      "sha256": "d503cf481bbddb8b2bc1e38bf198830923644bd9191e12515fdfbcf8592d17f3"
+    },
+    {
+      "bytes": 1346,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-20.json",
+      "sha256": "043e1f659aafc58dd40e7a90bd83a8cf15d8da2c37b1b7d9d6593c53b336adde"
+    },
+    {
+      "bytes": 1348,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-21.json",
+      "sha256": "93e3cb60a959807c5f5b966a19eb59634cda2d860f93a3b51e28eaf61c1e47e1"
+    },
+    {
+      "bytes": 1581,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-22.json",
+      "sha256": "1b11d16744437ac07903ca2ad37440e3a6cb2768a832bc69f905059e62e379e7"
+    },
+    {
+      "bytes": 1570,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-23.json",
+      "sha256": "0e091ec7d13e041c80d6eacb4c2f47c2a23b66512f892db596a570c86825ac0d"
+    },
+    {
+      "bytes": 1580,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-24.json",
+      "sha256": "0f04ec498d0c900a499be5d00752666b22cfbbf5a018ebef2424fd36c1540c45"
+    },
+    {
+      "bytes": 1567,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-25.json",
+      "sha256": "91cfd4193c1d5f769be82d8c931d83b27ed98f39ba2fdf0e3c45d017cb7c1516"
+    },
+    {
+      "bytes": 2266,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-26.json",
+      "sha256": "08dd8b6e5e89a6fb324a5772d11d0a46d53ff56ee09ed496c1dfad5a6ea401a7"
+    },
+    {
+      "bytes": 2259,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-27.json",
+      "sha256": "c05a6c76f8acca8051d55597a827318a275a1182231d043f439319a8d0f105f4"
+    },
+    {
+      "bytes": 2263,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-28.json",
+      "sha256": "5b11f0fcb9ac584904e35aabfd69e2c2ee031bf744a00dd1e9f0cc3409807182"
+    },
+    {
+      "bytes": 2257,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-29.json",
+      "sha256": "010bc1a146feda8ed420f7c10e24564dc42e42efe60b28152881b434131c44c9"
+    },
+    {
+      "bytes": 1448,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-30.json",
+      "sha256": "5a66ecf6445979627e4b32408f889c2d8c6d3859e7a946b6271eb048768319ec"
+    },
+    {
+      "bytes": 1440,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-31.json",
+      "sha256": "c720cc602d9ab53d1641cdcfe7e64e637ff40ac8e56870ae32b069a62ddceef4"
+    },
+    {
+      "bytes": 1581,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-32.json",
+      "sha256": "cb8e8fe3887e588486d1064d5149d5743a4c8c63b7c2395d1485b080c6c5009a"
+    },
+    {
+      "bytes": 1570,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-33.json",
+      "sha256": "8180eb3ca530c1f604642f35aee27e5d192aa9b7e66f1f22bfd005750775c6d6"
+    },
+    {
+      "bytes": 1576,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-34.json",
+      "sha256": "ab5940e7cb9395a2272930be45ce01076f5473c513601f979f73ae4cfc0c24dd"
+    },
+    {
+      "bytes": 1568,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-35.json",
+      "sha256": "d0d146bf88ae0459e73e3ccb0fe6ded3ef2d16975b852835ebfb750dc8df0265"
+    },
+    {
+      "bytes": 2168,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-36.json",
+      "sha256": "588da977f56e63ac2d11cda3e68a7b1c4924b863ff56d40e01f2c9e2c5ec6dc9"
+    },
+    {
+      "bytes": 2165,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-37.json",
+      "sha256": "d345c590ca24c5cb68abba14cd4b24616042923fbdcbb84b5a692aaa6285f9ec"
+    },
+    {
+      "bytes": 2166,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-38.json",
+      "sha256": "028f5540526adfdc54a80999374835807c365b76eab19b15828e8a1e73b6251b"
+    },
+    {
+      "bytes": 2161,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-39.json",
+      "sha256": "f61fb0fa8ef78ec671e6b7f2993d469ca9d88b1d54738fa70781621f63c8a00d"
+    },
+    {
+      "bytes": 1204,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-00.json",
+      "sha256": "7cfac4ea76f1bffe82cf1d644f5aad5b98cdbe33fef245ac806f9802b26e2c27"
+    },
+    {
+      "bytes": 1204,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-01.json",
+      "sha256": "b437fb6b62e764b01cfb7c8314c91701f4e8e35da38ecc0627369fbe31179590"
+    },
+    {
+      "bytes": 1304,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-02.json",
+      "sha256": "fa1bedee48317dffdf239766cc490ab80a134655be1bad00b80265e150749835"
+    },
+    {
+      "bytes": 1304,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-03.json",
+      "sha256": "0c2aaf197c49165793a3c5d09ebf9e8cd1437d431c66ee74269d3dec10d74d02"
+    },
+    {
+      "bytes": 1533,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-04.json",
+      "sha256": "d47a56c23e20454b24f985bd301d0b8283e1b79df6f2c110cf81471f946e0413"
+    },
+    {
+      "bytes": 1526,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-05.json",
+      "sha256": "8edcb2db07dc8eb469ffa706fbc7143a28c0ad90c2ee882b27dab01bc59c9200"
+    },
+    {
+      "bytes": 1531,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-06.json",
+      "sha256": "b7f0334d51ee4b9721dbc06887c5a118dcbb45f91dc372735d9e1f9ef89ae294"
+    },
+    {
+      "bytes": 1521,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-07.json",
+      "sha256": "97511d84d6b41050490217bebe1fccb530137b6e0bbaa61626f98e4410dd09d8"
+    },
+    {
+      "bytes": 2311,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-08.json",
+      "sha256": "e2424a800d22879460ff17f3aab53442acff7f59f64f87a14cbda8446f47ff5b"
+    },
+    {
+      "bytes": 2299,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-09.json",
+      "sha256": "48bb0c2d240f23a6669c06634a7a9bbad84f35984b0dac1b5221de7dbf2d24df"
+    },
+    {
+      "bytes": 2303,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-10.json",
+      "sha256": "b22ff7d0dad9b415af2a66fee02eea0de4c0fdda85e9e1c9ad95ab4ee864dbbd"
+    },
+    {
+      "bytes": 2300,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-11.json",
+      "sha256": "f220309f725ed2a01d299c9f4eb05a8aef561de6f838a77e77e7dd0cdbc1e929"
+    },
+    {
+      "bytes": 1529,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-12.json",
+      "sha256": "1ea0eb987e5dcdd38752c60d14c405b153f6556add86bcd06bbb0ae2a203f1f5"
+    },
+    {
+      "bytes": 1526,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-13.json",
+      "sha256": "311a6238f4921d101877f5208159811186fb037cc14d4a5deaba1beb11c0c80f"
+    },
+    {
+      "bytes": 1529,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-14.json",
+      "sha256": "e289ec3faa777dc9ed31ad15f85abc1b7c33b78fe1006a612327e5805c6b5fee"
+    },
+    {
+      "bytes": 1519,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-15.json",
+      "sha256": "216ba4361d6d256c429598bbe09e5ba43a0100869a4e8cb0c90f4ff28c93790d"
+    },
+    {
+      "bytes": 2215,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-16.json",
+      "sha256": "ef3c5c9bb01cbbc55d04231c9807bab06f9d1d8b0b91af1e791a09f03976a43f"
+    },
+    {
+      "bytes": 2304,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-17.json",
+      "sha256": "232e78ce2f40be7e2bd1481c45388ca349a2c5a78fcb9522c6429700f09b1b92"
+    },
+    {
+      "bytes": 2211,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-18.json",
+      "sha256": "c16986c9f3e4c5c98850052bef7c7f12e54bcf6e9da571983dc1c0c09fa47f62"
+    },
+    {
+      "bytes": 2203,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-19.json",
+      "sha256": "21e0c16ec28cb1fd980aacc7515142ea164a76598ca2aad9cce507d795c5fe55"
+    },
+    {
+      "bytes": 1305,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-20.json",
+      "sha256": "ce6d5eafa2a827ba9f35afb4ea7d34dacbe510f0d9f2095611fcf6e0bdbad3b1"
+    },
+    {
+      "bytes": 1300,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-21.json",
+      "sha256": "1e3aafca58f0bed3f4c583f0c4d81412228caf2db77ae545a9771f4726518d74"
+    },
+    {
+      "bytes": 1535,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-22.json",
+      "sha256": "daf2c0fe16fd2a3481627b9b44a69d8cebbd1028c7ef90726314b6df8456ad13"
+    },
+    {
+      "bytes": 1522,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-23.json",
+      "sha256": "aab449d1143a14689962c2384af17d22bb3c00250ee5feb0c9470d4a8e5540d9"
+    },
+    {
+      "bytes": 1533,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-24.json",
+      "sha256": "d39725c508868b85e58371d437833536198c36eb3312bc49ffbcff83102862be"
+    },
+    {
+      "bytes": 1522,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-25.json",
+      "sha256": "cc914f085306f96d29fc8d9c4918bd9266d9f6503ba27198f2521d30392a62f2"
+    },
+    {
+      "bytes": 2212,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-26.json",
+      "sha256": "257e6a2d1c7bbae750726b4a2cd9e2e216e280733374480f30968048cad955de"
+    },
+    {
+      "bytes": 2207,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-27.json",
+      "sha256": "bbf3693f6d5d508a6e02b261387042fa12e18f562f88ccb2aba812c815e3fd15"
+    },
+    {
+      "bytes": 2213,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-28.json",
+      "sha256": "13bdb71567fa253ae1e01f2418b4d8b551e2889460d8506716f74a5430ed68db"
+    },
+    {
+      "bytes": 2202,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-29.json",
+      "sha256": "44e49625b2bbdc56931ca757e84fc71e5241d27fbc996dcd3c9bdba500df6bc3"
+    },
+    {
+      "bytes": 1397,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-30.json",
+      "sha256": "7305b0a66e0ccdb3e2e5b751d5f211a95e3e25f976fcc3b2e01602b918313b25"
+    },
+    {
+      "bytes": 1399,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-31.json",
+      "sha256": "a950d23914d4898e5473f1a7f922ab6523f97ffce2f96b640f820598c10a229c"
+    },
+    {
+      "bytes": 1535,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-32.json",
+      "sha256": "e9f1e037a2c6107c0877c3a23f75a0a1c29b94155b88fd1930260b4bfe810bd6"
+    },
+    {
+      "bytes": 1522,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-33.json",
+      "sha256": "e2c89f0edded59ed44754ca368c73fb8b4e2233222b26f45dd42d00079f40160"
+    },
+    {
+      "bytes": 1531,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-34.json",
+      "sha256": "ffa5e5ed384c5603f05b341e983e535514405a35457b8a6c1f1e3b81d0ffdc36"
+    },
+    {
+      "bytes": 1517,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-35.json",
+      "sha256": "921290fb8392c9be772b7cc230ee0e0cacf7c4dd6ea3a49de88f1017c53dea3a"
+    },
+    {
+      "bytes": 2113,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-36.json",
+      "sha256": "1c905979b4ef51ce013a197189f6c2746e8c767d5c84a98baabb4e93672f2c57"
+    },
+    {
+      "bytes": 2109,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-37.json",
+      "sha256": "91430504031f2dd0b78927a66afb6cbcb47fd254fb00a1b56a11a0fb3b116d96"
+    },
+    {
+      "bytes": 2115,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-38.json",
+      "sha256": "73c55e18356864c5e8a02c475e64327622d02d21892828801887e6e6131a7e81"
+    },
+    {
+      "bytes": 2106,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-39.json",
+      "sha256": "06ff3f479de103fcbc387b2afd7b26dcfe860891ee56a504c82c3744b3e7b7db"
+    },
+    {
+      "bytes": 420,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-00.json",
+      "sha256": "00186d441a25bdf535375c43be906220259b8c3258cae3cc67e72cf3498820ed"
+    },
+    {
+      "bytes": 420,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-01.json",
+      "sha256": "b8f6899f59cb8a31a4831c8a71f8839cdca81169d2d049efd8f6b61552f89405"
+    },
+    {
+      "bytes": 420,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-02.json",
+      "sha256": "9322e688b2ac848df3d25169c39f304c4b75d340617b6ae6b48849d09d5b88e6"
+    },
+    {
+      "bytes": 420,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-03.json",
+      "sha256": "882b1a9efc464f8d13df2cc3953be811c4d3387940ba68efa0cb9158f095b57b"
+    },
+    {
+      "bytes": 420,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-04.json",
+      "sha256": "42b73d5852ecb878ff1ef2cc0aa8bc94af69dc5b94a11138946e9b71f60fbad4"
+    },
+    {
+      "bytes": 420,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-05.json",
+      "sha256": "e94a0a7c7631a223bc8a4f7ae6040ff8d9e222eb33928bd5ac66173547ebe175"
+    },
+    {
+      "bytes": 420,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-06.json",
+      "sha256": "5d36718b7b8140afb901a006b03ef8e8686dbaec96fe70389ce0458acbf7196c"
+    },
+    {
+      "bytes": 420,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-07.json",
+      "sha256": "853e7a1aeaf847849ca24b768ae79018d3b0e271b3b4d0fc2061d164cc5b2f49"
+    },
+    {
+      "bytes": 420,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-08.json",
+      "sha256": "bd65238a0cef8951c2270453ad840384a859c7986543864a561567e35073b7a7"
+    },
+    {
+      "bytes": 420,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-09.json",
+      "sha256": "695e59fc93c9e585d86faf040007ee142d50602697898bef24af7b33390d7781"
+    },
+    {
+      "bytes": 421,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-10.json",
+      "sha256": "cad9ade394ec58ab8ebcae02afb4c420c17c9b8e545ea39b4fbfceeb5f891000"
+    },
+    {
+      "bytes": 421,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-11.json",
+      "sha256": "546151938fc16c25d63eccd5cb58ea94ca7b26ef04c4e29fcc3e3a9d4979cd75"
+    },
+    {
+      "bytes": 421,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-12.json",
+      "sha256": "9659a13dc9c2b75a3eb1431e8291b27c768fd927e8ac635c4387a226e8d9af95"
+    },
+    {
+      "bytes": 421,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-13.json",
+      "sha256": "9f7d7427d1a78ba3f967c2a8f196b6fe334de59609a800381f784a67def670a7"
+    },
+    {
+      "bytes": 421,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-14.json",
+      "sha256": "8f0f037f3e42c2d362856a1e1cdc208d6a2bb8088ada81e4cf2410a8077a3ece"
+    },
+    {
+      "bytes": 421,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-15.json",
+      "sha256": "33f53b220d9ad877f50f76a8193773eb18cc782e2975fd51f235dfb4c8290087"
+    },
+    {
+      "bytes": 421,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-16.json",
+      "sha256": "2b7edac1dbb88f34594ab8ad00729af41b0f7ae1dae48762265740e1dc0d05d6"
+    },
+    {
+      "bytes": 421,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-17.json",
+      "sha256": "293b060064c2591e83144fddeb6ace8ef0a7a4cd44be11fc4c75d39b2a7d0628"
+    },
+    {
+      "bytes": 421,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-18.json",
+      "sha256": "87131a356f0e1ec979a89a2936e82ea1dfaea10d2908950fd2262cc5b54c2874"
+    },
+    {
+      "bytes": 421,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-19.json",
+      "sha256": "13f0e20b4f5477df9f1171569f270d3e2e1ad4082923fac7c9af3aeb779f066a"
+    },
+    {
+      "bytes": 421,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-20.json",
+      "sha256": "24368d616e4d3a590cea9f13e0fea66752039c6f8dc5dd8125963ca8e2fc118c"
+    },
+    {
+      "bytes": 421,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-21.json",
+      "sha256": "909887277c90ca67bd429f52add30be8193f1bd7faff3037cc246238e0d9626d"
+    },
+    {
+      "bytes": 421,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-22.json",
+      "sha256": "1570de15838654860e4cc55da7b95f939eb68279ffbb45aa44295ba9a021291e"
+    },
+    {
+      "bytes": 421,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-23.json",
+      "sha256": "01bb867420e7bd9160ec3972b6da9cf78aa3273d7742913384dfc21c873f04fd"
+    },
+    {
+      "bytes": 17433,
+      "path": "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/result.json",
+      "sha256": "c6a36955965eec1902402b254e26b4cdb23dedf7c0fb2a9cd5016dfa55f1eec7"
+    }
+  ],
+  "parent_elapsed_seconds": 8.287326958030462,
+  "parent_sampled_peak_rss_bytes": 280330240,
+  "read_files": {
+    "build/contact-learning-train-diagnosis-v1/train-audit.json": "a07618d2d44e50a816d0a610498b33fa70939a44ef71d8339a4c39760e3630a7",
+    "build/goal-conditioned-policy-v1/train-diagnostic-input-index.json": "b0119bd2a9e9f15031a0c0725ec6c1dd233c0845c62150f355c240a485c93554",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1.supervision/declaration.json": "9f570e4a41b8eac3f8976edc0ffda584e6a137fb83b44cb3d94e634d0f2caac2",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1.supervision/receipt.json": "220a76e83203dac536c6013eaa33e1e294fe47305c1fda17a161f43e411f0182",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-00.json": "f9660f968bd7abb1bb8c6b81ef4eacce2c2465150bb400e64eff334785115a17",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-01.json": "f97d51a4c82a077d38b0787cd06f74a63b7dafb23bf57c5ec73146ccc5b2add9",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-02.json": "7c9303a880723936187bb2e0b8d9ac204354b467995026865bb8c953f140a788",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-03.json": "6afbd5e12a6cb0276a2bc3e352b79724a367a4cddb0c4c6db688df1631f91c78",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-04.json": "16cacce23e7a17ff0eed8dae58b2c9efa6a5091d7e41c72efdd3faeaa6aacc04",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-05.json": "eca524103a58b58116bc4a62b3a31a32570fec7ed7f0b9cabbdabd3e5c9482b2",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-06.json": "1cae28df303151c71033b86b18a03c6e54f96f47d88fb3be7544eb13d326f4cc",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-07.json": "dcb63f562ee4301fc76caf589abee2b99dbb9cf05f10b00b5ee7404afa27dec1",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-08.json": "e09f2e41a6d287e8cf03f61d37d62b4f4432e6c14e659bb149e68b2c02ee1e49",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-09.json": "3cdc93835e58ba595a79d9bc2adb9d4258f1eb8205cd35f48317d1bbd9824ab0",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-10.json": "6cff442c1936e8ded71af9866eead883d22c49bc55fc5d2eff28819703f23af8",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-11.json": "c7cc0e205e9954c17e6971403c1a574ca012c02b7c7d9b2b4f101c6d7f239eab",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-12.json": "13acf1a1b3eb04fb6b0f575f7319d0e56b272fe1e1b8dc75687b064d54d66afd",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-13.json": "d9178c45dadf78d6adc76945d8151bdddd78d14be7ef57ce2247fe66d2f8a439",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-14.json": "24a7144383d47d116059a4d4e84e7a34b5919b8ad60ec583dec33eedc70ecb6f",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-15.json": "e0809d2cfd3b8508af5b4bf9ddc2910f61e2887d1018c72bab9bd1666d94f405",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-16.json": "97e498849498b40c140a4b31734bfb519b15fb5a8b157d9d871ee8d098770697",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-17.json": "a0c1347220a710482ad7c79a69f5631ac39f869a15d338e3ca1a657d5e208239",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-18.json": "f81be4161f2a3599a5fe4ed84f6498d0584a81df337eee51040ebef763618724",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-19.json": "deb44df3db649c38a082211e2f8f72b5411e3de1ebb30da5da4916c27a3dcdb4",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-20.json": "37adb9628d88e4275e286c17212571c14eefd32dc9195ff993c4a42edbcb3890",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-21.json": "6ecfeef5a667cbb97ae97ef551eeba7b8f7dea23093b5925fdb3a868e7ead461",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-22.json": "22ec76946527407b97e256d3057d40922f8125c43f3a872958757940804e267c",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-23.json": "0aeb7e6e098a80887930ca5491d1b3d42942bd76f867c5fe3a00b8f9cfa8e914",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-24.json": "c947b011892cc5ce689833535ca576855f5e12d514212819d6ca16610d649d4e",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-25.json": "0b8214b667a89ed420fafa9f42783b31525d1256f2f0324348d8925a3c46f31f",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-26.json": "2aeb6c3c09002d0bfa14cdcb1207dbc7f22778b694ef7afecec9576bc19d67ca",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-27.json": "2b2b8efa0a4300d7ea66a817ca14da90dd43b5e554e927e667d319d7e37d8dea",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-28.json": "d3e2ee720f383560a3e3d07ab0e87002ff2edd7ac12d180136115d7ee211f8f0",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-29.json": "df12b65362098bce418e5a423ebdc76c28409ed1410ca3112981b0f5451dd076",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-30.json": "16c1237050f9066836e79824e0390dcf1d22f5e28686f15ae85de227b78c7251",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-31.json": "0281cc26b1cb47ddebeb28f45a4cebc705352a4aec2af142e421f4d2a6adeba0",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-32.json": "6110acac68b58255584400de7f91a59024cb96b4a708e560a9e02cdd7daa56dc",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-33.json": "5661fa065312fb8ff49df26ad7caaa9f09b0561be9439b7e6042274b689f654a",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-34.json": "06491e73044e0a0e6acc10ed122858804c50b694655b9319209685ac6d65dd01",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-35.json": "41efdc9476d51727679729d4f9f6d8de8a1322fe37b9459223908a3b79baa45d",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-36.json": "bb73abadd998035eedce0b9f5a3c60c859f231edf6ad21bde7e98baa001ae406",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-37.json": "c2550b2a02d6e0c13868a29e01c6f646aa370d03abe13d5ef832ee403872efbc",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-38.json": "8cdc23df35c45e221407b98eca052e2649cef09ff59d5ec4025460364b9e3b39",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/IL-state-39.json": "5a76cab9708a61e0e8b6b7e15315f066d2c299c0561f00b6ff09021588837e8b",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-00.json": "3e98f687f576621728106c6de9153efac6e1947fa8ebfffed6c3d35d77183a5f",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-01.json": "fa4a0b5803945c6745d240568bee302c99e09959384fd7ba3cd84fce2f344b8f",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-02.json": "bf3a4667ea9be0cc9b606009823c8e3fd1628f6259ef9c5e811a149006f0723e",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-03.json": "42dc3e4fe642a95215f1be43fffe39591378d56909fab997784a8489a9ded004",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-04.json": "a4e222908f5af29460f908cc2c4d550ed3ac76471c06486427a9c8735a68d42e",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-05.json": "49a23240820b7ac9ea5f74fe0f74649dc449745c580912ff3d46da7ef774e8a0",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-06.json": "95b938455ba74af3fbdf745b7cda7fb30574418a9b64051d268d9966ff1f8d77",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-07.json": "ed5944eaff626f1b9f1df78a121d9d2f984eb99ddd200b16646878f2703f174e",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-08.json": "ed509e4c1f1be8c38cbf6ee03c16ce554c6f39ec1e53232b4e4b7c4ecb6aaaf2",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-09.json": "aa102f4367a62eb587d2fb701cfd24332483a7c771a2223626a26272cc67b002",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-10.json": "540838fe78d681b6175a30d7d55ee4ef70915d6aa246b6701a3576fa0bd92c30",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-11.json": "9b9ec762f1574f03fa747f8692b578f75327d7b40c55d16807238b605421f3e6",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-12.json": "94ac07f916b7083ea9fe7df2f47f17fa1223bf8777edcb4393a382823c0dc911",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-13.json": "8e1c22306e5e51213689b39b55d32925943e494e79b6a7c563f3a541bcb08e9f",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-14.json": "eaa1801d381a367038894fcd1485bf6f1186e7356f554de39c6d0473fa5b5364",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-15.json": "57d8e08c5a8948a3deaeb6286c08c469881af4fbe1cad32d60ac4df0e1f68e64",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-16.json": "ba30ba234d276b4f9c1b86f2a26b705dd6cd8d5af56d2c7edb35a2a53c119b59",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-17.json": "c3d8e93aa2f44a51e73b4941255c339d401ae7a44daa2d35cf4c700ed06ca225",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-18.json": "4d38ca96dd3b61c79d2da49351b7d1c4e3a284132171cd627a4fecdab4689749",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-19.json": "d503cf481bbddb8b2bc1e38bf198830923644bd9191e12515fdfbcf8592d17f3",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-20.json": "043e1f659aafc58dd40e7a90bd83a8cf15d8da2c37b1b7d9d6593c53b336adde",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-21.json": "93e3cb60a959807c5f5b966a19eb59634cda2d860f93a3b51e28eaf61c1e47e1",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-22.json": "1b11d16744437ac07903ca2ad37440e3a6cb2768a832bc69f905059e62e379e7",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-23.json": "0e091ec7d13e041c80d6eacb4c2f47c2a23b66512f892db596a570c86825ac0d",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-24.json": "0f04ec498d0c900a499be5d00752666b22cfbbf5a018ebef2424fd36c1540c45",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-25.json": "91cfd4193c1d5f769be82d8c931d83b27ed98f39ba2fdf0e3c45d017cb7c1516",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-26.json": "08dd8b6e5e89a6fb324a5772d11d0a46d53ff56ee09ed496c1dfad5a6ea401a7",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-27.json": "c05a6c76f8acca8051d55597a827318a275a1182231d043f439319a8d0f105f4",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-28.json": "5b11f0fcb9ac584904e35aabfd69e2c2ee031bf744a00dd1e9f0cc3409807182",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-29.json": "010bc1a146feda8ed420f7c10e24564dc42e42efe60b28152881b434131c44c9",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-30.json": "5a66ecf6445979627e4b32408f889c2d8c6d3859e7a946b6271eb048768319ec",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-31.json": "c720cc602d9ab53d1641cdcfe7e64e637ff40ac8e56870ae32b069a62ddceef4",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-32.json": "cb8e8fe3887e588486d1064d5149d5743a4c8c63b7c2395d1485b080c6c5009a",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-33.json": "8180eb3ca530c1f604642f35aee27e5d192aa9b7e66f1f22bfd005750775c6d6",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-34.json": "ab5940e7cb9395a2272930be45ce01076f5473c513601f979f73ae4cfc0c24dd",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-35.json": "d0d146bf88ae0459e73e3ccb0fe6ded3ef2d16975b852835ebfb750dc8df0265",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-36.json": "588da977f56e63ac2d11cda3e68a7b1c4924b863ff56d40e01f2c9e2c5ec6dc9",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-37.json": "d345c590ca24c5cb68abba14cd4b24616042923fbdcbb84b5a692aaa6285f9ec",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-38.json": "028f5540526adfdc54a80999374835807c365b76eab19b15828e8a1e73b6251b",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/INITIAL-state-39.json": "f61fb0fa8ef78ec671e6b7f2993d469ca9d88b1d54738fa70781621f63c8a00d",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-00.json": "7cfac4ea76f1bffe82cf1d644f5aad5b98cdbe33fef245ac806f9802b26e2c27",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-01.json": "b437fb6b62e764b01cfb7c8314c91701f4e8e35da38ecc0627369fbe31179590",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-02.json": "fa1bedee48317dffdf239766cc490ab80a134655be1bad00b80265e150749835",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-03.json": "0c2aaf197c49165793a3c5d09ebf9e8cd1437d431c66ee74269d3dec10d74d02",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-04.json": "d47a56c23e20454b24f985bd301d0b8283e1b79df6f2c110cf81471f946e0413",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-05.json": "8edcb2db07dc8eb469ffa706fbc7143a28c0ad90c2ee882b27dab01bc59c9200",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-06.json": "b7f0334d51ee4b9721dbc06887c5a118dcbb45f91dc372735d9e1f9ef89ae294",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-07.json": "97511d84d6b41050490217bebe1fccb530137b6e0bbaa61626f98e4410dd09d8",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-08.json": "e2424a800d22879460ff17f3aab53442acff7f59f64f87a14cbda8446f47ff5b",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-09.json": "48bb0c2d240f23a6669c06634a7a9bbad84f35984b0dac1b5221de7dbf2d24df",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-10.json": "b22ff7d0dad9b415af2a66fee02eea0de4c0fdda85e9e1c9ad95ab4ee864dbbd",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-11.json": "f220309f725ed2a01d299c9f4eb05a8aef561de6f838a77e77e7dd0cdbc1e929",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-12.json": "1ea0eb987e5dcdd38752c60d14c405b153f6556add86bcd06bbb0ae2a203f1f5",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-13.json": "311a6238f4921d101877f5208159811186fb037cc14d4a5deaba1beb11c0c80f",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-14.json": "e289ec3faa777dc9ed31ad15f85abc1b7c33b78fe1006a612327e5805c6b5fee",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-15.json": "216ba4361d6d256c429598bbe09e5ba43a0100869a4e8cb0c90f4ff28c93790d",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-16.json": "ef3c5c9bb01cbbc55d04231c9807bab06f9d1d8b0b91af1e791a09f03976a43f",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-17.json": "232e78ce2f40be7e2bd1481c45388ca349a2c5a78fcb9522c6429700f09b1b92",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-18.json": "c16986c9f3e4c5c98850052bef7c7f12e54bcf6e9da571983dc1c0c09fa47f62",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-19.json": "21e0c16ec28cb1fd980aacc7515142ea164a76598ca2aad9cce507d795c5fe55",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-20.json": "ce6d5eafa2a827ba9f35afb4ea7d34dacbe510f0d9f2095611fcf6e0bdbad3b1",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-21.json": "1e3aafca58f0bed3f4c583f0c4d81412228caf2db77ae545a9771f4726518d74",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-22.json": "daf2c0fe16fd2a3481627b9b44a69d8cebbd1028c7ef90726314b6df8456ad13",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-23.json": "aab449d1143a14689962c2384af17d22bb3c00250ee5feb0c9470d4a8e5540d9",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-24.json": "d39725c508868b85e58371d437833536198c36eb3312bc49ffbcff83102862be",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-25.json": "cc914f085306f96d29fc8d9c4918bd9266d9f6503ba27198f2521d30392a62f2",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-26.json": "257e6a2d1c7bbae750726b4a2cd9e2e216e280733374480f30968048cad955de",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-27.json": "bbf3693f6d5d508a6e02b261387042fa12e18f562f88ccb2aba812c815e3fd15",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-28.json": "13bdb71567fa253ae1e01f2418b4d8b551e2889460d8506716f74a5430ed68db",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-29.json": "44e49625b2bbdc56931ca757e84fc71e5241d27fbc996dcd3c9bdba500df6bc3",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-30.json": "7305b0a66e0ccdb3e2e5b751d5f211a95e3e25f976fcc3b2e01602b918313b25",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-31.json": "a950d23914d4898e5473f1a7f922ab6523f97ffce2f96b640f820598c10a229c",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-32.json": "e9f1e037a2c6107c0877c3a23f75a0a1c29b94155b88fd1930260b4bfe810bd6",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-33.json": "e2c89f0edded59ed44754ca368c73fb8b4e2233222b26f45dd42d00079f40160",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-34.json": "ffa5e5ed384c5603f05b341e983e535514405a35457b8a6c1f1e3b81d0ffdc36",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-35.json": "921290fb8392c9be772b7cc230ee0e0cacf7c4dd6ea3a49de88f1017c53dea3a",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-36.json": "1c905979b4ef51ce013a197189f6c2746e8c767d5c84a98baabb4e93672f2c57",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-37.json": "91430504031f2dd0b78927a66afb6cbcb47fd254fb00a1b56a11a0fb3b116d96",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-38.json": "73c55e18356864c5e8a02c475e64327622d02d21892828801887e6e6131a7e81",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/RL-state-39.json": "06ff3f479de103fcbc387b2afd7b26dcfe860891ee56a504c82c3744b3e7b7db",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-00.json": "00186d441a25bdf535375c43be906220259b8c3258cae3cc67e72cf3498820ed",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-01.json": "b8f6899f59cb8a31a4831c8a71f8839cdca81169d2d049efd8f6b61552f89405",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-02.json": "9322e688b2ac848df3d25169c39f304c4b75d340617b6ae6b48849d09d5b88e6",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-03.json": "882b1a9efc464f8d13df2cc3953be811c4d3387940ba68efa0cb9158f095b57b",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-04.json": "42b73d5852ecb878ff1ef2cc0aa8bc94af69dc5b94a11138946e9b71f60fbad4",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-05.json": "e94a0a7c7631a223bc8a4f7ae6040ff8d9e222eb33928bd5ac66173547ebe175",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-06.json": "5d36718b7b8140afb901a006b03ef8e8686dbaec96fe70389ce0458acbf7196c",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-07.json": "853e7a1aeaf847849ca24b768ae79018d3b0e271b3b4d0fc2061d164cc5b2f49",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-08.json": "bd65238a0cef8951c2270453ad840384a859c7986543864a561567e35073b7a7",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-09.json": "695e59fc93c9e585d86faf040007ee142d50602697898bef24af7b33390d7781",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-10.json": "cad9ade394ec58ab8ebcae02afb4c420c17c9b8e545ea39b4fbfceeb5f891000",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-11.json": "546151938fc16c25d63eccd5cb58ea94ca7b26ef04c4e29fcc3e3a9d4979cd75",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-12.json": "9659a13dc9c2b75a3eb1431e8291b27c768fd927e8ac635c4387a226e8d9af95",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-13.json": "9f7d7427d1a78ba3f967c2a8f196b6fe334de59609a800381f784a67def670a7",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-14.json": "8f0f037f3e42c2d362856a1e1cdc208d6a2bb8088ada81e4cf2410a8077a3ece",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-15.json": "33f53b220d9ad877f50f76a8193773eb18cc782e2975fd51f235dfb4c8290087",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-16.json": "2b7edac1dbb88f34594ab8ad00729af41b0f7ae1dae48762265740e1dc0d05d6",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-17.json": "293b060064c2591e83144fddeb6ace8ef0a7a4cd44be11fc4c75d39b2a7d0628",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-18.json": "87131a356f0e1ec979a89a2936e82ea1dfaea10d2908950fd2262cc5b54c2874",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-19.json": "13f0e20b4f5477df9f1171569f270d3e2e1ad4082923fac7c9af3aeb779f066a",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-20.json": "24368d616e4d3a590cea9f13e0fea66752039c6f8dc5dd8125963ca8e2fc118c",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-21.json": "909887277c90ca67bd429f52add30be8193f1bd7faff3037cc246238e0d9626d",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-22.json": "1570de15838654860e4cc55da7b95f939eb68279ffbb45aa44295ba9a021291e",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/reconstruction-23.json": "01bb867420e7bd9160ec3972b6da9cf78aa3273d7742913384dfc21c873f04fd",
+    "build/goal-conditioned-policy-v1/train-diagnostic-run-v1/result.json": "c6a36955965eec1902402b254e26b4cdb23dedf7c0fb2a9cd5016dfa55f1eec7",
+    "build/goal-conditioned-policy-v1/train-diagnostic-source-index.json": "46a262245eb04e7b9ec3457cf95d0a0f136392195246a18a17fd69c9e4d88411",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-01.json": "b8e3b0ae3167d3f59b3362579b58a0f2ba30d81f069c041cdc669b556b283ea7",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-02.json": "62c2ef890490864d21200815ce6c1921e9a52c8501138b3a1222671ecf30bd12",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-03.json": "6d28447ac5f86ce5779322c1f86a1d7d5815c8adadc010df18abc58ce296ac7a",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-04.json": "cb047e152adf78cde4de0c4c4f9a1f9f5e0cd1513910286cda5e291ccb5d1e3e",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-05.json": "6286420e15f5b49c18dedfb9a56c31e8f9d741d4a92e4ef15a81874e0f04e465",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-06.json": "4467f14c2a943b70af95cceefba6391efea0755f2b193c6eb7d512c3548c07f8",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-07.json": "7a7662f44bb563c30afd0076f428a420d42259638c4422b445bf0c426dfee811",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-08.json": "e283bc028856647f227a61bc346bebe3235e5248dfc43face689ca30c8836707",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-09.json": "8929e465850a73bb69805e2c1ed4347b44eb07a63c42504a5c7ac0486e7bfee5",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-10.json": "a82fda55f4d3ebd5ef55715155c6faa4fdb353aa10808d3891ec26ada128f611",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-11.json": "f995881c6b5adc70f77608aa2f26deb3ecf7562d55f6038c4500702f36a2e643",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-12.json": "834f2d35f11dd9657afb534e2ff9abceddd2ae1e6bf9be22cfc8143a76be23b4",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-13.json": "61ffd522f168dd23039fdca128c2045571d4a21b2b61c33519907ea4e2a35e01",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-14.json": "5c4ea2a75c007e2ee1df5cfd0a6926bdbd9c7dc58104da7b4c8cae0874d1be5d",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-15.json": "75f891d7e2fba54bc83b7fb8a536f4c6ac869562c3cebb003fdd577678eecaac",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-16.json": "9a1023e8864aae1d1a8bc3f308b7b55148566601676f512aa0eab3f903ca2136",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-17.json": "da580c3376a8cef513a7aba614e7eca5c594a1c8ad496780cf286858ff80b3c9",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-18.json": "94f0502c506b6c3bb7583ec1bc22ffe0a8a243350585f472a47cc670527d0f94",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-19.json": "fb426641ec9ed1ddc14de70bec8f31588e9f64f10363308d2d3692c8268ef31e",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-20.json": "f98b016984ae9749ebc734807c911f49805af63587677aeaa1e7831793791b82",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-21.json": "71a3e441fa5c56714d4434d270a3445d03ff2b36db3fff8fba5fc8ac5b9171ac",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-22.json": "979372119bfa9f2b66d8c20d9cf98fec9f18213bd5249ca3285bad51d8714d10",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-23.json": "cfcc0bd17aa80289f7f62dd4d3e85d38739bbc815cefbd6655b1db2f72b26cbc",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-24.json": "499e6d02c9ce1ab428c9740064dadcf8c31ac53f9431d9da318c45734cc287fb",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-25.json": "809137f3ec0a42f10c068d70085faec0079e0f1a57ed931b2cb3b5d5c021a222",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-26.json": "e1af9d6f8d1e9ca1ceeda5a503184232c91684494598cc0ee500751822652275",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-27.json": "c5379cd149608d2ca3355e9463c682cc31c165f2e92eea0718c3ce3639cc4637",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-28.json": "815d3890cffca0a2cf506be71ed33fae82a4e6678cf740353904c1a619861c07",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-29.json": "6f86d83820237823163dc2bc80a470242e1389fb1c93c247ec3fef436907d6f9",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-30.json": "74b856ea9224343fb9b784cf56acd8e14b2d88f9bba59ae70dd3e334d304713d",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-31.json": "cc1f8e83ac4fa52207522a01c9755e1d29303cebfde4ac61e548d91cbd57c5bf",
+    "outputs/learning/public-contact-v1/attempt-01/IL-update-32.json": "e07e4ee630e4fba738ed5c7fbc5b798c5c44da241cc785c389c3339becb7c6cb",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-00.json": "7950ffecb97f0972ea86fee79a46a7ceb4219d5520bf7e9efc0c802fec73d18a",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-01.json": "7a28ee779a64708ee6b86f74e7d27ffaf719546693ee43c77aad05170d5433be",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-02.json": "d368d615bdb30aef0a43dc761da3aba42bd8515517b6f843db6701ab473c8b13",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-03.json": "7710cd4cdcfdf7c77ee39d40d6bcc969e6754951226a135c8d69866ffd67cd70",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-04.json": "d53063622261ac5b61cbf4d54e999479fa9a4c7f339afcc10e7d2d04c35b5584",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-05.json": "0ef8ac5363950a22ebd07558fd223ddfcaed21b096371b68bcc86bf6746caf53",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-06.json": "253cb47a9d41a76424eb23d1bef29e25d3cfb1761436a7446600c46f3953088a",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-07.json": "24a422b2ddb43737c4089c3b2a8f8708e5ddbb6405cecaf95ea6b3eb262240db",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-08.json": "24546d398bd281790cd8ec3b61834413c650f39a0c20095b94f1a735ff826811",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-09.json": "91887860668a827de538ba955ce92454f6ce1e1fb8425d88f4617f85e2f2d428",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-10.json": "7edce9f2c9df90357e67e9ab7ee728363d6a2b698d5ac1310c73a3e72f7b1b36",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-11.json": "b196fb216157d448716308871fd1c87ceb1342700ade6b9399a2d11bddf0157e",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-12.json": "6eab8b96a33d5d4cd31bed22489fa66c27a27916bfb1820491c0e80a3470359f",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-13.json": "a81c3bb8ff0bb2c29cf93acb4870ef70c3367fa5030e442cae17d614719f67a6",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-14.json": "ce55b8f32ec7759e19bb51d8ca705f24c3f06b34059267f923ab8289462cb56f",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-15.json": "f3468d43739f2b7c19dc6ec45577a8763caa0199effb8c56166b3dbb86fbef81",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-16.json": "37e8c40119774afe6fbc832a277d254e601a75c98d876cd05dad7023bfb96190",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-17.json": "68ca0b7def4e5ccf3bfdc9e6f3774925b991eaa6d5f50826b3a0f436fece3889",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-18.json": "d859168690734bdd5056f8214b642ea1628eeaa350bf99d7dd58cd66e168b478",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-19.json": "f0254deefa0105139e7402c2ece9f146510612e302463f8169ab4066332dc070",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-20.json": "710e8f4109db43aa5bd16f1799053121e23bcb44aa03185b49e48a4409638ff3",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-21.json": "d1c5e9eea87a41f30861200be75b70b49ef5d25f1a1292262650ef7364ad2cd0",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-22.json": "cdcaca9e969f5557ce8e6d33d45075afe4a0fc821821a39f0999d1f1ab27cb19",
+    "outputs/learning/public-contact-v1/attempt-01/teacher-23.json": "5e225812ff3c4f595d3a31e295ef1a707edb0ebf626d25ba2e09659ca03724ef"
+  },
+  "receipt_sha256": "220a76e83203dac536c6013eaa33e1e294fe47305c1fda17a161f43e411f0182",
+  "result_sha256": "c6a36955965eec1902402b254e26b4cdb23dedf7c0fb2a9cd5016dfa55f1eec7",
+  "review_elapsed_seconds": 0.03345912485383451,
+  "scope": "independent_saved_TRAIN_only_standard_library_arithmetic_no_models_tasks_checkpoint_reads_search_or_heldout_access",
+  "source_files_verified": {
+    "build/goal-conditioned-policy-v1/darwin_fast_sampler.py": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+    "build/goal-conditioned-policy-v1/run_contact_owned.py": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7",
+    "build/goal-conditioned-policy-v1/run_train_diagnostic_owned.py": "ab341bfa3b8317b83d97345d8feb801b42343a77b3025a7fd4e6e4cdd9a36e3e",
+    "build/goal-conditioned-policy-v1/test_train_diagnostic_source.py": "689a71d02de7c48d8834272bea71b38701a4cb16f916a789bb0994c0c31f537d",
+    "build/goal-conditioned-policy-v1/train_diagnostic_readout.py": "a80b760eb2dea363c6646161c20e41f7028a3dc8c48c07616c6610b387a66a33",
+    "build/goal-conditioned-policy-v1/train_diagnostic_worker.py": "a794ef5fb57fbfb7c1045f8608e9780d474117a2601beaab3378e5c96b6dbe95",
+    "src/resectionlab/contact_checkpoint.py": "face66e01603583d9fe32da739ba8661fc688121c794b9458fee795f6fb39027",
+    "src/resectionlab/contact_costs.py": "2ef4fef9f378ee83734ff5ff5c36d817ef8ddace911b13ee35f03aa19b21531f",
+    "src/resectionlab/contact_family_episode.py": "b8f5a0cecf622cd6c341d91ad3009fff9ed455d9960550b026bc82a8639960a6",
+    "src/resectionlab/contact_learning.py": "964e4a0503a88794ee9998b2cbee2579107efb7ae657b7db5974989a556c8f48",
+    "src/resectionlab/contact_learning_contract.py": "22a0afdfb686270580d23a6330caac233ef1663cd17d58d2b601a12d1e359b0a",
+    "src/resectionlab/contact_learning_pilot.py": "996f90f3b57a72c464a047b573272af07cdf60a043e68816b83e184568d56b2e",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/development_episode.py": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+    "src/resectionlab/evaluation.py": "624db1b0f520c45d91b7da2fd3312f75acab3f2573a31621fa33e38343dc6010",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/goal_mode_episode_adapter.py": "8f161b8e8642557959cc0d8d44cacd1ea5b70e23bf8ec2350f0e7d1f8ed67af2",
+    "src/resectionlab/goal_mode_spatial_policy.py": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "src/resectionlab/legacy_transfer_supervisor.py": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd",
+    "src/resectionlab/legacy_transfer_worker.py": "88c4646eaf51b8c96f6962e166f1d2594271807e27a517fcdcd576dd436b2d01",
+    "src/resectionlab/native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+    "src/resectionlab/native_spatial_task.py": "1307b444ba3d9457928545834790be182b95891da1a7bc585bff36776d235cea",
+    "src/resectionlab/public_contact_family.py": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800",
+    "src/resectionlab/public_surface_contact.py": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+    "src/resectionlab/sequential_spatial_observation.py": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+    "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4",
+    "tests/test_contact_learning.py": "82a26e6d1a48270eaa4296be99520ecadd6e1fc07291d63681b43c93ccdcb200"
+  },
+  "source_index_sha256": "46a262245eb04e7b9ec3457cf95d0a0f136392195246a18a17fd69c9e4d88411",
+  "status": "PASS",
+  "verified_readouts": 120,
+  "verified_reconstructions": 24
+}

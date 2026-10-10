@@ -1,0 +1,135 @@
+{
+  "status": "PASS",
+  "readouts": 120,
+  "outputs": 145,
+  "bytes": 240735,
+  "elapsed_seconds": 0.03345912485383451,
+  "additional": {
+    "INITIAL": {
+      "teacher_STOP8": {
+        "count": 8,
+        "mean_CE": 1.0937191708739107,
+        "mean_teacher_probability": 0.3455508106360374,
+        "mean_STOP_probability": 0.3455508106360374,
+        "movement_only_teacher_correct_count": 0,
+        "STOP_margin_min": -0.04768358916044235,
+        "STOP_margin_max": -0.03047981485724449,
+        "movement_score_range_mean": 0.0007852977141737938
+      },
+      "teacher_movement32": {
+        "count": 32,
+        "mean_CE": 2.0537952773098183,
+        "mean_teacher_probability": 0.1412733523547936,
+        "mean_STOP_probability": 0.1373767670864852,
+        "movement_only_teacher_correct_count": 1,
+        "STOP_margin_min": -0.0558638870716095,
+        "STOP_margin_max": -0.03852170705795288,
+        "movement_score_range_mean": 0.023127450607717037
+      },
+      "root_aspiration16": {
+        "count": 16,
+        "mean_CE": 2.041838281106285,
+        "mean_teacher_probability": 0.14261359926878348,
+        "mean_STOP_probability": 0.13736389059612034,
+        "movement_only_teacher_correct_count": 1,
+        "STOP_margin_min": -0.04286384955048561,
+        "STOP_margin_max": -0.03852170705795288,
+        "movement_score_range_mean": 0.0062393927946686745
+      },
+      "second_probe16": {
+        "count": 16,
+        "mean_CE": 2.0657522735133513,
+        "mean_teacher_probability": 0.13993310544080373,
+        "mean_STOP_probability": 0.13738964357685005,
+        "movement_only_teacher_correct_count": 0,
+        "STOP_margin_min": -0.0558638870716095,
+        "STOP_margin_max": -0.0520099475979805,
+        "movement_score_range_mean": 0.0400155084207654
+      }
+    },
+    "IL": {
+      "teacher_STOP8": {
+        "count": 8,
+        "mean_CE": 0.8969538341939349,
+        "mean_teacher_probability": 0.4186242242118586,
+        "mean_STOP_probability": 0.4186242242118586,
+        "movement_only_teacher_correct_count": 0,
+        "STOP_margin_min": 0.26548831164836884,
+        "STOP_margin_max": 0.29742391407489777,
+        "movement_score_range_mean": 0.00037015601992607117
+      },
+      "teacher_movement32": {
+        "count": 32,
+        "mean_CE": 2.0540691203131933,
+        "mean_teacher_probability": 0.13973343298823077,
+        "mean_STOP_probability": 0.1673891805938969,
+        "movement_only_teacher_correct_count": 22,
+        "STOP_margin_min": 0.07073883712291718,
+        "STOP_margin_max": 0.28732119500637054,
+        "movement_score_range_mean": 0.05017825751565397
+      },
+      "root_aspiration16": {
+        "count": 16,
+        "mean_CE": 2.086593678747175,
+        "mean_teacher_probability": 0.1351923710870206,
+        "mean_STOP_probability": 0.1775947022325197,
+        "movement_only_teacher_correct_count": 6,
+        "STOP_margin_min": 0.2561206668615341,
+        "STOP_margin_max": 0.28732119500637054,
+        "movement_score_range_mean": 0.014778127893805504
+      },
+      "second_probe16": {
+        "count": 16,
+        "mean_CE": 2.0215445618792116,
+        "mean_teacher_probability": 0.14427449488944097,
+        "mean_STOP_probability": 0.15718365895527409,
+        "movement_only_teacher_correct_count": 16,
+        "STOP_margin_min": 0.07073883712291718,
+        "STOP_margin_max": 0.10254430025815964,
+        "movement_score_range_mean": 0.08557838713750243
+      }
+    },
+    "RL": {
+      "teacher_STOP8": {
+        "count": 8,
+        "mean_CE": 3.1312244505032893e-06,
+        "mean_teacher_probability": 0.99999686878099,
+        "mean_STOP_probability": 0.99999686878099,
+        "movement_only_teacher_correct_count": 0,
+        "STOP_margin_min": 13.311241626739502,
+        "STOP_margin_max": 13.323212146759033,
+        "movement_score_range_mean": 0.07812726497650146
+      },
+      "teacher_movement32": {
+        "count": 32,
+        "mean_CE": 13.454308996826866,
+        "mean_teacher_probability": 1.4375117145313899e-06,
+        "mean_STOP_probability": 0.9999893057746508,
+        "movement_only_teacher_correct_count": 6,
+        "STOP_margin_min": 13.311856269836426,
+        "STOP_margin_max": 13.442532539367676,
+        "movement_score_range_mean": 0.1681164801120758
+      },
+      "root_aspiration16": {
+        "count": 16,
+        "mean_CE": 13.448688375379605,
+        "mean_teacher_probability": 1.445661541548488e-06,
+        "mean_STOP_probability": 0.9999891943198471,
+        "movement_only_teacher_correct_count": 3,
+        "STOP_margin_min": 13.311856269836426,
+        "STOP_margin_max": 13.426807880401611,
+        "movement_score_range_mean": 0.16268718242645264
+      },
+      "second_probe16": {
+        "count": 16,
+        "mean_CE": 13.459929618274126,
+        "mean_teacher_probability": 1.4293618875142917e-06,
+        "mean_STOP_probability": 0.9999894172294546,
+        "movement_only_teacher_correct_count": 3,
+        "STOP_margin_min": 13.344827651977539,
+        "STOP_margin_max": 13.442532539367676,
+        "movement_score_range_mean": 0.17354577779769897
+      }
+    }
+  }
+}

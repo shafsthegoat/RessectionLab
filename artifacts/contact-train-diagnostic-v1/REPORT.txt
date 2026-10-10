@@ -1,0 +1,23 @@
+PASS — independent saved-only TRAIN diagnostic audit
+
+The approved diagnostic completed with exactly24 reconstructions,40 native steps (32 non-STOP commits),760 geometry previews,3 checkpoint loads and120 forwards. There were0 optimizer steps, searches, sampled actions, new teachers, patient reads or SELECT/MEASUREMENT outcome reads. Parent8.287326958s, sampled peak280,330,240B, exit0, no cleanup error or surviving owned PID; worker7.917292958s. Bounds remained30s/1GiB/2048previews/one thread/one attempt.
+
+The independent audit used only standard-library saved-file/hash/arithmetic reads. It verified all120 action inventories, teacher indices, observation/binding hashes and checkpoint identities;24 teacher history/strategy/geometry-audit digests; metered call counts; source pins; and all145 output files (240,735B). Checkpoint parameter identities agree with the original TRAIN update hash chains. It independently recomputed stable probabilities, CE, entropy, STOP margins, inventory-first argmax and all nine aggregate summaries. No checkpoint byte read/decoding, model forward, task reconstruction, search or held-out access occurred in this review. The worker's successful native/observation reconstruction is corroborated by the reviewed source and its saved exact-match receipts, not rerun here.
+
+Fixed same40 TRAIN states, checkpoint INITIAL → IL → RL:
+Mean CE:                 1.861780  → 1.822646 → 10.763448
+Exact teacher matches:  1/40      → 8/40     → 8/40
+Greedy STOP decisions:  0/40      → 40/40    → 40/40
+Mean STOP probability:  .179012   → .217636  → .999990818
+
+Both learned checkpoints therefore fail on the existing TRAIN states; this is not solely an unseen-layout generalization problem. IL's small CE improvement comes from the eight STOP-labelled states: their CE falls1.093719→.896954. CE on the32 movement-labelled states stays essentially flat2.053795→2.054069. All eight exact matches after learning are the teacher's genuine STOP labels.
+
+There is nevertheless learned within-movement discrimination. Ranking only the already-saved movement scores (without executing or proposing a masked policy), INITIAL→IL exact teacher top ranks improve1/32→22/32: aspiration1/16→6/16 and probe0/16→16/16. On the16 teacher probe states, IL's STOP exceeds its best movement score by only.070739–.102544; on the16 teacher aspiration states the gap is.256121–.287321. The learned probe ranking is overwhelmed by the STOP comparison. This rules out the blanket claim that IL learned nothing or that all relevant action distinctions are absent from the representation; it does not establish that every required relation can be learned under the fixed budget. A mode preference or other simple cue may explain some conditional ranks; these logits alone do not prove correct goal-specific geometric reasoning.
+
+RL shows a different degree of failure: mean STOP probability.999990818, movement-label CE13.454309 and STOP margins13.312–13.443. These readouts agree with the previously saved TRAIN exploration history: one positive-return episode, then64 consecutive immediate STOP episodes in the final16 updates. They do not reveal a reversed-gradient/export defect.
+
+Interpretation and next boundary
+The original negative pilot and checkpoint identities remain unchanged. No source repair is supported by this audit. A separately versioned fixed full-teacher IL optimization diagnostic on these same40 TRAIN observations is a narrower next question than changing representations, masking STOP or using exposed evaluation cases. All8 STOP labels, action masks, goals, geometry and loss semantics should remain. If32 full40-state updates are considered, that is1280 loss forwards versus128 previously and must be accounted as additional compute; success could not be credited solely to reduced sampling variance at matched budget. No new learning, checkpoint selection or evaluation is authorized by this result. Exposed measurement outcomes remain unusable as an untouched successor test.
+
+Result SHA256 c6a36955965eec1902402b254e26b4cdb23dedf7c0fb2a9cd5016dfa55f1eec7.
+Source index SHA25646a262245eb04e7b9ec3457cf95d0a0f136392195246a18a17fd69c9e4d88411.

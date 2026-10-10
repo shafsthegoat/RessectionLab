@@ -1,0 +1,28 @@
+{
+  "audit_execution": "stdlib saved-only; no model/task/checkpoint/search/heldout accesses",
+  "files": [
+    {
+      "bytes": 4215,
+      "path": "REPORT.txt",
+      "sha256": "f45d6a55830942816ed1878a1b889bfdf0671eebbb4c9761382d9d0417184214"
+    },
+    {
+      "bytes": 5122,
+      "path": "audit-terminal.json",
+      "sha256": "82c9adbe3032c4bc9044b3d63f54aaee76e2725bc9040b8a73ed0d1740402f80"
+    },
+    {
+      "bytes": 73664,
+      "path": "audit.json",
+      "sha256": "f6f8a33b0846c72ed38007a2590bfd91e0b6091449084a73b99a7160828e9d79"
+    },
+    {
+      "bytes": 9944,
+      "path": "audit_saved.py",
+      "sha256": "9f0cacf05b2b5b47bfa7c3fc8da412f753c45ad18dcb7e486966570455d69429"
+    }
+  ],
+  "run_result_sha256": "c6a36955965eec1902402b254e26b4cdb23dedf7c0fb2a9cd5016dfa55f1eec7",
+  "status": "PASS",
+  "version": "saved-TRAIN-diagnostic-independent-audit-v1"
+}
