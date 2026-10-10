@@ -1,0 +1,34 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-source-domain-diagnostic-v1/attempt-01/fresh-pycache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-source-domain-diagnostic-v1/diagnose_source_domains.py",
+    "--execute-two-public-segs",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-source-domain-diagnostic-v1/attempt-01/result.json"
+  ],
+  "head": "290bdccfe3350b89343876f899b4c3798bc40b38",
+  "source_pins": {
+    "build/select013-source-domain-diagnostic-v1/diagnose_source_domains.py": "8ed28ed8038031c0b3f6b70ec7b40c38bcf9d871134a151efb2ef9f2c7d2ddad",
+    "build/goal-conditioned-policy-v1/darwin_fast_sampler.py": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+    "build/goal-conditioned-policy-v1/run_contact_owned.py": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7",
+    "build/post-exposure-IL045-evaluation-recovery-v1/run_owned.py": "3e48eb654eaee6a048840a5ef4592e3a9938f6cd864dd9af3dbc7e49150196ff",
+    "src/resectionlab/remind_planning_qc.py": "f35a28f2cdedd777e15031b5cba370c4106c0436eefe9590ca17466d8944b3ca",
+    "scripts/convert_remind_development.py": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+  },
+  "caps": {
+    "wall_seconds": 60,
+    "RSS_bytes": 1610612736,
+    "output_bytes": 2097152,
+    "threads": 1
+  },
+  "root_authorized": true,
+  "original_public_SEG_objects": 2,
+  "MR_pixel_reads": 0,
+  "private_reads": 0,
+  "automatic_retry": false,
+  "parent_sha256": "dd0a5af440d014622e2d440f5b13c47ccb4f874f17a6fa80328162a34f7e80df"
+}

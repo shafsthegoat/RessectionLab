@@ -1,0 +1,35 @@
+The missing seed is caused by the old preparation crop. One successful
+two-public-SEG measurement recovered89 known-zero aperture cells at the
+same physical opening (MRI x62.5, transverse161/108, inward+axis0).
+
+Expanded native-MRI crop: start[61,70,23], shape131×154×117. S/T overlap
+with the original saved crop reproduces both original NPY byte hashes.
+Full T stays35,260 cells. Placed S grows745,523→745,592 (+69); zero native
+positive source centres are cropped. Source label zeros remain labels,
+not physical air. Both generic distal pre-entry point bounds fit this
+crop; full shafts/clearance/routes remain unassessed. F0 was not measured.
+
+Actual attempt03: complete,1.3414125s parent wall,1,096,368,128B sampled
+RSS (worker peak1,116,930,048B), PID91988 reaped, no remaining processes.
+Two exact original SEG files:7,464,858B. Zero MR pixel, private, planner,
+native-preview, model or optimizer work. Source and HEAD checks unchanged.
+Result SHA531e60692158457077d1a11b951bb5b217b8333abd269968a651eca474828445
+Receipt SHA6cb4cdbb8951719417efe210b82a5a9dbb10ab399b0abd4d8c4e1a7d73a082ec
+
+Attempt01 failed before payload access because .venv lacks pydicom.
+Attempt02 failed before payload access because imaging venv lacks scipy.
+Its prerequisite probe also failed; the orchestration mistakenly proceeded
+instead of branching on that error. These are preserved setup failures,
+not negative anatomical findings. Root separately released attempt03 with
+the same K geometry and no SciPy/F0 computation. Imaging runtime dependency
+probe passed: Python3.12.14, pydicom3.0.1, numpy2.5.3. No package was added.
+The first two receipts conservatively but inaccurately set the combined
+source-unchanged flag false when the terminal result was absent; source
+guard assertions passed. The corrected third receipt separates that flag.
+
+Next: construct the same expanded real-MRI/S/T/Ds inputs with the existing
+preserved-domain converter, authenticate original MRI/label overlap, and
+qualify the five-array SELECT input explicitly. Keep old inputs and the
+failed four-arm attempt unchanged. K recovery is not route acceptance or
+clinical/anatomical validation. No patient, physical opening, target,
+source domain or material was changed to obtain this diagnostic result.

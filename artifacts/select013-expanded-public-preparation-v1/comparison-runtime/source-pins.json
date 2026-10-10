@@ -1,0 +1,36 @@
+{
+  "files": {
+    "HANDOFF.txt": {
+      "bytes": 3149,
+      "sha256": "1fa66d538bfcb2868eae0d1daa3e9f29017849a4b421e913433e3e4fe455211c"
+    },
+    "comparison_contract.py": {
+      "bytes": 39954,
+      "sha256": "2ff76c6f38c1b15a2457603f1357fb55d4836f258cb066def60f4bde7ff37c6f"
+    },
+    "driver.patch": {
+      "bytes": 22700,
+      "sha256": "effe4d42a3eb3bd6150bc904e800e0fbae90c9ef5a4d43d5ca14e3e9a6a41231"
+    },
+    "freeze-runtime.py": {
+      "bytes": 9752,
+      "sha256": "e60b47b97c292c153d2e19937625ead851161f3eccdee622ea9545f071b84ef2"
+    },
+    "run_owned.py": {
+      "bytes": 12069,
+      "sha256": "8e41ef61c8ec624f32c2c0a408e8c838383246bc50521d76c1ea7ac8e719ea8f"
+    },
+    "select_worker.py": {
+      "bytes": 16312,
+      "sha256": "3a5ed23f6a41ef07e7c0ccd960dcfa5b2460c53fd7679444a3feca0849e49a1d"
+    },
+    "test_worker_flow.py": {
+      "bytes": 10252,
+      "sha256": "61285e01406e3f5bfa70c24202d26543d3e1b43e9c5b5ec636778c7a9572c29c"
+    }
+  },
+  "patient_or_checkpoint_payload_reads": false,
+  "status": "source_prepared_not_runtime_frozen",
+  "supervisor_unchanged": true,
+  "tests": "nine controls source-written, not executed"
+}

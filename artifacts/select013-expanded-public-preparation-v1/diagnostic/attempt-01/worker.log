@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-source-domain-diagnostic-v1/diagnose_source_domains.py", line 153, in <module>
+    main()
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-source-domain-diagnostic-v1/diagnose_source_domains.py", line 55, in main
+    core = qc.source_module(ROOT/PINS['core'][0], PINS['core'][1])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/remind_planning_qc.py", line 48, in source_module
+    exec(compile(raw, str(path), "exec", dont_inherit=True), value.__dict__)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/convert_remind_development.py", line 16, in <module>
+    import pydicom
+ModuleNotFoundError: No module named 'pydicom'

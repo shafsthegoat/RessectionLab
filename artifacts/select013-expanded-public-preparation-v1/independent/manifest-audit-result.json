@@ -1,0 +1,15 @@
+{
+  "SELECT037_HOLD_object_unchanged": true,
+  "audit_peak_RSS_bytes": 22233088,
+  "audit_seconds": 0.002684457926079631,
+  "checks": 137,
+  "files_checked": 8,
+  "full_target_voxels": 35260,
+  "manifest_sha256": "841261035a7d7be5c55984e717b8d65b712065a708e9260231ebcd49cc4d700e",
+  "root_visual_sha256": "1471e4e32b4fa09d7565664f279489d4b60a8eab149471e82475ee6539a58a86",
+  "scope": "Saved JSON/source byte comparisons only; no arrays/images/checkpoints/DICOM/models/native calls. Root visual observation retained without independent pixel inspection.",
+  "select_index_sha256": "a5a7ed8b504b3f768666cdec4c77908d680ff242eb157afb0f377b95105dc389",
+  "source_prepared_only": true,
+  "status": "PASS_final_expanded_manifest_saved_metadata",
+  "unknown_support_domain_voxels": 176294
+}

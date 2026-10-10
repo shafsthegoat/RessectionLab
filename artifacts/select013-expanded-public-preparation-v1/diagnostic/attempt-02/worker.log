@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-source-domain-diagnostic-v1/diagnose_source_domains.py", line 153, in <module>
+    main()
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-source-domain-diagnostic-v1/diagnose_source_domains.py", line 46, in main
+    from scipy.ndimage import binary_propagation, generate_binary_structure
+ModuleNotFoundError: No module named 'scipy'

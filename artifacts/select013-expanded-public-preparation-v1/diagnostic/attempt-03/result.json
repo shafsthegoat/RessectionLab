@@ -1,0 +1,358 @@
+{
+  "MR_pixels_read": 0,
+  "access_admitted": false,
+  "crop_map": {
+    "all_public_source_voxel_centres_inside_output": true,
+    "bound_mm": 0.001,
+    "clipped_to_MR_coverage": false,
+    "image_interpolation": "none",
+    "maximum_world_corner_difference_mm": 1.1323457321630187e-13,
+    "original_MR_sampling_mm": [
+      1.0,
+      1.0,
+      0.9999999034194179
+    ],
+    "planning_affine_method": "existing bounded polar orthogonal roundoff; exact native source crop affine retained",
+    "public_source_cell_bounds_in_MR_index": {
+      "cerebrum": {
+        "maximum": [
+          189.5003034496487,
+          222.49995945030196,
+          137.5000046412033
+        ],
+        "minimum": [
+          61.50031624964858,
+          71.49997455030196,
+          24.499993703009554
+        ]
+      },
+      "whole_tumor": {
+        "maximum": [
+          116.50031499944149,
+          191.49997710038187,
+          126.5000035432653
+        ],
+        "minimum": [
+          77.50031499944144,
+          113.49997710038184,
+          87.49999980330644
+        ]
+      }
+    },
+    "roundoff_halo_MR_cells_per_face": 1,
+    "selection": "outer native MRI cell box covering public cerebrum and whole-tumor source-grid domains, one-cell roundoff halo, clipped only to acquired MRI",
+    "support_source_domain_policy": "explicit mask; outside is unknown, never observed empty; downstream full-coverage factory is incompatible",
+    "unclipped_MR_start": [
+      61,
+      70,
+      23
+    ],
+    "unclipped_MR_stop": [
+      192,
+      224,
+      140
+    ],
+    "uniform_inset_MR_cells_per_face": 0,
+    "uses_label_positive_extent": false,
+    "uses_private_labels": false,
+    "uses_public_whole_tumor_source_domain": true
+  },
+  "derived_affine": [
+    [
+      1.0,
+      4.897e-12,
+      -1.0873523253007476e-27,
+      -61.37899999965685
+    ],
+    [
+      4.897e-12,
+      -1.0,
+      2.2204458347983412e-16,
+      76.1110000002986
+    ],
+    [
+      0.0,
+      -2.220446049250313e-16,
+      -0.9999999034194179,
+      66.72169615415781
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "elapsed_seconds": 0.9761678329668939,
+  "full_target_voxels": 35260,
+  "input_bindings": {
+    "case": [
+      "build/remind-select-public-bindings-v1/ReMIND-013-case.json",
+      "9d4448328e979c856e3c8e08599b9cc2b66fc7d324f1652d7970468099267c65"
+    ],
+    "core": [
+      "scripts/convert_remind_development.py",
+      "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+    ],
+    "headers": [
+      "build/remind-select-public-preparation-v1/actual-public-qc-v1/ReMIND-013-headers/result.json",
+      "fd3a5c5cfded6e4a60ef263c03f13df0adb07ae2f77b84f61aee9295e31b8948"
+    ],
+    "old_crop": [
+      "build/remind-select-public-preparation-v1/actual-public-qc-v1/ReMIND-013-crop-mr/conversion-result.json",
+      "9d126eaa926d7e6c4e11903d119a9446f1e38ea98993a652735cabd72ecd0fe9"
+    ],
+    "old_seed": [
+      "build/select013-empty-seed-diagnostic-v1/result.json",
+      "e50085f9f9ecd4aeac258bc83701c9f4e695cd36a981b247b3f59bed791c4c4f"
+    ],
+    "qc": [
+      "src/resectionlab/remind_planning_qc.py",
+      "f35a28f2cdedd777e15031b5cba370c4106c0436eefe9590ca17466d8944b3ca"
+    ]
+  },
+  "known_zero_is_physical_air": false,
+  "limits": "Diagnostic source recovery only; NN sampling differs from source voxel counts. E remains an explicit unassessed simulation workspace. No whole-tool clearance or accepted route is established.",
+  "material_or_target_deleted": false,
+  "model_forwards": 0,
+  "native_crop_affine": [
+    [
+      1.0,
+      4.897e-12,
+      -9.2621351054322e-16,
+      -61.37899999965685
+    ],
+    [
+      4.897e-12,
+      -1.0,
+      2.5755444836590516e-16,
+      76.1110000002986
+    ],
+    [
+      0.0,
+      0.0,
+      -0.9999999034194179,
+      66.72169615415781
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "native_previews": 0,
+  "old_crop_overlap_SHA256": {
+    "cerebrum": "58a0d75dd775772c742c8cac29766058337b34d17b0cfb8b30645a188d963070",
+    "whole_tumor": "00025fc785fe79e5008b5a838d42672e6473eab9f7220cb8acca54ad9366888e"
+  },
+  "optimizer_updates": 0,
+  "outer_crop_shape": [
+    131,
+    154,
+    117
+  ],
+  "outer_crop_start_MR": [
+    61,
+    70,
+    23
+  ],
+  "patient_id": "ReMIND-013",
+  "peak_RSS_bytes": 1116930048,
+  "planning_manifest_created": false,
+  "preentry_distal_point_bounds": [
+    {
+      "all_allowed_cone_p0_transverse_bound_inside_crop": true,
+      "distal_point_full_MR_axis0": 61.49999999,
+      "distal_point_inside_acquired_MRI_axis0": true,
+      "distal_point_inside_outer_crop_axis0": true,
+      "p0_transverse_full_MR_bound": [
+        [
+          153.99999999,
+          100.99999931393586
+        ],
+        [
+          168.00000001,
+          115.00000068606414
+        ]
+      ],
+      "tool_id": "generic_suction",
+      "whole_tool_in_image_certified": false
+    },
+    {
+      "all_allowed_cone_p0_transverse_bound_inside_crop": true,
+      "distal_point_full_MR_axis0": 60.79999999,
+      "distal_point_inside_acquired_MRI_axis0": true,
+      "distal_point_inside_outer_crop_axis0": true,
+      "p0_transverse_full_MR_bound": [
+        [
+          153.29999999,
+          100.29999924632945
+        ],
+        [
+          168.70000001,
+          115.70000075367055
+        ]
+      ],
+      "tool_id": "generic_aspirator",
+      "whole_tool_in_image_certified": false
+    }
+  ],
+  "private_objects_read": 0,
+  "restored_MR_x62_closed_disc": {
+    "Ds_inside_whole_disc": 89,
+    "full_T": 0,
+    "raw_S": 0,
+    "whole_disc_cells": 89
+  },
+  "role": "SELECT",
+  "source_placement": {
+    "cerebrum": {
+      "method": "nearest source centre; floor(index+.5), half-open source cell domain",
+      "outside_source_domain": "unknown",
+      "resampled_positive_volume_mm3": 745591.9279902907,
+      "resampled_positive_voxels": 745592,
+      "resampled_source_domain_voxels": 2184064,
+      "resampling_can_omit_subvoxel_labels": true,
+      "source_grid_unchanged": true,
+      "source_index_to_target_index": [
+        [
+          0.3333333,
+          -2.999999682653337e-20,
+          1.4929962617670055e-17,
+          0.6669828996485663
+        ],
+        [
+          2.999999682653337e-20,
+          0.3333333,
+          -1.0835519624773568e-16,
+          1.6666412003019655
+        ],
+        [
+          -6.661338070881507e-36,
+          -7.401486805525599e-17,
+          0.33333336559939153,
+          1.6666603858092515
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_positive_centres_outside_target_grid": 0,
+      "source_positive_volume_mm3": 745029.1104155204,
+      "source_positive_voxels": 20115790,
+      "target_index_to_source_index": [
+        [
+          3.00000030000003,
+          2.7000002697460803e-19,
+          -1.3436966398926002e-16,
+          -2.000948899040594
+        ],
+        [
+          -2.7000002697460803e-19,
+          3.00000030000003,
+          9.751967693520406e-16,
+          -4.9999241008982915
+        ],
+        [
+          0.0,
+          6.661338146301545e-16,
+          2.999999709605505,
+          -4.999980673438728
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    "whole_tumor": {
+      "method": "nearest source centre; floor(index+.5), half-open source cell domain",
+      "outside_source_domain": "unknown",
+      "resampled_positive_volume_mm3": 35259.99659456868,
+      "resampled_positive_voxels": 35260,
+      "resampled_source_domain_voxels": 118638,
+      "resampling_can_omit_subvoxel_labels": true,
+      "source_grid_unchanged": true,
+      "source_index_to_target_index": [
+        [
+          1.0,
+          -8.999999956727773e-20,
+          1.61349666003676e-17,
+          17.00031499944138
+        ],
+        [
+          8.999999956727773e-20,
+          1.0,
+          8.513378269510264e-16,
+          43.999977100381834
+        ],
+        [
+          -1.998401632019741e-35,
+          -2.220446263702306e-16,
+          1.0000000958963808,
+          64.99999985125463
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_positive_centres_outside_target_grid": 0,
+      "source_positive_volume_mm3": 35259.999975874736,
+      "source_positive_voxels": 35260,
+      "target_index_to_source_index": [
+        [
+          1.0,
+          8.999999956727773e-20,
+          -1.613496505308285e-17,
+          -17.00031499944138
+        ],
+        [
+          -8.999999956727773e-20,
+          1.0,
+          -8.513377453108179e-16,
+          -43.99997710038178
+        ],
+        [
+          0.0,
+          2.220446050769566e-16,
+          0.9999999041036285,
+          -64.99999361799048
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  },
+  "source_read_accounting": {
+    "objects_verified": 2,
+    "source_file_returned_bytes": 7464858
+  },
+  "status": "source_domain_diagnostic_complete",
+  "unchanged_rule": {
+    "known_zero_component_cells": null,
+    "known_zero_component_status": "not_measured; seed diagnostic only",
+    "old_outer_face_full_MR": 62.5,
+    "restored_outer_face_full_MR": 62.5,
+    "seed_cells": 89,
+    "seed_failure_remains": false,
+    "side": 1,
+    "transverse_full_MR": [
+      161,
+      108
+    ]
+  },
+  "unknown_is_free": false
+}

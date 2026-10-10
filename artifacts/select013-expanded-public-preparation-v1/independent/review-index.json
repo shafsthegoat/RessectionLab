@@ -1,0 +1,41 @@
+{
+  "files": {
+    "REPORT.txt": {
+      "bytes": 3960,
+      "sha256": "0464b22512069776525ed8187b35b92b26cb8775261098dc2a7a9570abe97046"
+    },
+    "audit-attempt-01.log": {
+      "bytes": 2038,
+      "sha256": "d6dd266b10501c412ad0b7274c775b65e805676be8253d18e4f44baa239906b8"
+    },
+    "audit-result.json": {
+      "bytes": 2200,
+      "sha256": "9adc42633e0ea73354e719d40f615f593cd51508853a81b4cb3b033c3759e005"
+    },
+    "audit_manifest.py": {
+      "bytes": 6870,
+      "sha256": "e905c4b7bc06514ba4f99377937bd64fd781c818c7bf8e67474427b9b4602cbe"
+    },
+    "audit_saved.py": {
+      "bytes": 9400,
+      "sha256": "e38ba0f4cbebae9d1a3eb9b29d799dacd1309a6b1aad0e6888807a4cc452b626"
+    },
+    "input-index.json": {
+      "bytes": 4391,
+      "sha256": "824284c2420e9eb9ee77e6693e8532eb76e077a0f94f7fca0777375104b352ad"
+    },
+    "manifest-audit-attempt-01.log": {
+      "bytes": 755,
+      "sha256": "578084e1402e8273922a288a3d15fc62c048e257df6ab0df6a0c0cf69d129f54"
+    },
+    "manifest-audit-result.json": {
+      "bytes": 783,
+      "sha256": "9d4469586c1fe33fa65506aefb9d0db6288598c40cf2a14db04df286b48b96db"
+    },
+    "manifest-input-index.json": {
+      "bytes": 1587,
+      "sha256": "a0ff198222dc558b42355275c49f025656bb8b359a2638a02994542de20c1fd2"
+    }
+  },
+  "scope": "compact saved-metadata independent review; no payloads"
+}

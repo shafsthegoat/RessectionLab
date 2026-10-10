@@ -1,0 +1,22 @@
+{
+  "schema": "remind-public-SELECT013-expanded-domain-crop-index-v1",
+  "status": "prepared_only_no_execution_release",
+  "selection_rule": "The same fixed SELECT013 subject and original three public series; repair the measured grid-cropping loss, with no patient/access/outcome selection.",
+  "planned_denominator": 1,
+  "subjects": ["ReMIND-013"],
+  "cases": [{
+    "patient_id": "ReMIND-013", "patient_group": "ReMIND:013", "role": "SELECT",
+    "status": "PREPARED_EXPANDED_QC_REQUIRED",
+    "case": {"path": "build/remind-select-public-bindings-v1/ReMIND-013-case.json", "bytes": 92193, "sha256": "9d4448328e979c856e3c8e08599b9cc2b66fc7d324f1652d7970468099267c65"},
+    "headers": {"path": "build/remind-select-public-preparation-v1/actual-public-qc-v1/ReMIND-013-headers/result.json", "bytes": 265134, "sha256": "fd3a5c5cfded6e4a60ef263c03f13df0adb07ae2f77b84f61aee9295e31b8948"},
+    "objects": 194, "bytes": 33046694,
+    "public_input_manifest": null, "training_admitted": false,
+    "replacement": null, "kept_in_fixed_denominator": true
+  }],
+  "MRI_sample_scope": "Original acquired full MRI supplies the fixed outer crop; only the 117 source planes needed for that crop are decoded. No MRI interpolation or exterior padding.",
+  "unchanged_full_target_voxels": 35260,
+  "expanded_start_MR": [61,70,23], "expanded_shape": [131,154,117],
+  "physical_aperture_from_diagnostic": {"axis0_face_full_MR": 62.5, "transverse_full_MR": [161,108], "inward_sign": 1},
+  "known_zero_is_physical_air": false,
+  "planning_or_training_admission": false
+}

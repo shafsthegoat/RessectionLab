@@ -1,0 +1,90 @@
+{
+  "schema": "select013-expanded-source-crop-and-saved-review-v1",
+  "files": [
+    {
+      "path": "build/goal-conditioned-policy-v1/darwin_fast_sampler.py",
+      "bytes": 9482,
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c"
+    },
+    {
+      "path": "build/goal-conditioned-policy-v1/run_contact_owned.py",
+      "bytes": 8730,
+      "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7"
+    },
+    {
+      "path": "build/select013-expanded-public-preparation-v1/run_public_qc_owned.py",
+      "bytes": 16895,
+      "sha256": "b2992add01b1605889d96bc2c5eae03f228ca57cc2b1277dc4fb03aab9212e0c"
+    },
+    {
+      "path": "build/select013-expanded-public-preparation-v1/prepare_expanded.py",
+      "bytes": 1757,
+      "sha256": "412ea065da71872c6514b69bf6893ae707f0398d640b76726baaaff613dbd6cf"
+    },
+    {
+      "path": "build/select013-expanded-public-preparation-v1/audit_saved_domains.py",
+      "bytes": 16680,
+      "sha256": "961488206f4edfea05914f90cdda44b3c690a9da7208e5ac81e461100b9b00e1"
+    },
+    {
+      "path": "build/select013-expanded-public-preparation-v1/public-select-index.json",
+      "bytes": 1553,
+      "sha256": "6d686716a1933e8905e600371083b2543c7fd37158ca045b5d0e8011dcc068d6"
+    },
+    {
+      "path": "build/select013-expanded-public-preparation-v1/stage/resectionlab/remind_planning_qc.py",
+      "bytes": 48164,
+      "sha256": "565843dac7efeef29640bb1690a7f1f167d38310d8b7e771babad5302571d796"
+    },
+    {
+      "path": "build/remind-select-public-bindings-v1/ReMIND-013-case.json",
+      "bytes": 92193,
+      "sha256": "9d4448328e979c856e3c8e08599b9cc2b66fc7d324f1652d7970468099267c65"
+    },
+    {
+      "path": "build/remind-select-public-bindings-v1/ReMIND-013-source-binding.json",
+      "bytes": 99124,
+      "sha256": "b7dbf348afdf6ee570b8a6ad64a48b34b7f2a2a1d75fd5ee3c890e2fea26970f"
+    },
+    {
+      "path": "build/remind-select-public-preparation-v1/actual-public-qc-v1/ReMIND-013-headers/result.json",
+      "bytes": 265134,
+      "sha256": "fd3a5c5cfded6e4a60ef263c03f13df0adb07ae2f77b84f61aee9295e31b8948"
+    },
+    {
+      "path": "build/remind-select-public-preparation-v1/public-select-inputs-v1/ReMIND-013-public-inputs-v1.json",
+      "bytes": 14172,
+      "sha256": "563963e7cf6ae7c1dff9f163db3208bf1af89b5611bc20e76a84c442a2b407a8"
+    },
+    {
+      "path": "build/select013-source-domain-diagnostic-v1/attempt-03/result.json",
+      "bytes": 9402,
+      "sha256": "531e60692158457077d1a11b951bb5b217b8333abd269968a651eca474828445"
+    },
+    {
+      "path": "manifests/experiments/remind-component-cohort-v1.json",
+      "bytes": 70925,
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+    },
+    {
+      "path": "manifests/experiments/remind-planning-pilot-v1.json",
+      "bytes": 34154,
+      "sha256": "ff092655049c1f6d5eb324f9610a4c1f5b8ec50c1a29cfaf92a54f74c951395f"
+    },
+    {
+      "path": "scripts/convert_remind_development.py",
+      "bytes": 11404,
+      "sha256": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+    },
+    {
+      "path": "src/resectionlab/__init__.py",
+      "bytes": 99,
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    {
+      "path": "src/resectionlab/legacy_transfer_supervisor.py",
+      "bytes": 10427,
+      "sha256": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
+    }
+  ]
+}

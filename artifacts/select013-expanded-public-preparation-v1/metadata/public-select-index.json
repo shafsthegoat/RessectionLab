@@ -1,0 +1,41 @@
+{
+  "schema": "remind-public-SELECT-expanded-input-index-v1",
+  "status": "source_metadata_not_execution_release",
+  "role": "SELECT",
+  "max_optimizer_updates": 0,
+  "planned_case_denominator": 2,
+  "original_select_ledger": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-select-public-preparation-v1/public-select-index-v2.json",
+    "bytes": 1565,
+    "sha256": "adc7232f0fd05300f90078385bc2576150eccc882712e31bfc97534f68680d5f"
+  },
+  "cases": [
+    {
+      "patient_id": "ReMIND-013",
+      "patient_group": "ReMIND:013",
+      "role": "SELECT",
+      "status": "EXPANDED_SOURCE_PREPARED_PENDING_SEPARATE_INFERENCE_RELEASE",
+      "path": "build/select013-expanded-public-preparation-v1/public-inputs-v1/ReMIND-013-public-inputs.json",
+      "sha256": "841261035a7d7be5c55984e717b8d65b712065a708e9260231ebcd49cc4d700e",
+      "supported_target_positive_voxels": 1579,
+      "full_target_denominator_voxels": 35260,
+      "anatomical_accuracy_pass": false
+    },
+    {
+      "patient_id": "ReMIND-037",
+      "patient_group": "ReMIND:037",
+      "role": "SELECT",
+      "status": "HOLD_ENCODED_SOURCE_SUPPORT_ARTIFACT",
+      "path": null,
+      "sha256": null,
+      "quarantined_conversion_manifest_sha256": "6824c835de54860ed06190e0f5887bbbf679ed8e20e5b483738038347137e202",
+      "source_diagnostic_result_sha256": "e09b995abb60679a7c672e944e579c2d5c023fbfcce539127859ea1ddc35dccd",
+      "kept_in_planned_denominator": true,
+      "replacement": null,
+      "anatomical_accuracy_pass": false
+    }
+  ],
+  "private_reference_loaded": false,
+  "split_changes": false,
+  "actual_policy_runs": 0
+}

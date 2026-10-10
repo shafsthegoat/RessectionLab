@@ -1,0 +1,27 @@
+{
+  "schema": "remind-fixed-SELECT013-expanded-domain-crop-release-v1",
+  "execution_released": true,
+  "source_index": {
+    "path": "build/select013-expanded-public-preparation-v1/source-index.json",
+    "bytes": 3460,
+    "sha256": "9a5627ceecafaa99773ce2563ee7cd37ae6e1c63807362c3b1931d4900c114c6"
+  },
+  "public_index": {
+    "path": "build/select013-expanded-public-preparation-v1/public-select-index.json",
+    "bytes": 1553,
+    "sha256": "6d686716a1933e8905e600371083b2543c7fd37158ca045b5d0e8011dcc068d6"
+  },
+  "subjects": [
+    "ReMIND-013"
+  ],
+  "caps": {
+    "seconds_per_case": 300,
+    "total_seconds": 330,
+    "sampled_rss_bytes": 3221225472,
+    "output_bytes_per_case": 268435456,
+    "log_bytes_per_phase": 4194304,
+    "threads": 1,
+    "automatic_retry": false
+  },
+  "scope": "Exact existing SELECT013 public expanded native-MRI crop and S/T/source-domain placement using preverified headers and original byte-checked source objects; then saved-only domain/old-overlap/full-count audit. No new patient/access, private labels, factory manifest, model or optimizer work. Old inputs and failed transfer remain unchanged. Root visual/intended-use qualification remains separate."
+}

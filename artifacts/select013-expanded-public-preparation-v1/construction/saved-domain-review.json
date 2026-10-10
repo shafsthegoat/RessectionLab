@@ -1,0 +1,219 @@
+{
+  "actor_inputs_admitted": false,
+  "all_saved_artifact_hashes_verified": true,
+  "all_source_domain_voxels_world_checked": true,
+  "audit_script_sha256": "961488206f4edfea05914f90cdda44b3c690a9da7208e5ac81e461100b9b00e1",
+  "case_sha256": "9d4448328e979c856e3c8e08599b9cc2b66fc7d324f1652d7970468099267c65",
+  "conversion_receipt_sha256": "bf9174ee066f2ce744a4b3ace1ae048954733981c8126e461c15a75d7c89a057",
+  "executing_script_sha256": "961488206f4edfea05914f90cdda44b3c690a9da7208e5ac81e461100b9b00e1",
+  "expanded_preparation_provenance": {
+    "diagnostic_result_sha256": "531e60692158457077d1a11b951bb5b217b8333abd269968a651eca474828445",
+    "expanded_crop_start_MR": [
+      61,
+      70,
+      23
+    ],
+    "fixed_opening_from_bound_diagnostic": {
+      "known_zero_component_cells": null,
+      "known_zero_component_status": "not_measured; seed diagnostic only",
+      "old_outer_face_full_MR": 62.5,
+      "restored_outer_face_full_MR": 62.5,
+      "seed_cells": 89,
+      "seed_failure_remains": false,
+      "side": 1,
+      "transverse_full_MR": [
+        161,
+        108
+      ]
+    },
+    "native_MR_samples_retained": true,
+    "new_access_or_route_admitted": false,
+    "old_conversion_sha256": "9d126eaa926d7e6c4e11903d119a9446f1e38ea98993a652735cabd72ecd0fe9",
+    "old_crop_start_MR": [
+      63,
+      72,
+      25
+    ],
+    "old_manifest_sha256": "563963e7cf6ae7c1dff9f163db3208bf1af89b5611bc20e76a84c442a2b407a8",
+    "old_overlap_file_sha256": {
+      "image": "5415f0e09f5888565fd49bf20314234e681ee6d55991f6bdd80524e49c6c6632",
+      "supplied_support": "58a0d75dd775772c742c8cac29766058337b34d17b0cfb8b30645a188d963070",
+      "supplied_whole_tumor": "00025fc785fe79e5008b5a838d42672e6473eab9f7220cb8acca54ad9366888e",
+      "whole_tumor_domain": "0237ec55f72db66a345ffcef3c5b83778017a40283f50b3ad61f55cf14140242"
+    },
+    "old_sources_or_failed_attempt_modified": false,
+    "old_support_placed_voxels": 745523,
+    "original_full_target_voxels": 35260,
+    "preentry_point_bounds_from_bound_diagnostic": [
+      {
+        "all_allowed_cone_p0_transverse_bound_inside_crop": true,
+        "distal_point_full_MR_axis0": 61.49999999,
+        "distal_point_inside_acquired_MRI_axis0": true,
+        "distal_point_inside_outer_crop_axis0": true,
+        "p0_transverse_full_MR_bound": [
+          [
+            153.99999999,
+            100.99999931393586
+          ],
+          [
+            168.00000001,
+            115.00000068606414
+          ]
+        ],
+        "tool_id": "generic_suction",
+        "whole_tool_in_image_certified": false
+      },
+      {
+        "all_allowed_cone_p0_transverse_bound_inside_crop": true,
+        "distal_point_full_MR_axis0": 60.79999999,
+        "distal_point_inside_acquired_MRI_axis0": true,
+        "distal_point_inside_outer_crop_axis0": true,
+        "p0_transverse_full_MR_bound": [
+          [
+            153.29999999,
+            100.29999924632945
+          ],
+          [
+            168.70000001,
+            115.70000075367055
+          ]
+        ],
+        "tool_id": "generic_aspirator",
+        "whole_tool_in_image_certified": false
+      }
+    ],
+    "restored_support_placed_voxels": 69
+  },
+  "full_coverage_factory_compatible": false,
+  "header_snapshot_sha256": "fd3a5c5cfded6e4a60ef263c03f13df0adb07ae2f77b84f61aee9295e31b8948",
+  "image_range": [
+    0.0,
+    1654.0
+  ],
+  "label_summaries": {
+    "cerebrum": {
+      "resampling_can_omit_subvoxel_labels": true,
+      "saved_domain_voxels": 2184064,
+      "saved_positive_volume_mm3": 745591.9279902907,
+      "saved_positive_voxels": 745592,
+      "source_positive_centres_cropped_from_bound_execution": 0,
+      "source_positive_volume_mm3_from_bound_execution": 745029.1104155204,
+      "source_positive_voxels_from_bound_execution": 20115790,
+      "volume_change_percent": 0.075543031393277
+    },
+    "whole_tumor": {
+      "resampling_can_omit_subvoxel_labels": true,
+      "saved_domain_voxels": 118638,
+      "saved_positive_volume_mm3": 35259.99659456868,
+      "saved_positive_voxels": 35260,
+      "source_positive_centres_cropped_from_bound_execution": 0,
+      "source_positive_volume_mm3_from_bound_execution": 35259.999975874736,
+      "source_positive_voxels_from_bound_execution": 35260,
+      "volume_change_percent": -9.589637151030672e-06
+    }
+  },
+  "limits": [
+    "Only an annotation-assisted geometric research condition; no anatomical or clinical accuracy pass.",
+    "Full native and placed target denominators remain; label-positive centre crop loss is zero, NN sampling differences stay explicit.",
+    "Known automatic label zero is not physical empty. Outside its saved source domain is explicitly unknown; no filling or full-coverage factory admission.",
+    "Source whole tumor is not a prescribed resection target. Missing vessels and function remain unknown.",
+    "Exact acquired/annotation availability timestamps are unverified. This audit permits zero optimizer updates.",
+    "NN sampling may omit thin labels; source positive crop losses and volume changes remain explicit."
+  ],
+  "optimizer_updates_performed": 0,
+  "original_source_reopened": false,
+  "patient_id": "ReMIND-013",
+  "private_reference_loaded": false,
+  "public_input_manifest": null,
+  "public_only": true,
+  "public_support_domain_fully_covered": false,
+  "role": "SELECT",
+  "saved_counts": {
+    "support": 745592,
+    "support_domain": 2184064,
+    "target": 35260,
+    "target_domain": 118638,
+    "target_in_known_support_positive": 1579,
+    "target_in_known_support_zero": 33681,
+    "target_in_unknown_support_domain": 0,
+    "target_outside_support": 33681
+  },
+  "shape_xyz": [
+    131,
+    154,
+    117
+  ],
+  "source_MR_sample_equality": "bound conversion worker independently compared decoded samples to original bytes; this saved audit checks finite saved samples only",
+  "source_centre_coverage": {
+    "cerebrum": {
+      "all_source_grid_centres_inside_crop": true,
+      "mapped_centre_maximum": [
+        128.33363679964856,
+        152.33329280030196,
+        114.33333795840359
+      ],
+      "mapped_centre_minimum": [
+        0.6669828996485663,
+        1.6666412003019289,
+        1.666660385809218
+      ]
+    },
+    "whole_tumor": {
+      "all_source_grid_centres_inside_crop": true,
+      "mapped_centre_maximum": [
+        55.00031499944138,
+        120.99997710038187,
+        103.0000034953171
+      ],
+      "mapped_centre_minimum": [
+        17.00031499944138,
+        43.999977100381834,
+        64.99999985125461
+      ]
+    }
+  },
+  "source_geometry_refit_from_saved_headers": {
+    "cerebrum": {
+      "centred_OLS_affine_max_difference_mm": 2.1316282072803006e-13,
+      "plane_residual_mm": 2.570902027265751e-06
+    },
+    "structural_t1ce": {
+      "centred_OLS_affine_max_difference_mm": 8.668621376273222e-13,
+      "plane_residual_mm": 0.00028771688494089176
+    },
+    "whole_tumor": {
+      "centred_OLS_affine_max_difference_mm": 3.552713678800501e-14,
+      "plane_residual_mm": 1.114844572217847e-08
+    }
+  },
+  "status": "saved_public_domain_geometry_checked_anatomy_unreviewed",
+  "support_unknown_domain_voxels": 176294,
+  "training_admitted": false,
+  "visual_review": {
+    "expert_anatomy_review": false,
+    "observation": "PENDING_ROOT_VISUAL_AND_SOURCE_ARTIFACT_REVIEW; no visual claim generated by this reader.",
+    "views": [
+      {
+        "available_to_actor": false,
+        "axis": 0,
+        "file": "public-qc-axis0-index36.png",
+        "index": 36,
+        "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention"
+      },
+      {
+        "available_to_actor": false,
+        "axis": 1,
+        "file": "public-qc-axis1-index82.png",
+        "index": 82,
+        "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention"
+      },
+      {
+        "available_to_actor": false,
+        "axis": 2,
+        "file": "public-qc-axis2-index84.png",
+        "index": 84,
+        "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention"
+      }
+    ]
+  }
+}

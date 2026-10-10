@@ -1,0 +1,46 @@
+One new owned attempt using the original four-arm SELECT013 driver.
+
+Methods remain observed_greedy, original IL64 plus accepted exact045 replay,
+original scratch RL8, observed_beam. Historical observed_* names mean simulated
+planning from permitted source-derived estimated world, not demonstrations.
+No new checkpoint selection: ranking IL is excluded from this comparison.
+
+The worker changes only the explicit partial_domain_inputs=True factory option
+and saved preparation metadata. run_owned.py is byte-identical to the previous
+supervisor. The qualified expanded manifest is 841261035a7d7be5c55984e717b8d65b712065a708e9260231ebcd49cc4d700e;
+successor index is a5a7ed8b504b3f768666cdec4c77908d680ff242eb157afb0f377b95105dc389.
+Original overlap, full T35260, restored69 S voxels, actual Ds2184064 and unknown
+176294 cells stay explicit. This is a real-MRI crop change, not arbitrary
+padding or a new physical aperture/access. All four arms must share the exact
+new initial source/model/observation/inventory. No equality to the old crop's
+source or observation hash is claimed. Actual preparation qualification is
+separate from execution; root must accept its independent saved review.
+
+Original EMPTY_FIXED_K result and 3.727428958984092s/371245056B parent cost are
+bound and retained, including its two reloads and zero forwards/previews.
+Original failed output is untouched.037 remains held in denominator2;067 closed.
+
+Unchanged: post-exposure S-union-T condition, model/tools/reward, h24, historical
+13 axes, intermediate/footprint proposals with no obstruction, cap120,
+depth-volume retention. Greedy60s; beam300s/5640calls/width2. Worker900s,
+parent960s,3GiB,one thread,128MiB output+16MiB supervision,750000 aggregate
+native previews,48 learned forwards,zero updates/gradients. Construction,
+selector, collection and replay costs remain measured; inclusive timers are
+not summed. Valid negative endpoints complete; capped searches remain unresolved.
+
+The freezer still requires committed HEAD and the exact terminal RL result
+b3bf8ff60f49b728618efa91b253676a703e607fae99d09faf5375a48c4dc1b8.
+It now permits only the three reviewed partial-Ds SELECT modules plus four
+already-promoted opt-in ranking modules versus the original RL source HEAD.
+The owned endpoint protocols have no ranking option; all other executing source,
+including the accepted045 recovery's geometry checker, must remain unchanged.
+
+Nine narrow controls are source-written and UNRUN here: the prior two fake
+four-arm flows plus four terminal-pin refusals, and three saved-JSON-only
+expanded-preparation joins/refusals. No arrays or weights are opened by the
+metadata control; no source freeze, release, model or patient run was performed.
+
+After root's tests/review and final committed HEAD, existing commands suffice:
+.venv/bin/python -B build/post-exposure-select013-expanded-comparison-v1/freeze-runtime.py --head FINAL_HEAD --rl-result-sha256 b3bf8ff60f49b728618efa91b253676a703e607fae99d09faf5375a48c4dc1b8
+The freezer writes a pending, non-executable template. Root owns the one-use
+release and launch through run_owned.py --release PATH --release-sha256 SHA.

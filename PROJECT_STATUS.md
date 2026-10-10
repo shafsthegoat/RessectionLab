@@ -13,9 +13,8 @@ is established.
 The fixed SELECT013 comparison previously failed before inference because its
 opening plane met the crop boundary and had no in-grid free-space seed. A separate
 real-source expansion now preserves every original MRI/label overlap and all
-35,260 target cells while restoring omitted support coverage. Intended-use
-qualification and explicit partial-domain inference integration are the next
-steps. The original four unstarted arms remain failed; no changed-condition
+35,260 target cells while restoring omitted support coverage. Saved source/frame qualification and explicit partial-domain inference
+integration are complete; the separately released matched comparison is next. The original four unstarted arms remain failed; no changed-condition
 transfer result exists yet. 037 remains held and EVAL067 closed. Earlier SELECT
 all-STOP outcomes belong to an earlier starting condition.
 
@@ -32,6 +31,8 @@ roles remain fixed. No held-out patient or clinical benefit has been demonstrate
 See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cross-patient-experiment-priority-october-10).
 
 Current integrated results, October 10:
+
+- **Existing scan coverage repairs the new-case preparation:** [expanded SELECT013 preparation](artifacts/select013-expanded-public-preparation-v1/RESULT.txt) preserves every original MRI/label overlap and all 35,260 target cells, restores 69 support cells, and leaves 176,294 grid cells explicitly unknown. Conversion plus saved review completes in 2.091 s at 1.190 GB sampled peak; independent metadata checks and three-view gross alignment review pass within their stated limits. The same physical opening and patient split are preserved. No full-tool clearance or useful transfer is inferred from the restored seed; the frozen comparison is next.
 
 - **Frozen inference can preserve acquired coverage explicitly:** [the five-array SELECT013 integration](artifacts/post-exposure-select013-partial-domain-v1/RESULT.txt) keeps missing source coverage unknown, the full supplied target visible and all SELECT updates disabled. All 209 selected cases plus nine subtests pass across the initial suite and one corrected historical-path retry; the original environment-path failure is retained. The four-array default stays unchanged. Actual expanded-preparation qualification and the matched transfer run remain separate.
 

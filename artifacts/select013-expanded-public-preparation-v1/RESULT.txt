@@ -1,0 +1,57 @@
+Expanded SELECT013 source preparation completed; no policy or native plan ran.
+
+The original inner crop lost the preceding known-zero aperture layer and
+1,469 native S-positive centres. The separately preserved two-SEG probe
+recovered K89 at the unchanged physical opening. Diagnostic attempt01
+failed before payload access (wrong runtime lacked pydicom); attempt02
+also failed before payload access (imaging runtime lacked scipy). Root
+separately released narrowed attempt03, which succeeded without computing
+F0. All original attempts, inputs and failed four-arm SELECT remain intact.
+
+Authorized expanded conversion plus saved-array review: session36393,
+exit0, both children reaped, no remaining process,2.090631s total wall,
+maximum sampled RSS1,190,182,912B. Read119 original objects/23,053,728B:
+117 acquired MRI planes and the same two public SEG objects. The75 other
+MRI planes remained outside this pixel-read scope. No private labels,
+model forwards, updates, native previews or planning admission occurred.
+
+Native MRI crop start61/70/23, shape131×154×117. MRI values are original
+samples; no MRI interpolation. Source affine and bounded derived planning
+affine remain distinct. Original MRI/S/T/T-domain crop overlap reproduces
+all four old NPY byte hashes. Original data files were not overwritten.
+
+Full target:35,260 placed cells, unchanged. Support:745,592 cells,
+69 restored beyond the old crop. Source-positive centre crop loss:0 for
+both labels. Ds-known cells:2,184,064; unknown support-domain cells:176,294.
+Target partition:1,579 known-support-positive,33,681 known-support-zero,
+0 outside Ds. Native and nearest-neighbour counts/volumes remain separate.
+Automatic support is not physical occupancy; source zeros are not air.
+
+Root viewed the3 exact orthogonal overlays. No gross frame mismatch was
+apparent, but this limited check does not establish segmentation accuracy,
+all-volume alignment, physical occupancy or clinical validity. The large
+target region outside automatic support remains explicit and unchanged.
+
+The five-array manifest preserves SELECT013, raw S/full T/Ds and source
+availability/overlap uncertainty. Its successor two-person ledger copies
+SELECT037's HOLD row unchanged. No new patient/access or replacement was
+selected. Preparation remains separate from fixed four-arm inference
+release; recovered K/p0 point bounds are not complete-tool route acceptance.
+
+Receipt SHA5ce0cfb3af6ff49289de9d2283b03f7e00e4517cf5bb92524a674785db6e8f6a
+Conversion SHAbf9174ee066f2ce744a4b3ace1ae048954733981c8126e461c15a75d7c89a057
+Saved review SHA6479dd6df8a9d81a05438e481533b2083a7d95cb5889f93b3c4dea038f6d6a7d
+Manifest SHA841261035a7d7be5c55984e717b8d65b712065a708e9260231ebcd49cc4d700e
+Two-person index SHAa5a7ed8b504b3f768666cdec4c77908d680ff242eb157afb0f377b95105dc389
+
+Independent saved review subsequently passed305 construction and137 final-
+manifest checks. Reports, exact indexes and metadata-only audit sources are
+in independent/. The planned unchanged four-arm comparison runner passes source
+review and all9 generated controls in1.23s. The runner is included for review;
+this preparation commit is not evidence that its patient comparison has run.
+
+Promotion note: root initially refused the previously announced39-file package
+hash before copying because its owner had added the two already reviewed
+independent report/index files. The final41-file package was verified at SHA
+92ccf57ba16286d4257b2f3f6ee876bfecc1686c30df5005b2de04c655b56a6c.
+All underlying patient-preparation pins remained unchanged.

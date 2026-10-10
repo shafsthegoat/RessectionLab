@@ -1,0 +1,18 @@
+{
+  "reviewer": "root assistant, actual visual inspection reported in task message",
+  "patient_id": "ReMIND-013",
+  "role": "SELECT",
+  "image_files": [
+    {"path": "build/select013-expanded-public-preparation-v1/actual-domain-qc-v1/ReMIND-013-crop-mr-domains/public-qc-axis0-index36.png", "sha256": "a40d1f58724923357c13adbe93204932054f78f188d7d1265bd3a12c0bf3feaf", "viewed": true},
+    {"path": "build/select013-expanded-public-preparation-v1/actual-domain-qc-v1/ReMIND-013-crop-mr-domains/public-qc-axis1-index82.png", "sha256": "0550dbec399cc2c5168b8937231917f3597d83cb82eb7806b0245bbd45b7a50b", "viewed": true},
+    {"path": "build/select013-expanded-public-preparation-v1/actual-domain-qc-v1/ReMIND-013-crop-mr-domains/public-qc-axis2-index84.png", "sha256": "b37eed82e22c1744ea630ff0d2d417a11a051df12f8f3b8fab47874d5be0b977", "viewed": true}
+  ],
+  "observation": "MRI shows orthogonal head/brain planes; green support and red supplied target overlays follow consistent gross frame orientation, with a large red region outside automatic green support consistent with known source semantics. No gross frame mismatch apparent in these three low-resolution previews.",
+  "scope": "Limited visual check plus separately saved quantitative overlap/frame checks, not expert anatomy validation.",
+  "establishes_segmentation_accuracy": false,
+  "establishes_all_volume_alignment": false,
+  "establishes_physical_occupancy": false,
+  "establishes_clinical_validity": false,
+  "planning_admission": false,
+  "private_data_viewed": false
+}

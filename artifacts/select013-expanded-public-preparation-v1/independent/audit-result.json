@@ -1,0 +1,50 @@
+{
+  "audit_peak_RSS_bytes": 21856256,
+  "audit_seconds": 0.006576082902029157,
+  "checks": 305,
+  "conversion_sha256": "bf9174ee066f2ce744a4b3ace1ae048954733981c8126e461c15a75d7c89a057",
+  "elapsed_seconds": 2.090631457976997,
+  "files_checked": 24,
+  "full_target_voxels": 35260,
+  "old_overlap_hashes": {
+    "image": "5415f0e09f5888565fd49bf20314234e681ee6d55991f6bdd80524e49c6c6632",
+    "supplied_support": "58a0d75dd775772c742c8cac29766058337b34d17b0cfb8b30645a188d963070",
+    "supplied_whole_tumor": "00025fc785fe79e5008b5a838d42672e6473eab9f7220cb8acca54ad9366888e",
+    "whole_tumor_domain": "0237ec55f72db66a345ffcef3c5b83778017a40283f50b3ad61f55cf14140242"
+  },
+  "phase_sampled_peak_RSS_bytes": [
+    1190182912,
+    95633408
+  ],
+  "receipt_sha256": "5ce0cfb3af6ff49289de9d2283b03f7e00e4517cf5bb92524a674785db6e8f6a",
+  "release_sha256": "6384fe77c9d048a3b40ed421bff8a93faabde1eb8809989ad869dbca0a1f0edd",
+  "restored_placed_support_voxels": 69,
+  "saved_counts": {
+    "support": 745592,
+    "support_domain": 2184064,
+    "target": 35260,
+    "target_domain": 118638,
+    "target_in_known_support_positive": 1579,
+    "target_in_known_support_zero": 33681,
+    "target_in_unknown_support_domain": 0,
+    "target_outside_support": 33681
+  },
+  "saved_review_sha256": "6479dd6df8a9d81a05438e481533b2083a7d95cb5889f93b3c4dea038f6d6a7d",
+  "scope": "Metadata/source hashes and saved arithmetic only. Recorded array/source-sample checks are authenticated evidence, not independently rerun. No arrays/DICOM/images/native/model/checkpoint reads. No anatomy, route, clinical or inference admission; original failed attempt preserved.",
+  "source_index_sha256": "9a5627ceecafaa99773ce2563ee7cd37ae6e1c63807362c3b1931d4900c114c6",
+  "status": "PASS_saved_expanded_SELECT013_metadata_audit",
+  "unchanged_aperture_diagnostic": {
+    "known_zero_component_cells": null,
+    "known_zero_component_status": "not_measured; seed diagnostic only",
+    "old_outer_face_full_MR": 62.5,
+    "restored_outer_face_full_MR": 62.5,
+    "seed_cells": 89,
+    "seed_failure_remains": false,
+    "side": 1,
+    "transverse_full_MR": [
+      161,
+      108
+    ]
+  },
+  "unknown_support_domain_voxels": 176294
+}

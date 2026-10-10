@@ -1522,3 +1522,24 @@ receipts and compact evidence: [result](../artifacts/public-motion-ranking-il64-
 No SELECT/EVAL exposure or updates occurred. Continue the original frozen IL/RL
 comparison on separately restored SELECT013 acquired coverage; preserve the
 original EMPTY_FIXED_K attempt. No new architecture or training sweep is started.
+
+### October 10: restored acquired SELECT013 coverage, original failure retained
+
+The separate expanded crop uses existing acquired MRI and public source labels,
+with no MRI interpolation or invented padding. Old MRI/S/T/T-domain overlap
+hashes match exactly; full T=35,260 is unchanged and S gains 69 placed cells.
+Ds retains 176,294 unknown cells. Both construction phases finish in 2.091 s,
+1,190,182,912 B sampled peak, with no surviving children. Independent saved review
+passes 305 construction and 137 final-manifest checks. Root's three orthogonal
+preview inspection finds no gross frame mismatch; this is not segmentation,
+physical or clinical validation. See [compact evidence](../artifacts/select013-expanded-public-preparation-v1/RESULT.txt).
+
+New public manifest 841261035a7d7be5c55984e717b8d65b712065a708e9260231ebcd49cc4d700e
+and SELECT index a5a7ed8b504b3f768666cdec4c77908d680ff242eb157afb0f377b95105dc389
+retain 013/037 roles and the entire original 037 HOLD object. Five-array inference
+keeps acquired Ds, simulated S∨T and assumed Ds∨T distinct, with zero SELECT
+updates. Original EMPTY_FIXED_K and both diagnostic dependency failures remain.
+The source-domain seed89 is neither measured F0 nor full-tool clearance. The
+existing four-arm runner adapted to these exact inputs passes nine generated
+controls and independent source review; actual separately released comparison
+is still required to establish complete planning outcomes.

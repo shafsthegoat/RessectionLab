@@ -1,0 +1,22 @@
+Compact metadata/source preservation only. No acquired arrays, MRI, PNGs,
+model weights or raw DICOM objects are included. Runtime/data paths in
+the manifests remain the original ignored paths; this package is not a
+self-contained new-clone execution environment.
+
+Source copies came from build/select013-expanded-public-preparation-v1
+and build/select013-source-domain-diagnostic-v1. The domain QC module came
+from the former's stage/resectionlab directory. Restore exact copies to
+those original paths only if reproducing with the already-bound data.
+Keep completed attempt paths immutable and use a new declared attempt.
+
+Unchanged converter: scripts/convert_remind_development.py
+SHA34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6.
+Existing owner/helper source references are in source/source-index.json
+and diagnostic attempt declarations; source copies of those shared helpers
+are not repeated here. Original role/split manifests remain authoritative.
+
+metadata/ReMIND-013-public-inputs.json binds all five actual arrays and
+construction/review/visual metadata; metadata/public-select-index.json
+preserves the original held037 record. These are source/intended-use
+records, not an execution release or an anatomical/clinical approval.
+Only the root-owned separately bound four-arm runner may perform inference.

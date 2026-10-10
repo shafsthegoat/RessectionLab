@@ -1,0 +1,34 @@
+{
+  "status": "complete",
+  "stop_reason": null,
+  "exit_code": 0,
+  "worker_pid": 91988,
+  "child_reaped": true,
+  "elapsed_seconds": 1.341412500012666,
+  "sampled_peak_RSS_bytes": 1096368128,
+  "samples": 21,
+  "remaining_owned_pids": [],
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "caps": {
+    "wall_seconds": 60,
+    "RSS_bytes": 1610612736,
+    "output_bytes": 2097152,
+    "threads": 1
+  },
+  "head": "290bdccfe3350b89343876f899b4c3798bc40b38",
+  "source_pins": {
+    "build/select013-source-domain-diagnostic-v1/diagnose_source_domains_v2.py": "3036a2a1764b588325a4d836975cf2e50f73b8ccfd7f0fb2b7e6fb868ba3c8a9",
+    "build/goal-conditioned-policy-v1/darwin_fast_sampler.py": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+    "build/goal-conditioned-policy-v1/run_contact_owned.py": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7",
+    "build/post-exposure-IL045-evaluation-recovery-v1/run_owned.py": "3e48eb654eaee6a048840a5ef4592e3a9938f6cd864dd9af3dbc7e49150196ff",
+    "src/resectionlab/remind_planning_qc.py": "f35a28f2cdedd777e15031b5cba370c4106c0436eefe9590ca17466d8944b3ca",
+    "scripts/convert_remind_development.py": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+  },
+  "result_sha256": "531e60692158457077d1a11b951bb5b217b8333abd269968a651eca474828445",
+  "worker_log_sha256": "bbc5e6989b55f90737b69506c519f2c912e3dace31815a1a8ec404add2eb46b0",
+  "output_bytes_before_receipt": 11510,
+  "source_and_HEAD_unchanged": true,
+  "automatic_retry": false,
+  "sampling_limit": "transient RSS peaks between samples may be missed"
+}
