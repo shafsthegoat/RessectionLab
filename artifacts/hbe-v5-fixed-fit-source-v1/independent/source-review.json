@@ -1,0 +1,107 @@
+{
+  "actual_payload_reads": 0,
+  "candidate_index": {
+    "bytes": 2304,
+    "path": "build/hbe-v5-fixed-fit-continuation-v2/source-index.json",
+    "sha256": "9955fb2a6d54703b7f45da6d060c4b03fba4223c764220fbfe9b1fb1a459dc48"
+  },
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "branch_output_bytes": {
+      "compression": 1610612736,
+      "tension": 536870912
+    },
+    "cleanup_reserve_seconds": 10,
+    "fit_calls": 0,
+    "held_out_member_reads": 0,
+    "measured_member_reads": 0,
+    "mesher_calls": 0,
+    "native_calls": 2,
+    "native_seconds": {
+      "compression": 2100,
+      "tension": 420
+    },
+    "new_output_bytes": 2147483648,
+    "preparation_seconds": 60,
+    "readout_seconds": 600,
+    "sampled_group_rss_bytes": 3221225472,
+    "threads": 1,
+    "total_seconds": 3600
+  },
+  "decision": "GO",
+  "execution_released": false,
+  "fit_calls": 0,
+  "generated_controls": {
+    "bytes": 608,
+    "path": "build/hbe-v5-fixed-fit-independent-v1/controls-result.json",
+    "sha256": "833672f164f0780da3d2e60ee2050701f01336ce282fef7af96156f6b63c6f41"
+  },
+  "native_calls": 0,
+  "physical_validation_pass": null,
+  "qualification": "unchanged poor within-specimen fit; no patient/tool or fine full-native equivalence claim",
+  "release_candidate_sha256": "928f1bf6a006b121c7180d89100628522c6f81eef8b60ff99b70a322cad40b17",
+  "report": {
+    "bytes": 6538,
+    "path": "build/hbe-v5-fixed-fit-independent-v1/REPORT.txt",
+    "sha256": "228152f8faae9175196deb6e6bcc11b54b88565de0e093f741f773daad6225ad"
+  },
+  "runtime_file_binding_count": 323,
+  "schema": "hbe-v5-fixed-fit-source-review-v1",
+  "scope": "exact source promotion and generated-only compatibility; not native execution",
+  "source_binding_count": 44,
+  "source_files": [
+    {
+      "path": "manifests/experiments/hbe-01-03-v5-fixed-fit-continuation-v1.json",
+      "previous_sha256": null,
+      "sha256": "083b9eac91dcc26353243fbb3c03ed4b3d9e6ddbb373337d55322d747bc8ff68",
+      "staged": "build/hbe-v5-fixed-fit-continuation-v2/stage/manifests/experiments/hbe-01-03-v5-fixed-fit-continuation-v1.json"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_fitted_confirmation.py",
+      "previous_sha256": null,
+      "sha256": "80774c4ffa11b4944227a750e25b92145249170f886f6e13996ee39fc803f045",
+      "staged": "build/hbe-v5-fixed-fit-continuation-v2/stage/scripts/mechanics_hbe_v5_fitted_confirmation.py"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_fitted_confirmation_experiment.py",
+      "previous_sha256": null,
+      "sha256": "78d9ee5b0c1a2ad404c56f92eab5b7a1ed9c9981bdb657a2405a96ebfeacd6cb",
+      "staged": "build/hbe-v5-fixed-fit-continuation-v2/stage/scripts/mechanics_hbe_v5_fitted_confirmation_experiment.py"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_frame.py",
+      "previous_sha256": "8431c7ae293befdf75bbccc54ce3481ddbd2e42b70daf1b6f826be96bf68e0d9",
+      "sha256": "1ca4b75d7d609b69339f6a99c8eb7d8d67d4a8fd6ae94e8aed6903ab18ac97b0",
+      "staged": "build/hbe-v5-fixed-fit-continuation-v2/stage/scripts/mechanics_hbe_v5_frame.py"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_stream.py",
+      "previous_sha256": "a353ca0d96d1c31b80302ce3239796e622b1b6adc15c97bf318ffb9246c3b70a",
+      "sha256": "b96ea74e0906cc69914712e7ea08a4196e24571a2549041347a4633829b75457",
+      "staged": "build/hbe-v5-fixed-fit-continuation-v2/stage/scripts/mechanics_hbe_v5_stream.py"
+    },
+    {
+      "path": "tests/test_hbe_v5_fixed_fit.py",
+      "previous_sha256": null,
+      "sha256": "68a87d4d3c5b073a4e08c9d00f9cc36fb47727a3c6b680edb16d6f551a5b5921",
+      "staged": "build/hbe-v5-fixed-fit-continuation-v2/stage/tests/test_hbe_v5_fixed_fit.py"
+    }
+  ],
+  "source_patch": {
+    "bytes": 85759,
+    "path": "build/hbe-v5-fixed-fit-continuation-v2/source.patch",
+    "sha256": "05d3b0a9b632d0545f6bd3001653347215c341c2f3426eb8e6c1d06f0aea7be6"
+  },
+  "subsequent_execution_requires": "separate root release binding committed exact sources and this review",
+  "test_portability_delta": {
+    "bytes": 539,
+    "path": "build/hbe-v5-fixed-fit-independent-v1/portability-check.json",
+    "sha256": "8fe0001467462e23fedd8351dc76959c5e6997ecd8e5caca661d665298338654"
+  },
+  "whole_reference_stream_parity": {
+    "bytes": 1431,
+    "path": "build/hbe-v5-fixed-fit-independent-v1/whole-stream-parity.json",
+    "sha256": "4d0e6feb9e8a2d30e44b351c4d430c8be8fefd0608f50aeab5b3825f030262ed"
+  }
+}

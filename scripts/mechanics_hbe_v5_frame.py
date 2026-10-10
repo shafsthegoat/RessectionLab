@@ -79,7 +79,7 @@ def _record(record, *, step, time, name, count, fields):
     return finite_array(record.get('values'), (count, fields))
 
 
-def _ratios(mesh, current, raw, *, coordinate_m, half):
+def _ratios(mesh, current, raw, *, coordinate_m, half, mu_Pa=1000.):
     X = mesh.rest_nodes_m
     top, bottom = np.asarray(mesh._top), np.asarray(mesh._bottom)
     prescribed = X.copy()
@@ -93,7 +93,7 @@ def _ratios(mesh, current, raw, *, coordinate_m, half):
     free_raw[bottom] = 0
     free_raw[top] = 0 if not half else free_raw[top] * [1, 1, 0]
     moments = np.cross(current, raw)
-    F0 = 1000. * mesh.radius_m**2
+    F0 = mu_Pa * mesh.radius_m**2
     T0 = F0 * mesh.radius_m
     ratios = {
         'force_balance': float(np.linalg.norm(raw.sum(axis=0)) /
@@ -125,7 +125,7 @@ def _contract_key(contract):
             contract['v5_declaration_sha256'], contract['v4_declaration_sha256'],
             contract['source_deck_sha256'], contract['adapted_deck_sha256'],
             tuple(contract['times']), tuple(contract['full_coordinates_m']),
-            tuple(contract['native_coordinates_m']))
+            tuple(contract['native_coordinates_m']),contract.get('fixed_fit_sha256'))
 
 
 def _freeze_geometry_arrays(mesh):
@@ -170,7 +170,27 @@ def evaluate_generated_frame(contract, mesh_manifest, node_record, element_recor
     return evaluate_prepared_frame(contract, prepared, node_record, element_record)
 
 
+FIXED_FIT_SHA256 = 'b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a'
+FIXED_MU_PA = 715.361571139082
+
+
 def evaluate_prepared_frame(contract, prepared, node_record, element_record):
+    """Original reference-only entrypoint; its material admission is unchanged."""
+    if contract['mu_Pa'] != 1000.:
+        raise ValueError('Pinned HBE reference material or radius differs')
+    return _evaluate_prepared_frame(contract, prepared, node_record, element_record)
+
+
+def evaluate_fitted_frame(contract, prepared, node_record, element_record, *, primitive_sink=None):
+    """Fixed-fit equations only; hash authentication/execution belongs to caller."""
+    if (contract.get('fixed_fit_sha256') != FIXED_FIT_SHA256
+            or type(contract.get('mu_Pa')) is not float or contract['mu_Pa'] != FIXED_MU_PA):
+        raise ValueError('Exact accepted fixed fit required')
+    return _evaluate_prepared_frame(contract, prepared, node_record, element_record,
+                                    primitive_sink=primitive_sink)
+
+
+def _evaluate_prepared_frame(contract, prepared, node_record, element_record, *, primitive_sink=None):
     """Evaluate one frame with validated stream-local geometry and unchanged gates.
 
     The record pair must come from `_iter_data_records`, whose one-based ID
@@ -196,7 +216,7 @@ def evaluate_prepared_frame(contract, prepared, node_record, element_record):
         raise ValueError('Nonpositive logged element J')
     current, raw = values[:, :3], values[:, 6:9]
     R, mu = native_mesh.radius_m, contract['mu_Pa']
-    if mu != 1000. or R != .004:
+    if not math.isfinite(mu) or mu <= 0 or R != .004:
         raise ValueError('Pinned HBE reference material or radius differs')
     motion_error = np.linalg.norm(values[:, 3:6] - (current - X), axis=1).max()
     primitive_ratio = float(motion_error / (1e-8 * R))
@@ -210,7 +230,7 @@ def evaluate_prepared_frame(contract, prepared, node_record, element_record):
     if half != (prepared.reconstruction_model is not None):
         raise ValueError('Representation-specific reconstruction required')
     native_ratios = _ratios(native_mesh, current, raw,
-                            coordinate_m=native_coordinate, half=half)
+                            coordinate_m=native_coordinate, half=half, mu_Pa=mu)
     native_ratios['primitive_consistency'] = primitive_ratio
     native_state = native_mesh.deformation(current, mu)
     top, bottom = np.asarray(native_mesh._top), np.asarray(native_mesh._bottom)
@@ -226,9 +246,15 @@ def evaluate_prepared_frame(contract, prepared, node_record, element_record):
             or native_mesh.height_m != (.00489159 / 2 if half else .00489159)):
         raise ValueError('Pinned HBE full/half height differs')
     full_ratios = _ratios(full_mesh, full_current, full_raw,
-                          coordinate_m=full_coordinate, half=False)
+                          coordinate_m=full_coordinate, half=False, mu_Pa=mu)
     full_state = full_mesh.deformation(full_current, mu)
     full_force = float(-full_raw[np.asarray(full_mesh._top), 2].sum())
+    if primitive_sink is not None:
+        full_top = np.asarray(full_mesh._top)
+        torque = float(-np.cross(full_current[full_top], full_raw[full_top])[:, 2].sum())
+        primitive_sink({'index': step, 'current': full_current, 'raw': full_raw,
+                        'native_current': current, 'native_raw': raw, 'torque': torque,
+                        'native_torque': float(-np.cross(current[top], raw[top])[:, 2].sum())})
     energy_limit = 1e-7 * mu * R**2 * full_mesh.height_m + 1e-4 * abs(full_state['energy_J'])
     force_limit = 1e-7 * mu * R**2 + 1e-4 * abs(full_force)
     scale_ratios = ({'force_bottom_scale_one': abs(bottom_force - full_force) / force_limit,

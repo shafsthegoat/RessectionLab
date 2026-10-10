@@ -1,0 +1,59 @@
+--- preserved-v1/mechanics_hbe_v5_fitted_confirmation.py
++++ reviewed-v2/mechanics_hbe_v5_fitted_confirmation.py
+@@ -151,7 +151,7 @@
+                  and pa.full_mesh.fingerprint==pb.full_mesh.fingerprint
+                  and pa.mapping_sha256==pb.mapping_sha256,'same paired native/full geometry')
+             reductions['reconstructed_full'].update(a,b,pa.full_mesh.rest_nodes_m)
+-            na=[dict(row,current=row['native_current'],raw=row['native_raw']) for row in (a,b)]
++            na=[dict(row,current=row['native_current'],raw=row['native_raw'],torque=row['native_torque']) for row in (a,b)]
+             reductions['native'].update(*na,pa.native_mesh.rest_nodes_m)
+         for stream in (reference,fitted):
+             try:next(stream)
+@@ -258,12 +258,16 @@
+         'physical_validation_pass':None,'full_native_fine_equivalence_claim':False}
+ 
+ 
+-def checked_predictions(references,numerical):
+-    from scripts.mechanics_hbe_branch_calibration_v3 import predictions, checked_reference, TORSION
++def require_confirmations(numerical):
+     need(numerical.get('passed') is True and numerical.get('mu_Pa')==MU
+          and numerical.get('fixed_fit_sha256')==FIT_SHA
+          and set(numerical.get('branches',{}))==set(AXIAL)
+          and all(row.get('passed') is True for row in numerical['branches'].values()),'both fitted checks must pass')
++
++
++def checked_predictions(references,numerical):
++    from scripts.mechanics_hbe_branch_calibration_v3 import predictions, checked_reference, TORSION
++    require_confirmations(numerical)
+     need(set(references)==set(TORSION),'two original torsion predictions')
+     for branch,row in references.items():checked_reference(branch,row)
+     return predictions(references,SCALE)
+@@ -317,13 +321,15 @@
+ 
+ def finish(root,declaration,release_binding,out,numerical,executions):
+     from scripts import mechanics_hbe_branch_calibration_v3 as v3
++    require_confirmations(numerical)
+     fit,old_ledger=fixed_fit(root,declaration)
+     study=read_binding(root,{'path':v3.DECLARATION_PATH,'sha256':v3.DECLARATION_SHA256})
+     registry=v3.Registry(root)
+     references=qualify_torsion(root,study,registry)
+     prediction=checked_predictions(references,numerical)
+     prediction_sha=exclusive_json(out/'predictions.json',prediction)
+-    numeric_sha=exclusive_json(out/'numerical.json',numerical,maximum=4*1024**2)
++    numeric_sha=sha(canonical(numerical))
++    read_binding(root,{'path':str((out/'numerical.json').relative_to(root)),'sha256':numeric_sha},maximum=4*1024**2)
+     registry.verify_all()
+     freeze={'schema':'hbe-v5-fixed-parameter-prediction-freeze-v1','release':release_binding,
+         'declaration':{'path':DECLARATION,'sha256':DECLARATION_SHA256},
+--- preserved-v1/mechanics_hbe_v5_frame.py
++++ reviewed-v2/mechanics_hbe_v5_frame.py
+@@ -253,7 +253,8 @@
+         full_top = np.asarray(full_mesh._top)
+         torque = float(-np.cross(full_current[full_top], full_raw[full_top])[:, 2].sum())
+         primitive_sink({'index': step, 'current': full_current, 'raw': full_raw,
+-                        'native_current': current, 'native_raw': raw, 'torque': torque})
++                        'native_current': current, 'native_raw': raw, 'torque': torque,
++                        'native_torque': float(-np.cross(current[top], raw[top])[:, 2].sum())})
+     energy_limit = 1e-7 * mu * R**2 * full_mesh.height_m + 1e-4 * abs(full_state['energy_J'])
+     force_limit = 1e-7 * mu * R**2 + 1e-4 * abs(full_force)
+     scale_ratios = ({'force_bottom_scale_one': abs(bottom_force - full_force) / force_limit,

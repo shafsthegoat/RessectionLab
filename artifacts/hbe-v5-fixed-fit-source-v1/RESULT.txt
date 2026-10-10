@@ -1,0 +1,24 @@
+Source evidence for the fixed-fit HBE continuation; no execution release here.
+
+The false release is byte-identical SHA928f1bf6a006b121c7180d89100628522c6f81eef8b60ff99b70a322cad40b17.
+The independent source review is byte-identical SHA688a4e9d6177fc2563bce2b3c1f9a224b9caa9eab4e8073c5b800ee6ffa6799a.
+The reviewed six-file source index is SHA9955fb2a6d54703b7f45da6d060c4b03fba4223c764220fbfe9b1fb1a459dc48.
+Root's canonical generated test log records 94 passing tests in 5.04 s.
+Independent evidence records 45 generated controls, six complete-stream parity
+cases and four refusals; the test-only portability delta passed separately.
+
+REVIEWED-RUN-RECIPE.txt is an unchanged copy of the root-reviewed recipe.
+ROOT-COMMANDS.txt gives the separate root release creation and actual canonical
+launcher command for the next isolated slot after scan decode/learning rollout.
+No true release, output attempt, solver call or scientific input access was made
+while preparing this artifact. The sole runtime lock is inside false-release.json.
+
+negative-v1 retains the original source index and complete two-file repair diff
+for the native torque label error. This source-review failure must not disappear
+when the repaired implementation is used. Source/review indices preserve original
+build paths and hashes; copied-evidence.json maps exact local artifact copies.
+
+The accepted scalar remains mu=715.361571139082 Pa. Poor descriptive axial fit
+remains unchanged (normalized RMSE about0.372 compression and2.842 tension).
+Two numerical fitted confirmations, then prereveal simulated torsion prediction
+freeze, are prospective. No patient material or surgical-tool-force claim.

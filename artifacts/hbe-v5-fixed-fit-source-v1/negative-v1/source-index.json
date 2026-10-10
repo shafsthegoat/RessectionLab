@@ -1,0 +1,48 @@
+{
+  "execution_released": false,
+  "false_release_sha256": "9ddeb6627e8111ad02406bccc5a9821d2c06cadf697d0bd24907ef9e2fefb698",
+  "files": [
+    {
+      "path": "manifests/experiments/hbe-01-03-v5-fixed-fit-continuation-v1.json",
+      "previous_sha256": null,
+      "sha256": "083b9eac91dcc26353243fbb3c03ed4b3d9e6ddbb373337d55322d747bc8ff68",
+      "staged": "build/hbe-v5-fixed-fit-continuation-v1/stage/manifests/experiments/hbe-01-03-v5-fixed-fit-continuation-v1.json"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_fitted_confirmation.py",
+      "previous_sha256": null,
+      "sha256": "917f664de706172b8e9e51a4221c0ede28b15a8b69a0dcaebfbed7cf7ddc969b",
+      "staged": "build/hbe-v5-fixed-fit-continuation-v1/stage/scripts/mechanics_hbe_v5_fitted_confirmation.py"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_fitted_confirmation_experiment.py",
+      "previous_sha256": null,
+      "sha256": "baf1322dfc9e8b53e759cea2250bd4d1cfeac2d592bdf3b980b8372f45ad95fc",
+      "staged": "build/hbe-v5-fixed-fit-continuation-v1/stage/scripts/mechanics_hbe_v5_fitted_confirmation_experiment.py"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_frame.py",
+      "previous_sha256": "8431c7ae293befdf75bbccc54ce3481ddbd2e42b70daf1b6f826be96bf68e0d9",
+      "sha256": "28001ad2307bdf008761739e8c7ca037934b77622b5e7c5f7bae6cce56fa4b6f",
+      "staged": "build/hbe-v5-fixed-fit-continuation-v1/stage/scripts/mechanics_hbe_v5_frame.py"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_stream.py",
+      "previous_sha256": "a353ca0d96d1c31b80302ce3239796e622b1b6adc15c97bf318ffb9246c3b70a",
+      "sha256": "b96ea74e0906cc69914712e7ea08a4196e24571a2549041347a4633829b75457",
+      "staged": "build/hbe-v5-fixed-fit-continuation-v1/stage/scripts/mechanics_hbe_v5_stream.py"
+    },
+    {
+      "path": "tests/test_hbe_v5_fixed_fit.py",
+      "previous_sha256": null,
+      "sha256": "3739ca3554b6081361643a4960ab9a8791ee7701a404b71fc2d897fd531a11a6",
+      "staged": "build/hbe-v5-fixed-fit-continuation-v1/stage/tests/test_hbe_v5_fixed_fit.py"
+    }
+  ],
+  "fit_calls": 0,
+  "measured_member_reads": 0,
+  "native_calls": 0,
+  "schema": "hbe-v5-fixed-fit-source-package-v1",
+  "source_patch_sha256": "1fc9cbbb0b86ac07c0f8b7bcf1623e3cc2f345866ab773d4eabcfb57cfbd23de",
+  "tests": "generated only"
+}

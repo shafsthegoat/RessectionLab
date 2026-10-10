@@ -1,0 +1,60 @@
+Source candidate independently reviewed GO. No executing release.
+
+The fixed fitted value is 715.361571139082 Pa from fit b6b23a29… and accepted
+publication f94c0cc4…. The poor axial calibration result is preserved. Nothing
+here upgrades it to physical validation, donor transfer or patient/tool mechanics.
+
+Four source files implement the minimum continuation: the existing v5 frame
+checker and complete-stream evaluator gain narrow internal streaming/actual-mu
+entrypoints, and a new fixed-fit core plus owned launcher consume them. The
+original public reference entrypoint still refuses mu != 1000; a generated
+regression reproduces its original output. The fixed-fit entrypoint requires
+the accepted fit hash/value. Neither old v3 axial coordinates nor a fresh fit is
+used. There is no measured-member reader or held-out evaluation call.
+
+Two sequential native calls are possible only after a future exact root release:
+compression N36/S120 and tension N24/S120, identical geometry and v5 schedules.
+Only c1, K and minimum residual change in already-adapted decks, checked by the
+existing ordered XML helper. Reference/fitted primitive streams run in lockstep;
+all native and reconstructed-full numerical gates and the unchanged scale
+reductions must pass. Exact reference readout reproduction is required.
+
+Only then are the original positive/negative N12/S120 simulated torsion curves
+scaled and frozen. Their original mesh/step/scale, native execution and source
+archive predicates are retained; original failed aggregate history remains.
+The new freeze links the accepted fit ledger, source roles and native receipts.
+It does not authorize measured torque access, extrapolation or schedule repair.
+
+The parent reuses supervise_stage and OwnedStage, exclusive attempt directories,
+source-only cold imports, cleanup failure refusal, exact output inventory and
+publication rechecks. False release has 44 source hashes and the existing
+323-file Python runtime closure. It is unlaunchable without a separate committed
+source/review-bound root release. Cold fake-checkout source preflight and explicit
+false execution refusal passed, with no specimen output copied/read.
+
+Generated controls: 33 passed, under one second, one numerical thread, 20-second
+ceiling. Actual Popen, acquired/output payload opens and network were blocked in
+the numerical fixture process. The two initial collection failures and invented
+XML-fixture failure are preserved in controls-initial/second/third.txt; corrected
+final controls pass. No actual fit body, model response member, native primitive,
+solver run, fitted confirmation, torque prediction execution or refit occurred.
+
+V2 preserves the reviewed V1 source and its discovered native-torque labeling
+defect. The repair computes native top torque separately, and the native scale
+reduction explicitly uses it. Two nonzero-couple controls distinguish native
+and reconstructed-full torque. Failed numerical reductions are persisted before
+the pass guard; the freeze authenticates the saved numerical bytes. A generated
+fake complete launcher path covers preparation, both native-stage stubs, readout
+and publication without creating any child. A late output mutation is rejected.
+
+Preparation sources are frozen by source-index.json. Root is sole tracked writer.
+
+Independent review: build/hbe-v5-fixed-fit-independent-v1/REPORT.txt,
+SHA256 228152f8faae9175196deb6e6bcc11b54b88565de0e093f741f773daad6225ad.
+45 generated controls passed in 0.95 seconds, with 568 snapshots unchanged;
+six old/new complete stream JSONs and four refusals were identical. A separate
+one-test canonical-path portability check passed with HBE_SOURCE_ROOT unset.
+Review release binding: source-review.json SHA256
+688a4e9d6177fc2563bce2b3c1f9a224b9caa9eab4e8073c5b800ee6ffa6799a.
+It binds false release 928f1bf6a006b121c7180d89100628522c6f81eef8b60ff99b70a322cad40b17
+and final source index 9955fb2a6d54703b7f45da6d060c4b03fba4223c764220fbfe9b1fb1a459dc48.

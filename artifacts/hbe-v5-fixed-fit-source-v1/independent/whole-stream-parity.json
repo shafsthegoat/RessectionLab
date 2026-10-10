@@ -1,0 +1,56 @@
+[
+  {
+    "branch": "compression",
+    "half": false,
+    "steps": 60,
+    "whole_json_equal": true,
+    "result_sha256": "63bbabc04bb4bf0e967e623f748c52d3cebe26247cbeacd9fc326420eadf232a",
+    "frames": 61,
+    "numerical_passed": true
+  },
+  {
+    "branch": "compression",
+    "half": true,
+    "steps": 60,
+    "whole_json_equal": true,
+    "result_sha256": "20e49acc52d8b3651a525cc8a05faf5a5a803db55c9bc88e03ea9641ec30028a",
+    "frames": 61,
+    "numerical_passed": true
+  },
+  {
+    "branch": "compression",
+    "half": true,
+    "steps": 120,
+    "whole_json_equal": true,
+    "result_sha256": "d3406576b205b52ecede6470d109b9a7cefcaa4c9a3710512ea7e76e03a5e454",
+    "frames": 121,
+    "numerical_passed": true
+  },
+  {
+    "branch": "tension",
+    "half": false,
+    "steps": 60,
+    "whole_json_equal": true,
+    "result_sha256": "3858bb1790894996b6ed3e5d8214a6f89d4347000ab4161bc585d00cb91d2976",
+    "frames": 61,
+    "numerical_passed": true
+  },
+  {
+    "branch": "tension",
+    "half": true,
+    "steps": 60,
+    "whole_json_equal": true,
+    "result_sha256": "9a53657cfcda32b5a6ec779459db0379c25aa6598c51e8ac14d64f1baf528e23",
+    "frames": 61,
+    "numerical_passed": true
+  },
+  {
+    "branch": "tension",
+    "half": true,
+    "steps": 120,
+    "whole_json_equal": true,
+    "result_sha256": "5005e019285577191028f11e127ad853b1b3e38c8ed5100d8963ffec7f03797c",
+    "frames": 121,
+    "numerical_passed": true
+  }
+]

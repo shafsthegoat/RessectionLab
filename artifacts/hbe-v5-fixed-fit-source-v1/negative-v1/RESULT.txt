@@ -1,0 +1,10 @@
+Preserved source-review negative, not a failed specimen experiment.
+V1 native ScaleReduction substituted native current/reaction arrays but retained
+the full reconstructed torque. V2 computes native top torque separately and
+selects it for the native reduction. Unchanged ScaleReduction formulas/limits.
+The complete two-file V1-to-V2 source diff is retained here; the original V1
+index pins the historical source files and disabled candidate. Original build
+files remain untouched. Independent REPORT.txt and generated controls bind the
+finding and its repair. Generated nonzero-couple controls demonstrate distinct
+native/full torques and refusal of a native-only torque scale mismatch.
+No actual specimen output or measured response was read to find or repair this.

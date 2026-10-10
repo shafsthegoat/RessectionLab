@@ -1,0 +1,98 @@
+Independent fixed-fit continuation source review
+
+Decision: GO for the exact separately indexed source candidate, not execution.
+Final candidate index: 9955fb2a6d54703b7f45da6d060c4b03fba4223c764220fbfe9b1fb1a459dc48.
+False release: 928f1bf6a006b121c7180d89100628522c6f81eef8b60ff99b70a322cad40b17.
+The false release remains false. Root must promote exact sources and separately
+bind the resulting commit, this source-review JSON and the unchanged false
+template before any native continuation. No actual fit, response member, native
+primitive, model, patient input or solver was opened or run by this review.
+
+The scoped implementation reuses the accepted fixed scalar 715.361571139082 Pa
+and fit SHA b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a.
+It authenticates the existing fit publication and ledger, preserves original
+DEVELOPMENT roles and poor calibration result, and does not call a member reader
+or estimator. Both compression N36/S120 and tension N24/S120 confirmations must
+pass before the original N12/S120 positive/negative simulated torsion predictions
+can be scaled and frozen. No measured torque or held-out access is admitted.
+The original failed aggregate/source/execution history remains bound.
+
+Numerical review
+The already adapted reference decks can change only c1, K and the mu-dependent
+minimum residual. Reference and fitted streams are paired for exactly 121
+states, with geometry/mapping fingerprints checked. Native and reconstructed
+full numerical gates and the existing ScaleReduction equations/limits are
+retained. Accepted reference readouts must reproduce exactly apart from their
+origin metadata. The public mu=1000 reference entrypoint still rejects fitted
+material; the separate fitted path requires the exact fixed fit and scalar.
+
+One concrete V1 defect was found and repaired in preserved V2: native reduction
+replaced positions/reactions but inherited full reconstructed torque. V2 emits
+native top torque independently and selects it for the native reduction. Two
+generated nonzero-couple controls show that the torques differ and that a native
+torque-only scale error fails despite a zero reconstructed torque error. No
+ScaleReduction threshold/formula changed. Completed failed numerical reductions
+are now saved before the pass guard; prediction/freeze publication remains closed.
+Parser exceptions still preserve stage/raw evidence without a numerical result.
+
+Execution and publication review
+The launcher uses bounded regular nonblocking/no-follow reads, exact byte hashes
+before compile/import, isolated no-site/no-cache Python, exact source/runtime
+closure, exclusive attempt reservation and the existing owned-child supervisor.
+One prepare child, two sequential native children, and one readout child are
+the only stages. Clean containment, zero exit, reaping, no fallback/errors and
+unchanged source/runtime/input/output bindings are required for success.
+The exact output inventory is checked before/after terminal and publication;
+late mutation produces a durable failure marker, invalidating any earlier
+publication. Original fit publication/ledger are not overwritten.
+
+Declared limits are one attempt/no retry, 3600 s total with 10 s cleanup reserve,
+60 s preparation, compression 2100 s, tension 420 s, readout/freeze 600 s,
+3 GiB sampled child process-group RSS and 2 GiB aggregate new output. Branch
+active-output caps are 1536 MiB/512 MiB. These are admission/resource limits,
+not evidence of actual runtime feasibility: stage sampling is not a real-time
+guarantee and parent imports/hashing use deadline checkpoints rather than a
+separate hard wall/RSS supervisor. Final success requires remaining within the
+declared lifecycle. Root owns the eventual serialized execution and monitoring.
+
+Independent generated evidence
+One bounded generated-only run passed 45 controls (33 author, 12 independent)
+in pytest 0.95 s, measured harness 0.9820519171189517 s, observed self peak RSS
+84,295,680 bytes. All 568 pre/post source/evidence snapshots were identical.
+The installed audit hook denied process/network and actual outputs/data/sources
+opens; no such accesses were attempted. No native, estimator or replay of
+actual streams occurred. The author cold copied-source preflight/refusal is
+inspected corroboration, not independently rerun.
+
+Six independent whole-result comparisons cover each axial branch with full S60,
+reconstructed-half S60 and reconstructed-half S120 tiny generated meshes. Every
+parsed JSON result exactly matches the unmodified canonical frame/stream source;
+all six numerical results pass. Four malformed stream controls also preserve
+the exact result/refusal. The remaining independent controls test failed-worker
+numerical persistence before freeze and unchanged public material admission.
+Author controls include the complete fake four-stage launcher wiring, late
+prediction mutation refusal, numerical/geometry/order failures, strict deck
+delta, torque distinction and clean-child predicates. No child was launched.
+
+Scope limits
+This is source promotion and generated compatibility evidence only. Actual
+fitted confirmations, resource feasibility and any later prediction freeze
+remain pending a separate root release. Numerical scale agreement cannot repair
+the poor observed calibration fit or establish physical validity, donor transfer,
+patient material fields or surgical force accuracy. Fine full-native equivalence
+is explicitly unclaimed; the torsion predictions retain their original grid.
+
+The final test-only portability delta adds an ordinary canonical path fallback
+when HBE_SOURCE_ROOT is unset. The affected control passed separately (1 test,
+0.14 s; harness 0.1658275828231126 s, peak 53,690,368 bytes). All six staged
+source/declaration/test hashes remained unchanged during that check. The four
+executing sources, declaration and false release did not change from the full
+45-control run. Original reviewed test/index/patch are preserved under candidate
+prior-reviewed/. Canonical patch applicability also passed without applying it.
+The portable test after promotion does not by itself establish historical parity;
+the six saved independent comparisons against pre-promotion sources do that.
+
+Reproduction and exact final pins are in source-review.json, review-index.json,
+run_review.py, controls-result.json and source-snapshot-before.json. The full
+45-control run binds its then-current candidate index and test bytes explicitly;
+portability-check.json records the later test-only delta, not another full run.

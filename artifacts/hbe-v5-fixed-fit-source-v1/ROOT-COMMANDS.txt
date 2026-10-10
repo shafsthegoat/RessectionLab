@@ -1,0 +1,98 @@
+Root-only next slot. This recipe has not created a true release or run a solver.
+
+First promote this artifact directory unchanged to:
+  artifacts/hbe-v5-fixed-fit-source-v1/
+Commit the six already promoted source/declaration/test files and this artifact.
+The saved canonical test log reports 94 passing generated tests in 5.04 s.
+The independent source review reports 45 controls plus the separate portability
+check; it is source approval, not authorization or evidence of a native run.
+
+After scan decoding and the learning rollout are terminal, root reserves the
+next isolated resource slot. Do not overlap this one-shot continuation with a
+model, learner, scan decode or other native solve. Root should check host memory
+and disk eligibility immediately before launch. The existing launcher retains
+its own exact source/runtime/fixity/free-space checks and child caps.
+
+From the repository root, create the separate release with this exact metadata
+command. It reads only source/evidence/Git blobs, changes only the three permitted
+fields, and refuses an existing destination. The committed HEAD is discovered
+at invocation, rather than guessing the imminent commit. Runtime lock appears
+once in false-release.json; it is not duplicated as a separate artifact.
+
+/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 -I -S -B - <<'PY'
+from pathlib import Path
+import hashlib, json, os, re, shlex, subprocess
+root = Path.cwd().resolve()
+artifact = Path('artifacts/hbe-v5-fixed-fit-source-v1')
+digest = lambda raw: hashlib.sha256(raw).hexdigest()
+canonical = lambda obj: (json.dumps(obj, sort_keys=True, indent=2, allow_nan=False)+'\n').encode()
+def exact(path, expected):
+    path = root/path
+    if path.is_symlink() or not path.is_file() or path.stat().st_size > 1024*1024:
+        raise ValueError('Expected small regular metadata/source: '+str(path))
+    raw = path.read_bytes()
+    if digest(raw) != expected: raise ValueError('Digest mismatch: '+str(path))
+    return raw
+false_sha = '928f1bf6a006b121c7180d89100628522c6f81eef8b60ff99b70a322cad40b17'
+review_sha = '688a4e9d6177fc2563bce2b3c1f9a224b9caa9eab4e8073c5b800ee6ffa6799a'
+release = json.loads(exact(artifact/'false-release.json', false_sha))
+review_path = artifact/'independent/source-review.json'
+review = json.loads(exact(review_path, review_sha))
+if (release['execution_released'] is not False or release['source_commit'] is not None
+    or release['independent_source_review'] is not None or digest(canonical(release)) != false_sha
+    or review['decision'] != 'GO' or review['release_candidate_sha256'] != false_sha):
+    raise ValueError('False candidate/review mismatch')
+head = subprocess.check_output(['/usr/bin/git','rev-parse','HEAD'], cwd=root, text=True, timeout=5).strip()
+if not re.fullmatch('[a-f0-9]{40}', head): raise ValueError('Expected committed Git source')
+bindings = dict(release['source_bindings'])
+bindings[release['declaration']['path']] = release['declaration']['sha256']
+bindings['tests/test_hbe_v5_fixed_fit.py'] = '68a87d4d3c5b073a4e08c9d00f9cc36fb47727a3c6b680edb16d6f551a5b5921'
+bindings[str(artifact/'false-release.json')] = false_sha
+bindings[str(review_path)] = review_sha
+for relative, expected in bindings.items():
+    exact(Path(relative), expected)
+    blob = subprocess.check_output(['/usr/bin/git','cat-file','blob',head+':'+relative], cwd=root, timeout=5)
+    if digest(blob) != expected: raise ValueError('Committed source differs: '+relative)
+release.update(execution_released=True, source_commit=head,
+    independent_source_review={'path':str(review_path),'sha256':review_sha})
+raw = canonical(release)
+normalized = dict(release, execution_released=False, source_commit=None, independent_source_review=None)
+if digest(canonical(normalized)) != false_sha: raise ValueError('Unexpected release delta')
+out = root/'build/hbe-v5-fixed-fit-root-release-v1.json'
+if (root/release['output_directory']).exists(): raise ValueError('One-shot attempt already exists')
+cache = root/'build'/('hbe-v5-fixed-fit-root-cache-'+head[:12])
+if cache.exists() or cache.is_symlink(): raise ValueError('Cache prefix must remain absent')
+fd = os.open(out, os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW, 0o600)
+with os.fdopen(fd,'wb') as stream:
+    stream.write(raw); stream.flush(); os.fsync(stream.fileno())
+fd = os.open(out.parent, os.O_RDONLY)
+try: os.fsync(fd)
+finally: os.close(fd)
+argv = [release['runtime']['executable'],'-I','-S','-B','-X','pycache_prefix='+str(cache),
+    'scripts/mechanics_hbe_v5_fitted_confirmation_experiment.py','--root',str(root),
+    '--release',str(out.relative_to(root)),'--release-sha256',digest(raw)]
+print(json.dumps({'release':str(out.relative_to(root)),'sha256':digest(raw),'source_commit':head}))
+print('SOURCE-ONLY PREFLIGHT: '+shlex.join(argv))
+print('ONE ROOT EXECUTION IN RESERVED SLOT: '+shlex.join(argv+['--execute']))
+PY
+
+Run the printed source-only preflight first. Then root launches the printed
+--execute command ONCE in the reserved slot, retaining its console/owned session.
+The parent command is the already reviewed canonical launcher, not this recipe.
+No automatic retry or alternate path follows a failure. Do not reuse the fresh
+cache path if it has been created; stop and inspect rather than bypass admission.
+
+Limits remain 3600 s total including 10 s cleanup reserve; preparation 60 s,
+compression 2100 s, tension 420 s, readout/freeze 600 s; 3 GiB sampled child-group
+RSS, one numerical thread, 2 GiB aggregate new files, branch caps 1.5 GiB/512 MiB.
+These are limits, not a feasibility guarantee. Parent hashing/import checks use
+deadlines; child resource monitoring is sampled, not a hard host-wide RSS bound.
+The existing launcher requires output allowance plus 2 GiB free disk.
+
+Expected only output attempt:
+  outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01
+Accept success only with completed_fitted_confirmation_and_prediction_freeze,
+accepted publication, unchanged exact output inventory, clean reaped stages and
+no failure marker. Retain every failure and partial output. No refit, member read,
+held-out torque access, or new physical-validity claim follows from this command.
+Root should request saved-result review before any separate torque release.

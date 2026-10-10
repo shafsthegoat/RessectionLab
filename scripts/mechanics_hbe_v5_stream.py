@@ -70,6 +70,28 @@ def evaluate_stream(contract, mesh_manifest, node_lines, element_lines, solver_l
     A returned numerical pass is *not* physical validation. The caller must
     authenticate the contract, source, mesh and outputs before native use.
     """
+    stream = evaluated_frames(contract, mesh_manifest, node_lines, element_lines, solver_lines,
+                              reconstruction=reconstruction)
+    while True:
+        try: next(stream)
+        except StopIteration as complete: return complete.value
+
+
+def evaluated_frames(contract, mesh_manifest, node_lines, element_lines, solver_lines,
+                     *, reconstruction=None, fitted=False, primitive_caps=None):
+    """Stream-local primitives; caller may reduce each yielded state then discard it.
+
+    Reference numerical result is byte-equivalent before provenance to the old
+    evaluate_stream. No raw state list is retained. fitted is not an IO release.
+    """
+    if fitted:
+        if contract.get('fixed_fit_sha256') != frame.FIXED_FIT_SHA256 or contract.get('mu_Pa') != frame.FIXED_MU_PA:
+            raise ValueError('Fixed fitted contract required')
+    elif contract.get('mu_Pa') != 1000.:
+        raise ValueError('Pinned reference material required')
+    primitive_caps = primitive_caps or {'nodes': MAX_PRIMITIVE_BYTES, 'elements': MAX_PRIMITIVE_BYTES}
+    if set(primitive_caps) != {'nodes', 'elements'} or any(type(v) is not int or not 0 < v <= MAX_PRIMITIVE_BYTES for v in primitive_caps.values()):
+        raise ValueError('Bounded primitive caps required')
     steps = contract.get('steps')
     times = contract.get('times')
     if (type(steps) is not int or steps not in (60, 120)
@@ -88,11 +110,11 @@ def evaluate_stream(contract, mesh_manifest, node_lines, element_lines, solver_l
     nodes = _iter_data_records(node_lines, expected_times=times,
                                item_count=len(mesh.rest_nodes_m), field_count=9,
                                record_name='mechanics_nodes_si',
-                               maximum_bytes=MAX_PRIMITIVE_BYTES, maximum_items=MAX_ITEMS)
+                               maximum_bytes=primitive_caps['nodes'], maximum_items=MAX_ITEMS)
     elements = _iter_data_records(element_lines, expected_times=times,
                                   item_count=mesh.element_count, field_count=8,
                                   record_name='mechanics_elements_si',
-                                  maximum_bytes=MAX_PRIMITIVE_BYTES, maximum_items=MAX_ITEMS)
+                                  maximum_bytes=primitive_caps['elements'], maximum_items=MAX_ITEMS)
     frames = []
     maximum_ratios = {}
     for index, (node, element) in enumerate(itertools.zip_longest(nodes, elements)):
@@ -100,7 +122,12 @@ def evaluate_stream(contract, mesh_manifest, node_lines, element_lines, solver_l
             raise ValueError('Complete synchronized native primitive streams required')
         if node['step'] != index or element['step'] != index:
             raise ValueError('Native primitive frame order differs')
-        result = frame.evaluate_prepared_frame(contract, prepared, node, element)
+        primitive = []
+        if fitted:
+            result = frame.evaluate_fitted_frame(contract, prepared, node, element, primitive_sink=primitive.append)
+        else:
+            result = frame._evaluate_prepared_frame(contract, prepared, node, element, primitive_sink=primitive.append)
+        yield primitive[0], prepared
         for key, value in result['criteria_ratios'].items():
             if not math.isfinite(value):
                 raise ValueError('Nonfinite numerical criterion')

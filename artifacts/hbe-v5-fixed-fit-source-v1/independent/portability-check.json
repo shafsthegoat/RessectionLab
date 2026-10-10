@@ -1,0 +1,17 @@
+{
+  "HBE_SOURCE_ROOT_present": false,
+  "actual_payload_reads": 0,
+  "blocked_access_attempts": [],
+  "elapsed_seconds": 0.1658275828231126,
+  "executing_sources_declaration_and_false_release_unchanged": true,
+  "exit_code": 0,
+  "final_candidate_index_sha256": "9955fb2a6d54703b7f45da6d060c4b03fba4223c764220fbfe9b1fb1a459dc48",
+  "fit_calls": 0,
+  "historical_parity_rerun": false,
+  "native_calls": 0,
+  "peak_self_rss_bytes": 53690368,
+  "source_snapshots_unchanged": 6,
+  "tests_changed": [
+    "tests/test_hbe_v5_fixed_fit.py"
+  ]
+}

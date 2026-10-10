@@ -1,0 +1,1458 @@
+--- /dev/null
++++ b/manifests/experiments/hbe-01-03-v5-fixed-fit-continuation-v1.json
+@@ -0,0 +1,347 @@
++{
++  "authorized_measured_members": [],
++  "backend_profile": {
++    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
++    "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
++  },
++  "caps": {
++    "attempts": 1,
++    "automatic_retry": false,
++    "branch_output_bytes": {
++      "compression": 1610612736,
++      "tension": 536870912
++    },
++    "cleanup_reserve_seconds": 10,
++    "fit_calls": 0,
++    "held_out_member_reads": 0,
++    "measured_member_reads": 0,
++    "mesher_calls": 0,
++    "native_calls": 2,
++    "native_seconds": {
++      "compression": 2100,
++      "tension": 420
++    },
++    "new_output_bytes": 2147483648,
++    "preparation_seconds": 60,
++    "readout_seconds": 600,
++    "sampled_group_rss_bytes": 3221225472,
++    "threads": 1,
++    "total_seconds": 3600
++  },
++  "donor_role": "DEVELOPMENT",
++  "evidence": {
++    "comparison": {
++      "path": "build/hbe-v5-native-twelve-row-comparison-v1/attempt-02/comparison.json",
++      "sha256": "6d3772eac38f8a1a210082a89cb00955f4a9b0d5304700fd0168711b9de99c12"
++    },
++    "comparison_receipt": {
++      "path": "build/hbe-v5-native-twelve-row-comparison-v1/attempt-02/receipt.json",
++      "sha256": "441626ffb3226a6683319b55e3c4e04912bc72805c2408effb39cfe5e8da3577"
++    },
++    "independent_audit": {
++      "path": "build/hbe-v5-native-verdict-independent-v1/audit-result.json",
++      "sha256": "97d9eaec96f65e9fa9fea49ec624bba2908e6dceae6a59a8357cb4b6fd8e6f2d"
++    },
++    "independent_report": {
++      "path": "build/hbe-v5-native-verdict-independent-v1/REPORT.txt",
++      "sha256": "372929bff40fc5546320ff0aed11054ebd44ddac2a656decdb0369037d137bac"
++    },
++    "independent_summary": {
++      "path": "build/hbe-v5-native-verdict-independent-v1/result-summary.json",
++      "sha256": "89ab6572891e2739d83ced2a6ee845e9b3eae1c0f9063b7d10fc4acb7edb86f1"
++    },
++    "manifest": {
++      "path": "build/hbe-v5-native-manifest-preparation-v1/actual-input-manifest-accounting-v2.json",
++      "sha256": "4ba15123c7d0482a38576528b64a95d0b44bd7cccbd9851e8701fca1834fe69c"
++    },
++    "protocol": {
++      "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
++      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
++    },
++    "roles": {
++      "path": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
++      "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
++    },
++    "v3_access_ledger": {
++      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/execution/access.jsonl",
++      "sha256": "d71d7eed76c189fae7486dd09d7c73e5c83cb261aa0d405f9eb62a151522e288"
++    },
++    "v3_failure_review": {
++      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/failure-audit/verification.json",
++      "sha256": "7931db57fb5332df48a6b18fdcee540d1eefdd9107c2214ac233d5039f9cbc39"
++    },
++    "v3_publication": {
++      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/execution/publication-check.json",
++      "sha256": "f97dcb6534bafd6f4f203c9c90b18ffd6fb1797694939472848a7e70d9f18f2c"
++    },
++    "v3_result": {
++      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/execution/result.json",
++      "sha256": "595e5ca281de701264df5f9a7fa00e204048db976bddfbc2d1c7f05a899c1f3c"
++    },
++    "v3_state": {
++      "path": "artifacts/hbe-branch-calibration-v3-failure-v1/execution/state.json",
++      "sha256": "34d80d1f8a7ca773b55ea1b626ca1b86927e0aed935b0ab948638643a454f7bd"
++    },
++    "v4": {
++      "path": "manifests/experiments/hbe-01-03-branch-calibration-v4.json",
++      "sha256": "85ed9ca8cb1a9048e885f27424678e97f20cb6dd2e2cbb5cfd6dccfe6dafb52b"
++    },
++    "v5": {
++      "path": "manifests/experiments/hbe-01-03-branch-calibration-v5.json",
++      "sha256": "50c5dbc8c45279245a8dcd9b92d16e9499bad6bc61c6dfbd5b5e307af49a71ce"
++    }
++  },
++  "fixed_fit": {
++    "fit": {
++      "path": "build/hbe-v5-axial-calibration-v1/attempt-01/fit.json",
++      "sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a"
++    },
++    "fit_body_read_by_this_preparation": false,
++    "independent_audit": {
++      "path": "build/hbe-v5-axial-calibration-result-independent-v1/audit-result.json",
++      "sha256": "f4e4388c25c011d8bfd14e1583d30d7afb80605b1388588da1be909ba34aec5e"
++    },
++    "independent_report": {
++      "path": "build/hbe-v5-axial-calibration-result-independent-v1/REPORT.txt",
++      "sha256": "8bd605a27a3933c6bf2fd00453413c081b8ca0137e01cebf01bf97beca5927b4"
++    },
++    "publication": {
++      "path": "build/hbe-v5-axial-calibration-v1/attempt-01/publication.json",
++      "sha256": "f94c0cc4eca474878f166a60066d5f4a8afd0c08d38b32537d95bbbdce399b49"
++    },
++    "refit_permitted": false
++  },
++  "geometry": {
++    "axis_origin_m": [
++      0,
++      0,
++      0
++    ],
++    "axis_unit_vector": [
++      0,
++      0,
++      1
++    ],
++    "height_m": 0.00489159,
++    "height_provenance": "creator_test_inferred",
++    "measurement_uncertainty": null,
++    "radius_m": 0.004,
++    "specimen": "HBE_01_03"
++  },
++  "inherited_source_bindings": {
++    "launchers/hbe_v5_ordinal9_continuation_v1.py": "8ea24abd2918bc36c289979e4ff15e1d7b0b5614d0ddfe14820254a7d81478b4",
++    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
++    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
++    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
++    "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
++    "scripts/mechanics_hbe_branch_calibration_v3.py": "66e36a45406e9a8770ce271527c855b2bde1ad0315c3476b0fd210ed5d50bf7d",
++    "scripts/mechanics_hbe_branch_calibration_v3_readout.py": "631cac92f1e78264dcc00a58ce34d5619044874684f890dfa082a1fb0c96e205",
++    "scripts/mechanics_hbe_branch_calibration_v4.py": "2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc",
++    "scripts/mechanics_hbe_branch_calibration_v5.py": "1f183287e65d008095f004815a1a2344a74f71d935cedddc7388d42d1dbdc016",
++    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
++    "scripts/mechanics_hbe_experiment.py": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
++    "scripts/mechanics_hbe_halfheight_global.py": "a56c3dd761ed8bab5f57ff9051ce5305743ae2c85e4e91d5398cd0995a0de2d0",
++    "scripts/mechanics_hbe_halfheight_global_experiment.py": "0ea6c6d2026cb32bf470967f5e7b9f08f0ffbdbefeb6fa7426e79e6c37bc91f2",
++    "scripts/mechanics_hbe_halfheight_global_n36.py": "61024ff1b3c874a870bf83d5af84ee37e566ea37ed0f967d52fd3a6ca92b360d",
++    "scripts/mechanics_hbe_halfheight_global_n36_experiment.py": "21d5a26d6edc0075d9bd362968ea1edb15ac5e6c5f4d09123c654376ae3f2e80",
++    "scripts/mechanics_hbe_halfheight_global_n36_readout.py": "d7384416693efb5d8383a4cff06ca2581e678abc7ce630b01f99894d09fb7a27",
++    "scripts/mechanics_hbe_halfheight_global_n36_temporal.py": "5af7a1d9beac06412c9a20c91fb6cf8d3834c2b8eb91c3053541f8d0256a9c93",
++    "scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py": "550d8300ebcdef18778026d1150bcd32feca4991bd94a57406a360234800ede1",
++    "scripts/mechanics_hbe_halfheight_global_readout.py": "5a6b3af67f20c8a0f9630e17c5b5c139d6e6528b7999e81f92f38cae5b722343",
++    "scripts/mechanics_hbe_halfheight_mesh.py": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084",
++    "scripts/mechanics_hbe_halfheight_readout.py": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
++    "scripts/mechanics_hbe_halfheight_spatial.py": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da",
++    "scripts/mechanics_hbe_halfheight_spatial_experiment.py": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd",
++    "scripts/mechanics_hbe_halfheight_spatial_readout.py": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c",
++    "scripts/mechanics_hbe_halfheight_temporal_common.py": "6e8824f65a370648ee231d4ac90222455a8a6c0ac8a58d513d48f71e625dd2b5",
++    "scripts/mechanics_hbe_mesh.py": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414",
++    "scripts/mechanics_hbe_outputs.py": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
++    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
++    "scripts/mechanics_hbe_readout.py": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
++    "scripts/mechanics_hbe_v5_axial_calibration.py": "20fa7411cb2a194e62c9fc0b4b4b1aa3f4e10f28cba4ac758c4dc190a47fd6be",
++    "scripts/mechanics_hbe_v5_axial_calibration_experiment.py": "5bceed4d7457d178ab4d2be918546bd6e0fac00e36f271fba75b6b63bf6b76fb",
++    "scripts/mechanics_hbe_v5_comparison.py": "895b294ecfc83847e0484f39ac0b9e1a5cda57a4853324a435c238e4c6649fb9",
++    "scripts/mechanics_hbe_v5_n12_admission.py": "29bbd47b1df7bd08efbca9cea13172e9ba220dec8dd9dbc22915285dffb9b70a",
++    "scripts/mechanics_hbe_v5_n12_saved_replay.py": "c35c3f122599c6415607d12c77c70e5c29070256b9bd2c5b13440513773a020d",
++    "scripts/mechanics_hbe_v5_n8_canary.py": "2e5ac4072f1a8c1f0c8eb9aeb3df6e1fe2e5d6d1732bdc97d74fa3e401536f1a",
++    "scripts/mechanics_hbe_v5_n8_one_shot.py": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0",
++    "scripts/mechanics_hbe_v5_native_comparison.py": "31fc3d66b401cf0c793e498292e8d44335e1e7d5ff11a3b1839238e86e6fc69e",
++    "scripts/mechanics_hbe_v5_remaining_one_shot.py": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b",
++    "scripts/mechanics_hbe_v5_source_bindings.py": "1ab6ee2c46aa93304efffdc88f3e4b6d57ade0a083d0907c3294708b6d093208",
++    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
++  },
++  "material": {
++    "K_over_mu": 49.666666666666664,
++    "c1_over_mu": 2,
++    "c2_through_c6": 0,
++    "energy": "mu/2*(Ibar1-3)+K/4*(J^2-1-2*ln(J))",
++    "febio_type": "Ogden",
++    "fitted_parameters": [
++      "positive_mu_scale_only"
++    ],
++    "initial_poisson_ratio_assumption": 0.49,
++    "m1": 2,
++    "m2_through_m6": 2,
++    "pressure_model": 1,
++    "reference_mu_Pa": 1000.0,
++    "sweeps": false
++  },
++  "physical_validation_pass": null,
++  "poor_axial_fit_preserved": true,
++  "references": {
++    "compression": {
++      "N": 36,
++      "coordinate": {
++        "coordinate_sha256": "881665105d646fbc47a116b0e6bcad7d4ad79f26d43b386c8f297e3b4624fa2e",
++        "endpoint_decimal_literal_m": "-0.00073726",
++        "endpoint_float64_hex": "-0x1.82895cb58d960p-11",
++        "member_sha256": "bada734592217ce8134317cbe929223be0436e2d6010a7df4f249b6678ba3a43",
++        "row_count": 30
++      },
++      "fitted_run_id": "compression:N36:S120:fitted",
++      "frames": 121,
++      "mesh_ancestry": {
++        "full_mesh_sha256": "6ba012cc042ec0a537a6c61283d444488ccf69de0bc9c385f319a827d69c8e74",
++        "half_elements": 34992,
++        "half_mesh_sha256": "8e7ad0e636151e007ab9fd8af0d043abfcf889b960c53e726766126691c3c075",
++        "half_nodes": 39610,
++        "identity_origin": "v4_declaration_hash_bound_not_geometry_payload",
++        "reconstruction_sha256": "9e0265495f47ece2d315746f79f40e71f717e0720f6f1621fa9c7f9d2d9eba8f"
++      },
++      "primitive_bindings": {
++        "adapted_deck": {
++          "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/06-compression-N36-S120-reference/attempt-01/specimen.feb",
++          "sha256": "343676258c2c49d91f78eba55c5a41185f59975ba5d1708213f9ccaa751b8f4b"
++        },
++        "elements": {
++          "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/06-compression-N36-S120-reference/attempt-01/elements.log",
++          "sha256": "aab982ce41d0ec60e61f91361edb0698b9502fc51ca3ccfaead179058200b044"
++        },
++        "mesh": {
++          "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/mesh.json",
++          "sha256": "8e7ad0e636151e007ab9fd8af0d043abfcf889b960c53e726766126691c3c075"
++        },
++        "nodes": {
++          "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/06-compression-N36-S120-reference/attempt-01/nodes.log",
++          "sha256": "5c48a10b03e9ef367e4e9d9440fd133012d34f9e82327140697252fea84de3fe"
++        },
++        "solver": {
++          "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/06-compression-N36-S120-reference/attempt-01/solver.log",
++          "sha256": "dacb200a19bb9af6c29868fa2d45c7dc631e2bed1de050d96fe77023bb5c155e"
++        },
++        "source_deck": {
++          "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/cases/compression-N36-S60-reference/skyline.feb",
++          "sha256": "93e02fff10bb680c7f60b93161a217bd47146b4d0dba34316003510df1008847"
++        }
++      },
++      "readout": {
++        "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/06-compression-N36-S120-reference/attempt-01/readout.json",
++        "sha256": "14ca49981b0bf68df1a2a1d75489b9e8966c017635d3c4ba20a794e64a8eb18b"
++      },
++      "receipt": {
++        "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/06-compression-N36-S120-reference/attempt-01/receipt.json",
++        "run_id": "compression:N36:S120:reference",
++        "sha256": "a1357ecb8cd129e10923d2d3a0837b62d892bf8b4bdb7d83ccb12cb7b6d041f4"
++      },
++      "reference_budget_observation": {
++        "interpretation": "metadata_only_reference_observation_not_prediction_of_fitted_runtime",
++        "native_seconds": 919.1162175000645,
++        "output_bytes": 1303446022,
++        "primitive_bytes": {
++          "elements.log": 517883002,
++          "nodes.log": 774953355
++        },
++        "readout_seconds": 78.89316879096441,
++        "sampled_native_rss_bytes": 1935507456
++      },
++      "reference_run_id": "compression:N36:S120:reference",
++      "representation": "lower_half_reconstructed",
++      "steps": 120,
++      "work_order": {
++        "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/06-compression-N36-S120-reference/attempt-01/readout-work-order.json",
++        "sha256": "b957d6f53a84a06b6a7b0b780a5b8335876335eae4a7a677d0442e4472c62701"
++      }
++    },
++    "tension": {
++      "N": 24,
++      "coordinate": {
++        "coordinate_sha256": "a1690a5cff8fb75fc619984074ba53dbb044f3ea6894f72f698cb36b1edc0731",
++        "endpoint_decimal_literal_m": "0.0007360099999999",
++        "endpoint_float64_hex": "0x1.81e1970946411p-11",
++        "member_sha256": "750bd806e5fc18083e157a31cb019456bd80ef779cf97d5f1d298e52c9d96fc8",
++        "row_count": 30
++      },
++      "fitted_run_id": "tension:N24:S120:fitted",
++      "frames": 121,
++      "mesh_ancestry": {
++        "full_mesh_sha256": "61f27d63cdcb6328bcbe94e05ac1802a162d613cadd01610caf649a16f30643b",
++        "half_elements": 10368,
++        "half_mesh_sha256": "f8a934c3e035fbf478583719b901490f72478579b72d0b4d8b0a6dea1a3b99a2",
++        "half_nodes": 12439,
++        "identity_origin": "v4_declaration_hash_bound_not_geometry_payload",
++        "reconstruction_sha256": "ec2240c6cb47f345c5efc0659ea13678e7b7b7a6a1ee9f8db9d73313f8f98cd7"
++      },
++      "primitive_bindings": {
++        "adapted_deck": {
++          "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/11-tension-N24-S120-reference/attempt-01/specimen.feb",
++          "sha256": "7e7f6c2f0f8b08bc71320aa5a6e59b862fa4ea10936eb88b174dc23628c0c813"
++        },
++        "elements": {
++          "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/11-tension-N24-S120-reference/attempt-01/elements.log",
++          "sha256": "e6be47c91d0ce8b5fdab9916e480aa0efabee79ae3ca4867b7565fd70835c490"
++        },
++        "mesh": {
++          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/mesh.json",
++          "sha256": "f8a934c3e035fbf478583719b901490f72478579b72d0b4d8b0a6dea1a3b99a2"
++        },
++        "nodes": {
++          "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/11-tension-N24-S120-reference/attempt-01/nodes.log",
++          "sha256": "12e9b1d636a2bf7270b91cff98709d62027eb190e7d457ef3606f5c3220f653b"
++        },
++        "solver": {
++          "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/11-tension-N24-S120-reference/attempt-01/solver.log",
++          "sha256": "60fcff00ebc0ebccea72d4763fe99a5567e870afce6dcab2dada87f91373ebf1"
++        },
++        "source_deck": {
++          "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/cases/tension-N24-S60-reference/skyline.feb",
++          "sha256": "0b66988b46c7d9af1286b24a646ba6279975f17c9bda9d3c78a7b242bdc670c5"
++        }
++      },
++      "readout": {
++        "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/11-tension-N24-S120-reference/attempt-01/readout.json",
++        "sha256": "20d64b4952aee288c3fa43597e019f1456a7e31b1ea9189a9f43a51d8500b3e1"
++      },
++      "receipt": {
++        "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/11-tension-N24-S120-reference/attempt-01/receipt.json",
++        "run_id": "tension:N24:S120:reference",
++        "sha256": "c108581d6afa8cd7edd41341deb76cf9ef40780ed0ff183235c6fe1f5d457b9c"
++      },
++      "reference_budget_observation": {
++        "interpretation": "metadata_only_reference_observation_not_prediction_of_fitted_runtime",
++        "native_seconds": 128.87279891688377,
++        "output_bytes": 389636763,
++        "primitive_bytes": {
++          "elements.log": 148391233,
++          "nodes.log": 236550875
++        },
++        "readout_seconds": 24.129254084080458,
++        "sampled_native_rss_bytes": 495583232
++      },
++      "reference_run_id": "tension:N24:S120:reference",
++      "representation": "lower_half_reconstructed",
++      "steps": 120,
++      "work_order": {
++        "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/11-tension-N24-S120-reference/attempt-01/readout-work-order.json",
++        "sha256": "fa3f2016870ab37b18c53ebd2b0e05805e955cc11068c9a9edbaa70090862809"
++      }
++    }
++  },
++  "role_changes": false,
++  "runtime_identity": {
++    "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
++    "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
++  },
++  "schema": "hbe-v5-fixed-fit-declaration-v1",
++  "specimen": "HBE_01_03",
++  "withheld_torque_schema_inspected": false
++}
+--- /dev/null
++++ b/scripts/mechanics_hbe_v5_fitted_confirmation.py
+@@ -0,0 +1,361 @@
++"""Fixed HBE specimen fit: numerical axial confirmation, then prediction freeze.
++
++No CSV/archive reader, fitter, mesher or held-out evaluator is called. A separate
++root release and owned-stage launcher are required. Poor axial fit remains an
++unchanged result; numerical scale agreement is not physical validation.
++"""
++from __future__ import annotations
++from contextlib import ExitStack
++from copy import deepcopy
++import hashlib
++import json
++import math
++import os
++from pathlib import Path
++import time
++import xml.etree.ElementTree as ET
++
++from scripts import mechanics_hbe_v5_axial_calibration as authority
++
++need, canonical, sha = authority.need, authority.canonical, authority.sha
++local, read_binding, exclusive_json = authority.local, authority.read_binding, authority.exclusive_json
++CORE = 'scripts/mechanics_hbe_v5_fitted_confirmation.py'
++RUNNER = 'scripts/mechanics_hbe_v5_fitted_confirmation_experiment.py'
++DECLARATION = 'manifests/experiments/hbe-01-03-v5-fixed-fit-continuation-v1.json'
++DECLARATION_SHA256 = '083b9eac91dcc26353243fbb3c03ed4b3d9e6ddbb373337d55322d747bc8ff68'
++OUTPUT = 'outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01'
++FIT_SHA = 'b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a'
++MU, SCALE = 715.361571139082, 0.715361571139082
++AXIAL = ('compression', 'tension')
++DONE = 'completed_fitted_confirmation_and_prediction_freeze'
++CAPS = {'total_seconds':3600,'cleanup_reserve_seconds':10,'preparation_seconds':60,
++        'native_seconds':{'compression':2100,'tension':420},'readout_seconds':600,
++        'sampled_group_rss_bytes':3*1024**3,'new_output_bytes':2*1024**3,
++        'branch_output_bytes':{'compression':1536*1024**2,'tension':512*1024**2},
++        'threads':1,'attempts':1,'native_calls':2,'fit_calls':0,'mesher_calls':0,
++        'measured_member_reads':0,'held_out_member_reads':0,'automatic_retry':False}
++SOURCE_ADDITIONS = {CORE,RUNNER,'scripts/mechanics_hbe_v5_frame.py','scripts/mechanics_hbe_v5_stream.py'}
++
++
++def check_release(root, binding, *, executing):
++    release=read_binding(root,binding,maximum=1024**2)
++    need(set(release)=={'schema','execution_released','declaration','output_directory','caps',
++         'source_commit','source_bindings','runtime','independent_source_review'},'release schema')
++    need(release['schema']=='hbe-v5-fixed-fit-release-v1' and type(release['execution_released']) is bool,
++         'explicit fixed-fit release')
++    need(not executing or release['execution_released'],'separate root release required')
++    need(release['declaration']=={'path':DECLARATION,'sha256':DECLARATION_SHA256}
++         and release['output_directory']==OUTPUT and release['caps']==CAPS,'frozen scope/caps')
++    declaration=read_binding(root,release['declaration'])
++    need(declaration['caps']==CAPS and declaration['fixed_fit']['fit']['sha256']==FIT_SHA,
++         'fixed declaration')
++    if executing:
++        import re
++        need(isinstance(release['source_commit'],str) and re.fullmatch('[a-f0-9]{40}',release['source_commit']),
++             'committed source required')
++        review=read_binding(root,release['independent_source_review'])
++        candidate={**release,'execution_released':False,'source_commit':None,'independent_source_review':None}
++        need(review.get('schema')=='hbe-v5-fixed-fit-source-review-v1' and review.get('decision')=='GO'
++             and review.get('release_candidate_sha256')==sha(canonical(candidate)),'exact independent review')
++    return release,declaration
++
++
++def verify_sources(root,release,declaration,*,committed):
++    """Reuse exact source/runtime validation with this phase's source names."""
++    expected=declaration['inherited_source_bindings']
++    need(set(release['source_bindings'])==set(expected)|SOURCE_ADDITIONS,'source closure')
++    need(all(release['source_bindings'][p]==d for p,d in expected.items()),'inherited source drift')
++    # Existing implementation accepts its own two names; they are already in
++    # inherited closure. Pass all the phase's sources as inherited, unchanged.
++    proxy={'inherited_source_bindings':dict(release['source_bindings'])}
++    authority.verify_sources(root,release,proxy,committed=committed)
++
++
++audit_loaded=authority.audit_loaded
++
++
++def fixed_fit(root,declaration):
++    """Authenticate accepted ten-file terminal, not a new estimator invocation."""
++    fixed=declaration['fixed_fit'];publication=read_binding(root,fixed['publication'])
++    parent=local(root,fixed['publication']['path']).parent
++    names={'intent.json','intent-receipt.json','receipt.json','readout-console.txt','state.json',
++           'access.jsonl','fit.json','calibration-metrics.json','terminal.json'}
++    need(publication.get('accepted') is True and set(publication['outputs'])==names
++         and {p.name for p in parent.iterdir()}==names|{'publication.json'},'exact accepted fit publication')
++    for name,row in publication['outputs'].items():
++        # Empty console is a legitimate bound output; shared launcher reader
++        # performs one bounded regular read and authenticates those same bytes.
++        from scripts.mechanics_hbe_v5_axial_calibration_experiment import regular_bytes
++        raw=regular_bytes(parent/name,16*1024**2,expected=row['sha256'],allow_empty=name=='readout-console.txt')
++        need(len(raw)==row['bytes'],'accepted fit size changed')
++    need(publication['outputs']['fit.json']['sha256']==FIT_SHA,'fixed fit identity')
++    fit=read_binding(root,fixed['fit']);need(fit['mu_Pa']==MU and fit['scale']==SCALE,'fixed scalar changed')
++    state=read_binding(root,{'path':str((parent/'state.json').relative_to(root)),
++                            'sha256':publication['outputs']['state.json']['sha256']})
++    need(state['status']==authority.DONE and state['fit_calls']==1 and state['native_calls']==0
++         and state['held_out_member_reads']==0 and state['freeze_saved'] is False,'fixed fit terminal')
++    for key in ('independent_audit','independent_report'):read_binding(root,fixed[key],decode=False)
++    return fit,{'path':str((parent/'access.jsonl').relative_to(root)),
++                'sha256':publication['outputs']['access.jsonl']['sha256']}
++
++
++def admit_evidence(root,declaration):
++    axial=read_binding(root,{'path':authority.DECLARATION,'sha256':authority.DECLARATION_SHA256})
++    records,_=authority.admit_evidence(root,axial)
++    fit,ledger=fixed_fit(root,declaration)
++    need(records['protocol']['roles']==declaration['evidence']['roles'],'unchanged specimen roles')
++    return records,fit,ledger
++
++
++def fitted_deck(reference):
++    from scripts.mechanics_hbe_experiment import check_fitted_deck
++    tree=ET.fromstring(reference)
++    for path,value in [('Material/material/c1',2*MU),('Material/material/k',149*MU/3),
++                       ('Control/solver/min_residual',(1e-10*MU*.004**2)**2)]:
++        matches=tree.findall(path);need(len(matches)==1,'exact scalar node');matches[0].text=repr(value)
++    text=ET.tostring(tree,encoding='unicode',xml_declaration=True)+'\n'
++    check_fitted_deck(reference,text,MU)
++    return text.encode()
++
++
++def fitted_contract(reference, deck_sha):
++    need(reference['mu_Pa']==1000. and reference['steps']==120
++         and reference['native_domain']=='lower_half_reconstructed','exact v5 axial reference')
++    branch=reference['branch'];need(branch in AXIAL,'axial branch only')
++    endpoint={'compression':-0.00073726,'tension':0.0007360099999999}[branch]
++    need(reference['full_coordinates_m'][-1].hex()==endpoint.hex()
++         and tuple(reference['times'])==tuple(i/120 for i in range(121)), 'frozen 120-step endpoint')
++    return dict(reference,run_id=reference['run_id'].replace(':reference',':fitted'),mu_Pa=MU,
++                adapted_deck_sha256=deck_sha,fixed_fit_sha256=FIT_SHA)
++
++
++def primitive_caps(branch):
++    need(branch in AXIAL,'axial branch')
++    return {'nodes':(768 if branch=='compression' else 256)*1024**2,
++            'elements':(512 if branch=='compression' else 256)*1024**2}
++
++
++def paired_streams(reference, fitted, *, deadline):
++    """Consume two evaluated generators in lockstep; retain no primitive history."""
++    from scripts.mechanics_hbe_branch_calibration_v3_readout import ScaleReduction
++    reductions={key:ScaleReduction(MU) for key in ('native','reconstructed_full')};reports=[]
++    try:
++        for index in range(121):
++            need(time.monotonic()<deadline,'paired stream deadline')
++            pair=[]
++            for stream in (reference,fitted):
++                try:pair.append(next(stream))
++                except StopIteration as error:raise ValueError('incomplete paired state') from error
++            (a,pa),(b,pb)=pair
++            need(pa.native_mesh.fingerprint==pb.native_mesh.fingerprint
++                 and pa.full_mesh.fingerprint==pb.full_mesh.fingerprint
++                 and pa.mapping_sha256==pb.mapping_sha256,'same paired native/full geometry')
++            reductions['reconstructed_full'].update(a,b,pa.full_mesh.rest_nodes_m)
++            na=[dict(row,current=row['native_current'],raw=row['native_raw'],torque=row['native_torque']) for row in (a,b)]
++            reductions['native'].update(*na,pa.native_mesh.rest_nodes_m)
++        for stream in (reference,fitted):
++            try:next(stream)
++            except StopIteration as complete:reports.append(complete.value)
++            else:raise ValueError('extra paired state')
++    finally:
++        reference.close();fitted.close()
++    metrics={key:r.finish() for key,r in reductions.items()}
++    passed=all(r['numerical_passed'] for r in reports) and all(
++        item['actual']<=item['limit'] for group in metrics.values() for item in group.values())
++    return reports,metrics,passed
++
++
++def load_reference(root,declaration,branch):
++    from scripts import mechanics_hbe_v5_frame as frame
++    from scripts import mechanics_hbe_v5_stream as stream
++    q=declaration['references'][branch];bindings=q['primitive_bindings']
++    old=read_binding(root,bindings['source_deck'],maximum=32*1024**2,decode=False)
++    adapted=read_binding(root,bindings['adapted_deck'],maximum=32*1024**2,decode=False)
++    order=read_binding(root,q['work_order'])
++    study=read_binding(root,declaration['evidence']['v5'],decode=False)
++    prior_raw=read_binding(root,declaration['evidence']['v4'],decode=False)
++    # Work order is the exact already accepted reader invocation.
++    contract=frame.verified_schedule(study,prior_raw,q['reference_run_id'],old,adapted,order['adapter_receipt'])
++    mesh=read_binding(root,bindings['mesh'],maximum=32*1024**2)
++    reconstruction=stream._bound_reconstruction(root,json.loads(prior_raw),
++        {'N':q['N']},bindings['mesh'],mesh)
++    return contract,mesh,reconstruction,adapted
++
++
++def prepare(root,declaration,out):
++    started=time.monotonic();admit_evidence(root,declaration)
++    rows={}
++    for branch in AXIAL:
++        q=declaration['references'][branch]
++        contract,_,_,adapted=load_reference(root,declaration,branch)
++        target=out/branch;target.mkdir(exist_ok=False)
++        raw=fitted_deck(adapted);path=target/'specimen.feb'
++        fd=os.open(path,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
++        with os.fdopen(fd,'wb') as f:f.write(raw);f.flush();os.fsync(f.fileno())
++        rows[branch]={'contract':fitted_contract(contract,sha(raw)),
++            'deck':{'path':str(path.relative_to(root)),'sha256':sha(raw)},'reference':q['readout']}
++    need(time.monotonic()-started<CAPS['preparation_seconds'],'combined preparation budget')
++    return rows
++
++
++def bound_hash(root,binding,maximum):
++    from scripts.mechanics_hbe_v5_n8_one_shot import file_hash
++    need(file_hash(local(root,binding['path']),maximum=maximum)==binding['sha256'],'primitive digest changed')
++
++
++def check_execution(root,declaration,branch,prepared,execution):
++    from scripts import mechanics_hbe_backend as backend
++    q=declaration['references'][branch];supervision=execution['supervision']
++    stage=supervision['receipt']['native_stage'];cleanup=supervision['cleanup']
++    command=[str(root/backend.PREFIX/'install/bin/febio4'),'-noconfig','-no_title','-i','specimen.feb','-o','solver.log']
++    need(execution['run_id']==q['fitted_run_id'] and execution['fixed_fit_sha256']==FIT_SHA
++         and execution['deck']==prepared['deck'] and execution['command']==stage['command']==command
++         and execution['runtime_identity']==declaration['runtime_identity'],'fitted execution identity')
++    need(stage['status']=='completed_within_caps' and stage['exit_code']==0 and stage['kill_reason'] is None
++         and 0 <= stage['elapsed_seconds'] < stage['wall_cap_seconds'] <= CAPS['native_seconds'][branch]
++         and stage['sampled_process_group_rss_cap_bytes']==CAPS['sampled_group_rss_bytes']
++         and stage['active_output_cap_bytes']==CAPS['branch_output_bytes'][branch]
++         and cleanup['contained'] and cleanup['direct_child_reaped'] and cleanup['exit_code']==0
++         and not cleanup['fallback_used'] and cleanup['remaining_members']==[] and cleanup['errors']==[],
++         'successful owned fitted invocation required')
++    need(set(execution['primitive_bindings'])=={'nodes','elements','solver'},'exact fitted primitive keys')
++    for key,binding in execution['primitive_bindings'].items():
++        need(binding['path']==OUTPUT+'/'+branch+'/'+key+'.log','fitted primitive path')
++    read_binding(root,prepared['deck'],maximum=32*1024**2,decode=False)
++
++
++def read_pairs(root,declaration,prepared,executions,*,deadline):
++    from scripts import mechanics_hbe_v5_stream as stream
++    rows={}
++    for branch in AXIAL:
++        q=declaration['references'][branch];ref=q['primitive_bindings'];new=executions[branch]['primitive_bindings']
++        check_execution(root,declaration,branch,prepared[branch],executions[branch])
++        contract,mesh,reconstruction,_=load_reference(root,declaration,branch)
++        expected=fitted_contract(contract,prepared[branch]['deck']['sha256'])
++        need(canonical(prepared[branch]['contract'])==canonical(expected),'prepared fitted contract changed')
++        caps={**primitive_caps(branch),'solver':16*1024**2}
++        for bindings in (ref,new):
++            for key,cap in caps.items():bound_hash(root,bindings[key],cap)
++        with ExitStack() as stack:
++            generators=[]
++            for bindings,c,fitted in ((ref,contract,False),(new,expected,True)):
++                opened={key:stack.enter_context(local(root,bindings[key]['path']).open(encoding='utf-8',errors='strict')) for key in caps}
++                generators.append(stream.evaluated_frames(c,mesh,opened['nodes'],opened['elements'],opened['solver'],
++                    reconstruction=reconstruction,fitted=fitted,primitive_caps=primitive_caps(branch)))
++            reports,metrics,passed=paired_streams(*generators,deadline=deadline)
++        saved=read_binding(root,q['readout'])
++        need({k:v for k,v in reports[0].items() if k!='provenance'}==
++             {k:v for k,v in saved.items() if k!='provenance'},'reference stream differs from accepted readout')
++        for bindings in (ref,new):
++            for key,cap in caps.items():bound_hash(root,bindings[key],cap)
++        reports[1]['provenance'].update(native_output_observed=True,generated_fixture_only=False,
++            source_binding_checked=True,output_origin='owned_fixed_fit_native',
++            fixed_fit_sha256=FIT_SHA,primitive_bindings=new)
++        rows[branch]={'execution':executions[branch],'reference':q['readout'],'readout':reports[1],
++                      'scale':metrics,'passed':passed}
++    return {'schema':'hbe-v5-fixed-fit-paired-evidence-v1','mu_Pa':MU,'fixed_fit_sha256':FIT_SHA,
++        'branches':rows,'passed':all(row['passed'] for row in rows.values()),'states_per_native_run':121,
++        'physical_validation_pass':None,'full_native_fine_equivalence_claim':False}
++
++
++def require_confirmations(numerical):
++    need(numerical.get('passed') is True and numerical.get('mu_Pa')==MU
++         and numerical.get('fixed_fit_sha256')==FIT_SHA
++         and set(numerical.get('branches',{}))==set(AXIAL)
++         and all(row.get('passed') is True for row in numerical['branches'].values()),'both fitted checks must pass')
++
++
++def checked_predictions(references,numerical):
++    from scripts.mechanics_hbe_branch_calibration_v3 import predictions, checked_reference, TORSION
++    require_confirmations(numerical)
++    need(set(references)==set(TORSION),'two original torsion predictions')
++    for branch,row in references.items():checked_reference(branch,row)
++    return predictions(references,SCALE)
++
++
++def qualify_torsion(root,study,registry):
++    """Original v3 torsion predicates, excluding its superseded axial entrypoint."""
++    import tarfile
++    from scripts.mechanics_hbe_branch_calibration_v3 import access, checked_reference, TORSION
++    references={}
++    legacy = registry.bound(study['legacy']['aggregate'])
++    outcome = registry.bound(study['legacy']['outcome'])
++    if not outcome['failed_aggregate_criteria'] or outcome['actual_solver_calls'] != 18:
++        raise ValueError('Original failed aggregate must remain preserved')
++    legacy_release = registry.bound(study['legacy']['release'])
++    if legacy_release['execution']['backend_profile'] != study['backend_profile']:
++        raise ValueError('Original torsion backend differs')
++    original_sources = legacy_release['execution']['source_bindings']
++    original_archive = legacy_release['execution']['source_archive']
++    registry.bound(original_archive,json_value=False)
++    with tarfile.open(access.local_path(root,original_archive['path'])) as bundle:
++        if bundle.pax_headers.get('comment') != legacy_release['source_commit']:
++            raise ValueError('Original torsion archive commit differs')
++        for key,binding in original_sources.items():
++            report_key = 'run_readout' if key == 'readout' else key
++            if report_key in legacy['source_bindings'] and legacy['source_bindings'][report_key] != binding:
++                raise ValueError('Original torsion report/source origin differs')
++            registry.bound(binding,json_value=False)
++            members=[m for m in bundle.getmembers() if m.name=='scripts/'+Path(binding['path']).name]
++            if len(members)!=1 or not members[0].isfile() or members[0].size>1024**2:
++                raise ValueError('Original torsion source member differs')
++            if hashlib.sha256(bundle.extractfile(members[0]).read()).hexdigest()!=binding['sha256']:
++                raise ValueError('Original torsion archived source differs')
++    for branch in TORSION:
++        for group in ('mesh','step'):
++            for metric in legacy[group][branch].values():
++                access._metric_record(metric)
++        q = study['torsion_references'][branch]
++        registry.primitives(branch,q['primitives'])
++        row = registry.bound(q['readout']); checked_reference(branch,row)
++        if legacy['runs'][f'{branch}:N12:S120:reference'] != row:
++            raise ValueError('Original torsion aggregate/readout identity differs')
++        access.verify_run_execution(root, f'{branch}:N12:S120:reference', row,
++                                   study['protocol']['sha256'], expected_backend_profile=study['backend_profile'])
++        registry.bound(q['execution']); references[branch] = row
++    for branch in ('compression','torsion_pos'):
++        for metric in legacy['scale'][branch].values():
++            access._metric_record(metric)
++    return references
++
++
++def finish(root,declaration,release_binding,out,numerical,executions):
++    from scripts import mechanics_hbe_branch_calibration_v3 as v3
++    require_confirmations(numerical)
++    fit,old_ledger=fixed_fit(root,declaration)
++    study=read_binding(root,{'path':v3.DECLARATION_PATH,'sha256':v3.DECLARATION_SHA256})
++    registry=v3.Registry(root)
++    references=qualify_torsion(root,study,registry)
++    prediction=checked_predictions(references,numerical)
++    prediction_sha=exclusive_json(out/'predictions.json',prediction)
++    numeric_sha=sha(canonical(numerical))
++    read_binding(root,{'path':str((out/'numerical.json').relative_to(root)),'sha256':numeric_sha},maximum=4*1024**2)
++    registry.verify_all()
++    freeze={'schema':'hbe-v5-fixed-parameter-prediction-freeze-v1','release':release_binding,
++        'declaration':{'path':DECLARATION,'sha256':DECLARATION_SHA256},
++        'fixed_fit':declaration['fixed_fit'],'original_fit_ledger':old_ledger,
++        'roles':declaration['evidence']['roles'],'protocol':declaration['evidence']['protocol'],
++        'mu_Pa':MU,'scale':SCALE,'refit_calls':0,'native_calls':2,'mesher_calls':0,
++        'predictions':{'path':str((out/'predictions.json').relative_to(root)),'sha256':prediction_sha},
++        'numerical':{'path':str((out/'numerical.json').relative_to(root)),'sha256':numeric_sha},
++        'fitted_executions':executions,'original_torsion_bindings':registry.snapshot(),
++        'measured_member_reads':0,'held_out_member_reads':0,'physical_validation_pass':None,
++        'calibration_quality':'unchanged_poor_within_specimen_fit_not_physical_validation',
++        'patient_tool_mechanics_admitted':False,'held_out_access_released':False}
++    freeze_sha=exclusive_json(out/'freeze.json',freeze,maximum=4*1024**2)
++    event={'phase':'freeze_saved','freeze':{'path':str((out/'freeze.json').relative_to(root)),
++           'sha256':freeze_sha},'previous_fit_ledger':old_ledger,'measured_member_reads':0,'refit_calls':0}
++    exclusive_json(out/'continuation-ledger.json',event)
++    return freeze,event
++
++
++def recheck_fixed_inputs(root,declaration,freeze):
++    """Final fixity of admitted specimen evidence; never reparse response members."""
++    admit_evidence(root,declaration)
++    for branch,q in declaration['references'].items():
++        caps={**primitive_caps(branch),'solver':16*1024**2,'source_deck':32*1024**2,
++              'adapted_deck':32*1024**2,'mesh':32*1024**2}
++        for key,cap in caps.items():bound_hash(root,q['primitive_bindings'][key],cap)
++        for key in ('readout','work_order'):read_binding(root,q[key],decode=False)
++    for item in freeze['original_torsion_bindings']:
++        bound_hash(root,{k:item[k] for k in ('path','sha256')},item['maximum_bytes'])
+--- /dev/null
++++ b/scripts/mechanics_hbe_v5_fitted_confirmation_experiment.py
+@@ -0,0 +1,315 @@
++"""Owned fixed-fit continuation; no root release means no native or response access."""
++from __future__ import annotations
++
++import argparse
++import hashlib
++import importlib.util
++import json
++import os
++from pathlib import Path
++import signal
++import stat
++import sys
++import time
++
++CORE='scripts/mechanics_hbe_v5_fitted_confirmation.py'
++RUNNER='scripts/mechanics_hbe_v5_fitted_confirmation_experiment.py'
++
++
++def regular_bytes(path,maximum,*,expected=None,allow_empty=False):
++    """One bounded stable regular read; FIFO/symlink refusal precedes body access."""
++    path=Path(path)
++    if '..' in path.parts or any(p.is_symlink() for p in (path,*path.parents)):
++        raise ValueError('Linked or escaping input forbidden')
++    fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK)
++    try:
++        before=os.fstat(fd)
++        if not stat.S_ISREG(before.st_mode) or not (0 if allow_empty else 1)<=before.st_size<=maximum:
++            raise ValueError('Bounded regular input required')
++        with os.fdopen(fd,'rb',buffering=0,closefd=False) as stream:raw=stream.read(maximum+1)
++        after=os.fstat(fd)
++        identity=lambda x:(x.st_dev,x.st_ino,x.st_size,x.st_mtime_ns,x.st_ctime_ns)
++        if identity(before)!=identity(after) or identity(after)!=identity(path.lstat()) or len(raw)!=before.st_size:
++            raise ValueError('Input changed while read')
++    finally:os.close(fd)
++    if expected is not None and hashlib.sha256(raw).hexdigest()!=expected:
++        raise ValueError('Input digest differs')
++    return raw
++
++
++def unique_json(raw):
++    def pairs(rows):
++        result={}
++        for key,value in rows:
++            if key in result:raise ValueError('Duplicate JSON key')
++            result[key]=value
++        return result
++    return json.loads(raw,object_pairs_hook=pairs,
++        parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Nonfinite JSON')))
++
++
++def check_cache(root,path):
++    cache=Path(path or '')
++    if (not cache.is_absolute() or '..' in cache.parts or not cache.is_relative_to(root/'build')
++            or cache.exists() or cache.is_symlink()
++            or any(p.is_symlink() for p in cache.parents)):
++        raise ValueError('Fresh absent cache prefix under ignored build required')
++    return cache
++
++
++def bootstrap(root,release_path,release_sha,*,worker):
++    """Verify exact local source before imports; never consult a cached project pyc."""
++    if not (sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode):
++        raise ValueError('Use -I -S -B and a fresh absent -X pycache_prefix')
++    cache=check_cache(root,sys.pycache_prefix)
++    relative=Path(release_path)
++    if relative.is_absolute() or '..' in relative.parts:raise ValueError('Relative release required')
++    raw=regular_bytes(root/relative,1024**2,expected=release_sha)
++    release=unique_json(raw)
++    bindings=release.get('source_bindings')
++    if (type(bindings) is not dict or any(type(bindings.get(name)) is not str
++            or len(bindings[name])!=64 or any(x not in '0123456789abcdef' for x in bindings[name])
++            for name in (CORE,RUNNER))):raise ValueError('Exact executing source hashes required')
++    sources={name:regular_bytes(root/name,1024**2,expected=bindings[name])
++             for name in (CORE,RUNNER)}
++    if any(name not in release['source_bindings'] for name in sources):raise ValueError('Missing executing source binding')
++    if Path(__file__).resolve()!=root/RUNNER:raise ValueError('Canonical runner required')
++    # This core reuses the existing stdlib-only authority module. Authenticate
++    # ALL local sources before making the canonical import root available.
++    for name,digest in bindings.items():
++        relative=Path(name)
++        if (relative.is_absolute() or '..' in relative.parts or relative.parts[0] not in ('scripts','launchers')
++                or relative.suffix!='.py' or type(digest) is not str or len(digest)!=64
++                or any(c not in '0123456789abcdef' for c in digest)):
++            raise ValueError('Exact local source inventory required')
++        regular_bytes(root/relative,1024**2,expected=digest)
++    sys.path.insert(0,str(root))
++    source=sources[CORE]  # Hash and compile the exact same bounded bytes.
++    spec=importlib.util.spec_from_loader('axial_fit_core',loader=None,origin=str(root/CORE))
++    core=importlib.util.module_from_spec(spec);core.__file__=str(root/CORE)
++    exec(compile(source,str(root/CORE),'exec'),core.__dict__)
++    rb={'path':release_path,'sha256':release_sha}
++    checked,declaration=core.check_release(root,rb,executing=worker)
++    core.verify_sources(root,checked,declaration,committed=worker or checked['execution_released'])
++    sites=checked['runtime']['site_packages']
++    if not isinstance(sites,list) or len(sites)!=1:raise ValueError('One pinned site-package root required')
++    site=Path(sites[0])
++    if not site.is_absolute() or not site.is_dir() or site.is_symlink():raise ValueError('Runtime site root')
++    # -S excludes .pth/sitecustomize; only the released directory is added explicitly.
++    sys.path[:0]=[str(root),str(site)]
++    if worker:
++        wanted=root/'build/hbe-v5-fixed-fit-confirmation-v1'/('unused-'+os.environ.get('HBE_CONTINUATION_MODE','')+'-pycache')
++        if cache!=wanted:raise ValueError('Exact worker cache prefix required')
++    return core,rb,checked,declaration
++
++
++def worker(root,core,rb,release,declaration,mode,deadline):
++    if os.getpid()!=os.getpgrp() or mode not in {'prepare','readout'}:
++        raise ValueError('Owned declared worker required')
++    cap=core.CAPS['preparation_seconds' if mode=='prepare' else 'readout_seconds']
++    core.need(time.monotonic()<deadline<=time.monotonic()+cap,'parent-owned deadline')
++    out=core.local(root,core.OUTPUT)
++    intent=core.read_binding(root,{'path':core.OUTPUT+'/intent.json','sha256':os.environ['HBE_CONTINUATION_INTENT_SHA256']})
++    core.need(intent['release']==rb and deadline<=intent['work_deadline'],'exact parent intent')
++    def audit(event,args):
++        if event in {'subprocess.Popen','os.fork','os.forkpty','os.posix_spawn','os.posix_spawnp',
++                     'socket.connect','socket.bind','socket.getaddrinfo'}:
++            raise RuntimeError('Readout/preparation worker cannot spawn or use network')
++        if event=='open' and isinstance(args[0],(str,bytes)):
++            name=os.fsdecode(args[0])
++            if name.endswith(('.csv','.mat')) or '/data/mechanics/' in name or '/data/patients/' in name:
++                raise RuntimeError('No measured member or patient access')
++    sys.addaudithook(audit)
++    if mode=='prepare':
++        from scripts import mechanics_hbe_backend as backend
++        profile=backend.verify_profile(root,declaration['backend_profile'])
++        core.need(profile['runtime_identity']==declaration['runtime_identity'],'fixed native runtime')
++        prepared=core.prepare(root,declaration,out)
++        core.exclusive_json(out/'prepared.json',{'branches':prepared,'runtime':profile['runtime']})
++    else:
++        prepared=core.read_binding(root,{'path':core.OUTPUT+'/prepared.json','sha256':os.environ['HBE_PREPARED_SHA256']})
++        executions=core.read_binding(root,{'path':core.OUTPUT+'/executions.json','sha256':os.environ['HBE_EXECUTIONS_SHA256']})
++        numeric=core.read_pairs(root,declaration,prepared['branches'],executions,deadline=deadline)
++        # Preserve unsuccessful numerical reductions before refusing the freeze.
++        core.exclusive_json(out/'numerical.json',numeric,maximum=4*1024**2)
++        core.need(numeric['passed'],'fitted numerical confirmation failed')
++        core.finish(root,declaration,rb,out,numeric,executions)
++    core.audit_loaded(root,release)
++    core.need(time.monotonic()<deadline,'worker terminal deadline')
++
++
++def snapshot(root,core,out,expected):
++    """Seal a fixed small inventory, streaming hashes of large primitive files."""
++    from scripts import mechanics_hbe_v5_remaining_one_shot as stages
++    from scripts.mechanics_hbe_v5_n8_one_shot import file_hash
++    total=stages.active_bytes(out,core.CAPS['new_output_bytes'])
++    core.need(total<=core.CAPS['new_output_bytes'],'aggregate output cap')
++    actual={str(p.relative_to(out)) for p in out.rglob('*') if p.is_file()}
++    core.need(actual==set(expected),'exact continuation file inventory')
++    result={}
++    for name,cap in sorted(expected.items()):
++        path=core.local(root,str((out/name).relative_to(root)))
++        result[name]={'bytes':path.stat().st_size,'sha256':file_hash(path,maximum=cap)}
++    return result
++
++
++def expected_outputs(core):
++    expected={name:4*1024**2 for name in ('intent.json','prepared.json','executions.json',
++              'numerical.json','predictions.json','freeze.json','continuation-ledger.json')}
++    for stage in ('prepare-stage','readout-stage'):
++        expected.update({stage+'/receipt.json':1024**2,stage+'/readout-console.txt':4*1024**2})
++    for branch in core.AXIAL:
++        expected.update({branch+'/'+name:cap for name,cap in {
++            'specimen.feb':32*1024**2,'nodes.log':core.primitive_caps(branch)['nodes'],
++            'elements.log':core.primitive_caps(branch)['elements'],'solver.log':16*1024**2,
++            'console.txt':16*1024**2,'receipt.json':1024**2}.items()})
++    return expected
++
++
++def require_stage(core,stage,cleanup):
++    core.need(stage['status']=='completed_within_caps' and stage['exit_code']==0
++         and cleanup['contained'] and cleanup['direct_child_reaped']
++         and cleanup['remaining_members']==[] and cleanup['errors']==[]
++         and cleanup['fallback_used'] is False and cleanup['exit_code']==0,'owned stage failed')
++
++
++def execute(root,core,rb,release,declaration,*,started=None):
++    core.need(release['execution_released'] is True,'separate root release required')
++    checked,decl=core.check_release(root,rb,executing=True)
++    core.need(checked==release and decl==declaration,'exact authority')
++    start=time.monotonic() if started is None else started
++    outer=start+core.CAPS['total_seconds'];work_deadline=outer-core.CAPS['cleanup_reserve_seconds']
++    out=core.local(root,core.OUTPUT);out.mkdir(parents=True,exist_ok=False)
++    record={'schema':'hbe-v5-fixed-fit-terminal-v1','status':'reserved','release':rb,
++            'caps':core.CAPS,'native_calls':0,'native_calls_accounting':'attempted','fit_calls':0,'mesher_calls':0,
++            'measured_member_reads':0,'held_out_member_reads':0,'physical_validation_pass':None,'stages':{}}
++    intent={'release':rb,'work_deadline':work_deadline,'caps':core.CAPS,'source_commit':release['source_commit']}
++    intent_sha=core.exclusive_json(out/'intent.json',intent)
++    stop={'requested':False};old={};owner=None
++    def interrupted(signum,frame):stop['requested']=True;raise KeyboardInterrupt('termination requested')
++    for signum in (signal.SIGTERM,signal.SIGINT):old[signum]=signal.signal(signum,interrupted)
++    try:
++        import shutil
++        from scripts import mechanics_hbe_v5_remaining_one_shot as stages
++        from scripts import mechanics_hbe_v5_n8_one_shot as io
++        from scripts import mechanics_hbe_backend as backend
++        from scripts import febio_runtime
++        from launchers.hbe_v5_ordinal9_continuation_v1 import OwnedStage
++        core.need(shutil.disk_usage(out).free>=core.CAPS['new_output_bytes']+2*1024**3,'disk reserve')
++        env=io.private_environment();env['HBE_CONTINUATION_INTENT_SHA256']=intent_sha
++        def recheck():
++            current,current_decl=core.check_release(root,rb,executing=True)
++            core.need(current==release and current_decl==declaration,'authority changed')
++            core.verify_sources(root,release,declaration,committed=False);core.audit_loaded(root,release)
++            core.fixed_fit(root,declaration)
++            check_cache(root,sys.pycache_prefix)
++            for mode in ('prepare','readout'):check_cache(root,root/'build/hbe-v5-fixed-fit-confirmation-v1'/('unused-'+mode+'-pycache'))
++            core.need(not stop['requested'] and time.monotonic()<work_deadline,'phase work deadline')
++        def observed(pgid,*,timeout_seconds):
++            core.need(stages.active_bytes(out,core.CAPS['new_output_bytes'])<=core.CAPS['new_output_bytes'],
++                      'aggregate output budget')
++            return febio_runtime.process_group_rss(pgid,timeout_seconds=timeout_seconds)
++        def run(name,kind,command,directory,seconds,environment,output_cap):
++            nonlocal owner
++            recheck();owner=OwnedStage();receipt={'phase':name,'release':rb}
++            wall=min(seconds,work_deadline-time.monotonic());core.need(wall>0,'remaining stage budget')
++            try:
++                stage=stages.supervise_stage(kind,command,directory,receipt,cwd=(directory if kind=='native' else root),
++                    environment=environment,wall_cap=wall,rss_cap=core.CAPS['sampled_group_rss_bytes'],
++                    output_cap=output_cap,rss_observer=observed,popen=owner)
++            finally:
++                cleanup=owner.cleanup(febio_runtime.process_group_rss,min(outer,time.monotonic()+5))
++                record['stages'][name]={'receipt':receipt,'cleanup':cleanup}
++            require_stage(core,stage,cleanup);owner=None
++            return receipt
++        def pyworker(mode,seconds):
++            directory=out/(mode+'-stage');directory.mkdir(exist_ok=False)
++            deadline=min(time.monotonic()+seconds,work_deadline)
++            env['HBE_CONTINUATION_MODE']=mode
++            command=[sys.executable,'-I','-S','-B','-X','pycache_prefix='+str(root/'build/hbe-v5-fixed-fit-confirmation-v1'/('unused-'+mode+'-pycache')),
++                str(root/RUNNER),'--root',str(root),'--release',rb['path'],'--release-sha256',rb['sha256'],
++                '--worker',mode,'--deadline',repr(deadline)]
++            return run(mode,'readout',command,directory,min(seconds,deadline-time.monotonic()),env,16*1024**2)
++        pyworker('prepare',core.CAPS['preparation_seconds'])
++        prepared_raw=regular_bytes(out/'prepared.json',4*1024**2);prepared=unique_json(prepared_raw)
++        env['HBE_PREPARED_SHA256']=core.sha(prepared_raw)
++        executions={}
++        for branch in core.AXIAL:
++            # Recheck the exact runtime and exact prepared deck before EACH native call.
++            profile=backend.verify_runtime_binding(root,declaration['runtime_identity'])
++            core.need(profile['runtime']==prepared['runtime'],'prepared native identity')
++            directory=out/branch;binding=prepared['branches'][branch]['deck']
++            core.read_binding(root,binding,maximum=32*1024**2,decode=False)
++            command=[profile['runtime']['executable'],'-noconfig','-no_title','-i','specimen.feb','-o','solver.log']
++            record['native_calls']+=1
++            receipt=run(branch,'native',command,directory,core.CAPS['native_seconds'][branch],env,
++                        core.CAPS['branch_output_bytes'][branch])
++            stages._check_backend(directory)
++            bindings={}
++            for key,cap in {**core.primitive_caps(branch),'solver':16*1024**2}.items():
++                path=directory/(key+'.log');bindings[key]={'path':str(path.relative_to(root)),
++                    'sha256':io.file_hash(path,maximum=cap)}
++            executions[branch]={'run_id':prepared['branches'][branch]['contract']['run_id'],
++                'fixed_fit_sha256':core.FIT_SHA,'deck':binding,'command':command,
++                'primitive_bindings':bindings,'supervision':record['stages'][branch],
++                'runtime_identity':declaration['runtime_identity']}
++        env['HBE_EXECUTIONS_SHA256']=core.exclusive_json(out/'executions.json',executions)
++        pyworker('readout',core.CAPS['readout_seconds'])
++        core.need(record['native_calls']==2,'exactly two completed native confirmations')
++        expected=expected_outputs(core);sealed=snapshot(root,core,out,expected)
++        freeze=core.read_binding(root,{'path':core.OUTPUT+'/freeze.json','sha256':sealed['freeze.json']['sha256']})
++        core.need(freeze['mu_Pa']==core.MU and freeze['fixed_fit']==declaration['fixed_fit']
++             and freeze['fitted_executions']==executions and freeze['held_out_access_released'] is False,
++             'fixed freeze semantic mismatch')
++        core.recheck_fixed_inputs(root,declaration,freeze)
++        recheck();core.need(snapshot(root,core,out,expected)==sealed,'output changed before terminal')
++        record.update(status=core.DONE,freeze={'path':core.OUTPUT+'/freeze.json','sha256':sealed['freeze.json']['sha256']},
++                      output_inventory=sealed,elapsed_before_terminal_seconds=time.monotonic()-start)
++        terminal_sha=core.exclusive_json(out/'terminal.json',record)
++        expected['terminal.json']=1024**2
++        sealed['terminal.json']={'bytes':(out/'terminal.json').stat().st_size,'sha256':terminal_sha}
++        core.need(snapshot(root,core,out,expected)==sealed,'persisted terminal changed')
++        recheck()
++        publication={'schema':'hbe-v5-fixed-fit-publication-v1','accepted':True,'release':rb,
++                     'outputs':sealed,'physical_validation_pass':None,'elapsed_seconds':time.monotonic()-start}
++        digest=core.exclusive_json(out/'publication.json',publication)
++        expected['publication.json']=1024**2;sealed['publication.json']={'bytes':(out/'publication.json').stat().st_size,'sha256':digest}
++        core.recheck_fixed_inputs(root,declaration,freeze)
++        recheck();core.need(snapshot(root,core,out,expected)==sealed,'publication bytes changed')
++        core.need(time.monotonic()<outer and not stop['requested'],'terminal deadline')
++    except BaseException as error:
++        record.update(status='failed_fixed_fit_continuation',error_type=type(error).__name__,error=str(error)[:2048])
++    finally:
++        try:
++            if owner is not None:
++                from scripts import febio_runtime
++                record['fallback_cleanup']=owner.cleanup(febio_runtime.process_group_rss,min(outer,time.monotonic()+5))
++            if record['status']!=core.DONE:
++                core.exclusive_json(out/'finalization-failure.json',record)
++                if not (out/'terminal.json').exists():core.exclusive_json(out/'terminal.json',record)
++                if not (out/'publication.json').exists():core.exclusive_json(out/'publication.json',{'accepted':False,'release':rb})
++        finally:
++            for signum,handler in old.items():signal.signal(signum,handler)
++    return record
++
++
++def main():
++    started=time.monotonic();p=argparse.ArgumentParser(description=__doc__)
++    p.add_argument('--root',type=Path,required=True);p.add_argument('--release',required=True)
++    p.add_argument('--release-sha256',required=True);p.add_argument('--execute',action='store_true')
++    p.add_argument('--worker',choices=('prepare','readout'),help=argparse.SUPPRESS)
++    p.add_argument('--deadline',type=float,help=argparse.SUPPRESS)
++    args=p.parse_args();root=args.root.resolve()
++    if args.execute and args.worker:raise ValueError('one mode required')
++    core,rb,release,declaration=bootstrap(root,args.release,args.release_sha256,worker=bool(args.worker))
++    if args.worker:worker(root,core,rb,release,declaration,args.worker,args.deadline);return 0
++    if args.execute:
++        result=execute(root,core,rb,release,declaration,started=started)
++        print(json.dumps({'status':result['status'],'physical_validation_pass':None}))
++        return 0 if result['status']==core.DONE else 1
++    # Deliberately source/declaration-only: no specimen output or native-runtime open.
++    print(json.dumps({'status':'source_preflight_only','native_calls':0,'native_calls_accounting':'attempted','fit_calls':0,'measured_member_reads':0}))
++    return 0
++
++
++if __name__=='__main__':raise SystemExit(main())
+--- a/scripts/mechanics_hbe_v5_frame.py
++++ b/scripts/mechanics_hbe_v5_frame.py
+@@ -79,7 +79,7 @@
+     return finite_array(record.get('values'), (count, fields))
+ 
+ 
+-def _ratios(mesh, current, raw, *, coordinate_m, half):
++def _ratios(mesh, current, raw, *, coordinate_m, half, mu_Pa=1000.):
+     X = mesh.rest_nodes_m
+     top, bottom = np.asarray(mesh._top), np.asarray(mesh._bottom)
+     prescribed = X.copy()
+@@ -93,7 +93,7 @@
+     free_raw[bottom] = 0
+     free_raw[top] = 0 if not half else free_raw[top] * [1, 1, 0]
+     moments = np.cross(current, raw)
+-    F0 = 1000. * mesh.radius_m**2
++    F0 = mu_Pa * mesh.radius_m**2
+     T0 = F0 * mesh.radius_m
+     ratios = {
+         'force_balance': float(np.linalg.norm(raw.sum(axis=0)) /
+@@ -125,7 +125,7 @@
+             contract['v5_declaration_sha256'], contract['v4_declaration_sha256'],
+             contract['source_deck_sha256'], contract['adapted_deck_sha256'],
+             tuple(contract['times']), tuple(contract['full_coordinates_m']),
+-            tuple(contract['native_coordinates_m']))
++            tuple(contract['native_coordinates_m']),contract.get('fixed_fit_sha256'))
+ 
+ 
+ def _freeze_geometry_arrays(mesh):
+@@ -170,7 +170,27 @@
+     return evaluate_prepared_frame(contract, prepared, node_record, element_record)
+ 
+ 
++FIXED_FIT_SHA256 = 'b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a'
++FIXED_MU_PA = 715.361571139082
++
++
+ def evaluate_prepared_frame(contract, prepared, node_record, element_record):
++    """Original reference-only entrypoint; its material admission is unchanged."""
++    if contract['mu_Pa'] != 1000.:
++        raise ValueError('Pinned HBE reference material or radius differs')
++    return _evaluate_prepared_frame(contract, prepared, node_record, element_record)
++
++
++def evaluate_fitted_frame(contract, prepared, node_record, element_record, *, primitive_sink=None):
++    """Fixed-fit equations only; hash authentication/execution belongs to caller."""
++    if (contract.get('fixed_fit_sha256') != FIXED_FIT_SHA256
++            or type(contract.get('mu_Pa')) is not float or contract['mu_Pa'] != FIXED_MU_PA):
++        raise ValueError('Exact accepted fixed fit required')
++    return _evaluate_prepared_frame(contract, prepared, node_record, element_record,
++                                    primitive_sink=primitive_sink)
++
++
++def _evaluate_prepared_frame(contract, prepared, node_record, element_record, *, primitive_sink=None):
+     """Evaluate one frame with validated stream-local geometry and unchanged gates.
+ 
+     The record pair must come from `_iter_data_records`, whose one-based ID
+@@ -196,7 +216,7 @@
+         raise ValueError('Nonpositive logged element J')
+     current, raw = values[:, :3], values[:, 6:9]
+     R, mu = native_mesh.radius_m, contract['mu_Pa']
+-    if mu != 1000. or R != .004:
++    if not math.isfinite(mu) or mu <= 0 or R != .004:
+         raise ValueError('Pinned HBE reference material or radius differs')
+     motion_error = np.linalg.norm(values[:, 3:6] - (current - X), axis=1).max()
+     primitive_ratio = float(motion_error / (1e-8 * R))
+@@ -210,7 +230,7 @@
+     if half != (prepared.reconstruction_model is not None):
+         raise ValueError('Representation-specific reconstruction required')
+     native_ratios = _ratios(native_mesh, current, raw,
+-                            coordinate_m=native_coordinate, half=half)
++                            coordinate_m=native_coordinate, half=half, mu_Pa=mu)
+     native_ratios['primitive_consistency'] = primitive_ratio
+     native_state = native_mesh.deformation(current, mu)
+     top, bottom = np.asarray(native_mesh._top), np.asarray(native_mesh._bottom)
+@@ -226,9 +246,15 @@
+             or native_mesh.height_m != (.00489159 / 2 if half else .00489159)):
+         raise ValueError('Pinned HBE full/half height differs')
+     full_ratios = _ratios(full_mesh, full_current, full_raw,
+-                          coordinate_m=full_coordinate, half=False)
++                          coordinate_m=full_coordinate, half=False, mu_Pa=mu)
+     full_state = full_mesh.deformation(full_current, mu)
+     full_force = float(-full_raw[np.asarray(full_mesh._top), 2].sum())
++    if primitive_sink is not None:
++        full_top = np.asarray(full_mesh._top)
++        torque = float(-np.cross(full_current[full_top], full_raw[full_top])[:, 2].sum())
++        primitive_sink({'index': step, 'current': full_current, 'raw': full_raw,
++                        'native_current': current, 'native_raw': raw, 'torque': torque,
++                        'native_torque': float(-np.cross(current[top], raw[top])[:, 2].sum())})
+     energy_limit = 1e-7 * mu * R**2 * full_mesh.height_m + 1e-4 * abs(full_state['energy_J'])
+     force_limit = 1e-7 * mu * R**2 + 1e-4 * abs(full_force)
+     scale_ratios = ({'force_bottom_scale_one': abs(bottom_force - full_force) / force_limit,
+--- a/scripts/mechanics_hbe_v5_stream.py
++++ b/scripts/mechanics_hbe_v5_stream.py
+@@ -70,6 +70,28 @@
+     A returned numerical pass is *not* physical validation. The caller must
+     authenticate the contract, source, mesh and outputs before native use.
+     """
++    stream = evaluated_frames(contract, mesh_manifest, node_lines, element_lines, solver_lines,
++                              reconstruction=reconstruction)
++    while True:
++        try: next(stream)
++        except StopIteration as complete: return complete.value
++
++
++def evaluated_frames(contract, mesh_manifest, node_lines, element_lines, solver_lines,
++                     *, reconstruction=None, fitted=False, primitive_caps=None):
++    """Stream-local primitives; caller may reduce each yielded state then discard it.
++
++    Reference numerical result is byte-equivalent before provenance to the old
++    evaluate_stream. No raw state list is retained. fitted is not an IO release.
++    """
++    if fitted:
++        if contract.get('fixed_fit_sha256') != frame.FIXED_FIT_SHA256 or contract.get('mu_Pa') != frame.FIXED_MU_PA:
++            raise ValueError('Fixed fitted contract required')
++    elif contract.get('mu_Pa') != 1000.:
++        raise ValueError('Pinned reference material required')
++    primitive_caps = primitive_caps or {'nodes': MAX_PRIMITIVE_BYTES, 'elements': MAX_PRIMITIVE_BYTES}
++    if set(primitive_caps) != {'nodes', 'elements'} or any(type(v) is not int or not 0 < v <= MAX_PRIMITIVE_BYTES for v in primitive_caps.values()):
++        raise ValueError('Bounded primitive caps required')
+     steps = contract.get('steps')
+     times = contract.get('times')
+     if (type(steps) is not int or steps not in (60, 120)
+@@ -88,11 +110,11 @@
+     nodes = _iter_data_records(node_lines, expected_times=times,
+                                item_count=len(mesh.rest_nodes_m), field_count=9,
+                                record_name='mechanics_nodes_si',
+-                               maximum_bytes=MAX_PRIMITIVE_BYTES, maximum_items=MAX_ITEMS)
++                               maximum_bytes=primitive_caps['nodes'], maximum_items=MAX_ITEMS)
+     elements = _iter_data_records(element_lines, expected_times=times,
+                                   item_count=mesh.element_count, field_count=8,
+                                   record_name='mechanics_elements_si',
+-                                  maximum_bytes=MAX_PRIMITIVE_BYTES, maximum_items=MAX_ITEMS)
++                                  maximum_bytes=primitive_caps['elements'], maximum_items=MAX_ITEMS)
+     frames = []
+     maximum_ratios = {}
+     for index, (node, element) in enumerate(itertools.zip_longest(nodes, elements)):
+@@ -100,7 +122,12 @@
+             raise ValueError('Complete synchronized native primitive streams required')
+         if node['step'] != index or element['step'] != index:
+             raise ValueError('Native primitive frame order differs')
+-        result = frame.evaluate_prepared_frame(contract, prepared, node, element)
++        primitive = []
++        if fitted:
++            result = frame.evaluate_fitted_frame(contract, prepared, node, element, primitive_sink=primitive.append)
++        else:
++            result = frame._evaluate_prepared_frame(contract, prepared, node, element, primitive_sink=primitive.append)
++        yield primitive[0], prepared
+         for key, value in result['criteria_ratios'].items():
+             if not math.isfinite(value):
+                 raise ValueError('Nonfinite numerical criterion')
+--- /dev/null
++++ b/tests/test_hbe_v5_fixed_fit.py
+@@ -0,0 +1,272 @@
++"""Tiny invented primitives only. No native subprocess or specimen payload."""
++from copy import deepcopy
++import importlib.util
++import json
++from pathlib import Path
++import time
++import numpy as np
++import pytest
++from scripts import mechanics_hbe_v5_fitted_confirmation as core
++from scripts import mechanics_hbe_v5_fitted_confirmation_experiment as launcher
++from scripts import mechanics_hbe_v5_frame as frame
++from scripts import mechanics_hbe_v5_stream as stream
++from test_mechanics_hbe_v5_frame import generated
++from test_mechanics_hbe_v5_stream import generated_run
++
++
++def test_reference_entrypoint_and_output_unchanged():
++    spec,mesh,node,element,reconstruction=generated('tension','lower_half_reconstructed',30)
++    candidate=frame.evaluate_generated_frame(spec,mesh,node,element,reconstruction=reconstruction)
++    source=Path(__file__).resolve().parents[2] # ignored stage, baseline passed by runner
++    import os
++    baseline=Path(os.environ.get('HBE_SOURCE_ROOT',Path(__file__).resolve().parents[1]))/'scripts/mechanics_hbe_v5_frame.py'
++    import sys
++    modspec=importlib.util.spec_from_file_location('oldframe_control',baseline)
++    old=importlib.util.module_from_spec(modspec);sys.modules[modspec.name]=old
++    exec(compile(baseline.read_bytes(),str(baseline),'exec'),old.__dict__)
++    assert candidate==old.evaluate_generated_frame(spec,mesh,node,element,reconstruction=reconstruction)
++    fitted=dict(spec,mu_Pa=core.MU,fixed_fit_sha256=core.FIT_SHA)
++    with pytest.raises(ValueError,match='reference material'):
++        frame.evaluate_prepared_frame(fitted,frame.prepare_generated_frame(fitted,mesh,reconstruction=reconstruction),node,element)
++
++
++def test_fitted_frame_scales_mu_and_force_denominators():
++    spec,mesh,node,element,reconstruction=generated('compression','lower_half_reconstructed',30)
++    reference=frame.evaluate_generated_frame(spec,mesh,node,element,reconstruction=reconstruction)
++    fitted=dict(spec,mu_Pa=core.MU,fixed_fit_sha256=core.FIT_SHA)
++    node=deepcopy(node);node['values'][:,6:9]*=core.SCALE
++    result=frame.evaluate_fitted_frame(fitted,frame.prepare_generated_frame(fitted,mesh,reconstruction=reconstruction),node,element)
++    assert result['energy_J']==pytest.approx(reference['energy_J']*core.SCALE,rel=2e-14)
++    assert result['applied_force_N']==pytest.approx(reference['applied_force_N']*core.SCALE)
++    for name in ('native_force_balance','native_free_dof_reaction','full_moment_balance'):
++        assert result['criteria_ratios'][name]==pytest.approx(reference['criteria_ratios'][name],abs=1e-9)
++    fitted['fixed_fit_sha256']='0'*64
++    with pytest.raises(ValueError,match='fixed fit'):frame.evaluate_fitted_frame(fitted,None,node,element)
++
++
++def test_three_scalar_deck_delta_and_forbidden_change():
++    from test_mechanics_hbe_branch_calibration_v5 import fixture_source
++    from scripts.mechanics_hbe_experiment import check_fitted_deck
++    source=('<febio_spec><Material><material><c1>2000.0</c1><k>'+repr(149*1000./3)+
++            '</k></material></Material><Control><solver><min_residual>'+repr((1e-10*1000.*.004**2)**2)+
++            '</min_residual><fixture>immutable</fixture></solver></Control></febio_spec>')
++    actual=core.fitted_deck(source)
++    check_fitted_deck(source,actual,core.MU)
++    with pytest.raises(ValueError):check_fitted_deck(source,actual.replace(b'immutable',b'changed'),core.MU)
++
++
++def scaled_lines(lines):
++    result=[]
++    for line in lines:
++        if line[:1].isdigit():
++            cells=line.strip().split(',');cells[7:10]=[repr(float(v)*core.SCALE) for v in cells[7:10]]
++            result.append(','.join(cells)+'\n')
++        else:result.append(line)
++    return result
++
++
++def test_generated_complete_paired_stream():
++    spec,mesh,nodes,elements,solver,reconstruction=generated_run('compression',half=True,steps=120)
++    fitted=core.fitted_contract(spec,'a'*64)
++    refs=stream.evaluated_frames(spec,mesh,nodes,elements,solver,reconstruction=reconstruction)
++    new=stream.evaluated_frames(fitted,mesh,scaled_lines(nodes),elements,solver,reconstruction=reconstruction,fitted=True)
++    reports,metrics,passed=core.paired_streams(refs,new,deadline=time.monotonic()+10)
++    assert passed and reports[0]['frame_count']==reports[1]['frame_count']==121
++    assert reports[0]==stream.evaluate_stream(spec,mesh,nodes,elements,solver,reconstruction=reconstruction)
++    assert metrics['native']['motion']['actual']==0
++    assert metrics['reconstructed_full']['reaction']['actual']<1e-8
++
++
++@pytest.mark.parametrize('change',['endpoint','steps','domain','mu'])
++def test_fitted_contract_refuses_drift(change):
++    spec={'mu_Pa':1000.,'steps':120,'native_domain':'lower_half_reconstructed','branch':'tension',
++          'times':tuple(i/120 for i in range(121)),'full_coordinates_m':[0.,.0007360099999999],
++          'run_id':'tension:N24:S120:reference'}
++    if change=='endpoint':spec['full_coordinates_m'][-1]=.15*.00489159
++    else:spec[{'steps':'steps','domain':'native_domain','mu':'mu_Pa'}[change]]={'steps':60,'domain':'full_native','mu':999.}[change]
++    with pytest.raises(ValueError):core.fitted_contract(spec,'a'*64)
++
++
++def torsion_rows():
++    H=.00489159;rows={}
++    for branch,sign in [('torsion_neg',-1),('torsion_pos',1)]:
++        rows[branch]={'branch':branch,'mesh_N':12,'steps':120,'mu_Pa':1000.,'frame_count':121,
++            'load_coordinate':[sign*.15*H/.004*i/120 for i in range(121)],
++            'applied_torque_Nm':[sign*i*1e-9 for i in range(121)],
++            'criteria':{'numerical':{'actual':0.,'limit':1.,'units':'ratio'}}}
++    return rows
++
++
++def numerical():return {'passed':True,'mu_Pa':core.MU,'fixed_fit_sha256':core.FIT_SHA,
++                       'branches':{b:{'passed':True} for b in core.AXIAL}}
++
++
++def test_fixed_prediction_no_refit(monkeypatch):
++    from scripts import mechanics_hbe_evaluation as evaluation
++    monkeypatch.setattr(evaluation,'fit_scale',lambda *a,**k:pytest.fail('refit forbidden'))
++    rows=torsion_rows();result=core.checked_predictions(rows,numerical())
++    assert result['fitted']['torsion_pos']['response'][-1]==rows['torsion_pos']['applied_torque_Nm'][-1]*core.SCALE
++    assert result['fitted']['torsion_neg']['coordinate']==rows['torsion_neg']['load_coordinate']
++
++
++@pytest.mark.parametrize('change',['failed_branch','wrong_fit','wrong_mu','one_branch','overall_failure'])
++def test_failed_confirmation_blocks_prediction(change):
++    n=numerical()
++    if change=='failed_branch':n['branches']['tension']['passed']=False
++    elif change=='wrong_fit':n['fixed_fit_sha256']='0'*64
++    elif change=='wrong_mu':n['mu_Pa']=1000.
++    elif change=='one_branch':del n['branches']['tension']
++    else:n['passed']=False
++    with pytest.raises(ValueError):core.checked_predictions(torsion_rows(),n)
++
++
++@pytest.mark.parametrize('field,value',[('fallback_used',True),('exit_code',1),('contained',False),
++                                      ('direct_child_reaped',False),('remaining_members',[1]),('errors',['observer'])])
++def test_owned_stage_requires_clean_reaped_exit(field,value):
++    clean={'contained':True,'direct_child_reaped':True,'remaining_members':[],'errors':[],
++           'fallback_used':False,'exit_code':0}
++    stage={'status':'completed_within_caps','exit_code':0}
++    launcher.require_stage(core,stage,clean)
++    clean[field]=value
++    with pytest.raises(ValueError):launcher.require_stage(core,stage,clean)
++
++
++def test_false_release_cannot_reserve(tmp_path):
++    with pytest.raises(ValueError,match='root release'):
++        launcher.execute(tmp_path,core,{}, {'execution_released':False},{})
++    assert list(tmp_path.iterdir())==[]
++
++
++@pytest.mark.parametrize('defect',['motion','reaction','missing','extra','order'])
++def test_paired_reduction_rejects_or_fails_changed_primitives(defect):
++    from types import SimpleNamespace
++    rest=np.zeros((2,3));mesh=SimpleNamespace(fingerprint='same',rest_nodes_m=rest)
++    prepared=SimpleNamespace(native_mesh=mesh,full_mesh=mesh,mapping_sha256='map')
++    def rows(changed=False):
++        count=120 if changed and defect=='missing' else 122 if changed and defect=='extra' else 121
++        for i in range(count):
++            x=rest.copy();raw=rest.copy()
++            if changed and defect=='motion':x[0,0]=1e-3
++            if changed and defect=='reaction':raw[0,0]=1.
++            index=i+1 if changed and defect=='order' else i
++            yield {'index':index,'current':x,'raw':raw,'native_current':x,'native_raw':raw,'torque':0.,'native_torque':0.},prepared
++        return {'numerical_passed':True}
++    if defect in ('motion','reaction'):
++        _,_,passed=core.paired_streams(rows(),rows(True),deadline=time.monotonic()+1)
++        assert passed is False
++    else:
++        with pytest.raises(ValueError):core.paired_streams(rows(),rows(True),deadline=time.monotonic()+1)
++
++
++def test_uninspected_torsion_domain_cannot_expand():
++    rows=torsion_rows();rows['torsion_pos']['load_coordinate'][-1]+=.0001
++    with pytest.raises(ValueError,match='loading grid'):core.checked_predictions(rows,numerical())
++
++
++def test_output_inventory_refuses_unlisted_or_mutated_file(tmp_path,monkeypatch):
++    monkeypatch.setattr(core,'CAPS',{**core.CAPS,'new_output_bytes':1024})
++    (tmp_path/'value').write_bytes(b'original')
++    seal=launcher.snapshot(tmp_path,core,tmp_path,{'value':100})
++    (tmp_path/'value').write_bytes(b'changed')
++    assert launcher.snapshot(tmp_path,core,tmp_path,{'value':100})!=seal
++    (tmp_path/'extra').write_bytes(b'other')
++    with pytest.raises(ValueError,match='inventory'):launcher.snapshot(tmp_path,core,tmp_path,{'value':100})
++
++
++def test_nonzero_native_couple_is_distinct_from_full_torque():
++    spec,mesh,node,element,reconstruction=generated('tension','lower_half_reconstructed',30)
++    top=np.asarray(mesh['boundaries']['top']['node_ids'])-1
++    values=node['values'].copy();values[:,6:9]=0.
++    values[top,6]=-values[top,1];values[top,7]=values[top,0]
++    node={**node,'values':values};captured=[]
++    prepared=frame.prepare_generated_frame(spec,mesh,reconstruction=reconstruction)
++    frame._evaluate_prepared_frame(spec,prepared,node,element,primitive_sink=captured.append)
++    primitive=captured[0]
++    expected=float(-np.cross(values[top,:3],values[top,6:9])[:,2].sum())
++    assert expected!=0 and primitive['native_torque']==expected
++    assert primitive['torque']!=primitive['native_torque']
++
++
++def test_native_scale_torque_uses_native_couple_not_full_value():
++    from types import SimpleNamespace
++    rest=np.zeros((2,3));mesh=SimpleNamespace(fingerprint='same',rest_nodes_m=rest)
++    prepared=SimpleNamespace(native_mesh=mesh,full_mesh=mesh,mapping_sha256='map')
++    def rows(changed):
++        for i in range(121):
++            yield {'index':i,'current':rest,'raw':rest,'native_current':rest,'native_raw':rest,
++                   'torque':0.,'native_torque':2*core.SCALE if changed else 1.},prepared
++        return {'numerical_passed':True}
++    _,metrics,passed=core.paired_streams(rows(False),rows(True),deadline=time.monotonic()+1)
++    assert passed is False and metrics['native']['torque']['actual']>1
++    assert metrics['reconstructed_full']['torque']['actual']==0
++
++
++@pytest.mark.parametrize('late_mutation',[False,True])
++def test_full_owned_launcher_wiring_without_process(tmp_path,monkeypatch,late_mutation):
++    from types import SimpleNamespace
++    from scripts import mechanics_hbe_backend as backend
++    from scripts import mechanics_hbe_v5_remaining_one_shot as stages
++    from scripts import mechanics_hbe_v5_n8_one_shot as io
++    from launchers import hbe_v5_ordinal9_continuation_v1 as owned
++    import shutil,sys
++    monkeypatch.setattr(core,'OUTPUT','build/fake-fixed-fit/attempt-01')
++    out=tmp_path/core.OUTPUT;rb={'path':'fake-release.json','sha256':'a'*64}
++    release={'execution_released':True,'source_commit':'b'*40};decl={'fixed_fit':{'fit':{'sha256':core.FIT_SHA}},'runtime_identity':{'fake':'runtime'}}
++    monkeypatch.setattr(core,'check_release',lambda *a,**k:(release,decl))
++    for name in ('verify_sources','audit_loaded','fixed_fit','recheck_fixed_inputs'):
++        monkeypatch.setattr(core,name,lambda *a,**k:None)
++    monkeypatch.setattr(launcher,'check_cache',lambda *a,**k:None)
++    monkeypatch.setattr(shutil,'disk_usage',lambda *a:SimpleNamespace(free=10*1024**3))
++    monkeypatch.setattr(backend,'verify_runtime_binding',lambda *a:{'runtime':{'executable':'invented-native-no-launch'}})
++    monkeypatch.setattr(stages,'_check_backend',lambda *a:None)
++    clean={'contained':True,'direct_child_reaped':True,'remaining_members':[],'errors':[],
++           'fallback_used':False,'exit_code':0}
++    monkeypatch.setattr(owned,'OwnedStage',lambda:SimpleNamespace(cleanup=lambda *a:dict(clean)))
++    calls=[];write=core.exclusive_json
++    def exclusive(path,value,**kwargs):
++        digest=write(path,value,**kwargs)
++        if late_mutation and path.name=='terminal.json':
++            (out/'predictions.json').write_text('{"late":"mutation"}\n')
++        return digest
++    monkeypatch.setattr(core,'exclusive_json',exclusive)
++    def stage(kind,command,directory,receipt,**kwargs):
++        assert kwargs['popen'] is not None
++        name=directory.name;calls.append(name)
++        result={'status':'completed_within_caps','exit_code':0,'command':command,'kill_reason':None,
++                'elapsed_seconds':.001,'wall_cap_seconds':kwargs['wall_cap'],
++                'sampled_process_group_rss_cap_bytes':kwargs['rss_cap'],'active_output_cap_bytes':kwargs['output_cap']}
++        receipt[kind+'_stage']=result;write(directory/'receipt.json',receipt)
++        (directory/('console.txt' if kind=='native' else 'readout-console.txt')).write_text('generated fixture\n')
++        if name=='prepare-stage':
++            branches={}
++            for branch in core.AXIAL:
++                target=out/branch;target.mkdir();deck=target/'specimen.feb';deck.write_text('<invented/>')
++                branches[branch]={'deck':{'path':str(deck.relative_to(tmp_path)),'sha256':core.sha(deck.read_bytes())},
++                                  'contract':{'run_id':branch+':fitted'}}
++            write(out/'prepared.json',{'branches':branches,'runtime':{'executable':'invented-native-no-launch'}})
++        elif kind=='native':
++            for leaf in ('nodes.log','elements.log','solver.log'):(directory/leaf).write_text('tiny invented bytes\n')
++        elif name=='readout-stage':
++            executions=json.loads((out/'executions.json').read_text())
++            for leaf in ('numerical.json','predictions.json','continuation-ledger.json'):write(out/leaf,{'generated':True})
++            write(out/'freeze.json',{'mu_Pa':core.MU,'fixed_fit':decl['fixed_fit'],
++                'fitted_executions':executions,'held_out_access_released':False})
++        return result
++    monkeypatch.setattr(stages,'supervise_stage',stage)
++    result=launcher.execute(tmp_path,core,rb,release,decl)
++    assert calls==['prepare-stage','compression','tension','readout-stage']
++    assert result['native_calls']==2 and result['fit_calls']==0 and result['measured_member_reads']==0
++    if late_mutation:
++        assert result['status']=='failed_fixed_fit_continuation' and (out/'finalization-failure.json').exists()
++    else:
++        assert result['status']==core.DONE and json.loads((out/'publication.json').read_text())['accepted'] is True
++        assert not (out/'finalization-failure.json').exists()
++
++
++def test_failed_numeric_is_preserved_before_prediction_or_torsion(monkeypatch,tmp_path):
++    bad=numerical();bad['branches']['compression']['passed']=False
++    monkeypatch.setattr(core,'fixed_fit',lambda *a:pytest.fail('failed branch cannot reach saved-fit/torque admission'))
++    core.exclusive_json(tmp_path/'numerical.json',bad)
++    with pytest.raises(ValueError):core.finish(tmp_path,{}, {},tmp_path,bad,{})
++    assert json.loads((tmp_path/'numerical.json').read_text())==bad
++    assert not (tmp_path/'freeze.json').exists()

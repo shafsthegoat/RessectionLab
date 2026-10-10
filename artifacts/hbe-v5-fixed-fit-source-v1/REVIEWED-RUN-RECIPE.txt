@@ -1,0 +1,36 @@
+Preparation only. Do not execute the native continuation from this package.
+
+1. Root reviews independent source verdict, applies source.patch (four Python
+   source files, one declaration and one generated test file), and runs portable
+   generated tests against canonical sources. Preserve historical sources and
+   earlier fit/failure publications.
+2. Independently review the exact false-release.json. It binds fixed paths,
+   caps, 44 sources, existing Python runtime, numerical PASS and fixed fit. The
+   independent JSON must use schema hbe-v5-fixed-fit-source-review-v1, decision GO,
+   and release_candidate_sha256 = SHA256 of canonical indented JSON + newline.
+3. Root creates a SEPARATE release changing only execution_released=true,
+   source_commit=<actual promoted commit>, independent_source_review=<exact
+   reviewed JSON binding>. No template edit, retry, refit or held-out release.
+4. Root starts the canonical command once using the release's interpreter:
+
+<python> -I -S -B -X pycache_prefix=<fresh absent absolute path under repo/build> \
+  scripts/mechanics_hbe_v5_fitted_confirmation_experiment.py \
+  --root <absolute repository> --release <relative new release.json> \
+  --release-sha256 <exact release SHA256> --execute
+
+Without --execute, the command performs source/declaration-only preflight. The
+false release must refuse --execute before creating its output directory.
+
+Limits: 3600 s INCLUDING import/fixity/publication and 10 s cleanup reserve;
+preparation 60 s; compression 2100 s; tension 420 s; paired readout/freeze 600 s.
+Each stage gets min(its cap, remaining total minus reserve). 3 GiB sampled child
+process-group RSS, one numerical thread, 2 GiB total new files, compression
+1.5 GiB/tension512 MiB active branch cap; require new-output allowance + 2 GiB
+free disk. No old logs are copied. Two native calls maximum, one attempt, no
+automatic retry. Caps are limits, not a promise of actual runtime feasibility.
+
+Success requires completed_fitted_confirmation_and_prediction_freeze plus an
+accepted exact publication, no failure marker, and clean owned-stage receipts.
+Any failure preserves evidence and leaves torque sealed. Next access still needs
+its own fixed-freeze-bound review/release. No physical accuracy threshold is
+invented, and no result becomes a patient material field or surgical action force.

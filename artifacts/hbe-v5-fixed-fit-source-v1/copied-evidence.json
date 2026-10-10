@@ -1,0 +1,77 @@
+{
+  "IMPLEMENTATION-RESULT.txt": {
+    "bytes": 3972,
+    "original": "build/hbe-v5-fixed-fit-continuation-v2/IMPLEMENTATION-RESULT.txt",
+    "sha256": "a167348fca7cba52151434fb0287c826cfb98cd7c5d8eb71e0023d69bf9d51fa"
+  },
+  "REVIEWED-RUN-RECIPE.txt": {
+    "bytes": 2349,
+    "original": "build/hbe-v5-fixed-fit-continuation-v2/RUN-RECIPE.txt",
+    "sha256": "512bf57a32e8fe5665c8fa9201ac2a5a3686d59f2813203b5e23c5c5ffe5f932"
+  },
+  "canonical-tests.txt": {
+    "bytes": 179,
+    "original": "build/hbe-v5-fixed-fit-continuation-v2/root-canonical-tests.log",
+    "sha256": "ef3d02c9953e0f79aabab7b20286c68fc8d71f1015341821fadfabf3577599be"
+  },
+  "false-release.json": {
+    "bytes": 83306,
+    "original": "build/hbe-v5-fixed-fit-continuation-v2/false-release.json",
+    "sha256": "928f1bf6a006b121c7180d89100628522c6f81eef8b60ff99b70a322cad40b17"
+  },
+  "independent/REPORT.txt": {
+    "bytes": 6538,
+    "original": "build/hbe-v5-fixed-fit-independent-v1/REPORT.txt",
+    "sha256": "228152f8faae9175196deb6e6bcc11b54b88565de0e093f741f773daad6225ad"
+  },
+  "independent/controls-result.json": {
+    "bytes": 608,
+    "original": "build/hbe-v5-fixed-fit-independent-v1/controls-result.json",
+    "sha256": "833672f164f0780da3d2e60ee2050701f01336ce282fef7af96156f6b63c6f41"
+  },
+  "independent/generated-controls.txt": {
+    "bytes": 675,
+    "original": "build/hbe-v5-fixed-fit-independent-v1/generated-controls.txt",
+    "sha256": "8be0ea3d922487c4027865a0fdb859135303baf440ae1809e0ae354c2eed371a"
+  },
+  "independent/portability-check.json": {
+    "bytes": 539,
+    "original": "build/hbe-v5-fixed-fit-independent-v1/portability-check.json",
+    "sha256": "8fe0001467462e23fedd8351dc76959c5e6997ecd8e5caca661d665298338654"
+  },
+  "independent/portability-controls.txt": {
+    "bytes": 601,
+    "original": "build/hbe-v5-fixed-fit-independent-v1/portability-controls.txt",
+    "sha256": "38b9c6cb65e6b23bd5953a2cb3bc60266f3680851c17b115dacb6b82d18ddddc"
+  },
+  "independent/review-index.json": {
+    "bytes": 3378,
+    "original": "build/hbe-v5-fixed-fit-independent-v1/review-index.json",
+    "sha256": "22f5191356c22b57b444e85447bcac3b00b78b8f72787934b001a818feb16cbd"
+  },
+  "independent/source-review.json": {
+    "bytes": 4424,
+    "original": "build/hbe-v5-fixed-fit-independent-v1/source-review.json",
+    "sha256": "688a4e9d6177fc2563bce2b3c1f9a224b9caa9eab4e8073c5b800ee6ffa6799a"
+  },
+  "independent/whole-stream-parity.json": {
+    "bytes": 1431,
+    "original": "build/hbe-v5-fixed-fit-independent-v1/whole-stream-parity.json",
+    "sha256": "4d0e6feb9e8a2d30e44b351c4d430c8be8fefd0608f50aeab5b3825f030262ed"
+  },
+  "negative-v1/source-index.json": {
+    "bytes": 2304,
+    "original": "build/hbe-v5-fixed-fit-continuation-v1/source-index.json",
+    "sha256": "7bf54055f6c1c60408924f6d22724376bf14b9116e1fb75f94c86d7e22113b47"
+  },
+  "source-index.json": {
+    "bytes": 2304,
+    "original": "build/hbe-v5-fixed-fit-continuation-v2/source-index.json",
+    "sha256": "9955fb2a6d54703b7f45da6d060c4b03fba4223c764220fbfe9b1fb1a459dc48"
+  },
+  "source.patch": {
+    "bytes": 85759,
+    "original": "build/hbe-v5-fixed-fit-continuation-v2/source.patch",
+    "sha256": "05d3b0a9b632d0545f6bd3001653347215c341c2f3426eb8e6c1d06f0aea7be6"
+  }
+}
