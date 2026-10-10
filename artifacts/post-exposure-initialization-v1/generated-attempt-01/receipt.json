@@ -1,0 +1,34 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-post-exposure-preparation-v1/generated-attempt-01/fresh-pycache",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py"
+  ],
+  "pid": 86209,
+  "returncode": 1,
+  "timed_out": false,
+  "wall_seconds": 2.4373025839999998,
+  "maxrss_bytes_macos": 96927744,
+  "patient_reads": 0,
+  "canonical_edits": false,
+  "threads": 1,
+  "files": {
+    "stage/resectionlab/evaluation.py": "79ac12b715b2d3e625e22e3da222c9fca932ea89dbf853b69d73fe42c0e92dfb",
+    "stage/resectionlab/native_proposals.py": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+    "stage/resectionlab/native_resection.py": "9f81cba1451ce3636c0100aeb2ee5a56ca8874cd9670e9886e5c2bb32dca6cee",
+    "stage/resectionlab/native_spatial_evaluation.py": "bed5957cecc2a18127eb3bbaa7854c4a26406cb222d2debf23244fbbe003084b",
+    "stage/resectionlab/native_spatial_task.py": "8237f90b3b512d03452be027e6e7e337f69da3e8127f169fe870a56c47418c32",
+    "stage/resectionlab/patient_planning_admission.py": "840eb3e52c62527f76297643a6b77bfe288bf3d93e475859b849196ecbebb81f",
+    "stage/resectionlab/post_exposure.py": "ce99dca252500b51de083f9e42e37d82518af0b3af4c9b9dced6ab2b6168dd61",
+    "stage/resectionlab/public_patient_factory.py": "2350e3af6267d7fb9e20b7860d9c931eca0b4858d041aeb7bbb9752666ef12d8"
+  },
+  "test_sha256": "cccf0697beb41c26d7633b4229302c0dff66990143ddf9b71837bfd8440aab74"
+}

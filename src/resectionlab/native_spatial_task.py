@@ -22,6 +22,7 @@ import numpy as np
 
 from .core import array_digest, immutable_array, semantic_digest, freeze_json, thaw_json
 from .geometry import AccessWindow, ToolGeometry
+from .post_exposure import PostExposureStart
 from .native_resection import NativeResectionConfig, NativeResectionEngine
 from .native_proposals import (NominalCavityProposalConfig, PreparedNominalCavityProposer,
     NOMINAL_CAVITY_PROPOSAL_VERSION, NOMINAL_CAVITY_FAMILIES,
@@ -84,6 +85,7 @@ def _native_identity(config):
     return (id(config), tuple(_array_identity(getattr(config, key)) for key in
             ("tissue_mask", "target_labels", "affine", "hard_exclusion")),
         *((_array_identity(config.interaction_domain),) if config.interaction_domain is not None else ()),
+        *((config.post_exposure.identity(),) if config.post_exposure is not None else ()),
         semantic_digest({"access": _access_record(config.access), "tools": [asdict(t) for t in config.tools],
             "source_hash": config.source_hash, "case_id": config.case_id, "step": config.max_tip_step_mm,
             "max_microsteps": config.max_microsteps, "support": config.tissue_support_provenance,
@@ -209,6 +211,7 @@ class NativeSpatialCase:
     occupancy_source_support: np.ndarray | None = None
     # Observed source coverage Ds stays distinct from assumed occupancy S OR T.
     support_domain: np.ndarray | None = None
+    post_exposure: PostExposureStart | None = None
     _interaction_domain: np.ndarray | None = field(init=False, repr=False, default=None)
     _domain_record: Mapping = field(init=False, repr=False, default_factory=dict)
     _occupancy_derivation: Mapping = field(init=False, repr=False, default_factory=dict)
@@ -334,6 +337,18 @@ class NativeSpatialCase:
             raise ValueError("One to four distinct explicit tool configurations are required")
         if not isinstance(self.access, AccessWindow):
             raise ValueError("One explicit hypothetical access window is required")
+        if self.post_exposure is not None:
+            if type(self.post_exposure) is not PostExposureStart or self.support_domain is None or self.occupancy_source_support is None:
+                raise ValueError("Post-exposure requires explicit unchanged Ds and S union T")
+            self.post_exposure.require_bound(support, self._interaction_domain, native_affine, self.access)
+            if (self.post_exposure.record["source_Ds_hash"] != array_digest(self.support_domain)
+                    or self.post_exposure.record["source_S_hash"] != array_digest(self.occupancy_source_support)
+                    or self.post_exposure.record["full_T_hash"] != array_digest(nominal > 0)):
+                raise ValueError("Post-exposure source knownness or unchanged S/T differs")
+            object.__setattr__(self, "_domain_record", freeze_json({**self._domain_record,
+                "post_exposure_condition_hash": self.post_exposure.fingerprint,
+                "unknown_interaction_rule": "U except declared wholly-proximal E blocks full tool; no U seed, flood or removal",
+                "external_tool_extent": "declared E and outside-image extent unassessed; observed Ds unchanged"}))
         for value in (self.support_derivation, self.target_derivation):
             if not isinstance(value, str) or len(value) > 2048:
                 raise ValueError("Source derivations must be bounded text")
@@ -444,6 +459,7 @@ class NativeSpatialCase:
             **({"occupancy_derivation": self._occupancy_derivation}
                if self.occupancy_source_support is not None else {}),
             **({"source_and_simulated_domains": self._domain_record} if self.support_domain is not None else {}),
+            **({"post_exposure": self.post_exposure.record} if self.post_exposure is not None else {}),
             **({'public_target_context_variant':self.public_target_context_variant,
                 'public_target_domain':array_digest(self.public_target_domain)}
                if self.public_target_context_variant is not None else {}),
@@ -467,7 +483,7 @@ class NativeSpatialCase:
             self.access, tools, self.source_hash,
             self.support_derivation + "; hypothetical aperture; cortical access unverified",
             case_id="native-spatial", max_tip_step_mm=min(.25, float(np.linalg.norm(self._native_affine_ras_mm[:3, :3], axis=0).min()) / 2),
-            interaction_domain=self._interaction_domain)
+            interaction_domain=self._interaction_domain, post_exposure=self.post_exposure)
         object.__setattr__(self, "_native_config", config)
         object.__setattr__(self, "_native_identity", _native_identity(config))
         if self.proposal_mode == "nominal_cavity_v1":
@@ -512,6 +528,7 @@ class NativeSpatialCase:
               if self.occupancy_source_support is not None else ()),
             *((_array_identity(self.support_domain), _array_identity(self._interaction_domain), semantic_digest(self._domain_record))
               if self.support_domain is not None else ()),
+            *((self.post_exposure.identity(),) if self.post_exposure is not None else ()),
             *((self.public_target_context_variant,_array_identity(self.public_target_domain),
                 None if self._public_target_source is None else self._public_target_source.fingerprint)
               if self.public_target_context_variant is not None else ()),
@@ -559,7 +576,9 @@ class NativeSpatialCase:
                 derived_from=("structural_intensity",) if self.support_source_kind == "derived_from_scan" else ()),
             "observed_cavity": ObservedChannel(np.asarray(cavity)[region], source_kind="observed_procedure_state",
                 coverage=None if self._interaction_domain is None else self._interaction_domain[region],
-                derivation="committed fully contained connected native cells")}
+                derivation=("committed fully contained connected native cells" if self.post_exposure is None else
+                    "declared simulated initial K closure plus committed connected-free state; source zeros are not observed air; condition="
+                    + self.post_exposure.fingerprint))}
         if self.nominal_target is not None:
             channels["nominal_target"] = ObservedChannel(self.nominal_target[region], source_kind=self.target_source_kind,
                 coverage=None if self.public_target_context_variant is None else self.public_target_domain[region],
@@ -777,9 +796,10 @@ class NativeSpatialTask:
         actions.extend(SpatialAction(identifier, result.entry_mm, result.tip_mm, tools[result.tool_id])
                        for identifier, result in inventory.items())
         state = ObservedProcedureState(self.case.access, self._steps, self.max_steps, self._current_tool)
-        base = build_spatial_observation(self.case.spatial_inputs(self._engine.removed_mask), actions, state)
+        cavity = self._engine.removed_mask if self.case.post_exposure is None else self._engine.connected_free_mask
+        base = build_spatial_observation(self.case.spatial_inputs(cavity), actions, state)
         if self.case._public_target_source is not None:
-            base=replace(base,public_target_context=self.case._public_target_source.observe(self._engine.removed_mask))
+            base=replace(base,public_target_context=self.case._public_target_source.observe(cavity))
         if self.tool_modes is None:
             return base
         from .sequential_spatial_observation import SequentialSpatialObservation
@@ -798,7 +818,7 @@ class NativeSpatialTask:
         voxel = float(self._config.voxel_volume_mm3)
         target = float(self.case.reference_target[tuple(indices.T)].sum(dtype=np.float64)) * voxel
         total = len(indices) * voxel
-        distance = float(np.linalg.norm(np.subtract(geometry["tip_mm"], geometry["entry_mm"])))
+        distance = float(np.linalg.norm(np.subtract(geometry["tip_mm"], geometry.get("physical_start_mm", geometry["entry_mm"]))))
         weights = self.reward_spec
         reward = (weights.target_per_mm3 * target - weights.normal_per_mm3 * (total - target)
             - weights.action_cost - 2 * weights.motion_per_mm * distance
@@ -1099,6 +1119,7 @@ class NativeSpatialTask:
             "proposal_rule_hash": None if self.case.proposal_config is None else self.case.proposal_config.fingerprint,
             "support_provenance": thaw_json(self.case.support_provenance),
             **({"source_and_simulated_domains": thaw_json(self.case._domain_record)} if self.case.support_domain is not None else {}),
+            **({"post_exposure": thaw_json(self.case.post_exposure.record)} if self.case.post_exposure is not None else {}),
             "intensity_normalization": thaw_json(self.case._normalization_record),
             "native_grid_reconciliation": thaw_json(self.case._grid_record),
             "crop": {"origin_voxels": self.case._crop_origin, "shape": self.case._crop_shape,
@@ -1114,7 +1135,8 @@ class NativeSpatialTask:
                                  frame="RAS+", semantic_hash=self._source_hash)
         return independent_check_native_history(source, self.case.tools, self._history,
             tissue_mask=self.case.observed_support, access=self.case.access, geometry_frame="RAS+",
-            tool_modes=self.tool_modes, interaction_domain=self.case._interaction_domain)
+            tool_modes=self.tool_modes, interaction_domain=self.case._interaction_domain,
+            post_exposure=self.case.post_exposure)
 
 
 def make_native_opening_task(*, tools=OPENING_TOOLS, max_steps=2, cancelled=None):

@@ -14,7 +14,7 @@ from collections.abc import Mapping
 from itertools import product
 
 import numpy as np
-from scipy.ndimage import binary_fill_holes
+from scipy.ndimage import binary_fill_holes, binary_propagation, generate_binary_structure
 
 from .native_resection import NATIVE_RESECTION_VERSION, NativeResectionConfig, NativeResectionEngine
 from .core import array_digest, immutable_array, freeze_json, thaw_json, semantic_digest
@@ -133,6 +133,7 @@ def _source_identity(config: NativeResectionConfig) -> tuple:
             tuple(_array_identity(getattr(config, name)) for name in
                   ("affine", "tissue_mask", "target_labels", "hard_exclusion")),
             *((_array_identity(config.interaction_domain),) if config.interaction_domain is not None else ()),
+            *((config.post_exposure.identity(),) if config.post_exposure is not None else ()) ,
             _array_identity(config.access.center_mm), _array_identity(config.access.normal_inward),
             config.access.radius_mm, config.access.window_id,
             tuple(tuple(asdict(tool).items()) for tool in config.tools))
@@ -193,7 +194,9 @@ def _verify_cavity(engine: NativeResectionEngine) -> str:
     expected_remaining = config.tissue_mask & ~expected_removed
     blocked = (expected_remaining if config.interaction_domain is None else
                expected_remaining | ~config.interaction_domain)
-    expected_free = ~binary_fill_holes(blocked)
+    expected_free = (~binary_fill_holes(blocked) if config.post_exposure is None else
+        binary_propagation(config.post_exposure.seed, structure=generate_binary_structure(3, 1),
+                           mask=~expected_remaining & config.interaction_domain))
     for name, expected in (("remaining_mask", expected_remaining), ("removed_mask", expected_removed),
                            ("contact_mask", expected_contact), ("connected_free_mask", expected_free)):
         actual = getattr(engine, name)

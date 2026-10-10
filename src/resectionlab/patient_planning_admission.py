@@ -205,6 +205,9 @@ class PatientPlanningContext:
             _need(record.get("occupancy_condition") == PARTIAL_DOMAIN_UNION_OCCUPANCY
                   and record.get("source_and_simulated_domains") == thaw_json(task.case._domain_record),
                   "partial_source_domain_context_changed")
+        if task.case.post_exposure is not None:
+            _need(record.get("post_exposure") == thaw_json(task.case.post_exposure.record),
+                  "post_exposure_context_changed")
 
     def require_observations(self, observations):
         record = self.record()
@@ -235,10 +238,13 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
     cohort = json.loads(cohort_bytes)
     derived_occupancy = case.occupancy_source_support is not None
     partial_domain = case.support_domain is not None
+    post_start = case.post_exposure
+    _need(post_start is None or partial_domain, "post_exposure_requires_fixed_partial_domain_condition")
     _need(not partial_domain or derived_occupancy, "partial_domain_requires_explicit_S_union_T_assumption")
     source = _fields(source_binding, SOURCE_FIELDS | ({"occupancy_derivation",
         "target_domain_source_sha256", "target_domain_binary_hash"} if derived_occupancy else set())
-        | (PARTIAL_DOMAIN_SOURCE_FIELDS if partial_domain else set()),
+        | (PARTIAL_DOMAIN_SOURCE_FIELDS if partial_domain else set())
+        | ({"post_exposure"} if post_start is not None else set()),
         "exact_public_source_fields_required")
     qc = _fields(qc_receipt, QC_FIELDS | ({"derived_occupancy_anatomically_validated"}
         if derived_occupancy else set()) | ({"partial_source_domain_preserved"} if partial_domain else set()),
@@ -254,8 +260,17 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
     plan = _fields(protocol, PROTOCOL_FIELDS | ({"checkpoint_lineage"} if checkpoint_reload else set())
         | ({"occupancy_learning_protocol"} if occupancy_learning else set())
         | ({"occupancy_inference_protocol"} if occupancy_inference else set())
-        | ({"occupancy_condition"} if derived_occupancy else set()),
+        | ({"occupancy_condition"} if derived_occupancy else set())
+        | ({"post_exposure_condition_hash"} if post_start is not None else set()),
         "exact_preflight_protocol_fields_required")
+    if post_start is not None:
+        from .post_exposure import VERSION as POST_EXPOSURE_VERSION
+        _need(post_start.record["version"] == POST_EXPOSURE_VERSION
+              and semantic_digest(source["post_exposure"]) == post_start.fingerprint
+              and plan["post_exposure_condition_hash"] == post_start.fingerprint
+              and plan["max_optimizer_updates"] == 0 and plan["max_policy_forwards"] == 0
+              and not occupancy_learning and not occupancy_inference and not checkpoint_reload,
+              "explicit_post_exposure_search_only_binding_required")
     domain = source["evidence_domain"]
     _need(domain in {"acquired_patient", "generated_interface_control"}, "explicit_evidence_domain_required")
     _need(source["version"] == qc["version"] == plan["version"] == VERSION
@@ -411,6 +426,7 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
            if derived_occupancy else {}),
         **({"source_and_simulated_domains": case._domain_record,
             "source_domain_fully_covered": False} if partial_domain else {}),
+        **({"post_exposure": post_start.record} if post_start is not None else {}),
         **({} if case.public_target_context_variant is None else {
             'public_target_context_variant':case.public_target_context_variant}),
         "patient_group": source["patient_group"], "role": member["role"], "evidence_domain": domain,

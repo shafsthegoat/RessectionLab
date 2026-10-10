@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-post-exposure-preparation-v1/generated-attempt-02/fresh-pycache",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py"
+  ],
+  "pid": 86628,
+  "returncode": 0,
+  "timed_out": false,
+  "wall_seconds": 2.933991458,
+  "maxrss_bytes_macos": 92913664,
+  "patient_reads": 0,
+  "canonical_edits": false,
+  "threads": 1,
+  "source_index_sha256": "bef3c4304ceb1cd422c3daf3407a0178048d2566ec3ac908db5b5177e9d0a868"
+}

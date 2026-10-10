@@ -23,11 +23,12 @@ from typing import Any, Iterable
 import numpy as np
 from scipy.ndimage import binary_fill_holes
 
-from .core import array_digest, freeze_json, semantic_digest
+from .core import array_digest, freeze_json, semantic_digest, thaw_json
+from .post_exposure import PostExposureStart, preentry_tip
 
 from .geometry import (
     AccessWindow, GeometryScene, ToolGeometry, ToolPose, capsule_voxel_indices,
-    check_motion, point_segment_distances, _immutable, _segment_cell_distances,
+    check_motion, tool_capsules, point_segment_distances, _immutable, _segment_cell_distances,
 )
 
 NATIVE_RESECTION_VERSION = "contained-native-cell-connected-suction-v2"
@@ -105,6 +106,7 @@ class NativeResectionConfig:
     max_microsteps: int = 4096
     # Optional public simulation domain. Its complement is unavailable, not air.
     interaction_domain: np.ndarray | None = None
+    post_exposure: PostExposureStart | None = None
     _fingerprint: str = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
@@ -128,6 +130,10 @@ class NativeResectionConfig:
             if domain.shape != tissue.shape or np.any(tissue & ~domain):
                 raise ValueError("Native interaction domain must contain all modeled tissue on the source grid")
             object.__setattr__(self, "interaction_domain", domain)
+        if self.post_exposure is not None:
+            if type(self.post_exposure) is not PostExposureStart:
+                raise ValueError("Typed explicit post-exposure start required")
+            self.post_exposure.require_bound(tissue, self.interaction_domain, affine, self.access)
         # Reuse geometry's physical-frame validation without installing tissue as
         # a hard exclusion: the distal active region is allowed declared contact.
         scene = GeometryScene(np.zeros((1, 1, 1), bool), affine)
@@ -155,8 +161,10 @@ class NativeResectionConfig:
             "source_hash": self.source_hash, "tissue_support_provenance": self.tissue_support_provenance,
             "arrays": {name: _hash_array(getattr(self, name)) for name in ("tissue_mask", "target_labels", "affine", "hard_exclusion")},
             **({"interaction_domain": _hash_array(self.interaction_domain),
-                "unknown_domain_rule": "within_grid_no_tool_encounter_or_free_space; exterior_extent_unassessed"}
+                "unknown_domain_rule": ("within_grid_no_tool_encounter_or_free_space; exterior_extent_unassessed" if self.post_exposure is None else
+                    "U except declared wholly_proximal E blocks full tool; U never becomes free; external_extent_unassessed")}
                if self.interaction_domain is not None else {}),
+            **({"post_exposure": thaw_json(self.post_exposure.record)} if self.post_exposure is not None else {}),
             "access": asdict(self.access), "tools": [asdict(tool) for tool in self.tools],
             "max_tip_step_mm": self.max_tip_step_mm, "max_microsteps": self.max_microsteps,
             "partial_cell_policy": "record_contact_keep_occupied_credit_no_removal",
@@ -242,6 +250,7 @@ class NativeStrokeResult:
             raise ValueError("A rejected preview is not an executed removal history")
         return {
             **({"interaction_mode": self.interaction_mode} if self.interaction_mode != "aspirate" else {}),
+            **(thaw_json(self._post_exposure_record) if hasattr(self, "_post_exposure_record") else {}),
             "tool_id": self.tool_id, "tip_mm": self.tip_mm, "axis_unit": self.axis_unit,
             "entry_mm": self.entry_mm,
             "removed_indices_native": self.removed_indices_native.tolist(),
@@ -345,14 +354,17 @@ class NativeResectionEngine:
         self.config = config
         self._tools = {tool.tool_id: tool for tool in config.tools}
         self._scene = GeometryScene(config.hard_exclusion, config.affine)
-        self._domain_scene = (None if config.interaction_domain is None else
-            GeometryScene(~config.interaction_domain, config.affine))
+        domain_blocked = None if config.interaction_domain is None else ~config.interaction_domain
+        if config.post_exposure is not None:
+            domain_blocked = domain_blocked & ~config.post_exposure.external_workspace
+        self._domain_scene = None if domain_blocked is None else GeometryScene(domain_blocked, config.affine)
         self._cell_scene = GeometryScene(np.zeros(config.tissue_mask.shape, bool), config.affine)
         # Enclosed anatomical voids are not new access entrances. They join free
         # space only if a verified removal opens a face-connected route to them.
         blocked = (config.tissue_mask if config.interaction_domain is None else
                    config.tissue_mask | ~config.interaction_domain)
-        self._initial_connected_free = _frozen(~binary_fill_holes(blocked), bool)
+        self._initial_connected_free = (_frozen(~binary_fill_holes(blocked), bool)
+            if config.post_exposure is None else config.post_exposure.initial_free)
         self.reset()
 
     @property
@@ -466,7 +478,17 @@ class NativeResectionEngine:
         if length < 1e-9:
             raise ValueError("Native stroke endpoint must lie inward from its access")
         axis = displacement / length
-        number = int(np.ceil(length / self.config.max_tip_step_mm))
+        physical_start = entry
+        post_record = None
+        if self.config.post_exposure is not None and float(axis @ self.config.access.normal_inward) > 0:
+            physical_start = preentry_tip(tool, entry, axis, self.config.access.normal_inward)
+            post_record = {"post_exposure_condition_hash": self.config.post_exposure.fingerprint,
+                "physical_start_mm": physical_start.tolist(),
+                "external_workspace_encounter_cells": 0,
+                "external_workspace_encounter_hash": semantic_digest([]),
+                "inter_insertion_transfer": "unassessed; each axial primitive withdraws identically"}
+        physical_displacement = tip-physical_start
+        number = int(np.ceil(float(np.linalg.norm(physical_displacement)) / self.config.max_tip_step_mm))
         records: list[NativeMicrostep] = []
         contacts: list[np.ndarray] = []
         removed: list[np.ndarray] = []
@@ -483,6 +505,8 @@ class NativeResectionEngine:
                 self.config.voxel_volume_mm3, None if failure_tip is None else tuple(failure_tip), unknowns,
                 interaction_mode=interaction_mode,
             )
+            if post_record is not None:
+                object.__setattr__(result, "_post_exposure_record", freeze_json(post_record))
             if obstruction is not None:
                 object.__setattr__(result, "_obstruction_diagnostic", obstruction)
             if feasible:
@@ -503,18 +527,38 @@ class NativeResectionEngine:
         if not geometry.feasible:
             failure = geometry.failures[0]
             return finish(False, "HARD_GEOMETRY:" + failure.reason, np.asarray(failure.position_mm))
+        if self.config.post_exposure is not None:
+            physical_geometry = check_motion(tool, ToolPose(physical_start, axis), ToolPose(tip, axis), self._scene)
+            unknowns = tuple(sorted(set(unknowns) | set(physical_geometry.unknowns)))
+            cells = physical_geometry.swept_voxel_indices
+            external = cells[self.config.post_exposure.external_workspace[tuple(cells.T)]]
+            post_record["external_workspace_encounter_cells"] = len(external)
+            post_record["external_workspace_encounter_hash"] = semantic_digest(external.tolist())
+            if len(external):
+                unknowns = tuple(sorted(set(unknowns) | {"declared_external_workspace_unassessed"}))
+            if not physical_geometry.feasible:
+                failure = physical_geometry.failures[0]
+                return finish(False, "HARD_GEOMETRY:"+failure.reason, np.asarray(failure.position_mm))
+            # Query only each local capsule; do not build a whole-tissue tree
+            # for every candidate's initial pose.
+            for start, end, radius, _ in tool_capsules(tool, ToolPose(physical_start, axis)):
+                initial_cells = capsule_voxel_indices(self._cell_scene, start, end, radius)
+                blocked_initial = initial_cells[self.remaining_mask[tuple(initial_cells.T)]]
+                if len(blocked_initial):
+                    position = self.config.affine[:3, :3]@blocked_initial[0]+self.config.affine[:3, 3]
+                    return finish(False, "POST_EXPOSURE_INITIAL_TOOL_OCCUPIED", position)
         if self._domain_scene is not None:
-            domain_geometry = check_motion(tool, ToolPose(entry, axis), ToolPose(tip, axis),
-                                           self._domain_scene, self.config.access)
+            domain_geometry = check_motion(tool, ToolPose(physical_start, axis), ToolPose(tip, axis),
+                                           self._domain_scene, self.config.access if post_record is None else None)
             unknowns = tuple(sorted(set(unknowns) | set(domain_geometry.unknowns)))
             if not domain_geometry.feasible:
                 failure = domain_geometry.failures[0]
                 return finish(False, "UNKNOWN_DOMAIN:" + failure.reason, np.asarray(failure.position_mm))
         remaining = self.remaining_mask.copy()
         connected_free = self.connected_free_mask.copy()
-        previous = np.asarray(entry)
+        previous = np.asarray(physical_start)
         for step in range(number + 1):
-            current = entry + displacement * (step / number)
+            current = physical_start + physical_displacement * (step / number)
             active_start = previous - tool.tip_length_mm * axis
             active_end = current
             touched = capsule_voxel_indices(self._cell_scene, active_start, active_end, tool.tip_radius_mm)

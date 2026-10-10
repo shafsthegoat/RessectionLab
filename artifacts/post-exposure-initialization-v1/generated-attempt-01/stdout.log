@@ -1,0 +1,475 @@
+FFFFF.FFFFFF..FFF.                                                       [100%]
+=================================== FAILURES ===================================
+_ test_thin_known_zero_layer_supports_seed_and_clear_preentry_without_initial_cut[1] _
+
+layers = 1
+
+    @pytest.mark.parametrize('layers',[1,2])
+    def test_thin_known_zero_layer_supports_seed_and_clear_preentry_without_initial_cut(layers):
+        S,T,Ds=arrays(layers); cfg,start=prepared(S,T,Ds)
+        assert cfg.access.center_mm[0]==7.5 and start.seed[7,8,8]
+        p0=preentry_tip(TOOL,cfg.access.center_mm,np.array([1.,0,0]),cfg.access.normal_inward)
+        assert p0[0]==pytest.approx(6.2-1e-8)
+        engine=NativeResectionEngine(cfg)
+        assert not engine.removed_mask.any() and not engine.contact_mask.any()
+        assert np.array_equal(engine.connected_free_mask,start.initial_free)
+        assert not np.any(engine.connected_free_mask & (~Ds | (S|T)))
+        cell_scene=GeometryScene(np.zeros_like(S),np.eye(4))
+        for a,b,r,_ in tool_capsules(TOOL,ToolPose(p0,[1,0,0])):
+            cells=capsule_voxel_indices(cell_scene,a,b,r)
+            assert not (S|T)[tuple(cells.T)].any()
+        before=engine.state_hash
+>       result=engine.preview_stroke(TOOL.tool_id,[8,8,8])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:488: in preview_stroke
+    "external_workspace_encounter_hash": array_digest(_EMPTY),
+                                         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+_ test_thin_known_zero_layer_supports_seed_and_clear_preentry_without_initial_cut[2] _
+
+layers = 2
+
+    @pytest.mark.parametrize('layers',[1,2])
+    def test_thin_known_zero_layer_supports_seed_and_clear_preentry_without_initial_cut(layers):
+        S,T,Ds=arrays(layers); cfg,start=prepared(S,T,Ds)
+        assert cfg.access.center_mm[0]==7.5 and start.seed[7,8,8]
+        p0=preentry_tip(TOOL,cfg.access.center_mm,np.array([1.,0,0]),cfg.access.normal_inward)
+        assert p0[0]==pytest.approx(6.2-1e-8)
+        engine=NativeResectionEngine(cfg)
+        assert not engine.removed_mask.any() and not engine.contact_mask.any()
+        assert np.array_equal(engine.connected_free_mask,start.initial_free)
+        assert not np.any(engine.connected_free_mask & (~Ds | (S|T)))
+        cell_scene=GeometryScene(np.zeros_like(S),np.eye(4))
+        for a,b,r,_ in tool_capsules(TOOL,ToolPose(p0,[1,0,0])):
+            cells=capsule_voxel_indices(cell_scene,a,b,r)
+            assert not (S|T)[tuple(cells.T)].any()
+        before=engine.state_hash
+>       result=engine.preview_stroke(TOOL.tool_id,[8,8,8])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:488: in preview_stroke
+    "external_workspace_encounter_hash": array_digest(_EMPTY),
+                                         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+_____________ test_touching_or_inward_U_is_never_exempt[location0] _____________
+
+location = (7, 8, 8)
+
+    @pytest.mark.parametrize('location',[(7,8,8),(9,8,8)])
+    def test_touching_or_inward_U_is_never_exempt(location):
+        S,T,Ds=arrays(); S[location]=False; T[location]=False; Ds[location]=False
+        cfg,start=prepared(S,T,Ds)
+        assert not start.external_workspace[location]
+        engine=NativeResectionEngine(cfg); before=engine.state_hash
+>       r=engine.preview_stroke(TOOL.tool_id,[8,8,8])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:488: in preview_stroke
+    "external_workspace_encounter_hash": array_digest(_EMPTY),
+                                         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+_____________ test_touching_or_inward_U_is_never_exempt[location1] _____________
+
+location = (9, 8, 8)
+
+    @pytest.mark.parametrize('location',[(7,8,8),(9,8,8)])
+    def test_touching_or_inward_U_is_never_exempt(location):
+        S,T,Ds=arrays(); S[location]=False; T[location]=False; Ds[location]=False
+        cfg,start=prepared(S,T,Ds)
+        assert not start.external_workspace[location]
+        engine=NativeResectionEngine(cfg); before=engine.state_hash
+>       r=engine.preview_stroke(TOOL.tool_id,[8,8,8])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:488: in preview_stroke
+    "external_workspace_encounter_hash": array_digest(_EMPTY),
+                                         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+_______ test_lateral_initial_shaft_material_is_not_exempted_as_external ________
+
+    def test_lateral_initial_shaft_material_is_not_exempted_as_external():
+        S,T,Ds=arrays(); S[1,1,8]=True; Ds[1,1,8]=True
+        cfg,start=prepared(S,T,Ds)
+        assert cfg.access.center_mm[0]==7.5 # extra cell lies wholly outside fixed disc
+        assert not start.external_workspace[1,1,8]
+>       r=NativeResectionEngine(cfg).preview_stroke(TOOL.tool_id,[8.5,9,8])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:488: in preview_stroke
+    "external_workspace_encounter_hash": array_digest(_EMPTY),
+                                         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+_______ test_cut_connects_new_known_zero_without_counting_it_as_removed ________
+
+    def test_cut_connects_new_known_zero_without_counting_it_as_removed():
+        S,T,Ds=arrays(); S[9,8,8]=False
+        cfg,start=prepared(S,T,Ds)
+        engine=NativeResectionEngine(cfg)
+        assert not engine.connected_free_mask[9,8,8]
+>       result=engine.execute_stroke(TOOL.tool_id,[8,8,8])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:722: in execute_stroke
+    result = self.preview_stroke(tool_id, tip_mm, entry_mm=entry_mm, interaction_mode=interaction_mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:488: in preview_stroke
+    "external_workspace_encounter_hash": array_digest(_EMPTY),
+                                         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+___ test_empty_K_fails_without_alternative_access_and_masks_remain_immutable ___
+
+    def test_empty_K_fails_without_alternative_access_and_masks_remain_immutable():
+        S,T,Ds=arrays(); Ds[7]=False
+        with pytest.raises(ValueError,match='EMPTY_FIXED_K'):prepared(S,T,Ds)
+        S,T,Ds=arrays(); cfg,start=prepared(S,T,Ds)
+        for a in (start.external_workspace,start.seed,start.initial_free):
+            with pytest.raises(ValueError):a.setflags(write=True)
+        changed=cfg.tissue_mask.copy(); changed[1,1,8]=True
+>       with pytest.raises(ValueError,match='differs from immutable'):replace(cfg,tissue_mask=changed)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'differs from immutable'
+E         Actual message: 'Native interaction domain must contain all modeled tissue on the source grid'
+
+build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py:132: AssertionError
+_________________ test_exact_preentry_pose_and_image_tip_guard _________________
+
+    def test_exact_preentry_pose_and_image_tip_guard():
+        S,T,Ds=arrays(); cfg,start=prepared(S,T,Ds)
+        axis=np.array([1,1,0],float)/np.sqrt(2)
+        p0=preentry_tip(TOOL,cfg.access.center_mm,axis,cfg.access.normal_inward)
+        assert (cfg.access.center_mm-p0)@cfg.access.normal_inward==pytest.approx(TOOL.tip_radius_mm+1e-8)
+        # A deep endpoint still uses unchanged tip-image rejection.
+>       r=NativeResectionEngine(cfg).preview_stroke(TOOL.tool_id,[18,8,8])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py:141: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:488: in preview_stroke
+    "external_workspace_encounter_hash": array_digest(_EMPTY),
+                                         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+____ test_actor_observes_connected_free_with_no_initial_reward_and_same_Ds _____
+
+    def test_actor_observes_connected_free_with_no_initial_reward_and_same_Ds():
+        S,T,Ds=arrays(); S[9,8,8]=False
+>       task=NativeSpatialTask(source(S,T,Ds),max_steps=2)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py:147: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_task.py:629: in __init__
+    self.reset()
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_task.py:683: in reset
+    return self.observation()
+           ^^^^^^^^^^^^^^^^^^
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_task.py:793: in observation
+    inventory = self._prepare_inventory()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_task.py:778: in _prepare_inventory
+    result = None if not eligible else self._engine.preview_stroke(tool.tool_id, tip,
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:488: in preview_stroke
+    "external_workspace_encounter_hash": array_digest(_EMPTY),
+                                         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+_____ test_approach_and_reverse_are_charged_per_insertion_and_tool_switch ______
+
+    def test_approach_and_reverse_are_charged_per_insertion_and_tool_switch():
+        S,T,Ds=arrays(); other=replace(TOOL,tool_id='generated-switch')
+>       case=source(S,T,Ds,tools=(TOOL,other)); task=NativeSpatialTask(case,max_steps=3)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_task.py:629: in __init__
+    self.reset()
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_task.py:683: in reset
+    return self.observation()
+           ^^^^^^^^^^^^^^^^^^
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_task.py:793: in observation
+    inventory = self._prepare_inventory()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_task.py:778: in _prepare_inventory
+    result = None if not eligible else self._engine.preview_stroke(tool.tool_id, tip,
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:488: in preview_stroke
+    "external_workspace_encounter_hash": array_digest(_EMPTY),
+                                         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+_______ test_nominal_proposal_verifier_accepts_explicit_initial_closure ________
+
+    def test_nominal_proposal_verifier_accepts_explicit_initial_closure():
+>       S,T,Ds=arrays();task=NativeSpatialTask(source(S,T,Ds,proposal=True),max_steps=2)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_task.py:629: in __init__
+    self.reset()
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_task.py:683: in reset
+    return self.observation()
+           ^^^^^^^^^^^^^^^^^^
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_task.py:793: in observation
+    inventory = self._prepare_inventory()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_task.py:719: in _prepare_inventory
+    evidence = certify(ray, collect_obstruction=obstruction)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_task.py:705: in certify
+    result = self._engine.preview_stroke(ray.tool_id, ray.tip_mm, entry_mm=ray.entry_mm, **options)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:488: in preview_stroke
+    "external_workspace_encounter_hash": array_digest(_EMPTY),
+                                         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+_ test_independent_replay_rejects_changed_external_reporting[external_workspace_encounter_cells-0] _
+
+field = 'external_workspace_encounter_cells', value = 0
+
+    @pytest.mark.parametrize('field,value',[
+        ('external_workspace_encounter_cells',0),
+        ('external_workspace_encounter_hash','sha256:'+'0'*64),
+        ('inter_insertion_transfer','certified')])
+    def test_independent_replay_rejects_changed_external_reporting(field,value):
+        S,T,Ds=arrays();cfg,start=prepared(S,T,Ds);engine=NativeResectionEngine(cfg)
+>       result=engine.execute_stroke(TOOL.tool_id,[8,8,8]);assert result.feasible
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py:222: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:722: in execute_stroke
+    result = self.preview_stroke(tool_id, tip_mm, entry_mm=entry_mm, interaction_mode=interaction_mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:488: in preview_stroke
+    "external_workspace_encounter_hash": array_digest(_EMPTY),
+                                         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+_ test_independent_replay_rejects_changed_external_reporting[external_workspace_encounter_hash-sha256:0000000000000000000000000000000000000000000000000000000000000000] _
+
+field = 'external_workspace_encounter_hash'
+value = 'sha256:0000000000000000000000000000000000000000000000000000000000000000'
+
+    @pytest.mark.parametrize('field,value',[
+        ('external_workspace_encounter_cells',0),
+        ('external_workspace_encounter_hash','sha256:'+'0'*64),
+        ('inter_insertion_transfer','certified')])
+    def test_independent_replay_rejects_changed_external_reporting(field,value):
+        S,T,Ds=arrays();cfg,start=prepared(S,T,Ds);engine=NativeResectionEngine(cfg)
+>       result=engine.execute_stroke(TOOL.tool_id,[8,8,8]);assert result.feasible
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py:222: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:722: in execute_stroke
+    result = self.preview_stroke(tool_id, tip_mm, entry_mm=entry_mm, interaction_mode=interaction_mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:488: in preview_stroke
+    "external_workspace_encounter_hash": array_digest(_EMPTY),
+                                         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+_ test_independent_replay_rejects_changed_external_reporting[inter_insertion_transfer-certified] _
+
+field = 'inter_insertion_transfer', value = 'certified'
+
+    @pytest.mark.parametrize('field,value',[
+        ('external_workspace_encounter_cells',0),
+        ('external_workspace_encounter_hash','sha256:'+'0'*64),
+        ('inter_insertion_transfer','certified')])
+    def test_independent_replay_rejects_changed_external_reporting(field,value):
+        S,T,Ds=arrays();cfg,start=prepared(S,T,Ds);engine=NativeResectionEngine(cfg)
+>       result=engine.execute_stroke(TOOL.tool_id,[8,8,8]);assert result.feasible
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py:222: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:722: in execute_stroke
+    result = self.preview_stroke(tool_id, tip_mm, entry_mm=entry_mm, interaction_mode=interaction_mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py:488: in preview_stroke
+    "external_workspace_encounter_hash": array_digest(_EMPTY),
+                                         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = _ImmutableArray([], shape=(0, 3), dtype=int64)
+
+    def array_digest(value: NDArray[Any]) -> str:
+        array = np.ascontiguousarray(value)
+        digest = hashlib.sha256()
+        digest.update(json.dumps({"shape": array.shape, "dtype": array.dtype.str}, sort_keys=True).encode())
+>       digest.update(memoryview(array).cast("B"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+src/resectionlab/core.py:109: TypeError
+=========================== short test summary info ============================
+FAILED build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py::test_thin_known_zero_layer_supports_seed_and_clear_preentry_without_initial_cut[1]
+FAILED build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py::test_thin_known_zero_layer_supports_seed_and_clear_preentry_without_initial_cut[2]
+FAILED build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py::test_touching_or_inward_U_is_never_exempt[location0]
+FAILED build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py::test_touching_or_inward_U_is_never_exempt[location1]
+FAILED build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py::test_lateral_initial_shaft_material_is_not_exempted_as_external
+FAILED build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py::test_cut_connects_new_known_zero_without_counting_it_as_removed
+FAILED build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py::test_empty_K_fails_without_alternative_access_and_masks_remain_immutable
+FAILED build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py::test_exact_preentry_pose_and_image_tip_guard
+FAILED build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py::test_actor_observes_connected_free_with_no_initial_reward_and_same_Ds
+FAILED build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py::test_approach_and_reverse_are_charged_per_insertion_and_tool_switch
+FAILED build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py::test_nominal_proposal_verifier_accepts_explicit_initial_closure
+FAILED build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py::test_independent_replay_rejects_changed_external_reporting[external_workspace_encounter_cells-0]
+FAILED build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py::test_independent_replay_rejects_changed_external_reporting[external_workspace_encounter_hash-sha256:0000000000000000000000000000000000000000000000000000000000000000]
+FAILED build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py::test_independent_replay_rejects_changed_external_reporting[inter_insertion_transfer-certified]
+14 failed, 4 passed in 2.05s

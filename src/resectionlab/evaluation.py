@@ -425,7 +425,8 @@ def _native_active_contacts(remaining: np.ndarray, rotation: np.ndarray,
                             spacing: np.ndarray, origin: np.ndarray,
                             start: np.ndarray, end: np.ndarray, radius: float, *,
                             distance_backend: str, distance_batch_size: int,
-                            cancelled: Callable[[], bool] | None) -> set[tuple[int, int, int]]:
+                            cancelled: Callable[[], bool] | None,
+                            tolerance_sq: float = 1e-9) -> set[tuple[int, int, int]]:
     """Exact active-contact set against the current pre-removal source mask."""
     start_local = rotation.T @ (start - origin)
     end_local = rotation.T @ (end - origin)
@@ -438,12 +439,12 @@ def _native_active_contacts(remaining: np.ndarray, rotation: np.ndarray,
     cell_indices = np.argwhere(remaining[region]) + low
     if distance_backend == "batch":
         for hits in _batch_cell_contacts(start_local, end_local, cell_indices, spacing,
-                                        radius, 1e-9, distance_batch_size, cancelled):
+                                        radius, tolerance_sq, distance_batch_size, cancelled):
             result.update(tuple(int(v) for v in index) for index in hits)
         return result
     for index in cell_indices:
         center = index * spacing
-        if segment_box_distance_sq(start_local, end_local, center - spacing / 2, center + spacing / 2) <= radius**2 + 1e-9:
+        if segment_box_distance_sq(start_local, end_local, center - spacing / 2, center + spacing / 2) <= radius**2 + tolerance_sq:
             result.add(tuple(int(v) for v in index))
     return result
 
@@ -849,6 +850,7 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
                                      tissue_mask: np.ndarray, access: Any,
                                      hard_exclusion: np.ndarray | None = None,
                                      interaction_domain: np.ndarray | None = None,
+                                     post_exposure: Any = None,
                                      geometry_frame: str = "RAS+",
                                      cancelled: Callable[[], bool] | None = None,
                                      distance_backend: str = "scalar",
@@ -901,13 +903,24 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         if (interaction_domain.shape != original.shape or interaction_domain.dtype != np.bool_
                 or np.any(original & ~interaction_domain)):
             raise ValueError("Native interaction domain must contain all modeled tissue on the source grid")
-        hard = hard | ~interaction_domain
+        unknown = ~interaction_domain
+        if post_exposure is not None:
+            from .post_exposure import PostExposureStart
+            if type(post_exposure) is not PostExposureStart:
+                raise ValueError("Typed post-exposure condition required")
+            post_exposure.assert_intact()
+            unknown = unknown & ~post_exposure.external_workspace
+        hard = hard | unknown
+    elif post_exposure is not None:
+        raise ValueError("Post-exposure cannot replace a missing source domain")
     remaining = original.copy()
     if geometry_frame not in {"RAS+", "LPS+"} or case.frame not in {"RAS+", "LPS+"}:
         raise ValueError("Independent native geometry needs an explicit RAS+ or LPS+ frame")
     matrix = np.asarray(case.affine, float)
     if case.frame != geometry_frame:
         matrix = np.diag([-1., -1., 1., 1.]) @ matrix
+    if post_exposure is not None:
+        post_exposure.require_bound(original, interaction_domain, matrix, access)
     spacing = np.linalg.norm(matrix[:3, :3], axis=0)
     if not np.allclose(matrix[:3, :3].T @ matrix[:3, :3], np.diag(spacing**2), atol=1e-7):
         raise ValueError("Independent native tool check does not support sheared source cells")
@@ -922,7 +935,7 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
             raise ValueError("Independent interaction registry must bind every frozen tool")
     connectivity = generate_binary_structure(3, 1)
     hard_scene = SimpleNamespace(forbidden_mask=hard, affine=matrix,
-                                 sphere_obstacles=(), enforce_tip_in_bounds=False)
+                                 sphere_obstacles=(), enforce_tip_in_bounds=post_exposure is not None)
     border = np.zeros_like(remaining)
     for axis in range(3):
         selector = [slice(None)] * 3
@@ -931,7 +944,8 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         selector[axis] = -1
         border[tuple(selector)] = True
     free_mask = ~remaining if interaction_domain is None else ~remaining & interaction_domain
-    free = binary_propagation(border & free_mask, structure=connectivity, mask=free_mask)
+    seed = border & free_mask if post_exposure is None else post_exposure.seed
+    free = binary_propagation(seed, structure=connectivity, mask=free_mask)
     declared: set[tuple[int, int, int]] = set()
     accepted: set[tuple[int, int, int]] = set()
     volume = float(abs(np.linalg.det(matrix[:3, :3])))
@@ -979,6 +993,55 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         normal = normal / np.linalg.norm(normal)
         if abs(float((previous - access.center_mm) @ normal)) > 1e-7:
             return report("native_entry_outside_access_plane", action_id)
+        if post_exposure is not None:
+            if record.get("post_exposure_condition_hash") != post_exposure.fingerprint:
+                return report("native_post_exposure_condition_mismatch", action_id)
+            alignment = float(axis @ normal)
+            if alignment <= 0:
+                return report("native_post_exposure_nonforward_axis", action_id)
+            # Independently derive the two-capsule forward extent; do not call
+            # the producer's preentry function or substitute the plane entry.
+            extent = max(tip_radius, shaft_radius-tip_length*alignment)
+            physical_start = previous-((extent+1e-8)/alignment)*axis
+            saved_start = np.asarray(record.get("physical_start_mm"), float)
+            if saved_start.shape != (3,) or not np.allclose(saved_start, physical_start, rtol=0, atol=1e-9):
+                return report("native_post_exposure_start_mismatch", action_id)
+            endpoint = np.asarray(record.get("tip_mm"), float)
+            if endpoint.shape != (3,) or not np.isfinite(endpoint).all():
+                raise ValueError("Post-exposure endpoint must be finite")
+            access_check = independent_check_motion(tool, ToolPose(previous, axis), ToolPose(endpoint, axis), hard_scene, access)
+            if not access_check.feasible:
+                return report("native_post_exposure_access_failure", action_id)
+            # Independently enumerate the full axial swept union against E.
+            # Match the declared linear 1e-9mm cell-contact tolerance, without
+            # using producer geometry or its saved count/hash.
+            external_cells = set()
+            try:
+                for a, b, radius in (
+                    (physical_start-length*axis, endpoint-tip_length*axis, shaft_radius),
+                    (physical_start-tip_length*axis, endpoint, tip_radius)):
+                    external_cells.update(_native_active_contacts(post_exposure.external_workspace,
+                        rotation, spacing, matrix[:3, 3], a, b, radius+1e-9,
+                        distance_backend=distance_backend, distance_batch_size=distance_batch_size,
+                        cancelled=cancelled, tolerance_sq=0.))
+            except IndependentBatchCancelled:
+                return report("independent_validation_cancelled", action_id)
+            from .core import semantic_digest
+            external_indices = np.asarray(sorted(external_cells), dtype=np.int64).reshape(-1, 3)
+            if (type(record.get("external_workspace_encounter_cells")) is not int
+                    or record["external_workspace_encounter_cells"] != len(external_indices)
+                    or record.get("external_workspace_encounter_hash") != semantic_digest(external_indices.tolist())
+                    or record.get("inter_insertion_transfer") != "unassessed; each axial primitive withdraws identically"):
+                return report("native_post_exposure_external_report_mismatch", action_id)
+            initial_scene = SimpleNamespace(forbidden_mask=remaining, affine=matrix,
+                                            sphere_obstacles=(), enforce_tip_in_bounds=True)
+            initial_check = independent_check_motion(tool, ToolPose(physical_start, axis),
+                ToolPose(physical_start, axis), initial_scene, None)
+            if not initial_check.feasible:
+                return report("native_post_exposure_initial_tool_occupied_or_outside", action_id)
+            previous = physical_start
+        elif "physical_start_mm" in record or "post_exposure_condition_hash" in record:
+            return report("undeclared_native_post_exposure_history", action_id)
         mode = record.get("interaction_mode", "aspirate")
         if mode not in {"aspirate", "probe"}:
             return report("unsupported_native_interaction_mode", action_id)
@@ -1077,7 +1140,7 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
             if omitted:
                 return report("unrecorded_partial_active_tissue_contact", action_id, next(iter(omitted)))
             certificate = independent_check_motion(tool, ToolPose(tip_start, axis), ToolPose(tip_end, axis),
-                hard_scene, access)
+                hard_scene, access if post_exposure is None else None)
             if not certificate.feasible:
                 return report("native_full_tool_hard_constraint_failure", action_id)
             # The shaft cannot use tissue clearance produced only at this

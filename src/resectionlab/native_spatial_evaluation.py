@@ -73,7 +73,7 @@ def evaluate_native_spatial_episode(task, *, minimum_target_cells=1, metrics=Non
     audit = independent_check_native_history(
         source, case.tools, history, tissue_mask=case.observed_support, access=case.access,
         hard_exclusion=task._config.hard_exclusion, geometry_frame='RAS+', cancelled=cancelled,
-        interaction_domain=task._config.interaction_domain,
+        interaction_domain=task._config.interaction_domain, post_exposure=task._config.post_exposure,
         distance_backend=distance_backend, distance_batch_size=distance_batch_size,
     )
     result = {
@@ -119,7 +119,7 @@ def evaluate_native_spatial_episode(task, *, minimum_target_cells=1, metrics=Non
         # do not reuse the simulator's reduction or its reported action totals.
         target = math.fsum(float(case.reference_target[cell]) for cell in sorted(cells)) * volume
         normal = len(cells) * volume - target
-        distance = float(np.linalg.norm(np.asarray(record['tip_mm']) - np.asarray(record['entry_mm'])))
+        distance = float(np.linalg.norm(np.asarray(record['tip_mm']) - np.asarray(record.get('physical_start_mm', record['entry_mm']))))
         change = int(previous_tool is not None and previous_tool != record['tool_id'])
         actual_reward = (weights.target_per_mm3 * target - weights.normal_per_mm3 * normal
                          - weights.action_cost - 2 * weights.motion_per_mm * distance

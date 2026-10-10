@@ -1,0 +1,94 @@
+{
+  "status": "source_repaired_after_preserved_generated_attempt01; rerun_held_for_SELECT_actual",
+  "definition": {
+    "path": "build/remind-post-exposure-preparation-v1/DEFINITION.txt",
+    "sha256": "8f1742eee47346ad8b7c24d2408cf1128b1695ac20e7c66bc86cc8acc532f4b1"
+  },
+  "files": [
+    {
+      "path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/evaluation.py",
+      "sha256": "cc8fc347b56efb2466c02d749eb307342c4931de0187b5ede2c0fbbb6975f193",
+      "bytes": 69646,
+      "canonical_path": "src/resectionlab/evaluation.py",
+      "baseline_sha256": "a5a47ab1d62583f5a0c05db80cc5dafb40a06d30a4542287c18b2d6d840a49e0"
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/native_proposals.py",
+      "sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+      "bytes": 61525,
+      "canonical_path": "src/resectionlab/native_proposals.py",
+      "baseline_sha256": "45a1dea3b85f919413c34eed7d84ab53817799918346714927d03bf2b6f9c359"
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py",
+      "sha256": "2aa191370f2dab441089dcd3d6b925c80d0da450d72fdc464d42fb93d13c8e1f",
+      "bytes": 46379,
+      "canonical_path": "src/resectionlab/native_resection.py",
+      "baseline_sha256": "98012e94329e21eea06d97701adb80f6315baa55c1b8b582fe64ec520de307cd"
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_evaluation.py",
+      "sha256": "bed5957cecc2a18127eb3bbaa7854c4a26406cb222d2debf23244fbbe003084b",
+      "bytes": 9953,
+      "canonical_path": "src/resectionlab/native_spatial_evaluation.py",
+      "baseline_sha256": "e5ea456cd3997148b1ff48359b66a63a27826c14da2fd33cd6e64e2045ff9820"
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_task.py",
+      "sha256": "8237f90b3b512d03452be027e6e7e337f69da3e8127f169fe870a56c47418c32",
+      "bytes": 86060,
+      "canonical_path": "src/resectionlab/native_spatial_task.py",
+      "baseline_sha256": "e2e30f8e1fd6ef5f37b922d21c200e19422ea1c96982de7956c343e05256efec"
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/patient_planning_admission.py",
+      "sha256": "d33c96f43b07db739be411eb2efef6376583c45c1db671df468fe9f505de6242",
+      "bytes": 29029,
+      "canonical_path": "src/resectionlab/patient_planning_admission.py",
+      "baseline_sha256": "d48e1b138653c6b38c81f33d91541849c532ea78a0b7db0a7132f03e7a05a8df",
+      "integration_base_path": "build/remind-post-exposure-preparation-v1/integration-baseline-40137fe/patient_planning_admission.py",
+      "integration_base_sha256": "1f2438e32385859d42362ed987f73021c5dfa2bf303c45037162ae9919dd21fd"
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/post_exposure.py",
+      "sha256": "ce95ca492aef3bb0149d9fb62c22766caad76701f894abaa37327a21acb7970e",
+      "bytes": 9110,
+      "canonical_path": "src/resectionlab/post_exposure.py",
+      "baseline_sha256": null
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/public_patient_factory.py",
+      "sha256": "c9f48ceb53cf0278d7a8a072d2925c5f57878ffc2f0ad79e07028d85b712d4b5",
+      "bytes": 25838,
+      "canonical_path": "src/resectionlab/public_patient_factory.py",
+      "baseline_sha256": "5f3fc69e71176b0a4eb776312ef3d80ff43f5ab39bb55ed2417b56b2b39ce50f",
+      "integration_base_path": "build/remind-post-exposure-preparation-v1/integration-baseline-40137fe/public_patient_factory.py",
+      "integration_base_sha256": "5e847d88978b449c25168c8caa13beb47ff7a98d7a5465220d4cdd9f3f5aa42a"
+    }
+  ],
+  "generated_tests": [
+    {
+      "path": "build/remind-post-exposure-preparation-v1/tests/parity_probe.py",
+      "sha256": "6aa1706cbba32b4c341fa2b4734600ce91c236c3b6d55e1e874548ec76a33b68",
+      "bytes": 2604
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py",
+      "sha256": "b9f3fb02db2ac945fc9dcdd8210971d86d19267afb89371d23992c85b6cffbef",
+      "bytes": 14115
+    }
+  ],
+  "canonical_edits": false,
+  "patient_execution": false,
+  "new_training_admission": false,
+  "source_freeze_for_review": false,
+  "baseline_commit": "a86a530",
+  "integration_dependency": "Factory/admission rebased over40137fe; await repaired generated suite and final source review",
+  "preserved_attempt01": {
+    "receipt": "build/remind-post-exposure-preparation-v1/generated-attempt-01/receipt.json",
+    "log": "build/remind-post-exposure-preparation-v1/generated-attempt-01/stdout.log",
+    "passed": 4,
+    "failed": 14,
+    "default_parity_passed": true
+  }
+}

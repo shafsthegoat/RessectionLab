@@ -80,7 +80,7 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         *, public_manifest_path, public_manifest_sha256, cohort_bytes,
         learning_protocol_hash=None, proposal_config=None, public_target_context_variant=None,
         expected_role="TRAIN", checkpoint_lineage=None, occupancy_condition="raw_cerebrum_baseline",
-        occupancy_learning_protocol=None, occupancy_inference_protocol=None):
+        occupancy_learning_protocol=None, occupancy_inference_protocol=None, post_exposure_condition=None):
     """Build one public source and admission inputs; caller owns supervised use.
 
     expected_protocol may be None for a first construction; then a learning
@@ -105,6 +105,11 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
             or type(limits.get("max_optimizer_updates")) is not int or limits["max_optimizer_updates"] != 0
             or type(limits.get("max_policy_forwards")) is not int or limits["max_policy_forwards"] <= 0):
         raise ValueError("Union inference requires fixed SELECT013 frozen weights and zero updates")
+    if post_exposure_condition is not None:
+        from resectionlab.post_exposure import VERSION as POST_EXPOSURE_VERSION
+        if (post_exposure_condition != POST_EXPOSURE_VERSION or not partial_domain
+                or expected_role != "TRAIN" or checkpoint_lineage is not None or occupancy_learning or occupancy_inference):
+            raise ValueError("Post-exposure is a separate fixed-four partial-domain TRAIN search condition")
     if occupancy_learning and (occupancy_condition != SUPPLIED_TUMOR_UNION_OCCUPANCY
             or expected_role != "TRAIN" or checkpoint_lineage is not None):
         raise ValueError("Union learning is restricted to the original full-coverage TRAIN condition")
@@ -213,10 +218,18 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         "goal_membership_meaning": "exact supplied positive region; outside this region is not normal anatomy truth",
         "estimated_support_zeros": "simulation occupancy assumption, not certified empty anatomy",
         "tools": "existing geometry.GENERIC_TOOLS; generic research geometry, not device validation"}
-    write(output / "public-task-derivation.json", derived)
-    # Access above uses raw S in both conditions. No filling, clipping or route
-    # selection accompanies the explicitly assumed material added below.
+    # Strict defaults retain the historical raw-S access exactly.
     occupancy = np.logical_or(support, target) if derived_occupancy else support
+    post_start = None
+    if post_exposure_condition is not None:
+        from resectionlab.native_spatial_task import reconcile_native_grid_roundoff
+        from resectionlab.post_exposure import prepare_post_exposure
+        native_affine, _ = reconcile_native_grid_roundoff(affine, image.shape)
+        access, post_start = prepare_post_exposure(support=support, target=target,
+            support_domain=support_domain, affine=native_affine, previous_access=access)
+        derived = {**derived, "strict_baseline_access_unchanged_in_original_condition": True,
+            "post_exposure": thaw_json(post_start.record)}
+    write(output / "public-task-derivation.json", derived)
     progress("before_native_case_constructor", native_shape=list(image.shape), actor_crop=[64,64,64])
     source = NativeSpatialCase(image, occupancy, target, affine, access, GENERIC_TOOLS,
         track="annotation_assisted", support_source_kind=(DERIVED_OCCUPANCY_SOURCE_KIND if derived_occupancy else "supplied_annotation"),
@@ -247,6 +260,7 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         target_semantics=SUPPLIED_GOAL_REGION,
         **({"occupancy_source_support": support} if derived_occupancy else {}),
         **({"support_domain": support_domain} if partial_domain else {}),
+        **({"post_exposure": post_start} if post_start is not None else {}),
         **({} if public_target_context_variant is None else {
             'public_target_context_variant':public_target_context_variant,
             'public_target_domain':np.asarray(domain,dtype=bool)}))
@@ -272,7 +286,8 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
             "target_domain_binary_hash": array_digest(np.asarray(domain, bool))} if derived_occupancy else {}),
         **({"support_domain_source_sha256": files["supplied_support_domain"]["sha256"],
             "support_domain_binary_hash": array_digest(support_domain),
-            "source_and_simulated_domains": thaw_json(source._domain_record)} if partial_domain else {})}
+            "source_and_simulated_domains": thaw_json(source._domain_record)} if partial_domain else {}),
+        **({"post_exposure": thaw_json(post_start.record)} if post_start is not None else {})}
     qc = {"version": VERSION, "evidence_domain": "acquired_patient", "subject": subject,
         "public_source_binding_hash": semantic_digest(binding), "status": "pass",
         "scope": PARTIAL_DOMAIN_QC_SCOPE if partial_domain else QC_SCOPE,
@@ -292,14 +307,17 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         **({} if expected_role == "TRAIN" else {"checkpoint_lineage": checkpoint_lineage}),
         **({"occupancy_condition": occupancy_condition} if derived_occupancy else {}),
         **({"occupancy_learning_protocol": thaw_json(occupancy_learning_protocol)} if occupancy_learning else {}),
-        **({"occupancy_inference_protocol": thaw_json(occupancy_inference_protocol)} if occupancy_inference else {})}
+        **({"occupancy_inference_protocol": thaw_json(occupancy_inference_protocol)} if occupancy_inference else {}),
+        **({"post_exposure_condition_hash": post_start.fingerprint} if post_start is not None else {})}
     if derived_occupancy:
         write(output / "derived-occupancy-assumption.json", {"condition": occupancy_condition,
             "derivation": thaw_json(source._occupancy_derivation),
             "raw_public_files": {key: {"sha256": files[key]["sha256"], "bytes": files[key]["bytes"]}
                 for key in input_keys},
             **({"source_and_simulated_domains": thaw_json(source._domain_record)} if partial_domain else {}),
-            "target_domain_hash": array_digest(domain), "access_derived_from": "raw S and unchanged T",
+            "target_domain_hash": array_digest(domain), "access_derived_from": ("raw S and unchanged T" if post_start is None else
+                "same original side/centroid; full O-cell face across fixed disc; separately declared post-exposure condition"),
+            **({"post_exposure": thaw_json(post_start.record)} if post_start is not None else {}),
             "public_access_rule": derived, "source_QC_validates_derived_material": False,
             "policy_comparison_permitted": occupancy_learning or occupancy_inference,
             **({"comparison_scope": "same_declared_union_world_SELECT013_frozen_inference_only"}

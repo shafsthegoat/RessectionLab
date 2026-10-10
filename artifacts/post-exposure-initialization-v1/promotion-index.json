@@ -1,0 +1,129 @@
+{
+  "scope": "Optional fixed-four partial-domain TRAIN post-exposure search qualification; no learning admission",
+  "files": [
+    {
+      "staged_path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/evaluation.py",
+      "canonical_path": "src/resectionlab/evaluation.py",
+      "sha256": "cc8fc347b56efb2466c02d749eb307342c4931de0187b5ede2c0fbbb6975f193",
+      "expected_previous_sha256": "a5a47ab1d62583f5a0c05db80cc5dafb40a06d30a4542287c18b2d6d840a49e0"
+    },
+    {
+      "staged_path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/native_proposals.py",
+      "canonical_path": "src/resectionlab/native_proposals.py",
+      "sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+      "expected_previous_sha256": "45a1dea3b85f919413c34eed7d84ab53817799918346714927d03bf2b6f9c359"
+    },
+    {
+      "staged_path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/native_resection.py",
+      "canonical_path": "src/resectionlab/native_resection.py",
+      "sha256": "2aa191370f2dab441089dcd3d6b925c80d0da450d72fdc464d42fb93d13c8e1f",
+      "expected_previous_sha256": "98012e94329e21eea06d97701adb80f6315baa55c1b8b582fe64ec520de307cd"
+    },
+    {
+      "staged_path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_evaluation.py",
+      "canonical_path": "src/resectionlab/native_spatial_evaluation.py",
+      "sha256": "bed5957cecc2a18127eb3bbaa7854c4a26406cb222d2debf23244fbbe003084b",
+      "expected_previous_sha256": "e5ea456cd3997148b1ff48359b66a63a27826c14da2fd33cd6e64e2045ff9820"
+    },
+    {
+      "staged_path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/native_spatial_task.py",
+      "canonical_path": "src/resectionlab/native_spatial_task.py",
+      "sha256": "8237f90b3b512d03452be027e6e7e337f69da3e8127f169fe870a56c47418c32",
+      "expected_previous_sha256": "e2e30f8e1fd6ef5f37b922d21c200e19422ea1c96982de7956c343e05256efec"
+    },
+    {
+      "staged_path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/patient_planning_admission.py",
+      "canonical_path": "src/resectionlab/patient_planning_admission.py",
+      "sha256": "d33c96f43b07db739be411eb2efef6376583c45c1db671df468fe9f505de6242",
+      "expected_previous_sha256": "1f2438e32385859d42362ed987f73021c5dfa2bf303c45037162ae9919dd21fd"
+    },
+    {
+      "staged_path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/post_exposure.py",
+      "canonical_path": "src/resectionlab/post_exposure.py",
+      "sha256": "ce95ca492aef3bb0149d9fb62c22766caad76701f894abaa37327a21acb7970e",
+      "expected_previous_sha256": null
+    },
+    {
+      "staged_path": "build/remind-post-exposure-preparation-v1/stage/resectionlab/public_patient_factory.py",
+      "canonical_path": "src/resectionlab/public_patient_factory.py",
+      "sha256": "c9f48ceb53cf0278d7a8a072d2925c5f57878ffc2f0ad79e07028d85b712d4b5",
+      "expected_previous_sha256": "5e847d88978b449c25168c8caa13beb47ff7a98d7a5465220d4cdd9f3f5aa42a"
+    },
+    {
+      "staged_path": "build/remind-post-exposure-preparation-v1/stage/tests/test_post_exposure.py",
+      "canonical_path": "tests/test_post_exposure.py",
+      "sha256": "1d1f140a76ae78cc236d608ab18857cb4df67bbe34917c8512c872cec143a751",
+      "expected_previous_sha256": null
+    }
+  ],
+  "source_review": "n36 source GO for repaired E reporting and SELECT40137fe rebase; generated controls then passed19",
+  "generated_controls": {
+    "passed": 19,
+    "pytest_seconds": 2.54,
+    "parent_seconds": 2.933991458,
+    "maxrss_bytes": 92913664,
+    "canonical_test_cases": 18,
+    "canonical_test_note": "Portable same generated controls; historical two-process parity remains preserved ignored evidence, not a missing-baseline canonical skip"
+  },
+  "preserved_prior_failure": {
+    "attempt": 1,
+    "passed": 4,
+    "failed": 14,
+    "repair": "New empty-index report hash representation; one negative fixture exercised earlier guard"
+  },
+  "evidence": [
+    {
+      "path": "build/remind-post-exposure-preparation-v1/source-index-review-v3.json",
+      "sha256": "bef3c4304ceb1cd422c3daf3407a0178048d2566ec3ac908db5b5177e9d0a868",
+      "bytes": 4719
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/DEFINITION.txt",
+      "sha256": "8f1742eee47346ad8b7c24d2408cf1128b1695ac20e7c66bc86cc8acc532f4b1",
+      "bytes": 7577
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/tests/test_post_exposure.py",
+      "sha256": "b9f3fb02db2ac945fc9dcdd8210971d86d19267afb89371d23992c85b6cffbef",
+      "bytes": 14115
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/tests/parity_probe.py",
+      "sha256": "6aa1706cbba32b4c341fa2b4734600ce91c236c3b6d55e1e874548ec76a33b68",
+      "bytes": 2604
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/generated-attempt-01/receipt.json",
+      "sha256": "e7f6a4df347e401274f563ee5055879367853d51c6d21db89a84fec61eeec61f",
+      "bytes": 1830
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/generated-attempt-01/stdout.log",
+      "sha256": "bb6833416b1b93ad904c3d4323cdd30007b90b68fa5e0098cea00bcbe4437702",
+      "bytes": 28111
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/generated-attempt-02/receipt.json",
+      "sha256": "f56be4059b3a4107a7be06dd98673c38a373741b4157480113e2ba59ada5ee88",
+      "bytes": 883
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/generated-attempt-02/stdout.log",
+      "sha256": "dd3c92a9fd83caadd95417541ec819144207ab1d21a45aba639a29c7dbe80eed",
+      "bytes": 99
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/generated-attempt-02/baseline-default-parity.json",
+      "sha256": "787880ff00dc3f7b415bceeed19183bd3b2d65c4417dfba613d0b4ef9e8fab5a",
+      "bytes": 3627
+    },
+    {
+      "path": "build/remind-post-exposure-preparation-v1/generated-attempt-02/stage-default-parity.json",
+      "sha256": "787880ff00dc3f7b415bceeed19183bd3b2d65c4417dfba613d0b4ef9e8fab5a",
+      "bytes": 3627
+    }
+  ],
+  "no_patient_execution": true,
+  "canonical_edits": false,
+  "pending": "Root promotion and focused canonical suite; separate four-case supervised feasibility release"
+}
