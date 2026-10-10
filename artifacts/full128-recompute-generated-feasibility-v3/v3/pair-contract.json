@@ -1,0 +1,109 @@
+{
+  "acquisition_allowlist_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v3-quiet/terminal-live-allowlist.json",
+  "acquisition_allowlist_sha256": "50fb3837a86e1a27b812828ba2ebf96084374c97f5c7e3a03b7dac5ddc55b008",
+  "arm_budget": {
+    "recompute": {
+      "host_abort_kernel_pressure_masks": [
+        2,
+        4
+      ],
+      "process_group_rss_cap_kib": 3145728,
+      "wall_time_cap_seconds": 120
+    }
+  },
+  "arm_order": [
+    "recompute"
+  ],
+  "fresh_preflight_per_arm": true,
+  "full128_parity_claim": "unavailable_no_accepted_native_full128_reference",
+  "gate": "CPU_FULL128_RECOMPUTE_FEASIBILITY_V2_IXI_TERMINAL",
+  "host_abort_free_drop_points": 20,
+  "host_abort_kernel_pressure_masks": [
+    2,
+    4
+  ],
+  "host_abort_min_free_percent": 30,
+  "host_abort_swap_growth_mib": 128,
+  "host_compressor_occupied": "diagnostic_only_no_standalone_stop",
+  "host_preflight_max_free_spread_points": 5,
+  "host_preflight_min_free_percent": 45,
+  "host_preflight_required_kernel_pressure_mask": 1,
+  "host_preflight_seconds": 30,
+  "host_preflight_swap_growth_measurement_tolerance_mib": 0.0,
+  "host_sample_max_interval_seconds": 0.2,
+  "host_sample_target_interval_seconds": 0.05,
+  "input_npy_sha256": "daa9ffd646347a94c89afe8357b5eb321ecc56cf8b17116b12f45ebe43858712",
+  "input_raw_sha256": "f490284195bd84ace5bf3f75d83094b6c74c7af7f276cd582ff811009ec971bb",
+  "input_shape": [
+    1,
+    2,
+    128,
+    128,
+    128
+  ],
+  "launch_ancestor_exemption": "Only exact PID ancestry of this supervisor is excluded and recorded at each sample",
+  "log_cap_bytes": 2097152,
+  "model_file_sha256": {
+    "dataset.json": "3a7c7c1fd5eb420243a25496bae2c2fb9f210d7910363b9361aaebc69e615a3f",
+    "fold_all/checkpoint_final.pth": "0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3",
+    "plans.json": "e85abbe6a41f4e5e0164d53dd3a297baf10e06cd5f05c1d46a22d2d869d64ad5"
+  },
+  "model_patch_size": [
+    128,
+    128,
+    128
+  ],
+  "model_training_or_patient_inference": false,
+  "monitor_revision": "identity-bound-closeout-v2",
+  "native_arm_enabled": false,
+  "one_attempt_per_arm": true,
+  "output_depth_tile": 1,
+  "output_shape": [
+    1,
+    3,
+    128,
+    128,
+    128
+  ],
+  "pageouts_swapouts_policy": "diagnostic_counters_only; no automatic hold from isolated system-wide increments",
+  "phase_probe_semantics": "No module hooks; direct self-RSS phase markers and independent descendant-aware watchdog",
+  "phase_rss_source": "direct_libproc_self_pid_no_subprocess",
+  "previous_full128_negatives": "Original generated128 tiled tile4/tile1 and lazy-only runs all pressure-stopped without accepted logits; preserved separately.",
+  "prior_attempt": {
+    "negative_receipt_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v2/ATTEMPT_01_NEGATIVE.json",
+    "negative_receipt_sha256": "6ea0ed226fb3683d0edbf9b5d57785ae0863cf8afff9253d2277399692874d91",
+    "no_model_forward": true,
+    "stop_reason": "project_compute_overlap_before_imports",
+    "supervision_sha256": "1648f7900b842d5104e48317bf8712a6452edcde929c2a57610c3351af68eac7"
+  },
+  "process_group_rss_cap_kib": 3145728,
+  "project_compute_policy": "Only exact live TractoInferno <=512 MiB kernel/command/source identity allowed; exact IXI byte-completion/session-terminal/status receipts prove historical completion; all other project compute blocks; no downloader signal",
+  "runner_source_sha256": {
+    "darwin_fast_sampler.py": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+    "launch_gate.py": "e220a401b5332fa04b5eb371b7578ebecfff4eb9c2f6e9f902678277959e2a1f",
+    "lazy_concat.py": "ce4d67f816edc13b73f7bfda8bf9af2aa761021473fb4dac47bfac13d7d59f5b",
+    "monitor_primitives.py": "d945e7f993f798152ad24a1a1e5b82902ffea4068954fd0e96244496a100ae56",
+    "pair_worker.py": "5f10511d96bcc629345c3efe81913f53240862fa99ee2f9cd560f3f594550f5e",
+    "recompute_skip.py": "cc273383ece037816a3efd4d5ed787955aa3f827e0d407b0356ced9f1669c42d",
+    "safe_finalize.py": "2e326517dff1b209651f06da0066f3a4807c221fdd826056e5669f6dc51997b4",
+    "slow_inventory.py": "53d8fab0f80934689965873f5dd945b6d458b618e8daaf5de840751bdbcff90e",
+    "supervise_pair.py": "5ca41461961b6681c71d69d084bf7affcb5517bd1d05a46799d1a25e7552ea57",
+    "test_feasibility_scope.py": "c9dae8ac890b1c56328b353f23d281ea1ba531e024f1b25d3a1737ef59f4d26f",
+    "test_isolated_import.py": "a7642e2418d1f9e9f371e96c00ca3df75ed1f8351ba9cfbad9bba232fa8f8968",
+    "test_launch_control.py": "06fb0256509c88e85e5815be0996ee6795ec6db8e19a18afec6ff18290906210",
+    "test_main_entry_precheckpoint.py": "5babbeec484b91c16d84a17383c7d8ac91886f44c0b0a9df7429aff03b58ef19",
+    "test_phase_no_ps.py": "0ec04f1aff8f3b0c1616b260ca68463bdb516389ee9ae6862df38412732d0aaf",
+    "test_terminal_ixi_allowlist.py": "aa73aa4867db813d94a432a76b9c13668a31ebd42d86708047284c661a7908bf",
+    "test_vanishing_pid.py": "fa54782c239b15d4cea558de367792725d1e0b0345999d77ef7bc54ebc97be35"
+  },
+  "scope": "One explicit manual generated-only full128 CPU recomputation feasibility follow-up after a prior unrelated project-shell overlap before model import; same source/input/model/caps and exact acquisition evidence; no native128 comparator or patient inference",
+  "single_full_patch_forward": true,
+  "single_generated_forward": true,
+  "slow_inventory_interval_seconds": 0.5,
+  "slow_inventory_max_age_seconds": 1.5,
+  "stop_after_same_early_pressure_failure": "If warning/critical kernel pressure stops this one attempt after before_generated_forward but before after_generated_forward with no accepted logits, stop further full128 model attempts on this host until a separately reviewed measured source-level memory reduction or changed resource environment. No dense layer hooks are attached, so do not infer the exact stopped encoder stage; preserve the negative and do not raise caps or retry.",
+  "tracked_adapter_path": "src/resectionlab/low_memory_conv3d.py",
+  "tracked_adapter_sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+  "tta_sliding_window_autocast": false,
+  "wall_time_cap_seconds": 120
+}

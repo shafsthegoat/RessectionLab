@@ -1,0 +1,138 @@
+{
+  "files": [
+    {
+      "bytes": 3217,
+      "path": "independent/actual-v3.md",
+      "sha256": "c0da81c025f370d7d8faeee372ddf0513d083da1af0cb86e1cac67c0c32230a3",
+      "source_path": "build/scan-target-estimator-independent/full128-recompute-terminal-ixi-v3-actual-audit.md"
+    },
+    {
+      "bytes": 1008,
+      "path": "independent/array-audit-v3.json",
+      "sha256": "48e5d90b2ad2f77fcb456d8f0fee799574e45124fbbdd77cdf1ce4418d2b6950",
+      "source_path": "build/scan-target-estimator-independent/full128-recompute-terminal-ixi-v3-array-audit.json"
+    },
+    {
+      "bytes": 3144,
+      "path": "independent/prospective-v2.md",
+      "sha256": "a1e1e3b4819512899a234bd83938abe3c3108e30774561d32f90b06b4ca7de0f",
+      "source_path": "build/scan-target-estimator-independent/full128-recompute-terminal-ixi-v2-prospective-review.md"
+    },
+    {
+      "bytes": 2657,
+      "path": "independent/prospective-v3.md",
+      "sha256": "e35a8efb1345c4cd62aeaa60303f5970399a8ff5f4dea69b1e6956eac4308882",
+      "source_path": "build/scan-target-estimator-independent/full128-recompute-terminal-ixi-v3-quiet-prospective-review.md"
+    },
+    {
+      "bytes": 1972,
+      "path": "v2/ATTEMPT_01_NEGATIVE.json",
+      "sha256": "6ea0ed226fb3683d0edbf9b5d57785ae0863cf8afff9253d2277399692874d91",
+      "source_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v2/ATTEMPT_01_NEGATIVE.json"
+    },
+    {
+      "bytes": 22522,
+      "path": "v2/host-preflight.json",
+      "sha256": "beb6a9dac7c02660513c0671c6e0210282748233bf7496387e8f691d025db1f1",
+      "source_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v2/recompute/host-preflight.json"
+    },
+    {
+      "bytes": 5663,
+      "path": "v2/pair-contract.json",
+      "sha256": "3a1bedf0448a955eb50afd47d63566ba44ac58a94296814a3a56650d28deb0d2",
+      "source_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v2/pair-contract.json"
+    },
+    {
+      "bytes": 16102,
+      "path": "v2/supervision.json",
+      "sha256": "1648f7900b842d5104e48317bf8712a6452edcde929c2a57610c3351af68eac7",
+      "source_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v2/recompute/supervision.json"
+    },
+    {
+      "bytes": 155,
+      "path": "v2/worker.log",
+      "sha256": "b70707110ab60b54e9deb7f36363bb3cdf410dcce6c029b15622cdfee1364628",
+      "source_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v2/recompute/worker.log"
+    },
+    {
+      "bytes": 556,
+      "path": "v3/finalization.json",
+      "sha256": "2e6e0fb5badeddca609f2f0df97be56abd15749aaa3088ac91b181286423c974",
+      "source_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v3-quiet/recompute/finalization.json"
+    },
+    {
+      "bytes": 22489,
+      "path": "v3/host-preflight.json",
+      "sha256": "46c748144bf37fcf831632bb1597cf8063b79f4de04ee71154520246595db2f7",
+      "source_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v3-quiet/recompute/host-preflight.json"
+    },
+    {
+      "bytes": 498,
+      "path": "v3/launch-binding.json",
+      "sha256": "36adf9afd803532125c5f63b82bc9acac49dd79dc4faa8b28bd39fc3e9eb9e34",
+      "source_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v3-quiet/recompute/launch-binding.json"
+    },
+    {
+      "bytes": 6144,
+      "path": "v3/pair-contract.json",
+      "sha256": "3ed3be266bf53fa8b31af49316405e667eca55cefde8831704239a685506c951",
+      "source_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v3-quiet/pair-contract.json"
+    },
+    {
+      "bytes": 2286,
+      "path": "v3/result.json",
+      "sha256": "efbe4a346215aae98d7193e89ef509c1090361bbe92ee65e8952d75069d11bb6",
+      "source_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v3-quiet/recompute/result.json"
+    },
+    {
+      "bytes": 132700,
+      "path": "v3/supervision.json",
+      "sha256": "47e60d9e0528ea4a521a4ba49b8d8e82fee7d24d8a50c85639f779e5541d449c",
+      "source_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v3-quiet/recompute/supervision.json"
+    },
+    {
+      "bytes": 1416,
+      "path": "v3/terminal-live-allowlist.json",
+      "sha256": "50fb3837a86e1a27b812828ba2ebf96084374c97f5c7e3a03b7dac5ddc55b008",
+      "source_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v3-quiet/terminal-live-allowlist.json"
+    },
+    {
+      "bytes": 2327,
+      "path": "v3/worker.log",
+      "sha256": "0579476524ce049a861ee6ff1a213c2a9db04fcd744bc5c4bbef89ee00b4ec15",
+      "source_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v3-quiet/recompute/worker.log"
+    }
+  ],
+  "generated_logits_copied": false,
+  "patient_arrays_copied": false,
+  "schema": "full128-recompute-terminal-ixi-v3-metadata-package-v1",
+  "scope": "Generated model resource/finite-logit evidence only; no patient/clinical inference",
+  "source_files_copied": false,
+  "v3_generated_input_sha256": "daa9ffd646347a94c89afe8357b5eb321ecc56cf8b17116b12f45ebe43858712",
+  "v3_model_file_sha256": {
+    "dataset.json": "3a7c7c1fd5eb420243a25496bae2c2fb9f210d7910363b9361aaebc69e615a3f",
+    "fold_all/checkpoint_final.pth": "0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3",
+    "plans.json": "e85abbe6a41f4e5e0164d53dd3a297baf10e06cd5f05c1d46a22d2d869d64ad5"
+  },
+  "v3_output_npy_sha256_reference_only": "f2c0c1a596a2f070996648dc8bcff3f817ab38d021fd77d04a4517be0b7de60d",
+  "v3_source_bindings": {
+    "darwin_fast_sampler.py": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+    "launch_gate.py": "e220a401b5332fa04b5eb371b7578ebecfff4eb9c2f6e9f902678277959e2a1f",
+    "lazy_concat.py": "ce4d67f816edc13b73f7bfda8bf9af2aa761021473fb4dac47bfac13d7d59f5b",
+    "monitor_primitives.py": "d945e7f993f798152ad24a1a1e5b82902ffea4068954fd0e96244496a100ae56",
+    "pair_worker.py": "5f10511d96bcc629345c3efe81913f53240862fa99ee2f9cd560f3f594550f5e",
+    "recompute_skip.py": "cc273383ece037816a3efd4d5ed787955aa3f827e0d407b0356ced9f1669c42d",
+    "safe_finalize.py": "2e326517dff1b209651f06da0066f3a4807c221fdd826056e5669f6dc51997b4",
+    "slow_inventory.py": "53d8fab0f80934689965873f5dd945b6d458b618e8daaf5de840751bdbcff90e",
+    "supervise_pair.py": "5ca41461961b6681c71d69d084bf7affcb5517bd1d05a46799d1a25e7552ea57",
+    "test_feasibility_scope.py": "c9dae8ac890b1c56328b353f23d281ea1ba531e024f1b25d3a1737ef59f4d26f",
+    "test_isolated_import.py": "a7642e2418d1f9e9f371e96c00ca3df75ed1f8351ba9cfbad9bba232fa8f8968",
+    "test_launch_control.py": "06fb0256509c88e85e5815be0996ee6795ec6db8e19a18afec6ff18290906210",
+    "test_main_entry_precheckpoint.py": "5babbeec484b91c16d84a17383c7d8ac91886f44c0b0a9df7429aff03b58ef19",
+    "test_phase_no_ps.py": "0ec04f1aff8f3b0c1616b260ca68463bdb516389ee9ae6862df38412732d0aaf",
+    "test_terminal_ixi_allowlist.py": "aa73aa4867db813d94a432a76b9c13668a31ebd42d86708047284c661a7908bf",
+    "test_vanishing_pid.py": "fa54782c239b15d4cea558de367792725d1e0b0345999d77ef7bc54ebc97be35"
+  },
+  "v3_tracked_adapter_sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+  "weights_copied": false
+}

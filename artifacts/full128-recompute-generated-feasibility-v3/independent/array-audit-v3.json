@@ -1,0 +1,40 @@
+{
+  "c_contiguous": true,
+  "dtype": "float32",
+  "elapsed_seconds": 0.031539374962449074,
+  "expected_array_bytes": 25165824,
+  "file_size_bytes": 25165952,
+  "finite_nonfinite_count": 0,
+  "max_per_region": [
+    8.9346342086792,
+    8.54360294342041,
+    7.603796005249023
+  ],
+  "min_per_region": [
+    -25.613924026489258,
+    -25.527118682861328,
+    -33.199275970458984
+  ],
+  "npy_sha256": "f2c0c1a596a2f070996648dc8bcff3f817ab38d021fd77d04a4517be0b7de60d",
+  "npy_sha_matches_result": true,
+  "observed_rss_cap_bytes": 268435456,
+  "peak_rss_darwin_bytes": 57884672,
+  "positive_count_per_region": [
+    74977,
+    24676,
+    5789
+  ],
+  "raw_sha256": "667475aec4a5d678c87a68bc5eddd2bdd4a710e2cbef139f055e69fe3de1bdde",
+  "raw_sha_matches_result": true,
+  "rlimit_as_enforced": false,
+  "scope": "independent saved generated full128 logits only; no model/checkpoint/patient",
+  "shape": [
+    1,
+    3,
+    128,
+    128,
+    128
+  ],
+  "shape_dtype_match_result": true,
+  "wall_alarm_seconds": 30
+}

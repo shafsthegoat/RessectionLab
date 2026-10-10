@@ -1208,3 +1208,9 @@ reconstructs that exact marker and retains strict equality, source guards and
 unchanged numerical math. All four actual sidecars pass; root canonical tests
 pass 83 in 5.22 seconds. Original failed receipt/log/manifest remain preserved.
 The successor comparison must bind the repaired source hash explicitly.
+
+### October 10: generated full128 inference clears its resource gate
+
+The [single quiet-window follow-up](../artifacts/full128-recompute-generated-feasibility-v3/RESULT.md) produces finite 128³ three-channel logits in 5.165 forward seconds, 7.545 supervised seconds and 2,577,743,872 bytes sampled peak RSS under the unchanged 3 GiB limit. Independent saved-output scanning verifies exact shape, dtype, finite values and hashes without reopening weights or rerunning the model. macOS rejected the auditor hard address-space limit; observed RSS and a wall alarm were used and documented. V2's project-shell overlap stopped before imports and remains a separate coordination negative. No patient prediction, full128 reference parity or segmentation accuracy follows. The next integration dependency is plan-correct preprocessing and explicit predicted-region coverage for an unreviewed Case4 diagnostic.
+
+Acquisition continued throughout: the 02:50 UTC snapshot reaches 5,683 verified files / 201,148,483,978 bytes, up 523 files / 17,332,434,314 bytes. The original queue and lock remain active, the same 54 unresolved failures remain, and all downloaded payloads retain unreviewed status.

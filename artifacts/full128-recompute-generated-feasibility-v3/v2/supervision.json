@@ -1,0 +1,490 @@
+{
+  "accepted_for_feasibility": false,
+  "acquisition_allowlist_manifest_sha256": "50fb3837a86e1a27b812828ba2ebf96084374c97f5c7e3a03b7dac5ddc55b008",
+  "arm": "recompute",
+  "completed_at_utc": "2026-10-10T02:38:55.447468+00:00",
+  "contract_sha256": "3a1bedf0448a955eb50afd47d63566ba44ac58a94296814a3a56650d28deb0d2",
+  "detached_descendant_pids_observed": [],
+  "elapsed_seconds": 0.5477050830000003,
+  "exit_code": -9,
+  "fast_series": [
+    {
+      "available_percent": 77,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.032797291000001394,
+      "group_read_seconds": 4.5332999999203594e-05,
+      "host_read_seconds": 1.1374999999702595e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": null,
+      "pgid": 41619,
+      "pids": [
+        41619
+      ],
+      "process_group_resident_bytes": 18186240,
+      "slow_inventory_age_seconds": 0.05877075000000076,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 11811160064,
+      "swap_used_bytes": 10020388864,
+      "timestamp_utc": "2026-10-10T02:38:54.903296+00:00"
+    },
+    {
+      "available_percent": 77,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.09292366600000079,
+      "group_read_seconds": 8.337499999910847e-05,
+      "host_read_seconds": 2.5458999999727894e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 41619,
+      "pids": [
+        41619
+      ],
+      "process_group_resident_bytes": 29786112,
+      "slow_inventory_age_seconds": 0.11885820799999891,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 11811160064,
+      "swap_used_bytes": 10020388864,
+      "timestamp_utc": "2026-10-10T02:38:54.963420+00:00"
+    },
+    {
+      "available_percent": 77,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.1529424160000019,
+      "group_read_seconds": 8.049999999926172e-05,
+      "host_read_seconds": 2.629199999759635e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 41619,
+      "pids": [
+        41619
+      ],
+      "process_group_resident_bytes": 36503552,
+      "slow_inventory_age_seconds": 0.17888387500000036,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 11811160064,
+      "swap_used_bytes": 10020388864,
+      "timestamp_utc": "2026-10-10T02:38:55.023438+00:00"
+    },
+    {
+      "available_percent": 77,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.20897687500000117,
+      "group_read_seconds": 3.420799999886981e-05,
+      "host_read_seconds": 2.2666999999643167e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 41619,
+      "pids": [
+        41619
+      ],
+      "process_group_resident_bytes": 55328768,
+      "slow_inventory_age_seconds": 0.23491241600000023,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 11811160064,
+      "swap_used_bytes": 10020388864,
+      "timestamp_utc": "2026-10-10T02:38:55.079474+00:00"
+    },
+    {
+      "available_percent": 77,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.2673289580000002,
+      "group_read_seconds": 0.00010483300000174722,
+      "host_read_seconds": 5.5875000001037733e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 41619,
+      "pids": [
+        41619
+      ],
+      "process_group_resident_bytes": 74776576,
+      "slow_inventory_age_seconds": 0.29316141600000023,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 11811160064,
+      "swap_used_bytes": 10020388864,
+      "timestamp_utc": "2026-10-10T02:38:55.137820+00:00"
+    },
+    {
+      "available_percent": 77,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.3273469999999996,
+      "group_read_seconds": 0.00010354200000151081,
+      "host_read_seconds": 4.395899999920516e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 41619,
+      "pids": [
+        41619
+      ],
+      "process_group_resident_bytes": 95830016,
+      "slow_inventory_age_seconds": 0.35318737500000097,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 11811160064,
+      "swap_used_bytes": 10020388864,
+      "timestamp_utc": "2026-10-10T02:38:55.197839+00:00"
+    },
+    {
+      "available_percent": 77,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.37918904100000006,
+      "group_read_seconds": 0.000108333000000016,
+      "host_read_seconds": 4.9083000000393895e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 41619,
+      "pids": [
+        41619
+      ],
+      "process_group_resident_bytes": 109740032,
+      "slow_inventory_age_seconds": 0.4049537910000005,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 11811160064,
+      "swap_used_bytes": 10020388864,
+      "timestamp_utc": "2026-10-10T02:38:55.249681+00:00"
+    },
+    {
+      "available_percent": 77,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.4306470410000003,
+      "group_read_seconds": 8.51659999980825e-05,
+      "host_read_seconds": 7.291599999703635e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 41619,
+      "pids": [
+        41619
+      ],
+      "process_group_resident_bytes": 121552896,
+      "slow_inventory_age_seconds": 0.4565783329999995,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 11811160064,
+      "swap_used_bytes": 10020388864,
+      "timestamp_utc": "2026-10-10T02:38:55.301143+00:00"
+    },
+    {
+      "available_percent": 77,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.49088670800000145,
+      "group_read_seconds": 0.00011716699999908542,
+      "host_read_seconds": 5.537500000230011e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 41619,
+      "pids": [
+        41619
+      ],
+      "process_group_resident_bytes": 131776512,
+      "slow_inventory_age_seconds": 0.5166412499999993,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 11811160064,
+      "swap_used_bytes": 10020388864,
+      "timestamp_utc": "2026-10-10T02:38:55.361377+00:00"
+    },
+    {
+      "available_percent": 77,
+      "detached_descendant_pids": [],
+      "detached_descendant_start_identities": {},
+      "elapsed_seconds": 0.5476634159999989,
+      "group_read_seconds": 7.36659999986955e-05,
+      "host_read_seconds": 4.108299999927567e-05,
+      "kernel_pressure_mask": 1,
+      "last_flushed_phase": "before_imports",
+      "pgid": 41619,
+      "pids": [
+        41619
+      ],
+      "process_group_resident_bytes": 144769024,
+      "slow_inventory_age_seconds": 0.04141904200000113,
+      "slow_inventory_errors_so_far": 0,
+      "swap_total_bytes": 11811160064,
+      "swap_used_bytes": 10020388864,
+      "timestamp_utc": "2026-10-10T02:38:55.418159+00:00"
+    }
+  ],
+  "finalization": {
+    "cleanup_errors": [],
+    "completed_at_utc": "2026-10-10T02:38:55.423672+00:00",
+    "exit_code": -9,
+    "finalization_receipt_write_error": null,
+    "launch_start_identity": [
+      1791599934,
+      870718
+    ],
+    "manual_attention_required": false,
+    "pgid": 41619,
+    "pid": 41619,
+    "provisional_receipt_write_error": null,
+    "remaining_detached_pids": [],
+    "remaining_group_pids": [],
+    "residual_possible": false,
+    "scope": "Identity-checked child cleanup with provisional trace before signaling",
+    "signal_results": [
+      {
+        "identity_matched": true,
+        "pid": 41619,
+        "signaled": true
+      }
+    ],
+    "terminate_requested": true
+  },
+  "last_flushed_phase": "before_imports",
+  "manual_attention_required": false,
+  "memory_accounting": "sampled descendant-aware RSS, available percentage and swap are distinct",
+  "monitor_error": null,
+  "no_retry": true,
+  "post_error": null,
+  "post_fast_host": {
+    "available_percent": 77,
+    "host_read_seconds": 1.5083999997500541e-05,
+    "kernel_pressure_mask": 1,
+    "swap_total_bytes": 11811160064,
+    "swap_used_bytes": 10020388864
+  },
+  "post_guard_reason": null,
+  "post_slow_inventory": {
+    "acquisition_allowlist_manifest_sha256": "50fb3837a86e1a27b812828ba2ebf96084374c97f5c7e3a03b7dac5ddc55b008",
+    "collection_seconds": 0.023151083000001904,
+    "compressor_occupied_pages": 38942,
+    "excluded_ancestor_pids": [
+      41545,
+      18726,
+      18690,
+      1
+    ],
+    "ixi_terminal_summary": {
+      "receipt_sha256": {
+        "canonical": "ed06d6ce316b9d18d13b2ae4e9d7189cc2ec3ae4db7e30d6e8b20108a93a82a8",
+        "session": "008ed7a992378d1cf090636c558585df3d7f88e8d70a4325ef5e50cff01b50ff",
+        "status": "ba0b9b84bed9f6e8f69a3635e1c671a7ece2847556c4821c546b8e6f1b8a0ac8"
+      },
+      "status": "all_bytes_verified",
+      "verified_bytes": 17225109877,
+      "verified_files": 3
+    },
+    "pageouts_counter": 3727065,
+    "project_process_inventory": [
+      {
+        "blocking_overlap": false,
+        "command_class": "python",
+        "pgid": 13668,
+        "pid": 13668,
+        "project_context": false,
+        "rss_kib": 5296
+      },
+      {
+        "blocking_overlap": false,
+        "command_class": "python",
+        "pgid": 14882,
+        "pid": 14882,
+        "project_context": false,
+        "rss_kib": 5296
+      },
+      {
+        "blocking_overlap": false,
+        "command_class": "python",
+        "pgid": 18806,
+        "pid": 18806,
+        "project_context": false,
+        "rss_kib": 1792
+      },
+      {
+        "blocking_overlap": false,
+        "command_class": "python",
+        "pgid": 41184,
+        "pid": 41184,
+        "project_context": false,
+        "rss_kib": 49952
+      },
+      {
+        "acquisition_role": "tracto",
+        "blocking_overlap": false,
+        "command_class": "acquisition_python",
+        "identity_matched": true,
+        "kernel_start_identity_matched": true,
+        "manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+        "max_rss_kib": 524288,
+        "pgid": 92434,
+        "pid": 92434,
+        "rss_kib": 41792,
+        "rss_within_cap": true
+      }
+    ],
+    "sample_monotonic": 30.728014125,
+    "swapouts_counter": 20160063,
+    "timestamp_utc": "2026-10-10T02:38:55.447380+00:00",
+    "vm_page_bytes": 16384
+  },
+  "process_group_id": 41619,
+  "process_group_rss_cap_kib": 3145728,
+  "result_exists": false,
+  "sampled_peak_process_group_resident_bytes": 144769024,
+  "scope": "Prospective generated full128 CPU stage-zero recomputation feasibility; no accepted native128 comparator or patient claim",
+  "slow_close_error": null,
+  "slow_inventory_errors": [],
+  "slow_series": [
+    {
+      "acquisition_allowlist_manifest_sha256": "50fb3837a86e1a27b812828ba2ebf96084374c97f5c7e3a03b7dac5ddc55b008",
+      "collection_seconds": 0.027679082999998883,
+      "compressor_occupied_pages": 38933,
+      "excluded_ancestor_pids": [
+        41545,
+        18726,
+        18690,
+        1
+      ],
+      "ixi_terminal_summary": {
+        "receipt_sha256": {
+          "canonical": "ed06d6ce316b9d18d13b2ae4e9d7189cc2ec3ae4db7e30d6e8b20108a93a82a8",
+          "session": "008ed7a992378d1cf090636c558585df3d7f88e8d70a4325ef5e50cff01b50ff",
+          "status": "ba0b9b84bed9f6e8f69a3635e1c671a7ece2847556c4821c546b8e6f1b8a0ac8"
+        },
+        "status": "all_bytes_verified",
+        "verified_bytes": 17225109877,
+        "verified_files": 3
+      },
+      "pageouts_counter": 3727065,
+      "project_process_inventory": [
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 13668,
+          "pid": 13668,
+          "project_context": false,
+          "rss_kib": 5296
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 14882,
+          "pid": 14882,
+          "project_context": false,
+          "rss_kib": 5296
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 18806,
+          "pid": 18806,
+          "project_context": false,
+          "rss_kib": 1792
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 41184,
+          "pid": 41184,
+          "project_context": false,
+          "rss_kib": 49952
+        },
+        {
+          "acquisition_role": "tracto",
+          "blocking_overlap": false,
+          "command_class": "acquisition_python",
+          "identity_matched": true,
+          "kernel_start_identity_matched": true,
+          "manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+          "max_rss_kib": 524288,
+          "pgid": 92434,
+          "pid": 92434,
+          "rss_kib": 41792,
+          "rss_within_cap": true
+        }
+      ],
+      "sample_monotonic": 30.125105625,
+      "swapouts_counter": 20160063,
+      "timestamp_utc": "2026-10-10T02:38:54.844471+00:00",
+      "vm_page_bytes": 16384
+    },
+    {
+      "acquisition_allowlist_manifest_sha256": "50fb3837a86e1a27b812828ba2ebf96084374c97f5c7e3a03b7dac5ddc55b008",
+      "collection_seconds": 0.05585112499999667,
+      "compressor_occupied_pages": 38943,
+      "excluded_ancestor_pids": [
+        41545,
+        18726,
+        18690,
+        1
+      ],
+      "ixi_terminal_summary": {
+        "receipt_sha256": {
+          "canonical": "ed06d6ce316b9d18d13b2ae4e9d7189cc2ec3ae4db7e30d6e8b20108a93a82a8",
+          "session": "008ed7a992378d1cf090636c558585df3d7f88e8d70a4325ef5e50cff01b50ff",
+          "status": "ba0b9b84bed9f6e8f69a3635e1c671a7ece2847556c4821c546b8e6f1b8a0ac8"
+        },
+        "status": "all_bytes_verified",
+        "verified_bytes": 17225109877,
+        "verified_files": 3
+      },
+      "pageouts_counter": 3727065,
+      "project_process_inventory": [
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 13668,
+          "pid": 13668,
+          "project_context": false,
+          "rss_kib": 5296
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 14882,
+          "pid": 14882,
+          "project_context": false,
+          "rss_kib": 5296
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 18806,
+          "pid": 18806,
+          "project_context": false,
+          "rss_kib": 1792
+        },
+        {
+          "blocking_overlap": false,
+          "command_class": "python",
+          "pgid": 41184,
+          "pid": 41184,
+          "project_context": false,
+          "rss_kib": 49952
+        },
+        {
+          "blocking_overlap": true,
+          "command_class": "project_shell",
+          "pgid": 41623,
+          "pid": 41623,
+          "project_context": true,
+          "rss_kib": 2448
+        },
+        {
+          "acquisition_role": "tracto",
+          "blocking_overlap": false,
+          "command_class": "acquisition_python",
+          "identity_matched": true,
+          "kernel_start_identity_matched": true,
+          "manifest_sha256": "4ab567045e91d70e040c799b70df0b8c45fe4c9cf2f8aa07156c88aabf82f629",
+          "max_rss_kib": 524288,
+          "pgid": 92434,
+          "pid": 92434,
+          "rss_kib": 41792,
+          "rss_within_cap": true
+        }
+      ],
+      "sample_monotonic": 30.657243958,
+      "swapouts_counter": 20160063,
+      "timestamp_utc": "2026-10-10T02:38:55.376596+00:00",
+      "vm_page_bytes": 16384
+    }
+  ],
+  "wall_time_cap_seconds": 120,
+  "watchdog_reason": "project_compute_overlap"
+}

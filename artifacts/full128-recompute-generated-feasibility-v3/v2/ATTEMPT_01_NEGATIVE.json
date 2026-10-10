@@ -1,0 +1,53 @@
+{
+  "attribution_limit": "Saved inventory retains process class/PID/PGID/RSS, not command bytes; root bookkeeping-shell attribution is plausible but not proven by this receipt alone.",
+  "checkpoint_loaded_evidence": false,
+  "cleanup_residual_possible": false,
+  "elapsed_seconds": 0.5477050830000003,
+  "exit_code": -9,
+  "last_flushed_phase": "before_imports",
+  "model_forward_executed": false,
+  "negative_class": "concurrent_project_shell_not_host_pressure_or_model_memory",
+  "no_retry_original_output": true,
+  "overlap_observation": {
+    "blocking_overlap": true,
+    "command_class": "project_shell",
+    "pgid": 41623,
+    "pid": 41623,
+    "project_context": true,
+    "rss_kib": 2448,
+    "timestamp_utc": "2026-10-10T02:38:55.376596+00:00"
+  },
+  "preflight_accepted": true,
+  "preflight_host_available_percent": [
+    78,
+    77,
+    77,
+    77,
+    77,
+    78,
+    77
+  ],
+  "preflight_host_kernel_masks": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "receipt_sha256": {
+    "finalization.json": "723402ababa60297a83cc992f77ff6e9f93c3a35977951d2babac7b0b56a8b97",
+    "host-preflight.json": "beb6a9dac7c02660513c0671c6e0210282748233bf7496387e8f691d025db1f1",
+    "launch-binding.json": "0ea42a3e7f62b312859b1bd86ea92b15a69f832551fbdc5d2ccd690fa776fc94",
+    "provisional-supervision.json": "40250ed29cdbdbb1998ffdeed1e4016b614eea7b400c0fc8ef6cfec6646cf5c0",
+    "supervision.json": "1648f7900b842d5104e48317bf8712a6452edcde929c2a57610c3351af68eac7",
+    "worker.log": "b70707110ab60b54e9deb7f36363bb3cdf410dcce6c029b15622cdfee1364628"
+  },
+  "release_source_directory": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v2",
+  "result_exists": false,
+  "sampled_peak_process_group_resident_bytes": 144769024,
+  "source_contract_sha256": "3a1bedf0448a955eb50afd47d63566ba44ac58a94296814a3a56650d28deb0d2",
+  "status": "negative_coordination_overlap_before_model_import",
+  "watchdog_reason": "project_compute_overlap"
+}
