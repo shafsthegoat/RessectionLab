@@ -1,0 +1,42 @@
+{
+  "SELECT_EVAL_execution": false,
+  "automatic_retry": false,
+  "canonical_result_status": "complete_fixed_ray_witness",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 210,
+    "output_bytes": 67108864,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 180,
+    "worker_log_bytes": 8388608
+  },
+  "checkpoint_loads": 0,
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 19.5530850419309,
+  "endpoint_control_sha256": "a8b9877b2ccc1ad01aea58ecdc786b43fe1207c4899ddc81c291ac8d457f9400",
+  "exit_code": 0,
+  "final_owned_pids": [],
+  "output_bytes": 4370482,
+  "private_reference_execution": false,
+  "release_sha256": "12f2b1dac613db9e577f23542828f0224ba4080b0362851565022a60db18094f",
+  "result_sha256": "23027ee7ad7af86ced95af89c7a02e0106f1f3a4c112f6d4d5a826071a26930f",
+  "sampled_peak_rss_bytes": 459882496,
+  "samples": 93,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/union025-clearance-witness-v1/source-index.json",
+    "sha256": "161116cc522d53dcf37c4cbb48813422e0c19bd1019f4c573891e02a228fcc67"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 32858,
+  "worker_final_sha256": "1c52f1f609d95aaae3b13fd905f8d1d6f0eb75821543b3712c52cadb1ad81bc8",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

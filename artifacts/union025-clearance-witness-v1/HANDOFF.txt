@@ -1,0 +1,47 @@
+Prepared, not executed: union025 fixed-ray clearance witness
+
+This keeps the previously saved S union T world, source, public target/domain,
+access, tools, reward, h24, proposal families and cap120. The one fixed ray is
+the exact tool/entry/tip that removed one public target cell with positive
+reward in raw025 and was shaft-blocked in union025. No private annotation,
+SELECT/EVAL, model, checkpoint, training or new search-policy calls are allowed.
+
+The STOP control and all15 saved legal root preparations are fixed before
+execution. Each preparation runs on an independent clone of the authenticated
+initial task. It is followed by one fresh diagnostic preview of the fixed ray.
+The ray executes only if that same physical geometry is currently emitted and
+legal in the task inventory. Native-feasible but absent/illegal means
+proposal_unavailable, not successful execution. A blocked/unavailable ray ends
+with prep+STOP, retaining preparation cost; rejected-preview temporary cuts are
+recorded separately and are never committed. Every complete history is sealed,
+replayed from a separate unchanged base clone, and independently audited.
+STOP0 competes against every complete cumulative return and wins ties.
+
+One public source construction;16 fixed-ray previews;at most46 rollout and46
+replay transitions (STOP control2,15 branches at most6 each). Existing preview
+accounting includes initial/successor inventories and direct diagnostic rays.
+Caps:10000 previews,180s worker,210s parent,3GiB sampled tree RSS,64MiB outputs,
+16MiB supervision,one thread,one attempt. Any missing row/replay/resource failure
+leaves the attempt unresolved. A blocked diagnostic is expected evidence and
+does not invalidate an otherwise complete prep+STOP history.
+
+The diagnostic is depth2 in motion actions within this fixed ray and15 first
+moves only. A negative result cannot prove global unreachability, STOP
+optimality, failure of longer preparation, or anatomical correctness. The full
+public target denominator is retained. First-failure cells are not a minimum
+clearing set or the full corridor; bounded4096 prefixes are explicitly marked.
+Union010's two omitted rays are deferred, not silently treated as explored.
+
+Root-owned metadata freeze after source review, at committed HEAD177c386:
+  python3 build/union025-clearance-witness-v1/freeze-runtime.py --head <full HEAD>
+This writes only the source-index and pending release template, without patient
+arrays or scientific imports. Root alone changes template status to
+released_one_attempt in a fresh root-release.json and computes its SHA256.
+The owned scientific command (not run during preparation):
+  <project Python> build/union025-clearance-witness-v1/run_owned.py --release <absolute root-release.json> --release-sha256 <SHA256>
+
+The parent/cleanup/sampler are reused from the completed paired-TRAIN attempt;
+the SIGTERM lifecycle wrapper is reused from the reviewed SELECT parent. The
+runtime closure is computed only after the canonical obstruction helper is
+committed; its source is0a531933eeea43862fe4122c8cca7fc192c0d44a32ea263363fc7a495c072f16.
+No canonical files are changed by this preparation.

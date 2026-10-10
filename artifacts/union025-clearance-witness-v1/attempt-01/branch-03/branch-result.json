@@ -1,0 +1,69 @@
+{
+  "actions": [
+    "nominal-cavity-563d92d39f1026eff3a77db5",
+    "STOP"
+  ],
+  "fixed_ray_feasible": false,
+  "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+  "native_counts": {
+    "replay": 2,
+    "rollout": 2
+  },
+  "native_previews": 209,
+  "ordinal": 3,
+  "outcomes": {
+    "clinical_deficit_probability": null,
+    "complete_tool_path_length_mm": 2.929687713353888,
+    "cumulative_contacted_tissue_upper_bound_mm3": 16.212471518715503,
+    "currently_retained_contacted_tissue_upper_bound_mm3": 15.258796723496944,
+    "language_surrogate": null,
+    "motor_surrogate": null,
+    "nonstop_actions": 1,
+    "normal_removed_mm3": 0.953674795218559,
+    "partial_contact_reward_weight": 0.0,
+    "positive_target_source_cells_removed": 0,
+    "reference_target_fraction_removed": 0.0,
+    "simulated_removed_volume_mm3": 0.953674795218559,
+    "target_removed_mm3": 0.0,
+    "tool_changes": 0,
+    "total_reference_target_mm3": 77974.35860665982,
+    "total_reward": -0.2236646467570657
+  },
+  "plan_seal": "sha256:7cc5f32b20e7a308834fa7b8cb5224716384db27277429cd2ea35b4dcbd3fc81",
+  "preparation_action": "nominal-cavity-563d92d39f1026eff3a77db5",
+  "ray_status": "blocked",
+  "status": "complete",
+  "successor_exact_ray_matches": [
+    {
+      "action_id": "nominal-cavity-b8f7206b924ab61dca8d695b",
+      "column_index": 12,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.80788894373058,
+        55.25603988714608,
+        1.6624837794409706
+      ],
+      "family": "exposed_opening",
+      "feasible": false,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "proposal_id": "nominal-cavity-b8f7206b924ab61dca8d695b",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "tip_mm": [
+        56.39013548641191,
+        55.250447293839734,
+        1.624508716361845
+      ],
+      "tool_id": "generic_suction",
+      "voxel": [
+        119,
+        45,
+        71
+      ]
+    }
+  ],
+  "target_access_success": false
+}

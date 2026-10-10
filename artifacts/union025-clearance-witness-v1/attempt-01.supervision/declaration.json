@@ -1,0 +1,676 @@
+{
+  "SELECT_EVAL_execution": false,
+  "TRAIN": [
+    "ReMIND-025"
+  ],
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 210,
+    "output_bytes": 67108864,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 180,
+    "worker_log_bytes": 8388608
+  },
+  "closed_roles": {
+    "EVAL": [
+      "ReMIND-067"
+    ],
+    "SELECT": [
+      "ReMIND-013",
+      "ReMIND-037"
+    ]
+  },
+  "completion_scope": "Fixed union025 STOP control and15 existing preparations; complete own-world replay/independent geometry; rejected fixed rays diagnostic only",
+  "condition_admission": {
+    "actual_model_optimizer_checkpoint_calls": 0,
+    "initialization_performed": false,
+    "learning_protocol_hash": "sha256:a1deac62dd0d1506bdd186a3d4e01a68e1f191d0896fada119955453bd3ca887",
+    "limits": {
+      "max_native_previews": 7297920,
+      "max_optimizer_updates": 0,
+      "max_policy_forwards": 0,
+      "max_steps": 24,
+      "memory_bytes": 3221225472,
+      "search": {
+        "beam_width": 2,
+        "max_calls": 5640,
+        "seconds": 300
+      },
+      "threads": 1,
+      "worker_seconds": 3540
+    },
+    "raw_envelope_note": "historical raw positive admission envelope retained; runner forbids actual model work"
+  },
+  "execution_limits": {
+    "candidate_cap": 120,
+    "checkpoint_loads": 0,
+    "complete_histories": 16,
+    "max_actions_per_branch": 3,
+    "max_fixed_ray_diagnostic_previews": 16,
+    "max_native_previews": 10000,
+    "max_native_transition_calls": 92,
+    "max_replay_calls": 46,
+    "max_rollout_calls": 46,
+    "obstruction_cell_limit": 4096,
+    "optimizer_updates": 0,
+    "policy_forwards": 0,
+    "root_preparations": 15,
+    "search_calls": 0,
+    "task_max_steps": 24,
+    "threads": 1
+  },
+  "fixed_ray": {
+    "entry_mm": [
+      59.80788894373058,
+      55.25603988714608,
+      1.6624837794409706
+    ],
+    "tip_mm": [
+      56.39013548641191,
+      55.250447293839734,
+      1.624508716361845
+    ],
+    "tool_id": "generic_suction"
+  },
+  "head": "177c3861cfdc48dc3ee33f966098a288cda858b7",
+  "input_index": {
+    "path": "build/union025-clearance-witness-v1/input-index.json",
+    "sha256": "c4e9a35729f74dc40d1e0d4120fda239bdf6bc22fe009d446a10fb6b913b6e90"
+  },
+  "output": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/union025-clearance-witness-v1/attempt-01",
+  "preview_bound_scope": "Aggregate10000 previews,16 diagnostic fixed-ray previews and92 native transitions including46 rollout +46 replay",
+  "release_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/union025-clearance-witness-v1/root-release.json",
+  "release_sha256": "12f2b1dac613db9e577f23542828f0224ba4080b0362851565022a60db18094f",
+  "root_preparations": [
+    {
+      "action_id": "nominal-cavity-1f4f2f86ac1c5143f2ac9e92",
+      "column_index": 0,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.77458393130671,
+        55.24025259249734,
+        4.662257948051617
+      ],
+      "family": "exposed_opening",
+      "feasible": true,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "proposal_id": "nominal-cavity-1f4f2f86ac1c5143f2ac9e92",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "tip_mm": [
+        59.28633343740407,
+        55.23945365059644,
+        4.656832939040314
+      ],
+      "tool_id": "generic_suction",
+      "voxel": [
+        122,
+        45,
+        68
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-d3c8e4756621ee770136eb82",
+      "column_index": 0,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.77458393130671,
+        55.24025259249734,
+        4.662257948051617
+      ],
+      "family": "exposed_opening",
+      "feasible": true,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "proposal_id": "nominal-cavity-d3c8e4756621ee770136eb82",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "tip_mm": [
+        59.28633343740407,
+        55.23945365059644,
+        4.656832939040314
+      ],
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        122,
+        45,
+        68
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-563d92d39f1026eff3a77db5",
+      "column_index": 1,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.771274209433706,
+        57.19334838950333,
+        4.672500008543335
+      ],
+      "family": "exposed_opening",
+      "feasible": true,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "proposal_id": "nominal-cavity-563d92d39f1026eff3a77db5",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "tip_mm": [
+        58.30652272772571,
+        57.19095156380061,
+        4.656224981509425
+      ],
+      "tool_id": "generic_suction",
+      "voxel": [
+        121,
+        43,
+        68
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-75df81638fd4cb878168aa9d",
+      "column_index": 2,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.77789365317971,
+        53.287156795491356,
+        4.652015887559883
+      ],
+      "family": "exposed_opening",
+      "feasible": true,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "proposal_id": "nominal-cavity-75df81638fd4cb878168aa9d",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "tip_mm": [
+        59.28964315927706,
+        53.28635785359045,
+        4.646590878548579
+      ],
+      "tool_id": "generic_suction",
+      "voxel": [
+        122,
+        47,
+        68
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-1096e79fdb94663becadd8ba",
+      "column_index": 4,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.79678727292263,
+        55.2507774555965,
+        2.6624085023111905
+      ],
+      "family": "exposed_opening",
+      "feasible": true,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "proposal_id": "nominal-cavity-1096e79fdb94663becadd8ba",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "tip_mm": [
+        57.3555348034093,
+        55.24678274609197,
+        2.6352834572546726
+      ],
+      "tool_id": "generic_suction",
+      "voxel": [
+        120,
+        45,
+        70
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-254464af721d8e6c20b250ac",
+      "column_index": 5,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.749070867817785,
+        57.18282352640418,
+        6.672349454283746
+      ],
+      "family": "exposed_opening",
+      "feasible": true,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "proposal_id": "nominal-cavity-254464af721d8e6c20b250ac",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "tip_mm": [
+        59.26082037391514,
+        57.182024584503274,
+        6.666924445272443
+      ],
+      "tool_id": "generic_suction",
+      "voxel": [
+        122,
+        43,
+        66
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-66679e0d78ac840600fd3090",
+      "column_index": 5,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.749070867817785,
+        57.18282352640418,
+        6.672349454283746
+      ],
+      "family": "exposed_opening",
+      "feasible": true,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "proposal_id": "nominal-cavity-66679e0d78ac840600fd3090",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "tip_mm": [
+        59.26082037391514,
+        57.182024584503274,
+        6.666924445272443
+      ],
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        122,
+        43,
+        66
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-20cd0ba564e2e563774d1878",
+      "column_index": 10,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.779548514116215,
+        52.31060889698836,
+        4.646894857314023
+      ],
+      "family": "exposed_opening",
+      "feasible": true,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "proposal_id": "nominal-cavity-20cd0ba564e2e563774d1878",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "tip_mm": [
+        59.29129802021356,
+        52.30980995508746,
+        4.6414698483027195
+      ],
+      "tool_id": "generic_suction",
+      "voxel": [
+        122,
+        48,
+        68
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-28a76bc09680e016555bf5eb",
+      "column_index": 11,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.741278918882834,
+        55.22446529784861,
+        7.662032116662245
+      ],
+      "family": "exposed_opening",
+      "feasible": true,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "proposal_id": "nominal-cavity-28a76bc09680e016555bf5eb",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "tip_mm": [
+        59.25302842498019,
+        55.22366635594771,
+        7.656607107650942
+      ],
+      "tool_id": "generic_suction",
+      "voxel": [
+        122,
+        45,
+        65
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-5287ad155b741d273dbc3e66",
+      "actual_opening_advance_mm": 0.9765625711179717,
+      "advance_source_axis_voxels": 1,
+      "column_index": 0,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.77458393130671,
+        55.24025259249734,
+        4.662257948051615
+      ],
+      "family": "intermediate_opening",
+      "feasible": true,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "opening_anchor_voxel": [
+        122,
+        45,
+        68
+      ],
+      "proposal_id": "nominal-cavity-5287ad155b741d273dbc3e66",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "requested_opening_advance_mm": 1.0,
+      "tip_mm": [
+        58.30983244959873,
+        55.237855766794624,
+        4.645982921017705
+      ],
+      "tool_id": "generic_suction",
+      "voxel": [
+        121,
+        45,
+        68
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-e2c67e40f12fee7279d254b1",
+      "actual_opening_advance_mm": 0.9765625711179717,
+      "advance_source_axis_voxels": 1,
+      "column_index": 5,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.749070867817785,
+        57.18282352640418,
+        6.6723494542837445
+      ],
+      "family": "intermediate_opening",
+      "feasible": true,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "opening_anchor_voxel": [
+        122,
+        43,
+        66
+      ],
+      "proposal_id": "nominal-cavity-e2c67e40f12fee7279d254b1",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "requested_opening_advance_mm": 1.0,
+      "tip_mm": [
+        58.2843193861098,
+        57.18042670070146,
+        6.656074427249834
+      ],
+      "tool_id": "generic_suction",
+      "voxel": [
+        121,
+        43,
+        66
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-fc987fe4fb3ebc37beb7c4e4",
+      "column_index": 1,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.771274209433706,
+        57.19334838950333,
+        4.672500008543337
+      ],
+      "family": "tool_footprint_opening",
+      "feasible": true,
+      "footprint_anchor_voxel": [
+        121,
+        43,
+        68
+      ],
+      "footprint_endpoint_tests": 1,
+      "footprint_exposed_cells": 348,
+      "footprint_radially_eligible_cells": 27,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "proposal_id": "nominal-cavity-fc987fe4fb3ebc37beb7c4e4",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "tip_mm": [
+        59.283023715531044,
+        57.192549447602424,
+        4.6670749995320335
+      ],
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        122,
+        43,
+        68
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-7c5133bc999ec59f3af12733",
+      "column_index": 4,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.79678727292263,
+        55.2507774555965,
+        2.6624085023111923
+      ],
+      "family": "tool_footprint_opening",
+      "feasible": true,
+      "footprint_anchor_voxel": [
+        120,
+        45,
+        70
+      ],
+      "footprint_endpoint_tests": 2,
+      "footprint_exposed_cells": 357,
+      "footprint_radially_eligible_cells": 31,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "proposal_id": "nominal-cavity-7c5133bc999ec59f3af12733",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "tip_mm": [
+        58.332035791214636,
+        55.24838062989378,
+        2.6461334752772814
+      ],
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        121,
+        45,
+        70
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-d0c8a0b4f4e1561cc99076d2",
+      "column_index": 8,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.80009699479563,
+        53.29768165859051,
+        2.6521664418194595
+      ],
+      "family": "tool_footprint_opening",
+      "feasible": true,
+      "footprint_anchor_voxel": [
+        122,
+        47,
+        69
+      ],
+      "footprint_endpoint_tests": 1,
+      "footprint_exposed_cells": 425,
+      "footprint_radially_eligible_cells": 51,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "proposal_id": "nominal-cavity-d0c8a0b4f4e1561cc99076d2",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "tip_mm": [
+        59.31184650089297,
+        53.29688271668961,
+        2.646741432808156
+      ],
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        122,
+        47,
+        70
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-175a15d3bff5cd888d216ccd",
+      "column_index": 9,
+      "endpoint_center_in_actor_crop": true,
+      "entry_mm": [
+        59.7696193484972,
+        58.16989628800632,
+        4.677621038789211
+      ],
+      "family": "tool_footprint_opening",
+      "feasible": true,
+      "footprint_anchor_voxel": [
+        122,
+        42,
+        67
+      ],
+      "footprint_endpoint_tests": 1,
+      "footprint_exposed_cells": 364,
+      "footprint_radially_eligible_cells": 32,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "proposal_id": "nominal-cavity-175a15d3bff5cd888d216ccd",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "tip_mm": [
+        59.28136885459455,
+        58.16909734610542,
+        4.672196029777908
+      ],
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        122,
+        42,
+        68
+      ]
+    }
+  ],
+  "source_files": {
+    "build/goal-conditioned-policy-v1/darwin_fast_sampler.py": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+    "build/goal-conditioned-policy-v1/run_contact_owned.py": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7",
+    "build/union025-clearance-witness-v1/freeze-runtime.py": "a6dcc1bf634165727324f8f76b087e1127f2e08c1ec309b20460070794fd8df7",
+    "build/union025-clearance-witness-v1/run_owned.py": "f6588f5e44885c318ec516aea5a0b1593d61a17bf4c3feb3fcac72e4912f6d1c",
+    "build/union025-clearance-witness-v1/witness_contract.py": "09210fcf36fcc261664a1a57b12226c81282d6459e30ba2653e1f4d8341b7bff",
+    "build/union025-clearance-witness-v1/witness_worker.py": "587ed3d7b5183ad1204143624cf8c8d397964f55ed5c0d709c81dfaefd74e469",
+    "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "src/resectionlab/anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+    "src/resectionlab/brain_extraction.py": "ef7d3b8d2d4161e9d544298b7986b6438ca41fd1b058cfebe16833eaa2900900",
+    "src/resectionlab/cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+    "src/resectionlab/contact_checkpoint.py": "5cb06e8d03d88abca1f0fbc4892a3f09866cb696d4cc20daf860afd9fe136f40",
+    "src/resectionlab/contact_family_desktop_bridge.py": "49fc166d4fdb8a227e597586167201c1e2b130878c2a8c5593764c8b50673c22",
+    "src/resectionlab/contact_family_desktop_release.py": "df739d8a0c855e37aa7d7bce036af402f5dfc054a1fa2d7fcd3e24852a1cd08b",
+    "src/resectionlab/contact_learning.py": "b4812a076b588594e95979ab8d7c078f2d7e317293438e73a96e86c5bd24a08b",
+    "src/resectionlab/contact_learning_contract.py": "8234a4dc0740469a18cb472ce8a5873c7ee12fe9dfa89c362b7ce7263afdeb19",
+    "src/resectionlab/contact_train_refit_release.py": "005961a81b96e22d78882038e20b792209025d4df69fbc175a751e04985413ee",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/critical_evidence.py": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99",
+    "src/resectionlab/data_policy.py": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208",
+    "src/resectionlab/desktop_bridge.py": "ea34877af54e6de26b9b116721808e9ef16666e4ad1d2ad02451b2cc2ce298f3",
+    "src/resectionlab/development_episode.py": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+    "src/resectionlab/evaluation.py": "624db1b0f520c45d91b7da2fd3312f75acab3f2573a31621fa33e38343dc6010",
+    "src/resectionlab/fixed_rl256_loader.py": "3907d44928512b897f4a960b5e56f1fa7c00c17e756110b4070b8fb24c553638",
+    "src/resectionlab/functional_events.py": "5a7ba030a4e4a0a4e35a48aa950a7bcc133b890dd02eee0b4301ed3a385f8faa",
+    "src/resectionlab/functional_evidence.py": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/goal_mode_spatial_policy.py": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a",
+    "src/resectionlab/goal_relation_spatial_policy.py": "8cf23e155fd1fd4d1994b4a032ded7c67a23cb8cec50496cd21f3ce2029c02dd",
+    "src/resectionlab/imaging.py": "45df035c47f9c509fef91ebc02f1c3bef40266c052dbd1de6d133815a5af6afa",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "src/resectionlab/learning.py": "7ef1da1bc5d6695db661f2f9a7a889b835cc70772ea1955892ea8e00c209af12",
+    "src/resectionlab/legacy_aspiration_projection.py": "69d0003350f30fa03996a272137521ae19a0f511667872ffb45cc386d7b1132c",
+    "src/resectionlab/legacy_transfer_episode.py": "a14e04ab2d948f283a4585b8834693a953cea71eefbf6525b673d7e1993f5bcd",
+    "src/resectionlab/legacy_transfer_supervisor.py": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd",
+    "src/resectionlab/legacy_transfer_worker.py": "88c4646eaf51b8c96f6962e166f1d2594271807e27a517fcdcd576dd436b2d01",
+    "src/resectionlab/native_axis_accounting.py": "c75eea141a636072465d6c88fc113c4bf53d8901428f1a1511623539ee541ce8",
+    "src/resectionlab/native_axis_policy_schema.py": "672a5dfd8ba7981bf6bc7a81746b15b094001145c0db942f16599f24a72dcafe",
+    "src/resectionlab/native_axis_refinement.py": "51e62d4475e1ba2a5292499581e2a697efcc3419cb5bf0ab4d476e336c917e0e",
+    "src/resectionlab/native_axis_simulation.py": "5ca0147885e2a8c918d10246f4889e4bbfb9c06724f62d8abc9e8cc605a540bf",
+    "src/resectionlab/native_functional_evaluation.py": "2c2284e32bc0bd87b4e6dbee82e2713777bb4d509b9e22837702a9ec3ab7da13",
+    "src/resectionlab/native_proposals.py": "6fbaf0bc23c666c8f64042ab070ceaac7954726c3f213d570270676d43b62b0e",
+    "src/resectionlab/native_refinement.py": "eec54a623eeff6a6efae64823c93746083602018cf2f3b187b7763487bc0f3c4",
+    "src/resectionlab/native_resection.py": "0a531933eeea43862fe4122c8cca7fc192c0d44a32ea263363fc7a495c072f16",
+    "src/resectionlab/native_routes.py": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea",
+    "src/resectionlab/native_simulation.py": "64552e5e5b5c245d4e815d0943ef4e9e5837b38d251ea891479c2a86ce026749",
+    "src/resectionlab/native_spatial_evaluation.py": "a3f0ac4c73e6242804ee1de59a7ab429374ae8fc7f21bb34671062fd591dfffa",
+    "src/resectionlab/native_spatial_task.py": "744e295a4ea437395cc3eb82f3ad75c9e3336a5f5504b83a7c5c40b8bcf8ec00",
+    "src/resectionlab/observed_landmark_replay.py": "e1e82f6f909d534c53c36ebc480bf13089d3033d822ae966b7f37ae2872397dd",
+    "src/resectionlab/observed_search.py": "52ed888c43a5b8405b4dd2407b583dcff59e21cf3c08b68a6c6571107b0268fd",
+    "src/resectionlab/patient_planning_admission.py": "755891729bfbaf4a8c5695eb1d4fa5577f22ef4c6c73d75cc37e6500690fe138",
+    "src/resectionlab/patient_planning_cohort_io.py": "45a1aa6b585e1dd4997bfdbb04ff911a40b0620e20707910ebd4665ade0ebb24",
+    "src/resectionlab/patient_planning_cohort_spec.py": "43991f4d7bc4ed30fbdb22e7996de2345762f0e68dedd4e32fc4f3b53eba4f7d",
+    "src/resectionlab/patient_planning_learning.py": "4eb8e40adffe2b70e37b9dec9d09f7ddb27ab1f558669f336165cc06658e6434",
+    "src/resectionlab/planning.py": "e1c1e377a8bdf4416c7b0f7e3f0c3c6d12d63ad46f174d0b0700b86f598a2b24",
+    "src/resectionlab/planning_budget.py": "c0b00319c0240ec57d6ef9e466ac0bfc8b1a781743f2bec92a8cc8ac517d0e8c",
+    "src/resectionlab/policy_inputs.py": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47",
+    "src/resectionlab/population_learning.py": "c2ad09dbe4a20ef9ea2c912e95cc05dec3c1cfb0fe38123627de4a8c9904772c",
+    "src/resectionlab/prior_proposals.py": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f",
+    "src/resectionlab/procedural_learning.py": "15eaa5f6e805357b0c11d788a403bcf7fbd5956963e93a746b29736fbe8c3ee6",
+    "src/resectionlab/public_contact_family.py": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800",
+    "src/resectionlab/public_patient_factory.py": "a6190ae6f2f7dde75fc64ab947050a469580f4cb68dc5fc3d3b663230e96cd4c",
+    "src/resectionlab/public_surface_contact.py": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+    "src/resectionlab/public_target_context.py": "8037a645c4a3fa57caec538e58a6d7fc024477a25af509b9fa1e57d12c5a1503",
+    "src/resectionlab/route_native_diagnostics.py": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf",
+    "src/resectionlab/selection_contract.py": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72",
+    "src/resectionlab/sequential_spatial_observation.py": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+    "src/resectionlab/shared_episode.py": "81d6b1faac3433f1a2eb09ff4ef70e773b69922c056495caf1a879fbbc381a4d",
+    "src/resectionlab/shared_transfer_comparison.py": "fe7713f60ec46de583d80f74bd59cc567a5a73b31998f9938e3aaa8ebbfb4835",
+    "src/resectionlab/shared_vascular_evaluation.py": "300f42604a69b207185417045bb88e392cdeea3e2c00713b7dcee9071c1861c0",
+    "src/resectionlab/simulation.py": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253",
+    "src/resectionlab/spatial_observations.py": "fd80342c0b512574da0d0580ce55fdb1de231d654e6615e72ef4ffe75977619f",
+    "src/resectionlab/spatial_policy.py": "30a666b114e9649744db527a78e11da0ce79b549117f863a4da84103e115c6f4",
+    "src/resectionlab/spatial_policy_diagnostics.py": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493",
+    "src/resectionlab/structural_evidence.py": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019",
+    "src/resectionlab/surface_contact_episode.py": "718321ef213ecdf7d7c1eeeba06bb607e7357c791dd58c0b645cefb0053f672e",
+    "src/resectionlab/vascular_contact_streaming.py": "fa2c09788f002c871575333018d6a11e309b48878045625e16d79fc39d75ebed",
+    "src/resectionlab/workspace_bundle.py": "f7dd62cf793f222f6768c67e2cdd55d3601afae9edc51c1fa5f7712dce64f66a",
+    "src/resectionlab/workspace_diagnostic.py": "f8a799f47027ebf49cd88b295de240f4cbc5e1126f18135b9cd5538a56a85be8",
+    "src/resectionlab/workspace_imaging.py": "932718dcc287366121b7d583384691a6274908a3af444239e70e2ff580b94501",
+    "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+  },
+  "source_index": {
+    "path": "build/union025-clearance-witness-v1/source-index.json",
+    "sha256": "161116cc522d53dcf37c4cbb48813422e0c19bd1019f4c573891e02a228fcc67"
+  },
+  "version": "owned-union025-clearance-witness-v1"
+}

@@ -1,0 +1,731 @@
+{
+  "plan": {
+    "actions": [
+      "nominal-cavity-563d92d39f1026eff3a77db5",
+      "STOP"
+    ],
+    "architecture_hash": null,
+    "context_hash": "sha256:b6e0d832a646c4313da4d23a54387a38a6175923188b60c14720b1a95a0a4c9e",
+    "decision_model_hash": "sha256:c1062a4a0b2dbdd9edcc8fbc1082e9ff8360b7d6eeb1aff68f8f24b266205b62",
+    "history": [
+      {
+        "action_id": "nominal-cavity-563d92d39f1026eff3a77db5",
+        "axis_unit": [
+          -0.9999369386924596,
+          -0.001636232893897042,
+          -0.011110417646035682
+        ],
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 2.929687713353888,
+        "contact_indices_native": [
+          [
+            120,
+            42,
+            67
+          ],
+          [
+            120,
+            42,
+            68
+          ],
+          [
+            120,
+            43,
+            67
+          ],
+          [
+            120,
+            43,
+            68
+          ],
+          [
+            120,
+            43,
+            69
+          ],
+          [
+            120,
+            44,
+            67
+          ],
+          [
+            120,
+            44,
+            68
+          ],
+          [
+            120,
+            44,
+            69
+          ],
+          [
+            121,
+            42,
+            67
+          ],
+          [
+            121,
+            43,
+            67
+          ],
+          [
+            121,
+            43,
+            68
+          ],
+          [
+            121,
+            44,
+            67
+          ],
+          [
+            121,
+            44,
+            68
+          ],
+          [
+            121,
+            44,
+            69
+          ],
+          [
+            122,
+            42,
+            67
+          ],
+          [
+            122,
+            43,
+            67
+          ],
+          [
+            122,
+            44,
+            67
+          ]
+        ],
+        "decision_model_hash": "sha256:0658593b8ffcefff364d4f9f00d0f84e7dbacce8c57ad999f9769e21c14e6126",
+        "entry_mm": [
+          59.771274209433706,
+          57.19334838950333,
+          4.672500008543335
+        ],
+        "function_unassessed_removed_volume_mm3": 0.953674795218559,
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "insertion_distance_mm": 1.464843856676944,
+        "language_surrogate": null,
+        "microsteps": [
+          {
+            "active_radius_mm": 1.0,
+            "active_stroke_end_mm": [
+              59.771274209433706,
+              57.19334838950333,
+              4.672500008543335
+            ],
+            "active_stroke_start_mm": [
+              62.771085025511084,
+              57.19825708818502,
+              4.705831261481443
+            ],
+            "contact_indices_native": [
+              [
+                121,
+                43,
+                68
+              ],
+              [
+                122,
+                42,
+                67
+              ],
+              [
+                122,
+                43,
+                67
+              ],
+              [
+                122,
+                44,
+                67
+              ]
+            ],
+            "removed_indices_native": [],
+            "tip_end_mm": [
+              59.771274209433706,
+              57.19334838950333,
+              4.672500008543335
+            ],
+            "tip_start_mm": [
+              59.771274209433706,
+              57.19334838950333,
+              4.672500008543335
+            ]
+          },
+          {
+            "active_radius_mm": 1.0,
+            "active_stroke_end_mm": [
+              59.52714896248237,
+              57.19294891855287,
+              4.669787504037684
+            ],
+            "active_stroke_start_mm": [
+              62.771085025511084,
+              57.19825708818502,
+              4.705831261481443
+            ],
+            "contact_indices_native": [
+              [
+                121,
+                43,
+                67
+              ],
+              [
+                121,
+                43,
+                68
+              ],
+              [
+                121,
+                44,
+                68
+              ],
+              [
+                122,
+                42,
+                67
+              ],
+              [
+                122,
+                43,
+                67
+              ],
+              [
+                122,
+                44,
+                67
+              ]
+            ],
+            "removed_indices_native": [],
+            "tip_end_mm": [
+              59.52714896248237,
+              57.19294891855287,
+              4.669787504037684
+            ],
+            "tip_start_mm": [
+              59.771274209433706,
+              57.19334838950333,
+              4.672500008543335
+            ]
+          },
+          {
+            "active_radius_mm": 1.0,
+            "active_stroke_end_mm": [
+              59.28302371553104,
+              57.192549447602424,
+              4.667074999532032
+            ],
+            "active_stroke_start_mm": [
+              62.52695977855975,
+              57.19785761723456,
+              4.703118756975791
+            ],
+            "contact_indices_native": [
+              [
+                121,
+                42,
+                67
+              ],
+              [
+                121,
+                43,
+                67
+              ],
+              [
+                121,
+                43,
+                68
+              ],
+              [
+                121,
+                44,
+                67
+              ],
+              [
+                121,
+                44,
+                68
+              ],
+              [
+                121,
+                44,
+                69
+              ],
+              [
+                122,
+                42,
+                67
+              ],
+              [
+                122,
+                43,
+                67
+              ],
+              [
+                122,
+                44,
+                67
+              ]
+            ],
+            "removed_indices_native": [],
+            "tip_end_mm": [
+              59.28302371553104,
+              57.192549447602424,
+              4.667074999532032
+            ],
+            "tip_start_mm": [
+              59.52714896248237,
+              57.19294891855287,
+              4.669787504037684
+            ]
+          },
+          {
+            "active_radius_mm": 1.0,
+            "active_stroke_end_mm": [
+              59.0388984685797,
+              57.19214997665197,
+              4.66436249502638
+            ],
+            "active_stroke_start_mm": [
+              62.282834531608415,
+              57.19745814628411,
+              4.700406252470139
+            ],
+            "contact_indices_native": [
+              [
+                121,
+                42,
+                67
+              ],
+              [
+                121,
+                43,
+                67
+              ],
+              [
+                121,
+                43,
+                68
+              ],
+              [
+                121,
+                44,
+                67
+              ],
+              [
+                121,
+                44,
+                68
+              ],
+              [
+                121,
+                44,
+                69
+              ],
+              [
+                122,
+                42,
+                67
+              ],
+              [
+                122,
+                43,
+                67
+              ],
+              [
+                122,
+                44,
+                67
+              ]
+            ],
+            "removed_indices_native": [],
+            "tip_end_mm": [
+              59.0388984685797,
+              57.19214997665197,
+              4.66436249502638
+            ],
+            "tip_start_mm": [
+              59.28302371553104,
+              57.192549447602424,
+              4.667074999532032
+            ]
+          },
+          {
+            "active_radius_mm": 1.0,
+            "active_stroke_end_mm": [
+              58.794773221628375,
+              57.19175050570151,
+              4.661649990520728
+            ],
+            "active_stroke_start_mm": [
+              62.03870928465708,
+              57.19705867533366,
+              4.697693747964487
+            ],
+            "contact_indices_native": [
+              [
+                120,
+                43,
+                68
+              ],
+              [
+                121,
+                42,
+                67
+              ],
+              [
+                121,
+                43,
+                67
+              ],
+              [
+                121,
+                43,
+                68
+              ],
+              [
+                121,
+                44,
+                67
+              ],
+              [
+                121,
+                44,
+                68
+              ],
+              [
+                121,
+                44,
+                69
+              ],
+              [
+                122,
+                42,
+                67
+              ],
+              [
+                122,
+                43,
+                67
+              ],
+              [
+                122,
+                44,
+                67
+              ]
+            ],
+            "removed_indices_native": [],
+            "tip_end_mm": [
+              58.794773221628375,
+              57.19175050570151,
+              4.661649990520728
+            ],
+            "tip_start_mm": [
+              59.0388984685797,
+              57.19214997665197,
+              4.66436249502638
+            ]
+          },
+          {
+            "active_radius_mm": 1.0,
+            "active_stroke_end_mm": [
+              58.55064797467704,
+              57.191351034751065,
+              4.658937486015077
+            ],
+            "active_stroke_start_mm": [
+              61.794584037705754,
+              57.1966592043832,
+              4.694981243458836
+            ],
+            "contact_indices_native": [
+              [
+                120,
+                42,
+                68
+              ],
+              [
+                120,
+                43,
+                67
+              ],
+              [
+                120,
+                43,
+                68
+              ],
+              [
+                120,
+                43,
+                69
+              ],
+              [
+                120,
+                44,
+                68
+              ],
+              [
+                121,
+                42,
+                67
+              ],
+              [
+                121,
+                43,
+                67
+              ],
+              [
+                121,
+                43,
+                68
+              ],
+              [
+                121,
+                44,
+                67
+              ],
+              [
+                121,
+                44,
+                68
+              ],
+              [
+                121,
+                44,
+                69
+              ],
+              [
+                122,
+                42,
+                67
+              ],
+              [
+                122,
+                43,
+                67
+              ],
+              [
+                122,
+                44,
+                67
+              ]
+            ],
+            "removed_indices_native": [],
+            "tip_end_mm": [
+              58.55064797467704,
+              57.191351034751065,
+              4.658937486015077
+            ],
+            "tip_start_mm": [
+              58.794773221628375,
+              57.19175050570151,
+              4.661649990520728
+            ]
+          },
+          {
+            "active_radius_mm": 1.0,
+            "active_stroke_end_mm": [
+              58.30652272772571,
+              57.19095156380061,
+              4.656224981509425
+            ],
+            "active_stroke_start_mm": [
+              61.55045879075442,
+              57.196259733432754,
+              4.692268738953184
+            ],
+            "contact_indices_native": [
+              [
+                120,
+                42,
+                67
+              ],
+              [
+                120,
+                42,
+                68
+              ],
+              [
+                120,
+                43,
+                67
+              ],
+              [
+                120,
+                43,
+                68
+              ],
+              [
+                120,
+                43,
+                69
+              ],
+              [
+                120,
+                44,
+                67
+              ],
+              [
+                120,
+                44,
+                68
+              ],
+              [
+                120,
+                44,
+                69
+              ],
+              [
+                121,
+                42,
+                67
+              ],
+              [
+                121,
+                43,
+                67
+              ],
+              [
+                121,
+                43,
+                68
+              ],
+              [
+                121,
+                44,
+                67
+              ],
+              [
+                121,
+                44,
+                68
+              ],
+              [
+                121,
+                44,
+                69
+              ],
+              [
+                122,
+                42,
+                67
+              ],
+              [
+                122,
+                43,
+                67
+              ],
+              [
+                122,
+                44,
+                67
+              ]
+            ],
+            "removed_indices_native": [
+              [
+                121,
+                43,
+                68
+              ]
+            ],
+            "tip_end_mm": [
+              58.30652272772571,
+              57.19095156380061,
+              4.656224981509425
+            ],
+            "tip_start_mm": [
+              58.55064797467704,
+              57.191351034751065,
+              4.658937486015077
+            ]
+          }
+        ],
+        "motor_surrogate": null,
+        "native_affine": [
+          [
+            0.976500987805342,
+            0.0016548609365015067,
+            0.011101670807958541,
+            -60.67616943193141
+          ],
+          [
+            0.001597883801812792,
+            -0.9765478985029925,
+            0.0052624315495769566,
+            98.63132191403871
+          ],
+          [
+            0.010850018022607372,
+            -0.005121030245863847,
+            -0.9999247228702097,
+            71.55845825652034
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "native_footprint": "fully_contained_connected_cells_v1",
+        "normal_removed_mm3": 0.953674795218559,
+        "outcome_scope": "separate_evaluator_reference",
+        "partial_contact_policy": "exposure_recorded_cells_remain_occupied_no_partial_volume_credit",
+        "partial_contact_weight": 0.0,
+        "removed_indices_native": [
+          [
+            121,
+            43,
+            68
+          ]
+        ],
+        "removed_volume_mm3": 0.953674795218559,
+        "retraction": "reverse_identical_insertion_path_after_removal_no_in_brain_reorientation",
+        "reward": -0.2236646467570657,
+        "source_hash": "sha256:99ef94f954b5856ef9cd638845d9ab0d43faaec80f57278289f021d627aaf8dc",
+        "source_shape": [
+          133,
+          169,
+          107
+        ],
+        "source_state_hash": "sha256:03f31849d13e3f9cd2e5762ee9ac61ba9f787db75b5b081afdbc094854c2d56d",
+        "target_removed_mm3": 0.0,
+        "temporal_rule": "shaft_sweep_must_clear_prior_cavity_before_endpoint_cut_credit",
+        "tip_mm": [
+          58.30652272772571,
+          57.19095156380061,
+          4.656224981509425
+        ],
+        "tissue_support_provenance": "explicit simulated S union T rigid-cell occupancy assumption; original automatic cerebrum and manual tumor retained; not validated material or corrected anatomy; hypothetical aperture; cortical access unverified",
+        "tool_id": "generic_suction"
+      },
+      {
+        "action_id": "STOP",
+        "complete_tool_path_length_mm": 0.0,
+        "insertion_distance_mm": 0.0,
+        "normal_removed_mm3": 0.0,
+        "reward": 0.0,
+        "target_removed_mm3": 0.0
+      }
+    ],
+    "initial_observation_hash": "sha256:911142e756260c5058b8e8969d75f8fc5f4f80c320052232f4fcd4ae5e658f2d",
+    "learning_updates": 0,
+    "max_steps": 24,
+    "parameter_hash": null,
+    "source_hash": "sha256:99ef94f954b5856ef9cd638845d9ab0d43faaec80f57278289f021d627aaf8dc",
+    "terminal_reason": "STOP"
+  },
+  "plan_seal": "sha256:7cc5f32b20e7a308834fa7b8cb5224716384db27277429cd2ea35b4dcbd3fc81"
+}

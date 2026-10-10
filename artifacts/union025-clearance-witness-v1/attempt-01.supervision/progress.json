@@ -1,0 +1,18 @@
+{
+  "elapsed_seconds": 19.169652374926955,
+  "output_bytes_at_last_stat": 4295132,
+  "owned_process_measurement": {
+    "detached_descendant_pids": [],
+    "detached_descendant_start_identities": {},
+    "group_read_seconds": 7.824995554983616e-05,
+    "pgid": 80704,
+    "pids": [
+      80704
+    ],
+    "process_group_resident_bytes": 459882496
+  },
+  "sampled_peak_rss_bytes": 459882496,
+  "samples": 93,
+  "supervision_bytes_at_last_stat": 25462,
+  "worker_pid": 80704
+}

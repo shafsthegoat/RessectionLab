@@ -1,0 +1,1110 @@
+{
+  "010_omitted_rays": "not accessed; deferred",
+  "SELECT_EVAL_opened": false,
+  "branches": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 1,
+        "rollout": 1
+      },
+      "native_previews": 1,
+      "ordinal": 0,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": 0.0
+      },
+      "plan_seal": "sha256:5f169d955ef119d136462f4afd125fcea8b76fffc7add0772af70481339852de",
+      "preparation_action": null,
+      "ray_status": "baseline_blocked",
+      "status": "complete",
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-1f4f2f86ac1c5143f2ac9e92",
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2
+      },
+      "native_previews": 211,
+      "ordinal": 1,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.9765625711179106,
+        "cumulative_contacted_tissue_upper_bound_mm3": 13.351447133059827,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 12.397772337841268,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 0.953674795218559,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.953674795218559,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": -0.22171152161482974
+      },
+      "plan_seal": "sha256:c0f15f77f0a117983c3c4ee4adc4ecbfa91410a633cf64bac7afc648585e6635",
+      "preparation_action": "nominal-cavity-1f4f2f86ac1c5143f2ac9e92",
+      "ray_status": "blocked",
+      "status": "complete",
+      "successor_exact_ray_matches": [
+        {
+          "action_id": "nominal-cavity-40affc7d77a26d3986d08f45",
+          "column_index": 12,
+          "endpoint_center_in_actor_crop": true,
+          "entry_mm": [
+            59.80788894373058,
+            55.25603988714608,
+            1.6624837794409706
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "offset_source_voxels": [
+            0,
+            3
+          ],
+          "proposal_id": "nominal-cavity-40affc7d77a26d3986d08f45",
+          "proposal_reason": "PROPOSED_UNCERTIFIED",
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            56.39013548641191,
+            55.250447293839734,
+            1.624508716361845
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            119,
+            45,
+            71
+          ]
+        }
+      ],
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-d3c8e4756621ee770136eb82",
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2
+      },
+      "native_previews": 209,
+      "ordinal": 2,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.9765625711179106,
+        "cumulative_contacted_tissue_upper_bound_mm3": 39.10066660396092,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 35.28596742308668,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 3.814699180874236,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 3.814699180874236,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": -0.7939163987459652
+      },
+      "plan_seal": "sha256:973d66472805d03fe65e76cccd9ce42b40cc83998b640d658afcd5ec391c6c13",
+      "preparation_action": "nominal-cavity-d3c8e4756621ee770136eb82",
+      "ray_status": "blocked",
+      "status": "complete",
+      "successor_exact_ray_matches": [
+        {
+          "action_id": "nominal-cavity-66824e3788be98fa99106799",
+          "column_index": 12,
+          "endpoint_center_in_actor_crop": true,
+          "entry_mm": [
+            59.80788894373058,
+            55.25603988714608,
+            1.6624837794409706
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "offset_source_voxels": [
+            0,
+            3
+          ],
+          "proposal_id": "nominal-cavity-66824e3788be98fa99106799",
+          "proposal_reason": "PROPOSED_UNCERTIFIED",
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            56.39013548641191,
+            55.250447293839734,
+            1.624508716361845
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            119,
+            45,
+            71
+          ]
+        }
+      ],
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-563d92d39f1026eff3a77db5",
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2
+      },
+      "native_previews": 209,
+      "ordinal": 3,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 2.929687713353888,
+        "cumulative_contacted_tissue_upper_bound_mm3": 16.212471518715503,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 15.258796723496944,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 0.953674795218559,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.953674795218559,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": -0.2236646467570657
+      },
+      "plan_seal": "sha256:7cc5f32b20e7a308834fa7b8cb5224716384db27277429cd2ea35b4dcbd3fc81",
+      "preparation_action": "nominal-cavity-563d92d39f1026eff3a77db5",
+      "ray_status": "blocked",
+      "status": "complete",
+      "successor_exact_ray_matches": [
+        {
+          "action_id": "nominal-cavity-b8f7206b924ab61dca8d695b",
+          "column_index": 12,
+          "endpoint_center_in_actor_crop": true,
+          "entry_mm": [
+            59.80788894373058,
+            55.25603988714608,
+            1.6624837794409706
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "offset_source_voxels": [
+            0,
+            3
+          ],
+          "proposal_id": "nominal-cavity-b8f7206b924ab61dca8d695b",
+          "proposal_reason": "PROPOSED_UNCERTIFIED",
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            56.39013548641191,
+            55.250447293839734,
+            1.624508716361845
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            119,
+            45,
+            71
+          ]
+        }
+      ],
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-75df81638fd4cb878168aa9d",
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2
+      },
+      "native_previews": 211,
+      "ordinal": 4,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.9765625711179248,
+        "cumulative_contacted_tissue_upper_bound_mm3": 18.11982110915262,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 17.166146313934064,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 0.953674795218559,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.953674795218559,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": -0.22171152161482974
+      },
+      "plan_seal": "sha256:8f6359ae5880b89a47cd3099ec0aa4fa02017ccecdd2919291d71c1f26f39680",
+      "preparation_action": "nominal-cavity-75df81638fd4cb878168aa9d",
+      "ray_status": "blocked",
+      "status": "complete",
+      "successor_exact_ray_matches": [
+        {
+          "action_id": "nominal-cavity-d18194c390731b704dd93a88",
+          "column_index": 12,
+          "endpoint_center_in_actor_crop": true,
+          "entry_mm": [
+            59.80788894373058,
+            55.25603988714608,
+            1.6624837794409706
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "offset_source_voxels": [
+            0,
+            3
+          ],
+          "proposal_id": "nominal-cavity-d18194c390731b704dd93a88",
+          "proposal_reason": "PROPOSED_UNCERTIFIED",
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            56.39013548641191,
+            55.250447293839734,
+            1.624508716361845
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            119,
+            45,
+            71
+          ]
+        }
+      ],
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-1096e79fdb94663becadd8ba",
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2
+      },
+      "native_previews": 209,
+      "ordinal": 5,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 4.882812855589808,
+        "cumulative_contacted_tissue_upper_bound_mm3": 17.166146313934064,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 16.212471518715503,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 0.953674795218559,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.953674795218559,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": -0.22561777189930163
+      },
+      "plan_seal": "sha256:c6968de249786b53f6dfd14c192dab9387ad7a3ec97b663ac294d094f17f3a52",
+      "preparation_action": "nominal-cavity-1096e79fdb94663becadd8ba",
+      "ray_status": "blocked",
+      "status": "complete",
+      "successor_exact_ray_matches": [
+        {
+          "action_id": "nominal-cavity-8b2ca2019456bef6f8c4749f",
+          "column_index": 12,
+          "endpoint_center_in_actor_crop": true,
+          "entry_mm": [
+            59.80788894373058,
+            55.25603988714608,
+            1.6624837794409706
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "offset_source_voxels": [
+            0,
+            3
+          ],
+          "proposal_id": "nominal-cavity-8b2ca2019456bef6f8c4749f",
+          "proposal_reason": "PROPOSED_UNCERTIFIED",
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            56.39013548641191,
+            55.250447293839734,
+            1.624508716361845
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            119,
+            45,
+            71
+          ]
+        }
+      ],
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-254464af721d8e6c20b250ac",
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2
+      },
+      "native_previews": 211,
+      "ordinal": 6,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.9765625711179248,
+        "cumulative_contacted_tissue_upper_bound_mm3": 17.166146313934064,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 16.212471518715503,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 0.953674795218559,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.953674795218559,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": -0.22171152161482974
+      },
+      "plan_seal": "sha256:ab2aadf224c0ecd59ac2e58d7e9679b4069d70d4f4bf0255516d3f842d0045b1",
+      "preparation_action": "nominal-cavity-254464af721d8e6c20b250ac",
+      "ray_status": "blocked",
+      "status": "complete",
+      "successor_exact_ray_matches": [
+        {
+          "action_id": "nominal-cavity-ad98256a4b2c50ad5ac082fa",
+          "column_index": 12,
+          "endpoint_center_in_actor_crop": true,
+          "entry_mm": [
+            59.80788894373058,
+            55.25603988714608,
+            1.6624837794409706
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "offset_source_voxels": [
+            0,
+            3
+          ],
+          "proposal_id": "nominal-cavity-ad98256a4b2c50ad5ac082fa",
+          "proposal_reason": "PROPOSED_UNCERTIFIED",
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            56.39013548641191,
+            55.250447293839734,
+            1.624508716361845
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            119,
+            45,
+            71
+          ]
+        }
+      ],
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-66679e0d78ac840600fd3090",
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2
+      },
+      "native_previews": 209,
+      "ordinal": 7,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.9765625711179248,
+        "cumulative_contacted_tissue_upper_bound_mm3": 44.822715375272274,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 39.10066660396092,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 5.722048771311354,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 5.722048771311354,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": -1.175386316833389
+      },
+      "plan_seal": "sha256:e25f8165b8a30ddf7afce69fd54f3eb6b93f39e90a446ff38d0c16b1e98269f0",
+      "preparation_action": "nominal-cavity-66679e0d78ac840600fd3090",
+      "ray_status": "blocked",
+      "status": "complete",
+      "successor_exact_ray_matches": [
+        {
+          "action_id": "nominal-cavity-88c4cc811d1d0dfc46f20b45",
+          "column_index": 12,
+          "endpoint_center_in_actor_crop": true,
+          "entry_mm": [
+            59.80788894373058,
+            55.25603988714608,
+            1.6624837794409706
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "offset_source_voxels": [
+            0,
+            3
+          ],
+          "proposal_id": "nominal-cavity-88c4cc811d1d0dfc46f20b45",
+          "proposal_reason": "PROPOSED_UNCERTIFIED",
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            56.39013548641191,
+            55.250447293839734,
+            1.624508716361845
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            119,
+            45,
+            71
+          ]
+        }
+      ],
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-20cd0ba564e2e563774d1878",
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2
+      },
+      "native_previews": 211,
+      "ordinal": 8,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.976562571117939,
+        "cumulative_contacted_tissue_upper_bound_mm3": 20.02717069958974,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 19.073495904371182,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 0.953674795218559,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.953674795218559,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": -0.22171152161482977
+      },
+      "plan_seal": "sha256:83a09f61a04f3c46194ed89182e048f0acb75a5b7d63195cfaa5cf4e2aa2d0d7",
+      "preparation_action": "nominal-cavity-20cd0ba564e2e563774d1878",
+      "ray_status": "blocked",
+      "status": "complete",
+      "successor_exact_ray_matches": [
+        {
+          "action_id": "nominal-cavity-f4a604b6417acc101af42551",
+          "column_index": 12,
+          "endpoint_center_in_actor_crop": true,
+          "entry_mm": [
+            59.80788894373058,
+            55.25603988714608,
+            1.6624837794409706
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "offset_source_voxels": [
+            0,
+            3
+          ],
+          "proposal_id": "nominal-cavity-f4a604b6417acc101af42551",
+          "proposal_reason": "PROPOSED_UNCERTIFIED",
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            56.39013548641191,
+            55.250447293839734,
+            1.624508716361845
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            119,
+            45,
+            71
+          ]
+        }
+      ],
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-28a76bc09680e016555bf5eb",
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2
+      },
+      "native_previews": 209,
+      "ordinal": 9,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.9765625711179248,
+        "cumulative_contacted_tissue_upper_bound_mm3": 21.934520290026857,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 20.9808454948083,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 0.953674795218559,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.953674795218559,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": -0.22171152161482974
+      },
+      "plan_seal": "sha256:873d9ecf2622d6cc2b5da91a4f783b38d5ed0fe8132fe0fe9da9c18c4cf270b8",
+      "preparation_action": "nominal-cavity-28a76bc09680e016555bf5eb",
+      "ray_status": "blocked",
+      "status": "complete",
+      "successor_exact_ray_matches": [
+        {
+          "action_id": "nominal-cavity-3a7f3f9dd8a5a373b2e3ec36",
+          "column_index": 12,
+          "endpoint_center_in_actor_crop": true,
+          "entry_mm": [
+            59.80788894373058,
+            55.25603988714608,
+            1.6624837794409706
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "offset_source_voxels": [
+            0,
+            3
+          ],
+          "proposal_id": "nominal-cavity-3a7f3f9dd8a5a373b2e3ec36",
+          "proposal_reason": "PROPOSED_UNCERTIFIED",
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            56.39013548641191,
+            55.250447293839734,
+            1.624508716361845
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            119,
+            45,
+            71
+          ]
+        }
+      ],
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-5287ad155b741d273dbc3e66",
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2
+      },
+      "native_previews": 211,
+      "ordinal": 10,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 2.9296877133538457,
+        "cumulative_contacted_tissue_upper_bound_mm3": 21.934520290026857,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 20.02717069958974,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 1.907349590437118,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 1.907349590437118,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": -0.41439960580077745
+      },
+      "plan_seal": "sha256:f5de504a52955ab43d687ad31a3593ad1fd5bc56800c2db868ede9021e7adbc6",
+      "preparation_action": "nominal-cavity-5287ad155b741d273dbc3e66",
+      "ray_status": "blocked",
+      "status": "complete",
+      "successor_exact_ray_matches": [
+        {
+          "action_id": "nominal-cavity-9be22c2bb9c3b3af6ce14959",
+          "column_index": 12,
+          "endpoint_center_in_actor_crop": true,
+          "entry_mm": [
+            59.80788894373058,
+            55.25603988714608,
+            1.6624837794409706
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "offset_source_voxels": [
+            0,
+            3
+          ],
+          "proposal_id": "nominal-cavity-9be22c2bb9c3b3af6ce14959",
+          "proposal_reason": "PROPOSED_UNCERTIFIED",
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            56.39013548641191,
+            55.250447293839734,
+            1.624508716361845
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            119,
+            45,
+            71
+          ]
+        }
+      ],
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-e2c67e40f12fee7279d254b1",
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2
+      },
+      "native_previews": 211,
+      "ordinal": 11,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 2.92968771335386,
+        "cumulative_contacted_tissue_upper_bound_mm3": 25.749219470901092,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 23.841869880463975,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 1.907349590437118,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 1.907349590437118,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": -0.41439960580077745
+      },
+      "plan_seal": "sha256:df3ecc4a1d1d9eee9fc87e629b1fd8be598819792de4b337b21f596c3eba562c",
+      "preparation_action": "nominal-cavity-e2c67e40f12fee7279d254b1",
+      "ray_status": "blocked",
+      "status": "complete",
+      "successor_exact_ray_matches": [
+        {
+          "action_id": "nominal-cavity-54fff6409aeee35d5fc9480a",
+          "column_index": 12,
+          "endpoint_center_in_actor_crop": true,
+          "entry_mm": [
+            59.80788894373058,
+            55.25603988714608,
+            1.6624837794409706
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "offset_source_voxels": [
+            0,
+            3
+          ],
+          "proposal_id": "nominal-cavity-54fff6409aeee35d5fc9480a",
+          "proposal_reason": "PROPOSED_UNCERTIFIED",
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            56.39013548641191,
+            55.250447293839734,
+            1.624508716361845
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            119,
+            45,
+            71
+          ]
+        }
+      ],
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-fc987fe4fb3ebc37beb7c4e4",
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2
+      },
+      "native_previews": 209,
+      "ordinal": 12,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.9765625711179532,
+        "cumulative_contacted_tissue_upper_bound_mm3": 27.65656906133821,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 25.749219470901092,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 1.907349590437118,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 1.907349590437118,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": -0.41244648065854156
+      },
+      "plan_seal": "sha256:93fb54528abf0b3e43ad8ab35db3ec3269096f2779ddc54343a1949008a1158b",
+      "preparation_action": "nominal-cavity-fc987fe4fb3ebc37beb7c4e4",
+      "ray_status": "blocked",
+      "status": "complete",
+      "successor_exact_ray_matches": [
+        {
+          "action_id": "nominal-cavity-5c8150adb641339ca02ccc67",
+          "column_index": 12,
+          "endpoint_center_in_actor_crop": true,
+          "entry_mm": [
+            59.80788894373058,
+            55.25603988714608,
+            1.6624837794409706
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "offset_source_voxels": [
+            0,
+            3
+          ],
+          "proposal_id": "nominal-cavity-5c8150adb641339ca02ccc67",
+          "proposal_reason": "PROPOSED_UNCERTIFIED",
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            56.39013548641191,
+            55.250447293839734,
+            1.624508716361845
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            119,
+            45,
+            71
+          ]
+        }
+      ],
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-7c5133bc999ec59f3af12733",
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2
+      },
+      "native_previews": 209,
+      "ordinal": 13,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 2.9296877133538737,
+        "cumulative_contacted_tissue_upper_bound_mm3": 34.33229262786813,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 32.42494303743101,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 1.907349590437118,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 1.907349590437118,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": -0.4143996058007775
+      },
+      "plan_seal": "sha256:81bb05b374fdfe7d94ef3d240c0104bd961b266e3c409c35a0a169f314d78202",
+      "preparation_action": "nominal-cavity-7c5133bc999ec59f3af12733",
+      "ray_status": "blocked",
+      "status": "complete",
+      "successor_exact_ray_matches": [
+        {
+          "action_id": "nominal-cavity-e9ec597ee7a7c38b7ab55812",
+          "column_index": 12,
+          "endpoint_center_in_actor_crop": true,
+          "entry_mm": [
+            59.80788894373058,
+            55.25603988714608,
+            1.6624837794409706
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "offset_source_voxels": [
+            0,
+            3
+          ],
+          "proposal_id": "nominal-cavity-e9ec597ee7a7c38b7ab55812",
+          "proposal_reason": "PROPOSED_UNCERTIFIED",
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            56.39013548641191,
+            55.250447293839734,
+            1.624508716361845
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            119,
+            45,
+            71
+          ]
+        }
+      ],
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-d0c8a0b4f4e1561cc99076d2",
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2
+      },
+      "native_previews": 209,
+      "ordinal": 14,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.9765625711179532,
+        "cumulative_contacted_tissue_upper_bound_mm3": 22.888195085245417,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 20.9808454948083,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 1.907349590437118,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 1.907349590437118,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": -0.41244648065854156
+      },
+      "plan_seal": "sha256:90e0b743a82132db83cd2b01facded6338e5289d22dc10bf54096157dda0ac0c",
+      "preparation_action": "nominal-cavity-d0c8a0b4f4e1561cc99076d2",
+      "ray_status": "blocked",
+      "status": "complete",
+      "successor_exact_ray_matches": [
+        {
+          "action_id": "nominal-cavity-8df91ffd96d3252c7fc0116a",
+          "column_index": 12,
+          "endpoint_center_in_actor_crop": true,
+          "entry_mm": [
+            59.80788894373058,
+            55.25603988714608,
+            1.6624837794409706
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "offset_source_voxels": [
+            0,
+            3
+          ],
+          "proposal_id": "nominal-cavity-8df91ffd96d3252c7fc0116a",
+          "proposal_reason": "PROPOSED_UNCERTIFIED",
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            56.39013548641191,
+            55.250447293839734,
+            1.624508716361845
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            119,
+            45,
+            71
+          ]
+        }
+      ],
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-175a15d3bff5cd888d216ccd",
+        "STOP"
+      ],
+      "fixed_ray_feasible": false,
+      "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "native_counts": {
+        "replay": 2,
+        "rollout": 2
+      },
+      "native_previews": 209,
+      "ordinal": 15,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.976562571117939,
+        "cumulative_contacted_tissue_upper_bound_mm3": 21.934520290026857,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 20.9808454948083,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 0.953674795218559,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.953674795218559,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": -0.22171152161482977
+      },
+      "plan_seal": "sha256:b5b8dba812e286ca864d125ad309afa8f45c8bd15d067afd47b2bb8eafc63abc",
+      "preparation_action": "nominal-cavity-175a15d3bff5cd888d216ccd",
+      "ray_status": "blocked",
+      "status": "complete",
+      "successor_exact_ray_matches": [
+        {
+          "action_id": "nominal-cavity-79d15511743236274fbb7037",
+          "column_index": 12,
+          "endpoint_center_in_actor_crop": true,
+          "entry_mm": [
+            59.80788894373058,
+            55.25603988714608,
+            1.6624837794409706
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "offset_source_voxels": [
+            0,
+            3
+          ],
+          "proposal_id": "nominal-cavity-79d15511743236274fbb7037",
+          "proposal_reason": "PROPOSED_UNCERTIFIED",
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            56.39013548641191,
+            55.250447293839734,
+            1.624508716361845
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            119,
+            45,
+            71
+          ]
+        }
+      ],
+      "target_access_success": false
+    }
+  ],
+  "checkpoint_loads": 0,
+  "complete_wall_seconds": 17.335260750027373,
+  "condition": "cerebrum_plus_supplied_tumor_assumption",
+  "fixed_ray": {
+    "entry_mm": [
+      59.80788894373058,
+      55.25603988714608,
+      1.6624837794409706
+    ],
+    "tip_mm": [
+      56.39013548641191,
+      55.250447293839734,
+      1.624508716361845
+    ],
+    "tool_id": "generic_suction"
+  },
+  "full_target_mm3": 77974.35860665982,
+  "interpretation": "Supplied S union T is an unvalidated material assumption. First-failure blockers are neither a full corridor nor a minimum clearing set.",
+  "native_counts": {
+    "replay": 31,
+    "rollout": 31
+  },
+  "negative_scope": "This tests all15 existing legal root moves followed by one fixed ray only, not longer preparation or global STOP optimality.",
+  "optimizer_updates": 0,
+  "policy_forwards": 0,
+  "private_reference_reads": 0,
+  "search_calls": 0,
+  "selected_ordinal": 0,
+  "selected_plan_seal": "sha256:5f169d955ef119d136462f4afd125fcea8b76fffc7add0772af70481339852de",
+  "selected_return": 0.0,
+  "source_released": true,
+  "status": "complete_fixed_ray_witness",
+  "subject": "ReMIND-025"
+}

@@ -1,0 +1,529 @@
+{
+  "action_id": "nominal-cavity-20cd0ba564e2e563774d1878",
+  "axis_unit": [
+    -0.9999369386924596,
+    -0.001636232893892231,
+    -0.011110417646035951
+  ],
+  "clinical_deficit_probability": null,
+  "complete_tool_path_length_mm": 0.976562571117939,
+  "contact_indices_native": [
+    [
+      121,
+      47,
+      67
+    ],
+    [
+      121,
+      47,
+      68
+    ],
+    [
+      121,
+      47,
+      69
+    ],
+    [
+      121,
+      48,
+      67
+    ],
+    [
+      121,
+      48,
+      68
+    ],
+    [
+      121,
+      48,
+      69
+    ],
+    [
+      121,
+      49,
+      67
+    ],
+    [
+      121,
+      49,
+      68
+    ],
+    [
+      121,
+      49,
+      69
+    ],
+    [
+      122,
+      47,
+      67
+    ],
+    [
+      122,
+      47,
+      68
+    ],
+    [
+      122,
+      47,
+      69
+    ],
+    [
+      122,
+      48,
+      67
+    ],
+    [
+      122,
+      48,
+      68
+    ],
+    [
+      122,
+      48,
+      69
+    ],
+    [
+      122,
+      49,
+      67
+    ],
+    [
+      122,
+      49,
+      68
+    ],
+    [
+      122,
+      49,
+      69
+    ],
+    [
+      123,
+      47,
+      67
+    ],
+    [
+      123,
+      48,
+      67
+    ],
+    [
+      123,
+      49,
+      67
+    ]
+  ],
+  "decision_model_hash": "sha256:0658593b8ffcefff364d4f9f00d0f84e7dbacce8c57ad999f9769e21c14e6126",
+  "entry_mm": [
+    59.779548514116215,
+    52.31060889698836,
+    4.646894857314023
+  ],
+  "function_unassessed_removed_volume_mm3": 0.953674795218559,
+  "geometry_unknowns": [
+    "normal_tissue_exposure_unassessed",
+    "tool_geometry_outside_image_unassessed"
+  ],
+  "insertion_distance_mm": 0.4882812855589695,
+  "language_surrogate": null,
+  "microsteps": [
+    {
+      "active_radius_mm": 1.0,
+      "active_stroke_end_mm": [
+        59.779548514116215,
+        52.31060889698836,
+        4.646894857314023
+      ],
+      "active_stroke_start_mm": [
+        62.77935933019359,
+        52.31551759567004,
+        4.680226110252131
+      ],
+      "contact_indices_native": [
+        [
+          121,
+          48,
+          68
+        ],
+        [
+          122,
+          47,
+          67
+        ],
+        [
+          122,
+          47,
+          68
+        ],
+        [
+          122,
+          47,
+          69
+        ],
+        [
+          122,
+          48,
+          67
+        ],
+        [
+          122,
+          48,
+          68
+        ],
+        [
+          122,
+          48,
+          69
+        ],
+        [
+          122,
+          49,
+          67
+        ],
+        [
+          122,
+          49,
+          68
+        ],
+        [
+          122,
+          49,
+          69
+        ],
+        [
+          123,
+          47,
+          67
+        ],
+        [
+          123,
+          48,
+          67
+        ],
+        [
+          123,
+          49,
+          67
+        ]
+      ],
+      "removed_indices_native": [],
+      "tip_end_mm": [
+        59.779548514116215,
+        52.31060889698836,
+        4.646894857314023
+      ],
+      "tip_start_mm": [
+        59.779548514116215,
+        52.31060889698836,
+        4.646894857314023
+      ]
+    },
+    {
+      "active_radius_mm": 1.0,
+      "active_stroke_end_mm": [
+        59.53542326716489,
+        52.310209426037915,
+        4.644182352808372
+      ],
+      "active_stroke_start_mm": [
+        62.77935933019359,
+        52.31551759567004,
+        4.680226110252131
+      ],
+      "contact_indices_native": [
+        [
+          121,
+          47,
+          68
+        ],
+        [
+          121,
+          48,
+          67
+        ],
+        [
+          121,
+          48,
+          68
+        ],
+        [
+          121,
+          48,
+          69
+        ],
+        [
+          121,
+          49,
+          68
+        ],
+        [
+          122,
+          47,
+          67
+        ],
+        [
+          122,
+          47,
+          68
+        ],
+        [
+          122,
+          47,
+          69
+        ],
+        [
+          122,
+          48,
+          67
+        ],
+        [
+          122,
+          48,
+          68
+        ],
+        [
+          122,
+          48,
+          69
+        ],
+        [
+          122,
+          49,
+          67
+        ],
+        [
+          122,
+          49,
+          68
+        ],
+        [
+          122,
+          49,
+          69
+        ],
+        [
+          123,
+          47,
+          67
+        ],
+        [
+          123,
+          48,
+          67
+        ],
+        [
+          123,
+          49,
+          67
+        ]
+      ],
+      "removed_indices_native": [],
+      "tip_end_mm": [
+        59.53542326716489,
+        52.310209426037915,
+        4.644182352808372
+      ],
+      "tip_start_mm": [
+        59.779548514116215,
+        52.31060889698836,
+        4.646894857314023
+      ]
+    },
+    {
+      "active_radius_mm": 1.0,
+      "active_stroke_end_mm": [
+        59.29129802021356,
+        52.30980995508746,
+        4.6414698483027195
+      ],
+      "active_stroke_start_mm": [
+        62.535234083242266,
+        52.31511812471959,
+        4.67751360574648
+      ],
+      "contact_indices_native": [
+        [
+          121,
+          47,
+          67
+        ],
+        [
+          121,
+          47,
+          68
+        ],
+        [
+          121,
+          47,
+          69
+        ],
+        [
+          121,
+          48,
+          67
+        ],
+        [
+          121,
+          48,
+          68
+        ],
+        [
+          121,
+          48,
+          69
+        ],
+        [
+          121,
+          49,
+          67
+        ],
+        [
+          121,
+          49,
+          68
+        ],
+        [
+          121,
+          49,
+          69
+        ],
+        [
+          122,
+          47,
+          67
+        ],
+        [
+          122,
+          47,
+          68
+        ],
+        [
+          122,
+          47,
+          69
+        ],
+        [
+          122,
+          48,
+          67
+        ],
+        [
+          122,
+          48,
+          68
+        ],
+        [
+          122,
+          48,
+          69
+        ],
+        [
+          122,
+          49,
+          67
+        ],
+        [
+          122,
+          49,
+          68
+        ],
+        [
+          122,
+          49,
+          69
+        ],
+        [
+          123,
+          47,
+          67
+        ],
+        [
+          123,
+          48,
+          67
+        ],
+        [
+          123,
+          49,
+          67
+        ]
+      ],
+      "removed_indices_native": [
+        [
+          122,
+          48,
+          68
+        ]
+      ],
+      "tip_end_mm": [
+        59.29129802021356,
+        52.30980995508746,
+        4.6414698483027195
+      ],
+      "tip_start_mm": [
+        59.53542326716489,
+        52.310209426037915,
+        4.644182352808372
+      ]
+    }
+  ],
+  "motor_surrogate": null,
+  "native_affine": [
+    [
+      0.976500987805342,
+      0.0016548609365015067,
+      0.011101670807958541,
+      -60.67616943193141
+    ],
+    [
+      0.001597883801812792,
+      -0.9765478985029925,
+      0.0052624315495769566,
+      98.63132191403871
+    ],
+    [
+      0.010850018022607372,
+      -0.005121030245863847,
+      -0.9999247228702097,
+      71.55845825652034
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "native_footprint": "fully_contained_connected_cells_v1",
+  "normal_removed_mm3": 0.953674795218559,
+  "outcome_scope": "separate_evaluator_reference",
+  "partial_contact_policy": "exposure_recorded_cells_remain_occupied_no_partial_volume_credit",
+  "partial_contact_weight": 0.0,
+  "removed_indices_native": [
+    [
+      122,
+      48,
+      68
+    ]
+  ],
+  "removed_volume_mm3": 0.953674795218559,
+  "retraction": "reverse_identical_insertion_path_after_removal_no_in_brain_reorientation",
+  "reward": -0.22171152161482977,
+  "source_hash": "sha256:99ef94f954b5856ef9cd638845d9ab0d43faaec80f57278289f021d627aaf8dc",
+  "source_shape": [
+    133,
+    169,
+    107
+  ],
+  "source_state_hash": "sha256:03f31849d13e3f9cd2e5762ee9ac61ba9f787db75b5b081afdbc094854c2d56d",
+  "target_removed_mm3": 0.0,
+  "temporal_rule": "shaft_sweep_must_clear_prior_cavity_before_endpoint_cut_credit",
+  "tip_mm": [
+    59.29129802021356,
+    52.30980995508746,
+    4.6414698483027195
+  ],
+  "tissue_support_provenance": "explicit simulated S union T rigid-cell occupancy assumption; original automatic cerebrum and manual tumor retained; not validated material or corrected anatomy; hypothetical aperture; cortical access unverified",
+  "tool_id": "generic_suction"
+}

@@ -1,0 +1,36 @@
+{
+  "actions": [
+    "STOP"
+  ],
+  "fixed_ray_feasible": false,
+  "fixed_ray_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+  "native_counts": {
+    "replay": 1,
+    "rollout": 1
+  },
+  "native_previews": 1,
+  "ordinal": 0,
+  "outcomes": {
+    "clinical_deficit_probability": null,
+    "complete_tool_path_length_mm": 0.0,
+    "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+    "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+    "language_surrogate": null,
+    "motor_surrogate": null,
+    "nonstop_actions": 0,
+    "normal_removed_mm3": 0.0,
+    "partial_contact_reward_weight": 0.0,
+    "positive_target_source_cells_removed": 0,
+    "reference_target_fraction_removed": 0.0,
+    "simulated_removed_volume_mm3": 0.0,
+    "target_removed_mm3": 0.0,
+    "tool_changes": 0,
+    "total_reference_target_mm3": 77974.35860665982,
+    "total_reward": 0.0
+  },
+  "plan_seal": "sha256:5f169d955ef119d136462f4afd125fcea8b76fffc7add0772af70481339852de",
+  "preparation_action": null,
+  "ray_status": "baseline_blocked",
+  "status": "complete",
+  "target_access_success": false
+}
