@@ -1,0 +1,21 @@
+{
+  "automatic_retry": false,
+  "max_sampled_worker_rss_bytes": 1073741824,
+  "max_wall_seconds": 90,
+  "scope": "generated_legacy_aspirate_only",
+  "source_sha256": {
+    "build/integration-first-policy-v2/legacy_checkpoint_rollout.py": "63206748d3a5ada635cae18bcdc5b46933d2876e00f38abb85cd68c88baa23c4",
+    "build/matched-estimate-methods-v1/candidate/frozen_preflight_supervisor.py": "8d3db9c04e4b2e040f6b6f5bc153618f277233fb93c12c2cabdf418493e58048",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/evaluation.py": "624db1b0f520c45d91b7da2fd3312f75acab3f2573a31621fa33e38343dc6010",
+    "src/resectionlab/native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+    "src/resectionlab/native_spatial_task.py": "503acba2bfe14dc6f744bd2099e45b018cfa2011de4e35b30e0e8c70abdb6255",
+    "src/resectionlab/observed_search.py": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+    "src/resectionlab/sequential_spatial_observation.py": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+    "src/resectionlab/shared_episode.py": "81d6b1faac3433f1a2eb09ff4ef70e773b69922c056495caf1a879fbbc381a4d",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+    "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4"
+  },
+  "status": "started",
+  "version": "legacy-RL256-shared-transition-supervision-v2"
+}

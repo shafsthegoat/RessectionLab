@@ -1,0 +1,46 @@
+{
+  "checkpoint_bytes": 394009,
+  "checkpoint_sha256": "1d391665f66cdd0c1fa1db150261b853820a9d30d62fc20c99cf021cf0229fbd",
+  "numpy_scalar_field": "grid_roundoff_band (pickle field immediately preceding numpy scalar GLOBAL)",
+  "pickle_bytes": 8059,
+  "pickle_globals": [
+    {
+      "global": "collections OrderedDict",
+      "position": 19
+    },
+    {
+      "global": "torch._utils _rebuild_tensor_v2",
+      "position": 74
+    },
+    {
+      "global": "torch FloatStorage",
+      "position": 125
+    },
+    {
+      "global": "numpy._core.multiarray scalar",
+      "position": 6228
+    },
+    {
+      "global": "numpy dtype",
+      "position": 6264
+    },
+    {
+      "global": "_codecs encode",
+      "position": 6344
+    },
+    {
+      "global": "torch ByteStorage",
+      "position": 7968
+    }
+  ],
+  "pickle_member": "RL-256/data.pkl",
+  "pickle_sha256": "16edae4fff507344431cd4a40069c9499ee32fa347a7da090825b0426ba1c085",
+  "scope": "static_zip_pickle_opcode_inspection_no_deserialization",
+  "scoped_dynamic_dtype": "numpy.dtypes.Float64DType",
+  "source_expression": "src/resectionlab/spatial_policy.py:24 GRID_ROUNDOFF_BAND = 64 * np.finfo(np.float64).eps",
+  "unsafe_globals_expected": [
+    "numpy._core.multiarray.scalar",
+    "numpy.dtype"
+  ],
+  "zip_members": 71
+}

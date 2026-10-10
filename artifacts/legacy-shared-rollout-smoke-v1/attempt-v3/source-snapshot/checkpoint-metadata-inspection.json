@@ -1,0 +1,135 @@
+{
+  "architecture_keys": [
+    "action_geometry",
+    "align_corners",
+    "channels",
+    "config",
+    "critic_candidate_context",
+    "grid_roundoff_band",
+    "grid_sample_order",
+    "image_input",
+    "image_layout",
+    "inference_ties",
+    "normalization",
+    "padding",
+    "procedure_state",
+    "return_transform",
+    "spatial_pool",
+    "version"
+  ],
+  "architecture_type": "dict",
+  "checkpoint_context": {
+    "items": {
+      "decision_model_hash": {
+        "type": "str",
+        "value": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b"
+      },
+      "declaration_sha256": {
+        "type": "str",
+        "value": "14df1a1fbb9bb8187d97bc7dcf99cacf923a9e5e9f4182693de0e1d01a5e1285"
+      },
+      "max_steps": {
+        "type": "int",
+        "value": 2
+      },
+      "real_patient_count": {
+        "type": "int",
+        "value": 0
+      },
+      "scope": {
+        "type": "str",
+        "value": "native-opening-generated-development-v1"
+      },
+      "source_ids": {
+        "items": [
+          {
+            "type": "str",
+            "value": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e"
+          }
+        ],
+        "type": "tuple"
+      },
+      "transition_lineage": {
+        "type": "str",
+        "value": "simulator_generated"
+      }
+    },
+    "type": "dict"
+  },
+  "checkpoint_sha256": "1d391665f66cdd0c1fa1db150261b853820a9d30d62fc20c99cf021cf0229fbd",
+  "checkpoint_top_keys": [
+    "action_rng",
+    "architecture",
+    "context",
+    "initial_parameter_hash",
+    "optimizer",
+    "parameter_hash",
+    "policy",
+    "updates"
+  ],
+  "config_type": "dict",
+  "context_exact_equal": false,
+  "context_key_differences": {
+    "source_ids": {
+      "checkpoint": {
+        "items": [
+          {
+            "type": "str",
+            "value": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e"
+          }
+        ],
+        "type": "tuple"
+      },
+      "release": {
+        "items": [
+          {
+            "type": "str",
+            "value": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e"
+          }
+        ],
+        "type": "list"
+      }
+    }
+  },
+  "context_type": "dict",
+  "release_context": {
+    "items": {
+      "decision_model_hash": {
+        "type": "str",
+        "value": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b"
+      },
+      "declaration_sha256": {
+        "type": "str",
+        "value": "14df1a1fbb9bb8187d97bc7dcf99cacf923a9e5e9f4182693de0e1d01a5e1285"
+      },
+      "max_steps": {
+        "type": "int",
+        "value": 2
+      },
+      "real_patient_count": {
+        "type": "int",
+        "value": 0
+      },
+      "scope": {
+        "type": "str",
+        "value": "native-opening-generated-development-v1"
+      },
+      "source_ids": {
+        "items": [
+          {
+            "type": "str",
+            "value": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e"
+          }
+        ],
+        "type": "list"
+      },
+      "transition_lineage": {
+        "type": "str",
+        "value": "simulator_generated"
+      }
+    },
+    "type": "dict"
+  },
+  "release_context_type": "dict",
+  "safe_loader": "V2 scoped weights_only=True one metadata load"
+}

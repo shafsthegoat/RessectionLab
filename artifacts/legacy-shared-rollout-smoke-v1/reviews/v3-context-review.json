@@ -1,0 +1,41 @@
+{
+  "actual_checkpoint_reads": 0,
+  "blocked_calls": [],
+  "controls": {
+    "actual_saved_metadata_accepted": true,
+    "changed_environment_rejected": true,
+    "changed_horizon_rejected": true,
+    "changed_source_rejected": true,
+    "extra_context_key_rejected": true,
+    "wrong_serialized_container_rejected": true
+  },
+  "model_forwards": 0,
+  "network_or_real_worker_calls": 0,
+  "scope": "Only saved typed context metadata reconstructed; exact tuple/list mismatch confirmed. No actual checkpoint decoded.",
+  "source_and_both_prior_attempts_unchanged": true,
+  "source_and_saved_evidence_sha256": {
+    "build/integration-first-policy-v2/checkpoint-metadata-inspection.json": "292a289781439e3bbaed7d05d93d2e70fdd6e9f5a7aa532ceb843f28af4d7d20",
+    "build/integration-first-policy-v3/legacy_checkpoint_rollout.py": "b48831841b27742d123d1338ef2ff05005f39f1d6b755617c2c7bc959ea749e4",
+    "build/integration-first-policy-v3/supervise_legacy_rollout.py": "02b7b5ca7b0a93fa4bae55694a342d48dfbe8fab024b42cfdbaec3096616bdb8",
+    "build/integration-first-policy-v3/test_legacy_checkpoint_rollout_guard.py": "41025a225dc3baa620557119f2af3e88a92896360417679c497dd8602e56c3c1",
+    "build/legacy-RL256-shared-executed-v1/attempt.json": "d0722a504bd8b1901957d63e40f072446b29b4c07c2af06a8cba568266eef516",
+    "build/legacy-RL256-shared-executed-v1/comparison.json": "00cf07885f375634d49649881a42b3ee208bd1b2202d4f8db98f2ce65423cb93",
+    "build/legacy-RL256-shared-executed-v1/source-snapshot/legacy_checkpoint_rollout.py": "0156ada24f0b1443f30db1a3a00415e11dbda674eb9274bf9acb718e503aa9a3",
+    "build/legacy-RL256-shared-executed-v1/source-snapshot/supervise_legacy_rollout.py": "5e2565af3e36d906dbbf20cc0b1361050c52be31e1c09976af5c2d9bb9a52254",
+    "build/legacy-RL256-shared-executed-v1/source-snapshot/test_legacy_checkpoint_rollout_guard.py": "53238b7695c721e1de12cbcd18abc2581fbf21f7cd12fcf4567d5fd8155cfc0f",
+    "build/legacy-RL256-shared-executed-v1/supervisor-failure.json": "48dd68a588822add0450e221eaf60ebc0f90c5bd724db5bfc547a7a1afa6ea1d",
+    "build/legacy-RL256-shared-executed-v1/supervisor-progress.json": "fdff2a26312b5e3b41ef2b90d622cc595a142c3f2ce4eb18b0a360993fe00a77",
+    "build/legacy-RL256-shared-executed-v1/supervisor.json": "48dd68a588822add0450e221eaf60ebc0f90c5bd724db5bfc547a7a1afa6ea1d",
+    "build/legacy-RL256-shared-executed-v1/worker.log": "41f806ef28a7e20caad35016cbb46cb900b23cd5b7dbf6caca2f95ee9b9eb3aa",
+    "build/legacy-RL256-shared-executed-v2/attempt.json": "09da166846c04f64c0ba912ee86c1dc6534511e38226d17e30da59f905c4064e",
+    "build/legacy-RL256-shared-executed-v2/comparison.json": "5ea0b6ae91b173428bb65a6a5d3c59823a9e9087aa21654343a413bfeab60306",
+    "build/legacy-RL256-shared-executed-v2/source-snapshot/legacy_checkpoint_rollout.py": "63206748d3a5ada635cae18bcdc5b46933d2876e00f38abb85cd68c88baa23c4",
+    "build/legacy-RL256-shared-executed-v2/source-snapshot/supervise_legacy_rollout.py": "8a9f6d9a3643fbea5169567135c7c00b4799022d690b1b8588bb32fcf7d3c1f3",
+    "build/legacy-RL256-shared-executed-v2/source-snapshot/test_legacy_checkpoint_rollout_guard.py": "2c1ce92e70ac709cf1ac377ac6e2451ca5894d1d943a2891311df19f4fc3d424",
+    "build/legacy-RL256-shared-executed-v2/supervisor-failure.json": "3e2c25825088621384a9b375a8c86605d2ef2e976218f02e46c88285d0f943c3",
+    "build/legacy-RL256-shared-executed-v2/supervisor-progress.json": "a542d97d4b9c6a8d262c16bbfc447e0384490094efb283ea4eb462027fb5b3bf",
+    "build/legacy-RL256-shared-executed-v2/supervisor.json": "3e2c25825088621384a9b375a8c86605d2ef2e976218f02e46c88285d0f943c3",
+    "build/legacy-RL256-shared-executed-v2/worker.log": "67bff36d10c7d8a37f2114b91be48bbce871198a0991b6f6095aa060e40fa83b"
+  },
+  "status": "GO"
+}

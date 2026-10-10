@@ -1,0 +1,8 @@
+{
+  "automatic_retry": false,
+  "error": "Checkpoint context/architecture differs from release",
+  "error_type": "ValueError",
+  "scope": "generated_legacy_aspirate_only",
+  "stage": "safe_checkpoint_load",
+  "status": "failed"
+}

@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/integration-first-policy-v2/legacy_checkpoint_rollout.py", line 254, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/integration-first-policy-v2/legacy_checkpoint_rollout.py", line 240, in main
+    result = execute(args.output)
+             ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/integration-first-policy-v2/legacy_checkpoint_rollout.py", line 194, in execute
+    policy, identity, receipt = load_bound_policy(task, release)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/integration-first-policy-v2/legacy_checkpoint_rollout.py", line 136, in load_bound_policy
+    raise ValueError("Checkpoint context/architecture differs from release")
+ValueError: Checkpoint context/architecture differs from release

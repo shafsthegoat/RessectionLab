@@ -1,0 +1,24 @@
+{
+  "comparison_sha256": "07d61374b4b97271e1f5c6f5e6eab395725afdcef953acdd2799c5a178e917c8",
+  "status": "complete",
+  "supervision": {
+    "automatic_retry": false,
+    "cleanup_errors": [],
+    "declaration_sha256": "1c894d6a927edc50acade0f7ec0346ad935921f55290533c2c8ebc973e09fa94",
+    "measurement_timeout_seconds": 2,
+    "returncode": 0,
+    "rss_samples": 5,
+    "rss_scope": "worker process RSS; native work uses threads, not subprocess workers",
+    "sampled_peak_rss_bytes": 237879296,
+    "sampling_interval_seconds": 0.2,
+    "sampling_limit": "transient peaks between samples can be missed",
+    "seconds": 1.0357347920071334,
+    "status": "complete",
+    "termination_grace_seconds": 2,
+    "termination_reason": null,
+    "timed_out": false,
+    "unresolved_worker_pid": null,
+    "worker_termination_confirmed": true
+  },
+  "version": "legacy-RL256-shared-transition-supervision-v3"
+}

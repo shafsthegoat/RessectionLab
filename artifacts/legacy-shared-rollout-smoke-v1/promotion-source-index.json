@@ -1,0 +1,266 @@
+{
+  "candidate_root": "build/integration-first-policy-v3/promotion-candidate",
+  "excluded": [
+    "checkpoint weights",
+    "patient imaging/annotations",
+    "bulk simulator outputs",
+    "Python caches"
+  ],
+  "files": [
+    {
+      "bytes": 2691,
+      "path": "RESULT.md",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/RESULT.md",
+      "sha256": "13c6762a59e64808d28675ac812e9e644635d9af2d94a3d66fce0c5b48272260",
+      "source": "build/integration-first-policy-v3/RESULT.md"
+    },
+    {
+      "bytes": 1552,
+      "path": "attempt-v1/attempt.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v1/attempt.json",
+      "sha256": "d0722a504bd8b1901957d63e40f072446b29b4c07c2af06a8cba568266eef516",
+      "source": "build/legacy-RL256-shared-executed-v1/attempt.json"
+    },
+    {
+      "bytes": 1297,
+      "path": "attempt-v1/comparison.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v1/comparison.json",
+      "sha256": "00cf07885f375634d49649881a42b3ee208bd1b2202d4f8db98f2ce65423cb93",
+      "source": "build/legacy-RL256-shared-executed-v1/comparison.json"
+    },
+    {
+      "bytes": 12697,
+      "path": "attempt-v1/source-snapshot/legacy_checkpoint_rollout.py",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v1/source-snapshot/legacy_checkpoint_rollout.py",
+      "sha256": "0156ada24f0b1443f30db1a3a00415e11dbda674eb9274bf9acb718e503aa9a3",
+      "source": "build/legacy-RL256-shared-executed-v1/source-snapshot/legacy_checkpoint_rollout.py"
+    },
+    {
+      "bytes": 6310,
+      "path": "attempt-v1/source-snapshot/supervise_legacy_rollout.py",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v1/source-snapshot/supervise_legacy_rollout.py",
+      "sha256": "5e2565af3e36d906dbbf20cc0b1361050c52be31e1c09976af5c2d9bb9a52254",
+      "source": "build/legacy-RL256-shared-executed-v1/source-snapshot/supervise_legacy_rollout.py"
+    },
+    {
+      "bytes": 6128,
+      "path": "attempt-v1/source-snapshot/test_legacy_checkpoint_rollout_guard.py",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v1/source-snapshot/test_legacy_checkpoint_rollout_guard.py",
+      "sha256": "53238b7695c721e1de12cbcd18abc2581fbf21f7cd12fcf4567d5fd8155cfc0f",
+      "source": "build/legacy-RL256-shared-executed-v1/source-snapshot/test_legacy_checkpoint_rollout_guard.py"
+    },
+    {
+      "bytes": 667,
+      "path": "attempt-v1/supervisor-failure.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v1/supervisor-failure.json",
+      "sha256": "48dd68a588822add0450e221eaf60ebc0f90c5bd724db5bfc547a7a1afa6ea1d",
+      "source": "build/legacy-RL256-shared-executed-v1/supervisor-failure.json"
+    },
+    {
+      "bytes": 667,
+      "path": "attempt-v1/supervisor.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v1/supervisor.json",
+      "sha256": "48dd68a588822add0450e221eaf60ebc0f90c5bd724db5bfc547a7a1afa6ea1d",
+      "source": "build/legacy-RL256-shared-executed-v1/supervisor.json"
+    },
+    {
+      "bytes": 2597,
+      "path": "attempt-v1/worker.log",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v1/worker.log",
+      "sha256": "41f806ef28a7e20caad35016cbb46cb900b23cd5b7dbf6caca2f95ee9b9eb3aa",
+      "source": "build/legacy-RL256-shared-executed-v1/worker.log"
+    },
+    {
+      "bytes": 1552,
+      "path": "attempt-v2/attempt.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v2/attempt.json",
+      "sha256": "09da166846c04f64c0ba912ee86c1dc6534511e38226d17e30da59f905c4064e",
+      "source": "build/legacy-RL256-shared-executed-v2/attempt.json"
+    },
+    {
+      "bytes": 230,
+      "path": "attempt-v2/comparison.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v2/comparison.json",
+      "sha256": "5ea0b6ae91b173428bb65a6a5d3c59823a9e9087aa21654343a413bfeab60306",
+      "source": "build/legacy-RL256-shared-executed-v2/comparison.json"
+    },
+    {
+      "bytes": 13902,
+      "path": "attempt-v2/source-snapshot/legacy_checkpoint_rollout.py",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v2/source-snapshot/legacy_checkpoint_rollout.py",
+      "sha256": "63206748d3a5ada635cae18bcdc5b46933d2876e00f38abb85cd68c88baa23c4",
+      "source": "build/legacy-RL256-shared-executed-v2/source-snapshot/legacy_checkpoint_rollout.py"
+    },
+    {
+      "bytes": 6310,
+      "path": "attempt-v2/source-snapshot/supervise_legacy_rollout.py",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v2/source-snapshot/supervise_legacy_rollout.py",
+      "sha256": "8a9f6d9a3643fbea5169567135c7c00b4799022d690b1b8588bb32fcf7d3c1f3",
+      "source": "build/legacy-RL256-shared-executed-v2/source-snapshot/supervise_legacy_rollout.py"
+    },
+    {
+      "bytes": 9086,
+      "path": "attempt-v2/source-snapshot/test_legacy_checkpoint_rollout_guard.py",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v2/source-snapshot/test_legacy_checkpoint_rollout_guard.py",
+      "sha256": "2c1ce92e70ac709cf1ac377ac6e2451ca5894d1d943a2891311df19f4fc3d424",
+      "source": "build/legacy-RL256-shared-executed-v2/source-snapshot/test_legacy_checkpoint_rollout_guard.py"
+    },
+    {
+      "bytes": 667,
+      "path": "attempt-v2/supervisor-failure.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v2/supervisor-failure.json",
+      "sha256": "3e2c25825088621384a9b375a8c86605d2ef2e976218f02e46c88285d0f943c3",
+      "source": "build/legacy-RL256-shared-executed-v2/supervisor-failure.json"
+    },
+    {
+      "bytes": 667,
+      "path": "attempt-v2/supervisor.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v2/supervisor.json",
+      "sha256": "3e2c25825088621384a9b375a8c86605d2ef2e976218f02e46c88285d0f943c3",
+      "source": "build/legacy-RL256-shared-executed-v2/supervisor.json"
+    },
+    {
+      "bytes": 1192,
+      "path": "attempt-v2/worker.log",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v2/worker.log",
+      "sha256": "67bff36d10c7d8a37f2114b91be48bbce871198a0991b6f6095aa060e40fa83b",
+      "source": "build/legacy-RL256-shared-executed-v2/worker.log"
+    },
+    {
+      "bytes": 1552,
+      "path": "attempt-v3/attempt.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v3/attempt.json",
+      "sha256": "c87cddd566dab6d957d551aef7c421e9937945d79e359384928ea61e32390c8d",
+      "source": "build/legacy-RL256-shared-executed-v3/attempt.json"
+    },
+    {
+      "bytes": 41622,
+      "path": "attempt-v3/comparison.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v3/comparison.json",
+      "sha256": "07d61374b4b97271e1f5c6f5e6eab395725afdcef953acdd2799c5a178e917c8",
+      "source": "build/legacy-RL256-shared-executed-v3/comparison.json"
+    },
+    {
+      "bytes": 903,
+      "path": "attempt-v3/completion.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v3/completion.json",
+      "sha256": "5d39e1e030129d5b869a90a34fc24ca06255c1b2ad0c746a0087579f3bbaad1a",
+      "source": "build/legacy-RL256-shared-executed-v3/completion.json"
+    },
+    {
+      "bytes": 3298,
+      "path": "attempt-v3/source-snapshot/checkpoint-metadata-inspection.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v3/source-snapshot/checkpoint-metadata-inspection.json",
+      "sha256": "292a289781439e3bbaed7d05d93d2e70fdd6e9f5a7aa532ceb843f28af4d7d20",
+      "source": "build/legacy-RL256-shared-executed-v3/source-snapshot/checkpoint-metadata-inspection.json"
+    },
+    {
+      "bytes": 1283,
+      "path": "attempt-v3/source-snapshot/checkpoint-static-inspection.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v3/source-snapshot/checkpoint-static-inspection.json",
+      "sha256": "e757774ef46deb537c9bdc9a85a456073e4e0152cd0a3a1156eedbde893e9c9f",
+      "source": "build/legacy-RL256-shared-executed-v3/source-snapshot/checkpoint-static-inspection.json"
+    },
+    {
+      "bytes": 14707,
+      "path": "attempt-v3/source-snapshot/legacy_checkpoint_rollout.py",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v3/source-snapshot/legacy_checkpoint_rollout.py",
+      "sha256": "b48831841b27742d123d1338ef2ff05005f39f1d6b755617c2c7bc959ea749e4",
+      "source": "build/legacy-RL256-shared-executed-v3/source-snapshot/legacy_checkpoint_rollout.py"
+    },
+    {
+      "bytes": 6310,
+      "path": "attempt-v3/source-snapshot/supervise_legacy_rollout.py",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v3/source-snapshot/supervise_legacy_rollout.py",
+      "sha256": "02b7b5ca7b0a93fa4bae55694a342d48dfbe8fab024b42cfdbaec3096616bdb8",
+      "source": "build/legacy-RL256-shared-executed-v3/source-snapshot/supervise_legacy_rollout.py"
+    },
+    {
+      "bytes": 9997,
+      "path": "attempt-v3/source-snapshot/test_legacy_checkpoint_rollout_guard.py",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v3/source-snapshot/test_legacy_checkpoint_rollout_guard.py",
+      "sha256": "41025a225dc3baa620557119f2af3e88a92896360417679c497dd8602e56c3c1",
+      "source": "build/legacy-RL256-shared-executed-v3/source-snapshot/test_legacy_checkpoint_rollout_guard.py"
+    },
+    {
+      "bytes": 669,
+      "path": "attempt-v3/supervisor.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v3/supervisor.json",
+      "sha256": "e6d5b4c01a4148df6743826d0ec6f91d07a6bc1a0be595eba053a0fae592a5ff",
+      "source": "build/legacy-RL256-shared-executed-v3/supervisor.json"
+    },
+    {
+      "bytes": 225,
+      "path": "attempt-v3/worker.log",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/attempt-v3/worker.log",
+      "sha256": "408920547d03a2bafe6b8a2c9bb8731db5376ab860ffafa5978a1189b5f42c63",
+      "source": "build/legacy-RL256-shared-executed-v3/worker.log"
+    },
+    {
+      "bytes": 2844,
+      "path": "reviews/v1-source-review.md",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/reviews/v1-source-review.md",
+      "sha256": "0a10b123bf0e607140c865c40713da676549227d311c04a5a0d61d80905aa4c2",
+      "source": "build/legacy-shared-rollout-independent-v1/REPORT.md"
+    },
+    {
+      "bytes": 4653,
+      "path": "reviews/v2-initial-restoration-negative.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/reviews/v2-initial-restoration-negative.json",
+      "sha256": "32a51e6087943eb2ce12f609f778a99dd0babe4c4fb5ecac53507207fb2028e2",
+      "source": "build/legacy-shared-rollout-loader-review-v2/test-review-before-set-fix.json"
+    },
+    {
+      "bytes": 3218,
+      "path": "reviews/v2-loader-review.md",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/reviews/v2-loader-review.md",
+      "sha256": "e6ed1203621d562b4c3fa9526297593a5dd25c9551b7a67cfbc493faee0c7b11",
+      "source": "build/legacy-shared-rollout-loader-review-v2/REPORT.md"
+    },
+    {
+      "bytes": 4678,
+      "path": "reviews/v2-loader-test-review.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/reviews/v2-loader-test-review.json",
+      "sha256": "6f3f353e103878fb7ad919fd5123be8e61beaf72e6a8e6bf507ed15d80efa6cc",
+      "source": "build/legacy-shared-rollout-loader-review-v2/test-review.json"
+    },
+    {
+      "bytes": 9898,
+      "path": "reviews/v3-actual-audit-script.py",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/reviews/v3-actual-audit-script.py",
+      "sha256": "c9677ecba2d5862ea3411a70163988a28ce9d8e5e5c145fc2bb27505d1a59ece",
+      "source": "build/legacy-shared-executed-postrun-review-v3/audit_saved.py"
+    },
+    {
+      "bytes": 7619,
+      "path": "reviews/v3-actual-audit.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/reviews/v3-actual-audit.json",
+      "sha256": "05a24288d547feed2e5bf7e3b1539fca6b15eaf82e796cbfe08c0820442b6814",
+      "source": "build/legacy-shared-executed-postrun-review-v3/audit.json"
+    },
+    {
+      "bytes": 3735,
+      "path": "reviews/v3-context-review.json",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/reviews/v3-context-review.json",
+      "sha256": "949a5767dd2b55bdc558d7a4439da9360a235e2c1ccb27fd0faf4be582901098",
+      "source": "build/legacy-shared-context-review-v3/review.json"
+    },
+    {
+      "bytes": 2050,
+      "path": "reviews/v3-context-review.md",
+      "proposed_tracked_destination": "artifacts/legacy-shared-rollout-smoke-v1/reviews/v3-context-review.md",
+      "sha256": "fced9367f1b3a21ab7364bb8c69cd1cd9d73d226beaeeef509c6d7c82335170e",
+      "source": "build/legacy-shared-context-review-v3/REPORT.md"
+    }
+  ],
+  "payload_bytes": 187473,
+  "payload_file_count": 35,
+  "proposed_tracked_root": "artifacts/legacy-shared-rollout-smoke-v1",
+  "scope": "generated software integration; no patient or clinical claim",
+  "source_attempts": [
+    "V1 failed safe NumPy scalar load before forward",
+    "V2 failed exact tuple-vs-JSON-list context comparison before forward",
+    "V3 completed shared-transition RL256/search smoke"
+  ],
+  "version": "legacy-shared-rollout-smoke-promotion-map-v1"
+}
