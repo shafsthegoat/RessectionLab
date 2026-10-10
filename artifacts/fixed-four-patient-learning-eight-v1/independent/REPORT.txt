@@ -1,0 +1,37 @@
+Independent eight-update saved-result audit: PASS for consistency and arithmetic
+
+Result SHA-256 b75bd91d284cacba2c980283424586ca506799919f6850175b6f4eeea4315aeb
+Parent receipt SHA-256 e1f18ca5dae011057f0c945690d71e9ba909041f7aa495e5ce4493e57f805fa2
+Root release SHA-256 c1cde8eb92f9df5d85ccb91ed0e591adb1da70e011582f3be116d237fecf72db
+Frozen HEAD137bdfca654c2ad843385382efdc539044eb01b1
+
+The prepared stdlib audit passed on its first execution:6,636 assertions in0.262s, process peak37,765,120B. It verified84 source/12 metadata pins and434 saved/source inputs, all unchanged on reread. It authenticated all76 complete visits:4 teachers,64 four-case gradient contributions across16 shared updates, and8 final greedy endpoints. Every saved plan/trace/context seal, nominal-to-replay history (apart from outcome_scope), legal action mask, full-tool audit history hash and reward/removal sum reconciles. No patient arrays, checkpoint contents, model, optimizer, geometry replay or native work was executed. No audit failure occurred.
+
+Matched control: the only learning-protocol change is updates_per_method1→8; only derived preview/forward/update budget counts change. Common initial parameter identity and both complete first-update numerical/tensor-identity records exactly equal the earlier pilot, excluding only context_hashes and trace_seals as declared. The four teacher actions/outcomes also agree:008/010/020 STOP;025 one target-cell action then STOP, return+0.916838857. IL recollects all four exact teacher seals at every update; RL collects each four-case batch at its one shared pre-update parameter identity. Each update follows the previous parameter hash; final frozen identities join all greedy records and checkpoint metadata.
+
+All eight final greedy episodes choose immediate STOP: target0, outside-goal removal0, return0, one step each. This is a STOP-only greedy outcome, not proof that the stochastic distributions are deterministic or that no feasible useful action exists. SELECT/EVAL remain closed; no checkpoint-reload inference was performed.
+
+One-update→eight-update endpoint comparison (values are nominal public-task return; all eight-update values0):
+Case   IL at1        RL at1         Change at8
+008   -3.298831933  -2.981274113    avoids12.635181649/11.088016549mm^3 outside-goal removal; target remains0
+010    0            0              unchanged STOP
+020    0            0              unchanged STOP
+025   -1.500776944  -4.009362078    loses0.953674795mm^3 target (one source cell) in both; avoids10.490422747/21.934520290mm^3 outside-goal removal
+Thus the declared objective improves relative to the negative one-update greedy endpoints through abstention, but target access disappears. Both methods still miss025's positive SEARCH teacher. This is not improved useful planning or a clinical outcome. Outside-goal volume is outside the supplied region, not independently established normal anatomy.
+
+Per-update learning exposure:
+Update  IL loss      RL collection steps  RL mean episode return  RL025 target / episode return
+1       3.317397833  41                  -3.747945418              0 / -1.079534171
+2       3.171264827  42                  -3.640916383              one cell / -1.366135734
+3       2.983480453  48                  -4.230632366              one cell / -2.442732988
+4       2.748161763  46                  -3.582141814              one cell / -0.830759566
+5       2.507221043  59                  -4.988594370              0 / -1.966380257
+6       2.219539940  22                  -1.932225770              0 / -0.445376168
+7       1.852483451  21                  -2.027836937              one cell / +0.502439251
+8       1.465587534  12                  -1.459233271              0 / -2.857125365
+
+IL optimizes the same five teacher labels each update: four STOP labels and one non-STOP025 label (40 total loss forwards). Its decreasing aggregate loss does not demonstrate that the minority positive action became the greedy choice. RL has291 collection decisions in32 complete episodes:28 negative,3 zero,1 positive. It removed the025 target cell in updates2,3,4,7; those episodes each contain a positive immediate reward, respectively+0.916838857,+0.728057023,+0.916838857,+0.916838857. Only update7 retains a positive complete return. Therefore zero positive exposure is refuted. Sparse positive cases, predominantly negative returns and STOP-heavy imitation labels are consistent with the observed abstention, but these saved records do not isolate a causal mechanism or prove that additional unchanged updates will fix it. RL collection is stochastic on-policy training exposure at changing weights, not an independently evaluated greedy learning curve; raw RL losses are not performance scores.
+
+Accounting:40 IL loss forwards +291 RL loss forwards +291 RL collection forwards +8 final greedy forwards =630 (cap2496). Native previews92,606 (cap3,373,440);16 shared updates (cap16). All76 source visits released. Parent1287.330656375s <3600s; sampled peak2,498,330,624B <3GiB; output48,227,780B <128MiB. Exit0, termination confirmed, no owned PIDs or cleanup errors. Sampling cannot exclude transient unsampled peaks. Nested phase costs must not be summed. Fixed full-target denominators, unsupported target exclusion from removal, public-only global context and all four TRAIN denominators remain intact. No held-out, generalization or clinical claim is supported.
+
+Files: audit-result.json contains compact endpoints/deltas/curves and verified counts; input-hashes.json binds all read evidence; audit-run-01.txt preserves successful execution output. Source is audit_saved.py, prepared before terminal. Reproduce only from saved metadata with --terminal-result-sha256 b75bd91d284cacba2c980283424586ca506799919f6850175b6f4eeea4315aeb. No further execution is needed.

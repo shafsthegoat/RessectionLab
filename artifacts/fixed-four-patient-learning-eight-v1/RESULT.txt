@@ -1,0 +1,61 @@
+Eight shared updates: lower loss, STOP-only endpoint
+October 10, 2026
+
+The controlled run completes all four fixed TRAIN patients (008,010,020,025),
+eight shared IL and eight shared RL updates, and all eight final greedy native
+replays. Both final policies choose immediate STOP for every patient, return 0,
+target removal 0 and outside-supplied-target removal 0. Search still selects the
+positive one-cell action then STOP on 025 (+0.916838857); its other three teachers
+stop. There is no useful learned plan or superiority over search.
+
+Relative to one update, stopping removes the earlier harmful continuations on 008
+and 025 and improves geometric return, but loses the 025 target action. The lower
+IL loss (3.317398 to 1.465588) is not planning accuracy. Every IL update sees the
+same five labels: four STOPs and one useful movement. RL samples 32 trajectories:
+28 negative, three zero and one positive total return. Four 025 episodes encounter
+a positive target-removal increment (updates 2,3,4,7); only update 7 ends positive
+(+0.502439251). Therefore this failure cannot be described as zero reward exposure.
+
+Only the number of updates changes from the first pilot: same initialization,
+seed, architecture, full supplied public-target context, horizon 24, cap 120,
+depth-volume search, reward and world. Worker, parent and independent audit all
+confirm identical initial weights and exact first-update numerical/parameter
+records, apart from declared protocol/context hashes and trace seals. The endpoint
+was fixed in advance; no intermediate checkpoint was selected by outcome.
+
+The run used 1287.330656 owned seconds (1283.888524 core),2,498,330,624 bytes sampled
+peak RSS,92,606 native previews,630 policy forwards and 48,227,780 output bytes.
+All 76 patient visits and 64 gradient contributions complete. Both parameter sets
+change. Parent exits 0 with no cap hit, cleanup error or remaining owned process.
+Sampled RSS does not guarantee detection of transient peaks. Costs separate
+training and final inference/replay; inclusive nested timers must not be summed.
+The independent saved-result audit passes 6,636 checks in 0.262 s, authenticating
+84 source files,12 metadata inputs and 434 saved/source inputs. It checks saved
+geometry acceptance without executing anatomy or a model again. Final inference
+uses in-memory endpoints; checkpoint reload is a separate validation step.
+
+Executed HEAD 137bdfca654c2ad843385382efdc539044eb01b1. Release SHA256
+c1cde8eb92f9df5d85ccb91ed0e591adb1da70e011582f3be116d237fecf72db.
+Result SHA256 b75bd91d284cacba2c980283424586ca506799919f6850175b6f4eeea4315aeb.
+Before execution, a release preparation supplied abbreviated HEAD 137bdfc and
+refused its exact-identity check; full HEAD corrected this before any patient
+execution or attempt. No training retry occurred.
+
+Next: inspect initial/one-update/eight-update logits on the exact five TRAIN
+teacher states. Distinguish poor useful-action ranking from over-preferred STOP
+before changing the model. Reuse the existing certificate-scored greedy search
+as a cheap baseline, with native replay and full preparation costs. No new
+architecture sweep or reward change is justified by this result alone.
+
+SELECT 013/037 and EVAL 067 were not used by this experiment. Separately acquired
+SELECT bytes remain unreviewed pending qualification; acquisition is not model
+evaluation. Simulated geometric removal on acquired anatomy is not observed
+surgery. One positive teacher voxel is about 0.001223% of the supplied 025 target.
+Missing vessel/function data, uncertain automatic support and unvalidated tissue
+mechanics remain. This establishes no clinical or held-out generalization benefit.
+
+Reproduce with the pinned canonical HEAD and runtime/ drivers, restoring paths
+from source-index.json. Prior pilot artifacts bind the exact first-update control.
+Existing one-attempt outputs must not be overwritten. local-output-index.json
+records full local outputs/checkpoints excluded from Git; no arrays or weights
+are included here. Independent audit inputs and executable checker are retained.

@@ -1,0 +1,1079 @@
+{
+  "audit_elapsed_seconds": 0.26175075001083314,
+  "audit_peak_rss_bytes": 37765120,
+  "checks": 6636,
+  "costs": {
+    "completed_replayed_visits": 76,
+    "gradient_contributions": 64,
+    "native_previews": 92606,
+    "policy_forwards": 630,
+    "shared_updates": 16
+  },
+  "greedy_endpoints": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+      "eight_minus_one": {
+        "outside_supplied_goal_mm3": -12.635181648554068,
+        "public_return": 3.298831933440468,
+        "steps": -23,
+        "target_mm3": 0.0
+      },
+      "learning_updates": 8,
+      "one_update_endpoint": {
+        "outside_supplied_goal_mm3": 12.635181648554068,
+        "public_return": -3.298831933440468,
+        "steps": 24,
+        "target_mm3": 0.0
+      },
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "TRAIN-greedy/IL",
+      "plan_parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+      "plan_seal": "sha256:2c6274ea85acd26adb91e1cec9ba8fd10a4bce0068d1adaa97f82170801f942f",
+      "public_return": 0.0,
+      "steps": 1,
+      "subject": "ReMIND-008",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "trace_seal": "sha256:0d2fa665af8e8e234e1024269b216a4af627f28bda17601e01bfc5eb4c6c054f"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+      "eight_minus_one": {
+        "outside_supplied_goal_mm3": 0.0,
+        "public_return": 0.0,
+        "steps": 0,
+        "target_mm3": 0.0
+      },
+      "learning_updates": 8,
+      "one_update_endpoint": {
+        "outside_supplied_goal_mm3": 0.0,
+        "public_return": 0.0,
+        "steps": 1,
+        "target_mm3": 0.0
+      },
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "TRAIN-greedy/IL",
+      "plan_parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+      "plan_seal": "sha256:060794d8db8e33e19e8479d6b4cf89983d6ab4933fab426ce10339adf76f3f5b",
+      "public_return": 0.0,
+      "steps": 1,
+      "subject": "ReMIND-010",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "trace_seal": "sha256:dcf4f427c428d376299e4788d7f3052edd9ed9307cbbca6de25d935eff61cdf2"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+      "eight_minus_one": {
+        "outside_supplied_goal_mm3": 0.0,
+        "public_return": 0.0,
+        "steps": 0,
+        "target_mm3": 0.0
+      },
+      "learning_updates": 8,
+      "one_update_endpoint": {
+        "outside_supplied_goal_mm3": 0.0,
+        "public_return": 0.0,
+        "steps": 1,
+        "target_mm3": 0.0
+      },
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "TRAIN-greedy/IL",
+      "plan_parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+      "plan_seal": "sha256:3d152b1710eadb152311dc46c100b6b3ecde31759187a2461dc14ede24816d0c",
+      "public_return": 0.0,
+      "steps": 1,
+      "subject": "ReMIND-020",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "trace_seal": "sha256:4c491a9c68ab6cfc8f226be09a1017897f20673d1bf17de98ccfd375af4c957d"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+      "eight_minus_one": {
+        "outside_supplied_goal_mm3": -10.49042274740415,
+        "public_return": 1.5007769436824556,
+        "steps": -11,
+        "target_mm3": -0.953674795218559
+      },
+      "learning_updates": 8,
+      "one_update_endpoint": {
+        "outside_supplied_goal_mm3": 10.49042274740415,
+        "public_return": -1.5007769436824556,
+        "steps": 12,
+        "target_mm3": 0.953674795218559
+      },
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "TRAIN-greedy/IL",
+      "plan_parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+      "plan_seal": "sha256:b4252cac2d1590ca1606d2fcde8ab9991ccac9ec80de30d46c581d663258d665",
+      "public_return": 0.0,
+      "steps": 1,
+      "subject": "ReMIND-025",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "trace_seal": "sha256:d5ba72c641e992e77387bbea338a0814fe25d4e68658699066b73321b83cac63"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:0bb5d1589b6df9ecdeb16a6120a2388482404ec058c8bf7585bcdf3b4184e21f",
+      "eight_minus_one": {
+        "outside_supplied_goal_mm3": -11.08801654873112,
+        "public_return": 2.9812741133495972,
+        "steps": -23,
+        "target_mm3": 0.0
+      },
+      "learning_updates": 8,
+      "one_update_endpoint": {
+        "outside_supplied_goal_mm3": 11.08801654873112,
+        "public_return": -2.9812741133495972,
+        "steps": 24,
+        "target_mm3": 0.0
+      },
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "TRAIN-greedy/RL",
+      "plan_parameter_hash": "sha256:0bb5d1589b6df9ecdeb16a6120a2388482404ec058c8bf7585bcdf3b4184e21f",
+      "plan_seal": "sha256:3f4e0b15d4fc4519ac8218e391b7d351cfe22ebac8ff29c4b48b50f87cfdc710",
+      "public_return": 0.0,
+      "steps": 1,
+      "subject": "ReMIND-008",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "trace_seal": "sha256:d5e15002a590fa18f20ae0dbaff4acb58965a03f2b7b7d9a1ed74cf9f8e27d05"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:0bb5d1589b6df9ecdeb16a6120a2388482404ec058c8bf7585bcdf3b4184e21f",
+      "eight_minus_one": {
+        "outside_supplied_goal_mm3": 0.0,
+        "public_return": 0.0,
+        "steps": 0,
+        "target_mm3": 0.0
+      },
+      "learning_updates": 8,
+      "one_update_endpoint": {
+        "outside_supplied_goal_mm3": 0.0,
+        "public_return": 0.0,
+        "steps": 1,
+        "target_mm3": 0.0
+      },
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "TRAIN-greedy/RL",
+      "plan_parameter_hash": "sha256:0bb5d1589b6df9ecdeb16a6120a2388482404ec058c8bf7585bcdf3b4184e21f",
+      "plan_seal": "sha256:8a21b159d55acc608d03c7a9f4b71d350aee80e77cf52a050790c7cc48a58799",
+      "public_return": 0.0,
+      "steps": 1,
+      "subject": "ReMIND-010",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "trace_seal": "sha256:4b4322682d992924b0eb8b3593c6a330b83f5dc1c093ab82d15a75db88d313bf"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:0bb5d1589b6df9ecdeb16a6120a2388482404ec058c8bf7585bcdf3b4184e21f",
+      "eight_minus_one": {
+        "outside_supplied_goal_mm3": 0.0,
+        "public_return": 0.0,
+        "steps": 0,
+        "target_mm3": 0.0
+      },
+      "learning_updates": 8,
+      "one_update_endpoint": {
+        "outside_supplied_goal_mm3": 0.0,
+        "public_return": 0.0,
+        "steps": 1,
+        "target_mm3": 0.0
+      },
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "TRAIN-greedy/RL",
+      "plan_parameter_hash": "sha256:0bb5d1589b6df9ecdeb16a6120a2388482404ec058c8bf7585bcdf3b4184e21f",
+      "plan_seal": "sha256:a1e93d894c3dfa86f7d4b50b0c3e06427675fd5d2c3c2c3e0c116819d21f1355",
+      "public_return": 0.0,
+      "steps": 1,
+      "subject": "ReMIND-020",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "trace_seal": "sha256:b3392090031b6d632e7fc7654a0adb2512b36fa293323a64a317ce9b587f1238"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "behavior_parameter_hash": "sha256:0bb5d1589b6df9ecdeb16a6120a2388482404ec058c8bf7585bcdf3b4184e21f",
+      "eight_minus_one": {
+        "outside_supplied_goal_mm3": -21.934520290026857,
+        "public_return": 4.009362077918176,
+        "steps": -17,
+        "target_mm3": -0.953674795218559
+      },
+      "learning_updates": 8,
+      "one_update_endpoint": {
+        "outside_supplied_goal_mm3": 21.934520290026857,
+        "public_return": -4.009362077918176,
+        "steps": 18,
+        "target_mm3": 0.953674795218559
+      },
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "TRAIN-greedy/RL",
+      "plan_parameter_hash": "sha256:0bb5d1589b6df9ecdeb16a6120a2388482404ec058c8bf7585bcdf3b4184e21f",
+      "plan_seal": "sha256:a5d2ccbb8e2ae1b95e6f5691a558688fb66758f9d9341355a7bac31e24f88910",
+      "public_return": 0.0,
+      "steps": 1,
+      "subject": "ReMIND-025",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "trace_seal": "sha256:32b7411b228dd7cf11f8336f1e2231e7ceb9a84dc915ef8e3e57c9be5541c99f"
+    }
+  ],
+  "learning_curves": {
+    "IL": [
+      {
+        "actor_loss": 0.0,
+        "after_parameter_hash": "sha256:437050c2dacd630dc7eeea6af20fe44071747b73f74ed5d4cecc1584fd91d5f1",
+        "before_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+        "entropy": 0.0,
+        "gradient_norm_before_clip": 4.8314595222473145,
+        "loss": 3.3173978328704834,
+        "loss_forward_calls": 5,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.9168388572207332,
+            "steps": 2,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.953674795218559,
+            "target_source_cells": 1
+          }
+        ],
+        "update": 1,
+        "value_loss": 0.0
+      },
+      {
+        "actor_loss": 0.0,
+        "after_parameter_hash": "sha256:25209902d6f485e0332c51e987ea56116e3a7ddaf7e6c52ef647b4cd326fb58f",
+        "before_parameter_hash": "sha256:437050c2dacd630dc7eeea6af20fe44071747b73f74ed5d4cecc1584fd91d5f1",
+        "entropy": 0.0,
+        "gradient_norm_before_clip": 5.043821334838867,
+        "loss": 3.1712648272514343,
+        "loss_forward_calls": 5,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.9168388572207332,
+            "steps": 2,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.953674795218559,
+            "target_source_cells": 1
+          }
+        ],
+        "update": 2,
+        "value_loss": 0.0
+      },
+      {
+        "actor_loss": 0.0,
+        "after_parameter_hash": "sha256:93bd621cf9461b4de039a6b1e581d50d35b48ddc073c1e745d4e7a9916d903cb",
+        "before_parameter_hash": "sha256:25209902d6f485e0332c51e987ea56116e3a7ddaf7e6c52ef647b4cd326fb58f",
+        "entropy": 0.0,
+        "gradient_norm_before_clip": 5.349754333496094,
+        "loss": 2.983480453491211,
+        "loss_forward_calls": 5,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.9168388572207332,
+            "steps": 2,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.953674795218559,
+            "target_source_cells": 1
+          }
+        ],
+        "update": 3,
+        "value_loss": 0.0
+      },
+      {
+        "actor_loss": 0.0,
+        "after_parameter_hash": "sha256:d2cc9f974c62bfac816ce14c355c42cb8c0520137785f56ec00bfba2a9715862",
+        "before_parameter_hash": "sha256:93bd621cf9461b4de039a6b1e581d50d35b48ddc073c1e745d4e7a9916d903cb",
+        "entropy": 0.0,
+        "gradient_norm_before_clip": 5.453170299530029,
+        "loss": 2.7481617629528046,
+        "loss_forward_calls": 5,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.9168388572207332,
+            "steps": 2,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.953674795218559,
+            "target_source_cells": 1
+          }
+        ],
+        "update": 4,
+        "value_loss": 0.0
+      },
+      {
+        "actor_loss": 0.0,
+        "after_parameter_hash": "sha256:fedfc7204f8a6d20d0e623b8619b3fd88017472e6f89135260d3bc25cfc74090",
+        "before_parameter_hash": "sha256:d2cc9f974c62bfac816ce14c355c42cb8c0520137785f56ec00bfba2a9715862",
+        "entropy": 0.0,
+        "gradient_norm_before_clip": 5.55686092376709,
+        "loss": 2.507221043109894,
+        "loss_forward_calls": 5,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.9168388572207332,
+            "steps": 2,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.953674795218559,
+            "target_source_cells": 1
+          }
+        ],
+        "update": 5,
+        "value_loss": 0.0
+      },
+      {
+        "actor_loss": 0.0,
+        "after_parameter_hash": "sha256:8a975986434078ff7a262773c063e0086209be785818909a53ff33362fd79fc4",
+        "before_parameter_hash": "sha256:fedfc7204f8a6d20d0e623b8619b3fd88017472e6f89135260d3bc25cfc74090",
+        "entropy": 0.0,
+        "gradient_norm_before_clip": 6.470020771026611,
+        "loss": 2.2195399403572083,
+        "loss_forward_calls": 5,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.9168388572207332,
+            "steps": 2,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.953674795218559,
+            "target_source_cells": 1
+          }
+        ],
+        "update": 6,
+        "value_loss": 0.0
+      },
+      {
+        "actor_loss": 0.0,
+        "after_parameter_hash": "sha256:86789269602350c6978485d85db8c927342c478f0d682a3c067e09e9a31dc45a",
+        "before_parameter_hash": "sha256:8a975986434078ff7a262773c063e0086209be785818909a53ff33362fd79fc4",
+        "entropy": 0.0,
+        "gradient_norm_before_clip": 7.112070083618164,
+        "loss": 1.8524834513664246,
+        "loss_forward_calls": 5,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.9168388572207332,
+            "steps": 2,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.953674795218559,
+            "target_source_cells": 1
+          }
+        ],
+        "update": 7,
+        "value_loss": 0.0
+      },
+      {
+        "actor_loss": 0.0,
+        "after_parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+        "before_parameter_hash": "sha256:86789269602350c6978485d85db8c927342c478f0d682a3c067e09e9a31dc45a",
+        "entropy": 0.0,
+        "gradient_norm_before_clip": 6.113973617553711,
+        "loss": 1.4655875340104103,
+        "loss_forward_calls": 5,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.9168388572207332,
+            "steps": 2,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.953674795218559,
+            "target_source_cells": 1
+          }
+        ],
+        "update": 8,
+        "value_loss": 0.0
+      }
+    ],
+    "RL": [
+      {
+        "actor_loss": -98.3929965943098,
+        "after_parameter_hash": "sha256:13d3d1932175d6cadbda79757251e0f773c08dfe28372acbbc804d3d5530737e",
+        "before_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+        "entropy": 3.0168035636345545,
+        "gradient_norm_before_clip": 21.33190155029297,
+        "loss": -93.67613283917308,
+        "loss_forward_calls": 41,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 28.790395674763573,
+            "public_return": -6.5230807283655565,
+            "steps": 15,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 32.42493541878113,
+            "public_return": -7.389166773014272,
+            "steps": 20,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 4.7683739760927955,
+            "public_return": -1.0795341706452668,
+            "steps": 5,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          }
+        ],
+        "update": 1,
+        "value_loss": 9.494062107801438
+      },
+      {
+        "actor_loss": -74.42126488685608,
+        "after_parameter_hash": "sha256:bc9a91ffa4da477124736af3ea3d445aff691a496f1a7d2658cffee8d7ab38d9",
+        "before_parameter_hash": "sha256:13d3d1932175d6cadbda79757251e0f773c08dfe28372acbbc804d3d5530737e",
+        "entropy": 3.0196836132378806,
+        "gradient_norm_before_clip": 15.179518699645996,
+        "loss": -71.55199415236712,
+        "loss_forward_calls": 42,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 8.122616774070472,
+            "public_return": -1.7490935552501168,
+            "steps": 4,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 32.96610191766822,
+            "public_return": -7.606660373241208,
+            "steps": 21,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 18.11981685167181,
+            "public_return": -3.8417758707362015,
+            "steps": 7,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 9.536747952185591,
+            "public_return": -1.366135734354272,
+            "steps": 10,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.953674795218559,
+            "target_source_cells": 1
+          }
+        ],
+        "update": 2,
+        "value_loss": 5.798934853010412
+      },
+      {
+        "actor_loss": -82.93397829704918,
+        "after_parameter_hash": "sha256:d300a02100732d97a9dae797d6d716119d093db7c3a71ee7a78565b53da7ac3c",
+        "before_parameter_hash": "sha256:bc9a91ffa4da477124736af3ea3d445aff691a496f1a7d2658cffee8d7ab38d9",
+        "entropy": 3.0100962246457734,
+        "gradient_norm_before_clip": 12.847915649414062,
+        "loss": -80.41798714501783,
+        "loss_forward_calls": 48,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 29.26720647165075,
+            "public_return": -7.027424098248734,
+            "steps": 24,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 28.790395674763573,
+            "public_return": -6.27698633104159,
+            "steps": 12,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 5.72204742684373,
+            "public_return": -1.175386047918976,
+            "steps": 2,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 15.258796723496944,
+            "public_return": -2.4427329880475996,
+            "steps": 10,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.953674795218559,
+            "target_source_cells": 1
+          }
+        ],
+        "update": 3,
+        "value_loss": 5.092188182579268
+      },
+      {
+        "actor_loss": -66.65297969989479,
+        "after_parameter_hash": "sha256:982404e3550bc8f7c2294bd1a0d265b98bddbd407c727f855ad1303a0fbfbca7",
+        "before_parameter_hash": "sha256:d300a02100732d97a9dae797d6d716119d093db7c3a71ee7a78565b53da7ac3c",
+        "entropy": 3.0395376983852618,
+        "gradient_norm_before_clip": 11.267058372497559,
+        "loss": -64.54263225756586,
+        "loss_forward_calls": 46,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 32.103675821326156,
+            "public_return": -7.46760876808133,
+            "steps": 24,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 10.329378600869374,
+            "public_return": -2.3152517160569013,
+            "steps": 7,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 17.16614228053119,
+            "public_return": -3.714947206708996,
+            "steps": 7,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 7.629398361748473,
+            "public_return": -0.8307595659823767,
+            "steps": 8,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.953674795218559,
+            "target_source_cells": 1
+          }
+        ],
+        "update": 4,
+        "value_loss": 4.28148603488461
+      },
+      {
+        "actor_loss": -96.61511296592653,
+        "after_parameter_hash": "sha256:7d65f3b198e049bd895052dcfe56e75aa1314e1fd1aca099268a0da1f2604dc0",
+        "before_parameter_hash": "sha256:982404e3550bc8f7c2294bd1a0d265b98bddbd407c727f855ad1303a0fbfbca7",
+        "entropy": 2.94868335507924,
+        "gradient_norm_before_clip": 27.26761817932129,
+        "loss": -93.15025763958693,
+        "loss_forward_calls": 59,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 28.364693496754033,
+            "public_return": -6.693874702977062,
+            "steps": 23,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 18.680791086678656,
+            "public_return": -4.257409412395363,
+            "steps": 13,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 31.47126084764051,
+            "public_return": -7.036713108183388,
+            "steps": 16,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 8.583073156967032,
+            "public_return": -1.966380257104586,
+            "steps": 7,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          }
+        ],
+        "update": 5,
+        "value_loss": 6.988683338794142
+      },
+      {
+        "actor_loss": -13.101383902132511,
+        "after_parameter_hash": "sha256:71fa08ffb4e84ab183cd2c5759769969430066086fa515d383891d759c0d62ba",
+        "before_parameter_hash": "sha256:7d65f3b198e049bd895052dcfe56e75aa1314e1fd1aca099268a0da1f2604dc0",
+        "entropy": 3.2168782031725325,
+        "gradient_norm_before_clip": 6.792896270751953,
+        "loss": -12.580675670877099,
+        "loss_forward_calls": 22,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 19.210633322801595,
+            "public_return": -4.155329465741281,
+            "steps": 9,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 11.208474652007194,
+            "public_return": -2.4901333266961623,
+            "steps": 7,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 2.861023713421865,
+            "public_return": -0.6380641179857519,
+            "steps": 3,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 1.907349590437118,
+            "public_return": -0.4453761683718954,
+            "steps": 3,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          }
+        ],
+        "update": 6,
+        "value_loss": 1.1057544888014763
+      },
+      {
+        "actor_loss": -17.859493285417557,
+        "after_parameter_hash": "sha256:221cae85754bc512ee1ae0561664b053fe3eb9d67229854a9014104d71b694f3",
+        "before_parameter_hash": "sha256:71fa08ffb4e84ab183cd2c5759769969430066086fa515d383891d759c0d62ba",
+        "entropy": 3.1312506902785526,
+        "gradient_norm_before_clip": 11.547113418579102,
+        "loss": -16.53932812809944,
+        "loss_forward_calls": 21,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 15.342720573244225,
+            "public_return": -3.4442859159942416,
+            "steps": 10,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 24.614689431858935,
+            "public_return": -5.169501083489905,
+            "steps": 7,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 1.9073495904371183,
+            "public_return": 0.5024392514199558,
+            "steps": 3,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.953674795218559,
+            "target_source_cells": 1
+          }
+        ],
+        "update": 7,
+        "value_loss": 2.7029546681436756
+      },
+      {
+        "actor_loss": -2.7984760403633118,
+        "after_parameter_hash": "sha256:0bb5d1589b6df9ecdeb16a6120a2388482404ec058c8bf7585bcdf3b4184e21f",
+        "before_parameter_hash": "sha256:221cae85754bc512ee1ae0561664b053fe3eb9d67229854a9014104d71b694f3",
+        "entropy": 3.0998871127764382,
+        "gradient_norm_before_clip": 11.599815368652344,
+        "loss": -2.1490440517663956,
+        "loss_forward_calls": 12,
+        "training_collection_exposure": [
+          {
+            "outside_supplied_goal_mm3": 12.89304249852456,
+            "public_return": -2.641655299998096,
+            "steps": 3,
+            "subject": "ReMIND-008",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 1.5384180894911834,
+            "public_return": -0.3381524176923881,
+            "steps": 2,
+            "subject": "ReMIND-010",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 0.0,
+            "public_return": 0.0,
+            "steps": 1,
+            "subject": "ReMIND-020",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          },
+          {
+            "outside_supplied_goal_mm3": 13.351447133059827,
+            "public_return": -2.857125364609791,
+            "steps": 6,
+            "subject": "ReMIND-025",
+            "target_mm3": 0.0,
+            "target_source_cells": 0
+          }
+        ],
+        "update": 8,
+        "value_loss": 1.3608617826054492
+      }
+    ]
+  },
+  "metadata_files_verified": 12,
+  "parent": {
+    "cleanup_errors": [],
+    "elapsed_seconds": 1287.3306563748047,
+    "final_owned_pids": [],
+    "output_bytes": 48227780,
+    "sampled_peak_rss_bytes": 2498330624
+  },
+  "saved_records_and_sources_verified": 434,
+  "scope": "Saved metadata/arithmetic only. No checkpoint contents, model execution, patient arrays or geometry replay. In-memory endpoint inference, not checkpoint-reload validation. RL exposure is stochastic TRAIN collection at each pre-update policy, not a fixed greedy learning curve. All four TRAIN denominators retained; no held-out/clinical claim.",
+  "source_files_verified": 84,
+  "status": "PASS_saved_metadata_consistency",
+  "teachers": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "behavior_parameter_hash": null,
+      "learning_updates": 0,
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "teachers",
+      "plan_parameter_hash": null,
+      "plan_seal": "sha256:d11945f524e0bea1f5798600e59f0b45498c58f17582d2bf867dc55734064d1f",
+      "public_return": 0.0,
+      "steps": 1,
+      "subject": "ReMIND-008",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "trace_seal": "sha256:105cc4b58a2c55aca9c8074db82b1c319541b2730233286837fb05741ff8e7f0"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "behavior_parameter_hash": null,
+      "learning_updates": 0,
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "teachers",
+      "plan_parameter_hash": null,
+      "plan_seal": "sha256:05831777fd22e52a306aecedcd6c2d504483147c0acf766581fd8acf9f1f3376",
+      "public_return": 0.0,
+      "steps": 1,
+      "subject": "ReMIND-010",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "trace_seal": "sha256:904b54925c93fc9d63ce5a2296a1ea3673b4f197330a7a1cb2e058c6e12609d7"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "behavior_parameter_hash": null,
+      "learning_updates": 0,
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "teachers",
+      "plan_parameter_hash": null,
+      "plan_seal": "sha256:3480304b806e2b400bab00cc51a2440acb6da03d0c1e115e77bb5c9c31b1ba78",
+      "public_return": 0.0,
+      "steps": 1,
+      "subject": "ReMIND-020",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "trace_seal": "sha256:8e4e1faed5ebbcf5f2cde3988516e4ecbdf6877e215ce77885b387585ff7b3a0"
+    },
+    {
+      "actions": [
+        "nominal-cavity-968f3758c3de3eab8c99ca99",
+        "STOP"
+      ],
+      "behavior_parameter_hash": null,
+      "learning_updates": 0,
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "teachers",
+      "plan_parameter_hash": null,
+      "plan_seal": "sha256:d20fc8a3f843ad6290b18a69725b81f2d7a407d7855473f91a0567830849fc6e",
+      "public_return": 0.9168388572207332,
+      "steps": 2,
+      "subject": "ReMIND-025",
+      "target_fraction": 1.2230620581688315e-05,
+      "target_mm3": 0.953674795218559,
+      "target_source_cells": 1,
+      "terminal": "STOP",
+      "trace_seal": "sha256:07b40fef39fbdc2318a0b9f79d8d68c73a925501d05fe14558426767a7f7ad07"
+    }
+  ]
+}

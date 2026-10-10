@@ -1,0 +1,55 @@
+{
+  "SELECT_EVAL_execution": false,
+  "automatic_retry": false,
+  "canonical_result_status": "complete_TRAIN_only_not_heldout_performance",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 3600,
+    "output_bytes": 134217728,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 3540,
+    "worker_log_bytes": 8388608
+  },
+  "checkpoints": {
+    "IL": {
+      "bytes": 137635,
+      "parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+      "path": "IL-final.psckpt",
+      "sha256": "d7d2519d655fda6d1519f079f0030631a15c3bd3fe31e8c5ba1c08361b5bbcde"
+    },
+    "RL": {
+      "bytes": 137635,
+      "parameter_hash": "sha256:0bb5d1589b6df9ecdeb16a6120a2388482404ec058c8bf7585bcdf3b4184e21f",
+      "path": "RL-final.psckpt",
+      "sha256": "f2a605f96b199c3bd1f71eac8f3844f1b68ad02fba35f18407322f1a39a68841"
+    }
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 1287.3306563748047,
+  "exit_code": 0,
+  "final_owned_pids": [],
+  "first_update_control_sha256": "8000990a1bc977b23d7f154c691bb7f3c55f089f6eb8d17523f1eb2680990d66",
+  "output_bytes": 48227780,
+  "private_reference_execution": false,
+  "release_sha256": "c1cde8eb92f9df5d85ccb91ed0e591adb1da70e011582f3be116d237fecf72db",
+  "result_sha256": "b75bd91d284cacba2c980283424586ca506799919f6850175b6f4eeea4315aeb",
+  "sampled_peak_rss_bytes": 2498330624,
+  "samples": 6139,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/source-index.json",
+    "sha256": "3bf24bf5038c20b04e44281df76411b61588efd207c75c0fddc518d969c04ea6"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 16283,
+  "worker_final_sha256": "72812b80868be512711653f0bc1512765940e1de27e4630e9b9518258229f5b9",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

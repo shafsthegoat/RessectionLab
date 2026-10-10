@@ -1,0 +1,25 @@
+{
+  "status": "exact_first_update_control_passed",
+  "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+  "methods": {
+    "IL": {
+      "update_record_sha256": "2c801a97d3463e8b17e634bfa61f0a3d3b0ce29f54b8685e61c6795cfe20d1a2",
+      "baseline_update_record_sha256": "98c8f43d2cae2aef82d1a467f2eeb1125776efee6459c3b31885614ff4ab2172",
+      "before_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+      "after_parameter_hash": "sha256:437050c2dacd630dc7eeea6af20fe44071747b73f74ed5d4cecc1584fd91d5f1",
+      "exact_match": true
+    },
+    "RL": {
+      "update_record_sha256": "3ea59dc1e274a1515354be0ee903a208bce8e62596a9b5ae80942f7ebfab0536",
+      "baseline_update_record_sha256": "abee51542f6a5f903332a173ae5849fba639b6e902f7cada8aec27f28b42221d",
+      "before_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+      "after_parameter_hash": "sha256:13d3d1932175d6cadbda79757251e0f773c08dfe28372acbbc804d3d5530737e",
+      "exact_match": true
+    }
+  },
+  "excluded_metadata_fields": [
+    "context_hashes",
+    "trace_seals"
+  ],
+  "scope": "exact canonical tensor hashes and numerical first-step receipts; no first-step checkpoint file created or reloaded"
+}

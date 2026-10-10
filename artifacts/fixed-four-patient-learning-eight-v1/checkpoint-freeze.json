@@ -1,0 +1,414 @@
+{
+  "checkpoints": {
+    "IL": {
+      "bytes": 137635,
+      "metadata": {
+        "SELECT_EVAL_opened": false,
+        "TRAIN_subjects": [
+          "ReMIND-008",
+          "ReMIND-010",
+          "ReMIND-020",
+          "ReMIND-025"
+        ],
+        "architecture_hash": "sha256:713c904fd34acf597e409c74725cc25253309ea927befb0db5ceb65d9cd3e79a",
+        "clinical_claim": false,
+        "completed_updates": 8,
+        "contexts": [
+          {
+            "context_hash": "sha256:d9e2c8eafb1c0b3d91218a22ae84161897ed43e61cbcc68c6fd6d4f990d4530e",
+            "patient_group": "ReMIND:008"
+          },
+          {
+            "context_hash": "sha256:f4af0f4521cf6a7ca710758f0f7ee2518245820c61a9c62156f0959dc2e5c488",
+            "patient_group": "ReMIND:010"
+          },
+          {
+            "context_hash": "sha256:53697aaa2364ad0af3a000786c43e8996fcb93b56c3cd9cd7a94b7badb9d76f9",
+            "patient_group": "ReMIND:020"
+          },
+          {
+            "context_hash": "sha256:ac4986bb3f1f52e75093f1f9703edc23efbd7294eeb6e890598b8d4bbc65da8f",
+            "patient_group": "ReMIND:025"
+          }
+        ],
+        "format": "ZIP_STORED_JSON_FLOAT32_NPY_V1",
+        "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+        "kind": "fixed_endpoint",
+        "learning_protocol_hash": "sha256:713594a9b671ef4d13945ea6cce09d1ffcc0eb3c228442d3adbc74ddab91029b",
+        "method": "IL",
+        "parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+        "private_reference_used": false,
+        "tensors": [
+          {
+            "dtype": "float32",
+            "entry": "tensors/0000.npy",
+            "name": "actor.0.bias",
+            "sha256": "9c2deaa90d24e4d3b2f610852ba972a30026b50aff1531c20c30f992fe7eef57",
+            "shape": [
+              32
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0001.npy",
+            "name": "actor.0.weight",
+            "sha256": "7192d7ca3992d26408c8f1cb2fac4e1be356bb8d388f0b75b67643d842831eb8",
+            "shape": [
+              32,
+              262
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0002.npy",
+            "name": "actor.2.bias",
+            "sha256": "996f2380b93b7db418f657bf13a435617868c96c2dbfd33eda181de06e87497f",
+            "shape": [
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0003.npy",
+            "name": "actor.2.weight",
+            "sha256": "7eb08432d96ae2b00dff56ff7f112cc6b73602dec90a8e848e2f98e4550ff616",
+            "shape": [
+              1,
+              32
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0004.npy",
+            "name": "critic.0.bias",
+            "sha256": "ffe865434e29ea161d1b08f1a710db2dced02fef2ffb3e33bd4c00b31f194ad1",
+            "shape": [
+              32
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0005.npy",
+            "name": "critic.0.weight",
+            "sha256": "f34dfc22689d80aaed35ee9c6deb0ba5a7443e75ac4de4c99eb8140f85f0a2f5",
+            "shape": [
+              32,
+              360
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0006.npy",
+            "name": "critic.2.bias",
+            "sha256": "b8a87011ee4249a9c9f09f61e398bcf6c46e972aaacb1f8992d30c5e17db0f94",
+            "shape": [
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0007.npy",
+            "name": "critic.2.weight",
+            "sha256": "4489855bdbd2a3ddc25c9e50194fe53706cb822166d37769f4c32a323a77b167",
+            "shape": [
+              1,
+              32
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0008.npy",
+            "name": "encoder.0.bias",
+            "sha256": "22b95e2536d724d2d5e53b0288440f22aaa665c4ccf4472e7de7ddccb32a7277",
+            "shape": [
+              8
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0009.npy",
+            "name": "encoder.0.weight",
+            "sha256": "73a98046e526e202fff34af7e92d9da896aa21c8be787bebd25440879f2c6c22",
+            "shape": [
+              8,
+              18,
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0010.npy",
+            "name": "encoder.2.bias",
+            "sha256": "5186705984f6f77e32353d711c5c0531e47f21c19bb3fee6bda856b5d00d4f8f",
+            "shape": [
+              16
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0011.npy",
+            "name": "encoder.2.weight",
+            "sha256": "e6a73007a18ae8735e9732fc029b830a81dfbff9a1964957d4c2866cc245c55c",
+            "shape": [
+              16,
+              8,
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0012.npy",
+            "name": "stop.0.bias",
+            "sha256": "c27e6906ce9a7b43737f4f0376f1f676ef929d6cdb39918a61024170418e2fd9",
+            "shape": [
+              32
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0013.npy",
+            "name": "stop.0.weight",
+            "sha256": "00dfbfc949c157379a516b89c1bd2b76208536413b6b98c1f7451012b57fba46",
+            "shape": [
+              32,
+              157
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0014.npy",
+            "name": "stop.2.bias",
+            "sha256": "6ef3f13a1c232b3801c521223390a0234b959d88dd502cbb36bfda5bf1add663",
+            "shape": [
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0015.npy",
+            "name": "stop.2.weight",
+            "sha256": "f4f2172b2b05c6aff65a0d84369ce8fb109aebd482ef98e9734fd0b1b6442ad0",
+            "shape": [
+              1,
+              32
+            ]
+          }
+        ],
+        "version": "patient-cohort-spatial-weights-v1"
+      },
+      "parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+      "path": "IL-final.psckpt",
+      "sha256": "d7d2519d655fda6d1519f079f0030631a15c3bd3fe31e8c5ba1c08361b5bbcde"
+    },
+    "RL": {
+      "bytes": 137635,
+      "metadata": {
+        "SELECT_EVAL_opened": false,
+        "TRAIN_subjects": [
+          "ReMIND-008",
+          "ReMIND-010",
+          "ReMIND-020",
+          "ReMIND-025"
+        ],
+        "architecture_hash": "sha256:713c904fd34acf597e409c74725cc25253309ea927befb0db5ceb65d9cd3e79a",
+        "clinical_claim": false,
+        "completed_updates": 8,
+        "contexts": [
+          {
+            "context_hash": "sha256:d9e2c8eafb1c0b3d91218a22ae84161897ed43e61cbcc68c6fd6d4f990d4530e",
+            "patient_group": "ReMIND:008"
+          },
+          {
+            "context_hash": "sha256:f4af0f4521cf6a7ca710758f0f7ee2518245820c61a9c62156f0959dc2e5c488",
+            "patient_group": "ReMIND:010"
+          },
+          {
+            "context_hash": "sha256:53697aaa2364ad0af3a000786c43e8996fcb93b56c3cd9cd7a94b7badb9d76f9",
+            "patient_group": "ReMIND:020"
+          },
+          {
+            "context_hash": "sha256:ac4986bb3f1f52e75093f1f9703edc23efbd7294eeb6e890598b8d4bbc65da8f",
+            "patient_group": "ReMIND:025"
+          }
+        ],
+        "format": "ZIP_STORED_JSON_FLOAT32_NPY_V1",
+        "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+        "kind": "fixed_endpoint",
+        "learning_protocol_hash": "sha256:713594a9b671ef4d13945ea6cce09d1ffcc0eb3c228442d3adbc74ddab91029b",
+        "method": "RL",
+        "parameter_hash": "sha256:0bb5d1589b6df9ecdeb16a6120a2388482404ec058c8bf7585bcdf3b4184e21f",
+        "private_reference_used": false,
+        "tensors": [
+          {
+            "dtype": "float32",
+            "entry": "tensors/0000.npy",
+            "name": "actor.0.bias",
+            "sha256": "a436b84596ad348e68ccaf26ab23c73bf144286db57cf89d20372298b45bac75",
+            "shape": [
+              32
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0001.npy",
+            "name": "actor.0.weight",
+            "sha256": "2acde68ff2d61d16023a2a697628867f331be08224fc1a2f4f3fcfcb4796871f",
+            "shape": [
+              32,
+              262
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0002.npy",
+            "name": "actor.2.bias",
+            "sha256": "81aeb610bb044a403e7badb22665f4a0e7b30bda266c2d3eea54872fc98c90cd",
+            "shape": [
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0003.npy",
+            "name": "actor.2.weight",
+            "sha256": "8fa974c4bc30b40355290383938a002dc90bb1952982d4ffed756baa5796db6c",
+            "shape": [
+              1,
+              32
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0004.npy",
+            "name": "critic.0.bias",
+            "sha256": "8fb7d2941af3b7d9e372700dbf96920b96033cb69e13bdf4bcbd19a07340a736",
+            "shape": [
+              32
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0005.npy",
+            "name": "critic.0.weight",
+            "sha256": "ff09ef383bf2c0c6bbfef1e9a8d796fd87ab7f6412130a4450ebc65614de4d2e",
+            "shape": [
+              32,
+              360
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0006.npy",
+            "name": "critic.2.bias",
+            "sha256": "35ce499f512d701fcbfad9c859427bef4aaf7e308de54eadde53ae3ddb0271b0",
+            "shape": [
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0007.npy",
+            "name": "critic.2.weight",
+            "sha256": "7698fadd0844a1784ba462e19e3e5bca3455f191de888bd4166c86f99e832b37",
+            "shape": [
+              1,
+              32
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0008.npy",
+            "name": "encoder.0.bias",
+            "sha256": "4dd5ce4cec72d7bf0f1957fa43133571a8ded9c0ab637fd1dcd9b217218fa892",
+            "shape": [
+              8
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0009.npy",
+            "name": "encoder.0.weight",
+            "sha256": "0d263ff398b4d050665788c143d8c7b7a59ea04292ed078863629963a8bd5eec",
+            "shape": [
+              8,
+              18,
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0010.npy",
+            "name": "encoder.2.bias",
+            "sha256": "57571ce8ba65ab327b43494cba235008dfbc5b3df19038f31f64a10124643dca",
+            "shape": [
+              16
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0011.npy",
+            "name": "encoder.2.weight",
+            "sha256": "bc338e85627c8228ef52d271b9f35569ccc9fac2bf0dae7a44110edc25f6b478",
+            "shape": [
+              16,
+              8,
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0012.npy",
+            "name": "stop.0.bias",
+            "sha256": "798e5d435935188d63b26effe2459074c5de02c68ec5078610c21f0c95e8fd13",
+            "shape": [
+              32
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0013.npy",
+            "name": "stop.0.weight",
+            "sha256": "d70606f5e90c0f8f6e41bfa752b68df083958ea8d56cc3fa7278724b2da56026",
+            "shape": [
+              32,
+              157
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0014.npy",
+            "name": "stop.2.bias",
+            "sha256": "e1f0f35904fbc9a49e56f2c7f7a55aa9313950068f4c1dbe16a8a946448428cf",
+            "shape": [
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "entry": "tensors/0015.npy",
+            "name": "stop.2.weight",
+            "sha256": "9e77039ad5b925b8c44533553dd7eac1c647737a2ff60420e6387e03d57798ea",
+            "shape": [
+              1,
+              32
+            ]
+          }
+        ],
+        "version": "patient-cohort-spatial-weights-v1"
+      },
+      "parameter_hash": "sha256:0bb5d1589b6df9ecdeb16a6120a2388482404ec058c8bf7585bcdf3b4184e21f",
+      "path": "RL-final.psckpt",
+      "sha256": "f2a605f96b199c3bd1f71eac8f3844f1b68ad02fba35f18407322f1a39a68841"
+    }
+  },
+  "learning_protocol_hash": "sha256:713594a9b671ef4d13945ea6cce09d1ffcc0eb3c228442d3adbc74ddab91029b",
+  "selection": "fixed_endpoint_no_heldout_selection"
+}

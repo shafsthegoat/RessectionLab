@@ -1,0 +1,135 @@
+{
+  "SELECT_EVAL_opened": false,
+  "TRAIN_greedy": {
+    "IL": {
+      "ReMIND-008": {
+        "actions": [
+          "STOP"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:2c6274ea85acd26adb91e1cec9ba8fd10a4bce0068d1adaa97f82170801f942f",
+        "public_return": 0.0,
+        "steps": 1
+      },
+      "ReMIND-010": {
+        "actions": [
+          "STOP"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:060794d8db8e33e19e8479d6b4cf89983d6ab4933fab426ce10339adf76f3f5b",
+        "public_return": 0.0,
+        "steps": 1
+      },
+      "ReMIND-020": {
+        "actions": [
+          "STOP"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:3d152b1710eadb152311dc46c100b6b3ecde31759187a2461dc14ede24816d0c",
+        "public_return": 0.0,
+        "steps": 1
+      },
+      "ReMIND-025": {
+        "actions": [
+          "STOP"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:b4252cac2d1590ca1606d2fcde8ab9991ccac9ec80de30d46c581d663258d665",
+        "public_return": 0.0,
+        "steps": 1
+      }
+    },
+    "RL": {
+      "ReMIND-008": {
+        "actions": [
+          "STOP"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:3f4e0b15d4fc4519ac8218e391b7d351cfe22ebac8ff29c4b48b50f87cfdc710",
+        "public_return": 0.0,
+        "steps": 1
+      },
+      "ReMIND-010": {
+        "actions": [
+          "STOP"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:8a21b159d55acc608d03c7a9f4b71d350aee80e77cf52a050790c7cc48a58799",
+        "public_return": 0.0,
+        "steps": 1
+      },
+      "ReMIND-020": {
+        "actions": [
+          "STOP"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:a1e93d894c3dfa86f7d4b50b0c3e06427675fd5d2c3c2c3e0c116819d21f1355",
+        "public_return": 0.0,
+        "steps": 1
+      },
+      "ReMIND-025": {
+        "actions": [
+          "STOP"
+        ],
+        "complete": true,
+        "plan_seal": "sha256:a5d2ccbb8e2ae1b95e6f5691a558688fb66758f9d9341355a7bac31e24f88910",
+        "public_return": 0.0,
+        "steps": 1
+      }
+    }
+  },
+  "TRAIN_subjects": [
+    "ReMIND-008",
+    "ReMIND-010",
+    "ReMIND-020",
+    "ReMIND-025"
+  ],
+  "checkpoints": {
+    "IL": {
+      "bytes": 137635,
+      "parameter_hash": "sha256:19c1fe2b45f04591c10a5be94e7489d1cda99213479777a112e5dd01713e6266",
+      "path": "IL-final.psckpt",
+      "sha256": "d7d2519d655fda6d1519f079f0030631a15c3bd3fe31e8c5ba1c08361b5bbcde"
+    },
+    "RL": {
+      "bytes": 137635,
+      "parameter_hash": "sha256:0bb5d1589b6df9ecdeb16a6120a2388482404ec058c8bf7585bcdf3b4184e21f",
+      "path": "RL-final.psckpt",
+      "sha256": "f2a605f96b199c3bd1f71eac8f3844f1b68ad02fba35f18407322f1a39a68841"
+    }
+  },
+  "clinical_claim": false,
+  "closed_roles": {
+    "EVAL": [
+      "ReMIND-067"
+    ],
+    "SELECT": [
+      "ReMIND-013",
+      "ReMIND-037"
+    ]
+  },
+  "complete_wall_seconds": 1283.8885239169467,
+  "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+  "optimizer_updates": {
+    "IL": 8,
+    "RL": 8
+  },
+  "output_bytes_before_terminal": 48223966,
+  "private_reference_reads": 0,
+  "selection_readiness": {
+    "SELECT_EVAL_opened": false,
+    "checkpoint_loader_available": true,
+    "execution_admitted": false,
+    "meaning": "both fixed endpoints and all8 complete TRAIN greedy replays retained",
+    "next_interface": "separate admitted greedy SELECT pass from authenticated checkpoints; no EVAL",
+    "ready": true
+  },
+  "status": "complete_TRAIN_only_not_heldout_performance",
+  "teacher_statuses": {
+    "ReMIND-008": "complete_replayed",
+    "ReMIND-010": "complete_replayed",
+    "ReMIND-020": "complete_replayed",
+    "ReMIND-025": "complete_replayed"
+  },
+  "version": "fixed-four-TRAIN-sequential-cohort-v2"
+}
