@@ -1,0 +1,77 @@
+{
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "cleanup_seconds": 10,
+    "fit_calls": 0,
+    "held_out_member_reads": 2,
+    "mesher_calls": 0,
+    "native_calls": 0,
+    "new_output_bytes": 16777216,
+    "sampled_group_rss_bytes": 536870912,
+    "threads": 1,
+    "total_seconds": 70,
+    "worker_seconds": 60
+  },
+  "cleanup": {
+    "contained": true,
+    "direct_child_reaped": true,
+    "errors": [],
+    "exit_code": 1,
+    "fallback_used": false,
+    "remaining_members": []
+  },
+  "declaration": {
+    "path": "manifests/experiments/hbe-01-03-v5-torsion-evaluation-v1.json",
+    "sha256": "fd5f04054cb153b0e69bfd2921ff584c1c4da4f664e539fd39c405e5a153f072"
+  },
+  "elapsed_before_terminal_publication_seconds": 1.6749738338403404,
+  "error": "worker supervision/cleanup failed",
+  "error_type": "ValueError",
+  "fit_calls": 0,
+  "held_out_member_reads": null,
+  "measured_access_accounting": "unknown_until_worker_state_and_ledger_checked",
+  "mesher_calls": 0,
+  "native_calls": 0,
+  "parent_cache_prefix": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-torsion-root-cache-0fc0351b6184",
+  "physical_validation_pass": null,
+  "readout_calls_attempted": 1,
+  "readout_stage": {
+    "active_output_cap_bytes": 16646144,
+    "command": [
+      "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "-I",
+      "-S",
+      "-B",
+      "-X",
+      "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-torsion-evaluation-v1/attempt-01/unused-worker-pycache",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_hbe_v5_torsion_evaluation_experiment.py",
+      "--root",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+      "--release",
+      "build/hbe-v5-torsion-root-release-v1.json",
+      "--release-sha256",
+      "6c0d33eb9fe19f562e70c7bdbd9a7a01f8296dbba46f4d32bd06e02181ffc0b2",
+      "--worker",
+      "--deadline",
+      "1302833.429312291"
+    ],
+    "elapsed_seconds": 1.1167174999136478,
+    "exit_code": 1,
+    "kill_reason": null,
+    "peak_sampled_active_output_bytes": 9113,
+    "peak_sampled_process_group_rss_bytes": 62996480,
+    "pid": 65050,
+    "sampled_process_group_rss_cap_bytes": 536870912,
+    "status": "failed_or_incomplete",
+    "wall_cap_seconds": 59.471838040975854
+  },
+  "release": {
+    "path": "build/hbe-v5-torsion-root-release-v1.json",
+    "sha256": "6c0d33eb9fe19f562e70c7bdbd9a7a01f8296dbba46f4d32bd06e02181ffc0b2"
+  },
+  "schema": "hbe-v5-torsion-evaluation-supervision-v1",
+  "source_commit": "0fc0351b61845c46949b26371e782b1ae2290c12",
+  "status": "failed_torsion_evaluation_attempt",
+  "termination_requested": false
+}

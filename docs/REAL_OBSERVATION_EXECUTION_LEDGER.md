@@ -1440,3 +1440,21 @@ lengths, fixity and exam-specific rotated gradients remain unqualified. Historic
 provider errors are preserved, not reported as newly observed. Existing patient
 role and 1-GiB prospective cap remain unchanged. See
 [metadata delta](../artifacts/ucsf-v5-access-refresh-20261010/RESULT.txt).
+
+## October 10, 2026 — Torsion attempt closes with a format failure
+
+The separately bound readout ran once at source commit 0fc0351 and exited 1 after
+strict conversion of the token `angle` failed. The parent completed in 1.675
+seconds, worker in 1.117 seconds at 62,996,480 bytes sampled group RSS; the child
+was reaped without fallback, errors or remaining members. Independent failure
+accounting accepts the negative publication. No metric, new freeze, fit or native
+solve occurred. The original freeze and continuation ledger are unchanged.
+
+The access ledger names both intended members but records no per-member success.
+Source and traceback imply one or two complete selected CSV bodies reached the
+process, including the first member; exact failed iteration and second-member
+exposure are unknown. Null counts remain intact. This is not zero measurement
+access. The consumed attempt is preserved; any format-only successor is separate.
+Latest human steering prioritizes a cross-patient geometric planning experiment,
+so this repair is deferred rather than blocking that experiment. See
+[failure evidence](../artifacts/hbe-v5-torsion-format-failure-v1/REPORT.txt).

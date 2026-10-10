@@ -1,0 +1,62 @@
+{
+  "audit": {
+    "path": "build/hbe-v5-fixed-fit-result-independent-v1/audit-result.json",
+    "sha256": "390ec39c523f9d0543647a9a9c40f29b775a80c5ced406f001e0913f226e9624"
+  },
+  "audit_scope": "saved JSON arithmetic and authenticated producer receipts; no independent raw primitive replay",
+  "continuation_ledger": {
+    "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/continuation-ledger.json",
+    "sha256": "59e6f16576bfca6905a883ae751af9752b807e6bae0e788e823b622b4ec30db7"
+  },
+  "decision": "GO",
+  "fitted_checks": {
+    "compression": "PASS",
+    "tension": "PASS"
+  },
+  "fixed_fit_sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a",
+  "freeze": {
+    "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/freeze.json",
+    "sha256": "a2daa256dacda5de9b7fec79e72973b27fa6d2d02a4b7641fc56744413abde90"
+  },
+  "future_access_requires": "separately reviewed reader and explicit root release bound to this exact freeze",
+  "held_out_access_released": false,
+  "held_out_member_reads": 0,
+  "measured_member_reads": 0,
+  "mu_Pa": 715.361571139082,
+  "native_calls": 2,
+  "numerical": {
+    "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/numerical.json",
+    "sha256": "c30f3356d90797cc24e9c6a613f23cc76187df58da61e0d542fe90cf277a8b8d"
+  },
+  "physical_validation_pass": null,
+  "predictions": {
+    "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/predictions.json",
+    "sha256": "403305f180f9d8ce5580c6765f5fa5070eaac8300f5b564e58fffe2cd2d96044"
+  },
+  "publication": {
+    "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/publication.json",
+    "sha256": "ebad2f0f24e7f8efa4654dd06d976457af5ffd3aa8f1432cfd0ad00783f15ad6"
+  },
+  "refit_calls": 0,
+  "release": {
+    "path": "build/hbe-v5-fixed-fit-root-release-v1.json",
+    "sha256": "97c182618a90e746971b7375f758dbe5c8b13b7ef68f5c1e696522321146fc3d"
+  },
+  "report": {
+    "path": "build/hbe-v5-fixed-fit-result-independent-v1/REPORT.txt",
+    "sha256": "1b233814edec0914e3b72e9c8c7ec4bc33051641472e7b63197a45f848c16076"
+  },
+  "scale": 0.715361571139082,
+  "schema": "hbe-v5-fixed-fit-heldout-admission-v1",
+  "scope": "accepted saved fixed-fit confirmation and pre-reveal prediction freeze evidence only",
+  "source_commit": "d09c78d8a90bbc1d6e507499c43c0db145b9f45e",
+  "states_per_native_run": 121,
+  "summary": {
+    "path": "build/hbe-v5-fixed-fit-result-independent-v1/result-summary.json",
+    "sha256": "10d6b6be36cbedb4d34908cf860e32e256345b036549a1d2f49a5aa220decd34"
+  },
+  "terminal": {
+    "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/terminal.json",
+    "sha256": "990e368db06a2569c91c1eacc3cccff4a2a4b6359fdc774b7b46c94a5a6f4d18"
+  }
+}

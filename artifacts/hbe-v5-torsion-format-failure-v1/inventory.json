@@ -1,0 +1,135 @@
+{
+  "schema": "hbe-v5-torsion-failure-evidence-v1",
+  "files": [
+    {
+      "path": "attempt-01/access.jsonl",
+      "origin": "build/hbe-v5-torsion-evaluation-v1/attempt-01/access.jsonl",
+      "bytes": 1968,
+      "sha256": "51a97d703dd18e7bdeba8b61dad952e20024116446d86ec17ca8bee165058251"
+    },
+    {
+      "path": "attempt-01/intent-receipt.json",
+      "origin": "build/hbe-v5-torsion-evaluation-v1/attempt-01/intent-receipt.json",
+      "bytes": 1198,
+      "sha256": "b00585047b2f0c1d5c17426f7830f11a882d6308c2974926b11085f829fd07f2"
+    },
+    {
+      "path": "attempt-01/intent.json",
+      "origin": "build/hbe-v5-torsion-evaluation-v1/attempt-01/intent.json",
+      "bytes": 671,
+      "sha256": "3ad6a45021030321a263868eadc160290c6236028394f789ee6cd2ee74c63d75"
+    },
+    {
+      "path": "attempt-01/publication.json",
+      "origin": "build/hbe-v5-torsion-evaluation-v1/attempt-01/publication.json",
+      "bytes": 363,
+      "sha256": "45e353c0cace7d66f6adb2605a8467f3171d48cd95e5bcce0c847c702570d326"
+    },
+    {
+      "path": "attempt-01/readout-console.txt",
+      "origin": "build/hbe-v5-torsion-evaluation-v1/attempt-01/readout-console.txt",
+      "bytes": 2249,
+      "sha256": "30e48428544dfa38fdfadc6b202de72666aff243fd4780a27800c67399846eae"
+    },
+    {
+      "path": "attempt-01/receipt.json",
+      "origin": "build/hbe-v5-torsion-evaluation-v1/attempt-01/receipt.json",
+      "bytes": 2516,
+      "sha256": "6b7d57e3a2e956f463ae8ed543e4b4b53ec2fbca8c78a8ca540345ad5745b0a0"
+    },
+    {
+      "path": "attempt-01/state.json",
+      "origin": "build/hbe-v5-torsion-evaluation-v1/attempt-01/state.json",
+      "bytes": 573,
+      "sha256": "7fe5f0bd9917f5f0c99ee0bda230a929a25953dc90c831dc94aa308cd8d4561f"
+    },
+    {
+      "path": "attempt-01/terminal.json",
+      "origin": "build/hbe-v5-torsion-evaluation-v1/attempt-01/terminal.json",
+      "bytes": 2892,
+      "sha256": "3a96f30f5f6e1dffbd356e7e6a2ddb041988f6b3b2740e7e2b32373fee8be38e"
+    },
+    {
+      "path": "audit.json",
+      "origin": "build/hbe-v5-torsion-failure-independent-v1/audit.json",
+      "bytes": 14954,
+      "sha256": "2b74ca993a785259f8d781e46af57831166971690c4a3b7d99e44698d8bb6915"
+    },
+    {
+      "path": "REPORT.txt",
+      "origin": "build/hbe-v5-torsion-failure-independent-v1/REPORT.txt",
+      "bytes": 1487,
+      "sha256": "b3f8d2453980d43f6dc44c94e978e8da8e045795a63ff72946b59861843c88da"
+    },
+    {
+      "path": "audit_saved_failure.mjs",
+      "origin": "build/hbe-v5-torsion-failure-independent-v1/audit_saved_failure.mjs",
+      "bytes": 12399,
+      "sha256": "7af5571696108edf8322fdb3eb3352c9f83d7489705d21a3d7cc47a71026a763"
+    },
+    {
+      "path": "release.json",
+      "origin": "build/hbe-v5-torsion-root-release-v1.json",
+      "bytes": 84972,
+      "sha256": "6c0d33eb9fe19f562e70c7bdbd9a7a01f8296dbba46f4d32bd06e02181ffc0b2"
+    },
+    {
+      "path": "source-review.json",
+      "origin": "build/hbe-v5-torsion-readout-adapter-v3/final-canonical-source-review.json",
+      "bytes": 5137,
+      "sha256": "10f578bc4c0de6595bce45b3a28fcd27d534ae9e86bae62d0346d853d5ee0a38"
+    },
+    {
+      "path": "predecessor-admission-review.json",
+      "origin": "artifacts/hbe-v5-fixed-fit-result-v1/audit/heldout-admission-review.json",
+      "bytes": 2773,
+      "sha256": "bbaebe463d8d3d701007060368cadd255b2d5923561e341574f19f78da1b20ff"
+    },
+    {
+      "path": "source/scripts/mechanics_hbe_v5_torsion_evaluation.py",
+      "origin": "scripts/mechanics_hbe_v5_torsion_evaluation.py",
+      "bytes": 17727,
+      "sha256": "f9b5c22b1c7954e49f8553a085de7758ea5e67daf0f90c0db0e04fd2c5dc4304"
+    },
+    {
+      "path": "source/scripts/mechanics_hbe_v5_torsion_evaluation_experiment.py",
+      "origin": "scripts/mechanics_hbe_v5_torsion_evaluation_experiment.py",
+      "bytes": 19928,
+      "sha256": "dfde020742b6ff29459d9f31e2c7734ed6873de4ab7bb5888393f7a2dfb32ef2"
+    },
+    {
+      "path": "source/scripts/mechanics_hbe_access.py",
+      "origin": "scripts/mechanics_hbe_access.py",
+      "bytes": 37769,
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    {
+      "path": "source/manifests/experiments/hbe-01-03-v5-torsion-evaluation-v1.json",
+      "origin": "manifests/experiments/hbe-01-03-v5-torsion-evaluation-v1.json",
+      "bytes": 2015,
+      "sha256": "fd5f04054cb153b0e69bfd2921ff584c1c4da4f664e539fd39c405e5a153f072"
+    },
+    {
+      "path": "source/manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+      "origin": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+      "bytes": 6123,
+      "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+    },
+    {
+      "path": "source/manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+      "origin": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+      "bytes": 13880,
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    {
+      "path": "dependencies.json",
+      "bytes": 2392,
+      "sha256": "e7360110b4a1944ccb664b60cd9199c99a3c2b15ca8c4ada22a2c35e6d081d59"
+    }
+  ],
+  "total_bytes": 233986,
+  "dependency": {
+    "path": "artifacts/hbe-v5-torsion-source-v1/inventory.json",
+    "sha256": "530da4e27fc4a01201c9c3e1e3ab72ae018075de17177c14536cc0c98cd36f8f"
+  }
+}

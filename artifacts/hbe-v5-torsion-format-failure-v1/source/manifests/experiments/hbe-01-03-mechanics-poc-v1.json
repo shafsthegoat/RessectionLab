@@ -1,0 +1,388 @@
+{
+  "schema_version": 1,
+  "declaration_id": "hbe-01-03-mechanics-poc-v1",
+  "date": "2026-10-04",
+  "status": "prospective_pending_root_review_source_freeze_and_separate_execution_release",
+  "protocol": "docs/hbe-specimen-mechanics-poc.md",
+  "roles": {
+    "path": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+    "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+  },
+  "febio_runtime": {
+    "path": "artifacts/febio-runtime-investigation-v1/prospective-runtime.json",
+    "sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48"
+  },
+  "febio_model_source_inspection": {
+    "path": "artifacts/febio-runtime-investigation-v1/model-source-inspection.json",
+    "sha256": "63dcf667c044cbf6fe5616f943b701a72ac875fe933d11d82076c323806e3931"
+  },
+  "execution_state": {
+    "curve_values_opened": false,
+    "gmsh_payload_acquired": false,
+    "meshes_generated": false,
+    "specimen_solver_executed": false,
+    "held_out_responses_released": false
+  },
+  "geometry": {
+    "specimen": "HBE_01_03",
+    "radius_m": 0.004,
+    "height_m": 0.00489159,
+    "axis_origin_m": [
+      0,
+      0,
+      0
+    ],
+    "axis_unit_vector": [
+      0,
+      0,
+      1
+    ],
+    "height_provenance": "creator_test_inferred",
+    "measurement_uncertainty": null
+  },
+  "material": {
+    "febio_type": "Ogden",
+    "energy": "mu/2*(Ibar1-3)+K/4*(J^2-1-2*ln(J))",
+    "c1_over_mu": 2,
+    "m1": 2,
+    "c2_through_c6": 0,
+    "m2_through_m6": 2,
+    "pressure_model": 1,
+    "K_over_mu": 49.666666666666664,
+    "initial_poisson_ratio_assumption": 0.49,
+    "reference_mu_Pa": 1000.0,
+    "fitted_parameters": [
+      "positive_mu_scale_only"
+    ],
+    "sweeps": false
+  },
+  "mechanics": {
+    "units": [
+      "m",
+      "N",
+      "Pa",
+      "Nm"
+    ],
+    "domain_type": "three-field-solid",
+    "element_type": "hex8",
+    "laugon": 0,
+    "quasistatic": true,
+    "body_forces": false,
+    "contact": false,
+    "rigid_bodies": false,
+    "glue_compliance": false,
+    "lateral_boundary": "traction_free",
+    "bottom_xyz": "prescribed_zero",
+    "top_axial_xyz": [
+      "prescribed_zero",
+      "prescribed_zero",
+      "prescribed_axial_displacement"
+    ],
+    "top_torsion_xyz": [
+      "x*(cos(theta)-1)-y*sin(theta)",
+      "x*sin(theta)+y*(cos(theta)-1)",
+      "prescribed_zero"
+    ],
+    "zero_components_use_prescribed_displacement_not_fixed_BC": true
+  },
+  "mesher": {
+    "name": "Gmsh",
+    "version": "4.15.2",
+    "documentation": "https://gmsh.info/doc/texinfo/gmsh.html",
+    "metadata_url": "https://pypi.org/pypi/gmsh/4.15.2/json",
+    "filename": "gmsh-4.15.2-py2.py3-none-macosx_12_0_arm64.whl",
+    "url": "https://files.pythonhosted.org/packages/3d/b4/0d25938ad62ea4db6bcbdecbc77c72d05d8a6a679abe4addcd86167ffd77/gmsh-4.15.2-py2.py3-none-macosx_12_0_arm64.whl",
+    "bytes": 36427761,
+    "sha256": "f6649b3e59f49272e7ee8ab282ecb4d1a6e0d627e86cf3e3b1a83fd07417e4f8",
+    "license": "GPL-2.0-or-later_with_upstream_external_linking_exception",
+    "scope": "separate_local_research_utility_no_app_bundling",
+    "private_prefix": "data/optional-runtimes/gmsh-4.15.2",
+    "global_or_app_environment_changes": false,
+    "method": "built_in_CAD_five_block_transfinite_quad_disk_recombined_axial_extrusion",
+    "central_square_xy": "(+/-R/2,+/-R/2)",
+    "outer_arc_corners_degrees": [
+      45,
+      135,
+      225,
+      315
+    ],
+    "edge_and_quarter_arc_cells": "N",
+    "radial_connector_cells": "N/2",
+    "axial_layers": "N/2",
+    "levels": [
+      {
+        "N": 4,
+        "nominal_hex8_cells": 96
+      },
+      {
+        "N": 8,
+        "nominal_hex8_cells": 768
+      },
+      {
+        "N": 12,
+        "nominal_hex8_cells": 2592
+      }
+    ],
+    "mesh_quality": {
+      "jacobian_sites": [
+        "8_gauss",
+        "8_corners",
+        "center"
+      ],
+      "rest_jacobian_positive": true,
+      "minimum_rest_scaled_jacobian_exclusive": 0.1,
+      "finest_relative_volume_error_max": 0.005,
+      "finest_max_radial_sag_over_R": 0.005,
+      "conforming_interfaces_and_boundary_tags_required": true,
+      "mixed_or_non_hex8_cells_allowed": false
+    },
+    "release_requirements": [
+      "root separately releases hash-pinned wheel acquisition/private extraction",
+      "verify wheel hash and safe bounded members before extraction;retain license notices",
+      "verify arm64 dylib and private prefix import version before mesh generation",
+      "record interpreter identity and private prefix runtime hashes;no ambient gmsh import"
+    ]
+  },
+  "loading": {
+    "branches": [
+      {
+        "id": "compression",
+        "mode": "axial",
+        "strain_endpoint": -0.15
+      },
+      {
+        "id": "tension",
+        "mode": "axial",
+        "strain_endpoint": 0.15
+      },
+      {
+        "id": "torsion_neg",
+        "mode": "torsion",
+        "nominal_shear_endpoint": -0.15,
+        "angle_endpoint_rad": -0.183434625
+      },
+      {
+        "id": "torsion_pos",
+        "mode": "torsion",
+        "nominal_shear_endpoint": 0.15,
+        "angle_endpoint_rad": 0.183434625
+      }
+    ],
+    "separate_rest_start_per_branch": true,
+    "base_equal_pseudotime_steps": 60,
+    "fine_repeat_equal_pseudotime_steps": 120,
+    "pseudotime_endpoint": 1,
+    "exact_rotation_at_each_step": true,
+    "time_cutback_or_retry": false,
+    "out_of_range_measured_coordinate": "stop_and_report_no_extrapolation_no_endpoint_change"
+  },
+  "solver": {
+    "analysis": "STATIC",
+    "linear_solver": "skyline",
+    "symmetric_stiffness": 1,
+    "qn_method": "BFGS",
+    "max_refs": 15,
+    "dtol": 1e-08,
+    "etol": 1e-08,
+    "rtol": 1e-08,
+    "min_residual_N2_formula": "(1e-10*mu*R^2)^2",
+    "tolerances_scale_with_mu": true,
+    "analytic_verification_required_first": true,
+    "silent_symmetrization_or_formulation_switch": false
+  },
+  "numerical_checks": {
+    "reference_scales": {
+      "L0_m": 0.004,
+      "F0_N": 0.016,
+      "T0_Nm": 6.400000000000001e-05,
+      "E0_J": 7.826544e-05,
+      "scale_definition": "use_current_run_mu_not_fitted_measurement_amplitude"
+    },
+    "mesh_reaction_change": {
+      "comparison": "fine60_vs_medium60_at_all_61_common_load_states",
+      "relative_to_max_abs_fine_response": 0.02,
+      "absolute_floor_times_F0_or_T0": 1e-05
+    },
+    "step_reaction_change": {
+      "comparison": "fine120_vs_fine60_at_all_61_common_load_states",
+      "relative_to_max_abs_fine_response": 0.002,
+      "absolute_floor_times_F0_or_T0": 1e-06
+    },
+    "refinement_trend": "fine_medium_max_difference_must_be_less_than_medium_coarse_unless_both_below_absolute_floor;field_probe_differences_same_rule",
+    "displacement_probes": {
+      "radial_fractions": [
+        0,
+        0.25,
+        0.5,
+        0.75
+      ],
+      "angles_radians": "j*pi/4,j=0..7;deduplicate_radius_zero",
+      "axial_fractions": [
+        0.25,
+        0.5,
+        0.75
+      ],
+      "unique_count": 75,
+      "comparison": "independent_hex8_interpolation_at_same_rest_points_and_common_load_states",
+      "mesh_max_change_over_R": 0.002,
+      "step_max_change_over_R": 0.0002
+    },
+    "scale_check": {
+      "multiplier": 2,
+      "branches": [
+        "compression",
+        "torsion_pos"
+      ],
+      "mesh_N": 12,
+      "steps": 120,
+      "displacement_absolute_over_R": 1e-06,
+      "displacement_relative": 1e-05,
+      "reaction_relative": 0.0001,
+      "reaction_absolute_times_scaled_F0_or_T0": 1e-07,
+      "required": "same_displacements_and_doubled_reactions"
+    },
+    "all_boundaries_force_and_moment_balance": {
+      "relative_to_sum_boundary_norms": 1e-05,
+      "absolute_times_F0_or_T0": 1e-08,
+      "common_origin_m": [
+        0,
+        0,
+        0
+      ]
+    },
+    "prescribed_displacement_max_error_over_R": 1e-08,
+    "energy_work": {
+      "relative_to_max_abs_energy_or_cumulative_work": 0.02,
+      "absolute_times_E0": 1e-06,
+      "integration": "trapezoidal_signed_force_dz_plus_torque_dtheta",
+      "energy": "independent_three_field_dev_energy_at_gauss_points_plus_U_of_cell_volume_averaged_J;augmentation_zero"
+    },
+    "deformed_jacobian_positive_at_all_declared_sites": true,
+    "tolerances_are": "numerical_engineering_gates_not_instrument_resolution_or_clinical_acceptance"
+  },
+  "calibration": {
+    "members_from": "roles.calibration.members",
+    "allowed_after": "root_release_and_runtime_mesh_analytical_gates",
+    "coordinate_schema": "finite_unique_monotone_signed_m_or_rad;ambiguous_units_signs_or_duplicates_stop",
+    "no_outcome_based_row_removal": true,
+    "weights": "each_mode_total_0.5;normalized_trapezoidal_coordinate_weights_within_mode",
+    "computed_curve_interpolation": "piecewise_linear_in_solved_input_coordinate_no_extrapolation",
+    "scale_formula": "sum(w*g*y)/sum(w*g*g)",
+    "mu_formula": "scale*reference_mu_Pa",
+    "minimum_identified_denominator_over_F0_squared_exclusive": 1e-12,
+    "nonpositive_scale": "stop_not_clip",
+    "intercept_sign_offset_height_pressure_fit": false,
+    "axial_mu_hat_confirmation_runs": 2,
+    "axial_mu_hat_confirmation_mesh_N": 12,
+    "axial_mu_hat_confirmation_steps": 120
+  },
+  "held_out": {
+    "members_from": "roles.held_out_validation.members",
+    "access_requires": "durable_calibration_parameter_and_prediction_freeze_with_all_hashes_and_numerical_gates",
+    "used_for_selection_or_refitting": false,
+    "release_is_loading_mode_not_donor_validation": true,
+    "no_CI_from_processed_rows": true
+  },
+  "independent_outputs": {
+    "node_fields": [
+      "id",
+      "rest_xyz_m",
+      "current_xyz_m",
+      "ux",
+      "uy",
+      "uz",
+      "Rx",
+      "Ry",
+      "Rz",
+      "prescribed_dofs",
+      "boundary_ids"
+    ],
+    "element_fields": [
+      "id",
+      "node_ids",
+      "sx",
+      "sy",
+      "sz",
+      "sxy",
+      "syz",
+      "sxz",
+      "J",
+      "sed"
+    ],
+    "all_converged_load_values_saved": true,
+    "applied_force_formula": "Fz=-sum_top(Rz)",
+    "applied_torque_formula": "Tz=-sum_top((x-axis_x)*Ry-(y-axis_y)*Rx)",
+    "sign_gate": "verify_raw_support_sign_against_analytic_extension_and_shear_patch;independent_known_force_pair_checks_current_lever_arm_pure_moment_sign;all_before_measured_response_access",
+    "raw_reactions_preserved": true,
+    "native_output_precision": "at_least_12_significant_digits_no_default_six_digit_reformatting"
+  },
+  "metrics": {
+    "axial_role": "calibration_goodness_of_fit_only",
+    "torsion_role": "within_specimen_held_out_mode",
+    "per_signed_branch": [
+      "RMSE",
+      "MAE",
+      "signed_endpoint_bias",
+      "observed_RMS_denominator",
+      "normalized_RMSE"
+    ],
+    "aggregation": "equal_branch_weight_not_row_pooled",
+    "normalized_error_null_when": "observed_RMS<=64*float64_epsilon*max(characteristic_fitted_response_scale,max_abs_observed)",
+    "torque_odd_symmetry_discrepancy": true,
+    "empirical_fidelity_acceptance_tolerance": null,
+    "physical_validation_pass_claim_allowed": false,
+    "reason": "unknown_metrology_and_no_application_tolerance;first_baseline_reports_descriptive_concordance",
+    "within_branch_weights": "normalized_trapezoidal_absolute_input_coordinate_weights;no_row_IID_assumption",
+    "signed_endpoint_bias_definition": "prediction_minus_observation_at_largest_absolute_observed_input_coordinate",
+    "torque_odd_symmetry_grid": "21_equal_points_in_intersection_of_positive_and_absolute_negative_observed_angle_domains;linear_interpolation_no_extrapolation;null_with_reason_if_empty_or_singleton_overlap"
+  },
+  "budgets": {
+    "maximum_specimen_solver_calls": 20,
+    "call_allocation": {
+      "branches_x_three_meshes": 12,
+      "fine_loadstep_repeats": 4,
+      "double_mu_controls": 2,
+      "calibrated_axial_confirmations": 2
+    },
+    "each_solver_seconds": 90,
+    "aggregate_specimen_seconds": 900,
+    "sampled_process_family_rss_bytes": 3221225472,
+    "runtime_threads": 1,
+    "generated_output_bytes": 1073741824,
+    "gmsh_acquisition_bytes": 36427761,
+    "gmsh_acquisition_seconds": 60,
+    "gmsh_expanded_bytes": 268435456,
+    "gmsh_generation_calls": 3,
+    "each_mesh_generation_seconds": 30,
+    "gmsh_aggregate_preparation_seconds": 150,
+    "on_failure": "kill_and_reap_process_group_preserve_partial_receipt_no_retry_or_budget_increase",
+    "each_active_run_output_bytes": 268435456,
+    "output_budget_basis": "Metadata-only estimate: 3199 fine nodes,2592 cells,9 node+8 element fields,13 characters/value,60 or120 frames yields~828MB (~790MiB) before headers/IDs;1GiB total is a cap,not a measured footprint. Lossless compression after each run may reduce retained size;raw decompressed hash retained."
+  },
+  "required_freeze_receipt": [
+    "git_commit_and_clean_source_archive_sha256",
+    "this_declaration_sha256",
+    "role_and_input_archive_hashes",
+    "verified_gmsh_runtime_and_license_receipt",
+    "verified_febio_binary_library_and_runtime_receipt",
+    "mesh_converter_and_evaluator_source_hashes",
+    "solver_deck_hashes_and_command_arrays",
+    "calibration_fit_and_predicted_torsion_hashes_before_heldout_open"
+  ],
+  "limits": [
+    "one_development_specimen_not_donor_transfer",
+    "test_inferred_height_and_unknown_measurement_uncertainty",
+    "processed_data_not_viscoelastic_or_hysteresis_validation",
+    "no_patient_specific_properties",
+    "no_cutting_or_patient_retractor_force_claim",
+    "real_patient_anatomy_displacement_poc_still_required",
+    "no_mechanics_policy_comparison_before_relevant_validation_gate"
+  ],
+  "storage": {
+    "immutable_raw_output_root": "outputs/mechanics/hbe-01-03-poc-v1",
+    "raw_outputs_git_ignored": true,
+    "lossless_archives": "retain_archive_and_decompressed_sha256;never_replace_raw_by_rounded_summary",
+    "tracked_artifacts": "source_declarations_hash_manifests_compact_metrics_and_partial_failure_receipts_only",
+    "large_raw_outputs_committed": false
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "cleanup_seconds": 10,
+    "fit_calls": 0,
+    "held_out_member_reads": 2,
+    "mesher_calls": 0,
+    "native_calls": 0,
+    "new_output_bytes": 16777216,
+    "sampled_group_rss_bytes": 536870912,
+    "threads": 1,
+    "total_seconds": 70,
+    "worker_seconds": 60
+  },
+  "deadline": 1302833.429312291,
+  "release": {
+    "path": "build/hbe-v5-torsion-root-release-v1.json",
+    "sha256": "6c0d33eb9fe19f562e70c7bdbd9a7a01f8296dbba46f4d32bd06e02181ffc0b2"
+  },
+  "schema": "hbe-v5-torsion-evaluation-intent-v1",
+  "source_commit": "0fc0351b61845c46949b26371e782b1ae2290c12"
+}

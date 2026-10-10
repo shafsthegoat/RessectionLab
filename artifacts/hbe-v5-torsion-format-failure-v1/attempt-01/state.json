@@ -1,0 +1,20 @@
+{
+  "automatic_retry": false,
+  "empirical_tolerance": null,
+  "error": {
+    "message": "could not convert string to float: 'angle'",
+    "type": "ValueError"
+  },
+  "fit_calls": 0,
+  "held_out_access_attempted": true,
+  "held_out_member_reads": null,
+  "held_out_responses_accessed": null,
+  "independent_donor_validation": false,
+  "mesher_calls": 0,
+  "native_calls": 0,
+  "new_freeze_saved": false,
+  "patient_tool_mechanics_admitted": false,
+  "physical_validation_pass": null,
+  "schema": "hbe-v5-torsion-state-v1",
+  "status": "failed_torsion_evaluation_attempt"
+}

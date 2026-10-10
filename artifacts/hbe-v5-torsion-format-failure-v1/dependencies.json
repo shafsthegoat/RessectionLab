@@ -1,0 +1,53 @@
+{
+  "source_evidence": {
+    "path": "artifacts/hbe-v5-torsion-source-v1/inventory.json",
+    "sha256": "530da4e27fc4a01201c9c3e1e3ab72ae018075de17177c14536cc0c98cd36f8f"
+  },
+  "upstream": {
+    "continuation_ledger": {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/continuation-ledger.json",
+      "sha256": "59e6f16576bfca6905a883ae751af9752b807e6bae0e788e823b622b4ec30db7"
+    },
+    "freeze": {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/freeze.json",
+      "sha256": "a2daa256dacda5de9b7fec79e72973b27fa6d2d02a4b7641fc56744413abde90"
+    },
+    "independent_review": {
+      "path": "artifacts/hbe-v5-fixed-fit-result-v1/audit/heldout-admission-review.json",
+      "sha256": "bbaebe463d8d3d701007060368cadd255b2d5923561e341574f19f78da1b20ff"
+    },
+    "numerical": {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/numerical.json",
+      "sha256": "c30f3356d90797cc24e9c6a613f23cc76187df58da61e0d542fe90cf277a8b8d"
+    },
+    "predictions": {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/predictions.json",
+      "sha256": "403305f180f9d8ce5580c6765f5fa5070eaac8300f5b564e58fffe2cd2d96044"
+    },
+    "publication": {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/publication.json",
+      "sha256": "ebad2f0f24e7f8efa4654dd06d976457af5ffd3aa8f1432cfd0ad00783f15ad6"
+    },
+    "terminal": {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/terminal.json",
+      "sha256": "990e368db06a2569c91c1eacc3cccff4a2a4b6359fdc774b7b46c94a5a6f4d18"
+    }
+  },
+  "hash_only_fixity": [
+    {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/freeze.json",
+      "bytes": 16248,
+      "sha256": "a2daa256dacda5de9b7fec79e72973b27fa6d2d02a4b7641fc56744413abde90",
+      "role": "freeze",
+      "inspection": "hash_only_not_parsed"
+    },
+    {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/continuation-ledger.json",
+      "bytes": 455,
+      "sha256": "59e6f16576bfca6905a883ae751af9752b807e6bae0e788e823b622b4ec30db7",
+      "role": "continuation_ledger",
+      "inspection": "hash_only_not_parsed"
+    }
+  ],
+  "excluded": "No original archive, selected member contents, prediction/numerical arrays, bulk output trees or original freeze body copied."
+}

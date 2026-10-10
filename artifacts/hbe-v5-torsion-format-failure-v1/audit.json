@@ -1,0 +1,357 @@
+{
+  "schema": "hbe-v5-torsion-failed-attempt-audit-v1",
+  "decision": "ACCEPT_FAILED_ATTEMPT_ACCOUNTING",
+  "result_status": "failed_torsion_evaluation_attempt",
+  "review_scope": "Saved failure state, ledger, console, receipts and source; two original freeze/ledger files hashed only. No archive, header, measured/predicted curve or numerical result arrays opened.",
+  "release": {
+    "path": "build/hbe-v5-torsion-root-release-v1.json",
+    "sha256": "6c0d33eb9fe19f562e70c7bdbd9a7a01f8296dbba46f4d32bd06e02181ffc0b2"
+  },
+  "source_commit": "0fc0351b61845c46949b26371e782b1ae2290c12",
+  "declaration": {
+    "path": "manifests/experiments/hbe-01-03-v5-torsion-evaluation-v1.json",
+    "sha256": "fd5f04054cb153b0e69bfd2921ff584c1c4da4f664e539fd39c405e5a153f072"
+  },
+  "independent_source_review": {
+    "path": "build/hbe-v5-torsion-readout-adapter-v3/final-canonical-source-review.json",
+    "sha256": "10f578bc4c0de6595bce45b3a28fcd27d534ae9e86bae62d0346d853d5ee0a38"
+  },
+  "source_files_rehashed_and_git_matched": 46,
+  "source_bindings": [
+    {
+      "path": "launchers/hbe_v5_ordinal9_continuation_v1.py",
+      "sha256": "8ea24abd2918bc36c289979e4ff15e1d7b0b5614d0ddfe14820254a7d81478b4"
+    },
+    {
+      "path": "scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    },
+    {
+      "path": "scripts/mechanics_febio_verification.py",
+      "sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5"
+    },
+    {
+      "path": "scripts/mechanics_hbe_access.py",
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    {
+      "path": "scripts/mechanics_hbe_backend.py",
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+    },
+    {
+      "path": "scripts/mechanics_hbe_branch_calibration_v3.py",
+      "sha256": "66e36a45406e9a8770ce271527c855b2bde1ad0315c3476b0fd210ed5d50bf7d"
+    },
+    {
+      "path": "scripts/mechanics_hbe_branch_calibration_v3_readout.py",
+      "sha256": "631cac92f1e78264dcc00a58ce34d5619044874684f890dfa082a1fb0c96e205"
+    },
+    {
+      "path": "scripts/mechanics_hbe_branch_calibration_v4.py",
+      "sha256": "2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc"
+    },
+    {
+      "path": "scripts/mechanics_hbe_branch_calibration_v5.py",
+      "sha256": "1f183287e65d008095f004815a1a2344a74f71d935cedddc7388d42d1dbdc016"
+    },
+    {
+      "path": "scripts/mechanics_hbe_evaluation.py",
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    {
+      "path": "scripts/mechanics_hbe_experiment.py",
+      "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global.py",
+      "sha256": "a56c3dd761ed8bab5f57ff9051ce5305743ae2c85e4e91d5398cd0995a0de2d0"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_experiment.py",
+      "sha256": "0ea6c6d2026cb32bf470967f5e7b9f08f0ffbdbefeb6fa7426e79e6c37bc91f2"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_n36.py",
+      "sha256": "61024ff1b3c874a870bf83d5af84ee37e566ea37ed0f967d52fd3a6ca92b360d"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_n36_experiment.py",
+      "sha256": "21d5a26d6edc0075d9bd362968ea1edb15ac5e6c5f4d09123c654376ae3f2e80"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_n36_readout.py",
+      "sha256": "d7384416693efb5d8383a4cff06ca2581e678abc7ce630b01f99894d09fb7a27"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_n36_temporal.py",
+      "sha256": "5af7a1d9beac06412c9a20c91fb6cf8d3834c2b8eb91c3053541f8d0256a9c93"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py",
+      "sha256": "550d8300ebcdef18778026d1150bcd32feca4991bd94a57406a360234800ede1"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_global_readout.py",
+      "sha256": "5a6b3af67f20c8a0f9630e17c5b5c139d6e6528b7999e81f92f38cae5b722343"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_mesh.py",
+      "sha256": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_readout.py",
+      "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_spatial.py",
+      "sha256": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+      "sha256": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_spatial_readout.py",
+      "sha256": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c"
+    },
+    {
+      "path": "scripts/mechanics_hbe_halfheight_temporal_common.py",
+      "sha256": "6e8824f65a370648ee231d4ac90222455a8a6c0ac8a58d513d48f71e625dd2b5"
+    },
+    {
+      "path": "scripts/mechanics_hbe_mesh.py",
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+    },
+    {
+      "path": "scripts/mechanics_hbe_outputs.py",
+      "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+    },
+    {
+      "path": "scripts/mechanics_hbe_physics.py",
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    {
+      "path": "scripts/mechanics_hbe_readout.py",
+      "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_axial_calibration.py",
+      "sha256": "20fa7411cb2a194e62c9fc0b4b4b1aa3f4e10f28cba4ac758c4dc190a47fd6be"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_axial_calibration_experiment.py",
+      "sha256": "5bceed4d7457d178ab4d2be918546bd6e0fac00e36f271fba75b6b63bf6b76fb"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_comparison.py",
+      "sha256": "895b294ecfc83847e0484f39ac0b9e1a5cda57a4853324a435c238e4c6649fb9"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_fitted_confirmation.py",
+      "sha256": "80774c4ffa11b4944227a750e25b92145249170f886f6e13996ee39fc803f045"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_fitted_confirmation_experiment.py",
+      "sha256": "78d9ee5b0c1a2ad404c56f92eab5b7a1ed9c9981bdb657a2405a96ebfeacd6cb"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_frame.py",
+      "sha256": "1ca4b75d7d609b69339f6a99c8eb7d8d67d4a8fd6ae94e8aed6903ab18ac97b0"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_n12_admission.py",
+      "sha256": "29bbd47b1df7bd08efbca9cea13172e9ba220dec8dd9dbc22915285dffb9b70a"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_n12_saved_replay.py",
+      "sha256": "c35c3f122599c6415607d12c77c70e5c29070256b9bd2c5b13440513773a020d"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_n8_canary.py",
+      "sha256": "2e5ac4072f1a8c1f0c8eb9aeb3df6e1fe2e5d6d1732bdc97d74fa3e401536f1a"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_n8_one_shot.py",
+      "sha256": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_native_comparison.py",
+      "sha256": "31fc3d66b401cf0c793e498292e8d44335e1e7d5ff11a3b1839238e86e6fc69e"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_remaining_one_shot.py",
+      "sha256": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_source_bindings.py",
+      "sha256": "1ab6ee2c46aa93304efffdc88f3e4b6d57ade0a083d0907c3294708b6d093208"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_stream.py",
+      "sha256": "b96ea74e0906cc69914712e7ea08a4196e24571a2549041347a4633829b75457"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_torsion_evaluation.py",
+      "sha256": "f9b5c22b1c7954e49f8553a085de7758ea5e67daf0f90c0db0e04fd2c5dc4304"
+    },
+    {
+      "path": "scripts/mechanics_hbe_v5_torsion_evaluation_experiment.py",
+      "sha256": "dfde020742b6ff29459d9f31e2c7734ed6873de4ab7bb5888393f7a2dfb32ef2"
+    },
+    {
+      "path": "scripts/mechanics_patient_constraints.py",
+      "sha256": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "build/hbe-v5-torsion-evaluation-v1/attempt-01/access.jsonl",
+      "bytes": 1968,
+      "sha256": "51a97d703dd18e7bdeba8b61dad952e20024116446d86ec17ca8bee165058251"
+    },
+    {
+      "path": "build/hbe-v5-torsion-evaluation-v1/attempt-01/intent-receipt.json",
+      "bytes": 1198,
+      "sha256": "b00585047b2f0c1d5c17426f7830f11a882d6308c2974926b11085f829fd07f2"
+    },
+    {
+      "path": "build/hbe-v5-torsion-evaluation-v1/attempt-01/intent.json",
+      "bytes": 671,
+      "sha256": "3ad6a45021030321a263868eadc160290c6236028394f789ee6cd2ee74c63d75"
+    },
+    {
+      "path": "build/hbe-v5-torsion-evaluation-v1/attempt-01/publication.json",
+      "bytes": 363,
+      "sha256": "45e353c0cace7d66f6adb2605a8467f3171d48cd95e5bcce0c847c702570d326"
+    },
+    {
+      "path": "build/hbe-v5-torsion-evaluation-v1/attempt-01/readout-console.txt",
+      "bytes": 2249,
+      "sha256": "30e48428544dfa38fdfadc6b202de72666aff243fd4780a27800c67399846eae"
+    },
+    {
+      "path": "build/hbe-v5-torsion-evaluation-v1/attempt-01/receipt.json",
+      "bytes": 2516,
+      "sha256": "6b7d57e3a2e956f463ae8ed543e4b4b53ec2fbca8c78a8ca540345ad5745b0a0"
+    },
+    {
+      "path": "build/hbe-v5-torsion-evaluation-v1/attempt-01/state.json",
+      "bytes": 573,
+      "sha256": "7fe5f0bd9917f5f0c99ee0bda230a929a25953dc90c831dc94aa308cd8d4561f"
+    },
+    {
+      "path": "build/hbe-v5-torsion-evaluation-v1/attempt-01/terminal.json",
+      "bytes": 2892,
+      "sha256": "3a96f30f5f6e1dffbd356e7e6a2ddb041988f6b3b2740e7e2b32373fee8be38e"
+    }
+  ],
+  "finalized_output_bytes": 12430,
+  "recorded": {
+    "readout_calls_attempted": 1,
+    "held_out_access_attempted": true,
+    "held_out_member_reads": null,
+    "held_out_responses_accessed": null,
+    "ledger_phases": [
+      "upstream_freeze_admitted",
+      "held_out_attempt"
+    ],
+    "error": {
+      "message": "could not convert string to float: 'angle'",
+      "type": "ValueError"
+    },
+    "physical_validation_pass": null,
+    "empirical_tolerance": null,
+    "fit_calls": 0,
+    "native_calls": 0,
+    "mesher_calls": 0,
+    "new_freeze_saved": false,
+    "observed_curves_file_present": false,
+    "metrics_file_present": false
+  },
+  "source_trace_inference": {
+    "basis": "Authenticated sequential _read_selected reads one entire member before parse_member_csv; traceback reached float conversion. Ledger itself records both intended members before any archive IO, not completed member counts.",
+    "minimum_complete_member_bodies_materialized": 1,
+    "maximum_complete_member_bodies_materialized": 2,
+    "necessarily_exposed_first_member": {
+      "path": "HBE_01/HBE_01_03/torsion_l1_c3_neg.csv",
+      "bytes": 1224,
+      "crc32": "f5259802"
+    },
+    "minimum_uncompressed_member_bytes": 1224,
+    "maximum_uncompressed_member_bytes": 2556,
+    "failed_member_identity": "not recorded; first or second iteration cannot be distinguished",
+    "second_member_exposure": "unknown",
+    "first_member_sha256": "not emitted",
+    "numeric_curve_completion_count": "unknown (zero or one)",
+    "archive_whole_bytes_hash_before_member_loop": "implied completed by source/trace; not independently rehashed by reviewer",
+    "final_archive_rehash_after_member_loop": "not reached because parse raised",
+    "warning": "Full CSV body includes response columns even when numeric conversion fails. This is consumed exposure, not zero-access or an unspent validation attempt."
+  },
+  "resource_receipts": {
+    "worker_elapsed_seconds": 1.1167174999136478,
+    "parent_elapsed_before_terminal_publication_seconds": 1.6749738338403404,
+    "sampled_peak_group_rss_bytes": 62996480,
+    "cleanup": {
+      "contained": true,
+      "direct_child_reaped": true,
+      "errors": [],
+      "exit_code": 1,
+      "fallback_used": false,
+      "remaining_members": []
+    },
+    "resource_limitations": "RSS sampled; parent time excludes final terminal/publication writes."
+  },
+  "original_fixity_verified": [
+    {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/freeze.json",
+      "bytes": 16248,
+      "sha256": "a2daa256dacda5de9b7fec79e72973b27fa6d2d02a4b7641fc56744413abde90",
+      "role": "freeze",
+      "inspection": "hash_only_not_parsed"
+    },
+    {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/continuation-ledger.json",
+      "bytes": 455,
+      "sha256": "59e6f16576bfca6905a883ae751af9752b807e6bae0e788e823b622b4ec30db7",
+      "role": "continuation_ledger",
+      "inspection": "hash_only_not_parsed"
+    }
+  ],
+  "other_upstream_identities": {
+    "continuation_ledger": {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/continuation-ledger.json",
+      "sha256": "59e6f16576bfca6905a883ae751af9752b807e6bae0e788e823b622b4ec30db7"
+    },
+    "freeze": {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/freeze.json",
+      "sha256": "a2daa256dacda5de9b7fec79e72973b27fa6d2d02a4b7641fc56744413abde90"
+    },
+    "independent_review": {
+      "path": "artifacts/hbe-v5-fixed-fit-result-v1/audit/heldout-admission-review.json",
+      "sha256": "bbaebe463d8d3d701007060368cadd255b2d5923561e341574f19f78da1b20ff"
+    },
+    "numerical": {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/numerical.json",
+      "sha256": "c30f3356d90797cc24e9c6a613f23cc76187df58da61e0d542fe90cf277a8b8d"
+    },
+    "predictions": {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/predictions.json",
+      "sha256": "403305f180f9d8ce5580c6765f5fa5070eaac8300f5b564e58fffe2cd2d96044"
+    },
+    "publication": {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/publication.json",
+      "sha256": "ebad2f0f24e7f8efa4654dd06d976457af5ffd3aa8f1432cfd0ad00783f15ad6"
+    },
+    "terminal": {
+      "path": "outputs/mechanics/hbe-v5-fixed-fit-confirmation-v1/attempt-01/terminal.json",
+      "sha256": "990e368db06a2569c91c1eacc3cccff4a2a4b6359fdc774b7b46c94a5a6f4d18"
+    }
+  },
+  "upstream_limits": "Predictions/numerical bodies not reopened. Their accepted identities and admission follow the saved ledger plus authenticated producer admission. Hash-only current freeze/ledger equality is independently confirmed.",
+  "next_action": "No retry, header repair or declaration change under this consumed release. Any format-only successor is a separate prospective root decision and must retain this exposure.",
+  "reviewer_archive_reads": 0,
+  "reviewer_curve_reads": 0,
+  "reviewer_native_calls": 0,
+  "reviewer_model_calls": 0,
+  "reviewer_reexecution_calls": 0
+}
