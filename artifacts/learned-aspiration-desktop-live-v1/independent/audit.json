@@ -1,0 +1,221 @@
+{
+  "action_ids": [
+    "NATIVE-SPATIAL:70d5e941f289e1ced3bcf449",
+    "STOP"
+  ],
+  "actor_forwards_recorded": 2,
+  "all_replay_prefix_mask_hashes_match": true,
+  "episode_id": "sha256:2c6dcf8b0cfc89ec4e23461d753cf0a72d42957993e0b02be5895bebc5e842e6",
+  "equal_permitted_inputs": {
+    "private_reference_scored_during_planning": false,
+    "same_decision_model": true,
+    "same_full_and_projected_inventory_trace": true,
+    "same_native_decisions_and_terminal_state": true,
+    "same_recorded_actions": true,
+    "same_source": true
+  },
+  "first_audit": {
+    "disposition": "Native and numerical assertions through line 128 passed; line 129 failed solely because reviewer used whole workspace image storage rows instead of established logical source identities. First attempt retained unchanged.",
+    "files": {
+      "audit_saved.py": {
+        "bytes": 13073,
+        "sha256": "6216d5a8a1e0fbae909f52eb9feccf628837ff2fae18fb2a7e1ad204be6bd4b8"
+      },
+      "run-output.txt": {
+        "bytes": 419,
+        "sha256": "6074e09a5aa773cbbc588f4a44848ed2347b499c5b5995004306e27b7bbf4316"
+      },
+      "run-receipt.json": {
+        "bytes": 634,
+        "sha256": "aeef27a2ae075c731775f02f5037a41965def266d36853dd8b4292da57d84ae1"
+      }
+    },
+    "native_replay_seconds": null,
+    "receipt": {
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "-B",
+        "-X",
+        "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/learned-transfer-saved-independent-v1/absent-cache-e17216ced25146f1a9be708dacefaec8",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/learned-transfer-saved-independent-v1/audit_saved.py"
+      ],
+      "elapsed_seconds": 2.5736765831243247,
+      "exit_code": 1,
+      "numeric_threads": 1,
+      "timeout_seconds": 30
+    }
+  },
+  "full_saved_episode_matches_native_replay": true,
+  "limitations": [
+    "Actor-only latency was not recorded; worker time includes load, actor, search, checks and serialization.",
+    "Search counters are saved execution accounting checked for internal consistency; search was not rerun.",
+    "Checkpoint provenance follows the bound original execution receipt; reviewer did not reopen weights.",
+    "UI vascular encounter readout is root-observed; private-reference scoring was not rerun or independently rescored here.",
+    "Primary planning hash is preserved in saved JSON but not independently recomputed after the bookkeeping assertion.",
+    "Generated geometry/software transfer only; no physical tissue or clinical validation."
+  ],
+  "metadata_repair": {
+    "correct_logical_session_digest": "sha256:00fbe2fe8b6606eaf0810b0d94a2587f08c8595cf9d936dd99ade70c710e2eef",
+    "first_metadata_finalizer_disposition": "An additional metadata-only assertion assumed episodeCanonicalJson included episodeId; established canonical_episode excludes that digest field. Initial finalizer source preserved; corrected without project imports or replay.",
+    "second_native_replay": false,
+    "workspace_metadata_sha256": "c8d15988becca6043ef56e29d67de4be70848e60f00bc6d42cce7bcc1c3190ef"
+  },
+  "microsteps": 35,
+  "new_updates_recorded": 0,
+  "outcomes": {
+    "clinical_probability": null,
+    "contact_cells": 63,
+    "modeled_reward": 3.353,
+    "nominal_target_removed_mm3": 4.0,
+    "other_removed_mm3": 3.0,
+    "probe_contact_cells": 0,
+    "removed_mm3": 7.0
+  },
+  "pair_seal": "sha256:1d6a076aa7310a2b57c4d0851626a23c000582040e221359a03abac79cfb96eb",
+  "replay_frames": 72,
+  "result_sha256": "9dbd781099dbf1bf6e44bd9cef9bfb4cff7ef9ebc2139906ea979c1de66ab295",
+  "review_activity": {
+    "actor_calls": 0,
+    "checkpoint_opens": 0,
+    "metadata_finalizer_project_imports": 0,
+    "native_replay_operations": 1,
+    "patient_reads": 0,
+    "private_reference_loads": 0,
+    "search_runs": 0
+  },
+  "saved_input_hashes": {
+    "build/learned-transfer-root-integration-v1/actual-attempt/attempt.json": "d792a08a025fea3396b5f580a6ffcb910f9b0cd1877c5ad3d072e7ba319dbb69",
+    "build/learned-transfer-root-integration-v1/actual-attempt/completion.json": "43cf51544c9c2a55349517443196368cbad96735c31770ba290fd121acff8759",
+    "build/learned-transfer-root-integration-v1/actual-attempt/progress.json": "9a9748b2599d6d869fc2b719565f4451ad8133923e125f38b81b1b8564866c65",
+    "build/learned-transfer-root-integration-v1/actual-attempt/result.json": "9dbd781099dbf1bf6e44bd9cef9bfb4cff7ef9ebc2139906ea979c1de66ab295",
+    "build/learned-transfer-root-integration-v1/actual-attempt/supervision.json": "b847aeca454a44a38c11579680f24d31fd8dc4f24d9a95502ffb0db8068b6011",
+    "build/learned-transfer-root-integration-v1/actual-attempt/worker.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "search_accounting": {
+    "actor_forward_calls": 0,
+    "beam_pruned_prefixes": 5,
+    "beam_width": 4,
+    "call_cap_reached": false,
+    "completed_layers": 4,
+    "eager_transition_calls": 14,
+    "estimated_incremental_return": 3.353,
+    "evaluated_transition_prefixes": 14,
+    "expanded_nodes": 10,
+    "final_policy_state_hash": null,
+    "guidance": "none",
+    "implicit_stop_evaluations": "all evaluated prefixes; known zero incremental reward",
+    "implicit_stop_prefix_count": 15,
+    "initial_policy_state_hash": null,
+    "layers": [
+      {
+        "completed": true,
+        "depth": 1,
+        "expanded_nodes": 1,
+        "model_transition_calls": 5,
+        "negative_prefixes_evaluated": 3,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 1,
+        "negative_prefixes_retained": 2
+      },
+      {
+        "completed": true,
+        "depth": 2,
+        "expanded_nodes": 4,
+        "model_transition_calls": 8,
+        "negative_prefixes_evaluated": 3,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 3,
+        "negative_prefixes_retained": 0
+      },
+      {
+        "completed": true,
+        "depth": 3,
+        "expanded_nodes": 4,
+        "model_transition_calls": 1,
+        "negative_prefixes_evaluated": 0,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 0,
+        "negative_prefixes_retained": 0
+      },
+      {
+        "completed": true,
+        "depth": 4,
+        "expanded_nodes": 1,
+        "model_transition_calls": 0,
+        "negative_prefixes_evaluated": 0,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 0,
+        "negative_prefixes_retained": 0
+      }
+    ],
+    "lazy_planning_transition_calls": 0,
+    "max_calls": 24,
+    "model_transition_calls": 14,
+    "negative_prefixes_evaluated": 6,
+    "negative_prefixes_pruned_by_beam": 4,
+    "negative_prefixes_retained": 2,
+    "objective_source": "observed_scan_estimator_only",
+    "observation_requests": 10,
+    "peak_next_layer_states": 5,
+    "planning_seconds": 0.7574038750026375,
+    "policy_state_check_seconds": 0.0,
+    "policy_state_checks": 0,
+    "root_legal_nonstop_actions": 5,
+    "stop_baseline_return": 0.0,
+    "time_cap_reached": false,
+    "transition_mode": "eager"
+  },
+  "source_commit": "ed87de4b8931819aac583ecd6f11efdbcf0c5361",
+  "source_hashes": {
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/desktop_bridge.py": "7b9489d5bb6a5e5321c608975f3881bcf990261a8e74ad7656808c7723242f99",
+    "src/resectionlab/development_episode.py": "de37e5f7b37f931c66b58296263dfd1d013bb324025a23112bfbef6131733162",
+    "src/resectionlab/fixed_rl256_loader.py": "3907d44928512b897f4a960b5e56f1fa7c00c17e756110b4070b8fb24c553638",
+    "src/resectionlab/legacy_aspiration_projection.py": "69d0003350f30fa03996a272137521ae19a0f511667872ffb45cc386d7b1132c",
+    "src/resectionlab/legacy_checkpoint_rollout_v3.py": "b48831841b27742d123d1338ef2ff05005f39f1d6b755617c2c7bc959ea749e4",
+    "src/resectionlab/legacy_transfer_episode.py": "a14e04ab2d948f283a4585b8834693a953cea71eefbf6525b673d7e1993f5bcd",
+    "src/resectionlab/legacy_transfer_supervisor.py": "60b25c4676954902e81ee32a1232f9e480573beb6e7a7dd8db337e890bca8b24",
+    "src/resectionlab/legacy_transfer_worker.py": "88c4646eaf51b8c96f6962e166f1d2594271807e27a517fcdcd576dd436b2d01",
+    "src/resectionlab/native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+    "src/resectionlab/native_spatial_task.py": "503acba2bfe14dc6f744bd2099e45b018cfa2011de4e35b30e0e8c70abdb6255",
+    "src/resectionlab/observed_search.py": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+    "src/resectionlab/sequential_spatial_observation.py": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+    "src/resectionlab/shared_episode.py": "81d6b1faac3433f1a2eb09ff4ef70e773b69922c056495caf1a879fbbc381a4d",
+    "src/resectionlab/shared_vascular_evaluation.py": "300f42604a69b207185417045bb88e392cdeea3e2c00713b7dcee9071c1861c0",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+    "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4",
+    "src/resectionlab/workspace_bundle.py": "f7dd62cf793f222f6768c67e2cdd55d3601afae9edc51c1fa5f7712dce64f66a",
+    "tests/test_legacy_transfer_backend.py": "c496c087d9c162410ccfd3073911aff01859484234cad74d02c6dae9e10912c8",
+    "tests/test_legacy_transfer_plan_geometry.py": "4a5a260f9736c22a345b4c7892b7e9590e717d4760a7b41f7f4b347337e52ae9"
+  },
+  "status": "PASS_saved_result_native_replay_and_corrected_metadata",
+  "strategy_seal": "sha256:e965536094d8f4b47981ccd0b8324985b273b2f5582921be0c70881836d9374a",
+  "supervision": {
+    "automaticRetry": false,
+    "cleanupErrors": [],
+    "elapsedSeconds": 5.066298249876127,
+    "sampledPeakRssBytes": 266321920,
+    "samples": 24,
+    "samplingLimit": "transient peaks between samples may be missed",
+    "status": "complete",
+    "stopReason": null,
+    "unresolvedWorkerPid": null,
+    "workerReturnCode": 0,
+    "workerTerminationConfirmed": true
+  },
+  "workspace": {
+    "computational_provenance": "imported_computational_provenance_unverified",
+    "image_arrays_decoded": 0,
+    "images": 1,
+    "primaryPlanningHash_saved_value": "sha256:e6c31b59f7f65d10b2712c9650f66de6664cd67faf39effc3487e00c87b0a7ed",
+    "primary_planning_hash_recomputed": false,
+    "reopen_authorship": "unverified_imported",
+    "saved_same_episode": true,
+    "selection": {
+      "episodeId": "sha256:2c6dcf8b0cfc89ec4e23461d753cf0a72d42957993e0b02be5895bebc5e842e6",
+      "frameIndex": 71,
+      "visible": true
+    },
+    "sha256": "46227462993f2a3b4ece80188f41f8c384dfac1c2f407eec06a56b33b73fab3a"
+  }
+}

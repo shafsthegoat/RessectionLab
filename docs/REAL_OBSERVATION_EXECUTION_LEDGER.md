@@ -1032,3 +1032,30 @@ bounded live run must retain both actor and matched restricted-search histories,
 followed by native replay and saved/imported provenance inspection. No new model
 updates, patient access or scientific performance claim follows from passing
 transport fixtures; their fabricated identities remain explicitly test-only.
+
+### October 10: actual trained transfer, matched search and fresh Mac reopen
+
+The [live result](../artifacts/learned-aspiration-desktop-live-v1/RESULT.md) now
+exercises the actual fixed checkpoint through Electron at source `ed87de4`.
+Actor and width-4 aspiration-only SEARCH choose identical aspiration+STOP IDs,
+return 3.353, 4/3 mm³ target/other removal and 17 mm full tool path. The actor used
+two forwards and zero updates; SEARCH used 14/24 branch calls without hitting a
+cap, but pruned prefixes. No optimum, speed or patient-generalization claim is
+made. The entire owned worker took 5.0663 seconds at 266,321,920 bytes sampled peak.
+
+Root inspected the live 72-frame tool replay, post-seal generated encounters and
+STOP's no-sweep state, then saved and reopened in a fresh app process. The same
+episode and final frame returned with honest unverified imported authorship and
+computation. Only one actor attempt exists. Both UI sessions exited zero within
+their limits; unmodified screenshots are archived. Independent saved replay
+matched the full episode, 72 mask hashes and both decision/inventory chains.
+Two reviewer bookkeeping recipe mistakes were repaired using saved JSON only;
+their original failures are preserved, with no replay retry.
+
+The original acquisition is still live and untouched. Its
+[01:46:35 UTC metadata snapshot](../artifacts/acquisition-progress/20261010T014635Z.json)
+records 4,466 verified files / 161,200,201,020 bytes, 541 files / 19,918,213,561 bytes
+above the prior snapshot. The 15 exhausted and 39 historical BrokenPipe records
+remain unresolved; 52 earlier deferred attempts are separately historical.
+Capacity is sufficient; recovery remains unlaunched while the original lock is
+held. All downloaded payloads remain unreviewed for intended use.

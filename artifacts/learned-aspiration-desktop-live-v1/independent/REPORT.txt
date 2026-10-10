@@ -1,0 +1,43 @@
+PASS — saved generated trained-transfer result and recorded native replay
+
+Scope: canonical source ed87de4b8931819aac583ecd6f11efdbcf0c5361;
+actual result SHA256 9dbd781099dbf1bf6e44bd9cef9bfb4cff7ef9ebc2139906ea979c1de66ab295.
+Controller/source promotion hashes, original copy index, worker result/completion/
+supervision receipts and all sealed actor/search/episode identities agree.
+The one worker completed in 5.06629825 s, 266,321,920 B sampled peak, 24 samples,
+exit 0 and reaped. Original live attempt count is one in the root's copied index.
+
+One bounded review process reproduced the entire saved episode through the
+existing native replay helper without loading weights, calling actor/search or
+loading private references. Exact episode equality, all 72 cumulative replay
+mask hashes, source/model/terminal state, aspiration+STOP geometry, 7 mm3 removed
+(4 nominal target / 3 other), 63 contact cells, zero probe cells, modeled reward
+3.353 and STOP's zero microsteps passed. Actor/search have identical complete
+recorded decisions and permitted inventory traces. Saved accounting records two
+actor forwards, zero new updates and width-4 SEARCH 14 of 24 model calls; its
+layer sums agree. SEARCH was not rerun. No exhaustive optimum or speed claim.
+
+The review's first process exited 1 after those native assertions because its
+workspace session-hash assertion included image ZIP storage fields. The actual
+bundle recipe hashes only image source identities. That first source, traceback
+and 2.57367658 s receipt are retained unchanged. A metadata-only finalizer then
+used the existing bundle recipe. Its first version also assumed the episode
+canonical string included episodeId; the established canonical recipe excludes
+that digest field. Both reviewer bookkeeping mistakes are preserved in source.
+The corrected stdlib-only finalizer passes, with no second native replay.
+Native-only elapsed time was not retained and is not claimed.
+
+The saved bundle SHA256 46227462993f2a3b4ece80188f41f8c384dfac1c2f407eec06a56b33b73fab3a
+has the same exact episode and frame 71 selection. Workspace and canonical episode
+hashes match; the auxiliary is an estimated, native-grid display-only MRA source.
+No image arrays were decoded. Primary planning hash remains a saved value, not a
+newly recomputed claim. The source's fresh-import authorship/computation downgrade
+is preserved; root's separate fresh-app observation confirms it at runtime.
+
+Limits: original actor execution is supported by source-bound live receipts, not
+an independent second actor run. Actor-only latency was not recorded. Worker time
+includes loading, actor, SEARCH, checks and serialization. Root-observed transient
+vascular scoring was not rescored here. This is generated software/native geometry
+transfer evidence, not physical tissue, patient or clinical validation.
+
+Audit: audit.json SHA256 d27d5e7dc7a0ed4106a0afa1afefc0c7657086b9aa00f14beee503c3e2418cd9.

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/learned-transfer-saved-independent-v1/audit_saved.py", line 129, in <module>
+    assert digest({k:v for k,v in saved.items() if k!='sessionHash'})==saved['sessionHash']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

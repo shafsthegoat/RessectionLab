@@ -1,0 +1,173 @@
+{
+  "schema": "learned-aspiration-live-evidence-v1",
+  "files": [
+    {
+      "path": "live-release.json",
+      "source_path": "build/learned-transfer-root-integration-v1/live-release.json",
+      "bytes": 2700,
+      "sha256": "bfd0880e5c7728c7259dd1a64aedc0d3f824d5a6032310ef2c893efdef9be36f"
+    },
+    {
+      "path": "live-mac/owner.json",
+      "source_path": "build/learned-transfer-root-integration-v1/live-mac/owner.json",
+      "bytes": 68,
+      "sha256": "d09d7bcc22b6a09aa276b131067b1fdb7e78d37ebb4d0b7151aa15a85886360d"
+    },
+    {
+      "path": "live-mac/terminal.json",
+      "source_path": "build/learned-transfer-root-integration-v1/live-mac/terminal.json",
+      "bytes": 219,
+      "sha256": "f1097202a3d9f3aec8f14c20b505d5ea2d79b26b15c93de682c6dcea2c8e47ad"
+    },
+    {
+      "path": "live-mac/trained-withdrawal.png",
+      "source_path": "build/learned-transfer-root-integration-v1/live-mac/trained-withdrawal.png",
+      "bytes": 615047,
+      "sha256": "e8348bb505a837f46aeee3c661e65fe7015fd5e260ddde459fbc3adefa5b963a"
+    },
+    {
+      "path": "live-reopen/owner.json",
+      "source_path": "build/learned-transfer-root-integration-v1/live-reopen/owner.json",
+      "bytes": 68,
+      "sha256": "007d88c00c4ca97902032928706914d8957129e3f7198ec800d7ce708e1b950b"
+    },
+    {
+      "path": "live-reopen/terminal.json",
+      "source_path": "build/learned-transfer-root-integration-v1/live-reopen/terminal.json",
+      "bytes": 216,
+      "sha256": "64ef681fc00b0869567ce7af53e6af03f51345ef1f97e612ee0a3bb99e829fce"
+    },
+    {
+      "path": "live-reopen/imported-provenance.png",
+      "source_path": "build/learned-transfer-root-integration-v1/live-reopen/imported-provenance.png",
+      "bytes": 602844,
+      "sha256": "980d0368f3732ba6e41bb05411adaadb0eed3a43d230ac28ef705206a646dfa6"
+    },
+    {
+      "path": "live-reopen/verified-state.txt",
+      "source_path": "build/learned-transfer-root-integration-v1/live-reopen/verified-state.txt",
+      "bytes": 12881,
+      "sha256": "f37237b8b3710e979efa7b9c57532527621139a10b35c71fb19ef1700213f37f"
+    },
+    {
+      "path": "actual-attempt/attempt.json",
+      "source_path": "build/learned-transfer-root-integration-v1/actual-attempt/attempt.json",
+      "bytes": 203,
+      "sha256": "d792a08a025fea3396b5f580a6ffcb910f9b0cd1877c5ad3d072e7ba319dbb69"
+    },
+    {
+      "path": "actual-attempt/supervision.json",
+      "source_path": "build/learned-transfer-root-integration-v1/actual-attempt/supervision.json",
+      "bytes": 353,
+      "sha256": "b847aeca454a44a38c11579680f24d31fd8dc4f24d9a95502ffb0db8068b6011"
+    },
+    {
+      "path": "actual-attempt/completion.json",
+      "source_path": "build/learned-transfer-root-integration-v1/actual-attempt/completion.json",
+      "bytes": 204,
+      "sha256": "43cf51544c9c2a55349517443196368cbad96735c31770ba290fd121acff8759"
+    },
+    {
+      "path": "actual-attempt/result.json",
+      "source_path": "build/learned-transfer-root-integration-v1/actual-attempt/result.json",
+      "bytes": 184977,
+      "sha256": "9dbd781099dbf1bf6e44bd9cef9bfb4cff7ef9ebc2139906ea979c1de66ab295"
+    },
+    {
+      "path": "actual-attempt/worker.log",
+      "source_path": "build/learned-transfer-root-integration-v1/actual-attempt/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "actual-attempt/copy-index.json",
+      "source_path": "build/learned-transfer-root-integration-v1/actual-attempt/copy-index.json",
+      "bytes": 2076,
+      "sha256": "fddf29bd9e1ff7d157a138c68c9299bf129a58b251849bcecbe7c943b6680d77"
+    },
+    {
+      "path": "run_live_mac.py",
+      "source_path": "build/learned-transfer-root-integration-v1/run_live_mac.py",
+      "bytes": 1999,
+      "sha256": "cb80f30b810d02a12109c9261752e6666650206b10ba3b02634529ccbc992971"
+    },
+    {
+      "path": "run_reopen_mac.py",
+      "source_path": "build/learned-transfer-root-integration-v1/run_reopen_mac.py",
+      "bytes": 2003,
+      "sha256": "323a31117b730588072c828d32fe3d1427af982ab311febd603db642894e862b"
+    },
+    {
+      "path": "independent/audit.json",
+      "source_path": "build/learned-transfer-saved-independent-v1/audit.json",
+      "bytes": 10881,
+      "sha256": "d27d5e7dc7a0ed4106a0afa1afefc0c7657086b9aa00f14beee503c3e2418cd9"
+    },
+    {
+      "path": "independent/run-receipt.json",
+      "source_path": "build/learned-transfer-saved-independent-v1/run-receipt.json",
+      "bytes": 634,
+      "sha256": "aeef27a2ae075c731775f02f5037a41965def266d36853dd8b4292da57d84ae1"
+    },
+    {
+      "path": "independent/audit_saved.py",
+      "source_path": "build/learned-transfer-saved-independent-v1/audit_saved.py",
+      "bytes": 13073,
+      "sha256": "6216d5a8a1e0fbae909f52eb9feccf628837ff2fae18fb2a7e1ad204be6bd4b8"
+    },
+    {
+      "path": "independent/first-run-output.txt",
+      "source_path": "build/learned-transfer-saved-independent-v1/first-run-output.txt",
+      "bytes": 419,
+      "sha256": "6074e09a5aa773cbbc588f4a44848ed2347b499c5b5995004306e27b7bbf4316"
+    },
+    {
+      "path": "independent/finalize_saved_metadata.py",
+      "source_path": "build/learned-transfer-saved-independent-v1/finalize_saved_metadata.py",
+      "bytes": 7528,
+      "sha256": "5d83aeb0af0d117496371a960a053a2bdb8c7158b298e1559730baf2cb80b641"
+    },
+    {
+      "path": "independent/first-run-receipt.json",
+      "source_path": "build/learned-transfer-saved-independent-v1/first-run-receipt.json",
+      "bytes": 634,
+      "sha256": "aeef27a2ae075c731775f02f5037a41965def266d36853dd8b4292da57d84ae1"
+    },
+    {
+      "path": "independent/REPORT.txt",
+      "source_path": "build/learned-transfer-saved-independent-v1/REPORT.txt",
+      "bytes": 2938,
+      "sha256": "fc6ac4b12b0ad17bf07e8f41d82fab148ca1d3f5f9ce3e32828c27a6318252ef"
+    },
+    {
+      "path": "independent/first-audit_saved.py",
+      "source_path": "build/learned-transfer-saved-independent-v1/first-audit_saved.py",
+      "bytes": 13073,
+      "sha256": "6216d5a8a1e0fbae909f52eb9feccf628837ff2fae18fb2a7e1ad204be6bd4b8"
+    },
+    {
+      "path": "independent/metadata-finalizer-first.py",
+      "source_path": "build/learned-transfer-saved-independent-v1/metadata-finalizer-first.py",
+      "bytes": 7218,
+      "sha256": "7a1666ce9e71a140bd320ece0d9aa7e139cd56a9a5517c8fa60111c7c9827219"
+    },
+    {
+      "path": "independent/run-output.txt",
+      "source_path": "build/learned-transfer-saved-independent-v1/run-output.txt",
+      "bytes": 419,
+      "sha256": "6074e09a5aa773cbbc588f4a44848ed2347b499c5b5995004306e27b7bbf4316"
+    }
+  ],
+  "total_bytes": 1482675,
+  "source_commit": "ed87de4b8931819aac583ecd6f11efdbcf0c5361",
+  "saved_generated_workspace": {
+    "path": "build/integrated-workspace-persistence-root/trained-transfer-live.ressectionlab",
+    "bytes": 284628,
+    "sha256": "46227462993f2a3b4ece80188f41f8c384dfac1c2f407eec06a56b33b73fab3a",
+    "included_in_git": false
+  },
+  "model_weights_included": false,
+  "patient_data_included": false,
+  "new_training_updates": 0,
+  "note": "One actual checkpoint run; fresh UI reopen did not run another actor. Screenshots are unmodified captures of the running app."
+}
