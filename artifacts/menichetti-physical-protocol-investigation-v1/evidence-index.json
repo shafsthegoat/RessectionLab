@@ -1,0 +1,74 @@
+{
+  "created_utc": "2026-10-10T01:03:40.217120+00:00",
+  "scope": "public methods and metadata, existing status/structure records only; no solver, fitting, or response-array reads",
+  "local_inputs": {
+    "PROJECT_STATUS.md": "6b25cb1c96836b35f444caaf589ceb97ed539627dfaf9008c00f2cc31e8fdc68",
+    "artifacts/brain-indentation-schema-followup-v1/RESULT.md": "0b3585634f15c9bfb25bed4dc0120b7915242a901ca3a64543eda3feae8b1cf7",
+    "artifacts/brain-indentation-schema-followup-v1/menichetti-candidate.json": "140ff7f43a4f71303ea9d9fa873466d533a9389b683dbed59ff52508d1c18116",
+    "artifacts/menichetti-sealed-completion-v1/RESULT.md": "c09be27d20dd0d470fd673e6b00acdbacfff056734a14a83e24d1931a5b5fc42",
+    "artifacts/menichetti-structure-and-grouping-v1/RESULT.md": "99537994ebdf79cebb229207b134fbef0b5ace61a8ba8b4d0fa964fdb290fbc3",
+    "artifacts/menichetti-structure-and-grouping-v1/GROUPING_REVIEW.txt": "e5fe8e8dacc3071e0d425cadd19ea9b6ebe9af9f6357eacf734fa0c4a99d2691",
+    "artifacts/menichetti-structure-and-grouping-v1/inventory.json": "963006c5c727270e52e06762a6cc90de9a0a2230d8b51ee1b65d3187592c5c1e",
+    "artifacts/menichetti-train-validity-preparation-v1/MECHANICAL-QUALIFICATION.txt": "7a43ab2874e56e3fede3dd7d39c2ac2e987061c4c4d9f90755bcd7b0541c16d0",
+    "artifacts/menichetti-train-validity-result-v1/RESULT.txt": "4777e5b4b1b5aa69807074f570a724feeb0e8f5cc5f06cc62ab48137c17ec5e3"
+  },
+  "public_sources": [
+    {
+      "title": "Creator release, current version 1",
+      "url": "https://data.mendeley.com/datasets/7sjcn229cw/1",
+      "evidence": "Units, sample rate, nested grouping; only force MAT and statistics PDF described."
+    },
+    {
+      "title": "Current creator file inventory, metadata only",
+      "url": "https://data.mendeley.com/public-api/datasets/7sjcn229cw/files?folder_id=root&version=1",
+      "local": "release-files.json",
+      "evidence": "Two files; published MAT checksum still matches sealed intake."
+    },
+    {
+      "title": "Menichetti et al. author manuscript",
+      "url": "https://lirias.kuleuven.be/retrieve/9c55d8a5-7dbd-40a4-ba17-7014df1a93e0",
+      "doi": "https://doi.org/10.1016/j.ijengsci.2020.103355",
+      "local": "manuscript.pdf",
+      "evidence": "Focused methods pp.3-5; supplementary DOI and Figure 2 caption checked; no response graphs or fitted tables used."
+    },
+    {
+      "title": "Cited apparatus paper, MacManus et al. 2017",
+      "url": "https://doi.org/10.1098/rsos.170894",
+      "evidence": "Publisher/PMC search-indexed methods: independent instrument calibration, initial contact threshold, different deceleration/cropping protocol; not a Menichetti row map. Direct publisher access returned403; PMC displayed browser challenge; neither bypassed."
+    },
+    {
+      "title": "Companion animal-surrogate comparison",
+      "url": "https://doi.org/10.1016/j.brain.2020.100018",
+      "publisher": "https://www.sciencedirect.com/science/article/pii/S2666522020300058",
+      "evidence": "Official abstract/methods provenance sought; direct publisher403; KU record returned JavaScript shell. Does not establish independent human cohort or provide missing trace metadata."
+    },
+    {
+      "title": "Creator publication index",
+      "url": "https://brain-lab.org/publications",
+      "evidence": "Links apparatus and companion papers; no located processing-code release."
+    }
+  ],
+  "downloaded_evidence": {
+    "structure-paper-crosscheck.json": {
+      "sha256": "c827e4b550b8bc9b4b8e21ab5b10ea078cda18fdc56ce2e7dd996afd80f1b61e",
+      "bytes": 994
+    },
+    "companion-record.html": {
+      "sha256": "830bf9af6721ca20830deabaa6e70015ae3d0da048fa277f6914257c9cb7a4f8",
+      "bytes": 4784
+    },
+    "release-files.json": {
+      "sha256": "d047839fe94fa5d0a92623e722c2b9c7b3581e190f75a210e37eba3728621870",
+      "bytes": 1464
+    },
+    "manuscript.pdf": {
+      "sha256": "2f9aed64cfbf9ed3e575a9690b7ba5e9d0b1c46ffc950a24f2203f00bf79342e",
+      "bytes": 1325282
+    },
+    "manuscript.headers": {
+      "sha256": "4ee0524354afbbe3f310be484696785670ba0608091ef10481c00d3f1f46ea1c",
+      "bytes": 505
+    }
+  },
+  "search_limit": "Bounded DOI/title/author/file-name/GitHub/official-repository searches; absence of a located public sidecar is not proof none exists."
+}

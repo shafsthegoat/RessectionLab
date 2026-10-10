@@ -1,0 +1,138 @@
+{
+  "verdict": "PASS_scoped_public_methods_and_structure_review",
+  "created_utc": "2026-10-10T01:06:49.540311+00:00",
+  "scope": "Local manuscript PDF pages 3 and 4 only (text plus rendered page inspection), existing structure-only inventory, saved file-list metadata and handoff/index wording.",
+  "inputs": [
+    {
+      "path": "build/menichetti-physical-protocol-investigation-v1/HANDOFF.txt",
+      "sha256": "7ca1b2b6aa60e1b1685d9f48f4faef95f0a86328576d7d1a78c31f804f8dbe02",
+      "bytes": 6309
+    },
+    {
+      "path": "build/menichetti-physical-protocol-investigation-v1/evidence-index.json",
+      "sha256": "03470f68d8aa48e2c5bd31797800e631f723b566285172f8d578972892aa9641",
+      "bytes": 4271
+    },
+    {
+      "path": "build/menichetti-physical-protocol-investigation-v1/structure-paper-crosscheck.json",
+      "sha256": "c827e4b550b8bc9b4b8e21ab5b10ea078cda18fdc56ce2e7dd996afd80f1b61e",
+      "bytes": 994
+    },
+    {
+      "path": "artifacts/menichetti-structure-and-grouping-v1/inventory.json",
+      "sha256": "963006c5c727270e52e06762a6cc90de9a0a2230d8b51ee1b65d3187592c5c1e",
+      "bytes": 50399
+    }
+  ],
+  "downloaded_index_fixity_verified": [
+    {
+      "path": "build/menichetti-physical-protocol-investigation-v1/structure-paper-crosscheck.json",
+      "sha256": "c827e4b550b8bc9b4b8e21ab5b10ea078cda18fdc56ce2e7dd996afd80f1b61e",
+      "bytes": 994
+    },
+    {
+      "path": "build/menichetti-physical-protocol-investigation-v1/companion-record.html",
+      "sha256": "830bf9af6721ca20830deabaa6e70015ae3d0da048fa277f6914257c9cb7a4f8",
+      "bytes": 4784
+    },
+    {
+      "path": "build/menichetti-physical-protocol-investigation-v1/release-files.json",
+      "sha256": "d047839fe94fa5d0a92623e722c2b9c7b3581e190f75a210e37eba3728621870",
+      "bytes": 1464
+    },
+    {
+      "path": "build/menichetti-physical-protocol-investigation-v1/manuscript.pdf",
+      "sha256": "2f9aed64cfbf9ed3e575a9690b7ba5e9d0b1c46ffc950a24f2203f00bf79342e",
+      "bytes": 1325282
+    },
+    {
+      "path": "build/menichetti-physical-protocol-investigation-v1/manuscript.headers",
+      "sha256": "4ee0524354afbbe3f310be484696785670ba0608091ef10481c00d3f1f46ea1c",
+      "bytes": 505
+    }
+  ],
+  "structure_check": {
+    "matrices": 120,
+    "columns_trials": 595,
+    "rows_each": 10350,
+    "brain_aliases": 10,
+    "exceptions_exactly_match_methods_page4_lines132_134": [
+      {
+        "brain": "Brain1",
+        "region": "CB",
+        "columns": 6
+      },
+      {
+        "brain": "Brain1",
+        "region": "CC",
+        "columns": 4
+      },
+      {
+        "brain": "Brain1",
+        "region": "SFCx",
+        "columns": 2
+      },
+      {
+        "brain": "Brain2",
+        "region": "SFCx",
+        "columns": 4
+      },
+      {
+        "brain": "Brain3",
+        "region": "TCx",
+        "columns": 4
+      }
+    ],
+    "non_exception_matrices": 115,
+    "other_column_counts": 5,
+    "grouping_interpretation": "Paper states ten cadaveric brains, regional specimens, and distinct indentation sites. Exact exceptional counts corroborate brain-number aliases and nested site grouping, not independently certified donor identities or cross-release independence."
+  },
+  "methods_supported": {
+    "page3_lines85_96": "125 micrometre spherical ruby radius; manual position/contact apparatus; closed-loop stage positioning specifications.",
+    "page4_lines104_123": "Ten cadaveric brains and regional specimen preparation; a coronal slice thickness and petri-dish dimensions are reported, not per-site local contact geometry.",
+    "page4_lines127_150": "Manual visual/force-change contact, no preconditioning, usually five distinct sites, nominal 57.7 micrometre stage indentation at 1.65 mm/s, one-second hold, force sampling at 10 kHz."
+  },
+  "measurement_semantics": {
+    "nominal_ramp_seconds_arithmetic": 0.03496969696969697,
+    "nominal_ramp_samples_arithmetic": 349.6969696969697,
+    "nominal_hold_samples_arithmetic": 10000,
+    "arithmetic_is_trial_boundary_authentication": false,
+    "still_unestablished_by_reviewed_pages": [
+      "per-trial sample zero and ramp/hold/contact row alignment",
+      "cropping, padding, resampling or filtering conventions",
+      "actual synchronized tissue indentation, preload/compliance correction and hold error",
+      "stored compressive sign, tare interval, baseline/gain/export conventions"
+    ],
+    "instrument_specs_are_trial_depth_error_bounds": false,
+    "bipolar_sensor_capacity_authenticates_force_polarity": false
+  },
+  "bounded_search_check": {
+    "wording_acceptable": true,
+    "saved_release_listing_files": [
+      "F_t_curves.mat",
+      "Menichetti_et_al_2020_Parameters_StatisticsTables.pdf"
+    ],
+    "published_mat_checksum_matches_saved_structure_inventory": true,
+    "limitation": "No new web search performed. The reported public-code/sidecar search is a bounded negative, not proof of nonexistence. 2017 apparatus details, companion methods, supplementary declaration and FE geometry outside PDF pp3-4 were not independently reverified in this scope; no protocol convention was transplanted."
+  },
+  "conclusion": "No correction to the scoped crosscheck or nominal-versus-measured distinction. Retain brain-level grouping and the experimental metadata blocker; this review grants no protected response access or constitutive-validation claim.",
+  "prohibited_activity": {
+    "raw_MAT_opened": false,
+    "response_arrays_opened": false,
+    "fitted_tables_or_plots_opened": false,
+    "fitting_or_solver_run": false,
+    "protected_split_or_tracked_file_changed": false
+  },
+  "page_inspection_evidence": [
+    {
+      "path": "build/menichetti-physical-protocol-investigation-v1/review-methods-03.png",
+      "sha256": "7e26003d327857917e5e4e20daa1b5448a8dfdd2238ec08431960ac45c383f03",
+      "bytes": 310922
+    },
+    {
+      "path": "build/menichetti-physical-protocol-investigation-v1/review-methods-04.png",
+      "sha256": "98e8e0a1e10032c282eacfeb74820303ab6ee28eb68aaa47b9bcfe04c4fa095b",
+      "bytes": 315416
+    }
+  ]
+}

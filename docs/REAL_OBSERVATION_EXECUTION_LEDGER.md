@@ -931,3 +931,21 @@ preserved. This prepares generated transfer from the older RL256 task to the
 larger desktop fixture; it does not show that transfer worked. Backend-owned
 checkpoint admission, live learned selection and honest reopened provenance
 remain the next integration slice. No patient or physical validation follows.
+
+
+### October 9: public indentation methods clarify the physical-data dependency
+
+The [archived protocol follow-up](../artifacts/menichetti-physical-protocol-investigation-v1/README.md)
+compares the creator release and public manuscript with the existing response-free
+inventory. All five exceptional trial-column counts agree, supporting the frozen
+brain-level grouping without independently certifying donor non-overlap. The
+nominal stage ramp and hold are documented, but per-trial sample boundaries,
+actual indentation/compliance and force polarity/tare/export preprocessing are
+not authenticated. Arithmetic agreement with 10,350 rows cannot supply those
+boundaries. Apparatus conventions from a different study are not transplanted.
+
+The scoped independent review confirms methods pages 3–4 and the structural
+crosscheck. No protected responses, fitted tables, patient records, solver calls
+or fitting occurred. The external dependency is a verified protocol/export
+manifest; no outreach occurred. Physical validation remains open, and this
+negative source search does not prove that unpublished metadata do not exist.

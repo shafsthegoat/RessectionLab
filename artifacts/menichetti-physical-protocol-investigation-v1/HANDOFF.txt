@@ -1,0 +1,100 @@
+Menichetti measured-validation bottleneck — public-source follow-up
+
+Decision: the acquired release still cannot support an unqualified held-out
+constitutive force-relaxation validation. The missing inputs are experimental
+chronology and measurement semantics, not another numerical solver. No sealed
+DEV/TEST response, MAT numeric body, fitted parameter table, or patient data was
+opened; no fit or solver was run. Existing split roles remain unchanged.
+
+What the primary sources establish
+
+The creator release remains version 1. A fresh metadata-only file listing contains
+exactly F_t_curves.mat and the fitted-statistics PDF; the MAT publisher checksum
+still matches the sealed intake. Columns are force trials in micronewtons at
+10 kHz, nested under brain number and region. No processing code or motion/timing
+sidecar was located in the bounded search. The statistics PDF was not downloaded.
+https://data.mendeley.com/datasets/7sjcn229cw/1
+https://data.mendeley.com/public-api/datasets/7sjcn229cw/files?folder_id=root&version=1
+
+The official author manuscript, methods pp.3–4, reports a 125 micrometre radius
+sphere, 57.7 micrometre stage indentation at 1.65 mm/s, then a one-second hold.
+Contact was established manually using microscopy and force change. The stage
+used closed-loop strain-gauge positioning; its quoted specifications are not a
+trial-synchronized indentation record. Ten cadaveric brains supplied regional
+specimens, usually tested at five distinct sites without preconditioning. Its
+supplementary-material declaration points to the same Mendeley release.
+https://lirias.kuleuven.be/retrieve/9c55d8a5-7dbd-40a4-ba17-7014df1a93e0
+https://doi.org/10.1016/j.ijengsci.2020.103355
+
+New structural corroboration: all five exceptional column counts in the existing
+structure-only inventory match manuscript section 2.3: Brain1 CB=6, CC=4,
+SFCx=2; Brain2 SFCx=4; Brain3 TCx=4. All other matrices have five columns.
+This strengthens the interpretation of Brain1…Brain10 as the paper's brain
+numbers, with sites nested in regional specimens. It does not independently
+certify donor identity or non-overlap with other releases. Keep the frozen
+brain-level grouping; do not split regions or columns across roles. The separate
+structure-paper-crosscheck.json records this response-free comparison.
+
+The cited 2017 apparatus paper documents manufacturer calibration and unique
+sensor gains, but its murine protocol includes an extra 10 micrometre deceleration
+segment that was discarded, plus a contact-force rejection rule. These details
+must NOT be transplanted into the 2020 human release. In particular, “same
+apparatus” does not authenticate identical cropping or preload conventions.
+https://doi.org/10.1098/rsos.170894
+
+Exact fields still missing from the inspected sources
+
+1. Per-trial sample chronology, keyed to release checksum/brain/region/column:
+   acquisition zero, contact, ramp start/end, hold start/end, and whether records
+   were cropped, padded, resampled or filtered. The 10,350 rows are compatible
+   with about 350 ramp samples plus 10,000 hold samples; that arithmetic is an
+   inference, not an authenticated boundary. Do not choose a boundary by looking
+   at protected response peaks or by minimizing model error.
+2. Actual indentation versus time, or a creator-certified reconstruction with
+   synchronization and error bounds: stage motion, initial contact/preload,
+   probe/support compliance and hold stability. The paper supplies a reported
+   nominal protocol, not these per-trial records. Controller resolution alone
+   does not bound dynamic tissue indentation error.
+3. Stored force semantics: compressive polarity, tare/baseline operation and
+   interval, residual preload, gain/calibration and preprocessing. Mixed signs
+   in the already published TRAIN validity counts do not settle these fields.
+4. For an absolute force prediction, the local specimen geometry/support and
+   justified contact/boundary approximation. The paper's idealized FE cylinder
+   is a modeling choice, not a measured per-site specimen geometry. Brain-number
+   grouping is reasonably corroborated above; cross-release donor equivalence
+   remains unknown, so companion human datasets cannot be treated as independent.
+
+Smallest defensible route
+
+Obtain a creator-authenticated protocol/export manifest supplying items 1–3,
+bound to this exact release (plus a justified geometry/boundary assumption for
+absolute contact force). No outreach was performed or authorized here. Then use
+the existing FEBio implementation with the authenticated ramp/hold input and
+the existing brain-level split: estimate material parameters from TRAIN only,
+freeze preprocessing, model, metric and acceptance limits before protected
+evaluation, and compare predicted force during the certified hold on held-out
+brains. Treat sites/regions within a brain as dependent when aggregating error.
+Report uncertainty from the experimental input and model geometry explicitly.
+
+Until that manifest exists, a predeclared sampled-force prediction benchmark is
+possible in principle, but must be called a time-series prediction task. Neither
+a guessed 350/10,000 split nor a response-normalized fit establishes a measured
+constant-indentation relaxation test. No such benchmark or protected read is
+authorized by this handoff.
+
+Evidence limits and preservation
+
+The evidence index binds the local status/qualification/structure records,
+downloaded manuscript, fresh release listing, and metadata crosscheck. Public
+methods were inspected; search results sometimes exposed aggregate scientific
+claims, but no published fitted values were copied into a model or this handoff.
+No public processing-code release was found; this is a bounded-search negative,
+not a claim that no unpublished code exists. Direct publisher/PMC access to the
+2017 paper hit an access challenge; only indexed primary methods were used and
+no challenge was bypassed. The companion paper's official abstract was located,
+but full methods access did not resolve the trace metadata:
+https://www.sciencedirect.com/science/article/pii/S2666522020300058
+https://brain-lab.org/publications
+
+Writes are confined to this ignored directory. No tracked source, split,
+measurement, prior negative, or numerical-control artifact was changed.
