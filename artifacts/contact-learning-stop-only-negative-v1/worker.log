@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/goal-conditioned-policy-v1/contact_owned_worker.py", line 149, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/goal-conditioned-policy-v1/contact_owned_worker.py", line 141, in main
+    smoke(args.output)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/goal-conditioned-policy-v1/contact_owned_worker.py", line 66, in smoke
+    raise AssertionError('Smoke requires one successful parameter-changing admitted update')
+AssertionError: Smoke requires one successful parameter-changing admitted update

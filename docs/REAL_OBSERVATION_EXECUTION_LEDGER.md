@@ -1185,3 +1185,15 @@ Root combined regression passes 96 checks in 5.30 seconds; author/independent
 controls pass 28/11. Both checkpoint findings and the combined-suite import-fixture
 failure are repaired and retained. No new training or held-out episode occurred
 in this source milestone; the next step is a separate actual TRAIN smoke.
+
+### October 10: actual contact learning smoke exposes empty action inventory
+
+The [first TRAIN learning smoke](../artifacts/contact-learning-stop-only-negative-v1/RESULT.md)
+executes the canonical pcf-06 surface teacher and native replay, then stops after
+its one IL update produces no parameter change. All initial non-STOP proposals
+are rejected, so SEARCH returns STOP without search transitions. Integer entries
+miss the subvoxel aperture center and have nonpositive aspirator clearance.
+A bounded continuous-center preview is queued with unchanged tools/constraints;
+no substitute case, recipe/split change, held-out execution or pilot occurred.
+This failure corrects the earlier assumption that structural and STOP-factory
+checks established a meaningful learning inventory.

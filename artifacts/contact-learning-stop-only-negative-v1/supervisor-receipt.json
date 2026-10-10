@@ -1,0 +1,29 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 45.0,
+    "learning_method_seconds": null,
+    "online_method_episode_seconds": null,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 1073741824,
+    "stage_limit_enforcement": "cooperative task checks; parent hard total wall and sampled owned-tree RSS",
+    "teacher_stage_seconds": 4.0,
+    "threads": 1
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "completion_scope": "worker return is separate from whether result reached fixed pilot endpoint",
+  "elapsed_seconds": 4.273317832965404,
+  "exit_code": 1,
+  "final_owned_pids": [],
+  "mode": "smoke",
+  "result_sha256": "a62ef4d480ef88a87896971e3e5924e89555d0a1f03c31647191dbbbd0b23d38",
+  "sampled_peak_rss_bytes": 361906176,
+  "samples": 20,
+  "sampling_limit": "transient peaks or detached descendants between samples may be missed",
+  "status": "failed",
+  "stop_reason": null,
+  "worker_process_scope": "owned process group plus discovered descendants via FastDarwinSampler",
+  "worker_termination_confirmed": true
+}
