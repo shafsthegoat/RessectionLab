@@ -1,0 +1,39 @@
+{
+  "c_contiguous": true,
+  "dtype": "float32",
+  "elapsed_seconds": 0.027034125057980418,
+  "file_size_bytes": 25165952,
+  "hard_address_space_limit_enforced": false,
+  "nonfinite_count": 0,
+  "npy_sha256": "703ff1aeb040c2bbeb640af4b98189a52778b770523a4750b4c19fa24f362a40",
+  "npy_sha_matches_result": true,
+  "observed_rss_cap_bytes": 268435456,
+  "peak_auditor_rss_bytes": 57769984,
+  "per_region_logit_max": [
+    13.171553611755371,
+    -7.964787483215332,
+    -7.3309006690979
+  ],
+  "per_region_logit_min": [
+    -22.948673248291016,
+    -23.906679153442383,
+    -35.22042465209961
+  ],
+  "positive_logit_voxel_count_by_region_channel": [
+    2625,
+    0,
+    0
+  ],
+  "raw_sha256": "9ff0b7633f1325bce8908c31b36fd74a78f144deeec894c9655d5a8f83188307",
+  "raw_sha_matches_result": true,
+  "scope": "saved Case4 model logits only; no patient source/labels/checkpoint/model reopened",
+  "shape": [
+    1,
+    3,
+    128,
+    128,
+    128
+  ],
+  "threshold_note": "logit > 0 corresponds to sigmoid probability > 0.5; channel order follows pinned nnU-Net region labels WT, TC, ET; this is not clinical validation",
+  "wall_alarm_seconds": 30
+}

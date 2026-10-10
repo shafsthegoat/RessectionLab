@@ -1,0 +1,139 @@
+{
+  "excluded_payloads": [
+    "Case4 input NPY",
+    "Case4 logits NPY",
+    "source patient images and labels",
+    "checkpoint and weights",
+    "bulk generated output"
+  ],
+  "payload_count": 25,
+  "payload_total_bytes": 302952,
+  "payloads": [
+    {
+      "path": "RESULT.md",
+      "sha256": "438f31969fd1d5b8fd47aecf87e0dc24cabc2e1c7c98c2b6ae89ab9de1991e56",
+      "size_bytes": 2843
+    },
+    {
+      "path": "SOURCE_PINS.json",
+      "sha256": "3b62bf27ea1c878bf3489a44f0ed2ebc717a3a64baec677477af115b9620e638",
+      "size_bytes": 2418
+    },
+    {
+      "path": "independent/actual-audit.md",
+      "sha256": "4c65eb13a1a6005f4174e0ab73af61769e3aa8fb9de64fe595581cbdd722cb73",
+      "size_bytes": 4272
+    },
+    {
+      "path": "independent/prospective-go.md",
+      "sha256": "cc681bf3389f493ca9b0eacdeda19b5abcfbf541ce72fa9fc119d0c0f3ba668e",
+      "size_bytes": 3138
+    },
+    {
+      "path": "independent/saved-logits-audit.json",
+      "sha256": "8697c6b98a95e0e8c51f95161fe4bb351338f15fa88d784c3c959b0cb34f0b18",
+      "size_bytes": 1146
+    },
+    {
+      "path": "receipts/finalization.json",
+      "sha256": "3f4e4bad5641164aa4d6e0149323b254260b38e585bbc1318de076df72ea614d",
+      "size_bytes": 556
+    },
+    {
+      "path": "receipts/host-preflight.json",
+      "sha256": "9de0a526a446eef938d538ade41ac9f2d35ee2d38591e30c6aed206a635f09e6",
+      "size_bytes": 20373
+    },
+    {
+      "path": "receipts/input-receipt.json",
+      "sha256": "63269eec6d8772272d06c44b147c149a76f1ecf0b41ee0c88b05bb8463e751a0",
+      "size_bytes": 2153
+    },
+    {
+      "path": "receipts/launch-binding.json",
+      "sha256": "a4cd6996db301eb9de001167c78e90c6decb3c0229efec3e248f29a5f48dafa0",
+      "size_bytes": 498
+    },
+    {
+      "path": "receipts/pair-contract.json",
+      "sha256": "1a567a0ae656c78732dcac6215776a4917bf3d2f51015ab85617e91c5169af15",
+      "size_bytes": 5924
+    },
+    {
+      "path": "receipts/result.json",
+      "sha256": "00f898eef8fc3e4bfdceba3184eb3d66049ca87a90d404ab117823d21300e107",
+      "size_bytes": 2984
+    },
+    {
+      "path": "receipts/supervision.json",
+      "sha256": "cf668f3aa5d4cbee1ab6ada68dde27694539d3783e67cafe54361e0b83daba9e",
+      "size_bytes": 125028
+    },
+    {
+      "path": "receipts/worker-phase.log",
+      "sha256": "75e402e061e4e892b1d5dd0a5e7b67697ace8d1f39fadc5bcfc4a3a903178e55",
+      "size_bytes": 2317
+    },
+    {
+      "path": "sources/acquisition-allowlist.json",
+      "sha256": "50fb3837a86e1a27b812828ba2ebf96084374c97f5c7e3a03b7dac5ddc55b008",
+      "size_bytes": 1416
+    },
+    {
+      "path": "sources/darwin_fast_sampler.py",
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+      "size_bytes": 9482
+    },
+    {
+      "path": "sources/launch_gate.py",
+      "sha256": "343566ae8062bcc58aa6021abbdccaad3fa064b7f468f9d08bcef78d85c62dd4",
+      "size_bytes": 912
+    },
+    {
+      "path": "sources/lazy_concat.py",
+      "sha256": "ce4d67f816edc13b73f7bfda8bf9af2aa761021473fb4dac47bfac13d7d59f5b",
+      "size_bytes": 11313
+    },
+    {
+      "path": "sources/monitor_primitives.py",
+      "sha256": "5857ace4165951897c1d950dcb915df878ac9242b49795e9a69ee74296c2f2b2",
+      "size_bytes": 4079
+    },
+    {
+      "path": "sources/pair_worker.py",
+      "sha256": "92bb80619b2873b5228ae1dc33bd85193ee96b2fec47e09d9c986b91558f7b69",
+      "size_bytes": 15274
+    },
+    {
+      "path": "sources/recompute_skip.py",
+      "sha256": "cc273383ece037816a3efd4d5ed787955aa3f827e0d407b0356ced9f1669c42d",
+      "size_bytes": 11954
+    },
+    {
+      "path": "sources/runtime-requirements-lock.txt",
+      "sha256": "f78bda5e88157d0974a81b53c08f79895841db4e48934aeb4058b08f31c5fde1",
+      "size_bytes": 8514
+    },
+    {
+      "path": "sources/safe_finalize.py",
+      "sha256": "2e326517dff1b209651f06da0066f3a4807c221fdd826056e5669f6dc51997b4",
+      "size_bytes": 13744
+    },
+    {
+      "path": "sources/slow_inventory.py",
+      "sha256": "53d8fab0f80934689965873f5dd945b6d458b618e8daaf5de840751bdbcff90e",
+      "size_bytes": 17569
+    },
+    {
+      "path": "sources/supervise_pair.py",
+      "sha256": "40dbda1f04114b44b56e76ff378aeaee96b15f601749aa4937aee74f0cb4a184",
+      "size_bytes": 27926
+    },
+    {
+      "path": "sources/tracked-low-memory-conv3d.py",
+      "sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+      "size_bytes": 7119
+    }
+  ],
+  "schema": "case4-forward-result-index-v1"
+}

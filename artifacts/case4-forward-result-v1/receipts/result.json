@@ -1,0 +1,73 @@
+{
+  "alias_compared_pairs": 184,
+  "alias_groups": 88,
+  "arm": "case4",
+  "case_overlap_status": "unknown",
+  "checkpoint_sha256_after": "0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3",
+  "clinical_evidence": false,
+  "contract_sha256": "1a567a0ae656c78732dcac6215776a4917bf3d2f51015ab85617e91c5169af15",
+  "dense_module_hooks_attached": false,
+  "dropout_configured": false,
+  "evaluation_admitted": false,
+  "forward_seconds": 5.209768667118624,
+  "full128_numerical_parity_reference_available": false,
+  "full_feature_map_instancenorm_unchanged": true,
+  "input_npy_sha256": "d95383a2c60690f7c4ccbc7f73b37a210b9f6cefef93bf9d3516cc7430ec3f3f",
+  "input_raw_sha256": "8d1c0ee902c365056c8b089b1c4c9d0efdae184941397ab9731eeffde7274a17",
+  "input_shape": [
+    1,
+    2,
+    128,
+    128,
+    128
+  ],
+  "lazy_attachment_report": {
+    "final_decoder_stages": 5,
+    "first_conv_depth_tile": 1,
+    "full_concat_avoided_only_at_last_stage": true,
+    "parameter_state_module_identities_preserved": true
+  },
+  "lazy_concat_source_sha256": "ce4d67f816edc13b73f7bfda8bf9af2aa761021473fb4dac47bfac13d7d59f5b",
+  "logits_npy_sha256": "703ff1aeb040c2bbeb640af4b98189a52778b770523a4750b4c19fa24f362a40",
+  "logits_raw_sha256": "9ff0b7633f1325bce8908c31b36fd74a78f144deeec894c9655d5a8f83188307",
+  "model_inference_performed": true,
+  "numpy_version": "2.0.1",
+  "output_nonfinite": 0,
+  "output_shape": [
+    1,
+    3,
+    128,
+    128,
+    128
+  ],
+  "phase_rss_source": "direct_libproc_self_pid_no_subprocess",
+  "planning_admitted": false,
+  "recompute_attachment_report": {
+    "initial_stage_zero_released_after_stage_one": true,
+    "stage_zero_recomputed_once_on_decoder_access": true,
+    "state_parameter_module_identities_preserved": true
+  },
+  "recompute_source_sha256": "cc273383ece037816a3efd4d5ed787955aa3f827e0d407b0356ced9f1669c42d",
+  "safe_globals_restored": true,
+  "scope": "Unreviewed Case4 DEVELOPMENT single patch; no planning, evaluation or clinical claim",
+  "single_case4_development_patch_no_sliding_window_tta_autocast": true,
+  "source_sha256": {
+    "dataset": "3a7c7c1fd5eb420243a25496bae2c2fb9f210d7910363b9361aaebc69e615a3f",
+    "flair": "046a8b7aa9620bdf0aeb2b0e40632b4c10ff58cff1ed83a458bd7b05cd86f993",
+    "plans": "e85abbe6a41f4e5e0164d53dd3a297baf10e06cd5f05c1d46a22d2d869d64ad5",
+    "support_map": "4932902a641aac5d884fbfec543b8da9cdefa9437407e488c1ebef6b9ca700f2",
+    "t1c": "608516aa3c55e8450e777d892dfa5fb5db5824046f85085a25b884e0fcf9d953"
+  },
+  "stage_zero_recomputation_enabled": true,
+  "tiled_adapter_sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+  "torch_version": "2.14.1",
+  "training_lineage_status": "unknown",
+  "unique_parameter_elements": 31197263,
+  "wrapper_report": {
+    "named_module_occurrences": 337,
+    "parameter_name_occurrences": 292,
+    "parameter_state_module_identities_preserved": true,
+    "state_dict_entries": 292,
+    "wrapped_unique_conv3d_modules": 27
+  }
+}

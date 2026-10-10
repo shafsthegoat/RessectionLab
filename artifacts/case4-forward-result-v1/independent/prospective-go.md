@@ -1,0 +1,15 @@
+# Prospective GO: one Case4 DEVELOPMENT trained diagnostic forward
+
+**Scoped GO** for one root-controlled attempt under model-backend contract SHA-256 `1a567a0ae656c78732dcac6215776a4917bf3d2f51015ab85617e91c5169af15`. The earlier `41b8d0de...` candidate remains HOLD evidence; the revised supervisor SHA-256 `40dbda1f04114b44b56e76ff378aeaee96b15f601749aa4937aee74f0cb4a184` fixes its sole identified trust-boundary defect. No patient tensor, checkpoint, or model was opened or executed during this prospective review.
+
+The supervisor now checks the exact independent input audit path and SHA-256 as a regular non-symlink file **before** host preflight. It also binds the accepted Case4 input-preparation contract/result/supervision/input receipt, requires clean finalization, and checks both original and copied input NPY hashes before launching the worker. The worker rechecks copied input receipt plus NPY/raw data hashes, channel shape/dtype/layout/finite signal, tracked low-memory adapter, checkpoint/plans/dataset, nnU-Net construction, safe weights-only load, alias structure, and source files. All nine runner files match their frozen source hashes; the accepted preparation's four metadata hashes match the forward contract; the copied input receipt matches the original. I checked only file sizes for the NPY copies in this review; the source supervisor will hash their bytes during the one attempt.
+
+Against the accepted generated full128 V3 control, the model file hashes, two-channel input/three-output shape, 128³ patch, output tile depth 1, and resource guard remain fixed: CPU FP32, full-map native InstanceNorm, no dropout/TTA/sliding window/autocast, 3 GiB sampled descendant-aware RSS, 120-second worker wall, 30-second normal-pressure preflight, 45% minimum preflight availability and 5-point spread, 30%/20-point/swap/pressure runtime stops, 0.2-second maximum fast sample gap, 1.5-second slow-inventory freshness, exact Tracto/terminal-IXI allowance, identity-bound finalization, and no retry. The patient forward uses the generated-validated tiled/lazy/recomputed architecture; it has **no accepted native full128 numerical parity reference**. The model-backend `case4` output directory was absent at review.
+
+The exact root-only command is:
+
+```text
+.tools/scan-target-runtime/venv/bin/python -B build/scan-target-estimator-research/case4-diagnostic-runner-v1/model_backend/supervise_pair.py case4 1a567a0ae656c78732dcac6215776a4917bf3d2f51015ab85617e91c5169af15
+```
+
+Do not use `-I` for this outer supervisor; it imports sibling guard modules. The inner released worker is separately launched with `-I`. The command may defer on the prospective host preflight without a model child; only an accepted run may produce logits, which still require an independent saved-output/resource/finite check. The resulting single-patch segmentation is DEVELOPMENT diagnostic evidence only. Inferior/cerebellar mask omission, spatial coverage, training overlap, and patient accuracy remain unresolved, and no route-planning or clinical use is admitted. Keep patient tensor, logits, model weights, and bulk output out of Git.

@@ -1,0 +1,118 @@
+{
+  "acquisition_allowlist_path": "build/limited-input-guard-design/gliomoda-full128-recompute-terminal-ixi-v3-quiet/terminal-live-allowlist.json",
+  "acquisition_allowlist_sha256": "50fb3837a86e1a27b812828ba2ebf96084374c97f5c7e3a03b7dac5ddc55b008",
+  "after_run_requirement": "Independent exact supervisor/result/logit audit, then separate bounded decode and anatomical display review; never treat finite output as accuracy",
+  "arm_budget": {
+    "case4": {
+      "host_abort_kernel_pressure_masks": [
+        2,
+        4
+      ],
+      "process_group_rss_cap_kib": 3145728,
+      "wall_time_cap_seconds": 120
+    }
+  },
+  "arm_order": [
+    "case4"
+  ],
+  "clinical_evidence": false,
+  "evaluation_admitted": false,
+  "fresh_preflight_per_arm": true,
+  "full128_parity_claim": "unavailable_no_accepted_native_full128_reference",
+  "gate": "CASE4_DEVELOPMENT_SINGLE128_RECOMPUTE_V1",
+  "geometry_sha256": "1b372a9accbf1cf9060cd15b36e16d969a553725b1caf3927fbd87576ff018bb",
+  "host_abort_free_drop_points": 20,
+  "host_abort_kernel_pressure_masks": [
+    2,
+    4
+  ],
+  "host_abort_min_free_percent": 30,
+  "host_abort_swap_growth_mib": 128,
+  "host_compressor_occupied": "diagnostic_only_no_standalone_stop",
+  "host_preflight_max_free_spread_points": 5,
+  "host_preflight_min_free_percent": 45,
+  "host_preflight_required_kernel_pressure_mask": 1,
+  "host_preflight_seconds": 30,
+  "host_sample_max_interval_seconds": 0.2,
+  "host_sample_target_interval_seconds": 0.05,
+  "independent_input_audit": {
+    "path": "build/scan-target-estimator-independent/case4-input-prep-v1-actual-audit.md",
+    "sha256": "dad60129a0cc1cfac68f6238550064f2582ffad7b0409b8ca35954fe2f6202d6"
+  },
+  "input_npy_sha256": "d95383a2c60690f7c4ccbc7f73b37a210b9f6cefef93bf9d3516cc7430ec3f3f",
+  "input_preparation": {
+    "contract_sha256": "3e856902bd477e3d7072522d86532fe585357f66d1f1fde4b735124c735dc664",
+    "input_receipt_sha256": "63269eec6d8772272d06c44b147c149a76f1ecf0b41ee0c88b05bb8463e751a0",
+    "result_sha256": "8a2c55e2ee7aa35760f99f1183a6a77b52e14e191ec26511b302d6382bd7b9dc",
+    "status": "accepted_source_only_unreviewed_anatomy",
+    "supervision_sha256": "cea9644f04a8304e38e8eb5ae4d8336ee8603add556556c4c379cceae950f5c0"
+  },
+  "input_raw_sha256": "8d1c0ee902c365056c8b089b1c4c9d0efdae184941397ab9731eeffde7274a17",
+  "input_receipt_sha256": "63269eec6d8772272d06c44b147c149a76f1ecf0b41ee0c88b05bb8463e751a0",
+  "input_shape": [
+    1,
+    2,
+    128,
+    128,
+    128
+  ],
+  "log_cap_bytes": 2097152,
+  "memory_accounting": "Sampled process-group resident bytes, host available percentage, kernel pressure and swap growth are distinct; no double count",
+  "model_file_sha256": {
+    "dataset.json": "3a7c7c1fd5eb420243a25496bae2c2fb9f210d7910363b9361aaebc69e615a3f",
+    "fold_all/checkpoint_final.pth": "0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3",
+    "plans.json": "e85abbe6a41f4e5e0164d53dd3a297baf10e06cd5f05c1d46a22d2d869d64ad5"
+  },
+  "model_patch_size": [
+    128,
+    128,
+    128
+  ],
+  "model_training_or_patient_inference": true,
+  "model_training_performed": false,
+  "monitor_revision": "identity-bound-closeout-v2",
+  "native_arm_enabled": false,
+  "one_attempt_per_arm": true,
+  "output_depth_tile": 1,
+  "output_shape": [
+    1,
+    3,
+    128,
+    128,
+    128
+  ],
+  "planning_admitted": false,
+  "process_group_rss_cap_kib": 3145728,
+  "project_compute_policy": "Only exact live TractoInferno acquisition wrapper below 512 MiB, with bound PID/start/command and terminal IXI receipt chain, may overlap; no transport interruption",
+  "release_status": "root_released_once",
+  "runner_source_sha256": {
+    "darwin_fast_sampler.py": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+    "launch_gate.py": "343566ae8062bcc58aa6021abbdccaad3fa064b7f468f9d08bcef78d85c62dd4",
+    "lazy_concat.py": "ce4d67f816edc13b73f7bfda8bf9af2aa761021473fb4dac47bfac13d7d59f5b",
+    "monitor_primitives.py": "5857ace4165951897c1d950dcb915df878ac9242b49795e9a69ee74296c2f2b2",
+    "pair_worker.py": "92bb80619b2873b5228ae1dc33bd85193ee96b2fec47e09d9c986b91558f7b69",
+    "recompute_skip.py": "cc273383ece037816a3efd4d5ed787955aa3f827e0d407b0356ced9f1669c42d",
+    "safe_finalize.py": "2e326517dff1b209651f06da0066f3a4807c221fdd826056e5669f6dc51997b4",
+    "slow_inventory.py": "53d8fab0f80934689965873f5dd945b6d458b618e8daaf5de840751bdbcff90e",
+    "supervise_pair.py": "40dbda1f04114b44b56e76ff378aeaee96b15f601749aa4937aee74f0cb4a184"
+  },
+  "runtime_lock_sha256": "f78bda5e88157d0974a81b53c08f79895841db4e48934aeb4058b08f31c5fde1",
+  "schema": "case4-development-single128-forward-release-v1",
+  "scope": "One local RESECT Case4 DEVELOPMENT trained segmentation diagnostic on one scan-derived 128-cube; unreviewed display only, no route, evaluation or clinical claim",
+  "single_full_patch_forward": true,
+  "slow_inventory_interval_seconds": 0.5,
+  "slow_inventory_max_age_seconds": 1.5,
+  "source_sha256": {
+    "dataset": "3a7c7c1fd5eb420243a25496bae2c2fb9f210d7910363b9361aaebc69e615a3f",
+    "flair": "046a8b7aa9620bdf0aeb2b0e40632b4c10ff58cff1ed83a458bd7b05cd86f993",
+    "plans": "e85abbe6a41f4e5e0164d53dd3a297baf10e06cd5f05c1d46a22d2d869d64ad5",
+    "support_map": "4932902a641aac5d884fbfec543b8da9cdefa9437407e488c1ebef6b9ca700f2",
+    "t1c": "608516aa3c55e8450e777d892dfa5fb5db5824046f85085a25b884e0fcf9d953"
+  },
+  "split_role": "DEVELOPMENT",
+  "stop_after_same_early_pressure_failure": "If warning/critical pressure stops before completed forward with no accepted logits, preserve this negative; do not raise caps or retry on this host without independently reviewed measured memory reduction or changed resource environment",
+  "tracked_adapter_path": "src/resectionlab/low_memory_conv3d.py",
+  "tracked_adapter_sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+  "tta_sliding_window_autocast": false,
+  "wall_time_cap_seconds": 120
+}
