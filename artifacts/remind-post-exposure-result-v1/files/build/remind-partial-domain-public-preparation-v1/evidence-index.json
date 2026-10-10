@@ -1,0 +1,56 @@
+{
+  "cohort": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/experiments/remind-component-cohort-v1.json",
+    "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+  },
+  "visual": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/root-overlay-review.json",
+    "sha256": "59b7a20cbd10fe841aeb6fc45b9fbc3936ad274db6425851dd1cc81c232a52d7"
+  },
+  "cases": [
+    {
+      "patient_id": "ReMIND-002",
+      "conversion": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains/conversion-result.json",
+        "sha256": "3c66619317b0368ead5a69d557b3a4d61b23ff4e2c144f9ccccdea2b25fab53a"
+      },
+      "saved_review": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-saved-domain-review/saved-domain-review.json",
+        "sha256": "840867348e3e106abc9ffd77b1de4fbffa308617a14f7f26a10073759badc6d9"
+      }
+    },
+    {
+      "patient_id": "ReMIND-015",
+      "conversion": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains/conversion-result.json",
+        "sha256": "88bd10a406090faa3d499b0086babd66ae168788037a76ce328207e1bfb0516c"
+      },
+      "saved_review": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-saved-domain-review/saved-domain-review.json",
+        "sha256": "323647931c0f9002b866c71b40d6706291ab94975528720bd685a8fd22899b33"
+      }
+    },
+    {
+      "patient_id": "ReMIND-018",
+      "conversion": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/conversion-result.json",
+        "sha256": "fe0bf8ecc90e18eab03953b6c8c3bbef1e9684d06382f56694f0bb86e04ae713"
+      },
+      "saved_review": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-saved-domain-review/saved-domain-review.json",
+        "sha256": "efcc61eed7e3873d135b6c3f696e338431f8151d300ed137562388893e60f589"
+      }
+    },
+    {
+      "patient_id": "ReMIND-045",
+      "conversion": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains/conversion-result.json",
+        "sha256": "679962f53974f5cbd5ecf8187e4efb2fa7dd58842d0be9cf4340deabf6f33c7f"
+      },
+      "saved_review": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-saved-domain-review/saved-domain-review.json",
+        "sha256": "a8d78f7cb0e3754ed1021aef6eed024d7049878a73af94c69018a56303ace442"
+      }
+    }
+  ]
+}

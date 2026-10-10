@@ -1,0 +1,43 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "log_bytes": 4194304,
+    "max_native_previews": 40000,
+    "output_bytes": 67108864,
+    "parent_seconds": 330,
+    "sampled_rss_bytes": 3221225472,
+    "supervision_bytes": 8388608,
+    "threads": 1,
+    "worker_seconds": 300
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 62.416034791851416,
+  "exit_code": 0,
+  "output_bytes": 3151284,
+  "planned_subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "release_sha256": "8315099d95b16a9dacac54a65c4d84d6385e458534b6dab26b73a37555d4af1a",
+  "remaining_owned_pids": [],
+  "result_sha256": "7a57fd74f58b15d6975be4459fe4f46e6396dfa9e2f3c0fec0ef68cf5e550358",
+  "result_status": "post_exposure_batch_complete",
+  "sampled_peak_rss_bytes": 702431232,
+  "samples": 298,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/remind-post-exposure-feasibility-v1/source-index.json",
+    "sha256": "4ac60917a28368056b1b0d07481a88f447be4116ec677fed1bb31dd2766c7b50"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 2179,
+  "training_admitted": false,
+  "worker_pid": 87096,
+  "worker_termination_confirmed": true
+}

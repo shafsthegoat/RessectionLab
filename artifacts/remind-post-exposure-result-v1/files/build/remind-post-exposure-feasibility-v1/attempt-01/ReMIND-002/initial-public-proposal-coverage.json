@@ -1,0 +1,2969 @@
+{
+  "scope": "current_state_actual_emitted_proposals_only",
+  "catalog_metadata": {
+    "basis": "permitted_nominal_and_observed_cavity_columns_without_crop_clipping",
+    "provider_version": "permitted-nominal-cavity-tool-footprint-opening-v1",
+    "source_hash": "sha256:27f4414796f49256181161f3f770f4ea75c242059bcc583c01817f65949b0f5b",
+    "decision_model_hash": "sha256:0fef2ea344006eb0d2b94a3ef5aea8d9f9cbf1a80e3d7bdcd9ef63450ff5bb9e",
+    "cavity_state_hash": "sha256:c8307aee919b45c33630282dafc4a40551b32f94dc3aa7b7245289253ca76c9b",
+    "provider_model_hash": "sha256:3715b3c6e20f3e71432f8e961de3bd1cf74844a03b151976239cd18603e9eb6f",
+    "nominal_target_hash": "sha256:80e3d3e2f5ba890ab8c56b7c994d54aeb860358059f78538a35f7f3bf59e88ff",
+    "nominal_provenance_hash": "sha256:c3bcf15898c25e712cb0d3b3532e4900639f79202748ecf11a40af95c94d2647",
+    "declared_slots": 130,
+    "evaluated_slots": 117,
+    "emitted_count": 117,
+    "accepted_count": 21,
+    "rejected_count": 96,
+    "omitted_count": 0,
+    "duplicate_count": 13,
+    "unavailable_count": 0,
+    "complete": true,
+    "ledger_complete": true,
+    "terminal": false,
+    "steps_taken": 0,
+    "max_steps": 24,
+    "remaining_steps": 24,
+    "terminated_slots": 0,
+    "candidate_cap": 120,
+    "crop_clipping": false,
+    "endpoint_centers_in_actor_crop": 117,
+    "all_support_cell_tool_pairs": 2022620,
+    "scope": "complete_dispositions_for_declared_columns_and_families_not_all_surgical_paths",
+    "disposition_counts": {
+      "PROPOSED_UNCERTIFIED": 117,
+      "DUPLICATE_GEOMETRY": 13
+    }
+  },
+  "catalog_count_basis": "Declared/omitted/duplicate/unavailable counts are family-tool-column slots; capped slots need not be unique geometries. Emitted actions are unique, actually previewed attempts. Legacy fixed rejected_count includes non-previewed outside-workspace slots.",
+  "original_source_affine_ras_mm": [
+    [
+      0.9704521955503429,
+      0.10898332260936874,
+      0.004482904165597161,
+      -91.40836778551827
+    ],
+    [
+      0.09599195316809211,
+      -0.834781229398997,
+      -0.5095366007253653,
+      219.68930644462017
+    ],
+    [
+      -0.05178873406562828,
+      0.4949111904160923,
+      -0.8604375088188876,
+      -4.531184152114307
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "native_physical_affine_ras_mm": [
+    [
+      0.9704521955503429,
+      0.10898332260936892,
+      0.004482904165596718,
+      -91.40836778551827
+    ],
+    [
+      0.09599195316809213,
+      -0.8347812293989967,
+      -0.5095366007253656,
+      219.68930644462017
+    ],
+    [
+      -0.051788734065628284,
+      0.49491119041609244,
+      -0.8604375088188871,
+      -4.531184152114307
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "steps_taken": 0,
+  "max_steps": 24,
+  "remaining_step_budget": 24,
+  "episode_terminal": false,
+  "proposal_dispositions": {
+    "PROPOSED_UNCERTIFIED": 117,
+    "DUPLICATE_GEOMETRY": 13
+  },
+  "preview_dispositions": {
+    "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 96,
+    "NATIVE_CONNECTED_STROKE": 21
+  },
+  "nominal_target_centers_total": 24274,
+  "nominal_target_center_depth_range_mm": [
+    15.136716174699334,
+    45.410148524098055
+  ],
+  "emitted_envelope": {
+    "proposal_count": 117,
+    "distal_active_tip_axial_upper_bound_mm": 46.133586190246476,
+    "active_sweep_aabb_ras_mm": [
+      [
+        -18.64807417139836,
+        159.05386606744207,
+        -3.38073841420532
+      ],
+      [
+        33.53637353105861,
+        172.59195436415882,
+        8.009170473543886
+      ]
+    ],
+    "target_centers_beyond_axial_bound": 0,
+    "target_centers_outside_aabb": 19552,
+    "endpoint_depth_range_mm": [
+      3.417968168480498,
+      44.43358619024647
+    ]
+  },
+  "accepted_envelope": {
+    "proposal_count": 21,
+    "distal_active_tip_axial_upper_bound_mm": 13.207029173144633,
+    "active_sweep_aabb_ras_mm": [
+      [
+        14.076848281762949,
+        163.17382811938558,
+        -3.380738414205319
+      ],
+      [
+        33.53637353105861,
+        171.79365858739106,
+        6.0671799092336025
+      ]
+    ],
+    "target_centers_beyond_axial_bound": 24274,
+    "target_centers_outside_aabb": 24274,
+    "endpoint_depth_range_mm": [
+      3.417968168480498,
+      12.207029173144633
+    ]
+  },
+  "actions": [
+    {
+      "action_id": "nominal-cavity-17e3eb7288647782ec0ac481",
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.534450693970342,
+        167.810135596839,
+        1.2420856750878415
+      ],
+      "tip_mm": [
+        17.344702640691736,
+        166.80222008857402,
+        1.7858673827769387
+      ],
+      "tip_depth_mm": 10.253904505441497,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-dd675bfc2ee720e1aece7af0",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.534450693970342,
+        167.81013559683896,
+        1.2420856750878402
+      ],
+      "tip_mm": [
+        12.492441662940024,
+        166.32226032273354,
+        2.0448110531050787
+      ],
+      "tip_depth_mm": 15.136716174699348,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-5889ba0f6151fdfd5c70ec9c",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.534450693970342,
+        167.810135596839,
+        1.2420856750878424
+      ],
+      "tip_mm": [
+        -16.62112420357026,
+        163.4425017276908,
+        3.5984730750739296
+      ],
+      "tip_depth_mm": 44.433586190246466,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-fb7dbaeea9faf72309257f96",
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.534450693970342,
+        167.810135596839,
+        1.2420856750878415
+      ],
+      "tip_mm": [
+        17.344702640691736,
+        166.80222008857402,
+        1.7858673827769387
+      ],
+      "tip_depth_mm": 10.253904505441497,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-e720b717940c5fb22d8207dc",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.534450693970342,
+        167.81013559683896,
+        1.2420856750878402
+      ],
+      "tip_mm": [
+        12.492441662940024,
+        166.32226032273354,
+        2.0448110531050787
+      ],
+      "tip_depth_mm": 15.136716174699348,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-75459967510467a660afebf7",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.534450693970342,
+        167.810135596839,
+        1.2420856750878424
+      ],
+      "tip_mm": [
+        -16.62112420357026,
+        163.4425017276908,
+        3.5984730750739296
+      ],
+      "tip_depth_mm": 44.433586190246466,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-feef8d1d2395eeb64f190d14",
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.316484048751605,
+        169.479698055637,
+        0.2522632942556543
+      ],
+      "tip_mm": [
+        16.15628379992266,
+        168.37579059420392,
+        0.8478337360103794
+      ],
+      "tip_depth_mm": 11.23046683929306,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-3ba43562e7382d7dee441d7f",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.316484048751605,
+        169.47969805563696,
+        0.25226329425565286
+      ],
+      "tip_mm": [
+        12.274475017721286,
+        167.99182278153154,
+        1.0549886722728914
+      ],
+      "tip_depth_mm": 15.136716174699348,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-292484cfc2bd952bef1b034e",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.316484048751605,
+        169.479698055637,
+        0.2522632942556551
+      ],
+      "tip_mm": [
+        -16.839090848789,
+        165.1120641864888,
+        2.6086506942417422
+      ],
+      "tip_depth_mm": 44.433586190246466,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-44deffbbc9c18e4592b8e69f",
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.316484048751605,
+        169.479698055637,
+        0.2522632942556543
+      ],
+      "tip_mm": [
+        16.15628379992266,
+        168.37579059420392,
+        0.8478337360103794
+      ],
+      "tip_depth_mm": 11.23046683929306,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-dbcd1a577f8f2d25d9840c9a",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.316484048751605,
+        169.47969805563696,
+        0.25226329425565286
+      ],
+      "tip_mm": [
+        12.274475017721286,
+        167.99182278153154,
+        1.0549886722728914
+      ],
+      "tip_depth_mm": 15.136716174699348,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-16f4c75382f86ef13a53a800",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.316484048751605,
+        169.479698055637,
+        0.2522632942556551
+      ],
+      "tip_mm": [
+        -16.839090848789,
+        165.1120641864888,
+        2.6086506942417422
+      ],
+      "tip_depth_mm": 44.433586190246466,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-7a72d01294427da5a8694bea",
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.75241733918908,
+        166.140573138041,
+        2.2319080559200253
+      ],
+      "tip_mm": [
+        17.562669285910474,
+        165.13265762977602,
+        2.7756897636091225
+      ],
+      "tip_depth_mm": 10.253904505441497,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-3cdd24e93db1ee9fda3684c5",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.75241733918908,
+        166.14057313804096,
+        2.231908055920024
+      ],
+      "tip_mm": [
+        12.710408308158762,
+        164.65269786393554,
+        3.0346334339372625
+      ],
+      "tip_depth_mm": 15.136716174699348,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-d2e7340755a619f09646b2e9",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.752417339189087,
+        166.140573138041,
+        2.2319080559200226
+      ],
+      "tip_mm": [
+        -16.403157558351523,
+        161.7729392688928,
+        4.58829545590611
+      ],
+      "tip_depth_mm": 44.43358619024647,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-331edb1749748a73d0237af0",
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.75241733918908,
+        166.140573138041,
+        2.2319080559200253
+      ],
+      "tip_mm": [
+        17.562669285910474,
+        165.13265762977602,
+        2.7756897636091225
+      ],
+      "tip_depth_mm": 10.253904505441497,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-57f2622b236950e4340593d1",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.75241733918908,
+        166.14057313804096,
+        2.231908055920024
+      ],
+      "tip_mm": [
+        12.710408308158762,
+        164.65269786393554,
+        3.0346334339372625
+      ],
+      "tip_depth_mm": 15.136716174699348,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-478106c0f65c868f4af6509a",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.752417339189087,
+        166.140573138041,
+        2.2319080559200226
+      ],
+      "tip_mm": [
+        -16.403157558351523,
+        161.7729392688928,
+        4.58829545590611
+      ],
+      "tip_depth_mm": 44.43358619024647,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-6f3946846302ff62b5c8f225",
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.525484885639152,
+        168.8292087982897,
+        2.962960692725618
+      ],
+      "tip_mm": [
+        17.33573683236054,
+        167.82129329002473,
+        3.5067424004147156
+      ],
+      "tip_depth_mm": 10.253904505441502,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-338a04aa57c05a6d63b3d499",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.525484885639152,
+        168.8292087982897,
+        2.9629606927256167
+      ],
+      "tip_mm": [
+        12.483475854608827,
+        167.34133352418428,
+        3.7656860707428557
+      ],
+      "tip_depth_mm": 15.136716174699353,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-1fa3399d41e00f6cf32d603a",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.525484885639145,
+        168.8292087982897,
+        2.9629606927256193
+      ],
+      "tip_mm": [
+        -16.63009001190146,
+        164.4615749291415,
+        5.3193480927117065
+      ],
+      "tip_depth_mm": 44.433586190246466,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-a3331d6594912b2992e9e1a8",
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.525484885639152,
+        168.8292087982897,
+        2.962960692725618
+      ],
+      "tip_mm": [
+        17.33573683236054,
+        167.82129329002473,
+        3.5067424004147156
+      ],
+      "tip_depth_mm": 10.253904505441502,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-a518638242c73a5d860640ed",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.525484885639152,
+        168.8292087982897,
+        2.9629606927256167
+      ],
+      "tip_mm": [
+        12.483475854608827,
+        167.34133352418428,
+        3.7656860707428557
+      ],
+      "tip_depth_mm": 15.136716174699353,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-56d7128d6f1d8819426e7646",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.525484885639145,
+        168.8292087982897,
+        2.9629606927256193
+      ],
+      "tip_mm": [
+        -16.63009001190146,
+        164.4615749291415,
+        5.3193480927117065
+      ],
+      "tip_depth_mm": 44.433586190246466,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-93ab3520493cb9ae90f2ac30",
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.543416502301536,
+        166.79106239538822,
+        -0.4787893425499333
+      ],
+      "tip_mm": [
+        23.176381622324996,
+        166.35909860613182,
+        -0.2457400392546063
+      ],
+      "tip_depth_mm": 4.3945305023320635,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-e098d4f0a423e5791f09c0b2",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.543416502301532,
+        166.79106239538822,
+        -0.478789342549933
+      ],
+      "tip_mm": [
+        12.501407471271222,
+        165.3031871212828,
+        0.3239360354673053
+      ],
+      "tip_depth_mm": 15.136716174699343,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-b3dd1e7ef29b45a7b8a65c01",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.54341650230154,
+        166.79106239538825,
+        -0.478789342549931
+      ],
+      "tip_mm": [
+        -16.612158395239064,
+        162.42342852624006,
+        1.8775980574361562
+      ],
+      "tip_depth_mm": 44.433586190246466,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-fef5dd9db5546d187e60c955",
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.543416502301536,
+        166.79106239538822,
+        -0.4787893425499333
+      ],
+      "tip_mm": [
+        23.176381622324996,
+        166.35909860613182,
+        -0.2457400392546063
+      ],
+      "tip_depth_mm": 4.3945305023320635,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-b3c5e29f8747e6c2c4a853f6",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.543416502301532,
+        166.79106239538822,
+        -0.478789342549933
+      ],
+      "tip_mm": [
+        12.501407471271222,
+        165.3031871212828,
+        0.3239360354673053
+      ],
+      "tip_depth_mm": 15.136716174699343,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-77c2a075995c929557604120",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.54341650230154,
+        166.79106239538825,
+        -0.478789342549931
+      ],
+      "tip_mm": [
+        -16.612158395239064,
+        162.42342852624006,
+        1.8775980574361562
+      ],
+      "tip_depth_mm": 44.433586190246466,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-2c983df0682d913ecea91571",
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.307518240420414,
+        170.4987712570877,
+        1.9731383118934307
+      ],
+      "tip_mm": [
+        17.1177701871418,
+        169.49085574882272,
+        2.5169200195825283
+      ],
+      "tip_depth_mm": 10.253904505441502,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-fcd191564d0c38546ba32044",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.30751824042041,
+        170.4987712570877,
+        1.9731383118934296
+      ],
+      "tip_mm": [
+        12.265509209390089,
+        169.01089598298228,
+        2.7758636899106683
+      ],
+      "tip_depth_mm": 15.136716174699352,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-019eb2ef01bf6b987e0c2122",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.307518240420414,
+        170.4987712570877,
+        1.973138311893432
+      ],
+      "tip_mm": [
+        -16.848056657120196,
+        166.1311373879395,
+        4.329525711879519
+      ],
+      "tip_depth_mm": 44.43358619024647,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-85d14c66eb229f710367fca1",
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.307518240420414,
+        170.4987712570877,
+        1.9731383118934307
+      ],
+      "tip_mm": [
+        17.1177701871418,
+        169.49085574882272,
+        2.5169200195825283
+      ],
+      "tip_depth_mm": 10.253904505441502,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-63c18824dca8e9f8852deb44",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.30751824042041,
+        170.4987712570877,
+        1.9731383118934296
+      ],
+      "tip_mm": [
+        12.265509209390089,
+        169.01089598298228,
+        2.7758636899106683
+      ],
+      "tip_depth_mm": 15.136716174699352,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-852d950e06ee786a99790972",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.307518240420414,
+        170.4987712570877,
+        1.973138311893432
+      ],
+      "tip_mm": [
+        -16.848056657120196,
+        166.1311373879395,
+        4.329525711879519
+      ],
+      "tip_depth_mm": 44.43358619024647,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-b104e668d14a4040d7cd52d5",
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.3254498570828,
+        168.46062485418622,
+        -1.4686117233821208
+      ],
+      "tip_mm": [
+        22.95841497710626,
+        168.02866106492982,
+        -1.2355624200867936
+      ],
+      "tip_depth_mm": 4.3945305023320635,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-88eb92efff1c64074cda71f9",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.325449857082795,
+        168.46062485418622,
+        -1.4686117233821203
+      ],
+      "tip_mm": [
+        12.283440826052484,
+        166.9727495800808,
+        -0.665886345364882
+      ],
+      "tip_depth_mm": 15.136716174699343,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-c9737f71155c2c147d2b724b",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.325449857082795,
+        168.46062485418625,
+        -1.4686117233821179
+      ],
+      "tip_mm": [
+        -16.8301250404578,
+        164.09299098503806,
+        0.8877756766039688
+      ],
+      "tip_depth_mm": 44.43358619024646,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-b8821d9cdb81ba6999899f5e",
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.3254498570828,
+        168.46062485418622,
+        -1.4686117233821208
+      ],
+      "tip_mm": [
+        22.95841497710626,
+        168.02866106492982,
+        -1.2355624200867936
+      ],
+      "tip_depth_mm": 4.3945305023320635,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-9f4b97ec1015ccaede936581",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.325449857082795,
+        168.46062485418622,
+        -1.4686117233821203
+      ],
+      "tip_mm": [
+        12.283440826052484,
+        166.9727495800808,
+        -0.665886345364882
+      ],
+      "tip_depth_mm": 15.136716174699343,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-13a912b06f06191732b3d697",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.325449857082795,
+        168.46062485418625,
+        -1.4686117233821179
+      ],
+      "tip_mm": [
+        -16.8301250404578,
+        164.09299098503806,
+        0.8877756766039688
+      ],
+      "tip_depth_mm": 44.43358619024646,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-1daa54a6662d0e638c6f5e1d",
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.743451530857886,
+        167.15964633949173,
+        3.952783073557802
+      ],
+      "tip_mm": [
+        17.553703477579276,
+        166.15173083122676,
+        4.496564781246899
+      ],
+      "tip_depth_mm": 10.2539045054415,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-1c3ed9efd7b3bf85f0ed0215",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.74345153085789,
+        167.1596463394917,
+        3.9527830735578005
+      ],
+      "tip_mm": [
+        12.701442499827564,
+        165.67177106538628,
+        4.755508451575039
+      ],
+      "tip_depth_mm": 15.136716174699353,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-f6b32dd34a2ba078684cd6ff",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.74345153085789,
+        167.15964633949173,
+        3.9527830735577996
+      ],
+      "tip_mm": [
+        -16.41212336668272,
+        162.79201247034354,
+        6.309170473543887
+      ],
+      "tip_depth_mm": 44.43358619024647,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-22d46dad2f8460394c70c7ae",
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.743451530857886,
+        167.15964633949173,
+        3.952783073557802
+      ],
+      "tip_mm": [
+        17.553703477579276,
+        166.15173083122676,
+        4.496564781246899
+      ],
+      "tip_depth_mm": 10.2539045054415,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-eb6dae45d04e8caea2c479c7",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.74345153085789,
+        167.1596463394917,
+        3.9527830735578005
+      ],
+      "tip_mm": [
+        12.701442499827564,
+        165.67177106538628,
+        4.755508451575039
+      ],
+      "tip_depth_mm": 15.136716174699353,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-5f2234b4401c416c4058f578",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.74345153085789,
+        167.15964633949173,
+        3.9527830735577996
+      ],
+      "tip_mm": [
+        -16.41212336668272,
+        162.79201247034354,
+        6.309170473543887
+      ],
+      "tip_depth_mm": 44.43358619024647,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-308473940f7d1ad8f4b5a17f",
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.76138314752027,
+        165.12149993659025,
+        0.5110330382822499
+      ],
+      "tip_mm": [
+        21.453443876443046,
+        164.49755224099766,
+        0.8476598097088335
+      ],
+      "tip_depth_mm": 6.347655170035205,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-e391acbe414f709af3e8f2ac",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.76138314752027,
+        165.12149993659025,
+        0.5110330382822509
+      ],
+      "tip_mm": [
+        12.71937411648996,
+        163.63362466248483,
+        1.313758416299489
+      ],
+      "tip_depth_mm": 15.136716174699341,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-89e2eae1c9f1c8b072f7996d",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.761383147520277,
+        165.12149993659025,
+        0.5110330382822492
+      ],
+      "tip_mm": [
+        -16.394191750020326,
+        160.75386606744206,
+        2.8674204382683364
+      ],
+      "tip_depth_mm": 44.433586190246466,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-bde0cb9880d67f72033888bc",
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.76138314752027,
+        165.12149993659025,
+        0.5110330382822499
+      ],
+      "tip_mm": [
+        21.453443876443046,
+        164.49755224099766,
+        0.8476598097088335
+      ],
+      "tip_depth_mm": 6.347655170035205,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-9d8ecc25903a8faeab0e2930",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.76138314752027,
+        165.12149993659025,
+        0.5110330382822509
+      ],
+      "tip_mm": [
+        12.71937411648996,
+        163.63362466248483,
+        1.313758416299489
+      ],
+      "tip_depth_mm": 15.136716174699341,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-b9c6696310a534f7a3dacb57",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.761383147520277,
+        165.12149993659025,
+        0.5110330382822492
+      ],
+      "tip_mm": [
+        -16.394191750020326,
+        160.75386606744206,
+        2.8674204382683364
+      ],
+      "tip_depth_mm": 44.433586190246466,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-df061b7f85ccf4cb6e93251e",
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.207500726142236,
+        170.31447928503596,
+        -0.24264789616043558
+      ],
+      "tip_mm": [
+        16.0473004773133,
+        169.2105718236029,
+        0.35292254559428926
+      ],
+      "tip_depth_mm": 11.230466839293054,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-706b321272a63c0a4400f51b",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.207500726142236,
+        170.31447928503596,
+        -0.2426478961604368
+      ],
+      "tip_mm": [
+        12.165491695111925,
+        168.82660401093054,
+        0.5600774818568013
+      ],
+      "tip_depth_mm": 15.13671617469934,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-d703d9625be194c3a69b70d6",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.207500726142236,
+        170.31447928503596,
+        -0.24264789616043458
+      ],
+      "tip_mm": [
+        -16.94807417139836,
+        165.94684541588776,
+        2.113739503825652
+      ],
+      "tip_depth_mm": 44.43358619024646,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-6c0de085679d2415045d7dcc",
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.207500726142236,
+        170.31447928503596,
+        -0.24264789616043558
+      ],
+      "tip_mm": [
+        16.0473004773133,
+        169.2105718236029,
+        0.35292254559428926
+      ],
+      "tip_depth_mm": 11.230466839293054,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-cc362bbae69e6187f369da95",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.207500726142236,
+        170.31447928503596,
+        -0.2426478961604368
+      ],
+      "tip_mm": [
+        12.165491695111925,
+        168.82660401093054,
+        0.5600774818568013
+      ],
+      "tip_depth_mm": 15.13671617469934,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-84b420fc51694d259b9e23c4",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.207500726142236,
+        170.31447928503596,
+        -0.24264789616043458
+      ],
+      "tip_mm": [
+        -16.94807417139836,
+        165.94684541588776,
+        2.113739503825652
+      ],
+      "tip_depth_mm": 44.43358619024646,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-5e970052725ce4ff9e4f1535",
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.86140066179845,
+        165.305791908642,
+        2.726819246336116
+      ],
+      "tip_mm": [
+        17.67165260851985,
+        164.29787640037702,
+        3.2706009540252126
+      ],
+      "tip_depth_mm": 10.253904505441492,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-8d3b550fca40d3d148bc2b85",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.861400661798445,
+        165.305791908642,
+        2.7268192463361145
+      ],
+      "tip_mm": [
+        12.819391630768138,
+        163.81791663453657,
+        3.5295446243533526
+      ],
+      "tip_depth_mm": 15.136716174699338,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-56d82d422231559b3a66bb53",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.86140066179845,
+        165.305791908642,
+        2.726819246336113
+      ],
+      "tip_mm": [
+        -16.294174235742148,
+        160.9381580394938,
+        5.0832066463222
+      ],
+      "tip_depth_mm": 44.43358619024646,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-b380ffc5e8344540f24bc95a",
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.86140066179845,
+        165.305791908642,
+        2.726819246336116
+      ],
+      "tip_mm": [
+        17.67165260851985,
+        164.29787640037702,
+        3.2706009540252126
+      ],
+      "tip_depth_mm": 10.253904505441492,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-1a2390751ce4bfe622084869",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.861400661798445,
+        165.305791908642,
+        2.7268192463361145
+      ],
+      "tip_mm": [
+        12.819391630768138,
+        163.81791663453657,
+        3.5295446243533526
+      ],
+      "tip_depth_mm": 15.136716174699338,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-4775f4d444b28b45396173b1",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.86140066179845,
+        165.305791908642,
+        2.726819246336113
+      ],
+      "tip_mm": [
+        -16.294174235742148,
+        160.9381580394938,
+        5.0832066463222
+      ],
+      "tip_depth_mm": 44.43358619024646,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-3a71e3d0b1d56b6501efcd3b",
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.521001981473553,
+        169.33874539901507,
+        3.8233982015445047
+      ],
+      "tip_mm": [
+        17.33125392819494,
+        168.3308298907501,
+        4.367179909233602
+      ],
+      "tip_depth_mm": 10.253904505441506,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-0ad439dfc126a095e3705482",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.52100198147355,
+        169.33874539901507,
+        3.823398201544504
+      ],
+      "tip_mm": [
+        12.478992950443228,
+        167.85087012490965,
+        4.626123579561742
+      ],
+      "tip_depth_mm": 15.136716174699352,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-8c5907f08d4e581903848554",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.521001981473553,
+        169.33874539901507,
+        3.823398201544506
+      ],
+      "tip_mm": [
+        -16.634572916067057,
+        164.97111152986687,
+        6.179785601530593
+      ],
+      "tip_depth_mm": 44.43358619024647,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-425997df16db87bf84a46c65",
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.521001981473553,
+        169.33874539901507,
+        3.8233982015445047
+      ],
+      "tip_mm": [
+        17.33125392819494,
+        168.3308298907501,
+        4.367179909233602
+      ],
+      "tip_depth_mm": 10.253904505441506,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-e06f9b279a7494c0df897d63",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.52100198147355,
+        169.33874539901507,
+        3.823398201544504
+      ],
+      "tip_mm": [
+        12.478992950443228,
+        167.85087012490965,
+        4.626123579561742
+      ],
+      "tip_depth_mm": 15.136716174699352,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-e5425b6210222d7143f6e5da",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.521001981473553,
+        169.33874539901507,
+        3.823398201544506
+      ],
+      "tip_mm": [
+        -16.634572916067057,
+        164.97111152986687,
+        6.179785601530593
+      ],
+      "tip_depth_mm": 44.43358619024647,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-2b0a7dae074cceee2358f4b0",
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.54789940646713,
+        166.28152579466285,
+        -1.3392268513688215
+      ],
+      "tip_mm": [
+        22.21041233094023,
+        165.75357005223836,
+        -1.054388814007865
+      ],
+      "tip_depth_mm": 5.371092836183656,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-435101892925c25dea88aa04",
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.54789940646713,
+        166.28152579466285,
+        -1.339226851368821
+      ],
+      "tip_mm": [
+        11.535438179886455,
+        164.69765856738934,
+        -0.4847127392859534
+      ],
+      "tip_depth_mm": 16.113278508550934,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-65107e6936a774729a90a2ee",
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.54789940646713,
+        166.28152579466288,
+        -1.3392268513688177
+      ],
+      "tip_mm": [
+        -16.60767549107348,
+        161.9138919255147,
+        1.0171605486172695
+      ],
+      "tip_depth_mm": 44.43358619024647,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-0a7ecba4715fdf9317833bc0",
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.54789940646713,
+        166.28152579466285,
+        -1.3392268513688215
+      ],
+      "tip_mm": [
+        22.21041233094023,
+        165.75357005223836,
+        -1.054388814007865
+      ],
+      "tip_depth_mm": 5.371092836183656,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-9037521c69e9b99e37b57ff1",
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.54789940646713,
+        166.28152579466285,
+        -1.339226851368821
+      ],
+      "tip_mm": [
+        11.535438179886455,
+        164.69765856738934,
+        -0.4847127392859534
+      ],
+      "tip_depth_mm": 16.113278508550934,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-2a37d88765f7758582546722",
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.54789940646713,
+        166.28152579466288,
+        -1.3392268513688177
+      ],
+      "tip_mm": [
+        -16.60767549107348,
+        161.9138919255147,
+        1.0171605486172695
+      ],
+      "tip_depth_mm": 44.43358619024647,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-fd7bac596bef4459e671d7c9",
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.534450693970342,
+        167.810135596839,
+        1.2420856750878415
+      ],
+      "tip_mm": [
+        16.3742504451414,
+        166.70622813540592,
+        1.8376561168425667
+      ],
+      "tip_depth_mm": 11.230466839293062,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-acc2837998ef2b963c663f05",
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.534450693970342,
+        167.810135596839,
+        1.2420856750878415
+      ],
+      "tip_mm": [
+        16.3742504451414,
+        166.70622813540592,
+        1.8376561168425667
+      ],
+      "tip_depth_mm": 11.230466839293062,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-bd476d0bb3b014dabcd33bb3",
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.316484048751605,
+        169.479698055637,
+        0.2522632942556535
+      ],
+      "tip_mm": [
+        15.18583160437231,
+        168.27979864103582,
+        0.8996224700760074
+      ],
+      "tip_depth_mm": 12.207029173144639,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-fe712d156b4ca2322791fa13",
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.316484048751605,
+        169.479698055637,
+        0.2522632942556535
+      ],
+      "tip_mm": [
+        15.18583160437231,
+        168.27979864103582,
+        0.8996224700760074
+      ],
+      "tip_depth_mm": 12.207029173144639,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-b8e7f2e56c2bf12e3a41eb85",
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.75241733918908,
+        166.140573138041,
+        2.2319080559200253
+      ],
+      "tip_mm": [
+        16.592217090360137,
+        165.03666567660792,
+        2.8274784976747505
+      ],
+      "tip_depth_mm": 11.230466839293062,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-38c35e8088653d6e3939f498",
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.75241733918908,
+        166.140573138041,
+        2.2319080559200253
+      ],
+      "tip_mm": [
+        16.592217090360137,
+        165.03666567660792,
+        2.8274784976747505
+      ],
+      "tip_depth_mm": 11.230466839293062,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-b815a16f070c7462e01356fc",
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.525484885639145,
+        168.82920879828973,
+        2.9629606927256185
+      ],
+      "tip_mm": [
+        16.365284636810202,
+        167.72530133685666,
+        3.5585311344803436
+      ],
+      "tip_depth_mm": 11.230466839293063,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-601516910c465800ab7d63c3",
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.525484885639145,
+        168.82920879828973,
+        2.9629606927256185
+      ],
+      "tip_mm": [
+        16.365284636810202,
+        167.72530133685666,
+        3.5585311344803436
+      ],
+      "tip_depth_mm": 11.230466839293063,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-5c37b090d927e4bc68057af1",
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.543416502301536,
+        166.79106239538822,
+        -0.47878934254993405
+      ],
+      "tip_mm": [
+        22.205929426774645,
+        166.26310665296373,
+        -0.1939513051889783
+      ],
+      "tip_depth_mm": 5.371092836183642,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-b32ad00f20b7084061b41286",
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.543416502301536,
+        166.79106239538822,
+        -0.47878934254993405
+      ],
+      "tip_mm": [
+        22.205929426774645,
+        166.26310665296373,
+        -0.1939513051889783
+      ],
+      "tip_depth_mm": 5.371092836183642,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-417058b9650ff6c6bf0e4a39",
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.307518240420407,
+        170.49877125708772,
+        1.9731383118934311
+      ],
+      "tip_mm": [
+        16.147317991591464,
+        169.39486379565466,
+        2.5687087536481563
+      ],
+      "tip_depth_mm": 11.230466839293063,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-8688eb48c339e17e665ed170",
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.307518240420407,
+        170.49877125708772,
+        1.9731383118934311
+      ],
+      "tip_mm": [
+        16.147317991591464,
+        169.39486379565466,
+        2.5687087536481563
+      ],
+      "tip_depth_mm": 11.230466839293063,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-084606da27086a6b8e5c3a96",
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.3254498570828,
+        168.46062485418622,
+        -1.4686117233821214
+      ],
+      "tip_mm": [
+        21.987962781555908,
+        167.93266911176173,
+        -1.1837736860211656
+      ],
+      "tip_depth_mm": 5.371092836183642,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-88e7fac5e0f41301b9246cb7",
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.3254498570828,
+        168.46062485418622,
+        -1.4686117233821214
+      ],
+      "tip_mm": [
+        21.987962781555908,
+        167.93266911176173,
+        -1.1837736860211656
+      ],
+      "tip_depth_mm": 5.371092836183642,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-e9a5150c137fe2b8e935e3a9",
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.743451530857886,
+        167.15964633949173,
+        3.952783073557802
+      ],
+      "tip_mm": [
+        16.58325128202894,
+        166.05573887805866,
+        4.548353515312527
+      ],
+      "tip_depth_mm": 11.230466839293065,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-aef60874b26f5dcda0b0ac93",
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.743451530857886,
+        167.15964633949173,
+        3.952783073557802
+      ],
+      "tip_mm": [
+        16.58325128202894,
+        166.05573887805866,
+        4.548353515312527
+      ],
+      "tip_depth_mm": 11.230466839293065,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-dd5cd1e6c58f3d4048175ab4",
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.76138314752027,
+        165.12149993659025,
+        0.5110330382822527
+      ],
+      "tip_mm": [
+        20.482991680892695,
+        164.40156028782957,
+        0.899448543774465
+      ],
+      "tip_depth_mm": 7.324217503886785,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-659d16e584d82c313a4954f0",
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.76138314752027,
+        165.12149993659025,
+        0.5110330382822527
+      ],
+      "tip_mm": [
+        20.482991680892695,
+        164.40156028782957,
+        0.899448543774465
+      ],
+      "tip_depth_mm": 7.324217503886785,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-1afdf9e893ef06d3d10d1dfa",
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.207500726142236,
+        170.31447928503596,
+        -0.24264789616043625
+      ],
+      "tip_mm": [
+        15.076848281762949,
+        169.1145798704348,
+        0.40471127965991727
+      ],
+      "tip_depth_mm": 12.207029173144633,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-15a1c10fb38040584fea54f4",
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.207500726142236,
+        170.31447928503596,
+        -0.24264789616043625
+      ],
+      "tip_mm": [
+        15.076848281762949,
+        169.1145798704348,
+        0.40471127965991727
+      ],
+      "tip_depth_mm": 12.207029173144633,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-cee30bba09bcf1839c3df058",
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.86140066179845,
+        165.305791908642,
+        2.726819246336116
+      ],
+      "tip_mm": [
+        16.701200412969513,
+        164.20188444720893,
+        3.3223896880908406
+      ],
+      "tip_depth_mm": 11.230466839293056,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-da571b205e98d09b58fec8a1",
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.86140066179845,
+        165.305791908642,
+        2.726819246336116
+      ],
+      "tip_mm": [
+        16.701200412969513,
+        164.20188444720893,
+        3.3223896880908406
+      ],
+      "tip_depth_mm": 11.230466839293056,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-b4a114bcd9b063d4ce7eb610",
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.521001981473553,
+        169.3387453990151,
+        3.8233982015445047
+      ],
+      "tip_mm": [
+        16.360801732644603,
+        168.23483793758203,
+        4.41896864329923
+      ],
+      "tip_depth_mm": 11.230466839293067,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-aa54d01761710f77c7b96888",
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.521001981473553,
+        169.3387453990151,
+        3.8233982015445047
+      ],
+      "tip_mm": [
+        16.360801732644603,
+        168.23483793758203,
+        4.41896864329923
+      ],
+      "tip_depth_mm": 11.230466839293067,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-f33b6dce6d40b6ceac05302a",
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.54789940646713,
+        166.28152579466288,
+        -1.3392268513688177
+      ],
+      "tip_mm": [
+        21.239960135389893,
+        165.6575780990703,
+        -1.0026000799422334
+      ],
+      "tip_depth_mm": 6.3476551700352175,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-76355b6e53b211ed0f57d311",
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.54789940646713,
+        166.28152579466288,
+        -1.3392268513688177
+      ],
+      "tip_mm": [
+        21.239960135389893,
+        165.6575780990703,
+        -1.0026000799422334
+      ],
+      "tip_depth_mm": 6.3476551700352175,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-b055d0034489e3543eb33333",
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.534450693970342,
+        167.81013559683896,
+        1.2420856750878397
+      ],
+      "tip_mm": [
+        23.1674158139938,
+        167.37817180758256,
+        1.475134978383167
+      ],
+      "tip_depth_mm": 4.394530502332068,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-05834e64a88a38315b6304ac",
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.316484048751605,
+        169.479698055637,
+        0.2522632942556542
+      ],
+      "tip_mm": [
+        17.126735995473,
+        168.47178254737202,
+        0.7960450019447514
+      ],
+      "tip_depth_mm": 10.253904505441495,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-6083b380facbd57fff7933bb",
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.75241733918908,
+        166.140573138041,
+        2.2319080559200253
+      ],
+      "tip_mm": [
+        18.53312148146081,
+        165.22864958294412,
+        2.7239010295434944
+      ],
+      "tip_depth_mm": 9.277342171589932,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-8f4175d6082ebb6ab9b305b1",
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.525484885639152,
+        168.8292087982897,
+        2.962960692725618
+      ],
+      "tip_mm": [
+        18.306189027910875,
+        167.91728524319282,
+        3.4549536663490876
+      ],
+      "tip_depth_mm": 9.277342171589938,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-567f34aa6179f9fc9b6c2438",
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.543416502301536,
+        166.79106239538825,
+        -0.4787893425499334
+      ],
+      "tip_mm": [
+        24.146833817875333,
+        166.45509055929992,
+        -0.2975287733202343
+      ],
+      "tip_depth_mm": 3.417968168480499,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-1b15d1e8ec43e1b71cf20965",
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.30751824042041,
+        170.4987712570877,
+        1.9731383118934307
+      ],
+      "tip_mm": [
+        18.088222382692138,
+        169.58684770199082,
+        2.4651312855169003
+      ],
+      "tip_depth_mm": 9.277342171589936,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-6fd08dfa237bff985486eff4",
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.325449857082795,
+        168.46062485418625,
+        -1.4686117233821208
+      ],
+      "tip_mm": [
+        23.928867172656595,
+        168.12465301809792,
+        -1.2873511541524216
+      ],
+      "tip_depth_mm": 3.417968168480498,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-0b5dc1af2ab2114852e34c18",
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.743451530857886,
+        167.15964633949173,
+        3.952783073557802
+      ],
+      "tip_mm": [
+        18.524155673129613,
+        166.24772278439485,
+        4.444776047181271
+      ],
+      "tip_depth_mm": 9.277342171589936,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-916a57aa3d45e4487fe2792d",
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.76138314752027,
+        165.12149993659025,
+        0.5110330382822506
+      ],
+      "tip_mm": [
+        23.394348267543734,
+        164.68953614733385,
+        0.7440823415775775
+      ],
+      "tip_depth_mm": 4.394530502332062,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-6886660670d9547c0e44a001",
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.207500726142236,
+        170.31447928503596,
+        -0.24264789616043558
+      ],
+      "tip_mm": [
+        17.017752672863637,
+        169.306563776771,
+        0.30113381152866125
+      ],
+      "tip_depth_mm": 10.25390450544149,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-448d1a5d922fcb2a1c7ac897",
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.86140066179845,
+        165.30579190864196,
+        2.726819246336114
+      ],
+      "tip_mm": [
+        23.494365781821912,
+        164.87382811938556,
+        2.959868549631441
+      ],
+      "tip_depth_mm": 4.394530502332061,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-2682295a9c4efb728c01a4f3",
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "entry_mm": [
+        27.521001981473553,
+        169.33874539901507,
+        3.8233982015445047
+      ],
+      "tip_mm": [
+        18.301706123745276,
+        168.4268218439182,
+        4.315391175167974
+      ],
+      "tip_depth_mm": 9.27734217158994,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    },
+    {
+      "action_id": "nominal-cavity-b05c09fbb3a45118c2d5a31f",
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "feasible": false,
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "entry_mm": [
+        27.54789940646713,
+        166.28152579466288,
+        -1.3392268513688208
+      ],
+      "tip_mm": [
+        23.18086452649058,
+        165.84956200540645,
+        -1.106177548073493
+      ],
+      "tip_depth_mm": 4.394530502332077,
+      "entry_inside_center_bounds": true,
+      "tip_inside_center_bounds": true,
+      "ray_samples": 5,
+      "ray_samples_inside": 5,
+      "sample_fraction_inside": 1.0,
+      "straight_segment_fraction_inside": 1.0
+    }
+  ],
+  "ray_sample_coverage_counts": {
+    "none": 0,
+    "partial": 0,
+    "full": 117
+  },
+  "target_basis": "static permitted nominal field; no private reference or residual/removal credit",
+  "binding_scope": "Source/provider/nominal and source-cell geometry checked; accepted actions exactly match observation dtype projection and tools. Cavity/decision hashes are task-reported provenance, not reconstructed from cropped images; rejected feasibility remains native-preview authority.",
+  "interpretation": "Current emitted/accepted active-tip sweep envelopes only. Bounds ignore cell containment, lateral gaps within the bounding box, prior-shaft clearance, interactions and horizon; future dynamic catalogs may extend them. No reachability or safety claim."
+}

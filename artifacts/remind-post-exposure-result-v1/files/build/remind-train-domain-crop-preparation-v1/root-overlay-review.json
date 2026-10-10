@@ -1,0 +1,73 @@
+{
+  "image_files": [
+    {
+      "path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains/public-qc-axis0-index84.png",
+      "sha256": "31c86ff35a82ebd5ec3739c0e258b059487ab8c184d09e95615cf46397799e8f",
+      "viewed": true
+    },
+    {
+      "path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains/public-qc-axis1-index60.png",
+      "sha256": "e6f63b98c9dff62701f4effa67b374a5595c1a3792e4008911d566a602843b76",
+      "viewed": true
+    },
+    {
+      "path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains/public-qc-axis2-index23.png",
+      "sha256": "7e649db61c1d5b1ed8a7a10e1d4c84f3575681f1fb9ded949833500fd5330de0",
+      "viewed": true
+    },
+    {
+      "path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains/public-qc-axis0-index16.png",
+      "sha256": "44c4cc52eb61f4df8f13e88d2a73a8d6197e2d539ad84c6b52901521dc657811",
+      "viewed": true
+    },
+    {
+      "path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains/public-qc-axis1-index120.png",
+      "sha256": "ff40b4dd2011cd854beed4232c40727209a3865cfdf0fb80fe816134b4d646a8",
+      "viewed": true
+    },
+    {
+      "path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains/public-qc-axis2-index66.png",
+      "sha256": "72f84bc0980ab77c8aae1187f76068821469a96c694188a0dedac0190b3bc62e",
+      "viewed": true
+    },
+    {
+      "path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/public-qc-axis0-index24.png",
+      "sha256": "826d600dffac1d6cdd64709c2d72a97e35b24a1e9dcfe9db49ced778eb9c5891",
+      "viewed": true
+    },
+    {
+      "path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/public-qc-axis1-index69.png",
+      "sha256": "c0af2cda8cfe945067ae80a668e3386e5c676885fab042775f41393ea530fcff",
+      "viewed": true
+    },
+    {
+      "path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/public-qc-axis2-index42.png",
+      "sha256": "0437e7214b5e45458447fbd3ba76eb05cbe4aeb342efb562306cb052c283cfe5",
+      "viewed": true
+    },
+    {
+      "path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains/public-qc-axis0-index105.png",
+      "sha256": "db77275340d500cf0a6194118a13711484d550927d62c1f74a33cb3eb6be5e7c",
+      "viewed": true
+    },
+    {
+      "path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains/public-qc-axis1-index71.png",
+      "sha256": "0fc03993c0a652080155436cc4b83267f7099ff0ba1455af6f7ca89316996ad3",
+      "viewed": true
+    },
+    {
+      "path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains/public-qc-axis2-index78.png",
+      "sha256": "835c1db48f193c65f3625c09a47dfa722bf09e27741d0a819a92900abc0b2312",
+      "viewed": true
+    }
+  ],
+  "observations": {
+    "ReMIND-002": "Previously crop-lost target is now visibly contained in these displayed planes with added margin; no obvious repeated band artifact. Quantitative remaining 20-label NN deficit and 1010 target cells in unknown support remain.",
+    "ReMIND-015": "Target is lateral and near the cortical outline in the displayed coronal and axial views; no obvious repeated band artifact or target clipping in these displayed planes.",
+    "ReMIND-018": "Small target is visible near central anatomy across the three displayed planes; no obvious repeated band artifact. This does not establish anatomical label correctness.",
+    "ReMIND-045": "Expanded displayed head/brain field contains the target with margin in these planes; no obvious repeated band artifact. Prior clipping result is preserved."
+  },
+  "planning_admission": false,
+  "scope": "Three saved planes per fixed TRAIN subject; qualitative display/coverage sanity check only. Not expert annotation validation or volumetric proof.",
+  "version": "root-twelve-overlay-review-v1"
+}

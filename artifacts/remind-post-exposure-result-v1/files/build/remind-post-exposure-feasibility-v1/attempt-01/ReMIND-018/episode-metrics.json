@@ -1,0 +1,509 @@
+{
+  "task_version": "native-spatial-observed-openings-v1",
+  "source_hash": "sha256:0db487c202c1fef5ce408c6dc593f6a42ce12f6f2b630807174ba9f37727edd6",
+  "supplied_goal_region": {
+    "condition": "PARTIAL_TARGET_PROGRESS",
+    "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+    "full_region_positive_voxels": 1247,
+    "unsupported_region_positive_voxels": 0,
+    "full_region_membership_mm3": 1189.2323111979806,
+    "unsupported_region_membership_mm3": 0.0,
+    "supported_region_membership_mm3": 1189.2323111979806,
+    "fraction_denominator": "entire_unchanged_supplied_region",
+    "occupancy_modified": true,
+    "derived_occupancy": true,
+    "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+    "occupancy_derivation": {
+      "version": "supplied-support-target-union-v1",
+      "condition": "cerebrum_plus_supplied_tumor_assumption",
+      "operation": "S OR (T > 0)",
+      "source_support_hash": "sha256:be8a66ee02cfedfd1f83d303ec8174aa705023fd2181635c98306c62add7dcab",
+      "supplied_target_hash": "sha256:4d2781b08afed89ea00e71a215f3be587726e500e8f98d271e62aea3f0e4f394",
+      "derived_occupancy_hash": "sha256:fa00381af0952750bc175fc7c41b9d4d4ae43a1ea27d5de82a6393968ffdc8dd",
+      "added_region_hash": "sha256:d52b614f3e79704f14dd5395a818048d97d0fe9f1cddcfa5945c9fb0a386f4ae",
+      "source_support_positive_voxels": 909356,
+      "added_region_positive_voxels": 250,
+      "source_support_unchanged": true,
+      "target_unchanged": true,
+      "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+      "anatomical_or_material_validation": false,
+      "outside_union": "unchanged simulation zeros; not certified empty anatomy"
+    },
+    "target_modified": false,
+    "unsupported_region_removable": false,
+    "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+    "source_and_simulated_domains": {
+      "version": "separate-source-and-simulated-domain-v1",
+      "source_support_domain_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+      "interaction_domain_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+      "interaction_domain_rule": "Ds OR (T > 0)",
+      "source_support_known_voxels": 2452824,
+      "source_support_unknown_voxels": 146736,
+      "target_in_unknown_support_voxels": 0,
+      "assumed_material_beyond_source_domain_voxels": 0,
+      "unavailable_interaction_voxels": 146736,
+      "source_domain_extended": false,
+      "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+      "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+      "unknown_interaction_rule": "U except declared wholly-proximal E blocks full tool; no U seed, flood or removal",
+      "external_tool_extent": "declared E and outside-image extent unassessed; observed Ds unchanged",
+      "anatomical_or_material_validation": false,
+      "post_exposure_condition_hash": "sha256:61715a74873c65b6061e59604d38aa918f849ec8e570ef6dd0fb5435a9b9d5db"
+    },
+    "simulated_supported_goal_removed_mm3": 0.0,
+    "fraction_of_full_region_removed": 0.0
+  },
+  "reference_hash": "sha256:bcc2f369f962c2e3be65daba7990e0843a9c73c0aa6dc429928776a70fd2f319",
+  "decision_model_hash": "sha256:6922c8b6e7b2956ae3f2480e04b3733d1d9ce41af13b292117f68d467c17743a",
+  "steps": 1,
+  "terminated": true,
+  "total_reward": 0.0,
+  "target_removed_mm3": 0.0,
+  "normal_removed_mm3": 0.0,
+  "reference_target_outside_observed_support_mm3": 0.0,
+  "simulated_removed_volume_mm3": 0.0,
+  "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+  "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+  "partial_contact_weight": 0.0,
+  "functional_evidence_available": {
+    "motor": false,
+    "language": false
+  },
+  "function_unassessed_removed_volume_mm3": 0.0,
+  "motor_surrogate": null,
+  "language_surrogate": null,
+  "clinical_deficit_probability": null,
+  "clinical_probability_reason": "no_validated_clinical_outcome_model",
+  "unknowns": [
+    "motor_evidence_unavailable",
+    "language_evidence_unavailable",
+    "vascular_coverage_unassessed"
+  ],
+  "planning_estimator_only": false,
+  "history": [
+    {
+      "action_id": "STOP",
+      "reward": 0.0,
+      "target_removed_mm3": 0.0,
+      "normal_removed_mm3": 0.0,
+      "insertion_distance_mm": 0.0,
+      "complete_tool_path_length_mm": 0.0
+    }
+  ],
+  "observation_track": "annotation_assisted",
+  "proposal_mode": "nominal_cavity_v1",
+  "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+  "support_provenance": {
+    "public_manifest_sha256": "bd123ffaba376977f672c16a215dee339757fe7514f54c6f9f4e2e7ca8176fed",
+    "supplied_support_file_sha256": "5840ece333b799a9a4f2bf8eebc099e5cd5e16f04b0927c2cf4b97f3c2ff78c8",
+    "supplied_target_file_sha256": "88cc540fa4eb8447a5d71902b4871553f198a161d28dd571499e6000b9605a5c",
+    "target_domain_file_sha256": "86ec4b36c96ae98fad59700431b600591e12c9a9c0e5acd6a7aa5a43adce54c8",
+    "target_domain_hash": "sha256:1c6ba6fa7375d1fbd573ed86a7ce48ee9c13b5a447b90439935dc957003b23dc",
+    "public_access_rule": {
+      "rule": "fixed_source_axis0_target_centroid_side_of_support_extent",
+      "target_centroid_source_voxels": [
+        24.464314354450682,
+        72.2878909382518,
+        41.80513231756215
+      ],
+      "access_index": [
+        26.5,
+        72.0,
+        42.0
+      ],
+      "access_side": "negative_source_axis0",
+      "support_extent_axis0": [
+        2,
+        133
+      ],
+      "transverse_rounding": "numpy_rint_ties_to_even",
+      "source_voxel_entry_offset": 0.5,
+      "radius_mm": 6.0,
+      "route_search": false,
+      "private_reference_used": false,
+      "public_target_positive_voxels": 1247,
+      "unsupported_target_positive_voxels": 250,
+      "task_condition": "PARTIAL_TARGET_PROGRESS",
+      "annotation_domain_hash": "sha256:1c6ba6fa7375d1fbd573ed86a7ce48ee9c13b5a447b90439935dc957003b23dc",
+      "annotation_domain_meaning": "outside source annotation domain remains unknown anatomy",
+      "goal_membership_meaning": "exact supplied positive region; outside this region is not normal anatomy truth",
+      "estimated_support_zeros": "simulation occupancy assumption, not certified empty anatomy",
+      "tools": "existing geometry.GENERIC_TOOLS; generic research geometry, not device validation",
+      "strict_baseline_access_unchanged_in_original_condition": true,
+      "post_exposure": {
+        "version": "public-union-post-exposure-axis0-v1",
+        "original_access": {
+          "center_mm": [
+            -33.16474987185926,
+            16.02802245391372,
+            33.61724372521439
+          ],
+          "normal_inward": [
+            0.9999987757578223,
+            -0.0004127613662210905,
+            -0.0015093412176356124
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "access": {
+          "center_mm": [
+            -54.649103455081075,
+            16.03689037590759,
+            33.649670985310635
+          ],
+          "normal_inward": [
+            0.9999987757578223,
+            -0.0004127613662210904,
+            -0.0015093412176356122
+          ],
+          "radius_mm": 6.0,
+          "window_id": "public-union-post-exposure-axis0-v1"
+        },
+        "selection": "same_side_and_transverse_centroid; outer_full_O_cell_face_across_closed_disc; no fallback",
+        "source_S_hash": "sha256:be8a66ee02cfedfd1f83d303ec8174aa705023fd2181635c98306c62add7dcab",
+        "full_T_hash": "sha256:941ba9785f573643a5d2761db191a83b6fca0c6de56118e41620d9ba541d7d96",
+        "source_Ds_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+        "occupancy_hash": "sha256:fa00381af0952750bc175fc7c41b9d4d4ae43a1ea27d5de82a6393968ffdc8dd",
+        "interaction_domain_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+        "native_affine_hash": "sha256:c3851a112d462af90c8e4e65adc55238a76a6a558dce271d469551fc6e432047",
+        "source_shape": [
+          135,
+          166,
+          116
+        ],
+        "external_workspace_hash": "sha256:bb45487bd11acd3c83e84e281a03468ae3680e04ad7359f0638445fff41f838e",
+        "seed_hash": "sha256:5e0065113df932d6c8e3f9382fc2290d1ab0b20c5dbafe0a956d0f7a42eeefc2",
+        "external_encounter_hash_rule": "semantic_digest(sorted_unique_native_index_lists)",
+        "initial_free_hash": "sha256:e0e88ebf9bc85d619c1172e28e9336ba8c71f23c1d55557f257c5d3617fbd6ea",
+        "external_unknown_cells": 39860,
+        "seed_cells": 93,
+        "initial_free_cells": 1542744,
+        "fixed_disc_occupied_cells": 10363,
+        "cell_face_source_index": 4.5,
+        "classification_tolerance_mm": 1e-08,
+        "external_workspace_rule": "E=U intersect full_cell_hi_less_than_minus1e-8mm; collision_exception_only",
+        "seed_rule": "Ds&~O; proximal distal_face_on_plane; entire footprint strictly_inside_disc",
+        "initial_free_rule": "six_connected_closure_of_K_in_Ds_and_not_O; zero_removal_or_reward",
+        "preentry_rule": "per_insertion_p0=entry-((max(rtip,rshaft-tip_length*cos_angle)+1e-8)/cos_angle)*axis",
+        "trajectory": "checked_axial_insertion_and_reverse; transfer_between_withdrawn_poses_unassessed",
+        "source_domains_extended": false,
+        "source_material_deleted": false,
+        "source_target_deleted": false,
+        "physical_air_or_operative_opening_observed": false,
+        "outside_image_geometry": "existing_unassessed_extent; tip_outside_image_still_refused",
+        "scope": "public_simulated_post_exposure_search_qualification_only"
+      }
+    },
+    "occupancy_unchanged": false,
+    "target_unchanged": true,
+    "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+    "raw_support_array_hash": "sha256:be8a66ee02cfedfd1f83d303ec8174aa705023fd2181635c98306c62add7dcab",
+    "target_domain_binary_hash": "sha256:c9a31fb4efa836d04c4a105595c63937b5f54babdd2144e58bf0776b064ae79f",
+    "source_QC_scope": "unchanged supplied annotations and frame; derived occupancy is not anatomically validated",
+    "support_domain_file_sha256": "679b5ff57a56a33661e09933582d526fa8c991b7f6e2d860240014a62de3bf4b",
+    "support_domain_binary_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+    "partial_source_domain_preserved": true,
+    "source_MR_crop_affine_ras_mm": [
+      [
+        0.9765615267041677,
+        -0.00039961327790992185,
+        -0.0015104415335160549,
+        -58.95142515419404
+      ],
+      [
+        -0.0004030869154108544,
+        -0.9765595621501455,
+        -0.0023557996839649533,
+        86.4499382463316
+      ],
+      [
+        -0.0014738378955550925,
+        0.002301279277640272,
+        -0.9999963738945553,
+        75.49046262417195
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "explicit_planning_grid": {
+      "derived_grid": {
+        "max_normalized_Gram_error": 4.926795462540842e-16,
+        "polar_corner_difference_mm": 5.0802282791029965e-14,
+        "polar_transform_applied": false,
+        "spacing_mm": [
+          0.9765627220593563,
+          0.976562355410022,
+          1.0000002895139766
+        ]
+      },
+      "image_interpolation": "none",
+      "maximum_bound_mm": 0.001,
+      "maximum_crop_world_difference_mm": 2.9413255070042383e-05,
+      "original_MR_affine_overwritten": false,
+      "source_MR_grid": {
+        "max_normalized_Gram_error": 2.631132606427021e-07,
+        "polar_corner_difference_mm": 2.9413255070042383e-05,
+        "polar_transform_applied": false,
+        "spacing_mm": [
+          0.9765627220593558,
+          0.9765623554100217,
+          1.0000002895139763
+        ]
+      },
+      "source_MR_samples_preserved": true,
+      "subset_converter_fit_difference_mm": 3.0346225252248732e-05
+    },
+    "public_source_bindings": {
+      "cohort_sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+      "case_sha256": "63df1936fd64c7b7370f4d772a7d2b75c95c12d439a4065b1c159ea6bc17369a",
+      "headers_sha256": "ae830f77f38ca86765d8df1f9cf2b5263e19d4ab4e9538de0879a8e7b5452b43",
+      "conversion": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/conversion-result.json",
+        "sha256": "fe0bf8ecc90e18eab03953b6c8c3bbef1e9684d06382f56694f0bb86e04ae713"
+      },
+      "saved_review": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-saved-domain-review/saved-domain-review.json",
+        "sha256": "efcc61eed7e3873d135b6c3f696e338431f8151d300ed137562388893e60f589"
+      },
+      "saved_array_review_sha256": "efcc61eed7e3873d135b6c3f696e338431f8151d300ed137562388893e60f589",
+      "root_visual_review": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/root-overlay-review.json",
+        "sha256": "59b7a20cbd10fe841aeb6fc45b9fbc3936ad274db6425851dd1cc81c232a52d7"
+      }
+    },
+    "public_label_resampling": {
+      "cerebrum": {
+        "resampling_can_omit_subvoxel_labels": true,
+        "saved_domain_voxels": 2452824,
+        "saved_positive_volume_mm3": 867229.7815410994,
+        "saved_positive_voxels": 909356,
+        "source_positive_centres_cropped_from_bound_execution": 0,
+        "source_positive_volume_mm3_from_bound_execution": 872233.9442726342,
+        "source_positive_voxels_from_bound_execution": 7316829,
+        "volume_change_percent": -0.573717953124131
+      },
+      "whole_tumor": {
+        "resampling_can_omit_subvoxel_labels": true,
+        "saved_domain_voxels": 7920,
+        "saved_positive_volume_mm3": 1189.2323111979808,
+        "saved_positive_voxels": 1247,
+        "source_positive_centres_cropped_from_bound_execution": 0,
+        "source_positive_volume_mm3_from_bound_execution": 1189.23177457601,
+        "source_positive_voxels_from_bound_execution": 1247,
+        "volume_change_percent": 4.512341349460769e-05
+      }
+    }
+  },
+  "source_and_simulated_domains": {
+    "version": "separate-source-and-simulated-domain-v1",
+    "source_support_domain_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+    "interaction_domain_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+    "interaction_domain_rule": "Ds OR (T > 0)",
+    "source_support_known_voxels": 2452824,
+    "source_support_unknown_voxels": 146736,
+    "target_in_unknown_support_voxels": 0,
+    "assumed_material_beyond_source_domain_voxels": 0,
+    "unavailable_interaction_voxels": 146736,
+    "source_domain_extended": false,
+    "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+    "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+    "unknown_interaction_rule": "U except declared wholly-proximal E blocks full tool; no U seed, flood or removal",
+    "external_tool_extent": "declared E and outside-image extent unassessed; observed Ds unchanged",
+    "anatomical_or_material_validation": false,
+    "post_exposure_condition_hash": "sha256:61715a74873c65b6061e59604d38aa918f849ec8e570ef6dd0fb5435a9b9d5db"
+  },
+  "post_exposure": {
+    "version": "public-union-post-exposure-axis0-v1",
+    "original_access": {
+      "center_mm": [
+        -33.16474987185926,
+        16.02802245391372,
+        33.61724372521439
+      ],
+      "normal_inward": [
+        0.9999987757578223,
+        -0.0004127613662210905,
+        -0.0015093412176356124
+      ],
+      "radius_mm": 6.0,
+      "window_id": "fixed-public-target-side-axis0-v1"
+    },
+    "access": {
+      "center_mm": [
+        -54.649103455081075,
+        16.03689037590759,
+        33.649670985310635
+      ],
+      "normal_inward": [
+        0.9999987757578223,
+        -0.0004127613662210904,
+        -0.0015093412176356122
+      ],
+      "radius_mm": 6.0,
+      "window_id": "public-union-post-exposure-axis0-v1"
+    },
+    "selection": "same_side_and_transverse_centroid; outer_full_O_cell_face_across_closed_disc; no fallback",
+    "source_S_hash": "sha256:be8a66ee02cfedfd1f83d303ec8174aa705023fd2181635c98306c62add7dcab",
+    "full_T_hash": "sha256:941ba9785f573643a5d2761db191a83b6fca0c6de56118e41620d9ba541d7d96",
+    "source_Ds_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+    "occupancy_hash": "sha256:fa00381af0952750bc175fc7c41b9d4d4ae43a1ea27d5de82a6393968ffdc8dd",
+    "interaction_domain_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+    "native_affine_hash": "sha256:c3851a112d462af90c8e4e65adc55238a76a6a558dce271d469551fc6e432047",
+    "source_shape": [
+      135,
+      166,
+      116
+    ],
+    "external_workspace_hash": "sha256:bb45487bd11acd3c83e84e281a03468ae3680e04ad7359f0638445fff41f838e",
+    "seed_hash": "sha256:5e0065113df932d6c8e3f9382fc2290d1ab0b20c5dbafe0a956d0f7a42eeefc2",
+    "external_encounter_hash_rule": "semantic_digest(sorted_unique_native_index_lists)",
+    "initial_free_hash": "sha256:e0e88ebf9bc85d619c1172e28e9336ba8c71f23c1d55557f257c5d3617fbd6ea",
+    "external_unknown_cells": 39860,
+    "seed_cells": 93,
+    "initial_free_cells": 1542744,
+    "fixed_disc_occupied_cells": 10363,
+    "cell_face_source_index": 4.5,
+    "classification_tolerance_mm": 1e-08,
+    "external_workspace_rule": "E=U intersect full_cell_hi_less_than_minus1e-8mm; collision_exception_only",
+    "seed_rule": "Ds&~O; proximal distal_face_on_plane; entire footprint strictly_inside_disc",
+    "initial_free_rule": "six_connected_closure_of_K_in_Ds_and_not_O; zero_removal_or_reward",
+    "preentry_rule": "per_insertion_p0=entry-((max(rtip,rshaft-tip_length*cos_angle)+1e-8)/cos_angle)*axis",
+    "trajectory": "checked_axial_insertion_and_reverse; transfer_between_withdrawn_poses_unassessed",
+    "source_domains_extended": false,
+    "source_material_deleted": false,
+    "source_target_deleted": false,
+    "physical_air_or_operative_opening_observed": false,
+    "outside_image_geometry": "existing_unassessed_extent; tip_outside_image_still_refused",
+    "scope": "public_simulated_post_exposure_search_qualification_only"
+  },
+  "intensity_normalization": {
+    "method": "support_percentile_1_99",
+    "percentiles": [
+      1.0,
+      99.0
+    ],
+    "percentile_method": "linear",
+    "lower": 223.0,
+    "upper": 559.0,
+    "clip": [
+      0.0,
+      1.0
+    ],
+    "statistics_voxels": 909606,
+    "statistics_scope": "entire_permitted_support",
+    "source_image_hash": "sha256:926e5ddb2e3e26b14106c29509a369200dbdc33ad1c1b89023ff41f3a89fbb8a",
+    "support_hash": "sha256:fa00381af0952750bc175fc7c41b9d4d4ae43a1ea27d5de82a6393968ffdc8dd",
+    "reference_labels_used": false,
+    "crop_used_for_statistics": false,
+    "raw_source_preserved": true
+  },
+  "native_grid_reconciliation": {
+    "method": "orthogonal_roundoff_1e-6mm",
+    "shape": [
+      135,
+      166,
+      116
+    ],
+    "original_affine_ras_mm": [
+      [
+        0.9765615265100828,
+        -0.0003996131995572975,
+        -0.001510309995578218,
+        -58.95142515419404
+      ],
+      [
+        -0.000403087363357807,
+        -0.976559562254609,
+        -0.0023558451180249406,
+        86.4499382463316
+      ],
+      [
+        -0.0014739663680106172,
+        0.0023012349613170113,
+        -0.9999963739861931,
+        75.49046262417195
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "derived_affine_ras_mm": [
+      [
+        0.9765615265100827,
+        -0.000399613199557236,
+        -0.0015103099955782364,
+        -58.95142515419404
+      ],
+      [
+        -0.00040308736335780684,
+        -0.9765595622546092,
+        -0.0023558451180245785,
+        86.4499382463316
+      ],
+      [
+        -0.0014739663680106167,
+        0.0023012349613172017,
+        -0.999996373986193,
+        75.49046262417195
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "original_affine_hash": "sha256:85dafc000c00b04deb84ab30da521cffd296290426b2a008bbe5ae8f688e6c4b",
+    "derived_affine_hash": "sha256:c3851a112d462af90c8e4e65adc55238a76a6a558dce271d469551fc6e432047",
+    "original_spacing_mm": [
+      0.9765627220593563,
+      0.976562355410022,
+      1.0000002895139766
+    ],
+    "derived_spacing_mm": [
+      0.9765627220593562,
+      0.976562355410022,
+      1.0000002895139766
+    ],
+    "origin_preserved": true,
+    "handedness_preserved": true,
+    "source_axis_gram_max_error": 4.926795462540842e-16,
+    "maximum_allowed_gram_error": 1e-08,
+    "corner_domain": "full_source_cell_extent_minus_half_to_shape_minus_half",
+    "maximum_corner_displacement_mm": 5.0802282791029965e-14,
+    "maximum_allowed_corner_displacement_mm": 1e-06,
+    "resampled": false,
+    "proposal_and_crop_indices_basis": "original_source_affine",
+    "native_and_actor_physical_grid": "derived_affine_ras_mm",
+    "source_image_hash": "sha256:926e5ddb2e3e26b14106c29509a369200dbdc33ad1c1b89023ff41f3a89fbb8a",
+    "support_hash": "sha256:fa00381af0952750bc175fc7c41b9d4d4ae43a1ea27d5de82a6393968ffdc8dd"
+  },
+  "crop": {
+    "origin_voxels": [
+      0,
+      40,
+      9
+    ],
+    "shape": [
+      64,
+      64,
+      64
+    ],
+    "basis": "scan_frame_and_declared_access_only",
+    "native_geometry_resampled": false
+  },
+  "assumptions": [
+    "rigid_fully_contained_native_cell_removal",
+    "hypothetical_intracranial_aperture",
+    "no_deformation_or_force_model",
+    "geometric_objective_does_not_optimize_function_or_partial_contact"
+  ]
+}

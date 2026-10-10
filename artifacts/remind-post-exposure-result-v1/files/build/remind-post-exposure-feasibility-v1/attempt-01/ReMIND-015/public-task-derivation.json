@@ -1,0 +1,96 @@
+{
+  "rule": "fixed_source_axis0_target_centroid_side_of_support_extent",
+  "target_centroid_source_voxels": [
+    15.592253066494512,
+    116.46881859264042,
+    64.0692059393157
+  ],
+  "access_index": [
+    5.5,
+    116.0,
+    64.0
+  ],
+  "access_side": "negative_source_axis0",
+  "support_extent_axis0": [
+    2,
+    131
+  ],
+  "transverse_rounding": "numpy_rint_ties_to_even",
+  "source_voxel_entry_offset": 0.5,
+  "radius_mm": 6.0,
+  "route_search": false,
+  "private_reference_used": false,
+  "public_target_positive_voxels": 7745,
+  "unsupported_target_positive_voxels": 1758,
+  "task_condition": "PARTIAL_TARGET_PROGRESS",
+  "annotation_domain_hash": "sha256:0c276cd5b64d47b649dd86d67b8411aecd472b0b100154e130c8888821220a81",
+  "annotation_domain_meaning": "outside source annotation domain remains unknown anatomy",
+  "goal_membership_meaning": "exact supplied positive region; outside this region is not normal anatomy truth",
+  "estimated_support_zeros": "simulation occupancy assumption, not certified empty anatomy",
+  "tools": "existing geometry.GENERIC_TOOLS; generic research geometry, not device validation",
+  "strict_baseline_access_unchanged_in_original_condition": true,
+  "post_exposure": {
+    "version": "public-union-post-exposure-axis0-v1",
+    "original_access": {
+      "center_mm": [
+        -53.404718749153474,
+        -12.469562499768145,
+        11.58070004125976
+      ],
+      "normal_inward": [
+        1.0,
+        4.897e-12,
+        0.0
+      ],
+      "radius_mm": 6.0,
+      "window_id": "fixed-public-target-side-axis0-v1"
+    },
+    "access": {
+      "center_mm": [
+        -56.334406249153474,
+        -12.469562499782498,
+        11.580700041259725
+      ],
+      "normal_inward": [
+        1.0,
+        4.897e-12,
+        0.0
+      ],
+      "radius_mm": 6.0,
+      "window_id": "public-union-post-exposure-axis0-v1"
+    },
+    "selection": "same_side_and_transverse_centroid; outer_full_O_cell_face_across_closed_disc; no fallback",
+    "source_S_hash": "sha256:9ada4b66d74fffee3a0ff584e96c8e94733bb5f277d906c17e520a3e7c3718c8",
+    "full_T_hash": "sha256:6f0e6eca3c3185f6bd2c90495579df2a064254ddb75e3448cf890fdfcf8f7def",
+    "source_Ds_hash": "sha256:7813d77de397dc95f8ffe1b34b3ba4ea400be89656620d5e6149a3f309a93558",
+    "occupancy_hash": "sha256:089b6f75f694bc2a8830aae0eb5d3bc1bc37d5457d233287b2a9836670b46340",
+    "interaction_domain_hash": "sha256:7813d77de397dc95f8ffe1b34b3ba4ea400be89656620d5e6149a3f309a93558",
+    "native_affine_hash": "sha256:8fe5a89da8428f0410683c79be5b751f726eba80ddf6d91ee1af1abe7e0220fb",
+    "source_shape": [
+      134,
+      175,
+      116
+    ],
+    "external_workspace_hash": "sha256:a31fa02bb9e35641e1a75d466a24b9db20880e034eae3db9bf1fb5aaad273bf2",
+    "seed_hash": "sha256:df077dbbab6b97a831cc33b14c3a4264d0509cc65844e04546ab81f60f816615",
+    "external_encounter_hash_rule": "semantic_digest(sorted_unique_native_index_lists)",
+    "initial_free_hash": "sha256:4fc8d4a166583abe1f0f6c2996755605f94cc20112c387e77400ae22cebdf8f7",
+    "external_unknown_cells": 21164,
+    "seed_cells": 93,
+    "initial_free_cells": 1646557,
+    "fixed_disc_occupied_cells": 14399,
+    "cell_face_source_index": 2.5,
+    "classification_tolerance_mm": 1e-08,
+    "external_workspace_rule": "E=U intersect full_cell_hi_less_than_minus1e-8mm; collision_exception_only",
+    "seed_rule": "Ds&~O; proximal distal_face_on_plane; entire footprint strictly_inside_disc",
+    "initial_free_rule": "six_connected_closure_of_K_in_Ds_and_not_O; zero_removal_or_reward",
+    "preentry_rule": "per_insertion_p0=entry-((max(rtip,rshaft-tip_length*cos_angle)+1e-8)/cos_angle)*axis",
+    "trajectory": "checked_axial_insertion_and_reverse; transfer_between_withdrawn_poses_unassessed",
+    "source_domains_extended": false,
+    "source_material_deleted": false,
+    "source_target_deleted": false,
+    "physical_air_or_operative_opening_observed": false,
+    "outside_image_geometry": "existing_unassessed_extent; tip_outside_image_still_refused",
+    "scope": "public_simulated_post_exposure_search_qualification_only"
+  }
+}

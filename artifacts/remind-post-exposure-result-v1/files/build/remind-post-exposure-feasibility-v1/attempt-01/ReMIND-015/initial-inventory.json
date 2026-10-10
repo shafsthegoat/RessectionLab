@@ -1,0 +1,6330 @@
+{
+  "basis": "permitted_nominal_and_observed_cavity_columns_without_crop_clipping",
+  "provider_version": "permitted-nominal-cavity-tool-footprint-opening-v1",
+  "source_hash": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524",
+  "decision_model_hash": "sha256:4d5944a1c2e5b1090ead2667a12d2c862e4b3d45d85c0e336d5a4b83ccfff3dd",
+  "cavity_state_hash": "sha256:2f9b04b9f0b7cf1092e4ade7b49382bf34f5a629a2abb62ac8835a31a6dd4618",
+  "provider_model_hash": "sha256:42cc956ed39176bce577602ea3ab8ff4a635840b8516ef720d8a173a4093904c",
+  "nominal_target_hash": "sha256:accc5fc2bc6914f3be555178d91e2aef731b0df299c2807f019e04f07d0c850b",
+  "nominal_provenance_hash": "sha256:ce52519de23d744737445fbc672c3775dcc98443d5f4b24020097cf218d9b8fb",
+  "declared_slots": 130,
+  "evaluated_slots": 78,
+  "emitted_count": 78,
+  "accepted_count": 39,
+  "rejected_count": 39,
+  "omitted_count": 0,
+  "duplicate_count": 52,
+  "unavailable_count": 0,
+  "complete": true,
+  "ledger_complete": true,
+  "terminal": false,
+  "steps_taken": 0,
+  "max_steps": 24,
+  "remaining_steps": 24,
+  "terminated_slots": 0,
+  "candidate_cap": 120,
+  "crop_clipping": false,
+  "endpoint_centers_in_actor_crop": 78,
+  "all_support_cell_tool_pairs": 1797274,
+  "scope": "complete_dispositions_for_declared_columns_and_families_not_all_surgical_paths",
+  "disposition_counts": {
+    "PROPOSED_UNCERTIFIED": 78,
+    "DUPLICATE_GEOMETRY": 52
+  },
+  "emitted": [
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-f9d6e69314b24a56e1e37107",
+      "voxel": [
+        3,
+        116,
+        64
+      ],
+      "action_id": "nominal-cavity-f9d6e69314b24a56e1e37107",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-712516eb28bbcc14747a6ba4",
+      "voxel": [
+        28,
+        116,
+        64
+      ],
+      "action_id": "nominal-cavity-712516eb28bbcc14747a6ba4",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-81c114a0600538d67baf4414",
+      "voxel": [
+        3,
+        116,
+        64
+      ],
+      "action_id": "nominal-cavity-81c114a0600538d67baf4414",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-764239f073eaef6d87ac39d2",
+      "voxel": [
+        28,
+        116,
+        64
+      ],
+      "action_id": "nominal-cavity-764239f073eaef6d87ac39d2",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-277a80aee55fd1e0c5c8d82e",
+      "voxel": [
+        3,
+        114,
+        64
+      ],
+      "action_id": "nominal-cavity-277a80aee55fd1e0c5c8d82e",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.846124999163045,
+        -10.516437499780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-12183e866d68893e446fb905",
+      "voxel": [
+        28,
+        114,
+        64
+      ],
+      "action_id": "nominal-cavity-12183e866d68893e446fb905",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.43206249916304,
+        -10.51643749966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-717b9abedcf5f9ca0c081b2a",
+      "voxel": [
+        3,
+        114,
+        64
+      ],
+      "action_id": "nominal-cavity-717b9abedcf5f9ca0c081b2a",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.846124999163045,
+        -10.516437499780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-2700881d589bb206bae88f75",
+      "voxel": [
+        28,
+        114,
+        64
+      ],
+      "action_id": "nominal-cavity-2700881d589bb206bae88f75",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.43206249916304,
+        -10.51643749966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-982af7ed5eb3a09f8589db85",
+      "voxel": [
+        3,
+        118,
+        64
+      ],
+      "action_id": "nominal-cavity-982af7ed5eb3a09f8589db85",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.84612499914391,
+        -14.422687499780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-ffb325667a020a3d12022b65",
+      "voxel": [
+        28,
+        118,
+        64
+      ],
+      "action_id": "nominal-cavity-ffb325667a020a3d12022b65",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499143914,
+        -14.42268749966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-f04c8092ffc4d0dcaa91f782",
+      "voxel": [
+        3,
+        118,
+        64
+      ],
+      "action_id": "nominal-cavity-f04c8092ffc4d0dcaa91f782",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.84612499914391,
+        -14.422687499780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-c59b99a343a3e5102c4045ed",
+      "voxel": [
+        28,
+        118,
+        64
+      ],
+      "action_id": "nominal-cavity-c59b99a343a3e5102c4045ed",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499143914,
+        -14.42268749966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-c6290532e84d800da7d0c466",
+      "voxel": [
+        3,
+        116,
+        62
+      ],
+      "action_id": "nominal-cavity-c6290532e84d800da7d0c466",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-d63c6ed2de7888a3d182a6ef",
+      "voxel": [
+        28,
+        116,
+        62
+      ],
+      "action_id": "nominal-cavity-d63c6ed2de7888a3d182a6ef",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-73bacd2a0621f37fe103d319",
+      "voxel": [
+        3,
+        116,
+        62
+      ],
+      "action_id": "nominal-cavity-73bacd2a0621f37fe103d319",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-83d263f57ebe8b8eea233eca",
+      "voxel": [
+        28,
+        116,
+        62
+      ],
+      "action_id": "nominal-cavity-83d263f57ebe8b8eea233eca",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-ec15f3c9e39b618e4c728e51",
+      "voxel": [
+        3,
+        116,
+        66
+      ],
+      "action_id": "nominal-cavity-ec15f3c9e39b618e4c728e51",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-05479d94f814da1dca33a983",
+      "voxel": [
+        28,
+        116,
+        66
+      ],
+      "action_id": "nominal-cavity-05479d94f814da1dca33a983",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-4b8d660f54a216ba917e2816",
+      "voxel": [
+        3,
+        116,
+        66
+      ],
+      "action_id": "nominal-cavity-4b8d660f54a216ba917e2816",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-5e5d89ef1510f8ebc8d92cd6",
+      "voxel": [
+        28,
+        116,
+        66
+      ],
+      "action_id": "nominal-cavity-5e5d89ef1510f8ebc8d92cd6",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-caeb300e9e4ecc0a8ca0f791",
+      "voxel": [
+        3,
+        114,
+        62
+      ],
+      "action_id": "nominal-cavity-caeb300e9e4ecc0a8ca0f791",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -55.846124999163045,
+        -10.516437499780096,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-20209502ea1c0b621f68cbb1",
+      "voxel": [
+        28,
+        114,
+        62
+      ],
+      "action_id": "nominal-cavity-20209502ea1c0b621f68cbb1",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -31.43206249916304,
+        -10.51643749966054,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-3805f21f42ef4b4c009f5e00",
+      "voxel": [
+        3,
+        114,
+        62
+      ],
+      "action_id": "nominal-cavity-3805f21f42ef4b4c009f5e00",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -55.846124999163045,
+        -10.516437499780096,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-c7028199e6ad1e353a9e2dd1",
+      "voxel": [
+        28,
+        114,
+        62
+      ],
+      "action_id": "nominal-cavity-c7028199e6ad1e353a9e2dd1",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -31.43206249916304,
+        -10.51643749966054,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-8d6773d8d4496c99b3db9c39",
+      "voxel": [
+        3,
+        114,
+        66
+      ],
+      "action_id": "nominal-cavity-8d6773d8d4496c99b3db9c39",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        9.580700041368246
+      ],
+      "tip_mm": [
+        -55.846124999163045,
+        -10.516437499780096,
+        9.580700041368246
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-f599b24b2296c736b4fa009a",
+      "voxel": [
+        28,
+        114,
+        66
+      ],
+      "action_id": "nominal-cavity-f599b24b2296c736b4fa009a",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        9.580700041368246
+      ],
+      "tip_mm": [
+        -31.43206249916304,
+        -10.51643749966054,
+        9.580700041368246
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-e75f83063e1c7e5866a7d3ef",
+      "voxel": [
+        3,
+        114,
+        66
+      ],
+      "action_id": "nominal-cavity-e75f83063e1c7e5866a7d3ef",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        9.580700041368246
+      ],
+      "tip_mm": [
+        -55.846124999163045,
+        -10.516437499780096,
+        9.580700041368246
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-9624fab44922d4bba5e97534",
+      "voxel": [
+        28,
+        114,
+        66
+      ],
+      "action_id": "nominal-cavity-9624fab44922d4bba5e97534",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        9.580700041368246
+      ],
+      "tip_mm": [
+        -31.43206249916304,
+        -10.51643749966054,
+        9.580700041368246
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-d06a24b45ccf861c6fe81ade",
+      "voxel": [
+        3,
+        118,
+        62
+      ],
+      "action_id": "nominal-cavity-d06a24b45ccf861c6fe81ade",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -55.84612499914391,
+        -14.422687499780096,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-e19160c5c078b07502cabcce",
+      "voxel": [
+        28,
+        118,
+        62
+      ],
+      "action_id": "nominal-cavity-e19160c5c078b07502cabcce",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -31.432062499143914,
+        -14.42268749966054,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-655c4afa2663656417dbdd6b",
+      "voxel": [
+        3,
+        118,
+        62
+      ],
+      "action_id": "nominal-cavity-655c4afa2663656417dbdd6b",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -55.84612499914391,
+        -14.422687499780096,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-4d19574e93fa5c8906af67c8",
+      "voxel": [
+        28,
+        118,
+        62
+      ],
+      "action_id": "nominal-cavity-4d19574e93fa5c8906af67c8",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -31.432062499143914,
+        -14.42268749966054,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-1ca78787461fd398d894055d",
+      "voxel": [
+        3,
+        118,
+        66
+      ],
+      "action_id": "nominal-cavity-1ca78787461fd398d894055d",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -55.84612499914391,
+        -14.422687499780096,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-4f65fd73a18938848af0bd80",
+      "voxel": [
+        28,
+        118,
+        66
+      ],
+      "action_id": "nominal-cavity-4f65fd73a18938848af0bd80",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -31.432062499143914,
+        -14.42268749966054,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-1e0bb8d77b342d238f1c5619",
+      "voxel": [
+        3,
+        118,
+        66
+      ],
+      "action_id": "nominal-cavity-1e0bb8d77b342d238f1c5619",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -55.84612499914391,
+        -14.422687499780096,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-f939a512118a8633a7bd728e",
+      "voxel": [
+        28,
+        118,
+        66
+      ],
+      "action_id": "nominal-cavity-f939a512118a8633a7bd728e",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -31.432062499143914,
+        -14.42268749966054,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-d5629731ce6b93692daecfad",
+      "voxel": [
+        3,
+        113,
+        64
+      ],
+      "action_id": "nominal-cavity-d5629731ce6b93692daecfad",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916782,
+        -9.539874999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.84612499916783,
+        -9.539874999780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-413eb96b5244561cbed8bfe2",
+      "voxel": [
+        28,
+        113,
+        64
+      ],
+      "action_id": "nominal-cavity-413eb96b5244561cbed8bfe2",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916782,
+        -9.539874999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499167824,
+        -9.53987499966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-d7e7cfb4f52df38c2845b3cb",
+      "voxel": [
+        3,
+        113,
+        64
+      ],
+      "action_id": "nominal-cavity-d7e7cfb4f52df38c2845b3cb",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916782,
+        -9.539874999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.84612499916783,
+        -9.539874999780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-26af2d29b115456f872d8683",
+      "voxel": [
+        28,
+        113,
+        64
+      ],
+      "action_id": "nominal-cavity-26af2d29b115456f872d8683",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916782,
+        -9.539874999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499167824,
+        -9.53987499966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-82f1885c0ead7171ffdd5d14",
+      "voxel": [
+        3,
+        119,
+        64
+      ],
+      "action_id": "nominal-cavity-82f1885c0ead7171ffdd5d14",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624913913,
+        -15.399249999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.84612499913913,
+        -15.399249999780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-f402b97d31317763163b1ef1",
+      "voxel": [
+        28,
+        119,
+        64
+      ],
+      "action_id": "nominal-cavity-f402b97d31317763163b1ef1",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624913913,
+        -15.399249999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499139132,
+        -15.39924999966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-30510ddef4ee3184fa5cd44a",
+      "voxel": [
+        3,
+        119,
+        64
+      ],
+      "action_id": "nominal-cavity-30510ddef4ee3184fa5cd44a",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624913913,
+        -15.399249999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.84612499913913,
+        -15.399249999780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-4e85c8cc373d0103cdd5a040",
+      "voxel": [
+        28,
+        119,
+        64
+      ],
+      "action_id": "nominal-cavity-4e85c8cc373d0103cdd5a040",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624913913,
+        -15.399249999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499139132,
+        -15.39924999966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-a23c912d0fcf499ee6ac90a9",
+      "voxel": [
+        3,
+        116,
+        61
+      ],
+      "action_id": "nominal-cavity-a23c912d0fcf499ee6ac90a9",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        14.58070004109696
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        14.58070004109696
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-f2dcd72a8df925280c41190e",
+      "voxel": [
+        28,
+        116,
+        61
+      ],
+      "action_id": "nominal-cavity-f2dcd72a8df925280c41190e",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        14.58070004109696
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        14.58070004109696
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-b70d20d76a67307e60cf3646",
+      "voxel": [
+        3,
+        116,
+        61
+      ],
+      "action_id": "nominal-cavity-b70d20d76a67307e60cf3646",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        14.58070004109696
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        14.58070004109696
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-974bc43f56dfb5a7af42ab8f",
+      "voxel": [
+        28,
+        116,
+        61
+      ],
+      "action_id": "nominal-cavity-974bc43f56dfb5a7af42ab8f",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        14.58070004109696
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        14.58070004109696
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-924f5516901172c63bd43c46",
+      "voxel": [
+        3,
+        116,
+        67
+      ],
+      "action_id": "nominal-cavity-924f5516901172c63bd43c46",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        8.580700041422489
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        8.580700041422489
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-fc3e65bf79756d88b892ecbf",
+      "voxel": [
+        28,
+        116,
+        67
+      ],
+      "action_id": "nominal-cavity-fc3e65bf79756d88b892ecbf",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        8.580700041422489
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        8.580700041422489
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-1ff213f33fca10b3412e899f",
+      "voxel": [
+        3,
+        116,
+        67
+      ],
+      "action_id": "nominal-cavity-1ff213f33fca10b3412e899f",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        8.580700041422489
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        8.580700041422489
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-8cf9fa07227ecf434e58a36e",
+      "voxel": [
+        28,
+        116,
+        67
+      ],
+      "action_id": "nominal-cavity-8cf9fa07227ecf434e58a36e",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        8.580700041422489
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        8.580700041422489
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-2ffd96febc0d21385acf6c34",
+      "voxel": [
+        4,
+        116,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-2ffd96febc0d21385acf6c34",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-36c5aeec5e0d53dd48a16a78",
+      "voxel": [
+        4,
+        116,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-36c5aeec5e0d53dd48a16a78",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-6bc5902ad588eae496284e2c",
+      "voxel": [
+        4,
+        114,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        114,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-6bc5902ad588eae496284e2c",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.869562499163045,
+        -10.516437499775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-4c6b544c1d0cb82f9cdd64ac",
+      "voxel": [
+        4,
+        114,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        114,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-4c6b544c1d0cb82f9cdd64ac",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.869562499163045,
+        -10.516437499775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-81ddcda5a8fb966861c65b0a",
+      "voxel": [
+        4,
+        118,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        118,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-81ddcda5a8fb966861c65b0a",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.86956249914391,
+        -14.422687499775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-a12c2faf5febdfbbc889fd1f",
+      "voxel": [
+        4,
+        118,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        118,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-a12c2faf5febdfbbc889fd1f",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.86956249914391,
+        -14.422687499775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-7b67f10a70dabd0c52ff50aa",
+      "voxel": [
+        4,
+        116,
+        62
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        62
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-7b67f10a70dabd0c52ff50aa",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-61e3a1cf4db556297ead011c",
+      "voxel": [
+        4,
+        116,
+        62
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        62
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-61e3a1cf4db556297ead011c",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-5eff751ba3c4d40c42a43f37",
+      "voxel": [
+        4,
+        116,
+        66
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        66
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-5eff751ba3c4d40c42a43f37",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-38536ff54f0beddc0f4927f5",
+      "voxel": [
+        4,
+        116,
+        66
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        66
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-38536ff54f0beddc0f4927f5",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-9cd48126387126709751f2d2",
+      "voxel": [
+        4,
+        114,
+        62
+      ],
+      "opening_anchor_voxel": [
+        3,
+        114,
+        62
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-9cd48126387126709751f2d2",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782494,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -54.869562499163045,
+        -10.516437499775321,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-3a5835f6af0cf98c6bb85ac0",
+      "voxel": [
+        4,
+        114,
+        62
+      ],
+      "opening_anchor_voxel": [
+        3,
+        114,
+        62
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-3a5835f6af0cf98c6bb85ac0",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782494,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -54.869562499163045,
+        -10.516437499775321,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-be1c3eab54bd4a165243885e",
+      "voxel": [
+        4,
+        114,
+        66
+      ],
+      "opening_anchor_voxel": [
+        3,
+        114,
+        66
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-be1c3eab54bd4a165243885e",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782494,
+        9.580700041368246
+      ],
+      "tip_mm": [
+        -54.869562499163045,
+        -10.516437499775321,
+        9.580700041368246
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-34b84c26126e8008b0976b88",
+      "voxel": [
+        4,
+        114,
+        66
+      ],
+      "opening_anchor_voxel": [
+        3,
+        114,
+        66
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-34b84c26126e8008b0976b88",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782494,
+        9.580700041368246
+      ],
+      "tip_mm": [
+        -54.869562499163045,
+        -10.516437499775321,
+        9.580700041368246
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-bc2487e095ebf9a9d74fcab9",
+      "voxel": [
+        4,
+        118,
+        62
+      ],
+      "opening_anchor_voxel": [
+        3,
+        118,
+        62
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-bc2487e095ebf9a9d74fcab9",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782494,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -54.86956249914391,
+        -14.422687499775321,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-dcbd956ff1aa07ccd1303ab8",
+      "voxel": [
+        4,
+        118,
+        62
+      ],
+      "opening_anchor_voxel": [
+        3,
+        118,
+        62
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-dcbd956ff1aa07ccd1303ab8",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782494,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -54.86956249914391,
+        -14.422687499775321,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-c6f2cc00d781a886e13df243",
+      "voxel": [
+        4,
+        118,
+        66
+      ],
+      "opening_anchor_voxel": [
+        3,
+        118,
+        66
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-c6f2cc00d781a886e13df243",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782494,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -54.86956249914391,
+        -14.422687499775321,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-5a14c25d76d2669d6cf623e0",
+      "voxel": [
+        4,
+        118,
+        66
+      ],
+      "opening_anchor_voxel": [
+        3,
+        118,
+        66
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-5a14c25d76d2669d6cf623e0",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782494,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -54.86956249914391,
+        -14.422687499775321,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-ee5f860e55f31e2cc36727eb",
+      "voxel": [
+        4,
+        113,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        113,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-ee5f860e55f31e2cc36727eb",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916782,
+        -9.539874999782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.86956249916783,
+        -9.539874999775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-8985919eeef0ed961e4b49f5",
+      "voxel": [
+        4,
+        113,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        113,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-8985919eeef0ed961e4b49f5",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916782,
+        -9.539874999782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.86956249916783,
+        -9.539874999775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-0ccb54615729aa678d18024b",
+      "voxel": [
+        4,
+        119,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        119,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-0ccb54615729aa678d18024b",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624913913,
+        -15.399249999782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.86956249913913,
+        -15.399249999775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-d5e95defa688423793bc8c24",
+      "voxel": [
+        4,
+        119,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        119,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-d5e95defa688423793bc8c24",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624913913,
+        -15.399249999782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.86956249913913,
+        -15.399249999775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-3be8465125fcdaa0c3cfa1fc",
+      "voxel": [
+        4,
+        116,
+        61
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        61
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-3be8465125fcdaa0c3cfa1fc",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        14.58070004109696
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        14.58070004109696
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-361ae6a853a7cfbe6c612e16",
+      "voxel": [
+        4,
+        116,
+        61
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        61
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-361ae6a853a7cfbe6c612e16",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        14.58070004109696
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        14.58070004109696
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-2ce017f4875cf690441e716a",
+      "voxel": [
+        4,
+        116,
+        67
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        67
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-2ce017f4875cf690441e716a",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        8.580700041422489
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        8.580700041422489
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-45928c8b8e48274484272431",
+      "voxel": [
+        4,
+        116,
+        67
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        67
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-45928c8b8e48274484272431",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        8.580700041422489
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        8.580700041422489
+      ],
+      "endpoint_center_in_actor_crop": true
+    }
+  ],
+  "ledger": [
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-f9d6e69314b24a56e1e37107",
+      "voxel": [
+        3,
+        116,
+        64
+      ],
+      "action_id": "nominal-cavity-f9d6e69314b24a56e1e37107",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-f9d6e69314b24a56e1e37107",
+      "voxel": [
+        3,
+        116,
+        64
+      ],
+      "action_id": "nominal-cavity-f9d6e69314b24a56e1e37107",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-712516eb28bbcc14747a6ba4",
+      "voxel": [
+        28,
+        116,
+        64
+      ],
+      "action_id": "nominal-cavity-712516eb28bbcc14747a6ba4",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-81c114a0600538d67baf4414",
+      "voxel": [
+        3,
+        116,
+        64
+      ],
+      "action_id": "nominal-cavity-81c114a0600538d67baf4414",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-81c114a0600538d67baf4414",
+      "voxel": [
+        3,
+        116,
+        64
+      ],
+      "action_id": "nominal-cavity-81c114a0600538d67baf4414",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-764239f073eaef6d87ac39d2",
+      "voxel": [
+        28,
+        116,
+        64
+      ],
+      "action_id": "nominal-cavity-764239f073eaef6d87ac39d2",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-277a80aee55fd1e0c5c8d82e",
+      "voxel": [
+        3,
+        114,
+        64
+      ],
+      "action_id": "nominal-cavity-277a80aee55fd1e0c5c8d82e",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.846124999163045,
+        -10.516437499780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-277a80aee55fd1e0c5c8d82e",
+      "voxel": [
+        3,
+        114,
+        64
+      ],
+      "action_id": "nominal-cavity-277a80aee55fd1e0c5c8d82e",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-12183e866d68893e446fb905",
+      "voxel": [
+        28,
+        114,
+        64
+      ],
+      "action_id": "nominal-cavity-12183e866d68893e446fb905",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.43206249916304,
+        -10.51643749966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-717b9abedcf5f9ca0c081b2a",
+      "voxel": [
+        3,
+        114,
+        64
+      ],
+      "action_id": "nominal-cavity-717b9abedcf5f9ca0c081b2a",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.846124999163045,
+        -10.516437499780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-717b9abedcf5f9ca0c081b2a",
+      "voxel": [
+        3,
+        114,
+        64
+      ],
+      "action_id": "nominal-cavity-717b9abedcf5f9ca0c081b2a",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-2700881d589bb206bae88f75",
+      "voxel": [
+        28,
+        114,
+        64
+      ],
+      "action_id": "nominal-cavity-2700881d589bb206bae88f75",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.43206249916304,
+        -10.51643749966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-982af7ed5eb3a09f8589db85",
+      "voxel": [
+        3,
+        118,
+        64
+      ],
+      "action_id": "nominal-cavity-982af7ed5eb3a09f8589db85",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.84612499914391,
+        -14.422687499780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-982af7ed5eb3a09f8589db85",
+      "voxel": [
+        3,
+        118,
+        64
+      ],
+      "action_id": "nominal-cavity-982af7ed5eb3a09f8589db85",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-ffb325667a020a3d12022b65",
+      "voxel": [
+        28,
+        118,
+        64
+      ],
+      "action_id": "nominal-cavity-ffb325667a020a3d12022b65",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499143914,
+        -14.42268749966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-f04c8092ffc4d0dcaa91f782",
+      "voxel": [
+        3,
+        118,
+        64
+      ],
+      "action_id": "nominal-cavity-f04c8092ffc4d0dcaa91f782",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.84612499914391,
+        -14.422687499780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-f04c8092ffc4d0dcaa91f782",
+      "voxel": [
+        3,
+        118,
+        64
+      ],
+      "action_id": "nominal-cavity-f04c8092ffc4d0dcaa91f782",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-c59b99a343a3e5102c4045ed",
+      "voxel": [
+        28,
+        118,
+        64
+      ],
+      "action_id": "nominal-cavity-c59b99a343a3e5102c4045ed",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499143914,
+        -14.42268749966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-c6290532e84d800da7d0c466",
+      "voxel": [
+        3,
+        116,
+        62
+      ],
+      "action_id": "nominal-cavity-c6290532e84d800da7d0c466",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-c6290532e84d800da7d0c466",
+      "voxel": [
+        3,
+        116,
+        62
+      ],
+      "action_id": "nominal-cavity-c6290532e84d800da7d0c466",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-d63c6ed2de7888a3d182a6ef",
+      "voxel": [
+        28,
+        116,
+        62
+      ],
+      "action_id": "nominal-cavity-d63c6ed2de7888a3d182a6ef",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-73bacd2a0621f37fe103d319",
+      "voxel": [
+        3,
+        116,
+        62
+      ],
+      "action_id": "nominal-cavity-73bacd2a0621f37fe103d319",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-73bacd2a0621f37fe103d319",
+      "voxel": [
+        3,
+        116,
+        62
+      ],
+      "action_id": "nominal-cavity-73bacd2a0621f37fe103d319",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-83d263f57ebe8b8eea233eca",
+      "voxel": [
+        28,
+        116,
+        62
+      ],
+      "action_id": "nominal-cavity-83d263f57ebe8b8eea233eca",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-ec15f3c9e39b618e4c728e51",
+      "voxel": [
+        3,
+        116,
+        66
+      ],
+      "action_id": "nominal-cavity-ec15f3c9e39b618e4c728e51",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-ec15f3c9e39b618e4c728e51",
+      "voxel": [
+        3,
+        116,
+        66
+      ],
+      "action_id": "nominal-cavity-ec15f3c9e39b618e4c728e51",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-05479d94f814da1dca33a983",
+      "voxel": [
+        28,
+        116,
+        66
+      ],
+      "action_id": "nominal-cavity-05479d94f814da1dca33a983",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-4b8d660f54a216ba917e2816",
+      "voxel": [
+        3,
+        116,
+        66
+      ],
+      "action_id": "nominal-cavity-4b8d660f54a216ba917e2816",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-4b8d660f54a216ba917e2816",
+      "voxel": [
+        3,
+        116,
+        66
+      ],
+      "action_id": "nominal-cavity-4b8d660f54a216ba917e2816",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-5e5d89ef1510f8ebc8d92cd6",
+      "voxel": [
+        28,
+        116,
+        66
+      ],
+      "action_id": "nominal-cavity-5e5d89ef1510f8ebc8d92cd6",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-caeb300e9e4ecc0a8ca0f791",
+      "voxel": [
+        3,
+        114,
+        62
+      ],
+      "action_id": "nominal-cavity-caeb300e9e4ecc0a8ca0f791",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -55.846124999163045,
+        -10.516437499780096,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-caeb300e9e4ecc0a8ca0f791",
+      "voxel": [
+        3,
+        114,
+        62
+      ],
+      "action_id": "nominal-cavity-caeb300e9e4ecc0a8ca0f791",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-20209502ea1c0b621f68cbb1",
+      "voxel": [
+        28,
+        114,
+        62
+      ],
+      "action_id": "nominal-cavity-20209502ea1c0b621f68cbb1",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -31.43206249916304,
+        -10.51643749966054,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-3805f21f42ef4b4c009f5e00",
+      "voxel": [
+        3,
+        114,
+        62
+      ],
+      "action_id": "nominal-cavity-3805f21f42ef4b4c009f5e00",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -55.846124999163045,
+        -10.516437499780096,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-3805f21f42ef4b4c009f5e00",
+      "voxel": [
+        3,
+        114,
+        62
+      ],
+      "action_id": "nominal-cavity-3805f21f42ef4b4c009f5e00",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-c7028199e6ad1e353a9e2dd1",
+      "voxel": [
+        28,
+        114,
+        62
+      ],
+      "action_id": "nominal-cavity-c7028199e6ad1e353a9e2dd1",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -31.43206249916304,
+        -10.51643749966054,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-8d6773d8d4496c99b3db9c39",
+      "voxel": [
+        3,
+        114,
+        66
+      ],
+      "action_id": "nominal-cavity-8d6773d8d4496c99b3db9c39",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        9.580700041368246
+      ],
+      "tip_mm": [
+        -55.846124999163045,
+        -10.516437499780096,
+        9.580700041368246
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-8d6773d8d4496c99b3db9c39",
+      "voxel": [
+        3,
+        114,
+        66
+      ],
+      "action_id": "nominal-cavity-8d6773d8d4496c99b3db9c39",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-f599b24b2296c736b4fa009a",
+      "voxel": [
+        28,
+        114,
+        66
+      ],
+      "action_id": "nominal-cavity-f599b24b2296c736b4fa009a",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        9.580700041368246
+      ],
+      "tip_mm": [
+        -31.43206249916304,
+        -10.51643749966054,
+        9.580700041368246
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-e75f83063e1c7e5866a7d3ef",
+      "voxel": [
+        3,
+        114,
+        66
+      ],
+      "action_id": "nominal-cavity-e75f83063e1c7e5866a7d3ef",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        9.580700041368246
+      ],
+      "tip_mm": [
+        -55.846124999163045,
+        -10.516437499780096,
+        9.580700041368246
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-e75f83063e1c7e5866a7d3ef",
+      "voxel": [
+        3,
+        114,
+        66
+      ],
+      "action_id": "nominal-cavity-e75f83063e1c7e5866a7d3ef",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-9624fab44922d4bba5e97534",
+      "voxel": [
+        28,
+        114,
+        66
+      ],
+      "action_id": "nominal-cavity-9624fab44922d4bba5e97534",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782487,
+        9.580700041368246
+      ],
+      "tip_mm": [
+        -31.43206249916304,
+        -10.51643749966054,
+        9.580700041368246
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-d06a24b45ccf861c6fe81ade",
+      "voxel": [
+        3,
+        118,
+        62
+      ],
+      "action_id": "nominal-cavity-d06a24b45ccf861c6fe81ade",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -55.84612499914391,
+        -14.422687499780096,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-d06a24b45ccf861c6fe81ade",
+      "voxel": [
+        3,
+        118,
+        62
+      ],
+      "action_id": "nominal-cavity-d06a24b45ccf861c6fe81ade",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-e19160c5c078b07502cabcce",
+      "voxel": [
+        28,
+        118,
+        62
+      ],
+      "action_id": "nominal-cavity-e19160c5c078b07502cabcce",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -31.432062499143914,
+        -14.42268749966054,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-655c4afa2663656417dbdd6b",
+      "voxel": [
+        3,
+        118,
+        62
+      ],
+      "action_id": "nominal-cavity-655c4afa2663656417dbdd6b",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -55.84612499914391,
+        -14.422687499780096,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-655c4afa2663656417dbdd6b",
+      "voxel": [
+        3,
+        118,
+        62
+      ],
+      "action_id": "nominal-cavity-655c4afa2663656417dbdd6b",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-4d19574e93fa5c8906af67c8",
+      "voxel": [
+        28,
+        118,
+        62
+      ],
+      "action_id": "nominal-cavity-4d19574e93fa5c8906af67c8",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -31.432062499143914,
+        -14.42268749966054,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-1ca78787461fd398d894055d",
+      "voxel": [
+        3,
+        118,
+        66
+      ],
+      "action_id": "nominal-cavity-1ca78787461fd398d894055d",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -55.84612499914391,
+        -14.422687499780096,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-1ca78787461fd398d894055d",
+      "voxel": [
+        3,
+        118,
+        66
+      ],
+      "action_id": "nominal-cavity-1ca78787461fd398d894055d",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-4f65fd73a18938848af0bd80",
+      "voxel": [
+        28,
+        118,
+        66
+      ],
+      "action_id": "nominal-cavity-4f65fd73a18938848af0bd80",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -31.432062499143914,
+        -14.42268749966054,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-1e0bb8d77b342d238f1c5619",
+      "voxel": [
+        3,
+        118,
+        66
+      ],
+      "action_id": "nominal-cavity-1e0bb8d77b342d238f1c5619",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -55.84612499914391,
+        -14.422687499780096,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-1e0bb8d77b342d238f1c5619",
+      "voxel": [
+        3,
+        118,
+        66
+      ],
+      "action_id": "nominal-cavity-1e0bb8d77b342d238f1c5619",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-f939a512118a8633a7bd728e",
+      "voxel": [
+        28,
+        118,
+        66
+      ],
+      "action_id": "nominal-cavity-f939a512118a8633a7bd728e",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782487,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -31.432062499143914,
+        -14.42268749966054,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-d5629731ce6b93692daecfad",
+      "voxel": [
+        3,
+        113,
+        64
+      ],
+      "action_id": "nominal-cavity-d5629731ce6b93692daecfad",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916782,
+        -9.539874999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.84612499916783,
+        -9.539874999780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-d5629731ce6b93692daecfad",
+      "voxel": [
+        3,
+        113,
+        64
+      ],
+      "action_id": "nominal-cavity-d5629731ce6b93692daecfad",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-413eb96b5244561cbed8bfe2",
+      "voxel": [
+        28,
+        113,
+        64
+      ],
+      "action_id": "nominal-cavity-413eb96b5244561cbed8bfe2",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916782,
+        -9.539874999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499167824,
+        -9.53987499966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-d7e7cfb4f52df38c2845b3cb",
+      "voxel": [
+        3,
+        113,
+        64
+      ],
+      "action_id": "nominal-cavity-d7e7cfb4f52df38c2845b3cb",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916782,
+        -9.539874999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.84612499916783,
+        -9.539874999780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-d7e7cfb4f52df38c2845b3cb",
+      "voxel": [
+        3,
+        113,
+        64
+      ],
+      "action_id": "nominal-cavity-d7e7cfb4f52df38c2845b3cb",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-26af2d29b115456f872d8683",
+      "voxel": [
+        28,
+        113,
+        64
+      ],
+      "action_id": "nominal-cavity-26af2d29b115456f872d8683",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916782,
+        -9.539874999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499167824,
+        -9.53987499966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-82f1885c0ead7171ffdd5d14",
+      "voxel": [
+        3,
+        119,
+        64
+      ],
+      "action_id": "nominal-cavity-82f1885c0ead7171ffdd5d14",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624913913,
+        -15.399249999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.84612499913913,
+        -15.399249999780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-82f1885c0ead7171ffdd5d14",
+      "voxel": [
+        3,
+        119,
+        64
+      ],
+      "action_id": "nominal-cavity-82f1885c0ead7171ffdd5d14",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-f402b97d31317763163b1ef1",
+      "voxel": [
+        28,
+        119,
+        64
+      ],
+      "action_id": "nominal-cavity-f402b97d31317763163b1ef1",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624913913,
+        -15.399249999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499139132,
+        -15.39924999966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-30510ddef4ee3184fa5cd44a",
+      "voxel": [
+        3,
+        119,
+        64
+      ],
+      "action_id": "nominal-cavity-30510ddef4ee3184fa5cd44a",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624913913,
+        -15.399249999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -55.84612499913913,
+        -15.399249999780096,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-30510ddef4ee3184fa5cd44a",
+      "voxel": [
+        3,
+        119,
+        64
+      ],
+      "action_id": "nominal-cavity-30510ddef4ee3184fa5cd44a",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-4e85c8cc373d0103cdd5a040",
+      "voxel": [
+        28,
+        119,
+        64
+      ],
+      "action_id": "nominal-cavity-4e85c8cc373d0103cdd5a040",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624913913,
+        -15.399249999782487,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -31.432062499139132,
+        -15.39924999966054,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-a23c912d0fcf499ee6ac90a9",
+      "voxel": [
+        3,
+        116,
+        61
+      ],
+      "action_id": "nominal-cavity-a23c912d0fcf499ee6ac90a9",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        14.58070004109696
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        14.58070004109696
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-a23c912d0fcf499ee6ac90a9",
+      "voxel": [
+        3,
+        116,
+        61
+      ],
+      "action_id": "nominal-cavity-a23c912d0fcf499ee6ac90a9",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-f2dcd72a8df925280c41190e",
+      "voxel": [
+        28,
+        116,
+        61
+      ],
+      "action_id": "nominal-cavity-f2dcd72a8df925280c41190e",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        14.58070004109696
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        14.58070004109696
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-b70d20d76a67307e60cf3646",
+      "voxel": [
+        3,
+        116,
+        61
+      ],
+      "action_id": "nominal-cavity-b70d20d76a67307e60cf3646",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        14.58070004109696
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        14.58070004109696
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-b70d20d76a67307e60cf3646",
+      "voxel": [
+        3,
+        116,
+        61
+      ],
+      "action_id": "nominal-cavity-b70d20d76a67307e60cf3646",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-974bc43f56dfb5a7af42ab8f",
+      "voxel": [
+        28,
+        116,
+        61
+      ],
+      "action_id": "nominal-cavity-974bc43f56dfb5a7af42ab8f",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        14.58070004109696
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        14.58070004109696
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_suction",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-924f5516901172c63bd43c46",
+      "voxel": [
+        3,
+        116,
+        67
+      ],
+      "action_id": "nominal-cavity-924f5516901172c63bd43c46",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        8.580700041422489
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        8.580700041422489
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_suction",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-924f5516901172c63bd43c46",
+      "voxel": [
+        3,
+        116,
+        67
+      ],
+      "action_id": "nominal-cavity-924f5516901172c63bd43c46",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_suction",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-fc3e65bf79756d88b892ecbf",
+      "voxel": [
+        28,
+        116,
+        67
+      ],
+      "action_id": "nominal-cavity-fc3e65bf79756d88b892ecbf",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        8.580700041422489
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        8.580700041422489
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "exposed_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-1ff213f33fca10b3412e899f",
+      "voxel": [
+        3,
+        116,
+        67
+      ],
+      "action_id": "nominal-cavity-1ff213f33fca10b3412e899f",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        8.580700041422489
+      ],
+      "tip_mm": [
+        -55.846124999153474,
+        -12.469562499780096,
+        8.580700041422489
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "proximal_nominal",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-1ff213f33fca10b3412e899f",
+      "voxel": [
+        3,
+        116,
+        67
+      ],
+      "action_id": "nominal-cavity-1ff213f33fca10b3412e899f",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "distal_nominal",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-8cf9fa07227ecf434e58a36e",
+      "voxel": [
+        28,
+        116,
+        67
+      ],
+      "action_id": "nominal-cavity-8cf9fa07227ecf434e58a36e",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782487,
+        8.580700041422489
+      ],
+      "tip_mm": [
+        -31.432062499153478,
+        -12.46956249966054,
+        8.580700041422489
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-2ffd96febc0d21385acf6c34",
+      "voxel": [
+        4,
+        116,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-2ffd96febc0d21385acf6c34",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-36c5aeec5e0d53dd48a16a78",
+      "voxel": [
+        4,
+        116,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-36c5aeec5e0d53dd48a16a78",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-6bc5902ad588eae496284e2c",
+      "voxel": [
+        4,
+        114,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        114,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-6bc5902ad588eae496284e2c",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.869562499163045,
+        -10.516437499775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-4c6b544c1d0cb82f9cdd64ac",
+      "voxel": [
+        4,
+        114,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        114,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-4c6b544c1d0cb82f9cdd64ac",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.869562499163045,
+        -10.516437499775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-81ddcda5a8fb966861c65b0a",
+      "voxel": [
+        4,
+        118,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        118,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-81ddcda5a8fb966861c65b0a",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.86956249914391,
+        -14.422687499775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-a12c2faf5febdfbbc889fd1f",
+      "voxel": [
+        4,
+        118,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        118,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-a12c2faf5febdfbbc889fd1f",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.86956249914391,
+        -14.422687499775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-7b67f10a70dabd0c52ff50aa",
+      "voxel": [
+        4,
+        116,
+        62
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        62
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-7b67f10a70dabd0c52ff50aa",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-61e3a1cf4db556297ead011c",
+      "voxel": [
+        4,
+        116,
+        62
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        62
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-61e3a1cf4db556297ead011c",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-5eff751ba3c4d40c42a43f37",
+      "voxel": [
+        4,
+        116,
+        66
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        66
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-5eff751ba3c4d40c42a43f37",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-38536ff54f0beddc0f4927f5",
+      "voxel": [
+        4,
+        116,
+        66
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        66
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-38536ff54f0beddc0f4927f5",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-9cd48126387126709751f2d2",
+      "voxel": [
+        4,
+        114,
+        62
+      ],
+      "opening_anchor_voxel": [
+        3,
+        114,
+        62
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-9cd48126387126709751f2d2",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782494,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -54.869562499163045,
+        -10.516437499775321,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-3a5835f6af0cf98c6bb85ac0",
+      "voxel": [
+        4,
+        114,
+        62
+      ],
+      "opening_anchor_voxel": [
+        3,
+        114,
+        62
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-3a5835f6af0cf98c6bb85ac0",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782494,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -54.869562499163045,
+        -10.516437499775321,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-be1c3eab54bd4a165243885e",
+      "voxel": [
+        4,
+        114,
+        66
+      ],
+      "opening_anchor_voxel": [
+        3,
+        114,
+        66
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-be1c3eab54bd4a165243885e",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782494,
+        9.580700041368246
+      ],
+      "tip_mm": [
+        -54.869562499163045,
+        -10.516437499775321,
+        9.580700041368246
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-34b84c26126e8008b0976b88",
+      "voxel": [
+        4,
+        114,
+        66
+      ],
+      "opening_anchor_voxel": [
+        3,
+        114,
+        66
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-34b84c26126e8008b0976b88",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916304,
+        -10.516437499782494,
+        9.580700041368246
+      ],
+      "tip_mm": [
+        -54.869562499163045,
+        -10.516437499775321,
+        9.580700041368246
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-bc2487e095ebf9a9d74fcab9",
+      "voxel": [
+        4,
+        118,
+        62
+      ],
+      "opening_anchor_voxel": [
+        3,
+        118,
+        62
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-bc2487e095ebf9a9d74fcab9",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782494,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -54.86956249914391,
+        -14.422687499775321,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-dcbd956ff1aa07ccd1303ab8",
+      "voxel": [
+        4,
+        118,
+        62
+      ],
+      "opening_anchor_voxel": [
+        3,
+        118,
+        62
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-dcbd956ff1aa07ccd1303ab8",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782494,
+        13.58070004115121
+      ],
+      "tip_mm": [
+        -54.86956249914391,
+        -14.422687499775321,
+        13.58070004115121
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-c6f2cc00d781a886e13df243",
+      "voxel": [
+        4,
+        118,
+        66
+      ],
+      "opening_anchor_voxel": [
+        3,
+        118,
+        66
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-c6f2cc00d781a886e13df243",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782494,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -54.86956249914391,
+        -14.422687499775321,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-5a14c25d76d2669d6cf623e0",
+      "voxel": [
+        4,
+        118,
+        66
+      ],
+      "opening_anchor_voxel": [
+        3,
+        118,
+        66
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-5a14c25d76d2669d6cf623e0",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624914391,
+        -14.422687499782494,
+        9.580700041368232
+      ],
+      "tip_mm": [
+        -54.86956249914391,
+        -14.422687499775321,
+        9.580700041368232
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-ee5f860e55f31e2cc36727eb",
+      "voxel": [
+        4,
+        113,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        113,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-ee5f860e55f31e2cc36727eb",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624916782,
+        -9.539874999782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.86956249916783,
+        -9.539874999775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-8985919eeef0ed961e4b49f5",
+      "voxel": [
+        4,
+        113,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        113,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-8985919eeef0ed961e4b49f5",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624916782,
+        -9.539874999782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.86956249916783,
+        -9.539874999775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-0ccb54615729aa678d18024b",
+      "voxel": [
+        4,
+        119,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        119,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-0ccb54615729aa678d18024b",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.33440624913913,
+        -15.399249999782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.86956249913913,
+        -15.399249999775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-d5e95defa688423793bc8c24",
+      "voxel": [
+        4,
+        119,
+        64
+      ],
+      "opening_anchor_voxel": [
+        3,
+        119,
+        64
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-d5e95defa688423793bc8c24",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.33440624913913,
+        -15.399249999782494,
+        11.580700041259725
+      ],
+      "tip_mm": [
+        -54.86956249913913,
+        -15.399249999775321,
+        11.580700041259725
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-3be8465125fcdaa0c3cfa1fc",
+      "voxel": [
+        4,
+        116,
+        61
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        61
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-3be8465125fcdaa0c3cfa1fc",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        14.58070004109696
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        14.58070004109696
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-361ae6a853a7cfbe6c612e16",
+      "voxel": [
+        4,
+        116,
+        61
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        61
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-361ae6a853a7cfbe6c612e16",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        14.58070004109696
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        14.58070004109696
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_suction",
+      "family": "intermediate_opening",
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-2ce017f4875cf690441e716a",
+      "voxel": [
+        4,
+        116,
+        67
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        67
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-2ce017f4875cf690441e716a",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": true,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        8.580700041422489
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        8.580700041422489
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "intermediate_opening",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-45928c8b8e48274484272431",
+      "voxel": [
+        4,
+        116,
+        67
+      ],
+      "opening_anchor_voxel": [
+        3,
+        116,
+        67
+      ],
+      "requested_opening_advance_mm": 1.0,
+      "advance_source_axis_voxels": 1,
+      "actual_opening_advance_mm": 0.9765625,
+      "action_id": "nominal-cavity-45928c8b8e48274484272431",
+      "proposal_reason": "PROPOSED_UNCERTIFIED",
+      "feasible": false,
+      "entry_mm": [
+        -56.334406249153474,
+        -12.469562499782494,
+        8.580700041422489
+      ],
+      "tip_mm": [
+        -54.869562499153474,
+        -12.469562499775321,
+        8.580700041422489
+      ],
+      "endpoint_center_in_actor_crop": true
+    },
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-f9d6e69314b24a56e1e37107",
+      "voxel": [
+        3,
+        116,
+        64
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        116,
+        64
+      ],
+      "footprint_exposed_cells": 329,
+      "footprint_radially_eligible_cells": 14,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-f9d6e69314b24a56e1e37107",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-81c114a0600538d67baf4414",
+      "voxel": [
+        3,
+        116,
+        64
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        115,
+        64
+      ],
+      "footprint_exposed_cells": 693,
+      "footprint_radially_eligible_cells": 72,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-81c114a0600538d67baf4414",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-277a80aee55fd1e0c5c8d82e",
+      "voxel": [
+        3,
+        114,
+        64
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        114,
+        64
+      ],
+      "footprint_exposed_cells": 300,
+      "footprint_radially_eligible_cells": 12,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-277a80aee55fd1e0c5c8d82e",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 1,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-717b9abedcf5f9ca0c081b2a",
+      "voxel": [
+        3,
+        114,
+        64
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        113,
+        64
+      ],
+      "footprint_exposed_cells": 628,
+      "footprint_radially_eligible_cells": 64,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-717b9abedcf5f9ca0c081b2a",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-982af7ed5eb3a09f8589db85",
+      "voxel": [
+        3,
+        118,
+        64
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        118,
+        64
+      ],
+      "footprint_exposed_cells": 381,
+      "footprint_radially_eligible_cells": 26,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-982af7ed5eb3a09f8589db85",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 2,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-f04c8092ffc4d0dcaa91f782",
+      "voxel": [
+        3,
+        118,
+        64
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        117,
+        64
+      ],
+      "footprint_exposed_cells": 720,
+      "footprint_radially_eligible_cells": 88,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-f04c8092ffc4d0dcaa91f782",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-c6290532e84d800da7d0c466",
+      "voxel": [
+        3,
+        116,
+        62
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        116,
+        62
+      ],
+      "footprint_exposed_cells": 300,
+      "footprint_radially_eligible_cells": 11,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-c6290532e84d800da7d0c466",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 3,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-73bacd2a0621f37fe103d319",
+      "voxel": [
+        3,
+        116,
+        62
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        115,
+        62
+      ],
+      "footprint_exposed_cells": 582,
+      "footprint_radially_eligible_cells": 55,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-73bacd2a0621f37fe103d319",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-ec15f3c9e39b618e4c728e51",
+      "voxel": [
+        3,
+        116,
+        66
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        116,
+        66
+      ],
+      "footprint_exposed_cells": 432,
+      "footprint_radially_eligible_cells": 12,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-ec15f3c9e39b618e4c728e51",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 4,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-4b8d660f54a216ba917e2816",
+      "voxel": [
+        3,
+        116,
+        66
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        115,
+        66
+      ],
+      "footprint_exposed_cells": 809,
+      "footprint_radially_eligible_cells": 74,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-4b8d660f54a216ba917e2816",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-caeb300e9e4ecc0a8ca0f791",
+      "voxel": [
+        3,
+        114,
+        62
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        114,
+        62
+      ],
+      "footprint_exposed_cells": 288,
+      "footprint_radially_eligible_cells": 10,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-caeb300e9e4ecc0a8ca0f791",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 5,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-3805f21f42ef4b4c009f5e00",
+      "voxel": [
+        3,
+        114,
+        62
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        113,
+        62
+      ],
+      "footprint_exposed_cells": 570,
+      "footprint_radially_eligible_cells": 49,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-3805f21f42ef4b4c009f5e00",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-8d6773d8d4496c99b3db9c39",
+      "voxel": [
+        3,
+        114,
+        66
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        114,
+        66
+      ],
+      "footprint_exposed_cells": 365,
+      "footprint_radially_eligible_cells": 12,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-8d6773d8d4496c99b3db9c39",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 6,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-e75f83063e1c7e5866a7d3ef",
+      "voxel": [
+        3,
+        114,
+        66
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        113,
+        66
+      ],
+      "footprint_exposed_cells": 714,
+      "footprint_radially_eligible_cells": 61,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-e75f83063e1c7e5866a7d3ef",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_suction",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-d06a24b45ccf861c6fe81ade",
+      "voxel": [
+        3,
+        118,
+        62
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        118,
+        62
+      ],
+      "footprint_exposed_cells": 308,
+      "footprint_radially_eligible_cells": 7,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-d06a24b45ccf861c6fe81ade",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 7,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-655c4afa2663656417dbdd6b",
+      "voxel": [
+        3,
+        118,
+        62
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        117,
+        62
+      ],
+      "footprint_exposed_cells": 590,
+      "footprint_radially_eligible_cells": 54,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-655c4afa2663656417dbdd6b",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_suction",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-1ca78787461fd398d894055d",
+      "voxel": [
+        3,
+        118,
+        66
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        118,
+        66
+      ],
+      "footprint_exposed_cells": 494,
+      "footprint_radially_eligible_cells": 19,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-1ca78787461fd398d894055d",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 8,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-1e0bb8d77b342d238f1c5619",
+      "voxel": [
+        3,
+        118,
+        66
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        117,
+        66
+      ],
+      "footprint_exposed_cells": 869,
+      "footprint_radially_eligible_cells": 95,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-1e0bb8d77b342d238f1c5619",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-d5629731ce6b93692daecfad",
+      "voxel": [
+        3,
+        113,
+        64
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        113,
+        64
+      ],
+      "footprint_exposed_cells": 291,
+      "footprint_radially_eligible_cells": 14,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-d5629731ce6b93692daecfad",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 9,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-d7e7cfb4f52df38c2845b3cb",
+      "voxel": [
+        3,
+        113,
+        64
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        112,
+        64
+      ],
+      "footprint_exposed_cells": 604,
+      "footprint_radially_eligible_cells": 65,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-d7e7cfb4f52df38c2845b3cb",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_suction",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-82f1885c0ead7171ffdd5d14",
+      "voxel": [
+        3,
+        119,
+        64
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        119,
+        64
+      ],
+      "footprint_exposed_cells": 382,
+      "footprint_radially_eligible_cells": 20,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-82f1885c0ead7171ffdd5d14",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 10,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-30510ddef4ee3184fa5cd44a",
+      "voxel": [
+        3,
+        119,
+        64
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        118,
+        64
+      ],
+      "footprint_exposed_cells": 761,
+      "footprint_radially_eligible_cells": 98,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-30510ddef4ee3184fa5cd44a",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_suction",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-a23c912d0fcf499ee6ac90a9",
+      "voxel": [
+        3,
+        116,
+        61
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        116,
+        61
+      ],
+      "footprint_exposed_cells": 262,
+      "footprint_radially_eligible_cells": 12,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-a23c912d0fcf499ee6ac90a9",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 11,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-b70d20d76a67307e60cf3646",
+      "voxel": [
+        3,
+        116,
+        61
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        115,
+        61
+      ],
+      "footprint_exposed_cells": 531,
+      "footprint_radially_eligible_cells": 59,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-b70d20d76a67307e60cf3646",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_suction",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-924f5516901172c63bd43c46",
+      "voxel": [
+        3,
+        116,
+        67
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        116,
+        67
+      ],
+      "footprint_exposed_cells": 426,
+      "footprint_radially_eligible_cells": 23,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-924f5516901172c63bd43c46",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    },
+    {
+      "column_index": 12,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "tool_id": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "reason": "DUPLICATE_GEOMETRY",
+      "proposal_id": "nominal-cavity-1ff213f33fca10b3412e899f",
+      "voxel": [
+        3,
+        116,
+        67
+      ],
+      "footprint_anchor_voxel": [
+        3,
+        115,
+        67
+      ],
+      "footprint_exposed_cells": 851,
+      "footprint_radially_eligible_cells": 100,
+      "footprint_endpoint_tests": 1,
+      "action_id": "nominal-cavity-1ff213f33fca10b3412e899f",
+      "proposal_reason": "DUPLICATE_GEOMETRY",
+      "feasible": false
+    }
+  ]
+}

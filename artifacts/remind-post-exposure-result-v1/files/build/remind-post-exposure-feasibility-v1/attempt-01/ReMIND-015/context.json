@@ -1,0 +1,140 @@
+{
+  "version": "remind-public-annotation-assisted-native-v1",
+  "scope": "patient_native_planning_experiment",
+  "subject": "ReMIND-015",
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "occupancy_derivation": {
+    "version": "supplied-support-target-union-v1",
+    "condition": "cerebrum_plus_supplied_tumor_assumption",
+    "operation": "S OR (T > 0)",
+    "source_support_hash": "sha256:9ada4b66d74fffee3a0ff584e96c8e94733bb5f277d906c17e520a3e7c3718c8",
+    "supplied_target_hash": "sha256:accc5fc2bc6914f3be555178d91e2aef731b0df299c2807f019e04f07d0c850b",
+    "derived_occupancy_hash": "sha256:089b6f75f694bc2a8830aae0eb5d3bc1bc37d5457d233287b2a9836670b46340",
+    "added_region_hash": "sha256:4adf1864e33b9eae5c230cf50908d1202ac3e655b4ab9f16f0f6657cf5b85098",
+    "source_support_positive_voxels": 896879,
+    "added_region_positive_voxels": 1758,
+    "source_support_unchanged": true,
+    "target_unchanged": true,
+    "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+    "anatomical_or_material_validation": false,
+    "outside_union": "unchanged simulation zeros; not certified empty anatomy"
+  },
+  "execution_kind": "search_only_no_policy",
+  "derived_occupancy_anatomically_validated": false,
+  "policy_comparison_permitted": false,
+  "source_and_simulated_domains": {
+    "version": "separate-source-and-simulated-domain-v1",
+    "source_support_domain_hash": "sha256:7813d77de397dc95f8ffe1b34b3ba4ea400be89656620d5e6149a3f309a93558",
+    "interaction_domain_hash": "sha256:7813d77de397dc95f8ffe1b34b3ba4ea400be89656620d5e6149a3f309a93558",
+    "interaction_domain_rule": "Ds OR (T > 0)",
+    "source_support_known_voxels": 2546116,
+    "source_support_unknown_voxels": 174084,
+    "target_in_unknown_support_voxels": 0,
+    "assumed_material_beyond_source_domain_voxels": 0,
+    "unavailable_interaction_voxels": 174084,
+    "source_domain_extended": false,
+    "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+    "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+    "unknown_interaction_rule": "U except declared wholly-proximal E blocks full tool; no U seed, flood or removal",
+    "external_tool_extent": "declared E and outside-image extent unassessed; observed Ds unchanged",
+    "anatomical_or_material_validation": false,
+    "post_exposure_condition_hash": "sha256:b8651e64f41db6838554f00637a7f93fee6c688e07317e57be0209314dc42b81"
+  },
+  "source_domain_fully_covered": false,
+  "post_exposure": {
+    "version": "public-union-post-exposure-axis0-v1",
+    "original_access": {
+      "center_mm": [
+        -53.404718749153474,
+        -12.469562499768145,
+        11.58070004125976
+      ],
+      "normal_inward": [
+        1.0,
+        4.897e-12,
+        0.0
+      ],
+      "radius_mm": 6.0,
+      "window_id": "fixed-public-target-side-axis0-v1"
+    },
+    "access": {
+      "center_mm": [
+        -56.334406249153474,
+        -12.469562499782498,
+        11.580700041259725
+      ],
+      "normal_inward": [
+        1.0,
+        4.897e-12,
+        0.0
+      ],
+      "radius_mm": 6.0,
+      "window_id": "public-union-post-exposure-axis0-v1"
+    },
+    "selection": "same_side_and_transverse_centroid; outer_full_O_cell_face_across_closed_disc; no fallback",
+    "source_S_hash": "sha256:9ada4b66d74fffee3a0ff584e96c8e94733bb5f277d906c17e520a3e7c3718c8",
+    "full_T_hash": "sha256:6f0e6eca3c3185f6bd2c90495579df2a064254ddb75e3448cf890fdfcf8f7def",
+    "source_Ds_hash": "sha256:7813d77de397dc95f8ffe1b34b3ba4ea400be89656620d5e6149a3f309a93558",
+    "occupancy_hash": "sha256:089b6f75f694bc2a8830aae0eb5d3bc1bc37d5457d233287b2a9836670b46340",
+    "interaction_domain_hash": "sha256:7813d77de397dc95f8ffe1b34b3ba4ea400be89656620d5e6149a3f309a93558",
+    "native_affine_hash": "sha256:8fe5a89da8428f0410683c79be5b751f726eba80ddf6d91ee1af1abe7e0220fb",
+    "source_shape": [
+      134,
+      175,
+      116
+    ],
+    "external_workspace_hash": "sha256:a31fa02bb9e35641e1a75d466a24b9db20880e034eae3db9bf1fb5aaad273bf2",
+    "seed_hash": "sha256:df077dbbab6b97a831cc33b14c3a4264d0509cc65844e04546ab81f60f816615",
+    "external_encounter_hash_rule": "semantic_digest(sorted_unique_native_index_lists)",
+    "initial_free_hash": "sha256:4fc8d4a166583abe1f0f6c2996755605f94cc20112c387e77400ae22cebdf8f7",
+    "external_unknown_cells": 21164,
+    "seed_cells": 93,
+    "initial_free_cells": 1646557,
+    "fixed_disc_occupied_cells": 14399,
+    "cell_face_source_index": 2.5,
+    "classification_tolerance_mm": 1e-08,
+    "external_workspace_rule": "E=U intersect full_cell_hi_less_than_minus1e-8mm; collision_exception_only",
+    "seed_rule": "Ds&~O; proximal distal_face_on_plane; entire footprint strictly_inside_disc",
+    "initial_free_rule": "six_connected_closure_of_K_in_Ds_and_not_O; zero_removal_or_reward",
+    "preentry_rule": "per_insertion_p0=entry-((max(rtip,rshaft-tip_length*cos_angle)+1e-8)/cos_angle)*axis",
+    "trajectory": "checked_axial_insertion_and_reverse; transfer_between_withdrawn_poses_unassessed",
+    "source_domains_extended": false,
+    "source_material_deleted": false,
+    "source_target_deleted": false,
+    "physical_air_or_operative_opening_observed": false,
+    "outside_image_geometry": "existing_unassessed_extent; tip_outside_image_still_refused",
+    "scope": "public_simulated_post_exposure_search_qualification_only"
+  },
+  "public_target_context_variant": "full-supplied-public-target-context-v1",
+  "patient_group": "ReMIND:015",
+  "role": "TRAIN",
+  "evidence_domain": "acquired_patient",
+  "real_patient_count": 1,
+  "cohort_sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+  "source_hash": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524",
+  "decision_model_hash": "sha256:4d5944a1c2e5b1090ead2667a12d2c862e4b3d45d85c0e336d5a4b83ccfff3dd",
+  "max_steps": 24,
+  "public_observation_binding": "sha256:ea3d8ed1f110cb1ac5e93d6299ad38c57d3cc7306beabc2fa00d16a9728b8599",
+  "observation_track": "annotation_assisted",
+  "protocol_sha256": "sha256:2839c353fa97e6286e18fc09c4406e24012884e2b90fbcd2a2818276264fe525",
+  "learning_protocol_hash": "sha256:914bee26cb8b8c7c92c3736afa9271eab118bfd7bc7bf3bc62500b421e70f3b6",
+  "public_source_binding_hash": "sha256:55f41a58e3f86626a0014fee218e3279ec6150126fbd5f4e285baa21bde9c17a",
+  "qc_receipt_hash": "sha256:48490d4021dd61ee9b9aa5efecfc4396e119d93da52e17620683367e07bbcca0",
+  "max_optimizer_updates": 0,
+  "budgets": {
+    "search": {
+      "max_calls": 1,
+      "beam_width": 1,
+      "seconds": 60
+    },
+    "max_native_previews": 40000,
+    "max_policy_forwards": 0,
+    "worker_seconds": 300,
+    "memory_bytes": 3221225472,
+    "threads": 1
+  },
+  "private_reference_in_task": false,
+  "ventricular_evidence": "unavailable_to_actor_and_search",
+  "actions": "simulated_not_recorded",
+  "clinical_claim": false
+}

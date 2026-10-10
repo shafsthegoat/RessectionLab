@@ -1,0 +1,39 @@
+{
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "log_bytes": 4194304,
+    "max_native_previews": 40000,
+    "output_bytes": 67108864,
+    "parent_seconds": 330,
+    "sampled_rss_bytes": 3221225472,
+    "supervision_bytes": 8388608,
+    "threads": 1,
+    "worker_seconds": 300
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-post-exposure-feasibility-v1/attempt-01.supervision/fresh-pycache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-post-exposure-feasibility-v1/initial_inventory_worker.py",
+    "--declaration",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-post-exposure-feasibility-v1/root-release.json",
+    "--declaration-sha256",
+    "8315099d95b16a9dacac54a65c4d84d6385e458534b6dab26b73a37555d4af1a"
+  ],
+  "condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "head": "d583008cb1ebc36b4ed34b5f722f3b4f8cc959ec",
+  "parent_pid": 87093,
+  "public_index": {
+    "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json",
+    "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8"
+  },
+  "release_sha256": "8315099d95b16a9dacac54a65c4d84d6385e458534b6dab26b73a37555d4af1a",
+  "source_index": {
+    "path": "build/remind-post-exposure-feasibility-v1/source-index.json",
+    "sha256": "4ac60917a28368056b1b0d07481a88f447be4116ec677fed1bb31dd2766c7b50"
+  },
+  "training_admitted": false
+}
