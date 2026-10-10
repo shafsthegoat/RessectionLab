@@ -1,0 +1,48 @@
+Scoped source review: patient learning and complete-plan preflight
+
+Verdict: no remaining concrete source blocker found for root's generated
+canonical controls. This is source review, not actual patient QC or execution.
+Reviewer authored the separate admission module; learning and orchestration
+were independently authored by goal_conditioned_policy.
+
+Reviewed source SHA256:
+patient_planning_learning.py
+50bd9750a7afc4beeb47acb32047f28e3801e022b97ae6835f2cc86ba52371e7
+patient_planning_preflight.py
+81cca24132ed3740893735c5bdb44f800c4897014abc4a337895b79beab46c04
+
+The learner retains the existing SpatialPolicy, mean-action categorical CE and
+complete-episode REINFORCE equations. Exact admitted TRAIN contexts and the
+learning-protocol digest are required; common initialization copies fresh
+identical tensors without loading an older checkpoint. Session identity,
+parameter ancestry, complete collected history and one-use loss ownership are
+checked. The class supports a declared update budget; the preflight fixes one
+update per IL/RL method. All current methods share the public native task.
+
+The preflight records beam-search accounting and refuses capped teachers instead
+of turning an incomplete result into a label. It retains complete planning and
+execution histories, seals before replay, compares all native history fields
+apart from their explicit outcome-scope label, and applies the existing
+independent geometry audit. Runtime accounting begins before the source factory;
+the existing owning parent remains necessary for hard wall and process-tree RSS.
+No patient loader, private reference callback or model checkpoint loader exists
+in these two modules. This first run cannot test ventricular avoidance.
+
+Two narrow review findings were repaired before this snapshot:
+1. Aspiration-only native STOP history omits interaction_mode. Replay frames now
+   receive a presentation-only normalized copy; authoritative histories and
+   seals remain unchanged. STOP and aspiration-then-STOP controls are present.
+2. Common initialization now checks methods times updates_per_method against
+   each admitted context's aggregate optimizer bound, preserving the reusable
+   session without widening the runner's two-update limit.
+
+Residual scope: the owned source/QC loader authenticates receipts and release
+scope. Hashes and caller assertions alone do not establish anatomical coverage,
+registration or clinical truth. The public automatic cerebrum support may reveal
+ventricular geometry; this must be disclosed and examined during TRAIN QC.
+Generated fixture passes cannot admit real arrays. The three complete methods
+and their post-seal private evaluation remain separate from clinical efficacy.
+
+No tests, model forwards, optimization, native patient execution, patient payload
+reads, or held-out reads were performed for this source review. Root retains the
+combined generated test run and any separately qualified actual preflight.

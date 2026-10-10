@@ -1,0 +1,55 @@
+{
+  "author_validation": {
+    "learning_runtime_tests": "not_run",
+    "model_forwards": 0,
+    "optimizer_updates": 0,
+    "patient_reads": 0,
+    "preflight_runtime_tests": "not_run",
+    "syntax": "six_files_AST_parse_only_no_module_import"
+  },
+  "canonical_evaluator_owned_by_root": "src/resectionlab/patient_planning_evaluation.py",
+  "files": [
+    {
+      "destination": "src/resectionlab/patient_planning_admission.py",
+      "previous_sha256": null,
+      "source": "build/cross-patient-planning-v1/stage/resectionlab/patient_planning_admission.py",
+      "source_sha256": "bfeee65c93c144df04dcfc3e7005f8bf53ff987b13e06942eca303d6143bb4b8"
+    },
+    {
+      "destination": "src/resectionlab/patient_planning_learning.py",
+      "previous_sha256": null,
+      "source": "build/cross-patient-planning-v1/stage/resectionlab/patient_planning_learning.py",
+      "source_sha256": "50bd9750a7afc4beeb47acb32047f28e3801e022b97ae6835f2cc86ba52371e7"
+    },
+    {
+      "destination": "src/resectionlab/patient_planning_preflight.py",
+      "previous_sha256": null,
+      "source": "build/cross-patient-planning-v1/stage/resectionlab/patient_planning_preflight.py",
+      "source_sha256": "81cca24132ed3740893735c5bdb44f800c4897014abc4a337895b79beab46c04"
+    },
+    {
+      "destination": "tests/test_patient_planning_admission.py",
+      "previous_sha256": null,
+      "source": "build/cross-patient-planning-v1/stage/tests/test_patient_planning_admission.py",
+      "source_sha256": "0bf919c6d88b9c0609b85318678786c7e82726bf3eaa5a02cbb6479aa797c398"
+    },
+    {
+      "destination": "tests/test_patient_planning_learning.py",
+      "previous_sha256": null,
+      "source": "build/cross-patient-planning-v1/stage/tests/test_patient_planning_learning.py",
+      "source_sha256": "070b0b9302c10d916c7261a38bb51efce5a8c88367acc7ae951438df2723f039"
+    },
+    {
+      "destination": "tests/test_patient_planning_preflight.py",
+      "previous_sha256": null,
+      "source": "build/cross-patient-planning-v1/stage/tests/test_patient_planning_preflight.py",
+      "source_sha256": "87376de4bf814eec5580e6cc430aee6014b78b3ab740140dd16e4e60f3738e60"
+    }
+  ],
+  "handoff_sha256": "9940ec95f9e82cab08050cca9068611547dd0fe6c11361ecfbcee6ac56662b9c",
+  "independent_admission_author_receipt": "17 prior generated controls passed on superseded source2a9c4a8c; current18 controls not run",
+  "no_runtime_release": true,
+  "patch_sha256": "fd0cbea16ce424adf4cd0d4a5e04c7481aa9b4660bacc5308784706fab5908ab",
+  "status": "SOURCE_REVIEW_READY_CANONICAL_TESTS_PENDING",
+  "version": "cross-patient-planning-source-slice-v1"
+}

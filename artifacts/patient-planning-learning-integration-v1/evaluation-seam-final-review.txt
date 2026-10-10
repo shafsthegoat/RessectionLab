@@ -1,0 +1,53 @@
+Scoped source GO after producer/consumer history repair
+
+Final evaluator SHA256:
+7df507ffce9ac6a1200dd8014a654a962720a7d5aa93d9f8d5288a2e96d97db4
+Root test source SHA256:
+d4d228c0b10100de08aedeef1d62d166e9b2a28fd9a05e849edcbad11f99c259
+Reviewed staged producer SHA256:
+81cca24132ed3740893735c5bdb44f800c4897014abc4a337895b79beab46c04
+
+The concrete mismatch in REPORT.txt is closed. Producer rows now retain exact
+replayed_history; the consumer binds the original native audit hash to that
+history and compares every field with the separately sealed nominal history.
+Only non-STOP outcome_scope may differ, with the two exact permitted strings.
+STOP rows instead require absent scope in both and otherwise exact equality.
+Neither the original plan seal nor the authoritative audit hash is relabeled.
+
+Independent seam validation uses the actual producer _seal_and_replay, _write
+and _history_identity function ASTs without importing its Torch-dependent
+orchestration. Tiny generated NativeSpatialTask planning/replay and actual
+independent geometry checks supply the histories and audits. Generated context
+and trace admission stubs make this explicitly a serialization/evaluation seam
+test, not a patient-admission or learning test. All three cases pass:
+  two-motion horizon; STOP-only completion; aspiration then STOP.
+Each loads its generated reference exactly once and returns all three matched
+method slots. A changed replay reward in the final method is refused before
+the loader in each case. Full-tool source geometry is unchanged. Root separately
+reported 10 focused tests passing, including a changed physical-pose refusal;
+those root tests were inspected, not rerun by this reviewer.
+
+The independent repaired seam took 0.528387833 s with 70,041,600 B observed peak
+self RSS. All three source pins remained unchanged, with zero protected-access
+attempts. Evidence: repaired/seam-result.json, repaired-seam-console.txt and
+probe_repaired_seam.py. Original mismatch reproduction and source snapshots are
+preserved intact. No patient data, image/label payload, model/Torch import,
+checkpoint, native solver or network processing occurred.
+
+Required runner boundary before any actual private-label evaluation:
+1. Authenticate the successful child terminal result
+   (complete_preflight_not_population_evidence) and a successful owned-parent
+   receipt with completed worker, clean cleanup and no remaining owned processes.
+2. Bind the exact completed sealed-plans bytes to that terminal attempt before
+   passing expected_sha256. A sealed-complete-plans.json file can be written
+   before a later budget/parent failure; file existence or its embedded complete
+   flag alone is insufficient authority to open private labels.
+3. Authenticate the same-patient annotation source/meaning, coverage and common
+   physical frame upstream, under the existing owned-worker memory/wall limits.
+
+These remain runner/qualification duties, not a new admission system inside the
+array-only adapter. The current API documents that it grants no patient admission
+or file/process isolation. The source GO confirms the repaired integration and
+full-tool annotation encounter semantics described in REPORT.txt. It does not
+authorize a real patient run, establish automatic-label accuracy, or convert
+geometric annotation contact into removal, injury or clinical evidence.

@@ -1,0 +1,7 @@
+# Real-anatomy planning and learning integration
+
+The existing spatial model can now use a source- and role-bound public patient task with separately labeled simulated actions. Reusable sessions preserve TRAIN-only updates, shared initialization and unchanged learning equations. The first-run driver compares beam search, one imitation update and one RL update, then records complete greedy trajectories and native replay. It measures proposals, simulator calls, forwards and elapsed time by phase. Private ventricular labels are absent from the task and every learning API.
+
+Root's combined canonical checks pass: **40 tests in 2.73 seconds**. These cover exact source/role joins, static observation integrity, training updates, complete histories, stopping and evaluation boundaries. Independent source review repaired a STOP export mismatch and aggregate update-budget check. Earlier generated fixture-domain failures remain preserved. No real patient gradient, population fit or transfer result is claimed by this source integration.
+
+The runner requires qualified patient inputs and external resource supervision before actual use. Its one-update limit is a feasibility protocol; reusable learning sessions support a future frozen multi-patient protocol. The present objective is public target/geometric access, with no ventricular avoidance reward. A learned critical-structure estimate and matching search/policy observation and cost are a separate scientific dependency.

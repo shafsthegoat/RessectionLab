@@ -1,0 +1,12 @@
+{
+  "status": "FAILED_FIXTURE_CONSTRUCTION",
+  "tests_failed": 17,
+  "pytest_seconds": 0.65,
+  "source_sha256": "b5a75e55b026a5fad3f3e5eb0a155663f1e811aa4126683d74e137ca1f9baa91",
+  "tests_sha256": "4f3e0acb5cead003d475b331c2d5eab001172ac8258deb4f2b8eb9b2b8acecf3",
+  "reason": "Generated fixture incorrectly combined synthetic_scan with supplied_annotation channels; unchanged SpatialInputs refused before admission checks.",
+  "repair": "Explicit generated-domain scan-derived interface channels and generated semantics; acquired annotation-assisted source semantics unchanged.",
+  "patient_payload_reads": 0,
+  "model_imports": 0,
+  "model_forwards": 0
+}
