@@ -160,8 +160,12 @@ def _seal_and_replay(base, context, trace, *, method, policy, updates, output, g
     if not replay.terminated or _history_identity(replay.metrics()["history"]) != _history_identity(plan["history"]):
         raise ValueError("Complete native replay differs from sealed public plan")
     audit = evaluate_native_spatial_episode(replay, cancelled=lambda: (guard() or False))
-    if audit["accepted"] is not True: raise ValueError("Independent native geometry rejected replay")
+    # A rejected route is an experimental result too. Persist its certificate
+    # before failing the export so the offending action and reason survive.
     _write(output / "native-replay.json", {"metrics": replay.metrics(), "independent_geometry": audit})
+    if audit["accepted"] is not True:
+        reasons = audit.get("geometry", {}).get("failures", ())
+        raise ValueError("Independent native geometry rejected replay: " + ", ".join(reasons))
     # Legacy aspiration STOP records omit interaction_mode. Normalize only the
     # presentation copy; authoritative histories, hashes and poses stay exact.
     display_history = []

@@ -36,6 +36,33 @@ def test_scope_normalization_does_not_hide_physical_or_reward_change():
     assert _history_identity(planning) != _history_identity(replay)
 
 
+def test_rejected_independent_replay_is_saved_without_export(tmp_path, monkeypatch):
+    import resectionlab.patient_planning_preflight as preflight
+
+    task, context, _ = bound_fixture()
+    teacher = trace(task, context, opening=True)
+    original_evaluate = preflight.evaluate_native_spatial_episode
+
+    def reject(replay, **kwargs):
+        audit = original_evaluate(replay, **kwargs)
+        assert audit["accepted"] is True
+        return {**audit, "accepted": False, "outcomes": None,
+                "geometry": {**audit["geometry"], "feasible": False,
+                             "failures": ["generated_rejection"]}}
+
+    monkeypatch.setattr(preflight, "evaluate_native_spatial_episode", reject)
+    with pytest.raises(ValueError, match="generated_rejection"):
+        preflight._seal_and_replay(task, context, teacher, method="SEARCH",
+            policy=None, updates=0, output=tmp_path, guard=lambda: None)
+    saved = json.loads((tmp_path / "native-replay.json").read_text())
+    assert saved["independent_geometry"]["accepted"] is False
+    assert saved["independent_geometry"]["geometry"]["failures"] == ["generated_rejection"]
+    assert saved["metrics"]["terminated"] is True
+    assert _history_identity(saved["metrics"]["history"]) == _history_identity(teacher.history)
+    assert (tmp_path / "plan.json").is_file()
+    assert not (tmp_path / "frames.json").exists()
+
+
 def test_aggregate_update_declaration_not_weakened_by_reusable_session():
     _, context, protocol = bound_fixture()
     changed = context.record(); changed["max_optimizer_updates"] = 1
