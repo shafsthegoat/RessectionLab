@@ -15,10 +15,12 @@ clinical harm/safety, and does not prove that no useful path exists.
 The earlier public motion-ranking IL64 contrast also regressed: 53/42 target
 cells on TRAIN015/045 versus original imitation's 58/51, with appropriate STOP
 on 002/018 retained. All results and original failed attempts remain preserved.
-Next, measure the existing exact geometry cache on a matched TRAIN route to
-address expensive search inventories, and use a bounded frozen TRAIN gradient
-diagnostic to distinguish conflicting action-learning signals. Neither requires
-an open-ended training sweep or changing evaluation patients.
+The exact geometry cache now lowers measured TRAIN045 greedy time by 28.45%
+with identical complete outcomes in one pair; full-arm time falls 12.12%. Its
+benefit for beam or RL is still unmeasured. Next validate broader cache use and
+use the prepared bounded frozen TRAIN gradient diagnostic to distinguish
+conflicting action-learning signals, without another training sweep or changing
+evaluation patients.
 
 The four recovered TRAIN cases exposed a separate initialization problem: an
 S-only entry plane can start tools inside assumed S∨T tissue, and unknown image
@@ -33,6 +35,8 @@ roles remain fixed. No held-out patient or clinical benefit has been demonstrate
 See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cross-patient-experiment-priority-october-10).
 
 Current integrated results, October 10:
+
+- **Exact geometry reuse reduces measured planning time:** [the complete TRAIN045 pair](artifacts/native-capsule-cache-train045-result-v1/REPORT.txt) preserves all 12 movements plus STOP, every non-time score, full metrics and accepted independent outcomes. Greedy time falls 16.312→11.672 s (28.45%); construction/selection/replay/audit total falls 35.109→30.855 s (12.12%). Cache hits are 40,083 of 45,354 with 21.39 MB retained array payload. Independent saved audit passes 1,428 checks. This is one baseline-first pair, with no established sustained, beam or RL speed gain.
 
 - **The repaired transfer test gives a negative learned result and a capped search:** [the saved independent audit](artifacts/post-exposure-select013-expanded-result-v1/REPORT.txt) accepts greedy STOP and both complete learned routes separately: all remove zero target, while IL/RL remove about 2/27 mm³ outside the supplied target. Beam evaluates 246 negative prefixes before its 300 s cap; its partial STOP is not accepted as an outcome. Owned runtime is 384.795 s at 1.548 GB sampled peak, with 26 forwards, 35,217 previews and no SELECT updates. Inventory work occupies 293.555 s of the beam phase. The preparation blocker is fixed; useful transfer and the fourth complete baseline remain unresolved.
 

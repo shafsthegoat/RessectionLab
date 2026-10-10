@@ -1,0 +1,49 @@
+{
+  "arm_interval_rss": {
+    "baseline": {
+      "sampled_peak_rss_bytes": 552960000,
+      "samples": 168
+    },
+    "cached": {
+      "sampled_peak_rss_bytes": 577503232,
+      "samples": 148
+    }
+  },
+  "arm_interval_scope": "entire process; arm directory creation through next arm or process exit, includes teardown; allocator carryover possible",
+  "automatic_retry": false,
+  "caps": {
+    "log_bytes": 2097152,
+    "native_previews": 6000,
+    "output_bytes": 33554432,
+    "parent_seconds": 150,
+    "sampled_rss_bytes": 3221225472,
+    "supervision_bytes": 4194304,
+    "threads": 1,
+    "worker_seconds": 120
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 68.2700877089519,
+  "exit_code": 0,
+  "output_bytes": 1119320,
+  "planned_subjects": [
+    "ReMIND-045"
+  ],
+  "release_sha256": "cc416924c1682d192e7671e3fad772925bca03a6d4cd14f72fdf334d1b5fa83b",
+  "remaining_owned_pids": [],
+  "result_sha256": "3275d6bd4d7c7c14eec4b39d4773111e015d465e4202a2f31a58bd9cbf53c76d",
+  "result_status": "complete_paired_native_routes",
+  "sampled_peak_rss_bytes": 577503232,
+  "samples": 325,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/native-capsule-cache-train045-pair-v1/source-index.json",
+    "sha256": "20c1d6d4ac24e98efffaa9f3b3a22265ea7882da11f08bf5cf03ed0ca17e3491"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 2133,
+  "training_admitted": false,
+  "worker_pid": 95086,
+  "worker_termination_confirmed": true
+}

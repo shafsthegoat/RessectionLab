@@ -1572,3 +1572,29 @@ unchanged complete outcomes, then consider its relevance to capped search. The
 fixed TRAIN gradient diagnostic remains source-only; no new model sweep follows
 from the SELECT failure. All original failed preparation and training attempts
 remain visible.
+
+### October 10: exact capsule cache pair improves measured TRAIN045 time
+
+The unchanged exact cache preserves 12 motions+STOP, every non-time selector
+field, full normalized metrics and independent outcomes in both arms and against
+the original accepted route. Both remove 51 target cells/48.637450445 mm³, zero
+outside T, return48.181962921, path95.487523819 mm, no tool changes; retained
+contact remains153.541755325 mm³ and clinical probability null. No model/reward/
+clearance change or optimizer work occurs. [Exact evidence](../artifacts/native-capsule-cache-train045-result-v1/REPORT.txt).
+
+Baseline→cached greedy16.312106→11.671703 s (28.45% less); full arms including
+construction/replay/audit35.108654→30.855118 s (12.12% less). Cache has40,083hits/
+45,354queries,5,271entries,21,386,352B payload, no evictions/bypasses. It is restored
+and dropped before uncached replay. Both arms make2,275 native previews; no
+feasibility or cavity result is cached. Parent68.270 s/577,503,232B sampled peak,
+exit0 and no owned survivors. Independent saved audit passes1,428 checks.
+
+This fixed baseline-first N=1 pair cannot isolate order/allocator/filesystem
+effects or establish sustained, beam or RL speedup. Python key/bookkeeping
+bytes remain unmeasured separately. Existing generated cache controls initially
+failed two obsolete source-bound-evidence fixtures; the fixture-only correction
+retains canonical guards and explicitly rejects changed masks. All49 relevant
+controls now pass; original failure logs remain committed. The next question is
+whether exact reuse materially expands bounded search coverage. Separately,
+the frozen TRAIN gradient diagnostic is prepared but unexecuted; learned agents
+still pay for expensive candidate inventories before their own forwards.

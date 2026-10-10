@@ -1,0 +1,102 @@
+{
+  "status": "complete_exact_parity_single_baseline_first_pair",
+  "identical_cached_metrics": "same bytes as packaged baseline/episode-metrics.json; SHA7544b3c8f39649a4d19b0b5f74f635d7072e8c852f440dd659100b60b22f87bd",
+  "files": [
+    {
+      "source": "build/native-capsule-cache-train045-independent-v1/REPORT.txt",
+      "packaged": "REPORT.txt",
+      "bytes": 3911,
+      "sha256": "ffc8f21f1bf6b9a0b5062ce932114cc025898f03177e76af296e03e897119793"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-independent-v1/audit-attempt-01.log",
+      "packaged": "audit-attempt-01.log",
+      "bytes": 6483,
+      "sha256": "5702504d6f897dcaff595c34fe435512c829fcc51422f64cbd2561bfc099b2a5"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-independent-v1/audit-result-01.json",
+      "packaged": "audit-result-01.json",
+      "bytes": 28574,
+      "sha256": "2c3942c9970a0dc20fa1303d22e6747d02dfd4b558e58ac451ee6fd60f8b4fa2"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-independent-v1/audit_saved.py",
+      "packaged": "audit_saved.py",
+      "bytes": 12925,
+      "sha256": "b37e70ce6aa8eca4fc418e6fa421d1746485afb373ca2ca7a6e6a785aab689ee"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-independent-v1/compact-result.json",
+      "packaged": "compact-result.json",
+      "bytes": 6483,
+      "sha256": "62c5f367b631629e26d1ff64227b0a9a0065f9051e8c3fd0a952af596f68e853"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-independent-v1/input-index.json",
+      "packaged": "input-index.json",
+      "bytes": 17606,
+      "sha256": "d15348f65f31534b956a16907a7ae770f53b2f97ed3b7fb1ec71fa3673ab4a1c"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-independent-v1/review-index.json",
+      "packaged": "review-index.json",
+      "bytes": 911,
+      "sha256": "0416df8434eae183e7aceadd4c120a461eec8f583d77a9970cbec8e7aea722c4"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/root-release.json",
+      "packaged": "root-release.json",
+      "bytes": 2129,
+      "sha256": "cc416924c1682d192e7671e3fad772925bca03a6d4cd14f72fdf334d1b5fa83b"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/source-index.json",
+      "packaged": "source-index.json",
+      "bytes": 23743,
+      "sha256": "20c1d6d4ac24e98efffaa9f3b3a22265ea7882da11f08bf5cf03ed0ca17e3491"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/attempt-01/result.json",
+      "packaged": "attempt-01/result.json",
+      "bytes": 16972,
+      "sha256": "3275d6bd4d7c7c14eec4b39d4773111e015d465e4202a2f31a58bd9cbf53c76d"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/attempt-01.supervision/receipt.json",
+      "packaged": "attempt-01.supervision/receipt.json",
+      "bytes": 1571,
+      "sha256": "4ce7ecc5ef69ea5e0ff42a641f8cc7754bd5ab03ba00e07e522f02c995502761"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/attempt-01/baseline/episode-metrics.json",
+      "packaged": "attempt-01/baseline/episode-metrics.json",
+      "bytes": 429352,
+      "sha256": "7544b3c8f39649a4d19b0b5f74f635d7072e8c852f440dd659100b60b22f87bd"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/attempt-01/baseline/greedy-plan.json",
+      "packaged": "attempt-01/baseline/greedy-plan.json",
+      "bytes": 81191,
+      "sha256": "172acfd52c0321b85e7ece8f1d5c9da15713084b6e6d861020c7cca6f92c23ff"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/attempt-01/baseline/independent-episode.json",
+      "packaged": "attempt-01/baseline/independent-episode.json",
+      "bytes": 2632,
+      "sha256": "c2d1a2b1cf714f39477d15ae1d99622a6022dc1a8d14da121d794f6bba1afee4"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/attempt-01/cached/greedy-plan.json",
+      "packaged": "attempt-01/cached/greedy-plan.json",
+      "bytes": 81191,
+      "sha256": "f98777863632ff8038fee9f21b0c0bb0a2a4da4a7d248d57600a2c46d929efab"
+    },
+    {
+      "source": "build/native-capsule-cache-train045-pair-v1/attempt-01/cached/independent-episode.json",
+      "packaged": "attempt-01/cached/independent-episode.json",
+      "bytes": 2631,
+      "sha256": "419c920bc12e20ccd54881fad1a27679c5b907b49f00441e4e10daac3f852bec"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+PASS: exact saved scientific parity for one baseline-first TRAIN045 capsule-cover cache pair.
+
+Both arms completed the same 12 motions plus STOP, all non-time greedy accounting/scores/dispositions, and entire normalized metrics/history. Both current independent full-tool certificates accepted the exact committed histories and reproduced the historical outcomes: 51 target cells / 48.637450445 mm3 removed, zero removal outside T, return +48.181962921, path 95.487523819 mm, no tool changes. Full metrics file SHA is identical in both arms: 7544b3c8f39649a4d19b0b5f74f635d7072e8c852f440dd659100b60b22f87bd. Zero outside-target removal is not a safety result: retained contacted-tissue upper bound remains 153.541755325 mm3 and clinical deficit probability is null.
+
+Timing, baseline -> cached:
+  Greedy: 16.312106167 -> 11.671702875 s, difference -4.640403292 s.
+  Cached/baseline ratio 0.715523965: 28.45% less greedy wall time, or 1.3976x baseline/cached.
+  Complete arm: 35.108654333 -> 30.855117834 s, ratio 0.878846496 (12.12% less time).
+  Public construction: 1.673534500 -> 1.666285959 s.
+  Cache construction: 0 -> 0.011684791 s.
+  Uncached authoritative replay: 16.579275209 -> 16.790817583 s.
+  Current independent audit: 0.466285625 -> 0.635997791 s.
+Full-arm times include teardown/bookkeeping; phase timers are not a substitute for those totals.
+
+Cache accounting: 45,354 coverage queries = 40,083 hits + 5,271 misses; 5,271 retained entries, zero evictions/bypasses. Retained array payload is 21,386,352 bytes, below 32 MiB; entries below 16,384. Source/frame/geometry namespace is bound. Feasibility, cavity and integrity were not cached. The saved flags and reviewed worker control flow restore the original query and drop the cache before authoritative replay and independent evaluation. This audit checks saved records/source, not an independent runtime interception trace.
+
+Work remains identical: 2,275 native previews per arm, 4,550 total; two fresh source visits and greedy calls, 26 committed actions, zero model/optimizer/checkpoint/external-work calls. Both planning budgets complete without blocked previews or failures. Source/context/model/initial observation/action mask identities match each other and the original accepted TRAIN045 record. All full metrics and non-time selector fields were compared, rather than only target totals.
+
+Owned parent completed exit 0 in 68.270087709 s, sampled peak RSS 577,503,232 bytes and output 1,119,320 bytes; no remaining owned PIDs or cleanup errors. Baseline/cached whole-process interval peaks were 552,960,000 / 577,503,232 bytes. Cumulative process ru_maxrss after the arms was 553,435,136 / 587,743,232 bytes; it is not an independent arm peak. Python cache-key/bookkeeping bytes remain unmeasured; process RSS includes them. Worker 120 s / parent 150 s / 3 GiB / 6,000 previews / 32 MiB output bounds all held.
+
+This fixed-order N=1 measurement demonstrates exact parity and lower observed greedy time for this route. It does not isolate allocator/filesystem/order effects, establish sustained throughput, or establish RL/beam acceleration. No model, reward, action vocabulary or clearance threshold changed.
+
+Independent audit first execution passed 1,428 checks over 109 source/JSON files in 0.019825417 s, peak RSS 26,296,320 bytes. No audit failure. Source/input hashes were rechecked afterward. No arrays, images, checkpoint payloads, native replay or model were read/executed by the audit.
+
+Exact pins: HEAD 4cd1411fe68dc4125385cf0a842399ebe3e26c4b; cache source 7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869; release cc416924c1682d192e7671e3fad772925bca03a6d4cd14f72fdf334d1b5fa83b; source index 20c1d6d4ac24e98efffaa9f3b3a22265ea7882da11f08bf5cf03ed0ca17e3491; result 3275d6bd4d7c7c14eec4b39d4773111e015d465e4202a2f31a58bd9cbf53c76d; parent 4ce7ecc5ef69ea5e0ff42a641f8cc7754bd5ab03ba00e07e522f02c995502761.

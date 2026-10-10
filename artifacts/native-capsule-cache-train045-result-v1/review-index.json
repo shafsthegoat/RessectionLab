@@ -1,0 +1,29 @@
+{
+  "files": {
+    "REPORT.txt": {
+      "bytes": 3911,
+      "sha256": "ffc8f21f1bf6b9a0b5062ce932114cc025898f03177e76af296e03e897119793"
+    },
+    "audit-attempt-01.log": {
+      "bytes": 6483,
+      "sha256": "5702504d6f897dcaff595c34fe435512c829fcc51422f64cbd2561bfc099b2a5"
+    },
+    "audit-result-01.json": {
+      "bytes": 28574,
+      "sha256": "2c3942c9970a0dc20fa1303d22e6747d02dfd4b558e58ac451ee6fd60f8b4fa2"
+    },
+    "audit_saved.py": {
+      "bytes": 12925,
+      "sha256": "b37e70ce6aa8eca4fc418e6fa421d1746485afb373ca2ca7a6e6a785aab689ee"
+    },
+    "compact-result.json": {
+      "bytes": 6483,
+      "sha256": "62c5f367b631629e26d1ff64227b0a9a0065f9051e8c3fd0a952af596f68e853"
+    },
+    "input-index.json": {
+      "bytes": 17606,
+      "sha256": "d15348f65f31534b956a16907a7ae770f53b2f97ed3b7fb1ec71fa3673ab4a1c"
+    }
+  },
+  "scope": "saved source/JSON; no arrays or scientific rerun"
+}
