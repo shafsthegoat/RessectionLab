@@ -1,0 +1,36 @@
+{
+  "files": [
+    {
+      "source_path": "build/remind-post-exposure-result-independent-v1/REPORT.txt",
+      "package_path": "independent-review/REPORT.txt",
+      "sha256": "0f0967f33a139e92754c528c2dd573f256da9c2d46bdd4492621d208185eaab2",
+      "bytes": 4554
+    },
+    {
+      "source_path": "build/remind-post-exposure-result-independent-v1/audit_saved.py",
+      "package_path": "independent-review/audit_saved.py",
+      "sha256": "7c289bf03b72e1795dfec7251bf43d1356a8a72242dc395c3e7a89e7bc4ed74d",
+      "bytes": 17157
+    },
+    {
+      "source_path": "build/remind-post-exposure-result-independent-v1/audit-result.json",
+      "package_path": "independent-review/audit-result.json",
+      "sha256": "4beaa7d616984b22fa86b97fcea5b609920cc57f1792dc8a27853acbb5f0af5c",
+      "bytes": 4815
+    },
+    {
+      "source_path": "build/remind-post-exposure-result-independent-v1/input-hashes.json",
+      "package_path": "independent-review/input-hashes.json",
+      "sha256": "1a27aec54f0bce70783770f90e05217a282a3283a51b5a3b2fd8e2894040db98",
+      "bytes": 26086
+    },
+    {
+      "source_path": "build/remind-post-exposure-result-independent-v1/audit-attempt-01.log",
+      "package_path": "independent-review/audit-attempt-01.log",
+      "sha256": "fab42ef9603fa05e7397969dac548463104b19a1f967ebfab16ca29596a4ecea",
+      "bytes": 151
+    }
+  ],
+  "main_package_manifest_sha256": "471ada277f15668add33445edaab01605fc7ef25bcdf8faa1a2d87badccd3356",
+  "scope": "Saved metadata-only independent audit; no mask or geometry rerun"
+}

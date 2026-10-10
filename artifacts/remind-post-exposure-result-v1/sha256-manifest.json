@@ -1,0 +1,927 @@
+{
+  "files": [
+    {
+      "source_path": "build/balanced-teacher-il64-v1/root-release.json",
+      "package_path": "files/build/balanced-teacher-il64-v1/root-release.json",
+      "sha256": "5facc562a712262b636f354044befaed4a55e6547016f3181268a1df764e2b22",
+      "bytes": 11918
+    },
+    {
+      "source_path": "build/goal-conditioned-policy-v1/darwin_fast_sampler.py",
+      "package_path": "files/build/goal-conditioned-policy-v1/darwin_fast_sampler.py",
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+      "bytes": 9482
+    },
+    {
+      "source_path": "build/goal-conditioned-policy-v1/run_contact_owned.py",
+      "package_path": "files/build/goal-conditioned-policy-v1/run_contact_owned.py",
+      "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7",
+      "bytes": 8730
+    },
+    {
+      "source_path": "build/remind-partial-domain-public-preparation-v1/evidence-index.json",
+      "package_path": "files/build/remind-partial-domain-public-preparation-v1/evidence-index.json",
+      "sha256": "f126f27f751a1ee31d00e44c4ec89ea8627b47eed700615b2b864ef97726218a",
+      "bytes": 3539
+    },
+    {
+      "source_path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-002-public-inputs.json",
+      "package_path": "files/build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-002-public-inputs.json",
+      "sha256": "f4b7145ed04362955586b7cc31962e5b408c675f07283e046225d2b4dba47753",
+      "bytes": 14487
+    },
+    {
+      "source_path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-015-public-inputs.json",
+      "package_path": "files/build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-015-public-inputs.json",
+      "sha256": "89bcdf6511bd1b91d7ba84f85f8b10f4c65d076d04a71c7bec4f81df75683b81",
+      "bytes": 14334
+    },
+    {
+      "source_path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-018-public-inputs.json",
+      "package_path": "files/build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-018-public-inputs.json",
+      "sha256": "bd123ffaba376977f672c16a215dee339757fe7514f54c6f9f4e2e7ca8176fed",
+      "bytes": 14443
+    },
+    {
+      "source_path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-045-public-inputs.json",
+      "package_path": "files/build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-045-public-inputs.json",
+      "sha256": "a324800fa92b0e168e4c65bc6e09f5235991cf8c4a3541148a52ea3da3aaf6df",
+      "bytes": 14417
+    },
+    {
+      "source_path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json",
+      "package_path": "files/build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json",
+      "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8",
+      "bytes": 1803
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/admitted-public-bindings.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/admitted-public-bindings.json",
+      "sha256": "baef5232a2be4df23bab006e10f10edb78e8dc141e41986a593a23a9005fd04f",
+      "bytes": 15151
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/construction-result.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/construction-result.json",
+      "sha256": "7686afcf3c646c1950f2dfe583d9ff74d5c39994a8dd97241b22e5d27087e45b",
+      "bytes": 29937
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/context.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/context.json",
+      "sha256": "f4618f002838bdb4fa377b2b2e62f54e44518a37464faf981ebb0e5f99b91870",
+      "bytes": 7068
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/derived-occupancy-assumption.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/derived-occupancy-assumption.json",
+      "sha256": "61b09b7061e3f92488bd3511d17e8e6ef8b088081aed7c64a129a258fbe05a6b",
+      "bytes": 11430
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/episode-metrics.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/episode-metrics.json",
+      "sha256": "59a3e11e3bd662063df245ba485ff36b4001c0445c688f572421ea42e1a83789",
+      "bytes": 21966
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/greedy-plan.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/greedy-plan.json",
+      "sha256": "757449e8ac744daee89dd085924a27c8a7a4fc571a1c906994188bf08c4989bc",
+      "bytes": 8635
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/independent-episode.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/independent-episode.json",
+      "sha256": "40d784c101280b97bc902fc77acdf363e5243b1bfab3cfeeb4feb276713acae8",
+      "bytes": 2494
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/initial-inventory.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/initial-inventory.json",
+      "sha256": "a2a6e3c8f05f98c7135c921e3eff46b76a094540b148de2231041e8147f24ba8",
+      "bytes": 203957
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/initial-public-proposal-coverage.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/initial-public-proposal-coverage.json",
+      "sha256": "1d93d11aae9ffdfc2b22540965d7247f0082e23683dfcd4a29c286651f91966a",
+      "bytes": 88466
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/public-task-derivation.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/public-task-derivation.json",
+      "sha256": "72d7e3dfaf2960aaf8adb6183829daa7fe845422014683b2d8e90a0b7c1cbdd3",
+      "bytes": 4163
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/admitted-public-bindings.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/admitted-public-bindings.json",
+      "sha256": "8a65ac62f3ef57b725e5a956674681040925e8ac7e109e44dabd4d4c61233788",
+      "bytes": 14998
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/construction-result.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/construction-result.json",
+      "sha256": "fac96679baf765c0ea753e08ec78dc5801f39ece5531cd4391b8067b305e2f61",
+      "bytes": 125415
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/context.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/context.json",
+      "sha256": "0262f56a7e30f5479027ef7de01b526c31f88d4e0dd077887327e3277c8dbfe1",
+      "bytes": 6978
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/derived-occupancy-assumption.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/derived-occupancy-assumption.json",
+      "sha256": "2ea2cc7d9fed4b12a76d8eda15f0a79e45f04d2f593f081a549918aac46fb227",
+      "bytes": 11253
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/episode-metrics.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/episode-metrics.json",
+      "sha256": "3ff9a551a4cad52e26936c797cdaf0b6923a6ddf5ae894867c8dd517a99359d9",
+      "bytes": 423851
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/greedy-plan.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/greedy-plan.json",
+      "sha256": "954ec5204482ba6c91867e34e61700470f060c74b702711e57414a77cb2cfcf1",
+      "bytes": 99065
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/independent-episode.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/independent-episode.json",
+      "sha256": "bcaf1303133576b7a281eec3915a3088f95306b17ef655041222f85272387547",
+      "bytes": 2627
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/initial-inventory.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/initial-inventory.json",
+      "sha256": "2d4f0dc585423af50ab4fa6fff86a3be8e7cf218dad639e3588b34122a1e80dd",
+      "bytes": 159456
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/initial-public-proposal-coverage.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/initial-public-proposal-coverage.json",
+      "sha256": "e24aee482930379c7329bfca4a22132bcb48633556ec80a3ff80ff00ea084263",
+      "bytes": 60222
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/public-task-derivation.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/public-task-derivation.json",
+      "sha256": "d45feef36900b466cc1224ec957e17afee2e9400652eedf7ae58aeb1d224a6e6",
+      "bytes": 4077
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/admitted-public-bindings.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/admitted-public-bindings.json",
+      "sha256": "da1e48c522ca8e1816983b6000c6d4e2fceb5c988ca060900b4169262eb96e0c",
+      "bytes": 15160
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/construction-result.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/construction-result.json",
+      "sha256": "19122085959b12cce68446371823b94e55651321cad65da656e925ee66d5c9c0",
+      "bytes": 27338
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/context.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/context.json",
+      "sha256": "8365177ae9e98f005a7431ae73e64f95afa9987d431d4eef42933b8f5ec6f83f",
+      "bytes": 7066
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/derived-occupancy-assumption.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/derived-occupancy-assumption.json",
+      "sha256": "e8a0212cf577f9cdc74f4cbae7b81866f2ec8067c7d250fb7116d079952b500a",
+      "bytes": 11428
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/episode-metrics.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/episode-metrics.json",
+      "sha256": "911e0d6060b4e16188a054ff2f736be90f897796db48b22c2b85a3faf16cb012",
+      "bytes": 21987
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/greedy-plan.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/greedy-plan.json",
+      "sha256": "4d0b9a0029293e787a99c276bd6bca9430bc0722c2eaaecd88bb193d4e1e5040",
+      "bytes": 7234
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/independent-episode.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/independent-episode.json",
+      "sha256": "20d0f0be9e4aa990136d47e5e2c91c2df140492b130d850fcb641e737bf7e6cb",
+      "bytes": 2494
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/initial-inventory.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/initial-inventory.json",
+      "sha256": "c8c4837cde9a8f2113db5ba935f539c990c70287e3af2aee2730179c6824e459",
+      "bytes": 155963
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/initial-public-proposal-coverage.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/initial-public-proposal-coverage.json",
+      "sha256": "170a39b2282c7c2b60f66edb308aba1e918ef8fd93c71e09190688b7aae3f9a3",
+      "bytes": 58647
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/public-task-derivation.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/public-task-derivation.json",
+      "sha256": "71b323ba213faee7c6d8e78ce7ddb3d9cd146b73ed8a414012d88108bf3332ea",
+      "bytes": 4164
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/admitted-public-bindings.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/admitted-public-bindings.json",
+      "sha256": "7868a44fe7c1b8c97d19ce79dfe93c479096aad9e1e6120b48570bcb005a2800",
+      "bytes": 15131
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/construction-result.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/construction-result.json",
+      "sha256": "0a3b97bc77ea10452b56aa45e0105b289030c74f3b4f7ce38c6e8242655b40ce",
+      "bytes": 108399
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/context.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/context.json",
+      "sha256": "a8bff615ea45503fa8e3ba69ed8c0f16bc6ea1e5609421e89264d0719fc7a55a",
+      "bytes": 7057
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/derived-occupancy-assumption.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/derived-occupancy-assumption.json",
+      "sha256": "df89c33f1982572af9d4ef5c5ce86ef16263b58e33f93eebd0f08d595ae27d8f",
+      "bytes": 11413
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/episode-metrics.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/episode-metrics.json",
+      "sha256": "fa67b7ee6862222d480d60a570161e7990082e854e0327814191a629a48f6e21",
+      "bytes": 429352
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/greedy-plan.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/greedy-plan.json",
+      "sha256": "da7b49d6fde2c97c9f6911f42475afb7a4cc946e8c894e8267cc4a82679c58c1",
+      "bytes": 81191
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/independent-episode.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/independent-episode.json",
+      "sha256": "a18c03193e4968bf2f2caa44257117c51107091ee0bdfe18083b7f5edd1b0db9",
+      "bytes": 2632
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/initial-inventory.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/initial-inventory.json",
+      "sha256": "b85fc846ee5d7150e21d69030bb9ed00b6b76f48ce5f48ee497b4ccf9e75cabb",
+      "bytes": 175958
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/initial-public-proposal-coverage.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/initial-public-proposal-coverage.json",
+      "sha256": "769fc45b31e7cdff65c25145e480ef4f6f8301470b22f785d019f74f21d883ce",
+      "bytes": 69527
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/public-task-derivation.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/public-task-derivation.json",
+      "sha256": "84282eae36f3fbbf25c94fbc777b79c3ed8e34fcdcfa48d3a86258318b46a697",
+      "bytes": 4158
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/construction-ledger.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/construction-ledger.json",
+      "sha256": "910cfcc5aa1cafedad28cb5a67393e25aeef74ba8b8c063cec381447640de417",
+      "bytes": 305360
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01/result.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01/result.json",
+      "sha256": "7a57fd74f58b15d6975be4459fe4f46e6396dfa9e2f3c0fec0ef68cf5e550358",
+      "bytes": 328416
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01.supervision/declaration.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01.supervision/declaration.json",
+      "sha256": "204c5fbcf608fc78436b2a2f4d156f5de68a0da69b0e5542874788f8f0b60d90",
+      "bytes": 1778
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01.supervision/receipt.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01.supervision/receipt.json",
+      "sha256": "664b7ac101e8c79e512d52f971f424b5e2b1bbeaa7d7b1502c110afb4364f233",
+      "bytes": 1326
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/attempt-01.supervision/worker.log",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/attempt-01.supervision/worker.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/batch_contract.py",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/batch_contract.py",
+      "sha256": "fb94069492cbfb591e5ec317a540e046c3941a7dca810f6e9744baa421a0620a",
+      "bytes": 5683
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/check-only.log",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/check-only.log",
+      "sha256": "151e702099b8b8963e82b79ff754b09f49d72e1412a14e9d5da82d1764f1f40b",
+      "bytes": 151
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/controls-attempt-01/receipt.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/controls-attempt-01/receipt.json",
+      "sha256": "3c3702a4764594d35d0d6e8be743004bd1858245db055f0fa489f990b3cfa334",
+      "bytes": 1195
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/controls-attempt-01/stdout.log",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/controls-attempt-01/stdout.log",
+      "sha256": "6957653a9d15f97a68b608e72a927ca890e6584e942223d14ef966c6ff1c8c87",
+      "bytes": 99
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/freeze_candidate.py",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/freeze_candidate.py",
+      "sha256": "877f4c7d988b706b5184e1e87425b2c3b6349c370e2e09f57c1d8e58323aabd9",
+      "bytes": 4749
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/initial_inventory_worker.py",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/initial_inventory_worker.py",
+      "sha256": "2cb96e4bf565fc99659e834657c641f01be8402f539be2be2ee63d43e4075a29",
+      "bytes": 19742
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/package_result.py",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/package_result.py",
+      "sha256": "89c48ff4d81710f0c37978082393604b3dbd0f7d001eb477053c1062a0d97a84",
+      "bytes": 7681
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/prepared-release.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/prepared-release.json",
+      "sha256": "038d66126aa55a595aadb316871dbb12f0e4d6a85b3be078e2b1afb893710f5b",
+      "bytes": 2497
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/root-release.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/root-release.json",
+      "sha256": "8315099d95b16a9dacac54a65c4d84d6385e458534b6dab26b73a37555d4af1a",
+      "bytes": 2534
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/run_owned.py",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/run_owned.py",
+      "sha256": "3e48eb654eaee6a048840a5ef4592e3a9938f6cd864dd9af3dbc7e49150196ff",
+      "bytes": 8995
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/source-index.json",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/source-index.json",
+      "sha256": "4ac60917a28368056b1b0d07481a88f447be4116ec677fed1bb31dd2766c7b50",
+      "bytes": 16768
+    },
+    {
+      "source_path": "build/remind-post-exposure-feasibility-v1/tests/test_batch_controls.py",
+      "package_path": "files/build/remind-post-exposure-feasibility-v1/tests/test_batch_controls.py",
+      "sha256": "e2a669b6c3f6bc7c3cc21b0dcf33e33674efdcbb0a7bf63441a811d3c447aa00",
+      "bytes": 7657
+    },
+    {
+      "source_path": "build/remind-post-exposure-preparation-v1/promotion-index.json",
+      "package_path": "files/build/remind-post-exposure-preparation-v1/promotion-index.json",
+      "sha256": "67330ac4123e883e877a8e84a948b4c77c7da0298c4d033df8cfd86117665183",
+      "bytes": 6262
+    },
+    {
+      "source_path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains/conversion-result.json",
+      "package_path": "files/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains/conversion-result.json",
+      "sha256": "3c66619317b0368ead5a69d557b3a4d61b23ff4e2c144f9ccccdea2b25fab53a",
+      "bytes": 19943
+    },
+    {
+      "source_path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-saved-domain-review/saved-domain-review.json",
+      "package_path": "files/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-saved-domain-review/saved-domain-review.json",
+      "sha256": "840867348e3e106abc9ffd77b1de4fbffa308617a14f7f26a10073759badc6d9",
+      "bytes": 5441
+    },
+    {
+      "source_path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains/conversion-result.json",
+      "package_path": "files/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains/conversion-result.json",
+      "sha256": "88bd10a406090faa3d499b0086babd66ae168788037a76ce328207e1bfb0516c",
+      "bytes": 19575
+    },
+    {
+      "source_path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-saved-domain-review/saved-domain-review.json",
+      "package_path": "files/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-saved-domain-review/saved-domain-review.json",
+      "sha256": "323647931c0f9002b866c71b40d6706291ab94975528720bd685a8fd22899b33",
+      "bytes": 5437
+    },
+    {
+      "source_path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/conversion-result.json",
+      "package_path": "files/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/conversion-result.json",
+      "sha256": "fe0bf8ecc90e18eab03953b6c8c3bbef1e9684d06382f56694f0bb86e04ae713",
+      "bytes": 20028
+    },
+    {
+      "source_path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-saved-domain-review/saved-domain-review.json",
+      "package_path": "files/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-saved-domain-review/saved-domain-review.json",
+      "sha256": "efcc61eed7e3873d135b6c3f696e338431f8151d300ed137562388893e60f589",
+      "bytes": 5427
+    },
+    {
+      "source_path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains/conversion-result.json",
+      "package_path": "files/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains/conversion-result.json",
+      "sha256": "679962f53974f5cbd5ecf8187e4efb2fa7dd58842d0be9cf4340deabf6f33c7f",
+      "bytes": 19934
+    },
+    {
+      "source_path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-saved-domain-review/saved-domain-review.json",
+      "package_path": "files/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-saved-domain-review/saved-domain-review.json",
+      "sha256": "a8d78f7cb0e3754ed1021aef6eed024d7049878a73af94c69018a56303ace442",
+      "bytes": 5441
+    },
+    {
+      "source_path": "build/remind-train-domain-crop-preparation-v1/root-overlay-review.json",
+      "package_path": "files/build/remind-train-domain-crop-preparation-v1/root-overlay-review.json",
+      "sha256": "59b7a20cbd10fe841aeb6fc45b9fbc3936ad274db6425851dd1cc81c232a52d7",
+      "bytes": 4165
+    },
+    {
+      "source_path": "manifests/experiments/remind-component-cohort-v1.json",
+      "package_path": "files/manifests/experiments/remind-component-cohort-v1.json",
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+      "bytes": 70925
+    },
+    {
+      "source_path": "src/resectionlab/__init__.py",
+      "package_path": "files/src/resectionlab/__init__.py",
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+      "bytes": 99
+    },
+    {
+      "source_path": "src/resectionlab/anatomy.py",
+      "package_path": "files/src/resectionlab/anatomy.py",
+      "sha256": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+      "bytes": 13915
+    },
+    {
+      "source_path": "src/resectionlab/brain_extraction.py",
+      "package_path": "files/src/resectionlab/brain_extraction.py",
+      "sha256": "ef7d3b8d2d4161e9d544298b7986b6438ca41fd1b058cfebe16833eaa2900900",
+      "bytes": 23276
+    },
+    {
+      "source_path": "src/resectionlab/cohort.py",
+      "package_path": "files/src/resectionlab/cohort.py",
+      "sha256": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+      "bytes": 14491
+    },
+    {
+      "source_path": "src/resectionlab/contact_checkpoint.py",
+      "package_path": "files/src/resectionlab/contact_checkpoint.py",
+      "sha256": "5cb06e8d03d88abca1f0fbc4892a3f09866cb696d4cc20daf860afd9fe136f40",
+      "bytes": 15134
+    },
+    {
+      "source_path": "src/resectionlab/contact_family_desktop_bridge.py",
+      "package_path": "files/src/resectionlab/contact_family_desktop_bridge.py",
+      "sha256": "49fc166d4fdb8a227e597586167201c1e2b130878c2a8c5593764c8b50673c22",
+      "bytes": 15882
+    },
+    {
+      "source_path": "src/resectionlab/contact_family_desktop_release.py",
+      "package_path": "files/src/resectionlab/contact_family_desktop_release.py",
+      "sha256": "df739d8a0c855e37aa7d7bce036af402f5dfc054a1fa2d7fcd3e24852a1cd08b",
+      "bytes": 10805
+    },
+    {
+      "source_path": "src/resectionlab/contact_learning.py",
+      "package_path": "files/src/resectionlab/contact_learning.py",
+      "sha256": "b4812a076b588594e95979ab8d7c078f2d7e317293438e73a96e86c5bd24a08b",
+      "bytes": 12709
+    },
+    {
+      "source_path": "src/resectionlab/contact_learning_contract.py",
+      "package_path": "files/src/resectionlab/contact_learning_contract.py",
+      "sha256": "8234a4dc0740469a18cb472ce8a5873c7ee12fe9dfa89c362b7ce7263afdeb19",
+      "bytes": 15537
+    },
+    {
+      "source_path": "src/resectionlab/contact_train_refit_release.py",
+      "package_path": "files/src/resectionlab/contact_train_refit_release.py",
+      "sha256": "005961a81b96e22d78882038e20b792209025d4df69fbc175a751e04985413ee",
+      "bytes": 8494
+    },
+    {
+      "source_path": "src/resectionlab/core.py",
+      "package_path": "files/src/resectionlab/core.py",
+      "sha256": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+      "bytes": 30914
+    },
+    {
+      "source_path": "src/resectionlab/critical_evidence.py",
+      "package_path": "files/src/resectionlab/critical_evidence.py",
+      "sha256": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99",
+      "bytes": 29592
+    },
+    {
+      "source_path": "src/resectionlab/data_policy.py",
+      "package_path": "files/src/resectionlab/data_policy.py",
+      "sha256": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208",
+      "bytes": 7928
+    },
+    {
+      "source_path": "src/resectionlab/desktop_bridge.py",
+      "package_path": "files/src/resectionlab/desktop_bridge.py",
+      "sha256": "ea34877af54e6de26b9b116721808e9ef16666e4ad1d2ad02451b2cc2ce298f3",
+      "bytes": 121702
+    },
+    {
+      "source_path": "src/resectionlab/development_episode.py",
+      "package_path": "files/src/resectionlab/development_episode.py",
+      "sha256": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+      "bytes": 14114
+    },
+    {
+      "source_path": "src/resectionlab/evaluation.py",
+      "package_path": "files/src/resectionlab/evaluation.py",
+      "sha256": "cc8fc347b56efb2466c02d749eb307342c4931de0187b5ede2c0fbbb6975f193",
+      "bytes": 69646
+    },
+    {
+      "source_path": "src/resectionlab/fixed_rl256_loader.py",
+      "package_path": "files/src/resectionlab/fixed_rl256_loader.py",
+      "sha256": "3907d44928512b897f4a960b5e56f1fa7c00c17e756110b4070b8fb24c553638",
+      "bytes": 5154
+    },
+    {
+      "source_path": "src/resectionlab/functional_events.py",
+      "package_path": "files/src/resectionlab/functional_events.py",
+      "sha256": "5a7ba030a4e4a0a4e35a48aa950a7bcc133b890dd02eee0b4301ed3a385f8faa",
+      "bytes": 23198
+    },
+    {
+      "source_path": "src/resectionlab/functional_evidence.py",
+      "package_path": "files/src/resectionlab/functional_evidence.py",
+      "sha256": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426",
+      "bytes": 11698
+    },
+    {
+      "source_path": "src/resectionlab/geometry.py",
+      "package_path": "files/src/resectionlab/geometry.py",
+      "sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+      "bytes": 31204
+    },
+    {
+      "source_path": "src/resectionlab/goal_mode_spatial_policy.py",
+      "package_path": "files/src/resectionlab/goal_mode_spatial_policy.py",
+      "sha256": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a",
+      "bytes": 8789
+    },
+    {
+      "source_path": "src/resectionlab/goal_relation_spatial_policy.py",
+      "package_path": "files/src/resectionlab/goal_relation_spatial_policy.py",
+      "sha256": "8cf23e155fd1fd4d1994b4a032ded7c67a23cb8cec50496cd21f3ce2029c02dd",
+      "bytes": 8601
+    },
+    {
+      "source_path": "src/resectionlab/imaging.py",
+      "package_path": "files/src/resectionlab/imaging.py",
+      "sha256": "45df035c47f9c509fef91ebc02f1c3bef40266c052dbd1de6d133815a5af6afa",
+      "bytes": 42272
+    },
+    {
+      "source_path": "src/resectionlab/independent_geometry_batch.py",
+      "package_path": "files/src/resectionlab/independent_geometry_batch.py",
+      "sha256": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+      "bytes": 9799
+    },
+    {
+      "source_path": "src/resectionlab/learning.py",
+      "package_path": "files/src/resectionlab/learning.py",
+      "sha256": "7ef1da1bc5d6695db661f2f9a7a889b835cc70772ea1955892ea8e00c209af12",
+      "bytes": 51360
+    },
+    {
+      "source_path": "src/resectionlab/legacy_aspiration_projection.py",
+      "package_path": "files/src/resectionlab/legacy_aspiration_projection.py",
+      "sha256": "69d0003350f30fa03996a272137521ae19a0f511667872ffb45cc386d7b1132c",
+      "bytes": 17510
+    },
+    {
+      "source_path": "src/resectionlab/legacy_transfer_episode.py",
+      "package_path": "files/src/resectionlab/legacy_transfer_episode.py",
+      "sha256": "a14e04ab2d948f283a4585b8834693a953cea71eefbf6525b673d7e1993f5bcd",
+      "bytes": 19495
+    },
+    {
+      "source_path": "src/resectionlab/legacy_transfer_supervisor.py",
+      "package_path": "files/src/resectionlab/legacy_transfer_supervisor.py",
+      "sha256": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd",
+      "bytes": 10427
+    },
+    {
+      "source_path": "src/resectionlab/legacy_transfer_worker.py",
+      "package_path": "files/src/resectionlab/legacy_transfer_worker.py",
+      "sha256": "88c4646eaf51b8c96f6962e166f1d2594271807e27a517fcdcd576dd436b2d01",
+      "bytes": 4685
+    },
+    {
+      "source_path": "src/resectionlab/native_axis_accounting.py",
+      "package_path": "files/src/resectionlab/native_axis_accounting.py",
+      "sha256": "c75eea141a636072465d6c88fc113c4bf53d8901428f1a1511623539ee541ce8",
+      "bytes": 32191
+    },
+    {
+      "source_path": "src/resectionlab/native_axis_policy_schema.py",
+      "package_path": "files/src/resectionlab/native_axis_policy_schema.py",
+      "sha256": "672a5dfd8ba7981bf6bc7a81746b15b094001145c0db942f16599f24a72dcafe",
+      "bytes": 4443
+    },
+    {
+      "source_path": "src/resectionlab/native_axis_refinement.py",
+      "package_path": "files/src/resectionlab/native_axis_refinement.py",
+      "sha256": "51e62d4475e1ba2a5292499581e2a697efcc3419cb5bf0ab4d476e336c917e0e",
+      "bytes": 17552
+    },
+    {
+      "source_path": "src/resectionlab/native_axis_simulation.py",
+      "package_path": "files/src/resectionlab/native_axis_simulation.py",
+      "sha256": "5ca0147885e2a8c918d10246f4889e4bbfb9c06724f62d8abc9e8cc605a540bf",
+      "bytes": 24485
+    },
+    {
+      "source_path": "src/resectionlab/native_functional_evaluation.py",
+      "package_path": "files/src/resectionlab/native_functional_evaluation.py",
+      "sha256": "2c2284e32bc0bd87b4e6dbee82e2713777bb4d509b9e22837702a9ec3ab7da13",
+      "bytes": 12986
+    },
+    {
+      "source_path": "src/resectionlab/native_proposals.py",
+      "package_path": "files/src/resectionlab/native_proposals.py",
+      "sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+      "bytes": 61525
+    },
+    {
+      "source_path": "src/resectionlab/native_refinement.py",
+      "package_path": "files/src/resectionlab/native_refinement.py",
+      "sha256": "eec54a623eeff6a6efae64823c93746083602018cf2f3b187b7763487bc0f3c4",
+      "bytes": 34315
+    },
+    {
+      "source_path": "src/resectionlab/native_resection.py",
+      "package_path": "files/src/resectionlab/native_resection.py",
+      "sha256": "2aa191370f2dab441089dcd3d6b925c80d0da450d72fdc464d42fb93d13c8e1f",
+      "bytes": 46379
+    },
+    {
+      "source_path": "src/resectionlab/native_routes.py",
+      "package_path": "files/src/resectionlab/native_routes.py",
+      "sha256": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea",
+      "bytes": 8680
+    },
+    {
+      "source_path": "src/resectionlab/native_simulation.py",
+      "package_path": "files/src/resectionlab/native_simulation.py",
+      "sha256": "64552e5e5b5c245d4e815d0943ef4e9e5837b38d251ea891479c2a86ce026749",
+      "bytes": 34916
+    },
+    {
+      "source_path": "src/resectionlab/native_spatial_evaluation.py",
+      "package_path": "files/src/resectionlab/native_spatial_evaluation.py",
+      "sha256": "bed5957cecc2a18127eb3bbaa7854c4a26406cb222d2debf23244fbbe003084b",
+      "bytes": 9953
+    },
+    {
+      "source_path": "src/resectionlab/native_spatial_task.py",
+      "package_path": "files/src/resectionlab/native_spatial_task.py",
+      "sha256": "8237f90b3b512d03452be027e6e7e337f69da3e8127f169fe870a56c47418c32",
+      "bytes": 86060
+    },
+    {
+      "source_path": "src/resectionlab/observed_landmark_replay.py",
+      "package_path": "files/src/resectionlab/observed_landmark_replay.py",
+      "sha256": "e1e82f6f909d534c53c36ebc480bf13089d3033d822ae966b7f37ae2872397dd",
+      "bytes": 11508
+    },
+    {
+      "source_path": "src/resectionlab/observed_search.py",
+      "package_path": "files/src/resectionlab/observed_search.py",
+      "sha256": "52ed888c43a5b8405b4dd2407b583dcff59e21cf3c08b68a6c6571107b0268fd",
+      "bytes": 34378
+    },
+    {
+      "source_path": "src/resectionlab/patient_planning_admission.py",
+      "package_path": "files/src/resectionlab/patient_planning_admission.py",
+      "sha256": "d33c96f43b07db739be411eb2efef6376583c45c1db671df468fe9f505de6242",
+      "bytes": 29029
+    },
+    {
+      "source_path": "src/resectionlab/patient_planning_cohort_io.py",
+      "package_path": "files/src/resectionlab/patient_planning_cohort_io.py",
+      "sha256": "45a1aa6b585e1dd4997bfdbb04ff911a40b0620e20707910ebd4665ade0ebb24",
+      "bytes": 12090
+    },
+    {
+      "source_path": "src/resectionlab/patient_planning_cohort_spec.py",
+      "package_path": "files/src/resectionlab/patient_planning_cohort_spec.py",
+      "sha256": "ec8d3632f6b6a9abf3276d671373831319311e4f8c1bfea10f89ef274bdd2194",
+      "bytes": 11248
+    },
+    {
+      "source_path": "src/resectionlab/patient_planning_learning.py",
+      "package_path": "files/src/resectionlab/patient_planning_learning.py",
+      "sha256": "b35970af26d132dc29577c852dfd7ed3e147325b6c099f1883daa354eecada93",
+      "bytes": 18692
+    },
+    {
+      "source_path": "src/resectionlab/planning.py",
+      "package_path": "files/src/resectionlab/planning.py",
+      "sha256": "e1c1e377a8bdf4416c7b0f7e3f0c3c6d12d63ad46f174d0b0700b86f598a2b24",
+      "bytes": 31212
+    },
+    {
+      "source_path": "src/resectionlab/planning_budget.py",
+      "package_path": "files/src/resectionlab/planning_budget.py",
+      "sha256": "c0b00319c0240ec57d6ef9e466ac0bfc8b1a781743f2bec92a8cc8ac517d0e8c",
+      "bytes": 11579
+    },
+    {
+      "source_path": "src/resectionlab/policy_inputs.py",
+      "package_path": "files/src/resectionlab/policy_inputs.py",
+      "sha256": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47",
+      "bytes": 3294
+    },
+    {
+      "source_path": "src/resectionlab/population_learning.py",
+      "package_path": "files/src/resectionlab/population_learning.py",
+      "sha256": "c2ad09dbe4a20ef9ea2c912e95cc05dec3c1cfb0fe38123627de4a8c9904772c",
+      "bytes": 25672
+    },
+    {
+      "source_path": "src/resectionlab/post_exposure.py",
+      "package_path": "files/src/resectionlab/post_exposure.py",
+      "sha256": "ce95ca492aef3bb0149d9fb62c22766caad76701f894abaa37327a21acb7970e",
+      "bytes": 9110
+    },
+    {
+      "source_path": "src/resectionlab/prior_proposals.py",
+      "package_path": "files/src/resectionlab/prior_proposals.py",
+      "sha256": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f",
+      "bytes": 27458
+    },
+    {
+      "source_path": "src/resectionlab/procedural_learning.py",
+      "package_path": "files/src/resectionlab/procedural_learning.py",
+      "sha256": "15eaa5f6e805357b0c11d788a403bcf7fbd5956963e93a746b29736fbe8c3ee6",
+      "bytes": 40198
+    },
+    {
+      "source_path": "src/resectionlab/public_contact_family.py",
+      "package_path": "files/src/resectionlab/public_contact_family.py",
+      "sha256": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800",
+      "bytes": 11219
+    },
+    {
+      "source_path": "src/resectionlab/public_patient_factory.py",
+      "package_path": "files/src/resectionlab/public_patient_factory.py",
+      "sha256": "c9f48ceb53cf0278d7a8a072d2925c5f57878ffc2f0ad79e07028d85b712d4b5",
+      "bytes": 25838
+    },
+    {
+      "source_path": "src/resectionlab/public_surface_contact.py",
+      "package_path": "files/src/resectionlab/public_surface_contact.py",
+      "sha256": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+      "bytes": 16277
+    },
+    {
+      "source_path": "src/resectionlab/public_target_context.py",
+      "package_path": "files/src/resectionlab/public_target_context.py",
+      "sha256": "1b21898e8c89c130586936c5f49beea7c7bdefd0e0aa750a797cc3ae0a6b5e15",
+      "bytes": 16294
+    },
+    {
+      "source_path": "src/resectionlab/route_native_diagnostics.py",
+      "package_path": "files/src/resectionlab/route_native_diagnostics.py",
+      "sha256": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf",
+      "bytes": 3685
+    },
+    {
+      "source_path": "src/resectionlab/selection_contract.py",
+      "package_path": "files/src/resectionlab/selection_contract.py",
+      "sha256": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72",
+      "bytes": 1927
+    },
+    {
+      "source_path": "src/resectionlab/sequential_spatial_observation.py",
+      "package_path": "files/src/resectionlab/sequential_spatial_observation.py",
+      "sha256": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+      "bytes": 3742
+    },
+    {
+      "source_path": "src/resectionlab/shared_episode.py",
+      "package_path": "files/src/resectionlab/shared_episode.py",
+      "sha256": "81d6b1faac3433f1a2eb09ff4ef70e773b69922c056495caf1a879fbbc381a4d",
+      "bytes": 12206
+    },
+    {
+      "source_path": "src/resectionlab/shared_transfer_comparison.py",
+      "package_path": "files/src/resectionlab/shared_transfer_comparison.py",
+      "sha256": "fe7713f60ec46de583d80f74bd59cc567a5a73b31998f9938e3aaa8ebbfb4835",
+      "bytes": 4840
+    },
+    {
+      "source_path": "src/resectionlab/shared_vascular_evaluation.py",
+      "package_path": "files/src/resectionlab/shared_vascular_evaluation.py",
+      "sha256": "300f42604a69b207185417045bb88e392cdeea3e2c00713b7dcee9071c1861c0",
+      "bytes": 21512
+    },
+    {
+      "source_path": "src/resectionlab/simulation.py",
+      "package_path": "files/src/resectionlab/simulation.py",
+      "sha256": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253",
+      "bytes": 47076
+    },
+    {
+      "source_path": "src/resectionlab/spatial_observations.py",
+      "package_path": "files/src/resectionlab/spatial_observations.py",
+      "sha256": "fd80342c0b512574da0d0580ce55fdb1de231d654e6615e72ef4ffe75977619f",
+      "bytes": 25806
+    },
+    {
+      "source_path": "src/resectionlab/spatial_policy.py",
+      "package_path": "files/src/resectionlab/spatial_policy.py",
+      "sha256": "30a666b114e9649744db527a78e11da0ce79b549117f863a4da84103e115c6f4",
+      "bytes": 25459
+    },
+    {
+      "source_path": "src/resectionlab/spatial_policy_diagnostics.py",
+      "package_path": "files/src/resectionlab/spatial_policy_diagnostics.py",
+      "sha256": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493",
+      "bytes": 20387
+    },
+    {
+      "source_path": "src/resectionlab/structural_evidence.py",
+      "package_path": "files/src/resectionlab/structural_evidence.py",
+      "sha256": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019",
+      "bytes": 13719
+    },
+    {
+      "source_path": "src/resectionlab/surface_contact_episode.py",
+      "package_path": "files/src/resectionlab/surface_contact_episode.py",
+      "sha256": "718321ef213ecdf7d7c1eeeba06bb607e7357c791dd58c0b645cefb0053f672e",
+      "bytes": 6579
+    },
+    {
+      "source_path": "src/resectionlab/vascular_contact_streaming.py",
+      "package_path": "files/src/resectionlab/vascular_contact_streaming.py",
+      "sha256": "fa2c09788f002c871575333018d6a11e309b48878045625e16d79fc39d75ebed",
+      "bytes": 14041
+    },
+    {
+      "source_path": "src/resectionlab/workspace_bundle.py",
+      "package_path": "files/src/resectionlab/workspace_bundle.py",
+      "sha256": "f7dd62cf793f222f6768c67e2cdd55d3601afae9edc51c1fa5f7712dce64f66a",
+      "bytes": 18934
+    },
+    {
+      "source_path": "src/resectionlab/workspace_diagnostic.py",
+      "package_path": "files/src/resectionlab/workspace_diagnostic.py",
+      "sha256": "f8a799f47027ebf49cd88b295de240f4cbc5e1126f18135b9cd5538a56a85be8",
+      "bytes": 7547
+    },
+    {
+      "source_path": "src/resectionlab/workspace_imaging.py",
+      "package_path": "files/src/resectionlab/workspace_imaging.py",
+      "sha256": "932718dcc287366121b7d583384691a6274908a3af444239e70e2ff580b94501",
+      "bytes": 9842
+    },
+    {
+      "source_path": "src/resectionlab/worlds.py",
+      "package_path": "files/src/resectionlab/worlds.py",
+      "sha256": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91",
+      "bytes": 20428
+    },
+    {
+      "source_path": "tests/test_post_exposure.py",
+      "package_path": "files/tests/test_post_exposure.py",
+      "sha256": "1d1f140a76ae78cc236d608ab18857cb4df67bbe34917c8512c872cec143a751",
+      "bytes": 13264
+    }
+  ],
+  "files_count": 153,
+  "total_bytes": 5135875,
+  "derived_summary_sha256": "56e9386b6203825e141f684079028d6466b2d5a5b5d50f88ec755752a946c30b",
+  "derived_report_sha256": "0091aa28dd8bbae37e586e788135ca7a04534435b931884f4b46871bc4697c93",
+  "source_reference_policy": "Restore copies to their source_path under the same repository before reproduction; source index retains original ignored dependencies. Arrays remain outside this package and require original frozen public manifests."
+}

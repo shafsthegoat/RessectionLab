@@ -1,0 +1,15 @@
+Four fixed TRAIN post-exposure routes completed, 2026-10-10.
+
+Patient   Initial legal/emitted   Greedy route      Removed T cells / mm3   Outside-T removed
+002       21/117                 STOP              0 / 0                   0
+015       39/78                  13 moves + STOP   58 / 55.313110          0
+018       17/75                  STOP              0 / 0                   0
+045       41/91                  12 moves + STOP   51 / 48.637450          0
+
+All four completed independent episode replay. All legal initial scores were negative for002/018 and positive for015/045; STOP outcomes preserve the fixed denominator. K=93 for every case; F0=1,550,811/1,646,557/1,542,744/1,459,043 known-zero cells. No initialized removal or contact. The measured totals are4,823 native previews,29 planning transitions,29 authoritative transitions, zero model/optimizer calls. Parent62.416s, sampled peak702,431,232B, clean reap.
+
+The two positive routes remove0.74887% and0.20157% of the complete supplied target. Their retained-contact upper bounds are150.680542 and153.541755mm3. Zero outside-target removal is not zero tissue contact, an anatomical normal-tissue claim or clinical safety. Normal-tissue exposure remains unassessed.
+
+This is a separately declared post-exposure simulation: rigid removable S OR T, source-known Ds distinct from D=Ds OR T, and no inward/straddling unknown clearance. The proximal external workspace E is an explicit unvalidated working-space assumption, not acquired air or evidence of surgery. Each insertion and reverse is checked/charged; transfer between withdrawn poses is unassessed/unpriced except the existing tool-switch penalty. Outside-image geometry remains unassessed. Source masks and full T were unchanged. NN sampling, automatic cerebrum ancestry, unavailable exact timing, unknown pretrained/cross-source overlap and no expert anatomical validation persist.
+
+Exact case source bindings, initial inventories and scores, complete histories/observations, greedy costs, authoritative episode metrics and independent replays are preserved under files/. Source and runtime releases/controls are included. No image arrays, DICOM, weights or original bulk payloads are packaged. sha256-manifest.json maps each exact copy to its original workspace path. This report is saved-output interpretation only, not a rerun or training admission.

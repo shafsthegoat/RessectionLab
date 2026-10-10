@@ -1,0 +1,27 @@
+PASS — independent saved-result arithmetic and source-binding audit.
+
+Result SHA-256: 7a57fd74f58b15d6975be4459fe4f46e6396dfa9e2f3c0fec0ef68cf5e550358
+Release: 8315099d95b16a9dacac54a65c4d84d6385e458534b6dab26b73a37555d4af1a
+Source index: 4ac60917a28368056b1b0d07481a88f447be4116ec677fed1bb31dd2766c7b50
+Bound source commit: d583008cb1ebc36b4ed34b5f722f3b4f8cc959ec
+
+The first audit invocation passed 4,067 checks in 0.0326 s with 26,083,328 B peak RSS. All 103 declared source/metadata bindings and 149 total inspected files remained unchanged. Only saved JSON and source text were read; no arrays, geometry replay, models, checkpoints or patient reconstruction were executed.
+
+All four fixed TRAIN cases retained complete committed routes and accepted independent full-tool/history evaluations. Saved action sequences, nominal decisions, authoritative history seals, microstep/macro removal and contact unions, source/frame/condition bindings, per-insertion pre-entry formula, approach plus reverse path cost, unchanged reward arithmetic and full-target denominators agree. No initialization removal/contact was recorded.
+
+Case | Initial legal/emitted | Non-STOP moves | Removed target cells/full placed target | Target mm3 | Full-target percent | Reward
+002  | 21/117                | 0              | 0/24274                               | 0          | 0                   | 0
+015  | 39/78                 | 13             | 58/7745                               | 55.3131103 | 0.7488702           | 54.8662150
+018  | 17/75                 | 0              | 0/1247                                | 0          | 0                   | 0
+045  | 41/91                 | 12             | 51/25301                              | 48.6374504 | 0.2015731           | 48.1819629
+
+Every route ends with STOP. Cases 002 and 018 have legal emitted actions, but all their initial immediate scores are negative; their STOP outcomes do not establish global unreachability. Cases 015 and 045 have zero outside-target removal, while retained contacted-tissue upper bounds remain 150.680542 and 153.541755 mm3 (158 and 161 cells). Contact is neither removal nor a validated injury estimate. Their saved histories retain external-workspace, outside-image tool and normal-tissue-exposure unknown flags. Complete return paths are 56.895313 and 95.487524 mm, including the declared pre-entry approach and reverse; transfer between withdrawn insertion poses remains unassessed.
+
+The full placed target and observed support domain remain separately bound. In 002, nearest-neighbor placement retains 24,274 target cells versus 24,294 native label positives, and 1,010 target cells remain outside observed Ds; these differences are preserved, not hidden by the S union T material assumption. K has 93 cells per case; declared initial free closures contain 1,550,811 / 1,646,557 / 1,542,744 / 1,459,043 cells. These are explicit simulated post-exposure assumptions, not observations of air or operative exposure. E remains an unassessed wholly proximal unknown-workspace exception; source domains are not extended and no initial tissue is cut.
+
+Cost/accounting: 4 greedy calls, 4 planning clones, 29 planning and 29 authoritative transitions, 4,823 native previews; zero model, optimizer or checkpoint calls. Owned parent completed in 62.416035 s, worker in 61.844229 s, sampled peak RSS 702,431,232 B and closed outputs 3,151,284 B, within 330/300 s, 3 GiB, 40,000 previews and 64 MiB. Exit zero, no surviving owned PIDs or cleanup errors. Sampling can miss transient peaks. Initial inventories have zero candidate-cap omissions. Later decisions retain all emitted legal scores but not complete proposal ledgers, so no all-route catalog-completeness claim is made.
+
+This supports computational feasibility for two positive, small partial-target routes in the separately declared post-exposure simulation. The original four starting-state failures remain valid under their original definition. Geometry, cell membership and E/K/F0 were not recomputed by this saved-only audit; their validity rests on the reviewed executing sources and saved independent checker. No clinical safety, surgical success, full resection, global optimality, learned transfer or training admission is established.
+
+Reproducer: .venv/bin/python -I -B build/remind-post-exposure-result-independent-v1/audit_saved.py
+Outputs are exclusive; do not rerun into this completed evidence directory. Exact inputs are listed in input-hashes.json; compact values and audit resources are in audit-result.json.

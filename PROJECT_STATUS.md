@@ -1,7 +1,8 @@
 # Project status
 
-**Current priority, October 10:** establish useful complete tool routes on the
-fixed recovered TRAIN cases before further training. The matched SELECT013
+**Current priority, October 10:** test whether shared imitation and scratch RL
+can learn the useful complete routes now established on the fixed recovered
+TRAIN cases, then test transfer under the same declared condition. The matched SELECT013
 comparison is complete: imitation, scratch RL, greedy search and beam search all
 STOP with zero progress. Beam explores24 layers/519 negative prefixes; no useful
 transfer or learned advantage is demonstrated. On the original TRAIN cases,
@@ -11,7 +12,10 @@ misses it. This tiny fit remains far from useful-scale planning.
 The four recovered TRAIN cases exposed a separate initialization problem: an
 S-only entry plane can start tools inside assumed S∨T tissue, and unknown image
 padding prevents any exterior free-space seed. A separately labeled post-exposure
-condition is being tested; the original failed conditions remain preserved.
+condition now permits two positive complete routes: 58 target cells on 015 and 51
+on 045, with 002/018 still stopping. These remove less than 1% of either full target;
+the original failed conditions remain preserved. The new learning comparison
+will retain all four patients and all 29 teacher decisions, with fixed endpoints.
 Automatic support and supplied tumor labels remain annotation-assisted inputs,
 not verified physical occupancy or neurological injury evidence. Existing patient
 roles remain fixed. No held-out patient or clinical benefit has been demonstrated.
@@ -19,7 +23,9 @@ See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cr
 
 Current integrated results, October 10:
 
-- **A separately labeled post-exposure start is ready for patient testing:** [the optional initialization](artifacts/post-exposure-initialization-v1/RESULT.md) retains all source tissue/target/coverage, starts full tools outside modeled material and separates accessible space from removed tissue. Approach/reverse costs and unassessed exterior encounters replay independently. The repaired19 generated controls and203 canonical tests plus9 subtests pass; the initial reporting failure is retained. Default behavior stays identical. The four-case feasibility and complete-greedy comparison is next; this is an assumption, not an observed surgical opening or mechanical validation.
+- **Two useful complete simulated routes now exist in the fixed new TRAIN cohort:** [the four-case result](artifacts/remind-post-exposure-result-v1/REPORT.txt) retains 002/018 STOP and reproduces 015's 13 moves plus STOP and 045's 12 moves plus STOP. They remove 58/51 target cells (0.74887%/0.20157% of full target), with rewards 54.8662/48.1820 and zero outside-target removal. Retained-contact upper bounds remain 150.68/153.54 mm³; zero removal outside the target is not zero contact or neurological harm. The 62.416 s / 702.4 MB run uses 4,823 native previews and no models. All four routes pass independent replay and 4,067 saved-evidence checks. The changed post-exposure assumption improves simulated feasibility, not learned accuracy or physical validity. Next: fixed shared IL64 versus scratch RL8 using all 29 complete teacher decisions, preserving both STOP cases and separate compute costs.
+
+- **A separately labeled post-exposure start preserves tissue and coverage:** [the optional initialization](artifacts/post-exposure-initialization-v1/RESULT.md) starts full tools outside modeled material and separates accessible space from removed tissue. Approach/reverse costs and unassessed exterior encounters replay independently. The repaired 19 generated controls and 203 canonical tests plus 9 subtests pass; the initial reporting failure is retained. Default behavior stays identical. The actual four-case result is recorded above; this remains an assumption, not an observed surgical opening or mechanical validation.
 
 - **The complete transfer comparison remains negative:** [SELECT013 on the matched union world](artifacts/obstruction-opening-select013-comparison-v1/README.md) gives four complete STOP plans: greedy, IL64, RL8 and beam. Beam finishes24 layers and519 negative prefixes, with no target removal in its retained progress and deepest opening about3.5mm. Planning/replay takes0.566s for greedy,0.861s for IL,0.667s for RL and219.983s for beam, excluding separate construction and upstream training costs. The owned228.130s/1.270GB run passes726 independent saved checks. There is no useful learned advantage;037 stays held and EVAL closed. The next environment check is the fixed four-case post-exposure condition, not another architecture sweep.
 
