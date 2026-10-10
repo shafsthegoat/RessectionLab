@@ -1,0 +1,80 @@
+--- build/union025-missing-axis-v1/axis_worker.py
++++ build/union025-missing-axis-v2/axis_worker.py
+@@ -190,7 +190,7 @@
+                 ('proposal_unavailable' if record['feasible'] else 'blocked'),
+                 selected_action_id=legal[0]['action_id'] if record['feasible'] and legal else None,
+                 exact_inventory_matches=matches,inventory_omitted_count=inventory['omitted_count'])
+-            diagnostics[name]=record;write(output/'diagnostics.json',diagnostics)
++            diagnostics[name]=record;write(dest/'examination.json',record)
+             return record
+ 
+         def history(actions,*,before_stop=None):
+@@ -225,6 +225,7 @@
+             history([prep,'STOP'],before_stop=lambda task:examine(task,'target',target_ray))
+             if diagnostics['target']['action_status']=='executable':
+                 history([prep,diagnostics['target']['selected_action_id'],'STOP'])
++        write(output/'diagnostics.json',diagnostics)
+         result['clearance_status']=first['action_status']
+         result['target_status']=diagnostics.get('target',{}).get('action_status','not_attempted_clearance_unavailable')
+         selected=max(range(len(result['histories'])),key=lambda i:result['histories'][i]['outcomes']['total_reward'])
+--- build/union025-missing-axis-v1/axis_contract.py
++++ build/union025-missing-axis-v2/axis_contract.py
+@@ -4,12 +4,12 @@
+ from pathlib import Path
+ import subprocess
+ HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
+-OUTPUT='build/union025-missing-axis-v1/attempt-01';SUBJECT='ReMIND-025';TRAIN=(SUBJECT,)
++OUTPUT='build/union025-missing-axis-v2/attempt-02';SUBJECT='ReMIND-025';TRAIN=(SUBJECT,)
+ CONDITION='cerebrum_plus_supplied_tumor_assumption'
+ CLOSED={'SELECT':['ReMIND-013','ReMIND-037'],'EVAL':['ReMIND-067']}
+ WORKER_SECONDS=60;PARENT_SECONDS=90;MEMORY_BYTES=3*1024**3
+ OUTPUT_BYTES=32*1024**2;SUPERVISION_BYTES=16*1024**2
+-INPUT_INDEX='build/union025-missing-axis-v1/input-index.json';INPUT_SHA='7e55c9b74d98b4ab75811aca2854d70ce5264a646d3bbfdcd4cd30f961448b2b'
++INPUT_INDEX='build/union025-missing-axis-v2/input-index.json';INPUT_SHA='7398be782bcf694958386c264a1ed9662d3d8247076bae38feec754817220653'
+ EXTRA_AXIS=(-1,4);CLEARANCE_VOXEL=(121,44,72);CLEARANCE_TOOL='generic_suction'
+ EXECUTION={'max_complete_histories':3,'task_max_steps':24,'candidate_cap':120,
+     'max_native_previews':1000,'max_native_transition_calls':12,'max_rollout_calls':6,'max_replay_calls':6,
+@@ -46,9 +46,12 @@
+     records,refs,ray=inputs();prior=records['paired_release']['condition_admission'][CONDITION]
+     protocol=semantic({'diagnostic':'posthoc-union025-one-extra-axis-v1','prior':prior['learning_protocol_hash'],
+         'extra_axis':EXTRA_AXIS,'clearance_voxel':CLEARANCE_VOXEL,'execution':EXECUTION})
+-    return {'version':'union025-missing-axis-release-v1','status':'pending_root_release','expected_head':head,
++    return {'version':'union025-missing-axis-release-v2','status':'pending_root_release','expected_head':head,
+         'output':OUTPUT,'TRAIN':list(TRAIN),'closed_roles':CLOSED,'SELECT_EVAL_execution':False,
+-        'attempts':1,'automatic_retry':False,'parent_seconds':PARENT_SECONDS,'worker_seconds':WORKER_SECONDS,
++        'attempts':1,'automatic_retry':False,'manual_corrected_attempt_ordinal':2,
++        'correction':{'scope':'exclusive diagnostics write lifetime only','prior_result':refs['failed_result'],
++            'prior_parent_receipt':refs['failed_receipt'],'prior_source_index':refs['failed_source_index'],
++            'scientific_task_caps_status_literals_unchanged':True},'parent_seconds':PARENT_SECONDS,'worker_seconds':WORKER_SECONDS,
+         'memory_bytes':MEMORY_BYTES,'output_bytes':OUTPUT_BYTES,'supervision_bytes':SUPERVISION_BYTES,
+         'execution_limits':EXECUTION,'condition':CONDITION,
+         'condition_admission':{**prior,'learning_protocol_hash':protocol},
+@@ -58,7 +61,7 @@
+             'formula':'tip=orthogonal_native_affine[:3,:3]@voxel+affine[:3,3]; entry=tip-dot(tip-access.center,access.normal)*access.normal',
+             'frame_hash':records['union_world']['common_public_world']['native_frame_hash']},
+         'target_ray':ray,'input_index':{'path':INPUT_INDEX,'sha256':INPUT_SHA},
+-        'source_index':{'path':'build/union025-missing-axis-v1/source-index.json','sha256':index_sha},
++        'source_index':{'path':'build/union025-missing-axis-v2/source-index.json','sha256':index_sha},
+         'scope':'post-hoc TRAIN task/action-space diagnosis, not model selection or transfer evaluation',
+         'completion':'STOP control plus prep+STOP if executable and prep+target+STOP if executable; every admitted history sealed and independently replayed',
+         'selection':'maximum actual complete reward, STOP first on equality',
+@@ -77,7 +80,7 @@
+     head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True,timeout=5).strip();ref=release['source_index']
+     if head!=release['expected_head'] or sha(ROOT/ref['path'])!=ref['sha256']:raise ValueError('HEAD/source index changed')
+     index=small(ROOT/ref['path'])
+-    if index['head']!=head or index['version']!='union025-missing-axis-runtime-v1':raise ValueError('Wrong runtime index')
++    if index['head']!=head or index['version']!='union025-missing-axis-runtime-v2':raise ValueError('Wrong runtime index')
+     for section in ('source_files','metadata_files'):
+         for relative,digest in index[section].items():
+             p=Path(relative)
+--- build/union025-missing-axis-v1/freeze-runtime.py
++++ build/union025-missing-axis-v2/freeze-runtime.py
+@@ -53,7 +53,7 @@
+     for rel in sources:
+         if rel.startswith('src/') and subprocess.check_output(['git','show',head+':'+rel],cwd=ROOT,timeout=5)!=(ROOT/rel).read_bytes():
+             raise ValueError('Uncommitted canonical source: '+rel)
+-    index={'version':'union025-missing-axis-runtime-v1','head':head,'source_files':sources,'metadata_files':metadata,
++    index={'version':'union025-missing-axis-runtime-v2','head':head,'source_files':sources,'metadata_files':metadata,
+         'closure_scope':'conservative static Python import closure including lazy imports; helpers pinned explicitly; no scientific imports'}
+     raw=(json.dumps(index,indent=2,sort_keys=True,allow_nan=False)+'\n').encode();digest=hashlib.sha256(raw).hexdigest()
+     release=release_template(head,digest)

@@ -1,0 +1,94 @@
+{
+  "access_derived_from": "raw S and unchanged T",
+  "condition": "cerebrum_plus_supplied_tumor_assumption",
+  "derivation": {
+    "added_region_hash": "sha256:fe18ba50afb2c603ca103c727a3512a60071eadff11f9d2ddf30b6fba29706fe",
+    "added_region_positive_voxels": 34358,
+    "anatomical_or_material_validation": false,
+    "condition": "cerebrum_plus_supplied_tumor_assumption",
+    "derived_occupancy_hash": "sha256:60a02969005f87cf6235378dcba6b60d2e041ffcfa7e0a13c723b04dcff1ec86",
+    "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+    "operation": "S OR (T > 0)",
+    "outside_union": "unchanged simulation zeros; not certified empty anatomy",
+    "source_support_hash": "sha256:eb97f5a033c069cbbe756d55409b25db7fdaba39dc0518930316ca8a053be57e",
+    "source_support_positive_voxels": 907842,
+    "source_support_unchanged": true,
+    "supplied_target_hash": "sha256:c58f56f86196bf7e7d4b45fce6a529fa3b17ab05afda2104871f9e712b895228",
+    "target_unchanged": true,
+    "version": "supplied-support-target-union-v1"
+  },
+  "intensity_normalization": {
+    "clip": [
+      0.0,
+      1.0
+    ],
+    "crop_used_for_statistics": false,
+    "lower": 193.0,
+    "method": "support_percentile_1_99",
+    "percentile_method": "linear",
+    "percentiles": [
+      1.0,
+      99.0
+    ],
+    "raw_source_preserved": true,
+    "reference_labels_used": false,
+    "source_image_hash": "sha256:1fc7209ee6a6cd5e41b4de27b32a663fa92d5995832f10b56bf1de299646927b",
+    "statistics_scope": "entire_permitted_support",
+    "statistics_voxels": 942200,
+    "support_hash": "sha256:60a02969005f87cf6235378dcba6b60d2e041ffcfa7e0a13c723b04dcff1ec86",
+    "upper": 535.0
+  },
+  "normalization_coupling": "support_percentile_1_99 uses this condition occupancy; compare recorded bounds across arms",
+  "policy_comparison_permitted": false,
+  "public_access_rule": {
+    "access_index": [
+      122.5,
+      45.0,
+      68.0
+    ],
+    "access_side": "positive_source_axis0",
+    "annotation_domain_hash": "sha256:804976ad25611a6fcb86ae570e01da323419e0729b2d82308701bf86ce8b1449",
+    "annotation_domain_meaning": "outside source annotation domain remains unknown anatomy",
+    "estimated_support_zeros": "simulation occupancy assumption, not certified empty anatomy",
+    "goal_membership_meaning": "exact supplied positive region; outside this region is not normal anatomy truth",
+    "private_reference_used": false,
+    "public_target_positive_voxels": 81762,
+    "radius_mm": 6.0,
+    "route_search": false,
+    "rule": "fixed_source_axis0_target_centroid_side_of_support_extent",
+    "source_voxel_entry_offset": 0.5,
+    "support_extent_axis0": [
+      0,
+      132
+    ],
+    "target_centroid_source_voxels": [
+      96.44417944766518,
+      44.69276681098799,
+      68.34335021158974
+    ],
+    "task_condition": "PARTIAL_TARGET_PROGRESS",
+    "tools": "existing geometry.GENERIC_TOOLS; generic research geometry, not device validation",
+    "transverse_rounding": "numpy_rint_ties_to_even",
+    "unsupported_target_positive_voxels": 34358
+  },
+  "raw_public_files": {
+    "image": {
+      "bytes": 9620284,
+      "sha256": "ccd515af17f10f5b3538a0b3ab02aed2ac90128aa7cc7e4be76bc4ad5d15294f"
+    },
+    "supplied_support": {
+      "bytes": 2405167,
+      "sha256": "df3f3f1307708aa55877ef86f4fae1cc92ae64ccf60cabf1a33df92332ef58c9"
+    },
+    "supplied_whole_tumor": {
+      "bytes": 2405167,
+      "sha256": "18a6b23c1e52528bb98be05a6190f9be91f23e121872b6bfda38d1871e506861"
+    },
+    "whole_tumor_domain": {
+      "bytes": 2405167,
+      "sha256": "610051cf506dabf02f5d8f84f1b3795b69f081cecbe782579aa2dc2628a2148a"
+    }
+  },
+  "source_QC_validates_derived_material": false,
+  "target_domain_hash": "sha256:804976ad25611a6fcb86ae570e01da323419e0729b2d82308701bf86ce8b1449"
+}

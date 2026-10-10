@@ -1,0 +1,30 @@
+{
+  "status": "single_changed_axis_bound",
+  "histories": [
+    {
+      "ordinal": 0,
+      "plan_sha256": "4e3b8bd267de6f73278aa6d7bfc6e52a78ff8cbfd76a1bd36ee7755bd643a1e7",
+      "replay_sha256": "c2f1a156dac64f398b40709cbbeb69a1b59e8b8bc6123da972af0bed0ab27256",
+      "seal": "sha256:761202252cd886b02043570386a0856dae75458fd9bf196c6c1e6dc266a89052"
+    },
+    {
+      "ordinal": 1,
+      "plan_sha256": "cad354e047abb7d97b7cfe5d2457aa2d1906824fc0bf45a67d275195b1390803",
+      "replay_sha256": "cd808b365b8dbbac84fab650c7ffd64e079a22e261bf9c42aac82fc49bab0e84",
+      "seal": "sha256:9c1f0bc99fc7208160fe256a7b546e373f864e2b9652ba6246c6063c7ca56814"
+    },
+    {
+      "ordinal": 2,
+      "plan_sha256": "359757b242fe18e6311f0bc885c10f01bba07e16b985871d0a92fb76e4e05b0f",
+      "replay_sha256": "dd1c7583d2c96a3951a8a9f76bd8b1f1d55499be5aaca7f81b040ccd2718c32c",
+      "seal": "sha256:a7542d246b541a22ac0d7fec6728af3b3e71b8713ca70fc0e61aafe3c46de7c3"
+    }
+  ],
+  "native_counts": {
+    "replay": 6,
+    "rollout": 6
+  },
+  "diagnostic_previews": 2,
+  "selected_ordinal": 2,
+  "zero_model_work": true
+}

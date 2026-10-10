@@ -1,0 +1,112 @@
+{
+  "SELECT_EVAL_opened": false,
+  "checkpoint_loads": 0,
+  "clearance_status": "executable",
+  "complete_wall_seconds": 4.179422584129497,
+  "condition": "cerebrum_plus_supplied_tumor_assumption",
+  "full_target_mm3": 77974.35860665982,
+  "histories": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "ordinal": 0,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": 0.0
+      },
+      "plan_seal": "sha256:761202252cd886b02043570386a0856dae75458fd9bf196c6c1e6dc266a89052",
+      "status": "complete",
+      "target_access_success": false
+    },
+    {
+      "actions": [
+        "nominal-cavity-ddb77b16f8e340d7af00154d",
+        "STOP"
+      ],
+      "ordinal": 1,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 2.9296877133538737,
+        "cumulative_contacted_tissue_upper_bound_mm3": 13.351447133059827,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 12.397772337841268,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 1,
+        "reference_target_fraction_removed": 1.2230620581688315e-05,
+        "simulated_removed_volume_mm3": 0.953674795218559,
+        "target_removed_mm3": 0.953674795218559,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": 0.9207451075052051
+      },
+      "plan_seal": "sha256:9c1f0bc99fc7208160fe256a7b546e373f864e2b9652ba6246c6063c7ca56814",
+      "status": "complete",
+      "target_access_success": true
+    },
+    {
+      "actions": [
+        "nominal-cavity-ddb77b16f8e340d7af00154d",
+        "nominal-cavity-2d503c15b1e976aee22ed318",
+        "STOP"
+      ],
+      "ordinal": 2,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 9.76562571117963,
+        "cumulative_contacted_tissue_upper_bound_mm3": 33.37861783264957,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 31.47126824221245,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 2,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 2,
+        "reference_target_fraction_removed": 2.446124116337663e-05,
+        "simulated_removed_volume_mm3": 1.907349590437118,
+        "target_removed_mm3": 1.907349590437118,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 77974.35860665982,
+        "total_reward": 1.8375839647259382
+      },
+      "plan_seal": "sha256:a7542d246b541a22ac0d7fec6728af3b3e71b8713ca70fc0e61aafe3c46de7c3",
+      "status": "complete",
+      "target_access_success": true
+    }
+  ],
+  "initial_omissions": 0,
+  "interpretation": "One appended source-normal axis. This is a changed proposal model over the same unvalidated public S union T occupancy, not a transfer result.",
+  "native_counts": {
+    "replay": 6,
+    "rollout": 6
+  },
+  "optimizer_updates": 0,
+  "policy_forwards": 0,
+  "post_hoc_TRAIN_diagnosis": true,
+  "private_reference_reads": 0,
+  "search_calls": 0,
+  "selected_ordinal": 2,
+  "selected_plan_seal": "sha256:a7542d246b541a22ac0d7fec6728af3b3e71b8713ca70fc0e61aafe3c46de7c3",
+  "selected_return": 1.8375839647259382,
+  "source_released": true,
+  "status": "complete_missing_axis_diagnostic",
+  "subject": "ReMIND-025",
+  "target_status": "executable"
+}

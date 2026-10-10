@@ -1,0 +1,33 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/union025-missing-axis-v1/axis_worker.py", line 291, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/union025-missing-axis-v1/axis_worker.py", line 277, in main
+    result=execute(release,args.release_sha256,output,progress)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/union025-missing-axis-v1/axis_worker.py", line 238, in execute
+    run_world();gc.collect();result['source_released']=life[0] is not None and life[0]() is None
+    ^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/union025-missing-axis-v1/axis_worker.py", line 225, in run_world
+    history([prep,'STOP'],before_stop=lambda task:examine(task,'target',target_ray))
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/union025-missing-axis-v1/axis_worker.py", line 200, in history
+    if action=='STOP' and before_stop is not None:before_stop(task)
+                                                  ^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/union025-missing-axis-v1/axis_worker.py", line 225, in <lambda>
+    history([prep,'STOP'],before_stop=lambda task:examine(task,'target',target_ray))
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/union025-missing-axis-v1/axis_worker.py", line 193, in examine
+    diagnostics[name]=record;write(output/'diagnostics.json',diagnostics)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/union025-missing-axis-v1/axis_worker.py", line 76, in write
+    def write(path,value):sink.write(path,thaw_json(freeze_json(value)))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/patient_planning_cohort_io.py", line 55, in write
+    self.write_bytes(path,raw,terminal=terminal)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/patient_planning_cohort_io.py", line 52, in write_bytes
+    with path.open('xb') as stream: stream.write(raw)
+         ^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileExistsError: [Errno 17] File exists: '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/union025-missing-axis-v1/attempt-01/diagnostics.json'

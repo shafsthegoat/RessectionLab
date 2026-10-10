@@ -1,0 +1,778 @@
+{
+  "version": "union025-saved-blocker-diagnosis-v1",
+  "scope": "saved JSON and source bytes only; stdlib coordinate arithmetic; zero patient-array reads/native/model calls",
+  "finding": "All15 preparations leave the same singleton first blocker and zero temporary fixed-ray cuts; no current fixed-axis tool capsule can fully contain that cell at any endpoint depth.",
+  "blocker": {
+    "native_index": [
+      121,
+      44,
+      72
+    ],
+    "center_ras_mm": [
+      58.352584271894045,
+      56.23545339149592,
+      0.6514050597827179
+    ],
+    "public_occupancy_class": "added T minus raw S",
+    "first_rejected_interval_index": 12,
+    "planned_microsteps": 15,
+    "previous_tip_depth_mm": 2.685547070574404,
+    "rejected_tip_depth_mm": 2.9296877133538954,
+    "shaft_front_depth_mm": -0.07031228664610437,
+    "fixed_ray_tip_radius_mm": 1.0,
+    "fixed_ray_shaft_radius_mm": 1.4,
+    "first_prior_microstep_contacting_cell": 2,
+    "temporary_cells_removed_before_failure": 0,
+    "failure_pose_and_blockers_identical_all16": true
+  },
+  "branches": [
+    {
+      "ordinal": 0,
+      "tool": null,
+      "family": null,
+      "column": null,
+      "endpoint_voxel": null,
+      "removed_cells": [],
+      "removed_blockers": [],
+      "contacted_blockers": [],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": 0.0,
+      "successor_omissions": null
+    },
+    {
+      "ordinal": 1,
+      "tool": "generic_suction",
+      "family": "exposed_opening",
+      "column": 0,
+      "endpoint_voxel": [
+        122,
+        45,
+        68
+      ],
+      "removed_cells": [
+        [
+          122,
+          45,
+          68
+        ]
+      ],
+      "removed_blockers": [],
+      "contacted_blockers": [],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": -0.22171152161482974,
+      "successor_omissions": 0
+    },
+    {
+      "ordinal": 2,
+      "tool": "generic_aspirator",
+      "family": "exposed_opening",
+      "column": 0,
+      "endpoint_voxel": [
+        122,
+        45,
+        68
+      ],
+      "removed_cells": [
+        [
+          121,
+          45,
+          68
+        ],
+        [
+          122,
+          45,
+          67
+        ],
+        [
+          122,
+          45,
+          68
+        ],
+        [
+          122,
+          46,
+          68
+        ]
+      ],
+      "removed_blockers": [],
+      "contacted_blockers": [],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": -0.7939163987459652,
+      "successor_omissions": 0
+    },
+    {
+      "ordinal": 3,
+      "tool": "generic_suction",
+      "family": "exposed_opening",
+      "column": 1,
+      "endpoint_voxel": [
+        121,
+        43,
+        68
+      ],
+      "removed_cells": [
+        [
+          121,
+          43,
+          68
+        ]
+      ],
+      "removed_blockers": [],
+      "contacted_blockers": [],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": -0.2236646467570657,
+      "successor_omissions": 0
+    },
+    {
+      "ordinal": 4,
+      "tool": "generic_suction",
+      "family": "exposed_opening",
+      "column": 2,
+      "endpoint_voxel": [
+        122,
+        47,
+        68
+      ],
+      "removed_cells": [
+        [
+          122,
+          47,
+          68
+        ]
+      ],
+      "removed_blockers": [],
+      "contacted_blockers": [],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": -0.22171152161482974,
+      "successor_omissions": 0
+    },
+    {
+      "ordinal": 5,
+      "tool": "generic_suction",
+      "family": "exposed_opening",
+      "column": 4,
+      "endpoint_voxel": [
+        120,
+        45,
+        70
+      ],
+      "removed_cells": [
+        [
+          120,
+          45,
+          70
+        ]
+      ],
+      "removed_blockers": [],
+      "contacted_blockers": [],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": -0.22561777189930163,
+      "successor_omissions": 0
+    },
+    {
+      "ordinal": 6,
+      "tool": "generic_suction",
+      "family": "exposed_opening",
+      "column": 5,
+      "endpoint_voxel": [
+        122,
+        43,
+        66
+      ],
+      "removed_cells": [
+        [
+          122,
+          43,
+          66
+        ]
+      ],
+      "removed_blockers": [],
+      "contacted_blockers": [],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": -0.22171152161482974,
+      "successor_omissions": 0
+    },
+    {
+      "ordinal": 7,
+      "tool": "generic_aspirator",
+      "family": "exposed_opening",
+      "column": 5,
+      "endpoint_voxel": [
+        122,
+        43,
+        66
+      ],
+      "removed_cells": [
+        [
+          121,
+          43,
+          66
+        ],
+        [
+          122,
+          42,
+          66
+        ],
+        [
+          122,
+          43,
+          65
+        ],
+        [
+          122,
+          43,
+          66
+        ],
+        [
+          122,
+          43,
+          67
+        ],
+        [
+          122,
+          44,
+          66
+        ]
+      ],
+      "removed_blockers": [],
+      "contacted_blockers": [],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": -1.175386316833389,
+      "successor_omissions": 0
+    },
+    {
+      "ordinal": 8,
+      "tool": "generic_suction",
+      "family": "exposed_opening",
+      "column": 10,
+      "endpoint_voxel": [
+        122,
+        48,
+        68
+      ],
+      "removed_cells": [
+        [
+          122,
+          48,
+          68
+        ]
+      ],
+      "removed_blockers": [],
+      "contacted_blockers": [],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": -0.22171152161482977,
+      "successor_omissions": 0
+    },
+    {
+      "ordinal": 9,
+      "tool": "generic_suction",
+      "family": "exposed_opening",
+      "column": 11,
+      "endpoint_voxel": [
+        122,
+        45,
+        65
+      ],
+      "removed_cells": [
+        [
+          122,
+          45,
+          65
+        ]
+      ],
+      "removed_blockers": [],
+      "contacted_blockers": [],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": -0.22171152161482974,
+      "successor_omissions": 0
+    },
+    {
+      "ordinal": 10,
+      "tool": "generic_suction",
+      "family": "intermediate_opening",
+      "column": 0,
+      "endpoint_voxel": [
+        121,
+        45,
+        68
+      ],
+      "removed_cells": [
+        [
+          121,
+          45,
+          68
+        ],
+        [
+          122,
+          45,
+          68
+        ]
+      ],
+      "removed_blockers": [],
+      "contacted_blockers": [],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": -0.41439960580077745,
+      "successor_omissions": 0
+    },
+    {
+      "ordinal": 11,
+      "tool": "generic_suction",
+      "family": "intermediate_opening",
+      "column": 5,
+      "endpoint_voxel": [
+        121,
+        43,
+        66
+      ],
+      "removed_cells": [
+        [
+          121,
+          43,
+          66
+        ],
+        [
+          122,
+          43,
+          66
+        ]
+      ],
+      "removed_blockers": [],
+      "contacted_blockers": [],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": -0.41439960580077745,
+      "successor_omissions": 0
+    },
+    {
+      "ordinal": 12,
+      "tool": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "column": 1,
+      "endpoint_voxel": [
+        122,
+        43,
+        68
+      ],
+      "removed_cells": [
+        [
+          121,
+          43,
+          68
+        ],
+        [
+          122,
+          43,
+          67
+        ]
+      ],
+      "removed_blockers": [],
+      "contacted_blockers": [],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": -0.41244648065854156,
+      "successor_omissions": 0
+    },
+    {
+      "ordinal": 13,
+      "tool": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "column": 4,
+      "endpoint_voxel": [
+        121,
+        45,
+        70
+      ],
+      "removed_cells": [
+        [
+          120,
+          45,
+          70
+        ],
+        [
+          121,
+          45,
+          69
+        ]
+      ],
+      "removed_blockers": [],
+      "contacted_blockers": [
+        [
+          121,
+          44,
+          72
+        ]
+      ],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": -0.4143996058007775,
+      "successor_omissions": 0
+    },
+    {
+      "ordinal": 14,
+      "tool": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "column": 8,
+      "endpoint_voxel": [
+        122,
+        47,
+        70
+      ],
+      "removed_cells": [
+        [
+          122,
+          47,
+          69
+        ],
+        [
+          122,
+          48,
+          70
+        ]
+      ],
+      "removed_blockers": [],
+      "contacted_blockers": [],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": -0.41244648065854156,
+      "successor_omissions": 0
+    },
+    {
+      "ordinal": 15,
+      "tool": "generic_aspirator",
+      "family": "tool_footprint_opening",
+      "column": 9,
+      "endpoint_voxel": [
+        122,
+        42,
+        68
+      ],
+      "removed_cells": [
+        [
+          122,
+          42,
+          67
+        ]
+      ],
+      "removed_blockers": [],
+      "contacted_blockers": [],
+      "fixed_ray_failure_interval": 12,
+      "temporary_ray_removed_cells": 0,
+      "target_removed_mm3": 0.0,
+      "total_return": -0.22171152161482977,
+      "successor_omissions": 0
+    }
+  ],
+  "distinct_cells_removed_across_preparations": 19,
+  "axis_containment": {
+    "method": "Transform the saved native cell eight corners with recorded affine. For each of13 saved source-normal lines, take maximum corner radial distance to the infinite line. Distance to any finite active capsule segment is at least this distance.",
+    "bounds": [
+      {
+        "column": 0,
+        "offset_source_voxels": [
+          0,
+          0
+        ],
+        "transverse_native": [
+          45,
+          68
+        ],
+        "blocker_center_distance_mm": 4.117484793971672,
+        "max_corner_distance_to_infinite_axis_mm": 4.732417579339647
+      },
+      {
+        "column": 1,
+        "offset_source_voxels": [
+          -2,
+          0
+        ],
+        "transverse_native": [
+          43,
+          68
+        ],
+        "blocker_center_distance_mm": 4.117484793971663,
+        "max_corner_distance_to_infinite_axis_mm": 4.732417579339646
+      },
+      {
+        "column": 2,
+        "offset_source_voxels": [
+          2,
+          0
+        ],
+        "transverse_native": [
+          47,
+          68
+        ],
+        "blocker_center_distance_mm": 4.958132624413829,
+        "max_corner_distance_to_infinite_axis_mm": 5.650886988880948
+      },
+      {
+        "column": 3,
+        "offset_source_voxels": [
+          0,
+          -2
+        ],
+        "transverse_native": [
+          45,
+          66
+        ],
+        "blocker_center_distance_mm": 6.078954586303469,
+        "max_corner_distance_to_infinite_axis_mm": 6.663016191063186
+      },
+      {
+        "column": 4,
+        "offset_source_voxels": [
+          0,
+          2
+        ],
+        "transverse_native": [
+          45,
+          70
+        ],
+        "blocker_center_distance_mm": 2.2256855861366764,
+        "max_corner_distance_to_infinite_axis_mm": 2.897545627184553
+      },
+      {
+        "column": 5,
+        "offset_source_voxels": [
+          -2,
+          -2
+        ],
+        "transverse_native": [
+          43,
+          66
+        ],
+        "blocker_center_distance_mm": 6.078954586303467,
+        "max_corner_distance_to_infinite_axis_mm": 6.663016191063193
+      },
+      {
+        "column": 6,
+        "offset_source_voxels": [
+          -2,
+          2
+        ],
+        "transverse_native": [
+          43,
+          70
+        ],
+        "blocker_center_distance_mm": 2.225685586136687,
+        "max_corner_distance_to_infinite_axis_mm": 2.89754562718457
+      },
+      {
+        "column": 7,
+        "offset_source_voxels": [
+          2,
+          -2
+        ],
+        "transverse_native": [
+          47,
+          66
+        ],
+        "blocker_center_distance_mm": 6.677056758410009,
+        "max_corner_distance_to_infinite_axis_mm": 7.3438772033736495
+      },
+      {
+        "column": 8,
+        "offset_source_voxels": [
+          2,
+          2
+        ],
+        "transverse_native": [
+          47,
+          70
+        ],
+        "blocker_center_distance_mm": 3.547262947826874,
+        "max_corner_distance_to_infinite_axis_mm": 4.234680422118934
+      },
+      {
+        "column": 9,
+        "offset_source_voxels": [
+          -3,
+          0
+        ],
+        "transverse_native": [
+          42,
+          68
+        ],
+        "blocker_center_distance_mm": 4.451371172273356,
+        "max_corner_distance_to_infinite_axis_mm": 5.119616703581181
+      },
+      {
+        "column": 10,
+        "offset_source_voxels": [
+          3,
+          0
+        ],
+        "transverse_native": [
+          48,
+          68
+        ],
+        "blocker_center_distance_mm": 5.590957203590416,
+        "max_corner_distance_to_infinite_axis_mm": 6.289826854039219
+      },
+      {
+        "column": 11,
+        "offset_source_voxels": [
+          0,
+          -3
+        ],
+        "transverse_native": [
+          45,
+          65
+        ],
+        "blocker_center_distance_mm": 7.0677927215134915,
+        "max_corner_distance_to_infinite_axis_mm": 7.641713829109075
+      },
+      {
+        "column": 12,
+        "offset_source_voxels": [
+          0,
+          3
+        ],
+        "transverse_native": [
+          45,
+          71
+        ],
+        "blocker_center_distance_mm": 1.3977393008975938,
+        "max_corner_distance_to_infinite_axis_mm": 2.096608951346396
+      }
+    ],
+    "minimum_max_corner_distance_mm": 2.096608951346396,
+    "nearest_column": 12,
+    "maximum_declared_active_tip_radius_mm": 1.7,
+    "minimum_excess_mm": 0.3966089513463962,
+    "consequence": "Under these fixed13 lines, unchanged tips and all-corners whole-cell removal, this blocker cannot be removed by additional endpoint depths or longer histories. This is a specific fixed-ray obstruction proof, not global target unreachability.",
+    "source_basis": "NominalCavityProposalProvider freezes _columns; all five enabled endpoint families use these same transverse columns. contained_capsule_cells requires all eight corners inside radius minus inward epsilon."
+  },
+  "recommended_single_diagnostic": {
+    "status": "proposed_only_not_previewed_or_executable_inventory_action",
+    "tool_id": "generic_suction",
+    "axis_rule": "source-normal line through the recorded public first blocker cell center",
+    "endpoint_voxel": [
+      121,
+      44,
+      72
+    ],
+    "offset_source_voxels": [
+      -1,
+      4
+    ],
+    "entry_mm": [
+      59.81733575360204,
+      56.23785021719864,
+      0.6676800868166287
+    ],
+    "tip_mm": [
+      58.352584271894045,
+      56.23545339149592,
+      0.6514050597827179
+    ],
+    "insertion_depth_mm": 1.4648438566769402,
+    "normal_aperture_envelope_margin_mm": 0.4825152060283382,
+    "max_corner_radial_distance_mm": 0.6988696504488133,
+    "necessary_checks_only": true,
+    "full_shaft_temporal_exposure_and_connected_removal": "unmeasured; unchanged native preview required",
+    "next_experiment": "One root-released diagnostic preview of this single missing clearance axis in the same union025 root state. If feasible, separately version an opt-in shared proposal rule before any commit; then test clearing this cell followed by the original ray with all costs and replay. Do not silently inject the diagnostic ray.",
+    "source_rule_followup": "A reusable rule must derive uncovered clearance axes from permitted occupancy/target geometry, preserve existing proposals, and bind a new decision identity; do not hardcode this patient cell."
+  },
+  "not_explanations_here": [
+    "No cap omissions at root or15 recorded successor states",
+    "No missing fixed-target ray: it remains emitted but blocked",
+    "No reward/training issue explains this particular geometric refusal"
+  ],
+  "limits": [
+    "No new axis was previewed. Aperture/radial necessary checks do not certify full-tool feasibility or connected removal.",
+    "A successful first-cell clearance could expose another blocker; no positive-return completion is yet known.",
+    "S union T remains an explicit unvalidated material assumption, with full target denominator77974.35860665982mm3."
+  ],
+  "costs": {
+    "owned_seconds": 19.5530850419309,
+    "peak_sampled_rss_bytes": 459882496,
+    "previews": 3252,
+    "rollout_transitions": 31,
+    "replay_transitions": 31,
+    "model_work": 0
+  },
+  "saved_input_sha256": {
+    "build/union025-clearance-witness-v1/attempt-01/result.json": "23027ee7ad7af86ced95af89c7a02e0106f1f3a4c112f6d4d5a826071a26930f",
+    "build/union025-clearance-witness-v1/attempt-01.supervision/receipt.json": "9309b874e690104a93c74260985d47d5e545200eb1a66a6d23aeb61d77b1ebb1",
+    "build/union025-clearance-witness-v1/attempt-01/initial-inventory.json": "21b332aa00a543ca1587b99bbf892a63e67ec5f32bc1ce47f2be61c85ab2830a",
+    "build/union025-clearance-witness-v1/attempt-01/world.json": "8169f1e0bf6e9d9e37deb6084e0aa2242b116f51d4bf6b00328d038e53c26cf4",
+    "build/union025-clearance-witness-v1/attempt-01/branch-00/fixed-ray-preview.json": "1d7e290fe7f67d7e160e9b4240b1af471d566e26ea7b0f6fd9b88a2d42843745",
+    "build/union025-clearance-witness-v1/attempt-01/branch-00/plan.json": "727b94d5daaf3b571693c41a11c6b759641e89c32716e9adf8eba408a5c4c75d",
+    "build/union025-clearance-witness-v1/attempt-01/branch-01/fixed-ray-preview.json": "198a1eac81ad2eafdae5b2182418b3f09107a2f1ed9c6f42e79221a9ff35104c",
+    "build/union025-clearance-witness-v1/attempt-01/branch-01/plan.json": "c3489aba02c4ae6fcfd841fc17ab8a2a1a46a1cd8cba414429d16e08a015ab49",
+    "build/union025-clearance-witness-v1/attempt-01/branch-01/successor-inventory.json": "d60174a8bf56d90bd2ad6d696e5b07d438bfda13ba293b9830525d6ed56b330c",
+    "build/union025-clearance-witness-v1/attempt-01/branch-02/fixed-ray-preview.json": "2343f96ec23e0d38e29b7e4719c2fbf59d00ceeebe0fb0ac3f15e248a0533530",
+    "build/union025-clearance-witness-v1/attempt-01/branch-02/plan.json": "602385f1650b9cceee4f5ce357cb2e3fcc2b60196d6b60fc6173266fcd01995b",
+    "build/union025-clearance-witness-v1/attempt-01/branch-02/successor-inventory.json": "29c57ac2e49633faa6291579bc35d628fb799bf40512af177846426fbda73b5b",
+    "build/union025-clearance-witness-v1/attempt-01/branch-03/fixed-ray-preview.json": "bf671ade63cda4aa9b655778e1509a1ea3348d805d9631e60235bb09df0449c3",
+    "build/union025-clearance-witness-v1/attempt-01/branch-03/plan.json": "1670250f1b3342a5b129ef86ad782e92e776135182b1b89537d1a936bd042f99",
+    "build/union025-clearance-witness-v1/attempt-01/branch-03/successor-inventory.json": "aa5a981e849143992f7349c1d067d68256966349404a7c45a7b2f9be0ef892aa",
+    "build/union025-clearance-witness-v1/attempt-01/branch-04/fixed-ray-preview.json": "d4d312d6882b52c177e9b3bc6964c61609ea5b43139e77bd61968fa5740c135d",
+    "build/union025-clearance-witness-v1/attempt-01/branch-04/plan.json": "6cc75eff92cb78e167d46c2175041fa13c92eb019dd49e336c01bab9e5610264",
+    "build/union025-clearance-witness-v1/attempt-01/branch-04/successor-inventory.json": "1a7a8fb98a7dfb1b80f0a8006a7bb0589bce978d904e1fd9a98be1551cd347cd",
+    "build/union025-clearance-witness-v1/attempt-01/branch-05/fixed-ray-preview.json": "59653ec7bb2fa3e43a2664ca7d62a829b59e1899b751c31451aa411bd18570d0",
+    "build/union025-clearance-witness-v1/attempt-01/branch-05/plan.json": "8759dcf0395643c20b8e7bafb2fc06148d99b5d57882fa637930b6e1f2df6efe",
+    "build/union025-clearance-witness-v1/attempt-01/branch-05/successor-inventory.json": "29ecbd7bff6680e81c2a195f41f91b00f27b2916d2d4c1b67241660337151a6c",
+    "build/union025-clearance-witness-v1/attempt-01/branch-06/fixed-ray-preview.json": "7acefb813998ef13cf051619249d7f02496c8cf1f9eba1bc0e57e43e30b547c1",
+    "build/union025-clearance-witness-v1/attempt-01/branch-06/plan.json": "1b3683df90bba4798d4c8d21c96c1a9514bfd3c4fc66a68420fd26c692707ebe",
+    "build/union025-clearance-witness-v1/attempt-01/branch-06/successor-inventory.json": "085b001840d216b5056c550037990056f291c8892baabaefe5dc5533f92be3fe",
+    "build/union025-clearance-witness-v1/attempt-01/branch-07/fixed-ray-preview.json": "4101a58c0d01ef819e46d99921d7422f5051afe834e27c61092aa8dfde0d2cba",
+    "build/union025-clearance-witness-v1/attempt-01/branch-07/plan.json": "40b62b43fa11d083f6018b971675c235e98d9da99aaf5a89c18e2c86b74f86e7",
+    "build/union025-clearance-witness-v1/attempt-01/branch-07/successor-inventory.json": "8dcf01ee81458012a3da1d996ac09045b265a38b5de4e5532e39ea2026a84a48",
+    "build/union025-clearance-witness-v1/attempt-01/branch-08/fixed-ray-preview.json": "205f0cd8b3cc8c31332b179abe95ce7068fd2eb948e07afe39c388e527d92589",
+    "build/union025-clearance-witness-v1/attempt-01/branch-08/plan.json": "8472592617154971acefeb8417d4dd5210134df6838541a4a224dbb519405a55",
+    "build/union025-clearance-witness-v1/attempt-01/branch-08/successor-inventory.json": "dbf262526e6db1ccfed2217338178b9767167820290cd0689579ec653f89f616",
+    "build/union025-clearance-witness-v1/attempt-01/branch-09/fixed-ray-preview.json": "8afa4980e005277ef6140c5f863e550fff74c53109dd160ebd1295a5c97befc0",
+    "build/union025-clearance-witness-v1/attempt-01/branch-09/plan.json": "4c2d8336f0bd6036187a7e00fbe57184857ca711a4680c9a78dc280dcd8cb2b5",
+    "build/union025-clearance-witness-v1/attempt-01/branch-09/successor-inventory.json": "e3fdff48afd6fe0e80b67cf9539a10eb7d1a3876146bbd3d1df6acfc0e5cf54a",
+    "build/union025-clearance-witness-v1/attempt-01/branch-10/fixed-ray-preview.json": "5c52f92ffe1304b14416bd6c11bffebbf17db6bd4c3c9802d7e5da55a16eff83",
+    "build/union025-clearance-witness-v1/attempt-01/branch-10/plan.json": "ba22474a98eff5abd99043f829fde49e520c795faa5a34ecd482e77666ca3552",
+    "build/union025-clearance-witness-v1/attempt-01/branch-10/successor-inventory.json": "6f3a781bcce68790fbe42b0c1d145261bef3b079afb76008dae6e3bc6e6507e8",
+    "build/union025-clearance-witness-v1/attempt-01/branch-11/fixed-ray-preview.json": "33724b5c432f5a4cc5b986ebda79f41f5e98c6628499a581dc90d5174207b771",
+    "build/union025-clearance-witness-v1/attempt-01/branch-11/plan.json": "7dd3fb029571b48104c8a09ad90c72f64e3ef3dfaa82adbd029b62b744df6846",
+    "build/union025-clearance-witness-v1/attempt-01/branch-11/successor-inventory.json": "dd8564ab81d98b053aa42d62ce81e8d29faf7c3207c36caeb17b772ef8b45f51",
+    "build/union025-clearance-witness-v1/attempt-01/branch-12/fixed-ray-preview.json": "429b788dfa97034698c34e901bce31f43d0c7d50b163e0de787c21c9afaa7706",
+    "build/union025-clearance-witness-v1/attempt-01/branch-12/plan.json": "89ec236e43eada07dd2a1146ece97601b096509c80b9e037f805ca1ba14db52c",
+    "build/union025-clearance-witness-v1/attempt-01/branch-12/successor-inventory.json": "9e9814fbfd5e4651915996f4e851dda251ff6c6451a85cb509005976a645e4e2",
+    "build/union025-clearance-witness-v1/attempt-01/branch-13/fixed-ray-preview.json": "c7c1f6c22755fe97d7dbe744b9701455c4d4518c74eef90c7b977a341fd614f4",
+    "build/union025-clearance-witness-v1/attempt-01/branch-13/plan.json": "a623255f442427abde83fae007e9a0ae2961db39931fe9fa93d0048efc117da6",
+    "build/union025-clearance-witness-v1/attempt-01/branch-13/successor-inventory.json": "758c4722f548b1ad0c467789fc41385037bd3cf5dee5c2e62043a54d0700d169",
+    "build/union025-clearance-witness-v1/attempt-01/branch-14/fixed-ray-preview.json": "420f45acd0debfdbdd24240c00279088100c4d7d52d08837ef2bae076d4a2a4a",
+    "build/union025-clearance-witness-v1/attempt-01/branch-14/plan.json": "99c68c11c10fbbbf3607b14838a29ec36f630152f95a211a161b8d8791b2109a",
+    "build/union025-clearance-witness-v1/attempt-01/branch-14/successor-inventory.json": "2807287e72c7a75913a373623603fd92645c48b4ececa126947a9dce63d0c3b4",
+    "build/union025-clearance-witness-v1/attempt-01/branch-15/fixed-ray-preview.json": "b0b0d67b4b450c83282a14bf262eaec10a9c1ea9b246fc070b05ae4b6ac09a24",
+    "build/union025-clearance-witness-v1/attempt-01/branch-15/plan.json": "151a3a4197d3297a5b853fb20329945c0ac42f7797ef3ad385cb08efb9b50bb4",
+    "build/union025-clearance-witness-v1/attempt-01/branch-15/successor-inventory.json": "df5c113a67b6b0400c2319ef1e5349bc61d6dda1f7ef1962ef95531810f572df"
+  },
+  "source_sha256": {
+    "src/resectionlab/native_proposals.py": "6fbaf0bc23c666c8f64042ab070ceaac7954726c3f213d570270676d43b62b0e",
+    "src/resectionlab/native_resection.py": "0a531933eeea43862fe4122c8cca7fc192c0d44a32ea263363fc7a495c072f16"
+  }
+}

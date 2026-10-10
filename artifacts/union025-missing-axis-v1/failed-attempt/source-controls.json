@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "groups": [
+    "four AST parses",
+    "twelve metadata joins and exact declared axis/voxel",
+    "pending/widened release refusal",
+    "conditional12 transition/2 diagnostic bound and STOP ties",
+    "identity-only row changes permitted; changed feasibility refused",
+    "no scientific imports"
+  ],
+  "seconds": 0.021232290999999997,
+  "source_hashes": {
+    "axis_contract.py": "a593c1e7734951e28b836f7b04e7d991153278813f1c5a014e089277552b2c34",
+    "axis_worker.py": "930609c9b23200cd72b5809f9e914e1c7686f79e97809b10860c3a8289389512",
+    "run_owned.py": "e58a8b0aac6c4a8d07c0731745f44ba8b4730b0ca0b44d1deb22acb8f6d0e0ff",
+    "freeze-runtime.py": "c3b9e81bad84198df3d19942dafd9c08909a64a105db5be97cbba2ac7489d25c"
+  },
+  "input_index_sha256": "7e55c9b74d98b4ab75811aca2854d70ce5264a646d3bbfdcd4cd30f961448b2b",
+  "patient_array_reads": 0,
+  "native_calls": 0,
+  "model_calls": 0
+}

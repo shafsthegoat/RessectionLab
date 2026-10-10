@@ -1,0 +1,22 @@
+{
+  "scope": "source-only manual correction; original directory untouched",
+  "old_files": {
+    "axis_worker.py": "930609c9b23200cd72b5809f9e914e1c7686f79e97809b10860c3a8289389512",
+    "axis_contract.py": "a593c1e7734951e28b836f7b04e7d991153278813f1c5a014e089277552b2c34",
+    "run_owned.py": "e58a8b0aac6c4a8d07c0731745f44ba8b4730b0ca0b44d1deb22acb8f6d0e0ff",
+    "freeze-runtime.py": "c3b9e81bad84198df3d19942dafd9c08909a64a105db5be97cbba2ac7489d25c",
+    "source-index.json": "2e12da647223d4ec5b26fd19ec70160afc6032721ebf7e152d049f00c4d9b7ef",
+    "root-release.json": "7fee8d087469790fb48e6b8289a048201feba605a173424a6a0e142896b971aa",
+    "attempt-01/result.json": "a66feea7546ea016591aa36936ae890883038eab781f7e7f688d580088d80683",
+    "attempt-01.supervision/receipt.json": "30bf6e9920b0dc2048397677521d1d439ca12815f1478ffcd465a706c0f27c5f"
+  },
+  "new_files": {
+    "axis_worker.py": "245c4dcf731135445c2601691271abe44b004442ff1a61e5f6bd16e6d15f2819",
+    "axis_contract.py": "15fbedd138fbb76b25d07828a97821632259f2b4adcaffe48162a784cbb711cb",
+    "run_owned.py": "e58a8b0aac6c4a8d07c0731745f44ba8b4730b0ca0b44d1deb22acb8f6d0e0ff",
+    "freeze-runtime.py": "1e7e525a4b5a712ab1cd02651df24f6028cbe9ae030252c1694442c0f4df6aa0",
+    "input-index.json": "7398be782bcf694958386c264a1ed9662d3d8247076bae38feec754817220653"
+  },
+  "production_changes": 0,
+  "native_model_calls": 0
+}

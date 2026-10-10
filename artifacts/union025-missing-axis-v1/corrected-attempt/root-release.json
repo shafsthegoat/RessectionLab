@@ -1,0 +1,135 @@
+{
+  "SELECT_EVAL_execution": false,
+  "TRAIN": [
+    "ReMIND-025"
+  ],
+  "attempts": 1,
+  "automatic_retry": false,
+  "checkpoint_loads": 0,
+  "clearance_ray": {
+    "formula": "tip=orthogonal_native_affine[:3,:3]@voxel+affine[:3,3]; entry=tip-dot(tip-access.center,access.normal)*access.normal",
+    "frame_hash": "sha256:a72ec9ce0eb3e7fb78357a9c1f59b81c3868abd3f23f0ff1766cf24ade16d95c",
+    "tool_id": "generic_suction",
+    "voxel": [
+      121,
+      44,
+      72
+    ]
+  },
+  "closed_roles": {
+    "EVAL": [
+      "ReMIND-067"
+    ],
+    "SELECT": [
+      "ReMIND-013",
+      "ReMIND-037"
+    ]
+  },
+  "completion": "STOP control plus prep+STOP if executable and prep+target+STOP if executable; every admitted history sealed and independently replayed",
+  "condition": "cerebrum_plus_supplied_tumor_assumption",
+  "condition_admission": {
+    "actual_model_optimizer_checkpoint_calls": 0,
+    "initialization_performed": false,
+    "learning_protocol_hash": "sha256:f5fa10fbfae10248ec83b533b940c38d382b573dde5c44e7abb9296fa87f3ca0",
+    "limits": {
+      "max_native_previews": 7297920,
+      "max_optimizer_updates": 0,
+      "max_policy_forwards": 0,
+      "max_steps": 24,
+      "memory_bytes": 3221225472,
+      "search": {
+        "beam_width": 2,
+        "max_calls": 5640,
+        "seconds": 300
+      },
+      "threads": 1,
+      "worker_seconds": 3540
+    },
+    "raw_envelope_note": "historical raw positive admission envelope retained; runner forbids actual model work"
+  },
+  "correction": {
+    "prior_parent_receipt": {
+      "bytes": 1628,
+      "path": "build/union025-missing-axis-v1/attempt-01.supervision/receipt.json",
+      "sha256": "30bf6e9920b0dc2048397677521d1d439ca12815f1478ffcd465a706c0f27c5f"
+    },
+    "prior_result": {
+      "bytes": 1844,
+      "path": "build/union025-missing-axis-v1/attempt-01/result.json",
+      "sha256": "a66feea7546ea016591aa36936ae890883038eab781f7e7f688d580088d80683"
+    },
+    "prior_source_index": {
+      "bytes": 11360,
+      "path": "build/union025-missing-axis-v1/source-index.json",
+      "sha256": "2e12da647223d4ec5b26fd19ec70160afc6032721ebf7e152d049f00c4d9b7ef"
+    },
+    "scientific_task_caps_status_literals_unchanged": true,
+    "scope": "exclusive diagnostics write lifetime only"
+  },
+  "execution_limits": {
+    "candidate_cap": 120,
+    "checkpoint_loads": 0,
+    "max_complete_histories": 3,
+    "max_diagnostic_previews": 2,
+    "max_native_previews": 1000,
+    "max_native_transition_calls": 12,
+    "max_replay_calls": 6,
+    "max_rollout_calls": 6,
+    "obstruction_cell_limit": 4096,
+    "optimizer_updates": 0,
+    "policy_forwards": 0,
+    "search_calls": 0,
+    "task_max_steps": 24,
+    "threads": 1
+  },
+  "expected_head": "7947d23529a38d4cb8e8348fbba142c23467a6c3",
+  "feasibility": "direct previews never authorize inventory injection; exact emitted legal geometry required",
+  "input_index": {
+    "path": "build/union025-missing-axis-v2/input-index.json",
+    "sha256": "7398be782bcf694958386c264a1ed9662d3d8247076bae38feec754817220653"
+  },
+  "manual_corrected_attempt_ordinal": 2,
+  "memory_bytes": 3221225472,
+  "model_forwards": 0,
+  "optimizer_updates": 0,
+  "output": "build/union025-missing-axis-v2/attempt-02",
+  "output_bytes": 33554432,
+  "parent_seconds": 90,
+  "private_reference_reads": 0,
+  "proposal_change": {
+    "all_other_config_fields_unchanged": true,
+    "append_offsets_source_voxels": [
+      [
+        -1,
+        4
+      ]
+    ],
+    "cap": 120,
+    "horizon": 24,
+    "original13_unchanged": true
+  },
+  "scope": "post-hoc TRAIN task/action-space diagnosis, not model selection or transfer evaluation",
+  "selection": "maximum actual complete reward, STOP first on equality",
+  "source_index": {
+    "path": "build/union025-missing-axis-v2/source-index.json",
+    "sha256": "cddb0f1ef363d7728479c53bd7896eb9a95ff174be0ce5426fd8339030175024"
+  },
+  "status": "released_one_attempt",
+  "supervision_bytes": 16777216,
+  "target_ray": {
+    "entry_mm": [
+      59.80788894373058,
+      55.25603988714608,
+      1.6624837794409706
+    ],
+    "tip_mm": [
+      56.39013548641191,
+      55.250447293839734,
+      1.624508716361845
+    ],
+    "tool_id": "generic_suction"
+  },
+  "unchanged": "public arrays/domain/access/tools/reward/material assumption; native collision and whole-cell removal",
+  "version": "union025-missing-axis-release-v2",
+  "worker_seconds": 60
+}

@@ -1,0 +1,38 @@
+{
+  "appended_axis": [
+    -1,
+    4
+  ],
+  "clearance": {
+    "entry_mm": [
+      59.81733575360204,
+      56.23785021719864,
+      0.6676800868166287
+    ],
+    "tip_mm": [
+      58.352584271894045,
+      56.23545339149592,
+      0.6514050597827179
+    ],
+    "tool_id": "generic_suction"
+  },
+  "clearance_voxel": [
+    121,
+    44,
+    72
+  ],
+  "formula": "tip=orthogonal_native_affine[:3,:3]@voxel+affine[:3,3]; entry=tip-dot(tip-access.center,access.normal)*access.normal",
+  "target": {
+    "entry_mm": [
+      59.80788894373058,
+      55.25603988714608,
+      1.6624837794409706
+    ],
+    "tip_mm": [
+      56.39013548641191,
+      55.250447293839734,
+      1.624508716361845
+    ],
+    "tool_id": "generic_suction"
+  }
+}

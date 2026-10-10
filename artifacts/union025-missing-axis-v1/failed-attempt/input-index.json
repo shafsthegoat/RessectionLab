@@ -1,0 +1,65 @@
+{
+  "scope": "Existing TRAIN025 public metadata and saved post-hoc diagnosis; no array or checkpoint payload reads",
+  "files": {
+    "learning_release": {
+      "path": "build/balanced-teacher-il64-v1/root-release.json",
+      "sha256": "5facc562a712262b636f354044befaed4a55e6547016f3181268a1df764e2b22",
+      "bytes": 11918
+    },
+    "paired_release": {
+      "path": "build/paired-train-occupancy-search-v1/root-release.json",
+      "sha256": "d14478bc7e5a71e9bc06560b34adfeaf5e36d6a166fa227a74bce82b7f2ba16a",
+      "bytes": 4477
+    },
+    "paired_result": {
+      "path": "build/paired-train-occupancy-search-v1/attempt-01/result.json",
+      "sha256": "e585a6517aaf551168181e0c077a67784fc7ab889a270a572a7958f7242c237b",
+      "bytes": 169380
+    },
+    "paired_receipt": {
+      "path": "build/paired-train-occupancy-search-v1/attempt-01.supervision/receipt.json",
+      "sha256": "57e353139d4e283cd0fb302fe2fd8c954ff31ab8626cfc529045b332ffb22456",
+      "bytes": 1643
+    },
+    "raw_plan": {
+      "path": "build/paired-train-occupancy-search-v1/attempt-01/arm-06/plan.json",
+      "sha256": "792b2a232236b1c6b9af101ce8bee368a0ed8b50cc363b64e3a2f27c4fdd6707",
+      "bytes": 23394
+    },
+    "union_inventory": {
+      "path": "build/paired-train-occupancy-search-v1/attempt-01/arm-07/initial-inventory.json",
+      "sha256": "21b332aa00a543ca1587b99bbf892a63e67ec5f32bc1ce47f2be61c85ab2830a",
+      "bytes": 187896
+    },
+    "union_world": {
+      "path": "build/paired-train-occupancy-search-v1/attempt-01/arm-07/world.json",
+      "sha256": "5423f59094433e3af71a654402237690b140e7ec57739f117ce3b0387c6818b3",
+      "bytes": 8125
+    },
+    "public_manifest": {
+      "path": "build/remind-planning-qc-v1/public-cohort-v1/ReMIND-025-public-inputs-v2.json",
+      "sha256": "ed77373178c2cbaa70d77c02939c0fe4a734cb8fabd273d60d93a6f65a47ff96",
+      "bytes": 15977
+    },
+    "cohort": {
+      "path": "manifests/experiments/remind-component-cohort-v1.json",
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+      "bytes": 70925
+    },
+    "witness_result": {
+      "path": "build/union025-clearance-witness-v1/attempt-01/result.json",
+      "sha256": "23027ee7ad7af86ced95af89c7a02e0106f1f3a4c112f6d4d5a826071a26930f",
+      "bytes": 37458
+    },
+    "witness_receipt": {
+      "path": "build/union025-clearance-witness-v1/attempt-01.supervision/receipt.json",
+      "sha256": "9309b874e690104a93c74260985d47d5e545200eb1a66a6d23aeb61d77b1ebb1",
+      "bytes": 1634
+    },
+    "diagnosis": {
+      "path": "build/union025-clearance-witness-v1/saved-blocker-diagnosis.json",
+      "sha256": "c3785b8a3c865a3483f7262089b993cf7ad456b0f3b4af1777b1297719582e5f",
+      "bytes": 25638
+    }
+  }
+}

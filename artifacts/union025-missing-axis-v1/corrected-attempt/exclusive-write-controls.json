@@ -1,0 +1,66 @@
+{
+  "old_reproduction": {
+    "old_second_examine_refused": true,
+    "complete_histories_before_failure": 1
+  },
+  "cases": {
+    "both_executable": {
+      "complete_histories": 3,
+      "aggregate_writes": 1,
+      "unique_writes": 31,
+      "fake_step_calls": 12,
+      "diagnostic_names": [
+        "clearance",
+        "target"
+      ]
+    },
+    "clearance_blocked": {
+      "complete_histories": 1,
+      "aggregate_writes": 1,
+      "unique_writes": 9,
+      "fake_step_calls": 2,
+      "diagnostic_names": [
+        "clearance"
+      ]
+    },
+    "target_blocked": {
+      "complete_histories": 2,
+      "aggregate_writes": 1,
+      "unique_writes": 20,
+      "fake_step_calls": 6,
+      "diagnostic_names": [
+        "clearance",
+        "target"
+      ]
+    },
+    "clearance_not_emitted": {
+      "complete_histories": 1,
+      "aggregate_writes": 1,
+      "unique_writes": 9,
+      "fake_step_calls": 2,
+      "diagnostic_names": [
+        "clearance"
+      ]
+    },
+    "target_not_emitted": {
+      "complete_histories": 2,
+      "aggregate_writes": 1,
+      "unique_writes": 20,
+      "fake_step_calls": 6,
+      "diagnostic_names": [
+        "clearance",
+        "target"
+      ]
+    }
+  },
+  "status": "PASS",
+  "seconds": 0.06443441612645984,
+  "old_source_sha256": "930609c9b23200cd72b5809f9e914e1c7686f79e97809b10860c3a8289389512",
+  "new_source_sha256": "245c4dcf731135445c2601691271abe44b004442ff1a61e5f6bd16e6d15f2819",
+  "actual_OutputBudget_source_sha256": "45a1aa6b585e1dd4997bfdbb04ff911a40b0620e20707910ebd4665ade0ebb24",
+  "parent_worker_contract_status_literals_match": true,
+  "native_engine_calls": 0,
+  "model_forwards": 0,
+  "patient_payload_reads": 0,
+  "scope": "Exact nested source write flow with generated task/geometry/audit doubles; canonical OutputBudget imported and used unchanged"
+}

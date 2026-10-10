@@ -1,0 +1,57 @@
+{
+  "complete_wall_seconds": 1.4898825830314308,
+  "diagnostic_previews": 2,
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 1.4898599579464644,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": "arm_raised_FileExistsError",
+    "history_complete_caller_attestation": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 1000,
+      "planning_execution_seconds": 60.0
+    },
+    "native_preview_entries": 224,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 34,
+          "raised": 0,
+          "rejected": 190,
+          "rejection_reasons": {
+            "HARD_GEOMETRY:ACCESS_APERTURE": 8,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 182
+          },
+          "returned": 224,
+          "returned_microsteps": 1178,
+          "seconds": 0.8643104571383446,
+          "started": 224
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 224,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "failed",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "native_counts": {
+    "replay": 1,
+    "rollout": 2
+  },
+  "prohibited_calls": {
+    "checkpoint_loads": 0,
+    "optimizer_updates": 0,
+    "policy_forwards": 0,
+    "search_calls": 0
+  },
+  "source_visits_attempted": 1
+}

@@ -1,0 +1,174 @@
+{
+  "appended_axis": [
+    -1,
+    4
+  ],
+  "audit_script_sha256": "000371bb60fd944c4c247a47ab4c2f5a646507728012f9ca99227ed96fd6428f",
+  "clean_reap": true,
+  "complete_independently_audited_histories": 3,
+  "decision": "PASS_SAVED_CORRECTED_MISSING_AXIS_WITNESS",
+  "diagnostic_previews": 2,
+  "histories": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "fraction": 0.0,
+      "full_target_mm3": 77974.35860665982,
+      "normal_mm3": 0,
+      "ordinal": 0,
+      "plan_seal": "sha256:761202252cd886b02043570386a0856dae75458fd9bf196c6c1e6dc266a89052",
+      "removed_cells": [],
+      "return": 0.0,
+      "target_cells": 0,
+      "target_mm3": 0.0
+    },
+    {
+      "actions": [
+        "nominal-cavity-ddb77b16f8e340d7af00154d",
+        "STOP"
+      ],
+      "fraction": 1.2230620581688315e-05,
+      "full_target_mm3": 77974.35860665982,
+      "normal_mm3": 0,
+      "ordinal": 1,
+      "plan_seal": "sha256:9c1f0bc99fc7208160fe256a7b546e373f864e2b9652ba6246c6063c7ca56814",
+      "removed_cells": [
+        [
+          121,
+          44,
+          72
+        ]
+      ],
+      "return": 0.9207451075052051,
+      "target_cells": 1,
+      "target_mm3": 0.953674795218559
+    },
+    {
+      "actions": [
+        "nominal-cavity-ddb77b16f8e340d7af00154d",
+        "nominal-cavity-2d503c15b1e976aee22ed318",
+        "STOP"
+      ],
+      "fraction": 2.446124116337663e-05,
+      "full_target_mm3": 77974.35860665982,
+      "normal_mm3": 0,
+      "ordinal": 2,
+      "plan_seal": "sha256:a7542d246b541a22ac0d7fec6728af3b3e71b8713ca70fc0e61aafe3c46de7c3",
+      "removed_cells": [
+        [
+          119,
+          45,
+          71
+        ],
+        [
+          121,
+          44,
+          72
+        ]
+      ],
+      "return": 1.8375839647259382,
+      "target_cells": 2,
+      "target_mm3": 1.907349590437118
+    }
+  ],
+  "interpretation": "The appended axis permits exact legal removal of the prior blocker; the subsequent original target ray becomes legal. Both prep alone and prep+target beat STOP after unchanged costs.",
+  "limits": [
+    "Post-hoc TRAIN action-space diagnosis, not a learned-policy, transfer, or fair comparison to the old13-axis model.",
+    "Only2 source cells/1.9073495904mm3 are removed out of77974.3586067mm3 full supplied target.",
+    "S union T is an unvalidated material assumption; no clinical or anatomical correctness inferred.",
+    "Independent review validates saved full-tool geometry receipts and arithmetic, without rerunning geometry or opening patient arrays.",
+    "Observed feasibility under this one changed proposal model does not establish global reachability or optimality."
+  ],
+  "native_counts": {
+    "replay": 6,
+    "rollout": 6
+  },
+  "native_preview_entries": 779,
+  "original_13_axes_preserved_physical_ledger_rows": 130,
+  "original_failure_preserved": true,
+  "output_bytes": 950897,
+  "parent_seconds": 6.231789665995166,
+  "proposal_model_identity_changed": true,
+  "release_sha256": "9f8e7249b01a8bc73d34a2682976889c3e57b2fda72ece0ab7bb3fea284c82a7",
+  "result_sha256": "8f585c7884d8a36fcfa998de16f1c400a12ce982ecd690148c952f9e2ae9cc89",
+  "runtime": {
+    "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "numpy": "2.5.3",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "threads": 1,
+    "torch": "2.14.1"
+  },
+  "sampled_peak_rss_bytes": 465666048,
+  "saved_file_sha256": {
+    "build/balanced-teacher-il64-v1/root-release.json": "5facc562a712262b636f354044befaed4a55e6547016f3181268a1df764e2b22",
+    "build/goal-conditioned-policy-v1/darwin_fast_sampler.py": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+    "build/goal-conditioned-policy-v1/run_contact_owned.py": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7",
+    "build/paired-train-occupancy-search-v1/attempt-01.supervision/receipt.json": "57e353139d4e283cd0fb302fe2fd8c954ff31ab8626cfc529045b332ffb22456",
+    "build/paired-train-occupancy-search-v1/attempt-01/arm-06/plan.json": "792b2a232236b1c6b9af101ce8bee368a0ed8b50cc363b64e3a2f27c4fdd6707",
+    "build/paired-train-occupancy-search-v1/attempt-01/arm-07/initial-inventory.json": "21b332aa00a543ca1587b99bbf892a63e67ec5f32bc1ce47f2be61c85ab2830a",
+    "build/paired-train-occupancy-search-v1/attempt-01/arm-07/world.json": "5423f59094433e3af71a654402237690b140e7ec57739f117ce3b0387c6818b3",
+    "build/paired-train-occupancy-search-v1/attempt-01/result.json": "e585a6517aaf551168181e0c077a67784fc7ab889a270a572a7958f7242c237b",
+    "build/paired-train-occupancy-search-v1/root-release.json": "d14478bc7e5a71e9bc06560b34adfeaf5e36d6a166fa227a74bce82b7f2ba16a",
+    "build/remind-planning-qc-v1/public-cohort-v1/ReMIND-025-public-inputs-v2.json": "ed77373178c2cbaa70d77c02939c0fe4a734cb8fabd273d60d93a6f65a47ff96",
+    "build/union025-clearance-witness-v1/attempt-01.supervision/receipt.json": "9309b874e690104a93c74260985d47d5e545200eb1a66a6d23aeb61d77b1ebb1",
+    "build/union025-clearance-witness-v1/attempt-01/result.json": "23027ee7ad7af86ced95af89c7a02e0106f1f3a4c112f6d4d5a826071a26930f",
+    "build/union025-clearance-witness-v1/saved-blocker-diagnosis.json": "c3785b8a3c865a3483f7262089b993cf7ad456b0f3b4af1777b1297719582e5f",
+    "build/union025-missing-axis-independent-v1/audit.json": "d736d7cd05fba851b62085cd5e0471868c848222cdc794fd6cba847d43533c13",
+    "build/union025-missing-axis-v1/attempt-01.supervision/receipt.json": "30bf6e9920b0dc2048397677521d1d439ca12815f1478ffcd465a706c0f27c5f",
+    "build/union025-missing-axis-v1/attempt-01/result.json": "a66feea7546ea016591aa36936ae890883038eab781f7e7f688d580088d80683",
+    "build/union025-missing-axis-v1/source-index.json": "2e12da647223d4ec5b26fd19ec70160afc6032721ebf7e152d049f00c4d9b7ef",
+    "build/union025-missing-axis-v2/attempt-02.supervision/endpoint-control.json": "f2b47b5351cf1f6ad30f8c64e805fa2a533b3cc569b1775ce6f8b0155340abfd",
+    "build/union025-missing-axis-v2/attempt-02.supervision/receipt.json": "bf6f156dfd91f1e97b5f227e09066b896d0724692ee5092cef4955dc08148e35",
+    "build/union025-missing-axis-v2/attempt-02.supervision/worker-final.json": "649a234a493d81ec0e6709b7b158c5c3635779cf936194e90da6f15a9238002f",
+    "build/union025-missing-axis-v2/attempt-02/clearance/examination.json": "7d0975f1b69700f86086ea30ded47cda495c5a2d4b902d0013d99644efc7fbd5",
+    "build/union025-missing-axis-v2/attempt-02/clearance/fixed-ray-preview.json": "7b81f7d298d14500d8f49f39f59d3c151b4daebc6bb87bb2ca13f877636de242",
+    "build/union025-missing-axis-v2/attempt-02/clearance/inventory.json": "b5249856dd53625b8dcfd979b75fe0a9f597bb6a03291915c86ac8a9d340af42",
+    "build/union025-missing-axis-v2/attempt-02/context.json": "c721c16fa70764e7812782e4e2f9b17d7a6a75fbe9716e66ac2792361297d5d9",
+    "build/union025-missing-axis-v2/attempt-02/costs.json": "8aa5175b70e88106d3503e3283ebdae5eb4a96af879078bbc1ca257b5bdf99ff",
+    "build/union025-missing-axis-v2/attempt-02/diagnostics.json": "c52ea82d117f4d6accdec631b4518f2edbc5a5749ffde75418e3cfac2d3132f7",
+    "build/union025-missing-axis-v2/attempt-02/history-00/attempt-00.json": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e",
+    "build/union025-missing-axis-v2/attempt-02/history-00/plan.json": "4e3b8bd267de6f73278aa6d7bfc6e52a78ff8cbfd76a1bd36ee7755bd643a1e7",
+    "build/union025-missing-axis-v2/attempt-02/history-00/replay-attempt-00.json": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e",
+    "build/union025-missing-axis-v2/attempt-02/history-00/replay.json": "c2f1a156dac64f398b40709cbbeb69a1b59e8b8bc6123da972af0bed0ab27256",
+    "build/union025-missing-axis-v2/attempt-02/history-00/returned-00.json": "6df66ee0ca3f1b18988af3ade928bc950ead7628cea5b48f2a8672a41310be48",
+    "build/union025-missing-axis-v2/attempt-02/history-01/attempt-00.json": "95ad1b5e83a229a3a275d742305c65b7a9ee540732291cff10b62e68e6ced8f8",
+    "build/union025-missing-axis-v2/attempt-02/history-01/attempt-01.json": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e",
+    "build/union025-missing-axis-v2/attempt-02/history-01/plan.json": "cad354e047abb7d97b7cfe5d2457aa2d1906824fc0bf45a67d275195b1390803",
+    "build/union025-missing-axis-v2/attempt-02/history-01/replay-attempt-00.json": "95ad1b5e83a229a3a275d742305c65b7a9ee540732291cff10b62e68e6ced8f8",
+    "build/union025-missing-axis-v2/attempt-02/history-01/replay-attempt-01.json": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e",
+    "build/union025-missing-axis-v2/attempt-02/history-01/replay.json": "cd808b365b8dbbac84fab650c7ffd64e079a22e261bf9c42aac82fc49bab0e84",
+    "build/union025-missing-axis-v2/attempt-02/history-01/returned-00.json": "fede1ea9e64554dfe7ab70c7ec51410cb287838c9edde305e62fdea7161bf7a5",
+    "build/union025-missing-axis-v2/attempt-02/history-01/returned-01.json": "6df66ee0ca3f1b18988af3ade928bc950ead7628cea5b48f2a8672a41310be48",
+    "build/union025-missing-axis-v2/attempt-02/history-02/attempt-00.json": "95ad1b5e83a229a3a275d742305c65b7a9ee540732291cff10b62e68e6ced8f8",
+    "build/union025-missing-axis-v2/attempt-02/history-02/attempt-01.json": "cb637a139788c832614903c6eccab5fdd6d210e2f6dc0d372e4d7193e49c49d7",
+    "build/union025-missing-axis-v2/attempt-02/history-02/attempt-02.json": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e",
+    "build/union025-missing-axis-v2/attempt-02/history-02/plan.json": "359757b242fe18e6311f0bc885c10f01bba07e16b985871d0a92fb76e4e05b0f",
+    "build/union025-missing-axis-v2/attempt-02/history-02/replay-attempt-00.json": "95ad1b5e83a229a3a275d742305c65b7a9ee540732291cff10b62e68e6ced8f8",
+    "build/union025-missing-axis-v2/attempt-02/history-02/replay-attempt-01.json": "cb637a139788c832614903c6eccab5fdd6d210e2f6dc0d372e4d7193e49c49d7",
+    "build/union025-missing-axis-v2/attempt-02/history-02/replay-attempt-02.json": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e",
+    "build/union025-missing-axis-v2/attempt-02/history-02/replay.json": "dd1c7583d2c96a3951a8a9f76bd8b1f1d55499be5aaca7f81b040ccd2718c32c",
+    "build/union025-missing-axis-v2/attempt-02/history-02/returned-00.json": "fede1ea9e64554dfe7ab70c7ec51410cb287838c9edde305e62fdea7161bf7a5",
+    "build/union025-missing-axis-v2/attempt-02/history-02/returned-01.json": "acba1e3091a8f8021b870cfe0b88279a3204fdfe66df1384e4f1daa3107fe25f",
+    "build/union025-missing-axis-v2/attempt-02/history-02/returned-02.json": "6df66ee0ca3f1b18988af3ade928bc950ead7628cea5b48f2a8672a41310be48",
+    "build/union025-missing-axis-v2/attempt-02/initial-inventory.json": "b5249856dd53625b8dcfd979b75fe0a9f597bb6a03291915c86ac8a9d340af42",
+    "build/union025-missing-axis-v2/attempt-02/prospective-rays.json": "cb68cfc1146ebbe52a85f3104782cfcf7005f1a65b6be3f705c38fff3fe0e432",
+    "build/union025-missing-axis-v2/attempt-02/result.json": "8f585c7884d8a36fcfa998de16f1c400a12ce982ecd690148c952f9e2ae9cc89",
+    "build/union025-missing-axis-v2/attempt-02/target/examination.json": "73f6f77689228063d10a8c0073475d43ba542f4f9a1de01d0ccd7429a989a8ff",
+    "build/union025-missing-axis-v2/attempt-02/target/fixed-ray-preview.json": "a389ec076f3ab46fc8f59c12cb97c0eab4def61079b867dc281b0b0b55bcae28",
+    "build/union025-missing-axis-v2/attempt-02/target/inventory.json": "6ed95327df5a58fe22254622861f1d49d0e35e4a7ab4d635c7bc097e209de242",
+    "build/union025-missing-axis-v2/attempt-02/world.json": "9ca2103508cfbd85a31275769e8bc2fd4b8e1d661d4872824317d66910fdb657",
+    "build/union025-missing-axis-v2/axis_contract.py": "15fbedd138fbb76b25d07828a97821632259f2b4adcaffe48162a784cbb711cb",
+    "build/union025-missing-axis-v2/axis_worker.py": "245c4dcf731135445c2601691271abe44b004442ff1a61e5f6bd16e6d15f2819",
+    "build/union025-missing-axis-v2/freeze-runtime.py": "1e7e525a4b5a712ab1cd02651df24f6028cbe9ae030252c1694442c0f4df6aa0",
+    "build/union025-missing-axis-v2/input-index.json": "7398be782bcf694958386c264a1ed9662d3d8247076bae38feec754817220653",
+    "build/union025-missing-axis-v2/root-release.json": "9f8e7249b01a8bc73d34a2682976889c3e57b2fda72ece0ab7bb3fea284c82a7",
+    "build/union025-missing-axis-v2/run_owned.py": "e58a8b0aac6c4a8d07c0731745f44ba8b4730b0ca0b44d1deb22acb8f6d0e0ff",
+    "build/union025-missing-axis-v2/source-index.json": "cddb0f1ef363d7728479c53bd7896eb9a95ff174be0ce5426fd8339030175024",
+    "manifests/experiments/remind-component-cohort-v1.json": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+  },
+  "selected_ordinal": 2,
+  "source_guard": "All80 current source and16 metadata pins passed before root source hold released; canonical80-file closure also verified against execution HEAD as applicable.",
+  "source_index_sha256": "cddb0f1ef363d7728479c53bd7896eb9a95ff174be0ce5426fd8339030175024",
+  "underlying_public_world_unchanged": true
+}

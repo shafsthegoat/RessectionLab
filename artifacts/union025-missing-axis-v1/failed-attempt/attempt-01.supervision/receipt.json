@@ -1,0 +1,42 @@
+{
+  "SELECT_EVAL_execution": false,
+  "automatic_retry": false,
+  "canonical_result_status": "failed_or_unresolved",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 90,
+    "output_bytes": 33554432,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 60,
+    "worker_log_bytes": 8388608
+  },
+  "checkpoint_loads": 0,
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 3.71077008289285,
+  "endpoint_control_sha256": null,
+  "exit_code": 1,
+  "final_owned_pids": [],
+  "output_bytes": 704286,
+  "private_reference_execution": false,
+  "release_sha256": "7fee8d087469790fb48e6b8289a048201feba605a173424a6a0e142896b971aa",
+  "result_sha256": "a66feea7546ea016591aa36936ae890883038eab781f7e7f688d580088d80683",
+  "sampled_peak_rss_bytes": 452706304,
+  "samples": 17,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/union025-missing-axis-v1/source-index.json",
+    "sha256": "2e12da647223d4ec5b26fd19ec70160afc6032721ebf7e152d049f00c4d9b7ef"
+  },
+  "status": "failed_or_unresolved",
+  "stop_reason": "final_guard:ValueError:Incomplete fixed-ray witness endpoint",
+  "supervision_bytes_before_receipt": 17606,
+  "worker_final_sha256": "64a0896b8894b5e2888f3e400a13e0e39b69f52023e8e68487e9bc12dc441944",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

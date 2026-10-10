@@ -1,0 +1,572 @@
+[
+  {
+    "bytes": 10365,
+    "preserved": "failed-attempt/axis_contract.py",
+    "sha256": "a593c1e7734951e28b836f7b04e7d991153278813f1c5a014e089277552b2c34",
+    "source": "build/union025-missing-axis-v1/axis_contract.py"
+  },
+  {
+    "bytes": 22301,
+    "preserved": "failed-attempt/axis_worker.py",
+    "sha256": "930609c9b23200cd72b5809f9e914e1c7686f79e97809b10860c3a8289389512",
+    "source": "build/union025-missing-axis-v1/axis_worker.py"
+  },
+  {
+    "bytes": 2068,
+    "preserved": "failed-attempt/check_source.py",
+    "sha256": "bedcd477ab5013f1610582d5d4c2984e3955d42794b07f70053485e5c3568391",
+    "source": "build/union025-missing-axis-v1/check_source.py"
+  },
+  {
+    "bytes": 4486,
+    "preserved": "failed-attempt/freeze-runtime.py",
+    "sha256": "c3b9e81bad84198df3d19942dafd9c08909a64a105db5be97cbba2ac7489d25c",
+    "source": "build/union025-missing-axis-v1/freeze-runtime.py"
+  },
+  {
+    "bytes": 2737,
+    "preserved": "failed-attempt/input-index.json",
+    "sha256": "7e55c9b74d98b4ab75811aca2854d70ce5264a646d3bbfdcd4cd30f961448b2b",
+    "source": "build/union025-missing-axis-v1/input-index.json"
+  },
+  {
+    "bytes": 3573,
+    "preserved": "failed-attempt/root-release.json",
+    "sha256": "7fee8d087469790fb48e6b8289a048201feba605a173424a6a0e142896b971aa",
+    "source": "build/union025-missing-axis-v1/root-release.json"
+  },
+  {
+    "bytes": 12615,
+    "preserved": "failed-attempt/run_owned.py",
+    "sha256": "e58a8b0aac6c4a8d07c0731745f44ba8b4730b0ca0b44d1deb22acb8f6d0e0ff",
+    "source": "build/union025-missing-axis-v1/run_owned.py"
+  },
+  {
+    "bytes": 912,
+    "preserved": "failed-attempt/source-controls.json",
+    "sha256": "116dc57c1ac1b7f3e30c91ab3bdea9e99b7245dfe1c9187be69f96a2f577dbf1",
+    "source": "build/union025-missing-axis-v1/source-controls.json"
+  },
+  {
+    "bytes": 11360,
+    "preserved": "failed-attempt/source-index.json",
+    "sha256": "2e12da647223d4ec5b26fd19ec70160afc6032721ebf7e152d049f00c4d9b7ef",
+    "source": "build/union025-missing-axis-v1/source-index.json"
+  },
+  {
+    "bytes": 8645,
+    "preserved": "failed-attempt/attempt-01/clearance/fixed-ray-preview.json",
+    "sha256": "7b81f7d298d14500d8f49f39f59d3c151b4daebc6bb87bb2ca13f877636de242",
+    "source": "build/union025-missing-axis-v1/attempt-01/clearance/fixed-ray-preview.json"
+  },
+  {
+    "bytes": 2839,
+    "preserved": "failed-attempt/attempt-01/context.json",
+    "sha256": "b45a920aafdb079a4be05a9cf92ed71f6f412184150529b323bf163354ef4db8",
+    "source": "build/union025-missing-axis-v1/attempt-01/context.json"
+  },
+  {
+    "bytes": 2074,
+    "preserved": "failed-attempt/attempt-01/costs.json",
+    "sha256": "ff2c62cafdafc13a41cc898a4898d949366299e2f8bd5ac8b2b4a92118e2b96f",
+    "source": "build/union025-missing-axis-v1/attempt-01/costs.json"
+  },
+  {
+    "bytes": 10597,
+    "preserved": "failed-attempt/attempt-01/diagnostics.json",
+    "sha256": "ca7b6c204e575fa53b521f6568359b007d9f981a1cca7b3f20f4808937ab3ea9",
+    "source": "build/union025-missing-axis-v1/attempt-01/diagnostics.json"
+  },
+  {
+    "bytes": 26,
+    "preserved": "failed-attempt/attempt-01/history-00/attempt-00.json",
+    "sha256": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e",
+    "source": "build/union025-missing-axis-v1/attempt-01/history-00/attempt-00.json"
+  },
+  {
+    "bytes": 926,
+    "preserved": "failed-attempt/attempt-01/history-00/plan.json",
+    "sha256": "3af384274f0ddceab6d6cffe639f57936e69c8acc867d6272ced7d526e97cd67",
+    "source": "build/union025-missing-axis-v1/attempt-01/history-00/plan.json"
+  },
+  {
+    "bytes": 26,
+    "preserved": "failed-attempt/attempt-01/history-00/replay-attempt-00.json",
+    "sha256": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e",
+    "source": "build/union025-missing-axis-v1/attempt-01/history-00/replay-attempt-00.json"
+  },
+  {
+    "bytes": 22252,
+    "preserved": "failed-attempt/attempt-01/history-00/replay.json",
+    "sha256": "149daf0065c4f9298b12992741628dc502594d4a40190bb29097b88928c6435e",
+    "source": "build/union025-missing-axis-v1/attempt-01/history-00/replay.json"
+  },
+  {
+    "bytes": 172,
+    "preserved": "failed-attempt/attempt-01/history-00/returned-00.json",
+    "sha256": "6df66ee0ca3f1b18988af3ade928bc950ead7628cea5b48f2a8672a41310be48",
+    "source": "build/union025-missing-axis-v1/attempt-01/history-00/returned-00.json"
+  },
+  {
+    "bytes": 61,
+    "preserved": "failed-attempt/attempt-01/history-01/attempt-00.json",
+    "sha256": "95ad1b5e83a229a3a275d742305c65b7a9ee540732291cff10b62e68e6ced8f8",
+    "source": "build/union025-missing-axis-v1/attempt-01/history-01/attempt-00.json"
+  },
+  {
+    "bytes": 10459,
+    "preserved": "failed-attempt/attempt-01/history-01/returned-00.json",
+    "sha256": "fede1ea9e64554dfe7ab70c7ec51410cb287838c9edde305e62fdea7161bf7a5",
+    "source": "build/union025-missing-axis-v1/attempt-01/history-01/returned-00.json"
+  },
+  {
+    "bytes": 732,
+    "preserved": "failed-attempt/attempt-01/prospective-rays.json",
+    "sha256": "cb68cfc1146ebbe52a85f3104782cfcf7005f1a65b6be3f705c38fff3fe0e432",
+    "source": "build/union025-missing-axis-v1/attempt-01/prospective-rays.json"
+  },
+  {
+    "bytes": 1844,
+    "preserved": "failed-attempt/attempt-01/result.json",
+    "sha256": "a66feea7546ea016591aa36936ae890883038eab781f7e7f688d580088d80683",
+    "source": "build/union025-missing-axis-v1/attempt-01/result.json"
+  },
+  {
+    "bytes": 9199,
+    "preserved": "failed-attempt/attempt-01/source/admitted-public-bindings.json",
+    "sha256": "e4c6a53edcb1bdf1084cc73c10c3b4a1dfe79d75bc26e8842f53e73fa05f43ce",
+    "source": "build/union025-missing-axis-v1/attempt-01/source/admitted-public-bindings.json"
+  },
+  {
+    "bytes": 3833,
+    "preserved": "failed-attempt/attempt-01/source/derived-occupancy-assumption.json",
+    "sha256": "9a2cc1a1617c14b736bb047adab1f92a02fb4210ab8e6c6162fcebf4d16bb74b",
+    "source": "build/union025-missing-axis-v1/attempt-01/source/derived-occupancy-assumption.json"
+  },
+  {
+    "bytes": 1128,
+    "preserved": "failed-attempt/attempt-01/source/public-task-derivation.json",
+    "sha256": "aa96f4a3e08ae366b7a016123b14331e66f664e52446b01abfd194a56a889361",
+    "source": "build/union025-missing-axis-v1/attempt-01/source/public-task-derivation.json"
+  },
+  {
+    "bytes": 18807,
+    "preserved": "failed-attempt/attempt-01/target/fixed-ray-preview.json",
+    "sha256": "a389ec076f3ab46fc8f59c12cb97c0eab4def61079b867dc281b0b0b55bcae28",
+    "source": "build/union025-missing-axis-v1/attempt-01/target/fixed-ray-preview.json"
+  },
+  {
+    "bytes": 6772,
+    "preserved": "failed-attempt/attempt-01/world.json",
+    "sha256": "5ac0d223893f03a16d5597e97a0359d6492232354db854f334af331d0741ee2e",
+    "source": "build/union025-missing-axis-v1/attempt-01/world.json"
+  },
+  {
+    "bytes": 12898,
+    "preserved": "failed-attempt/attempt-01.supervision/declaration.json",
+    "sha256": "cd7258ef316c06d76951a7702a051c042f894909178c486207001a2d200de043",
+    "source": "build/union025-missing-axis-v1/attempt-01.supervision/declaration.json"
+  },
+  {
+    "bytes": 474,
+    "preserved": "failed-attempt/attempt-01.supervision/progress.json",
+    "sha256": "b96ca56e8eea74024dfe0adf9fdbc5089901422263f1aaf629d59251afd16329",
+    "source": "build/union025-missing-axis-v1/attempt-01.supervision/progress.json"
+  },
+  {
+    "bytes": 1628,
+    "preserved": "failed-attempt/attempt-01.supervision/receipt.json",
+    "sha256": "30bf6e9920b0dc2048397677521d1d439ca12815f1478ffcd465a706c0f27c5f",
+    "source": "build/union025-missing-axis-v1/attempt-01.supervision/receipt.json"
+  },
+  {
+    "bytes": 737,
+    "preserved": "failed-attempt/attempt-01.supervision/worker-final.json",
+    "sha256": "64a0896b8894b5e2888f3e400a13e0e39b69f52023e8e68487e9bc12dc441944",
+    "source": "build/union025-missing-axis-v1/attempt-01.supervision/worker-final.json"
+  },
+  {
+    "bytes": 158,
+    "preserved": "failed-attempt/attempt-01.supervision/worker-progress.json",
+    "sha256": "a9477f44c2ad1aeea07ea01de2dbf8513a1c68f42c9bef7e6811f70d35b13c48",
+    "source": "build/union025-missing-axis-v1/attempt-01.supervision/worker-progress.json"
+  },
+  {
+    "bytes": 3339,
+    "preserved": "failed-attempt/attempt-01.supervision/worker.log",
+    "sha256": "443d7fb6ba6e53655c352912f9e97c05ea1985b8d252eddaf4cdf97e7e7a8bb6",
+    "source": "build/union025-missing-axis-v1/attempt-01.supervision/worker.log"
+  },
+  {
+    "bytes": 17927,
+    "preserved": "failed-attempt/independent/audit.json",
+    "sha256": "d736d7cd05fba851b62085cd5e0471868c848222cdc794fd6cba847d43533c13",
+    "source": "build/union025-missing-axis-independent-v1/audit.json"
+  },
+  {
+    "bytes": 10104,
+    "preserved": "failed-attempt/independent/audit_saved.py",
+    "sha256": "b3df25b0eda0137bc1f514f5ab458c57a1414000e5ca2257e9d1915a25f67c65",
+    "source": "build/union025-missing-axis-independent-v1/audit_saved.py"
+  },
+  {
+    "bytes": 10690,
+    "preserved": "corrected-attempt/axis_contract.py",
+    "sha256": "15fbedd138fbb76b25d07828a97821632259f2b4adcaffe48162a784cbb711cb",
+    "source": "build/union025-missing-axis-v2/axis_contract.py"
+  },
+  {
+    "bytes": 22347,
+    "preserved": "corrected-attempt/axis_worker.py",
+    "sha256": "245c4dcf731135445c2601691271abe44b004442ff1a61e5f6bd16e6d15f2819",
+    "source": "build/union025-missing-axis-v2/axis_worker.py"
+  },
+  {
+    "bytes": 8115,
+    "preserved": "corrected-attempt/check_exclusive_writes.py",
+    "sha256": "caa250ed779c49de358c77cc23d5c9165a56a33679f9cf5dfa040882b8007e21",
+    "source": "build/union025-missing-axis-v2/check_exclusive_writes.py"
+  },
+  {
+    "bytes": 1386,
+    "preserved": "corrected-attempt/correction-source.json",
+    "sha256": "9c1473d05f045d57d2a666a1e2eae42970faf362f29db944a9ca2820fef80b53",
+    "source": "build/union025-missing-axis-v2/correction-source.json"
+  },
+  {
+    "bytes": 6372,
+    "preserved": "corrected-attempt/correction.patch",
+    "sha256": "67c8c3927ecc46442431fc6ccd5fe9631beaa00eaa35f2207729ad28bdb22590",
+    "source": "build/union025-missing-axis-v2/correction.patch"
+  },
+  {
+    "bytes": 1830,
+    "preserved": "corrected-attempt/exclusive-write-controls.json",
+    "sha256": "c07c54fc141c7536cd780a0642d0f6514fd4beaaaf4f12a400f8f767b959c7ce",
+    "source": "build/union025-missing-axis-v2/exclusive-write-controls.json"
+  },
+  {
+    "bytes": 1830,
+    "preserved": "corrected-attempt/exclusive-write-controls.log",
+    "sha256": "c07c54fc141c7536cd780a0642d0f6514fd4beaaaf4f12a400f8f767b959c7ce",
+    "source": "build/union025-missing-axis-v2/exclusive-write-controls.log"
+  },
+  {
+    "bytes": 4486,
+    "preserved": "corrected-attempt/freeze-runtime.py",
+    "sha256": "1e7e525a4b5a712ab1cd02651df24f6028cbe9ae030252c1694442c0f4df6aa0",
+    "source": "build/union025-missing-axis-v2/freeze-runtime.py"
+  },
+  {
+    "bytes": 3368,
+    "preserved": "corrected-attempt/input-index.json",
+    "sha256": "7398be782bcf694958386c264a1ed9662d3d8247076bae38feec754817220653",
+    "source": "build/union025-missing-axis-v2/input-index.json"
+  },
+  {
+    "bytes": 4389,
+    "preserved": "corrected-attempt/root-release.json",
+    "sha256": "9f8e7249b01a8bc73d34a2682976889c3e57b2fda72ece0ab7bb3fea284c82a7",
+    "source": "build/union025-missing-axis-v2/root-release.json"
+  },
+  {
+    "bytes": 12615,
+    "preserved": "corrected-attempt/run_owned.py",
+    "sha256": "e58a8b0aac6c4a8d07c0731745f44ba8b4730b0ca0b44d1deb22acb8f6d0e0ff",
+    "source": "build/union025-missing-axis-v2/run_owned.py"
+  },
+  {
+    "bytes": 11755,
+    "preserved": "corrected-attempt/source-index.json",
+    "sha256": "cddb0f1ef363d7728479c53bd7896eb9a95ff174be0ce5426fd8339030175024",
+    "source": "build/union025-missing-axis-v2/source-index.json"
+  },
+  {
+    "bytes": 9552,
+    "preserved": "corrected-attempt/attempt-02/clearance/examination.json",
+    "sha256": "7d0975f1b69700f86086ea30ded47cda495c5a2d4b902d0013d99644efc7fbd5",
+    "source": "build/union025-missing-axis-v2/attempt-02/clearance/examination.json"
+  },
+  {
+    "bytes": 8645,
+    "preserved": "corrected-attempt/attempt-02/clearance/fixed-ray-preview.json",
+    "sha256": "7b81f7d298d14500d8f49f39f59d3c151b4daebc6bb87bb2ca13f877636de242",
+    "source": "build/union025-missing-axis-v2/attempt-02/clearance/fixed-ray-preview.json"
+  },
+  {
+    "bytes": 2839,
+    "preserved": "corrected-attempt/attempt-02/context.json",
+    "sha256": "c721c16fa70764e7812782e4e2f9b17d7a6a75fbe9716e66ac2792361297d5d9",
+    "source": "build/union025-missing-axis-v2/attempt-02/context.json"
+  },
+  {
+    "bytes": 2087,
+    "preserved": "corrected-attempt/attempt-02/costs.json",
+    "sha256": "8aa5175b70e88106d3503e3283ebdae5eb4a96af879078bbc1ca257b5bdf99ff",
+    "source": "build/union025-missing-axis-v2/attempt-02/costs.json"
+  },
+  {
+    "bytes": 32620,
+    "preserved": "corrected-attempt/attempt-02/diagnostics.json",
+    "sha256": "c52ea82d117f4d6accdec631b4518f2edbc5a5749ffde75418e3cfac2d3132f7",
+    "source": "build/union025-missing-axis-v2/attempt-02/diagnostics.json"
+  },
+  {
+    "bytes": 26,
+    "preserved": "corrected-attempt/attempt-02/history-00/attempt-00.json",
+    "sha256": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-00/attempt-00.json"
+  },
+  {
+    "bytes": 926,
+    "preserved": "corrected-attempt/attempt-02/history-00/plan.json",
+    "sha256": "4e3b8bd267de6f73278aa6d7bfc6e52a78ff8cbfd76a1bd36ee7755bd643a1e7",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-00/plan.json"
+  },
+  {
+    "bytes": 26,
+    "preserved": "corrected-attempt/attempt-02/history-00/replay-attempt-00.json",
+    "sha256": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-00/replay-attempt-00.json"
+  },
+  {
+    "bytes": 22251,
+    "preserved": "corrected-attempt/attempt-02/history-00/replay.json",
+    "sha256": "c2f1a156dac64f398b40709cbbeb69a1b59e8b8bc6123da972af0bed0ab27256",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-00/replay.json"
+  },
+  {
+    "bytes": 172,
+    "preserved": "corrected-attempt/attempt-02/history-00/returned-00.json",
+    "sha256": "6df66ee0ca3f1b18988af3ade928bc950ead7628cea5b48f2a8672a41310be48",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-00/returned-00.json"
+  },
+  {
+    "bytes": 61,
+    "preserved": "corrected-attempt/attempt-02/history-01/attempt-00.json",
+    "sha256": "95ad1b5e83a229a3a275d742305c65b7a9ee540732291cff10b62e68e6ced8f8",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-01/attempt-00.json"
+  },
+  {
+    "bytes": 26,
+    "preserved": "corrected-attempt/attempt-02/history-01/attempt-01.json",
+    "sha256": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-01/attempt-01.json"
+  },
+  {
+    "bytes": 14993,
+    "preserved": "corrected-attempt/attempt-02/history-01/plan.json",
+    "sha256": "cad354e047abb7d97b7cfe5d2457aa2d1906824fc0bf45a67d275195b1390803",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-01/plan.json"
+  },
+  {
+    "bytes": 61,
+    "preserved": "corrected-attempt/attempt-02/history-01/replay-attempt-00.json",
+    "sha256": "95ad1b5e83a229a3a275d742305c65b7a9ee540732291cff10b62e68e6ced8f8",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-01/replay-attempt-00.json"
+  },
+  {
+    "bytes": 26,
+    "preserved": "corrected-attempt/attempt-02/history-01/replay-attempt-01.json",
+    "sha256": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-01/replay-attempt-01.json"
+  },
+  {
+    "bytes": 36523,
+    "preserved": "corrected-attempt/attempt-02/history-01/replay.json",
+    "sha256": "cd808b365b8dbbac84fab650c7ffd64e079a22e261bf9c42aac82fc49bab0e84",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-01/replay.json"
+  },
+  {
+    "bytes": 10459,
+    "preserved": "corrected-attempt/attempt-02/history-01/returned-00.json",
+    "sha256": "fede1ea9e64554dfe7ab70c7ec51410cb287838c9edde305e62fdea7161bf7a5",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-01/returned-00.json"
+  },
+  {
+    "bytes": 172,
+    "preserved": "corrected-attempt/attempt-02/history-01/returned-01.json",
+    "sha256": "6df66ee0ca3f1b18988af3ade928bc950ead7628cea5b48f2a8672a41310be48",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-01/returned-01.json"
+  },
+  {
+    "bytes": 61,
+    "preserved": "corrected-attempt/attempt-02/history-02/attempt-00.json",
+    "sha256": "95ad1b5e83a229a3a275d742305c65b7a9ee540732291cff10b62e68e6ced8f8",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-02/attempt-00.json"
+  },
+  {
+    "bytes": 61,
+    "preserved": "corrected-attempt/attempt-02/history-02/attempt-01.json",
+    "sha256": "cb637a139788c832614903c6eccab5fdd6d210e2f6dc0d372e4d7193e49c49d7",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-02/attempt-01.json"
+  },
+  {
+    "bytes": 26,
+    "preserved": "corrected-attempt/attempt-02/history-02/attempt-02.json",
+    "sha256": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-02/attempt-02.json"
+  },
+  {
+    "bytes": 43841,
+    "preserved": "corrected-attempt/attempt-02/history-02/plan.json",
+    "sha256": "359757b242fe18e6311f0bc885c10f01bba07e16b985871d0a92fb76e4e05b0f",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-02/plan.json"
+  },
+  {
+    "bytes": 61,
+    "preserved": "corrected-attempt/attempt-02/history-02/replay-attempt-00.json",
+    "sha256": "95ad1b5e83a229a3a275d742305c65b7a9ee540732291cff10b62e68e6ced8f8",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-02/replay-attempt-00.json"
+  },
+  {
+    "bytes": 61,
+    "preserved": "corrected-attempt/attempt-02/history-02/replay-attempt-01.json",
+    "sha256": "cb637a139788c832614903c6eccab5fdd6d210e2f6dc0d372e4d7193e49c49d7",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-02/replay-attempt-01.json"
+  },
+  {
+    "bytes": 26,
+    "preserved": "corrected-attempt/attempt-02/history-02/replay-attempt-02.json",
+    "sha256": "d6f0d3c6469a5854c2e5bdb50e356101878949414430e679dc01684f7914285e",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-02/replay-attempt-02.json"
+  },
+  {
+    "bytes": 65314,
+    "preserved": "corrected-attempt/attempt-02/history-02/replay.json",
+    "sha256": "dd1c7583d2c96a3951a8a9f76bd8b1f1d55499be5aaca7f81b040ccd2718c32c",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-02/replay.json"
+  },
+  {
+    "bytes": 10459,
+    "preserved": "corrected-attempt/attempt-02/history-02/returned-00.json",
+    "sha256": "fede1ea9e64554dfe7ab70c7ec51410cb287838c9edde305e62fdea7161bf7a5",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-02/returned-00.json"
+  },
+  {
+    "bytes": 21094,
+    "preserved": "corrected-attempt/attempt-02/history-02/returned-01.json",
+    "sha256": "acba1e3091a8f8021b870cfe0b88279a3204fdfe66df1384e4f1daa3107fe25f",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-02/returned-01.json"
+  },
+  {
+    "bytes": 172,
+    "preserved": "corrected-attempt/attempt-02/history-02/returned-02.json",
+    "sha256": "6df66ee0ca3f1b18988af3ade928bc950ead7628cea5b48f2a8672a41310be48",
+    "source": "build/union025-missing-axis-v2/attempt-02/history-02/returned-02.json"
+  },
+  {
+    "bytes": 732,
+    "preserved": "corrected-attempt/attempt-02/prospective-rays.json",
+    "sha256": "cb68cfc1146ebbe52a85f3104782cfcf7005f1a65b6be3f705c38fff3fe0e432",
+    "source": "build/union025-missing-axis-v2/attempt-02/prospective-rays.json"
+  },
+  {
+    "bytes": 4179,
+    "preserved": "corrected-attempt/attempt-02/result.json",
+    "sha256": "8f585c7884d8a36fcfa998de16f1c400a12ce982ecd690148c952f9e2ae9cc89",
+    "source": "build/union025-missing-axis-v2/attempt-02/result.json"
+  },
+  {
+    "bytes": 9199,
+    "preserved": "corrected-attempt/attempt-02/source/admitted-public-bindings.json",
+    "sha256": "4f113cfae9f7a7ed021e27b24bcf6872fa2539bcac2b26bd063ed4d671e325cb",
+    "source": "build/union025-missing-axis-v2/attempt-02/source/admitted-public-bindings.json"
+  },
+  {
+    "bytes": 3833,
+    "preserved": "corrected-attempt/attempt-02/source/derived-occupancy-assumption.json",
+    "sha256": "9a2cc1a1617c14b736bb047adab1f92a02fb4210ab8e6c6162fcebf4d16bb74b",
+    "source": "build/union025-missing-axis-v2/attempt-02/source/derived-occupancy-assumption.json"
+  },
+  {
+    "bytes": 1128,
+    "preserved": "corrected-attempt/attempt-02/source/public-task-derivation.json",
+    "sha256": "aa96f4a3e08ae366b7a016123b14331e66f664e52446b01abfd194a56a889361",
+    "source": "build/union025-missing-axis-v2/attempt-02/source/public-task-derivation.json"
+  },
+  {
+    "bytes": 19712,
+    "preserved": "corrected-attempt/attempt-02/target/examination.json",
+    "sha256": "73f6f77689228063d10a8c0073475d43ba542f4f9a1de01d0ccd7429a989a8ff",
+    "source": "build/union025-missing-axis-v2/attempt-02/target/examination.json"
+  },
+  {
+    "bytes": 18807,
+    "preserved": "corrected-attempt/attempt-02/target/fixed-ray-preview.json",
+    "sha256": "a389ec076f3ab46fc8f59c12cb97c0eab4def61079b867dc281b0b0b55bcae28",
+    "source": "build/union025-missing-axis-v2/attempt-02/target/fixed-ray-preview.json"
+  },
+  {
+    "bytes": 6772,
+    "preserved": "corrected-attempt/attempt-02/world.json",
+    "sha256": "9ca2103508cfbd85a31275769e8bc2fd4b8e1d661d4872824317d66910fdb657",
+    "source": "build/union025-missing-axis-v2/attempt-02/world.json"
+  },
+  {
+    "bytes": 12898,
+    "preserved": "corrected-attempt/attempt-02.supervision/declaration.json",
+    "sha256": "5af26bb6baf5343202ce50823ae66b17c72d2089458616a51a61ee6d6b30db47",
+    "source": "build/union025-missing-axis-v2/attempt-02.supervision/declaration.json"
+  },
+  {
+    "bytes": 1108,
+    "preserved": "corrected-attempt/attempt-02.supervision/endpoint-control.json",
+    "sha256": "f2b47b5351cf1f6ad30f8c64e805fa2a533b3cc569b1775ce6f8b0155340abfd",
+    "source": "build/union025-missing-axis-v2/attempt-02.supervision/endpoint-control.json"
+  },
+  {
+    "bytes": 474,
+    "preserved": "corrected-attempt/attempt-02.supervision/progress.json",
+    "sha256": "31bebfb1abce5921d8a117e89721a6e85df9bf251753c2d55a49d42698474347",
+    "source": "build/union025-missing-axis-v2/attempt-02.supervision/progress.json"
+  },
+  {
+    "bytes": 1633,
+    "preserved": "corrected-attempt/attempt-02.supervision/receipt.json",
+    "sha256": "bf6f156dfd91f1e97b5f227e09066b896d0724692ee5092cef4955dc08148e35",
+    "source": "build/union025-missing-axis-v2/attempt-02.supervision/receipt.json"
+  },
+  {
+    "bytes": 689,
+    "preserved": "corrected-attempt/attempt-02.supervision/worker-final.json",
+    "sha256": "649a234a493d81ec0e6709b7b158c5c3635779cf936194e90da6f15a9238002f",
+    "source": "build/union025-missing-axis-v2/attempt-02.supervision/worker-final.json"
+  },
+  {
+    "bytes": 158,
+    "preserved": "corrected-attempt/attempt-02.supervision/worker-progress.json",
+    "sha256": "a83a8df7a888517bb81bcb4818808d2d47f7611fca9381402067c941aec05b35",
+    "source": "build/union025-missing-axis-v2/attempt-02.supervision/worker-progress.json"
+  },
+  {
+    "bytes": 0,
+    "preserved": "corrected-attempt/attempt-02.supervision/worker.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "build/union025-missing-axis-v2/attempt-02.supervision/worker.log"
+  },
+  {
+    "bytes": 12845,
+    "preserved": "corrected-attempt/independent/audit.json",
+    "sha256": "d3d7c80c7b6994e3d242d0f414b54bdd9b2ffbbc260cd60e90d42448b224bd7e",
+    "source": "build/union025-missing-axis-independent-v2/audit.json"
+  },
+  {
+    "bytes": 14697,
+    "preserved": "corrected-attempt/independent/audit_saved.py",
+    "sha256": "000371bb60fd944c4c247a47ab4c2f5a646507728012f9ca99227ed96fd6428f",
+    "source": "build/union025-missing-axis-independent-v2/audit_saved.py"
+  },
+  {
+    "bytes": 10320,
+    "preserved": "diagnosis/diagnose_saved.py",
+    "sha256": "60d13f97cc3859ef63d2c28e019c14c104fe9b667f585f3c601436d79cf184b2",
+    "source": "build/union025-clearance-witness-v1/diagnose_saved.py"
+  },
+  {
+    "bytes": 25638,
+    "preserved": "diagnosis/saved-blocker-diagnosis.json",
+    "sha256": "c3785b8a3c865a3483f7262089b993cf7ad456b0f3b4af1777b1297719582e5f",
+    "source": "build/union025-clearance-witness-v1/saved-blocker-diagnosis.json"
+  }
+]

@@ -1,0 +1,56 @@
+Completed: one missing approach axis clears the modeled obstruction
+
+The same union025 world that chose STOP now admits a complete two-motion sequence
+when one source-normal approach axis is appended. It first removes the recorded
+blocker[121,44,72], then executes the formerly blocked fixed target ray, removing
+[119,45,71]. The three predeclared complete alternatives are:
+
+Sequence                       Target mm3   Outside target mm3   Total reward
+STOP                           0            0                    0
+new approach, STOP             0.953674795  0                   +0.920745108
+new approach, fixed ray, STOP  1.907349590   0                   +1.837583965
+
+All three complete histories have exact native replay and independent complete-
+tool geometry/outcome acceptance. The extra axis[-1,+4] changes the proposal model
+and observation identity; all130 original ledger rows on the thirteen old axes
+remain physically identical except IDs. No cap omission occurs initially. Same
+image, source domain, assumed S-union-T material, target, access, tools, normalization,
+reward, h24 and cap120. Both motions must be exactly emitted/legal before task.step;
+no direct-preview result is silently injected into the action inventory.
+
+Diagnosis: the same single cell blocked all15 prior opening witnesses. Even the
+nearest original axis has a farthest-cell-corner distance2.096609mm, exceeding the
+largest existing active radius1.7mm. Every existing family varied depth on those
+same axes, so more depth or longer histories there cannot remove this particular
+whole-cell blocker. A changed lateral choice is needed for this fixed path. This
+does not prove global target unreachability or validate the occupancy assumption.
+The exact saved-coordinate derivation and all13 bounds are preserved.
+
+The first attempt failed after preparation and target preview because a second
+exclusive write reused diagnostics.json. It is unresolved: only STOP completed
+replay. Its full source, partial evidence, receipt and independent failure audit
+remain intact. The corrected attempt changes only write lifetime (unique local
+records, one final aggregate). Generated controls reproduce the old failure and
+check all five executable/blocked/unavailable branches with actual OutputBudget.
+No scientific task parameter or success criterion changed for the manual repeat.
+
+Corrected owned run:6.231790s,465,666,048B sampled peak,779 previews,6 rollout plus
+6 replay transitions,2 direct diagnostics,zero models/updates/private evidence.
+Independent saved audit verifies source checks, exact action matching, all costs,
+seals and outcomes. Original failure:3.710770s,452,706,304B,224 previews,2 rollout
+plus1 replay; clean reap for both. Count both when reporting development cost.
+
+This is a post-hoc TRAIN action-space diagnostic. Two cells are only0.002446% of
+the unchanged77,974.358607mm3 supplied target. There is no new learned-policy result,
+held-out transfer, complete resection, physical fidelity or clinical benefit claim.
+Next: a deterministic bounded proposal rule from permitted-world obstruction
+geometry, then matched search/IL/RL tasks across patients. Do not hardcode025.
+
+Executed HEAD:7947d23529a38d4cb8e8348fbba142c23467a6c3
+Corrected release:9f8e7249b01a8bc73d34a2682976889c3e57b2fda72ece0ab7bb3fea284c82a7
+Corrected index:cddb0f1ef363d7728479c53bd7896eb9a95ff174be0ce5426fd8339030175024
+Corrected result:8f585c7884d8a36fcfa998de16f1c400a12ce982ecd690148c952f9e2ae9cc89
+Corrected independent audit:d3d7c80c7b6994e3d242d0f414b54bdd9b2ffbbc260cd60e90d42448b224bd7e
+Prior failed result:a66feea7546ea016591aa36936ae890883038eab781f7e7f688d580088d80683
+Compact evidence is indexed; repeated full inventory JSON remains outside Git
+at its recorded original path. Patient images/arrays/checkpoints are not included.
