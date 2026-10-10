@@ -1,0 +1,86 @@
+{
+  "status": "failed_or_unresolved",
+  "scope": "one_TRAIN_supplied_region_scale_preflight",
+  "release_sha256": "4cb4a166c8c070dedcef81eed6c3f38aa044d1db78d931d4047ad19b18aed6ef",
+  "private_array_reads": 0,
+  "profile_enabled": true,
+  "events": [
+    {
+      "phase": "before_public_imports",
+      "elapsed_seconds": 3.379210829734802e-05
+    },
+    {
+      "phase": "before_public_array_loading",
+      "elapsed_seconds": 2.0641382499597967
+    },
+    {
+      "phase": "public_array_loaded:image",
+      "elapsed_seconds": 2.103699167026207,
+      "bytes": 83081128
+    },
+    {
+      "phase": "public_array_loaded:supplied_support",
+      "elapsed_seconds": 2.1165126250125468,
+      "bytes": 20770378
+    },
+    {
+      "phase": "public_array_loaded:supplied_whole_tumor",
+      "elapsed_seconds": 2.133529624901712,
+      "bytes": 20770378
+    },
+    {
+      "phase": "public_array_loaded:whole_tumor_domain",
+      "elapsed_seconds": 2.146548999939114,
+      "bytes": 20770378
+    },
+    {
+      "phase": "before_native_case_constructor",
+      "elapsed_seconds": 2.322678874945268,
+      "native_shape": [
+        251,
+        331,
+        250
+      ],
+      "actor_crop": [
+        64,
+        64,
+        64
+      ]
+    },
+    {
+      "phase": "native_case_constructed",
+      "elapsed_seconds": 2.91645499994047,
+      "source_hash": "sha256:a580cc297211c3e0dde31a90a133e53f1bc5df336fa3d10705285fcfaad44f64"
+    },
+    {
+      "phase": "phase_start:public_preparation",
+      "elapsed_seconds": 4.701908166985959
+    },
+    {
+      "phase": "before_native_task_constructor_and_initial_inventory",
+      "elapsed_seconds": 4.702243458945304
+    },
+    {
+      "phase": "public_task_and_inventory_ready",
+      "elapsed_seconds": 6.28455812507309,
+      "legal_nonstop_actions": 20
+    },
+    {
+      "phase": "phase_complete:public_preparation",
+      "elapsed_seconds": 6.420449374942109
+    },
+    {
+      "phase": "phase_start:offline_teacher_search",
+      "elapsed_seconds": 6.420768625102937
+    }
+  ],
+  "public_preparation_native_preview_calls": 0,
+  "public_source_preparation_seconds": 0.9082695420365781,
+  "failure": {
+    "type": "InterruptedError",
+    "message": "Teacher unresolved at declared cap; no label or replacement"
+  },
+  "last_phase": "phase_start:offline_teacher_search",
+  "complete_profiled_wall_seconds": 22.268334459047765,
+  "profile_scope": "includes imports, public loader, native inventory, training and replay; not an unprofiled timing benchmark"
+}

@@ -1,0 +1,69 @@
+{
+  "actions": [
+    "STOP"
+  ],
+  "accounting": {
+    "model_transition_calls": 96,
+    "planning_seconds": 15.770638791844249,
+    "completed_layers": 2,
+    "call_cap_reached": true,
+    "time_cap_reached": false,
+    "beam_width": 2,
+    "max_calls": 96,
+    "estimated_incremental_return": 0.0,
+    "stop_baseline_return": 0.0,
+    "implicit_stop_evaluations": "all evaluated prefixes; known zero incremental reward",
+    "implicit_stop_prefix_count": 97,
+    "evaluated_transition_prefixes": 96,
+    "objective_source": "supplied_public_whole_tumor_and_frozen_geometric_costs",
+    "root_legal_nonstop_actions": 20,
+    "expanded_nodes": 5,
+    "transition_mode": "lazy_planning",
+    "eager_transition_calls": 0,
+    "lazy_planning_transition_calls": 96,
+    "observation_requests": 5,
+    "actor_forward_calls": 0,
+    "guidance": "none",
+    "negative_prefixes_evaluated": 96,
+    "negative_prefixes_retained": 4,
+    "negative_prefixes_pruned_by_beam": 56,
+    "beam_pruned_prefixes": 56,
+    "peak_next_layer_states": 3,
+    "layers": [
+      {
+        "depth": 1,
+        "completed": true,
+        "expanded_nodes": 1,
+        "model_transition_calls": 20,
+        "negative_prefixes_evaluated": 20,
+        "negative_prefixes_retained": 2,
+        "negative_prefixes_pruned_by_beam": 18,
+        "negative_prefixes_pending_at_cap": 0
+      },
+      {
+        "depth": 2,
+        "completed": true,
+        "expanded_nodes": 2,
+        "model_transition_calls": 40,
+        "negative_prefixes_evaluated": 40,
+        "negative_prefixes_retained": 2,
+        "negative_prefixes_pruned_by_beam": 38,
+        "negative_prefixes_pending_at_cap": 0
+      },
+      {
+        "depth": 3,
+        "completed": false,
+        "expanded_nodes": 2,
+        "model_transition_calls": 36,
+        "negative_prefixes_evaluated": 36,
+        "negative_prefixes_retained": 0,
+        "negative_prefixes_pruned_by_beam": 0,
+        "negative_prefixes_pending_at_cap": 36
+      }
+    ],
+    "policy_state_checks": 0,
+    "policy_state_check_seconds": 0.0,
+    "initial_policy_state_hash": null,
+    "final_policy_state_hash": null
+  }
+}

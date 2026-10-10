@@ -1,0 +1,38 @@
+{
+  "expected_head": "82aeabe791338e8fe186ff8ce085d223fe3beba5",
+  "limits": {
+    "max_native_previews": 2048,
+    "max_optimizer_updates": 2,
+    "max_policy_forwards": 40,
+    "max_steps": 6,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 96,
+      "seconds": 60
+    },
+    "threads": 1,
+    "worker_seconds": 120
+  },
+  "output": "build/cross-patient-planning-v1/ReMIND-008-run-v1",
+  "profile": true,
+  "public_manifest": {
+    "path": "build/remind-planning-qc-v1/ReMIND-008-public-inputs-v2.json",
+    "sha256": "57b9588c2a72874cae1cd6555fcd58cfada543ac63cda7f1e6b41fefa5b2163b"
+  },
+  "research_task_admission": {
+    "clinical_or_anatomical_accuracy_claim": false,
+    "hypothetical_access_assumption_accepted": true,
+    "native_image_and_supplied_support_domain_fully_covered": true,
+    "public_geometry_and_source_linkage_checked": true,
+    "source_target_and_support_unchanged": true,
+    "supplied_region_partial_progress_accepted": true
+  },
+  "source_index": {
+    "path": "build/cross-patient-planning-v1/actual-preflight-v1/source-index.json",
+    "sha256": "571e4354900c742cb4911487f878d73ee424612f1ef0ab908ac057e66dc0fd4b"
+  },
+  "status": "released_one_attempt",
+  "version": "ReMIND-008-public-preflight-release-v1",
+  "comparison_limit": "One TRAIN scale/interface preflight; SEARCH previews full permitted world; actor sees64cubed crop plus public proposals/legality. No equal-effective-observation or population benefit claim."
+}

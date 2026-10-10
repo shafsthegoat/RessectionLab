@@ -1,0 +1,186 @@
+{
+  "version": "patient-native-preflight-sealed-plans-v1",
+  "status": "failed_or_unresolved",
+  "protocol": {
+    "version": "remind-public-annotation-assisted-native-v1",
+    "scope": "patient_native_planning_experiment",
+    "subject": "ReMIND-008",
+    "role": "TRAIN",
+    "evidence_domain": "acquired_patient",
+    "public_source_binding_hash": "sha256:72484098ea5b846051d8c0adbe5c6c8220c8d42e5b3ac945cb20176028f31d37",
+    "qc_receipt_hash": "sha256:41e0e404fed34bd37945c0193fbecdb6a585b41268e24960d056da003f908e90",
+    "max_native_previews": 2048,
+    "max_optimizer_updates": 2,
+    "max_policy_forwards": 40,
+    "max_steps": 6,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 96,
+      "seconds": 60
+    },
+    "threads": 1,
+    "worker_seconds": 120,
+    "initialization": "fresh_seeded_shared_initialization",
+    "private_reference_used": false,
+    "clinical_claim": false,
+    "split_changes": false,
+    "runtime_release_sha256": "4cb4a166c8c070dedcef81eed6c3f38aa044d1db78d931d4047ad19b18aed6ef",
+    "learning_protocol_hash": "sha256:b4c17c30248bb28bfe9d6e8e9eb3b3cafcfad2372128083a58f5fb98af8a430c"
+  },
+  "learning_protocol": {
+    "version": "qualified-patient-learning-preflight-v1",
+    "seed": 20261010,
+    "methods": [
+      "IL",
+      "RL"
+    ],
+    "updates_per_method": 1,
+    "rl_episodes": 1,
+    "learning_rate": 0.001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "gamma": 1.0,
+    "entropy_weight": 0.01,
+    "value_weight": 0.5,
+    "max_gradient_norm": 5.0,
+    "architecture": {
+      "encoder_channels": [
+        8,
+        16
+      ],
+      "hidden_features": 32,
+      "ray_samples": 5,
+      "physical_reference_mm": 10.0,
+      "critic_candidate_context": true
+    },
+    "initialization": "same_fresh_spatial_parameters_no_checkpoint_load",
+    "scope": "one_qualified_TRAIN_patient_software_and_scale_preflight",
+    "population_training": false,
+    "patient_adaptation": false,
+    "private_training_reward": false,
+    "clinical_claim": false
+  },
+  "methods": {},
+  "plans": [],
+  "private_reference_reads": 0,
+  "checkpoint_loads": 0,
+  "optimizer_updates": 0,
+  "population_training": false,
+  "patient_adaptation": false,
+  "ventricular_avoidance_tested": false,
+  "clinical_claim": false,
+  "patient_context": {
+    "version": "remind-public-annotation-assisted-native-v1",
+    "scope": "patient_native_planning_experiment",
+    "subject": "ReMIND-008",
+    "patient_group": "ReMIND:008",
+    "role": "TRAIN",
+    "evidence_domain": "acquired_patient",
+    "real_patient_count": 1,
+    "cohort_sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+    "source_hash": "sha256:a580cc297211c3e0dde31a90a133e53f1bc5df336fa3d10705285fcfaad44f64",
+    "decision_model_hash": "sha256:a2efa588a141f8fee871148345197cf6591feb5de9e04e595a2b7f394f3115b8",
+    "max_steps": 6,
+    "public_observation_binding": "sha256:ceecb185c5173ae4bd18b9fb57f89091807ff64a8966203ab8c198ad32d7ac24",
+    "observation_track": "annotation_assisted",
+    "protocol_sha256": "sha256:cda6116b79e8d8fefe0bf2c7a8afda2a0d49f51f1c8e67b8c2a3f8a52c72c97f",
+    "learning_protocol_hash": "sha256:b4c17c30248bb28bfe9d6e8e9eb3b3cafcfad2372128083a58f5fb98af8a430c",
+    "public_source_binding_hash": "sha256:72484098ea5b846051d8c0adbe5c6c8220c8d42e5b3ac945cb20176028f31d37",
+    "qc_receipt_hash": "sha256:41e0e404fed34bd37945c0193fbecdb6a585b41268e24960d056da003f908e90",
+    "max_optimizer_updates": 2,
+    "budgets": {
+      "search": {
+        "beam_width": 2,
+        "max_calls": 96,
+        "seconds": 60
+      },
+      "max_native_previews": 2048,
+      "max_policy_forwards": 40,
+      "worker_seconds": 120,
+      "memory_bytes": 3221225472,
+      "threads": 1
+    },
+    "private_reference_in_task": false,
+    "ventricular_evidence": "unavailable_to_actor_and_search",
+    "actions": "simulated_not_recorded",
+    "clinical_claim": false
+  },
+  "initial_parameter_hash": "sha256:47101c68a31949bc0cd862996a99e4f5c3f72097d482f8cf1ddde9d8fd2615d5",
+  "failure": {
+    "type": "InterruptedError",
+    "message": "Teacher unresolved at declared cap; no label or replacement"
+  },
+  "complete_wall_seconds": 17.490666707977653,
+  "costs": {
+    "public_preparation": {
+      "inventory_request_calls": 5,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_returned": 5,
+      "inventory_request_inclusive_seconds": 1.0268433750607073,
+      "complete_wall_seconds": 1.7181859160773456,
+      "native_preview_entries": 68
+    },
+    "offline_teacher_search": {
+      "task_clone_calls": 97,
+      "task_clone_returned": 97,
+      "task_clone_inclusive_seconds": 3.217000876320526,
+      "inventory_request_calls": 101,
+      "inventory_request_returned": 101,
+      "inventory_request_inclusive_seconds": 6.432012628298253,
+      "native_transition_calls": 96,
+      "native_transition_returned": 96,
+      "native_transition_inclusive_seconds": 5.991066751535982,
+      "inventory_build_or_terminal_empty_calls": 4,
+      "complete_wall_seconds": 15.771501749986783,
+      "native_preview_entries": 272
+    }
+  },
+  "native_budget": {
+    "version": "native-planning-budget-v1",
+    "status": "failed",
+    "failure": "arm_raised_InterruptedError",
+    "limits": {
+      "native_preview_entries": 2048,
+      "planning_execution_seconds": 120.0
+    },
+    "native_preview_entries": 340,
+    "observed_admissions_before_accounting_failure": 340,
+    "counting_reliable": true,
+    "blocked_preview_attempts": 0,
+    "elapsed_seconds": 17.490638375049457,
+    "time_overshoot_seconds": 0.0,
+    "history_complete_caller_attestation": null,
+    "score": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "requests": {},
+    "cache_hits": null,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "native_preview_profile": {
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "phases": {
+        "unclassified": {
+          "started": 340,
+          "returned": 340,
+          "raised": 0,
+          "seconds": 2.9213987740222365,
+          "feasible": 99,
+          "rejected": 241,
+          "returned_microsteps": 2030,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 241
+          }
+        }
+      },
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "total_policy_forward_calls": 0,
+  "cost_scope": "includes_public_factory_and_all_training_planning_replay;phase_subcalls_inclusive_not_additive",
+  "resource_authority": "existing_owned_parent_receipt_required_for_hard_wall_and_tree_RSS"
+}

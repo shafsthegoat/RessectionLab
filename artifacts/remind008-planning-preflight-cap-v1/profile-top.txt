@@ -1,0 +1,40 @@
+Sat Oct 10 01:31:24 2026    build/cross-patient-planning-v1/ReMIND-008-run-v1/profile.pstats
+
+         26031999 function calls (21137258 primitive calls) in 22.267 seconds
+
+   Ordered by: internal time
+   List reduced from 9426 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     4015   10.377    0.003   10.377    0.003 {method 'update' of '_hashlib.HASH' objects}
+     2468    2.021    0.001    2.021    0.001 {built-in method builtins.compile}
+        6    1.238    0.206    1.238    0.206 {built-in method scipy.ndimage._nd_image.binary_erosion2}
+     5222    0.861    0.000    1.259    0.000 geometry.py:319(_segment_cell_distances)
+        6    0.554    0.092    0.554    0.092 {built-in method scipy.ndimage._nd_image.binary_erosion}
+    27683    0.542    0.000    0.542    0.000 {method 'copy' of 'numpy.ndarray' objects}
+   186389    0.400    0.000    0.400    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+     2178    0.364    0.000    0.364    0.000 {method 'read' of '_io.BufferedReader' objects}
+1220654/5268    0.344    0.000    0.775    0.000 core.py:55(freeze_json)
+6499237/6499027    0.331    0.000    0.527    0.000 {built-in method builtins.isinstance}
+855632/824    0.285    0.000    0.616    0.001 copy.py:118(deepcopy)
+     5857    0.263    0.000    0.263    0.000 {method 'sort' of 'numpy.ndarray' objects}
+       46    0.259    0.006    0.260    0.006 {built-in method _imp.create_dynamic}
+1220943/5274    0.213    0.000    0.512    0.000 core.py:78(thaw_json)
+1362565/54535    0.186    0.000    0.709    0.000 core.py:74(<genexpr>)
+       23    0.151    0.007    0.152    0.007 _arraysetops_impl.py:806(_isin)
+     1873    0.126    0.000    0.237    0.000 native_resection.py:255(_extend_connected_free)
+     5222    0.120    0.000    1.791    0.000 geometry.py:357(capsule_voxel_indices)
+     7493    0.118    0.000    0.212    0.000 geometry.py:285(point_segment_distances)
+     7193    0.104    0.000    0.104    0.000 encoder.py:205(iterencode)
+      137    0.103    0.001    0.103    0.001 {method 'nonzero' of 'numpy.ndarray' objects}
+  1528700    0.103    0.000    0.195    0.000 <frozen abc>:117(__instancecheck__)
+  6755/20    0.102    0.000    0.644    0.032 <frozen importlib._bootstrap>:480(_call_with_frames_removed)
+159741/33107    0.094    0.000    0.472    0.000 copy.py:191(_deepcopy_list)
+   246/30    0.092    0.000    0.090    0.003 _ops.py:322(py_impl)
+     2030    0.090    0.000    0.172    0.000 native_resection.py:230(_connected_surface_cells)
+  1779496    0.086    0.000    0.086    0.000 {method 'get' of 'dict' objects}
+  1528700    0.085    0.000    0.092    0.000 {built-in method _abc._abc_instancecheck}
+   4968/6    0.077    0.000    0.631    0.105 {built-in method builtins.exec}
+    26175    0.073    0.000    0.073    0.000 {method 'tobytes' of 'numpy.ndarray' objects}
+
+
