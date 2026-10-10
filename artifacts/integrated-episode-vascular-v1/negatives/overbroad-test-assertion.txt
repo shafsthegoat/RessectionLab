@@ -1,0 +1,35 @@
+.F...............                                                        [100%]
+=================================== FAILURES ===================================
+______ test_reopened_backend_episode_is_evaluable_but_report_is_not_saved ______
+
+current = (<test_bridge.Client object at 0x10b970470>, {'case': {'caseId': 'generated-sequential-v1', 'caseHash': 'sha256:6946fa...d213d587e81dfa79eed82a22d6eb', 'episodeId': 'sha256:cd8874c97a3847a1225e1b741f4b786b28783e1dbb3f749cb70162ca9538377d'})
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-948/test_reopened_backend_episode_0')
+
+    def test_reopened_backend_episode_is_evaluable_but_report_is_not_saved(current,tmp_path):
+        client,executed,args=current
+        path=tmp_path/'generated.ressectionlab'
+        client.call('saveCase',{'caseHash':args['caseHash'],'path':str(path)})
+        second=Client(tmp_path/'second')
+        try:
+            loaded=second.call('loadCase',{'path':str(path)})
+            assert loaded['workspaceSession']['episodeReplay']['episode']['episodeId']==args['episodeId']
+            out=second.call('evaluateDevelopmentEpisodeVascular',args)
+            assert out['evaluation']['episodeId']==args['episodeId']
+            saved=tmp_path/'after.ressectionlab'
+            second.call('saveCase',{'caseHash':args['caseHash'],'path':str(saved)})
+            from zipfile import ZipFile
+            with ZipFile(saved) as archive:
+                workspace=json.loads(archive.read('workspace.json'))
+>               assert 'vascular' not in json.dumps(workspace).lower().replace('vascular_injury','')
+E               assert 'vascular' not in '{"episodere...7e007147c1"}'
+E                 
+E                 'vascular' is contained here:
+E                 ?           ---
+E                   ilable", "vascular_coverage_unassessed"]}, "nativeenginefinalstateid": "sha256:e59122092706eff4d532ce1ec719cf2e6333c1eeafb2eb60ff113875ff637c2d", "patientadmission": false, "physicalunits": "mm", "planning": {"actor_forward_calls": 0, "learnedpolicyexecuted": false, "model_transition_calls": 6, "optimizer_updates": 0, "sealedbeforereferencescoring": true, "selector": "scripted_interface_demonstration", "strategy": {"actions": ["native-spatial:26de06d9ae105521cbd6203c", "native-spatial:b71a7b6e7b32522ddd38f235", "native-spatial:5c16551493fe47d...
+E                 
+E                 ...Full output truncated (2 lines hidden), use '-vv' to show
+
+build/shared-episode-vascular-bridge-v1/tests/test_bridge.py:73: AssertionError
+=========================== short test summary info ============================
+FAILED build/shared-episode-vascular-bridge-v1/tests/test_bridge.py::test_reopened_backend_episode_is_evaluable_but_report_is_not_saved
+1 failed, 16 passed in 38.42s

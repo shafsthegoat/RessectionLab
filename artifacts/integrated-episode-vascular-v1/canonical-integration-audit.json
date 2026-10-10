@@ -1,0 +1,114 @@
+{
+  "verdict": "PASS_exact_reviewed_source_integration",
+  "checked_files": [
+    {
+      "path": "desktop/src/App.tsx",
+      "sha256": "9c7ad547749013a057a9d13b1a6d2985405542cb890d3790222e423294f7806b",
+      "bytes": 74057
+    },
+    {
+      "path": "desktop/src/EpisodePanel.tsx",
+      "sha256": "e0b7706c6317ea7423c913a4d0dca639d07b23c1525ff6f4f7a3d92d2618a256",
+      "bytes": 5631
+    },
+    {
+      "path": "desktop/src/types.ts",
+      "sha256": "997c43242c987158793845e8c0954414979b5d0da5f153ba3cf4aa2d3c8a2b28",
+      "bytes": 13895
+    },
+    {
+      "path": "desktop/electron/main.cjs",
+      "sha256": "b0078c966f5bb31467ec31b2759ccf89c47566425b94f27a73b8064b29baba39",
+      "bytes": 10309
+    },
+    {
+      "path": "desktop/electron/preload.cjs",
+      "sha256": "d1c1aa5915c105ab8a59283902005142d8e10254cfa79a86eb05caa4e81a10b7",
+      "bytes": 2294
+    },
+    {
+      "path": "desktop/electron/sidecar.cjs",
+      "sha256": "2e8dd439a442833659cff6383a6eb5d5f7f1011e6a60e99b9684aa8852c3dd2b",
+      "bytes": 7516
+    },
+    {
+      "path": "desktop/src/episode-vascular-types.ts",
+      "sha256": "eff15451c55dcb8f19dc1d15071dabec193992efc55932aebae79fe3753d2a9c",
+      "bytes": 1766
+    },
+    {
+      "path": "desktop/src/episode-vascular-data.ts",
+      "sha256": "fbe572008f9067a76623ef0f3fc8a70f782c97cba993e27cef45e1afeab5d164",
+      "bytes": 4974
+    },
+    {
+      "path": "desktop/src/EpisodeVascularPanel.tsx",
+      "sha256": "cf033b2af85e2353bff65eea3d342b6a0e3a6606e478f3cdffebab52282e1a65",
+      "bytes": 4575
+    },
+    {
+      "path": "desktop/electron/episode-vascular.cjs",
+      "sha256": "ab3952216bcc471c489d2cecab4d64dc731db3cb3c6de5ab8dd67ba7c33b61f4",
+      "bytes": 4690
+    },
+    {
+      "path": "desktop/electron/episode-vascular.test.cjs",
+      "sha256": "40e30676cc839362af9cce958033c4bc3a0f58370baf69698a2a2a8851c82ee6",
+      "bytes": 3765
+    },
+    {
+      "path": "desktop/tests/vascular-fixture.mjs",
+      "sha256": "0f7bd1d2c97b4dd59eee8b72d229eebfdd3cb398a614a4853b82d7a7ea90f730",
+      "bytes": 2171
+    },
+    {
+      "path": "desktop/tests/episode-vascular.test.mjs",
+      "sha256": "d5a01f7039d1cfc4c67cb3213967ddfc88ee6e202e38e1dace567c81cd40c63f",
+      "bytes": 3065
+    },
+    {
+      "path": "desktop/tests/episode-vascular-panel.test.mjs",
+      "sha256": "3f15ea4f9e805d150a1818c38c4060b992a7c8e2459470841265f3f789bdd4d4",
+      "bytes": 2479
+    },
+    {
+      "path": "desktop/tests/episode-vascular-crossstack.mjs",
+      "sha256": "124ccc329c12dd7dc4dc44f05ce60266f3841dacaa4d7d3bc530a6d89de33e59",
+      "bytes": 1315
+    },
+    {
+      "path": "src/resectionlab/shared_vascular_evaluation.py",
+      "sha256": "2a06ef3fda83fa7eb435a260a6c163eddaa0964e8318f5ec3a652ce40816535e",
+      "bytes": 21210
+    },
+    {
+      "path": "src/resectionlab/desktop_bridge.py",
+      "sha256": "3b9bf8e4671e368efffbc93cda5d9934a3084bd5e387a1caac34c9d716eadb92",
+      "bytes": 104631
+    },
+    {
+      "path": "tests/test_shared_vascular_evaluation.py",
+      "sha256": "7d3bb2df6e2f9a1a92c21065ae5d9083dfba0698abef3b59c333c30939b7ea7f",
+      "bytes": 13132
+    },
+    {
+      "path": "tests/test_desktop_episode_vascular.py",
+      "sha256": "f31329433f39d1b484e77037733508944f7d862bdfe0b1b50aaa5d433406cf42",
+      "bytes": 9257
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/App.commit.tsx",
+      "sha256": "371a9f5715ea02e90e1a466ce76d7b0e75347f182fcc9b73550fa5392f11fede",
+      "bytes": 68824
+    }
+  ],
+  "integration_gaps": [],
+  "backend_test_changes": "Only ignored import bootstraps removed; evaluator output root corrected to canonical tests parents[1].",
+  "canonical_worktree_app": "Exact reviewed worktree candidate, including pre-existing neighboring WIP.",
+  "clean_app_sha256": "371a9f5715ea02e90e1a466ce76d7b0e75347f182fcc9b73550fa5392f11fede",
+  "clean_app_delta_from_HEAD": "Exactly one EpisodePanel vascularApi property; no neighboring WIP imports/state/UI.",
+  "neighboring_wip_excluded_from_candidate_index": true,
+  "test_executions_in_this_audit": 0,
+  "tracked_edits_in_this_audit": 0,
+  "head": "941dd7810711af091aaafb2bb5ef1de7af35861e"
+}

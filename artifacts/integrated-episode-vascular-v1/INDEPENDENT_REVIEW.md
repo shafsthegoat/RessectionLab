@@ -1,0 +1,9 @@
+GO for root integration of the exact generated-only vascular candidates bound in audit.json.
+
+Independent checks passed: six evaluator controls (3.38 s), three actual bridge controls (3.88 s), 19 desktop contract controls (0.11 s), and the final evaluator result through both host and renderer validators. All indexed candidate source copies and patch hashes matched.
+
+The review reproduced and repaired one material defect: a loader could mutate motion after preflight, producing scores for changed geometry while retaining the original physical-history hash. Final code scores a detached episode snapshot and checks fixed caller/reference identities after loading and scoring. Binding mutation/replacement and late episode mutation now produce failed reports with original bindings and no partial outcomes. The original negative receipt remains saved.
+
+The final path accepts only the current completed generated backend episode, replays exact native actions/frames and independent geometry before private annotation materialization, and publishes only a separately bound scalar sidecar. Primary planning, history, replay and transfer state remain unchanged. Bridge ownership replacement or mutation prevents stale publication. Exact action ordinals, full shaft/tip geometry, STOP emptiness, tri-state encounter/coverage semantics and absence of private arrays are checked. Shaft-only contact outside brain support is independently covered.
+
+The paired generated fixture has six actions, one unique positive whole-tool cell and one unknown cell. Shaft and tip counts can overlap. These are full-action/path annotation contacts, not instantaneous-frame contact, removal, biological vessel freedom, rupture or injury risk. Cooperative per-pass kernel budgets are not an aggregate process-budget guarantee. No patient reads, model/checkpoint calls, heavy jobs or tracked writes occurred in this review. Final integrated Electron interaction remains root-owned.

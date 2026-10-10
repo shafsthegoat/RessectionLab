@@ -1630,7 +1630,7 @@ export default function App() {
             </Tabs.Trigger>
           </Tabs.List>
           <Tabs.Content value="episode" className="planning-tab-content">
-            <EpisodePanel view={episodeView?.source.caseHash === payload?.caseHash ? episodeView : null} step={episodeStep}
+            <EpisodePanel vascularApi={!readonly && !engineStopped && engineOperations.has("evaluateDevelopmentEpisodeVascular") ? api : null} view={episodeView?.source.caseHash === payload?.caseHash ? episodeView : null} step={episodeStep}
               selector={episodeSelector} onSelector={setEpisodeSelector} busy={controlsBlocked}
               onExecute={executeEpisode} onStep={requestEpisodeStep} onShow={showEpisode} onSource={restoreSourceView} visible={episodeVisible}
               unavailableReason={engineStopped ? "The local engine stopped. Reopen the app to execute." : readonly ? "This browser preview is read only. Open the desktop app to execute." : !api?.executeDevelopmentEpisode || !engineOperations.has("executeDevelopmentEpisode") ? "This engine does not provide generated development episodes." : undefined}/>

@@ -46,7 +46,7 @@ MAX_PRIOR_PROPOSALS = 16
 MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
-OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "loadCase", "importNifti", "importDisplaySeries", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
+OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
 RUN_INTEGRITY_FILES = {"checkpointSha256": "checkpoint.pt", "contractSha256": "contract.json",
@@ -80,6 +80,66 @@ def _require_json_budget(value: Any, limit: int, code: str, message: str) -> Non
         size += len(chunk.encode("utf-8"))
         if size > limit:
             raise BridgeError(code, message)
+
+
+def _require_development_vascular_result(result: dict, episode: dict) -> None:
+    """Allow only scalar contact summaries plus the already public history."""
+    def need(ok):
+        if not ok:
+            raise BridgeError("VASCULAR_RESULT_MISMATCH", "Encounter result differs from the selected episode or scalar contract")
+    keys = {"schema", "status", "evaluationId", "episodeId", "caseHash", "sourceHash", "decisionModelHash",
+            "strategySeal", "physicalHistoryHash", "physicalHistoryCanonicalJson", "actionIds", "referenceBindingHash",
+            "perAction", "shaft", "tip", "wholeTool", "removedOverlap", "clinicalInjuryProbability", "scope", "patientAdmission"}
+    need(isinstance(result, dict) and set(result) == keys)
+    need(result["schema"] == "generated-shared-vascular-encounter-v1"
+         and result["status"] == "evaluated_generated_vascular_reference"
+         and result["scope"] == "generated_geometry_annotation_contact_only"
+         and result["patientAdmission"] is False and result["clinicalInjuryProbability"] is None
+         and result["removedOverlap"] == {"status": "not_evaluated_by_contact_kernel", "outcomes": None})
+    for key in ("caseHash", "episodeId", "sourceHash", "decisionModelHash"):
+        need(result[key] == episode[key])
+    need(result["strategySeal"] == episode["planning"]["strategySeal"])
+    history = episode["history"]
+    history_canonical = json.dumps(history, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    need(result["physicalHistoryCanonicalJson"] == history_canonical
+         and result["physicalHistoryHash"] == "sha256:" + hashlib.sha256(history_canonical.encode()).hexdigest()
+         and result["actionIds"] == [row["action_id"] for row in history])
+    for key in ("evaluationId", "referenceBindingHash"):
+        value = result[key]
+        need(isinstance(value, str) and len(value) == 71 and value.startswith("sha256:")
+             and all(char in "0123456789abcdef" for char in value[7:]))
+    count_keys = {"touched_reference_cells", "positive_reference_cells", "unknown_reference_cells", "outside_reference_fov",
+                  "annotated_positive_encounter", "annotation_coverage_complete_for_sweep", "positive_cell_volume_upper_bound_mm3",
+                  "unknown_in_grid_cell_volume_mm3", "biological_vessel_free", "clinical_injury_probability"}
+    def contact(value):
+        need(isinstance(value, dict) and set(value) == count_keys)
+        for key in ("touched_reference_cells", "positive_reference_cells", "unknown_reference_cells"):
+            need(type(value[key]) is int and value[key] >= 0)
+        need(value["positive_reference_cells"] + value["unknown_reference_cells"] <= value["touched_reference_cells"])
+        for key in ("outside_reference_fov", "annotation_coverage_complete_for_sweep"):
+            need(type(value[key]) is bool)
+        expected_encounter = (True if value["positive_reference_cells"] else None
+                              if value["unknown_reference_cells"] or value["outside_reference_fov"] else False)
+        need(value["annotated_positive_encounter"] is expected_encounter
+             and value["annotation_coverage_complete_for_sweep"] is
+                 (not value["unknown_reference_cells"] and not value["outside_reference_fov"]))
+        for key in ("positive_cell_volume_upper_bound_mm3", "unknown_in_grid_cell_volume_mm3"):
+            need(type(value[key]) in (int, float) and math.isfinite(value[key]) and value[key] >= 0)
+        need(value["biological_vessel_free"] is None and value["clinical_injury_probability"] is None)
+    for part in ("shaft", "tip", "wholeTool"):
+        contact(result[part])
+    need(isinstance(result["perAction"], list) and len(result["perAction"]) == len(history))
+    for index, (row, action) in enumerate(zip(result["perAction"], history)):
+        need(isinstance(row, dict) and set(row) == {"actionIndex", "actionId", "interactionMode", "sweepCount", "shaft", "tip", "wholeTool"})
+        need(type(row["actionIndex"]) is int and row["actionIndex"] == index
+             and row["actionId"] == action["action_id"] and row["interactionMode"] == action["interaction_mode"]
+             and type(row["sweepCount"]) is int and row["sweepCount"] >= 0)
+        if action["action_id"] == "STOP":
+            need(row["sweepCount"] == 0 and all(row[part] is None for part in ("shaft", "tip", "wholeTool")))
+        else:
+            need(row["sweepCount"] == 1)
+            for part in ("shaft", "tip", "wholeTool"):
+                contact(row[part])
 
 
 def _require_axis_output_binding(binding: dict, *, case: CaseData, access: AccessWindow,
@@ -916,6 +976,57 @@ class BridgeSession:
             _require_json_budget(result, 32 * 1024, "RESULT_SIZE_LIMIT", "Observation result exceeds 32 KiB")
             request.begin_commit()
             self.observed_replay = candidate
+            return result
+        if operation == "evaluateDevelopmentEpisodeVascular":
+            # Read-only post-seal inspection of a backend-owned generated episode.
+            # Renderer arguments never carry an episode, reference or output path.
+            if set(args) != {"caseHash", "episodeId"}:
+                raise BridgeError("INVALID_ARGUMENT", "Name the current case and generated episode only")
+            entry = self._get_case(args["caseHash"])
+            episode_id = _string(args["episodeId"], "episodeId", maximum=80)
+            envelope = entry.episode
+            if envelope is None:
+                raise BridgeError("EPISODE_UNAVAILABLE", "Execute or reopen a checked generated episode first")
+            if not isinstance(envelope, dict) or set(envelope) != {"episode", "episodeCanonicalJson"}:
+                raise BridgeError("EPISODE_BINDING_MISMATCH", "Stored episode envelope is malformed")
+            _require_json_budget(envelope, 2 * 1024 * 1024, "EPISODE_SIZE_LIMIT", "Stored episode exceeds 2 MiB")
+            episode = envelope["episode"]
+            if not isinstance(episode, dict) or episode.get("episodeId") != episode_id:
+                raise BridgeError("EPISODE_VERSION_MISMATCH", "Episode changed; select its current version")
+            canonical = json.dumps({key: value for key, value in episode.items() if key != "episodeId"},
+                                   sort_keys=True, separators=(",", ":"), allow_nan=False)
+            if (canonical != envelope["episodeCanonicalJson"]
+                    or "sha256:" + hashlib.sha256(canonical.encode()).hexdigest() != episode_id
+                    or episode.get("caseHash") != entry.case.semantic_hash
+                    or episode.get("evidenceKind") != "generated_software_fixture"
+                    or episode.get("patientAdmission") is not False
+                    or episode.get("clinicalValidation") is not False):
+                raise BridgeError("EPISODE_BINDING_MISMATCH", "Stored generated episode identity changed")
+            # The evaluator replays this exact sealed history before reference access.
+            # Its fixed wrapper owns the generated-only private reference factory.
+            expected_envelope = json.loads(json.dumps(envelope, allow_nan=False))
+            from .shared_vascular_evaluation import evaluate_development_episode_vascular
+            progress(0.1, "Checking the sealed generated history before reference evaluation")
+            request.check()
+            with tempfile.TemporaryDirectory(prefix="resectionlab-generated-vascular-") as directory:
+                evaluation = evaluate_development_episode_vascular(
+                    episode=json.loads(json.dumps(expected_envelope["episode"], allow_nan=False)),
+                    output_directory=Path(directory).resolve() / "evaluation", cancelled=request.cancelled.is_set)
+                request.check()
+                if (self.cases.get(args["caseHash"]) is not entry or entry.episode != expected_envelope
+                        or entry.case.semantic_hash != args["caseHash"]):
+                    raise BridgeError("EPISODE_VERSION_MISMATCH", "Episode changed during reference evaluation")
+                _require_development_vascular_result(evaluation, expected_envelope["episode"])
+                evaluation_canonical = json.dumps({key: value for key, value in evaluation.items() if key != "evaluationId"},
+                                                  sort_keys=True, separators=(",", ":"), allow_nan=False)
+                if "sha256:" + hashlib.sha256(evaluation_canonical.encode()).hexdigest() != evaluation["evaluationId"]:
+                    raise BridgeError("VASCULAR_RESULT_MISMATCH", "Encounter result identity changed")
+                result = {"caseHash": entry.case.semantic_hash, "evaluation": evaluation,
+                          "evaluationCanonicalJson": evaluation_canonical}
+                _require_json_budget(result, 512 * 1024, "VASCULAR_RESULT_SIZE_LIMIT", "Encounter result exceeds 512 KiB")
+            # UI result is transient. The evaluator's direct API accepts a fresh
+            # retained evidence directory for root's reproducible experiments.
+            request.check()
             return result
         if operation == "executeDevelopmentEpisode":
             # Explicitly authorized generated development path. The legacy

@@ -1,4 +1,5 @@
 'use strict';
+const {vascularRequest,validateVascularResult}=require('./episode-vascular.cjs');
 
 const { app, BrowserWindow, dialog, ipcMain, session, Menu } = require('electron');
 const path = require('node:path');
@@ -64,6 +65,7 @@ function bindOperations() {
     return process.argv.includes('--demo') ? engine.request('createSyntheticCase') : null;
   });
   handle('executeDevelopmentEpisode', args => engine.request('executeDevelopmentEpisode', episodeRequest(args), 30000));
+  handle('evaluateDevelopmentEpisodeVascular', async args => { const request=vascularRequest(args); return validateVascularResult(await engine.request('evaluateDevelopmentEpisodeVascular',request),request); });
   handle('createSyntheticCase', () => engine.request('createSyntheticCase'));
   handle('openCase', async () => {
     const selected = await pick('Open a saved research case', ['ressectionlab', 'rslab']);

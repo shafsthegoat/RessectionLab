@@ -1,0 +1,8 @@
+{
+  "status": "generated_integration_failure_preserved",
+  "tests": {"passed": 7, "failed": 10, "seconds": 15.08},
+  "shared_failure": "Evaluator reused the research-output helper that requires repository build paths; the app-owned TemporaryDirectory was refused as ignored_build_output_required before private reference access.",
+  "resolution_requested": "Generated shared evaluator to validate its own fresh caller-owned output directory without changing existing private-evaluator storage policy.",
+  "patient_reads": 0,
+  "source_tracked_writes": 0
+}

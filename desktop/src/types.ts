@@ -456,6 +456,7 @@ export interface ObservedLandmarkResult {
 }
 
 export interface ResectionApi extends TrainingApi {
+  evaluateDevelopmentEpisodeVascular?(request: import("./episode-vascular-types").EpisodeVascularRequest): Promise<import("./episode-vascular-types").EpisodeVascularResult>;
   executeDevelopmentEpisode?(args: import("./episode-types").DevelopmentEpisodeRequest): Promise<import("./episode-types").DevelopmentEpisodeResult>;
   readOnly?: boolean;
   ping(): Promise<unknown>;

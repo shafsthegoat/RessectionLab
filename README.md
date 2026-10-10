@@ -33,6 +33,9 @@ retains those images, source frames, individual view settings and generated repl
 position across restarts. Additional images remain display-only; opening or saving
 them does not register them or make them policy inputs. A legacy trained actor runs through the shared backend, while
 the desktop episode selector currently offers scripted and SEARCH execution.
+The [replay-linked vessel evaluator](artifacts/integrated-episode-vascular-v1/RESULT.md)
+now reports generated annotation encounters and unknown coverage for the exact
+recorded full-tool paths, separately from removal and clinical injury.
 The [matched generated search control](artifacts/shared-search-width4-generated-v1/RESULT.md)
 slightly outperforms that actor on one fixed task. No patient generalization is established.
 This revised desktop has not been repackaged; see [Electron packaging](docs/electron-packaging.md)

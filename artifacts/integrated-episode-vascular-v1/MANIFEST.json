@@ -1,0 +1,94 @@
+{
+  "INDEPENDENT_REVIEW.md": {
+    "bytes": 1960,
+    "sha256": "3b4b557839a9abaa97f91672d38e365cdb4641a17075daf55f8d1888ad720dd7"
+  },
+  "RESULT.md": {
+    "bytes": 3826,
+    "sha256": "cf40ba42a19dab4265c743153ac500812112ed5661478d29f23f6704bd1ae9ad"
+  },
+  "backend-tests.txt": {
+    "bytes": 110,
+    "sha256": "a2b1746a7fed7590251201ec8e89390c60837255f43d5340bfdb57089fea187c"
+  },
+  "canonical-backend-result.txt": {
+    "bytes": 629,
+    "sha256": "7d8001e01613dd451ccdc710c1b94d60c9962369846616928a615d17915b3330"
+  },
+  "canonical-desktop-result.txt": {
+    "bytes": 631,
+    "sha256": "16024094a05df519f2d7f6424941766271fe2263a9cedff95ce9a37d732a5c06"
+  },
+  "canonical-integration-audit.json": {
+    "bytes": 4152,
+    "sha256": "570d1df642b650b9b3ac643e7832e5db963d527653bc669399fa8c6b244fbe95"
+  },
+  "desktop-tests.txt": {
+    "bytes": 29952,
+    "sha256": "409f47f41e0d6253a3501d80f3ee6ab67b228552fccb2923f3867f7b6059bc95"
+  },
+  "evaluation/attempt.json": {
+    "bytes": 394,
+    "sha256": "f91abe1581ed8a1ef05e41b530f33fbabf469d738e088dde716853d1a4eb4213"
+  },
+  "evaluation/report.json": {
+    "bytes": 38731,
+    "sha256": "55a5a77bffe48c953080ab27447f33d045604e3d279d290f280a212bb810b46f"
+  },
+  "independent-audit.json": {
+    "bytes": 12450,
+    "sha256": "e8ecd669bb648982e8bdda882c699cfe4483694d7624294ad881d3f53493c29b"
+  },
+  "initial-missing-selector.txt": {
+    "bytes": 94,
+    "sha256": "dd15f1759d53217368127f500f23fc6e3e21bc97b389561d281e6b4b08987586"
+  },
+  "live-mac-terminal.json": {
+    "bytes": 217,
+    "sha256": "2daf69e14b9597672d245f9a2fbecf8d06ee6ad832771ac5b0fb221d61e5552b"
+  },
+  "live-workflow.json": {
+    "bytes": 1638,
+    "sha256": "76fd0290b896d073346dcc3b8480c835927fdc58d005e6f10a965052a55e9c87"
+  },
+  "negatives/desktop-cleanup-flake.txt": {
+    "bytes": 30087,
+    "sha256": "0f983771ce99657f3a56756bdfb5902a3dc5d7c578fcdcf3dfc193ddce9105bc"
+  },
+  "negatives/desktop-cleanup-retest.txt": {
+    "bytes": 565,
+    "sha256": "2fcccdad47471a9eb4ed22db0a7333d380cd6d4e94fc2eb593e6a11942e68f64"
+  },
+  "negatives/geometry-alias-original.json": {
+    "bytes": 293,
+    "sha256": "5c751b6e8c2773ccdadca74eee02b7fa6456deca86356a31187cbda8d1c3107b"
+  },
+  "negatives/initial-output-path.json": {
+    "bytes": 556,
+    "sha256": "a7178e35d142b1a99c046d2f2d5e1d2a8122151d4dd0a55147acb02cd22a0bca"
+  },
+  "negatives/overbroad-test-assertion.txt": {
+    "bytes": 2816,
+    "sha256": "df13d99eb3ab9c51a76dd5c5612e034c010f822311ea0ef57f6b2a4ae79f75bd"
+  },
+  "promotion-pins.json": {
+    "bytes": 839,
+    "sha256": "e1ba10393a7d1d35ae7e5ef3cfdeaaab3d5bd22763868fa4d24b38bcc9667cc1"
+  },
+  "reproduce-canonical.py": {
+    "bytes": 1322,
+    "sha256": "2e43a667919f6268c488e4844fec80a5a2ac3df0137d9a4c6323af0797e27cfc"
+  },
+  "source-index.json": {
+    "bytes": 2066,
+    "sha256": "fa12eb5985ddbbbde1c9ca23f0a667e416c50bcda1f2806c6e38d443899c8509"
+  },
+  "staged-build.txt": {
+    "bytes": 1010,
+    "sha256": "4b4a16ec22c7523e7e2637d87efe100a430c4d31aea5ea1615275dfa1a8c9ce8"
+  },
+  "worktree-build.txt": {
+    "bytes": 845,
+    "sha256": "4b9eeb9075a0dae5132f060133a950ee1e38de72c838dcdc9c162c8c6ae67161"
+  }
+}

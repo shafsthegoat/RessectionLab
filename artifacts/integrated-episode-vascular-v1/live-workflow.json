@@ -1,0 +1,25 @@
+{
+  "kind": "root_observed_native_Electron_interaction",
+  "source_baseline": "941dd78",
+  "scope": "generated_software_fixture_only",
+  "screenshots_inspected_in_conversation": true,
+  "screenshot_files_committed": false,
+  "checks": [
+    "Reopened saved generated workspace at frame3/95; episode cd8874c97a3847a1225e1b741f4b786b28783e1dbb3f749cb70162ca9538377d.",
+    "Clicked Evaluate annotated encounters; controls disabled while working and reenabled after; replay stayed frame3 with 0 target and 1 other mm3 removed.",
+    "Action1 showed shaft0, tip1 and wholetool1 positive cells; complete generated annotation coverage for that action.",
+    "Action2 Probe selected frame7 with zero removal by that action; contact readout followed action2.",
+    "Action6 STOP selected frame95 and showed no sweep; accumulated target2 and other3 mm3.",
+    "Action5 selected frame57 and showed 1 positive plus1 unknown in-grid cell for shaft/tip/union with incomplete coverage.",
+    "Home on focused replay slider reached frame0; initial tissue explicitly has no executed action. Native setValue alone had no effect.",
+    "Selected SEARCH and executed new episode: 2 actions,72frames; prior evaluation disappeared.",
+    "Evaluated SEARCH successfully; initial frame stayed unassigned, action1 showed positive and unknown coverage for its own path.",
+    "Quit normally; monitored process reaped with exit0."
+  ],
+  "negative_claims": [
+    "No measured anatomy or physical validation",
+    "No clinical injury probability",
+    "No vascular-aware planning or new training",
+    "UI evaluation is ephemeral and not workspace-persisted"
+  ]
+}

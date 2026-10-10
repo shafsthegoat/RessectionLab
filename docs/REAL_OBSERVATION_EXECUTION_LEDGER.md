@@ -868,3 +868,32 @@ Ordinal 9 remains unreleased. The old chain verifies the native receipt but does
 not authenticate the new v2 policy sidecar/envelope or its wrapper-time/sidecar-byte
 charges; a narrow source-bound admission adapter is being prepared before the
 next native step. Native twelve-row comparison and physical validation remain open.
+
+
+### October 9: generated vessel encounters reach the shared Mac replay
+
+The [vascular integration](../artifacts/integrated-episode-vascular-v1/RESULT.md)
+connects sealed native history, full-tool scoring, bridge/host validation and the
+existing Episode panel. Canonical checks pass 69 backend and 333 desktop; worktree
+and exact staged builds pass. Root's live Mac test evaluated a reopened scripted
+workspace, verified aspiration/probe/initial/STOP and unknown coverage, executed
+SEARCH, confirmed stale-report clearing and evaluated the new search history.
+It exited normally after 92.80 s at 724.14 MB sampled process-tree peak; GPU and
+transient peak memory were not measured. No patient data or model training ran.
+
+Independent review reproduced a mutable-history alias that could change scoring
+geometry after preflight while keeping original bindings. The final detached
+snapshot and caller/reference guards repair it; the original negative is saved.
+Other retained negatives include the initial output-directory refusal, overbroad
+test assertion, mistyped canonical test selector and transient author-side Vite
+cleanup failure. Root's final canonical run was clean. Primary source, replay,
+policy observations/rewards and workspace persistence remain unchanged. The
+report is ephemeral; contact is not removal, injury probability or measured
+biological clearance. Patient and physical validity remain unestablished.
+
+At 00:54:10 UTC original Tracto worker 92434 still held its lock and had verified
+3,691 files / 130,414,590,611 bytes, up 271 files / 11,949,419,638 bytes since the previous
+snapshot. Failure counts remained 15 exhausted plus 39 historical BrokenPipe
+records. Recovery remains unlaunched; no download was interrupted. The latest
+small metadata receipt is build/acquisition-continuity-20261010/
+small-20261010T005411582932Z.json (SHA256 d0ce4d5b2ef44c63aea62da8da930e00767806450f05859e2f1f392940e4ccfc).

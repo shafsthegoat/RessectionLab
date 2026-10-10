@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   startupCase: () => ipcRenderer.invoke('research:startupCase'),
   ping: () => ipcRenderer.invoke('research:ping'),
   executeDevelopmentEpisode: args => ipcRenderer.invoke('research:executeDevelopmentEpisode', args),
+  evaluateDevelopmentEpisodeVascular: args => ipcRenderer.invoke('research:evaluateDevelopmentEpisodeVascular', args),
   createSyntheticCase: () => ipcRenderer.invoke('research:createSyntheticCase'),
   openCase: () => ipcRenderer.invoke('research:openCase'),
   importNifti: () => ipcRenderer.invoke('research:importNifti'),

@@ -104,6 +104,16 @@ geometric history, not force measurements. Modeled removed volume is distinct
 from accessible target volume. No trained mixed-mode policy or clinical outcome
 is represented by this workflow.
 
+After execution, **Evaluate annotated encounters** checks the completed generated
+strategy against a separate generated vessel reference. The readout follows the
+selected action and distinguishes shaft, tip and full-tool contact, positive
+annotation cells, unknown cells and missing field of view. Counts cover the entire
+recorded action and return path; they are not contact at the single displayed
+frame. The initial frame has no action, and STOP has no sweep. These annotations
+were not planning inputs. Contact does not establish vessel removal or injury.
+This evaluation is transient: a new or reopened episode clears it, and Save does
+not persist it. See the [integrated checks](../artifacts/integrated-episode-vascular-v1/RESULT.md).
+
 ## Replay, save and resume
 
 If the independent check accepts the sequence, use **Inspect selection replay**. The timeline and volumes describe the last checked step. While another step loads, the pending message identifies both the requested step and the still-displayed step. STOP with zero removal is a valid recorded result. **Return to source annotations** or **Source view** restores the source display.

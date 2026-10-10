@@ -1,8 +1,10 @@
+import { EpisodeVascularPanel } from "./EpisodeVascularPanel";
+import type { EpisodeVascularApi } from "./episode-vascular-types";
 import { ReplayStepControl } from "./ReplayStepControl";
 import type { EpisodeView } from "./episode-data";
 import type { DevelopmentEpisodeRequest } from "./episode-types";
-export function EpisodePanel({view,step,selector,busy,unavailableReason,onSelector,onExecute,onStep,onShow,onSource,visible}: {
-  view:EpisodeView|null;step:number;selector:DevelopmentEpisodeRequest["selector"];busy:boolean;unavailableReason?:string;
+export function EpisodePanel({view,step,selector,busy,unavailableReason,onSelector,onExecute,onStep,onShow,onSource,visible,vascularApi=null}: {
+  vascularApi?:EpisodeVascularApi|null;view:EpisodeView|null;step:number;selector:DevelopmentEpisodeRequest["selector"];busy:boolean;unavailableReason?:string;
   onSelector:(value:DevelopmentEpisodeRequest["selector"])=>void;onExecute:()=>void;onStep:(value:number)=>void;
   onShow:()=>void;onSource:()=>void;visible:boolean;
 }) {
@@ -26,6 +28,7 @@ export function EpisodePanel({view,step,selector,busy,unavailableReason,onSelect
         {frame.tipRasMm && <span>Tip RAS+ mm: {frame.tipRasMm.map(n=>n.toFixed(2)).join(", ")} · {frame.toolId}</span>}</p>
       <dl className="episode-quantities"><div><dt>Target removed</dt><dd>{replay.removedTargetVolumeMm3.toFixed(2)} mm³</dd></div><div><dt>Other tissue removed</dt><dd>{replay.removedNormalVolumeMm3.toFixed(2)} mm³</dd></div><div><dt>Target remaining</dt><dd>{replay.residualTargetVolumeMm3.toFixed(2)} mm³</dd></div><div><dt>Probe contact</dt><dd>{view.probeCounts[step]} cells contacted during probing</dd></div></dl>
       <p className="instrument-note">Recorded backend boundaries only. Withdrawal reverses the recorded path. No interpolation, extra tissue effects or elapsed-time animation.</p>
+      <EpisodeVascularPanel episode={episode} actionIndex={frame.actionIndex} api={vascularApi} busy={busy}/>
       <h3>Action timeline</h3><ol className="episode-timeline">{episode.history.map((action,index)=>{
         const first=episode.replayFrames.findIndex(f=>f.actionIndex===index);
         return <li key={index}><button className={frame.actionIndex===index?"selected":""} disabled={busy} onClick={()=>onStep(first)} aria-current={frame.actionIndex===index?"step":undefined}>

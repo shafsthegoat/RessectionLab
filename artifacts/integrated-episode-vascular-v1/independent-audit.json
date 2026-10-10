@@ -1,0 +1,293 @@
+{
+  "verdict": "GO_for_root_integration_of_exact_generated_only_candidates",
+  "tracked_writes_by_reviewer": false,
+  "reviewer_model_forwards": 0,
+  "reviewer_checkpoint_loads": 0,
+  "reviewer_patient_reads": 0,
+  "reviewer_mechanics_or_heavy_jobs": 0,
+  "source_pins": [
+    {
+      "path": "build/shared-vascular-integration-next-v1/stage/resectionlab/shared_vascular_evaluation.py",
+      "sha256": "2a06ef3fda83fa7eb435a260a6c163eddaa0964e8318f5ec3a652ce40816535e",
+      "bytes": 21210
+    },
+    {
+      "path": "build/shared-vascular-integration-next-v1/stage/tests/test_shared_vascular_evaluation.py",
+      "sha256": "2827904e142f7936b947b0b38fad8c32e145d9baaa150231b078d4afb25cec01",
+      "bytes": 13307
+    },
+    {
+      "path": "build/shared-episode-vascular-bridge-v1/proposal/resectionlab/desktop_bridge.py",
+      "sha256": "3b9bf8e4671e368efffbc93cda5d9934a3084bd5e387a1caac34c9d716eadb92",
+      "bytes": 104631
+    },
+    {
+      "path": "build/shared-episode-vascular-bridge-v1/source-index.json",
+      "sha256": "6b9702ccb3ad96e1c01faa1533ed3a86d93358699fdda7d87a0fa975d371c810",
+      "bytes": 3077
+    },
+    {
+      "path": "build/shared-episode-vascular-bridge-v1/source.patch",
+      "sha256": "b6827d5b68e472e68c8dccec474102b771ebe7718f6ce7c08ab1e1a45ba5cce8",
+      "bytes": 10904
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/source-index.json",
+      "sha256": "fd8515e56deda30ab271d2f0de2e4ad61db9202c611f4861c10c3fc1b826e8f2",
+      "bytes": 2663
+    },
+    {
+      "path": "build/shared-episode-vascular-bridge-v1/proposal/resectionlab/desktop_bridge.py",
+      "sha256": "3b9bf8e4671e368efffbc93cda5d9934a3084bd5e387a1caac34c9d716eadb92",
+      "bytes": 104631
+    },
+    {
+      "path": "build/shared-episode-vascular-bridge-v1/baseline/desktop_bridge.py",
+      "sha256": "cccd45f33796359deb35b857f803f30116d24fea3a4b7143e79eb04a960b8a95",
+      "bytes": 95798
+    },
+    {
+      "path": "build/shared-episode-vascular-bridge-v1/source.patch",
+      "sha256": "b6827d5b68e472e68c8dccec474102b771ebe7718f6ce7c08ab1e1a45ba5cce8",
+      "bytes": 10904
+    },
+    {
+      "path": "build/shared-vascular-integration-next-v1/stage/resectionlab/shared_vascular_evaluation.py",
+      "sha256": "2a06ef3fda83fa7eb435a260a6c163eddaa0964e8318f5ec3a652ce40816535e",
+      "bytes": 21210
+    },
+    {
+      "path": "build/shared-episode-vascular-bridge-v1/tests/test_bridge.py",
+      "sha256": "2a1064da79ba1a185fb052615cadd403016e41a0f750aede1aa45599be0c703c",
+      "bytes": 9654
+    },
+    {
+      "path": "build/shared-episode-vascular-bridge-v1/generated-ui-fixture.json",
+      "sha256": "5b831d55f4447b409e0576a64da7766df6224b5d7359c9a0a86942211c852e7b",
+      "bytes": 769200
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/stage/desktop/src/App.tsx",
+      "sha256": "9c7ad547749013a057a9d13b1a6d2985405542cb890d3790222e423294f7806b",
+      "bytes": 74057
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/stage/desktop/src/EpisodePanel.tsx",
+      "sha256": "e0b7706c6317ea7423c913a4d0dca639d07b23c1525ff6f4f7a3d92d2618a256",
+      "bytes": 5631
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/stage/desktop/src/types.ts",
+      "sha256": "997c43242c987158793845e8c0954414979b5d0da5f153ba3cf4aa2d3c8a2b28",
+      "bytes": 13895
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/stage/desktop/electron/main.cjs",
+      "sha256": "b0078c966f5bb31467ec31b2759ccf89c47566425b94f27a73b8064b29baba39",
+      "bytes": 10309
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/stage/desktop/electron/preload.cjs",
+      "sha256": "d1c1aa5915c105ab8a59283902005142d8e10254cfa79a86eb05caa4e81a10b7",
+      "bytes": 2294
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/stage/desktop/electron/sidecar.cjs",
+      "sha256": "2e8dd439a442833659cff6383a6eb5d5f7f1011e6a60e99b9684aa8852c3dd2b",
+      "bytes": 7516
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/stage/desktop/src/episode-vascular-types.ts",
+      "sha256": "eff15451c55dcb8f19dc1d15071dabec193992efc55932aebae79fe3753d2a9c",
+      "bytes": 1766
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/stage/desktop/src/episode-vascular-data.ts",
+      "sha256": "fbe572008f9067a76623ef0f3fc8a70f782c97cba993e27cef45e1afeab5d164",
+      "bytes": 4974
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/stage/desktop/src/EpisodeVascularPanel.tsx",
+      "sha256": "cf033b2af85e2353bff65eea3d342b6a0e3a6606e478f3cdffebab52282e1a65",
+      "bytes": 4575
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/stage/desktop/electron/episode-vascular.cjs",
+      "sha256": "ab3952216bcc471c489d2cecab4d64dc731db3cb3c6de5ab8dd67ba7c33b61f4",
+      "bytes": 4690
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/stage/desktop/electron/episode-vascular.test.cjs",
+      "sha256": "40e30676cc839362af9cce958033c4bc3a0f58370baf69698a2a2a8851c82ee6",
+      "bytes": 3765
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/stage/desktop/tests/vascular-fixture.mjs",
+      "sha256": "0f7bd1d2c97b4dd59eee8b72d229eebfdd3cb398a614a4853b82d7a7ea90f730",
+      "bytes": 2171
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/stage/desktop/tests/episode-vascular.test.mjs",
+      "sha256": "d5a01f7039d1cfc4c67cb3213967ddfc88ee6e202e38e1dace567c81cd40c63f",
+      "bytes": 3065
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/stage/desktop/tests/episode-vascular-panel.test.mjs",
+      "sha256": "3f15ea4f9e805d150a1818c38c4060b992a7c8e2459470841265f3f789bdd4d4",
+      "bytes": 2479
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/stage/desktop/tests/episode-vascular-crossstack.mjs",
+      "sha256": "124ccc329c12dd7dc4dc44f05ce60266f3841dacaa4d7d3bc530a6d89de33e59",
+      "bytes": 1315
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/App.commit.tsx",
+      "sha256": "371a9f5715ea02e90e1a466ce76d7b0e75347f182fcc9b73550fa5392f11fede",
+      "bytes": 68824
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/desktop-worktree.patch",
+      "sha256": "d22237e67529d512775342e9f3cf0491352488b44397699945279faf496c30ac",
+      "bytes": 38562
+    },
+    {
+      "path": "build/shared-vascular-desktop-v1/desktop-commit.patch",
+      "sha256": "e48370e361b7e7dd440c54997a554af7606f8697480d0039ee902f6e18106bf3",
+      "bytes": 38562
+    },
+    {
+      "path": "src/resectionlab/development_episode.py",
+      "sha256": "bf9e6f89eb90a3483af2f95491e5937d6b8748b53425d72b4448c27880c83da6",
+      "bytes": 12914
+    },
+    {
+      "path": "src/resectionlab/native_resection.py",
+      "sha256": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+      "bytes": 30492
+    },
+    {
+      "path": "src/resectionlab/native_spatial_task.py",
+      "sha256": "503acba2bfe14dc6f744bd2099e45b018cfa2011de4e35b30e0e8c70abdb6255",
+      "bytes": 62405
+    },
+    {
+      "path": "src/resectionlab/evaluation.py",
+      "sha256": "624db1b0f520c45d91b7da2fd3312f75acab3f2573a31621fa33e38343dc6010",
+      "bytes": 64077
+    },
+    {
+      "path": "src/resectionlab/functional_events.py",
+      "sha256": "5a7ba030a4e4a0a4e35a48aa950a7bcc133b890dd02eee0b4301ed3a385f8faa",
+      "bytes": 23198
+    },
+    {
+      "path": "src/resectionlab/vascular_contact_streaming.py",
+      "sha256": "fa2c09788f002c871575333018d6a11e309b48878045625e16d79fc39d75ebed",
+      "bytes": 14041
+    },
+    {
+      "path": "src/resectionlab/independent_geometry_batch.py",
+      "sha256": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+      "bytes": 9799
+    }
+  ],
+  "independent_tests": {
+    "evaluator": {
+      "passed": 6,
+      "seconds": 3.38
+    },
+    "bridge": {
+      "passed": 3,
+      "seconds": 3.88
+    },
+    "desktop_contract": {
+      "passed": 19,
+      "milliseconds": 108.884416
+    },
+    "cross_stack": {
+      "status": "actual_backend_scalar_evaluation_matches_same_episode",
+      "selector": "scripted",
+      "episodeId": "sha256:cd8874c97a3847a1225e1b741f4b786b28783e1dbb3f749cb70162ca9538377d",
+      "evaluationId": "sha256:62b1d7f774c0fbdf7acbec375e9c2fce2ce69fd694827a74ac1ddd1ecd45961b",
+      "actions": 6,
+      "wholeTool": {
+        "touched_reference_cells": 91,
+        "positive_reference_cells": 1,
+        "unknown_reference_cells": 1,
+        "outside_reference_fov": false,
+        "annotated_positive_encounter": true,
+        "annotation_coverage_complete_for_sweep": false,
+        "positive_cell_volume_upper_bound_mm3": 1,
+        "unknown_in_grid_cell_volume_mm3": 1,
+        "biological_vessel_free": null,
+        "clinical_injury_probability": null
+      }
+    }
+  },
+  "decisive_controls": [
+    "Actual final evaluator on saved public generated episode produces original action/history identity and expected positive/unknown counts.",
+    "Re-sealed replay pose tamper refused before private loader or output reservation.",
+    "Mutated and re-sealed same binding object fails with original captured binding hash and null outcomes.",
+    "Caller episode mutation during scoring fails with original physical history and null outcomes.",
+    "Loaded reference binding replacement during scoring fails without partial outcomes.",
+    "Positive annotation at RAS [6,6,-5] counts as shaft-only exposure despite lying outside brain support.",
+    "Actual BridgeRuntime preserves primary case planning, episode, and transfer state.",
+    "Replaced case entry or in-place episode mutation prevents stale bridge publication.",
+    "Host and renderer reject stale/re-sealed identities, physical history, actions, STOP sweeps, false coverage and clinical claims."
+  ],
+  "repaired_finding": {
+    "original_source_sha256": "52ab20edeb5f676d2b94d4d8cd4047d2be8a0c79405aef3d9f61f8a3066f82ab",
+    "negative_receipt": {
+      "path": "build/shared-vascular-integration-review-v1/mutation-reproduction.json",
+      "sha256": "5c751b6e8c2773ccdadca74eee02b7fa6456deca86356a31187cbda8d1c3107b",
+      "bytes": 293
+    },
+    "description": "Loader mutation changed physical geometry scores while retaining original history. Final code snapshots episode and revalidates captured caller/reference identities after load and scoring; negative receipt retains original hash."
+  },
+  "scope_limits": [
+    "Generated completed episode only; no patient admission, physical validation, vascular planning, vessel-removal, rupture or injury probability.",
+    "Counts cover whole insertion and same-envelope reverse withdrawal, not instantaneous current replay frame.",
+    "Unknown reference coverage/outside FOV is not biological clearance; whole-tool union is not the sum of shaft and tip counts.",
+    "Kernel wall/work bounds are cooperative per scoring pass; no aggregate hard process-budget claim is made.",
+    "Callback integrity checks protect accidental misuse, not a hostile Python process.",
+    "No actual Electron window was launched by reviewer; root owns final integrated click/render validation."
+  ],
+  "evidence": [
+    {
+      "path": "build/shared-vascular-integration-review-v1/test_review_boundaries.py",
+      "sha256": "06bf02d4b7127df5741f2838b4782cf233ca9a6bef7b9d0c3b6ab78574890a14",
+      "bytes": 6248
+    },
+    {
+      "path": "build/shared-vascular-integration-review-v1/evaluator-tests.txt",
+      "sha256": "bce59568370c8366d3a5d222c0b21cf4ccde41458e5bc46bfd8af081ffd7b2e0",
+      "bytes": 98
+    },
+    {
+      "path": "build/shared-vascular-integration-review-v1/bridge-tests.txt",
+      "sha256": "28f9db703fed60c7244316755cbe2ca3110dc3e4aeace28281ef30bf2f760267",
+      "bytes": 113
+    },
+    {
+      "path": "build/shared-vascular-integration-review-v1/desktop-contract-tests.txt",
+      "sha256": "799d5c7a4e8a0359d7d7d98283bea82c7bd4f2342a12e4edce5ae99b6b55c460",
+      "bytes": 1685
+    },
+    {
+      "path": "build/shared-vascular-integration-review-v1/crossstack-final.txt",
+      "sha256": "68487bf721debbbe1ba228cc82544cf358473b3b0b668834b4366c7ff0f2b3a1",
+      "bytes": 631
+    },
+    {
+      "path": "build/shared-vascular-integration-review-v1/final-generated-ui-fixture.json",
+      "sha256": "b455fda8f59be03f72a86d79a28bb8e72a1f51ebda54b7900e02d1b9cfea3bd1",
+      "bytes": 281148
+    },
+    {
+      "path": "build/shared-vascular-integration-review-v1/reproduce_mutation.py",
+      "sha256": "b02bae7f30d5c40b2cbbc15d67b809783bc25f31efd6a3f496e45fd8ddb27c23",
+      "bytes": 1735
+    }
+  ]
+}
