@@ -1,0 +1,339 @@
+{
+  "SELECT_EVAL_execution": false,
+  "TRAIN": [
+    "ReMIND-008",
+    "ReMIND-010",
+    "ReMIND-020",
+    "ReMIND-025"
+  ],
+  "attempts": 1,
+  "automatic_retry": false,
+  "balanced_baseline": {
+    "parent": {
+      "path": "build/balanced-teacher-il-v1/attempt-01.supervision/receipt.json",
+      "sha256": "ecf5b97efda838f7c1eafbefe727322fcdbd7b48a69ef14b8f78c1392455567d"
+    },
+    "release": {
+      "path": "build/balanced-teacher-il-v1/root-release.json",
+      "sha256": "63acce8556bda8a23552e8007b6851e11d80a022c4920ca3838104df6117e8f3"
+    },
+    "result": {
+      "path": "build/balanced-teacher-il-v1/attempt-01/result.json",
+      "sha256": "e183018bc21400cc87b377b7cc7ee87eb0a8943ea09b88ff9b40b10cc10bebd3"
+    },
+    "source_index": {
+      "path": "build/balanced-teacher-il-v1/source-index.json",
+      "sha256": "6bfcaa037b3c9a350e181580f4c3d9dd09c8c9afc8e6675fde6d9a9187d18911"
+    },
+    "state_ReMIND-008_0": {
+      "path": "build/balanced-teacher-il-v1/attempt-01/teacher-readout/ReMIND-008/state-00.json",
+      "sha256": "49c3d73643f266bf184734e00138446ef92310005cb88d5fd01fdfaa055f2634"
+    },
+    "state_ReMIND-010_0": {
+      "path": "build/balanced-teacher-il-v1/attempt-01/teacher-readout/ReMIND-010/state-00.json",
+      "sha256": "500e5f880884f512e9cb012a30f38f75ebbc45bd38fbf40f6a2fc2a01892687a"
+    },
+    "state_ReMIND-020_0": {
+      "path": "build/balanced-teacher-il-v1/attempt-01/teacher-readout/ReMIND-020/state-00.json",
+      "sha256": "c32b3cd8d6f93906f5ca5f9b7ad6a2b6aa582149ca764ae30f9cc7abb520d988"
+    },
+    "state_ReMIND-025_0": {
+      "path": "build/balanced-teacher-il-v1/attempt-01/teacher-readout/ReMIND-025/state-00.json",
+      "sha256": "0744e03c9007c0085c0d8ebea07ad2f4be2a8d7d3e6c881fc8d836205dfbbb26"
+    },
+    "state_ReMIND-025_1": {
+      "path": "build/balanced-teacher-il-v1/attempt-01/teacher-readout/ReMIND-025/state-01.json",
+      "sha256": "b95ad2a884593fc1cc8579543addc93fb03fd572a7acce1d258b136784936ac2"
+    },
+    "update_01": {
+      "path": "build/balanced-teacher-il-v1/attempt-01/IL/update-01/update.json",
+      "sha256": "87c7842af6288535f25a5edc03257ac6271909dd5938ec759c66defbf6882d85"
+    },
+    "update_02": {
+      "path": "build/balanced-teacher-il-v1/attempt-01/IL/update-02/update.json",
+      "sha256": "f289f987b4cf1d68583fd5de897e66ec89b2c3f83704ff0b04014a1805af0e15"
+    },
+    "update_03": {
+      "path": "build/balanced-teacher-il-v1/attempt-01/IL/update-03/update.json",
+      "sha256": "f802739dbae030cfd92dab5dd3c55ca20c3a4338daa43991074e03d97d3dc3c7"
+    },
+    "update_04": {
+      "path": "build/balanced-teacher-il-v1/attempt-01/IL/update-04/update.json",
+      "sha256": "b579b9720c9b829774ba3d01f8cc361b56186efae120dc847f5db2dce73102c0"
+    },
+    "update_05": {
+      "path": "build/balanced-teacher-il-v1/attempt-01/IL/update-05/update.json",
+      "sha256": "306794a6a57bb5923547afe95e4e79fc5c5f87032b0c3c244652be5dc30a0407"
+    },
+    "update_06": {
+      "path": "build/balanced-teacher-il-v1/attempt-01/IL/update-06/update.json",
+      "sha256": "e45b7afb4f66ee608eb76d796c122116871ebef0bbc3bbc798574e2c38d8fe3e"
+    },
+    "update_07": {
+      "path": "build/balanced-teacher-il-v1/attempt-01/IL/update-07/update.json",
+      "sha256": "aecaf1e14c864cba7fec8c772378332223e180010e0d2d225ac85f21f2d2fc50"
+    },
+    "update_08": {
+      "path": "build/balanced-teacher-il-v1/attempt-01/IL/update-08/update.json",
+      "sha256": "a7082f6838fc80894bcf40bb3bca2c04478e9933831c5d12b70d9e8ca24993e7"
+    }
+  },
+  "baseline": {
+    "diagnostic_result": {
+      "path": "build/five-state-policy-diagnostic-v1/attempt-01/result.json",
+      "sha256": "9b3bfa60e67277091f6b04c35eea6697013e6cbbca211cb94a5229ec4ac73420"
+    },
+    "parent": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01.supervision/receipt.json",
+      "sha256": "e1f18ca5dae011057f0c945690d71e9ba909041f7aa495e5ce4493e57f805fa2"
+    },
+    "release": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/root-release.json",
+      "sha256": "c1cde8eb92f9df5d85ccb91ed0e591adb1da70e011582f3be116d237fecf72db"
+    },
+    "result": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/result.json",
+      "sha256": "b75bd91d284cacba2c980283424586ca506799919f6850175b6f4eeea4315aeb"
+    },
+    "source_index": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/source-index.json",
+      "sha256": "3bf24bf5038c20b04e44281df76411b61588efd207c75c0fddc518d969c04ea6"
+    },
+    "state_ReMIND-008_0": {
+      "path": "build/five-state-policy-diagnostic-v1/attempt-01/ReMIND-008/state-00.json",
+      "sha256": "73d3f459f4a93b5d6851b60b36ad3268d4c5ecb6f9e279cc836e73a8a7b5e855"
+    },
+    "state_ReMIND-010_0": {
+      "path": "build/five-state-policy-diagnostic-v1/attempt-01/ReMIND-010/state-00.json",
+      "sha256": "2c7cec5c1e6e7c3fb481b3c23a30fc4fa362b78a5ef5a96e9d4594176a322653"
+    },
+    "state_ReMIND-020_0": {
+      "path": "build/five-state-policy-diagnostic-v1/attempt-01/ReMIND-020/state-00.json",
+      "sha256": "f5d823d22855cb4ca2afbb631ad0efbc486a04f94e9d5311cbd2b2ff467c2e29"
+    },
+    "state_ReMIND-025_0": {
+      "path": "build/five-state-policy-diagnostic-v1/attempt-01/ReMIND-025/state-00.json",
+      "sha256": "13fa5914bcf4cb88d0c593390acc2bae818fd000cf793e209fd268153118f5ae"
+    },
+    "state_ReMIND-025_1": {
+      "path": "build/five-state-policy-diagnostic-v1/attempt-01/ReMIND-025/state-01.json",
+      "sha256": "3f5aca840d6bb790a4bad950eac24bb03adba4ed59c73a01582c4108ae04e2a5"
+    },
+    "teacher_ReMIND-008": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/teachers/ReMIND-008/plan.json",
+      "sha256": "8b3cd2f7aad5308481534154cf55a400c8791dc4e18ba0275756a52a4bb2d502"
+    },
+    "teacher_ReMIND-010": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/teachers/ReMIND-010/plan.json",
+      "sha256": "1e862c792a8dafaf1102ffe2968b24b6272eb249426889efe1231eda53f49d68"
+    },
+    "teacher_ReMIND-020": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/teachers/ReMIND-020/plan.json",
+      "sha256": "7e5c5ee0a1068e88d171180622f705be68bd913032acdc78eaef070d20637e7e"
+    },
+    "teacher_ReMIND-025": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/teachers/ReMIND-025/plan.json",
+      "sha256": "843c09b795a684147dab7d479bcc00b45dcbee8fb4f7054da57a1f25f0ba90bb"
+    }
+  },
+  "claim": "runtime parity benchmark on unchanged four TRAIN inputs; no new model or SELECT/EVAL execution",
+  "closed_roles": {
+    "EVAL": [
+      "ReMIND-067"
+    ],
+    "SELECT": [
+      "ReMIND-013",
+      "ReMIND-037"
+    ]
+  },
+  "cohort_limits": {
+    "checkpoint_bytes": 8388608,
+    "max_native_previews": 7297920,
+    "max_optimizer_updates": 128,
+    "max_policy_forwards": 18624,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "output_bytes": 134217728,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 3540
+  },
+  "completion": "all64 update math/tensor hashes,5 exact teacher logits,4 exact full native histories,8 released source visits,320 loss forwards,64 shared Adam updates,1 reload,actual cache receipt",
+  "execution_limits": {
+    "RL_updates": 0,
+    "TRAIN_greedy_replays": 4,
+    "cached_teacher_readout_rows": 5,
+    "checkpoint_loads": 1,
+    "loss_forwards": 320,
+    "max_native_previews": 70080,
+    "max_policy_forwards": 421,
+    "optimizer_updates": 64,
+    "search_calls": 0,
+    "source_visits": 8,
+    "teacher_cache_payload_bytes": 67108864,
+    "teacher_logit_forwards": 5,
+    "teacher_trace_reuses": 256
+  },
+  "expected_head": "a673f438c92214883de036141feb4d889af52566",
+  "fixed64_baseline": {
+    "path": "build/balanced-teacher-il64-cached-v1/baseline-metadata-index.json",
+    "sha256": "e75b2a8e67284c3fc98b11ca7cd74ac9f72dc607d02b10d04a606846f47ed041"
+  },
+  "learning_protocol": {
+    "architecture": {
+      "critic_candidate_context": true,
+      "encoder_channels": [
+        8,
+        16
+      ],
+      "hidden_features": 32,
+      "physical_reference_mm": 10.0,
+      "ray_samples": 5
+    },
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "clinical_claim": false,
+    "cohort_execution": {
+      "accumulation": "complete-trace-actionwise-shared-gradient-v1",
+      "heldout_execution": false,
+      "il_teacher_weighting": "balanced_STOP_motion_CE_v1",
+      "live_source_patients": 1,
+      "max_steps": 24,
+      "patient_order": [
+        "ReMIND-008",
+        "ReMIND-010",
+        "ReMIND-020",
+        "ReMIND-025"
+      ],
+      "proposal_config": {
+        "intermediate_opening_mm": 1.0,
+        "max_candidates": 120,
+        "nominal_min_membership": 0.0,
+        "offsets_source_voxels": [
+          [
+            0,
+            0
+          ],
+          [
+            -2,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            -2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            -2,
+            -2
+          ],
+          [
+            -2,
+            2
+          ],
+          [
+            2,
+            -2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            -3,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            0,
+            -3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "tool_footprint_opening": true
+      },
+      "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+      "retained_prefix_diagnostics": true,
+      "retention_mode": "return_plus_opening_depth_volume_v1",
+      "search": {
+        "beam_width": 2,
+        "max_calls": 5640,
+        "seconds": 300
+      },
+      "task_condition": "PARTIAL_TARGET_PROGRESS",
+      "teacher_cache_payload_bytes": 67108864,
+      "teacher_observations": "cache_complete_replayed_TRAIN_teacher_traces_v1"
+    },
+    "entropy_weight": 0.01,
+    "eps": 1e-08,
+    "gamma": 1.0,
+    "initialization": "same_fresh_spatial_parameters_no_checkpoint_load",
+    "learning_rate": 0.001,
+    "max_gradient_norm": 5.0,
+    "methods": [
+      "IL",
+      "RL"
+    ],
+    "patient_adaptation": false,
+    "population_training": true,
+    "private_training_reward": false,
+    "public_target_context_variant": "full-supplied-public-target-context-v1",
+    "rl_episodes": 4,
+    "scope": "fixed_four_TRAIN_shared_population_pilot",
+    "seed": 20261010,
+    "updates_per_method": 64,
+    "value_weight": 0.5,
+    "version": "fixed-four-TRAIN-sequential-cohort-v2"
+  },
+  "learning_protocol_hash": "sha256:fe1581d6f7b14f1bbbebc1e0553b9735973677212dac77467734172d700e40f7",
+  "limits": {
+    "max_native_previews": 7297920,
+    "max_optimizer_updates": 128,
+    "max_policy_forwards": 18624,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 3540
+  },
+  "objective": "unchanged 0.5 mean motion NLL + 0.5 mean STOP NLL",
+  "optimizer_lifetime": "baseline final accumulator reference lifetime preserved; separate cleanup deferred",
+  "output": "build/balanced-teacher-il64-cached-v1/attempt-01",
+  "parent_seconds": 3600,
+  "protocol_change": "teacher observation storage and 64MiB payload allowance only",
+  "public_manifest_index": {
+    "path": "build/remind-planning-qc-v1/public-cohort-v1/public-manifest-index.json",
+    "sha256": "11b5c1ae8f9b2c03695e7eb0768d2cc340db68631f3ddb50ba365910fe0187f7"
+  },
+  "selection": "same fixed64 endpoint, no threshold/intermediate checkpoint/success-metric selection",
+  "source_index": {
+    "path": "build/balanced-teacher-il64-cached-v1/source-index.json",
+    "sha256": "a789aedc2d74b7eba6576f1582d9a3421a700c6bfc706898e7d43b42f93f1f89"
+  },
+  "status": "released_one_attempt",
+  "supervision_bytes": 16777216,
+  "version": "balanced-teacher-IL64-cached-release-v1"
+}

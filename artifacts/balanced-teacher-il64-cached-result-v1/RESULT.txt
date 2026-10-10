@@ -1,0 +1,37 @@
+Exact patient training parity with9.45x observed runtime reduction
+October 10, 2026
+
+The same64-update balanced imitation experiment now takes118.296s owned-parent
+wall time versus1117.777s previously: an observed9.44895x ratio,89.42% reduction.
+All64 numerical/scalar update receipts, module/global gradient norms and every
+before/after full parameter hash match, apart from changed context/trace seals.
+The five final readout records and four complete native routes also match.
+No new architecture, data, rewards, action masks, optimizer or endpoint selection.
+
+Verified immutable teacher observations are collected and replayed once, then
+reused256 times. Actual source visits fall268→8 and native previews68,876→2,056.
+Loss forwards remain320; final teacher readouts5 and greedy forwards5;64 Adam
+updates and one authenticated final checkpoint reload remain. The cache holds
+39,340,076bytes of crop arrays plus40,135bytes of serialized metadata. Zero native
+geometry work occurs during cached loss/readout phases. Fresh deployment checks
+still reconstruct each patient. RL remains on-policy and was not run here.
+
+Sampled process-tree peak falls2,575,335,424→2,413,871,104bytes (6.27%). Baseline
+final accumulator/optimizer lifetime is deliberately preserved. These are two
+single sequential runs on this machine; this establishes exact parity and an
+observed runtime improvement, not a repeated latency distribution or an expected
+speedup for every workload. Sampling can miss transient peaks. Teacher search,
+original preprocessing and independent audit costs are separate from these runs.
+
+Independent saved-only audit passes7,903 checks over576 unchanged inputs in
+0.098s. Owned worker exits cleanly within caps with no remaining processes.
+The final policy still fits five teacher states:025 one useful action thenSTOP,
+otherthreeSTOP. The preceding SELECT comparison remains a non-discriminating
+all-STOP tie. No model accuracy, physical fidelity, useful clinical resection or
+unseen-patient improvement follows from faster identical training.
+
+Executed HEAD a673f438c92214883de036141feb4d889af52566.
+Release SHA256 924ae2e5473b37e3a4ad52fd377f8250c5b7d946aabffadc5bdb4157fa7c2dd9.
+Result SHA256 dd1f9372e8ff9ae14a387a2f7b0736b4032552cfcb20d59a7ef9889159c0c6b7.
+Weights, arrays and bulk traces remain outsideGit. Compact source/receipt hashes
+and the full original outcome are preserved alongside this comparison.

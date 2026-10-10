@@ -1,0 +1,344 @@
+{
+  "all64_update_exact_match": true,
+  "audit_peak_rss_bytes": 30621696,
+  "audit_seconds": 0.09818758303299546,
+  "cache": {
+    "RL_reuse": false,
+    "array_bytes": 39340076,
+    "cache_seal": "sha256:4766e4be8d406a24b7e3ef85abc634826091259ee1d365278e390895bbe759ab",
+    "complete": true,
+    "learning_protocol_hash": "sha256:fe1581d6f7b14f1bbbebc1e0553b9735973677212dac77467734172d700e40f7",
+    "memory_scope": "owned crop buffers plus JSON byte estimate; Python overhead and tree RSS remain supervised",
+    "metadata_json_bytes": 40135,
+    "mode": "cache_complete_replayed_TRAIN_teacher_traces_v1",
+    "traces": [
+      {
+        "array_bytes": 7870492,
+        "context_hash": "sha256:d104c1757cba424fa84de7005af305435b31bbb4f662d2e84f85ea9064fc1f9b",
+        "independent_replay_hash": "sha256:3f4708a3f7d89e6f2a3d1a7f4487d86863376b07bcd6aef2bf6fdb7f8dbbec95",
+        "metadata_json_bytes": 7707,
+        "observations": [
+          "sha256:fe16629c70208cb5de7431a96d72b1b7a4c6401ed77fbc6b1c093a7e29c27ce0"
+        ],
+        "plan_seal": "sha256:b46eebbbba1284da0cd7a7ed0daaa6fbb709b7ffe76de498013dcf87c6842410",
+        "steps": 1,
+        "stop_steps": 1,
+        "subject": "ReMIND-008",
+        "trace_seal": "sha256:a304ab8d6a4f468350feaabcefe95dbd20a9e198841468f70035b866fef9f6eb"
+      },
+      {
+        "array_bytes": 7868557,
+        "context_hash": "sha256:185454d8326898469ec24e128a27f6080d797a55b2cd4ee1564aea4e8771a4a7",
+        "independent_replay_hash": "sha256:ecbe553fff7120774c6f401405ab38d87ecd557d7a446ff2ca2ff3b365b3d42a",
+        "metadata_json_bytes": 6844,
+        "observations": [
+          "sha256:3b02753d3b9ab332ff548ee159dc0027fc704b6af6967fedd6758cfb508beed0"
+        ],
+        "plan_seal": "sha256:a3fdcda62f6e543e396bb0549ef063e8cc0c5a3e09c19107c53646395b568beb",
+        "steps": 1,
+        "stop_steps": 1,
+        "subject": "ReMIND-010",
+        "trace_seal": "sha256:8e3136d96a565cf7411bfe30657c3a487958e8b1aa1bad6bba3a21f0086b440a"
+      },
+      {
+        "array_bytes": 7867654,
+        "context_hash": "sha256:c30a806eed25c0cd90de990b8353432ebdf1ccec5bda6cdbecba31f0371b2c84",
+        "independent_replay_hash": "sha256:f4129abc32a8b0f481b8a901316cd175c1bd0dc3db0d048bf3c8646e50236a7a",
+        "metadata_json_bytes": 6428,
+        "observations": [
+          "sha256:b59d28122182a38d091d4deb22c82c816dc8fedaa59cbe703f214dd3a7193677"
+        ],
+        "plan_seal": "sha256:ad318531e8c81193875d54dc8eed76c2e706dc84e6d5a396a9638e8311e719c6",
+        "steps": 1,
+        "stop_steps": 1,
+        "subject": "ReMIND-020",
+        "trace_seal": "sha256:52327aaa6e07612d4e3483de282be4e3585b73170121c221e84552af0a31c8b0"
+      },
+      {
+        "array_bytes": 15733373,
+        "context_hash": "sha256:05a1beff3b44529ba75bc71813ba96a15e9ec5b1c7f895ae1faa80da229827a6",
+        "independent_replay_hash": "sha256:6c82bec39fddad6b1d3ba6bbd58c8248aa12deb7adf58d79f2252460138921e0",
+        "metadata_json_bytes": 19156,
+        "observations": [
+          "sha256:8d167affbd5b7e8ae153935b6dd83eb2c0815b2be9a4bb13dc2c07396d56e150",
+          "sha256:0162c698ea5e1934eb2ea556604538b0489f6f518589eef0ee0598decf62666f"
+        ],
+        "plan_seal": "sha256:69d49b52037784a71894281fb56c1e885ec8c121c374bb2d7d38f3d5b82e2a33",
+        "steps": 2,
+        "stop_steps": 1,
+        "subject": "ReMIND-025",
+        "trace_seal": "sha256:87d1571d95ddca56e25f0e640b5da1876d41355b7d90e519226a4c8b8c29c4bf"
+      }
+    ]
+  },
+  "checks": 7903,
+  "complete_routes": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "context_hash": "sha256:d104c1757cba424fa84de7005af305435b31bbb4f662d2e84f85ea9064fc1f9b",
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "TRAIN-greedy/IL",
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:85904a43969f9eb141c92bd7f195db4d1a0da73c25504fe1f0f9e39e5a0c3880",
+      "public_return": 0.0,
+      "recollected64_comparison": {
+        "first_different_action_step_0based": null,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "STOP"
+          ],
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+          "plan_seal": "sha256:a8428ba0e29c76b7079dba647bd98de1c256df1febd5937a09d282d0235d4fa4",
+          "public_return": 0.0,
+          "steps": 1,
+          "target_mm3": 0.0,
+          "terminal": "STOP"
+        },
+        "return_difference": 0.0,
+        "same_actions": true,
+        "same_physical_history": true,
+        "target_mm3_difference": 0.0
+      },
+      "steps": 1,
+      "subject": "ReMIND-008",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "trace_seal": "sha256:58645cf7a10034df2a4da074056681cee055774eaca5f7d4c6c58d64c4353d87"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "context_hash": "sha256:185454d8326898469ec24e128a27f6080d797a55b2cd4ee1564aea4e8771a4a7",
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "TRAIN-greedy/IL",
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:e1416afb15ede0588b56109afdc7e62837c79063aab96b0f85d21650ec707607",
+      "public_return": 0.0,
+      "recollected64_comparison": {
+        "first_different_action_step_0based": null,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "STOP"
+          ],
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+          "plan_seal": "sha256:bb18618560472729d42346d17e88939a75633ad9b9ae49c2f7424f3aadc055ef",
+          "public_return": 0.0,
+          "steps": 1,
+          "target_mm3": 0.0,
+          "terminal": "STOP"
+        },
+        "return_difference": 0.0,
+        "same_actions": true,
+        "same_physical_history": true,
+        "target_mm3_difference": 0.0
+      },
+      "steps": 1,
+      "subject": "ReMIND-010",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "trace_seal": "sha256:5d3afac5bc28c066654424bb00795ff6eb58d957a0e81227ee966cf17490e02f"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "context_hash": "sha256:c30a806eed25c0cd90de990b8353432ebdf1ccec5bda6cdbecba31f0371b2c84",
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "TRAIN-greedy/IL",
+      "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+      "plan_seal": "sha256:915db87e24052f4eac90505f59076f6bb9ae73e9eab9c0fdd4f5f1c77593d4b1",
+      "public_return": 0.0,
+      "recollected64_comparison": {
+        "first_different_action_step_0based": null,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "STOP"
+          ],
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:f3f7d50c68a2f9c79961db3ec7cf1a8865d895a340f070ad15a436cdcd2e089d",
+          "plan_seal": "sha256:9197ea4a8bed30ac71dea015c319ca158bd9f584670367c4216c41322e8fcc74",
+          "public_return": 0.0,
+          "steps": 1,
+          "target_mm3": 0.0,
+          "terminal": "STOP"
+        },
+        "return_difference": 0.0,
+        "same_actions": true,
+        "same_physical_history": true,
+        "target_mm3_difference": 0.0
+      },
+      "steps": 1,
+      "subject": "ReMIND-020",
+      "target_fraction": 0.0,
+      "target_mm3": 0.0,
+      "target_source_cells": 0,
+      "terminal": "STOP",
+      "trace_seal": "sha256:8cef192c744630aa9da1caf235c32c669c28e32845279e44f0d79fc22cb0ed16"
+    },
+    {
+      "actions": [
+        "nominal-cavity-968f3758c3de3eab8c99ca99",
+        "STOP"
+      ],
+      "context_hash": "sha256:05a1beff3b44529ba75bc71813ba96a15e9ec5b1c7f895ae1faa80da229827a6",
+      "outside_supplied_goal_mm3": 0.0,
+      "phase": "TRAIN-greedy/IL",
+      "physical_history_hash": "sha256:32a987af5e79d69af618416d3bee7a1eca48c17af6293702eb179edc170a9be7",
+      "plan_seal": "sha256:779024e20214a261d36e4945d83d39757b8971af46d6d68b90c021da4aa675d9",
+      "public_return": 0.9168388572207332,
+      "recollected64_comparison": {
+        "first_different_action_step_0based": null,
+        "outside_mm3_difference": 0.0,
+        "reference": {
+          "actions": [
+            "nominal-cavity-968f3758c3de3eab8c99ca99",
+            "STOP"
+          ],
+          "outside_supplied_goal_mm3": 0.0,
+          "physical_history_hash": "sha256:32a987af5e79d69af618416d3bee7a1eca48c17af6293702eb179edc170a9be7",
+          "plan_seal": "sha256:220224762137d04378d5cbe62f7ac4f8fced3c005c962777212acd728f090887",
+          "public_return": 0.9168388572207332,
+          "steps": 2,
+          "target_mm3": 0.953674795218559,
+          "terminal": "STOP"
+        },
+        "return_difference": 0.0,
+        "same_actions": true,
+        "same_physical_history": true,
+        "target_mm3_difference": 0.0
+      },
+      "steps": 2,
+      "subject": "ReMIND-025",
+      "target_fraction": 1.2230620581688315e-05,
+      "target_mm3": 0.953674795218559,
+      "target_source_cells": 1,
+      "terminal": "STOP",
+      "trace_seal": "sha256:c834c050ba01b699d264821d9cd0de47b1d5efcaf5ef5ed6f1a11511dffe4be9"
+    }
+  ],
+  "cost_comparison": {
+    "cached_parent_seconds": 118.29643466696143,
+    "cached_peak_rss_bytes": 2413871104,
+    "cached_previews": 2056,
+    "cached_source_visits": 8,
+    "observed_parent_wall_ratio_recollected_over_cached": 9.448949739244325,
+    "policy_forwards_each": 330,
+    "recollected_parent_seconds": 1117.7770654999185,
+    "recollected_peak_rss_bytes": 2575335424,
+    "recollected_previews": 68876,
+    "recollected_source_visits": 268,
+    "scope": "One sequential owned run per condition; whole-parent time is comparable scope but not a repeated or hardware-independent speedup estimate. Inclusive nested scopes are not summed."
+  },
+  "counts": {
+    "RL_updates": 0,
+    "checkpoint_reloads": 1,
+    "loss_forwards": 320,
+    "policy_forwards": 330,
+    "search_calls": 0,
+    "shared_IL_updates": 64,
+    "source_visits": 8,
+    "teacher_readouts": 5,
+    "trace_reuses": 256
+  },
+  "endpoint_parameter_hash": "sha256:56712968c5fc662fc3f74ea7e0c6c9f87dc46846e04e7cdb19d57809027ce2b8",
+  "excluded_update_fields": [
+    "context_hashes",
+    "trace_seals"
+  ],
+  "inputs": 576,
+  "metadata_files": 121,
+  "readouts": [
+    {
+      "best_movement_minus_STOP": -11.213966369628906,
+      "conditional_teacher_movement_probability": null,
+      "greedy_action": "STOP",
+      "scalar_CE_absolute_error": 2.046609308692382e-07,
+      "scalar_probability_max_absolute_error": 2.0998601291122299e-07,
+      "step": 0,
+      "stop_probability": 0.9999269247055054,
+      "subject": "ReMIND-008",
+      "teacher_CE": 7.30726242181845e-05,
+      "teacher_minus_STOP": 0.0,
+      "teacher_movement_rank": null,
+      "teacher_probability": 0.9999269247055054,
+      "teacher_rank": 1
+    },
+    {
+      "best_movement_minus_STOP": -12.046690940856934,
+      "conditional_teacher_movement_probability": null,
+      "greedy_action": "STOP",
+      "scalar_CE_absolute_error": 4.512094609054884e-08,
+      "scalar_probability_max_absolute_error": 4.441352852158076e-08,
+      "step": 0,
+      "stop_probability": 0.9999734163284302,
+      "subject": "ReMIND-010",
+      "teacher_CE": 2.658331868587993e-05,
+      "teacher_minus_STOP": 0.0,
+      "teacher_movement_rank": null,
+      "teacher_probability": 0.9999734163284302,
+      "teacher_rank": 1
+    },
+    {
+      "best_movement_minus_STOP": -13.679021835327148,
+      "conditional_teacher_movement_probability": null,
+      "greedy_action": "STOP",
+      "scalar_CE_absolute_error": 1.0929511473634079e-07,
+      "scalar_probability_max_absolute_error": 1.0932194605128842e-07,
+      "step": 0,
+      "stop_probability": 0.9999947547912598,
+      "subject": "ReMIND-020",
+      "teacher_CE": 5.245195097813848e-06,
+      "teacher_minus_STOP": 0.0,
+      "teacher_movement_rank": null,
+      "teacher_probability": 0.9999947547912598,
+      "teacher_rank": 1
+    },
+    {
+      "best_movement_minus_STOP": 3.6458210945129395,
+      "conditional_teacher_movement_probability": 0.9977537989616394,
+      "greedy_action": "nominal-cavity-968f3758c3de3eab8c99ca99",
+      "scalar_CE_absolute_error": 2.1883376777331875e-08,
+      "scalar_probability_max_absolute_error": 4.942197762147771e-09,
+      "step": 0,
+      "stop_probability": 0.02538040652871132,
+      "subject": "ReMIND-025",
+      "teacher_CE": 0.027956731617450714,
+      "teacher_minus_STOP": 3.6458210945129395,
+      "teacher_movement_rank": 1,
+      "teacher_probability": 0.9724304676055908,
+      "teacher_rank": 1
+    },
+    {
+      "best_movement_minus_STOP": -3.063979387283325,
+      "conditional_teacher_movement_probability": null,
+      "greedy_action": "STOP",
+      "scalar_CE_absolute_error": 9.275355594695611e-09,
+      "scalar_probability_max_absolute_error": 2.9314045357775598e-09,
+      "step": 1,
+      "stop_probability": 0.9405581951141357,
+      "subject": "ReMIND-025",
+      "teacher_CE": 0.06128176674246788,
+      "teacher_minus_STOP": 0.0,
+      "teacher_movement_rank": null,
+      "teacher_probability": 0.9405581951141357,
+      "teacher_rank": 1
+    }
+  ],
+  "release_sha256": "924ae2e5473b37e3a4ad52fd377f8250c5b7d946aabffadc5bdb4157fa7c2dd9",
+  "result_sha256": "dd1f9372e8ff9ae14a387a2f7b0736b4032552cfcb20d59a7ef9889159c0c6b7",
+  "scope": "Saved metadata/scalar/parity audit only. No checkpoint bytes, observations, patient arrays, geometry/model execution or tests. Cache byte accounting is declared array/JSON payload, not total Python/RSS. Exact TRAIN imitation remains five labels, no new clinical or heldout evidence.",
+  "source_files": 86,
+  "status": "PASS_saved_cached64_exact_parity_audit"
+}

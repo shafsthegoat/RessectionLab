@@ -1,0 +1,66 @@
+{
+  "exact_match": true,
+  "excluded_metadata_fields": [
+    "context_hashes",
+    "trace_seals"
+  ],
+  "scope": "all other update fields, including gradient and full parameter hashes, equal completed recollected64",
+  "updates": [
+    {
+      "actual_sha256": "f2bc6120469b4858946a4f8fb7441316017304c622ed6f2c9479629a79db4b5c",
+      "after_parameter_hash": "sha256:ab9d91a6d379264d9cec714a548701c6baf251029461727465bf191d359eb5b5",
+      "baseline_sha256": "b35380c805275ad7699e3a018e3022bfeeb5021921e05e59c7bcfc5c6c1d21d2",
+      "loss": 3.1298843324184418,
+      "update": 1
+    },
+    {
+      "actual_sha256": "ccc62696a4bd467f4c42b4a20abcd968bc7ff11a2f5809169f62732d72a0d5f1",
+      "after_parameter_hash": "sha256:a14736d082835f08de650869003e8a07f8e75fbdbaa43d3bff2aff6bb9d7fc16",
+      "baseline_sha256": "29b001658f10580d04830b71c7237e6f649fbe9843e96d4bd2a686b63e6069ca",
+      "loss": 3.041562646627426,
+      "update": 2
+    },
+    {
+      "actual_sha256": "fa564d054bc994d6f4be33a023c5e3b431a28d9117a791f23aa236aec1bfa035",
+      "after_parameter_hash": "sha256:2db0ccd937f2796429a10ca0d7c9c8fe8f94c42a1509fde882d0be0208709448",
+      "baseline_sha256": "ddf5d8f4be9765295a7a31b0e156753c69934724da8712521716c883f3a207a0",
+      "loss": 2.9358518421649933,
+      "update": 3
+    },
+    {
+      "actual_sha256": "708f21cca3e71136aae45ca8bad6b0b2e3074325925bbb7ea649eac9df7ca7fa",
+      "after_parameter_hash": "sha256:02053c23787617d9a9e4229f441f8177106efc1688cd4b68957e0450b75dff5f",
+      "baseline_sha256": "bf79b977fa4b621aff1b673260e4de421119b36aeeed1077dc78713477e8dc9f",
+      "loss": 2.805980235338211,
+      "update": 4
+    },
+    {
+      "actual_sha256": "cf94b735153bf2632f0bea0df5266c422517e3792e55ac472fee43de2da4e50c",
+      "after_parameter_hash": "sha256:b26c51d44b52094ee561b24b9373d709973a39d490ee907e25ffcbf525794901",
+      "baseline_sha256": "46ca2c1b6d5302c366f0a2ffb5aa71644482201ee5e3dcc21eb90ecd18757a73",
+      "loss": 2.6786842048168182,
+      "update": 5
+    },
+    {
+      "actual_sha256": "323b97ea0a6ab5c3c325bc12c6617ecaf31bd9447c1802c3cf660f8044705c45",
+      "after_parameter_hash": "sha256:efa2f1eff62ae7bf8593f646b75fa4fbb018ded2eaf4a8d9c93e15949a800b2d",
+      "baseline_sha256": "fc5b2b3460f4893aedf9489686f3942b29d0a45bb27b79e2103ffd9708f5b749",
+      "loss": 2.53461155295372,
+      "update": 6
+    },
+    {
+      "actual_sha256": "c62273794ca692725ef076480d08161cc798023eb5c1af6858505691730fd06d",
+      "after_parameter_hash": "sha256:a619b45db77a43da9c3156baac4fb988369eea854daf13e897c5bdb57ebdd245",
+      "baseline_sha256": "2b246ba98dbb264d132ada04f0ed2cc16b973c9f8269b2a799beb72c039b1953",
+      "loss": 2.3696551471948624,
+      "update": 7
+    },
+    {
+      "actual_sha256": "6695149975b45ec862cda4116fadb2cca99df367fd60f969c0ee5b18217f05ce",
+      "after_parameter_hash": "sha256:d4798fe46aace695252b5d258f74b858e3d5942f3358044c68935771caffd0ee",
+      "baseline_sha256": "81314d24bfcfe9e81781eb2ca21129f52d3f893c9e9bb91e95cdccfb7c8fe26f",
+      "loss": 2.2283670157194138,
+      "update": 8
+    }
+  ]
+}

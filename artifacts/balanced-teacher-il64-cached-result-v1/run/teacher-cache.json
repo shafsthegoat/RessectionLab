@@ -1,0 +1,69 @@
+{
+  "RL_reuse": false,
+  "array_bytes": 39340076,
+  "cache_seal": "sha256:4766e4be8d406a24b7e3ef85abc634826091259ee1d365278e390895bbe759ab",
+  "complete": true,
+  "learning_protocol_hash": "sha256:fe1581d6f7b14f1bbbebc1e0553b9735973677212dac77467734172d700e40f7",
+  "memory_scope": "owned crop buffers plus JSON byte estimate; Python overhead and tree RSS remain supervised",
+  "metadata_json_bytes": 40135,
+  "mode": "cache_complete_replayed_TRAIN_teacher_traces_v1",
+  "traces": [
+    {
+      "array_bytes": 7870492,
+      "context_hash": "sha256:d104c1757cba424fa84de7005af305435b31bbb4f662d2e84f85ea9064fc1f9b",
+      "independent_replay_hash": "sha256:3f4708a3f7d89e6f2a3d1a7f4487d86863376b07bcd6aef2bf6fdb7f8dbbec95",
+      "metadata_json_bytes": 7707,
+      "observations": [
+        "sha256:fe16629c70208cb5de7431a96d72b1b7a4c6401ed77fbc6b1c093a7e29c27ce0"
+      ],
+      "plan_seal": "sha256:b46eebbbba1284da0cd7a7ed0daaa6fbb709b7ffe76de498013dcf87c6842410",
+      "steps": 1,
+      "stop_steps": 1,
+      "subject": "ReMIND-008",
+      "trace_seal": "sha256:a304ab8d6a4f468350feaabcefe95dbd20a9e198841468f70035b866fef9f6eb"
+    },
+    {
+      "array_bytes": 7868557,
+      "context_hash": "sha256:185454d8326898469ec24e128a27f6080d797a55b2cd4ee1564aea4e8771a4a7",
+      "independent_replay_hash": "sha256:ecbe553fff7120774c6f401405ab38d87ecd557d7a446ff2ca2ff3b365b3d42a",
+      "metadata_json_bytes": 6844,
+      "observations": [
+        "sha256:3b02753d3b9ab332ff548ee159dc0027fc704b6af6967fedd6758cfb508beed0"
+      ],
+      "plan_seal": "sha256:a3fdcda62f6e543e396bb0549ef063e8cc0c5a3e09c19107c53646395b568beb",
+      "steps": 1,
+      "stop_steps": 1,
+      "subject": "ReMIND-010",
+      "trace_seal": "sha256:8e3136d96a565cf7411bfe30657c3a487958e8b1aa1bad6bba3a21f0086b440a"
+    },
+    {
+      "array_bytes": 7867654,
+      "context_hash": "sha256:c30a806eed25c0cd90de990b8353432ebdf1ccec5bda6cdbecba31f0371b2c84",
+      "independent_replay_hash": "sha256:f4129abc32a8b0f481b8a901316cd175c1bd0dc3db0d048bf3c8646e50236a7a",
+      "metadata_json_bytes": 6428,
+      "observations": [
+        "sha256:b59d28122182a38d091d4deb22c82c816dc8fedaa59cbe703f214dd3a7193677"
+      ],
+      "plan_seal": "sha256:ad318531e8c81193875d54dc8eed76c2e706dc84e6d5a396a9638e8311e719c6",
+      "steps": 1,
+      "stop_steps": 1,
+      "subject": "ReMIND-020",
+      "trace_seal": "sha256:52327aaa6e07612d4e3483de282be4e3585b73170121c221e84552af0a31c8b0"
+    },
+    {
+      "array_bytes": 15733373,
+      "context_hash": "sha256:05a1beff3b44529ba75bc71813ba96a15e9ec5b1c7f895ae1faa80da229827a6",
+      "independent_replay_hash": "sha256:6c82bec39fddad6b1d3ba6bbd58c8248aa12deb7adf58d79f2252460138921e0",
+      "metadata_json_bytes": 19156,
+      "observations": [
+        "sha256:8d167affbd5b7e8ae153935b6dd83eb2c0815b2be9a4bb13dc2c07396d56e150",
+        "sha256:0162c698ea5e1934eb2ea556604538b0489f6f518589eef0ee0598decf62666f"
+      ],
+      "plan_seal": "sha256:69d49b52037784a71894281fb56c1e885ec8c121c374bb2d7d38f3d5b82e2a33",
+      "steps": 2,
+      "stop_steps": 1,
+      "subject": "ReMIND-025",
+      "trace_seal": "sha256:87d1571d95ddca56e25f0e640b5da1876d41355b7d90e519226a4c8b8c29c4bf"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "SELECT_EVAL_execution": false,
+  "automatic_retry": false,
+  "canonical_result_status": "complete_cached_balanced_IL64_TRAIN_only",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 3600,
+    "output_bytes": 134217728,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 3540,
+    "worker_log_bytes": 8388608
+  },
+  "checkpoints": {
+    "IL": {
+      "bytes": 137636,
+      "parameter_hash": "sha256:56712968c5fc662fc3f74ea7e0c6c9f87dc46846e04e7cdb19d57809027ce2b8",
+      "path": "IL-final.psckpt",
+      "sha256": "cbd071d97e8847520603702f9fffaa142fcd8385df3e374eba2bce53a5f98065"
+    }
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 118.29643466696143,
+  "endpoint_control_sha256": "fd42dc6359cadd900bea557108fcd258487176aaf90692990b4b2da5df3e5f3c",
+  "exit_code": 0,
+  "final_owned_pids": [],
+  "output_bytes": 1227409,
+  "private_reference_execution": false,
+  "release_sha256": "924ae2e5473b37e3a4ad52fd377f8250c5b7d946aabffadc5bdb4157fa7c2dd9",
+  "result_sha256": "dd1f9372e8ff9ae14a387a2f7b0736b4032552cfcb20d59a7ef9889159c0c6b7",
+  "sampled_peak_rss_bytes": 2413871104,
+  "samples": 564,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/balanced-teacher-il64-cached-v1/source-index.json",
+    "sha256": "a789aedc2d74b7eba6576f1582d9a3421a700c6bfc706898e7d43b42f93f1f89"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 45602,
+  "worker_final_sha256": "69db00b080074395afe51556f50fef36bf5152be352ca87635295a8d91e6cae3",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

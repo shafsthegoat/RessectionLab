@@ -1,0 +1,161 @@
+{
+  "bytes": 573223,
+  "files": [
+    {
+      "bytes": 19114,
+      "path": "driver/pilot_contract.py",
+      "sha256": "c984945ab59a50b5fb8decfe20e0e5ec5b8bcf460ea5ce0acae9ed63c21428f4",
+      "source": "build/balanced-teacher-il64-cached-v1/pilot_contract.py"
+    },
+    {
+      "bytes": 22953,
+      "path": "driver/cohort_worker.py",
+      "sha256": "33764eaeea56b23e127fe4f8505e42c777ebdf8af3df9917ca4fb29980afe3bd",
+      "source": "build/balanced-teacher-il64-cached-v1/cohort_worker.py"
+    },
+    {
+      "bytes": 12875,
+      "path": "driver/run_owned.py",
+      "sha256": "07aafc0924c1630146d2358d5d99ec4d26b3d6e159c5e8c9849695654bd3960b",
+      "source": "build/balanced-teacher-il64-cached-v1/run_owned.py"
+    },
+    {
+      "bytes": 9079,
+      "path": "driver/freeze-runtime.py",
+      "sha256": "769ffe76709d6050c0c0d3cd6917695f8b80604c03eabb1e8412915086a1b991",
+      "source": "build/balanced-teacher-il64-cached-v1/freeze-runtime.py"
+    },
+    {
+      "bytes": 12239,
+      "path": "bindings/root-release.json",
+      "sha256": "924ae2e5473b37e3a4ad52fd377f8250c5b7d946aabffadc5bdb4157fa7c2dd9",
+      "source": "build/balanced-teacher-il64-cached-v1/root-release.json"
+    },
+    {
+      "bytes": 30113,
+      "path": "bindings/source-index.json",
+      "sha256": "a789aedc2d74b7eba6576f1582d9a3421a700c6bfc706898e7d43b42f93f1f89",
+      "source": "build/balanced-teacher-il64-cached-v1/source-index.json"
+    },
+    {
+      "bytes": 18061,
+      "path": "bindings/baseline-metadata-index.json",
+      "sha256": "e75b2a8e67284c3fc98b11ca7cd74ac9f72dc607d02b10d04a606846f47ed041",
+      "source": "build/balanced-teacher-il64-cached-v1/baseline-metadata-index.json"
+    },
+    {
+      "bytes": 11125,
+      "path": "run/result.json",
+      "sha256": "dd1f9372e8ff9ae14a387a2f7b0736b4032552cfcb20d59a7ef9889159c0c6b7",
+      "source": "build/balanced-teacher-il64-cached-v1/attempt-01/result.json"
+    },
+    {
+      "bytes": 4095,
+      "path": "run/configuration.json",
+      "sha256": "0627105f800fd59141b679b53eeca117e6c85c5216417806e342bbfdf8733b3a",
+      "source": "build/balanced-teacher-il64-cached-v1/attempt-01/configuration.json"
+    },
+    {
+      "bytes": 96007,
+      "path": "run/costs.json",
+      "sha256": "c9221ff70503cd85b1e644d21770e4bd8cb19302c3ba52be709c89a343ebe36b",
+      "source": "build/balanced-teacher-il64-cached-v1/attempt-01/costs.json"
+    },
+    {
+      "bytes": 3205,
+      "path": "run/teacher-cache.json",
+      "sha256": "2dad91adfab5edc893483947d43cf7569b940bffbfae2b89742d1389191d10b9",
+      "source": "build/balanced-teacher-il64-cached-v1/attempt-01/teacher-cache.json"
+    },
+    {
+      "bytes": 341,
+      "path": "run/checkpoint-reload.json",
+      "sha256": "c7da301d64e054be986e0daf2456dd1b6155f396731521ab644f9e95f7683a6f",
+      "source": "build/balanced-teacher-il64-cached-v1/attempt-01/checkpoint-reload.json"
+    },
+    {
+      "bytes": 51662,
+      "path": "run/training-dynamics.json",
+      "sha256": "69b10231b84d008693a5daeb9ba906b865660304c07416e323c3e707110a0ea4",
+      "source": "build/balanced-teacher-il64-cached-v1/attempt-01/training-dynamics.json"
+    },
+    {
+      "bytes": 739,
+      "path": "run/endpoint-teacher-metrics.json",
+      "sha256": "b2baba3a240411bf244591e95c17d9e56fa13145158c70fb93547f5207c2ed02",
+      "source": "build/balanced-teacher-il64-cached-v1/attempt-01/endpoint-teacher-metrics.json"
+    },
+    {
+      "bytes": 3065,
+      "path": "run/first-eight-update-control.json",
+      "sha256": "6bcb3536471daa897748e24cb8bfe3a3aecd9da7f6a9122b0983924c8b0df79f",
+      "source": "build/balanced-teacher-il64-cached-v1/attempt-01/first-eight-update-control.json"
+    },
+    {
+      "bytes": 1912,
+      "path": "supervision/receipt.json",
+      "sha256": "c3ac843bf291c95f150aac85aed621df96dd1cf319e84f04e6c9f3b820b51bb8",
+      "source": "build/balanced-teacher-il64-cached-v1/attempt-01.supervision/receipt.json"
+    },
+    {
+      "bytes": 760,
+      "path": "supervision/worker-final.json",
+      "sha256": "69db00b080074395afe51556f50fef36bf5152be352ca87635295a8d91e6cae3",
+      "source": "build/balanced-teacher-il64-cached-v1/attempt-01.supervision/worker-final.json"
+    },
+    {
+      "bytes": 24985,
+      "path": "supervision/endpoint-control.json",
+      "sha256": "fd42dc6359cadd900bea557108fcd258487176aaf90692990b4b2da5df3e5f3c",
+      "source": "build/balanced-teacher-il64-cached-v1/attempt-01.supervision/endpoint-control.json"
+    },
+    {
+      "bytes": 19222,
+      "path": "supervision/declaration.json",
+      "sha256": "9745395af8d7cfd17e7e3f67ae362e052d535c76236300fa1209a0285663720a",
+      "source": "build/balanced-teacher-il64-cached-v1/attempt-01.supervision/declaration.json"
+    },
+    {
+      "bytes": 15936,
+      "path": "audit/audit_saved.py",
+      "sha256": "f6d137057652af36b4ce88651a036137677f2865e6f8294ec3da4eb7809bab44",
+      "source": "build/balanced-teacher-il64-cached-audit-v1/audit_saved.py"
+    },
+    {
+      "bytes": 14021,
+      "path": "audit/audit-result.json",
+      "sha256": "06b94ab04c1cb7818b55743415f049172ac9bd4a5dc9d1d2cc361d5809c94bc6",
+      "source": "build/balanced-teacher-il64-cached-audit-v1/audit-result.json"
+    },
+    {
+      "bytes": 110729,
+      "path": "audit/input-hashes.json",
+      "sha256": "28c60c2cac4dd176f234a934a06a575a3bae9ba8ee56935a3fa0f0452f377cd4",
+      "source": "build/balanced-teacher-il64-cached-audit-v1/input-hashes.json"
+    },
+    {
+      "bytes": 2452,
+      "path": "audit/audit-run-01.txt",
+      "sha256": "ffb631c9f425924b58572973157d935e4f7f028c4d76f1bb9e128a388966a9d0",
+      "source": "build/balanced-teacher-il64-cached-audit-v1/audit-run-01.txt"
+    },
+    {
+      "bytes": 5442,
+      "path": "audit/REPORT.txt",
+      "sha256": "dea9803a479a742299606ea000b13b72b7a908452f2c882ff532215fceb9c845",
+      "source": "build/balanced-teacher-il64-cached-audit-v1/REPORT.txt"
+    },
+    {
+      "bytes": 2430,
+      "path": "RESULT.txt",
+      "sha256": "f90c176ea4d45e69a24594156ea6eba3677f7e51a04f390f81e15508636a32aa",
+      "source": "root from audited saved output"
+    },
+    {
+      "bytes": 80661,
+      "path": "full-output-bindings.json",
+      "sha256": "ba45e70cd95f9f94dc73f80bb8429bc7076bf223df287ce28947b4ba774cd253",
+      "source": "root from audited saved output"
+    }
+  ]
+}

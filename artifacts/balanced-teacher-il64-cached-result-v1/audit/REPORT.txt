@@ -1,0 +1,86 @@
+PASS — independent saved-only cached64 parity/runtime audit
+
+One cached execution completed in118.29643466696143s owned-parent time versus
+1117.7770654999185s for the completed recollected64 execution: observed ratio
+9.448949739244325, or89.4168132163% less wall time. Both totals include owned
+worker lifecycle/final validation. This is one sequential run per condition,
+not a repeated, randomized or hardware-independent performance estimate.
+Nested inclusive timing scopes must not be summed into another runtime total.
+
+All64 update dictionaries match exactly after excluding only context_hashes
+and trace_seals (the declared storage protocol changes their identities).
+This includes every scalar loss, gradient norm and module-gradient norm, and
+every before/after full-parameter hash. Fresh initialization, final parameter
+hash and all64 dynamics records match. All five entire teacher-readout JSON
+objects are identical. Four complete final plan objects match apart from
+context_hash, including every action and physical history field; their saved
+independent full-tool replays are complete and accepted. Outcome values match.
+
+The shared final parameter hash is:
+sha256:56712968c5fc662fc3f74ea7e0c6c9f87dc46846e04e7cdb19d57809027ce2b8
+The audit authenticates these recorded parameter identities and owned reload
+receipts; it does not open checkpoint bytes or independently rerun tensors.
+Checkpoint file SHA differs as expected because protocol/context metadata
+differs. The cached checkpoint SHA recorded by the parent is
+cbd071d97e8847520603702f9fffaa142fcd8385df3e374eba2bce53a5f98065.
+
+Outcomes remain exactly the same five-label TRAIN imitation:008/010/020 STOP;
+025 takes nominal-cavity-968f3758c3de3eab8c99ca99 then STOP, return
+0.9168388572207332, target0.953674795218559mm3 (one cell), outside supplied
+target0. The full target denominator remains unchanged. There is no new
+label, broader target-removal achievement, clinical result, or held-out claim.
+
+Executed work                       Recollected64        Cached64
+  Shared IL updates                 64                   64
+  Loss forwards/backwards           320                  320
+  Final teacher-logit forwards       5                    5
+  Greedy forwards                   5                    5
+  Total policy forwards             330                  330
+  Checkpoint reloads                1                    1
+  Source visits                     268                  8
+  Native previews                   68,876               2,056
+  Peak sampled owned RSS bytes      2,575,335,424        2,413,871,104
+  Output bytes                      21,671,471           1,227,409
+
+The cached run has exactly four initial teacher/replay visits and four fresh
+greedy/replay visits, with source-release checks for all eight. All256 cache
+reuse scopes contain zero native previews/transitions, inventory requests or
+task clones. Cached teacher readout scopes likewise contain no new geometry
+queries. The five teacher observations are captured after initial complete
+replay, seal/context checked at reuse, and released before greedy sources.
+End64 inference does not request a new training permit or bypass exhausted
+trace_for_il admission. The baseline final accumulator/optimizer reference
+lifetime was preserved; that independent cleanup was deliberately deferred.
+
+Recorded cache payload:39,340,076 array bytes +40,135 metadata JSON bytes =
+39,380,211 bytes, below64MiB. These are payload-accounting figures, not total
+Python memory or measured peak RSS. Exact cache seals, four ordered entries,
+five observation hashes, replay/trace/plan bindings and byte sums pass.
+Zero RL updates/search calls/private-reference work or SELECT/EVAL opening.
+
+Owned parent exited zero with no stop reason, cleanup errors or owned PIDs.
+Parent118.2964s <3600s; worker117.54416400007904s <3540s; sampled RSS <3GiB;
+output1,227,409B <128MiB. Sampling can miss transient peaks, as declared by
+the original supervisor. This audit made no patient-array, checkpoint,
+geometry/model/native, training or test execution calls.
+
+Independent audit-run-01.txt passes7,903 checks in .098187583s with30,621,696B
+observed RSS. All576 source/metadata/JSON input bindings remain unchanged,
+including86 sources and121 metadata files. The reused prior audit helper is
+hash-bound; its documented float32 tolerances remain unchanged. No audit
+failure or source repair was required for this saved-result run.
+
+Exact SHA-256 bindings:
+  result dd1f9372e8ff9ae14a387a2f7b0736b4032552cfcb20d59a7ef9889159c0c6b7
+  release 924ae2e5473b37e3a4ad52fd377f8250c5b7d946aabffadc5bdb4157fa7c2dd9
+  source-index a789aedc2d74b7eba6576f1582d9a3421a700c6bfc706898e7d43b42f93f1f89
+  parent receipt c3ac843bf291c95f150aac85aed621df96dd1cf319e84f04e6c9f3b820b51bb8
+  endpoint-control fd42dc6359cadd900bea557108fcd258487176aaf90692990b4b2da5df3e5f3c
+  audit_saved.py f6d137057652af36b4ce88651a036137677f2865e6f8294ec3da4eb7809bab44
+  audit-result.json 06b94ab04c1cb7818b55743415f049172ac9bd4a5dc9d1d2cc361d5809c94bc6
+  input-hashes.json 28c60c2cac4dd176f234a934a06a575a3bae9ba8ee56935a3fa0f0452f377cd4
+  reused scalar/seal helper b12157e2a3d92e959798092d22e17d6c29ebfa2070b726cbd8b5b5b932261fb1
+
+The native preview reduction measures avoided public teacher reconstruction
+and replay work. Training arithmetic and all fixed TRAIN endpoints remain
+unchanged; this optimization supplies no additional scientific validation.

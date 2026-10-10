@@ -1,0 +1,19 @@
+{"all64_update_exact_match": true, "audit_peak_rss_bytes": 30621696, "audit_seconds": 0.09818758303299546, "checks": 7903, "cost_comparison": {"cached_parent_seconds": 118.29643466696143, "cached_peak_rss_bytes": 2413871104, "cached_previews": 2056, "cached_source_visits": 8, "observed_parent_wall_ratio_recollected_over_cached": 9.448949739244325, "policy_forwards_each": 330, "recollected_parent_seconds": 1117.7770654999185, "recollected_peak_rss_bytes": 2575335424, "recollected_previews": 68876, "recollected_source_visits": 268, "scope": "One sequential owned run per condition; whole-parent time is comparable scope but not a repeated or hardware-independent speedup estimate. Inclusive nested scopes are not summed."}, "counts": {"RL_updates": 0, "checkpoint_reloads": 1, "loss_forwards": 320, "policy_forwards": 330, "search_calls": 0, "shared_IL_updates": 64, "source_visits": 8, "teacher_readouts": 5, "trace_reuses": 256}, "endpoint_parameter_hash": "sha256:56712968c5fc662fc3f74ea7e0c6c9f87dc46846e04e7cdb19d57809027ce2b8", "excluded_update_fields": ["context_hashes", "trace_seals"], "inputs": 576, "metadata_files": 121, "release_sha256": "924ae2e5473b37e3a4ad52fd377f8250c5b7d946aabffadc5bdb4157fa7c2dd9", "result_sha256": "dd1f9372e8ff9ae14a387a2f7b0736b4032552cfcb20d59a7ef9889159c0c6b7", "scope": "Saved metadata/scalar/parity audit only. No checkpoint bytes, observations, patient arrays, geometry/model execution or tests. Cache byte accounting is declared array/JSON payload, not total Python/RSS. Exact TRAIN imitation remains five labels, no new clinical or heldout evidence.", "source_files": 86, "status": "PASS_saved_cached64_exact_parity_audit"}
+        0.14 real         0.08 user         0.02 sys
+            30703616  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                2190  page reclaims
+                   8  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                 319  voluntary context switches
+                  26  involuntary context switches
+          1842195748  instructions retired
+           461318850  cycles elapsed
+            19775920  peak memory footprint

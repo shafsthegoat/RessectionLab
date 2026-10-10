@@ -1,0 +1,26 @@
+{
+  "balanced_IL_64": {
+    "STOP_count": 4,
+    "STOP_mean_NLL": 0.01534666697011744,
+    "balanced_mean_CE": 0.021651699293784077,
+    "motion_count": 1,
+    "motion_mean_NLL": 0.027956731617450714,
+    "unweighted_mean_CE": 0.017868679899584093
+  },
+  "balanced_IL_8": {
+    "STOP_count": 4,
+    "STOP_mean_NLL": 0.5954422056674957,
+    "balanced_mean_CE": 2.2371668368577957,
+    "motion_count": 1,
+    "motion_mean_NLL": 3.8788914680480957,
+    "unweighted_mean_CE": 1.2521320581436157
+  },
+  "unweighted_IL_8": {
+    "STOP_count": 4,
+    "STOP_mean_NLL": 0.4022485315799713,
+    "balanced_mean_CE": 2.444551780819893,
+    "motion_count": 1,
+    "motion_mean_NLL": 4.4868550300598145,
+    "unweighted_mean_CE": 1.21916983127594
+  }
+}
