@@ -1,0 +1,31 @@
+Saved conversion status only: ReMIND-010 / 020 / 025
+
+All retain their frozen TRAIN roles. Saved status is
+public_crop_source_samples_and_label_grids_converted_anatomy_unreviewed;
+actor_inputs_admitted=false and training_admitted=false. No case was replaced.
+
+Case       MRI crop XYZ      Tumor outside estimated support / supplied total
+010        270 x 362 x 109   6,988 / 15,209 (saved fraction 0.45946479058452233)
+020        133 x 183 x 114   40,373 / 49,821 (saved fraction 0.8103610927119086)
+025        133 x 169 x 107   34,358 / 81,762 (saved fraction 0.42021966194564714)
+
+All three receipts preserve source MRI samples, use explicitly resampled label
+placements with original label geometry retained, and report no registration.
+Shared frame UID and source descriptions support correspondence; explicit source
+SOP links and expert alignment review are absent. Source annotation accuracy and
+clinical validity remain unreviewed. Arrays and images were not opened here.
+
+Public cerebrum zeros overlap automatic ventricular positives by 49,210/145,215
+cells for 010, 44,080/44,080 for 020 and 34,316/34,325 for 025. Public support can
+therefore disclose ventricular structure; withholding the separate annotation
+does not mean the actor has no ventricular cue. These are saved QC diagnostics,
+not a reason to modify support or select easier cases. Supplied whole tumor is
+not a prescribed resection; unsupported target remains explicit and unchanged.
+
+Original metadata receipts (hashes retained in external-qc-SHA256SUMS):
+build/remind-planning-qc-v1/remaining-train-v1/ReMIND-010-crop-mr/conversion-result.json
+build/remind-planning-qc-v1/remaining-train-v1/ReMIND-020-crop-mr/conversion-result.json
+build/remind-planning-qc-v1/remaining-train-v1/ReMIND-025-crop-mr/conversion-result.json
+
+This note transcribes already-saved status/counts only. No new pixel reads,
+registration, models, searches, QC calculations or clinical review were done.

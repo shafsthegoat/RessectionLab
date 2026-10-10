@@ -1,0 +1,68 @@
+ReMIND-008 saved comparison review — PASS for saved identity and arithmetic
+
+The completed comparison is negative. SEARCH selected STOP (return 0). After
+one IL update and one RL update from identical fresh parameters, both learners
+executed six actions to the declared horizon. IL returned -1.0648516907534562,
+removing 34 cells / 4.38363444949835 mm3 outside the supplied target. RL returned
+-1.142209945751589, removing 37 cells / 4.770425724454087 mm3 outside the supplied
+target. All three achieved zero supplied-target removal and no target-access
+success. Complete recorded tool paths were 0, 8.124800853786127 and
+8.124800860771579 mm. “Outside supplied target” is not normal-anatomy ground truth.
+
+This is one annotation-assisted TRAIN-case software/scale preflight with two
+optimizer updates and 15 policy forwards, not population training, patient
+transfer, clinical efficacy or learned-method superiority. SEARCH completed its
+six-layer, width-two beam without its call/time cap: 211 evaluated transitions,
+all negative, with 165 prefixes pruned. STOP is the best found by that bounded
+search, not proof that no beneficial strategy exists. The entire supplied target
+denominator is retained: 18,509 positive cells, including 6,394 outside estimated
+support. The declared task permits only partial target progress; no target or
+support was altered to manufacture success.
+
+Post-seal ventricular scoring completed but did not establish avoidance. The
+reference is the source automatic BrainLab ventricular annotation, not manual
+truth. IL touched 573 in-grid cells and RL 569; ALL were outside known annotation
+coverage, and both full-tool sweeps also extended outside the reference FOV.
+Zero positive contacts therefore yields UNKNOWN encounter status, not safety.
+SEARCH has no sweep because it stopped. Reused kernel fields mentioning vessels
+do not add vascular evidence; the bound label is ventricles. Annotation accuracy,
+clinical injury probability and removed-overlap scoring remain unestablished.
+
+The first run remains failed_or_unresolved at its 2,048-preview cap, after both
+updates and all three plans had been sealed; RL replay was interrupted after a
+committed transition while building the next inventory. A separate continuation
+restarted ONLY that exact saved six-action RL plan, with 408 additional previews
+and no new policy construction/forward, search, optimizer or checkpoint load.
+SEARCH/IL completed receipts were reused byte-for-byte. All three original plan
+seals match the final bundle and evaluator. Nominal and replayed histories match
+in every field except the explicit outcome-scope label; recorded independent
+full-tool geometry receipts are accepted and bind those exact history hashes.
+Reward sums, path sums and unique removed-cell volume arithmetic independently
+match each method's recorded metrics. This review did not rerun geometry.
+
+The first private evaluation remains failed after two qualified array reads:
+strict reference orthogonality refusal. Evaluation v2 bound the SAME orthogonal
+roundoff grid already present in the sealed native bundle, preserving origin,
+mask and coverage file identities; no registration or mask resampling occurred.
+Independent corner arithmetic agrees with 3.3859260444514545e-7 mm maximum change,
+below the existing 1e-6 mm bound. No plan changed after reference loading. File
+access isolation is explicitly not supplied by this evaluator API.
+
+Retained parent costs: failed run 69.93320900015533 s / 1,915,027,456 B sampled
+peak RSS; replay continuation 11.375336250057444 s / 1,297,514,496 B; failed
+evaluation 0.37745325011201203 s / 68,239,360 B; completed evaluation
+0.730011000065133 s / 359,497,728 B. These four scopes sum to 82.41600950038992 s,
+2,456 admitted previews plus one blocked preview attempt, and four private-array
+reads across both evaluation attempts. Original transition instrumentation logs
+234 attempts (one interrupted), followed by six restarted replay calls. Failed
+work is retained, not subtracted. Earlier attempts, acquisition/QC/conversion,
+preparation outside these four parents, and this saved review are additional;
+the profiled preflight is not an unprofiled latency benchmark. All four children
+are reaped; owned run/continuation receipts have no final PIDs or cleanup errors.
+
+Evidence: audit.json contains exact hashes for 25 saved JSON/source inputs and
+the verified arithmetic. audit_saved.py uses only Python standard-library JSON,
+hash and scalar arithmetic. No image/array/DICOM/checkpoint was read; no patient,
+model, optimizer, search or native replay was executed. An initial reviewer
+script key typo (total_reward versus history.reward) was corrected before the
+successful saved-only check; it did not concern experiment data or source.
