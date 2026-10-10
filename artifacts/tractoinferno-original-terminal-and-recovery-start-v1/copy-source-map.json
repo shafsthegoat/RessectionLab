@@ -1,0 +1,49 @@
+{
+  "copied_exact_files": [
+    {
+      "package_path": "original-started.json",
+      "original_path": "data/acquisition/tractoinferno-train-v1/runs/20261009T094645035821Z-90fc2160/started.json",
+      "sha256": "477e0ba63d5ef854d118e7a15525f5e4af6581b45c956b9bf9089d8e5d9c356e"
+    },
+    {
+      "package_path": "terminal-readiness.json",
+      "original_path": "build/tractoinferno-terminal-readiness-v1/readiness.json",
+      "sha256": "fed5012432ba658d984ec877b39ab6c7951cf09aad3ce442924ca723718e4da6"
+    },
+    {
+      "package_path": "prepared-declaration.json",
+      "original_path": "build/tractoinferno-recovery-preparation-v1/adapter-v1/prepared-declaration.json",
+      "sha256": "32c582c845e3438e5ddf8084e4d39c894528ed4dcb37f7e16312b58ab2acaa93"
+    },
+    {
+      "package_path": "released-declaration.json",
+      "original_path": "build/tractoinferno-recovery-preparation-v1/adapter-v1/released-declaration.json",
+      "sha256": "a732da70dd79183492bf0d546fd17c2894a2ea5f6a19a4316fb38da4a4af3231"
+    },
+    {
+      "package_path": "release-rebinding.json",
+      "original_path": "build/tractoinferno-terminal-readiness-v1/release-rebinding.json",
+      "sha256": "99cc6303e6757529ddef06d6e95d9251da6424b595bc4fa340c70702a20f99d6"
+    },
+    {
+      "package_path": "recovery-started.json",
+      "original_path": "data/acquisition/tractoinferno-recovery-v1/runs/20261010T043710319129Z-513f59bf/started.json",
+      "sha256": "5e9f4b66b3e0c9341850a5b426d5b9bd3fe80cedded0b93d542416324f90b4c3"
+    },
+    {
+      "package_path": "recovery-start-observation.json",
+      "original_path": "build/tractoinferno-terminal-readiness-v1/recovery-start-observation.json",
+      "sha256": "a823bc2114dad724336cd30de4ea9ef1a5ad724bf6fec50429de3af885e4f18a"
+    }
+  ],
+  "immutable_terminal_metadata_omitted_for_compactness": {
+    "path": "data/acquisition/tractoinferno-train-v1/runs/20261009T094645035821Z-90fc2160/completion.json",
+    "sha256": "7def45d81709a16316445cf18f64f60fc7ebdb9fd3b96fdd8eafa333ddcb33fe",
+    "bytes": 3285884,
+    "included_in_package": false
+  },
+  "recovery_source": "build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py",
+  "recovery_source_sha256": "2444c11e608dfa84691a9485f1e62e9e4b3454a8f6faf5d79d9d2236a3731a65",
+  "reviewed_source_handoff_commit": "3b63842",
+  "no_payload_or_original_journal_copies": true
+}

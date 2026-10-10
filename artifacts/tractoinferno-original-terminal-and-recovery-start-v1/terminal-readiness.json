@@ -1,0 +1,91 @@
+{
+  "schema": "tractoinferno-original-terminal-recovery-readiness-v1",
+  "checked_utc": "2026-10-10T04:34:40.967572+00:00",
+  "status": "metadata_runtime_prerequisites_pass_recovery_not_launched",
+  "original_run_id": "20261009T094645035821Z-90fc2160",
+  "original_pid": 92434,
+  "original_pgid": 92434,
+  "original_owned_session": 35269,
+  "session_tool_exit_code_observed": 0,
+  "session_tool_terminal_event": {
+    "event": "completed",
+    "status": "completed_with_unresolved_files",
+    "verified_files": 7568,
+    "verified_bytes": 264964237066
+  },
+  "original_terminal": {
+    "path": "data/acquisition/tractoinferno-train-v1/runs/20261009T094645035821Z-90fc2160/completion.json",
+    "sha256": "7def45d81709a16316445cf18f64f60fc7ebdb9fd3b96fdd8eafa333ddcb33fe"
+  },
+  "original_finished_utc": "2026-10-10T04:29:27.349070+00:00",
+  "complete_terminal_scope_files": 7622,
+  "verified_files": 7568,
+  "verified_bytes": 264964237066,
+  "verified_record_MD5_Git_size_bindings_match": true,
+  "verified_final_regular_file_sizes_reconciled": 7568,
+  "verified_payloads_rehashed": false,
+  "current_unresolved_files": 54,
+  "current_unresolved_status_counts": {
+    "transport_exhausted": 15,
+    "integrity_or_scope_refusal": 39
+  },
+  "historical_transport_deferred_count": 52,
+  "unresolved_matches_reviewed_proposal_exactly": true,
+  "eligible_recovery_files": 54,
+  "excluded_original_successes": [],
+  "eligible_expected_bytes": 8824129973,
+  "preserved_partial_bytes": 3351836181,
+  "estimated_remaining_payload_bytes": 5472293792,
+  "all_selected_history_hashes_counts_and_partial_stats_match": true,
+  "original_and_predecessor_locks_available_and_acquired_for_readiness": [
+    "data/acquisition/remind-train-originals-v1/queue.lock",
+    "data/acquisition/nfbs-originals-v1/queue.lock",
+    "data/acquisition/remind-train-seg-v1/queue.lock",
+    "data/acquisition/menichetti-mechanics-v1/queue.lock",
+    "data/acquisition/tractoinferno-train-v1/queue.lock"
+  ],
+  "locks_released_by_readiness_on_context_exit": true,
+  "free_bytes": 363399036928,
+  "free_space_reserve_bytes": 107374182400,
+  "active_output_allowance_bytes": 68719476736,
+  "headroom_after_remaining_reserve_and_allowance_bytes": 181833084000,
+  "bindings": {
+    "runner_sha256": "2444c11e608dfa84691a9485f1e62e9e4b3454a8f6faf5d79d9d2236a3731a65",
+    "false_template_sha256": "32c582c845e3438e5ddf8084e4d39c894528ed4dcb37f7e16312b58ab2acaa93",
+    "proposal_sha256": "c5800243aac0bf5afdfe83a1fec4a4534b66bf844a916006e0a1f3ee842ceacd",
+    "original_declaration_sha256": "98c9f4bc797aecfc36d2857b98435016162c243e5c35eef4e08d99ed0ebb1f57",
+    "original_runner_sha256": "e1db984939c5b342b754650e7f42b7df57d6c1993d2ffb8add36da373d58b5bc",
+    "exact_manifest_sha256": "151441d5eb6fe923ad3b1f978edf49b04843956f3209e216a95340466003a846",
+    "cohort_sha256": "71296e9dc5d72bd35180e346ffb1ef98c2f1abff2db016ca3d09e64880f75f30",
+    "scope_sha256": "3ae53f90fb1aceaff317ac08861808afc637dfb858f6b3feb3b3754868f51053"
+  },
+  "release_created": false,
+  "recovery_launched": false,
+  "new_network_requests": 0,
+  "payload_bytes_opened": 0,
+  "process_signals": 0,
+  "blocked_accesses": [],
+  "all_payloads_unreviewed": true,
+  "training_admitted": false,
+  "next_command": "build/idc-acquisition-venv/bin/python build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py --declaration build/tractoinferno-recovery-preparation-v1/adapter-v1/prepared-declaration.json --declaration-sha256 32c582c845e3438e5ddf8084e4d39c894528ed4dcb37f7e16312b58ab2acaa93 --freeze-release build/tractoinferno-recovery-preparation-v1/adapter-v1/released-declaration.json",
+  "next_command_effect": "Root-controlled separate terminal-bound release only; no GET/HEAD. Then check-only and launch using emitted release SHA per committed COMMANDS.txt. Runtime gates recheck all prerequisites.",
+  "original_started_receipt": {
+    "path": "data/acquisition/tractoinferno-train-v1/runs/20261009T094645035821Z-90fc2160/started.json",
+    "sha256": "477e0ba63d5ef854d118e7a15525f5e4af6581b45c956b9bf9089d8e5d9c356e",
+    "pid": 92434,
+    "pgid": 92434,
+    "started_utc": "2026-10-09T09:46:45.036268+00:00"
+  },
+  "terminal_process_probe": {
+    "command": [
+      "ps",
+      "-p",
+      "92434",
+      "-o",
+      "pid=,pgid=,lstart=,command="
+    ],
+    "returncode": 1,
+    "stdout": "",
+    "stderr": ""
+  }
+}

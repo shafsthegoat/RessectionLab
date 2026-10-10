@@ -1,0 +1,58 @@
+{
+  "schema": "tractoinferno-terminal-and-recovery-start-package-v1",
+  "files": [
+    {
+      "path": "RESULT.txt",
+      "bytes": 2640,
+      "sha256": "3f8196805a8c17c4bed85e9bb5e6802d1c088a7d7a7dd589298d06bbbdc848c4"
+    },
+    {
+      "path": "copy-source-map.json",
+      "bytes": 2374,
+      "sha256": "ab034c0cbd6606f94a1f96f37f9ddb2a9df4a89285b09ee6c67434f08b68ec76"
+    },
+    {
+      "path": "original-started.json",
+      "bytes": 753,
+      "sha256": "477e0ba63d5ef854d118e7a15525f5e4af6581b45c956b9bf9089d8e5d9c356e"
+    },
+    {
+      "path": "original-terminal-summary.json",
+      "bytes": 10893,
+      "sha256": "cd8e48fa83b1196c5bc61d69a3a0f003d3df37c7b204c28f28d2cc9a29b990c7"
+    },
+    {
+      "path": "prepared-declaration.json",
+      "bytes": 610,
+      "sha256": "32c582c845e3438e5ddf8084e4d39c894528ed4dcb37f7e16312b58ab2acaa93"
+    },
+    {
+      "path": "recovery-start-observation.json",
+      "bytes": 1525,
+      "sha256": "a823bc2114dad724336cd30de4ea9ef1a5ad724bf6fec50429de3af885e4f18a"
+    },
+    {
+      "path": "recovery-started.json",
+      "bytes": 222,
+      "sha256": "5e9f4b66b3e0c9341850a5b426d5b9bd3fe80cedded0b93d542416324f90b4c3"
+    },
+    {
+      "path": "release-rebinding.json",
+      "bytes": 2391,
+      "sha256": "99cc6303e6757529ddef06d6e95d9251da6424b595bc4fa340c70702a20f99d6"
+    },
+    {
+      "path": "released-declaration.json",
+      "bytes": 4418,
+      "sha256": "a732da70dd79183492bf0d546fd17c2894a2ea5f6a19a4316fb38da4a4af3231"
+    },
+    {
+      "path": "terminal-readiness.json",
+      "bytes": 4372,
+      "sha256": "fed5012432ba658d984ec877b39ab6c7951cf09aad3ce442924ca723718e4da6"
+    }
+  ],
+  "payload_files": 0,
+  "original_journal_files": 0,
+  "all_payloads_unreviewed": true
+}

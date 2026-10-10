@@ -1,0 +1,43 @@
+{
+  "recorded_utc": "2026-10-10T04:37:37.022423+00:00",
+  "root_owned_session_id": 19191,
+  "started_receipt": {
+    "path": "data/acquisition/tractoinferno-recovery-v1/runs/20261010T043710319129Z-513f59bf/started.json",
+    "sha256": "5e9f4b66b3e0c9341850a5b426d5b9bd3fe80cedded0b93d542416324f90b4c3"
+  },
+  "started": {
+    "declaration_sha256": "a732da70dd79183492bf0d546fd17c2894a2ea5f6a19a4316fb38da4a4af3231",
+    "files": 54,
+    "pgid": 61558,
+    "pid": 61558,
+    "remaining_queue_bytes": 5472293792,
+    "started_utc": "2026-10-10T04:37:10.414449+00:00",
+    "workers": 1
+  },
+  "process_probe": {
+    "returncode": 0,
+    "stdout": "61558 61558 Sat Oct 10 00:37:10 2026      75776 python3.12       build/idc-acquisition-venv/bin/python build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py --declaration build/tractoinferno-recovery-preparation-v1/adapter-v1/released-declaration.json --declaration-sha256 a732da70dd79183492bf0d546fd17c2894a2ea5f6a19a4316fb38da4a4af3231\n",
+    "stderr": ""
+  },
+  "locks": [
+    {
+      "path": "data/acquisition/tractoinferno-train-v1/queue.lock",
+      "held": true
+    },
+    {
+      "path": "data/acquisition/tractoinferno-recovery-v1/queue.lock",
+      "held": true
+    }
+  ],
+  "completed_object_records": 1,
+  "statuses": {
+    "byte_verified": 1
+  },
+  "verified_bytes": 4990162,
+  "current_intents": 2,
+  "terminal_exists": false,
+  "free_bytes": 362055266304,
+  "payload_reads": 0,
+  "new_network_requests_by_monitor": 0,
+  "signals_or_restarts": 0
+}

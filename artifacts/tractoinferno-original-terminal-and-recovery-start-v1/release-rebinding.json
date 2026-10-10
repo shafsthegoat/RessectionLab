@@ -1,0 +1,53 @@
+{
+  "schema": "tractoinferno-recovery-terminal-release-rebinding-v1",
+  "recorded_utc": "2026-10-10T04:37:17.183939+00:00",
+  "status": "released_contract_check_pass_no_transfer_started_by_preparer",
+  "prepared_declaration": {
+    "path": "build/tractoinferno-recovery-preparation-v1/adapter-v1/prepared-declaration.json",
+    "sha256": "32c582c845e3438e5ddf8084e4d39c894528ed4dcb37f7e16312b58ab2acaa93",
+    "execution_released": false
+  },
+  "released_declaration": {
+    "path": "build/tractoinferno-recovery-preparation-v1/adapter-v1/released-declaration.json",
+    "sha256": "a732da70dd79183492bf0d546fd17c2894a2ea5f6a19a4316fb38da4a4af3231"
+  },
+  "original_terminal": {
+    "path": "data/acquisition/tractoinferno-train-v1/runs/20261009T094645035821Z-90fc2160/completion.json",
+    "sha256": "7def45d81709a16316445cf18f64f60fc7ebdb9fd3b96fdd8eafa333ddcb33fe"
+  },
+  "runner_sha256": "2444c11e608dfa84691a9485f1e62e9e4b3454a8f6faf5d79d9d2236a3731a65",
+  "permitted_changed_fields": [
+    "excluded_original_successes",
+    "execution_released",
+    "original_terminal",
+    "scope_frozen",
+    "selected_paths"
+  ],
+  "all_other_fields_unchanged": true,
+  "selected_failure_count": 54,
+  "excluded_original_success_count": 0,
+  "one_additional_attempt_per_selected_object": true,
+  "workers": 1,
+  "reserve_bytes": 107374182400,
+  "allowance_bytes": 68719476736,
+  "freeze_result": {
+    "exit_code": 0,
+    "status": "separate_release_frozen_no_network",
+    "selected": 54,
+    "excluded": 0
+  },
+  "check_only_result": {
+    "exit_code": 0,
+    "status": "contract_valid_no_execution",
+    "execution_released": true,
+    "original_terminal_bound": true,
+    "network_requests": 0,
+    "payload_bytes_read": 0
+  },
+  "original_process_and_locks": "Both exact reviewed CLI invocations rechecked original PID absence and acquired/released original plus predecessor locks. Runtime launch rechecks before any transfer.",
+  "new_network_requests_by_preparer": 0,
+  "payload_reads_by_preparer": 0,
+  "actual_transfer_launched_by_preparer": false,
+  "tracked_edits": false,
+  "launch_command": "build/idc-acquisition-venv/bin/python build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py --declaration build/tractoinferno-recovery-preparation-v1/adapter-v1/released-declaration.json --declaration-sha256 a732da70dd79183492bf0d546fd17c2894a2ea5f6a19a4316fb38da4a4af3231"
+}
