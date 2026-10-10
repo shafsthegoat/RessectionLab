@@ -1275,3 +1275,8 @@ Acquisition independently continues: 6,215 verified files /217,055,647,324B at03
 ## Fixed TRAIN-only learning diagnostic
 
 [Result](../artifacts/contact-train-diagnostic-v1/RESULT.md):24 teacher reconstructions,40 states,3 checkpoint loads,120 forwards,760 previews,0updates/search/patient/held-out reads. Independent arithmetic confirms all counts and readouts. IL improves movement-only teacher ranks1/32→22/32 but STOPwins40/40; RLSTOPprobability.999990818. Parent8.287s280.3MB clean. This is training-set diagnosis, not a new benchmark; no source bug was established.
+
+
+## Case4 diagnostic source handoff integrated
+
+[Result](../artifacts/scan-diagnostic-runner-integration-v1/RESULT.md): four source/type/doc/test files; ten canonical generated controls pass0.313s. Independent review found and repaired geometry/source substitution and origin-label defects before promotion. Patient forward release remains unset; supervised preparation and actual model output follow separately. No patient/weight/forward test access or planning admission.

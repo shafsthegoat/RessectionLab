@@ -1,0 +1,33 @@
+{
+  "scope": "source-only; no Case4 patient-forward release or desktop wiring",
+  "new_files": [
+    {
+      "from": "build/scan-target-estimator-research/case4-diagnostic-runner-v1/promotion/src/resectionlab/scan_diagnostic_runner.py",
+      "to": "src/resectionlab/scan_diagnostic_runner.py",
+      "sha256": "35314bac4786e4357f632a6cde580bd04a44be41c88cd9913c245f15fd13c86a"
+    },
+    {
+      "from": "build/scan-target-estimator-research/case4-diagnostic-runner-v1/promotion/tests/test_scan_diagnostic_runner.py",
+      "to": "tests/test_scan_diagnostic_runner.py",
+      "sha256": "f23262f4f5ce92d3be289cc9422daf956424d0541b9816200763fdb4ddafdca5"
+    },
+    {
+      "from": "build/scan-target-estimator-research/case4-diagnostic-runner-v1/promotion/desktop/src/scan-diagnostic-layer.ts",
+      "to": "desktop/src/scan-diagnostic-layer.ts",
+      "sha256": "d4451656cd79a3129f999b2f6b17e2ab8f020d475fc4760ed5a48593cc5e1869"
+    },
+    {
+      "from": "build/scan-target-estimator-research/case4-diagnostic-runner-v1/promotion/docs/scan-diagnostic-runner.md",
+      "to": "docs/scan-diagnostic-runner.md",
+      "sha256": "bd057c371d99abc6af8f3fb9cd315b05b9f5ff3655c4161ba8bfad75135d5312"
+    }
+  ],
+  "tests": {
+    "isolated_runtime_overlay": "3 passed in 0.124s",
+    "base_runtime": "optional nnU-Net missing; module skipped before imaging/model imports",
+    "patient_pixels_or_checkpoint_read": false
+  },
+  "release_pin": null,
+  "backend_pair_contract": null,
+  "desktop_integration": false
+}
