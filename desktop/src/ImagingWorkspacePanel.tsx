@@ -7,7 +7,7 @@ export function ImagingWorkspacePanel(props:{caseHash:string;series:DisplaySerie
     <h2>Imaging workspace <span>{1+props.series.length}</span></h2>
     <label>Inspect scan<select aria-label="Inspect scan" value={props.selectedId??''} onChange={e=>props.onSelect(e.target.value||null)} disabled={props.busy}>
       <option value="">Primary planning image</option>
-      {props.series.map(s=><option key={s.descriptor.seriesId} value={s.descriptor.seriesId}>{s.descriptor.modality} · native-grid display</option>)}
+      {props.series.map(s=><option key={s.descriptor.seriesId} value={s.descriptor.seriesId}>{s.descriptor.modality} · separate image grid</option>)}
     </select></label>
     {props.selectedId && <p className="muted-note">Separate native frame. Registration and same-person association are unverified. Planning overlays and episode replay are hidden.</p>}
     <label>Additional image modality<select aria-label="Additional image modality" value={modality} onChange={e=>setModality(e.target.value as DisplayModality)}>
