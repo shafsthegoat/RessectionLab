@@ -108,10 +108,9 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
     if post_exposure_condition is not None:
         from resectionlab.post_exposure import VERSION as POST_EXPOSURE_VERSION
         if (post_exposure_condition != POST_EXPOSURE_VERSION or not partial_domain
-                or expected_role != "TRAIN" or checkpoint_lineage is not None or occupancy_inference):
+                or expected_role != "TRAIN" or checkpoint_lineage is not None or occupancy_learning or occupancy_inference):
             raise ValueError("Post-exposure is a separate fixed-four partial-domain TRAIN search condition")
-    if occupancy_learning and (occupancy_condition not in (SUPPLIED_TUMOR_UNION_OCCUPANCY, PARTIAL_DOMAIN_UNION_OCCUPANCY)
-            or partial_domain and post_exposure_condition is None
+    if occupancy_learning and (occupancy_condition != SUPPLIED_TUMOR_UNION_OCCUPANCY
             or expected_role != "TRAIN" or checkpoint_lineage is not None):
         raise ValueError("Union learning is restricted to the original full-coverage TRAIN condition")
     if derived_occupancy and not occupancy_learning and not occupancy_inference and (expected_role != "TRAIN" or checkpoint_lineage is not None
@@ -127,13 +126,10 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
     if len(token) != 64 or any(c not in "0123456789abcdef" for c in token):
         raise ValueError("Explicit learning protocol hash required")
     if occupancy_learning:
-        from resectionlab.patient_planning_cohort_spec import (validate_union_obstruction_learning,
-            validate_post_exposure_learning)
-        validator = validate_post_exposure_learning if partial_domain else validate_union_obstruction_learning
-        occupancy_learning_protocol = validator(occupancy_learning_protocol,
+        from resectionlab.patient_planning_cohort_spec import validate_union_obstruction_learning
+        occupancy_learning_protocol = validate_union_obstruction_learning(occupancy_learning_protocol,
             learning_protocol_hash=learning_protocol_hash, proposal_config=proposal_config,
-            max_steps=limits.get("max_steps"),
-            **({'post_exposure_condition':post_exposure_condition} if partial_domain else {}))
+            max_steps=limits.get("max_steps"))
         if (public_target_context_variant != occupancy_learning_protocol["public_target_context_variant"]
                 or type(limits.get("max_optimizer_updates")) is not int
                 or limits["max_optimizer_updates"] < 2*occupancy_learning_protocol["updates_per_method"]
@@ -326,8 +322,7 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
             "policy_comparison_permitted": occupancy_learning or occupancy_inference,
             **({"comparison_scope": "same_declared_union_world_SELECT013_frozen_inference_only"}
                 if occupancy_inference else {}),
-            **({"comparison_scope": ("same_declared_post_exposure_world_new_four_TRAIN_only" if partial_domain
-                else "same_declared_union_world_fixed_four_TRAIN_only")} if occupancy_learning else {}),
+            **({"comparison_scope": "same_declared_union_world_fixed_four_TRAIN_only"} if occupancy_learning else {}),
             "normalization_coupling": "support_percentile_1_99 uses this condition occupancy; compare recorded bounds across arms",
             "intensity_normalization": thaw_json(source._normalization_record)})
     write(output / "admitted-public-bindings.json", {"source_binding": binding, "qc": qc,

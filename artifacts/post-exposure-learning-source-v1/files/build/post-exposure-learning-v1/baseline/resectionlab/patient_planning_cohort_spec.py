@@ -6,7 +6,7 @@ teacher outcome. This stage does not assert that any patient task is reachable.
 from dataclasses import asdict
 
 from .core import freeze_json, semantic_digest, thaw_json
-from .native_proposals import NominalCavityProposalConfig, DEFAULT_COLUMN_OFFSETS
+from .native_proposals import NominalCavityProposalConfig
 from .public_target_context import VERSION as TARGET_CONTEXT
 
 VERSION = 'fixed-four-TRAIN-sequential-cohort-v2'
@@ -15,16 +15,12 @@ BALANCED_TEACHER_CE = 'balanced_STOP_motion_CE_v1'
 RECOLLECT_TEACHERS = 'recollect_complete_pinned_plan_each_IL_update'
 CACHED_TEACHERS = 'cache_complete_replayed_TRAIN_teacher_traces_v1'
 TRAIN = ('ReMIND-008', 'ReMIND-010', 'ReMIND-020', 'ReMIND-025')
-POST_EXPOSURE_LEARNING_VERSION = 'fixed-four-TRAIN-post-exposure-learning-v1'
-POST_EXPOSURE_TRAIN = ('ReMIND-002', 'ReMIND-015', 'ReMIND-018', 'ReMIND-045')
-POST_EXPOSURE_TEACHER_STEPS = (1, 14, 1, 13)
 CLOSED = {'SELECT': ('ReMIND-013', 'ReMIND-037'), 'EVAL': ('ReMIND-067',)}
 
 
 def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
         retention_mode='return_plus_opening_depth_v1', il_teacher_weighting=None,
-        teacher_observations=RECOLLECT_TEACHERS, teacher_cache_payload_bytes=None, occupancy_condition=None,
-        post_exposure_condition=None):
+        teacher_observations=RECOLLECT_TEACHERS, teacher_cache_payload_bytes=None, occupancy_condition=None):
     from .patient_planning_learning import PREFLIGHT_PROTOCOL
     # The sole longer endpoint is a fixed balanced-teacher optimization contrast.
     # Existing 1..8 protocols retain their exact records and bounds.
@@ -50,20 +46,7 @@ def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
     if (type(retention_mode) is not str or retention_mode not in {
             'return_plus_opening_depth_v1', 'return_plus_opening_depth_volume_v1'}):
         raise ValueError('Explicit reviewed depth or depth-volume two-lane retention required')
-    if post_exposure_condition is not None:
-        from .post_exposure import VERSION as POST_EXPOSURE_VERSION
-        from .patient_planning_admission import PARTIAL_DOMAIN_UNION_OCCUPANCY
-        il = (updates == 64 and il_teacher_weighting == BALANCED_TEACHER_CE
-              and teacher_observations == CACHED_TEACHERS and teacher_cache_payload_bytes == 256*1024**2)
-        rl = (updates == 8 and il_teacher_weighting is None
-              and teacher_observations == RECOLLECT_TEACHERS and teacher_cache_payload_bytes is None)
-        if (post_exposure_condition != POST_EXPOSURE_VERSION
-                or occupancy_condition != PARTIAL_DOMAIN_UNION_OCCUPANCY
-                or proposal_config.offsets_source_voxels != DEFAULT_COLUMN_OFFSETS
-                or proposal_config.obstruction_opening is not False
-                or proposal_config.max_candidates != 120 or max_steps != 24 or not (il or rl)):
-            raise ValueError('Exact new-four post-exposure IL64 cached256MiB or scratch RL8 condition required')
-    elif occupancy_condition is not None:
+    if occupancy_condition is not None:
         from .native_spatial_task import SUPPLIED_TUMOR_UNION_OCCUPANCY
         if (occupancy_condition != SUPPLIED_TUMOR_UNION_OCCUPANCY
                 or proposal_config.obstruction_opening is not True
@@ -93,13 +76,6 @@ def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
             'heldout_execution': False})
     if occupancy_condition is not None:
         record['cohort_execution']['occupancy_condition'] = occupancy_condition
-    if post_exposure_condition is not None:
-        record['version'] = POST_EXPOSURE_LEARNING_VERSION
-        record['cohort_execution'].update(patient_order=list(POST_EXPOSURE_TRAIN),
-            post_exposure_condition=post_exposure_condition,
-            teacher_source='fixed_saved_greedy_complete_histories_v1',
-            teacher_decisions=sum(POST_EXPOSURE_TEACHER_STEPS),
-            teacher_steps=list(POST_EXPOSURE_TEACHER_STEPS))
     if il_teacher_weighting is not None:
         record['cohort_execution']['il_teacher_weighting'] = il_teacher_weighting
     if teacher_observations == CACHED_TEACHERS:
@@ -108,7 +84,7 @@ def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
 
 
 def validate_sequential_protocol(protocol):
-    if protocol.get('version') not in (VERSION, POST_EXPOSURE_LEARNING_VERSION):
+    if protocol.get('version') != VERSION:
         raise ValueError('Exact sequential cohort version required')
     execution = protocol.get('cohort_execution', {})
     config = NominalCavityProposalConfig(**thaw_json(execution.get('proposal_config', {})))
@@ -118,31 +94,10 @@ def validate_sequential_protocol(protocol):
         il_teacher_weighting=execution.get('il_teacher_weighting'),
         teacher_observations=execution.get('teacher_observations'),
         teacher_cache_payload_bytes=execution.get('teacher_cache_payload_bytes'),
-        occupancy_condition=execution.get('occupancy_condition'),
-        post_exposure_condition=execution.get('post_exposure_condition'))
+        occupancy_condition=execution.get('occupancy_condition'))
     if semantic_digest(expected) != semantic_digest(protocol):
         raise ValueError('Sequential objective, scheduling or task options changed')
     return expected
-
-
-def protocol_train_subjects(protocol):
-    """Exact cohort order from a complete validated condition, never a caller list."""
-    protocol = validate_sequential_protocol(protocol)
-    return POST_EXPOSURE_TRAIN if protocol['version'] == POST_EXPOSURE_LEARNING_VERSION else TRAIN
-
-
-def validate_post_exposure_learning(protocol, *, learning_protocol_hash, proposal_config,
-        max_steps, post_exposure_condition):
-    protocol = validate_sequential_protocol(protocol)
-    execution = protocol['cohort_execution']
-    if (protocol['version'] != POST_EXPOSURE_LEARNING_VERSION
-            or execution.get('post_exposure_condition') != post_exposure_condition
-            or semantic_digest(protocol) != learning_protocol_hash
-            or type(proposal_config) is not NominalCavityProposalConfig
-            or proposal_config.fingerprint != execution['proposal_rule_hash']
-            or max_steps != execution['max_steps']):
-        raise ValueError('Exact declared new-four post-exposure learning world required')
-    return protocol
 
 
 def validate_union_obstruction_learning(protocol, *, learning_protocol_hash, proposal_config, max_steps):
@@ -221,7 +176,6 @@ def validate_limits(protocol, limits):
         raise ValueError('Sequential limits differ from declared protocol or bounded staging envelope')
 
 
-def validate_factories(factories, learning_protocol=None):
-    subjects = TRAIN if learning_protocol is None else protocol_train_subjects(learning_protocol)
-    if set(factories) != set(subjects) or any(not callable(factories[s]) for s in subjects):
+def validate_factories(factories):
+    if set(factories) != set(TRAIN) or any(not callable(factories[s]) for s in TRAIN):
         raise ValueError('Exactly four fixed TRAIN visit factories required; SELECT/EVAL closed')

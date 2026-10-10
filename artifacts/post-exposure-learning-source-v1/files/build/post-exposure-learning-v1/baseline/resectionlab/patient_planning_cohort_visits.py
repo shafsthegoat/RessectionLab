@@ -11,18 +11,17 @@ from pathlib import Path
 from .core import freeze_json, semantic_digest, thaw_json
 from .native_proposals import NominalCavityProposalConfig
 from .patient_planning_admission import COHORT_SHA256
-from .patient_planning_cohort_spec import TRAIN, validate_limits, validate_factories, protocol_train_subjects
+from .patient_planning_cohort_spec import TRAIN, validate_limits, validate_factories
 
 
 def make_train_visit_factories(*, manifest_index_path, manifest_index_sha256,
         cohort_bytes, learning_protocol, limits, released_record, released_sha256, progress):
     validate_limits(learning_protocol, limits)
-    subjects = protocol_train_subjects(learning_protocol)
     raw = Path(manifest_index_path).read_bytes()
     if hashlib.sha256(raw).hexdigest() != manifest_index_sha256:
         raise ValueError('Public manifest index changed')
     index = json.loads(raw); rows = index['cases']
-    if (len(rows) != 4 or {r['patient_id'] for r in rows} != set(subjects)
+    if (len(rows) != 4 or {r['patient_id'] for r in rows} != set(TRAIN)
             or any(r['role'] != 'TRAIN' for r in rows)):
         raise ValueError('Exactly fixed four TRAIN manifests required; held-out files closed')
     if (type(cohort_bytes) is not bytes or hashlib.sha256(cohort_bytes).hexdigest() != COHORT_SHA256
@@ -41,8 +40,6 @@ def make_train_visit_factories(*, manifest_index_path, manifest_index_sha256,
     occupancy_options = ({} if 'occupancy_condition' not in protocol['cohort_execution'] else {
         'occupancy_condition': protocol['cohort_execution']['occupancy_condition'],
         'occupancy_learning_protocol': protocol})
-    if 'post_exposure_condition' in protocol['cohort_execution']:
-        occupancy_options['post_exposure_condition'] = protocol['cohort_execution']['post_exposure_condition']
     def closure(subject):
         def construct(*, output):
             from .public_patient_factory import prepare_public_source
@@ -61,6 +58,6 @@ def make_train_visit_factories(*, manifest_index_path, manifest_index_sha256,
             return make_patient_planning_task(source, cohort_bytes=cohort_bytes,
                 source_binding=binding, qc_receipt=qc, protocol=admission)
         return construct
-    factories = {subject: closure(subject) for subject in subjects}
-    validate_factories(factories, learning_protocol)
+    factories = {subject: closure(subject) for subject in TRAIN}
+    validate_factories(factories)
     return factories

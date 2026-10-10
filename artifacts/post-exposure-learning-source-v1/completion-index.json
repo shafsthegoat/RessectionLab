@@ -1,0 +1,33 @@
+{
+  "source_index_sha256": "afc2dabc938c74ea378c2f81b596590a876d97fd76dc22ff9366e4ae88e59856",
+  "status": "source_and_generated_controls_complete_no_acquired_training",
+  "files": [
+    {
+      "source_path": "build/post-exposure-learning-v1/canonical-controls.log",
+      "package_path": "files/build/post-exposure-learning-v1/canonical-controls.log",
+      "sha256": "4324b61ac9034419ed15b432cb4f2a1c8fafc8996d65175a322cb10cdb06f972",
+      "bytes": 474
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/canonical-historical.log",
+      "package_path": "files/build/post-exposure-learning-v1/canonical-historical.log",
+      "sha256": "96930e0475760ea3818d98efd9c208416bb41c820336d7ab9d9949a8ae04a4ad",
+      "bytes": 98
+    },
+    {
+      "source_path": "build/post-exposure-learning-independent-v1/REPORT.txt",
+      "package_path": "files/build/post-exposure-learning-independent-v1/REPORT.txt",
+      "sha256": "83fe67358f746c5cc15c6650c6a3f3191683d82d9dcb30ee4fcd1a1c10b0d4ca",
+      "bytes": 5411
+    }
+  ],
+  "canonical_tests": {
+    "ordinary_pass": 152,
+    "optional_initial_skip": 2,
+    "subsequent_exact_historical_pass": 2,
+    "total_pass": 154
+  },
+  "independent_review": "GO exact unchanged admission and runner pins",
+  "runtime_freeze": "pending final canonical commit; root owns release and launch",
+  "no_patient_or_model_execution": true
+}

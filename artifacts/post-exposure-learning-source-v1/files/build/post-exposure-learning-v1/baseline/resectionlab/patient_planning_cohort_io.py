@@ -59,12 +59,6 @@ def _save_checkpoint(policy, *, method, contexts, protocol, updates, initial_has
     """Non-pickle weights plus hash-only lineage; no image, mask or observation data."""
     if updates != protocol['updates_per_method']:
         raise ValueError('Only the complete fixed endpoint can be saved as final')
-    subjects = TRAIN
-    if 'cohort_execution' in protocol:
-        from .patient_planning_cohort_spec import protocol_train_subjects
-        subjects = protocol_train_subjects(protocol)
-        if tuple(c.patient_group for c in contexts) != tuple('ReMIND:'+s.rsplit('-',1)[1] for s in subjects):
-            raise ValueError('Checkpoint contexts must match the exact declared TRAIN cohort order')
     entries=[]; payloads=[]
     for index,(name,tensor) in enumerate(sorted(policy.state_dict().items())):
         array=tensor.detach().cpu().contiguous().numpy()
@@ -78,7 +72,7 @@ def _save_checkpoint(policy, *, method, contexts, protocol, updates, initial_has
         'method':method,'architecture_hash':policy.architecture_hash,'parameter_hash':parameter_hash(policy),
         'initial_parameter_hash':initial_hash,'learning_protocol_hash':semantic_digest(protocol),
         'completed_updates':updates,'contexts':[{'patient_group':c.patient_group,'context_hash':c.fingerprint} for c in contexts],
-        'TRAIN_subjects':list(subjects),'SELECT_EVAL_opened':False,'private_reference_used':False,
+        'TRAIN_subjects':list(TRAIN),'SELECT_EVAL_opened':False,'private_reference_used':False,
         'tensors':entries,'format':'ZIP_STORED_JSON_FLOAT32_NPY_V1','clinical_claim':False}
     archive_bytes=io.BytesIO()
     with zipfile.ZipFile(archive_bytes,'w',compression=zipfile.ZIP_STORED) as archive:
@@ -109,14 +103,13 @@ to open a patient. The returned model is not registered for a TRAIN session.
 No observation, task factory, forward, optimizer, pickle or torch.load is used.
 """
     protocol=freeze_json(expected_learning_protocol)
-    subjects = TRAIN
     if 'cohort_execution' in protocol:
-        from .patient_planning_cohort_spec import protocol_train_subjects
-        subjects = protocol_train_subjects(protocol)
+        from .patient_planning_cohort_spec import validate_sequential_protocol
+        validate_sequential_protocol(protocol)
     elif semantic_digest(protocol)!=semantic_digest(cohort_learning_protocol(protocol.get('updates_per_method'),
             public_target_context_variant=protocol.get('public_target_context_variant'))):
         raise ValueError('Exact cohort checkpoint protocol required')
-    groups=tuple('ReMIND:'+subject.rsplit('-',1)[1] for subject in subjects)
+    groups=tuple('ReMIND:'+subject.rsplit('-',1)[1] for subject in TRAIN)
     context_hashes=dict(expected_context_hashes)
     if (set(context_hashes)!=set(groups) or any(type(h) is not str or len(h)!=71
             or not h.startswith('sha256:') or any(c not in '0123456789abcdef' for c in h[7:])
@@ -171,7 +164,7 @@ No observation, task factory, forward, optimizer, pickle or torch.load is used.
                 or type(metadata['completed_updates']) is not int
                 or metadata['completed_updates']!=protocol['updates_per_method']
                 or metadata['contexts']!=[{'patient_group':g,'context_hash':context_hashes[g]} for g in groups]
-                or metadata['TRAIN_subjects']!=list(subjects)
+                or metadata['TRAIN_subjects']!=list(TRAIN)
                 or any(metadata[k] is not False for k in ('SELECT_EVAL_opened','private_reference_used','clinical_claim'))):
             raise ValueError('Checkpoint architecture or declared TRAIN lineage differs')
         rows=metadata['tensors']

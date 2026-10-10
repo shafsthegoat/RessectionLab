@@ -9,7 +9,7 @@ from dataclasses import dataclass
 import json
 
 from .core import freeze_json, semantic_digest, thaw_json
-from .patient_planning_cohort_spec import CACHED_TEACHERS, protocol_train_subjects, validate_sequential_protocol
+from .patient_planning_cohort_spec import CACHED_TEACHERS, TRAIN, validate_sequential_protocol
 from .patient_planning_learning import PatientTrainingTrace, PatientTrainSession
 from .patient_planning_preflight import _history_identity
 
@@ -49,7 +49,6 @@ class PatientTeacherTraceCache:
         if execution['teacher_observations'] != CACHED_TEACHERS:
             raise ValueError('Teacher cache must be declared before context admission')
         self._protocol_hash = semantic_digest(self.protocol)
-        self._subjects = protocol_train_subjects(self.protocol)
         self._entries = ()
         self._pins_hash = semantic_digest(())
 
@@ -75,14 +74,10 @@ The sealed replay object is validated and discarded; only compact pins remain.
         if type(trace) is not PatientTrainingTrace:
             raise TypeError('Exact admitted complete teacher trace required')
         trace.require(); context = trace.context.record()
-        if (len(self._entries) >= len(self._subjects) or context['subject'] != self._subjects[len(self._entries)]
+        if (len(self._entries) >= len(TRAIN) or context['subject'] != TRAIN[len(self._entries)]
                 or context['learning_protocol_hash'] != self._protocol_hash
                 or trace.behavior_parameter_hash is not None):
             raise ValueError('Ordered fixed TRAIN teachers under this storage protocol required')
-        expected_steps = self.protocol['cohort_execution'].get('teacher_steps')
-        if expected_steps is not None and (len(trace.transitions) != expected_steps[len(self._entries)]
-                or sum(r.action_id == 'STOP' for r in trace.transitions) != 1):
-            raise ValueError('Exact complete post-exposure teacher decision counts required')
         expected_plan = {'context_hash': trace.context.fingerprint,
             'source_hash': context['source_hash'], 'decision_model_hash': context['decision_model_hash'],
             'initial_observation_hash': trace.transitions[0].observation.fingerprint,
@@ -122,16 +117,16 @@ The sealed replay object is validated and discarded; only compact pins remain.
         if type(session) is not PatientTrainSession:
             raise TypeError('Exact admitted IL session required')
         session.require('IL')
-        if (len(self._entries) != len(self._subjects) or semantic_digest(session.protocol) != self._protocol_hash
+        if (len(self._entries) != len(TRAIN) or semantic_digest(session.protocol) != self._protocol_hash
                 or tuple(c.fingerprint for c in session.contexts) != tuple(e.pin['context_hash'] for e in self._entries)):
             raise ValueError('All four replayed teachers and the exact common session are required')
-        entry = self._entries[self._subjects.index(subject)]
+        entry = self._entries[TRAIN.index(subject)]
         session.require_trace(entry.trace)
         return entry.trace
 
     def record(self):
         self._require()
-        return {'mode': CACHED_TEACHERS, 'complete': len(self._entries) == len(self._subjects),
+        return {'mode': CACHED_TEACHERS, 'complete': len(self._entries) == len(TRAIN),
             'learning_protocol_hash': self._protocol_hash, 'cache_seal': self._pins_hash,
             'traces': [thaw_json(e.pin) for e in self._entries],
             'array_bytes': sum(e.pin['array_bytes'] for e in self._entries),

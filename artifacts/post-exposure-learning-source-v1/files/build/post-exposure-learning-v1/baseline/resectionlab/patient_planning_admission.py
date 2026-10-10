@@ -255,8 +255,8 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
     _need(not occupancy_inference or (derived_occupancy and not partial_domain
               and checkpoint_reload and not occupancy_learning),
           "union_inference_requires_original_full_coverage_frozen_SELECT_condition")
-    _need(not occupancy_learning or (derived_occupancy and (not partial_domain or post_start is not None)),
-          "union_learning_requires_full_coverage_or_explicit_post_exposure_condition")
+    _need(not occupancy_learning or (derived_occupancy and not partial_domain),
+          "union_learning_requires_original_full_coverage_condition")
     plan = _fields(protocol, PROTOCOL_FIELDS | ({"checkpoint_lineage"} if checkpoint_reload else set())
         | ({"occupancy_learning_protocol"} if occupancy_learning else set())
         | ({"occupancy_inference_protocol"} if occupancy_inference else set())
@@ -268,9 +268,9 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
         _need(post_start.record["version"] == POST_EXPOSURE_VERSION
               and semantic_digest(source["post_exposure"]) == post_start.fingerprint
               and plan["post_exposure_condition_hash"] == post_start.fingerprint
-              and (occupancy_learning or (plan["max_optimizer_updates"] == 0 and plan["max_policy_forwards"] == 0))
-              and not occupancy_inference and not checkpoint_reload,
-              "explicit_post_exposure_search_or_learning_binding_required")
+              and plan["max_optimizer_updates"] == 0 and plan["max_policy_forwards"] == 0
+              and not occupancy_learning and not occupancy_inference and not checkpoint_reload,
+              "explicit_post_exposure_search_only_binding_required")
     domain = source["evidence_domain"]
     _need(domain in {"acquired_patient", "generated_interface_control"}, "explicit_evidence_domain_required")
     _need(source["version"] == qc["version"] == plan["version"] == VERSION
@@ -318,13 +318,10 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
                       and type(plan["max_policy_forwards"]) is int and plan["max_policy_forwards"] == 0)),
                   "derived_occupancy_requires_fixed_TRAIN_search_only_or_explicit_learning")
         if occupancy_learning:
-            from .patient_planning_cohort_spec import (validate_union_obstruction_learning,
-                validate_post_exposure_learning)
-            validator = validate_post_exposure_learning if partial_domain else validate_union_obstruction_learning
-            learning = validator(plan["occupancy_learning_protocol"],
+            from .patient_planning_cohort_spec import validate_union_obstruction_learning
+            learning = validate_union_obstruction_learning(plan["occupancy_learning_protocol"],
                 learning_protocol_hash=plan["learning_protocol_hash"], proposal_config=case.proposal_config,
-                max_steps=plan["max_steps"],
-                **({'post_exposure_condition':post_start.record['version']} if partial_domain else {}))
+                max_steps=plan["max_steps"])
             _need(plan["initialization"] == "fresh_seeded_shared_initialization"
                   and case.proposal_mode == "nominal_cavity_v1"
                   and case.public_target_context_variant == learning["public_target_context_variant"]
@@ -420,14 +417,12 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
         **({"occupancy_condition": plan["occupancy_condition"],
             "occupancy_derivation": case._occupancy_derivation,
             "execution_kind": (UNION_SELECT_EXECUTION if occupancy_inference else
-                ("fixed_four_TRAIN_post_exposure_learning_v1" if partial_domain else
-                 "fixed_four_TRAIN_union_obstruction_learning_v1") if occupancy_learning else "search_only_no_policy"),
+                "fixed_four_TRAIN_union_obstruction_learning_v1" if occupancy_learning else "search_only_no_policy"),
             "derived_occupancy_anatomically_validated": False,
             "policy_comparison_permitted": occupancy_learning or occupancy_inference,
             **({"comparison_scope": "same_declared_union_world_SELECT013_frozen_inference_only"}
                 if occupancy_inference else {}),
-            **({"comparison_scope": ("same_declared_post_exposure_world_new_four_TRAIN_only" if partial_domain
-                else "same_declared_union_world_fixed_four_TRAIN_only")} if occupancy_learning else {})}
+            **({"comparison_scope": "same_declared_union_world_fixed_four_TRAIN_only"} if occupancy_learning else {})}
            if derived_occupancy else {}),
         **({"source_and_simulated_domains": case._domain_record,
             "source_domain_fully_covered": False} if partial_domain else {}),

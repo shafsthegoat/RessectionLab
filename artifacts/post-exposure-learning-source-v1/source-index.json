@@ -1,0 +1,146 @@
+{
+  "files": [
+    {
+      "source_path": "build/post-exposure-learning-v1/pilot_contract.py",
+      "package_path": "files/build/post-exposure-learning-v1/pilot_contract.py",
+      "sha256": "82982baea9ad33865d0af36707eb88f3cf9f6a2cf42d463425acec8a05cfb5a6",
+      "bytes": 18596
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/cohort_worker.py",
+      "package_path": "files/build/post-exposure-learning-v1/cohort_worker.py",
+      "sha256": "554d4820e2301d39230442971697802d96c17ef03702fee532936e91e598b1b0",
+      "bytes": 22806
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/run_owned.py",
+      "package_path": "files/build/post-exposure-learning-v1/run_owned.py",
+      "sha256": "fe497e162411919ff49d889fed1264ea15004fad52230c0effb6c56a84089806",
+      "bytes": 13169
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/freeze-runtime.py",
+      "package_path": "files/build/post-exposure-learning-v1/freeze-runtime.py",
+      "sha256": "7b872b53bc57a1c84fdbdcc34b53b7e05ba70047f9682c5ab569a681197cca05",
+      "bytes": 8171
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/runner-index.json",
+      "package_path": "files/build/post-exposure-learning-v1/runner-index.json",
+      "sha256": "dbc52d2a85193a6278e0530e9b636ab67a16b3f91c01cb19854020f215a9dbae",
+      "bytes": 2538
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/tests/test_runner.py",
+      "package_path": "files/build/post-exposure-learning-v1/tests/test_runner.py",
+      "sha256": "c77fa8eafd01fdfb971a88b95bbf96a84eed482e7f76331cef75d7e178424308",
+      "bytes": 13816
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/tests/run_controls.py",
+      "package_path": "files/build/post-exposure-learning-v1/tests/run_controls.py",
+      "sha256": "8eaf7a5f173ee6ec0eb83b64d71438c305adcc6797db74c3267a8769760999f3",
+      "bytes": 405
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/admission-index.json",
+      "package_path": "files/build/post-exposure-learning-v1/admission-index.json",
+      "sha256": "66ffe82c254877009a49eb2f2616481967babcd4957baacc09bb1ab9c1fa4c16",
+      "bytes": 3414
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/admission.patch",
+      "package_path": "files/build/post-exposure-learning-v1/admission.patch",
+      "sha256": "e9f6fcc89da735247d49fb78735b4b1be4b05bbc03a40e7b932554234c2e0d4b",
+      "bytes": 43117
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/run_generated.py",
+      "package_path": "files/build/post-exposure-learning-v1/run_generated.py",
+      "sha256": "e201db037d381cf6097f000c9e174611866f024da1023f603c16a1f182b86a8c",
+      "bytes": 3448
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/generated-attempt-01/receipt.json",
+      "package_path": "files/build/post-exposure-learning-v1/generated-attempt-01/receipt.json",
+      "sha256": "5bdd7c3b34b42122d099a3f8ab9894fa513e67810782591b7b96ff8cf109e840",
+      "bytes": 5482
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/generated-attempt-01/tests.log",
+      "package_path": "files/build/post-exposure-learning-v1/generated-attempt-01/tests.log",
+      "sha256": "11899aa96ca73175f4426a34e70a423fea8697ed3f2400b562ea8993307acbe6",
+      "bytes": 191
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/runner-controls-attempt-01/receipt.json",
+      "package_path": "files/build/post-exposure-learning-v1/runner-controls-attempt-01/receipt.json",
+      "sha256": "7a02bff2bb7108a756551eb3774eab9e1bd6105df38f9a18844187fc10f5108a",
+      "bytes": 1365
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/runner-controls-attempt-01/stdout.log",
+      "package_path": "files/build/post-exposure-learning-v1/runner-controls-attempt-01/stdout.log",
+      "sha256": "60a67fab9c69c3af3a1c935e037a1066cf067f946124d599fd12357b625ae086",
+      "bytes": 277
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/runner-controls-attempt-02/receipt.json",
+      "package_path": "files/build/post-exposure-learning-v1/runner-controls-attempt-02/receipt.json",
+      "sha256": "5cd778efebcfbe838f9382661c32491cbb514a78c13fc7217371caee0a4640cc",
+      "bytes": 1379
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/runner-controls-attempt-02/stdout.log",
+      "package_path": "files/build/post-exposure-learning-v1/runner-controls-attempt-02/stdout.log",
+      "sha256": "6dab108e83d9b40f8bcf9795708b74a68cfc5033ef5a23911393c82dc716940c",
+      "bytes": 100
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/baseline/resectionlab/patient_planning_admission.py",
+      "package_path": "files/build/post-exposure-learning-v1/baseline/resectionlab/patient_planning_admission.py",
+      "sha256": "d33c96f43b07db739be411eb2efef6376583c45c1db671df468fe9f505de6242",
+      "bytes": 29029
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/baseline/resectionlab/patient_planning_cohort_io.py",
+      "package_path": "files/build/post-exposure-learning-v1/baseline/resectionlab/patient_planning_cohort_io.py",
+      "sha256": "45a1aa6b585e1dd4997bfdbb04ff911a40b0620e20707910ebd4665ade0ebb24",
+      "bytes": 12090
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/baseline/resectionlab/patient_planning_cohort_spec.py",
+      "package_path": "files/build/post-exposure-learning-v1/baseline/resectionlab/patient_planning_cohort_spec.py",
+      "sha256": "ec8d3632f6b6a9abf3276d671373831319311e4f8c1bfea10f89ef274bdd2194",
+      "bytes": 11248
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/baseline/resectionlab/patient_planning_cohort_visits.py",
+      "package_path": "files/build/post-exposure-learning-v1/baseline/resectionlab/patient_planning_cohort_visits.py",
+      "sha256": "c145fc9427a4ba271b74840d9c164ad4571553f2c446ad12ac98ffd61ed24e6f",
+      "bytes": 3955
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/baseline/resectionlab/patient_planning_learning.py",
+      "package_path": "files/build/post-exposure-learning-v1/baseline/resectionlab/patient_planning_learning.py",
+      "sha256": "b35970af26d132dc29577c852dfd7ed3e147325b6c099f1883daa354eecada93",
+      "bytes": 18692
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/baseline/resectionlab/patient_teacher_trace_cache.py",
+      "package_path": "files/build/post-exposure-learning-v1/baseline/resectionlab/patient_teacher_trace_cache.py",
+      "sha256": "4a23d2962c951223afa13ace81fe3fe6f5d897e311907c5bc92869774a5cb940",
+      "bytes": 7941
+    },
+    {
+      "source_path": "build/post-exposure-learning-v1/baseline/resectionlab/public_patient_factory.py",
+      "package_path": "files/build/post-exposure-learning-v1/baseline/resectionlab/public_patient_factory.py",
+      "sha256": "c9f48ceb53cf0278d7a8a072d2925c5f57878ffc2f0ad79e07028d85b712d4b5",
+      "bytes": 25838
+    }
+  ],
+  "files_count": 23,
+  "total_bytes": 247067,
+  "result_sha256": "3a319dfd107f22a3221d732e51e124f091b8365b09c35795c52eb8ba487738d8",
+  "pending_companion": "canonical-controls.log and independent source review, added only after terminal notifications"
+}

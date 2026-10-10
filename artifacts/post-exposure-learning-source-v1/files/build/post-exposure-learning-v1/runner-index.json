@@ -1,0 +1,31 @@
+{
+  "scope": "Staged fixed new-four post-exposure IL64 versus scratch RL8; no acquired training run",
+  "files": {
+    "build/post-exposure-learning-v1/pilot_contract.py": "82982baea9ad33865d0af36707eb88f3cf9f6a2cf42d463425acec8a05cfb5a6",
+    "build/post-exposure-learning-v1/cohort_worker.py": "554d4820e2301d39230442971697802d96c17ef03702fee532936e91e598b1b0",
+    "build/post-exposure-learning-v1/run_owned.py": "fe497e162411919ff49d889fed1264ea15004fad52230c0effb6c56a84089806",
+    "build/post-exposure-learning-v1/freeze-runtime.py": "7b872b53bc57a1c84fdbdcc34b53b7e05ba70047f9682c5ab569a681197cca05",
+    "build/post-exposure-learning-v1/tests/test_runner.py": "c77fa8eafd01fdfb971a88b95bbf96a84eed482e7f76331cef75d7e178424308",
+    "build/post-exposure-learning-v1/tests/run_controls.py": "8eaf7a5f173ee6ec0eb83b64d71438c305adcc6797db74c3267a8769760999f3",
+    "build/post-exposure-learning-v1/runner-controls-attempt-01/receipt.json": "7a02bff2bb7108a756551eb3774eab9e1bd6105df38f9a18844187fc10f5108a",
+    "build/post-exposure-learning-v1/runner-controls-attempt-01/stdout.log": "60a67fab9c69c3af3a1c935e037a1066cf067f946124d599fd12357b625ae086",
+    "build/post-exposure-learning-v1/runner-controls-attempt-02/receipt.json": "5cd778efebcfbe838f9382661c32491cbb514a78c13fc7217371caee0a4640cc",
+    "build/post-exposure-learning-v1/runner-controls-attempt-02/stdout.log": "6dab108e83d9b40f8bcf9795708b74a68cfc5033ef5a23911393c82dc716940c"
+  },
+  "generated_controls": {
+    "passed": 13,
+    "pytest_seconds": 12.85,
+    "parent_seconds": 13.338719125138596,
+    "maxrss_bytes": 269058048,
+    "scope": "actual runner control flow with generated numerical stubs; real production admission/cache/checkpoint controls in admission-index",
+    "prior_failure": "attempt01 base runtime interpreter resolved outside .venv; failed before collection"
+  },
+  "budget_arithmetic": {
+    "IL_forwards": "64*29 loss +29 readout +4*24 maxgreedy =1981",
+    "RL_forwards": "2*(8*4*24) collection+loss +29 readout +4*24 maxgreedy =1661",
+    "IL_previews": "8 source visits*120 candidates*(1+3*24)=70080",
+    "RL_previews": "44 source visits*120 candidates*(1+3*24)=385440",
+    "qualification": "conservative prospective maxima; actual measured costs are authority; no equal-compute claim"
+  },
+  "runtime_freeze": "Await canonical promotion then freeze-runtime.py --head <exact promoted HEAD> --method IL; false template only, root changes only status to released_one_attempt; RL additionally requires matched IL completion receipt hash"
+}

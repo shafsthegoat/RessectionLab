@@ -49,15 +49,8 @@ def common_patient_policies(contexts, protocol):
     if not contexts: raise ValueError("At least one admitted TRAIN context required")
     sequential = 'cohort_execution' in protocol
     if sequential:
-        from .patient_planning_cohort_spec import (validate_sequential_protocol,
-            protocol_train_subjects, POST_EXPOSURE_LEARNING_VERSION)
+        from .patient_planning_cohort_spec import validate_sequential_protocol
         validate_sequential_protocol(protocol)
-        if protocol['version'] == POST_EXPOSURE_LEARNING_VERSION:
-            execution = protocol['cohort_execution']
-            if (tuple(c.record().get('subject') for c in contexts) != protocol_train_subjects(protocol)
-                    or any(c.record().get('post_exposure', {}).get('version') != execution['post_exposure_condition']
-                           for c in contexts)):
-                raise ValueError('Exact ordered new-four TRAIN post-exposure contexts required')
     variant=protocol.get('public_target_context_variant')
     if variant is not None:
         from .public_target_context import VERSION

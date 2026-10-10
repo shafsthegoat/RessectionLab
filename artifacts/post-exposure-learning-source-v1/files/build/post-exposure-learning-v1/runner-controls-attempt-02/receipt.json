@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/post-exposure-learning-v1/runner-controls-attempt-02/fresh-pycache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/post-exposure-learning-v1/tests/run_controls.py"
+  ],
+  "pid": 88005,
+  "returncode": 0,
+  "timed_out": false,
+  "wall_seconds": 13.338719125138596,
+  "maxrss_bytes_macos": 269058048,
+  "one_thread": true,
+  "patient_arrays_opened": 0,
+  "numerical_endpoint_layers": "generated stubs; production admission/cache/checkpoint separately tested",
+  "files": {
+    "pilot_contract.py": "82982baea9ad33865d0af36707eb88f3cf9f6a2cf42d463425acec8a05cfb5a6",
+    "cohort_worker.py": "554d4820e2301d39230442971697802d96c17ef03702fee532936e91e598b1b0",
+    "run_owned.py": "fe497e162411919ff49d889fed1264ea15004fad52230c0effb6c56a84089806",
+    "freeze-runtime.py": "7b872b53bc57a1c84fdbdcc34b53b7e05ba70047f9682c5ab569a681197cca05",
+    "tests/test_runner.py": "c77fa8eafd01fdfb971a88b95bbf96a84eed482e7f76331cef75d7e178424308",
+    "tests/run_controls.py": "8eaf7a5f173ee6ec0eb83b64d71438c305adcc6797db74c3267a8769760999f3"
+  }
+}

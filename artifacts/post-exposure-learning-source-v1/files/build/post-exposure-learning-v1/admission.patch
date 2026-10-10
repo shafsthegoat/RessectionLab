@@ -1,0 +1,665 @@
+--- a/src/resectionlab/patient_planning_admission.py
++++ b/src/resectionlab/patient_planning_admission.py
+@@ -255,8 +255,8 @@
+     _need(not occupancy_inference or (derived_occupancy and not partial_domain
+               and checkpoint_reload and not occupancy_learning),
+           "union_inference_requires_original_full_coverage_frozen_SELECT_condition")
+-    _need(not occupancy_learning or (derived_occupancy and not partial_domain),
+-          "union_learning_requires_original_full_coverage_condition")
++    _need(not occupancy_learning or (derived_occupancy and (not partial_domain or post_start is not None)),
++          "union_learning_requires_full_coverage_or_explicit_post_exposure_condition")
+     plan = _fields(protocol, PROTOCOL_FIELDS | ({"checkpoint_lineage"} if checkpoint_reload else set())
+         | ({"occupancy_learning_protocol"} if occupancy_learning else set())
+         | ({"occupancy_inference_protocol"} if occupancy_inference else set())
+@@ -268,9 +268,9 @@
+         _need(post_start.record["version"] == POST_EXPOSURE_VERSION
+               and semantic_digest(source["post_exposure"]) == post_start.fingerprint
+               and plan["post_exposure_condition_hash"] == post_start.fingerprint
+-              and plan["max_optimizer_updates"] == 0 and plan["max_policy_forwards"] == 0
+-              and not occupancy_learning and not occupancy_inference and not checkpoint_reload,
+-              "explicit_post_exposure_search_only_binding_required")
++              and (occupancy_learning or (plan["max_optimizer_updates"] == 0 and plan["max_policy_forwards"] == 0))
++              and not occupancy_inference and not checkpoint_reload,
++              "explicit_post_exposure_search_or_learning_binding_required")
+     domain = source["evidence_domain"]
+     _need(domain in {"acquired_patient", "generated_interface_control"}, "explicit_evidence_domain_required")
+     _need(source["version"] == qc["version"] == plan["version"] == VERSION
+@@ -318,10 +318,13 @@
+                       and type(plan["max_policy_forwards"]) is int and plan["max_policy_forwards"] == 0)),
+                   "derived_occupancy_requires_fixed_TRAIN_search_only_or_explicit_learning")
+         if occupancy_learning:
+-            from .patient_planning_cohort_spec import validate_union_obstruction_learning
+-            learning = validate_union_obstruction_learning(plan["occupancy_learning_protocol"],
++            from .patient_planning_cohort_spec import (validate_union_obstruction_learning,
++                validate_post_exposure_learning)
++            validator = validate_post_exposure_learning if partial_domain else validate_union_obstruction_learning
++            learning = validator(plan["occupancy_learning_protocol"],
+                 learning_protocol_hash=plan["learning_protocol_hash"], proposal_config=case.proposal_config,
+-                max_steps=plan["max_steps"])
++                max_steps=plan["max_steps"],
++                **({'post_exposure_condition':post_start.record['version']} if partial_domain else {}))
+             _need(plan["initialization"] == "fresh_seeded_shared_initialization"
+                   and case.proposal_mode == "nominal_cavity_v1"
+                   and case.public_target_context_variant == learning["public_target_context_variant"]
+@@ -417,12 +420,14 @@
+         **({"occupancy_condition": plan["occupancy_condition"],
+             "occupancy_derivation": case._occupancy_derivation,
+             "execution_kind": (UNION_SELECT_EXECUTION if occupancy_inference else
+-                "fixed_four_TRAIN_union_obstruction_learning_v1" if occupancy_learning else "search_only_no_policy"),
++                ("fixed_four_TRAIN_post_exposure_learning_v1" if partial_domain else
++                 "fixed_four_TRAIN_union_obstruction_learning_v1") if occupancy_learning else "search_only_no_policy"),
+             "derived_occupancy_anatomically_validated": False,
+             "policy_comparison_permitted": occupancy_learning or occupancy_inference,
+             **({"comparison_scope": "same_declared_union_world_SELECT013_frozen_inference_only"}
+                 if occupancy_inference else {}),
+-            **({"comparison_scope": "same_declared_union_world_fixed_four_TRAIN_only"} if occupancy_learning else {})}
++            **({"comparison_scope": ("same_declared_post_exposure_world_new_four_TRAIN_only" if partial_domain
++                else "same_declared_union_world_fixed_four_TRAIN_only")} if occupancy_learning else {})}
+            if derived_occupancy else {}),
+         **({"source_and_simulated_domains": case._domain_record,
+             "source_domain_fully_covered": False} if partial_domain else {}),
+--- a/src/resectionlab/patient_planning_cohort_io.py
++++ b/src/resectionlab/patient_planning_cohort_io.py
+@@ -59,6 +59,12 @@
+     """Non-pickle weights plus hash-only lineage; no image, mask or observation data."""
+     if updates != protocol['updates_per_method']:
+         raise ValueError('Only the complete fixed endpoint can be saved as final')
++    subjects = TRAIN
++    if 'cohort_execution' in protocol:
++        from .patient_planning_cohort_spec import protocol_train_subjects
++        subjects = protocol_train_subjects(protocol)
++        if tuple(c.patient_group for c in contexts) != tuple('ReMIND:'+s.rsplit('-',1)[1] for s in subjects):
++            raise ValueError('Checkpoint contexts must match the exact declared TRAIN cohort order')
+     entries=[]; payloads=[]
+     for index,(name,tensor) in enumerate(sorted(policy.state_dict().items())):
+         array=tensor.detach().cpu().contiguous().numpy()
+@@ -72,7 +78,7 @@
+         'method':method,'architecture_hash':policy.architecture_hash,'parameter_hash':parameter_hash(policy),
+         'initial_parameter_hash':initial_hash,'learning_protocol_hash':semantic_digest(protocol),
+         'completed_updates':updates,'contexts':[{'patient_group':c.patient_group,'context_hash':c.fingerprint} for c in contexts],
+-        'TRAIN_subjects':list(TRAIN),'SELECT_EVAL_opened':False,'private_reference_used':False,
++        'TRAIN_subjects':list(subjects),'SELECT_EVAL_opened':False,'private_reference_used':False,
+         'tensors':entries,'format':'ZIP_STORED_JSON_FLOAT32_NPY_V1','clinical_claim':False}
+     archive_bytes=io.BytesIO()
+     with zipfile.ZipFile(archive_bytes,'w',compression=zipfile.ZIP_STORED) as archive:
+@@ -103,13 +109,14 @@
+ No observation, task factory, forward, optimizer, pickle or torch.load is used.
+ """
+     protocol=freeze_json(expected_learning_protocol)
++    subjects = TRAIN
+     if 'cohort_execution' in protocol:
+-        from .patient_planning_cohort_spec import validate_sequential_protocol
+-        validate_sequential_protocol(protocol)
++        from .patient_planning_cohort_spec import protocol_train_subjects
++        subjects = protocol_train_subjects(protocol)
+     elif semantic_digest(protocol)!=semantic_digest(cohort_learning_protocol(protocol.get('updates_per_method'),
+             public_target_context_variant=protocol.get('public_target_context_variant'))):
+         raise ValueError('Exact cohort checkpoint protocol required')
+-    groups=tuple('ReMIND:'+subject.rsplit('-',1)[1] for subject in TRAIN)
++    groups=tuple('ReMIND:'+subject.rsplit('-',1)[1] for subject in subjects)
+     context_hashes=dict(expected_context_hashes)
+     if (set(context_hashes)!=set(groups) or any(type(h) is not str or len(h)!=71
+             or not h.startswith('sha256:') or any(c not in '0123456789abcdef' for c in h[7:])
+@@ -164,7 +171,7 @@
+                 or type(metadata['completed_updates']) is not int
+                 or metadata['completed_updates']!=protocol['updates_per_method']
+                 or metadata['contexts']!=[{'patient_group':g,'context_hash':context_hashes[g]} for g in groups]
+-                or metadata['TRAIN_subjects']!=list(TRAIN)
++                or metadata['TRAIN_subjects']!=list(subjects)
+                 or any(metadata[k] is not False for k in ('SELECT_EVAL_opened','private_reference_used','clinical_claim'))):
+             raise ValueError('Checkpoint architecture or declared TRAIN lineage differs')
+         rows=metadata['tensors']
+--- a/src/resectionlab/patient_planning_cohort_spec.py
++++ b/src/resectionlab/patient_planning_cohort_spec.py
+@@ -6,7 +6,7 @@
+ from dataclasses import asdict
+ 
+ from .core import freeze_json, semantic_digest, thaw_json
+-from .native_proposals import NominalCavityProposalConfig
++from .native_proposals import NominalCavityProposalConfig, DEFAULT_COLUMN_OFFSETS
+ from .public_target_context import VERSION as TARGET_CONTEXT
+ 
+ VERSION = 'fixed-four-TRAIN-sequential-cohort-v2'
+@@ -15,12 +15,16 @@
+ RECOLLECT_TEACHERS = 'recollect_complete_pinned_plan_each_IL_update'
+ CACHED_TEACHERS = 'cache_complete_replayed_TRAIN_teacher_traces_v1'
+ TRAIN = ('ReMIND-008', 'ReMIND-010', 'ReMIND-020', 'ReMIND-025')
++POST_EXPOSURE_LEARNING_VERSION = 'fixed-four-TRAIN-post-exposure-learning-v1'
++POST_EXPOSURE_TRAIN = ('ReMIND-002', 'ReMIND-015', 'ReMIND-018', 'ReMIND-045')
++POST_EXPOSURE_TEACHER_STEPS = (1, 14, 1, 13)
+ CLOSED = {'SELECT': ('ReMIND-013', 'ReMIND-037'), 'EVAL': ('ReMIND-067',)}
+ 
+ 
+ def sequential_learning_protocol(*, updates, max_steps, search, proposal_config,
+         retention_mode='return_plus_opening_depth_v1', il_teacher_weighting=None,
+-        teacher_observations=RECOLLECT_TEACHERS, teacher_cache_payload_bytes=None, occupancy_condition=None):
++        teacher_observations=RECOLLECT_TEACHERS, teacher_cache_payload_bytes=None, occupancy_condition=None,
++        post_exposure_condition=None):
+     from .patient_planning_learning import PREFLIGHT_PROTOCOL
+     # The sole longer endpoint is a fixed balanced-teacher optimization contrast.
+     # Existing 1..8 protocols retain their exact records and bounds.
+@@ -46,7 +50,20 @@
+     if (type(retention_mode) is not str or retention_mode not in {
+             'return_plus_opening_depth_v1', 'return_plus_opening_depth_volume_v1'}):
+         raise ValueError('Explicit reviewed depth or depth-volume two-lane retention required')
+-    if occupancy_condition is not None:
++    if post_exposure_condition is not None:
++        from .post_exposure import VERSION as POST_EXPOSURE_VERSION
++        from .patient_planning_admission import PARTIAL_DOMAIN_UNION_OCCUPANCY
++        il = (updates == 64 and il_teacher_weighting == BALANCED_TEACHER_CE
++              and teacher_observations == CACHED_TEACHERS and teacher_cache_payload_bytes == 256*1024**2)
++        rl = (updates == 8 and il_teacher_weighting is None
++              and teacher_observations == RECOLLECT_TEACHERS and teacher_cache_payload_bytes is None)
++        if (post_exposure_condition != POST_EXPOSURE_VERSION
++                or occupancy_condition != PARTIAL_DOMAIN_UNION_OCCUPANCY
++                or proposal_config.offsets_source_voxels != DEFAULT_COLUMN_OFFSETS
++                or proposal_config.obstruction_opening is not False
++                or proposal_config.max_candidates != 120 or max_steps != 24 or not (il or rl)):
++            raise ValueError('Exact new-four post-exposure IL64 cached256MiB or scratch RL8 condition required')
++    elif occupancy_condition is not None:
+         from .native_spatial_task import SUPPLIED_TUMOR_UNION_OCCUPANCY
+         if (occupancy_condition != SUPPLIED_TUMOR_UNION_OCCUPANCY
+                 or proposal_config.obstruction_opening is not True
+@@ -76,6 +93,13 @@
+             'heldout_execution': False})
+     if occupancy_condition is not None:
+         record['cohort_execution']['occupancy_condition'] = occupancy_condition
++    if post_exposure_condition is not None:
++        record['version'] = POST_EXPOSURE_LEARNING_VERSION
++        record['cohort_execution'].update(patient_order=list(POST_EXPOSURE_TRAIN),
++            post_exposure_condition=post_exposure_condition,
++            teacher_source='fixed_saved_greedy_complete_histories_v1',
++            teacher_decisions=sum(POST_EXPOSURE_TEACHER_STEPS),
++            teacher_steps=list(POST_EXPOSURE_TEACHER_STEPS))
+     if il_teacher_weighting is not None:
+         record['cohort_execution']['il_teacher_weighting'] = il_teacher_weighting
+     if teacher_observations == CACHED_TEACHERS:
+@@ -84,7 +108,7 @@
+ 
+ 
+ def validate_sequential_protocol(protocol):
+-    if protocol.get('version') != VERSION:
++    if protocol.get('version') not in (VERSION, POST_EXPOSURE_LEARNING_VERSION):
+         raise ValueError('Exact sequential cohort version required')
+     execution = protocol.get('cohort_execution', {})
+     config = NominalCavityProposalConfig(**thaw_json(execution.get('proposal_config', {})))
+@@ -94,10 +118,31 @@
+         il_teacher_weighting=execution.get('il_teacher_weighting'),
+         teacher_observations=execution.get('teacher_observations'),
+         teacher_cache_payload_bytes=execution.get('teacher_cache_payload_bytes'),
+-        occupancy_condition=execution.get('occupancy_condition'))
++        occupancy_condition=execution.get('occupancy_condition'),
++        post_exposure_condition=execution.get('post_exposure_condition'))
+     if semantic_digest(expected) != semantic_digest(protocol):
+         raise ValueError('Sequential objective, scheduling or task options changed')
+     return expected
++
++
++def protocol_train_subjects(protocol):
++    """Exact cohort order from a complete validated condition, never a caller list."""
++    protocol = validate_sequential_protocol(protocol)
++    return POST_EXPOSURE_TRAIN if protocol['version'] == POST_EXPOSURE_LEARNING_VERSION else TRAIN
++
++
++def validate_post_exposure_learning(protocol, *, learning_protocol_hash, proposal_config,
++        max_steps, post_exposure_condition):
++    protocol = validate_sequential_protocol(protocol)
++    execution = protocol['cohort_execution']
++    if (protocol['version'] != POST_EXPOSURE_LEARNING_VERSION
++            or execution.get('post_exposure_condition') != post_exposure_condition
++            or semantic_digest(protocol) != learning_protocol_hash
++            or type(proposal_config) is not NominalCavityProposalConfig
++            or proposal_config.fingerprint != execution['proposal_rule_hash']
++            or max_steps != execution['max_steps']):
++        raise ValueError('Exact declared new-four post-exposure learning world required')
++    return protocol
+ 
+ 
+ def validate_union_obstruction_learning(protocol, *, learning_protocol_hash, proposal_config, max_steps):
+@@ -176,6 +221,7 @@
+         raise ValueError('Sequential limits differ from declared protocol or bounded staging envelope')
+ 
+ 
+-def validate_factories(factories):
+-    if set(factories) != set(TRAIN) or any(not callable(factories[s]) for s in TRAIN):
++def validate_factories(factories, learning_protocol=None):
++    subjects = TRAIN if learning_protocol is None else protocol_train_subjects(learning_protocol)
++    if set(factories) != set(subjects) or any(not callable(factories[s]) for s in subjects):
+         raise ValueError('Exactly four fixed TRAIN visit factories required; SELECT/EVAL closed')
+--- a/src/resectionlab/patient_planning_cohort_visits.py
++++ b/src/resectionlab/patient_planning_cohort_visits.py
+@@ -11,17 +11,18 @@
+ from .core import freeze_json, semantic_digest, thaw_json
+ from .native_proposals import NominalCavityProposalConfig
+ from .patient_planning_admission import COHORT_SHA256
+-from .patient_planning_cohort_spec import TRAIN, validate_limits, validate_factories
++from .patient_planning_cohort_spec import TRAIN, validate_limits, validate_factories, protocol_train_subjects
+ 
+ 
+ def make_train_visit_factories(*, manifest_index_path, manifest_index_sha256,
+         cohort_bytes, learning_protocol, limits, released_record, released_sha256, progress):
+     validate_limits(learning_protocol, limits)
++    subjects = protocol_train_subjects(learning_protocol)
+     raw = Path(manifest_index_path).read_bytes()
+     if hashlib.sha256(raw).hexdigest() != manifest_index_sha256:
+         raise ValueError('Public manifest index changed')
+     index = json.loads(raw); rows = index['cases']
+-    if (len(rows) != 4 or {r['patient_id'] for r in rows} != set(TRAIN)
++    if (len(rows) != 4 or {r['patient_id'] for r in rows} != set(subjects)
+             or any(r['role'] != 'TRAIN' for r in rows)):
+         raise ValueError('Exactly fixed four TRAIN manifests required; held-out files closed')
+     if (type(cohort_bytes) is not bytes or hashlib.sha256(cohort_bytes).hexdigest() != COHORT_SHA256
+@@ -40,6 +41,8 @@
+     occupancy_options = ({} if 'occupancy_condition' not in protocol['cohort_execution'] else {
+         'occupancy_condition': protocol['cohort_execution']['occupancy_condition'],
+         'occupancy_learning_protocol': protocol})
++    if 'post_exposure_condition' in protocol['cohort_execution']:
++        occupancy_options['post_exposure_condition'] = protocol['cohort_execution']['post_exposure_condition']
+     def closure(subject):
+         def construct(*, output):
+             from .public_patient_factory import prepare_public_source
+@@ -58,6 +61,6 @@
+             return make_patient_planning_task(source, cohort_bytes=cohort_bytes,
+                 source_binding=binding, qc_receipt=qc, protocol=admission)
+         return construct
+-    factories = {subject: closure(subject) for subject in TRAIN}
+-    validate_factories(factories)
++    factories = {subject: closure(subject) for subject in subjects}
++    validate_factories(factories, learning_protocol)
+     return factories
+--- a/src/resectionlab/patient_planning_learning.py
++++ b/src/resectionlab/patient_planning_learning.py
+@@ -49,8 +49,15 @@
+     if not contexts: raise ValueError("At least one admitted TRAIN context required")
+     sequential = 'cohort_execution' in protocol
+     if sequential:
+-        from .patient_planning_cohort_spec import validate_sequential_protocol
++        from .patient_planning_cohort_spec import (validate_sequential_protocol,
++            protocol_train_subjects, POST_EXPOSURE_LEARNING_VERSION)
+         validate_sequential_protocol(protocol)
++        if protocol['version'] == POST_EXPOSURE_LEARNING_VERSION:
++            execution = protocol['cohort_execution']
++            if (tuple(c.record().get('subject') for c in contexts) != protocol_train_subjects(protocol)
++                    or any(c.record().get('post_exposure', {}).get('version') != execution['post_exposure_condition']
++                           for c in contexts)):
++                raise ValueError('Exact ordered new-four TRAIN post-exposure contexts required')
+     variant=protocol.get('public_target_context_variant')
+     if variant is not None:
+         from .public_target_context import VERSION
+--- a/src/resectionlab/patient_teacher_trace_cache.py
++++ b/src/resectionlab/patient_teacher_trace_cache.py
+@@ -9,7 +9,7 @@
+ import json
+ 
+ from .core import freeze_json, semantic_digest, thaw_json
+-from .patient_planning_cohort_spec import CACHED_TEACHERS, TRAIN, validate_sequential_protocol
++from .patient_planning_cohort_spec import CACHED_TEACHERS, protocol_train_subjects, validate_sequential_protocol
+ from .patient_planning_learning import PatientTrainingTrace, PatientTrainSession
+ from .patient_planning_preflight import _history_identity
+ 
+@@ -49,6 +49,7 @@
+         if execution['teacher_observations'] != CACHED_TEACHERS:
+             raise ValueError('Teacher cache must be declared before context admission')
+         self._protocol_hash = semantic_digest(self.protocol)
++        self._subjects = protocol_train_subjects(self.protocol)
+         self._entries = ()
+         self._pins_hash = semantic_digest(())
+ 
+@@ -74,10 +75,14 @@
+         if type(trace) is not PatientTrainingTrace:
+             raise TypeError('Exact admitted complete teacher trace required')
+         trace.require(); context = trace.context.record()
+-        if (len(self._entries) >= len(TRAIN) or context['subject'] != TRAIN[len(self._entries)]
++        if (len(self._entries) >= len(self._subjects) or context['subject'] != self._subjects[len(self._entries)]
+                 or context['learning_protocol_hash'] != self._protocol_hash
+                 or trace.behavior_parameter_hash is not None):
+             raise ValueError('Ordered fixed TRAIN teachers under this storage protocol required')
++        expected_steps = self.protocol['cohort_execution'].get('teacher_steps')
++        if expected_steps is not None and (len(trace.transitions) != expected_steps[len(self._entries)]
++                or sum(r.action_id == 'STOP' for r in trace.transitions) != 1):
++            raise ValueError('Exact complete post-exposure teacher decision counts required')
+         expected_plan = {'context_hash': trace.context.fingerprint,
+             'source_hash': context['source_hash'], 'decision_model_hash': context['decision_model_hash'],
+             'initial_observation_hash': trace.transitions[0].observation.fingerprint,
+@@ -117,16 +122,16 @@
+         if type(session) is not PatientTrainSession:
+             raise TypeError('Exact admitted IL session required')
+         session.require('IL')
+-        if (len(self._entries) != len(TRAIN) or semantic_digest(session.protocol) != self._protocol_hash
++        if (len(self._entries) != len(self._subjects) or semantic_digest(session.protocol) != self._protocol_hash
+                 or tuple(c.fingerprint for c in session.contexts) != tuple(e.pin['context_hash'] for e in self._entries)):
+             raise ValueError('All four replayed teachers and the exact common session are required')
+-        entry = self._entries[TRAIN.index(subject)]
++        entry = self._entries[self._subjects.index(subject)]
+         session.require_trace(entry.trace)
+         return entry.trace
+ 
+     def record(self):
+         self._require()
+-        return {'mode': CACHED_TEACHERS, 'complete': len(self._entries) == len(TRAIN),
++        return {'mode': CACHED_TEACHERS, 'complete': len(self._entries) == len(self._subjects),
+             'learning_protocol_hash': self._protocol_hash, 'cache_seal': self._pins_hash,
+             'traces': [thaw_json(e.pin) for e in self._entries],
+             'array_bytes': sum(e.pin['array_bytes'] for e in self._entries),
+--- a/src/resectionlab/public_patient_factory.py
++++ b/src/resectionlab/public_patient_factory.py
+@@ -108,9 +108,10 @@
+     if post_exposure_condition is not None:
+         from resectionlab.post_exposure import VERSION as POST_EXPOSURE_VERSION
+         if (post_exposure_condition != POST_EXPOSURE_VERSION or not partial_domain
+-                or expected_role != "TRAIN" or checkpoint_lineage is not None or occupancy_learning or occupancy_inference):
++                or expected_role != "TRAIN" or checkpoint_lineage is not None or occupancy_inference):
+             raise ValueError("Post-exposure is a separate fixed-four partial-domain TRAIN search condition")
+-    if occupancy_learning and (occupancy_condition != SUPPLIED_TUMOR_UNION_OCCUPANCY
++    if occupancy_learning and (occupancy_condition not in (SUPPLIED_TUMOR_UNION_OCCUPANCY, PARTIAL_DOMAIN_UNION_OCCUPANCY)
++            or partial_domain and post_exposure_condition is None
+             or expected_role != "TRAIN" or checkpoint_lineage is not None):
+         raise ValueError("Union learning is restricted to the original full-coverage TRAIN condition")
+     if derived_occupancy and not occupancy_learning and not occupancy_inference and (expected_role != "TRAIN" or checkpoint_lineage is not None
+@@ -126,10 +127,13 @@
+     if len(token) != 64 or any(c not in "0123456789abcdef" for c in token):
+         raise ValueError("Explicit learning protocol hash required")
+     if occupancy_learning:
+-        from resectionlab.patient_planning_cohort_spec import validate_union_obstruction_learning
+-        occupancy_learning_protocol = validate_union_obstruction_learning(occupancy_learning_protocol,
++        from resectionlab.patient_planning_cohort_spec import (validate_union_obstruction_learning,
++            validate_post_exposure_learning)
++        validator = validate_post_exposure_learning if partial_domain else validate_union_obstruction_learning
++        occupancy_learning_protocol = validator(occupancy_learning_protocol,
+             learning_protocol_hash=learning_protocol_hash, proposal_config=proposal_config,
+-            max_steps=limits.get("max_steps"))
++            max_steps=limits.get("max_steps"),
++            **({'post_exposure_condition':post_exposure_condition} if partial_domain else {}))
+         if (public_target_context_variant != occupancy_learning_protocol["public_target_context_variant"]
+                 or type(limits.get("max_optimizer_updates")) is not int
+                 or limits["max_optimizer_updates"] < 2*occupancy_learning_protocol["updates_per_method"]
+@@ -322,7 +326,8 @@
+             "policy_comparison_permitted": occupancy_learning or occupancy_inference,
+             **({"comparison_scope": "same_declared_union_world_SELECT013_frozen_inference_only"}
+                 if occupancy_inference else {}),
+-            **({"comparison_scope": "same_declared_union_world_fixed_four_TRAIN_only"} if occupancy_learning else {}),
++            **({"comparison_scope": ("same_declared_post_exposure_world_new_four_TRAIN_only" if partial_domain
++                else "same_declared_union_world_fixed_four_TRAIN_only")} if occupancy_learning else {}),
+             "normalization_coupling": "support_percentile_1_99 uses this condition occupancy; compare recorded bounds across arms",
+             "intensity_normalization": thaw_json(source._normalization_record)})
+     write(output / "admitted-public-bindings.json", {"source_binding": binding, "qc": qc,
+--- /dev/null
++++ b/tests/test_post_exposure_learning.py
+@@ -0,0 +1,277 @@
++"""Generated admission/lineage controls; no acquired arrays or fitted weights.
++
++Fabricated annotation-style manifests exercise interfaces only, not source QC.
++DTO-only teacher receipts below do not establish native replay; the owned runner
++must authenticate/replay every pinned saved teacher before admitting its cache.
++"""
++from dataclasses import replace
++import copy
++import importlib.util
++import json
++import os
++from pathlib import Path
++import sys
++
++import numpy as np
++import pytest
++import torch
++
++from resectionlab.core import freeze_json, semantic_digest, thaw_json
++from resectionlab import patient_planning_admission as admission
++from resectionlab import public_patient_factory as factory
++from resectionlab import patient_planning_learning as learning
++from resectionlab.native_proposals import NominalCavityProposalConfig, DEFAULT_COLUMN_OFFSETS
++from resectionlab.patient_planning_cohort_spec import (
++    TRAIN, POST_EXPOSURE_TRAIN, POST_EXPOSURE_LEARNING_VERSION, POST_EXPOSURE_TEACHER_STEPS,
++    CACHED_TEACHERS, BALANCED_TEACHER_CE, sequential_learning_protocol,
++    sequential_limits, protocol_train_subjects, validate_sequential_protocol, validate_factories)
++from resectionlab.post_exposure import VERSION as EXPOSURE
++from resectionlab.public_target_context import VERSION as TARGET_CONTEXT
++import test_paired_train_occupancy as helper
++
++
++def protocol(updates=8, **changes):
++    options = dict(updates=updates, max_steps=24,
++        search={'max_calls':5640, 'beam_width':2, 'seconds':300},
++        proposal_config=NominalCavityProposalConfig(max_candidates=120,
++            intermediate_opening_mm=1., tool_footprint_opening=True),
++        occupancy_condition=admission.PARTIAL_DOMAIN_UNION_OCCUPANCY,
++        post_exposure_condition=EXPOSURE, retention_mode='return_plus_opening_depth_volume_v1')
++    if updates == 64:
++        options.update(il_teacher_weighting=BALANCED_TEACHER_CE,
++            teacher_observations=CACHED_TEACHERS, teacher_cache_payload_bytes=256*1024**2)
++    options.update(changes)
++    return sequential_learning_protocol(**options)
++
++
++def limits(p):
++    return thaw_json(sequential_limits(p, worker_seconds=3540, memory_bytes=3*1024**3,
++                                      output_bytes=128*1024**2))
++
++
++def fixture(tmp_path, subject='ReMIND-002'):
++    inputs, _ = helper.fixture(tmp_path, subject=subject)
++    m = json.loads(inputs['public_manifest_path'].read_bytes())
++    image = np.arange(343, dtype=np.float32).reshape(7,7,7)
++    S = np.zeros(image.shape, np.uint8); S[1:4,2:5,2:5] = 1
++    T = np.zeros_like(S); T[3:5,3,3] = 1
++    Dt = np.ones_like(S); Dt[0,0,0] = 0
++    Ds = Dt.copy(); Ds[4,3,3] = 0
++    for key, values in zip(factory.PARTIAL_DOMAIN_ARRAY_KEYS, (image,S,T,Dt,Ds)):
++        path = tmp_path/(key+'.npy'); np.save(path,values,allow_pickle=False)
++        m['input_files'][key] = {'path':str(path),'sha256':factory.sha(path),
++            'bytes':path.stat().st_size,'dtype':str(values.dtype)}
++    m.update(shape_xyz=list(S.shape), public_support_domain_fully_covered=False,
++        source_domain_condition=admission.PARTIAL_DOMAIN_UNION_OCCUPANCY, training_admitted=False,
++        public_source_domain_counts={'support_domain':int(Ds.sum()),'target_in_known_support_positive':1,
++            'target_in_known_support_zero':0,'target_in_unknown_support_domain':1})
++    inputs['public_manifest_path'].write_text(json.dumps(m))
++    inputs['public_manifest_sha256'] = factory.sha(inputs['public_manifest_path'])
++    return inputs
++
++
++def build(path, inputs, p, *, search_only=False, **changes):
++    path.mkdir()
++    bound = {k:v for k,v in limits(p).items() if k not in ('output_bytes','checkpoint_bytes')}
++    if search_only: bound.update(max_optimizer_updates=0,max_policy_forwards=0)
++    options = dict(learning_protocol_hash=semantic_digest(p),
++        proposal_config=NominalCavityProposalConfig(**thaw_json(p['cohort_execution']['proposal_config'])),
++        public_target_context_variant=TARGET_CONTEXT,
++        occupancy_condition=admission.PARTIAL_DOMAIN_UNION_OCCUPANCY, post_exposure_condition=EXPOSURE)
++    if not search_only: options['occupancy_learning_protocol'] = p
++    options.update(changes)
++    return factory.prepare_public_source(path,{'limits':bound},'b'*64,None,
++        lambda *a,**k:None,**inputs,**options)
++
++
++def admit(built, inputs):
++    case,args = helper.contract(built,inputs)
++    return admission.make_patient_planning_task(case,**args)
++
++
++@pytest.mark.parametrize('updates',[8,64])
++@pytest.mark.parametrize('subject',POST_EXPOSURE_TRAIN)
++def test_new4_admission_changes_authority_not_tested_world(tmp_path, subject, updates):
++    inputs = fixture(tmp_path,subject); p=protocol(updates)
++    learned = build(tmp_path/'learned',inputs,p)
++    searched = build(tmp_path/'search',inputs,p,search_only=True)
++    assert learned[0].source_hash == searched[0].source_hash and learned[1:3] == searched[1:3]
++    task,context=admit(learned,inputs); other,closed=admit(searched,inputs)
++    context.require_training(); context.require_task(task.planning_clone()); context.require_task(task.fresh())
++    assert task.decision_model_hash == other.decision_model_hash
++    assert task.observation().fingerprint == other.observation().fingerprint
++    assert task.candidate_inventory() == other.candidate_inventory()
++    assert context.fingerprint != closed.fingerprint
++    with pytest.raises(ValueError): closed.require_training()
++    record=context.record()
++    assert record['execution_kind']=='fixed_four_TRAIN_post_exposure_learning_v1'
++    assert record['post_exposure']==thaw_json(task.case.post_exposure.record)
++    assert record['derived_occupancy_anatomically_validated'] is False
++    assert record['source_domain_fully_covered'] is False
++    assert task.case._supplied_goal_extent['full_region_positive_voxels']==2
++    assert not task.case.support_domain[4,3,3] and task.case._interaction_domain[4,3,3]
++    assert task.step('STOP').terminated
++
++
++@pytest.mark.parametrize('change',['no_exposure','old_occupancy','axis','obstruction','cap','horizon',
++    'updates','cache_bound','teacher_steps','teacher_source','order','private','initialization','version'])
++def test_protocol_refuses_unmatched_world_cohort_or_endpoint(change):
++    p=thaw_json(protocol(64)); e=p['cohort_execution']
++    if change=='no_exposure':e.pop('post_exposure_condition')
++    elif change=='old_occupancy':e['occupancy_condition']='cerebrum_plus_supplied_tumor_assumption'
++    elif change=='axis':e['proposal_config']['offsets_source_voxels'].append([-1,4])
++    elif change=='obstruction':e['proposal_config']['obstruction_opening']=True
++    elif change=='cap':e['proposal_config']['max_candidates']=96
++    elif change=='horizon':e['max_steps']=6
++    elif change=='updates':p['updates_per_method']=32
++    elif change=='cache_bound':e['teacher_cache_payload_bytes']=64*1024**2
++    elif change=='teacher_steps':e['teacher_steps']=[1,1,1,1]
++    elif change=='teacher_source':e['teacher_source']='new_beam_search'
++    elif change=='order':e['patient_order'][-1]='ReMIND-013'
++    elif change=='private':p['private_training_reward']=True
++    elif change=='initialization':p['initialization']='old_IL_checkpoint'
++    else:p['version']='fixed-four-TRAIN-sequential-cohort-v2'
++    with pytest.raises(ValueError):validate_sequential_protocol(p)
++
++
++@pytest.mark.parametrize('subject',['ReMIND-008','ReMIND-025','ReMIND-013','ReMIND-067'])
++def test_old_or_protected_subject_rejected_before_array_read(tmp_path,monkeypatch,subject):
++    inputs=fixture(tmp_path,subject)
++    monkeypatch.setattr(factory.np,'load',lambda *a,**k:pytest.fail('no source array read'))
++    with pytest.raises(ValueError):build(tmp_path/'out',inputs,protocol())
++
++
++@pytest.mark.parametrize('change',['exposure','protocol','initializer','update_budget','forward_budget','role','private','domain'])
++def test_admission_rejects_rebound_mismatch_before_native_inventory(tmp_path,monkeypatch,change):
++    inputs=fixture(tmp_path); built=build(tmp_path/'source',inputs,protocol())
++    case,args=helper.contract(built,inputs);args=copy.deepcopy(args)
++    if change=='exposure':args['protocol']['post_exposure_condition_hash']='sha256:'+'0'*64
++    elif change=='protocol':args['protocol']['learning_protocol_hash']='sha256:'+'0'*64
++    elif change=='initializer':args['protocol']['initialization']='checkpoint_warmstart'
++    elif change=='update_budget':args['protocol']['max_optimizer_updates']=0
++    elif change=='forward_budget':args['protocol']['max_policy_forwards']=0
++    elif change=='role':args['protocol']['role']='SELECT'
++    elif change=='private':args['protocol']['private_reference_used']=True
++    else:args['source_binding']['source_and_simulated_domains']['source_domain_extended']=True
++    helper.rebind(args)
++    monkeypatch.setattr(admission,'NativeSpatialTask',lambda *a,**k:pytest.fail('no native inventory'))
++    with pytest.raises(ValueError):admission.make_patient_planning_task(case,**args)
++
++
++def generated_dtos(p, monkeypatch):
++    import test_patient_cohort_sequential as generated
++    monkeypatch.setattr(generated,'TRAIN',POST_EXPOSURE_TRAIN)
++    contexts,observations=generated.generated_contexts(p)
++    result=[]
++    for context in contexts:
++        r=context.record();r.update(occupancy_condition=admission.PARTIAL_DOMAIN_UNION_OCCUPANCY,
++            post_exposure={'version':EXPOSURE},decision_model_hash=semantic_digest({'generated':context.patient_group}))
++        result.append(admission.PatientPlanningContext(freeze_json(r),semantic_digest(r)))
++    return tuple(result),observations
++
++
++def test_exact29_cache_fresh_common_policy_and_readable_checkpoint(tmp_path,monkeypatch):
++    from resectionlab.patient_teacher_trace_cache import PatientTeacherTraceCache
++    from resectionlab.patient_planning_cohort_io import _save_checkpoint,load_cohort_checkpoint,OutputBudget
++    from resectionlab.spatial_policy import parameter_hash
++    from test_patient_cohort_sequential import synthetic_trace
++    from test_patient_teacher_trace_cache import simulated_receipt
++    torch.set_num_threads(1)
++    p=protocol(64);contexts,observations=generated_dtos(p,monkeypatch)
++    il,rl=learning.common_patient_policies(contexts,p)
++    assert parameter_hash(il)==parameter_hash(rl)
++    session=learning.PatientTrainSession(contexts,'IL',il,initial_parameter_hash=parameter_hash(il),protocol=p)
++    assert not session._optimizer.state
++    cache=PatientTeacherTraceCache(p)
++    for context,obs,n in zip(contexts,observations,POST_EXPOSURE_TEACHER_STEPS):
++        trace=synthetic_trace(context,obs,n)
++        cache.add_replayed(trace,simulated_receipt(trace))
++    record=cache.record()
++    assert record['complete'] and sum(r['steps'] for r in record['traces'])==29
++    assert sum(r['stop_steps'] for r in record['traces'])==4
++    assert record['array_bytes']+record['metadata_json_bytes']<=256*1024**2
++    for subject in POST_EXPOSURE_TRAIN:cache.trace_for_il(session,subject).require()
++    other=learning.PatientTrainSession(contexts,'RL',rl,initial_parameter_hash=parameter_hash(rl),protocol=p)
++    with pytest.raises(ValueError):cache.trace_for_il(other,POST_EXPOSURE_TRAIN[0])
++    # Generated endpoint-format control only; no optimizer execution is claimed.
++    saved=_save_checkpoint(il,method='IL',contexts=contexts,protocol=p,updates=64,
++        initial_hash=parameter_hash(il),output=OutputBudget(tmp_path,16*1024**2),limits={'checkpoint_bytes':8*1024**2})
++    assert saved['metadata']['TRAIN_subjects']==list(POST_EXPOSURE_TRAIN)
++    restored,meta=load_cohort_checkpoint(tmp_path/saved['path'],expected_sha256=saved['sha256'],
++        expected_learning_protocol=p,expected_context_hashes={c.patient_group:c.fingerprint for c in contexts},expected_method='IL')
++    assert parameter_hash(restored)==parameter_hash(il)
++    assert thaw_json(meta)==saved['metadata']
++    with pytest.raises(ValueError):load_cohort_checkpoint(tmp_path/saved['path'],expected_sha256=saved['sha256'],
++        expected_learning_protocol=p,expected_context_hashes={'ReMIND:'+s[-3:]:'sha256:'+'0'*64 for s in TRAIN},expected_method='IL')
++
++
++@pytest.mark.parametrize('change',['order','missing_context','exposure','occupancy'])
++def test_common_initialization_rejects_wrong_condition_before_model(monkeypatch,change):
++    p=protocol();contexts,obs=generated_dtos(p,monkeypatch)
++    if change=='order':contexts=tuple(reversed(contexts))
++    elif change=='missing_context':contexts=contexts[:-1]
++    else:
++        r=contexts[0].record();r.pop('post_exposure' if change=='exposure' else 'occupancy_condition')
++        contexts=(admission.PatientPlanningContext(freeze_json(r),semantic_digest(r)),*contexts[1:])
++    monkeypatch.setattr(learning,'SpatialPolicy',lambda *a,**k:pytest.fail('no model allocation'))
++    with pytest.raises(ValueError):learning.common_patient_policies(contexts,p)
++
++
++def test_cache_refuses_incomplete_teacher_and_old_subject(monkeypatch):
++    from resectionlab.patient_teacher_trace_cache import PatientTeacherTraceCache
++    from test_patient_cohort_sequential import synthetic_trace
++    from test_patient_teacher_trace_cache import simulated_receipt
++    p=protocol(64);contexts,observations=generated_dtos(p,monkeypatch)
++    cache=PatientTeacherTraceCache(p)
++    first=synthetic_trace(contexts[0],observations[0],1);cache.add_replayed(first,simulated_receipt(first))
++    wrong=synthetic_trace(contexts[1],observations[1],1)
++    with pytest.raises(ValueError,match='decision counts'):cache.add_replayed(wrong,simulated_receipt(wrong))
++    r=contexts[1].record();r.update(subject='ReMIND-010',patient_group='ReMIND:010')
++    c=admission.PatientPlanningContext(freeze_json(r),semantic_digest(r))
++    wrong=synthetic_trace(c,observations[1],14)
++    with pytest.raises(ValueError,match='Ordered'):cache.add_replayed(wrong,simulated_receipt(wrong))
++    assert not cache.record()['complete'] and len(cache.record()['traces'])==1
++
++
++def test_existing_SELECT_endpoint_does_not_accept_new_protocol():
++    # Rejection precedes checkpoint or lineage I/O, not a future SELECT admission.
++    p=protocol()
++    with pytest.raises(ValueError):admission.validate_union_select013_inference(p,
++        checkpoint_lineage={},learning_protocol_hash=semantic_digest(p),
++        proposal_config=NominalCavityProposalConfig(**thaw_json(p['cohort_execution']['proposal_config'])),
++        max_steps=24,search=p['cohort_execution']['search'],public_target_context_variant=TARGET_CONTEXT)
++
++
++def test_visits_bind_new4_and_forward_condition(tmp_path,monkeypatch):
++    from resectionlab.patient_planning_cohort_visits import make_train_visit_factories
++    p=protocol(); bound=limits(p);inputs=fixture(tmp_path)
++    rows=[{'patient_id':s,'role':'TRAIN','path':str(tmp_path/(s+'.json')),'sha256':'a'*64} for s in POST_EXPOSURE_TRAIN]
++    path=tmp_path/'index.json';path.write_text(json.dumps({'cohort_sha256':admission.COHORT_SHA256,'cases':rows}))
++    release={'limits':{k:v for k,v in bound.items() if k not in ('output_bytes','checkpoint_bytes')},'learning_protocol_hash':semantic_digest(p)}
++    calls=[]
++    def stub(*a,**kw):calls.append(kw);return object(),{},{},{}
++    monkeypatch.setattr(factory,'prepare_public_source',stub)
++    monkeypatch.setattr(admission,'make_patient_planning_task',lambda *a,**kw:('task','context'))
++    factories=make_train_visit_factories(manifest_index_path=path,manifest_index_sha256=factory.sha(path),
++        cohort_bytes=inputs['cohort_bytes'],learning_protocol=p,limits=bound,released_record=release,
++        released_sha256='a'*64,progress=lambda *a:None)
++    assert tuple(factories)==protocol_train_subjects(p)==POST_EXPOSURE_TRAIN
++    with pytest.raises(ValueError):validate_factories(factories) # old beam runner remains closed
++    for subject in POST_EXPOSURE_TRAIN:
++        out=tmp_path/subject;out.mkdir();assert factories[subject](output=out)==('task','context')
++    assert all(c['post_exposure_condition']==EXPOSURE and semantic_digest(c['occupancy_learning_protocol'])==semantic_digest(p) for c in calls)
++
++
++def test_old_protocol_records_and_checkpoint_lineage_are_unchanged(monkeypatch):
++    baseline=os.environ.get('POST_EXPOSURE_LEARNING_BASELINE')
++    if not baseline:pytest.skip('historical source parity requires explicit saved baseline')
++    path=Path(baseline)/'patient_planning_cohort_spec.py'
++    spec=importlib.util.spec_from_file_location('resectionlab._old_post_learning_spec',path)
++    old=importlib.util.module_from_spec(spec);monkeypatch.setitem(sys.modules,spec.name,old);spec.loader.exec_module(old)
++    for updates in (1,8,64):
++        options=dict(updates=updates,max_steps=24,search={'max_calls':5640,'beam_width':2,'seconds':300},
++            proposal_config=NominalCavityProposalConfig(max_candidates=120,intermediate_opening_mm=1.,tool_footprint_opening=True,obstruction_opening=True),
++            occupancy_condition='cerebrum_plus_supplied_tumor_assumption')
++        if updates==64:options.update(il_teacher_weighting=BALANCED_TEACHER_CE,teacher_observations=CACHED_TEACHERS,teacher_cache_payload_bytes=64*1024**2)
++        a=old.sequential_learning_protocol(**options); b=sequential_learning_protocol(**options)
++        assert semantic_digest(a)==semantic_digest(b) and protocol_train_subjects(b)==TRAIN

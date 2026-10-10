@@ -1,0 +1,63 @@
+{
+  "base_head": "d75dae6a9849108242c0404b0534502a9eeb5dcf",
+  "files": [
+    {
+      "base_sha256": "d33c96f43b07db739be411eb2efef6376583c45c1db671df468fe9f505de6242",
+      "destination": "src/resectionlab/patient_planning_admission.py",
+      "sha256": "b49385654bf99acd0f223dc98c6f7dc2c5681315f1cb50ef3c7ae0a6a51e1c37",
+      "staged": "build/post-exposure-learning-v1/stage/resectionlab/patient_planning_admission.py"
+    },
+    {
+      "base_sha256": "45a1aa6b585e1dd4997bfdbb04ff911a40b0620e20707910ebd4665ade0ebb24",
+      "destination": "src/resectionlab/patient_planning_cohort_io.py",
+      "sha256": "98c0f52c2f108125692a70761f31b645cd6a41c86715786ab0913d4f7f9f59e3",
+      "staged": "build/post-exposure-learning-v1/stage/resectionlab/patient_planning_cohort_io.py"
+    },
+    {
+      "base_sha256": "ec8d3632f6b6a9abf3276d671373831319311e4f8c1bfea10f89ef274bdd2194",
+      "destination": "src/resectionlab/patient_planning_cohort_spec.py",
+      "sha256": "37b2f9d49df322fb27eb4c4090a32126b50255d8d29c8e9a36dfa536eebe5b10",
+      "staged": "build/post-exposure-learning-v1/stage/resectionlab/patient_planning_cohort_spec.py"
+    },
+    {
+      "base_sha256": "c145fc9427a4ba271b74840d9c164ad4571553f2c446ad12ac98ffd61ed24e6f",
+      "destination": "src/resectionlab/patient_planning_cohort_visits.py",
+      "sha256": "a7cc335711734e86a13a5abed91b56bed750255c233950a30dddc660e13141ba",
+      "staged": "build/post-exposure-learning-v1/stage/resectionlab/patient_planning_cohort_visits.py"
+    },
+    {
+      "base_sha256": "b35970af26d132dc29577c852dfd7ed3e147325b6c099f1883daa354eecada93",
+      "destination": "src/resectionlab/patient_planning_learning.py",
+      "sha256": "0185544a4484a0c1c2b7e49fa3adda75fc31abb636d8956e65dfb4643e4c29f0",
+      "staged": "build/post-exposure-learning-v1/stage/resectionlab/patient_planning_learning.py"
+    },
+    {
+      "base_sha256": "4a23d2962c951223afa13ace81fe3fe6f5d897e311907c5bc92869774a5cb940",
+      "destination": "src/resectionlab/patient_teacher_trace_cache.py",
+      "sha256": "0f37645a2af82f8f5122b701855b59ab3af832fc4ea3cc34cfcebcab0883ad45",
+      "staged": "build/post-exposure-learning-v1/stage/resectionlab/patient_teacher_trace_cache.py"
+    },
+    {
+      "base_sha256": "c9f48ceb53cf0278d7a8a072d2925c5f57878ffc2f0ad79e07028d85b712d4b5",
+      "destination": "src/resectionlab/public_patient_factory.py",
+      "sha256": "23da98ebabf858e528de350d83c40e38ab0bdfb42213c7586df8702404a34092",
+      "staged": "build/post-exposure-learning-v1/stage/resectionlab/public_patient_factory.py"
+    },
+    {
+      "base_sha256": null,
+      "destination": "tests/test_post_exposure_learning.py",
+      "sha256": "7cbb75ab4266a53ea1bea22599d0e550db16691661aa0cfc2e7bfd785a50593f",
+      "staged": "build/post-exposure-learning-v1/stage/tests/test_post_exposure_learning.py"
+    }
+  ],
+  "generated_log": {
+    "path": "build/post-exposure-learning-v1/generated-attempt-01/tests.log",
+    "sha256": "11899aa96ca73175f4426a34e70a423fea8697ed3f2400b562ea8993307acbe6"
+  },
+  "generated_receipt": {
+    "path": "build/post-exposure-learning-v1/generated-attempt-01/receipt.json",
+    "sha256": "5bdd7c3b34b42122d099a3f8ab9894fa513e67810782591b7b96ff8cf109e840"
+  },
+  "patch_sha256": "e9f6fcc89da735247d49fb78735b4b1be4b05bbc03a40e7b932554234c2e0d4b",
+  "scope": "source-only promotion candidate; generated controls; no acquired learning execution"
+}

@@ -1,0 +1,80 @@
+Independent source review: fixed new-four post-exposure learning
+
+Decision: GO for the exact source candidates below. No source blocker remains.
+This is source/saved-control review, not an acquired-data execution or result
+acceptance. Root owns canonical promotion, the subsequent source freeze, and
+separate one-attempt IL64 and RL8 releases. No reviewer imports, tests, patient
+arrays, tensors, checkpoint execution, native replay or model runs were used.
+
+Exact reviewed packages
+- Admission index: 66ffe82c254877009a49eb2f2616481967babcd4957baacc09bb1ab9c1fa4c16
+- Admission patch: e9f6fcc89da735247d49fb78735b4b1be4b05bbc03a40e7b932554234c2e0d4b
+- Runner index: dbc52d2a85193a6278e0530e9b636ab67a16b3f91c01cb19854020f215a9dbae
+- pilot_contract.py: 82982baea9ad33865d0af36707eb88f3cf9f6a2cf42d463425acec8a05cfb5a6
+- cohort_worker.py: 554d4820e2301d39230442971697802d96c17ef03702fee532936e91e598b1b0
+- run_owned.py: fe497e162411919ff49d889fed1264ea15004fad52230c0effb6c56a84089806
+- freeze-runtime.py: 7b872b53bc57a1c84fdbdcc34b53b7e05ba70047f9682c5ab569a681197cca05
+Paths are under build/post-exposure-learning-v1. Exact package and runner
+hashes were checked from current bytes. The admission index pins all seven
+production modules and the generated test; the runner index pins its controls.
+
+Consequential checks
+The new protocol binds TRAIN ReMIND-002/015/018/045 in that order, the explicit
+partial-domain post-exposure condition, immutable full target and source-domain
+semantics, historical 13 axes, cap120, horizon24 and unchanged reward/tool math.
+The old/default protocol branches remain separate. Existing SELECT admission
+does not admit this new condition, and parameter loading grants no new case or
+training authority. Physical post-exposure records keep their earlier search
+qualification scope; learning authority is a separate explicit protocol.
+
+Before caching or updating, the worker reconstructs all four pinned complete
+greedy teachers (1/14/1/13 decisions: 25 motion and 4 STOP) and invokes the existing
+authoritative/independent replay. The transparent saved-plan projection binds
+source, model, initial observation, actions, full physical history, horizon and
+terminal state. Its comparison exempts only the new admission context and the
+existing history scope label; it does not replace physical history with counts.
+The cache additionally binds exact ordered contexts, teacher seals and step counts.
+
+IL performs 64 shared updates, each accumulating all 29 fixed labels with the
+unchanged balanced STOP/motion objective. RL starts from the same seeded fresh
+architecture/tensors, performs 8 shared updates from 32 fresh on-policy episodes,
+and does not use the IL cache or final IL weights. Each endpoint saves and loads
+the authenticated parameter-only checkpoint, checks exact parameters and update
+count, drops optimizer/session state, records 29 fixed teacher logits, and seals
+and independently replays four complete learned greedy routes. Negative or
+different routes are retained; success does not require reward improvement.
+Cached endpoint readouts verify observation/context/teacher bindings and do not
+request a training trace from an exhausted session.
+
+Prospective arithmetic is internally consistent:
+- IL: 1856 loss forwards, 29 readouts, at most 96 greedy forwards = 1981;
+  8 source visits, 256 trace reuses, at most 70080 native previews.
+- RL: at most 768 collection plus 768 loss forwards, 29 readouts and 96 greedy
+  forwards = 1661; 44 source visits, no cache reuse, at most 385440 previews.
+Actual forward totals are joined to loss calls and complete greedy lengths.
+Both endpoints have one reload and zero new search/private/SELECT/EVAL calls.
+IL has 900/960-second worker/parent caps, RL 3540/3600; both have sampled 3 GiB
+owned-process RSS, 128 MiB outputs and 16 MiB supervision. Runtime feasibility is
+not established by these maxima. Source/input postguards, clean owned cleanup,
+worker final/result/control/checkpoint bindings and all-four completion are
+required; exit zero or an existing partial result alone is insufficient.
+
+Saved control evidence reviewed, not rerun
+Admission: 107 passed, 5 optional historical-file skips, 4.44 s; parent 4.785 s.
+Includes generated native context/world identity, ordered 29-state cache and
+checkpoint controls plus existing regressions. DTO receipts are not acquired
+teacher evidence. Runner: 13 passed, 12.85 s; parent 13.338719 s, 269058048 B.
+The latter executes actual endpoint orchestration for both iteration counts with
+explicit numerical/session/cache stubs and exact visit/forward/reload joins; it
+does not prove scientific replay or model performance. The initial runner
+precollection interpreter failure is retained separately in attempt-01.
+
+Interpretation limits
+No private reference, hidden future cavity or SELECT/EVAL source is introduced.
+Manual target annotation, assumed post-exposure workspace/connected-free state
+and current committed cavity are explicitly public inputs. This is shared public
+evidence/world/proposals/reward, not identical information bandwidth: search
+uses full-source geometry/target, whereas the actor receives a 64-cubed crop plus
+global summaries and action features. IL64 versus RL8 is unequal compute and
+training exposure. No unannotated-input, held-out transfer, operative-history,
+surgical safety or clinical-success conclusion is supported by source approval.
