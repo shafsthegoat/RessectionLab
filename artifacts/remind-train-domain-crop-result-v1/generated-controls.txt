@@ -1,0 +1,2 @@
+Generated-only tests:12 passed in0.032s. Includes retained-child cleanup failures, unreaped-child receipt, fast-exit log cap, eight-bound-phase success, bad final JSON, source/role boundary refusal, support/target domain positivity, unknown/known-zero distinction, binary/dtype refusal and half-open centre containment. No subprocess or patient source used by test harness.
+Command: OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 build/idc-acquisition-venv/bin/python -I -B build/remind-train-domain-crop-preparation-v1/test_generated.py

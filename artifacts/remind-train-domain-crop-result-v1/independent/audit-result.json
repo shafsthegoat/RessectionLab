@@ -1,0 +1,624 @@
+{
+  "audit_peak_rss_bytes": 28508160,
+  "audit_seconds": 0.01624074997380376,
+  "batch_seconds": 7.0985189999919385,
+  "checks": 916,
+  "completed_phases": 8,
+  "inputs": 50,
+  "peak_sampled_rss_bytes": 1198899200,
+  "phases": [
+    {
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/bin/python",
+        "-I",
+        "-B",
+        "-X",
+        "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/fresh-pycache",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/prepare_remind_planning.py",
+        "crop-mr-domains",
+        "--public-only",
+        "--case",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-public-qc-preparation-v1/bindings/ReMIND-002-case.json",
+        "--case-sha256",
+        "59f7df33759d8de556b0b6335863bad08dda3879bb232e3e3cbb98ee10503171",
+        "--repository-root",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains",
+        "--headers",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-headers/result.json",
+        "--headers-sha256",
+        "e28cea1d1be2f0635ac706f008467bb3d5b5cbfb5f211a3fe4cb72b23ad14bbf"
+      ],
+      "case_elapsed_seconds": 1.4192139999940991,
+      "case_output_bytes": 23906766,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 1.4192020839545876,
+      "exit_code": 0,
+      "final_phase_log_bytes": 249,
+      "intended_use_admitted": false,
+      "phase": "crop-mr-domains",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result_guard_error": null,
+      "result_sha256": "3c66619317b0368ead5a69d557b3a4d61b23ff4e2c144f9ccccdea2b25fab53a",
+      "result_status": "public_crop_source_samples_and_label_grids_converted_anatomy_unreviewed",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 824016896,
+      "stop_reason": null,
+      "subject": "ReMIND-002"
+    },
+    {
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/bin/python",
+        "-I",
+        "-B",
+        "-X",
+        "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/fresh-pycache",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/audit_saved_domains.py",
+        "--subject",
+        "ReMIND-002",
+        "--conversion-sha256",
+        "3c66619317b0368ead5a69d557b3a4d61b23ff4e2c144f9ccccdea2b25fab53a",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-saved-domain-review"
+      ],
+      "case_elapsed_seconds": 1.8647470420692116,
+      "case_output_bytes": 23912917,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 0.4442229999694973,
+      "exit_code": 0,
+      "final_phase_log_bytes": 632,
+      "intended_use_admitted": false,
+      "phase": "saved-domain-review",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result_guard_error": null,
+      "result_sha256": "840867348e3e106abc9ffd77b1de4fbffa308617a14f7f26a10073759badc6d9",
+      "result_status": "saved_public_domain_geometry_checked_anatomy_unreviewed",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 68583424,
+      "stop_reason": null,
+      "subject": "ReMIND-002"
+    },
+    {
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/bin/python",
+        "-I",
+        "-B",
+        "-X",
+        "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/fresh-pycache",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/prepare_remind_planning.py",
+        "crop-mr-domains",
+        "--public-only",
+        "--case",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-public-qc-preparation-v1/bindings/ReMIND-015-case.json",
+        "--case-sha256",
+        "53c5f3a360c4c79ceede9248d5c2d97a00391a2c3839e6ca4492eba86ee58c18",
+        "--repository-root",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains",
+        "--headers",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-headers/result.json",
+        "--headers-sha256",
+        "a02471718c7a8dd118340169a28afd055cd84b3cd5cb39612a7ebdc0ff7e6be6"
+      ],
+      "case_elapsed_seconds": 1.0961099171545357,
+      "case_output_bytes": 21860568,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 1.096073458204046,
+      "exit_code": 0,
+      "final_phase_log_bytes": 249,
+      "intended_use_admitted": false,
+      "phase": "crop-mr-domains",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result_guard_error": null,
+      "result_sha256": "88bd10a406090faa3d499b0086babd66ae168788037a76ce328207e1bfb0516c",
+      "result_status": "public_crop_source_samples_and_label_grids_converted_anatomy_unreviewed",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 527450112,
+      "stop_reason": null,
+      "subject": "ReMIND-015"
+    },
+    {
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/bin/python",
+        "-I",
+        "-B",
+        "-X",
+        "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/fresh-pycache",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/audit_saved_domains.py",
+        "--subject",
+        "ReMIND-015",
+        "--conversion-sha256",
+        "88bd10a406090faa3d499b0086babd66ae168788037a76ce328207e1bfb0516c",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-saved-domain-review"
+      ],
+      "case_elapsed_seconds": 1.537321374984458,
+      "case_output_bytes": 21866716,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 0.43985541607253253,
+      "exit_code": 0,
+      "final_phase_log_bytes": 633,
+      "intended_use_admitted": false,
+      "phase": "saved-domain-review",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result_guard_error": null,
+      "result_sha256": "323647931c0f9002b866c71b40d6706291ab94975528720bd685a8fd22899b33",
+      "result_status": "saved_public_domain_geometry_checked_anatomy_unreviewed",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 65912832,
+      "stop_reason": null,
+      "subject": "ReMIND-015"
+    },
+    {
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/bin/python",
+        "-I",
+        "-B",
+        "-X",
+        "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/fresh-pycache",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/prepare_remind_planning.py",
+        "crop-mr-domains",
+        "--public-only",
+        "--case",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-public-qc-preparation-v1/bindings/ReMIND-018-case.json",
+        "--case-sha256",
+        "63df1936fd64c7b7370f4d772a7d2b75c95c12d439a4065b1c159ea6bc17369a",
+        "--repository-root",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains",
+        "--headers",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-headers/result.json",
+        "--headers-sha256",
+        "ae830f77f38ca86765d8df1f9cf2b5263e19d4ab4e9538de0879a8e7b5452b43"
+      ],
+      "case_elapsed_seconds": 1.1013515831436962,
+      "case_output_bytes": 20890902,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 1.1013093751389533,
+      "exit_code": 0,
+      "final_phase_log_bytes": 249,
+      "intended_use_admitted": false,
+      "phase": "crop-mr-domains",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result_guard_error": null,
+      "result_sha256": "fe0bf8ecc90e18eab03953b6c8c3bbef1e9684d06382f56694f0bb86e04ae713",
+      "result_status": "public_crop_source_samples_and_label_grids_converted_anatomy_unreviewed",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 514932736,
+      "stop_reason": null,
+      "subject": "ReMIND-018"
+    },
+    {
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/bin/python",
+        "-I",
+        "-B",
+        "-X",
+        "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/fresh-pycache",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/audit_saved_domains.py",
+        "--subject",
+        "ReMIND-018",
+        "--conversion-sha256",
+        "fe0bf8ecc90e18eab03953b6c8c3bbef1e9684d06382f56694f0bb86e04ae713",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-saved-domain-review"
+      ],
+      "case_elapsed_seconds": 1.5315948331262916,
+      "case_output_bytes": 20897040,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 0.42886266694404185,
+      "exit_code": 0,
+      "final_phase_log_bytes": 633,
+      "intended_use_admitted": false,
+      "phase": "saved-domain-review",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result_guard_error": null,
+      "result_sha256": "efcc61eed7e3873d135b6c3f696e338431f8151d300ed137562388893e60f589",
+      "result_status": "saved_public_domain_geometry_checked_anatomy_unreviewed",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 64569344,
+      "stop_reason": null,
+      "subject": "ReMIND-018"
+    },
+    {
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/bin/python",
+        "-I",
+        "-B",
+        "-X",
+        "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/fresh-pycache",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/prepare_remind_planning.py",
+        "crop-mr-domains",
+        "--public-only",
+        "--case",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-public-qc-preparation-v1/bindings/ReMIND-045-case.json",
+        "--case-sha256",
+        "9413d47ff3a55bfd429b64777f2ba9d55eea548c904f8e4328a41481158e16ac",
+        "--repository-root",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains",
+        "--headers",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-headers/result.json",
+        "--headers-sha256",
+        "32d01668e69ef38a5700d7ee0ca42d27d01a81e7d0adc3115a9392bbfea1f524"
+      ],
+      "case_elapsed_seconds": 1.7157089579850435,
+      "case_output_bytes": 23347854,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 1.715673333965242,
+      "exit_code": 0,
+      "final_phase_log_bytes": 250,
+      "intended_use_admitted": false,
+      "phase": "crop-mr-domains",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result_guard_error": null,
+      "result_sha256": "679962f53974f5cbd5ecf8187e4efb2fa7dd58842d0be9cf4340deabf6f33c7f",
+      "result_status": "public_crop_source_samples_and_label_grids_converted_anatomy_unreviewed",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 1198899200,
+      "stop_reason": null,
+      "subject": "ReMIND-045"
+    },
+    {
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/bin/python",
+        "-I",
+        "-B",
+        "-X",
+        "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/fresh-pycache",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/audit_saved_domains.py",
+        "--subject",
+        "ReMIND-045",
+        "--conversion-sha256",
+        "679962f53974f5cbd5ecf8187e4efb2fa7dd58842d0be9cf4340deabf6f33c7f",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-saved-domain-review"
+      ],
+      "case_elapsed_seconds": 2.1618178330827504,
+      "case_output_bytes": 23354006,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 0.44508512504398823,
+      "exit_code": 0,
+      "final_phase_log_bytes": 633,
+      "intended_use_admitted": false,
+      "phase": "saved-domain-review",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result_guard_error": null,
+      "result_sha256": "a8d78f7cb0e3754ed1021aef6eed024d7049878a73af94c69018a56303ace442",
+      "result_status": "saved_public_domain_geometry_checked_anatomy_unreviewed",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 67878912,
+      "stop_reason": null,
+      "subject": "ReMIND-045"
+    }
+  ],
+  "planned_cases": 4,
+  "receipt_sha256": "4fa78eda5216a7332605cd00be701f6e5f65cd69c1648ffa74ceba0388c98b11",
+  "release_sha256": "948ae1c701f1fece2bd2e4791875555fdaf0bb3e826a12bcd1bed3b1a419b96a",
+  "rows": [
+    {
+      "counts": {
+        "support": 988741,
+        "support_domain": 2561900,
+        "target": 24274,
+        "target_domain": 56453,
+        "target_in_known_support_positive": 1705,
+        "target_in_known_support_zero": 21559,
+        "target_in_unknown_support_domain": 1010,
+        "target_outside_support": 22569
+      },
+      "labels": {
+        "cerebrum": {
+          "NN_volume_change_percent": 0.005943641819472489,
+          "native_positive_voxels": 14747939,
+          "new_placed_positive_mm3": 942936.8207998007,
+          "new_placed_positive_voxels": 988741,
+          "new_source_positive_centres_cropped": 0,
+          "old_placed_positive_voxels": 988731,
+          "old_source_positive_centres_cropped": 135,
+          "source_centre_bounds_in_new_crop": {
+            "maximum": [
+              138.47121764813653,
+              170.34642407226212,
+              119.45813481106175
+            ],
+            "minimum": [
+              1.664771399326864,
+              0.7719875474169262,
+              9.97279289591585
+            ]
+          },
+          "source_positive_mm3": 942880.7793434919
+        },
+        "whole_tumor": {
+          "NN_volume_change_percent": -0.08233756231560418,
+          "native_positive_voxels": 24294,
+          "new_placed_positive_mm3": 23149.48847887805,
+          "new_placed_positive_voxels": 24274,
+          "new_source_positive_centres_cropped": 0,
+          "old_placed_positive_voxels": 22699,
+          "old_source_positive_centres_cropped": 1565,
+          "source_centre_bounds_in_new_crop": {
+            "maximum": [
+              100.27389279333838,
+              87.03148601755687,
+              44.25983343239413
+            ],
+            "minimum": [
+              68.2634190243729,
+              33.18224001854554,
+              1.9005851692104057
+            ]
+          },
+          "source_positive_mm3": 23168.564910448822
+        }
+      },
+      "native_crop_start": [
+        39,
+        53,
+        16
+      ],
+      "no_planning_admission": true,
+      "root_visual_review_pending_in_saved_worker": true,
+      "shape_xyz": [
+        141,
+        173,
+        122
+      ],
+      "subject": "ReMIND-002",
+      "support_unknown_domain_voxels": 414046
+    },
+    {
+      "counts": {
+        "support": 896879,
+        "support_domain": 2546116,
+        "target": 7745,
+        "target_domain": 20956,
+        "target_in_known_support_positive": 5987,
+        "target_in_known_support_zero": 1758,
+        "target_in_unknown_support_domain": 0,
+        "target_outside_support": 1758
+      },
+      "labels": {
+        "cerebrum": {
+          "NN_volume_change_percent": -0.0050236845717699374,
+          "native_positive_voxels": 7175391,
+          "new_placed_positive_mm3": 855330.4671777147,
+          "new_placed_positive_voxels": 896879,
+          "new_source_positive_centres_cropped": 0,
+          "old_placed_positive_voxels": 896877,
+          "old_source_positive_centres_cropped": 228,
+          "source_centre_bounds_in_new_crop": {
+            "maximum": [
+              131.2502812668926,
+              173.2497480706142,
+              114.2499963305274
+            ],
+            "minimum": [
+              0.7502679036925822,
+              1.7497305090141166,
+              1.7499963373588296
+            ]
+          },
+          "source_positive_mm3": 855373.4384411727
+        },
+        "whole_tumor": {
+          "NN_volume_change_percent": 2.1816417561382195e-07,
+          "native_positive_voxels": 7745,
+          "new_placed_positive_mm3": 7386.207580165663,
+          "new_placed_positive_voxels": 7745,
+          "new_source_positive_centres_cropped": 0,
+          "old_placed_positive_voxels": 7745,
+          "old_source_positive_centres_cropped": 0,
+          "source_centre_bounds_in_new_crop": {
+            "maximum": [
+              28.00026797998703,
+              134.99973050390517,
+              78.99999629297103
+            ],
+            "minimum": [
+              3.0002679799869973,
+              104.99973050390517,
+              53.99999634751208
+            ]
+          },
+          "source_positive_mm3": 7386.207564051604
+        }
+      },
+      "native_crop_start": [
+        43,
+        61,
+        24
+      ],
+      "no_planning_admission": true,
+      "root_visual_review_pending_in_saved_worker": true,
+      "shape_xyz": [
+        134,
+        175,
+        116
+      ],
+      "subject": "ReMIND-015",
+      "support_unknown_domain_voxels": 174084
+    },
+    {
+      "counts": {
+        "support": 909356,
+        "support_domain": 2452824,
+        "target": 1247,
+        "target_domain": 7920,
+        "target_in_known_support_positive": 997,
+        "target_in_known_support_zero": 250,
+        "target_in_unknown_support_domain": 0,
+        "target_outside_support": 250
+      },
+      "labels": {
+        "cerebrum": {
+          "NN_volume_change_percent": -0.573717953124131,
+          "native_positive_voxels": 7316829,
+          "new_placed_positive_mm3": 867229.7815410993,
+          "new_placed_positive_voxels": 909356,
+          "new_source_positive_centres_cropped": 0,
+          "old_placed_positive_voxels": 909186,
+          "old_source_positive_centres_cropped": 2146,
+          "source_centre_bounds_in_new_crop": {
+            "maximum": [
+              133.24994392560066,
+              163.25005050243539,
+              114.24999620656645
+            ],
+            "minimum": [
+              1.749976178106409,
+              0.7500047522170165,
+              0.7500079673940874
+            ]
+          },
+          "source_positive_mm3": 872233.9442726342
+        },
+        "whole_tumor": {
+          "NN_volume_change_percent": 4.512341349460769e-05,
+          "native_positive_voxels": 1247,
+          "new_placed_positive_mm3": 1189.2323111979806,
+          "new_placed_positive_voxels": 1247,
+          "new_source_positive_centres_cropped": 0,
+          "old_placed_positive_voxels": 1247,
+          "old_source_positive_centres_cropped": 0,
+          "source_centre_bounds_in_new_crop": {
+            "maximum": [
+              32.999975030749944,
+              88.00001934292462,
+              47.000013214339695
+            ],
+            "minimum": [
+              15.999977569503342,
+              49.00001318048729,
+              37.000012857925164
+            ]
+          },
+          "source_positive_mm3": 1189.23177457601
+        }
+      },
+      "native_crop_start": [
+        46,
+        68,
+        29
+      ],
+      "no_planning_admission": true,
+      "root_visual_review_pending_in_saved_worker": true,
+      "shape_xyz": [
+        135,
+        166,
+        116
+      ],
+      "subject": "ReMIND-018",
+      "support_unknown_domain_voxels": 146736
+    },
+    {
+      "counts": {
+        "support": 823052,
+        "support_domain": 2304431,
+        "target": 25301,
+        "target_domain": 96406,
+        "target_in_known_support_positive": 5416,
+        "target_in_known_support_zero": 19885,
+        "target_in_unknown_support_domain": 0,
+        "target_outside_support": 19885
+      },
+      "labels": {
+        "cerebrum": {
+          "NN_volume_change_percent": -0.019572813867774208,
+          "native_positive_voxels": 29092192,
+          "new_placed_positive_mm3": 784924.5267332898,
+          "new_placed_positive_voxels": 823052,
+          "new_source_positive_centres_cropped": 0,
+          "old_placed_positive_voxels": 792567,
+          "old_source_positive_centres_cropped": 1083331,
+          "source_centre_bounds_in_new_crop": {
+            "maximum": [
+              135.75789240784994,
+              171.55810324436564,
+              119.20459140130846
+            ],
+            "minimum": [
+              1.2739861468248002,
+              1.658569853747328,
+              1.5006132657383677
+            ]
+          },
+          "source_positive_mm3": 785078.1886258661
+        },
+        "whole_tumor": {
+          "NN_volume_change_percent": 0.00011392046512792575,
+          "native_positive_voxels": 25301,
+          "new_placed_positive_mm3": 24128.943798057677,
+          "new_placed_positive_voxels": 25301,
+          "new_source_positive_centres_cropped": 0,
+          "old_placed_positive_voxels": 25102,
+          "old_source_positive_centres_cropped": 199,
+          "source_centre_bounds_in_new_crop": {
+            "maximum": [
+              126.18219931484418,
+              99.71013198723259,
+              96.33658770047415
+            ],
+            "minimum": [
+              84.18220546281253,
+              41.71015436620328,
+              59.336585153067276
+            ]
+          },
+          "source_positive_mm3": 24128.916310283985
+        }
+      },
+      "native_crop_start": [
+        43,
+        59,
+        19
+      ],
+      "no_planning_admission": true,
+      "root_visual_review_pending_in_saved_worker": true,
+      "shape_xyz": [
+        138,
+        174,
+        121
+      ],
+      "subject": "ReMIND-045",
+      "support_unknown_domain_voxels": 601021
+    }
+  ],
+  "scope": "Saved small JSON/source hashes and scalar affine/count arithmetic only. Existing bound worker owns all array/hash/finite/binary/domain checks; this independent audit opened no DICOM, arrays, images or original samples. Crop-centre coverage is distinct from NN label preservation and anatomy. Old full-support factory incompatible; no training admission.",
+  "source_index": {
+    "bytes": 5053,
+    "path": "build/remind-train-domain-crop-preparation-v1/source-index.json",
+    "sha256": "3a927873f4eea60a15eb916bf0b97c1abc2782bc8b2ec85716a610816acaf631"
+  },
+  "status": "PASS_saved_domain_metadata_audit",
+  "training_admitted": 0
+}

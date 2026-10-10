@@ -1,0 +1,34 @@
+{
+  "cases": [
+    {
+      "patient_id": "ReMIND-002",
+      "public_input_manifest": null,
+      "role": "TRAIN",
+      "status": "DOMAIN_SOURCE_RESULT_REQUIRES_ROOT_VISUAL_AND_INTENDED_USE_REVIEW",
+      "training_admitted": false
+    },
+    {
+      "patient_id": "ReMIND-015",
+      "public_input_manifest": null,
+      "role": "TRAIN",
+      "status": "DOMAIN_SOURCE_RESULT_REQUIRES_ROOT_VISUAL_AND_INTENDED_USE_REVIEW",
+      "training_admitted": false
+    },
+    {
+      "patient_id": "ReMIND-018",
+      "public_input_manifest": null,
+      "role": "TRAIN",
+      "status": "DOMAIN_SOURCE_RESULT_REQUIRES_ROOT_VISUAL_AND_INTENDED_USE_REVIEW",
+      "training_admitted": false
+    },
+    {
+      "patient_id": "ReMIND-045",
+      "public_input_manifest": null,
+      "role": "TRAIN",
+      "status": "DOMAIN_SOURCE_RESULT_REQUIRES_ROOT_VISUAL_AND_INTENDED_USE_REVIEW",
+      "training_admitted": false
+    }
+  ],
+  "mismatch_policy": "Preserve native/placed full-target counts, known-positive/known-zero/unknown support partition and source-domain masks. No factory manifest, target clipping, support filling or replacement.",
+  "planned_denominator": 4
+}

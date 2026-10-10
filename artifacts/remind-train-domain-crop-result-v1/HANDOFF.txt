@@ -1,0 +1,16 @@
+Prepared only. Do not run until root dispatch; preserve prepared-release.json false.
+
+Fixed TRAIN002/015/018/045, unchanged cohort/case/source bindings. Existing header snapshots are hash-bound and reused; no new header phase. Canonical converter f35a28f2cdedd777e15031b5cba370c4106c0436eefe9590ca17466d8944b3ca and CLI befa1a98b4ddc26868597dab9c62f5fcde95d3af7070807df4e88a4fb8e9fe5e at1a05e2a. Each case runs crop-mr-domains then saved-domain-review sequentially, eight phases total. Every output is new under build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1; original crops/reviews untouched.
+
+Known monitor and cleanup/final log functions retained AST-exact. One thread, sampled3GiB,300s per case including both phases,1230s total,256MiB output/case,4MiB log/phase, no automatic retry. Child imports use exclusive fresh pycache prefix. Final result must bind exact case/phase/source/header and conversion receipt; all phases must finish for batch success. Full denominator remains four even after failure. No private/EVAL/SELECT sources, models, native solve, factory manifest or training admission.
+
+Saved reviewer retains streamed finite/binary checks, artifact hashes, world-domain equality and independent saved-header affine refit. It intentionally removes support_domain.all(): every positive support voxel must still lie in known domain. Target counts are partitioned into known support-positive, known source-label-zero and unknown-domain, checked against conversion, and summed to full placed target. Native source counts/volumes and NN placed counts/volumes remain separate. Every source grid centre must fit the new crop, actual positive-centre crop losses must be zero, and no array is modified. Root visual review remains pending. Existing full-coverage factory remains incompatible; no manifest creator is present.
+
+Twelve generated-only controls pass; syntax/check-only and false-release refusal pass. No patient execution occurred. Source index binds24 code/metadata files; independent review requested from n36_result_audit_fresh.
+
+After independent source review, root may create root-release.json from prepared-release.json by changing only execution_released:false to true and hash it. Exact command (substitute that SHA only):
+  build/idc-acquisition-venv/bin/python -I -B -X pycache_prefix=build/remind-train-domain-crop-preparation-v1/fresh-parent-pycache build/remind-train-domain-crop-preparation-v1/run_public_qc_owned.py --release build/remind-train-domain-crop-preparation-v1/root-release.json --release-sha256 <root-release-SHA256>
+
+Do not reuse an existing output path or restart automatically after a negative. The metadata source-guard check can use the same command with --check-only. This does not read DICOM/arrays or create a worker.
+
+Terminal review inputs: actual-domain-qc-v1/receipt.json; pending-qualification-index.json; four *-crop-mr-domains/conversion-result.json; four *-saved-domain-review/saved-domain-review.json; eight *-supervisor.json. Root can view the12 newly bound public overlays only after terminal; no helper claims visual/anatomical accuracy or clears source artifacts.

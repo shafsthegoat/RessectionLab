@@ -1,0 +1,30 @@
+{
+  "schema": "remind-fixed-four-public-domain-crop-release-v1",
+  "execution_released": false,
+  "source_index": {
+    "path": "build/remind-train-domain-crop-preparation-v1/source-index.json",
+    "bytes": 5053,
+    "sha256": "3a927873f4eea60a15eb916bf0b97c1abc2782bc8b2ec85716a610816acaf631"
+  },
+  "public_index": {
+    "path": "build/remind-train-domain-crop-preparation-v1/public-train-index.json",
+    "bytes": 5715,
+    "sha256": "ab8382bceba867d7b7badcf776cd1b3e0218d401392de7eda5e3a5df7d3a1372"
+  },
+  "subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "caps": {
+    "seconds_per_case": 300,
+    "total_seconds": 1230,
+    "sampled_rss_bytes": 3221225472,
+    "output_bytes_per_case": 268435456,
+    "log_bytes_per_phase": 4194304,
+    "threads": 1,
+    "automatic_retry": false
+  },
+  "scope": "Exact four TRAIN public domain-preserving crop conversion using preverified headers and original byte-checked sources, then saved-only geometry/domain/full-count review. Explicit unknown support domain, no private labels/factory manifest/model/training admission. Root visual and intended-use qualification remain separate."
+}

@@ -1,0 +1,20 @@
+{
+  "anatomical_accuracy_reviewed": false,
+  "cases": [
+    {
+      "patient_group": "ReMIND:045",
+      "patient_id": "ReMIND-045",
+      "public_input_manifest": null,
+      "role": "TRAIN",
+      "saved_review_path": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-saved-domain-review/saved-domain-review.json",
+      "saved_review_sha256": "a8d78f7cb0e3754ed1021aef6eed024d7049878a73af94c69018a56303ace442",
+      "source_artifact_clearance": false,
+      "training_admitted": false
+    }
+  ],
+  "elapsed_seconds": 0.10146754188463092,
+  "failed_cases_replaced": false,
+  "max_optimizer_updates": 0,
+  "role": "TRAIN",
+  "schema": "remind-public-train-saved-review-index-v1"
+}

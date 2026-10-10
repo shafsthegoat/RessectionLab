@@ -1,0 +1,39 @@
+Completed: full annotation-domain crops for four fixed TRAIN patients
+
+The new phase completes all eight conversion/review phases in 7.098519 seconds
+at 1,198,899,200 bytes sampled peak RSS. Both target and support annotations have
+zero source-positive crop loss. No source labels are repaired or filled; native
+MRI samples and unknown annotation coverage are retained. All source geometry
+centres are inside acquired MRI and the derived crop.
+
+Subject    Old placed target    New placed target    Native target
+002                 22699                 24274            24294
+015                  7745                  7745             7745
+018                  1247                  1247             1247
+045                 25102                 25301            25301
+
+The crop correction restores 1,575 placed target cells for 002 and 199 for 045.
+This is a preparation improvement, not a model-accuracy result. 002 retains a
+20-positive nearest-neighbor sampling deficit (-0.08234% target volume), so zero
+crop loss must not be described as lossless label sampling. Domain partitions
+and small affine-volume differences are fully retained in the independent report.
+
+Unknown support-domain cells remain in all four crops; 002 has 1,010 target cells
+in that unknown region. Known automatic label-zero is not observed physical empty.
+None has a factory manifest or planning/training admission. All four subjects and
+the existing splits remain unchanged. Whole tumor is not a prescribed resection.
+
+Root reviewed all 12 saved overlays (three planes per person). This is a limited
+qualitative sanity check, not expert segmentation accuracy or clinical validation.
+Images, source records and arrays stay outside Git; exact image hashes are saved.
+Independent saved-metadata audit passes 916 checks in 0.01624 s, with unchanged
+24 bound source/metadata files and 50 read inputs. Its initial mistyped helper pin
+failed before result access; the failed script/log and corrected passing audit
+are both preserved. No patient rerun was needed.
+
+Receipt: 4fa78eda5216a7332605cd00be701f6e5f65cd69c1648ffa74ceba0388c98b11
+Release: 948ae1c701f1fece2bd2e4791875555fdaf0bb3e826a12bcd1bed3b1a419b96a
+Source index: 3a927873f4eea60a15eb916bf0b97c1abc2782bc8b2ec85716a610816acaf631
+Independent report: 484741ffe2ec823fb10e826069c46f33efb0c381248f6a93bbc2120ff442f264
+The index preserves compact driver, controls, receipts and independent evidence.
+Next: explicit domain-aware qualification before any new learning admission.

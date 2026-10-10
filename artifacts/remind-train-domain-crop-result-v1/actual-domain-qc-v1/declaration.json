@@ -1,0 +1,29 @@
+{
+  "caps": {
+    "automatic_retry": false,
+    "log_bytes_per_phase": 4194304,
+    "output_bytes_per_case": 268435456,
+    "sampled_rss_bytes": 3221225472,
+    "seconds_per_case": 300,
+    "threads": 1,
+    "total_seconds": 1230
+  },
+  "internal_crop_cap": "existing110s/2GiB checkpoints retained",
+  "parent_sha256": "1b064117d57dd02ff2fcb94a1113039b3c01143a5d6943f6609c1ebfd430844f",
+  "policy_or_training": false,
+  "public_index": {
+    "bytes": 5715,
+    "path": "build/remind-train-domain-crop-preparation-v1/public-train-index.json",
+    "sha256": "ab8382bceba867d7b7badcf776cd1b3e0218d401392de7eda5e3a5df7d3a1372"
+  },
+  "public_only": true,
+  "release_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/root-release.json",
+  "release_sha256": "948ae1c701f1fece2bd2e4791875555fdaf0bb3e826a12bcd1bed3b1a419b96a",
+  "runtime": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/bin/python",
+  "scope": "native domain-preserving crop plus saved domain/count audit only; no factory manifest; root visual/intended-use review separate",
+  "source_index": {
+    "bytes": 5053,
+    "path": "build/remind-train-domain-crop-preparation-v1/source-index.json",
+    "sha256": "3a927873f4eea60a15eb916bf0b97c1abc2782bc8b2ec85716a610816acaf631"
+  }
+}

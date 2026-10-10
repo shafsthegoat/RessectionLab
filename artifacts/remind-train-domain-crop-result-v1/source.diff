@@ -1,0 +1,270 @@
+--- build/remind-train-public-qc-preparation-v1/run_public_qc_owned.py
++++ build/remind-train-domain-crop-preparation-v1/run_public_qc_owned.py
+@@ -1,4 +1,4 @@
+-"""Disabled by default: one fixed four-person public TRAIN source-QC batch.
++"""Disabled by default: four native-domain crops and saved-domain reviews.
+ 
+ Reuses the SELECT parent ownership/cleanup and source-geometry conversion path.
+ No case is admitted to training by this driver, even on conversion success.
+@@ -62,11 +62,17 @@
+         need(0<path.stat().st_size<=16*1024**2,'terminal_result_extent')
+         raw=path.read_bytes();result_hash=hashlib.sha256(raw).hexdigest();result=json.loads(raw)
+         need(isinstance(result,dict),'terminal_result_object')
+-        status='header_geometry_and_ancestry_projected' if phase=='headers' else 'public_crop_source_samples_and_label_grids_converted_anatomy_unreviewed'
++        status='saved_public_domain_geometry_checked_anatomy_unreviewed' if phase=='saved-domain-review' else 'public_crop_source_samples_and_label_grids_converted_anatomy_unreviewed'
+         need(result.get('status')==status,'phase_success_status')
+         need(result.get('case_sha256')==case_sha and result.get('executing_script_sha256')==reader_sha,'phase_source_case_binding')
+         need(result.get('patient_id')==subject and result.get('role')=='TRAIN','phase_patient_role_binding')
+         need(result.get('public_only') is True and result.get('private_reference_loaded') is False and result.get('training_admitted') is False and result.get('optimizer_updates_performed')==0,'phase_public_nontraining_boundary')
++        need(result.get('full_coverage_factory_compatible') is False,'full_coverage_factory_refusal')
++        if phase=='crop-mr-domains':
++            need(result.get('crop_policy')=='public_source_domain_union_no_extrapolation' and result.get('support_source_domain_required') is True,'explicit_domain_crop')
++            need(all(result['annotations'][k]['placement']['source_positive_centres_outside_target_grid']==0 for k in ('cerebrum','whole_tumor')),'source_positive_crop_loss')
++        else:
++            need(result.get('public_input_manifest') is None and result.get('original_source_reopened') is False,'saved_review_boundary')
+         return result,result_hash,None
+     except BaseException as error:
+         return result if isinstance(result,dict) else {},result_hash,'terminal_guard:'+type(error).__name__+':'+str(error)
+@@ -101,8 +107,10 @@
+         declared={o['path']:o for o in flat['objects']}
+         need(nested==declared and len(nested)==len(flat['objects'])==row['objects']==flat['total_objects'],'exact_object_binding')
+         need(sum(o['bytes'] for o in flat['objects'])==row['bytes']==flat['total_bytes'],'exact_byte_binding')
+-        bound.append((person,path,row['case']['sha256']))
+-    need(tuple(p for p,_,_ in bound)==SUBJECTS,'fixed_order')
++        header=ROOT/row['headers']['path'];need(sha(header)==row['headers']['sha256'],'frozen_header_hash')
++        saved=json.loads(header.read_bytes());need(saved['case_sha256']==row['case']['sha256'] and saved['patient_id']==person and saved['public_only'] is True and saved['status']=='header_geometry_and_ancestry_projected','frozen_header_identity')
++        bound.append((person,path,row['case']['sha256'],header,row['headers']['sha256']))
++    need(tuple(row[0] for row in bound)==SUBJECTS,'fixed_order')
+     need(sum(r['objects'] for r in index['cases'])==760 and sum(r['bytes'] for r in index['cases'])==105063822,'fixed_totals')
+     return value,bound
+ def main():
+@@ -115,24 +123,26 @@
+     # Exact helper sources have been checked above. Import only after dispatch.
+     sys.path.insert(0,str(ROOT/'build/goal-conditioned-policy-v1'))
+     from run_contact_owned import FastDarwinSampler,cleanup_owned,_receipt
+-    output=HERE/'actual-public-qc-v1';output.mkdir(exist_ok=False)
++    output=HERE/'actual-domain-qc-v1';output.mkdir(exist_ok=False)
+     env=dict(os.environ)
+     for key in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','VECLIB_MAXIMUM_THREADS','NUMEXPR_NUM_THREADS'):env[key]='1'
+     for key in ('PYTHONHOME','PYTHONPATH','PYTHONUSERBASE','LD_PRELOAD','DYLD_LIBRARY_PATH'):env.pop(key,None)
+     runtime=ROOT/'build/idc-acquisition-venv/bin/python'
+-    reader_sha=sha(HERE/'stage/src/resectionlab/remind_planning_qc.py')
+-    _receipt(output/'declaration.json',{'release_path':str(args.release.resolve()),'release_sha256':args.release_sha256,'source_index':release['source_index'],'public_index':release['public_index'],'parent_sha256':sha(__file__),'caps':CAPS,'runtime':str(runtime),'public_only':True,'policy_or_training':False,'internal_crop_cap':'existing110s/2GiB checkpoints retained','scope':'source qualification only; source-artifact/intended-use review remains separate'})
++    reader_sha=sha(ROOT/'src/resectionlab/remind_planning_qc.py'); review_sha=sha(HERE/'audit_saved_domains.py')
++    _receipt(output/'declaration.json',{'release_path':str(args.release.resolve()),'release_sha256':args.release_sha256,'source_index':release['source_index'],'public_index':release['public_index'],'parent_sha256':sha(__file__),'caps':CAPS,'runtime':str(runtime),'public_only':True,'policy_or_training':False,'internal_crop_cap':'existing110s/2GiB checkpoints retained','scope':'native domain-preserving crop plus saved domain/count audit only; no factory manifest; root visual/intended-use review separate'})
+     sampler=FastDarwinSampler();started=time.monotonic();outcomes=[];fatal=None
+     def stop(*_):raise InterruptedError('public TRAIN QC parent interrupted')
+     previous=signal.signal(signal.SIGTERM,stop)
+     try:
+-        for subject,case,expected in bound:
++        for subject,case,expected,header,header_sha in bound:
+             case_started=time.monotonic();case_paths=[]
+-            for phase in ('headers','crop-mr'):
++            for phase in ('crop-mr-domains','saved-domain-review'):
+                 target=output/(subject+'-'+phase)
+-                command=[str(runtime),'-I','-B','-X','pycache_prefix='+str(output/'fresh-pycache'),str(HERE/'stage/scripts/prepare_remind_planning.py'),phase,'--public-only','--case',str(case),'--case-sha256',expected,'--repository-root',str(ROOT),'--output',str(target)]
+-                if phase=='crop-mr':
+-                    header=output/(subject+'-headers/result.json');command+=['--headers',str(header),'--headers-sha256',sha(header)]
++                if phase=='crop-mr-domains':
++                    command=[str(runtime),'-I','-B','-X','pycache_prefix='+str(output/'fresh-pycache'),str(ROOT/'scripts/prepare_remind_planning.py'),phase,'--public-only','--case',str(case),'--case-sha256',expected,'--repository-root',str(ROOT),'--output',str(target),'--headers',str(header),'--headers-sha256',header_sha]
++                else:
++                    conversion=output/(subject+'-crop-mr-domains/conversion-result.json')
++                    command=[str(runtime),'-I','-B','-X','pycache_prefix='+str(output/'fresh-pycache'),str(HERE/'audit_saved_domains.py'),'--subject',subject,'--conversion-sha256',sha(conversion),'--output',str(target)]
+                 process=None;peak=0;reason=None;actions=[];errors=[];detached={};remaining=[]
+                 phase_started=time.monotonic();case_paths.append(target);log_path=output/(subject+'-'+phase+'.log')
+                 try:
+@@ -160,8 +170,13 @@
+                         reason=reason or 'final_size_guard:'+type(error).__name__+':'+str(error)
+                     if time.monotonic()-case_started>=CAPS['seconds_per_case']:reason=reason or 'case_wall_cap'
+                     if time.monotonic()-started>=CAPS['total_seconds']:reason=reason or 'batch_wall_cap'
+-                    result_path=target/('result.json' if phase=='headers' else 'conversion-result.json')
+-                    result,result_hash,result_error=terminal_result(result_path,phase,subject,expected,reader_sha)
++                    result_path=target/('saved-domain-review.json' if phase=='saved-domain-review' else 'conversion-result.json')
++                    result,result_hash,result_error=terminal_result(result_path,phase,subject,expected,review_sha if phase=='saved-domain-review' else reader_sha)
++                    if result_error is None:
++                        try:
++                            need(result['header_snapshot_sha256']==header_sha,'result_frozen_header_binding')
++                            if phase=='saved-domain-review':need(result['conversion_receipt_sha256']==sha(conversion),'saved_review_conversion_binding')
++                        except BaseException as error:result_error='terminal_link:'+type(error).__name__+':'+str(error)
+                     reason=reason or result_error
+                     code=None
+                     try:code=None if process is None else process.poll()
+@@ -175,7 +190,7 @@
+     except BaseException as error:fatal=type(error).__name__+':'+str(error)
+     finally:
+         _receipt(output/'receipt.json',{'outcomes':outcomes,'elapsed_seconds':time.monotonic()-started,'fatal':fatal,'roles_changed':False,'public_only':True,'caps':CAPS,'memory_limit':'sampled, not kernel hard','planned_subjects':SUBJECTS,'failed_cases_replaced':False,'training_admitted':False,'automatic_source_artifact_clearance':False})
+-        _receipt(output/'pending-qualification-index.json',{'planned_denominator':4,'cases':[{'patient_id':p,'role':'TRAIN','public_input_manifest':None,'training_admitted':False,'status':'SOURCE_RESULT_REQUIRES_SAVED_COVERAGE_AND_ARTIFACT_REVIEW' if any(r['subject']==p for r in outcomes) else 'NOT_RUN_RETAINED_IN_DENOMINATOR'} for p in SUBJECTS],'mismatch_policy':'Preserve native/placed full-target counts, crop losses and outside-support positives; do not clip targets or fill/repair support. Suspicious source-artifact cases remain held without replacement.'})
++        _receipt(output/'pending-qualification-index.json',{'planned_denominator':4,'cases':[{'patient_id':p,'role':'TRAIN','public_input_manifest':None,'training_admitted':False,'status':'DOMAIN_SOURCE_RESULT_REQUIRES_ROOT_VISUAL_AND_INTENDED_USE_REVIEW' if any(r['subject']==p for r in outcomes) else 'NOT_RUN_RETAINED_IN_DENOMINATOR'} for p in SUBJECTS],'mismatch_policy':'Preserve native/placed full-target counts, known-positive/known-zero/unknown support partition and source-domain masks. No factory manifest, target clipping, support filling or replacement.'})
+         signal.signal(signal.SIGTERM,previous)
+     return 0 if fatal is None and len(outcomes)==8 and all(r['phase_complete'] for r in outcomes) else 1
+ if __name__=='__main__':raise SystemExit(main())
+--- build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/audit_saved_public.py
++++ build/remind-train-domain-crop-preparation-v1/audit_saved_domains.py
+@@ -7,11 +7,13 @@
+ import time
+ import numpy as np
+ 
+-ROOT = Path(__file__).resolve().parents[3]
++ROOT = Path(__file__).resolve().parents[2]
+ HERE = Path(__file__).resolve().parent
+-BASE = HERE.parent / "actual-public-qc-v1"
++BASE = HERE / "actual-domain-qc-v1"
++ORIGINAL = ROOT / "build/remind-train-public-qc-preparation-v1"
+ COHORT = "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+-RESULTS = {'ReMIND-002': '984ad5487ac2987b884cd3d6d4f97b43cc6c4403777b5bd6797f03bd7e5168fd', 'ReMIND-015': 'a187ec40fd785011263fa4e7a558b40e33fc203cf9f1a6d29dcd5b6c5bdad574', 'ReMIND-018': '102f3319b93faf46e81ba4432c9a8f8d75adb22d5f3ff7bea72d2702712970e1', 'ReMIND-045': '0d7d2abadf79de8e9ec60bf92a4db7899677fc37b010515b23622ae83e08171a'}
++SUBJECTS = ("ReMIND-002", "ReMIND-015", "ReMIND-018", "ReMIND-045")
++CONVERTER_SHA = "f35a28f2cdedd777e15031b5cba370c4106c0436eefe9590ca17466d8944b3ca"
+ 
+ 
+ def sha(path):
+@@ -42,28 +44,62 @@
+     return {"centred_OLS_affine_max_difference_mm": difference, "plane_residual_mm": residual}
+ 
+ 
++def domain_plane_counts(support, target, support_domain, target_domain):
++    assert support.shape == target.shape == support_domain.shape == target_domain.shape
++    assert all(a.dtype == np.uint8 and np.isin(a, (0, 1)).all() for a in (support, target, support_domain, target_domain))
++    assert np.all((support == 0) | (support_domain == 1))
++    assert np.all((target == 0) | (target_domain == 1))
++    return {"support": int(support.sum()), "support_domain": int(support_domain.sum()),
++            "target": int(target.sum()), "target_domain": int(target_domain.sum()),
++            "target_outside_support": int(np.count_nonzero((target != 0) & (support == 0))),
++            "target_in_known_support_positive": int(np.count_nonzero((target != 0) & (support != 0) & (support_domain != 0))),
++            "target_in_known_support_zero": int(np.count_nonzero((target != 0) & (support == 0) & (support_domain != 0))),
++            "target_in_unknown_support_domain": int(np.count_nonzero((target != 0) & (support_domain == 0)))}
++
++
++def source_centres_inside_crop(geometry, crop_affine, crop_shape):
++    points = np.asarray(list(itertools.product(*[(0, n-1) for n in geometry["shape_xyz"]])), dtype=float)
++    mapped = (np.c_[points, np.ones(8)] @ (np.linalg.inv(crop_affine) @ np.asarray(geometry["affine_xyz_to_ras_mm"])).T)[:, :3]
++    assert np.all(mapped >= -.5) and np.all(mapped < np.asarray(crop_shape)-.5)
++    return {"all_source_grid_centres_inside_crop": True, "mapped_centre_minimum": mapped.min(0).tolist(), "mapped_centre_maximum": mapped.max(0).tolist()}
++
++
+ def main():
++    import argparse
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--subject", choices=SUBJECTS, required=True)
++    parser.add_argument("--conversion-sha256", required=True)
++    parser.add_argument("--output", type=Path, required=True)
++    args = parser.parse_args()
+     signal.alarm(290); started = time.monotonic()
+-    output = HERE / "actual-saved-review-v1" / "array-audit"; output.mkdir(parents=True, exist_ok=False)
++    output = args.output.resolve(); assert output == (BASE / (args.subject + "-saved-domain-review")).resolve(); output.mkdir(exist_ok=False)
+     index = {"schema": "remind-public-train-saved-review-index-v1", "role": "TRAIN", "max_optimizer_updates": 0,
+              "cases": [], "failed_cases_replaced": False, "anatomical_accuracy_reviewed": False}
+     pilot = ROOT / "manifests/experiments/remind-planning-pilot-v1.json"
+-    for subject, result_sha in RESULTS.items():
+-        folder = BASE / (subject + "-crop-mr"); result_path = folder / "conversion-result.json"
++    index_metadata = json.loads((HERE / "public-train-index.json").read_bytes())
++    row = next(v for v in index_metadata["cases"] if v["patient_id"] == args.subject)
++    for subject, result_sha in [(args.subject, args.conversion_sha256)]:
++        folder = BASE / (subject + "-crop-mr-domains"); result_path = folder / "conversion-result.json"
+         assert sha(result_path) == result_sha
+         report = json.loads(result_path.read_bytes())
+-        header_path = BASE / (subject + "-headers/result.json")
++        header_path = ROOT / row["headers"]["path"]
++        assert sha(header_path) == row["headers"]["sha256"]
+         assert sha(header_path) == report["header_snapshot_sha256"]
+         headers = json.loads(header_path.read_bytes())
+-        case_path = HERE.parent / "bindings" / (subject + "-case.json")
++        case_path = ROOT / row["case"]["path"]
++        assert sha(case_path) == row["case"]["sha256"]
+         assert sha(case_path) == report["case_sha256"]
+         case = json.loads(case_path.read_bytes())
+         assert report["role"] == case["role"] == headers["role"] == "TRAIN"
+         assert report["public_only"] and headers["public_only"] and not report["private_reference_loaded"]
+         assert report["status"] == "public_crop_source_samples_and_label_grids_converted_anatomy_unreviewed"
++        assert report["executing_script_sha256"] == CONVERTER_SHA
++        assert report["crop_policy"] == "public_source_domain_union_no_extrapolation"
++        assert report["full_coverage_factory_compatible"] is False and report["support_source_domain_required"] is True
+         assert set(report["annotations"]) == {"whole_tumor", "cerebrum"}
+         assert report["immutable_role_binding"]["cohort_sha256"] == COHORT
+         for name, binding in report["artifacts"].items():
++            assert Path(name).name == name and not (folder/name).is_symlink()
+             assert (folder/name).stat().st_size == binding["bytes"] and sha(folder/name) == binding["sha256"]
+         names = {"image": "MR_native_crop.npy", "supplied_support": "cerebrum_source_label.npy",
+                  "supplied_whole_tumor": "whole_tumor_source_label.npy", "whole_tumor_domain": "whole_tumor_source_grid_domain.npy"}
+@@ -72,7 +108,7 @@
+         shape = tuple(report["shape_xyz"]); nvox = int(np.prod(shape)); affine = np.asarray(report["planning_derived_affine_ras_mm"])
+         assert all(a.shape == shape for a in (*arrays.values(), support_domain))
+         assert arrays["image"].dtype == np.float32 and all(a.dtype == np.uint8 for k, a in arrays.items() if k != "image")
+-        count = {"support": 0, "target": 0, "target_domain": 0, "target_outside_support": 0}
++        count = {k: 0 for k in ("support", "support_domain", "target", "target_domain", "target_outside_support", "target_in_known_support_positive", "target_in_known_support_zero", "target_in_unknown_support_domain")}
+         image_min, image_max = float("inf"), float("-inf")
+         x, y = np.indices(shape[:2], dtype=float)
+         transforms = {kind: np.linalg.solve(np.asarray(report["annotations"][kind]["source_native_affine_ras_mm"]), affine)
+@@ -82,50 +118,61 @@
+             target = arrays["supplied_whole_tumor"][:, :, z]; domain = arrays["whole_tumor_domain"][:, :, z]
+             assert np.isfinite(image).all()
+             image_min = min(image_min, float(image.min())); image_max = max(image_max, float(image.max()))
+-            assert all(np.isin(a, (0, 1)).all() for a in (support, target, domain, support_domain[:, :, z]))
+-            assert np.all((target == 0) | (domain == 1))
++            plane_counts = domain_plane_counts(support, target, support_domain[:, :, z], domain)
+             for kind, saved_domain in (("cerebrum", support_domain[:, :, z]), ("whole_tumor", domain)):
+                 t = transforms[kind]
+                 coordinates = t[:3, 0, None, None]*x+t[:3, 1, None, None]*y+(t[:3, 2]*z+t[:3, 3])[:, None, None]
+                 expected = np.all((coordinates >= -.5) & (coordinates < np.asarray(report["annotations"][kind]["source_native_shape"])[:, None, None]-.5), axis=0)
+                 assert np.array_equal(saved_domain, expected)
+-            assert support_domain[:, :, z].all()
+-            count["support"] += int(support.sum()); count["target"] += int(target.sum()); count["target_domain"] += int(domain.sum())
+-            count["target_outside_support"] += int(np.count_nonzero((target != 0) & (support == 0)))
++            for key, value in plane_counts.items(): count[key] += value
+         relation = report["public_target_support_relation"]
+         assert count["support"] > 0 and count["target"] > 0
+         assert count["target"] == relation["whole_tumor_positive_voxels"]
+         assert count["target_outside_support"] == relation["whole_tumor_positive_outside_public_support"]
++        partition = report["public_target_support_domain_relation"]
++        assert count["target"] == partition["full_placed_target_voxels"]
++        for key in ("target_in_known_support_positive", "target_in_known_support_zero", "target_in_unknown_support_domain"):
++            assert count[key] == partition[key]
++        assert count["target"] == sum(count[k] for k in ("target_in_known_support_positive", "target_in_known_support_zero", "target_in_unknown_support_domain"))
++        assert count["target_outside_support"] == count["target_in_known_support_zero"] + count["target_in_unknown_support_domain"]
++        assert partition["known_label_zero_is_physical_empty"] is False and partition["unknown_label_zero_is_observed_empty"] is False
++        assert report["public_support_source_domain_unknown_voxels"] == nvox-count["support_domain"]
++        assert report["public_support_source_domain_complete"] == (count["support_domain"] == nvox)
+         summaries = {}
+         volume = abs(float(np.linalg.det(affine[:3, :3])))
+-        for kind, total, domains in (("cerebrum", count["support"], nvox), ("whole_tumor", count["target"], count["target_domain"])):
++        for kind, total, domains in (("cerebrum", count["support"], count["support_domain"]), ("whole_tumor", count["target"], count["target_domain"])):
+             annotation = report["annotations"][kind]; placement = annotation["placement"]
++            assert placement["source_positive_centres_outside_target_grid"] == 0
++            assert annotation["source_samples_equal"] is True
+             assert total == annotation["placed_positive_voxels"] == placement["resampled_positive_voxels"]
+             assert domains == annotation["placed_source_domain_voxels"]
+             summaries[kind] = {"saved_positive_voxels": total, "saved_domain_voxels": domains,
+                 "saved_positive_volume_mm3": total*volume,
+                 "source_positive_centres_cropped_from_bound_execution": placement["source_positive_centres_outside_target_grid"],
+                 "source_positive_voxels_from_bound_execution": placement["source_positive_voxels"],
++                "source_positive_volume_mm3_from_bound_execution": placement["source_positive_volume_mm3"],
++                "resampling_can_omit_subvoxel_labels": placement["resampling_can_omit_subvoxel_labels"],
+                 "volume_change_percent": 100*(total*volume/placement["source_positive_volume_mm3"]-1)}
+         geometry = {row["kind"]: fit_saved_geometry(row["geometry"]) for row in headers["series"]}
++        centre_coverage = {row["kind"]: source_centres_inside_crop(row["geometry"], affine, shape) for row in headers["series"] if row["kind"] in ("cerebrum", "whole_tumor")}
+         limits = ["Only an annotation-assisted geometric research condition; no anatomical or clinical accuracy pass.",
+-            "Full supplied target remains the denominator; unchanged support excludes some target positives.",
+-            "Automatic support zeros are uncertain, informative public estimates, not confirmed empty anatomy; no filling.",
++            "Full native and placed target denominators remain; label-positive centre crop loss is zero, NN sampling differences stay explicit.",
++            "Known automatic label zero is not physical empty. Outside its saved source domain is explicitly unknown; no filling or full-coverage factory admission.",
+             "Source whole tumor is not a prescribed resection target. Missing vessels and function remain unknown.",
+             "Exact acquired/annotation availability timestamps are unverified. This audit permits zero optimizer updates.",
+             "NN sampling may omit thin labels; source positive crop losses and volume changes remain explicit."]
+         visual = "PENDING_ROOT_VISUAL_AND_SOURCE_ARTIFACT_REVIEW; no visual claim generated by this reader."
+-        audit = {"status": "saved_public_geometry_domains_samples_checked_anatomy_unreviewed", "patient_id": subject,
+-            "role": "TRAIN", "original_source_reopened": False, "private_reference_loaded": False,
++        audit = {"status": "saved_public_domain_geometry_checked_anatomy_unreviewed", "patient_id": subject,
++            "role": "TRAIN", "original_source_reopened": False, "private_reference_loaded": False, "public_only": True, "training_admitted": False, "actor_inputs_admitted": False, "optimizer_updates_performed": 0, "executing_script_sha256": sha(__file__), "case_sha256": report["case_sha256"], "full_coverage_factory_compatible": False,
+             "conversion_receipt_sha256": result_sha, "header_snapshot_sha256": sha(header_path),
+             "shape_xyz": shape, "source_geometry_refit_from_saved_headers": geometry,
+             "saved_counts": count, "image_range": [image_min, image_max], "label_summaries": summaries,
+-            "public_support_domain_fully_covered": True,
++            "public_support_domain_fully_covered": count["support_domain"] == nvox, "support_unknown_domain_voxels": nvox-count["support_domain"], "source_centre_coverage": centre_coverage, "public_input_manifest": None,
+             "source_MR_sample_equality": "bound conversion worker independently compared decoded samples to original bytes; this saved audit checks finite saved samples only",
+             "all_saved_artifact_hashes_verified": True, "all_source_domain_voxels_world_checked": True,
+             "visual_review": {"views": report["public_overlays"]["images"], "observation": visual, "expert_anatomy_review": False},
+             "limits": limits, "audit_script_sha256": sha(__file__)}
+-        audit_path = output / (subject + "-saved-public-review.json"); audit_sha = save(audit_path, audit)
++        audit_path = output / "saved-domain-review.json"; audit_sha = save(audit_path, audit)
+         index["cases"].append({"patient_id": subject, "patient_group": case["patient_group"], "role": "TRAIN",
+             "public_input_manifest": None, "training_admitted": False, "source_artifact_clearance": False,
+             "saved_review_path": str(audit_path.relative_to(ROOT)), "saved_review_sha256": audit_sha})

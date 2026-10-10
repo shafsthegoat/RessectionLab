@@ -1,0 +1,641 @@
+{
+  "MR_header_only_objects_outside_selected_z": 55,
+  "MR_native_crop_affine_ras_mm": [
+    [
+      0.5052881574969563,
+      -0.8019990333304745,
+      0.2404919991195247,
+      65.17072200254734
+    ],
+    [
+      -0.8346173056994072,
+      -0.47047949799105027,
+      0.19358248932423527,
+      17.082850182016166
+    ],
+    [
+      -0.04210664658818891,
+      -0.29853320680752493,
+      -0.9511518345960821,
+      110.66196355125925
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "MR_pixel_source_objects": 121,
+  "RSS_cap_bytes": 2147483648,
+  "actor_inputs_admitted": false,
+  "anatomical_coverage": "Only source annotation domains; other anatomy remains unknown",
+  "annotations": {
+    "cerebrum": {
+      "ancestry": {
+        "automatic_annotation_is_independent_ground_truth": false,
+        "referenced_sop_instance_uids": [],
+        "segments": [
+          {
+            "algorithm_name": "BrainLab",
+            "algorithm_type": "AUTOMATIC",
+            "coded_semantics": [
+              {
+                "CodeMeaning": "Anatomical Structure",
+                "CodeValue": "123037004",
+                "CodingSchemeDesignator": "SCT",
+                "sequence": "SegmentedPropertyCategoryCodeSequence"
+              },
+              {
+                "CodeMeaning": "Brain",
+                "CodeValue": "12738006",
+                "CodingSchemeDesignator": "SCT",
+                "sequence": "SegmentedPropertyTypeCodeSequence"
+              }
+            ],
+            "description": "Cerebrum",
+            "label": "Brain",
+            "number": 1
+          }
+        ],
+        "source_annotation_accuracy": "unreviewed"
+      },
+      "annotation_accuracy": "unreviewed",
+      "correspondence": {
+        "MR_index_to_SEG_index": [
+          [
+            3.253001976581186,
+            0.017071945422074464,
+            0.12149714247030485,
+            -163.3884837837363
+          ],
+          [
+            -0.01228485182691852,
+            3.2525428074209786,
+            -0.13433176212896117,
+            -193.0678753580307
+          ],
+          [
+            -0.11930187290209276,
+            0.1307131613508697,
+            3.3301517623422527,
+            -91.98512291742315
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "all_explicit_refs_in_selected_MR": false,
+        "correspondence": "shared_frame_plus_source_description",
+        "expert_alignment_review": false,
+        "explicit_SOP_refs_present": false,
+        "frame_uid_matches": true,
+        "identity_cross_frame_assumed": false,
+        "registration_performed": false,
+        "source_description": "cerebrum seg - MR ref: 3D_AX_T1_postcontrast",
+        "unmatched_explicit_SOP_refs": []
+      },
+      "native_grid_domain_voxels": 81435984,
+      "outside_native_grid": "unknown; zero padded mask must be paired with domain",
+      "placed_positive_voxels": 823052,
+      "placed_source_domain_voxels": 2304431,
+      "placement": {
+        "method": "nearest source centre; floor(index+.5), half-open source cell domain",
+        "outside_source_domain": "unknown",
+        "resampled_positive_volume_mm3": 784924.5267332898,
+        "resampled_positive_voxels": 823052,
+        "resampled_source_domain_voxels": 2304431,
+        "resampling_can_omit_subvoxel_labels": true,
+        "source_grid_unchanged": true,
+        "source_index_to_target_index": [
+          [
+            0.3069915043989826,
+            -0.0011593511272230128,
+            -0.011246989732968456,
+            5.900486047080324
+          ],
+          [
+            0.001611102662584643,
+            0.3069480711305915,
+            0.012322816761846541,
+            1.6585698537473093
+          ],
+          [
+            0.010934699236140412,
+            -0.012089760817998941,
+            0.29939999662757666,
+            7.992814825003805
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_positive_centres_outside_target_grid": 0,
+        "source_positive_volume_mm3": 785078.1886258661,
+        "source_positive_voxels": 29092192,
+        "target_index_to_source_index": [
+          [
+            3.2530019601701605,
+            0.0170720643284763,
+            0.12149667380304607,
+            -20.1937083039071
+          ],
+          [
+            -0.012284746840362848,
+            3.25254277110295,
+            -0.1343308465363274,
+            -4.248401829200759
+          ],
+          [
+            -0.11930233167128768,
+            0.13071405045089296,
+            3.3301518164306954,
+            -26.130143448009107
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "source_native_affine_ras_mm": [
+        [
+          0.1564567566,
+          -0.24966532589999998,
+          0.056437357968819345,
+          68.74420173981346
+        ],
+        [
+          -0.2548616589,
+          -0.1457855166,
+          0.06154789387853819,
+          12.925148024914328
+        ],
+        [
+          -0.023807872829999997,
+          -0.0800862552,
+          -0.287980080880081,
+          102.31599489534241
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_native_geometry_retained": true,
+      "source_native_shape": [
+        424,
+        538,
+        357
+      ],
+      "source_positive_voxels": 29092192,
+      "source_samples_equal": true
+    },
+    "whole_tumor": {
+      "ancestry": {
+        "automatic_annotation_is_independent_ground_truth": false,
+        "referenced_sop_instance_uids": [],
+        "segments": [
+          {
+            "algorithm_name": null,
+            "algorithm_type": "MANUAL",
+            "coded_semantics": [
+              {
+                "CodeMeaning": "Morphologically Altered Structure",
+                "CodeValue": "49755003",
+                "CodingSchemeDesignator": "SCT",
+                "sequence": "SegmentedPropertyCategoryCodeSequence"
+              },
+              {
+                "CodeMeaning": "Glioma",
+                "CodeValue": "115240006",
+                "CodingSchemeDesignator": "SCT",
+                "sequence": "SegmentedPropertyTypeCodeSequence"
+              },
+              {
+                "CodeMeaning": "Brain",
+                "CodeValue": "12738006",
+                "CodingSchemeDesignator": "SCT",
+                "sequence": "AnatomicRegionSequence"
+              }
+            ],
+            "description": "Tumor",
+            "label": "Glioma",
+            "number": 1
+          }
+        ],
+        "source_annotation_accuracy": "unreviewed"
+      },
+      "annotation_accuracy": "unreviewed",
+      "correspondence": {
+        "MR_index_to_SEG_index": [
+          [
+            1.0000004281964676,
+            8.11637707043289e-08,
+            2.9660446179691213e-07,
+            -127.18229563804218
+          ],
+          [
+            -1.269710674933755e-07,
+            1.000000504611868,
+            -3.531305742127122e-07,
+            -100.71018027958434
+          ],
+          [
+            -6.305610950052554e-09,
+            -1.9742819104551224e-07,
+            1.0000002063957714,
+            -78.33658421667056
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "all_explicit_refs_in_selected_MR": false,
+        "correspondence": "shared_frame_plus_source_description",
+        "expert_alignment_review": false,
+        "explicit_SOP_refs_present": false,
+        "frame_uid_matches": true,
+        "identity_cross_frame_assumed": false,
+        "registration_performed": false,
+        "source_description": "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "unmatched_explicit_SOP_refs": []
+      },
+      "native_grid_domain_voxels": 96406,
+      "outside_native_grid": "unknown; zero padded mask must be paired with domain",
+      "placed_positive_voxels": 25301,
+      "placed_source_domain_voxels": 96406,
+      "placement": {
+        "method": "nearest source centre; floor(index+.5), half-open source cell domain",
+        "outside_source_domain": "unknown",
+        "resampled_positive_volume_mm3": 24128.943798057677,
+        "resampled_positive_voxels": 25301,
+        "resampled_source_domain_voxels": 96406,
+        "resampling_can_omit_subvoxel_labels": true,
+        "source_grid_unchanged": true,
+        "source_index_to_target_index": [
+          [
+            0.9999995718036904,
+            -1.07709373031728e-07,
+            -1.510576493057858e-07,
+            84.1822172990892
+          ],
+          [
+            1.0042530868004107e-07,
+            0.9999994953883544,
+            7.217950760696201e-08,
+            41.71015436620327
+          ],
+          [
+            1.451097459137518e-07,
+            -7.050765184202223e-08,
+            0.9999997936041553,
+            59.336589242511074
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_positive_centres_outside_target_grid": 0,
+        "source_positive_volume_mm3": 24128.916310283985,
+        "source_positive_voxels": 25301,
+        "target_index_to_source_index": [
+          [
+            1.0000004281964603,
+            1.0770948427607507e-07,
+            1.5105773737422723e-07,
+            -84.1822668014468
+          ],
+          [
+            -1.0042539183574561e-07,
+            1.0000005046118843,
+            -7.21795740954434e-08,
+            -41.71016267672094
+          ],
+          [
+            -1.4510984511217906e-07,
+            7.050768638383609e-08,
+            1.0000002063958604,
+            -59.33659221455545
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "source_native_affine_ras_mm": [
+        [
+          0.5052878408203124,
+          -0.8019986221637129,
+          0.2404915164022306,
+          88.52545187287457
+        ],
+        [
+          -0.8346170068359374,
+          -0.470479154622373,
+          0.1935825307801736,
+          -61.314335751012194
+        ],
+        [
+          -0.0421066724609375,
+          -0.29853324053073815,
+          -0.9511517312145746,
+          38.22735597983806
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_native_geometry_retained": true,
+      "source_native_shape": [
+        43,
+        59,
+        38
+      ],
+      "source_positive_voxels": 25301,
+      "source_samples_equal": true
+    }
+  },
+  "artifacts": {
+    "MR_native_crop.npy": {
+      "bytes": 11621936,
+      "sha256": "21075d9e398da3ebc4d5e8965f5f4abbbbcc6357d2d388e4337d18a3a57cec3d"
+    },
+    "cerebrum_source_grid_domain.npy": {
+      "bytes": 2905580,
+      "sha256": "db586c452ea6d6a17f1e62acfec69c74c111a2a378dd9a85fec6848b8539b702"
+    },
+    "cerebrum_source_label.npy": {
+      "bytes": 2905580,
+      "sha256": "d3908e4ee9dbc2d88f270c0ac4ac2d0a80bac4575f0e859e2f264f909954c6df"
+    },
+    "public-qc-axis0-index105.png": {
+      "bytes": 27673,
+      "sha256": "db77275340d500cf0a6194118a13711484d550927d62c1f74a33cb3eb6be5e7c"
+    },
+    "public-qc-axis1-index71.png": {
+      "bytes": 22568,
+      "sha256": "0fc03993c0a652080155436cc4b83267f7099ff0ba1455af6f7ca89316996ad3"
+    },
+    "public-qc-axis2-index78.png": {
+      "bytes": 33423,
+      "sha256": "835c1db48f193c65f3625c09a47dfa722bf09e27741d0a819a92900abc0b2312"
+    },
+    "whole_tumor_source_grid_domain.npy": {
+      "bytes": 2905580,
+      "sha256": "3863dd1c47ce88a674807b61eadce4b2ce3e80eb598a5243456f92e467c250c5"
+    },
+    "whole_tumor_source_label.npy": {
+      "bytes": 2905580,
+      "sha256": "7b774e4ffd3596ba5669dfac7e4a9f80cb90c499a67c85ff918f9984655cef42"
+    }
+  },
+  "case_sha256": "9413d47ff3a55bfd429b64777f2ba9d55eea548c904f8e4328a41481158e16ac",
+  "case_uncertainties": [
+    "Source describes Preop phase; exact timestamps, frames and explicit source-SOP linkage remain unreviewed.",
+    "Whole tumor is not a prescribed resection target.",
+    "Automatic Brainlab cerebrum is supplied estimated support; holes and voids may encode anatomy. No filling, repair or hidden mask intersection.",
+    "Native/placed full target counts, crop losses and target/support conflict must stay visible.",
+    "Any suspicious encoded-source support artifact holds intended use; retain the person in the fixed four-person denominator without replacement.",
+    "Cross-collection identity/pretrained exposure remains unknown; no independent external-transfer claim.",
+    "Only public three-series metadata prepared; no header, pixel or array opened and no private series included."
+  ],
+  "clinical_validity": "unreviewed",
+  "crop_policy": "public_source_domain_union_no_extrapolation",
+  "crop_selection_uses_private_ventricle_labels": false,
+  "declared_conditions": {
+    "support": "supplied automatic Brainlab cerebrum estimate",
+    "vessels_and_function": "unknown",
+    "whole_tumor": "manual source annotation; any task target use must be explicit"
+  },
+  "elapsed_seconds": 1.3699950000736862,
+  "estimated_crop_peak_bytes": 389138630,
+  "executing_script_sha256": "f35a28f2cdedd777e15031b5cba370c4106c0436eefe9590ca17466d8944b3ca",
+  "explicit_source_SOP_links_present": {
+    "cerebrum": false,
+    "whole_tumor": false
+  },
+  "full_MR_native_array_written": false,
+  "full_coverage_factory_compatible": false,
+  "header_snapshot_sha256": "32d01668e69ef38a5700d7ee0ca42d27d01a81e7d0adc3115a9392bbfea1f524",
+  "immutable_role_binding": {
+    "cohort_sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+    "patient_group": "ReMIND:045",
+    "role": "TRAIN",
+    "source_binding_sha256": "f1282350f7cd9a8014241d6067c9cacd084316e5b5113681a28f093e21914ed0"
+  },
+  "labels_resampled": true,
+  "native_peak_estimate_not_measurement": true,
+  "objects_verified": 123,
+  "optimizer_updates_performed": 0,
+  "output_bytes_before_receipt": 23327920,
+  "patient_group": "ReMIND:045",
+  "patient_id": "ReMIND-045",
+  "peak_RSS_bytes": 1347420160,
+  "planning_derived_affine_ras_mm": [
+    [
+      0.5052881028261165,
+      -0.8019989554809558,
+      0.240491700254241,
+      65.17072200254734
+    ],
+    [
+      -0.8346173450586629,
+      -0.47047946827885667,
+      0.19358247861843497,
+      17.082850182016166
+    ],
+    [
+      -0.042106522489067544,
+      -0.2985334627729551,
+      -0.951151912340891,
+      110.66196355125925
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "planning_grid_source": "native MRI outer crop covering both public annotation source domains; explicit domain masks required",
+  "private_reference_loaded": false,
+  "public_crop_start_MR": [
+    43,
+    59,
+    19
+  ],
+  "public_only": true,
+  "public_overlays": {
+    "colors": {
+      "cerebrum_boundary": "green",
+      "whole_tumor": "red"
+    },
+    "images": [
+      {
+        "available_to_actor": false,
+        "axis": 0,
+        "file": "public-qc-axis0-index105.png",
+        "index": 105,
+        "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention"
+      },
+      {
+        "available_to_actor": false,
+        "axis": 1,
+        "file": "public-qc-axis1-index71.png",
+        "index": 71,
+        "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention"
+      },
+      {
+        "available_to_actor": false,
+        "axis": 2,
+        "file": "public-qc-axis2-index78.png",
+        "index": 78,
+        "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention"
+      }
+    ],
+    "selection": "source whole-tumor grid centre for QC only",
+    "window": [
+      0.0,
+      1109.3050000000003
+    ]
+  },
+  "public_support_source_domain_complete": false,
+  "public_support_source_domain_unknown_voxels": 601021,
+  "public_target_support_domain_relation": {
+    "full_placed_target_voxels": 25301,
+    "known_label_zero_is_physical_empty": false,
+    "target_in_known_support_positive": 5416,
+    "target_in_known_support_zero": 19885,
+    "target_in_unknown_support_domain": 0,
+    "unknown_label_zero_is_observed_empty": false
+  },
+  "public_target_support_relation": {
+    "outside_fraction": 0.7859373147306431,
+    "support_filled_or_modified": false,
+    "target_clipped": false,
+    "task_interpretation": "Source whole-tumor annotation is not prescribed resection. Any support-limited target or expanded removable domain must be an explicit task condition; source arrays remain unchanged.",
+    "whole_tumor_positive_outside_public_support": 19885,
+    "whole_tumor_positive_voxels": 25301
+  },
+  "registration_performed": false,
+  "reindex_policy": {
+    "derived_grid": {
+      "max_normalized_Gram_error": 3.8946383250174523e-16,
+      "polar_corner_difference_mm": 1.4664627452047077e-13,
+      "polar_transform_applied": false,
+      "spacing_mm": [
+        0.9765629210483622,
+        0.9765630973263895,
+        1.0000001971344639
+      ]
+    },
+    "image_interpolation": "none",
+    "maximum_bound_mm": 0.001,
+    "maximum_crop_world_difference_mm": 5.847372165827887e-05,
+    "original_MR_affine_overwritten": false,
+    "source_MR_grid": {
+      "max_normalized_Gram_error": 5.48732348279985e-07,
+      "polar_corner_difference_mm": 5.847372165827887e-05,
+      "polar_transform_applied": false,
+      "spacing_mm": [
+        0.976562921048362,
+        0.9765630973263891,
+        1.0000001971344634
+      ]
+    },
+    "source_MR_samples_preserved": true,
+    "subset_converter_fit_difference_mm": 7.711493487392767e-05
+  },
+  "reused_converter_sha256": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6",
+  "role": "TRAIN",
+  "selected_MR_pixels_match_independent_raw_bytes": true,
+  "shape_xyz": [
+    138,
+    174,
+    121
+  ],
+  "source_cropping_map": {
+    "all_public_source_voxel_centres_inside_output": true,
+    "bound_mm": 0.001,
+    "clipped_to_MR_coverage": false,
+    "image_interpolation": "none",
+    "maximum_world_corner_difference_mm": 5.847372165827887e-05,
+    "original_MR_sampling_mm": [
+      0.976562921048362,
+      0.9765630973263891,
+      1.0000001971344634
+    ],
+    "planning_affine_method": "existing bounded polar orthogonal roundoff; exact native source crop affine retained",
+    "public_source_cell_bounds_in_MR_index": {
+      "cerebrum": {
+        "maximum": [
+          178.91758957196282,
+          230.7185794330726,
+          138.36578708420396
+        ],
+        "minimum": [
+          44.114276012618376,
+          60.49813121488399,
+          20.339444973211645
+        ]
+      },
+      "whole_tumor": {
+        "maximum": [
+          169.68219176061146,
+          159.21016239041643,
+          115.83659281101176
+        ],
+        "minimum": [
+          126.68219411342727,
+          100.21017328379637,
+          77.83658873464974
+        ]
+      }
+    },
+    "roundoff_halo_MR_cells_per_face": 1,
+    "selection": "outer native MRI cell box covering public cerebrum and whole-tumor source-grid domains, one-cell roundoff halo, clipped only to acquired MRI",
+    "support_source_domain_policy": "explicit mask; outside is unknown, never observed empty; downstream full-coverage factory is incompatible",
+    "unclipped_MR_start": [
+      43,
+      59,
+      19
+    ],
+    "unclipped_MR_stop": [
+      181,
+      233,
+      140
+    ],
+    "uniform_inset_MR_cells_per_face": 0,
+    "uses_label_positive_extent": false,
+    "uses_private_labels": false,
+    "uses_public_whole_tumor_source_domain": true
+  },
+  "source_file_returned_bytes": 23923764,
+  "status": "public_crop_source_samples_and_label_grids_converted_anatomy_unreviewed",
+  "support_source_domain_required": true,
+  "training_admitted": false,
+  "whole_tumor_is_prescribed_resection_target": false
+}

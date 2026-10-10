@@ -1,0 +1,9 @@
+{
+  "scope": "Metadata/source-only guard controls; no raw patient files, arrays or workers",
+  "check_only_exit_code": 0,
+  "check_only_stdout": "{\"status\": \"prepared_metadata_contract_valid\", \"subjects\": [\"ReMIND-002\", \"ReMIND-015\", \"ReMIND-018\", \"ReMIND-045\"], \"objects\": 760, \"bytes\": 105063822, \"execution_released\": false, \"patient_source_files_opened\": 0, \"workers_started\": 0}\n",
+  "false_release_exit_code": 1,
+  "false_release_stderr": "Traceback (most recent call last):\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/run_public_qc_owned.py\", line 196, in <module>\n    if __name__=='__main__':raise SystemExit(main())\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/run_public_qc_owned.py\", line 122, in main\n    need(release['execution_released'] is True,'root_dispatch_required_before_any_patient_source_or_worker')\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-domain-crop-preparation-v1/run_public_qc_owned.py\", line 24, in need\n    if not value:raise ValueError(reason)\nValueError: root_dispatch_required_before_any_patient_source_or_worker\n",
+  "actual_output_absent": true,
+  "release_sha256": "320ee81c67bbe682aef4dd1782672b966277ff32c943364e517a311a4ff72a79"
+}

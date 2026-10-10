@@ -1,0 +1,308 @@
+[
+  {
+    "bytes": 3150,
+    "preserved": "HANDOFF.txt",
+    "sha256": "27d4873c1bde0a84da594519914dc8f9a92bca58658cb99a339ef4c91fd30703",
+    "source": "build/remind-train-domain-crop-preparation-v1/HANDOFF.txt"
+  },
+  {
+    "bytes": 14413,
+    "preserved": "audit_saved_domains.py",
+    "sha256": "4caac4a2b42dd2319d8cb6af1ab30bc0c827199fbea957c9ae87c25a79c64ba2",
+    "source": "build/remind-train-domain-crop-preparation-v1/audit_saved_domains.py"
+  },
+  {
+    "bytes": 532,
+    "preserved": "generated-controls.txt",
+    "sha256": "3d85dd22f5ac9b55f5f32326ebadda015fef05fd892f75a0124f76d49586a001",
+    "source": "build/remind-train-domain-crop-preparation-v1/generated-controls.txt"
+  },
+  {
+    "bytes": 1174,
+    "preserved": "prepared-release.json",
+    "sha256": "320ee81c67bbe682aef4dd1782672b966277ff32c943364e517a311a4ff72a79",
+    "source": "build/remind-train-domain-crop-preparation-v1/prepared-release.json"
+  },
+  {
+    "bytes": 5715,
+    "preserved": "public-train-index.json",
+    "sha256": "ab8382bceba867d7b7badcf776cd1b3e0218d401392de7eda5e3a5df7d3a1372",
+    "source": "build/remind-train-domain-crop-preparation-v1/public-train-index.json"
+  },
+  {
+    "bytes": 1173,
+    "preserved": "root-release.json",
+    "sha256": "948ae1c701f1fece2bd2e4791875555fdaf0bb3e826a12bcd1bed3b1a419b96a",
+    "source": "build/remind-train-domain-crop-preparation-v1/root-release.json"
+  },
+  {
+    "bytes": 16933,
+    "preserved": "run_public_qc_owned.py",
+    "sha256": "1b064117d57dd02ff2fcb94a1113039b3c01143a5d6943f6609c1ebfd430844f",
+    "source": "build/remind-train-domain-crop-preparation-v1/run_public_qc_owned.py"
+  },
+  {
+    "bytes": 751,
+    "preserved": "source-delta.json",
+    "sha256": "d907d7b4bbd127746f1c53a9107182aeb95783106f0195576f5b479226bd8fa1",
+    "source": "build/remind-train-domain-crop-preparation-v1/source-delta.json"
+  },
+  {
+    "bytes": 5053,
+    "preserved": "source-index.json",
+    "sha256": "3a927873f4eea60a15eb916bf0b97c1abc2782bc8b2ec85716a610816acaf631",
+    "source": "build/remind-train-domain-crop-preparation-v1/source-index.json"
+  },
+  {
+    "bytes": 1495,
+    "preserved": "source-only-controls.json",
+    "sha256": "1ad85b3d067448f0171f7e3e8bbe364f707375151ea4e92f2c230b2312e08999",
+    "source": "build/remind-train-domain-crop-preparation-v1/source-only-controls.json"
+  },
+  {
+    "bytes": 25470,
+    "preserved": "source.diff",
+    "sha256": "da79fbb56e82afa3b1a9995c7b573aaad5cf8314499b939a31b1751b16670228",
+    "source": "build/remind-train-domain-crop-preparation-v1/source.diff"
+  },
+  {
+    "bytes": 10804,
+    "preserved": "test_generated.py",
+    "sha256": "88d87e58469ff3f6ef453d1dae767cff67fc895a03a6be34d5967f6c55072ed3",
+    "source": "build/remind-train-domain-crop-preparation-v1/test_generated.py"
+  },
+  {
+    "bytes": 4165,
+    "preserved": "root-overlay-review.json",
+    "sha256": "59b7a20cbd10fe841aeb6fc45b9fbc3936ad274db6425851dd1cc81c232a52d7",
+    "source": "build/remind-train-domain-crop-preparation-v1/root-overlay-review.json"
+  },
+  {
+    "bytes": 19943,
+    "preserved": "actual-domain-qc-v1/ReMIND-002-crop-mr-domains/conversion-result.json",
+    "sha256": "3c66619317b0368ead5a69d557b3a4d61b23ff4e2c144f9ccccdea2b25fab53a",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains/conversion-result.json"
+  },
+  {
+    "bytes": 2167,
+    "preserved": "actual-domain-qc-v1/ReMIND-002-crop-mr-domains-supervisor.json",
+    "sha256": "0a4b388943fc0aa8c61795ca7e1a1f89ed848920634afc56dd76a88a35092d1d",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains-supervisor.json"
+  },
+  {
+    "bytes": 249,
+    "preserved": "actual-domain-qc-v1/ReMIND-002-crop-mr-domains.log",
+    "sha256": "958f2aabfc84df7441ee86df016f09a4231f9d81ae95eee625aff595a39cf61f",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-crop-mr-domains.log"
+  },
+  {
+    "bytes": 5441,
+    "preserved": "actual-domain-qc-v1/ReMIND-002-saved-domain-review/saved-domain-review.json",
+    "sha256": "840867348e3e106abc9ffd77b1de4fbffa308617a14f7f26a10073759badc6d9",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-saved-domain-review/saved-domain-review.json"
+  },
+  {
+    "bytes": 710,
+    "preserved": "actual-domain-qc-v1/ReMIND-002-saved-domain-review/saved-review-index.json",
+    "sha256": "f76a63cc9d9127983dc84b5da94e318f8d8771c832322a807d23d47a656654d5",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-saved-domain-review/saved-review-index.json"
+  },
+  {
+    "bytes": 1565,
+    "preserved": "actual-domain-qc-v1/ReMIND-002-saved-domain-review-supervisor.json",
+    "sha256": "97a4129a8bdacdf37d14510b4435f049e9fc91e9005d89c63815dfbacdf5edf4",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-saved-domain-review-supervisor.json"
+  },
+  {
+    "bytes": 632,
+    "preserved": "actual-domain-qc-v1/ReMIND-002-saved-domain-review.log",
+    "sha256": "ba4bdac65ce7ac704cf84655f3a12820d535f12c289326e95cdd9dc11cba5acd",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-002-saved-domain-review.log"
+  },
+  {
+    "bytes": 19575,
+    "preserved": "actual-domain-qc-v1/ReMIND-015-crop-mr-domains/conversion-result.json",
+    "sha256": "88bd10a406090faa3d499b0086babd66ae168788037a76ce328207e1bfb0516c",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains/conversion-result.json"
+  },
+  {
+    "bytes": 2166,
+    "preserved": "actual-domain-qc-v1/ReMIND-015-crop-mr-domains-supervisor.json",
+    "sha256": "c02bb30d08b90b89a515fbc2e061effe47272c133dd0e0ac1a22d6338f3d8585",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains-supervisor.json"
+  },
+  {
+    "bytes": 249,
+    "preserved": "actual-domain-qc-v1/ReMIND-015-crop-mr-domains.log",
+    "sha256": "6b7080e39f8afcc587da4144777e13d928e15f184bdf006b17c172c874b24fe7",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-crop-mr-domains.log"
+  },
+  {
+    "bytes": 5437,
+    "preserved": "actual-domain-qc-v1/ReMIND-015-saved-domain-review/saved-domain-review.json",
+    "sha256": "323647931c0f9002b866c71b40d6706291ab94975528720bd685a8fd22899b33",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-saved-domain-review/saved-domain-review.json"
+  },
+  {
+    "bytes": 711,
+    "preserved": "actual-domain-qc-v1/ReMIND-015-saved-domain-review/saved-review-index.json",
+    "sha256": "f1d2cabee3cd9823eadb04ac712e1fde019a40eedcc188b2b72da2fe68ba5b3f",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-saved-domain-review/saved-review-index.json"
+  },
+  {
+    "bytes": 1565,
+    "preserved": "actual-domain-qc-v1/ReMIND-015-saved-domain-review-supervisor.json",
+    "sha256": "359a3424501e7e0d3e260012359c2f5e03b600e6f0a07895a6a9c70764de8e3c",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-saved-domain-review-supervisor.json"
+  },
+  {
+    "bytes": 633,
+    "preserved": "actual-domain-qc-v1/ReMIND-015-saved-domain-review.log",
+    "sha256": "809bf54d6c1e6c5e39f2a821ba5c7de9b3015950384b626ae7580b31a52c536e",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-015-saved-domain-review.log"
+  },
+  {
+    "bytes": 20028,
+    "preserved": "actual-domain-qc-v1/ReMIND-018-crop-mr-domains/conversion-result.json",
+    "sha256": "fe0bf8ecc90e18eab03953b6c8c3bbef1e9684d06382f56694f0bb86e04ae713",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains/conversion-result.json"
+  },
+  {
+    "bytes": 2167,
+    "preserved": "actual-domain-qc-v1/ReMIND-018-crop-mr-domains-supervisor.json",
+    "sha256": "cfbc7b084a3da662b8e315523bf341172d955235626e5bcdd173fdbbff2d741e",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains-supervisor.json"
+  },
+  {
+    "bytes": 249,
+    "preserved": "actual-domain-qc-v1/ReMIND-018-crop-mr-domains.log",
+    "sha256": "93f332e2fe4fcb33c1181bd04dff26586c87db3c35ab2c9281c98344bc4fe669",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-crop-mr-domains.log"
+  },
+  {
+    "bytes": 5427,
+    "preserved": "actual-domain-qc-v1/ReMIND-018-saved-domain-review/saved-domain-review.json",
+    "sha256": "efcc61eed7e3873d135b6c3f696e338431f8151d300ed137562388893e60f589",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-saved-domain-review/saved-domain-review.json"
+  },
+  {
+    "bytes": 711,
+    "preserved": "actual-domain-qc-v1/ReMIND-018-saved-domain-review/saved-review-index.json",
+    "sha256": "630db28f956aa978917d6925706705abb6ef0beb4222282e50250de638b2b5c7",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-saved-domain-review/saved-review-index.json"
+  },
+  {
+    "bytes": 1566,
+    "preserved": "actual-domain-qc-v1/ReMIND-018-saved-domain-review-supervisor.json",
+    "sha256": "d56b761c30cd573826bf2918362d5c7daa07fa9c5e52353698404b5a9995e632",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-saved-domain-review-supervisor.json"
+  },
+  {
+    "bytes": 633,
+    "preserved": "actual-domain-qc-v1/ReMIND-018-saved-domain-review.log",
+    "sha256": "fbe0717a74f825d6b28cb88ef4e14bb651371f38aa4703f71fde0d5333eda8aa",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-018-saved-domain-review.log"
+  },
+  {
+    "bytes": 19934,
+    "preserved": "actual-domain-qc-v1/ReMIND-045-crop-mr-domains/conversion-result.json",
+    "sha256": "679962f53974f5cbd5ecf8187e4efb2fa7dd58842d0be9cf4340deabf6f33c7f",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains/conversion-result.json"
+  },
+  {
+    "bytes": 2167,
+    "preserved": "actual-domain-qc-v1/ReMIND-045-crop-mr-domains-supervisor.json",
+    "sha256": "eef512f3c34d4a8c2fe9ebb238a8de77d176f087c059133f3f321a1f1fe9f74e",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains-supervisor.json"
+  },
+  {
+    "bytes": 250,
+    "preserved": "actual-domain-qc-v1/ReMIND-045-crop-mr-domains.log",
+    "sha256": "21457ae99719ea79e8b687f56606689368a8727561f09c96eb59c6c6fe8caac3",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-crop-mr-domains.log"
+  },
+  {
+    "bytes": 5441,
+    "preserved": "actual-domain-qc-v1/ReMIND-045-saved-domain-review/saved-domain-review.json",
+    "sha256": "a8d78f7cb0e3754ed1021aef6eed024d7049878a73af94c69018a56303ace442",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-saved-domain-review/saved-domain-review.json"
+  },
+  {
+    "bytes": 711,
+    "preserved": "actual-domain-qc-v1/ReMIND-045-saved-domain-review/saved-review-index.json",
+    "sha256": "9d381371b200ea60080b7430fc9ef1e01350b71b155be42a6d455555a40674cb",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-saved-domain-review/saved-review-index.json"
+  },
+  {
+    "bytes": 1566,
+    "preserved": "actual-domain-qc-v1/ReMIND-045-saved-domain-review-supervisor.json",
+    "sha256": "b1ff41e63c4c98cce4807a4ec5771e27c7ca923f4b4e20a78216a2f878c40c2d",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-saved-domain-review-supervisor.json"
+  },
+  {
+    "bytes": 633,
+    "preserved": "actual-domain-qc-v1/ReMIND-045-saved-domain-review.log",
+    "sha256": "b85b2c2c2f1c9d69564f408122185c65a4c1af09d9a5603a945d881e2eae319a",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/ReMIND-045-saved-domain-review.log"
+  },
+  {
+    "bytes": 1413,
+    "preserved": "actual-domain-qc-v1/declaration.json",
+    "sha256": "296c37ee887dc927f155031a4494c9cd488a492887ed95ee4780eb1cb5396979",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/declaration.json"
+  },
+  {
+    "bytes": 1162,
+    "preserved": "actual-domain-qc-v1/pending-qualification-index.json",
+    "sha256": "5c2592ba34019566b73faf88449f17c13f2b7cc14d5bce00e635f6fa1414354b",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/pending-qualification-index.json"
+  },
+  {
+    "bytes": 16806,
+    "preserved": "actual-domain-qc-v1/receipt.json",
+    "sha256": "4fa78eda5216a7332605cd00be701f6e5f65cd69c1648ffa74ceba0388c98b11",
+    "source": "build/remind-train-domain-crop-preparation-v1/actual-domain-qc-v1/receipt.json"
+  },
+  {
+    "bytes": 4695,
+    "preserved": "independent/REPORT.txt",
+    "sha256": "484741ffe2ec823fb10e826069c46f33efb0c381248f6a93bbc2120ff442f264",
+    "source": "build/remind-train-domain-crop-independent-v1/REPORT.txt"
+  },
+  {
+    "bytes": 26293,
+    "preserved": "independent/audit-result.json",
+    "sha256": "a1f860781c368f970d8b3b7e0a17b393090bd53b59262075cca9c1d0387f9dbb",
+    "source": "build/remind-train-domain-crop-independent-v1/audit-result.json"
+  },
+  {
+    "bytes": 468,
+    "preserved": "independent/audit-run-01.txt",
+    "sha256": "2a523c759a6dcb109d78d47a40bb263ece06b237fe4067f159c06e8616246688",
+    "source": "build/remind-train-domain-crop-independent-v1/audit-run-01.txt"
+  },
+  {
+    "bytes": 1014,
+    "preserved": "independent/audit-run-02.txt",
+    "sha256": "90a825f167eeb1fc74f96c71390a9583296c2f5f6075d037fc10d7e047084bfe",
+    "source": "build/remind-train-domain-crop-independent-v1/audit-run-02.txt"
+  },
+  {
+    "bytes": 14025,
+    "preserved": "independent/audit_saved-initial-typo.py",
+    "sha256": "46fc571864af21b35490a351e85e2887bc1f0bb0bde1fea36c790a1057c9c4c2",
+    "source": "build/remind-train-domain-crop-independent-v1/audit_saved-initial-typo.py"
+  },
+  {
+    "bytes": 14027,
+    "preserved": "independent/audit_saved.py",
+    "sha256": "e3b903e7cb2cdae26baa6bd3d54c258eed88be9b060a39cd3306b2257f5eae93",
+    "source": "build/remind-train-domain-crop-independent-v1/audit_saved.py"
+  },
+  {
+    "bytes": 9978,
+    "preserved": "independent/input-hashes.json",
+    "sha256": "c0fa534a0cceb5c4a635096ae9f434dd535a47fb2fbb7a6f2c04b2f88845005b",
+    "source": "build/remind-train-domain-crop-independent-v1/input-hashes.json"
+  }
+]

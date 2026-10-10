@@ -1,0 +1,71 @@
+PASS: independent saved-JSON audit of four fixed TRAIN domain-preserving crops.
+
+All four source-grid extents are now covered, with zero source-positive crop
+loss for both cerebrum and whole tumor. Independent scalar affine arithmetic
+reproduces each native MRI crop start/shape and proves the complete annotation
+source-grid centre boxes lie inside acquired MRI and the new derived crop.
+This repairs the prior crop-selection loss; it does not validate anatomy or
+guarantee nearest-neighbor preservation of every positive source label.
+
+Subject  Native target  Old placed  New placed  Known support+  Known label0  Unknown domain
+002      24294          22699       24274       1705            21559         1010
+015       7745           7745        7745       5987             1758            0
+018       1247           1247        1247        997              250            0
+045      25301          25102       25301       5416            19885            0
+
+Each last-three-column partition sums to the full new placed target denominator.
+002 still has 20 fewer NN-placed positives than native positives: zero crop loss
+must not be reported as lossless label sampling. Its placed target volume is
+23149.48847887805 mm3 versus native 23168.564910448822 mm3 (-0.0823375623%).
+The other three target counts match; small nonzero volume differences remain
+because source and derived affine determinants differ. Cerebrum NN volume
+differences are also retained, including -0.5737179531% for 018.
+
+Unknown support-domain cells remain in every output: 414046 / 174084 / 146736 /
+601021 for 002 / 015 / 018 / 045. 002 includes 1010 target-positive cells in unknown
+support coverage. Known automatic label-zero is not physical empty; domain-zero
+is unknown. No support filling, label clipping, occupancy union, extrapolation,
+image interpolation, registration or factory manifest was introduced. The old
+factory requiring a complete support domain remains incompatible. All four
+people remain in the denominator with null public manifests and no planning,
+actor or training admission. Whole tumor is not a prescribed resection target.
+
+Native MRI starts / shapes:
+002 [39,53,16] / [141,173,122]
+015 [43,61,24] / [134,175,116]
+018 [46,68,29] / [135,166,116]
+045 [43,59,19] / [138,174,121]
+The outer-box calculation uses both annotation domains and a one-cell roundoff
+halo, no uniform inset, and clipping only to acquired MRI. The existing .001 mm
+affine reconciliation bound remains in force. These are coverage calculations,
+not proof of tissue correspondence, clinical accuracy or source-label validity.
+
+All eight phases completed in 7.0985189999919385 s; peak sampled process-group RSS
+was 1,198,899,200 B. Every phase exited 0, was reaped, and retained no owned processes,
+cleanup errors or cleanup actions. Source/case/header/conversion/reviewer links
+and final log/output/time limits agree. Caps: 300 s per case including both phases,
+1230 s batch, 3 GiB sampled RSS, 256 MiB per case, 4 MiB log/phase, one thread, no retry.
+Original 110 s/2 GiB conversion checkpoints remain. No original arrays or DICOM
+were reopened by this independent audit. Bound conversion/saved-array workers
+own source-sample equality, array hashes, finite/binary and every-voxel domain
+checks; this audit independently reconciles their saved records and arithmetic.
+Their visual review remains explicitly pending. Root may separately review
+the saved overlays; no expert anatomical accuracy claim is inferred here.
+
+Independent execution: 916 checks, 50 small JSON/source inputs, 0.01624075 s and
+28,508,160 B observed RSS. All 24 indexed code/metadata files rehashed and all read
+inputs checked again afterward. No scientific imports, patient arrays/images,
+models, native geometry replay or new data conversion occurred in this audit.
+
+Preserved audit negative: audit-run-01.txt stopped before helper import or result
+access because the reviewer typed a 62-character helper digest instead of the
+historically frozen 64-character digest. audit_saved-initial-typo.py preserves
+that exact script. Independent file hashing confirmed the helper was unchanged;
+only the missing two characters were restored. audit-run-02.txt passed. This was
+an audit-script pin transcription error, not a source change or patient retry.
+
+Receipt SHA256: 4fa78eda5216a7332605cd00be701f6e5f65cd69c1648ffa74ceba0388c98b11
+Release SHA256: 948ae1c701f1fece2bd2e4791875555fdaf0bb3e826a12bcd1bed3b1a419b96a
+Source index SHA256: 3a927873f4eea60a15eb916bf0b97c1abc2782bc8b2ec85716a610816acaf631
+Audit result and exact input hash inventory are adjacent; no duplicate result
+package or array copies were prepared. Root owns any tracked promotion.
