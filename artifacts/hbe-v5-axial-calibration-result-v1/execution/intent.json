@@ -1,0 +1,24 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "cleanup_seconds": 10,
+    "fit_calls": 1,
+    "held_out_member_reads": 0,
+    "mesher_calls": 0,
+    "native_calls": 0,
+    "new_output_bytes": 16777216,
+    "sampled_group_rss_bytes": 536870912,
+    "threads": 1,
+    "total_seconds": 70,
+    "worker_seconds": 60
+  },
+  "deadline": 1296539.59897475,
+  "release": {
+    "path": "build/hbe-v5-axial-calibration-root-release-v1/root-release.json",
+    "sha256": "90e1fa69a75dfe5dec3fd205c46c0405266db40fd0be1c9a22611a12e468b958"
+  },
+  "schema": "hbe-v5-axial-fit-intent-v1",
+  "source_commit": "4384ea0ae681e46986de9505edf226dcaa2a6c8c"
+}

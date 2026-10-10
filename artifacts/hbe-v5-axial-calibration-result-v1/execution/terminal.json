@@ -1,0 +1,127 @@
+{
+  "access_ledger": {
+    "path": "build/hbe-v5-axial-calibration-v1/attempt-01/access.jsonl",
+    "sha256": "3f55fceeaca20662d0a5541bfbfddbb4eb5fac6a945de017c0175cc67e85e412"
+  },
+  "calibration_metrics": {
+    "path": "build/hbe-v5-axial-calibration-v1/attempt-01/calibration-metrics.json",
+    "sha256": "1bfa855b35c1ba9124563aae574d3d4f0f1fe3308d8a2a632e3a5ae37618267c"
+  },
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "cleanup_seconds": 10,
+    "fit_calls": 1,
+    "held_out_member_reads": 0,
+    "mesher_calls": 0,
+    "native_calls": 0,
+    "new_output_bytes": 16777216,
+    "sampled_group_rss_bytes": 536870912,
+    "threads": 1,
+    "total_seconds": 70,
+    "worker_seconds": 60
+  },
+  "cleanup": {
+    "contained": true,
+    "direct_child_reaped": true,
+    "errors": [],
+    "exit_code": 0,
+    "fallback_used": false,
+    "remaining_members": []
+  },
+  "declaration": {
+    "path": "manifests/experiments/hbe-01-03-v5-axial-calibration-v1.json",
+    "sha256": "31b4c3b85e4fdab0010be28300c8e6fda2930c48659ee78792dc6f225c2cf794"
+  },
+  "elapsed_before_terminal_publication_seconds": 2.1731718750670552,
+  "fit": {
+    "path": "build/hbe-v5-axial-calibration-v1/attempt-01/fit.json",
+    "sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a"
+  },
+  "fit_calls": 1,
+  "freeze_saved": false,
+  "held_out_access_released": false,
+  "held_out_member_reads": 0,
+  "measured_access_accounting": "exact_two_completed_axial_members_2392_uncompressed_bytes",
+  "mesher_calls": 0,
+  "native_calls": 0,
+  "output_inventory": {
+    "access.jsonl": {
+      "bytes": 905,
+      "sha256": "3f55fceeaca20662d0a5541bfbfddbb4eb5fac6a945de017c0175cc67e85e412"
+    },
+    "calibration-metrics.json": {
+      "bytes": 6838,
+      "sha256": "1bfa855b35c1ba9124563aae574d3d4f0f1fe3308d8a2a632e3a5ae37618267c"
+    },
+    "fit.json": {
+      "bytes": 7886,
+      "sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a"
+    },
+    "intent-receipt.json": {
+      "bytes": 1212,
+      "sha256": "c6a7997f402334e0f5a768506e787ea8a7011eca4a5a0a8d748f685c3187383b"
+    },
+    "intent.json": {
+      "bytes": 684,
+      "sha256": "33c0c2e40db49cba0545a8a0199af8a8c0c979ec0bf5f7bc243e337e682e142d"
+    },
+    "readout-console.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "receipt.json": {
+      "bytes": 2566,
+      "sha256": "731a3414e9923586a5ec4c32f07aee565e04eaa94cc34fe9ce63210c206a8783"
+    },
+    "state.json": {
+      "bytes": 2072,
+      "sha256": "ae3c3ff478205c36616415470fa6305968b1b3842fb701c6fb4a4f556c335eff"
+    }
+  },
+  "parent_cache_prefix": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-axial-calibration-root-release-v1/unused-parent-cache",
+  "physical_validation_pass": null,
+  "readout_calls_attempted": 1,
+  "readout_stage": {
+    "active_output_cap_bytes": 16646144,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-I",
+      "-S",
+      "-B",
+      "-X",
+      "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-axial-calibration-v1/attempt-01/unused-worker-pycache",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_hbe_v5_axial_calibration_experiment.py",
+      "--root",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+      "--release",
+      "build/hbe-v5-axial-calibration-root-release-v1/root-release.json",
+      "--release-sha256",
+      "90e1fa69a75dfe5dec3fd205c46c0405266db40fd0be1c9a22611a12e468b958",
+      "--worker",
+      "--deadline",
+      "1296539.59897475"
+    ],
+    "elapsed_seconds": 1.3217140829656273,
+    "exit_code": 0,
+    "kill_reason": null,
+    "peak_sampled_active_output_bytes": 22098,
+    "peak_sampled_process_group_rss_bytes": 177684480,
+    "pid": 46306,
+    "sampled_process_group_rss_cap_bytes": 536870912,
+    "status": "completed_within_caps",
+    "wall_cap_seconds": 59.24027412501164
+  },
+  "release": {
+    "path": "build/hbe-v5-axial-calibration-root-release-v1/root-release.json",
+    "sha256": "90e1fa69a75dfe5dec3fd205c46c0405266db40fd0be1c9a22611a12e468b958"
+  },
+  "schema": "hbe-v5-axial-fit-supervision-v1",
+  "source_commit": "4384ea0ae681e46986de9505edf226dcaa2a6c8c",
+  "state": {
+    "path": "build/hbe-v5-axial-calibration-v1/attempt-01/state.json",
+    "sha256": "ae3c3ff478205c36616415470fa6305968b1b3842fb701c6fb4a4f556c335eff"
+  },
+  "status": "completed_axial_calibration_pending_fitted_confirmation",
+  "termination_requested": false
+}

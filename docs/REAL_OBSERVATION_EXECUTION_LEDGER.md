@@ -1260,3 +1260,8 @@ Acquisition independently continues: 6,215 verified files /217,055,647,324B at03
 ## Final contact checkpoint publication
 
 [Fixed local publication](../artifacts/public-contact-learning-v1/RESULT.md) now binds both independently reviewed32-update endpoints. Thirteen canonical controls pass after making unpublished-catalog fixtures explicit; no production guard change. InteractiveTRAIN/SELECTonly, no weights tracked. Live inference follows separately; the negative12/16SEARCH versus0/16IL/RL result is preserved.
+
+
+## Fixed axial specimen calibration retains substantial error
+
+[Actual result](../artifacts/hbe-v5-axial-calibration-result-v1/RESULT.md): one authorized fit, two original DEVELOPMENT members, 60 total correlated rows, no native call or held-out read. The fixed scale is 0.715361571139082 (μ715.3616Pa). Compression/tension normalized RMSE0.3722/2.8421; no empirical tolerance or physical pass. Independent saved-only arithmetic agrees without reopening the archive. Exact terminal, publication and access records are retained; fixed-fit confirmations and unopened torque prediction remain pending.

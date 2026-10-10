@@ -1,0 +1,48 @@
+{
+  "accepted": true,
+  "elapsed_before_publication_seconds": 2.2107997501734644,
+  "outputs": {
+    "access.jsonl": {
+      "bytes": 905,
+      "sha256": "3f55fceeaca20662d0a5541bfbfddbb4eb5fac6a945de017c0175cc67e85e412"
+    },
+    "calibration-metrics.json": {
+      "bytes": 6838,
+      "sha256": "1bfa855b35c1ba9124563aae574d3d4f0f1fe3308d8a2a632e3a5ae37618267c"
+    },
+    "fit.json": {
+      "bytes": 7886,
+      "sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a"
+    },
+    "intent-receipt.json": {
+      "bytes": 1212,
+      "sha256": "c6a7997f402334e0f5a768506e787ea8a7011eca4a5a0a8d748f685c3187383b"
+    },
+    "intent.json": {
+      "bytes": 684,
+      "sha256": "33c0c2e40db49cba0545a8a0199af8a8c0c979ec0bf5f7bc243e337e682e142d"
+    },
+    "readout-console.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "receipt.json": {
+      "bytes": 2566,
+      "sha256": "731a3414e9923586a5ec4c32f07aee565e04eaa94cc34fe9ce63210c206a8783"
+    },
+    "state.json": {
+      "bytes": 2072,
+      "sha256": "ae3c3ff478205c36616415470fa6305968b1b3842fb701c6fb4a4f556c335eff"
+    },
+    "terminal.json": {
+      "bytes": 4798,
+      "sha256": "2388bd58b02977465751981a07bdf1d1e2577d5c9d00d6e25b6a3e19dc09a0c5"
+    }
+  },
+  "physical_validation_pass": null,
+  "release": {
+    "path": "build/hbe-v5-axial-calibration-root-release-v1/root-release.json",
+    "sha256": "90e1fa69a75dfe5dec3fd205c46c0405266db40fd0be1c9a22611a12e468b958"
+  },
+  "schema": "hbe-v5-axial-fit-publication-v1"
+}

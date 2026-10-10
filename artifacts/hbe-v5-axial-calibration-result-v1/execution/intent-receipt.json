@@ -1,0 +1,33 @@
+{
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "cleanup_seconds": 10,
+    "fit_calls": 1,
+    "held_out_member_reads": 0,
+    "mesher_calls": 0,
+    "native_calls": 0,
+    "new_output_bytes": 16777216,
+    "sampled_group_rss_bytes": 536870912,
+    "threads": 1,
+    "total_seconds": 70,
+    "worker_seconds": 60
+  },
+  "declaration": {
+    "path": "manifests/experiments/hbe-01-03-v5-axial-calibration-v1.json",
+    "sha256": "31b4c3b85e4fdab0010be28300c8e6fda2930c48659ee78792dc6f225c2cf794"
+  },
+  "held_out_member_reads": 0,
+  "measured_access_accounting": "unknown_until_worker_state_and_ledger_checked",
+  "mesher_calls": 0,
+  "native_calls": 0,
+  "parent_cache_prefix": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-v5-axial-calibration-root-release-v1/unused-parent-cache",
+  "physical_validation_pass": null,
+  "release": {
+    "path": "build/hbe-v5-axial-calibration-root-release-v1/root-release.json",
+    "sha256": "90e1fa69a75dfe5dec3fd205c46c0405266db40fd0be1c9a22611a12e468b958"
+  },
+  "schema": "hbe-v5-axial-fit-supervision-v1",
+  "source_commit": "4384ea0ae681e46986de9505edf226dcaa2a6c8c",
+  "status": "reserved"
+}

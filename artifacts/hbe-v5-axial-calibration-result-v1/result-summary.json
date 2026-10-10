@@ -1,0 +1,76 @@
+{
+  "audit_scope": "Saved-record arithmetic only; interpolated unscaled predictions checked from saved fit, not reconstructed from reference readouts. No archive or estimator rerun. Float agreement rel1e-12/abs1e-15 solely arithmetic audit, no fit-quality threshold.",
+  "branch_metrics": {
+    "compression": {
+      "MAE": 0.0050151552480008615,
+      "RMSE": 0.008129197501465504,
+      "normalized_RMSE": 0.3721675208819034,
+      "observed_RMS_denominator": 0.02184284507740553,
+      "physical_validation_pass": null,
+      "response_unit": "N",
+      "role": "calibration_fit",
+      "row_IID_confidence_interval": null,
+      "row_count": 30,
+      "signed_endpoint_bias": 0.02179112581061647
+    },
+    "tension": {
+      "MAE": 0.007890160444294584,
+      "RMSE": 0.008641906582590213,
+      "normalized_RMSE": 2.842080027679559,
+      "observed_RMS_denominator": 0.003040697833426589,
+      "physical_validation_pass": null,
+      "response_unit": "N",
+      "role": "calibration_fit",
+      "row_IID_confidence_interval": null,
+      "row_count": 30,
+      "signed_endpoint_bias": 0.012315256832152465
+    }
+  },
+  "calibration_metrics": {
+    "path": "build/hbe-v5-axial-calibration-v1/attempt-01/calibration-metrics.json",
+    "sha256": "1bfa855b35c1ba9124563aae574d3d4f0f1fe3308d8a2a632e3a5ae37618267c"
+  },
+  "decision": "PASS_saved_fit_record_arithmetic_and_publication",
+  "equal_branch_RMSE_N": 0.00838946963162896,
+  "equal_branch_normalized_RMSE": 2.0268112328648695,
+  "execution": {
+    "calibration_rows": 60,
+    "cleanup": {
+      "contained": true,
+      "direct_child_reaped": true,
+      "errors": [],
+      "exit_code": 0,
+      "fallback_used": false,
+      "remaining_members": []
+    },
+    "completed_members": 2,
+    "decoded_bytes": 2392,
+    "elapsed_before_publication_seconds": 2.2107997501734644,
+    "ledger_events": 2,
+    "output_bytes": 28539,
+    "sampled_group_peak_rss_bytes": 177684480,
+    "worker_seconds": 1.3217140829656273
+  },
+  "fit": {
+    "path": "build/hbe-v5-axial-calibration-v1/attempt-01/fit.json",
+    "sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a"
+  },
+  "fit_calls_in_execution": 1,
+  "fitted_parameters": [
+    "positive_mu_scale_only"
+  ],
+  "held_out_reads": 0,
+  "interpretation": "Descriptive goodness of fit to two development curves from one specimen; no independent validation, physical tolerance or patient/tool property admission.",
+  "mu_Pa": 715.361571139082,
+  "physical_validation_pass": null,
+  "publication_sha256": "f94c0cc4eca474878f166a60066d5f4a8afd0c08d38b32537d95bbbdce399b49",
+  "reference_mu_Pa": 1000.0,
+  "release": {
+    "path": "build/hbe-v5-axial-calibration-root-release-v1/root-release.json",
+    "sha256": "90e1fa69a75dfe5dec3fd205c46c0405266db40fd0be1c9a22611a12e468b958"
+  },
+  "scale": 0.715361571139082,
+  "schema": "hbe-v5-axial-fit-saved-audit-v1",
+  "source_commit": "4384ea0ae681e46986de9505edf226dcaa2a6c8c",
+  "terminal_sha256": "2388bd58b02977465751981a07bdf1d1e2577d5c9d00d6e25b6a3e19dc09a0c5"
+}

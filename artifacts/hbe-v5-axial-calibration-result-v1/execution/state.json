@@ -1,0 +1,49 @@
+{
+  "automatic_retry": false,
+  "calibration_access_attempted": true,
+  "calibration_member_sha256": {
+    "compression": "bada734592217ce8134317cbe929223be0436e2d6010a7df4f249b6678ba3a43",
+    "tension": "750bd806e5fc18083e157a31cb019456bd80ef779cf97d5f1d298e52c9d96fc8"
+  },
+  "calibration_metrics": {
+    "path": "build/hbe-v5-axial-calibration-v1/attempt-01/calibration-metrics.json",
+    "sha256": "1bfa855b35c1ba9124563aae574d3d4f0f1fe3308d8a2a632e3a5ae37618267c"
+  },
+  "calibration_responses_accessed": true,
+  "declaration": {
+    "path": "manifests/experiments/hbe-01-03-v5-axial-calibration-v1.json",
+    "sha256": "31b4c3b85e4fdab0010be28300c8e6fda2930c48659ee78792dc6f225c2cf794"
+  },
+  "fit": {
+    "path": "build/hbe-v5-axial-calibration-v1/attempt-01/fit.json",
+    "sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a"
+  },
+  "fit_calls": 1,
+  "freeze_saved": false,
+  "held_out_access_released": false,
+  "held_out_member_reads": 0,
+  "mesher_calls": 0,
+  "native_calls": 0,
+  "patient_tool_mechanics_admitted": false,
+  "physical_validation_pass": null,
+  "qualification": {
+    "path": "build/hbe-v5-native-twelve-row-comparison-v1/attempt-02/comparison.json",
+    "sha256": "6d3772eac38f8a1a210082a89cb00955f4a9b0d5304700fd0168711b9de99c12"
+  },
+  "reference_readouts": {
+    "compression": {
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/06-compression-N36-S120-reference/attempt-01/readout.json",
+      "sha256": "14ca49981b0bf68df1a2a1d75489b9e8966c017635d3c4ba20a794e64a8eb18b"
+    },
+    "tension": {
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/11-tension-N24-S120-reference/attempt-01/readout.json",
+      "sha256": "20d64b4952aee288c3fa43597e019f1456a7e31b1ea9189a9f43a51d8500b3e1"
+    }
+  },
+  "release": {
+    "path": "build/hbe-v5-axial-calibration-root-release-v1/root-release.json",
+    "sha256": "90e1fa69a75dfe5dec3fd205c46c0405266db40fd0be1c9a22611a12e468b958"
+  },
+  "schema": "hbe-v5-axial-fit-state-v1",
+  "status": "completed_axial_calibration_pending_fitted_confirmation"
+}

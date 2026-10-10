@@ -1,0 +1,78 @@
+{
+  "archive_or_native_bulk_copied": false,
+  "contains_authorized_development_calibration_samples": true,
+  "files": {
+    "REPORT.txt": {
+      "bytes": 5613,
+      "sha256": "8bd605a27a3933c6bf2fd00453413c081b8ca0137e01cebf01bf97beca5927b4"
+    },
+    "audit-console.txt": {
+      "bytes": 1660,
+      "sha256": "527cbbe1c10c8a65ae4ab12694b150867e34c88252b50229547d484dad4bf94d"
+    },
+    "audit-result.json": {
+      "bytes": 11340,
+      "sha256": "f4e4388c25c011d8bfd14e1583d30d7afb80605b1388588da1be909ba34aec5e"
+    },
+    "audit_saved_fit.py": {
+      "bytes": 13542,
+      "sha256": "0bb67a38d98ac722fdf2c424308308744c4528604e51cccfc0edc8d0230d3520"
+    },
+    "declaration.json": {
+      "bytes": 9781,
+      "sha256": "31b4c3b85e4fdab0010be28300c8e6fda2930c48659ee78792dc6f225c2cf794"
+    },
+    "execution/access.jsonl": {
+      "bytes": 905,
+      "sha256": "3f55fceeaca20662d0a5541bfbfddbb4eb5fac6a945de017c0175cc67e85e412"
+    },
+    "execution/calibration-metrics.json": {
+      "bytes": 6838,
+      "sha256": "1bfa855b35c1ba9124563aae574d3d4f0f1fe3308d8a2a632e3a5ae37618267c"
+    },
+    "execution/fit.json": {
+      "bytes": 7886,
+      "sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a"
+    },
+    "execution/intent-receipt.json": {
+      "bytes": 1212,
+      "sha256": "c6a7997f402334e0f5a768506e787ea8a7011eca4a5a0a8d748f685c3187383b"
+    },
+    "execution/intent.json": {
+      "bytes": 684,
+      "sha256": "33c0c2e40db49cba0545a8a0199af8a8c0c979ec0bf5f7bc243e337e682e142d"
+    },
+    "execution/publication.json": {
+      "bytes": 1578,
+      "sha256": "f94c0cc4eca474878f166a60066d5f4a8afd0c08d38b32537d95bbbdce399b49"
+    },
+    "execution/readout-console.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "execution/receipt.json": {
+      "bytes": 2566,
+      "sha256": "731a3414e9923586a5ec4c32f07aee565e04eaa94cc34fe9ce63210c206a8783"
+    },
+    "execution/state.json": {
+      "bytes": 2072,
+      "sha256": "ae3c3ff478205c36616415470fa6305968b1b3842fb701c6fb4a4f556c335eff"
+    },
+    "execution/terminal.json": {
+      "bytes": 4798,
+      "sha256": "2388bd58b02977465751981a07bdf1d1e2577d5c9d00d6e25b6a3e19dc09a0c5"
+    },
+    "result-summary.json": {
+      "bytes": 3035,
+      "sha256": "ed481dc8aa0b6f30149b795b48dc9b9ef40cc9a7d02690e79e4f4fedf50c7697"
+    },
+    "root-release.json": {
+      "bytes": 81829,
+      "sha256": "90e1fa69a75dfe5dec3fd205c46c0405266db40fd0be1c9a22611a12e468b958"
+    }
+  },
+  "report_scope": "saved publication and fit arithmetic, no independent physical validation",
+  "schema": "hbe-v5-axial-fit-saved-result-index-v1",
+  "source_output_inventory_unchanged": true,
+  "total_bytes": 155339
+}

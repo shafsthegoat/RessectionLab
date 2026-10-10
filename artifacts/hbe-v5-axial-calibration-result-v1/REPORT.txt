@@ -1,0 +1,91 @@
+PASS — saved axial fit publication, accounting and arithmetic
+
+Accepted exact execution:
+  build/hbe-v5-axial-calibration-v1/attempt-01
+  source commit 4384ea0ae681e46986de9505edf226dcaa2a6c8c
+  release SHA 90e1fa69a75dfe5dec3fd205c46c0405266db40fd0be1c9a22611a12e468b958
+  fit SHA b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a
+  metrics SHA 1bfa855b35c1ba9124563aae574d3d4f0f1fe3308d8a2a632e3a5ae37618267c
+
+Integrity and access scope
+All ten files match the accepted publication inventory and terminal's nested
+inventory exactly; canonical persisted JSON agrees and no finalization-failure
+marker or cache directory is present. The released candidate normalizes exactly
+to the independently reviewed false template 0cc30a56... . All 33 current project
+source hashes match the root release. Release/declaration/review and complete
+saved output hashes were checked before and after arithmetic. Runtime binary
+hashing and historical Git authentication were not repeated in this saved-only
+review; their execution authority remains the reviewed source-bound launcher.
+
+The ledger records exactly one calibration attempt and one completion for the
+two original HBE_01_03 compression_c3.csv and tension_c3.csv members, with the
+frozen original member SHA256 values. It records 60 DEVELOPMENT calibration
+rows, 30 in each branch, and 2,392 decoded bytes. State and terminal record one
+fit, zero native calls, zero mesher calls and zero held-out reads. There is no
+freeze_saved event; held-out access and patient/tool admission remain false.
+These are source-bound saved ledger/worker records, not a separate syscall trace.
+
+The worker completed in 1.3217140829656273 s with 177,684,480 bytes sampled group
+RSS, zero exit and no kill reason. Publication was written at 2.2107997501734644 s
+from parent entry, within the 70 s envelope. Final inventory totals 28,539 bytes.
+Cleanup records contained=true, direct_child_reaped=true, exit_code=0,
+fallback_used=false, no errors and no remaining members. Original caps were
+60 s worker, 70 s lifecycle, 512 MiB sampled group RSS, 16 MiB output, one attempt.
+
+Independent saved-record arithmetic
+A standalone stdlib audit took 0.04603020893409848 s and peaked at 23,658,496 bytes.
+It imported no project modules and called no estimator, native program, archive
+reader, saved-stream checker or reference-readout loader. Explicit read guards
+permitted only these saved fit outputs and listed source/release/role metadata;
+process and network calls were denied. No original measured member was reopened.
+
+From the saved 30-row coordinates, observed responses, already interpolated
+unscaled predictions and weights, the audit independently recomputed branch
+quadrature weights, numerator, denominator, scale, modulus, scaled predictions,
+signed residuals, RMSE, MAE, observed RMS denominators, normalized RMSE, endpoint
+bias and equal-branch aggregates. It confirmed the exact frozen coordinate and
+member hashes. Cross-implementation arithmetic comparison used relative 1e-12 /
+absolute 1e-15 tolerance only; this is not a fit-quality acceptance threshold.
+The saved unscaled reference predictions were not re-interpolated from the
+native readouts. No second fit or new response access occurred.
+
+Descriptive result under the fixed one-scale model
+Reference mu: 1000 Pa.
+Positive fitted scale: 0.715361571139082.
+Fitted mu: 715.361571139082 Pa.
+Only positive_mu_scale_only was fitted; no offset, clipping or sign fit.
+
+                     Compression                 Tension
+RMSE [N]             0.008129197501465504          0.008641906582590213
+MAE [N]              0.0050151552480008615         0.007890160444294584
+Observed RMS [N]     0.02184284507740553           0.003040697833426589
+Normalized RMSE      0.3721675208819034            2.842080027679559
+Endpoint bias [N]   +0.02179112581061647          +0.012315256832152465
+
+Endpoint bias is predicted minus observed, preserving the original branch
+signs. Normalized RMSE is divided by each observed branch's weighted RMS; it is
+not a per-row percentage error. Tension RMS residual is approximately 2.84 times
+its observed RMS. Both branches have substantial descriptive residuals. The
+single-scale estimate combines both branches with equal total quadrature weight.
+
+Equal-branch RMSE: 0.00838946963162896 N.
+Equal-branch normalized RMSE: 2.0268112328648695.
+No empirical tolerance, row-IID confidence interval or physical-validity verdict
+was supplied. physical_validation_pass remains null and independent donor
+validation is false. This estimate is conditional on the fixed specimen
+geometry/material law and original DEVELOPMENT assignment; it is not a patient
+property or evidence of general biological validity.
+
+Continuation and package scope
+The terminal is completed_axial_calibration_pending_fitted_confirmation.
+The fixed parameter can inform a separately reviewed fitted-confirmation
+proposal. This audit grants no native execution, refit, torque exposure or
+prediction-freeze authority. Previously recorded v3 exposure/failure and source
+numerical caveats remain in the declaration; they are not erased by this fit.
+
+The execution/ directory contains byte-identical copies of the ten small saved
+files, including authorized DEVELOPMENT calibration samples in fit/metrics.
+The root release and declaration are copied exactly. audit-result.json retains
+all input hashes and scalar findings; source-index.json inventories this compact
+package. No original archive, unselected member, native bulk output or source
+runtime binaries were copied. Root alone promotes or commits the evidence.
