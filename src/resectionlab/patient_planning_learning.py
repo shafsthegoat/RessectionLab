@@ -47,11 +47,15 @@ def common_patient_policies(contexts, protocol):
     """Construct once and copy exact tensors; do not reinterpret old weights."""
     contexts = tuple(contexts); protocol = freeze_json(protocol)
     if not contexts: raise ValueError("At least one admitted TRAIN context required")
+    sequential = 'cohort_execution' in protocol
+    if sequential:
+        from .patient_planning_cohort_spec import validate_sequential_protocol
+        validate_sequential_protocol(protocol)
     variant=protocol.get('public_target_context_variant')
     if variant is not None:
         from .public_target_context import VERSION
         if variant!=VERSION:raise ValueError('Unknown opt-in patient public target variant')
-    if (set(protocol) != set(PREFLIGHT_PROTOCOL)|({'public_target_context_variant'} if variant is not None else set()) or protocol["methods"] != PREFLIGHT_PROTOCOL["methods"]
+    if (set(protocol) != set(PREFLIGHT_PROTOCOL)|({'public_target_context_variant'} if variant is not None else set())|({'cohort_execution'} if sequential else set()) or protocol["methods"] != PREFLIGHT_PROTOCOL["methods"]
             or type(protocol["seed"]) is not int or protocol["seed"] < 0
             or type(protocol["updates_per_method"]) is not int or protocol["updates_per_method"] < 1
             or protocol["architecture"] != PREFLIGHT_PROTOCOL["architecture"]

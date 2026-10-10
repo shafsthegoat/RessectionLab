@@ -1,0 +1,45 @@
+{
+  "exit_code": 0,
+  "wall_seconds": 1.1111910408362746,
+  "alarm_seconds": 30,
+  "threads": 1,
+  "patient_reads": 0,
+  "native_previews": 0,
+  "native_steps": 0,
+  "optimizer_steps": 0,
+  "scope": "changed bounded IO and explicit retention/candidate-cap schema controls only",
+  "maxrss_bytes_macos": 247529472,
+  "historical_default_identity": [
+    {
+      "updates": 1,
+      "max_steps": 3,
+      "legacy_and_new_hash": "sha256:bf99df15bfca69ff9b3035f49cf721a64e2a779b067fc35b4bf060cd469be71b"
+    },
+    {
+      "updates": 1,
+      "max_steps": 24,
+      "legacy_and_new_hash": "sha256:9ad214999e185d557e72953f372cb64d0a424b602d81132fb0e4f074bf06a8ab"
+    },
+    {
+      "updates": 8,
+      "max_steps": 3,
+      "legacy_and_new_hash": "sha256:6be4165f351984feb83fae24efee47b02f72df964ee9b4fefd704f12b279a8be"
+    },
+    {
+      "updates": 8,
+      "max_steps": 24,
+      "legacy_and_new_hash": "sha256:76e47536c744dd19527c0ab12b524fe0c19db6d8b3af0102596154a2ec3d863a"
+    }
+  ],
+  "source_sha256": {
+    "src/resectionlab/patient_planning_accumulation.py": "5d707bc68f04fb8f80ea43f0c2016fb7c4b0c67fbd66cf31f717fa6f4d14840a",
+    "src/resectionlab/patient_planning_cohort.py": "bbaa6fc1e1805205f643d48f7c9ebe9b4af8afa7ce7fbc066468c80fb362d830",
+    "src/resectionlab/patient_planning_cohort_io.py": "89e462950d2ba2e38996ead0e4091cb10616093fe52e3e556b6d1fcfa6fd49a8",
+    "src/resectionlab/patient_planning_cohort_sequential.py": "32be40ce0cc287b7f3c16a51bbfe55a42cd41cfda092548028271cb5a1ddad72",
+    "src/resectionlab/patient_planning_cohort_spec.py": "c0791dec265055355cdd329b33c954183a8c4338189308868a86472cc48fc53d",
+    "src/resectionlab/patient_planning_cohort_visits.py": "0c0b356d9acdbe43aa99421a59c1e8fafd64720f4e9ed82a9749e729d2fabea7",
+    "src/resectionlab/patient_planning_learning.py": "452f04b5802d5e1e736423c693dd76cb6e30184b7036b597e363dca7aed3f3db",
+    "tests/test_patient_cohort_sequential.py": "21321b81daaf3c4fa7ba0b6cfbd82c278fdebbfa7ba5f031522496ab81438c51"
+  },
+  "log_sha256": "c006518664d677476792e0e8a28065867ddb32791a1b8d6b8eaba50580e0caf6"
+}

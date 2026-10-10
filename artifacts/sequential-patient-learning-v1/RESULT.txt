@@ -1,0 +1,27 @@
+Sequential four-patient learning integration, October 10, 2026
+
+One shared population policy visits fixed TRAIN008/010/020/025 sequentially.
+Only one source patient and one action graph remain live at a time. Complete
+teacher/episode traces are recollected from frozen plans and context. IL preserves
+its mean over all teacher actions; RL preserves its episode mean with per-episode
+entropy/value normalization. Every patient contributes before one clip and Adam
+step. Parameters remain fixed throughout a collection/update. Failed accumulation
+cannot be retried. No held-out patient factory is accepted.
+
+Explicit protocol binds a horizon up to24, candidate cap96 or120, and old depth or
+new depth-volume retention. Old default protocol fingerprints are unchanged. The
+older all-patients-live runner is not promoted; exact IO/checkpoint helper bodies
+are extracted. Checkpoints are bounded JSON/array archives with lineage checks.
+All fixed TRAIN evaluations must complete before readiness; a late failure leaves
+it false. The protocol and resource declarations are prospective, not feasibility
+or useful-teacher claims. An all-STOP/no-positive teacher set cannot launch training.
+
+Validation: initial16 generated controls pass, including two shared IL/RL updates
+with unequal episode lengths against the former combined-graph computation.
+Gradient/loss/parameter tolerance checks and exact optimizer-step counts pass.
+15 changed IO/schema controls pass with four old-default protocol hashes equal.
+Final canonical integration:49 tests passed in3.24s. Independent source review
+found no blocking issue in the final IO/spec/runner revision. Root verified exact
+promotion hashes. These are tiny generated controls, with no patient training,
+SELECT/EVAL access or new model-benefit result. Patient task reachability remains
+the next experimental bottleneck.
