@@ -1,0 +1,199 @@
+{
+  "schema": "tractoinferno-recovery-versionable-handoff-v1",
+  "files": [
+    {
+      "path": "RESTORE_AND_REPRODUCE.txt",
+      "bytes": 8049,
+      "sha256": "c1c2f71c307e3fe0b81a2e4218b8039e424e7f643c05de04ff42c12af104fdc3"
+    },
+    {
+      "path": "author-evidence/COMMANDS.txt",
+      "bytes": 2668,
+      "sha256": "9e952e3ae31a15e7794c8d9a9044daf95bbdf2385c2426340da2771c2e47f50d"
+    },
+    {
+      "path": "author-evidence/REPORT.txt",
+      "bytes": 6225,
+      "sha256": "7a69bf94275726c0151f2b2a216abea3f2f642534377a305eb71d21304bdd83e"
+    },
+    {
+      "path": "author-evidence/candidate-preflight.json",
+      "bytes": 3171,
+      "sha256": "b2589526707c29f9b8cd9e8a4db9de2cf3170b98bfd2861ba3e0a68655a04071"
+    },
+    {
+      "path": "author-evidence/classification-controls.json",
+      "bytes": 2209,
+      "sha256": "c850020a239790fe1d427761a8288e4f11dbff992d74fe264d7bfe49731b46f9"
+    },
+    {
+      "path": "author-evidence/generated-controls.json",
+      "bytes": 6732,
+      "sha256": "19bb3452fbbab8aaee92178f75a4e1ba8cb5293f2641bd14cafc0eb88cc1a111"
+    },
+    {
+      "path": "author-evidence/hash-manifest.json",
+      "bytes": 1608,
+      "sha256": "6638ec87562d7d7683be70d532f25f8b16989248ed31ccce23cebf599541184e"
+    },
+    {
+      "path": "author-evidence/test-classification.py",
+      "bytes": 3808,
+      "sha256": "5a1fbf1a91a6f001372919b0c56e8a89b94f628adadae2e7882d10188671fe39"
+    },
+    {
+      "path": "candidate/classify.py",
+      "bytes": 2400,
+      "sha256": "d496e5a44950ccb2fbf07b8fc105eac71f8d23716e50d44455db487078d08388"
+    },
+    {
+      "path": "candidate/prepared-declaration.json",
+      "bytes": 610,
+      "sha256": "32c582c845e3438e5ddf8084e4d39c894528ed4dcb37f7e16312b58ab2acaa93"
+    },
+    {
+      "path": "candidate/proposed-recovery.json",
+      "bytes": 158791,
+      "sha256": "c5800243aac0bf5afdfe83a1fec4a4534b66bf844a916006e0a1f3ee842ceacd"
+    },
+    {
+      "path": "candidate/run-recovery.py",
+      "bytes": 23453,
+      "sha256": "2444c11e608dfa84691a9485f1e62e9e4b3454a8f6faf5d79d9d2236a3731a65"
+    },
+    {
+      "path": "candidate/test-generated.py",
+      "bytes": 15510,
+      "sha256": "53e77a454e74da8ededb61d24555a4a37a11770562e886b82fb485366353a091"
+    },
+    {
+      "path": "dependencies/original-declaration.json",
+      "bytes": 3253,
+      "sha256": "98c9f4bc797aecfc36d2857b98435016162c243e5c35eef4e08d99ed0ebb1f57"
+    },
+    {
+      "path": "dependencies/original-frozen-bindings.json",
+      "bytes": 902,
+      "sha256": "5d9b16497446e10cafdf4f3398cfccdd29553dc51fe20b6eddb455fe13a200ca"
+    },
+    {
+      "path": "dependencies/original-run-intake.py",
+      "bytes": 21030,
+      "sha256": "e1db984939c5b342b754650e7f42b7df57d6c1993d2ffb8add36da373d58b5bc"
+    },
+    {
+      "path": "dependencies/source/CHANGES",
+      "bytes": 206,
+      "sha256": "36304e9f92a49827180f4e8bec8346d65a362e7e4c8a60328f387bcf1e79a62a"
+    },
+    {
+      "path": "dependencies/source/README",
+      "bytes": 1324,
+      "sha256": "1b907a4d54aa0bee92fc54bc1b2f58b2e0cb89b53add204777ae01a2d83c8db9"
+    },
+    {
+      "path": "dependencies/source/acquire_btc_case.py",
+      "bytes": 27807,
+      "sha256": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf"
+    },
+    {
+      "path": "dependencies/source/acquire_public_case.py",
+      "bytes": 11170,
+      "sha256": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb"
+    },
+    {
+      "path": "dependencies/source/cohort.json",
+      "bytes": 56916,
+      "sha256": "71296e9dc5d72bd35180e346ffb1ef98c2f1abff2db016ca3d09e64880f75f30"
+    },
+    {
+      "path": "dependencies/source/dataset_description.json",
+      "bytes": 2428,
+      "sha256": "4c9a06caf6e0190c30d006e218412af5748993f756955f4306d24ef51c40c682"
+    },
+    {
+      "path": "dependencies/source/real_intake_io.py",
+      "bytes": 4305,
+      "sha256": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+    },
+    {
+      "path": "dependencies/source/representative-head-checks.json",
+      "bytes": 6036,
+      "sha256": "4178bd07a247af44a88969c2b4bbdc7bd08ccb86342950c16752ebbcde9f4ba9"
+    },
+    {
+      "path": "dependencies/source/scope.json",
+      "bytes": 6085,
+      "sha256": "3ae53f90fb1aceaff317ac08861808afc637dfb858f6b3feb3b3754868f51053"
+    },
+    {
+      "path": "dependencies/source/source-authority-audit.json",
+      "bytes": 6148,
+      "sha256": "fb48249512e33a0371f4cb948f3f5bf969a38fe744996cb3a11413d160f2b5e5"
+    },
+    {
+      "path": "external-required-files.json",
+      "bytes": 3575,
+      "sha256": "12f120259922874ed94484ee47f7f07c667b69da2165876f0c15148a0f42cefb"
+    },
+    {
+      "path": "independent-review/REPORT.txt",
+      "bytes": 2689,
+      "sha256": "d005f36b7f5ddf51c4e6f3d1c9dcb2274fe4dd9e8af2a6f535a74c578d0750a2"
+    },
+    {
+      "path": "independent-review/generated-controls.json",
+      "bytes": 6732,
+      "sha256": "19bb3452fbbab8aaee92178f75a4e1ba8cb5293f2641bd14cafc0eb88cc1a111"
+    },
+    {
+      "path": "independent-review/generated-tests.log",
+      "bytes": 211,
+      "sha256": "ed7c8cf1d7b3e44b8cb487bdb4c263563e51c0fc862223f896434ea7cbe78a9f"
+    },
+    {
+      "path": "independent-review/review.json",
+      "bytes": 2141,
+      "sha256": "3ee365fcc3659a9db87b6910ea17963d24290567e10600238220a83e29d4c945"
+    },
+    {
+      "path": "independent-review/run_review.py",
+      "bytes": 6338,
+      "sha256": "155b9db08028bd23af3c870cd9126d474f4558fa1bd2f871c58b66a8a9236c72"
+    },
+    {
+      "path": "restore-map.json",
+      "bytes": 14737,
+      "sha256": "10e812d894610c74bfd2bc635f0509fadf2ea5ab30e8a79547ccb2a5c53f2dc6"
+    },
+    {
+      "path": "restore-reproduction.json",
+      "bytes": 5657,
+      "sha256": "2427e2428fc98e09a63dbed2ddc5ebf703ce20769ca47e8828a4e57cfc0d0056"
+    },
+    {
+      "path": "snapshot/RESULT.txt",
+      "bytes": 1696,
+      "sha256": "8863121e8a6ac25f3eefcb13e91effa58ceeab3d78086a18d17b836e5e0bf863"
+    },
+    {
+      "path": "snapshot/original-status-20261010T003555Z.json",
+      "bytes": 7472,
+      "sha256": "c5035fa5e6306e6b09caa6fb0bde719c2ef04b5544480ab70e1f9ed6a5e3614e"
+    },
+    {
+      "path": "snapshot/status-20261010T003555Z.json",
+      "bytes": 8458,
+      "sha256": "a08d6116648f3d3146bcf4746f1f7b78681f7a85424c946f7c1dd85b4d1d2eb3"
+    },
+    {
+      "path": "verify-package.py",
+      "bytes": 1166,
+      "sha256": "bd8b591d714b85f6ff70d9d4dab4b2a52efb606bd2716efb5d06bfc90fd2c5f8"
+    }
+  ],
+  "actual_recovery_launched": false,
+  "self_contained_for_actual_recovery": false,
+  "external_large_metadata_files": 3,
+  "excluded": "No acquisition payloads, original attempt journals, locks, partials, signed URLs or released recovery declaration."
+}

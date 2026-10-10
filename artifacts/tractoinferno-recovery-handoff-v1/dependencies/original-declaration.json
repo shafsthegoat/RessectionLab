@@ -1,0 +1,56 @@
+{
+  "RSS_bound_semantics": "Declared transport allowance, not a measured or enforced high-water guarantee. Two streaming workers; root may bind exact process identity in a separate model-overlap monitor.",
+  "active_output_allowance_bytes": 68719476736,
+  "all_payloads_unreviewed": true,
+  "canonical_cohort_path": "manifests/experiments/tractoinferno-publisher-person-splits-v1.json",
+  "canonical_cohort_sha256": "71296e9dc5d72bd35180e346ffb1ef98c2f1abff2db016ca3d09e64880f75f30",
+  "created_utc": "2026-10-09T09:39:15.678413+00:00",
+  "decoded_array_bytes": 0,
+  "estimated_free_after_full_intake_and_output_allowance": 316274937665,
+  "execution_released": true,
+  "expected_RSS_upper_bound_bytes": 536870912,
+  "free_bytes_at_preparation": 658782781440,
+  "free_space_reserve_bytes": 107374182400,
+  "labels_admitted": false,
+  "max_transport_attempts_per_object_across_restarts": 3,
+  "max_workers": 2,
+  "optimizer_updates": 0,
+  "people": 198,
+  "preceding_terminal_receipts": [
+    {
+      "path": "data/acquisition/menichetti-mechanics-v1/completion.json",
+      "sha256": "c8a219659c5ab68419ab448ac3431c2690de01e681a0d5c1f5b8dba6c796afc0"
+    }
+  ],
+  "predecessor_queue_locks": [
+    "data/acquisition/remind-train-originals-v1/queue.lock",
+    "data/acquisition/nfbs-originals-v1/queue.lock",
+    "data/acquisition/remind-train-seg-v1/queue.lock",
+    "data/acquisition/menichetti-mechanics-v1/queue.lock"
+  ],
+  "role_commit": "2869208",
+  "runner": "build/tractoinferno-train-preparation-v1/run-intake.py",
+  "runner_sha256": "e1db984939c5b342b754650e7f42b7df57d6c1993d2ffb8add36da373d58b5bc",
+  "schema": "tractoinferno-full-published-train-byte-acquisition-v1",
+  "scope_commit": "2869208",
+  "scope_path": "manifests/experiments/tractoinferno-full-train-byte-intake-v1.json",
+  "scope_sha256": "3ae53f90fb1aceaff317ac08861808afc637dfb858f6b3feb3b3754868f51053",
+  "source_files_sha256": {
+    "CHANGES": "36304e9f92a49827180f4e8bec8346d65a362e7e4c8a60328f387bcf1e79a62a",
+    "README": "1b907a4d54aa0bee92fc54bc1b2f58b2e0cb89b53add204777ae01a2d83c8db9",
+    "acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+    "acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+    "cohort.json": "71296e9dc5d72bd35180e346ffb1ef98c2f1abff2db016ca3d09e64880f75f30",
+    "dataset_description.json": "4c9a06caf6e0190c30d006e218412af5748993f756955f4306d24ef51c40c682",
+    "git-tree-v1.1.1.json": "47ae99bf84277fc605bffefe8d1bbbd629a4526eb1288601ee775a21648df0b5",
+    "real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+    "representative-head-checks.json": "4178bd07a247af44a88969c2b4bbdc7bd08ccb86342950c16752ebbcde9f4ba9",
+    "scope.json": "3ae53f90fb1aceaff317ac08861808afc637dfb858f6b3feb3b3754868f51053",
+    "source-authority-audit.json": "fb48249512e33a0371f4cb948f3f5bf969a38fe744996cb3a11413d160f2b5e5",
+    "train-exact-object-manifest.json": "151441d5eb6fe923ad3b1f978edf49b04843956f3209e216a95340466003a846",
+    "train-source-identities.json": "166d830213dcbe633d02fe3fb6a89e91e7827f8282623075ccfcdd1c32323315"
+  },
+  "total_source_bytes": 273788367039,
+  "total_source_files": 7622,
+  "training_admitted": false
+}

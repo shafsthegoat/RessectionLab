@@ -1,0 +1,29 @@
+{
+  "actual_dataset_or_original_journal_reads": 0,
+  "actual_network_requests": 0,
+  "author_controls": 32,
+  "blocked_accesses": [],
+  "candidate_sha256": "2444c11e608dfa84691a9485f1e62e9e4b3454a8f6faf5d79d9d2236a3731a65",
+  "elapsed_seconds": 0.6592554999515414,
+  "independent_controls": [
+    "original_and_predecessor_locks_held_during_body_then_released",
+    "live_pid_and_process_query_error_refuse_without_signal",
+    "same_size_historical_receipt_mutation_refused",
+    "nested_TLS_and_filesystem_flush_publish_remain_nontransient"
+  ],
+  "limits": "Generated response streams and fake queue files only. Runtime terminal identity, exact final selection, disk space and endpoint availability remain execution-time requirements.",
+  "original_process_signals": 0,
+  "source_hashes_before": {
+    "build/tractoinferno-recovery-preparation-v1/adapter-v1/prepared-declaration.json": "32c582c845e3438e5ddf8084e4d39c894528ed4dcb37f7e16312b58ab2acaa93",
+    "build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py": "2444c11e608dfa84691a9485f1e62e9e4b3454a8f6faf5d79d9d2236a3731a65",
+    "build/tractoinferno-recovery-preparation-v1/adapter-v1/test-generated.py": "53e77a454e74da8ededb61d24555a4a37a11770562e886b82fb485366353a091",
+    "build/tractoinferno-recovery-preparation-v1/classify.py": "d496e5a44950ccb2fbf07b8fc105eac71f8d23716e50d44455db487078d08388",
+    "build/tractoinferno-recovery-preparation-v1/proposed-recovery.json": "c5800243aac0bf5afdfe83a1fec4a4534b66bf844a916006e0a1f3ee842ceacd",
+    "build/tractoinferno-train-preparation-v1/run-intake.py": "e1db984939c5b342b754650e7f42b7df57d6c1993d2ffb8add36da373d58b5bc",
+    "data/acquisition/tractoinferno-train-v1/source/acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+    "data/acquisition/tractoinferno-train-v1/source/acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+    "data/acquisition/tractoinferno-train-v1/source/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+  },
+  "source_hashes_unchanged": true,
+  "status": "pass"
+}

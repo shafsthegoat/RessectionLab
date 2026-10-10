@@ -1,0 +1,382 @@
+{
+  "status": "pass",
+  "runner_sha256": "2444c11e608dfa84691a9485f1e62e9e4b3454a8f6faf5d79d9d2236a3731a65",
+  "test_sha256": "53e77a454e74da8ededb61d24555a4a37a11770562e886b82fb485366353a091",
+  "controls": [
+    {
+      "case": "fresh",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "resume",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          "bytes=3-"
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "ignored_range",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          "bytes=3-"
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "wrong_md5",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "wrong_git",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "wrong_etag",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "wrong_version",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "wrong_range",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          "bytes=3-"
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "wrong_length",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "wrong_encoding",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "wrong_url",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "open_timeout",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "open_broken_pipe",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "read_broken_pipe",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          "bytes=3-"
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "tls",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "wrapped_tls",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "open_filesystem",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "write_broken_pipe",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          "bytes=3-"
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "journal_failure",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "truncated",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ],
+        [
+          "GET",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "head_timeout",
+      "status": "pass",
+      "fake_calls": [
+        [
+          "HEAD",
+          null
+        ]
+      ],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "orphan",
+      "status": "pass",
+      "fake_calls": [],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "held_original_lock",
+      "status": "pass",
+      "fake_calls": [],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "live_pid",
+      "status": "pass",
+      "fake_calls": [],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "false_release",
+      "status": "pass",
+      "fake_calls": [],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "changed_partial",
+      "status": "pass",
+      "fake_calls": [],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "storage",
+      "status": "pass",
+      "fake_calls": [],
+      "actual_network_requests": 0
+    },
+    {
+      "case": "logger_broken_pipe_separate_no_attempt",
+      "status": "pass",
+      "actual_network_requests": 0
+    },
+    {
+      "case": "terminal_success_exclusion_changed_failure_incomplete_refusal",
+      "status": "pass",
+      "actual_network_requests": 0
+    },
+    {
+      "case": "phase_and_TLS_conservative_classification",
+      "status": "pass",
+      "actual_network_requests": 0
+    },
+    {
+      "case": "original_history_hash_membership_orphan_immutable",
+      "status": "pass",
+      "actual_network_requests": 0
+    },
+    {
+      "case": "secondary_close_preserves_primary_filesystem_failure",
+      "status": "pass",
+      "actual_network_requests": 0
+    }
+  ],
+  "actual_network_requests": 0,
+  "original_payload_bytes_read": 0,
+  "generated_only": true
+}

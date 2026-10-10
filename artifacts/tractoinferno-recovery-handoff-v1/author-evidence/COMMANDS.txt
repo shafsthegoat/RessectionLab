@@ -1,0 +1,17 @@
+Run from the RessectionLab repository root. Original source and helpers remain unchanged.
+Do not execute freeze or recovery until independent review and root's original-terminal check.
+
+1. Metadata-only candidate check (safe while the original continues):
+build/idc-acquisition-venv/bin/python build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py --declaration build/tractoinferno-recovery-preparation-v1/adapter-v1/prepared-declaration.json --declaration-sha256 32c582c845e3438e5ddf8084e4d39c894528ed4dcb37f7e16312b58ab2acaa93 --check-only
+
+2. After the original is terminal and reviewed, freeze a separate release. This is fail-closed and performs no network or payload access; original PID or held lock causes refusal. Never rerun over an existing output or remove a partial release without reconciliation.
+build/idc-acquisition-venv/bin/python build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py --declaration build/tractoinferno-recovery-preparation-v1/adapter-v1/prepared-declaration.json --declaration-sha256 32c582c845e3438e5ddf8084e4d39c894528ed4dcb37f7e16312b58ab2acaa93 --freeze-release build/tractoinferno-recovery-preparation-v1/adapter-v1/released-declaration.json
+
+3. Use the released SHA emitted by step2. This shell variable derives it from that exact file; compare it with the emitted SHA before proceeding.
+RECOVERY_DECL_SHA=$(shasum -a 256 build/tractoinferno-recovery-preparation-v1/adapter-v1/released-declaration.json | cut -d ' ' -f 1)
+build/idc-acquisition-venv/bin/python build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py --declaration build/tractoinferno-recovery-preparation-v1/adapter-v1/released-declaration.json --declaration-sha256 "$RECOVERY_DECL_SHA" --check-only
+
+4. Only after step3 succeeds, root may launch this exact one-worker command and retain its session/PID/PGID. The program rechecks the original terminal, process and lock gate before opening any recovery transfer. Keep the session alive; do not restart after an observation timeout.
+build/idc-acquisition-venv/bin/python build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py --declaration build/tractoinferno-recovery-preparation-v1/adapter-v1/released-declaration.json --declaration-sha256 "$RECOVERY_DECL_SHA"
+
+Runtime records: data/acquisition/tractoinferno-recovery-v1/runs/<run-id>/{started,completion,fatal}.json as applicable, plus separate immutable attempts/<source-key>/{scope,head-http,payload-intent,get-http,result}.json. Source payload partials/finals remain in the original verified directory and are published only through the unchanged helper. No image extraction or QC is run.

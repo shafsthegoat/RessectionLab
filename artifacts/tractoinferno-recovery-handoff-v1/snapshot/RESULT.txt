@@ -1,0 +1,9 @@
+At 2026-10-10T00:35:55.072748+00:00, the exact original Tracto process remained live (PID/PGID 92434, owned session 35269). It has 3,420 verified files and 118,465,170,973 verified bytes of 7,622 files / 273,788,367,039 bytes. The same 15 exhausted transport and 39 historical BrokenPipe refusal records remain; 52 earlier deferred records are preserved. The original queue lock is held and no terminal receipt exists. No process was signaled or restarted.
+
+There are 50 partial files totaling 3,684,234,773 bytes. Snapshot free space is 516,227,350,528 bytes; after all remaining Tracto bytes, the 100 GiB reserve and 64 GiB output allowance, estimated unallocated headroom is 188,494,730,099 bytes. Storage is not the immediate blocker.
+
+The reviewed recovery adapter is ready, but its nonoverlap gate correctly waits for original completion and lock release. It can then freeze at most the 54 reviewed failures, exclude original successes, and reserve one additional attempt each without resetting history.
+
+The 12 other top-level declared intakes and the 890-file Lausanne/RESECT queue have recorded completed byte receipts; they offer no outstanding transfer to duplicate. No ready, frozen nonoverlapping queue was found. The remaining catalog entries have specific saved access/fixity or role/linkage limitations, listed in the JSON; no new provider probe was made. UPenn and UTSW roles remain protected. Legacy synthetic-lineage exclusions are superseded by later permission and are not used as acquisition blockers.
+
+Next: preserve continuous original transfer, then use the independently passed recovery command after its terminal gate. No anatomical QC or payload admission is claimed.

@@ -1,0 +1,106 @@
+{
+  "all_payloads_unreviewed": true,
+  "attribution": {
+    "authors": [
+      "Philippe Poulin",
+      "Guillaume Theaud",
+      "Pierre-Marc Jodoin",
+      "Maxime Descoteaux"
+    ],
+    "paper_doi": "10.1038/s41597-022-01833-1",
+    "publisher_acknowledgment": "This data was obtained from the OpenNeuro database (https://openneuro.org/datasets/ds003900). Its accession number is ds003900. Please cite the TractoInferno paper if you use this dataset: https://doi.org/10.1101/2021.11.29.470422",
+    "source_dataset_doi": "10.18112/openneuro.ds003900.v1.1.1"
+  },
+  "cohort_assignment_changes": false,
+  "cohort_path": "manifests/experiments/tractoinferno-publisher-person-splits-v1.json",
+  "cohort_sha256": "71296e9dc5d72bd35180e346ffb1ef98c2f1abff2db016ca3d09e64880f75f30",
+  "contents": {
+    "NIfTI_gzip_files": 2376,
+    "annex_MD5_files": 7226,
+    "bval_files": 198,
+    "bvec_files": 198,
+    "tractogram_files": 4850
+  },
+  "dataset": "TractoInferno",
+  "declaration_status": "frozen_before_train_payload_access",
+  "decoded_array_bytes": 0,
+  "exact_total_bytes": 273788367039,
+  "files": 7622,
+  "independent_evaluation_claim": false,
+  "intake": {
+    "active_output_allowance_bytes": 68719476736,
+    "anatomy_label_or_tract_qc_allowed": false,
+    "decoder_allowed": false,
+    "execution_released": true,
+    "free_space_reserve_bytes": 107374182400,
+    "image_header_qc_allowed": false,
+    "max_attempts_per_object_across_restarts": 3,
+    "max_workers": 2,
+    "release_requirement": "Independent byte-scope and transport review, then root freezes prospective cohort/scope and binds released declaration before any TRAIN payload GET. Existing model output reserve remains active; no generic process-overlap exception.",
+    "storage_rule": "At start and before each transport attempt, free bytes minus all queued/inflight still-needed bytes minus 64 GiB for active/future model outputs must remain at least 100 GiB. Completed bytes are not double-counted as future storage. Existing partial bytes reduce planned remaining bytes; inflight reservations stay until terminal, conservatively counting up to two growing files twice."
+  },
+  "labels_admitted": false,
+  "license": "CC0",
+  "object_contract": {
+    "all_file_payload_bytes_read_during_preparation": 0,
+    "checksums": "7,226 author Git-annex MD5E identities agree with the exact S3 version size and single-part ETag. For 396 regular Git gradient blobs, verify both provider single-part MD5 and pinned release Git blob SHA1 framing before publication. Compute local SHA256 for every complete file.",
+    "manifest": "build/tractoinferno-train-preparation-v1/train-exact-object-manifest.json",
+    "manifest_sha256": "151441d5eb6fe923ad3b1f978edf49b04843956f3209e216a95340466003a846",
+    "representative_HEAD_checks": 6,
+    "source_authority_audit_sha256": "fb48249512e33a0371f4cb948f3f5bf969a38fe744996cb3a11413d160f2b5e5",
+    "source_identity_manifest_sha256": "166d830213dcbe633d02fe3fb6a89e91e7827f8282623075ccfcdd1c32323315",
+    "source_tree_sha256": "47ae99bf84277fc605bffefe8d1bbbd629a4526eb1288601ee775a21648df0b5",
+    "transport": "Exact HTTPS versionId URLs, no redirects, If-Match, exact response version, size, status and Content-Range for resumed files. Multipart ETags are not whole-file MD5; none is selected."
+  },
+  "optimizer_updates": 0,
+  "people": 198,
+  "protected_roles": {
+    "payload_access": false,
+    "testset_MEASUREMENT_EVAL_people": 28,
+    "validset_SELECT_people": 58
+  },
+  "provenance_limits": {
+    "biological_overlap": "Unknown with existing project cohorts and among upstream aliases. Preserve every existing role and quarantine later discovered protected conflicts before admission.",
+    "disease_and_intended_use": "Complementary generic human imaging component candidates, not verified glioma policy cases or retraction/deformation measurements.",
+    "person_source_site_crosswalk": "Unknown; published six-site total does not prove this TRAIN split covers all six sites.",
+    "pretrained_exposure": "Unknown; no independent-transfer or external-evaluation claim.",
+    "reference_tracts": "Algorithm-generated and source-curated; not histological truth or functional indispensability.",
+    "source_ancestry": "Retain source pipelines and all known/unknown upstream ancestry. Synthetic/simulator-generated learning is permitted by current steering; this does not establish reference validity or evaluation independence.",
+    "source_datasets": [
+      {
+        "DOI": "doi:10.1016/j.neuroimage.2015.02.071"
+      },
+      {
+        "DOI": "doi:10.1101/2020.06.17.154666"
+      },
+      {
+        "DOI": "doi:10.18112/openneuro.ds001796.v1.4.1",
+        "URL": "https://openneuro.org/datasets/ds001796/versions/1.4.1",
+        "Version": "1.4.1"
+      },
+      {
+        "DOI": "doi:10.18112/openneuro.ds000030.v1.0.0",
+        "URL": "https://openneuro.org/datasets/ds000030/versions/1.0.0",
+        "Version": "1.0.0"
+      },
+      {
+        "DOI": "doi:10.18112/openneuro.ds000201.v1.0.3",
+        "URL": "https://openneuro.org/datasets/ds000201/versions/1.0.3",
+        "Version": "1.0.3"
+      },
+      {
+        "DOI": "doi:10.1016/j.nicl.2019.101907"
+      }
+    ],
+    "source_missingness": "Acquire exactly published files; do not invent 30 bundles per subject or exclude difficult people based on contents."
+  },
+  "schema": "tractoinferno-full-published-train-byte-intake-v1",
+  "selection_rule": "Every file under derivatives/trainset/ in the pinned 1.1.1 source Git tree, using the author-published TRAIN partition. No image, tract, diagnosis, quality or outcome selection. Keep all 198 TRAIN source identifiers in denominator through later QC. Exclude top-level sub-1001 duplicate and every validset/testset payload.",
+  "source_commit": "bf5b266e9964881b4ba3695a8374c29808f0c4da",
+  "source_doi": "10.18112/openneuro.ds003900.v1.1.1",
+  "source_family_role": "TRAIN",
+  "source_partition": "trainset",
+  "source_release": "1.1.1",
+  "source_url": "https://openneuro.org/datasets/ds003900/versions/1.1.1",
+  "training_admitted": false
+}

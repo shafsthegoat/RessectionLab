@@ -815,3 +815,31 @@ patient planning admission, mode-aware learned behavior and physical validation
 remain open. No policy update or clinical/generalization claim occurred. The next
 shared-system slice is post-seal vascular encounter accounting displayed on the
 same instrument episode; private annotations remain outside planning inputs.
+
+
+### October 9 local / October 10 UTC: continuous intake and bounded recovery handoff
+
+The [preserved handoff](../artifacts/tractoinferno-recovery-handoff-v1/RESTORE_AND_REPRODUCE.txt)
+contains exact reviewed recovery source, its unreleased template, immutable
+54-object proposal, independent evidence and safe restore instructions. Package
+manifest SHA-256 is `8230f1126ca43f86b38cb8ae23202ade9b08060fabf40671b5738c9d70269e75`;
+38 compact source/text files total 443,716 bytes before the manifest. An isolated
+restoration reproduced 32 authored and four independent generated controls. Three
+large source metadata indexes and original terminal/journal/partial state remain
+explicit external dependencies; this is not a fresh-clone runnable recovery job.
+
+At 00:35:55 UTC, original PID/PGID 92434 remained live with its lock held:
+3,420 files /118,465,170,973 bytes verified, 15 exhausted transport records and
+39 historical BrokenPipe refusals unchanged. No origin for every historical
+BrokenPipe is proved. Remaining-queue bytes plus 100 GiB reserve and 64 GiB output
+allowance left approximately 188.49 GB unallocated at that snapshot. Other
+inspected declared queues have completion receipts; no further ready queue was
+found. No payload was decoded or admitted by this metadata check.
+
+Recovery was not launched. After the original is terminal, the exact adapter
+excludes original successes, retains lifetime attempt history and unchanged
+partials, then permits at most one additional verified-TLS/range/version/checksum
+attempt per selected object. It holds original/predecessor/recovery locks, refuses
+changed evidence or occupied journals and never truncates a partial for ignored
+Range. Source, filesystem, checksum and TLS refusals remain closed. The ongoing
+original queue was neither signaled nor restarted.

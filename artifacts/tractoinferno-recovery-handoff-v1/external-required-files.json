@@ -1,0 +1,47 @@
+{
+  "schema": "tractoinferno-recovery-external-metadata-dependencies-v1",
+  "self_contained_for_generated_tests_after_exact_source_restore": true,
+  "self_contained_for_actual_recovery": false,
+  "required_metadata_files": [
+    {
+      "required_path": "data/acquisition/tractoinferno-train-v1/source/git-tree-v1.1.1.json",
+      "bytes": 3556716,
+      "sha256": "47ae99bf84277fc605bffefe8d1bbbd629a4526eb1288601ee775a21648df0b5",
+      "availability": "existing ignored original acquisition source cache; not packaged",
+      "restore_rule": "Copy exact original verified metadata bytes only if destination absent, then verify SHA. Do not regenerate, refetch latest, or edit declaration to bypass missing input.",
+      "purpose": "Original load_contract requires every original source_files_sha256 member, even evidence not semantically reread."
+    },
+    {
+      "required_path": "data/acquisition/tractoinferno-train-v1/source/train-exact-object-manifest.json",
+      "bytes": 12931337,
+      "sha256": "151441d5eb6fe923ad3b1f978edf49b04843956f3209e216a95340466003a846",
+      "availability": "existing ignored original acquisition source cache; not packaged",
+      "restore_rule": "Copy exact original verified metadata bytes only if destination absent, then verify SHA. Do not regenerate, refetch latest, or edit declaration to bypass missing input.",
+      "purpose": "Original load_contract requires every original source_files_sha256 member, even evidence not semantically reread."
+    },
+    {
+      "required_path": "data/acquisition/tractoinferno-train-v1/source/train-source-identities.json",
+      "bytes": 5333039,
+      "sha256": "166d830213dcbe633d02fe3fb6a89e91e7827f8282623075ccfcdd1c32323315",
+      "availability": "existing ignored original acquisition source cache; not packaged",
+      "restore_rule": "Copy exact original verified metadata bytes only if destination absent, then verify SHA. Do not regenerate, refetch latest, or edit declaration to bypass missing input.",
+      "purpose": "Original load_contract requires every original source_files_sha256 member, even evidence not semantically reread."
+    }
+  ],
+  "excluded_live_state": {
+    "original_terminal_path": "data/acquisition/tractoinferno-train-v1/runs/20261009T094645035821Z-90fc2160/completion.json",
+    "terminal_available_at_snapshot": false,
+    "original_journals": "Exact referenced intent/result/http files in candidate/proposed-recovery.json must remain present and hash-identical; none are packaged.",
+    "partials": "Keep original verified/ partial files and their device/inode/size/mtime/ctime unchanged. No payload copied. Relocating partials changes this exact proposal and requires reconciliation/review, not silent rebinding.",
+    "locks": [
+      "data/acquisition/remind-train-originals-v1/queue.lock",
+      "data/acquisition/nfbs-originals-v1/queue.lock",
+      "data/acquisition/remind-train-seg-v1/queue.lock",
+      "data/acquisition/menichetti-mechanics-v1/queue.lock",
+      "data/acquisition/tractoinferno-train-v1/queue.lock"
+    ],
+    "lock_rule": "Existing persistent queue locks must be available and acquired by the reviewed adapter after the original exits; never delete, replace or manufacture locks to bypass ownership.",
+    "python": "Existing project build/idc-acquisition-venv/bin/python (Python 3.12 in the reviewed local run); interpreter/environment is not packaged.",
+    "new_recovery_release": "None included. Only the false template is packaged. Root must bind actual terminal state via exact reviewed freeze recipe later."
+  }
+}

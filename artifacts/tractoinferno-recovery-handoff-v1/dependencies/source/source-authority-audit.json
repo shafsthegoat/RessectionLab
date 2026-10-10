@@ -1,0 +1,129 @@
+{
+  "all_payloads_unreviewed": true,
+  "attribution": {
+    "authors": [
+      "Philippe Poulin",
+      "Guillaume Theaud",
+      "Pierre-Marc Jodoin",
+      "Maxime Descoteaux"
+    ],
+    "paper_doi": "10.1038/s41597-022-01833-1",
+    "publisher_acknowledgment": "This data was obtained from the OpenNeuro database (https://openneuro.org/datasets/ds003900). Its accession number is ds003900. Please cite the TractoInferno paper if you use this dataset: https://doi.org/10.1101/2021.11.29.470422",
+    "source_dataset_doi": "10.18112/openneuro.ds003900.v1.1.1"
+  },
+  "data_object_body_requests": 0,
+  "generated_by": [
+    {
+      "Container": {
+        "Tag": "scilus/scilus:1.1.0_tractoflow-2.2.1",
+        "Type": "singularity"
+      },
+      "Name": "TractoFlow",
+      "Version": "2.1.1"
+    },
+    {
+      "Container": {
+        "Tag": "scilus/scilus:1.2.0_rbxflow-1.1.0",
+        "Type": "singularity"
+      },
+      "Name": "RBX-flow",
+      "Version": "1.1.0"
+    },
+    {
+      "CodeURL": "https://github.com/scilus/dmriqcpy",
+      "Name": "dmriqc-flow",
+      "Version": "0.1.0"
+    }
+  ],
+  "license": "CC0",
+  "license_evidence": {
+    "git_bound_shared_metadata": true,
+    "path": "dataset_description.json",
+    "sha256": "4c9a06caf6e0190c30d006e218412af5748993f756955f4306d24ef51c40c682"
+  },
+  "person_site_crosswalk": "Unknown; do not infer site from source ID digits or claim all six reported sites occur in TRAIN.",
+  "protected_source_file_body_reads": 0,
+  "publisher_git_url": "https://github.com/OpenNeuroDatasets/ds003900",
+  "regular_gradient_metadata": {
+    "additional_pinned_release_git_blob_SHA1_required_before_atomic_publish": true,
+    "count": 396,
+    "payload_bytes_read": 0,
+    "provider_MD5_size_version_bound": true
+  },
+  "release_products": "Derived structural/diffusion volumes, gradients, masks, fODF representations and algorithm-generated reference tract bundles. Source authors performed processing and curation; no local anatomical or label review.",
+  "s3_metadata": {
+    "all_objects_HEAD_checked": false,
+    "listing_pages": 9,
+    "multipart_selected_objects": 0,
+    "redirects_allowed": false,
+    "representative_HEAD_files": 6,
+    "response_bodies_read": 0,
+    "scope": "ds003900/derivatives/trainset/ only",
+    "verified_TLS": true
+  },
+  "schema": "tractoinferno-source-metadata-authority-v1",
+  "selected_pointer_metadata": {
+    "author_annex_md5_and_size_matched_to_S3_version": 7226,
+    "count": 7226,
+    "payload_bytes_read": 0
+  },
+  "shared_release_metadata_and_annex_pointer_only": true,
+  "source_commit": "bf5b266e9964881b4ba3695a8374c29808f0c4da",
+  "source_datasets": [
+    {
+      "DOI": "doi:10.1016/j.neuroimage.2015.02.071"
+    },
+    {
+      "DOI": "doi:10.1101/2020.06.17.154666"
+    },
+    {
+      "DOI": "doi:10.18112/openneuro.ds001796.v1.4.1",
+      "URL": "https://openneuro.org/datasets/ds001796/versions/1.4.1",
+      "Version": "1.4.1"
+    },
+    {
+      "DOI": "doi:10.18112/openneuro.ds000030.v1.0.0",
+      "URL": "https://openneuro.org/datasets/ds000030/versions/1.0.0",
+      "Version": "1.0.0"
+    },
+    {
+      "DOI": "doi:10.18112/openneuro.ds000201.v1.0.3",
+      "URL": "https://openneuro.org/datasets/ds000201/versions/1.0.3",
+      "Version": "1.0.3"
+    },
+    {
+      "DOI": "doi:10.1016/j.nicl.2019.101907"
+    }
+  ],
+  "source_files_sha256": {
+    "CHANGES": "36304e9f92a49827180f4e8bec8346d65a362e7e4c8a60328f387bcf1e79a62a",
+    "README": "1b907a4d54aa0bee92fc54bc1b2f58b2e0cb89b53add204777ae01a2d83c8db9",
+    "dataset_description.json": "4c9a06caf6e0190c30d006e218412af5748993f756955f4306d24ef51c40c682",
+    "git-tree-receipt.json": "e926d916bb69b05b129285ce4e97a4ee2c00ce96756513e6e97af62080690f45",
+    "git-tree-v1.1.1.json": "47ae99bf84277fc605bffefe8d1bbbd629a4526eb1288601ee775a21648df0b5",
+    "representative-head-checks.json": "4178bd07a247af44a88969c2b4bbdc7bd08ccb86342950c16752ebbcde9f4ba9",
+    "s3-versions-page-001-receipt.json": "c11970cd675c69d8cdebeb9d23455ca62fae1738c92fd720a88f1f57c197a676",
+    "s3-versions-page-001.xml": "ac528b8f42f4d491ee1812ec9fda0b0130c246139188f8b939e1b463cc9b3bbc",
+    "s3-versions-page-002-receipt.json": "42e06c206483f9728276609ed3c97c1487b4e8d3669f0f04d13e084d901cc693",
+    "s3-versions-page-002.xml": "8ce01e1a3531c2dccad7bca059546e5550e98920a94246ca1b52b1927d1c9d7a",
+    "s3-versions-page-003-receipt.json": "ec15fa1eb2d9c4ed45d4ed3b9290b629a6b9d36838f7f99125b1401886b443ca",
+    "s3-versions-page-003.xml": "e5f92610dbe9c3037cd002098fc90f4d2a008b54a88247c52a789a16e508a3c7",
+    "s3-versions-page-004-receipt.json": "e59ef52cfd2c10a4acc8fe14691bdd04d9dd9e776688d4235fac293d0ffb4e15",
+    "s3-versions-page-004.xml": "ae8f2dd4061ffd150ab47f33c057101ac8749005aab1efe574ae0d6984a0e68a",
+    "s3-versions-page-005-receipt.json": "7b70821bee3af489ebde73cc369b722a9937bb35ef7e2d058dbaa604e479db45",
+    "s3-versions-page-005.xml": "7e01c09cb3cc3a3ac4182e0408ad19867aa5763553e98968d4f53e2e45612b0e",
+    "s3-versions-page-006-receipt.json": "d1f7cfe1c9b9b421782ecbe355d472d0b637e9fe5aba71e5cfc210b3c8728e1d",
+    "s3-versions-page-006.xml": "1d01feffa9fbfa1f6cc146771763746db9e2c7255c08debccc6e1389edf54a7f",
+    "s3-versions-page-007-receipt.json": "4969908b5f1528b3fb97a1769909038ca120be3259f76f59877aa590b5dfaf5b",
+    "s3-versions-page-007.xml": "e4c5829099574818c85a07343a4d25b37e64d2acc38254576c817d2e58bb6181",
+    "s3-versions-page-008-receipt.json": "c6621cb810ba24ad47f362fe662e0fbc4f55ff254a83e65184dc96c44f6fe3d8",
+    "s3-versions-page-008.xml": "21ac065faa0fef190bfa64e99fedba6eb2ddc71ec10eda450ff806c957dbefe6",
+    "s3-versions-page-009-receipt.json": "fe69015f9e75cdb8a4ecbd91eb07c7fef35826e7af07118a0582e9016d824af8",
+    "s3-versions-page-009.xml": "8b2cea8694a692532a711adb2a8baa00877462c62c5fe16cf8b02196b24fdf84",
+    "train-exact-object-manifest.json": "151441d5eb6fe923ad3b1f978edf49b04843956f3209e216a95340466003a846",
+    "train-source-identities.json": "166d830213dcbe633d02fe3fb6a89e91e7827f8282623075ccfcdd1c32323315"
+  },
+  "source_tag": "1.1.1",
+  "source_url": "https://openneuro.org/datasets/ds003900/versions/1.1.1",
+  "training_admitted": false
+}

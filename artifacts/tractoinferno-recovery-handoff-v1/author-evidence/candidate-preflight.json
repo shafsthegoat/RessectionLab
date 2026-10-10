@@ -1,0 +1,28 @@
+{
+  "status": "pass",
+  "runner_sha256": "2444c11e608dfa84691a9485f1e62e9e4b3454a8f6faf5d79d9d2236a3731a65",
+  "prepared_declaration_sha256": "32c582c845e3438e5ddf8084e4d39c894528ed4dcb37f7e16312b58ab2acaa93",
+  "controls": [
+    {
+      "case": "check_only",
+      "returncode": 0,
+      "stdout": "{\"status\": \"contract_valid_no_execution\", \"execution_released\": false, \"original_terminal_bound\": false, \"network_requests\": 0, \"payload_bytes_read\": 0}\n",
+      "stderr": ""
+    },
+    {
+      "case": "false_release",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py\", line 410, in <module>\n    main()\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py\", line 406, in main\n    execute(ROOT, d, p, old, entries, args.declaration_sha256)\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py\", line 223, in execute\n    require(d['execution_released'] is True and d['scope_frozen'] is True, 'recovery_not_released')\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py\", line 39, in require\n    raise RuntimeError(reason)\nRuntimeError: recovery_not_released\n"
+    },
+    {
+      "case": "live_original_freeze_refusal",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py\", line 410, in <module>\n    main()\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py\", line 386, in main\n    with original_gate(ROOT, p, old):\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py\", line 93, in original_gate\n    require(not pid.stdout.strip(), 'original_pid_still_live_no_recovery')\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py\", line 39, in require\n    raise RuntimeError(reason)\nRuntimeError: original_pid_still_live_no_recovery\n"
+    }
+  ],
+  "network_requests": 0,
+  "payload_bytes_read": 0,
+  "recovery_base_created": false
+}

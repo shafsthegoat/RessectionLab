@@ -1,0 +1,2025 @@
+{
+  "alias_rule": "All modalities, visits and derivatives for a source person inherit one role. Keep existing protected project assignments if an upstream biological alias is later established; quarantine conflicts before any intended-use admission. Unknown overlap is not evidence of independence.",
+  "all_payloads_unreviewed": true,
+  "counts": {
+    "MEASUREMENT_EVAL": 28,
+    "SELECT": 58,
+    "TRAIN": 198
+  },
+  "dataset": "TractoInferno",
+  "dataset_doi": "10.18112/openneuro.ds003900.v1.1.1",
+  "declaration_status": "frozen_before_train_payload_access",
+  "existing_project_assignment_changes": false,
+  "existing_project_assignment_search": {
+    "paths": "manifests/**/*.json",
+    "pattern": "tractoinferno|ds003900",
+    "result": "no prior matching source assignment; metadata only"
+  },
+  "labels_admitted": false,
+  "license": "CC0",
+  "members": [
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1001"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1002"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1003"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1004"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1005"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1007"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1011"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1012"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1013"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1014"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1015"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1016"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1017"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1018"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1020"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1023"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1025"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1026"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1027"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1029"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1030"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1032"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1033"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1034"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1035"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1038"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1039"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1040"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1041"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1042"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1043"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1044"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1045"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1048"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1051"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1052"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1054"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1055"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1056"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1057"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1059"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1060"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1062"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1063"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1064"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1065"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1067"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1068"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1069"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1071"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1073"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1074"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1075"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1076"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1078"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1079"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1081"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1082"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1083"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1084"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1085"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1086"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1087"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1088"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1089"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1091"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1093"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1094"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1098"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1099"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1101"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1102"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1104"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1105"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1106"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1107"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1109"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1110"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1111"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1112"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1113"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1114"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1117"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1118"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1119"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1120"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1122"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1125"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1126"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1127"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1129"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1130"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1131"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1133"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1136"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1137"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1138"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1139"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1140"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1142"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1143"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1144"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1148"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1150"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1151"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1152"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1153"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1154"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1155"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1157"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1158"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1159"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1160"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1161"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1163"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1165"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1166"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1167"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1168"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1170"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1174"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1176"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1177"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1179"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1180"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1181"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1182"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1183"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1184"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1186"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1187"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1188"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1189"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1190"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1192"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1193"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1195"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1196"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1198"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1199"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1200"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1202"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1203"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1204"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1207"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1208"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1210"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1211"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1213"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1214"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1215"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1216"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1218"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1219"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1220"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1221"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1225"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1226"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1227"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1229"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1230"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1231"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1233"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1234"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1236"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1237"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1238"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1239"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1240"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1241"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1244"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1246"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1248"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1249"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1251"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1253"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1255"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1256"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1257"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1258"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1259"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1260"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1261"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1262"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1264"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1265"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1267"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1268"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1269"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1270"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1272"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1275"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1276"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1277"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1278"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1279"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1280"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "TRAIN",
+      "source_partition": "trainset",
+      "subject": "sub-1282"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1000"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1008"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1009"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1010"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1021"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1022"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1028"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1031"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1036"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1037"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1053"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1058"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1070"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1072"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1077"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1090"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1092"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1095"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1096"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1097"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1100"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1103"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1108"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1116"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1121"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1123"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1128"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1132"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1134"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1141"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1145"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1147"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1162"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1169"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1171"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1172"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1173"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1185"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1194"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1197"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1201"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1205"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1206"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1212"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1223"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1224"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1228"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1242"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1243"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1247"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1250"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1252"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1254"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1266"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1271"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1273"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1274"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "SELECT",
+      "source_partition": "validset",
+      "subject": "sub-1283"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1006"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1019"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1024"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1046"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1047"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1049"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1050"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1061"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1066"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1080"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1115"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1124"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1135"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1146"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1149"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1156"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1164"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1175"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1178"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1191"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1209"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1217"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1222"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1232"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1235"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1245"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1263"
+    },
+    {
+      "intended_use_admitted": false,
+      "payload_accessed_before_declaration": false,
+      "role": "MEASUREMENT_EVAL",
+      "source_partition": "testset",
+      "subject": "sub-1281"
+    }
+  ],
+  "overlap": {
+    "biological_overlap_with_current_project": "unknown",
+    "independent_evaluation_claim": false,
+    "pretrained_exposure": "unknown",
+    "publisher_test_or_validation_is_external_site_evaluation": false,
+    "source_person_to_upstream_alias_crosswalk": "not_available_in_inspected_release_metadata"
+  },
+  "partition_rule": "Preserve every published source person partition. TRAIN is trainset; SELECT is validset; MEASUREMENT_EVAL is testset. No new random split, outcome or image-based selection. Source identifiers are not proof of independent biological identity across upstream datasets.",
+  "protected_payload_access": false,
+  "schema": "tractoinferno-publisher-person-splits-v1",
+  "source_commit": "bf5b266e9964881b4ba3695a8374c29808f0c4da",
+  "source_release": "1.1.1",
+  "source_tree_sha256": "47ae99bf84277fc605bffefe8d1bbbd629a4526eb1288601ee775a21648df0b5",
+  "training_admitted": false,
+  "use_boundary": "Generic diffusion/tractography/anatomy component research candidates only. These are derivative human imaging data, not 198 verified glioma cases, surgical retraction measurements, functional ground truth, or admitted policy training."
+}

@@ -1,0 +1,2926 @@
+{
+  "actual_payload_requests": 0,
+  "all_payloads_unreviewed": true,
+  "attempt_budget": "Proposes exactly one additional payload attempt per listed object in a separate appended recovery lineage. This explicitly extends an exhausted budget and reclassifies specified worker BrokenPipe exceptions; it is not an automatic retry grant. Old attempts and terminal labels remain immutable.",
+  "classification_counts": {
+    "proposed_exhausted_transport_budget_extension": 15,
+    "proposed_worker_broken_pipe_transport_reclassification": 39
+  },
+  "classification_source_sha256": "d496e5a44950ccb2fbf07b8fc105eac71f8d23716e50d44455db487078d08388",
+  "cohort_role": "TRAIN only; unchanged publisher partition",
+  "cohort_sha256": "71296e9dc5d72bd35180e346ffb1ef98c2f1abff2db016ca3d09e64880f75f30",
+  "eligibility_gate": [
+    "Root freeze/release of this exact object subset and one-attempt extension after review.",
+    "Original process must be terminal and the existing original queue.lock acquired exclusively before recovery; never stop, signal or bypass the live queue.",
+    "Bind the original run terminal completion and exclude every original-run success; never redownload a verified object.",
+    "Recheck all bound history digests, no orphan intent, and each partial type/stat tuple; changed candidates stop for reconciliation.",
+    "Refresh exact versioned-source HEAD using verified TLS, no redirects, required ETag/version/total length before opening a payload GET; failed metadata check consumes no payload attempt and starts no requests for that object.",
+    "Keep separate recovery journal and preserve original files/history. Resume retained partial at exact offset with If-Match, strict206/range/length/version, source size/MD5 and required Git-blob SHA1 before atomic publication; then local SHA256.",
+    "Check all still-declared unwritten bytes plus100GiB reserve and64GiB output allowance. One worker only; do not relabel patients or admit payloads."
+  ],
+  "excluded_counts": {
+    "exclude_in_flight_or_unreconciled_intent": 2
+  },
+  "excluded_observations": [
+    {
+      "classification": "exclude_in_flight_or_unreconciled_intent",
+      "entry": {
+        "bytes": 746322864,
+        "etag_opaque": "\"b6b529e9efb5d04b46994e6614fe9783\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "b6b529e9efb5d04b46994e6614fe9783",
+        "path": "derivatives/trainset/sub-1112/dwi/sub-1112__dwi.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "7zCMxG9MTusz1QT8QuBNWx8AZd3tO.XZ",
+        "sha256": null,
+        "size_bytes": 746322864,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1112/dwi/sub-1112__dwi.nii.gz?versionId=7zCMxG9MTusz1QT8QuBNWx8AZd3tO.XZ",
+        "subject": "sub-1112"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [],
+      "original_attempts_used": 1,
+      "original_error_type": null,
+      "original_terminal_result_utc": null,
+      "original_terminal_status": null,
+      "orphan_or_active_intents": [
+        "data/acquisition/tractoinferno-train-v1/attempts/59/59e5966112dd7150b5c23e5aa5b81b5c57cbe623ae41baa830c10bb7c3546073/01-20261009T094645035821Z-90fc2160-intent.json"
+      ],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1112/dwi/sub-1112__dwi.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791590261914614691,
+        "dev": 16777232,
+        "ino": 9922018,
+        "mtime_ns": 1791590261914614691,
+        "size": 736100352
+      }
+    },
+    {
+      "classification": "exclude_in_flight_or_unreconciled_intent",
+      "entry": {
+        "bytes": 44138220,
+        "etag_opaque": "\"0deb13b989b24d602bf6032f28c43253\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "0deb13b989b24d602bf6032f28c43253",
+        "path": "derivatives/trainset/sub-1112/tractography/sub-1112__CC_Pa.trk",
+        "role": "TRAIN",
+        "s3_version_id": "UepJbAwaYvgCnjkDu8MUMbCFNF5fsH2B",
+        "sha256": null,
+        "size_bytes": 44138220,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1112/tractography/sub-1112__CC_Pa.trk?versionId=UepJbAwaYvgCnjkDu8MUMbCFNF5fsH2B",
+        "subject": "sub-1112"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [],
+      "original_attempts_used": 1,
+      "original_error_type": null,
+      "original_terminal_result_utc": null,
+      "original_terminal_status": null,
+      "orphan_or_active_intents": [
+        "data/acquisition/tractoinferno-train-v1/attempts/e0/e01395c74178862e9478c8299adbba1a79a84a209d8f8b1a1331deed3f6df194/01-20261009T094645035821Z-90fc2160-intent.json"
+      ],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1112/tractography/sub-1112__CC_Pa.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791590262672965629,
+        "dev": 16777232,
+        "ino": 9923183,
+        "mtime_ns": 1791590262672965629,
+        "size": 19922944
+      }
+    }
+  ],
+  "execution_released": false,
+  "limitations": "Original records contain exception type/message, not traceback. Main progress logger runs outside the per-object handler; stored worker BrokenPipe results cannot have been produced by that logger. Exact original socket/read/write stack location is unknown. Supplied transport-stage response evidence and short regular partials support a narrow candidate reclassification, not a claim that every original operation is known.",
+  "minimum_remaining_network_bytes": 5472293792,
+  "objects": [
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 4990162,
+        "etag_opaque": "\"9e60cad2940bf5637ae7fcc7eed0c803\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "9e60cad2940bf5637ae7fcc7eed0c803",
+        "path": "derivatives/trainset/sub-1104/dti/sub-1104__ad.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "_urSqTe_9nbX8WsfNSAitbUqro3Y1JN3",
+        "sha256": null,
+        "size_bytes": 4990162,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1104/dti/sub-1104__ad.nii.gz?versionId=_urSqTe_9nbX8WsfNSAitbUqro3Y1JN3",
+        "subject": "sub-1104"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/02/02da92bd4eb431f48816601c7d0ec71f547c5aaf584f045191661231f1665211/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "2f13cdbfadde0610a373c07ff40bf6cc081e1ef0d630a1363d0e56b9766fb0bd"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/02/02da92bd4eb431f48816601c7d0ec71f547c5aaf584f045191661231f1665211/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "3d80685450665f64d824b60cf6b81443d6151b5f45791a71241b3ecd9285fd5f"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/02/02da92bd4eb431f48816601c7d0ec71f547c5aaf584f045191661231f1665211/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "322010ab5282a743c90485cae1e0b09ec9681cf08eedd46942176aea4ee628e4"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T17:16:27.789075+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1104/dti/sub-1104__ad.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791566187788581335,
+        "dev": 16777232,
+        "ino": 9835916,
+        "mtime_ns": 1791566187788581335,
+        "size": 3414605
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_exhausted_transport_budget_extension",
+      "entry": {
+        "bytes": 682060403,
+        "etag_opaque": "\"9ce1ac58395e425fb9daab3d1c92b6b3\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "9ce1ac58395e425fb9daab3d1c92b6b3",
+        "path": "derivatives/trainset/sub-1109/dwi/sub-1109__dwi.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "TMGbm5XVRd7x5qp0z.yu8M_vWXsz1zug",
+        "sha256": null,
+        "size_bytes": 682060403,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/dwi/sub-1109__dwi.nii.gz?versionId=TMGbm5XVRd7x5qp0z.yu8M_vWXsz1zug",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/04/04176f249965a56c18415032230a3f8d3af348dd17fae27661ccdeaba1b885e4/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "bdd7215aeab43a96ff91ce46d7db3f0dccad1bdb1b2cc0a2c57683608c873aec"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/04/04176f249965a56c18415032230a3f8d3af348dd17fae27661ccdeaba1b885e4/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "2c025e8cd79685ccb37981484acac96e611ee6b8e896a602fb08de46eb932a54"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/04/04176f249965a56c18415032230a3f8d3af348dd17fae27661ccdeaba1b885e4/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "241fec7645e88b4ad19e0eda26c5b95f8ac37fd7515d11e21b5340eda6bdad8d"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/04/04176f249965a56c18415032230a3f8d3af348dd17fae27661ccdeaba1b885e4/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "b783fb9577a80339fb83f5492007969a5d21ebe66ab99127ee3c648ca101cf90"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/04/04176f249965a56c18415032230a3f8d3af348dd17fae27661ccdeaba1b885e4/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "4cfa127acaa019b37a442f5e67cdd6d0bfe7c7ca69990cd1b081f458bfa0048a"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/04/04176f249965a56c18415032230a3f8d3af348dd17fae27661ccdeaba1b885e4/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "591ef98772d788a1ebfd0367b3dd61ca98a31362ae5836cfd828b079995388de"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/04/04176f249965a56c18415032230a3f8d3af348dd17fae27661ccdeaba1b885e4/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "e3d0f3422086e65215a3c2ca41ffaf62632143090cc6071c65bda585d61f19fd"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/04/04176f249965a56c18415032230a3f8d3af348dd17fae27661ccdeaba1b885e4/03-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "238c89eacc27fbc8aab0a4a57520e20af983f211de0c25bbe3f7382ae813aaf1"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "TimeoutError",
+      "original_terminal_result_utc": "2026-10-09T20:47:41.704162+00:00",
+      "original_terminal_status": "transport_exhausted",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/dwi/sub-1109__dwi.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791578570253653043,
+        "dev": 16777232,
+        "ino": 9839247,
+        "mtime_ns": 1791578570253653043,
+        "size": 59768832
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 183203574,
+        "etag_opaque": "\"fbcda4b3450db3a7515defbc1a36fadc\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "fbcda4b3450db3a7515defbc1a36fadc",
+        "path": "derivatives/trainset/sub-1107/sh/sub-1107__dwi_sh.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "7D5yZJDtnj.ASWz8Lwn8.94Paiprnn3Q",
+        "sha256": null,
+        "size_bytes": 183203574,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1107/sh/sub-1107__dwi_sh.nii.gz?versionId=7D5yZJDtnj.ASWz8Lwn8.94Paiprnn3Q",
+        "subject": "sub-1107"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/05/05a27e682115ab5066bbb29ac4f16853222b00b75eaf483d73021e1498f2fce3/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "f190403f1d6f7d76938d5050ad79d11c462be3726f8ee6a5ba7f67882b1236c0"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/05/05a27e682115ab5066bbb29ac4f16853222b00b75eaf483d73021e1498f2fce3/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "68fe4031fefd976dae145f59b4fda4bffef91a5c627864aece27c58af60a335c"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/05/05a27e682115ab5066bbb29ac4f16853222b00b75eaf483d73021e1498f2fce3/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "02f89da945ee72c6ec7ac13f90a519dac7c771c55970f9a68d43eb78165fe073"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T20:00:43.739654+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1107/sh/sub-1107__dwi_sh.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791576043739057732,
+        "dev": 16777232,
+        "ino": 9838793,
+        "mtime_ns": 1791576043739057732,
+        "size": 46399234
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 6978552,
+        "etag_opaque": "\"51af899f51b0bee874b389e4f6b11f6e\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "51af899f51b0bee874b389e4f6b11f6e",
+        "path": "derivatives/trainset/sub-1109/tractography/sub-1109__POPT_R.trk",
+        "role": "TRAIN",
+        "s3_version_id": "3_YZUeEYBGCVAkrXLVc_W9zpDD2OsH2c",
+        "sha256": null,
+        "size_bytes": 6978552,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/tractography/sub-1109__POPT_R.trk?versionId=3_YZUeEYBGCVAkrXLVc_W9zpDD2OsH2c",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/13/138ffeb5213da9ade7c373c2e028073a967936990ddae825ed30ec7c27c48e0a/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "344a7f65bba85dacc9bd82be8c20c92843bd9691731b338022519c12a1bb5b95"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/13/138ffeb5213da9ade7c373c2e028073a967936990ddae825ed30ec7c27c48e0a/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "419e942109eb8632fe2467bbc5f2adb063beee8321f0f92c630f7e16074c45c1"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/13/138ffeb5213da9ade7c373c2e028073a967936990ddae825ed30ec7c27c48e0a/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "c3eda6af3867908e31d1219afbbb239266fa7d0ce72aa5ac55eadb8fc764a7cb"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T22:38:08.631474+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/tractography/sub-1109__POPT_R.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791585488629670989,
+        "dev": 16777232,
+        "ino": 9842003,
+        "mtime_ns": 1791585488629670989,
+        "size": 2611868
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_exhausted_transport_budget_extension",
+      "entry": {
+        "bytes": 34898632,
+        "etag_opaque": "\"a0c53bac63e7cf75d29552247a756a75\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "a0c53bac63e7cf75d29552247a756a75",
+        "path": "derivatives/trainset/sub-1109/tractography/sub-1109__AF_L.trk",
+        "role": "TRAIN",
+        "s3_version_id": "iLqtgjEi..bPaCqCqbmFA8YGzVFUHGoJ",
+        "sha256": null,
+        "size_bytes": 34898632,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/tractography/sub-1109__AF_L.trk?versionId=iLqtgjEi..bPaCqCqbmFA8YGzVFUHGoJ",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/1b/1b36d91125625e5d749d03397dbf4d05207cc21442c65f602fabd4b585f476bb/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "75f420d8e710bfc076da5b8117a7f06e6cfbc9ecc94846599fd8978336d7402b"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/1b/1b36d91125625e5d749d03397dbf4d05207cc21442c65f602fabd4b585f476bb/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "0714a04bfae91afed14071805ce969fed0a572b9a6ae671c01b4970e74702f69"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/1b/1b36d91125625e5d749d03397dbf4d05207cc21442c65f602fabd4b585f476bb/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "ecd5eccd129b67ab5727bb6e05209d0f8053fab515cc44723dda2139b1d787f2"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/1b/1b36d91125625e5d749d03397dbf4d05207cc21442c65f602fabd4b585f476bb/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "748d36e0378a5f71140b9e8f5b252512fd77360fe70693f5927b5129f29cba29"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/1b/1b36d91125625e5d749d03397dbf4d05207cc21442c65f602fabd4b585f476bb/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "93ad08d75935909c8d77b59ea23ebf8ef4fd9c03baa5e8105b492ee744272d05"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/1b/1b36d91125625e5d749d03397dbf4d05207cc21442c65f602fabd4b585f476bb/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "545019fa5b963ed77f2f69dcd7e48c4af7320f62fbdf6c3469592a488be8ec42"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "URLError",
+      "original_terminal_result_utc": "2026-10-09T21:37:02.291461+00:00",
+      "original_terminal_status": "transport_exhausted",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/tractography/sub-1109__AF_L.trk.partial",
+      "partial_stat": null,
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 7114216,
+        "etag_opaque": "\"bf1eecbeb3f2c8fdd89ca866323c5c2a\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "bf1eecbeb3f2c8fdd89ca866323c5c2a",
+        "path": "derivatives/trainset/sub-1109/tractography/sub-1109__MCP.trk",
+        "role": "TRAIN",
+        "s3_version_id": "NsPQ2_2x45gkjJiahhhGMmQqMKT4WraL",
+        "sha256": null,
+        "size_bytes": 7114216,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/tractography/sub-1109__MCP.trk?versionId=NsPQ2_2x45gkjJiahhhGMmQqMKT4WraL",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/1f/1f9ed7328578679841c22cae6ac5f67cdcc7c971af5f9f3a64a16379d26be3f6/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "62279debe8b76971bacca48d2ce73beb3e6367582b52ac23fe568dd4d4fceb77"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/1f/1f9ed7328578679841c22cae6ac5f67cdcc7c971af5f9f3a64a16379d26be3f6/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "b235bce296432aad5387ac36b8841374a3affc83302e1db42aef44c8aea97b30"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/1f/1f9ed7328578679841c22cae6ac5f67cdcc7c971af5f9f3a64a16379d26be3f6/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "b511327b6e6a1dd1e701b64f0334c63c7678deb381b3004131f6b570b04be61f"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T22:21:12.633853+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/tractography/sub-1109__MCP.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791584472632465261,
+        "dev": 16777232,
+        "ino": 9841902,
+        "mtime_ns": 1791584472632465261,
+        "size": 2280002
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 151265886,
+        "etag_opaque": "\"349febf42495d8ba466300d3d891657a\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "349febf42495d8ba466300d3d891657a",
+        "path": "derivatives/trainset/sub-1105/sh/sub-1105__dwi_sh.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "tF4XWTI6L72zV_AL1E7EKImnvS43yM3S",
+        "sha256": null,
+        "size_bytes": 151265886,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1105/sh/sub-1105__dwi_sh.nii.gz?versionId=tF4XWTI6L72zV_AL1E7EKImnvS43yM3S",
+        "subject": "sub-1105"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/23/237504c2bf2bcf13848789245c130cfd180fa016f8256c4cc9a7a4d67322b281/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "80448ab1e80be667521f4a2e169096bb310a080b00cece691eb38f802d6f4e7a"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/23/237504c2bf2bcf13848789245c130cfd180fa016f8256c4cc9a7a4d67322b281/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "d1a16e8f3420f88d8006463a0177fee3ba65307324ca8a3978a76d93fc979c1b"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/23/237504c2bf2bcf13848789245c130cfd180fa016f8256c4cc9a7a4d67322b281/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "17603d23aea80c9aebc3058c6b247694e296036208531369ada7c2997528430f"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T19:17:55.690577+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1105/sh/sub-1105__dwi_sh.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791573475690006879,
+        "dev": 16777232,
+        "ino": 9837223,
+        "mtime_ns": 1791573475690006879,
+        "size": 76205296
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_exhausted_transport_budget_extension",
+      "entry": {
+        "bytes": 799464290,
+        "etag_opaque": "\"491e1d8512199339d3366e1a780a7c7e\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "491e1d8512199339d3366e1a780a7c7e",
+        "path": "derivatives/trainset/sub-1101/dwi/sub-1101__dwi.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "eoR7KWXBG.v4pT8qrjI1xZucFLkIa0j0",
+        "sha256": null,
+        "size_bytes": 799464290,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1101/dwi/sub-1101__dwi.nii.gz?versionId=eoR7KWXBG.v4pT8qrjI1xZucFLkIa0j0",
+        "subject": "sub-1101"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/27/2772309ea408026452168395a2c4088fd7b12f5a4a4f517c6e2d39d49dc94bc8/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "416778b05cc2a13d6fd4ce504cdee0a590184ca5b2e5ee0103716f92eb9e105d"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/27/2772309ea408026452168395a2c4088fd7b12f5a4a4f517c6e2d39d49dc94bc8/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "e8a66c144e05659eae4c6cc16fc3fd561a42e3a94a610297e26d3cc6444d777d"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/27/2772309ea408026452168395a2c4088fd7b12f5a4a4f517c6e2d39d49dc94bc8/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "40d25402d4024f1bb4125290e72f07a7195b2e21ecb65885ffa02fc12081ef2f"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/27/2772309ea408026452168395a2c4088fd7b12f5a4a4f517c6e2d39d49dc94bc8/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "741cd9f3259834b1a5db4a61068825e32b5b5542eacb99a1b4e2a624ff57300c"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/27/2772309ea408026452168395a2c4088fd7b12f5a4a4f517c6e2d39d49dc94bc8/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "65aeafdf3bb1ef3aa64183267b1911407a21cb3440e717381895866f3a063173"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/27/2772309ea408026452168395a2c4088fd7b12f5a4a4f517c6e2d39d49dc94bc8/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "f4734d77fc239f9d30e499cc47eb0f6d099a48eca00ad431296cacb390905708"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/27/2772309ea408026452168395a2c4088fd7b12f5a4a4f517c6e2d39d49dc94bc8/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "a39071da3f06f4d5a5b87f768fc57f4e7e94d8b14d9ddf1e760426b8e0a3a581"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "URLError",
+      "original_terminal_result_utc": "2026-10-09T15:00:09.025899+00:00",
+      "original_terminal_status": "transport_exhausted",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1101/dwi/sub-1101__dwi.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791557844021661859,
+        "dev": 16777232,
+        "ino": 9832781,
+        "mtime_ns": 1791557844021661859,
+        "size": 642777088
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 669242707,
+        "etag_opaque": "\"c602f46a01bd497160eab95c0f593909\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "c602f46a01bd497160eab95c0f593909",
+        "path": "derivatives/trainset/sub-1104/dwi/sub-1104__dwi.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "0IGmdT.I4j.9LAua2lJprCGFn9KpNloN",
+        "sha256": null,
+        "size_bytes": 669242707,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1104/dwi/sub-1104__dwi.nii.gz?versionId=0IGmdT.I4j.9LAua2lJprCGFn9KpNloN",
+        "subject": "sub-1104"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/29/29c9c2dd99956696cf450150275b1cce9819ae9cdad30eca9c54bf7d8903272e/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "fe7ee0a214f8937b935d5c79469db68940774957226533227a3c13d87404d467"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/29/29c9c2dd99956696cf450150275b1cce9819ae9cdad30eca9c54bf7d8903272e/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "528814368eb21bb361d78d3f009ba8991a854efad9ff34e1fcefa2afffbfd240"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/29/29c9c2dd99956696cf450150275b1cce9819ae9cdad30eca9c54bf7d8903272e/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "62f74ccf467613ee1cd4a74cb24440c47d73743d6daeadf385972def1db4614b"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T17:34:01.651766+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1104/dwi/sub-1104__dwi.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791567241651096108,
+        "dev": 16777232,
+        "ino": 9836023,
+        "mtime_ns": 1791567241651096108,
+        "size": 58123872
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 9646148,
+        "etag_opaque": "\"3607b98ccb0297d19242563386dddc87\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "3607b98ccb0297d19242563386dddc87",
+        "path": "derivatives/trainset/sub-1102/tractography/sub-1102__OR_ML_R.trk",
+        "role": "TRAIN",
+        "s3_version_id": "fFvefUSRYwuml03axM7kVcvqyBBpyUC0",
+        "sha256": null,
+        "size_bytes": 9646148,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1102/tractography/sub-1102__OR_ML_R.trk?versionId=fFvefUSRYwuml03axM7kVcvqyBBpyUC0",
+        "subject": "sub-1102"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/2e/2e6d9bd0811d5bf567e8ff4037908759e38d981012b0f0b641873b8141049873/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "4a6a092de2d64d85b1410021653f52b38db3107cf950b6145c4831cc5ec4f91b"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/2e/2e6d9bd0811d5bf567e8ff4037908759e38d981012b0f0b641873b8141049873/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "3a66ee6d0129b5c1fc13c9f09dd4fb4c5fb301132919533872bbac4c5c31aff8"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/2e/2e6d9bd0811d5bf567e8ff4037908759e38d981012b0f0b641873b8141049873/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "2aad03f331daf18e43c714676804333e2e83a53213da3e3efe6a8c4ec5c2f2ce"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T16:45:09.750445+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1102/tractography/sub-1102__OR_ML_R.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791564309749841746,
+        "dev": 16777232,
+        "ino": 9835687,
+        "mtime_ns": 1791564309749841746,
+        "size": 5032514
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_exhausted_transport_budget_extension",
+      "entry": {
+        "bytes": 178913132,
+        "etag_opaque": "\"97ae778143397738ee9cb926cee0a11c\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "97ae778143397738ee9cb926cee0a11c",
+        "path": "derivatives/trainset/sub-1101/sh/sub-1101__dwi_sh.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "UGq0PgyFF9l0uMeUdsUoNA4s8IPNf7vD",
+        "sha256": null,
+        "size_bytes": 178913132,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1101/sh/sub-1101__dwi_sh.nii.gz?versionId=UGq0PgyFF9l0uMeUdsUoNA4s8IPNf7vD",
+        "subject": "sub-1101"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/31/3181f6384234baa3b5a4ab94cda2732cceb8a73a6f8d4572dd419fcf73530005/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "8074d035f88c6271bc12f41999ad4ee5f74c4662739b648c5bf73b627560d641"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/31/3181f6384234baa3b5a4ab94cda2732cceb8a73a6f8d4572dd419fcf73530005/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "a94d63794c8e3e0d0db4b03ef7427bfd401c428bf447900d8ab1410bcbe4a2c0"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/31/3181f6384234baa3b5a4ab94cda2732cceb8a73a6f8d4572dd419fcf73530005/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "c6f302feb80044c8aec7da7dc1142172406f1d829db5edd9783a5a9f8a5455e6"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/31/3181f6384234baa3b5a4ab94cda2732cceb8a73a6f8d4572dd419fcf73530005/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "e393b025fb2a4332d0c9218dc674300e007004b5b1178df4a928664bb599262d"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/31/3181f6384234baa3b5a4ab94cda2732cceb8a73a6f8d4572dd419fcf73530005/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "c8c829d8ece60da6162a5cb896077f1a5379a9a63bfe3b7af3b22fbdcfa10d40"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/31/3181f6384234baa3b5a4ab94cda2732cceb8a73a6f8d4572dd419fcf73530005/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "7910225d7839ab2f55404c9708ab7dfa07a881269216765b3896d00be5c4cfc6"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/31/3181f6384234baa3b5a4ab94cda2732cceb8a73a6f8d4572dd419fcf73530005/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "97248d5bee04429ba2d4ce2a0407060efd698854bd9f0f4ff0e56dfc683cc18a"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "URLError",
+      "original_terminal_result_utc": "2026-10-09T15:04:36.010482+00:00",
+      "original_terminal_status": "transport_exhausted",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1101/sh/sub-1101__dwi_sh.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791558031595424659,
+        "dev": 16777232,
+        "ino": 9833683,
+        "mtime_ns": 1791558031595349368,
+        "size": 0
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 5786364,
+        "etag_opaque": "\"246148acf517f52c1ff37439ed6f0947\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "246148acf517f52c1ff37439ed6f0947",
+        "path": "derivatives/trainset/sub-1105/tractography/sub-1105__OR_ML_L.trk",
+        "role": "TRAIN",
+        "s3_version_id": "crkev._jW9_YSSp6fYV1oyK0QJbMp3p.",
+        "sha256": null,
+        "size_bytes": 5786364,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1105/tractography/sub-1105__OR_ML_L.trk?versionId=crkev._jW9_YSSp6fYV1oyK0QJbMp3p.",
+        "subject": "sub-1105"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/46/4673aca9a96feef9f4a3878775b1abd1ce5d15046928f4bb80df23b9768b17f0/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "3a4b12ddb2a798b6e18a27f70af8f8c933133548af65d63c70ea01beb5632d27"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/46/4673aca9a96feef9f4a3878775b1abd1ce5d15046928f4bb80df23b9768b17f0/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "74f9488a0c076279cd5b73842f6d478ebbca543479ef8e39c33c969e5b14d588"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/46/4673aca9a96feef9f4a3878775b1abd1ce5d15046928f4bb80df23b9768b17f0/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "f2e411fd0e18281ad1cbd4ae31ec7204a60833c5bacaa92dee504b5afde94e40"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T19:42:03.454109+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1105/tractography/sub-1105__OR_ML_L.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791574923453102906,
+        "dev": 16777232,
+        "ino": 9837558,
+        "mtime_ns": 1791574923453102906,
+        "size": 3335162
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 31972480,
+        "etag_opaque": "\"0dafc23b4aee603a10c0a92752acebdf\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "0dafc23b4aee603a10c0a92752acebdf",
+        "path": "derivatives/trainset/sub-1101/tractography/sub-1101__PYT_R.trk",
+        "role": "TRAIN",
+        "s3_version_id": "xIqC6_U.mZw_40zKkwurb8IRA.VTUYTx",
+        "sha256": null,
+        "size_bytes": 31972480,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1101/tractography/sub-1101__PYT_R.trk?versionId=xIqC6_U.mZw_40zKkwurb8IRA.VTUYTx",
+        "subject": "sub-1101"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/48/48626fcb840252f8d22e3ecc0dc01be00d62242e05fa87aed3e9cea8245ae94a/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "93a7566f814f77c9455380c3c20e31105d3696db7a6f9ed116fdfe845b32f8fb"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/48/48626fcb840252f8d22e3ecc0dc01be00d62242e05fa87aed3e9cea8245ae94a/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "a0d5678d5d138cbc9e49f42af2fe0e0813708e416340c85b1866f1ab455e3e14"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/48/48626fcb840252f8d22e3ecc0dc01be00d62242e05fa87aed3e9cea8245ae94a/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "618551925a50b66bbc271c90fa70a91466d75a2270f11f9a6b85f70002937205"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T15:38:50.692482+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1101/tractography/sub-1101__PYT_R.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791560330692190650,
+        "dev": 16777232,
+        "ino": 9834713,
+        "mtime_ns": 1791560330692190650,
+        "size": 28909589
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 244120371,
+        "etag_opaque": "\"75d46f97fd54b868902ade51d81b7302\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "75d46f97fd54b868902ade51d81b7302",
+        "path": "derivatives/trainset/sub-1105/fodf/sub-1105__fodf.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "kAMBvXujJ4HGlIgCGVsewqo7ocAiotKc",
+        "sha256": null,
+        "size_bytes": 244120371,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1105/fodf/sub-1105__fodf.nii.gz?versionId=kAMBvXujJ4HGlIgCGVsewqo7ocAiotKc",
+        "subject": "sub-1105"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/49/491f052e86b2bdc36cc4315ce266e750d6de8f2837b95fae9bdcbe959085076b/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "02c3713a7d0d6a0e5286acfe4cca450ab44f7cc729d7d2440d48c9aab68e9b20"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/49/491f052e86b2bdc36cc4315ce266e750d6de8f2837b95fae9bdcbe959085076b/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "e636a00aa1658bc3184e0628d7ccdf7a79000b0ad1a7be2d04677a61ed67fd6d"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/49/491f052e86b2bdc36cc4315ce266e750d6de8f2837b95fae9bdcbe959085076b/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "5bddb50fddd968f76d7c1998e3be131f07326c6968580f13ad1887dbb6d5c293"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T19:00:17.689991+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1105/fodf/sub-1105__fodf.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791572417689290501,
+        "dev": 16777232,
+        "ino": 9837127,
+        "mtime_ns": 1791572417689290501,
+        "size": 16022313
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_exhausted_transport_budget_extension",
+      "entry": {
+        "bytes": 161796224,
+        "etag_opaque": "\"aa1d845a93163fea4a71f79d7cb69a25\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "aa1d845a93163fea4a71f79d7cb69a25",
+        "path": "derivatives/trainset/sub-1081/sh/sub-1081__dwi_sh.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "8MjdZIY6ftTgodUQK7Xf_6D4Pcymncgd",
+        "sha256": null,
+        "size_bytes": 161796224,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1081/sh/sub-1081__dwi_sh.nii.gz?versionId=8MjdZIY6ftTgodUQK7Xf_6D4Pcymncgd",
+        "subject": "sub-1081"
+      },
+      "execution_released": false,
+      "from_original_ten": true,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/4a/4ac13e425efef829f2acbf00578dd6853b4215756edd962c3a25fca86b241e6f/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "04f5643c7cd35b290b1c163865fc0cbacef0a9ef0d6e70e8104528c8b174dbb4"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/4a/4ac13e425efef829f2acbf00578dd6853b4215756edd962c3a25fca86b241e6f/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "cb2fc14b6ec4c016284d56e6749f1d485e922f03fe0cc38da9ac249b68e8e6de"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/4a/4ac13e425efef829f2acbf00578dd6853b4215756edd962c3a25fca86b241e6f/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "37506ffcd80021689da131d23d8c412f70387603fd70da9c666c1b00e63cf025"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/4a/4ac13e425efef829f2acbf00578dd6853b4215756edd962c3a25fca86b241e6f/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "f525dc280f3c45790ddd50d452c7dbeecfe38c306b2822558548f5dcf56dfb6a"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/4a/4ac13e425efef829f2acbf00578dd6853b4215756edd962c3a25fca86b241e6f/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "1a77b14b7ec5d79e02c90c60722225d18289a52015f6e5a98346b0e5842e062f"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/4a/4ac13e425efef829f2acbf00578dd6853b4215756edd962c3a25fca86b241e6f/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "9a30d99f24074f70346be1b6e180d43ed4b4637d2e5f0c14b7c758cf0328ba79"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/4a/4ac13e425efef829f2acbf00578dd6853b4215756edd962c3a25fca86b241e6f/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "04cc014814d337b56e874cd012afbd180adcab9d23fe112dcc9fffd51517034f"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "URLError",
+      "original_terminal_result_utc": "2026-10-09T13:24:21.217859+00:00",
+      "original_terminal_status": "transport_exhausted",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1081/sh/sub-1081__dwi_sh.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791551745036699593,
+        "dev": 16777232,
+        "ino": 9821270,
+        "mtime_ns": 1791551745036699593,
+        "size": 91226112
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 135872268,
+        "etag_opaque": "\"7b038f10ea6a9f15f59b081715bfc6cf\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "7b038f10ea6a9f15f59b081715bfc6cf",
+        "path": "derivatives/trainset/sub-1109/tractography/sub-1109__CC_Fr_2.trk",
+        "role": "TRAIN",
+        "s3_version_id": "cVcMVohuOaLBSmXUQQpY1xUehsDx3ENY",
+        "sha256": null,
+        "size_bytes": 135872268,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/tractography/sub-1109__CC_Fr_2.trk?versionId=cVcMVohuOaLBSmXUQQpY1xUehsDx3ENY",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/5a/5afd53e44e017c670678f502fe941e0b4ea2ea20559734249b235d9521ac1255/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "a406523d89b9d1c775c204f61b30ead281f291022a4a5ba219179b7bf84f464d"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/5a/5afd53e44e017c670678f502fe941e0b4ea2ea20559734249b235d9521ac1255/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "b4a070a637121189dbdb6f15a7de15cef221400ed2170d95c785f886c1743c92"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/5a/5afd53e44e017c670678f502fe941e0b4ea2ea20559734249b235d9521ac1255/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "7d7cdeb4fa2cd0a624f01c320bc42268af2ff2ba48909cdfa767bcd04d5eb4fa"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/5a/5afd53e44e017c670678f502fe941e0b4ea2ea20559734249b235d9521ac1255/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "3d08d7312b6965da40633d6a522f47d9e05bdcf338fefcc0601f86e7b7a682ad"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/5a/5afd53e44e017c670678f502fe941e0b4ea2ea20559734249b235d9521ac1255/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "9a8a64f7ca25df8dc3d54f866892fb5bedb7b3c4d46dc619498f3fd829866d5a"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/5a/5afd53e44e017c670678f502fe941e0b4ea2ea20559734249b235d9521ac1255/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "fb781809bd7311e0aff59b2301d8877402868c6d789a88fb8a0fb663f21fc14c"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/5a/5afd53e44e017c670678f502fe941e0b4ea2ea20559734249b235d9521ac1255/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "e9e00fb61ef9a8accf2f3f8d29aab86b98c046999fcc7545d1c23a486302802e"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/5a/5afd53e44e017c670678f502fe941e0b4ea2ea20559734249b235d9521ac1255/03-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "5a369214ae2efb93de5cd82622a8e81b3b445b1dc16a4337fc92e9b00b38ad55"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T22:02:43.769810+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/tractography/sub-1109__CC_Fr_2.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791583363768929334,
+        "dev": 16777232,
+        "ino": 9841276,
+        "mtime_ns": 1791583363768929334,
+        "size": 22256570
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 25055856,
+        "etag_opaque": "\"5010c811f79e4a9fb5403ace5a43592f\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "5010c811f79e4a9fb5403ace5a43592f",
+        "path": "derivatives/trainset/sub-1104/tractography/sub-1104__PYT_L.trk",
+        "role": "TRAIN",
+        "s3_version_id": "VAbnbPCfOyppI8lvKJ1Tr.Mtd4Wcuf0o",
+        "sha256": null,
+        "size_bytes": 25055856,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1104/tractography/sub-1104__PYT_L.trk?versionId=VAbnbPCfOyppI8lvKJ1Tr.Mtd4Wcuf0o",
+        "subject": "sub-1104"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/5c/5ceb1639224df86f518e62692f291b207ffedadca4b59a4f4779d7aea1e5b086/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "b650499888b3fc1185580365815de07fc3e06ba8bcc2c827a9bb494996ef7038"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/5c/5ceb1639224df86f518e62692f291b207ffedadca4b59a4f4779d7aea1e5b086/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "a17e6d93044f01f852f2845ece10ed1942440669ff9ea3dee9f75aa0aa29a0f9"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/5c/5ceb1639224df86f518e62692f291b207ffedadca4b59a4f4779d7aea1e5b086/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "06e0d4729f61e2c3b3668a83c615a656749c7ae9e1242102c30daa0538a6964a"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T18:50:03.638507+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1104/tractography/sub-1104__PYT_L.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791571803637606973,
+        "dev": 16777232,
+        "ino": 9836776,
+        "mtime_ns": 1791571803637606973,
+        "size": 13522674
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 47844639,
+        "etag_opaque": "\"98a0f0d1c4e180a039b9e864c1deaaf4\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "98a0f0d1c4e180a039b9e864c1deaaf4",
+        "path": "derivatives/trainset/sub-1102/fodf/sub-1102__peaks.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "RF4EVXCcPCIAc3YZQVCwl1DU25IeiRFW",
+        "sha256": null,
+        "size_bytes": 47844639,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1102/fodf/sub-1102__peaks.nii.gz?versionId=RF4EVXCcPCIAc3YZQVCwl1DU25IeiRFW",
+        "subject": "sub-1102"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/64/64d3edf5e334c60ff9e2b4d1a70d84aa947357fbd97adbc8d2bc89e7b014f64d/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "3abf0dcf5264e842c4a94f6cc4ce0f4d4fcbdf970b40d44313364e21f35c627a"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/64/64d3edf5e334c60ff9e2b4d1a70d84aa947357fbd97adbc8d2bc89e7b014f64d/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "4af5727bfd4e9ccf717943f788e0df55e2ba290298298295a865bc1a3d9e7284"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/64/64d3edf5e334c60ff9e2b4d1a70d84aa947357fbd97adbc8d2bc89e7b014f64d/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "01091be42d2799a20d4fdbfa2dbf79e27643840ce5eac32a63e2e935f5832552"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T16:12:40.645057+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1102/fodf/sub-1102__peaks.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791562360644514580,
+        "dev": 16777232,
+        "ino": 9835081,
+        "mtime_ns": 1791562360644514580,
+        "size": 24594756
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 43401592,
+        "etag_opaque": "\"5ed6b66e9ee53ca083392d152f83b5bc\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "5ed6b66e9ee53ca083392d152f83b5bc",
+        "path": "derivatives/trainset/sub-1110/fodf/sub-1110__peaks.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "Kcote1L01YQnTL.1VIiZlC_vDcwbF2_g",
+        "sha256": null,
+        "size_bytes": 43401592,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1110/fodf/sub-1110__peaks.nii.gz?versionId=Kcote1L01YQnTL.1VIiZlC_vDcwbF2_g",
+        "subject": "sub-1110"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/69/6943d85e08c91f42e1d40274844d812473ddbf6831590eac91a7d0a2041d4771/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "6a33c2a90c3f7f2095c0b1b08a39bbd0829395cc5733ba0e0106303f2dfc7794"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/69/6943d85e08c91f42e1d40274844d812473ddbf6831590eac91a7d0a2041d4771/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "416fd63027c1ef479f36b9f72aa2e483f06a2b33bf8c808c28587ec22b875548"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/69/6943d85e08c91f42e1d40274844d812473ddbf6831590eac91a7d0a2041d4771/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "81bbf77c85bfdbc3e7f8b6e5d3f3a2c4a3faad9b8445f50e2530b59c6bbad99d"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T23:38:33.588012+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1110/fodf/sub-1110__peaks.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791589113587520867,
+        "dev": 16777232,
+        "ino": 9842409,
+        "mtime_ns": 1791589113587520867,
+        "size": 43044052
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 31386088,
+        "etag_opaque": "\"8f5be01d40ccb92a83f02214c10343f2\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "8f5be01d40ccb92a83f02214c10343f2",
+        "path": "derivatives/trainset/sub-1109/tractography/sub-1109__PYT_L.trk",
+        "role": "TRAIN",
+        "s3_version_id": "qTiIwhOnRMtFCA1POfwgQNN0pC.uDMA7",
+        "sha256": null,
+        "size_bytes": 31386088,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/tractography/sub-1109__PYT_L.trk?versionId=qTiIwhOnRMtFCA1POfwgQNN0pC.uDMA7",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6d/6d25376c29c2b15663230ec23e6335ed5bb7d510b25425ddb9bf32f41d808c24/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "13c0ce72139d51ea7feae3d18c4bc1528d25f73fc2bbb1aa84e0fc4c62905ffc"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6d/6d25376c29c2b15663230ec23e6335ed5bb7d510b25425ddb9bf32f41d808c24/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "83023cb4bc2f0c2f8cea5f9b83801862468a456ba2d186ee087f24ae46a679e8"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6d/6d25376c29c2b15663230ec23e6335ed5bb7d510b25425ddb9bf32f41d808c24/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "a5bdabfa15ebecb1b7329032bb227f33409dcbf0dba376234d7931178510e183"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T22:38:08.630817+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/tractography/sub-1109__PYT_L.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791585488629508831,
+        "dev": 16777232,
+        "ino": 9842007,
+        "mtime_ns": 1791585488629508831,
+        "size": 1792577
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 67985024,
+        "etag_opaque": "\"75d7035c49a26c6b78d9a125f67f06bb\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "75d7035c49a26c6b78d9a125f67f06bb",
+        "path": "derivatives/trainset/sub-1109/tractography/sub-1109__CC_Fr_1.trk",
+        "role": "TRAIN",
+        "s3_version_id": "NGtSCn3eywKQIYBs7GulTD6FFzYvHQbQ",
+        "sha256": null,
+        "size_bytes": 67985024,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/tractography/sub-1109__CC_Fr_1.trk?versionId=NGtSCn3eywKQIYBs7GulTD6FFzYvHQbQ",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6d/6d5c906d96cb82bdbc046c256eb1d94748df85f72bd8912f8252ca23c0caaddc/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "b42e801d95a8ab1b376f54b3fb8efeddad11f661af9d3ed3e5355f14083f25db"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6d/6d5c906d96cb82bdbc046c256eb1d94748df85f72bd8912f8252ca23c0caaddc/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "01292212ff41ad36449e5f3bdf4e1b7da564ced6a9a7629c196b06dca3039d3b"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6d/6d5c906d96cb82bdbc046c256eb1d94748df85f72bd8912f8252ca23c0caaddc/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "320de9c658912ba3a9120f6d30769b140ff65698284c744c667ff175c2860600"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6d/6d5c906d96cb82bdbc046c256eb1d94748df85f72bd8912f8252ca23c0caaddc/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "ed71c245d343eab355a7a535e8d474bd4a5eff9c62528189d884519ce97b2911"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6d/6d5c906d96cb82bdbc046c256eb1d94748df85f72bd8912f8252ca23c0caaddc/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "4df3422f78d18cb57faa02e3bda577dfc27b06e9bc2dd6c53c03dd7edbfbea95"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6d/6d5c906d96cb82bdbc046c256eb1d94748df85f72bd8912f8252ca23c0caaddc/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "d82c67a70124b615c4fa1d81d6f00bb3b7153041a40816dfbfea6607ee5b57d2"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6d/6d5c906d96cb82bdbc046c256eb1d94748df85f72bd8912f8252ca23c0caaddc/03-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "98d78251b6f7b824d335cd9e90b49bc440d3a13853034007c834809e73e96fb7"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T21:44:41.363421+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/tractography/sub-1109__CC_Fr_1.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791582281362884204,
+        "dev": 16777232,
+        "ino": 9841091,
+        "mtime_ns": 1791582281362884204,
+        "size": 2854465
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 28161852,
+        "etag_opaque": "\"18ba49859636d98aea87cc4a0d130e80\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "18ba49859636d98aea87cc4a0d130e80",
+        "path": "derivatives/trainset/sub-1082/tractography/sub-1082__CC_Fr_1.trk",
+        "role": "TRAIN",
+        "s3_version_id": "ku5.g9Nio3AjofpxxLQLX0_nxi4AqinL",
+        "sha256": null,
+        "size_bytes": 28161852,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1082/tractography/sub-1082__CC_Fr_1.trk?versionId=ku5.g9Nio3AjofpxxLQLX0_nxi4AqinL",
+        "subject": "sub-1082"
+      },
+      "execution_released": false,
+      "from_original_ten": true,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6f/6f50fb99ca8dc69cfc60e46171eab613730ea801aefe16bbf1f4860f009ef734/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "684aeb019cccf9d3c5b036fb77ea7520aaa1bc9a627cd2ca39989d2139ced19c"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6f/6f50fb99ca8dc69cfc60e46171eab613730ea801aefe16bbf1f4860f009ef734/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "e1dfaea36362b9c5a7946daa410337922e28995d1a4478b1270fc2af48bee862"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6f/6f50fb99ca8dc69cfc60e46171eab613730ea801aefe16bbf1f4860f009ef734/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "fdd7812d8b95a6826b1f9bf14bd947e545b20b57ed76f47157b2245ec7976d9b"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T14:38:11.341282+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1082/tractography/sub-1082__CC_Fr_1.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791556691338825982,
+        "dev": 16777232,
+        "ino": 9822845,
+        "mtime_ns": 1791556691338825982,
+        "size": 19390822
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 17209668,
+        "etag_opaque": "\"702bfea1cc21d2e6097a54111fdc05ce\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "702bfea1cc21d2e6097a54111fdc05ce",
+        "path": "derivatives/trainset/sub-1081/tractography/sub-1081__SLF_R.trk",
+        "role": "TRAIN",
+        "s3_version_id": "vV8U4wFqW6WMdIG1ZnrIJHlF5SjqDfs0",
+        "sha256": null,
+        "size_bytes": 17209668,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1081/tractography/sub-1081__SLF_R.trk?versionId=vV8U4wFqW6WMdIG1ZnrIJHlF5SjqDfs0",
+        "subject": "sub-1081"
+      },
+      "execution_released": false,
+      "from_original_ten": true,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6f/6fe46aea9d8addfd92fe993d78899b66fd33f37bf9d362b5e9d23cd7e6afde0e/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "330e7e320f0cadf832701171a11e2e6fc51663979e8c72ff15d880c934e6af6a"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6f/6fe46aea9d8addfd92fe993d78899b66fd33f37bf9d362b5e9d23cd7e6afde0e/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "ba5636376819f39443c1ad10a122a104a3023c16d993bedb472c3fb165f207c6"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/6f/6fe46aea9d8addfd92fe993d78899b66fd33f37bf9d362b5e9d23cd7e6afde0e/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "a16f6e63713d8fb3f21c1b0f181aad08f7f7fb9ccf8187778a5f1d7cdbbe0da3"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T13:58:04.771428+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1081/tractography/sub-1081__SLF_R.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791554284768173799,
+        "dev": 16777232,
+        "ino": 9822358,
+        "mtime_ns": 1791554284768173799,
+        "size": 7003713
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 81599404,
+        "etag_opaque": "\"6a1ddd26f4d0d70080fb79b96584c73c\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "6a1ddd26f4d0d70080fb79b96584c73c",
+        "path": "derivatives/trainset/sub-1109/tractography/sub-1109__CC_Pa.trk",
+        "role": "TRAIN",
+        "s3_version_id": "RkBMpXtgkk.nkSdxUACVTp3HrYFumN4t",
+        "sha256": null,
+        "size_bytes": 81599404,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/tractography/sub-1109__CC_Pa.trk?versionId=RkBMpXtgkk.nkSdxUACVTp3HrYFumN4t",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/74/7474e6fe87750816e924446fa9893e01901cabc1177e6eb95a8c5acf94c2de4b/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "1ca6ef847d29971bf764cb6af6818aa43fb4e40ef003fb7fc255febdb7bec854"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/74/7474e6fe87750816e924446fa9893e01901cabc1177e6eb95a8c5acf94c2de4b/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "f4ea8b810bd3d09beebbc747941fec9680ca9136b104e77ef0dac698560e07b3"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/74/7474e6fe87750816e924446fa9893e01901cabc1177e6eb95a8c5acf94c2de4b/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "b4c2887fddadcaa0d4bf86e4108a43565eaa72f365b95cfac48e5a8f1f08bd96"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/74/7474e6fe87750816e924446fa9893e01901cabc1177e6eb95a8c5acf94c2de4b/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "f768ce63e88ab7d7e3a0d3fe96c9c4bec4093f66c009dabf1035a8a4b8da7ce7"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/74/7474e6fe87750816e924446fa9893e01901cabc1177e6eb95a8c5acf94c2de4b/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "c3934686edb312e61ef39e682247d6d6597e0e17a9d29f298c4db337fb230bbe"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/74/7474e6fe87750816e924446fa9893e01901cabc1177e6eb95a8c5acf94c2de4b/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "bc4aa5ddad40d9cd2623b05d3b822a92d103c68de8925204a7b5970f4b5d2c3b"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/74/7474e6fe87750816e924446fa9893e01901cabc1177e6eb95a8c5acf94c2de4b/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "88a5dc01aaaa842f92948126f86bd1518fde3c985fa7dc5bf00028eaab697307"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/74/7474e6fe87750816e924446fa9893e01901cabc1177e6eb95a8c5acf94c2de4b/03-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "8c1eef190bf4536345d002aa102e20dd6974b31a2af40ae0a064a38e69c277e9"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T22:02:43.770143+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/tractography/sub-1109__CC_Pa.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791583363768868042,
+        "dev": 16777232,
+        "ino": 9841289,
+        "mtime_ns": 1791583363768868042,
+        "size": 27451949
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 16223124,
+        "etag_opaque": "\"c9b458b1606281c9e130ce7029ba0587\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "c9b458b1606281c9e130ce7029ba0587",
+        "path": "derivatives/trainset/sub-1104/tractography/sub-1104__FPT_L.trk",
+        "role": "TRAIN",
+        "s3_version_id": "LzpFKIuaIIYokjEX78ESmAfsPe.0EemT",
+        "sha256": null,
+        "size_bytes": 16223124,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1104/tractography/sub-1104__FPT_L.trk?versionId=LzpFKIuaIIYokjEX78ESmAfsPe.0EemT",
+        "subject": "sub-1104"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/76/76962a3113f22e6113dc50788a70e85eb142826bc147fe54148d129805b113fa/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "fecfdf419d8e6d9d4dd2f96842ea4f921eb39f75093e81492f4237bca7458e51"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/76/76962a3113f22e6113dc50788a70e85eb142826bc147fe54148d129805b113fa/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "f7f96c429cf01a47a2ff36c2f21d6f4b8d897e9befae312f2073260fd076a864"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/76/76962a3113f22e6113dc50788a70e85eb142826bc147fe54148d129805b113fa/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "669ad452229750fd351a70c95e7ff6eefc6a1c39bb49f21217c457c561f3902f"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T18:16:47.770345+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1104/tractography/sub-1104__FPT_L.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791569807769632155,
+        "dev": 16777232,
+        "ino": 9836460,
+        "mtime_ns": 1791569807769632155,
+        "size": 15901872
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_exhausted_transport_budget_extension",
+      "entry": {
+        "bytes": 47263427,
+        "etag_opaque": "\"ead494186c3b13743705869aa813fc38\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "ead494186c3b13743705869aa813fc38",
+        "path": "derivatives/trainset/sub-1101/fodf/sub-1101__peaks.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "YXVpl0zE1WsPxEsSvUP9GX_Ajo0fatxb",
+        "sha256": null,
+        "size_bytes": 47263427,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1101/fodf/sub-1101__peaks.nii.gz?versionId=YXVpl0zE1WsPxEsSvUP9GX_Ajo0fatxb",
+        "subject": "sub-1101"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/7a/7abe364bab0b3c3b3518bf3e5d53d3c5dca15b45939034951947dd7b024a5eab/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "5f94ec97f26c8cd59ce90b3f7ba70bb5bb8f6953bdcfba669ff4b403ef74a83d"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/7a/7abe364bab0b3c3b3518bf3e5d53d3c5dca15b45939034951947dd7b024a5eab/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "9af945cd211c24db7e3cb45895d83f5a61fdf0d445a683954820a9406d258692"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/7a/7abe364bab0b3c3b3518bf3e5d53d3c5dca15b45939034951947dd7b024a5eab/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "73c8acdc56f8da75aad96ccdbb663cf1d679e67b909c04be73292c7d1133101e"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/7a/7abe364bab0b3c3b3518bf3e5d53d3c5dca15b45939034951947dd7b024a5eab/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "27e36587bde8fb6e755fb8e631ee5774351e5155d1d782bc7c460e3feb956fb6"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/7a/7abe364bab0b3c3b3518bf3e5d53d3c5dca15b45939034951947dd7b024a5eab/02-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "aa2211a3752f8e318079e992654ac400ad867a70de4d5ad1337e5002e14e31a4"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/7a/7abe364bab0b3c3b3518bf3e5d53d3c5dca15b45939034951947dd7b024a5eab/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "9ae1cc43ab1785745f2913e57d301017bcb5adbbf0c427c5d053eef1faee1e46"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/7a/7abe364bab0b3c3b3518bf3e5d53d3c5dca15b45939034951947dd7b024a5eab/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "ed369609da504065f2b2ad2203867aa97360923684e4f086478fdef8a99b61cb"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "URLError",
+      "original_terminal_result_utc": "2026-10-09T15:04:11.633130+00:00",
+      "original_terminal_status": "transport_exhausted",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1101/fodf/sub-1101__peaks.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791558018955446096,
+        "dev": 16777232,
+        "ino": 9833620,
+        "mtime_ns": 1791558018955446096,
+        "size": 2097152
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 46279800,
+        "etag_opaque": "\"d410cd5aee494c159c809971a5438fe3\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "d410cd5aee494c159c809971a5438fe3",
+        "path": "derivatives/trainset/sub-1105/tractography/sub-1105__CC_Pr_Po.trk",
+        "role": "TRAIN",
+        "s3_version_id": "12jSBar2GhotA5Vm5.Q.pU4T8h6ceeFm",
+        "sha256": null,
+        "size_bytes": 46279800,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1105/tractography/sub-1105__CC_Pr_Po.trk?versionId=12jSBar2GhotA5Vm5.Q.pU4T8h6ceeFm",
+        "subject": "sub-1105"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/7f/7f6698ff18799f0e8815ac52195f89bc80de964e28374880d136a1185bd807fe/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "60b730c34f0377a69a88911edd1a8ddd7303eb2effcb64ac9cb8fb00e6bf8832"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/7f/7f6698ff18799f0e8815ac52195f89bc80de964e28374880d136a1185bd807fe/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "53788da659dfa7ab6866e9a994b675c603918a5022e6ce7cb3d5514e2d5686b4"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/7f/7f6698ff18799f0e8815ac52195f89bc80de964e28374880d136a1185bd807fe/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "df3c5d16dc31faea3a2086aec381fed8bf2028f77ab0576485bcadbde315b478"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T19:33:13.579987+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1105/tractography/sub-1105__CC_Pr_Po.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791574393579362404,
+        "dev": 16777232,
+        "ino": 9837397,
+        "mtime_ns": 1791574393579362404,
+        "size": 43093569
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 361662331,
+        "etag_opaque": "\"9f60465f0172ad3b3cb57486d793966d\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "9f60465f0172ad3b3cb57486d793966d",
+        "path": "derivatives/trainset/sub-1082/dwi/sub-1082__dwi.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "l1iwOv1vLLUzN6DKIMTCdL7AXgnXJOft",
+        "sha256": null,
+        "size_bytes": 361662331,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1082/dwi/sub-1082__dwi.nii.gz?versionId=l1iwOv1vLLUzN6DKIMTCdL7AXgnXJOft",
+        "subject": "sub-1082"
+      },
+      "execution_released": false,
+      "from_original_ten": true,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/81/8139a32f93d8c8e91d6424cd36131d4bf98d57f531c018a60dc54d7be26e3d56/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "869c773ba9101f4756157fc262ce9b6aea7a5fb6c6562f115835d6f77569addd"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/81/8139a32f93d8c8e91d6424cd36131d4bf98d57f531c018a60dc54d7be26e3d56/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "b954959572d8d0ba109da9b274d681e1a4c587068c865eea610848d842cbdcbd"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/81/8139a32f93d8c8e91d6424cd36131d4bf98d57f531c018a60dc54d7be26e3d56/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "3ec89b69072ea23336f7e28f2fdfc5a2405530947067c12fc49027f0d449406f"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T14:21:24.408329+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1082/dwi/sub-1082__dwi.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791555684407453056,
+        "dev": 16777232,
+        "ino": 9822524,
+        "mtime_ns": 1791555684407453056,
+        "size": 20755769
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 180496680,
+        "etag_opaque": "\"0c517a1711cc2e370bd89d9b95de5ddf\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "0c517a1711cc2e370bd89d9b95de5ddf",
+        "path": "derivatives/trainset/sub-1102/sh/sub-1102__dwi_sh.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "OtC4zLbWmDwLLKbpiQAG2yQtIDk0n82P",
+        "sha256": null,
+        "size_bytes": 180496680,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1102/sh/sub-1102__dwi_sh.nii.gz?versionId=OtC4zLbWmDwLLKbpiQAG2yQtIDk0n82P",
+        "subject": "sub-1102"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/8e/8e676b1033dd3028978baf2ffb985851ff45a4d4fb5c66c110adc58633e2b6a8/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "fa741a3344019894a25927b6b59920a228695ce1e6b32817c9cd70fd2587d4ef"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/8e/8e676b1033dd3028978baf2ffb985851ff45a4d4fb5c66c110adc58633e2b6a8/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "b4c35097dca202b5cc7e56808c34516d9cd3aca5c0e237193e3721fd759559af"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/8e/8e676b1033dd3028978baf2ffb985851ff45a4d4fb5c66c110adc58633e2b6a8/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "454aa157f92c1f285c36a3fd82dd9566fb037bdc7e00211b6b0cfe65789575a6"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T16:29:19.746508+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1102/sh/sub-1102__dwi_sh.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791563359746116209,
+        "dev": 16777232,
+        "ino": 9835229,
+        "mtime_ns": 1791563359746116209,
+        "size": 17812626
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_exhausted_transport_budget_extension",
+      "entry": {
+        "bytes": 42234220,
+        "etag_opaque": "\"8d8ba0f6e43daf7a1e0699455888d591\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "8d8ba0f6e43daf7a1e0699455888d591",
+        "path": "derivatives/trainset/sub-1081/tractography/sub-1081__CC_Fr_1.trk",
+        "role": "TRAIN",
+        "s3_version_id": "1rqLrV4rGsk6dcxKoPXJOVBB4MkNDV6W",
+        "sha256": null,
+        "size_bytes": 42234220,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1081/tractography/sub-1081__CC_Fr_1.trk?versionId=1rqLrV4rGsk6dcxKoPXJOVBB4MkNDV6W",
+        "subject": "sub-1081"
+      },
+      "execution_released": false,
+      "from_original_ten": true,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/92/9272b8b4fe7b6f2bce16583c0f2f25472af3b251b50cd2b763be1005d811b527/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "12603a671a6ece8c81cc967485f9eec7def29cc3abc79b36f19a6e2ec18e6ce7"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/92/9272b8b4fe7b6f2bce16583c0f2f25472af3b251b50cd2b763be1005d811b527/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "b581205046fe5f00d49c55defcdafb4e55c05d5c04b5525510d0b943414f9de2"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/92/9272b8b4fe7b6f2bce16583c0f2f25472af3b251b50cd2b763be1005d811b527/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "078aec5c1612eed511f198d149f8abb9ba08bbd58fe87a4b2c1ee7ce5807f95a"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/92/9272b8b4fe7b6f2bce16583c0f2f25472af3b251b50cd2b763be1005d811b527/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "868a76e4c835913daf5fe3990a6356f069941688dace6cb3e30ed4395565af20"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/92/9272b8b4fe7b6f2bce16583c0f2f25472af3b251b50cd2b763be1005d811b527/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "67b6b3ca6fe55cd17837e47d05c2fa5fea18a8656f3b7fb92c4ed5e092470af3"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/92/9272b8b4fe7b6f2bce16583c0f2f25472af3b251b50cd2b763be1005d811b527/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "ba7307c8f14baaab9d7c9a80193575f312d1641df35af92887f1d72a50c32a9b"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/92/9272b8b4fe7b6f2bce16583c0f2f25472af3b251b50cd2b763be1005d811b527/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "de4ee9bf6ecb00ee6e782486a8e2533df745a70553752adbbf18f1324f0deaa5"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "URLError",
+      "original_terminal_result_utc": "2026-10-09T13:24:21.250377+00:00",
+      "original_terminal_status": "transport_exhausted",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1081/tractography/sub-1081__CC_Fr_1.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791551745291314179,
+        "dev": 16777232,
+        "ino": 9821301,
+        "mtime_ns": 1791551745291314179,
+        "size": 32505856
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 22455732,
+        "etag_opaque": "\"62469a2224a31d74d08ab0a9170befbc\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "62469a2224a31d74d08ab0a9170befbc",
+        "path": "derivatives/trainset/sub-1081/tractography/sub-1081__PYT_R.trk",
+        "role": "TRAIN",
+        "s3_version_id": "NQDq_UF9Ms6nvF7xr86yUJr1WB3nakuk",
+        "sha256": null,
+        "size_bytes": 22455732,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1081/tractography/sub-1081__PYT_R.trk?versionId=NQDq_UF9Ms6nvF7xr86yUJr1WB3nakuk",
+        "subject": "sub-1081"
+      },
+      "execution_released": false,
+      "from_original_ten": true,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/96/96fc76be02bdc4caf8cfd116763f2b642bcaf496da602c1d11f47a948ff78b16/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "2b55fbd646214c748b3e519e53f813a59aec82d5ee1a7557fa0ee13a1d73f585"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/96/96fc76be02bdc4caf8cfd116763f2b642bcaf496da602c1d11f47a948ff78b16/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "1878dad8f6c1ae7ace8ebee6f30248993060299fb17a1040ef37038b58aacc4c"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/96/96fc76be02bdc4caf8cfd116763f2b642bcaf496da602c1d11f47a948ff78b16/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "fc51ed5cbfed33944b607693b228815169474a4aeed8a8d4a39ba5773cc35636"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T13:58:04.769620+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1081/tractography/sub-1081__PYT_R.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791554284768202303,
+        "dev": 16777232,
+        "ino": 9822317,
+        "mtime_ns": 1791554284768202303,
+        "size": 15544897
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 149804009,
+        "etag_opaque": "\"f45bda97d6b0f87dc08e2548701ddcb9\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "f45bda97d6b0f87dc08e2548701ddcb9",
+        "path": "derivatives/trainset/sub-1104/sh/sub-1104__dwi_sh.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "nCg3IZmZ1.gkxwOJZbu_t4NQ9unv7d2R",
+        "sha256": null,
+        "size_bytes": 149804009,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1104/sh/sub-1104__dwi_sh.nii.gz?versionId=nCg3IZmZ1.gkxwOJZbu_t4NQ9unv7d2R",
+        "subject": "sub-1104"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ac/ac9035a61e6fcba5140dcf28ac1d2506dba162bb9dd9d0a0d9029953f76460f7/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "ed04b9818eb0b0dfa37b686ed05e7e35c42790e37a070273339479cc385eaf39"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ac/ac9035a61e6fcba5140dcf28ac1d2506dba162bb9dd9d0a0d9029953f76460f7/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "8cbc9c26948cb4b1bc28690c0debb76caa9a83fe3db0a9cbd1eab568d3b6de07"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ac/ac9035a61e6fcba5140dcf28ac1d2506dba162bb9dd9d0a0d9029953f76460f7/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "2b5ab8f426e367ea165a9c5fea539a9dac6671b139fbf405495ac34e6710f5ac"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T17:50:23.816708+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1104/sh/sub-1104__dwi_sh.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791568223816128278,
+        "dev": 16777232,
+        "ino": 9836240,
+        "mtime_ns": 1791568223816128278,
+        "size": 129737990
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 807042220,
+        "etag_opaque": "\"72dabc134dc868ed5e47c0784a2b8738\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "72dabc134dc868ed5e47c0784a2b8738",
+        "path": "derivatives/trainset/sub-1102/dwi/sub-1102__dwi.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "vN8Fo4NwA39WtPhfQL_r9vcGpLKRUX8u",
+        "sha256": null,
+        "size_bytes": 807042220,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1102/dwi/sub-1102__dwi.nii.gz?versionId=vN8Fo4NwA39WtPhfQL_r9vcGpLKRUX8u",
+        "subject": "sub-1102"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ad/adb56477752789f94c217775b718c6e6ce0b2cf8ab6b894653cc0efe991b5030/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "70a54d26cebdec45628af876069031dfcf9deaad1f67f44daface196fb57f398"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ad/adb56477752789f94c217775b718c6e6ce0b2cf8ab6b894653cc0efe991b5030/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "46f52c5af72fb4537bf36d6a26d95bb0a924932cfe8dc33305c0c9927d1bb36e"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ad/adb56477752789f94c217775b718c6e6ce0b2cf8ab6b894653cc0efe991b5030/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "954f986433af4d3fc952b8b3c923e851d54d713bdd0f7c5e1a563a0d06b3b65d"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T15:56:20.850378+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1102/dwi/sub-1102__dwi.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791561380850098971,
+        "dev": 16777232,
+        "ino": 9834926,
+        "mtime_ns": 1791561380850098971,
+        "size": 44790123
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 58712916,
+        "etag_opaque": "\"da9d575de62494efc62764674e1a28af\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "da9d575de62494efc62764674e1a28af",
+        "path": "derivatives/trainset/sub-1104/tractography/sub-1104__CC_Oc.trk",
+        "role": "TRAIN",
+        "s3_version_id": "umwIS1oUesQp4PQXjrEqjjsN4p5M0Gpw",
+        "sha256": null,
+        "size_bytes": 58712916,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1104/tractography/sub-1104__CC_Oc.trk?versionId=umwIS1oUesQp4PQXjrEqjjsN4p5M0Gpw",
+        "subject": "sub-1104"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ae/aee8e266702ac3f4abb6fd5f3fbeb415a3cd82e978ec48e6b09752c14ce08f70/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "18134a6bad22f17cdbb25a36f3d3748e8548a2f5b179bb04fb7469f946119153"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ae/aee8e266702ac3f4abb6fd5f3fbeb415a3cd82e978ec48e6b09752c14ce08f70/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "758c241e3f5575643b985ba1d28c9105c9d7067245a9864edc62214b6a94ce9e"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ae/aee8e266702ac3f4abb6fd5f3fbeb415a3cd82e978ec48e6b09752c14ce08f70/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "8bd13a0a1aeb982fc898e84722a478edeb6ba89541a7f2b889a6d7a51df6bdc3"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T17:59:17.770509+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1104/tractography/sub-1104__CC_Oc.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791568757769887956,
+        "dev": 16777232,
+        "ino": 9836349,
+        "mtime_ns": 1791568757769887956,
+        "size": 34954238
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 675406240,
+        "etag_opaque": "\"46b424d0d2a071c1e7bd97207be35d2c\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "46b424d0d2a071c1e7bd97207be35d2c",
+        "path": "derivatives/trainset/sub-1105/dwi/sub-1105__dwi.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "MMRYTiGCN2nf3vu64ws7qsZzXW1.KIX3",
+        "sha256": null,
+        "size_bytes": 675406240,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1105/dwi/sub-1105__dwi.nii.gz?versionId=MMRYTiGCN2nf3vu64ws7qsZzXW1.KIX3",
+        "subject": "sub-1105"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/b2/b26a1a213f4e3d84f4cf088590b3df3f7150309e83211793a9c828168144d633/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "42805c439c8b7b81029e1f2b9dbf133035a0674cd99a1c8e5b8e8854a3c88b4f"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/b2/b26a1a213f4e3d84f4cf088590b3df3f7150309e83211793a9c828168144d633/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "95ffd30721ac6e58457b6d0b804a1ea63811eb6b5ab798e8d433ca3024334359"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/b2/b26a1a213f4e3d84f4cf088590b3df3f7150309e83211793a9c828168144d633/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "6fd1230d3d41699185d11eb92a258543647a42cb74747062220b43ba9592e1b5"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T19:00:17.691543+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1105/dwi/sub-1105__dwi.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791572417689461761,
+        "dev": 16777232,
+        "ino": 9837004,
+        "mtime_ns": 1791572417689461761,
+        "size": 413880782
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 29802892,
+        "etag_opaque": "\"9b30909ce81cd4e132823cc47f668a95\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "9b30909ce81cd4e132823cc47f668a95",
+        "path": "derivatives/trainset/sub-1109/tractography/sub-1109__PYT_R.trk",
+        "role": "TRAIN",
+        "s3_version_id": "1zPUcAZZ0zzXKjwv00rIKs6FEQFc9LOS",
+        "sha256": null,
+        "size_bytes": 29802892,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/tractography/sub-1109__PYT_R.trk?versionId=1zPUcAZZ0zzXKjwv00rIKs6FEQFc9LOS",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/b3/b3dd1972d93367e91b8cc59720d2820d4c0fd3aeb54eca55d44e20aaf1b9919b/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "d91f1fd546385ade8b55c477ed7136eb0e223cffd8d6d09b99f93d4803e3500f"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/b3/b3dd1972d93367e91b8cc59720d2820d4c0fd3aeb54eca55d44e20aaf1b9919b/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "b1d8dd0e1cfe2d67b31ed65605cdca5a27f9270297c179d63eaae52a9327208f"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/b3/b3dd1972d93367e91b8cc59720d2820d4c0fd3aeb54eca55d44e20aaf1b9919b/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "0f4b2533572c2a02f0a914ff33d554039ce236926037d6f680fc395b1821d3ae"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T22:55:38.654746+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/tractography/sub-1109__PYT_R.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791586538653067425,
+        "dev": 16777232,
+        "ino": 9842048,
+        "mtime_ns": 1791586538653067425,
+        "size": 18669195
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 41740416,
+        "etag_opaque": "\"bb0155417f69c1d273dcb9a8751e6002\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "bb0155417f69c1d273dcb9a8751e6002",
+        "path": "derivatives/trainset/sub-1105/tractography/sub-1105__CC_Fr_2.trk",
+        "role": "TRAIN",
+        "s3_version_id": "Bi.Hq0NLBY5xbFC7UN_E0YXY1XrpCddp",
+        "sha256": null,
+        "size_bytes": 41740416,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1105/tractography/sub-1105__CC_Fr_2.trk?versionId=Bi.Hq0NLBY5xbFC7UN_E0YXY1XrpCddp",
+        "subject": "sub-1105"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ba/ba45cc5cd872420e480479780f4436dac42515b805dfd55ce4b58bdb54652944/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "6cd4c52570d2d5f04e5ca699a61bb84bbb9bce99376bbb47653c8cb72cbc1856"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ba/ba45cc5cd872420e480479780f4436dac42515b805dfd55ce4b58bdb54652944/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "8f931c93d9b34b9e053933906e44e701e57b801259262959b3aa308b39f47757"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ba/ba45cc5cd872420e480479780f4436dac42515b805dfd55ce4b58bdb54652944/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "36042d912296cefbf1098226b100881efd889f03b25601bba6c6ccd8d35e9172"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T19:17:55.692069+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1105/tractography/sub-1105__CC_Fr_2.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791573475691330511,
+        "dev": 16777232,
+        "ino": 9837255,
+        "mtime_ns": 1791573475691330511,
+        "size": 40271076
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 164927319,
+        "etag_opaque": "\"4accc98e4a82b2a01c3956e5ef5ad33a\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "4accc98e4a82b2a01c3956e5ef5ad33a",
+        "path": "derivatives/trainset/sub-1082/sh/sub-1082__dwi_sh.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "py9gt.sGYtaxo_wwSwE39yIiVnNhwTJF",
+        "sha256": null,
+        "size_bytes": 164927319,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1082/sh/sub-1082__dwi_sh.nii.gz?versionId=py9gt.sGYtaxo_wwSwE39yIiVnNhwTJF",
+        "subject": "sub-1082"
+      },
+      "execution_released": false,
+      "from_original_ten": true,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/be/be86c7a1c27a4bc13397b40b3b2ee603969f95d4e84fab9ff7e2ca66ea81c73c/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "6e0ca02467bf340050af4e2ffe1cbc39428eda6bda117b9dd1788dfe0299f10c"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/be/be86c7a1c27a4bc13397b40b3b2ee603969f95d4e84fab9ff7e2ca66ea81c73c/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "d04a457bc95177fb155570846dca88ef32013dc43e4fdc87e54ea3835c2319de"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/be/be86c7a1c27a4bc13397b40b3b2ee603969f95d4e84fab9ff7e2ca66ea81c73c/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "1fcf9111777b3858b6dcce7e755b061ab2b43a79e28e271a42677a9567b00a86"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T14:38:11.339381+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1082/sh/sub-1082__dwi_sh.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791556691338521918,
+        "dev": 16777232,
+        "ino": 9822796,
+        "mtime_ns": 1791556691338521918,
+        "size": 75031631
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 251893695,
+        "etag_opaque": "\"faeb3da45fb844aa65b16e73b3eed35b\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "faeb3da45fb844aa65b16e73b3eed35b",
+        "path": "derivatives/trainset/sub-1110/fodf/sub-1110__fodf.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "ibN84Dnxe7YFJi2I7E1lx3P5WIWiUjoq",
+        "sha256": null,
+        "size_bytes": 251893695,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1110/fodf/sub-1110__fodf.nii.gz?versionId=ibN84Dnxe7YFJi2I7E1lx3P5WIWiUjoq",
+        "subject": "sub-1110"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/c5/c577e9943f48977edfff9cf73b87b24c974e5fd8307c8a4982eb93eb6d1d449f/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "0416573f02356d54c9ce91a031c223b06288276a3d36f1eb0cb85228511012d1"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/c5/c577e9943f48977edfff9cf73b87b24c974e5fd8307c8a4982eb93eb6d1d449f/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "59f744c10e7a739764510caca49049343b1748ba32248fff5afd6ef319fbc161"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/c5/c577e9943f48977edfff9cf73b87b24c974e5fd8307c8a4982eb93eb6d1d449f/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "1c552fbaae741f084f81bd46b11aff0153388a61b383c2b2ab596f5dfa488f11"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T23:20:48.720653+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1110/fodf/sub-1110__fodf.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791588048720215555,
+        "dev": 16777232,
+        "ino": 9842311,
+        "mtime_ns": 1791588048720215555,
+        "size": 198967427
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_exhausted_transport_budget_extension",
+      "entry": {
+        "bytes": 246514315,
+        "etag_opaque": "\"0ce21123868bf9247c9ce6450c08d91f\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "0ce21123868bf9247c9ce6450c08d91f",
+        "path": "derivatives/trainset/sub-1109/fodf/sub-1109__fodf.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "1jPQD6Cqd28J4fVKabkOYKYTLjoODZTW",
+        "sha256": null,
+        "size_bytes": 246514315,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/fodf/sub-1109__fodf.nii.gz?versionId=1jPQD6Cqd28J4fVKabkOYKYTLjoODZTW",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/c7/c70af84fa1ec09b9df0c6de56af4be6efb8eb50950d948b675689a1f859b6ded/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "6e93177d46d6b9f505092ea7aeea03cd7a99bf9c6ef311b239546a6274cb51dd"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/c7/c70af84fa1ec09b9df0c6de56af4be6efb8eb50950d948b675689a1f859b6ded/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "52088b6c3bac11f2de65b54699dc319a46382baf05fc51405adf12535a3d9d57"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/c7/c70af84fa1ec09b9df0c6de56af4be6efb8eb50950d948b675689a1f859b6ded/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "19f4b79b7aaa489cefca190d65041f8b7cb9cd5918a752f89bdbfcb3288a61ec"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/c7/c70af84fa1ec09b9df0c6de56af4be6efb8eb50950d948b675689a1f859b6ded/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "9ef9a8a5716278cde06d98b1a0bc06d43ccf1846259c503ced33b01ca5a1e002"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/c7/c70af84fa1ec09b9df0c6de56af4be6efb8eb50950d948b675689a1f859b6ded/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "573965b912b5a01222fc108d4f1bf6d2e72002e35c47035549146b9cdd8fd192"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/c7/c70af84fa1ec09b9df0c6de56af4be6efb8eb50950d948b675689a1f859b6ded/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "3ed4655a4412b0badcfdd29be9e282933a51027a8f4496ceac1de4917b2f9017"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/c7/c70af84fa1ec09b9df0c6de56af4be6efb8eb50950d948b675689a1f859b6ded/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "2fee74d65e6a8e6d689476cab764f97f4d47aeb2f72747003c415fc196942deb"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/c7/c70af84fa1ec09b9df0c6de56af4be6efb8eb50950d948b675689a1f859b6ded/03-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "95010e963f365acb7a7fbc397ec40f50c3bab69b8945f577126e3af672c96ea8"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "TimeoutError",
+      "original_terminal_result_utc": "2026-10-09T20:47:13.604381+00:00",
+      "original_terminal_status": "transport_exhausted",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/fodf/sub-1109__fodf.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791576075116023569,
+        "dev": 16777232,
+        "ino": 9839259,
+        "mtime_ns": 1791576075116023569,
+        "size": 113246208
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_exhausted_transport_budget_extension",
+      "entry": {
+        "bytes": 144752,
+        "etag_opaque": "\"f6636ef15bddb46730712852fca31a2c\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "f6636ef15bddb46730712852fca31a2c",
+        "path": "derivatives/trainset/sub-1109/mask/sub-1109__mask_csf.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "sDRkl6EoTyWaPCsrSgtJpmixMgwHvdgo",
+        "sha256": null,
+        "size_bytes": 144752,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/mask/sub-1109__mask_csf.nii.gz?versionId=sDRkl6EoTyWaPCsrSgtJpmixMgwHvdgo",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/cc/cc4dec14d607f84bc55dccd510bf1aab066ec79a8ca9c7c013335ba1883a7155/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "f09749b622be623961527adab57bcdd4bb55ef7f16fc046fdff5b46f15a0c1ca"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/cc/cc4dec14d607f84bc55dccd510bf1aab066ec79a8ca9c7c013335ba1883a7155/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "05916160b8a23cd128803a783639873147e99a1be7c6c7e4acac55110772dac8"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/cc/cc4dec14d607f84bc55dccd510bf1aab066ec79a8ca9c7c013335ba1883a7155/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "6e96b495ae33338c8905c1be55eca15f578fee5bf9a79d4e28ce674e773cce7c"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/cc/cc4dec14d607f84bc55dccd510bf1aab066ec79a8ca9c7c013335ba1883a7155/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "9e060cb407c18df2a5dacda0160c1bdd87f61f7b6c5ad365d1b617dfd23d3a31"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/cc/cc4dec14d607f84bc55dccd510bf1aab066ec79a8ca9c7c013335ba1883a7155/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "d943b04a657342833af6a1c1407ffa93f8b2f3e4abe8e0042a485b4d54a25633"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/cc/cc4dec14d607f84bc55dccd510bf1aab066ec79a8ca9c7c013335ba1883a7155/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "8c9217f2e6ceffc3f11eadaad267a0a021b65c9318424cc12c7ccd87acaae43e"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "URLError",
+      "original_terminal_result_utc": "2026-10-09T21:01:52.167188+00:00",
+      "original_terminal_status": "transport_exhausted",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/mask/sub-1109__mask_csf.nii.gz.partial",
+      "partial_stat": null,
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 14022976,
+        "etag_opaque": "\"b48a565784b7fddf3447012f9221c98a\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "b48a565784b7fddf3447012f9221c98a",
+        "path": "derivatives/trainset/sub-1109/tractography/sub-1109__SLF_R.trk",
+        "role": "TRAIN",
+        "s3_version_id": "CRGrYz0GGYaU9uqSjjUn.PgM6fz_IXlb",
+        "sha256": null,
+        "size_bytes": 14022976,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/tractography/sub-1109__SLF_R.trk?versionId=CRGrYz0GGYaU9uqSjjUn.PgM6fz_IXlb",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/cf/cf298ee10b7ee227a88a74ab4b806d4633a4407aba599b3f54f42f5389d542c2/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "6639bf72e911ceee5dc9a57bbe29fb96fb8af82f87927a7e3bca673e01ee776f"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/cf/cf298ee10b7ee227a88a74ab4b806d4633a4407aba599b3f54f42f5389d542c2/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "32b1d09f8f829a713a588a81270425278703b1316360328dd53e31266848cd2f"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/cf/cf298ee10b7ee227a88a74ab4b806d4633a4407aba599b3f54f42f5389d542c2/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "01cb9714a3c5b032e25ceaccd0c0aef09028b61dbdd8bec6c5aea0e5bffc2186"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T22:55:38.655156+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/tractography/sub-1109__SLF_R.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791586538652944789,
+        "dev": 16777232,
+        "ino": 9842077,
+        "mtime_ns": 1791586538652944789,
+        "size": 8007233
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 291401858,
+        "etag_opaque": "\"85e41273db6068c891ba689ba93958dd\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "85e41273db6068c891ba689ba93958dd",
+        "path": "derivatives/trainset/sub-1102/fodf/sub-1102__fodf.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "C8ZYlAHP.Z4FlQoXpEGXgQ5WXKKYlwyA",
+        "sha256": null,
+        "size_bytes": 291401858,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1102/fodf/sub-1102__fodf.nii.gz?versionId=C8ZYlAHP.Z4FlQoXpEGXgQ5WXKKYlwyA",
+        "subject": "sub-1102"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d0/d012e8415e967c0aa3592bbafb2d4295b810d0b43c31085b5ef709c1dc996376/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "ce07dead89d451549966dcc43c2cd168882fc838a5852ba8cae3187f99b97e0c"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d0/d012e8415e967c0aa3592bbafb2d4295b810d0b43c31085b5ef709c1dc996376/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "b49bdea1635a7d6069c6465728e98e90603fb9f525b5dfb92b6533a9f5bc82b8"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d0/d012e8415e967c0aa3592bbafb2d4295b810d0b43c31085b5ef709c1dc996376/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "b8df082be0b1277b68914c3cdd6429b460ae4555b295031d8ef24c45cb266094"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T16:12:40.644966+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1102/fodf/sub-1102__fodf.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791562360644522595,
+        "dev": 16777232,
+        "ino": 9835008,
+        "mtime_ns": 1791562360644522595,
+        "size": 47845622
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_exhausted_transport_budget_extension",
+      "entry": {
+        "bytes": 46275964,
+        "etag_opaque": "\"29b133f4cb11089987d3d63ae5824d22\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "29b133f4cb11089987d3d63ae5824d22",
+        "path": "derivatives/trainset/sub-1081/tractography/sub-1081__CC_Oc.trk",
+        "role": "TRAIN",
+        "s3_version_id": "Y625CZ3Tf5DqP4ZrsNvbySei._wObSrU",
+        "sha256": null,
+        "size_bytes": 46275964,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1081/tractography/sub-1081__CC_Oc.trk?versionId=Y625CZ3Tf5DqP4ZrsNvbySei._wObSrU",
+        "subject": "sub-1081"
+      },
+      "execution_released": false,
+      "from_original_ten": true,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d2/d2191f684faf6e37e3391d30034a493576fbc9a4583e4afe37ede99e04272795/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "4ca4af632591377f85c81206af9735b79a602f7eec12b66f11565c635a472922"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d2/d2191f684faf6e37e3391d30034a493576fbc9a4583e4afe37ede99e04272795/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "896e97c550cdf85cbdbfe0bc5798b00e9b5d3eebfaf6b3fd0aa196c977c09cba"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d2/d2191f684faf6e37e3391d30034a493576fbc9a4583e4afe37ede99e04272795/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "87c83b154a9f1ffacdb198e14619e0631594ab8b9c9585ef2c2307e4dd0fc149"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d2/d2191f684faf6e37e3391d30034a493576fbc9a4583e4afe37ede99e04272795/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "7fcb9e20c32768ede13280f0964b971572b69472322f7fe0ee80d1c5111c6adb"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d2/d2191f684faf6e37e3391d30034a493576fbc9a4583e4afe37ede99e04272795/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "1eb300a72f2790c26e8b7fe20695cef41a933639e14a15967c495b95ee7fa717"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d2/d2191f684faf6e37e3391d30034a493576fbc9a4583e4afe37ede99e04272795/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "e3e8bcb11f46870db9309f9590fce0bc3864d30e15ea76a8f83fe9d54198ef37"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "URLError",
+      "original_terminal_result_utc": "2026-10-09T13:42:29.774496+00:00",
+      "original_terminal_status": "transport_exhausted",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1081/tractography/sub-1081__CC_Oc.trk.partial",
+      "partial_stat": null,
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 11741808,
+        "etag_opaque": "\"f176ec2972ae74132d8f2676b6deb426\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "f176ec2972ae74132d8f2676b6deb426",
+        "path": "derivatives/trainset/sub-1104/tractography/sub-1104__MCP.trk",
+        "role": "TRAIN",
+        "s3_version_id": "AyVmOZDggiD7p1VnjFwOUuBWenSphk9b",
+        "sha256": null,
+        "size_bytes": 11741808,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1104/tractography/sub-1104__MCP.trk?versionId=AyVmOZDggiD7p1VnjFwOUuBWenSphk9b",
+        "subject": "sub-1104"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d4/d4d58a0c33ec47aa9117610deaa052d6fa4f372b17e7f50c7e6ba1c2b84bc45b/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "342950fd8884aca4b373ca97c6a0991112c73c69c51e12f6b6cde6a03b69be2e"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d4/d4d58a0c33ec47aa9117610deaa052d6fa4f372b17e7f50c7e6ba1c2b84bc45b/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "3b874314c6ab1b092635d1571f6d5b12320b6bbe11a89701733dbcae27c316a2"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d4/d4d58a0c33ec47aa9117610deaa052d6fa4f372b17e7f50c7e6ba1c2b84bc45b/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "cecaa40ae76ebb20526bfd946f6d4d35b790ac5ba5efe354758ab8e781bc7e3c"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T18:34:00.706857+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1104/tractography/sub-1104__MCP.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791570840706342252,
+        "dev": 16777232,
+        "ino": 9836591,
+        "mtime_ns": 1791570840706342252,
+        "size": 1705537
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_exhausted_transport_budget_extension",
+      "entry": {
+        "bytes": 44826944,
+        "etag_opaque": "\"ae533205a910219d3a6a2cfad2201cfd\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "ae533205a910219d3a6a2cfad2201cfd",
+        "path": "derivatives/trainset/sub-1081/tractography/sub-1081__CC_Fr_2.trk",
+        "role": "TRAIN",
+        "s3_version_id": "gTiF6WOCI32.HRvbmkz4SwOxsQ4ilRW2",
+        "sha256": null,
+        "size_bytes": 44826944,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1081/tractography/sub-1081__CC_Fr_2.trk?versionId=gTiF6WOCI32.HRvbmkz4SwOxsQ4ilRW2",
+        "subject": "sub-1081"
+      },
+      "execution_released": false,
+      "from_original_ten": true,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d5/d517c1784ead07a430fa767320d273b7a68b207c121bda6bd06ae384006fc4c8/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "88d75e3f96e0fea4a4ad5569a6b8692779cc2798ffa712c5ec297a8d4c15b854"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d5/d517c1784ead07a430fa767320d273b7a68b207c121bda6bd06ae384006fc4c8/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "00061ea5395f10a4b8dc153a0f776a375d60e9ce8c2edaf3a353fb10ab2cb6a7"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d5/d517c1784ead07a430fa767320d273b7a68b207c121bda6bd06ae384006fc4c8/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "932eb7ab63727b4e93cd332457f65eaec0bee3fd0221d05cb0443faaa7758cbb"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d5/d517c1784ead07a430fa767320d273b7a68b207c121bda6bd06ae384006fc4c8/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "8b22d76d6fbd0e07f9e98164777ebfafc1564e7f75156f65c1d715827e0cefe3"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d5/d517c1784ead07a430fa767320d273b7a68b207c121bda6bd06ae384006fc4c8/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "c1d851d5a0340e9749e6302d082351e42ee4a274803f373f811dab2c7337244e"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/d5/d517c1784ead07a430fa767320d273b7a68b207c121bda6bd06ae384006fc4c8/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "062538e12cfee689aa1c9efa0002c0744dc6aff84e83d31aced4792a42d5778b"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "URLError",
+      "original_terminal_result_utc": "2026-10-09T13:42:29.746309+00:00",
+      "original_terminal_status": "transport_exhausted",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1081/tractography/sub-1081__CC_Fr_2.trk.partial",
+      "partial_stat": null,
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 13648164,
+        "etag_opaque": "\"93fddd1a7ae50534d6768e2a357539ab\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "93fddd1a7ae50534d6768e2a357539ab",
+        "path": "derivatives/trainset/sub-1109/tractography/sub-1109__ILF_R.trk",
+        "role": "TRAIN",
+        "s3_version_id": "wYXKU_Q_mcNXoUhfTi77_Sr9MmIAGRrL",
+        "sha256": null,
+        "size_bytes": 13648164,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/tractography/sub-1109__ILF_R.trk?versionId=wYXKU_Q_mcNXoUhfTi77_Sr9MmIAGRrL",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/e5/e5aba2efe4d36b7767e72f1c5c5a434cdd0841d8c8162e9869e681601c4fc558/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "cc8ae0834844e4b62771d82a8c04d2c52580642097ceb8ceaf79d272b487aed5"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/e5/e5aba2efe4d36b7767e72f1c5c5a434cdd0841d8c8162e9869e681601c4fc558/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "d87842dbf7640804c3e655c539642339208560dad894c584ebd4dd30527d7d63"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/e5/e5aba2efe4d36b7767e72f1c5c5a434cdd0841d8c8162e9869e681601c4fc558/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "78e65fb055e8c178a906fa66dde650ce9d53115474b1eac588408e20e04e4571"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T22:21:12.636487+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/tractography/sub-1109__ILF_R.trk.partial",
+      "partial_stat": {
+        "ctime_ns": 1791584472635911982,
+        "dev": 16777232,
+        "ino": 9841876,
+        "mtime_ns": 1791584472635911982,
+        "size": 9677377
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 152713278,
+        "etag_opaque": "\"7f4728ad4f56e7b2f3780195a9da05bb\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "7f4728ad4f56e7b2f3780195a9da05bb",
+        "path": "derivatives/trainset/sub-1109/sh/sub-1109__dwi_sh.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "FP0r8CR2IU0mPEfxXWaq_RkpXxs3sWUd",
+        "sha256": null,
+        "size_bytes": 152713278,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/sh/sub-1109__dwi_sh.nii.gz?versionId=FP0r8CR2IU0mPEfxXWaq_RkpXxs3sWUd",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/eb/eb02071c7ec3e19ad894db71ebb9c8cd13c02c845beecdebb9398d96e69595ca/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "176f2fa43ecc509204d305869ddda54e3e7a7e801daecf09c79c411b6ca62e56"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/eb/eb02071c7ec3e19ad894db71ebb9c8cd13c02c845beecdebb9398d96e69595ca/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "5723fd08f9f7b1989ba08a22f4b5af9c2f89cd3396ef70852476aed55e512d90"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/eb/eb02071c7ec3e19ad894db71ebb9c8cd13c02c845beecdebb9398d96e69595ca/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "c42827eea456b9757ea8c8ddf8c05f83bf94623c2726c7e9365b98cab349f6db"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/eb/eb02071c7ec3e19ad894db71ebb9c8cd13c02c845beecdebb9398d96e69595ca/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "90d116d74bb46ac031927633cfe1c8698aef2d8df83aeee695929161fc9270cb"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/eb/eb02071c7ec3e19ad894db71ebb9c8cd13c02c845beecdebb9398d96e69595ca/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "fd871892cb7ee4502c515bbd00e3b112d58469625d702f4040e89c1eef1e8ec1"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/eb/eb02071c7ec3e19ad894db71ebb9c8cd13c02c845beecdebb9398d96e69595ca/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "08f0d933795986d879d6322b2db11ed1b33cfaa19f5b5241ccdb72c52cbfe306"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/eb/eb02071c7ec3e19ad894db71ebb9c8cd13c02c845beecdebb9398d96e69595ca/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "d3da629db538b7667a5d1544cf9af560c80cc4cd8db5dc0dddd2ce2816694b9b"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/eb/eb02071c7ec3e19ad894db71ebb9c8cd13c02c845beecdebb9398d96e69595ca/03-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "87b44adacc51209f51e693232f11249647636a4e523abf991d4ead70d68551d0"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T21:44:40.754480+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/sh/sub-1109__dwi_sh.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791582280753981978,
+        "dev": 16777232,
+        "ino": 9840457,
+        "mtime_ns": 1791582280753981978,
+        "size": 23772867
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_exhausted_transport_budget_extension",
+      "entry": {
+        "bytes": 288708230,
+        "etag_opaque": "\"0120742d286e350e5c468fb85229a2a5\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "0120742d286e350e5c468fb85229a2a5",
+        "path": "derivatives/trainset/sub-1101/fodf/sub-1101__fodf.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "fdVfMrW4K5kn_Nhkjl0tRQhDR211B2vX",
+        "sha256": null,
+        "size_bytes": 288708230,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1101/fodf/sub-1101__fodf.nii.gz?versionId=fdVfMrW4K5kn_Nhkjl0tRQhDR211B2vX",
+        "subject": "sub-1101"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ec/ec1a639e1be4dbbd83717c6d735fde5d998ff2ae6ee2965b58e21396f2a83ffd/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "041ec8d073fc76040f461fec442c7e5199814fbec2df61f7bb6d254304be20dc"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ec/ec1a639e1be4dbbd83717c6d735fde5d998ff2ae6ee2965b58e21396f2a83ffd/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "7b192df1e4bef2f4228146100c64926fb3d82f3ebe59d5d9969b59cb11bbe84a"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ec/ec1a639e1be4dbbd83717c6d735fde5d998ff2ae6ee2965b58e21396f2a83ffd/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "33ef20f1ff0ba4cf6cce0db8df2baa34858338083e5420210eccb8c225298f8f"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ec/ec1a639e1be4dbbd83717c6d735fde5d998ff2ae6ee2965b58e21396f2a83ffd/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "65c7d1f72f6021a7218f6c791c9350693eb9efb6b53a455154a5a1ca20a4b02b"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ec/ec1a639e1be4dbbd83717c6d735fde5d998ff2ae6ee2965b58e21396f2a83ffd/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "311aa433354e656087f01dd131da7aab3519808f377c4cdcf96de1a45bc09fc2"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ec/ec1a639e1be4dbbd83717c6d735fde5d998ff2ae6ee2965b58e21396f2a83ffd/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "fbdcfa0cf3174aea359369b1531fe747308d9db267e2b00df2f63c157dba9011"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ec/ec1a639e1be4dbbd83717c6d735fde5d998ff2ae6ee2965b58e21396f2a83ffd/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "b0f88efcc690ba607692e69bbb4d4798fde0401c16ff16edf7305f97f8068f5d"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "URLError",
+      "original_terminal_result_utc": "2026-10-09T15:00:09.026273+00:00",
+      "original_terminal_status": "transport_exhausted",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1101/fodf/sub-1101__fodf.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791557844020221308,
+        "dev": 16777232,
+        "ino": 9832810,
+        "mtime_ns": 1791557844020221308,
+        "size": 269484032
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_exhausted_transport_budget_extension",
+      "entry": {
+        "bytes": 40095557,
+        "etag_opaque": "\"43c4337860623ff3dc9621fdd1d6c349\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "43c4337860623ff3dc9621fdd1d6c349",
+        "path": "derivatives/trainset/sub-1109/fodf/sub-1109__peaks.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "U7RJsRxcj9YCcZRrTgqSjb3IFGloX5L_",
+        "sha256": null,
+        "size_bytes": 40095557,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/fodf/sub-1109__peaks.nii.gz?versionId=U7RJsRxcj9YCcZRrTgqSjb3IFGloX5L_",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f0/f04a4d8e442d2cd3254aa076ae159ea1d30d046f160a2760f0d75d53d97d1096/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "e6001b57eed6770b85607715f427b6cf740eb02b8fb4323a3c31b5862abbcec4"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f0/f04a4d8e442d2cd3254aa076ae159ea1d30d046f160a2760f0d75d53d97d1096/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "d42d10b8ecdcb15602aa148484d14f42b809e68f8169054bf14668f637b59520"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f0/f04a4d8e442d2cd3254aa076ae159ea1d30d046f160a2760f0d75d53d97d1096/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "f18dfb08288777506f79f16ee89f90d7a7224f43682b194f893ce5356e45c835"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f0/f04a4d8e442d2cd3254aa076ae159ea1d30d046f160a2760f0d75d53d97d1096/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "599f782c49157e0bfd8c0c02ffd22bfb6cc23408e9c56860879f1a7fe1cc1584"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f0/f04a4d8e442d2cd3254aa076ae159ea1d30d046f160a2760f0d75d53d97d1096/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "6cd1ece9ab21e8d150b36fc9403c026175f95be55582440fb8ed8dd866b79eba"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f0/f04a4d8e442d2cd3254aa076ae159ea1d30d046f160a2760f0d75d53d97d1096/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "ccb5af0722a1c4c2b7aeefd824d18a6d723124a3de2a7706eaa18d419ae7951d"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f0/f04a4d8e442d2cd3254aa076ae159ea1d30d046f160a2760f0d75d53d97d1096/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "60df4686955ad18fa378892beb2e00e1efa09af9bb7089a83de039ca57b93d5a"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "URLError",
+      "original_terminal_result_utc": "2026-10-09T21:05:30.721252+00:00",
+      "original_terminal_status": "transport_exhausted",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/fodf/sub-1109__peaks.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791578837122229693,
+        "dev": 16777232,
+        "ino": 9840130,
+        "mtime_ns": 1791578837122229693,
+        "size": 7340032
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 818213848,
+        "etag_opaque": "\"516b812f36c933a3fa49ce32a56b3532\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "516b812f36c933a3fa49ce32a56b3532",
+        "path": "derivatives/trainset/sub-1107/dwi/sub-1107__dwi.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "MvPdVLDXoYuQ5vByodSvUniK7ROJ_u1e",
+        "sha256": null,
+        "size_bytes": 818213848,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1107/dwi/sub-1107__dwi.nii.gz?versionId=MvPdVLDXoYuQ5vByodSvUniK7ROJ_u1e",
+        "subject": "sub-1107"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f1/f1b14147e6eeb359f7ac108b63ed1ed36dbbaf16fa8527d9b6ff8629b087c4c1/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "fa6522bf4a7dde3dfa2f7ba75cad323da289156c7df5c8c3ced6ee0ac983c823"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f1/f1b14147e6eeb359f7ac108b63ed1ed36dbbaf16fa8527d9b6ff8629b087c4c1/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "ded5088cf45546d833e1bee199ebe5a986618141eadbd74956c15ee5ff527b0c"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f1/f1b14147e6eeb359f7ac108b63ed1ed36dbbaf16fa8527d9b6ff8629b087c4c1/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "2f862ff12a735b4b8b5ab8e549726fe9a0c1b2be5bb8c28a2bf79f67dd640ed7"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T20:00:43.747315+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1107/dwi/sub-1107__dwi.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791576043746130980,
+        "dev": 16777232,
+        "ino": 9838654,
+        "mtime_ns": 1791576043746130980,
+        "size": 565949582
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_worker_broken_pipe_transport_reclassification",
+      "entry": {
+        "bytes": 265565314,
+        "etag_opaque": "\"3328f988c1941cc7d73a6164451d1605\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "3328f988c1941cc7d73a6164451d1605",
+        "path": "derivatives/trainset/sub-1082/fodf/sub-1082__fodf.nii.gz",
+        "role": "TRAIN",
+        "s3_version_id": "c_hGvOr6VgTfk7uBGCJRhVivW3OHxIrL",
+        "sha256": null,
+        "size_bytes": 265565314,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1082/fodf/sub-1082__fodf.nii.gz?versionId=c_hGvOr6VgTfk7uBGCJRhVivW3OHxIrL",
+        "subject": "sub-1082"
+      },
+      "execution_released": false,
+      "from_original_ten": true,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f7/f7fd15563fdffd6bf27fe6fd0a257962149eb524c3949f9e0ced488b901fab9f/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "cac4a212c6d86e7ebdc095cc3e1c565b3b8853c16f43121f007f918143fcbdc7"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f7/f7fd15563fdffd6bf27fe6fd0a257962149eb524c3949f9e0ced488b901fab9f/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "f39f38c4431010c4e969442e38b48eef0825cbac4dc36ff0d0f2e7e353578e71"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f7/f7fd15563fdffd6bf27fe6fd0a257962149eb524c3949f9e0ced488b901fab9f/01-20261009T094645035821Z-90fc2160-http.json",
+          "sha256": "9a0c2260557ef7d2649a415ef5f83d31a1be04b1858a529c2267e82fd690ba4a"
+        }
+      ],
+      "original_attempts_used": 1,
+      "original_error_type": "BrokenPipeError",
+      "original_terminal_result_utc": "2026-10-09T14:21:24.409130+00:00",
+      "original_terminal_status": "integrity_or_scope_refusal",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1082/fodf/sub-1082__fodf.nii.gz.partial",
+      "partial_stat": {
+        "ctime_ns": 1791555684407399493,
+        "dev": 16777232,
+        "ino": 9822528,
+        "mtime_ns": 1791555684407399493,
+        "size": 2775423
+      },
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 2
+    },
+    {
+      "classification": "proposed_exhausted_transport_budget_extension",
+      "entry": {
+        "bytes": 9085284,
+        "etag_opaque": "\"90c1afb1e51e6387810416cc41e17d94\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "90c1afb1e51e6387810416cc41e17d94",
+        "path": "derivatives/trainset/sub-1101/tractography/sub-1101__AF_R.trk",
+        "role": "TRAIN",
+        "s3_version_id": "Y55GoUv.YctMqGjts0pK9LHHKz9AtKEK",
+        "sha256": null,
+        "size_bytes": 9085284,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1101/tractography/sub-1101__AF_R.trk?versionId=Y55GoUv.YctMqGjts0pK9LHHKz9AtKEK",
+        "subject": "sub-1101"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f8/f8cee59dc3b41d0b4cf41e1d2ca2549705aab5b863db33909dbb6802d614f61c/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "41edb07b6d886184d2fec5fe44bad6ac160ac6ad76da886dddd70819edf487f4"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f8/f8cee59dc3b41d0b4cf41e1d2ca2549705aab5b863db33909dbb6802d614f61c/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "7c11245b79443fcb3e2f6ef8d9596a9f4435412f20a495f858549987b6e66ac7"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f8/f8cee59dc3b41d0b4cf41e1d2ca2549705aab5b863db33909dbb6802d614f61c/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "cddfd0a484e1b600ed0dd720d6dbb40620017fc26a85e81ca07346c454294810"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f8/f8cee59dc3b41d0b4cf41e1d2ca2549705aab5b863db33909dbb6802d614f61c/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "846e376bc7a94c52eaefbeb3a928c65312f49a16d8e180adebed6fc4ba919ee5"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f8/f8cee59dc3b41d0b4cf41e1d2ca2549705aab5b863db33909dbb6802d614f61c/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "5814620ee6bc82fa288dd879ad2ab3bb9bb11499c1e299d9ce524868f87f733c"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/f8/f8cee59dc3b41d0b4cf41e1d2ca2549705aab5b863db33909dbb6802d614f61c/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "4aa48bb47eefd26b7049618811b983b0ebd55db3ad7e0c694923e7ebe1817aa5"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "URLError",
+      "original_terminal_result_utc": "2026-10-09T15:22:26.632581+00:00",
+      "original_terminal_status": "transport_exhausted",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1101/tractography/sub-1101__AF_R.trk.partial",
+      "partial_stat": null,
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    },
+    {
+      "classification": "proposed_exhausted_transport_budget_extension",
+      "entry": {
+        "bytes": 35257128,
+        "etag_opaque": "\"2bf4019244cfc0e920c450625726b608\"",
+        "expected_git_blob_sha1": null,
+        "expected_md5": "2bf4019244cfc0e920c450625726b608",
+        "path": "derivatives/trainset/sub-1109/tractography/sub-1109__AF_R.trk",
+        "role": "TRAIN",
+        "s3_version_id": "Pykj4J2Li.VihGzwqT0cCEFHfI7Yf78w",
+        "sha256": null,
+        "size_bytes": 35257128,
+        "source_url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1109/tractography/sub-1109__AF_R.trk?versionId=Pykj4J2Li.VihGzwqT0cCEFHfI7Yf78w",
+        "subject": "sub-1109"
+      },
+      "execution_released": false,
+      "from_original_ten": false,
+      "history_records": [
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ff/ff37f0013e5b81164e208d3ab4ae7f26c02af07b6bfa77705aa5977c63d77ab1/01-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "35ab604ef21fe8e4a61e59dd1ebdf2ca97dc443390522c07eb3880e3b310eea2"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ff/ff37f0013e5b81164e208d3ab4ae7f26c02af07b6bfa77705aa5977c63d77ab1/01-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "c98ceaa9ecee34420a7c0c853f988a9797d878b726bc64de7dcc1ae6af951702"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ff/ff37f0013e5b81164e208d3ab4ae7f26c02af07b6bfa77705aa5977c63d77ab1/02-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "060515d9037e72763bfca14a7e57c761d43881e7976b467e7ba821eb790f2249"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ff/ff37f0013e5b81164e208d3ab4ae7f26c02af07b6bfa77705aa5977c63d77ab1/02-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "b58b3dbf43279d5faec1c35b40d9879e4d2048bb1560e072a1ccd4c20d6b012a"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ff/ff37f0013e5b81164e208d3ab4ae7f26c02af07b6bfa77705aa5977c63d77ab1/03-20261009T094645035821Z-90fc2160-intent.json",
+          "sha256": "e3516a96b08d26dceadb2ade565567d12927d88a5a1a57173743f26b57f35940"
+        },
+        {
+          "path": "data/acquisition/tractoinferno-train-v1/attempts/ff/ff37f0013e5b81164e208d3ab4ae7f26c02af07b6bfa77705aa5977c63d77ab1/03-20261009T094645035821Z-90fc2160-result.json",
+          "sha256": "3d394562a7b382a09b970604c59ca2eeaae2b6b43f767f8334ce33981f9ea993"
+        }
+      ],
+      "original_attempts_used": 3,
+      "original_error_type": "URLError",
+      "original_terminal_result_utc": "2026-10-09T21:38:42.078629+00:00",
+      "original_terminal_status": "transport_exhausted",
+      "orphan_or_active_intents": [],
+      "partial_path": "data/acquisition/tractoinferno-train-v1/verified/derivatives/trainset/sub-1109/tractography/sub-1109__AF_R.trk.partial",
+      "partial_stat": null,
+      "proposed_additional_payload_attempts": 1,
+      "proposed_total_attempt_ceiling_including_history": 4
+    }
+  ],
+  "original_declaration_sha256": "98c9f4bc797aecfc36d2857b98435016162c243e5c35eef4e08d99ed0ebb1f57",
+  "original_pgid": 92434,
+  "original_pid": 92434,
+  "original_run_id": "20261009T094645035821Z-90fc2160",
+  "original_runner_sha256": "e1db984939c5b342b754650e7f42b7df57d6c1993d2ffb8add36da373d58b5bc",
+  "original_session_id": 35269,
+  "original_ten_audit_manifest_sha256": "ddb46f782b416d461c7a0713d4d8693d2164a010816ac411e6d0221e4a12df12",
+  "original_ten_histories_preserved": true,
+  "payload_bytes_read": 0,
+  "prepared_utc": "2026-10-09T23:57:42.802022+00:00",
+  "preserved_partial_bytes": 3351836181,
+  "remaining_queue_independence": "This proposal does not alter or pause the active iterator. Recovery is queued behind the existing exclusive queue lock; no concurrent request for any listed object is permitted.",
+  "required_adapter_delta": [
+    "Journal generic opener failures with error type and phase without inventing HTTP status.",
+    "Record traceback and phase (open/read/write/verify/journal/log). BrokenPipe in HTTP open/read may be transport; logger BrokenPipe must disable optional console output without creating an object failure. Ordinary filesystem or checksum/source-identity failures remain nonretryable.",
+    "Use reviewed separate recovery scope/history extension rather than altering the old attempt counters or original runner.",
+    "Check-only refuses while original process/queue remains live. No live-source change."
+  ],
+  "schema": "tractoinferno-narrow-transport-recovery-proposal-v1",
+  "scope_frozen": false,
+  "selected_expected_bytes": 8824129973,
+  "selected_files": 54,
+  "source_object_manifest_sha256": "151441d5eb6fe923ad3b1f978edf49b04843956f3209e216a95340466003a846",
+  "status_snapshot_sha256": "9a4229e5c668a5c47e0e4b8e500411dd313a98ba2786eda41a97c18e0fbcdff3",
+  "training_admitted": false
+}

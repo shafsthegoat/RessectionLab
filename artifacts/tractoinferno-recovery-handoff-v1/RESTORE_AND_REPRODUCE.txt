@@ -1,0 +1,55 @@
+TractoInferno recovery handoff candidate — reviewed source, false release
+
+This package supports versioning, independent inspection and generated-only reproduction. It is NOT a recovery launch and is NOT self-contained for execution from a fresh clone. It contains no acquisition payloads, original attempt journals, released recovery declaration, signed download URLs, credentials or archive bodies. Public versionId URLs in the immutable proposal identify published objects; they are not presigned credentials.
+
+Exact reviewed candidate
+
+Recovery runner SHA256: 2444c11e608dfa84691a9485f1e62e9e4b3454a8f6faf5d79d9d2236a3731a65.
+False prepared declaration SHA256: 32c582c845e3438e5ddf8084e4d39c894528ed4dcb37f7e16312b58ab2acaa93.
+Original 54-object proposal SHA256: c5800243aac0bf5afdfe83a1fec4a4534b66bf844a916006e0a1f3ee842ceacd.
+Independent GO: independent-review/REPORT.txt and review.json. Thirty-two authored controls and four independent controls passed. This approval concerns the frozen source and bounds; actual terminal state, locks, source responses and capacity remain runtime checks.
+
+The prepared declaration still has execution_released=false, scope_frozen=false, original_terminal=null and no selected/excluded terminal subset. dependencies/original-declaration.json is the HISTORICAL original acquisition declaration, whose true execution flag does not release recovery. Do not launch the original runner again. Its source is included only because the recovery loader reuses its unchanged contract validator.
+
+Package contents and source paths
+
+restore-map.json maps every copied byte-identical source/evidence file to its original source path and, where applicable, exact required restore path. hash-manifest.json binds every delivered file except itself. Restore locations are repository-relative. The package can be promoted under artifacts without editing the reviewed source; do not execute candidate/run-recovery.py from inside the package because its original relative directory depth is part of its path assumptions.
+
+The 10 small original source dependencies, original declaration, original runner and canonical cohort/scope bytes are included. Three larger original metadata indexes are intentionally external to keep the versionable package compact:
+
+- data/acquisition/tractoinferno-train-v1/source/git-tree-v1.1.1.json — 3,556,716 bytes; SHA47ae99bf84277fc605bffefe8d1bbbd629a4526eb1288601ee775a21648df0b5.
+- data/acquisition/tractoinferno-train-v1/source/train-exact-object-manifest.json — 12,931,337 bytes; SHA151441d5eb6fe923ad3b1f978edf49b04843956f3209e216a95340466003a846.
+- data/acquisition/tractoinferno-train-v1/source/train-source-identities.json — 5,333,039 bytes; SHA166d830213dcbe633d02fe3fb6a89e91e7827f8282623075ccfcdd1c32323315.
+
+external-required-files.json records these precise dependencies and excluded live-state requirements. They currently reside in the ignored original source cache. Copy exact retained metadata bytes only; do not refetch a current release, regenerate an index, relax source bindings, or substitute local hashes for source authority. A fresh clone lacking these files cannot run the full CLI check or recovery.
+
+Restore policy
+
+1. First verify hash-manifest.json using the small verify-package.py command below. The file hashes are pinned by the root handoff receipt; do not regenerate the manifest to bless a mismatch.
+2. Inspect restore-map.json. For each restore path, an existing file must already have the listed SHA. A missing file may be restored from the named package file in an isolated reproduction checkout. Never overwrite differing tracked or ignored state, especially in a live acquisition checkout. Canonical cohort/scope copies are duplicates of already committed manifests, not permission to change roles.
+3. For generated-only tests, restore the candidate runner/test/template, proposal/classifier, original runner and three helper source files to their exact mapped paths. Use Python 3.12 and the existing project environment if available. No dataset, original journal, terminal receipt, lock, partial, or large source index is needed by these generated tests.
+4. Full metadata-only CLI contract validation additionally requires all 13 original source files, both canonical manifests and original declaration. Restore the three external metadata files from the preserved cache and verify their listed hashes. No original queue/payload access is needed by a false-template --check-only, but it is not evidence that runtime recovery prerequisites pass.
+5. Actual recovery additionally needs the original per-run complete terminal receipt, all immutable journals referenced in the proposal, original partial files with unchanged device/inode/size/mtime/ctime, existing queue locks and enough disk. None are bundled. Moving the partials to a new filesystem changes this exact proposal's stat bindings; matching bytes alone do not authorize silent rebinding. Missing or changed history/partials require reconciliation and review. Never fabricate an original terminal receipt or create/delete locks to bypass ownership.
+
+Verification and generated-only reproduction commands
+
+Run from the repository root, replacing PACKAGE with this package's actual location (the ignored candidate path shown here). These commands do not freeze or launch recovery:
+
+build/idc-acquisition-venv/bin/python build/tractoinferno-recovery-handoff-v1/verify-package.py
+
+After restoring exact copies in an isolated checkout:
+build/idc-acquisition-venv/bin/python build/tractoinferno-recovery-preparation-v1/adapter-v1/test-generated.py
+build/idc-acquisition-venv/bin/python build/tractoinferno-recovery-independent-v1/run_review.py
+
+The generated tests create small fake data/queue fixtures under build. Run them in a scratch checkout if saved review receipts must stay byte-identical: the independent runner writes new timing receipts to its expected build folder. Keep the packaged original evidence unchanged. The independent runner installs an audit hook rejecting actual data/journal access except three source helpers, network and process signals.
+
+Full false-template check, only after all original metadata dependencies exist:
+build/idc-acquisition-venv/bin/python build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py --declaration build/tractoinferno-recovery-preparation-v1/adapter-v1/prepared-declaration.json --declaration-sha256 32c582c845e3438e5ddf8084e4d39c894528ed4dcb37f7e16312b58ab2acaa93 --check-only
+
+Root-only eventual freeze/launch
+
+The exact recipe is preserved in author-evidence/COMMANDS.txt. Do not run it now from this package. The original PID92434 must be absent, its original and predecessor locks must be free, and the complete original per-run terminal receipt must exist. The reviewed freeze step derives at most the 54 proposal objects, excludes every original success, rechecks immutable history and partial stats, and exclusively creates a separate released declaration. Execution repeats the gate and holds the locks through one-worker recovery. No new source or per-object budget is inferred from this handoff. Each eligible object has at most one separately journaled additional payload attempt; a prior result or orphan blocks automatic retry. No status observation timeout authorizes a restart.
+
+Continuity snapshot, not current readiness
+
+snapshot/ records the 2026-10-10T00:35:55.072748Z metadata/stat observation: exact original PID/PGID92434, owned session35269, 3,420 verified files /118,465,170,973 bytes; the same 15 exhausted transport and 39 historical BrokenPipe refusal records; no original terminal receipt and lock held. It is historical and cannot authorize launch. The storage snapshot leaves 188,494,730,099 bytes after estimated remaining full-queue bytes plus100GiB reserve and64GiB allowance. Recheck at execution; recovery partial bytes are already part of that queue reservation. All payloads remain unreviewed and training admission false. No originals were rehashed or decoded for this handoff.

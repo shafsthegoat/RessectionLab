@@ -1,0 +1,174 @@
+{
+  "schema": "acquisition-continuity-metadata-only-v1",
+  "recorded_utc": "2026-10-10T00:38:07.891228+00:00",
+  "snapshot": "build/tractoinferno-train-preparation-v1/status-snapshots/20261010T003555072748Z.json",
+  "snapshot_sha256": "c5035fa5e6306e6b09caa6fb0bde719c2ef04b5544480ab70e1f9ed6a5e3614e",
+  "original": {
+    "pid": 92434,
+    "pgid": 92434,
+    "owned_session_id": 35269,
+    "process_evidence": "92434 92434 Fri Oct  9 05:46:44 2026      37712 build/idc-acquisition-venv/bin/python build/tractoinferno-train-preparation-v1/run-intake.py --declaration data/acquisition/tractoinferno-train-v1/declaration.json --declaration-sha256 98c9f4bc797aecfc36d2857b98435016162c243e5c35eef4e08d99ed0ebb1f57",
+    "exact_identity_matches": true,
+    "original_queue_lock_available": false,
+    "terminal_receipt_present": false,
+    "verified_files": 3420,
+    "verified_bytes": 118465170973,
+    "latest_status_counts": {
+      "byte_verified": 3420,
+      "transport_exhausted": 15,
+      "integrity_or_scope_refusal": 39
+    },
+    "historical_status_counts": {
+      "byte_verified": 3420,
+      "transport_exhausted": 15,
+      "transport_deferred": 52,
+      "integrity_or_scope_refusal": 39
+    },
+    "partial_files": 50,
+    "partial_bytes": 3684234773,
+    "planned_files": 7622,
+    "planned_bytes": 273788367039
+  },
+  "storage": {
+    "snapshot_free_bytes": 516227350528,
+    "estimated_unwritten_full_queue_bytes": 151638961293,
+    "reserve_bytes": 107374182400,
+    "active_output_allowance_bytes": 68719476736,
+    "unallocated_headroom_after_all_reservations_bytes": 188494730099,
+    "note": "Metadata/stat snapshot, not a fixed new acquisition allocation. Recovery partials are already included; no double reservation."
+  },
+  "completed_known_queues": [
+    {
+      "scope": "btc-pat16-pat20-diffusion-v1",
+      "receipt": "data/acquisition/btc-pat16-pat20-diffusion-v1/completion.json",
+      "receipt_sha256": "e62a963c502ceb0e374945f4228ef91dc26f3fcf5b9933c976fc008476ed64b1",
+      "recorded_status": "all_bytes_verified"
+    },
+    {
+      "scope": "btc-train-diffusion-extension-v1",
+      "receipt": "data/acquisition/btc-train-diffusion-extension-v1/completion.json",
+      "receipt_sha256": "e4151bc5632806af5ae8624ab0cc97ef4f7a384c95d35180fdfcb6be8bd8581f",
+      "recorded_status": "all_bytes_verified"
+    },
+    {
+      "scope": "btc-train-restfmri-intake-v1",
+      "receipt": "data/acquisition/btc-train-restfmri-intake-v1/completion.json",
+      "receipt_sha256": "5c0c1dc1600a92541674f80867670be72201887f5f41f7dbe12bc88f7a2d131f",
+      "recorded_status": "all_bytes_verified"
+    },
+    {
+      "scope": "greiner-13946193-v1",
+      "receipt": "data/acquisition/greiner-13946193-v1/completion.json",
+      "receipt_sha256": "bbbb568411483f82e159a170ee82fd6632bb0f3fb05a0d8174e563b7e20d1e02",
+      "recorded_status": "all_bytes_verified"
+    },
+    {
+      "scope": "greiner-13960486-schema-v1",
+      "receipt": "data/acquisition/greiner-13960486-schema-v1/receipt.json",
+      "receipt_sha256": "e9dfdbd4ac50f6664792ea3ed7a5d9ecb0d803740e4674db2f3bbd9b7faf8471",
+      "recorded_status": "byte_verified_schema_review_only"
+    },
+    {
+      "scope": "ixi-t1-mra-vessel-v1",
+      "receipt": "data/acquisition/ixi-t1-mra-vessel-v1/completion.json",
+      "receipt_sha256": "ed06d6ce316b9d18d13b2ae4e9d7189cc2ec3ae4db7e30d6e8b20108a93a82a8",
+      "recorded_status": "all_bytes_verified"
+    },
+    {
+      "scope": "menichetti-mechanics-v1",
+      "receipt": "data/acquisition/menichetti-mechanics-v1/completion.json",
+      "receipt_sha256": "c8a219659c5ab68419ab448ac3431c2690de01e681a0d5c1f5b8dba6c796afc0",
+      "recorded_status": "all_bytes_verified"
+    },
+    {
+      "scope": "nfbs-originals-v1",
+      "receipt": "data/acquisition/nfbs-originals-v1/completion.json",
+      "receipt_sha256": "51649f192d24ca1f7a71b2e309fba8b18f3d30d47e1220efda6c73b586d760e3",
+      "recorded_status": "all_bytes_verified"
+    },
+    {
+      "scope": "remind-train-originals-v1",
+      "receipt": "data/acquisition/remind-train-originals-v1/completion.json",
+      "receipt_sha256": "32e319a3aafb571019ee16da1072c834015f9fdcdb97563fca4c19418f64a61d",
+      "recorded_status": "all_bytes_verified"
+    },
+    {
+      "scope": "remind-train-seg-v1",
+      "receipt": "data/acquisition/remind-train-seg-v1/completion.json",
+      "receipt_sha256": "2b3a5605be4d9f8376e92dc5cdae318077153f8352a8a699d78c8a906a9abd4f",
+      "recorded_status": "all_bytes_verified"
+    },
+    {
+      "scope": "remind001-extension-v1",
+      "receipt": "data/acquisition/remind001-extension-v1/completion.json",
+      "receipt_sha256": "a171ae0a5ded6adc27e904ea044b765d4dc7ae86e4009712d2c27d14db015af4",
+      "recorded_status": "all_bytes_verified"
+    },
+    {
+      "scope": "remind001-ultrasound-v1",
+      "receipt": "data/acquisition/remind001-ultrasound-v1/completion.json",
+      "receipt_sha256": "70715dd6fff50f2ab1a65df24c8679a704e08d5aee88d55209c979c3bafdb7a4",
+      "recorded_status": "all_bytes_verified"
+    },
+    {
+      "scope": "continuous-Lausanne-RESECT-890",
+      "receipt": "data/acquisition/continuous-source-v1/runs/20261009T045908903716Z-77a8fc86/finished.json",
+      "receipt_sha256": "03f7fba8b481d9c62db94e2225d683c6a1ac2dd1b7c3cefbefe22afd746e0609",
+      "recorded_status": "all_bytes_verified",
+      "verified_files": 890,
+      "unresolved_files": 0
+    }
+  ],
+  "recovery": {
+    "candidate_source": "build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py",
+    "candidate_sha256": "2444c11e608dfa84691a9485f1e62e9e4b3454a8f6faf5d79d9d2236a3731a65",
+    "review": "build/tractoinferno-recovery-independent-v1/review.json",
+    "review_sha256": "3ee365fcc3659a9db87b6910ea17963d24290567e10600238220a83e29d4c945",
+    "maximum_selected_files": 54,
+    "additional_attempts_per_file": 1,
+    "state": "independently_reviewed_waiting_original_terminal_and_locks",
+    "actual_recovery_launched": false
+  },
+  "known_nonoverlapping_ready_pending_queue": null,
+  "catalog_limits": [
+    {
+      "source": "UCSF-PDGM v5",
+      "reason": "Last preserved official service probe reports package1065 files_on_server=no; listing/downloadspec failed. No restored exact object/gradient route established in this metadata-only pass.",
+      "evidence": "docs/ucsf-v5-targeted-acquisition-2026-10-04.md"
+    },
+    {
+      "source": "BTC_postop",
+      "reason": "Same-ID candidate pairs documented, but explicit cross-dataset individual linkage remains unverified. No outcome payload accessed or roles changed.",
+      "evidence": "docs/btc-longitudinal-outcome-audit.md"
+    },
+    {
+      "source": "UPenn/UTSW",
+      "reason": "Existing reserved-final/external roles are preserved, not available as a new research TRAIN queue.",
+      "evidence": "manifests/cohort_registry.json; EXPERIMENT_PROTOCOL.md:185"
+    },
+    {
+      "source": "MULTIS run005 / CFB",
+      "reason": "Saved audit lacks an authenticated exact payload/checksum route; run027 is not a replacement for accepted run005. No new provider request this pass.",
+      "evidence": "docs/REAL_OBSERVATION_EXECUTION_LEDGER.md"
+    },
+    {
+      "source": "COSTA / IBSR / LPBA40 / TubeTK",
+      "reason": "Saved specific access/license/fixity gaps persist in local evidence; restricted dataset, login/license requirement or unresolved publisher release/fixity. Not rejected solely for synthetic/learned label ancestry.",
+      "evidence": "docs/critical-annotation-source-audit.md; artifacts/ibsr-source-qualification-v1/qualification.json"
+    },
+    {
+      "source": "15GB bowel dataset",
+      "reason": "Parent explicit task/role deferral remains in force."
+    }
+  ],
+  "next_actual_step": "Let the full original queue continue. Once original is terminal and locks are free, root runs the reviewed terminal-only recovery freeze/check/one-worker launch; exclude original successes. No extra nonoverlapping queue is ready to launch from the inspected current declarations.",
+  "historical_catalog_caveat": "Some earlier catalog wording prohibited synthetic or model-derived labels. Later user permission supersedes that exclusion; access/fixity/roles and uncertainty remain separate. No old label-QC dependency was imposed on acquisition.",
+  "actions": {
+    "new_network_requests": 0,
+    "new_payloads": 0,
+    "payload_bytes_opened": 0,
+    "image_decodes": 0,
+    "original_signals_or_restarts": 0,
+    "tracked_edits": 0
+  }
+}

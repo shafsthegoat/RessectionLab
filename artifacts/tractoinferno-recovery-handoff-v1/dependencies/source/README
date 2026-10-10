@@ -1,0 +1,45 @@
+# TractoInferno Machine Learning Tractography Dataset
+
+The /derivatives folder contains the pre-split training/validation/testing datasets, each containing unique subjects with the following: 
+
+- T1W image 
+- DTI metrics maps (FA/AD/MD/RD)
+- DWI image with bval/bvec 
+- fodf map + fodf peaks 
+- White matter/grey matter/csf masks
+- DWI SH map (SH of order 6 fitted to the DWI signal, using the `descoteaux07` basis: https://dipy.org/documentation/1.3.0./theory/sh_basis/)
+- Tractograms of the following delineated bundles 
+  - AF_L
+  - AF_R
+  - CC_Fr_1
+  - CC_Fr_2
+  - CC_Oc
+  - CC_Pa
+  - CC_Pr_Po
+  - CG_L
+  - CG_R
+  - FAT_L
+  - FAT_R
+  - FPT_L
+  - FPT_R
+  - IFOF_L
+  - IFOF_R
+  - ILF_L
+  - ILF_R
+  - MCP
+  - MdLF_L
+  - MdLF_R
+  - OR_ML_L
+  - OR_ML_R
+  - POPT_L
+  - POPT_R
+  - PYT_L
+  - PYT_R
+  - SLF_L
+  - SLF_R
+  - UF_L
+  - UF_R
+
+All tractograms contain compressed streamlines to reduce disk space, which means that the step size is variable. If your algorithm requires a fixed step size, you have to manually resample the streamlines, which can be done using SCILPY (https://github.com/scilus/scilpy) and the scil_resample_streamlines.py script: https://github.com/scilus/scilpy/blob/master/scripts/scil_resample_streamlines.py
+
+To evaluate a candidate tractogram, refer to: https://github.com/scil-vital/TractoInferno/

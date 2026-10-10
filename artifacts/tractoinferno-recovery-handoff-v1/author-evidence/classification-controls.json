@@ -1,0 +1,87 @@
+{
+  "schema": "tractoinferno-recovery-classification-controls-v1",
+  "status": "pass",
+  "classification_source_sha256": "d496e5a44950ccb2fbf07b8fc105eac71f8d23716e50d44455db487078d08388",
+  "original_runner_sha256": "e1db984939c5b342b754650e7f42b7df57d6c1993d2ffb8add36da373d58b5bc",
+  "cases": [
+    {
+      "case": "worker_broken_pipe_with_exact_HTTP_and_short_partial",
+      "status": "pass"
+    },
+    {
+      "case": "changed_ETag",
+      "status": "pass"
+    },
+    {
+      "case": "changed_x-amz-version-id",
+      "status": "pass"
+    },
+    {
+      "case": "changed_Content-Length",
+      "status": "pass"
+    },
+    {
+      "case": "changed_Content-Range",
+      "status": "pass"
+    },
+    {
+      "case": "changed_Content-Encoding",
+      "status": "pass"
+    },
+    {
+      "case": "active_intent_excluded",
+      "status": "pass"
+    },
+    {
+      "case": "existing_final_excluded",
+      "status": "pass"
+    },
+    {
+      "case": "nonregular_partial_excluded",
+      "status": "pass"
+    },
+    {
+      "case": "oversized_partial_excluded",
+      "status": "pass"
+    },
+    {
+      "case": "full_partial_requires_offline_verification",
+      "status": "pass"
+    },
+    {
+      "case": "missing_HTTP_stage_excluded",
+      "status": "pass"
+    },
+    {
+      "case": "prior_AcquisitionError_stays_excluded",
+      "status": "pass"
+    },
+    {
+      "case": "prior_SSLCertVerificationError_stays_excluded",
+      "status": "pass"
+    },
+    {
+      "case": "prior_URLError_stays_excluded",
+      "status": "pass"
+    },
+    {
+      "case": "explicit_transport_<urlopen error [Errno 8] nodename nor servname provided, or not known>",
+      "status": "pass"
+    },
+    {
+      "case": "explicit_transport_<urlopen error [Errno 54] Connection reset by peer>",
+      "status": "pass"
+    },
+    {
+      "case": "explicit_transport_The read operation timed out",
+      "status": "pass"
+    },
+    {
+      "case": "main_progress_logger_not_in_worker_exception_handler",
+      "status": "pass"
+    }
+  ],
+  "actual_network_requests": 0,
+  "source_payload_bytes_read": 0,
+  "boundary": "Synthetic metadata dictionaries and AST only. No new transfer budget or release follows from these tests."
+}

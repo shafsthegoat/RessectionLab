@@ -1,0 +1,137 @@
+{
+  "schema": "tractoinferno-representative-versioned-HEAD-v1",
+  "checked_utc": "2026-10-09T09:29:02.194777+00:00",
+  "exact_object_manifest_sha256": "151441d5eb6fe923ad3b1f978edf49b04843956f3209e216a95340466003a846",
+  "selection": "largest declared file in each of six format/product categories; no payload/quality selection",
+  "records": [
+    {
+      "category": "anatomy",
+      "path": "derivatives/trainset/sub-1264/anat/sub-1264__T1w.nii.gz",
+      "url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1264/anat/sub-1264__T1w.nii.gz?versionId=w37u.SeNgNWGdTB9G_pq.2SqxdHpIuoY",
+      "status": 200,
+      "headers": {
+        "x-amz-id-2": "1Qu072QxZg44BKIvJWxchWJ55djpAngjEd0dVp31DYUK8pp11ivQZLlXW9IHVda1XtSUOUita/E=",
+        "x-amz-request-id": "3G0XGY9FQ1G5QXE4",
+        "Server": "AmazonS3",
+        "Date": "Fri, 09 Oct 2026 09:29:03 GMT",
+        "Last-Modified": "Tue, 16 Aug 2022 19:28:52 GMT",
+        "ETag": "\"821e716755c42b90f51a1d3187ccfef4\"",
+        "x-amz-version-id": "w37u.SeNgNWGdTB9G_pq.2SqxdHpIuoY",
+        "Accept-Ranges": "bytes",
+        "Content-Length": "15130489",
+        "Content-Type": "application/gzip",
+        "Connection": "close"
+      },
+      "body_bytes": 0,
+      "tls_verified": true
+    },
+    {
+      "category": "dwi",
+      "path": "derivatives/trainset/sub-1125/dwi/sub-1125__dwi.nii.gz",
+      "url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1125/dwi/sub-1125__dwi.nii.gz?versionId=PgB62OQdJe_5bMpMUV9D.hLmBMK8lvnX",
+      "status": 200,
+      "headers": {
+        "x-amz-id-2": "9/gQE72d507lo+ChNY4oX5BvxyIDeeIbCwyJ+HVW27QIMLOO8HfORjhi8cnfWJku1gsZarGcDkY=",
+        "x-amz-request-id": "3G0Z61NNBQ4W0N6H",
+        "Date": "Fri, 09 Oct 2026 09:29:03 GMT",
+        "Last-Modified": "Tue, 16 Aug 2022 17:03:38 GMT",
+        "ETag": "\"db619c3f17aa68c5ae93bf8f66e5f39c\"",
+        "x-amz-version-id": "PgB62OQdJe_5bMpMUV9D.hLmBMK8lvnX",
+        "Accept-Ranges": "bytes",
+        "Content-Type": "application/gzip",
+        "Content-Length": "881776957",
+        "Server": "AmazonS3",
+        "Connection": "close"
+      },
+      "body_bytes": 0,
+      "tls_verified": true
+    },
+    {
+      "category": "tract",
+      "path": "derivatives/trainset/sub-1182/tractography/sub-1182__CC_Fr_2.trk",
+      "url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1182/tractography/sub-1182__CC_Fr_2.trk?versionId=jkfvDfU0deKQrORmc4Ds.CGTZu40idHJ",
+      "status": 200,
+      "headers": {
+        "x-amz-id-2": "DnNSKe9qG6xFUxWsAty7//v0j7mx2/ldSc2uoM04yXa0u/PKMJl5d5wVFSKTmRl8C5xlYmNaG1U=",
+        "x-amz-request-id": "3G0HKHJ19V27TR5F",
+        "Date": "Fri, 09 Oct 2026 09:29:03 GMT",
+        "Last-Modified": "Tue, 16 Aug 2022 17:40:00 GMT",
+        "ETag": "\"7b6962cd9aa4fb6f51ce5f93e9be2750\"",
+        "x-amz-version-id": "jkfvDfU0deKQrORmc4Ds.CGTZu40idHJ",
+        "Accept-Ranges": "bytes",
+        "Content-Type": "application/octet-stream",
+        "Content-Length": "177843572",
+        "Server": "AmazonS3",
+        "Connection": "close"
+      },
+      "body_bytes": 0,
+      "tls_verified": true
+    },
+    {
+      "category": "bval",
+      "path": "derivatives/trainset/sub-1098/dwi/sub-1098__dwi.bval",
+      "url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1098/dwi/sub-1098__dwi.bval?versionId=440bhmcyGDhWkebKSuRs.NXT1FOHzh6O",
+      "status": 200,
+      "headers": {
+        "x-amz-id-2": "uYARQm7XfPCuLKZTH6mEaGCEFBRYoj/iQnfKzFhkSKyC/zQh1y/oHOzitTShiGBpiaFiqlkQrLI=",
+        "x-amz-request-id": "3G0QZ51D0S1X59CC",
+        "Server": "AmazonS3",
+        "Date": "Fri, 09 Oct 2026 09:29:03 GMT",
+        "Last-Modified": "Tue, 16 Aug 2022 16:46:09 GMT",
+        "ETag": "\"5e81cfc185febb18df92fa71823fbbf9\"",
+        "x-amz-version-id": "440bhmcyGDhWkebKSuRs.NXT1FOHzh6O",
+        "Accept-Ranges": "bytes",
+        "Content-Length": "648",
+        "Content-Type": "text/plain",
+        "Connection": "close"
+      },
+      "body_bytes": 0,
+      "tls_verified": true
+    },
+    {
+      "category": "bvec",
+      "path": "derivatives/trainset/sub-1143/dwi/sub-1143__dwi.bvec",
+      "url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1143/dwi/sub-1143__dwi.bvec?versionId=tU0NCE3uZboixYTNmiZi5A8rnF39Ka43",
+      "status": 200,
+      "headers": {
+        "x-amz-id-2": "Eje8xDGS9/a121hDO9eYqOlAUmkWlmdVsIxP7pxK4UytU0druhSoic63SRQLCmPhAF5VQ3K4oi4=",
+        "x-amz-request-id": "3G0HB57EGD6T2GCK",
+        "Date": "Fri, 09 Oct 2026 09:29:03 GMT",
+        "Last-Modified": "Tue, 16 Aug 2022 17:16:00 GMT",
+        "ETag": "\"9bac87f7b736c13fadad8f671057fc5a\"",
+        "x-amz-version-id": "tU0NCE3uZboixYTNmiZi5A8rnF39Ka43",
+        "Accept-Ranges": "bytes",
+        "Content-Type": "text/plain",
+        "Content-Length": "5706",
+        "Server": "AmazonS3",
+        "Connection": "close"
+      },
+      "body_bytes": 0,
+      "tls_verified": true
+    },
+    {
+      "category": "fodf",
+      "path": "derivatives/trainset/sub-1211/fodf/sub-1211__fodf.nii.gz",
+      "url": "https://s3.amazonaws.com/openneuro.org/ds003900/derivatives/trainset/sub-1211/fodf/sub-1211__fodf.nii.gz?versionId=.JkpY95ZJNTTQfkAB1Hfl3P5efKG8UJm",
+      "status": 200,
+      "headers": {
+        "x-amz-id-2": "oT0cfRuHfuvsejnDUHHOAI+73M91fOKfsACNS9hKPI4wCt0IDLmZckGdNaPIHQ0isN7MZQnqMRU=",
+        "x-amz-request-id": "3G0Z4FK0ET874PAY",
+        "Server": "AmazonS3",
+        "Date": "Fri, 09 Oct 2026 09:29:03 GMT",
+        "Last-Modified": "Tue, 16 Aug 2022 17:56:13 GMT",
+        "ETag": "\"e84fbb89c1b8cef42293655953e9b038\"",
+        "x-amz-version-id": ".JkpY95ZJNTTQfkAB1Hfl3P5efKG8UJm",
+        "Accept-Ranges": "bytes",
+        "Content-Length": "353930332",
+        "Content-Type": "application/gzip",
+        "Connection": "close"
+      },
+      "body_bytes": 0,
+      "tls_verified": true
+    }
+  ],
+  "payload_bytes_requested": 0,
+  "status": "all_six_representative_headers_match",
+  "all_7622_objects_HEAD_probed": false
+}

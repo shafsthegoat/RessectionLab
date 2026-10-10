@@ -1,0 +1,308 @@
+{
+  "schema": "tractoinferno-recovery-exact-restore-map-v1",
+  "files": [
+    {
+      "package_path": "candidate/run-recovery.py",
+      "original_source_path": "build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py",
+      "restore_paths": [
+        "build/tractoinferno-recovery-preparation-v1/adapter-v1/run-recovery.py"
+      ],
+      "sha256": "2444c11e608dfa84691a9485f1e62e9e4b3454a8f6faf5d79d9d2236a3731a65",
+      "bytes": 23453,
+      "purpose": "exact reviewed executable/test/false template; restore at original depth before use"
+    },
+    {
+      "package_path": "candidate/test-generated.py",
+      "original_source_path": "build/tractoinferno-recovery-preparation-v1/adapter-v1/test-generated.py",
+      "restore_paths": [
+        "build/tractoinferno-recovery-preparation-v1/adapter-v1/test-generated.py"
+      ],
+      "sha256": "53e77a454e74da8ededb61d24555a4a37a11770562e886b82fb485366353a091",
+      "bytes": 15510,
+      "purpose": "exact reviewed executable/test/false template; restore at original depth before use"
+    },
+    {
+      "package_path": "candidate/prepared-declaration.json",
+      "original_source_path": "build/tractoinferno-recovery-preparation-v1/adapter-v1/prepared-declaration.json",
+      "restore_paths": [
+        "build/tractoinferno-recovery-preparation-v1/adapter-v1/prepared-declaration.json"
+      ],
+      "sha256": "32c582c845e3438e5ddf8084e4d39c894528ed4dcb37f7e16312b58ab2acaa93",
+      "bytes": 610,
+      "purpose": "exact reviewed executable/test/false template; restore at original depth before use"
+    },
+    {
+      "package_path": "author-evidence/generated-controls.json",
+      "original_source_path": "build/tractoinferno-recovery-preparation-v1/adapter-v1/generated-controls.json",
+      "restore_paths": [],
+      "sha256": "19bb3452fbbab8aaee92178f75a4e1ba8cb5293f2641bd14cafc0eb88cc1a111",
+      "bytes": 6732,
+      "purpose": "immutable authored review evidence; not runtime state"
+    },
+    {
+      "package_path": "author-evidence/candidate-preflight.json",
+      "original_source_path": "build/tractoinferno-recovery-preparation-v1/adapter-v1/candidate-preflight.json",
+      "restore_paths": [],
+      "sha256": "b2589526707c29f9b8cd9e8a4db9de2cf3170b98bfd2861ba3e0a68655a04071",
+      "bytes": 3171,
+      "purpose": "immutable authored review evidence; not runtime state"
+    },
+    {
+      "package_path": "author-evidence/REPORT.txt",
+      "original_source_path": "build/tractoinferno-recovery-preparation-v1/adapter-v1/REPORT.txt",
+      "restore_paths": [],
+      "sha256": "7a69bf94275726c0151f2b2a216abea3f2f642534377a305eb71d21304bdd83e",
+      "bytes": 6225,
+      "purpose": "immutable authored review evidence; not runtime state"
+    },
+    {
+      "package_path": "author-evidence/COMMANDS.txt",
+      "original_source_path": "build/tractoinferno-recovery-preparation-v1/adapter-v1/COMMANDS.txt",
+      "restore_paths": [],
+      "sha256": "9e952e3ae31a15e7794c8d9a9044daf95bbdf2385c2426340da2771c2e47f50d",
+      "bytes": 2668,
+      "purpose": "immutable authored review evidence; not runtime state"
+    },
+    {
+      "package_path": "author-evidence/hash-manifest.json",
+      "original_source_path": "build/tractoinferno-recovery-preparation-v1/adapter-v1/hash-manifest.json",
+      "restore_paths": [],
+      "sha256": "6638ec87562d7d7683be70d532f25f8b16989248ed31ccce23cebf599541184e",
+      "bytes": 1608,
+      "purpose": "immutable authored review evidence; not runtime state"
+    },
+    {
+      "package_path": "candidate/proposed-recovery.json",
+      "original_source_path": "build/tractoinferno-recovery-preparation-v1/proposed-recovery.json",
+      "restore_paths": [
+        "build/tractoinferno-recovery-preparation-v1/proposed-recovery.json"
+      ],
+      "sha256": "c5800243aac0bf5afdfe83a1fec4a4534b66bf844a916006e0a1f3ee842ceacd",
+      "bytes": 158791,
+      "purpose": "exact reviewed 54-object proposal/classifier; original journal bytes intentionally excluded"
+    },
+    {
+      "package_path": "candidate/classify.py",
+      "original_source_path": "build/tractoinferno-recovery-preparation-v1/classify.py",
+      "restore_paths": [
+        "build/tractoinferno-recovery-preparation-v1/classify.py"
+      ],
+      "sha256": "d496e5a44950ccb2fbf07b8fc105eac71f8d23716e50d44455db487078d08388",
+      "bytes": 2400,
+      "purpose": "exact reviewed 54-object proposal/classifier; original journal bytes intentionally excluded"
+    },
+    {
+      "package_path": "author-evidence/classification-controls.json",
+      "original_source_path": "build/tractoinferno-recovery-preparation-v1/classification-controls.json",
+      "restore_paths": [],
+      "sha256": "c850020a239790fe1d427761a8288e4f11dbff992d74fe264d7bfe49731b46f9",
+      "bytes": 2209,
+      "purpose": "historical classification controls"
+    },
+    {
+      "package_path": "author-evidence/test-classification.py",
+      "original_source_path": "build/tractoinferno-recovery-preparation-v1/test-classification.py",
+      "restore_paths": [],
+      "sha256": "5a1fbf1a91a6f001372919b0c56e8a89b94f628adadae2e7882d10188671fe39",
+      "bytes": 3808,
+      "purpose": "historical classification controls"
+    },
+    {
+      "package_path": "independent-review/REPORT.txt",
+      "original_source_path": "build/tractoinferno-recovery-independent-v1/REPORT.txt",
+      "restore_paths": [],
+      "sha256": "d005f36b7f5ddf51c4e6f3d1c9dcb2274fe4dd9e8af2a6f535a74c578d0750a2",
+      "bytes": 2689,
+      "purpose": "independent generated-only review source/evidence; preserve receipt before rerunning"
+    },
+    {
+      "package_path": "independent-review/review.json",
+      "original_source_path": "build/tractoinferno-recovery-independent-v1/review.json",
+      "restore_paths": [],
+      "sha256": "3ee365fcc3659a9db87b6910ea17963d24290567e10600238220a83e29d4c945",
+      "bytes": 2141,
+      "purpose": "independent generated-only review source/evidence; preserve receipt before rerunning"
+    },
+    {
+      "package_path": "independent-review/generated-controls.json",
+      "original_source_path": "build/tractoinferno-recovery-independent-v1/generated-controls.json",
+      "restore_paths": [],
+      "sha256": "19bb3452fbbab8aaee92178f75a4e1ba8cb5293f2641bd14cafc0eb88cc1a111",
+      "bytes": 6732,
+      "purpose": "independent generated-only review source/evidence; preserve receipt before rerunning"
+    },
+    {
+      "package_path": "independent-review/generated-tests.log",
+      "original_source_path": "build/tractoinferno-recovery-independent-v1/generated-tests.log",
+      "restore_paths": [],
+      "sha256": "ed7c8cf1d7b3e44b8cb487bdb4c263563e51c0fc862223f896434ea7cbe78a9f",
+      "bytes": 211,
+      "purpose": "independent generated-only review source/evidence; preserve receipt before rerunning"
+    },
+    {
+      "package_path": "independent-review/run_review.py",
+      "original_source_path": "build/tractoinferno-recovery-independent-v1/run_review.py",
+      "restore_paths": [
+        "build/tractoinferno-recovery-independent-v1/run_review.py"
+      ],
+      "sha256": "155b9db08028bd23af3c870cd9126d474f4558fa1bd2f871c58b66a8a9236c72",
+      "bytes": 6338,
+      "purpose": "independent generated-only review source/evidence; preserve receipt before rerunning"
+    },
+    {
+      "package_path": "dependencies/original-run-intake.py",
+      "original_source_path": "build/tractoinferno-train-preparation-v1/run-intake.py",
+      "restore_paths": [
+        "build/tractoinferno-train-preparation-v1/run-intake.py"
+      ],
+      "sha256": "e1db984939c5b342b754650e7f42b7df57d6c1993d2ffb8add36da373d58b5bc",
+      "bytes": 21030,
+      "purpose": "unchanged original load_contract source; never relaunch original runner"
+    },
+    {
+      "package_path": "dependencies/original-declaration.json",
+      "original_source_path": "data/acquisition/tractoinferno-train-v1/declaration.json",
+      "restore_paths": [
+        "data/acquisition/tractoinferno-train-v1/declaration.json"
+      ],
+      "sha256": "98c9f4bc797aecfc36d2857b98435016162c243e5c35eef4e08d99ed0ebb1f57",
+      "bytes": 3253,
+      "purpose": "historical original acquisition binding; not a recovery execution release"
+    },
+    {
+      "package_path": "dependencies/source/CHANGES",
+      "original_source_path": "data/acquisition/tractoinferno-train-v1/source/CHANGES",
+      "restore_paths": [
+        "data/acquisition/tractoinferno-train-v1/source/CHANGES"
+      ],
+      "sha256": "36304e9f92a49827180f4e8bec8346d65a362e7e4c8a60328f387bcf1e79a62a",
+      "bytes": 206,
+      "purpose": "unchanged original metadata/helper dependency"
+    },
+    {
+      "package_path": "dependencies/source/README",
+      "original_source_path": "data/acquisition/tractoinferno-train-v1/source/README",
+      "restore_paths": [
+        "data/acquisition/tractoinferno-train-v1/source/README"
+      ],
+      "sha256": "1b907a4d54aa0bee92fc54bc1b2f58b2e0cb89b53add204777ae01a2d83c8db9",
+      "bytes": 1324,
+      "purpose": "unchanged original metadata/helper dependency"
+    },
+    {
+      "package_path": "dependencies/source/acquire_btc_case.py",
+      "original_source_path": "data/acquisition/tractoinferno-train-v1/source/acquire_btc_case.py",
+      "restore_paths": [
+        "data/acquisition/tractoinferno-train-v1/source/acquire_btc_case.py"
+      ],
+      "sha256": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+      "bytes": 27807,
+      "purpose": "unchanged original metadata/helper dependency"
+    },
+    {
+      "package_path": "dependencies/source/acquire_public_case.py",
+      "original_source_path": "data/acquisition/tractoinferno-train-v1/source/acquire_public_case.py",
+      "restore_paths": [
+        "data/acquisition/tractoinferno-train-v1/source/acquire_public_case.py"
+      ],
+      "sha256": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+      "bytes": 11170,
+      "purpose": "unchanged original metadata/helper dependency"
+    },
+    {
+      "package_path": "dependencies/source/cohort.json",
+      "original_source_path": "data/acquisition/tractoinferno-train-v1/source/cohort.json",
+      "restore_paths": [
+        "data/acquisition/tractoinferno-train-v1/source/cohort.json",
+        "manifests/experiments/tractoinferno-publisher-person-splits-v1.json"
+      ],
+      "sha256": "71296e9dc5d72bd35180e346ffb1ef98c2f1abff2db016ca3d09e64880f75f30",
+      "bytes": 56916,
+      "purpose": "unchanged original metadata/helper dependency"
+    },
+    {
+      "package_path": "dependencies/source/dataset_description.json",
+      "original_source_path": "data/acquisition/tractoinferno-train-v1/source/dataset_description.json",
+      "restore_paths": [
+        "data/acquisition/tractoinferno-train-v1/source/dataset_description.json"
+      ],
+      "sha256": "4c9a06caf6e0190c30d006e218412af5748993f756955f4306d24ef51c40c682",
+      "bytes": 2428,
+      "purpose": "unchanged original metadata/helper dependency"
+    },
+    {
+      "package_path": "dependencies/source/real_intake_io.py",
+      "original_source_path": "data/acquisition/tractoinferno-train-v1/source/real_intake_io.py",
+      "restore_paths": [
+        "data/acquisition/tractoinferno-train-v1/source/real_intake_io.py"
+      ],
+      "sha256": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+      "bytes": 4305,
+      "purpose": "unchanged original metadata/helper dependency"
+    },
+    {
+      "package_path": "dependencies/source/representative-head-checks.json",
+      "original_source_path": "data/acquisition/tractoinferno-train-v1/source/representative-head-checks.json",
+      "restore_paths": [
+        "data/acquisition/tractoinferno-train-v1/source/representative-head-checks.json"
+      ],
+      "sha256": "4178bd07a247af44a88969c2b4bbdc7bd08ccb86342950c16752ebbcde9f4ba9",
+      "bytes": 6036,
+      "purpose": "unchanged original metadata/helper dependency"
+    },
+    {
+      "package_path": "dependencies/source/scope.json",
+      "original_source_path": "data/acquisition/tractoinferno-train-v1/source/scope.json",
+      "restore_paths": [
+        "data/acquisition/tractoinferno-train-v1/source/scope.json",
+        "manifests/experiments/tractoinferno-full-train-byte-intake-v1.json"
+      ],
+      "sha256": "3ae53f90fb1aceaff317ac08861808afc637dfb858f6b3feb3b3754868f51053",
+      "bytes": 6085,
+      "purpose": "unchanged original metadata/helper dependency"
+    },
+    {
+      "package_path": "dependencies/source/source-authority-audit.json",
+      "original_source_path": "data/acquisition/tractoinferno-train-v1/source/source-authority-audit.json",
+      "restore_paths": [
+        "data/acquisition/tractoinferno-train-v1/source/source-authority-audit.json"
+      ],
+      "sha256": "fb48249512e33a0371f4cb948f3f5bf969a38fe744996cb3a11413d160f2b5e5",
+      "bytes": 6148,
+      "purpose": "unchanged original metadata/helper dependency"
+    },
+    {
+      "package_path": "dependencies/original-frozen-bindings.json",
+      "original_source_path": "artifacts/tractoinferno-train-intake-preparation-v1/frozen-bindings.json",
+      "restore_paths": [],
+      "sha256": "5d9b16497446e10cafdf4f3398cfccdd29553dc51fe20b6eddb455fe13a200ca",
+      "bytes": 902,
+      "purpose": "previous tracked role/scope freeze evidence"
+    },
+    {
+      "package_path": "snapshot/RESULT.txt",
+      "original_source_path": "build/acquisition-continuity-20261010/RESULT.txt",
+      "restore_paths": [],
+      "sha256": "8863121e8a6ac25f3eefcb13e91effa58ceeab3d78086a18d17b836e5e0bf863",
+      "bytes": 1696,
+      "purpose": "historical metadata/stat continuity snapshot, not a terminal or live preflight"
+    },
+    {
+      "package_path": "snapshot/status-20261010T003555Z.json",
+      "original_source_path": "build/acquisition-continuity-20261010/status-20261010T003555Z.json",
+      "restore_paths": [],
+      "sha256": "a08d6116648f3d3146bcf4746f1f7b78681f7a85424c946f7c1dd85b4d1d2eb3",
+      "bytes": 8458,
+      "purpose": "historical metadata/stat continuity snapshot, not a terminal or live preflight"
+    },
+    {
+      "package_path": "snapshot/original-status-20261010T003555Z.json",
+      "original_source_path": "build/tractoinferno-train-preparation-v1/status-snapshots/20261010T003555072748Z.json",
+      "restore_paths": [],
+      "sha256": "c5035fa5e6306e6b09caa6fb0bde719c2ef04b5544480ab70e1f9ed6a5e3614e",
+      "bytes": 7472,
+      "purpose": "historical stat-only snapshot; payload bodies not included"
+    }
+  ],
+  "copy_policy": "Only restore missing paths. An existing path must already match the listed hash; never overwrite it. Do not restore anything into a live acquisition cache or manipulate locks/journals/partials. Root owns repository changes."
+}

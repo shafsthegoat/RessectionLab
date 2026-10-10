@@ -1,0 +1,235 @@
+{
+  "schema": "tractoinferno-live-status-v1",
+  "recorded_utc": "2026-10-10T00:35:55.072748+00:00",
+  "run_id": "20261009T094645035821Z-90fc2160",
+  "owner_agent": "/root/acquisition_continuity_audit",
+  "session_id": 35269,
+  "pid": 92434,
+  "pgid": 92434,
+  "process_alive": true,
+  "exact_process_identity_matches": true,
+  "sampled_rss_kib": 35440,
+  "verified_files": 3420,
+  "verified_bytes": 118465170973,
+  "planned_files": 7622,
+  "planned_bytes": 273788367039,
+  "planned_TRAIN_source_people": 198,
+  "latest_status_counts": {
+    "byte_verified": 3420,
+    "transport_exhausted": 15,
+    "integrity_or_scope_refusal": 39
+  },
+  "historical_result_status_counts": {
+    "byte_verified": 3420,
+    "transport_exhausted": 15,
+    "transport_deferred": 52,
+    "integrity_or_scope_refusal": 39
+  },
+  "partial_files": [
+    {
+      "path": "derivatives/trainset/sub-1082/dwi/sub-1082__dwi.nii.gz.partial",
+      "bytes_present": 20755769
+    },
+    {
+      "path": "derivatives/trainset/sub-1082/tractography/sub-1082__CC_Fr_1.trk.partial",
+      "bytes_present": 19390822
+    },
+    {
+      "path": "derivatives/trainset/sub-1082/sh/sub-1082__dwi_sh.nii.gz.partial",
+      "bytes_present": 75031631
+    },
+    {
+      "path": "derivatives/trainset/sub-1082/fodf/sub-1082__fodf.nii.gz.partial",
+      "bytes_present": 2775423
+    },
+    {
+      "path": "derivatives/trainset/sub-1133/dwi/sub-1133__dwi.nii.gz.partial",
+      "bytes_present": 174063616
+    },
+    {
+      "path": "derivatives/trainset/sub-1133/fodf/sub-1133__fodf.nii.gz.partial",
+      "bytes_present": 158334976
+    },
+    {
+      "path": "derivatives/trainset/sub-1102/dwi/sub-1102__dwi.nii.gz.partial",
+      "bytes_present": 44790123
+    },
+    {
+      "path": "derivatives/trainset/sub-1102/tractography/sub-1102__OR_ML_R.trk.partial",
+      "bytes_present": 5032514
+    },
+    {
+      "path": "derivatives/trainset/sub-1102/sh/sub-1102__dwi_sh.nii.gz.partial",
+      "bytes_present": 17812626
+    },
+    {
+      "path": "derivatives/trainset/sub-1102/fodf/sub-1102__peaks.nii.gz.partial",
+      "bytes_present": 24594756
+    },
+    {
+      "path": "derivatives/trainset/sub-1102/fodf/sub-1102__fodf.nii.gz.partial",
+      "bytes_present": 47845622
+    },
+    {
+      "path": "derivatives/trainset/sub-1105/dwi/sub-1105__dwi.nii.gz.partial",
+      "bytes_present": 413880782
+    },
+    {
+      "path": "derivatives/trainset/sub-1105/tractography/sub-1105__CC_Pr_Po.trk.partial",
+      "bytes_present": 43093569
+    },
+    {
+      "path": "derivatives/trainset/sub-1105/tractography/sub-1105__OR_ML_L.trk.partial",
+      "bytes_present": 3335162
+    },
+    {
+      "path": "derivatives/trainset/sub-1105/tractography/sub-1105__CC_Fr_2.trk.partial",
+      "bytes_present": 40271076
+    },
+    {
+      "path": "derivatives/trainset/sub-1105/sh/sub-1105__dwi_sh.nii.gz.partial",
+      "bytes_present": 76205296
+    },
+    {
+      "path": "derivatives/trainset/sub-1105/fodf/sub-1105__fodf.nii.gz.partial",
+      "bytes_present": 16022313
+    },
+    {
+      "path": "derivatives/trainset/sub-1104/dwi/sub-1104__dwi.nii.gz.partial",
+      "bytes_present": 58123872
+    },
+    {
+      "path": "derivatives/trainset/sub-1104/dti/sub-1104__ad.nii.gz.partial",
+      "bytes_present": 3414605
+    },
+    {
+      "path": "derivatives/trainset/sub-1104/tractography/sub-1104__CC_Oc.trk.partial",
+      "bytes_present": 34954238
+    },
+    {
+      "path": "derivatives/trainset/sub-1104/tractography/sub-1104__FPT_L.trk.partial",
+      "bytes_present": 15901872
+    },
+    {
+      "path": "derivatives/trainset/sub-1104/tractography/sub-1104__MCP.trk.partial",
+      "bytes_present": 1705537
+    },
+    {
+      "path": "derivatives/trainset/sub-1104/tractography/sub-1104__PYT_L.trk.partial",
+      "bytes_present": 13522674
+    },
+    {
+      "path": "derivatives/trainset/sub-1104/sh/sub-1104__dwi_sh.nii.gz.partial",
+      "bytes_present": 129737990
+    },
+    {
+      "path": "derivatives/trainset/sub-1110/fodf/sub-1110__fodf.nii.gz.partial",
+      "bytes_present": 198967427
+    },
+    {
+      "path": "derivatives/trainset/sub-1110/fodf/sub-1110__peaks.nii.gz.partial",
+      "bytes_present": 43044052
+    },
+    {
+      "path": "derivatives/trainset/sub-1081/tractography/sub-1081__SLF_R.trk.partial",
+      "bytes_present": 7003713
+    },
+    {
+      "path": "derivatives/trainset/sub-1081/tractography/sub-1081__PYT_R.trk.partial",
+      "bytes_present": 15544897
+    },
+    {
+      "path": "derivatives/trainset/sub-1081/tractography/sub-1081__CC_Fr_1.trk.partial",
+      "bytes_present": 32505856
+    },
+    {
+      "path": "derivatives/trainset/sub-1081/sh/sub-1081__dwi_sh.nii.gz.partial",
+      "bytes_present": 91226112
+    },
+    {
+      "path": "derivatives/trainset/sub-1101/dwi/sub-1101__dwi.nii.gz.partial",
+      "bytes_present": 642777088
+    },
+    {
+      "path": "derivatives/trainset/sub-1101/tractography/sub-1101__PYT_R.trk.partial",
+      "bytes_present": 28909589
+    },
+    {
+      "path": "derivatives/trainset/sub-1101/sh/sub-1101__dwi_sh.nii.gz.partial",
+      "bytes_present": 0
+    },
+    {
+      "path": "derivatives/trainset/sub-1101/fodf/sub-1101__peaks.nii.gz.partial",
+      "bytes_present": 2097152
+    },
+    {
+      "path": "derivatives/trainset/sub-1101/fodf/sub-1101__fodf.nii.gz.partial",
+      "bytes_present": 269484032
+    },
+    {
+      "path": "derivatives/trainset/sub-1107/dwi/sub-1107__dwi.nii.gz.partial",
+      "bytes_present": 565949582
+    },
+    {
+      "path": "derivatives/trainset/sub-1107/sh/sub-1107__dwi_sh.nii.gz.partial",
+      "bytes_present": 46399234
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/dwi/sub-1109__dwi.nii.gz.partial",
+      "bytes_present": 59768832
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__PYT_R.trk.partial",
+      "bytes_present": 18669195
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__MCP.trk.partial",
+      "bytes_present": 2280002
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__ILF_R.trk.partial",
+      "bytes_present": 9677377
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__SLF_R.trk.partial",
+      "bytes_present": 8007233
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__CC_Fr_1.trk.partial",
+      "bytes_present": 2854465
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__PYT_L.trk.partial",
+      "bytes_present": 1792577
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__POPT_R.trk.partial",
+      "bytes_present": 2611868
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__CC_Fr_2.trk.partial",
+      "bytes_present": 22256570
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/tractography/sub-1109__CC_Pa.trk.partial",
+      "bytes_present": 27451949
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/sh/sub-1109__dwi_sh.nii.gz.partial",
+      "bytes_present": 23772867
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/fodf/sub-1109__peaks.nii.gz.partial",
+      "bytes_present": 7340032
+    },
+    {
+      "path": "derivatives/trainset/sub-1109/fodf/sub-1109__fodf.nii.gz.partial",
+      "bytes_present": 113246208
+    }
+  ],
+  "terminal_status": null,
+  "terminal_receipt_sha256": null,
+  "free_bytes": 516227350528,
+  "all_payloads_unreviewed": true,
+  "payload_bytes_opened_by_status_tool": 0
+}

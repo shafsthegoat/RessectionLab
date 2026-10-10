@@ -1,0 +1,14 @@
+GO for the frozen recovery adapter; actual execution remains dependent on the original queue becoming terminal and the separate terminal-bound release.
+
+Reviewed source SHA-256: 2444c11e608dfa84691a9485f1e62e9e4b3454a8f6faf5d79d9d2236a3731a65.
+Prepared declaration SHA-256: 32c582c845e3438e5ddf8084e4d39c894528ed4dcb37f7e16312b58ab2acaa93.
+
+32 author-generated controls and four independent controls passed in 0.659 seconds. Exact candidate, test, declaration, classifier, proposal, original runner and three reused helper source hashes were unchanged. The review accessed only code, saved preparation metadata and generated fixture files; no actual network request, dataset/original-journal read or original-process signal occurred.
+
+The original PID must be absent. Original and predecessor queue locks remain exclusively held for the entire serial recovery, alongside its own lock. The complete 7,622-row terminal receipt is bound; original successes are excluded, selected old history hashes/counts and partial stats are rechecked, and original attempt/result records are not rewritten. Existing recovery results or orphan journals never receive another request, so restarts cannot reset the one-additional-attempt limit.
+
+Exact versioned URL, ETag, version, length, encoding and range are checked before payload writes. Ignored Range is refused before the reused helper could truncate a retained partial. Verified TLS and redirect refusal remain enabled. Size, MD5, applicable Git-blob hash and local SHA-256 support publication. Remaining original-queue bytes plus 100 GiB reserve and 64 GiB output allowance are checked, with one worker. Fresh TLS/integrity/filesystem failures remain non-transient and closed; primary filesystem errors retain their classification even if response close also fails. Optional progress-output BrokenPipe is separately recorded without consuming an object attempt.
+
+Historical limitation: the 39 explicitly selected worker BrokenPipe records have no stack traces. The original progress logger is outside the worker exception handler; valid response identity plus short regular partials support the authorized narrow reclassification. They cannot prove every prior error was a network fault. Known historical TLS/checksum/other errors are excluded, and full/changed partials or changed histories require reconciliation. This GO does not erase prior failure labels, admit payloads for training, or authorize a second recovery attempt.
+
+No source repair requested. Exact source must stay frozen; actual terminal receipt, final exclusion list, locks, free space and source responses are runtime prerequisites, not established by these generated controls.
