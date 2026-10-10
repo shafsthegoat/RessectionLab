@@ -1,0 +1,11 @@
+Source-only candidate, no actual conversion release or execution.
+
+Adds explicit crop-mr-domains phase for TRAIN002/015/018/045 public triples only. Original crop/crop-mr function and original results remain unchanged. The new grid covers both public annotation source-domain boxes on native MRI sampling, with one native-cell halo for the existing bounded affine roundoff. It checks every source grid centre is inside acquired MRI and the resulting crop, refuses extrapolation or non-negligible shear, retains the 32-million-voxel cap, and reuses exact reader/byte/sample/resampling functions.
+
+The cerebrum domain mask is saved even where coverage is incomplete. Separate target counts distinguish known support-positive, known source-label-zero, and unknown source-domain cells. Neither known label zero nor unknown zero is physical empty. No mask filling, union occupancy, repaired labels, registration or MRI interpolation occurs. New reports explicitly say full_coverage_factory_compatible=false. Do not pass these outputs to the existing factory/auditor that requires support_domain.all(); a separately reviewed domain-aware task contract is needed. There is no public-manifest creator here.
+
+This recovers source-grid extent, not anatomy truth or exact NN preservation of subvoxel positives. New conversion must recount zero source-positive crop losses and retain native-versus-resampled counts/volumes. Source-label accuracy, unknown tissue/material and missing critical anatomy remain unresolved. The target is supplied whole tumor, not prescribed resection.
+
+Current MRI crops remain the baseline.002/045 stay held for full-target use.015/018 have zero target-centre crop loss in the existing crop and may support a separately qualified region task; their source support crop losses and all four planned people remain in the denominator.
+
+Review source.diff, source-delta.json, test_generated.py and four-case-geometry-proposal.json. Eight tiny generated tests pass; only geometry arithmetic was evaluated on saved header JSON, never arrays/DICOM. No new launcher, new images, models or native solve were run. Future root dispatch must bind exact candidate/source/case/header hashes and fresh output paths; use the established owned resource monitor. Old saved-array audit assumes full support-domain coverage and must not be applied unchanged.

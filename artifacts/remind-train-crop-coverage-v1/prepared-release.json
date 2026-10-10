@@ -1,0 +1,30 @@
+{
+  "schema": "remind-public-TRAIN-next-four-QC-release-v1",
+  "execution_released": false,
+  "source_index": {
+    "path": "build/remind-train-public-qc-preparation-v1/source-index.json",
+    "bytes": 4306,
+    "sha256": "1c75e63b2f845f8890bbcf05871f81f4c62be35d5fd5fac1dd91d19f7e8f1a7e"
+  },
+  "public_index": {
+    "path": "build/remind-train-public-qc-preparation-v1/public-train-index.json",
+    "bytes": 4700,
+    "sha256": "8b9263a99e9e8a05b26351979db00b76f68ec8025c8215e4a252e5432006abb6"
+  },
+  "subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "caps": {
+    "seconds_per_case": 300,
+    "total_seconds": 1230,
+    "sampled_rss_bytes": 3221225472,
+    "output_bytes_per_case": 268435456,
+    "log_bytes_per_phase": 4194304,
+    "threads": 1,
+    "automatic_retry": false
+  },
+  "scope": "Public source geometry/byte/sample conversion only; no policy/model/native solve, private labels or training admission; intended-use qualification separate."
+}

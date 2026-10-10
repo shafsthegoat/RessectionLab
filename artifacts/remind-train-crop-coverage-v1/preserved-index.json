@@ -1,0 +1,210 @@
+{
+  "files": [
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/metadata-preservation-v1/REPORT.txt",
+      "preserved": "metadata-preservation-v1/REPORT.txt",
+      "bytes": 3150,
+      "sha256": "b07efdcfea3e3002fa12fe975e9015d1d33df5745a04af1f521b42b88938bdda"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/metadata-preservation-v1/summary.json",
+      "preserved": "metadata-preservation-v1/summary.json",
+      "bytes": 19662,
+      "sha256": "ba953ba8966083660b5fa09058d2644afee5bae183bac20003fd7198dcdf77c0"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/metadata-preservation-v1/preservation-index.json",
+      "preserved": "metadata-preservation-v1/preservation-index.json",
+      "bytes": 11002,
+      "sha256": "c8ae624cf437fec9a4ac637e2ff10b2bfd44f983e6674dc1042600e850fb96be"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/metadata-preservation-v1/deferred-saved-review.json",
+      "preserved": "metadata-preservation-v1/deferred-saved-review.json",
+      "bytes": 15988,
+      "sha256": "469708bd19f02142cf1fe263ce75bee720bb5bb53ae20c5a4f9b9b477d0a0d71"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/audit_saved_metadata.py",
+      "preserved": "audit_saved_metadata.py",
+      "bytes": 9854,
+      "sha256": "196eef112c5c49442d4852ad37a9ad3fd8ca5fb16b9b1d3698745a518df3032a"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/receipt.json",
+      "preserved": "actual-public-qc-v1/receipt.json",
+      "bytes": 18075,
+      "sha256": "d461f9d4a08b8b25120da532d0df06ba12664b0a5bf4997335d8f21551cab2ac"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/declaration.json",
+      "preserved": "actual-public-qc-v1/declaration.json",
+      "bytes": 1359,
+      "sha256": "7cf2720f99b77f9046926b2cfbcb24b266e3d1df7a391efd807688b5c163f714"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/root-release.json",
+      "preserved": "root-release.json",
+      "bytes": 998,
+      "sha256": "3bb004f2f66dd634def2e18155fd670992867c2421d4bb6562c1468dd2c585e4"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/prepared-release.json",
+      "preserved": "prepared-release.json",
+      "bytes": 999,
+      "sha256": "a768f412cb66c0444a98a2ff2a7f83162f8ec176062b13cc9c14daede60f4b7f"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/source-index.json",
+      "preserved": "source-index.json",
+      "bytes": 4306,
+      "sha256": "1c75e63b2f845f8890bbcf05871f81f4c62be35d5fd5fac1dd91d19f7e8f1a7e"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/public-train-index.json",
+      "preserved": "public-train-index.json",
+      "bytes": 4700,
+      "sha256": "8b9263a99e9e8a05b26351979db00b76f68ec8025c8215e4a252e5432006abb6"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/pending-qualification-index.json",
+      "preserved": "actual-public-qc-v1/pending-qualification-index.json",
+      "bytes": 1136,
+      "sha256": "b8be8a996153a9838ed169fccbabd87c3ffff3800ac4211b958e5ddb04c37a5d"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/saved-review-preservation-v1/REPORT.txt",
+      "preserved": "saved-review-preservation-v1/REPORT.txt",
+      "bytes": 3854,
+      "sha256": "24d3b76aff33c3c07f63f94eead3e567f9d66cd26ec1a1ccdc13bb5274df7309"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/saved-review-preservation-v1/summary.json",
+      "preserved": "saved-review-preservation-v1/summary.json",
+      "bytes": 22968,
+      "sha256": "ce358398e93d7a47e1c4a0357e6828d5a3a9cf21f08eb92d6a003e67a187cfa1"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/saved-review-preservation-v1/preservation-index.json",
+      "preserved": "saved-review-preservation-v1/preservation-index.json",
+      "bytes": 4310,
+      "sha256": "f2108f1874ab9aba51fc0702f87f5c84531b2048dd812966024c9163a41742a6"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/reconcile_saved_review.py",
+      "preserved": "reconcile_saved_review.py",
+      "bytes": 8602,
+      "sha256": "5b007b0166e774273af29357c2540ec1df398bcd1ea80030bf1f9e3d85a0c30f"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/root-overlay-review.json",
+      "preserved": "root-overlay-review.json",
+      "bytes": 6049,
+      "sha256": "d29f5068dbef78046e9e23024cbec3df7dad7a2dffde5de0ea35f47cbf26153a"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/root-release.json",
+      "preserved": "saved-review-preparation-v1/root-release.json",
+      "bytes": 759,
+      "sha256": "807fc18dc5aca9e241bc18bcb4e3831f57354e3ffe8fa3650c5e718b4eed1f80"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1/result.json",
+      "preserved": "saved-review-preparation-v1/actual-saved-review-v1/result.json",
+      "bytes": 697,
+      "sha256": "e84b3d6331bd08cd510daa465dfd2f7fde5fab277a52d63da7bed89134349e2a"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1.supervision/receipt.json",
+      "preserved": "saved-review-preparation-v1/actual-saved-review-v1.supervision/receipt.json",
+      "bytes": 676,
+      "sha256": "515bbcb8bdb78d879ded98cf0af129e95e76ec1244c8119e771fa313c63bb9b7"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1.supervision/declaration.json",
+      "preserved": "saved-review-preparation-v1/actual-saved-review-v1.supervision/declaration.json",
+      "bytes": 1136,
+      "sha256": "5c476338cd5a3da5d56af342a1f2c0bb1891f2cea52f63f26b67698cccd73da2"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1/array-audit/saved-review-index.json",
+      "preserved": "saved-review-preparation-v1/actual-saved-review-v1/array-audit/saved-review-index.json",
+      "bytes": 2197,
+      "sha256": "b8a34f57c9bbe2a8970d64bb38ae0a5740ab310905034367c1a06d67b551e187"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1/saved-support-pattern-v1.json",
+      "preserved": "saved-review-preparation-v1/actual-saved-review-v1/saved-support-pattern-v1.json",
+      "bytes": 58074,
+      "sha256": "abeb3b20e34363fa995f281670c63831fb72e34042335d92c64cc0974dafb711"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-002-saved-public-review.json",
+      "preserved": "saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-002-saved-public-review.json",
+      "bytes": 3849,
+      "sha256": "e2d81b25b5fb4316e3f06538814157792468acc790aba36efab3721fc5d6cf75"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-015-saved-public-review.json",
+      "preserved": "saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-015-saved-public-review.json",
+      "bytes": 3846,
+      "sha256": "616aa2a253c2dff916c491d7f8c26ebb904a523e0486af9177663c6f65d285fd"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-018-saved-public-review.json",
+      "preserved": "saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-018-saved-public-review.json",
+      "bytes": 3842,
+      "sha256": "ca7b5649e989dc0f23640d150176a43e8f9450deb7510c86dbc4042feb31da18"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-045-saved-public-review.json",
+      "preserved": "saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-045-saved-public-review.json",
+      "bytes": 3845,
+      "sha256": "f78f96b3364db6c1c1428e824231d11dabe8eb83adfa9dfa85df20c0f24f399c"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/HANDOFF.txt",
+      "preserved": "crop-domain-revision-v1/HANDOFF.txt",
+      "bytes": 2356,
+      "sha256": "81e74cc23950c350d49cb373e900e5943b421435aa7094b61eb186b26e80430a"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/source-index.json",
+      "preserved": "crop-domain-revision-v1/source-index.json",
+      "bytes": 2161,
+      "sha256": "910dbf81db79f18cdbe3c942f8bad32d78e9e743dbb931224851184f5eea9de1"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/source-delta.json",
+      "preserved": "crop-domain-revision-v1/source-delta.json",
+      "bytes": 1751,
+      "sha256": "0407597bdafcf85315830c9892eac06ac7268f30031eedcd8d5a663930a7e737"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/independent-source-review.json",
+      "preserved": "crop-domain-revision-v1/independent-source-review.json",
+      "bytes": 734,
+      "sha256": "544e7fc6cd19d51907994615093d87cc7882a3d3c2d665f1965b6951cee86590"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/generated-controls.txt",
+      "preserved": "crop-domain-revision-v1/generated-controls.txt",
+      "bytes": 428,
+      "sha256": "09db92c0ae8a8064dc797dd15ceeb300efc39245ab9f0d8fce7526011c182ffa"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/canonical-tests.txt",
+      "preserved": "crop-domain-revision-v1/canonical-tests.txt",
+      "bytes": 120,
+      "sha256": "4b51c9c683dda4b7de938d63c9b0be7a6ea77d99e58515afc5d75ef87b837b55"
+    },
+    {
+      "source": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/four-case-geometry-proposal.json",
+      "preserved": "crop-domain-revision-v1/four-case-geometry-proposal.json",
+      "bytes": 10220,
+      "sha256": "a664dd2c9a1988941e7ec0cbb86417ac0084edbdd48d2301b6cde8f60fa26171"
+    }
+  ],
+  "patient_arrays_or_images": false,
+  "no_training_admission": true
+}

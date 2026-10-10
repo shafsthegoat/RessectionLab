@@ -1,0 +1,117 @@
+{
+  "review_kind": "root visual sanity inspection of twelve hash-verified saved public overlays",
+  "scope": "limited three orthogonal target-centered images per TRAIN case; native affine, not clinical radiological display convention",
+  "all_four_retained": true,
+  "cases": [
+    {
+      "patient_id": "ReMIND-002",
+      "views_inspected": [
+        {
+          "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-crop-mr/public-qc-axis0-index82.png",
+          "sha256": "3437be80d077af957acdb81d625c74c5b638317a27580da85e7bc0fe8a1cab3c",
+          "axis": 0,
+          "index": 82
+        },
+        {
+          "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-crop-mr/public-qc-axis1-index58.png",
+          "sha256": "fc2a5bd63ed7d0a9912b109ca0c3566b91e5e3d19e910885ddc59f564f66ea04",
+          "axis": 1,
+          "index": 58
+        },
+        {
+          "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-crop-mr/public-qc-axis2-index12.png",
+          "sha256": "7c27ab36198cd8ae42feb4f767a7a3e312fa7858ba74c11ed5557e701c84d73c",
+          "axis": 2,
+          "index": 12
+        }
+      ],
+      "observation": "All three target-centered orthogonal views inspected. Supplied tumor extends to a crop edge in two displayed planes, consistent with measured source target crop loss. No obvious regular repeated support striping in these three views. Hold full-target experiment; cannot infer absent source tissue from crop.",
+      "saved_review_sha256": "e2d81b25b5fb4316e3f06538814157792468acc790aba36efab3721fc5d6cf75",
+      "expert_anatomical_accuracy_validated": false,
+      "clinical_planning_admitted": false
+    },
+    {
+      "patient_id": "ReMIND-015",
+      "views_inspected": [
+        {
+          "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-crop-mr/public-qc-axis0-index14.png",
+          "sha256": "281309262ac8c9990f9425a08b814c0f1a8261a06d0b71060cc6180c3d89e4cc",
+          "axis": 0,
+          "index": 14
+        },
+        {
+          "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-crop-mr/public-qc-axis1-index118.png",
+          "sha256": "510be01a5c50cceaf84f8c144d629bc8afd970694424d205fea3758c2ab62863",
+          "axis": 1,
+          "index": 118
+        },
+        {
+          "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-crop-mr/public-qc-axis2-index64.png",
+          "sha256": "598807fe1403f2cbbf02fe3e07f814502502259203630cd3cb64ec4899e2932c",
+          "axis": 2,
+          "index": 64
+        }
+      ],
+      "observation": "All three target-centered orthogonal views inspected. Localized lateral tumor overlay appears registered within the displayed head/brain field; no obvious regular repeated support striping. This is limited visual sanity review, not expert delineation accuracy.",
+      "saved_review_sha256": "616aa2a253c2dff916c491d7f8c26ebb904a523e0486af9177663c6f65d285fd",
+      "expert_anatomical_accuracy_validated": false,
+      "clinical_planning_admitted": false
+    },
+    {
+      "patient_id": "ReMIND-018",
+      "views_inspected": [
+        {
+          "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-crop-mr/public-qc-axis0-index22.png",
+          "sha256": "9a58a55fbbfe5ca1c46444ccb88e6d13a6beed38a1427ccadf3cf5cb8d948fc1",
+          "axis": 0,
+          "index": 22
+        },
+        {
+          "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-crop-mr/public-qc-axis1-index67.png",
+          "sha256": "7754ee1c5616a614a5d95be7b0217add6adc496ab65092953052539d7212968f",
+          "axis": 1,
+          "index": 67
+        },
+        {
+          "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-crop-mr/public-qc-axis2-index40.png",
+          "sha256": "e044f2a3bcd022b5abf2b6f7785831bc231a87542b7ac21975af4fd327fe5369",
+          "axis": 2,
+          "index": 40
+        }
+      ],
+      "observation": "All three target-centered orthogonal views inspected. Small/disconnected target regions visible; no obvious regular repeated support striping. Their biological interpretation and completeness are not established by these images.",
+      "saved_review_sha256": "ca7b5649e989dc0f23640d150176a43e8f9450deb7510c86dbc4042feb31da18",
+      "expert_anatomical_accuracy_validated": false,
+      "clinical_planning_admitted": false
+    },
+    {
+      "patient_id": "ReMIND-045",
+      "views_inspected": [
+        {
+          "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-crop-mr/public-qc-axis0-index92.png",
+          "sha256": "710d330318c8f001519db844b095f5a66e216eaf40c2b63a84a6702b574aca87",
+          "axis": 0,
+          "index": 92
+        },
+        {
+          "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-crop-mr/public-qc-axis1-index58.png",
+          "sha256": "8c42e94fb1bedb7ee5abe6fb5ff60009f1094e42219b2b24614e7826158803e5",
+          "axis": 1,
+          "index": 58
+        },
+        {
+          "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-crop-mr/public-qc-axis2-index65.png",
+          "sha256": "da0a52d91d0cf18e40ef531f806e5c08f8ca9c645d2cb274aacd4b9ef5bc8c93",
+          "axis": 2,
+          "index": 65
+        }
+      ],
+      "observation": "All three target-centered orthogonal views inspected. Displayed crop cuts through brain/head field and target reaches an edge in some planes. Measured source target/support losses retained; hold full-target experiment. No obvious regular repeated support striping in these views.",
+      "saved_review_sha256": "f78f96b3364db6c1c1428e824231d11dabe8eb83adfa9dfa85df20c0f24f399c",
+      "expert_anatomical_accuracy_validated": false,
+      "clinical_planning_admitted": false
+    }
+  ],
+  "timestamp_UTC": "2026-10-10T09:20:00Z",
+  "no_mask_repair_or_extrapolation": true
+}

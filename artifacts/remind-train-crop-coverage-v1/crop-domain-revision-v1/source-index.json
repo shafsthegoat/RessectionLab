@@ -1,0 +1,51 @@
+{
+  "status": "candidate_source_only_no_execution_release",
+  "files": [
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/stage/src/resectionlab/remind_planning_qc.py",
+      "bytes": 48091,
+      "sha256": "f35a28f2cdedd777e15031b5cba370c4106c0436eefe9590ca17466d8944b3ca"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/stage/scripts/prepare_remind_planning.py",
+      "bytes": 1292,
+      "sha256": "befa1a98b4ddc26868597dab9c62f5fcde95d3af7070807df4e88a4fb8e9fe5e"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/stage/src/resectionlab/__init__.py",
+      "bytes": 99,
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/source.diff",
+      "bytes": 11189,
+      "sha256": "d7929ebaba53940faa10e7515b61ce3b0f0e39d4464481df8cfe8a363da64515"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/source-delta.json",
+      "bytes": 1751,
+      "sha256": "0407597bdafcf85315830c9892eac06ac7268f30031eedcd8d5a663930a7e737"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/test_generated.py",
+      "bytes": 5566,
+      "sha256": "a631c73385a4b69f38a82294f53eaa49cc27adf454f6d620a0647844e015355e"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/generated-controls.txt",
+      "bytes": 428,
+      "sha256": "09db92c0ae8a8064dc797dd15ceeb300efc39245ab9f0d8fce7526011c182ffa"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/four-case-geometry-proposal.json",
+      "bytes": 10220,
+      "sha256": "a664dd2c9a1988941e7ec0cbb86417ac0084edbdd48d2301b6cde8f60fa26171"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/crop-domain-revision-v1/HANDOFF.txt",
+      "bytes": 2356,
+      "sha256": "81e74cc23950c350d49cb373e900e5943b421435aa7094b61eb186b26e80430a"
+    }
+  ],
+  "canonical_edits": false
+}

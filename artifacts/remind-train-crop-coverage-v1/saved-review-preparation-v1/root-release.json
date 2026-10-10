@@ -1,0 +1,22 @@
+{
+  "execution_released": true,
+  "source_index": {
+    "path": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/source-index.json",
+    "sha256": "e95f08d2d58c9f276f5b56f162dca5bcee9f3b8f527bdb973c9244b67d97f547"
+  },
+  "patient_ids": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "caps": {
+    "seconds": 300,
+    "sampled_rss_bytes": 3221225472,
+    "output_bytes": 67108864,
+    "log_bytes": 4194304,
+    "threads": 1,
+    "automatic_retry": false
+  },
+  "scope": "Existing public saved arrays/overlay fixity, geometry/coverage/full target denominator/support pattern only. No original DICOM, private sources, model, training or automatic admission. Root visual review pending; manifests null."
+}

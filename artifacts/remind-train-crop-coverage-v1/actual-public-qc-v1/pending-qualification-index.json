@@ -1,0 +1,34 @@
+{
+  "cases": [
+    {
+      "patient_id": "ReMIND-002",
+      "public_input_manifest": null,
+      "role": "TRAIN",
+      "status": "SOURCE_RESULT_REQUIRES_SAVED_COVERAGE_AND_ARTIFACT_REVIEW",
+      "training_admitted": false
+    },
+    {
+      "patient_id": "ReMIND-015",
+      "public_input_manifest": null,
+      "role": "TRAIN",
+      "status": "SOURCE_RESULT_REQUIRES_SAVED_COVERAGE_AND_ARTIFACT_REVIEW",
+      "training_admitted": false
+    },
+    {
+      "patient_id": "ReMIND-018",
+      "public_input_manifest": null,
+      "role": "TRAIN",
+      "status": "SOURCE_RESULT_REQUIRES_SAVED_COVERAGE_AND_ARTIFACT_REVIEW",
+      "training_admitted": false
+    },
+    {
+      "patient_id": "ReMIND-045",
+      "public_input_manifest": null,
+      "role": "TRAIN",
+      "status": "SOURCE_RESULT_REQUIRES_SAVED_COVERAGE_AND_ARTIFACT_REVIEW",
+      "training_admitted": false
+    }
+  ],
+  "mismatch_policy": "Preserve native/placed full-target counts, crop losses and outside-support positives; do not clip targets or fill/repair support. Suspicious source-artifact cases remain held without replacement.",
+  "planned_denominator": 4
+}

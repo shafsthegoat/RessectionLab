@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1.supervision/fresh-pycache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/review_worker.py"
+  ],
+  "caps": {
+    "automatic_retry": false,
+    "log_bytes": 4194304,
+    "output_bytes": 67108864,
+    "sampled_rss_bytes": 3221225472,
+    "seconds": 300,
+    "threads": 1
+  },
+  "no_original_DICOM_or_private_data": true,
+  "release_sha256": "807fc18dc5aca9e241bc18bcb4e3831f57354e3ffe8fa3650c5e718b4eed1f80",
+  "source_index": {
+    "path": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/source-index.json",
+    "sha256": "e95f08d2d58c9f276f5b56f162dca5bcee9f3b8f527bdb973c9244b67d97f547"
+  }
+}

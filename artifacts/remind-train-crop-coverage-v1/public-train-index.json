@@ -1,0 +1,121 @@
+{
+  "schema": "remind-public-TRAIN-next-four-QC-index-v1",
+  "status": "preparation_only_no_execution_release",
+  "selection_rule": "Existing TRAIN and strict_three_label_glioma stratum; exactly one source-described Preop ceT1, manual whole-tumor SEG and automatic cerebrum SEG with same StudyInstanceUID; exclude existing four pilot people, then lexicographic patient ID. No image/performance-based selection.",
+  "planned_denominator": 4,
+  "subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "cases": [
+    {
+      "patient_id": "ReMIND-002",
+      "patient_group": "ReMIND:002",
+      "role": "TRAIN",
+      "status": "PREPARED_QC_REQUIRED",
+      "case": {
+        "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-002-case.json",
+        "bytes": 92698,
+        "sha256": "59f7df33759d8de556b0b6335863bad08dda3879bb232e3e3cbb98ee10503171"
+      },
+      "source_binding": {
+        "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-002-source-binding.json",
+        "bytes": 99621,
+        "sha256": "4aae0d9b4a413a61e135095964e73d0678d8173ebd8d811eb056a19db3f0b5a4"
+      },
+      "objects": 194,
+      "bytes": 26512190,
+      "public_input_manifest": null,
+      "training_admitted": false,
+      "kept_in_fixed_denominator": true,
+      "replacement": null
+    },
+    {
+      "patient_id": "ReMIND-015",
+      "patient_group": "ReMIND:015",
+      "role": "TRAIN",
+      "status": "PREPARED_QC_REQUIRED",
+      "case": {
+        "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-015-case.json",
+        "bytes": 92699,
+        "sha256": "53c5f3a360c4c79ceede9248d5c2d97a00391a2c3839e6ca4492eba86ee58c18"
+      },
+      "source_binding": {
+        "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-015-source-binding.json",
+        "bytes": 99621,
+        "sha256": "5bd61963a2aca022857683aae5e9af998c89eecb7f49ac0c4ffde03eadd069e5"
+      },
+      "objects": 194,
+      "bytes": 24255778,
+      "public_input_manifest": null,
+      "training_admitted": false,
+      "kept_in_fixed_denominator": true,
+      "replacement": null
+    },
+    {
+      "patient_id": "ReMIND-018",
+      "patient_group": "ReMIND:018",
+      "role": "TRAIN",
+      "status": "PREPARED_QC_REQUIRED",
+      "case": {
+        "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-018-case.json",
+        "bytes": 92698,
+        "sha256": "63df1936fd64c7b7370f4d772a7d2b75c95c12d439a4065b1c159ea6bc17369a"
+      },
+      "source_binding": {
+        "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-018-source-binding.json",
+        "bytes": 99621,
+        "sha256": "d26ad45212c8d8aec93ab17f8c8d88fda7bcabd9ae61c4c98df1f807d73a845a"
+      },
+      "objects": 194,
+      "bytes": 24167450,
+      "public_input_manifest": null,
+      "training_admitted": false,
+      "kept_in_fixed_denominator": true,
+      "replacement": null
+    },
+    {
+      "patient_id": "ReMIND-045",
+      "patient_group": "ReMIND:045",
+      "role": "TRAIN",
+      "status": "PREPARED_QC_REQUIRED",
+      "case": {
+        "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-045-case.json",
+        "bytes": 85451,
+        "sha256": "9413d47ff3a55bfd429b64777f2ba9d55eea548c904f8e4328a41481158e16ac"
+      },
+      "source_binding": {
+        "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-045-source-binding.json",
+        "bytes": 91782,
+        "sha256": "f1282350f7cd9a8014241d6067c9cacd084316e5b5113681a28f093e21914ed0"
+      },
+      "objects": 178,
+      "bytes": 30128404,
+      "public_input_manifest": null,
+      "training_admitted": false,
+      "kept_in_fixed_denominator": true,
+      "replacement": null
+    }
+  ],
+  "cohort": {
+    "path": "manifests/experiments/remind-component-cohort-v1.json",
+    "bytes": 70925,
+    "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+  },
+  "expansion_candidate": {
+    "path": "build/remind-train-public-expansion-candidate-v1/candidate.json",
+    "bytes": 47049,
+    "sha256": "d436dacfc1ed54a2061cd21bb9c309d0403fdf7b98fc637c3a66c00e546084e6"
+  },
+  "original_pilot": {
+    "path": "manifests/experiments/remind-planning-pilot-v1.json",
+    "bytes": 34154,
+    "sha256": "ff092655049c1f6d5eb324f9610a4c1f5b8ec50c1a29cfaf92a54f74c951395f"
+  },
+  "original_pilot_unchanged": true,
+  "optimizer_updates_performed": 0,
+  "private_reference_loaded": false,
+  "hold_policy": "Successful conversion is source geometry/sample correspondence only. Public input manifest stays null until explicit saved source-artifact/coverage qualification; mismatches retained, no replacement."
+}

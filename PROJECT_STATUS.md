@@ -18,6 +18,8 @@ See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cr
 
 Current integrated results, October 10:
 
+- **Additional TRAIN data exposed a recoverable preparation error:** [four-case crop review](artifacts/remind-train-crop-coverage-v1/RESULT.txt) traces002/045 missing target regions to our conservative crop, with acquired MRI coverage verified from saved geometry. The explicit replacement phase preserves native samples and unknown support domains;21 canonical tests pass. Old results and all four patients remain visible, without training admission. Actual recrop/domain-aware qualification are next.
+
 - **The occupancy experiment worsens the only positive route:** [all eight paired TRAIN runs](artifacts/paired-train-occupancy-search-v1/RESULT.txt) complete in25.626s. Raw results reproduce the old plans; all S∪T arms STOP. The exact useful025 suction geometry becomes shaft-blocked when additional tumor cells are occupied. Union010 also has two capped, untested proposals. Independent audit passes2,151 checks plus176 geometric joins. This locates a tool-access/preparation bottleneck; union is not validated anatomy, and greedy STOP does not prove no beneficial sequence. Next: exhaustive one-preparation/fixed-ray witness before retraining.
 
 - **The occupancy diagnostic is ready for a controlled patient comparison:** [explicit S versus S∪T integration](artifacts/paired-train-occupancy-v1/RESULT.txt) preserves baseline source/observation/protocol behavior and records the alternative as an unvalidated simulated material assumption. Fixed TRAIN search-only admission and unchanged full targets/access are enforced; 162 tests and nine subtests pass. The eight-arm patient experiment is next, with zero model work in both arms.

@@ -1,0 +1,483 @@
+{
+  "all_eight_phases_pass": true,
+  "all_owned_children_reaped_recorded": true,
+  "audit_scope": "Saved JSON and source hashes; output array/PNG stat only. No DICOM, array or image body opened.",
+  "converted": 4,
+  "elapsed_seconds": 8.415848624892533,
+  "failed_cases_replaced": false,
+  "phases": [
+    {
+      "case_elapsed_seconds": 1.0802794999908656,
+      "case_output_bytes": 258056,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 1.0802644579671323,
+      "exit_code": 0,
+      "final_phase_log_bytes": 236,
+      "intended_use_admitted": false,
+      "phase": "headers",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result": {
+        "bytes": 258056,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-headers/result.json",
+        "sha256": "e28cea1d1be2f0635ac706f008467bb3d5b5cbfb5f211a3fe4cb72b23ad14bbf"
+      },
+      "result_guard_error": null,
+      "result_sha256": "e28cea1d1be2f0635ac706f008467bb3d5b5cbfb5f211a3fe4cb72b23ad14bbf",
+      "result_status": "header_geometry_and_ancestry_projected",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 138067968,
+      "stop_reason": null,
+      "subject": "ReMIND-002",
+      "supervisor": {
+        "bytes": 1845,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-headers-supervisor.json",
+        "sha256": "f98e020dbcdfaca800c833fb393844c3849c44a83bd14e28d770daa35fcf931c"
+      }
+    },
+    {
+      "case_elapsed_seconds": 2.290621417108923,
+      "case_output_bytes": 20538380,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 1.2093144999817014,
+      "exit_code": 0,
+      "final_phase_log_bytes": 249,
+      "intended_use_admitted": false,
+      "phase": "crop-mr",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result": {
+        "bytes": 18804,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-crop-mr/conversion-result.json",
+        "sha256": "984ad5487ac2987b884cd3d6d4f97b43cc6c4403777b5bd6797f03bd7e5168fd"
+      },
+      "result_guard_error": null,
+      "result_sha256": "984ad5487ac2987b884cd3d6d4f97b43cc6c4403777b5bd6797f03bd7e5168fd",
+      "result_status": "public_crop_source_samples_and_label_grids_converted_anatomy_unreviewed",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 798687232,
+      "stop_reason": null,
+      "subject": "ReMIND-002",
+      "supervisor": {
+        "bytes": 2188,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-crop-mr-supervisor.json",
+        "sha256": "9c52424b069233b7346c379dd9af5135ec13f631e3dc0253a253d4e93965eac3"
+      }
+    },
+    {
+      "case_elapsed_seconds": 0.8880049160216004,
+      "case_output_bytes": 250345,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 0.8879552909638733,
+      "exit_code": 0,
+      "final_phase_log_bytes": 236,
+      "intended_use_admitted": false,
+      "phase": "headers",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result": {
+        "bytes": 250345,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-headers/result.json",
+        "sha256": "a02471718c7a8dd118340169a28afd055cd84b3cd5cb39612a7ebdc0ff7e6be6"
+      },
+      "result_guard_error": null,
+      "result_sha256": "a02471718c7a8dd118340169a28afd055cd84b3cd5cb39612a7ebdc0ff7e6be6",
+      "result_status": "header_geometry_and_ancestry_projected",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 138051584,
+      "stop_reason": null,
+      "subject": "ReMIND-015",
+      "supervisor": {
+        "bytes": 1845,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-headers-supervisor.json",
+        "sha256": "5871920a364d6e4688d0c8f5abf61a3538c68be4b9f6e5871e36db503b8a08de"
+      }
+    },
+    {
+      "case_elapsed_seconds": 1.880500208120793,
+      "case_output_bytes": 20262103,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 0.9909537918865681,
+      "exit_code": 0,
+      "final_phase_log_bytes": 249,
+      "intended_use_admitted": false,
+      "phase": "crop-mr",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result": {
+        "bytes": 18444,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-crop-mr/conversion-result.json",
+        "sha256": "a187ec40fd785011263fa4e7a558b40e33fc203cf9f1a6d29dcd5b6c5bdad574"
+      },
+      "result_guard_error": null,
+      "result_sha256": "a187ec40fd785011263fa4e7a558b40e33fc203cf9f1a6d29dcd5b6c5bdad574",
+      "result_status": "public_crop_source_samples_and_label_grids_converted_anatomy_unreviewed",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 508100608,
+      "stop_reason": null,
+      "subject": "ReMIND-015",
+      "supervisor": {
+        "bytes": 2188,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-crop-mr-supervisor.json",
+        "sha256": "72ad1917e5cbdcd6cf08b1332283bd0458a0e07173db255b368374dd9b823947"
+      }
+    },
+    {
+      "case_elapsed_seconds": 0.7547104579862207,
+      "case_output_bytes": 249370,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 0.7546824170276523,
+      "exit_code": 0,
+      "final_phase_log_bytes": 236,
+      "intended_use_admitted": false,
+      "phase": "headers",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result": {
+        "bytes": 249370,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-headers/result.json",
+        "sha256": "ae830f77f38ca86765d8df1f9cf2b5263e19d4ab4e9538de0879a8e7b5452b43"
+      },
+      "result_guard_error": null,
+      "result_sha256": "ae830f77f38ca86765d8df1f9cf2b5263e19d4ab4e9538de0879a8e7b5452b43",
+      "result_status": "header_geometry_and_ancestry_projected",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 123207680,
+      "stop_reason": null,
+      "subject": "ReMIND-018",
+      "supervisor": {
+        "bytes": 1845,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-headers-supervisor.json",
+        "sha256": "8722323b34d2baa1308d8ccb40ad971e1395dd283cef38262c71182403a266f3"
+      }
+    },
+    {
+      "case_elapsed_seconds": 1.7333825409878045,
+      "case_output_bytes": 19353553,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 0.9779708341229707,
+      "exit_code": 0,
+      "final_phase_log_bytes": 249,
+      "intended_use_admitted": false,
+      "phase": "crop-mr",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result": {
+        "bytes": 18887,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-crop-mr/conversion-result.json",
+        "sha256": "102f3319b93faf46e81ba4432c9a8f8d75adb22d5f3ff7bea72d2702712970e1"
+      },
+      "result_guard_error": null,
+      "result_sha256": "102f3319b93faf46e81ba4432c9a8f8d75adb22d5f3ff7bea72d2702712970e1",
+      "result_status": "public_crop_source_samples_and_label_grids_converted_anatomy_unreviewed",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 496762880,
+      "stop_reason": null,
+      "subject": "ReMIND-018",
+      "supervisor": {
+        "bytes": 2189,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-crop-mr-supervisor.json",
+        "sha256": "2d72aee6c5977bb082047413483d9b20bb5e1f540804767c8c83baf36ed2cb22"
+      }
+    },
+    {
+      "case_elapsed_seconds": 0.8761581669095904,
+      "case_output_bytes": 250825,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 0.8761154168751091,
+      "exit_code": 0,
+      "final_phase_log_bytes": 235,
+      "intended_use_admitted": false,
+      "phase": "headers",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result": {
+        "bytes": 250825,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-headers/result.json",
+        "sha256": "32d01668e69ef38a5700d7ee0ca42d27d01a81e7d0adc3115a9392bbfea1f524"
+      },
+      "result_guard_error": null,
+      "result_sha256": "32d01668e69ef38a5700d7ee0ca42d27d01a81e7d0adc3115a9392bbfea1f524",
+      "result_status": "header_geometry_and_ancestry_projected",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 143785984,
+      "stop_reason": null,
+      "subject": "ReMIND-045",
+      "supervisor": {
+        "bytes": 1845,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-headers-supervisor.json",
+        "sha256": "0a56bd8c67c17c259180f4bba951e3185078e5cd2d919e439f5f7ecaed9689d8"
+      }
+    },
+    {
+      "case_elapsed_seconds": 2.5081789169926196,
+      "case_output_bytes": 12924542,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "elapsed_seconds": 1.6305186250247061,
+      "exit_code": 0,
+      "final_phase_log_bytes": 248,
+      "intended_use_admitted": false,
+      "phase": "crop-mr",
+      "phase_complete": true,
+      "reaped": true,
+      "remaining_owned_pids": [],
+      "result": {
+        "bytes": 18788,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-crop-mr/conversion-result.json",
+        "sha256": "0d7d2abadf79de8e9ec60bf92a4db7899677fc37b010515b23622ae83e08171a"
+      },
+      "result_guard_error": null,
+      "result_sha256": "0d7d2abadf79de8e9ec60bf92a4db7899677fc37b010515b23622ae83e08171a",
+      "result_status": "public_crop_source_samples_and_label_grids_converted_anatomy_unreviewed",
+      "role": "TRAIN",
+      "sampled_peak_rss_bytes": 1486831616,
+      "stop_reason": null,
+      "subject": "ReMIND-045",
+      "supervisor": {
+        "bytes": 2190,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-crop-mr-supervisor.json",
+        "sha256": "946a1cfdfd4a4bf57c06a778da773755cf1f23689aaa28a7f7a20e95c8311c91"
+      }
+    }
+  ],
+  "planned_denominator": 4,
+  "reviewed_anatomy": 0,
+  "root_release_delta_only_execution_released": true,
+  "rows": [
+    {
+      "annotations": {
+        "cerebrum": {
+          "correspondence": "shared_frame_plus_source_description",
+          "expert_alignment_review": false,
+          "explicit_SOP_refs_present": false,
+          "frame_uid_matches": true,
+          "registration_performed": false,
+          "resampled_positive_volume_mm3": 942927.2840574101,
+          "resampled_positive_voxels": 988731,
+          "resampling_can_omit_subvoxel_labels": true,
+          "source_positive_centres_outside_target_grid": 135,
+          "source_positive_volume_mm3": 942880.7793434919,
+          "source_positive_voxels": 14747939,
+          "source_samples_equal_recorded": true
+        },
+        "whole_tumor": {
+          "correspondence": "shared_frame_plus_source_description",
+          "expert_alignment_review": false,
+          "explicit_SOP_refs_present": false,
+          "frame_uid_matches": true,
+          "registration_performed": false,
+          "resampled_positive_volume_mm3": 21647.451552362727,
+          "resampled_positive_voxels": 22699,
+          "resampling_can_omit_subvoxel_labels": true,
+          "source_positive_centres_outside_target_grid": 1565,
+          "source_positive_volume_mm3": 23168.564910448822,
+          "source_positive_voxels": 24294,
+          "source_samples_equal_recorded": true
+        }
+      },
+      "conversion_result": {
+        "bytes": 18804,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-crop-mr/conversion-result.json",
+        "sha256": "984ad5487ac2987b884cd3d6d4f97b43cc6c4403777b5bd6797f03bd7e5168fd"
+      },
+      "header_result": {
+        "bytes": 258056,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-headers/result.json",
+        "sha256": "e28cea1d1be2f0635ac706f008467bb3d5b5cbfb5f211a3fe4cb72b23ad14bbf"
+      },
+      "outside_support_fraction": 0.9248865588792458,
+      "patient_id": "ReMIND-002",
+      "placed_target_inside_support_voxels": 1705,
+      "placed_target_outside_support_voxels": 20994,
+      "placed_target_positive_voxels": 22699,
+      "role": "TRAIN",
+      "shape_xyz": [
+        137,
+        169,
+        109
+      ],
+      "status": "SOURCE_RESULT_UNREVIEWED_NO_TRAINING_ADMISSION"
+    },
+    {
+      "annotations": {
+        "cerebrum": {
+          "correspondence": "shared_frame_plus_source_description",
+          "expert_alignment_review": false,
+          "explicit_SOP_refs_present": false,
+          "frame_uid_matches": true,
+          "registration_performed": false,
+          "resampled_positive_volume_mm3": 855328.5598290819,
+          "resampled_positive_voxels": 896877,
+          "resampling_can_omit_subvoxel_labels": true,
+          "source_positive_centres_outside_target_grid": 228,
+          "source_positive_volume_mm3": 855373.4384411727,
+          "source_positive_voxels": 7175391,
+          "source_samples_equal_recorded": true
+        },
+        "whole_tumor": {
+          "correspondence": "shared_frame_plus_source_description",
+          "expert_alignment_review": false,
+          "explicit_SOP_refs_present": false,
+          "frame_uid_matches": true,
+          "registration_performed": false,
+          "resampled_positive_volume_mm3": 7386.207580165663,
+          "resampled_positive_voxels": 7745,
+          "resampling_can_omit_subvoxel_labels": true,
+          "source_positive_centres_outside_target_grid": 0,
+          "source_positive_volume_mm3": 7386.207564051604,
+          "source_positive_voxels": 7745,
+          "source_samples_equal_recorded": true
+        }
+      },
+      "conversion_result": {
+        "bytes": 18444,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-crop-mr/conversion-result.json",
+        "sha256": "a187ec40fd785011263fa4e7a558b40e33fc203cf9f1a6d29dcd5b6c5bdad574"
+      },
+      "header_result": {
+        "bytes": 250345,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-headers/result.json",
+        "sha256": "a02471718c7a8dd118340169a28afd055cd84b3cd5cb39612a7ebdc0ff7e6be6"
+      },
+      "outside_support_fraction": 0.22698515171078115,
+      "patient_id": "ReMIND-015",
+      "placed_target_inside_support_voxels": 5987,
+      "placed_target_outside_support_voxels": 1758,
+      "placed_target_positive_voxels": 7745,
+      "role": "TRAIN",
+      "shape_xyz": [
+        130,
+        171,
+        112
+      ],
+      "status": "SOURCE_RESULT_UNREVIEWED_NO_TRAINING_ADMISSION"
+    },
+    {
+      "annotations": {
+        "cerebrum": {
+          "correspondence": "shared_frame_plus_source_description",
+          "expert_alignment_review": false,
+          "explicit_SOP_refs_present": false,
+          "frame_uid_matches": true,
+          "registration_performed": false,
+          "resampled_positive_volume_mm3": 867067.6568475119,
+          "resampled_positive_voxels": 909186,
+          "resampling_can_omit_subvoxel_labels": true,
+          "source_positive_centres_outside_target_grid": 2146,
+          "source_positive_volume_mm3": 872233.9442726342,
+          "source_positive_voxels": 7316829,
+          "source_samples_equal_recorded": true
+        },
+        "whole_tumor": {
+          "correspondence": "shared_frame_plus_source_description",
+          "expert_alignment_review": false,
+          "explicit_SOP_refs_present": false,
+          "frame_uid_matches": true,
+          "registration_performed": false,
+          "resampled_positive_volume_mm3": 1189.2323111979808,
+          "resampled_positive_voxels": 1247,
+          "resampling_can_omit_subvoxel_labels": true,
+          "source_positive_centres_outside_target_grid": 0,
+          "source_positive_volume_mm3": 1189.23177457601,
+          "source_positive_voxels": 1247,
+          "source_samples_equal_recorded": true
+        }
+      },
+      "conversion_result": {
+        "bytes": 18887,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-crop-mr/conversion-result.json",
+        "sha256": "102f3319b93faf46e81ba4432c9a8f8d75adb22d5f3ff7bea72d2702712970e1"
+      },
+      "header_result": {
+        "bytes": 249370,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-headers/result.json",
+        "sha256": "ae830f77f38ca86765d8df1f9cf2b5263e19d4ab4e9538de0879a8e7b5452b43"
+      },
+      "outside_support_fraction": 0.20048115477145148,
+      "patient_id": "ReMIND-018",
+      "placed_target_inside_support_voxels": 997,
+      "placed_target_outside_support_voxels": 250,
+      "placed_target_positive_voxels": 1247,
+      "role": "TRAIN",
+      "shape_xyz": [
+        131,
+        162,
+        112
+      ],
+      "status": "SOURCE_RESULT_UNREVIEWED_NO_TRAINING_ADMISSION"
+    },
+    {
+      "annotations": {
+        "cerebrum": {
+          "correspondence": "shared_frame_plus_source_description",
+          "expert_alignment_review": false,
+          "explicit_SOP_refs_present": false,
+          "frame_uid_matches": true,
+          "registration_performed": false,
+          "resampled_positive_volume_mm3": 755851.729148855,
+          "resampled_positive_voxels": 792567,
+          "resampling_can_omit_subvoxel_labels": true,
+          "source_positive_centres_outside_target_grid": 1083331,
+          "source_positive_volume_mm3": 785078.1886258661,
+          "source_positive_voxels": 29092192,
+          "source_samples_equal_recorded": true
+        },
+        "whole_tumor": {
+          "correspondence": "shared_frame_plus_source_description",
+          "expert_alignment_review": false,
+          "explicit_SOP_refs_present": false,
+          "frame_uid_matches": true,
+          "registration_performed": false,
+          "resampled_positive_volume_mm3": 23939.16237377352,
+          "resampled_positive_voxels": 25102,
+          "resampling_can_omit_subvoxel_labels": true,
+          "source_positive_centres_outside_target_grid": 199,
+          "source_positive_volume_mm3": 24128.916310283985,
+          "source_positive_voxels": 25301,
+          "source_samples_equal_recorded": true
+        }
+      },
+      "conversion_result": {
+        "bytes": 18788,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-crop-mr/conversion-result.json",
+        "sha256": "0d7d2abadf79de8e9ec60bf92a4db7899677fc37b010515b23622ae83e08171a"
+      },
+      "header_result": {
+        "bytes": 250825,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-headers/result.json",
+        "sha256": "32d01668e69ef38a5700d7ee0ca42d27d01a81e7d0adc3115a9392bbfea1f524"
+      },
+      "outside_support_fraction": 0.7843996494303243,
+      "patient_id": "ReMIND-045",
+      "placed_target_inside_support_voxels": 5412,
+      "placed_target_outside_support_voxels": 19690,
+      "placed_target_positive_voxels": 25102,
+      "role": "TRAIN",
+      "shape_xyz": [
+        112,
+        148,
+        95
+      ],
+      "status": "SOURCE_RESULT_UNREVIEWED_NO_TRAINING_ADMISSION"
+    }
+  ],
+  "sampled_peak_rss_bytes": 1486831616,
+  "schema": "remind-next-four-saved-metadata-audit-v1",
+  "source_index_files_rehashed": 20,
+  "training_admitted": 0
+}

@@ -9,7 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("phase", choices=("headers", "crop", "crop-mr"))
+    parser.add_argument("phase", choices=("headers", "crop", "crop-mr", "crop-mr-domains"))
     parser.add_argument("--case", type=Path, required=True)
     parser.add_argument("--case-sha256", required=True)
     parser.add_argument("--output", type=Path, required=True)

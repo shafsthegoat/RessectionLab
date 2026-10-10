@@ -1,0 +1,50 @@
+{
+  "anatomical_accuracy_reviewed": false,
+  "cases": [
+    {
+      "patient_group": "ReMIND:002",
+      "patient_id": "ReMIND-002",
+      "public_input_manifest": null,
+      "role": "TRAIN",
+      "saved_review_path": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-002-saved-public-review.json",
+      "saved_review_sha256": "e2d81b25b5fb4316e3f06538814157792468acc790aba36efab3721fc5d6cf75",
+      "source_artifact_clearance": false,
+      "training_admitted": false
+    },
+    {
+      "patient_group": "ReMIND:015",
+      "patient_id": "ReMIND-015",
+      "public_input_manifest": null,
+      "role": "TRAIN",
+      "saved_review_path": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-015-saved-public-review.json",
+      "saved_review_sha256": "616aa2a253c2dff916c491d7f8c26ebb904a523e0486af9177663c6f65d285fd",
+      "source_artifact_clearance": false,
+      "training_admitted": false
+    },
+    {
+      "patient_group": "ReMIND:018",
+      "patient_id": "ReMIND-018",
+      "public_input_manifest": null,
+      "role": "TRAIN",
+      "saved_review_path": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-018-saved-public-review.json",
+      "saved_review_sha256": "ca7b5649e989dc0f23640d150176a43e8f9450deb7510c86dbc4042feb31da18",
+      "source_artifact_clearance": false,
+      "training_admitted": false
+    },
+    {
+      "patient_group": "ReMIND:045",
+      "patient_id": "ReMIND-045",
+      "public_input_manifest": null,
+      "role": "TRAIN",
+      "saved_review_path": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-045-saved-public-review.json",
+      "saved_review_sha256": "f78f96b3364db6c1c1428e824231d11dabe8eb83adfa9dfa85df20c0f24f399c",
+      "source_artifact_clearance": false,
+      "training_admitted": false
+    }
+  ],
+  "elapsed_seconds": 0.283270874992013,
+  "failed_cases_replaced": false,
+  "max_optimizer_updates": 0,
+  "role": "TRAIN",
+  "schema": "remind-public-train-saved-review-index-v1"
+}

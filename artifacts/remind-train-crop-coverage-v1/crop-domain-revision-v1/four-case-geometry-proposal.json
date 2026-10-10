@@ -1,0 +1,308 @@
+{
+  "patient_array_reads": 0,
+  "DICOM_reads": 0,
+  "geometry_metadata_cases": [
+    {
+      "patient_id": "ReMIND-002",
+      "header_sha256": "e28cea1d1be2f0635ac706f008467bb3d5b5cbfb5f211a3fe4cb72b23ad14bbf",
+      "proposed_MRI_start": [
+        39,
+        53,
+        16
+      ],
+      "proposed_shape": [
+        141,
+        173,
+        122
+      ],
+      "proposed_native_voxels": 2975946,
+      "proposed_float32_MRI_bytes": 11903784,
+      "source_extent_guards_pass": true,
+      "geometry_metadata_only": true,
+      "map": {
+        "selection": "outer native MRI cell box covering public cerebrum and whole-tumor source-grid domains, one-cell roundoff halo, clipped only to acquired MRI",
+        "uses_private_labels": false,
+        "uses_label_positive_extent": false,
+        "uses_public_whole_tumor_source_domain": true,
+        "public_source_cell_bounds_in_MR_index": {
+          "cerebrum": {
+            "minimum": [
+              40.45996098600638,
+              53.567185484149974,
+              25.772996114394694
+            ],
+            "maximum": [
+              177.6760179133007,
+              223.55120697701426,
+              135.657924598337
+            ]
+          },
+          "whole_tumor": {
+            "minimum": [
+              106.75278613313269,
+              85.59496442226347,
+              17.325016369792518
+            ],
+            "maximum": [
+              139.78451743600564,
+              140.61874550782335,
+              60.835398989489946
+            ]
+          }
+        },
+        "unclipped_MR_start": [
+          39,
+          53,
+          16
+        ],
+        "unclipped_MR_stop": [
+          180,
+          226,
+          138
+        ],
+        "clipped_to_MR_coverage": false,
+        "uniform_inset_MR_cells_per_face": 0,
+        "roundoff_halo_MR_cells_per_face": 1,
+        "all_public_source_voxel_centres_inside_output": true,
+        "support_source_domain_policy": "explicit mask; outside is unknown, never observed empty; downstream full-coverage factory is incompatible",
+        "original_MR_sampling_mm": [
+          0.9765623338515713,
+          0.9765624158050282,
+          1.0000001752454708
+        ],
+        "image_interpolation": "none",
+        "planning_affine_method": "existing bounded polar orthogonal roundoff; exact native source crop affine retained",
+        "maximum_world_corner_difference_mm": 2.207144778713701e-05,
+        "bound_mm": 0.001
+      }
+    },
+    {
+      "patient_id": "ReMIND-015",
+      "header_sha256": "a02471718c7a8dd118340169a28afd055cd84b3cd5cb39612a7ebdc0ff7e6be6",
+      "proposed_MRI_start": [
+        43,
+        61,
+        24
+      ],
+      "proposed_shape": [
+        134,
+        175,
+        116
+      ],
+      "proposed_native_voxels": 2720200,
+      "proposed_float32_MRI_bytes": 10880800,
+      "source_extent_guards_pass": true,
+      "geometry_metadata_only": true,
+      "map": {
+        "selection": "outer native MRI cell box covering public cerebrum and whole-tumor source-grid domains, one-cell roundoff halo, clipped only to acquired MRI",
+        "uses_private_labels": false,
+        "uses_label_positive_extent": false,
+        "uses_public_whole_tumor_source_domain": true,
+        "public_source_cell_bounds_in_MR_index": {
+          "cerebrum": {
+            "minimum": [
+              43.50026787809258,
+              62.4997304834141,
+              25.499996337374032
+            ],
+            "maximum": [
+              174.50028129249264,
+              234.49974809621415,
+              138.4999963305122
+            ]
+          },
+          "whole_tumor": {
+            "minimum": [
+              45.500267979987015,
+              165.49973050390514,
+              77.49999634860292
+            ],
+            "maximum": [
+              71.50026797998704,
+              196.49973050390514,
+              103.49999629188022
+            ]
+          }
+        },
+        "unclipped_MR_start": [
+          43,
+          61,
+          24
+        ],
+        "unclipped_MR_stop": [
+          177,
+          236,
+          140
+        ],
+        "clipped_to_MR_coverage": false,
+        "uniform_inset_MR_cells_per_face": 0,
+        "roundoff_halo_MR_cells_per_face": 1,
+        "all_public_source_voxel_centres_inside_output": true,
+        "support_source_domain_policy": "explicit mask; outside is unknown, never observed empty; downstream full-coverage factory is incompatible",
+        "original_MR_sampling_mm": [
+          0.9765625,
+          0.9765625,
+          0.9999999999457446
+        ],
+        "image_interpolation": "none",
+        "planning_affine_method": "existing bounded polar orthogonal roundoff; exact native source crop affine retained",
+        "maximum_world_corner_difference_mm": 4.851357575199109e-14,
+        "bound_mm": 0.001
+      }
+    },
+    {
+      "patient_id": "ReMIND-018",
+      "header_sha256": "ae830f77f38ca86765d8df1f9cf2b5263e19d4ab4e9538de0879a8e7b5452b43",
+      "proposed_MRI_start": [
+        46,
+        68,
+        29
+      ],
+      "proposed_shape": [
+        135,
+        166,
+        116
+      ],
+      "proposed_native_voxels": 2599560,
+      "proposed_float32_MRI_bytes": 10398240,
+      "source_extent_guards_pass": true,
+      "geometry_metadata_only": true,
+      "map": {
+        "selection": "outer native MRI cell box covering public cerebrum and whole-tumor source-grid domains, one-cell roundoff halo, clipped only to acquired MRI",
+        "uses_private_labels": false,
+        "uses_label_positive_extent": false,
+        "uses_public_whole_tumor_source_domain": true,
+        "public_source_cell_bounds_in_MR_index": {
+          "cerebrum": {
+            "minimum": [
+              47.49997630242855,
+              68.50000472150856,
+              29.500031688990898
+            ],
+            "maximum": [
+              179.4999593177919,
+              231.500055897166,
+              143.4999970967232
+            ]
+          },
+          "whole_tumor": {
+            "minimum": [
+              61.499982531743896,
+              116.50001478722233,
+              65.50002104302523
+            ],
+            "maximum": [
+              79.49998140487249,
+              156.50002164687837,
+              76.50001739575565
+            ]
+          }
+        },
+        "unclipped_MR_start": [
+          46,
+          68,
+          29
+        ],
+        "unclipped_MR_stop": [
+          181,
+          234,
+          145
+        ],
+        "clipped_to_MR_coverage": false,
+        "uniform_inset_MR_cells_per_face": 0,
+        "roundoff_halo_MR_cells_per_face": 1,
+        "all_public_source_voxel_centres_inside_output": true,
+        "support_source_domain_policy": "explicit mask; outside is unknown, never observed empty; downstream full-coverage factory is incompatible",
+        "original_MR_sampling_mm": [
+          0.9765627220593558,
+          0.9765623554100217,
+          1.0000002895139763
+        ],
+        "image_interpolation": "none",
+        "planning_affine_method": "existing bounded polar orthogonal roundoff; exact native source crop affine retained",
+        "maximum_world_corner_difference_mm": 2.9413255070042383e-05,
+        "bound_mm": 0.001
+      }
+    },
+    {
+      "patient_id": "ReMIND-045",
+      "header_sha256": "32d01668e69ef38a5700d7ee0ca42d27d01a81e7d0adc3115a9392bbfea1f524",
+      "proposed_MRI_start": [
+        43,
+        59,
+        19
+      ],
+      "proposed_shape": [
+        138,
+        174,
+        121
+      ],
+      "proposed_native_voxels": 2905452,
+      "proposed_float32_MRI_bytes": 11621808,
+      "source_extent_guards_pass": true,
+      "geometry_metadata_only": true,
+      "map": {
+        "selection": "outer native MRI cell box covering public cerebrum and whole-tumor source-grid domains, one-cell roundoff halo, clipped only to acquired MRI",
+        "uses_private_labels": false,
+        "uses_label_positive_extent": false,
+        "uses_public_whole_tumor_source_domain": true,
+        "public_source_cell_bounds_in_MR_index": {
+          "cerebrum": {
+            "minimum": [
+              44.114276012618376,
+              60.49813121488399,
+              20.339444973211645
+            ],
+            "maximum": [
+              178.91758957196282,
+              230.7185794330726,
+              138.36578708420396
+            ]
+          },
+          "whole_tumor": {
+            "minimum": [
+              126.68219411342727,
+              100.21017328379637,
+              77.83658873464974
+            ],
+            "maximum": [
+              169.68219176061146,
+              159.21016239041643,
+              115.83659281101176
+            ]
+          }
+        },
+        "unclipped_MR_start": [
+          43,
+          59,
+          19
+        ],
+        "unclipped_MR_stop": [
+          181,
+          233,
+          140
+        ],
+        "clipped_to_MR_coverage": false,
+        "uniform_inset_MR_cells_per_face": 0,
+        "roundoff_halo_MR_cells_per_face": 1,
+        "all_public_source_voxel_centres_inside_output": true,
+        "support_source_domain_policy": "explicit mask; outside is unknown, never observed empty; downstream full-coverage factory is incompatible",
+        "original_MR_sampling_mm": [
+          0.976562921048362,
+          0.9765630973263891,
+          1.0000001971344634
+        ],
+        "image_interpolation": "none",
+        "planning_affine_method": "existing bounded polar orthogonal roundoff; exact native source crop affine retained",
+        "maximum_world_corner_difference_mm": 5.847372165827887e-05,
+        "bound_mm": 0.001
+      }
+    }
+  ],
+  "not_executed_on_images": true,
+  "source_positive_crop_loss_expectation": "All source centre boxes fit the proposed crop; actual source-positive recount and NN sampling volume/count audit required on separately released conversion.",
+  "candidate_source_sha256_at_geometry_calculation": "8a12b1ca1e2ba494ba0d1886a1fccac964cd7010ec8c8088f3bfce7938ed59f9",
+  "current_candidate_source_sha256": "f35a28f2cdedd777e15031b5cba370c4106c0436eefe9590ca17466d8944b3ca",
+  "crop_function_AST_unchanged_by_later_domain_partition_addition": true,
+  "crop_function_AST_sha256": "050112bf34b0f5309bcb16411f14768bbfabb1e33ba5867fb4eaeae9139f6145"
+}

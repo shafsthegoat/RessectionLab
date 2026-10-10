@@ -1,0 +1,257 @@
+{
+  "array_and_overlay_bodies_not_opened": true,
+  "declaration": {
+    "bytes": 1359,
+    "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/declaration.json",
+    "sha256": "7cf2720f99b77f9046926b2cfbcb24b266e3d1df7a391efd807688b5c163f714"
+  },
+  "duplicate_raw_header_uid_lists_or_arrays_in_package": false,
+  "metadata_and_source_rehashed": [
+    {
+      "bytes": 9482,
+      "path": "build/goal-conditioned-policy-v1/darwin_fast_sampler.py",
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c"
+    },
+    {
+      "bytes": 8730,
+      "path": "build/goal-conditioned-policy-v1/run_contact_owned.py",
+      "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7"
+    },
+    {
+      "bytes": 13076,
+      "path": "build/remind-select-public-preparation-v1/audit_saved_public.py",
+      "sha256": "6d09fcd2e27fbb1cfbadd3205586273583e483890e57c317841e124a29d91ba9"
+    },
+    {
+      "bytes": 2188,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-crop-mr-supervisor.json",
+      "sha256": "9c52424b069233b7346c379dd9af5135ec13f631e3dc0253a253d4e93965eac3"
+    },
+    {
+      "bytes": 18804,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-crop-mr/conversion-result.json",
+      "sha256": "984ad5487ac2987b884cd3d6d4f97b43cc6c4403777b5bd6797f03bd7e5168fd"
+    },
+    {
+      "bytes": 1845,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-headers-supervisor.json",
+      "sha256": "f98e020dbcdfaca800c833fb393844c3849c44a83bd14e28d770daa35fcf931c"
+    },
+    {
+      "bytes": 258056,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-headers/result.json",
+      "sha256": "e28cea1d1be2f0635ac706f008467bb3d5b5cbfb5f211a3fe4cb72b23ad14bbf"
+    },
+    {
+      "bytes": 2188,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-crop-mr-supervisor.json",
+      "sha256": "72ad1917e5cbdcd6cf08b1332283bd0458a0e07173db255b368374dd9b823947"
+    },
+    {
+      "bytes": 18444,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-crop-mr/conversion-result.json",
+      "sha256": "a187ec40fd785011263fa4e7a558b40e33fc203cf9f1a6d29dcd5b6c5bdad574"
+    },
+    {
+      "bytes": 1845,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-headers-supervisor.json",
+      "sha256": "5871920a364d6e4688d0c8f5abf61a3538c68be4b9f6e5871e36db503b8a08de"
+    },
+    {
+      "bytes": 250345,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-headers/result.json",
+      "sha256": "a02471718c7a8dd118340169a28afd055cd84b3cd5cb39612a7ebdc0ff7e6be6"
+    },
+    {
+      "bytes": 2189,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-crop-mr-supervisor.json",
+      "sha256": "2d72aee6c5977bb082047413483d9b20bb5e1f540804767c8c83baf36ed2cb22"
+    },
+    {
+      "bytes": 18887,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-crop-mr/conversion-result.json",
+      "sha256": "102f3319b93faf46e81ba4432c9a8f8d75adb22d5f3ff7bea72d2702712970e1"
+    },
+    {
+      "bytes": 1845,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-headers-supervisor.json",
+      "sha256": "8722323b34d2baa1308d8ccb40ad971e1395dd283cef38262c71182403a266f3"
+    },
+    {
+      "bytes": 249370,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-headers/result.json",
+      "sha256": "ae830f77f38ca86765d8df1f9cf2b5263e19d4ab4e9538de0879a8e7b5452b43"
+    },
+    {
+      "bytes": 2190,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-crop-mr-supervisor.json",
+      "sha256": "946a1cfdfd4a4bf57c06a778da773755cf1f23689aaa28a7f7a20e95c8311c91"
+    },
+    {
+      "bytes": 18788,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-crop-mr/conversion-result.json",
+      "sha256": "0d7d2abadf79de8e9ec60bf92a4db7899677fc37b010515b23622ae83e08171a"
+    },
+    {
+      "bytes": 1845,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-headers-supervisor.json",
+      "sha256": "0a56bd8c67c17c259180f4bba951e3185078e5cd2d919e439f5f7ecaed9689d8"
+    },
+    {
+      "bytes": 250825,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-headers/result.json",
+      "sha256": "32d01668e69ef38a5700d7ee0ca42d27d01a81e7d0adc3115a9392bbfea1f524"
+    },
+    {
+      "bytes": 1359,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/declaration.json",
+      "sha256": "7cf2720f99b77f9046926b2cfbcb24b266e3d1df7a391efd807688b5c163f714"
+    },
+    {
+      "bytes": 1136,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/pending-qualification-index.json",
+      "sha256": "b8be8a996153a9838ed169fccbabd87c3ffff3800ac4211b958e5ddb04c37a5d"
+    },
+    {
+      "bytes": 18075,
+      "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/receipt.json",
+      "sha256": "d461f9d4a08b8b25120da532d0df06ba12664b0a5bf4997335d8f21551cab2ac"
+    },
+    {
+      "bytes": 92698,
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-002-case.json",
+      "sha256": "59f7df33759d8de556b0b6335863bad08dda3879bb232e3e3cbb98ee10503171"
+    },
+    {
+      "bytes": 99621,
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-002-source-binding.json",
+      "sha256": "4aae0d9b4a413a61e135095964e73d0678d8173ebd8d811eb056a19db3f0b5a4"
+    },
+    {
+      "bytes": 92699,
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-015-case.json",
+      "sha256": "53c5f3a360c4c79ceede9248d5c2d97a00391a2c3839e6ca4492eba86ee58c18"
+    },
+    {
+      "bytes": 99621,
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-015-source-binding.json",
+      "sha256": "5bd61963a2aca022857683aae5e9af998c89eecb7f49ac0c4ffde03eadd069e5"
+    },
+    {
+      "bytes": 92698,
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-018-case.json",
+      "sha256": "63df1936fd64c7b7370f4d772a7d2b75c95c12d439a4065b1c159ea6bc17369a"
+    },
+    {
+      "bytes": 99621,
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-018-source-binding.json",
+      "sha256": "d26ad45212c8d8aec93ab17f8c8d88fda7bcabd9ae61c4c98df1f807d73a845a"
+    },
+    {
+      "bytes": 85451,
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-045-case.json",
+      "sha256": "9413d47ff3a55bfd429b64777f2ba9d55eea548c904f8e4328a41481158e16ac"
+    },
+    {
+      "bytes": 91782,
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-045-source-binding.json",
+      "sha256": "f1282350f7cd9a8014241d6067c9cacd084316e5b5113681a28f093e21914ed0"
+    },
+    {
+      "bytes": 15988,
+      "path": "build/remind-train-public-qc-preparation-v1/metadata-preservation-v1/deferred-saved-review.json",
+      "sha256": "469708bd19f02142cf1fe263ce75bee720bb5bb53ae20c5a4f9b9b477d0a0d71"
+    },
+    {
+      "bytes": 19662,
+      "path": "build/remind-train-public-qc-preparation-v1/metadata-preservation-v1/summary.json",
+      "sha256": "ba953ba8966083660b5fa09058d2644afee5bae183bac20003fd7198dcdf77c0"
+    },
+    {
+      "bytes": 999,
+      "path": "build/remind-train-public-qc-preparation-v1/prepared-release.json",
+      "sha256": "a768f412cb66c0444a98a2ff2a7f83162f8ec176062b13cc9c14daede60f4b7f"
+    },
+    {
+      "bytes": 4700,
+      "path": "build/remind-train-public-qc-preparation-v1/public-train-index.json",
+      "sha256": "8b9263a99e9e8a05b26351979db00b76f68ec8025c8215e4a252e5432006abb6"
+    },
+    {
+      "bytes": 998,
+      "path": "build/remind-train-public-qc-preparation-v1/root-release.json",
+      "sha256": "3bb004f2f66dd634def2e18155fd670992867c2421d4bb6562c1468dd2c585e4"
+    },
+    {
+      "bytes": 14959,
+      "path": "build/remind-train-public-qc-preparation-v1/run_public_qc_owned.py",
+      "sha256": "b1be7baf3ea239440cd0e1dc7c64c5e6ecc7dcd97308e74f0e05147861a03bf0"
+    },
+    {
+      "bytes": 4306,
+      "path": "build/remind-train-public-qc-preparation-v1/source-index.json",
+      "sha256": "1c75e63b2f845f8890bbcf05871f81f4c62be35d5fd5fac1dd91d19f7e8f1a7e"
+    },
+    {
+      "bytes": 1273,
+      "path": "build/remind-train-public-qc-preparation-v1/stage/scripts/prepare_remind_planning.py",
+      "sha256": "155e32f3c4605407fe4c3e65de5c0445bae7918002daf803d2dde470fe350b35"
+    },
+    {
+      "bytes": 99,
+      "path": "build/remind-train-public-qc-preparation-v1/stage/src/resectionlab/__init__.py",
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    {
+      "bytes": 41956,
+      "path": "build/remind-train-public-qc-preparation-v1/stage/src/resectionlab/remind_planning_qc.py",
+      "sha256": "4a3521ae64e3b1f376d3e5b3d6b46132ca6175e83e15d2a18a074a0076f839c5"
+    },
+    {
+      "bytes": 70925,
+      "path": "manifests/experiments/remind-component-cohort-v1.json",
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+    },
+    {
+      "bytes": 34154,
+      "path": "manifests/experiments/remind-planning-pilot-v1.json",
+      "sha256": "ff092655049c1f6d5eb324f9610a4c1f5b8ec50c1a29cfaf92a54f74c951395f"
+    },
+    {
+      "bytes": 11404,
+      "path": "scripts/convert_remind_development.py",
+      "sha256": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+    },
+    {
+      "bytes": 99,
+      "path": "src/resectionlab/__init__.py",
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    {
+      "bytes": 10427,
+      "path": "src/resectionlab/legacy_transfer_supervisor.py",
+      "sha256": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
+    }
+  ],
+  "pending_qualification": {
+    "bytes": 1136,
+    "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/pending-qualification-index.json",
+    "sha256": "b8be8a996153a9838ed169fccbabd87c3ffff3800ac4211b958e5ddb04c37a5d"
+  },
+  "prepared_release_preserved": {
+    "bytes": 999,
+    "path": "build/remind-train-public-qc-preparation-v1/prepared-release.json",
+    "sha256": "a768f412cb66c0444a98a2ff2a7f83162f8ec176062b13cc9c14daede60f4b7f"
+  },
+  "receipt": {
+    "bytes": 18075,
+    "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/receipt.json",
+    "sha256": "d461f9d4a08b8b25120da532d0df06ba12664b0a5bf4997335d8f21551cab2ac"
+  },
+  "root_release": {
+    "bytes": 998,
+    "path": "build/remind-train-public-qc-preparation-v1/root-release.json",
+    "sha256": "3bb004f2f66dd634def2e18155fd670992867c2421d4bb6562c1468dd2c585e4"
+  },
+  "schema": "remind-next-four-compact-preservation-index-v1"
+}

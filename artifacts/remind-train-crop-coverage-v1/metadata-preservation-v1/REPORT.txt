@@ -1,0 +1,22 @@
+Saved metadata audit: PASS; anatomy/intended-use qualification remains pending.
+
+The exact four TRAIN cases completed all eight source conversion phases in 8.415849 seconds, peak sampled owned RSS 1,486,831,616 bytes. All 20 source/index bindings and eight saved result/supervisor pairs reconcile. Root release differs from the preserved false template only in execution_released. Recorded cleanup has all children reaped and no remaining owned PIDs; this audit did not launch or sample processes.
+
+Case | native target positives | placed full target | outside automatic support | target positive source centres outside crop
+--- | ---: | ---: | ---: | ---:
+ReMIND-002 | 24,294 | 22,699 | 20,994 (92.49%) | 1,565
+ReMIND-015 | 7,745 | 7,745 | 1,758 (22.70%) | 0
+ReMIND-018 | 1,247 | 1,247 | 250 (20.05%) | 0
+ReMIND-045 | 25,301 | 25,102 | 19,690 (78.44%) | 199
+
+Native positives, placed full target, source-centre crop losses and outside-support positives are distinct denominators. Nearest-neighbour resampling can omit subvoxel labels; native-minus-placed is not asserted to be crop loss. target_clipped=false records no mask intersection with support, not absence of crop loss. No target clipping, support filling/repair, or replacement was performed.
+
+All four remain SOURCE_RESULT_UNREVIEWED_NO_TRAINING_ADMISSION, with public input manifests null and denominator four. Manual whole tumor is not a prescribed resection target. Automatic Brainlab cerebrum is supplied estimated support, not proven healthy/removable tissue. Saved correspondence records shared frame plus source description, without explicit SOP references or expert alignment review. Exact source availability timestamps and cross-collection/pretrained overlap remain uncertain.
+
+Exposure: this audit read saved JSON and hashed small source/metadata files, and stat-checked 32 saved array/overlay artifacts. It did not read or hash artifact bodies, reopen original DICOM, decode pixels, inspect overlays, train, or read private data. Recorded artifact SHA256 values remain the converter values, pending a saved-array audit.
+
+The conversion reports inherit the preparation-era sentence “Only public three-series metadata prepared; no header, pixel or array opened…” in case_uncertainties. That sentence describes prior preparation, is stale for the completed conversion, and must not be used as the current exposure statement. Original reports are preserved unchanged.
+
+Compact preservation: summary.json contains sanitized geometry/count/terminal projections. preservation-index.json hashes original sources and receipts without copying header UID lists or arrays. deferred-saved-review.json binds the existing 32 artifacts by recorded hashes and fresh size/stat only. The original full header and conversion reports remain at their indexed ignored paths.
+
+Next: stage the existing saved-array geometry/domain/sample verifier and support-pattern diagnostic for this exact four-case allowlist, remove inherited visual claims and automatic runnable-manifest output, and keep root visual/source-artifact review pending. No saved-array execution occurred in this metadata audit.

@@ -1,0 +1,22 @@
+Saved-review reconciliation: PASS. Crop coverage diagnosis: losses introduced by our crop selection.
+
+Root-owned saved-array audit completed in 0.671575s with sampled peak RSS 64,716,800 bytes, exit0, no cleanup errors or remaining children. Four source-review hashes, full target/support counts, world-domain/geometry checks and root twelve-overlay note reconcile. This follow-up opened JSON/source only, no arrays, PNG bodies or original DICOM.
+
+Case | full source target positives | source target centres cropped | source support centres cropped | uniform MRI inset/face
+--- | ---: | ---: | ---: | ---:
+ReMIND-002 | 24,294 | 1,565 | 135 / 14,747,939 | 1
+ReMIND-015 | 7,745 | 0 | 228 / 7,175,391 | 1
+ReMIND-018 | 1,247 | 0 | 2,146 / 7,316,829 | 1
+ReMIND-045 | 25,301 | 199 | 1,083,331 / 29,092,192 | 12
+
+Geometry proof: for every case and both labels, all eight corners of the complete source voxel-centre box map inside full acquired MRI cell coverage. An affine map attains each coordinate extremum at a box corner, so every label-positive source centre is covered by acquired MRI. No original image or label values are needed for that containment proof. Current crop metadata says clipped_to_MR_coverage=false for all four. This proves geometry coverage, not anatomy accuracy.
+
+Current source mr_sampling_crop uses cerebrum source-grid bounds, then uniformly insets every face until all output corners fit inside that source domain.002 tumor source-grid centres extend to MRI z17.9006 whereas current crop begins z27; the tumor grid also extends below the cerebrum source-domain grid. Removing the inset alone cannot recover the full target there.045 uses a12-cell inset; its target reaches MRI x169.1822 whereas current crop ends at cell boundary167.5. This is unnecessary MRI coverage loss from the conservative contained rectangle.015/018 support-centre losses also arise from the crop; neither loses target-positive centres.
+
+Root inspected all twelve existing orthogonal overlays, finding no obvious repeated striping like037 in those limited views. The exact notes and image hashes are preserved separately; this audit did not repeat visual inspection. No expert anatomical validation follows.002/045 remain held for full-target use.015/018 may support separately qualified region tasks with their support losses disclosed. All four stay in the denominator; no new public manifest or training admission is created.
+
+Smallest remedy is a separately named native-MRI crop covering both public source-domain boxes, retaining explicit source-domain masks and no extrapolation or label repair. The ignored source-only candidate adds crop-mr-domains for these four TRAIN people and preserves original crop behavior/results. It includes a one-cell halo for the existing bounded affine roundoff, verifies complete source-centre containment, and requires actual positive-centre crop loss zero on any later execution. Nearest-neighbour sampling differences still require count/volume audit; source extent recovery is not perfect subvoxel label preservation.
+
+Incomplete cerebrum source-domain cells remain unknown, never observed empty. Candidate output explicitly partitions target overlap into known label-positive, known label-zero and unknown-domain, and marks the existing full-support-domain factory incompatible. Even known label zero is not proven physical emptiness. Domain-aware task semantics require separate review before use; no factory bypass is supplied.
+
+Candidate: ../crop-domain-revision-v1/HANDOFF.txt and source-index.json. Eight generated-only tests pass. Metadata-only geometry prediction yields new crops002141x173x122,015134x175x116,018135x166x116,045138x174x121, all below3million voxels. No actual conversion rerun, model/native work, source acquisition, SELECT/EVAL access, canonical edit or original-result change occurred.

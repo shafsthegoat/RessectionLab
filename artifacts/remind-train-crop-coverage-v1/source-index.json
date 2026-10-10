@@ -1,0 +1,108 @@
+{
+  "schema": "remind-public-TRAIN-next-four-QC-source-index-v1",
+  "files": [
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/run_public_qc_owned.py",
+      "bytes": 14959,
+      "sha256": "b1be7baf3ea239440cd0e1dc7c64c5e6ecc7dcd97308e74f0e05147861a03bf0"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/stage/src/resectionlab/remind_planning_qc.py",
+      "bytes": 41956,
+      "sha256": "4a3521ae64e3b1f376d3e5b3d6b46132ca6175e83e15d2a18a074a0076f839c5"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/stage/scripts/prepare_remind_planning.py",
+      "bytes": 1273,
+      "sha256": "155e32f3c4605407fe4c3e65de5c0445bae7918002daf803d2dde470fe350b35"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/public-train-index.json",
+      "bytes": 4700,
+      "sha256": "8b9263a99e9e8a05b26351979db00b76f68ec8025c8215e4a252e5432006abb6"
+    },
+    {
+      "path": "scripts/convert_remind_development.py",
+      "bytes": 11404,
+      "sha256": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+    },
+    {
+      "path": "manifests/experiments/remind-component-cohort-v1.json",
+      "bytes": 70925,
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+    },
+    {
+      "path": "manifests/experiments/remind-planning-pilot-v1.json",
+      "bytes": 34154,
+      "sha256": "ff092655049c1f6d5eb324f9610a4c1f5b8ec50c1a29cfaf92a54f74c951395f"
+    },
+    {
+      "path": "build/goal-conditioned-policy-v1/run_contact_owned.py",
+      "bytes": 8730,
+      "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7"
+    },
+    {
+      "path": "build/goal-conditioned-policy-v1/darwin_fast_sampler.py",
+      "bytes": 9482,
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c"
+    },
+    {
+      "path": "src/resectionlab/legacy_transfer_supervisor.py",
+      "bytes": 10427,
+      "sha256": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-002-case.json",
+      "bytes": 92698,
+      "sha256": "59f7df33759d8de556b0b6335863bad08dda3879bb232e3e3cbb98ee10503171"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-002-source-binding.json",
+      "bytes": 99621,
+      "sha256": "4aae0d9b4a413a61e135095964e73d0678d8173ebd8d811eb056a19db3f0b5a4"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-015-case.json",
+      "bytes": 92699,
+      "sha256": "53c5f3a360c4c79ceede9248d5c2d97a00391a2c3839e6ca4492eba86ee58c18"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-015-source-binding.json",
+      "bytes": 99621,
+      "sha256": "5bd61963a2aca022857683aae5e9af998c89eecb7f49ac0c4ffde03eadd069e5"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-018-case.json",
+      "bytes": 92698,
+      "sha256": "63df1936fd64c7b7370f4d772a7d2b75c95c12d439a4065b1c159ea6bc17369a"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-018-source-binding.json",
+      "bytes": 99621,
+      "sha256": "d26ad45212c8d8aec93ab17f8c8d88fda7bcabd9ae61c4c98df1f807d73a845a"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-045-case.json",
+      "bytes": 85451,
+      "sha256": "9413d47ff3a55bfd429b64777f2ba9d55eea548c904f8e4328a41481158e16ac"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/bindings/ReMIND-045-source-binding.json",
+      "bytes": 91782,
+      "sha256": "f1282350f7cd9a8014241d6067c9cacd084316e5b5113681a28f093e21914ed0"
+    },
+    {
+      "path": "build/remind-train-public-qc-preparation-v1/stage/src/resectionlab/__init__.py",
+      "bytes": 99,
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    {
+      "path": "src/resectionlab/__init__.py",
+      "bytes": 99,
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    }
+  ],
+  "prepared_only": true,
+  "actual_source_read_released": false,
+  "geometry_code_change": "Only four fixed TRAIN IDs added to exact public reader allowlist; algorithms unchanged."
+}

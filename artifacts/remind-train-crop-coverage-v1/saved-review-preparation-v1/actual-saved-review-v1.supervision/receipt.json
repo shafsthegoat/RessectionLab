@@ -1,0 +1,25 @@
+{
+  "automatic_source_artifact_clearance": false,
+  "caps": {
+    "automatic_retry": false,
+    "log_bytes": 4194304,
+    "output_bytes": 67108864,
+    "sampled_rss_bytes": 3221225472,
+    "seconds": 300,
+    "threads": 1
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 0.6715751660522074,
+  "exit_code": 0,
+  "memory_limit": "sampled, not kernel hard",
+  "planned_denominator": 4,
+  "reaped": true,
+  "remaining_owned_pids": [],
+  "result_sha256": "e84b3d6331bd08cd510daa465dfd2f7fde5fab277a52d63da7bed89134349e2a",
+  "sampled_peak_rss_bytes": 64716800,
+  "samples": 5,
+  "status": "complete",
+  "stop_reason": null,
+  "training_admitted": false
+}

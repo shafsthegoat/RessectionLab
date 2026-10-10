@@ -25,7 +25,7 @@ COHORT_SHA = "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
 MAX_RSS = 2*1024**3
 MAX_CORNER_MM = .001
 PUBLIC_SERIES_KINDS = frozenset(("structural_t1ce", "whole_tumor", "cerebrum"))
-PUBLIC_SUBJECTS_BY_ROLE = {"TRAIN": ("ReMIND-008", "ReMIND-010", "ReMIND-020", "ReMIND-025"),
+PUBLIC_SUBJECTS_BY_ROLE = {"TRAIN": ("ReMIND-002", "ReMIND-008", "ReMIND-010", "ReMIND-015", "ReMIND-018", "ReMIND-020", "ReMIND-025", "ReMIND-045"),
                            "SELECT": ("ReMIND-013", "ReMIND-037")}
 
 
@@ -435,6 +435,68 @@ def mr_sampling_crop(mr_geometry, public_geometry):
         "maximum_world_corner_difference_mm": error, "bound_mm": MAX_CORNER_MM}
 
 
+def public_target_support_domain_relation(target, support, domain):
+    """Partition target by known support and explicitly unknown source extent."""
+    import numpy as np
+    need(target.shape == support.shape == domain.shape, "public_domain_shape")
+    need(all(np.isin(a, (0, 1)).all() for a in (target, support, domain)), "public_domain_binary")
+    need(np.all((support == 0) | (domain == 1)), "support_positive_outside_source_domain")
+    return {"full_placed_target_voxels": int(np.count_nonzero(target)),
+            "target_in_known_support_positive": int(np.count_nonzero((target != 0) & (support != 0) & (domain != 0))),
+            "target_in_known_support_zero": int(np.count_nonzero((target != 0) & (support == 0) & (domain != 0))),
+            "target_in_unknown_support_domain": int(np.count_nonzero((target != 0) & (domain == 0))),
+            "known_label_zero_is_physical_empty": False, "unknown_label_zero_is_observed_empty": False}
+
+
+def mr_sampling_domain_union_crop(mr_geometry, public_geometry, tumor_geometry):
+    """Retain both public source-grid extents on acquired MRI sampling.
+
+    The outer box can contain unknown annotation-domain cells. Domain masks
+    must accompany labels; this function cannot grant planning admission.
+    """
+    import numpy as np
+    mr = np.asarray(mr_geometry["affine_xyz_to_ras_mm"], dtype=float)
+    full = np.asarray(mr_geometry["shape_xyz"], dtype=int)
+    geometry = {"cerebrum": public_geometry, "whole_tumor": tumor_geometry}
+    mapped_domains = {}; mapped_centres = {}
+    for kind, g in geometry.items():
+        transform = np.linalg.inv(mr) @ np.asarray(g["affine_xyz_to_ras_mm"])
+        mapped_domains[kind] = (np.c_[corners(g["shape_xyz"]), np.ones(8)] @ transform.T)[:, :3]
+        centre_corners = np.asarray(list(itertools.product(*[(0, n-1) for n in g["shape_xyz"]])), dtype=float)
+        mapped_centres[kind] = (np.c_[centre_corners, np.ones(8)] @ transform.T)[:, :3]
+        need(np.all(mapped_centres[kind] >= -.5) and np.all(mapped_centres[kind] < full-.5), "public_source_grid_centres_outside_acquired_MRI:"+kind)
+    points = np.concatenate(list(mapped_domains.values()))
+    low = np.floor(points.min(0)+.5).astype(int)-1
+    high = np.ceil(points.max(0)+.5).astype(int)+1
+    # One native-cell halo protects outer extent from the already bounded
+    # sub-micron planning-affine roundoff. MRI clipping never extrapolates.
+    start, stop = np.maximum(low, 0), np.minimum(high, full)
+    shape = stop-start
+    need(np.all(shape >= 3) and int(np.prod(shape)) <= 32000000, "public_MR_crop_extent")
+    spacing = np.linalg.norm(mr[:3, :3], axis=0)
+    u, _, vt = np.linalg.svd(mr[:3, :3]/spacing)
+    native = mr.copy(); native[:3, 3] = (mr @ np.r_[start, 1])[:3]
+    derived = native.copy(); derived[:3, :3] = (u@vt)*spacing
+    error = corner_error(native, derived, shape)
+    need(error <= MAX_CORNER_MM, "MR_orthogonal_roundoff_exceeds_bound")
+    for kind, g in geometry.items():
+        centre_corners = np.asarray(list(itertools.product(*[(0, n-1) for n in g["shape_xyz"]])), dtype=float)
+        mapped = (np.c_[centre_corners, np.ones(8)] @ (np.linalg.inv(derived) @ np.asarray(g["affine_xyz_to_ras_mm"])).T)[:, :3]
+        need(np.all(mapped >= -.5) and np.all(mapped < shape-.5), "public_source_grid_centres_outside_derived_crop:"+kind)
+    return start, tuple(int(n) for n in shape), native, derived, {
+        "selection": "outer native MRI cell box covering public cerebrum and whole-tumor source-grid domains, one-cell roundoff halo, clipped only to acquired MRI",
+        "uses_private_labels": False, "uses_label_positive_extent": False, "uses_public_whole_tumor_source_domain": True,
+        "public_source_cell_bounds_in_MR_index": {k: {"minimum": v.min(0).tolist(), "maximum": v.max(0).tolist()} for k, v in mapped_domains.items()},
+        "unclipped_MR_start": low.tolist(), "unclipped_MR_stop": high.tolist(),
+        "clipped_to_MR_coverage": bool(np.any(start != low) or np.any(stop != high)),
+        "uniform_inset_MR_cells_per_face": 0, "roundoff_halo_MR_cells_per_face": 1,
+        "all_public_source_voxel_centres_inside_output": True,
+        "support_source_domain_policy": "explicit mask; outside is unknown, never observed empty; downstream full-coverage factory is incompatible",
+        "original_MR_sampling_mm": spacing.tolist(), "image_interpolation": "none",
+        "planning_affine_method": "existing bounded polar orthogonal roundoff; exact native source crop affine retained",
+        "maximum_world_corner_difference_mm": error, "bound_mm": MAX_CORNER_MM}
+
+
 def resample_binary_nn(source, source_affine, target_affine, target_shape, checkpoint=None):
     """Nearest source voxel centre, with half-open native cell-domain coverage.
 
@@ -487,16 +549,22 @@ def run_crop(args):
         raw = args.case.read_bytes(); need(digest(raw) == args.case_sha256, "exact_case"); case = json.loads(raw)
         report["immutable_role_binding"] = validate_case(case, repository_root, public_only=public_only)
         report.update(patient_id=case["patient_id"], patient_group=case["patient_group"], role=case["role"])
+        domain_union_crop = args.phase == "crop-mr-domains"
+        if domain_union_crop:
+            need(public_only and case["role"] == "TRAIN" and case["patient_id"] in ("ReMIND-002", "ReMIND-015", "ReMIND-018", "ReMIND-045"), "domain_union_exact_TRAIN_public_scope")
         if public_only: report.update(public_only=True, optimizer_updates_performed=0, private_reference_loaded=False)
         raw = args.headers.read_bytes(); need(digest(raw) == args.headers_sha256, "exact_header_snapshot"); headers = json.loads(raw)
         by_kind = validate_header_binding(headers, case, args.case_sha256, public_only=public_only)
         series = {s["kind"]: s for s in case["series"]}
         core = source_module(repository_root / "scripts/convert_remind_development.py", CORE_SHA)
         mr = by_kind["structural_t1ce"]; public = by_kind["cerebrum"]
-        resample_labels = args.phase == "crop-mr"
+        resample_labels = args.phase in ("crop-mr", "crop-mr-domains")
         mr_affine = np.asarray(mr["geometry"]["affine_xyz_to_ras_mm"])
         if resample_labels:
-            start, shape, native_crop_affine, derived, crop_map = mr_sampling_crop(mr["geometry"], public["geometry"])
+            if domain_union_crop:
+                start, shape, native_crop_affine, derived, crop_map = mr_sampling_domain_union_crop(mr["geometry"], public["geometry"], by_kind["whole_tumor"]["geometry"])
+            else:
+                start, shape, native_crop_affine, derived, crop_map = mr_sampling_crop(mr["geometry"], public["geometry"])
         else:
             shape = tuple(public["geometry"]["shape_xyz"]); need(np.prod(shape) <= 32000000, "planning_voxel_cap")
             derived = np.asarray(public["geometry"]["affine_xyz_to_ras_mm"])
@@ -530,7 +598,9 @@ def run_crop(args):
             MR_pixel_source_objects=len(selected_indices), MR_header_only_objects_outside_selected_z=len(series["structural_t1ce"]["objects"])-len(selected_indices),
             full_MR_native_array_written=False, selected_MR_pixels_match_independent_raw_bytes=True, source_cropping_map=crop_map,
             case_uncertainties=case.get("case_uncertainties", []), annotations={})
-        masks = {}; tumor_point = None
+        if domain_union_crop:
+            report.update(planning_grid_source="native MRI outer crop covering both public annotation source domains; explicit domain masks required", crop_policy="public_source_domain_union_no_extrapolation", full_coverage_factory_compatible=False, support_source_domain_required=True)
+        masks = {}; tumor_point = None; support_domain_for_relation = None
         label_kinds = ("cerebrum", "whole_tumor") if public_only else ("cerebrum", "whole_tumor", "ventricles")
         for kind in label_kinds:
             guard(started); source = series[kind]; saved = by_kind[kind]
@@ -544,7 +614,12 @@ def run_crop(args):
             need(corner_error(affine, saved["geometry"]["affine_xyz_to_ras_mm"], native.shape) < 1e-9, "SEG_saved_geometry")
             if resample_labels:
                 placed, domain, placement = resample_binary_nn(native, affine, derived, shape, lambda: guard(started))
-                if kind == "cerebrum": need(bool(np.all(domain)), "public_support_source_domain_incomplete")
+                if domain_union_crop:
+                    need(placement["source_positive_centres_outside_target_grid"] == 0, "unexpected_public_source_positive_crop_loss:"+kind)
+                    if kind == "cerebrum":
+                        support_domain_for_relation = domain
+                        report.update(public_support_source_domain_complete=bool(np.all(domain)), public_support_source_domain_unknown_voxels=int(domain.size-np.count_nonzero(domain)))
+                elif kind == "cerebrum": need(bool(np.all(domain)), "public_support_source_domain_incomplete")
             else:
                 offset, placement = integer_map(affine, native.shape, derived)
                 placed, domain = place(native, offset, shape)
@@ -570,6 +645,8 @@ def run_crop(args):
                 "public_support_zero_voxels": int(np.count_nonzero(masks["cerebrum"] == 0)),
                 "support_filled_or_modified": False, "information_boundary": "The automatic cerebrum mask is explicitly supplied public estimated support. Its holes/zeros may reveal anatomy; retain and declare this cue, never fill or hide it to manufacture difficulty."}
         report["public_target_support_relation"] = public_target_support_relation(masks["whole_tumor"], masks["cerebrum"])
+        if domain_union_crop:
+            report["public_target_support_domain_relation"] = public_target_support_domain_relation(masks["whole_tumor"], masks["cerebrum"], support_domain_for_relation)
         if not public_only:
             report["evaluation_only_target_ventricle_relation"] = {"overlap_positive_voxels": int(np.count_nonzero(masks["whole_tumor"] & masks["ventricles"])),
                 "interpretation": "Source-reference overlap can contradict simultaneous perfect target-removal and zero-contact hard goals; it is not clinical truth."}

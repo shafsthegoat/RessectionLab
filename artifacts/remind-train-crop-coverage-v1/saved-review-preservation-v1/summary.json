@@ -1,0 +1,669 @@
+{
+  "all_four_arrays_checked_by_bound_worker": true,
+  "elapsed_seconds": 0.6715751660522074,
+  "expert_anatomy_validation": false,
+  "fixed_denominator": 4,
+  "next_change": "Preserve original crops. Separate conversion may retain a native-MRI outer box covering both public annotation domains, with source-domain masks retained and unknown outside. Do not use the current factory if it assumes full support coverage; no extrapolation, filling or automatic admission.",
+  "proof_limit": "Affine geometry/source-grid containment, not anatomical validity or annotation accuracy. A grid centre inside MRI coverage does not verify tissue identity.",
+  "root_reviewed_12_overlays": true,
+  "root_visual_note": {
+    "bytes": 6049,
+    "path": "build/remind-train-public-qc-preparation-v1/root-overlay-review.json",
+    "sha256": "d29f5068dbef78046e9e23024cbec3df7dad7a2dffde5de0ea35f47cbf26153a"
+  },
+  "rows": [
+    {
+      "conversion_result": {
+        "bytes": 18804,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-crop-mr/conversion-result.json",
+        "sha256": "984ad5487ac2987b884cd3d6d4f97b43cc6c4403777b5bd6797f03bd7e5168fd"
+      },
+      "current_crop_clipped_to_MRI_coverage": false,
+      "current_crop_shape": [
+        137,
+        169,
+        109
+      ],
+      "current_crop_start": [
+        41,
+        55,
+        27
+      ],
+      "current_uniform_inset_MRI_cells_per_face": 1,
+      "full_MRI_shape": [
+        216,
+        256,
+        192
+      ],
+      "full_target_use_held": true,
+      "headers": {
+        "bytes": 258056,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-002-headers/result.json",
+        "sha256": "e28cea1d1be2f0635ac706f008467bb3d5b5cbfb5f211a3fe4cb72b23ad14bbf"
+      },
+      "interpretation": "All positive source centres are geometrically inside acquired MRI; losses result from selected crop. Full source-domain centre boxes suffice for this proof without reading labels.",
+      "outer_annotation_domain_bbox_MRI_start": [
+        40,
+        54,
+        17
+      ],
+      "outer_annotation_domain_bbox_MRI_stop": [
+        179,
+        225,
+        137
+      ],
+      "outer_bbox_shape_without_roundoff_halo": [
+        139,
+        171,
+        120
+      ],
+      "patient_id": "ReMIND-002",
+      "role": "TRAIN",
+      "root_visual_observation": "All three target-centered orthogonal views inspected. Supplied tumor extends to a crop edge in two displayed planes, consistent with measured source target crop loss. No obvious regular repeated support striping in these three views. Hold full-target experiment; cannot infer absent source tissue from crop.",
+      "saved_counts": {
+        "support": 988731,
+        "target": 22699,
+        "target_domain": 48218,
+        "target_outside_support": 20994
+      },
+      "saved_review": {
+        "bytes": 3849,
+        "path": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-002-saved-public-review.json",
+        "sha256": "e2d81b25b5fb4316e3f06538814157792468acc790aba36efab3721fc5d6cf75"
+      },
+      "source_domains": {
+        "cerebrum": {
+          "entire_source_voxel_centre_box_inside_MRI": true,
+          "entire_source_voxel_centre_box_inside_cerebrum_domain": true,
+          "native_positive_voxels": 14747939,
+          "source_positive_centres_outside_current_crop": 135,
+          "voxel_cell_bounds_in_full_MRI": {
+            "maximum": [
+              177.67601791330068,
+              223.55120697701426,
+              135.65792459833693
+            ],
+            "minimum": [
+              40.459960986006344,
+              53.56718548414999,
+              25.772996114394672
+            ]
+          },
+          "voxel_centre_bounds_in_cerebrum_source_grid": {
+            "maximum": [
+              334.0,
+              414.00000000000006,
+              274.0
+            ],
+            "minimum": [
+              -3.032296636007459e-14,
+              9.847678228425139e-14,
+              -4.596323321948148e-14
+            ]
+          },
+          "voxel_centre_bounds_in_full_MRI": {
+            "maximum": [
+              177.47121783710443,
+              223.3464069489026,
+              135.45813382519967
+            ],
+            "minimum": [
+              40.6647610622026,
+              53.77198551226167,
+              25.972786887531964
+            ]
+          }
+        },
+        "whole_tumor": {
+          "entire_source_voxel_centre_box_inside_MRI": true,
+          "entire_source_voxel_centre_box_inside_cerebrum_domain": false,
+          "native_positive_voxels": 24294,
+          "source_positive_centres_outside_current_crop": 1565,
+          "voxel_cell_bounds_in_full_MRI": {
+            "maximum": [
+              139.78451743600564,
+              140.61874550782332,
+              60.83539898948994
+            ],
+            "minimum": [
+              106.75278613313267,
+              85.59496442226343,
+              17.32501636979251
+            ]
+          },
+          "voxel_centre_bounds_in_cerebrum_source_grid": {
+            "maximum": [
+              240.74483871164784,
+              210.5944325487503,
+              85.80736346421384
+            ],
+            "minimum": [
+              162.59429598622393,
+              79.1265636233996,
+              -20.201661551868995
+            ]
+          },
+          "voxel_centre_bounds_in_full_MRI": {
+            "maximum": [
+              139.27388973938938,
+              140.03147763455883,
+              60.25983089824406
+            ],
+            "minimum": [
+              107.26341382974893,
+              86.18223229552791,
+              17.90058446103839
+            ]
+          }
+        }
+      },
+      "source_geometry_refit": {
+        "cerebrum": {
+          "centred_OLS_affine_max_difference_mm": 2.8421709430404007e-13,
+          "plane_residual_mm": 8.731564799885743e-06
+        },
+        "structural_t1ce": {
+          "centred_OLS_affine_max_difference_mm": 1.7053025658242404e-13,
+          "plane_residual_mm": 0.0007860611091270188
+        },
+        "whole_tumor": {
+          "centred_OLS_affine_max_difference_mm": 5.684341886080802e-14,
+          "plane_residual_mm": 8.314281545335872e-06
+        }
+      },
+      "training_admitted": false
+    },
+    {
+      "conversion_result": {
+        "bytes": 18444,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-crop-mr/conversion-result.json",
+        "sha256": "a187ec40fd785011263fa4e7a558b40e33fc203cf9f1a6d29dcd5b6c5bdad574"
+      },
+      "current_crop_clipped_to_MRI_coverage": false,
+      "current_crop_shape": [
+        130,
+        171,
+        112
+      ],
+      "current_crop_start": [
+        45,
+        63,
+        26
+      ],
+      "current_uniform_inset_MRI_cells_per_face": 1,
+      "full_MRI_shape": [
+        216,
+        256,
+        192
+      ],
+      "full_target_use_held": false,
+      "headers": {
+        "bytes": 250345,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-015-headers/result.json",
+        "sha256": "a02471718c7a8dd118340169a28afd055cd84b3cd5cb39612a7ebdc0ff7e6be6"
+      },
+      "interpretation": "All positive source centres are geometrically inside acquired MRI; losses result from selected crop. Full source-domain centre boxes suffice for this proof without reading labels.",
+      "outer_annotation_domain_bbox_MRI_start": [
+        44,
+        62,
+        25
+      ],
+      "outer_annotation_domain_bbox_MRI_stop": [
+        176,
+        235,
+        139
+      ],
+      "outer_bbox_shape_without_roundoff_halo": [
+        132,
+        173,
+        114
+      ],
+      "patient_id": "ReMIND-015",
+      "role": "TRAIN",
+      "root_visual_observation": "All three target-centered orthogonal views inspected. Localized lateral tumor overlay appears registered within the displayed head/brain field; no obvious regular repeated support striping. This is limited visual sanity review, not expert delineation accuracy.",
+      "saved_counts": {
+        "support": 896877,
+        "target": 7745,
+        "target_domain": 20956,
+        "target_outside_support": 1758
+      },
+      "saved_review": {
+        "bytes": 3846,
+        "path": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-015-saved-public-review.json",
+        "sha256": "616aa2a253c2dff916c491d7f8c26ebb904a523e0486af9177663c6f65d285fd"
+      },
+      "source_domains": {
+        "cerebrum": {
+          "entire_source_voxel_centre_box_inside_MRI": true,
+          "entire_source_voxel_centre_box_inside_cerebrum_domain": true,
+          "native_positive_voxels": 7175391,
+          "source_positive_centres_outside_current_crop": 228,
+          "voxel_cell_bounds_in_full_MRI": {
+            "maximum": [
+              174.50028129249264,
+              234.49974809621418,
+              138.4999963305122
+            ],
+            "minimum": [
+              43.50026787809258,
+              62.49973048341411,
+              25.499996337374018
+            ]
+          },
+          "voxel_centre_bounds_in_cerebrum_source_grid": {
+            "maximum": [
+              261.0,
+              343.0,
+              225.0
+            ],
+            "minimum": [
+              1.421085471492492e-14,
+              -1.1093356479670479e-29,
+              0.0
+            ]
+          },
+          "voxel_centre_bounds_in_full_MRI": {
+            "maximum": [
+              174.25028126689264,
+              234.24974807061417,
+              138.24999633052738
+            ],
+            "minimum": [
+              43.75026790369258,
+              62.749730509014114,
+              25.749996337358837
+            ]
+          }
+        },
+        "whole_tumor": {
+          "entire_source_voxel_centre_box_inside_MRI": true,
+          "entire_source_voxel_centre_box_inside_cerebrum_domain": true,
+          "native_positive_voxels": 7745,
+          "source_positive_centres_outside_current_crop": 0,
+          "voxel_cell_bounds_in_full_MRI": {
+            "maximum": [
+              71.50026797998703,
+              196.49973050390514,
+              103.49999629188021
+            ],
+            "minimum": [
+              45.50026797998701,
+              165.49973050390514,
+              77.4999963486029
+            ]
+          },
+          "voxel_centre_bounds_in_cerebrum_source_grid": {
+            "maximum": [
+              54.499994571789415,
+              266.4999727001848,
+              154.49999992060626
+            ],
+            "minimum": [
+              4.499999691788804,
+              206.4999788441842,
+              104.50000002665215
+            ]
+          },
+          "voxel_centre_bounds_in_full_MRI": {
+            "maximum": [
+              71.00026797998703,
+              195.99973050390514,
+              102.99999629297103
+            ],
+            "minimum": [
+              46.00026797998701,
+              165.99973050390514,
+              77.99999634751208
+            ]
+          }
+        }
+      },
+      "source_geometry_refit": {
+        "cerebrum": {
+          "centred_OLS_affine_max_difference_mm": 4.973799150320701e-13,
+          "plane_residual_mm": 3.2117576158690366e-08
+        },
+        "structural_t1ce": {
+          "centred_OLS_affine_max_difference_mm": 6.536993168992922e-13,
+          "plane_residual_mm": 3.958143267368574e-06
+        },
+        "whole_tumor": {
+          "centred_OLS_affine_max_difference_mm": 1.4210854715202004e-14,
+          "plane_residual_mm": 1.996410858851556e-08
+        }
+      },
+      "training_admitted": false
+    },
+    {
+      "conversion_result": {
+        "bytes": 18887,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-crop-mr/conversion-result.json",
+        "sha256": "102f3319b93faf46e81ba4432c9a8f8d75adb22d5f3ff7bea72d2702712970e1"
+      },
+      "current_crop_clipped_to_MRI_coverage": false,
+      "current_crop_shape": [
+        131,
+        162,
+        112
+      ],
+      "current_crop_start": [
+        48,
+        70,
+        31
+      ],
+      "current_uniform_inset_MRI_cells_per_face": 1,
+      "full_MRI_shape": [
+        216,
+        256,
+        192
+      ],
+      "full_target_use_held": false,
+      "headers": {
+        "bytes": 249370,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-018-headers/result.json",
+        "sha256": "ae830f77f38ca86765d8df1f9cf2b5263e19d4ab4e9538de0879a8e7b5452b43"
+      },
+      "interpretation": "All positive source centres are geometrically inside acquired MRI; losses result from selected crop. Full source-domain centre boxes suffice for this proof without reading labels.",
+      "outer_annotation_domain_bbox_MRI_start": [
+        47,
+        69,
+        30
+      ],
+      "outer_annotation_domain_bbox_MRI_stop": [
+        180,
+        233,
+        144
+      ],
+      "outer_bbox_shape_without_roundoff_halo": [
+        133,
+        164,
+        114
+      ],
+      "patient_id": "ReMIND-018",
+      "role": "TRAIN",
+      "root_visual_observation": "All three target-centered orthogonal views inspected. Small/disconnected target regions visible; no obvious regular repeated support striping. Their biological interpretation and completeness are not established by these images.",
+      "saved_counts": {
+        "support": 909186,
+        "target": 1247,
+        "target_domain": 7920,
+        "target_outside_support": 250
+      },
+      "saved_review": {
+        "bytes": 3842,
+        "path": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-018-saved-public-review.json",
+        "sha256": "ca7b5649e989dc0f23640d150176a43e8f9450deb7510c86dbc4042feb31da18"
+      },
+      "source_domains": {
+        "cerebrum": {
+          "entire_source_voxel_centre_box_inside_MRI": true,
+          "entire_source_voxel_centre_box_inside_cerebrum_domain": true,
+          "native_positive_voxels": 7316829,
+          "source_positive_centres_outside_current_crop": 2146,
+          "voxel_cell_bounds_in_full_MRI": {
+            "maximum": [
+              179.49995931779188,
+              231.500055897166,
+              143.49999709672323
+            ],
+            "minimum": [
+              47.49997630242855,
+              68.50000472150852,
+              29.500031688990912
+            ]
+          },
+          "voxel_centre_bounds_in_cerebrum_source_grid": {
+            "maximum": [
+              262.99999999999994,
+              325.00000000000006,
+              227.00000000000003
+            ],
+            "minimum": [
+              0.0,
+              0.0,
+              2.842170943040401e-14
+            ]
+          },
+          "voxel_centre_bounds_in_full_MRI": {
+            "maximum": [
+              179.24995934096268,
+              231.2500558117805,
+              143.24999717290018
+            ],
+            "minimum": [
+              47.74997627925778,
+              68.750004806894,
+              29.750031612813956
+            ]
+          }
+        },
+        "whole_tumor": {
+          "entire_source_voxel_centre_box_inside_MRI": true,
+          "entire_source_voxel_centre_box_inside_cerebrum_domain": true,
+          "native_positive_voxels": 1247,
+          "source_positive_centres_outside_current_crop": 0,
+          "voxel_cell_bounds_in_full_MRI": {
+            "maximum": [
+              79.49998140487249,
+              156.50002164687837,
+              76.50001739575565
+            ],
+            "minimum": [
+              61.499982531743896,
+              116.5000147872223,
+              65.50002104302523
+            ]
+          },
+          "voxel_centre_bounds_in_cerebrum_source_grid": {
+            "maximum": [
+              62.50000799885573,
+              174.49998143897042,
+              92.50000003994452
+            ],
+            "minimum": [
+              28.50000353278817,
+              96.49998934448847,
+              72.50000071138702
+            ]
+          },
+          "voxel_centre_bounds_in_full_MRI": {
+            "maximum": [
+              78.99998137540237,
+              156.00002152934945,
+              76.00001756489563
+            ],
+            "minimum": [
+              61.99998256121401,
+              117.00001490475123,
+              66.00002087388526
+            ]
+          }
+        }
+      },
+      "source_geometry_refit": {
+        "cerebrum": {
+          "centred_OLS_affine_max_difference_mm": 7.105427357601002e-14,
+          "plane_residual_mm": 5.1864353688558366e-06
+        },
+        "structural_t1ce": {
+          "centred_OLS_affine_max_difference_mm": 1.1368683772161603e-13,
+          "plane_residual_mm": 0.0006774014857779796
+        },
+        "whole_tumor": {
+          "centred_OLS_affine_max_difference_mm": 2.1316282072803006e-14,
+          "plane_residual_mm": 2.2966862564951226e-06
+        }
+      },
+      "training_admitted": false
+    },
+    {
+      "conversion_result": {
+        "bytes": 18788,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-crop-mr/conversion-result.json",
+        "sha256": "0d7d2abadf79de8e9ec60bf92a4db7899677fc37b010515b23622ae83e08171a"
+      },
+      "current_crop_clipped_to_MRI_coverage": false,
+      "current_crop_shape": [
+        112,
+        148,
+        95
+      ],
+      "current_crop_start": [
+        56,
+        72,
+        32
+      ],
+      "current_uniform_inset_MRI_cells_per_face": 12,
+      "full_MRI_shape": [
+        216,
+        256,
+        176
+      ],
+      "full_target_use_held": true,
+      "headers": {
+        "bytes": 250825,
+        "path": "build/remind-train-public-qc-preparation-v1/actual-public-qc-v1/ReMIND-045-headers/result.json",
+        "sha256": "32d01668e69ef38a5700d7ee0ca42d27d01a81e7d0adc3115a9392bbfea1f524"
+      },
+      "interpretation": "All positive source centres are geometrically inside acquired MRI; losses result from selected crop. Full source-domain centre boxes suffice for this proof without reading labels.",
+      "outer_annotation_domain_bbox_MRI_start": [
+        44,
+        60,
+        20
+      ],
+      "outer_annotation_domain_bbox_MRI_stop": [
+        180,
+        232,
+        139
+      ],
+      "outer_bbox_shape_without_roundoff_halo": [
+        136,
+        172,
+        119
+      ],
+      "patient_id": "ReMIND-045",
+      "role": "TRAIN",
+      "root_visual_observation": "All three target-centered orthogonal views inspected. Displayed crop cuts through brain/head field and target reaches an edge in some planes. Measured source target/support losses retained; hold full-target experiment. No obvious regular repeated support striping in these views.",
+      "saved_counts": {
+        "support": 792567,
+        "target": 25102,
+        "target_domain": 91922,
+        "target_outside_support": 19690
+      },
+      "saved_review": {
+        "bytes": 3845,
+        "path": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1/array-audit/ReMIND-045-saved-public-review.json",
+        "sha256": "f78f96b3364db6c1c1428e824231d11dabe8eb83adfa9dfa85df20c0f24f399c"
+      },
+      "source_domains": {
+        "cerebrum": {
+          "entire_source_voxel_centre_box_inside_MRI": true,
+          "entire_source_voxel_centre_box_inside_cerebrum_domain": true,
+          "native_positive_voxels": 29092192,
+          "source_positive_centres_outside_current_crop": 1083331,
+          "voxel_cell_bounds_in_full_MRI": {
+            "maximum": [
+              178.9175895719628,
+              230.71857943307262,
+              138.365787084204
+            ],
+            "minimum": [
+              44.114276012618355,
+              60.49813121488397,
+              20.33944497321165
+            ]
+          },
+          "voxel_centre_bounds_in_cerebrum_source_grid": {
+            "maximum": [
+              423.0,
+              537.0,
+              356.00000000000006
+            ],
+            "minimum": [
+              -2.1663226767998367e-14,
+              -7.445433158892456e-14,
+              0.0
+            ]
+          },
+          "voxel_centre_bounds_in_full_MRI": {
+            "maximum": [
+              178.75789063343666,
+              230.55813839198902,
+              138.20457491572336
+            ],
+            "minimum": [
+              44.27397495114448,
+              60.658572255967556,
+              20.500657141692283
+            ]
+          }
+        },
+        "whole_tumor": {
+          "entire_source_voxel_centre_box_inside_MRI": true,
+          "entire_source_voxel_centre_box_inside_cerebrum_domain": true,
+          "native_positive_voxels": 25301,
+          "source_positive_centres_outside_current_crop": 199,
+          "voxel_cell_bounds_in_full_MRI": {
+            "maximum": [
+              169.68219176061146,
+              159.2101623904164,
+              115.83659281101177
+            ],
+            "minimum": [
+              126.68219411342726,
+              100.21017328379634,
+              77.83658873464974
+            ]
+          },
+          "voxel_centre_bounds_in_cerebrum_source_grid": {
+            "maximum": [
+              403.6840271642079,
+              311.05815390101566,
+              297.67566643178236
+            ],
+            "minimum": [
+              261.57248624777367,
+              116.92458995743034,
+              161.86800047451595
+            ]
+          },
+          "voxel_centre_bounds_in_full_MRI": {
+            "maximum": [
+              169.18219178582558,
+              158.71016240267156,
+              115.33659281234276
+            ],
+            "minimum": [
+              127.18219408821314,
+              100.71017327154118,
+              78.33658873331875
+            ]
+          }
+        }
+      },
+      "source_geometry_refit": {
+        "cerebrum": {
+          "centred_OLS_affine_max_difference_mm": 5.684341886080802e-14,
+          "plane_residual_mm": 5.138075306534848e-06
+        },
+        "structural_t1ce": {
+          "centred_OLS_affine_max_difference_mm": 8.526512829121202e-14,
+          "plane_residual_mm": 0.0006333250504059361
+        },
+        "whole_tumor": {
+          "centred_OLS_affine_max_difference_mm": 9.947598300641403e-14,
+          "plane_residual_mm": 3.898263607638227e-06
+        }
+      },
+      "training_admitted": false
+    }
+  ],
+  "sampled_peak_rss_bytes": 64716800,
+  "schema": "remind-four-TRAIN-saved-review-and-crop-coverage-proof-v1",
+  "scope": "Saved JSON hashes and affine corner arithmetic only; no arrays, PNG bodies or original DICOM read.",
+  "terminal": {
+    "bytes": 676,
+    "path": "build/remind-train-public-qc-preparation-v1/saved-review-preparation-v1/actual-saved-review-v1.supervision/receipt.json",
+    "sha256": "515bbcb8bdb78d879ded98cf0af129e95e76ec1244c8119e771fa313c63bb9b7"
+  },
+  "training_admitted": false
+}
