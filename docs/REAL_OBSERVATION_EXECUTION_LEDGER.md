@@ -1107,3 +1107,14 @@ records 4,759 verified files / 170,524,264,942 bytes, up 293 files / 9,324,063,9
 bytes. The original worker and queue lock remain active; failure counts are
 unchanged and capacity is sufficient. Recovery remains unlaunched. Payloads
 remain unreviewed for intended use.
+
+### October 10: public contact objective uses the same persistent native state
+
+The [backend integration](../artifacts/public-surface-contact-backend-v1/RESULT.md)
+adds a source/crop/frame-bound public goal observation, explicit all-removal cost,
+and a distinct v2 episode export using the existing full-tool replay. No physical
+transition was reimplemented. Near SEARCH executes aspiration then probe (+0.708);
+costly SEARCH chooses STOP (0). No policy was trained or run. Root canonical tests
+pass 34 in 18.88 seconds; independent core/bridge controls pass 33/21. The bridge
+clears prior actor/comparison capabilities and refuses transient-contact Save.
+Desktop v2 admission and live inspection follow as the next integration step.

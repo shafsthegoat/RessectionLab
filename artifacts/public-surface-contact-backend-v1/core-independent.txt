@@ -1,0 +1,100 @@
+Independent review — public contact task and versioned episode export
+
+Decision: GO for the exact four-file source/test promotion described below.
+No blocking finding. Acceptance concerns generated software contract, geometry,
+observation binding and replay correctness. No medical, policy-performance,
+training, model-loading, UI or persistence admission follows from this review.
+
+Candidate: build/public-surface-contact-integration-v1
+promotion.json SHA256 4afa430df6f0238ca290e19d06fed85b80a0c01554b0935414bd240a0cf2d09b
+source.patch SHA256 d97f422411a092780d2befa11da85911cb86cf590a2a30f07f5539001eab5843
+The patch adds two canonical modules and two tests. It modifies no existing
+production source. git apply --check passes. Exact source pins and five saved
+fixture-file hashes are recorded in promotion-check.json.
+
+Goal-grid repair
+
+The reviewed prototype trusted task-built observations. Observation v2 now
+carries the PublicSurfaceGoal and native crop origin, checks the source binding
+and enforces the one-cell grid at goal index minus crop origin. Context v2
+captures the expected goal-grid digest, crop origin and crop-affine digest from
+the task. It rejects a wrong grid, different authentic goal, internally
+consistent shifted origin/grid, changed frame and mutated context. An
+independent nonzero-crop test verifies that cropped voxel coordinates map to
+the exact source RAS goal and that a self-consistent shifted grid is still
+rejected by the original task context.
+
+This fixes the previously identified detached goal-grid ambiguity within the
+declared task. The declaration/context is still supplied by trusted application
+construction; it authenticates neither anatomy nor arbitrary upstream probe
+measurements. Committed-contact provenance remains the native engine's job.
+The new context continues to grant no learning API admission.
+
+Native behavior and objective
+
+AST comparison confirms that potential, scoring, planning clone, fresh task,
+metrics and strategy sealing/replay checks are unchanged from the independently
+reviewed prototype. step, _transition and clone remain inherited from the
+existing NativeSpatialTask. The new observation/context versions deliberately
+change task identity without changing the physical engine or public objective.
+Legacy aspiration v1 and its goal-free observation contract pass regression.
+
+All removal is charged; retained committed geometric probe contact is the
+public goal. Private-reference zero/one changes cannot change the observation,
+inventory, reward, complete strategy or exported scripted episode. No fake
+target_removed_mm3, normal_removed_mm3 or reference_hash field appears anywhere
+in the exported v2 episode. The nominal-target compartment is explicitly
+generated fixture background and is not this task's goal or reward.
+
+Versioned application export
+
+The helper reuses the existing CaseData and _execute_sealed_development_plan,
+including tools, insertion and reverse-withdrawal frames, native cell deltas,
+source bindings, state ancestry and independent geometry audit. It additionally
+compares the entire executed public-reward history against the sealed plan.
+An independent altered-reward injection is rejected at that check.
+
+The exporter returns explicit episode schema v2, taskKind, publicGoal and task
+contract. The inherited sealedBeforeReferenceScoring field was removed during
+pre-freeze review; v2 instead states sealedBeforeExecution=true and
+referenceScoringPerformed=false. No reference outcome or learned authorship is
+implied. Current v1 desktop admission remains unchanged.
+
+All four actual saved v2 envelopes were independently checked: canonical JSON
+and episode identity agree; their goal/index/grid/context fields match a fresh
+declared task; authoritative execution reproduces full history, metrics,
+replayFrames, final masks, native final state and independent geometry audit.
+Near scripted/SEARCH produce aspiration then probe (+0.708). Costly scripted
+retains contact at negative return; costly SEARCH selects STOP at zero.
+
+The envelope helper checks publication identity; it is not an independent
+semantic validator for a maliciously resealed imported episode. Any later
+desktop/reopen consumer must explicitly admit v2 and revalidate authoritative
+goal/history/source semantics. This package does not wire the UI, relax v1
+validation, authorize old actor/vascular paths, or claim save/reopen support.
+The separate next-learning proposal was not an execution request and is outside
+this GO.
+
+Validation
+
+33 focused generated tests passed in 7.08 seconds: the author's 25 plus eight
+independent cases. The one-thread supervised child completed in 7.216 seconds
+under a 30-second wall cap. No test failure, timeout or retry occurred. All
+four candidate files, saved envelopes and production Python source hashes
+remained unchanged and agree with the author's bound source inventory. The
+previous prototype inventory remains exactly 66549e23df01eb6918d76418a23369ac9d67bd593670cf3704b40b0c8066f6e6.
+
+The child audit hook denies original data/model/image/native-mechanics reads,
+Torch imports, subprocesses and network access. No patient data, weights,
+native solve, model inference or training was used. Only ignored review files
+were written. No tracked or neighboring work was edited.
+
+Commands from repository root:
+  .venv/bin/python -B build/public-surface-contact-integration-independent-v1/run_review.py
+  git apply --check build/public-surface-contact-integration-v1/source.patch
+
+Source pins:
+public_surface_contact.py def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0
+surface_contact_episode.py 718321ef213ecdf7d7c1eeeba06bb607e7357c791dd58c0b645cefb0053f672e
+test_public_surface_contact.py a046e1913d659d0f38701b18ca1d55260b1ae05166058ac3b4013803e5cdd48c
+test_surface_contact_episode.py bd69ba1bf9812967106a2131fc2b8d50929f50ddb0800fe85772a404d781c00f

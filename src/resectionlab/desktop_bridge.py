@@ -47,7 +47,7 @@ MAX_PRIOR_PROPOSALS = 16
 MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
-OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
+OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "executePublicSurfaceContactEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 TRANSFER_SUPERVISOR_SHA256 = "60b25c4676954902e81ee32a1232f9e480573beb6e7a7dd8db337e890bca8b24"
 RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
@@ -265,6 +265,9 @@ class _CaseEntry:
     # the renderer; imported episodes have no comparison capability.
     comparison_pair: Any = None
     comparison_actor_episode_id: str | None = None
+    # The public-goal episode is intentionally transient until v2 workspace
+    # replay admission exists. Save refuses this current case explicitly.
+    public_surface_contact_active: bool = False
 
 
 @dataclass
@@ -393,8 +396,11 @@ class BridgeSession:
         from .workspace_bundle import session_descriptor
         return {'workspaceSession':session_descriptor(entry)}
 
-    def _install_case(self, case: CaseData, artifacts: dict, request: _Request, *, workspace=None) -> dict:
+    def _install_case(self, case: CaseData, artifacts: dict, request: _Request, *, workspace=None,
+                      transient_public_contact: bool = False) -> dict:
         request.check()
+        if transient_public_contact and workspace is not None:
+            raise BridgeError("INVALID_ARGUMENT", "A transient contact episode cannot import workspace replay")
         if case.mri.size * 4 > MAX_ARRAY_BYTES:
             raise BridgeError("ARRAY_SIZE_LIMIT", "Selected MRI is too large for this desktop view")
         if (len(case.compartments) > 32 or len(case.structural_evidence) > 8 or len(case.critical_evidence) > 3
@@ -402,9 +408,17 @@ class BridgeSession:
             raise BridgeError("CASE_SIZE_LIMIT", "Expanded case arrays exceed the desktop cache limit")
         restored=self._workspace_fields(case,workspace)
         if case.semantic_hash in self.cases:
-            entry=replace(self.cases[case.semantic_hash],artifacts=freeze_json(artifacts),
-                comparison_pair=None,comparison_actor_episode_id=None,**restored)
-            extra=self._workspace_payload(entry)
+            if transient_public_contact:
+                entry=replace(self.cases[case.semantic_hash],artifacts=freeze_json(artifacts),
+                    episode=None,episode_selection=None,workspace_hash=None,
+                    comparison_pair=None,comparison_actor_episode_id=None,
+                    public_surface_contact_active=True)
+                extra={}
+            else:
+                entry=replace(self.cases[case.semantic_hash],artifacts=freeze_json(artifacts),
+                    comparison_pair=None,comparison_actor_episode_id=None,
+                    public_surface_contact_active=False,**restored)
+                extra=self._workspace_payload(entry)
             request.begin_commit()
             self.cases[case.semantic_hash]=entry
             self.cases.move_to_end(case.semantic_hash)
@@ -457,7 +471,8 @@ class BridgeSession:
             "clinicalUseStatus": "research_only",
         }
         entry = _CaseEntry(case, descriptor, freeze_json(artifacts),**restored)
-        extra=self._workspace_payload(entry)
+        entry.public_surface_contact_active = transient_public_contact
+        extra={} if transient_public_contact else self._workspace_payload(entry)
         request.begin_commit()
         self.cases[case.semantic_hash] = entry
         while len(self.cases) > self.max_cases:
@@ -1096,6 +1111,43 @@ class BridgeSession:
             _require_json_budget(result, 2 * 1024 * 1024, "COMPARISON_RESULT_SIZE_LIMIT",
                                  "Matched SEARCH result exceeds 2 MiB")
             return result
+        if operation == "executePublicSurfaceContactEpisode":
+            # A distinct generated public goal on the same native engine and
+            # frame exporter. Do not admit an old aspiration checkpoint here.
+            if (set(args) != {"fixture", "goalId", "selector"} or
+                    args.get("fixture") != "generated-public-surface-contact-v1" or
+                    args.get("goalId") not in ("near", "costly") or
+                    args.get("selector") not in ("scripted", "SEARCH")):
+                raise BridgeError("INVALID_ARGUMENT", "Choose the fixed public goal and scripted or SEARCH")
+            from .surface_contact_episode import execute_surface_contact_episode, episode_envelope
+            progress(0.1, "Executing the generated public contact objective")
+            case, episode = execute_surface_contact_episode(
+                selector=args["selector"], goal_id=args["goalId"], cancelled=request.cancelled.is_set)
+            request.check()
+            if (episode.get("schema") != "resectionlab.shared-native-development-episode.v2" or
+                    episode.get("taskKind") != "public_retained_surface_contact" or
+                    episode.get("fixture") != args["fixture"] or
+                    episode.get("selector") != args["selector"] or
+                    episode.get("publicGoal", {}).get("goalId") != args["goalId"] or
+                    episode.get("caseHash") != case.semantic_hash or
+                    episode.get("patientAdmission") is not False or
+                    episode.get("clinicalValidation") is not False or
+                    episode.get("evidenceKind") != "generated_software_fixture" or
+                    episode.get("planning", {}).get("learnedPolicyExecuted") is not False or
+                    episode.get("planning", {}).get("referenceScoringPerformed") is not False or
+                    episode.get("taskContract", {}).get("learnedPolicySupported") is not False):
+                raise BridgeError("EPISODE_BINDING_MISMATCH", "Public contact objective or native case changed")
+            _require_json_budget(episode, 2 * 1024 * 1024, "EPISODE_SIZE_LIMIT",
+                                 "Generated contact episode exceeds 2 MiB")
+            envelope = episode_envelope(episode)
+            progress(0.9, "Publishing checked public goal and native replay")
+            installed = self._install_case(case, {}, request, transient_public_contact=True)
+            entry = self.cases[case.semantic_hash]
+            if (entry.episode is not None or entry.comparison_pair is not None or
+                    entry.episode_selection is not None or not entry.public_surface_contact_active or
+                    "workspaceSession" in installed):
+                raise BridgeError("EPISODE_BINDING_MISMATCH", "An old episode survived the public goal install")
+            return {"case": installed, **envelope}
         if operation == "executeDevelopmentEpisode":
             # Explicitly authorized generated development path. The legacy
             # createSyntheticCase policy exclusion remains unchanged above.
@@ -1348,6 +1400,9 @@ class BridgeSession:
         if operation == "saveCase":
             _keys(args, {"caseHash", "path", "workspace", "overwrite"})
             entry = self._get_case(args.get("caseHash"))
+            if entry.public_surface_contact_active:
+                raise BridgeError("CONTACT_EPISODE_TRANSIENT",
+                                  "The current public contact episode cannot yet be saved as a workspace")
             destination = _path(args.get("path"), kind="case", output=True)
             if destination.exists() and args.get("overwrite") is not True:
                 raise BridgeError("DESTINATION_EXISTS", "Save destination already exists; the native dialog must confirm replacement")

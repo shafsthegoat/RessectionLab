@@ -1,0 +1,44 @@
+{
+  "schema": "public-contact-backend-integration-v1",
+  "files": [
+    {
+      "path": "src/resectionlab/public_surface_contact.py",
+      "bytes": 16277,
+      "sha256": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0"
+    },
+    {
+      "path": "src/resectionlab/surface_contact_episode.py",
+      "bytes": 6579,
+      "sha256": "718321ef213ecdf7d7c1eeeba06bb607e7357c791dd58c0b645cefb0053f672e"
+    },
+    {
+      "path": "src/resectionlab/desktop_bridge.py",
+      "bytes": 116881,
+      "sha256": "a25cfd8e209ee13379acca409816352f9ddfa47612b9dbafb086ec868d82e15e"
+    },
+    {
+      "path": "tests/test_public_surface_contact.py",
+      "bytes": 10505,
+      "sha256": "a046e1913d659d0f38701b18ca1d55260b1ae05166058ac3b4013803e5cdd48c"
+    },
+    {
+      "path": "tests/test_surface_contact_episode.py",
+      "bytes": 5364,
+      "sha256": "bd69ba1bf9812967106a2131fc2b8d50929f50ddb0800fe85772a404d781c00f"
+    },
+    {
+      "path": "tests/test_public_surface_contact_bridge.py",
+      "bytes": 5212,
+      "sha256": "0000e5e3a570ee74eb8a7c792e9858b98e3fd99ebb34c75513c8b3a61778a0fa"
+    }
+  ],
+  "canonical_validation": {
+    "command": ".venv/bin/python -m pytest -q tests/test_public_surface_contact.py tests/test_surface_contact_episode.py tests/test_public_surface_contact_bridge.py tests/test_shared_transfer_comparison.py",
+    "numeric_threads": 1,
+    "passed": 34,
+    "seconds": 18.88
+  },
+  "learned_policy_executed": false,
+  "patient_data_used": false,
+  "physical_validation_pass": null
+}

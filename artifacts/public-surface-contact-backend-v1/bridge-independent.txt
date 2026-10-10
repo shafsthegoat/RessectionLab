@@ -1,0 +1,39 @@
+GO — public-contact BridgeSession integration
+
+Frozen bridge a25cfd8e209ee13379acca409816352f9ddfa47612b9dbafb086ec868d82e15e;
+author tests 13226d4f739ece1dfcbff98c6fcfb60146e8d6122b70872b211b907e65221242.
+Frozen core dependencies public_surface_contact def4c741… and
+surface_contact_episode 718321ef… match the separately reviewed core.
+
+The new operation accepts exactly fixture/goalId/selector, with fixed near/costly
+public goals and scripted/SEARCH only. It does not admit a checkpoint, trained
+selector, patient source, response history, output path or private reference.
+Response checks require the distinct v2 task, exact requested goal/selector/case,
+generated provenance, no learned policy/private scoring and a valid canonical
+content identity before installation. The same native engine/exporter is reused.
+Core metrics report public retained-contact outcome and all removal cost, not
+false tumor/clinical measures. Background nominal target remains explicitly
+unused by the contact objective. v1 execute/save/vascular schemas remain intact.
+
+On same-source installation, the new entry clears old actor envelope/selection,
+workspace hash and comparison pair/identity before any workspace projection.
+No old actor or pair can survive into the returned v2 case. The operation does
+not store the v2 episode as a v1 workspace envelope. A backend transient flag
+rejects Save even before destination validation; normal case installation clears
+that flag. This knowingly leaves v2 workspace persistence unsupported rather
+than granting a false stored replay certificate.
+
+21 controls passed in 1.91 s with one numeric thread: author's six generated
+controls plus fifteen independent saved-episode/fake callback controls. Extra
+controls verify old workspace projection is never called, old pair/vascular
+operations are unavailable, cancellation before compute/after compute/prepublish
+preserves the original entry with no commit, malformed identity/scope never
+installs, goal mismatch refuses, workspace coercion refuses, and normal source
+installation resets transient mode. The author's costly-goal SEARCH uses only
+the bounded generated task. No actor/checkpoint/private/patient call occurred.
+No heavy job or resource benchmark was run; the test process is terminal.
+
+No source changes requested. UI opt-in for v2, its objective labels, and live app
+execution remain separate integration responsibilities. This grants software
+bridge correctness only, not physical contact, measurement, clinical or training
+admission.

@@ -1,0 +1,30 @@
+{
+  "schema": "public-surface-contact-bridge-promotion-v1",
+  "scope": "Distinct generated public-goal BridgeSession operation; transient v2 replay; no trained policy, patient input or private reference",
+  "baseDesktopBridgeSha256": "7e0712d58cf935ed200c357bf30298dfde48057ddff6dcd920afc96cbbe5e80c",
+  "dependencies": {
+    "public_surface_contact.py": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+    "surface_contact_episode.py": "718321ef213ecdf7d7c1eeeba06bb607e7357c791dd58c0b645cefb0053f672e"
+  },
+  "files": [
+    {
+      "from": "build/public-surface-contact-bridge-v1/promotion/src/resectionlab/desktop_bridge.py",
+      "to": "src/resectionlab/desktop_bridge.py",
+      "sha256": "a25cfd8e209ee13379acca409816352f9ddfa47612b9dbafb086ec868d82e15e",
+      "bytes": 116881
+    },
+    {
+      "from": "build/public-surface-contact-bridge-v1/promotion/tests/test_public_surface_contact_bridge.py",
+      "to": "tests/test_public_surface_contact_bridge.py",
+      "sha256": "0000e5e3a570ee74eb8a7c792e9858b98e3fd99ebb34c75513c8b3a61778a0fa",
+      "bytes": 5212
+    }
+  ],
+  "validation": {
+    "generatedControls": "6 passed in 1.14 s against exact promotion files through package overlay",
+    "independentBridgeReport": "build/public-surface-contact-bridge-independent-v1/REPORT.txt",
+    "independentBridgeReportSha256": "3b2d5540f0a46867e12b4443750867a2bc16e018468580f105031ab28470b7e4",
+    "nearScriptedTransportFixtureSha256": "42dd28355ecbc2c0c873ed95a79bb33e561d70ce188b06bd9c652d989d9acf03",
+    "costlySearchTransportFixtureSha256": "e483abed2a8acf9e63ff85f6a8c26f07036633ea327a167247b2c6fc027cc9a6"
+  }
+}

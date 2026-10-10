@@ -1,0 +1,27 @@
+{
+  "files": [
+    {
+      "destination": "src/resectionlab/public_surface_contact.py",
+      "sha256": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+      "source": "stage/resectionlab/public_surface_contact.py"
+    },
+    {
+      "destination": "src/resectionlab/surface_contact_episode.py",
+      "sha256": "718321ef213ecdf7d7c1eeeba06bb607e7357c791dd58c0b645cefb0053f672e",
+      "source": "stage/resectionlab/surface_contact_episode.py"
+    },
+    {
+      "destination": "tests/test_public_surface_contact.py",
+      "sha256": "a046e1913d659d0f38701b18ca1d55260b1ae05166058ac3b4013803e5cdd48c",
+      "source": "stage/tests/test_public_surface_contact.py"
+    },
+    {
+      "destination": "tests/test_surface_contact_episode.py",
+      "sha256": "bd69ba1bf9812967106a2131fc2b8d50929f50ddb0800fe85772a404d781c00f",
+      "source": "stage/tests/test_surface_contact_episode.py"
+    }
+  ],
+  "old_production_sources_changed": false,
+  "patch_sha256": "d97f422411a092780d2befa11da85911cb86cf590a2a30f07f5539001eab5843",
+  "schema": "public-contact-promotion-map-v1"
+}
