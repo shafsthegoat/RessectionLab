@@ -1,0 +1,722 @@
+{
+  "IL64_frozen_anchor_metadata": {
+    "TRAIN_greedy": {
+      "ReMIND-008": {
+        "actions": [
+          "STOP"
+        ],
+        "checkpoint_reloaded": true,
+        "complete": true,
+        "outside_interpretation": "outside supplied target, not verified normal tissue",
+        "outside_supplied_target_removed_mm3": 0.0,
+        "parameter_hash": "sha256:56712968c5fc662fc3f74ea7e0c6c9f87dc46846e04e7cdb19d57809027ce2b8",
+        "plan_seal": "sha256:a8428ba0e29c76b7079dba647bd98de1c256df1febd5937a09d282d0235d4fa4",
+        "public_return": 0.0,
+        "steps": 1,
+        "target_removed_mm3": 0.0
+      },
+      "ReMIND-010": {
+        "actions": [
+          "STOP"
+        ],
+        "checkpoint_reloaded": true,
+        "complete": true,
+        "outside_interpretation": "outside supplied target, not verified normal tissue",
+        "outside_supplied_target_removed_mm3": 0.0,
+        "parameter_hash": "sha256:56712968c5fc662fc3f74ea7e0c6c9f87dc46846e04e7cdb19d57809027ce2b8",
+        "plan_seal": "sha256:bb18618560472729d42346d17e88939a75633ad9b9ae49c2f7424f3aadc055ef",
+        "public_return": 0.0,
+        "steps": 1,
+        "target_removed_mm3": 0.0
+      },
+      "ReMIND-020": {
+        "actions": [
+          "STOP"
+        ],
+        "checkpoint_reloaded": true,
+        "complete": true,
+        "outside_interpretation": "outside supplied target, not verified normal tissue",
+        "outside_supplied_target_removed_mm3": 0.0,
+        "parameter_hash": "sha256:56712968c5fc662fc3f74ea7e0c6c9f87dc46846e04e7cdb19d57809027ce2b8",
+        "plan_seal": "sha256:9197ea4a8bed30ac71dea015c319ca158bd9f584670367c4216c41322e8fcc74",
+        "public_return": 0.0,
+        "steps": 1,
+        "target_removed_mm3": 0.0
+      },
+      "ReMIND-025": {
+        "actions": [
+          "nominal-cavity-968f3758c3de3eab8c99ca99",
+          "STOP"
+        ],
+        "checkpoint_reloaded": true,
+        "complete": true,
+        "outside_interpretation": "outside supplied target, not verified normal tissue",
+        "outside_supplied_target_removed_mm3": 0.0,
+        "parameter_hash": "sha256:56712968c5fc662fc3f74ea7e0c6c9f87dc46846e04e7cdb19d57809027ce2b8",
+        "plan_seal": "sha256:220224762137d04378d5cbe62f7ac4f8fced3c005c962777212acd728f090887",
+        "public_return": 0.9168388572207332,
+        "steps": 2,
+        "target_removed_mm3": 0.953674795218559
+      }
+    },
+    "checkpoint": {
+      "bytes": 137636,
+      "parameter_hash": "sha256:56712968c5fc662fc3f74ea7e0c6c9f87dc46846e04e7cdb19d57809027ce2b8",
+      "path": "IL-final.psckpt",
+      "sha256": "85470cafa0829d22cb0f2a6a02f80cbbbbc5addd183a1e9e585a93c0ead056da"
+    },
+    "optimizer_updates": {
+      "IL": 64,
+      "RL": 0
+    },
+    "worker_wall_seconds": 1114.2273296250496
+  },
+  "RL8_025_posthoc_teacher_readout": {
+    "stop_probability": 0.36626192927360535,
+    "teacher_minus_STOP": -2.2345094680786133,
+    "teacher_movement_rank": 16,
+    "teacher_probability": 0.0392063707113266,
+    "value": -1.5509966611862183
+  },
+  "cost_note": "phase wall sums are measured scopes; inclusive subcall times are not added. TRAIN greedy validation is not a deployment benchmark.",
+  "cost_phase_sums": {
+    "TRAIN_greedy_RL": {
+      "complete_wall_seconds": 11.221120168222114,
+      "native_preview_entries": 822,
+      "native_transition_calls": 8,
+      "policy_forward_calls": 4
+    },
+    "offline_RL": {
+      "complete_wall_seconds": 897.6868143309839,
+      "native_preview_entries": 63032,
+      "native_transition_calls": 582,
+      "policy_forward_calls": 582
+    }
+  },
+  "counts": {
+    "STOP": 30,
+    "decisions": 291,
+    "episodes": 32,
+    "exact_025_root_teacher_samples": 1,
+    "horizon_without_STOP": 2,
+    "motion_negative_return_to_go": 253,
+    "motion_positive_return_to_go": 8,
+    "motions": 261,
+    "negative_episodes": 28,
+    "positive_episodes": 1,
+    "zero_episodes": 3
+  },
+  "episodes": [
+    {
+      "motions": 0,
+      "return": 0.0,
+      "steps": 1,
+      "subject": "ReMIND-008",
+      "target_removed_mm3": 0.0,
+      "update": 1,
+      "weighted_actor_loss": -0.39514294266700745,
+      "weighted_entropy": 0.9570730924606323,
+      "weighted_value_MSE": 0.03904040530323982
+    },
+    {
+      "motions": 14,
+      "return": -6.523080728365557,
+      "steps": 15,
+      "subject": "ReMIND-010",
+      "target_removed_mm3": 0.0,
+      "update": 1,
+      "weighted_actor_loss": -38.73500606417656,
+      "weighted_entropy": 0.8116768876711529,
+      "weighted_value_MSE": 3.429728802666067
+    },
+    {
+      "motions": 19,
+      "return": -7.389166773014272,
+      "steps": 20,
+      "subject": "ReMIND-020",
+      "target_removed_mm3": 0.0,
+      "update": 1,
+      "weighted_actor_loss": -56.06705893576145,
+      "weighted_entropy": 0.580146452784538,
+      "weighted_value_MSE": 5.763744055107237
+    },
+    {
+      "motions": 4,
+      "return": -1.0795341706452666,
+      "steps": 5,
+      "subject": "ReMIND-025",
+      "target_removed_mm3": 0.0,
+      "update": 1,
+      "weighted_actor_loss": -3.195788651704788,
+      "weighted_entropy": 0.6679071307182312,
+      "weighted_value_MSE": 0.26154884472489354
+    },
+    {
+      "motions": 3,
+      "return": -1.7490935552501168,
+      "steps": 4,
+      "subject": "ReMIND-008",
+      "target_removed_mm3": 0.0,
+      "update": 2,
+      "weighted_actor_loss": -4.222488313913345,
+      "weighted_entropy": 0.9273477345705032,
+      "weighted_value_MSE": 0.44602516992017627
+    },
+    {
+      "motions": 20,
+      "return": -7.606660373241209,
+      "steps": 21,
+      "subject": "ReMIND-010",
+      "target_removed_mm3": 0.0,
+      "update": 2,
+      "weighted_actor_loss": -59.15501049160957,
+      "weighted_entropy": 0.7717795513925098,
+      "weighted_value_MSE": 4.148260772693902
+    },
+    {
+      "motions": 6,
+      "return": -3.8417758707362006,
+      "steps": 7,
+      "subject": "ReMIND-020",
+      "target_removed_mm3": 0.0,
+      "update": 2,
+      "weighted_actor_loss": -8.096771605312824,
+      "weighted_entropy": 0.7073700513158526,
+      "weighted_value_MSE": 1.0367636647341505
+    },
+    {
+      "motions": 9,
+      "return": -1.3661357343542722,
+      "steps": 10,
+      "subject": "ReMIND-025",
+      "target_removed_mm3": 0.953674795218559,
+      "update": 2,
+      "weighted_actor_loss": -2.946994476020336,
+      "weighted_entropy": 0.6131862759590149,
+      "weighted_value_MSE": 0.16788524566218258
+    },
+    {
+      "motions": 24,
+      "return": -7.027424098248732,
+      "steps": 24,
+      "subject": "ReMIND-008",
+      "target_removed_mm3": 0.0,
+      "update": 3,
+      "weighted_actor_loss": -52.56432601809502,
+      "weighted_entropy": 0.8500148728489875,
+      "weighted_value_MSE": 2.3143963142841435
+    },
+    {
+      "motions": 11,
+      "return": -6.2769863310415905,
+      "steps": 12,
+      "subject": "ReMIND-010",
+      "target_removed_mm3": 0.0,
+      "update": 3,
+      "weighted_actor_loss": -21.256829432444647,
+      "weighted_entropy": 0.7794411430756251,
+      "weighted_value_MSE": 2.0358908425420927
+    },
+    {
+      "motions": 1,
+      "return": -1.175386047918976,
+      "steps": 2,
+      "subject": "ReMIND-020",
+      "target_removed_mm3": 0.0,
+      "update": 3,
+      "weighted_actor_loss": -0.938142285682261,
+      "weighted_entropy": 0.7830721735954285,
+      "weighted_value_MSE": 0.17381486228623544
+    },
+    {
+      "motions": 9,
+      "return": -2.4427329880475996,
+      "steps": 10,
+      "subject": "ReMIND-025",
+      "target_removed_mm3": 0.953674795218559,
+      "update": 3,
+      "weighted_actor_loss": -8.174680560827255,
+      "weighted_entropy": 0.5975680351257324,
+      "weighted_value_MSE": 0.5680861634667964
+    },
+    {
+      "motions": 24,
+      "return": -7.46760876808133,
+      "steps": 24,
+      "subject": "ReMIND-008",
+      "target_removed_mm3": 0.0,
+      "update": 4,
+      "weighted_actor_loss": -50.89878399297595,
+      "weighted_entropy": 0.8536615918080013,
+      "weighted_value_MSE": 2.569134841852549
+    },
+    {
+      "motions": 6,
+      "return": -2.3152517160569013,
+      "steps": 7,
+      "subject": "ReMIND-010",
+      "target_removed_mm3": 0.0,
+      "update": 4,
+      "weighted_actor_loss": -5.198662897571921,
+      "weighted_entropy": 0.8273606981549945,
+      "weighted_value_MSE": 0.3686083572683857
+    },
+    {
+      "motions": 6,
+      "return": -3.7149472067089966,
+      "steps": 7,
+      "subject": "ReMIND-020",
+      "target_removed_mm3": 0.0,
+      "update": 4,
+      "weighted_actor_loss": -10.07067533582449,
+      "weighted_entropy": 0.7222913844244822,
+      "weighted_value_MSE": 1.2981003089142698
+    },
+    {
+      "motions": 7,
+      "return": -0.8307595659823767,
+      "steps": 8,
+      "subject": "ReMIND-025",
+      "target_removed_mm3": 0.953674795218559,
+      "update": 4,
+      "weighted_actor_loss": -0.4848574735224247,
+      "weighted_entropy": 0.6362240239977837,
+      "weighted_value_MSE": 0.04564252684940584
+    },
+    {
+      "motions": 22,
+      "return": -6.693874702977064,
+      "steps": 23,
+      "subject": "ReMIND-008",
+      "target_removed_mm3": 0.0,
+      "update": 5,
+      "weighted_actor_loss": -35.493458192795515,
+      "weighted_entropy": 0.8500160263932269,
+      "weighted_value_MSE": 1.5667195033867916
+    },
+    {
+      "motions": 12,
+      "return": -4.257409412395363,
+      "steps": 13,
+      "subject": "ReMIND-010",
+      "target_removed_mm3": 0.0,
+      "update": 5,
+      "weighted_actor_loss": -19.104712545871735,
+      "weighted_entropy": 0.833402298963987,
+      "weighted_value_MSE": 1.2204188700550451
+    },
+    {
+      "motions": 15,
+      "return": -7.036713108183388,
+      "steps": 16,
+      "subject": "ReMIND-020",
+      "target_removed_mm3": 0.0,
+      "update": 5,
+      "weighted_actor_loss": -38.753901144489646,
+      "weighted_entropy": 0.6223466899245977,
+      "weighted_value_MSE": 3.958362585915893
+    },
+    {
+      "motions": 6,
+      "return": -1.9663802571045859,
+      "steps": 7,
+      "subject": "ReMIND-025",
+      "target_removed_mm3": 0.0,
+      "update": 5,
+      "weighted_actor_loss": -3.2630410827696323,
+      "weighted_entropy": 0.6429183397974287,
+      "weighted_value_MSE": 0.24318237943641308
+    },
+    {
+      "motions": 8,
+      "return": -4.155329465741281,
+      "steps": 9,
+      "subject": "ReMIND-008",
+      "target_removed_mm3": 0.0,
+      "update": 6,
+      "weighted_actor_loss": -11.408748716115952,
+      "weighted_entropy": 0.9396567278438144,
+      "weighted_value_MSE": 0.760514222499397
+    },
+    {
+      "motions": 6,
+      "return": -2.4901333266961623,
+      "steps": 7,
+      "subject": "ReMIND-010",
+      "target_removed_mm3": 0.0,
+      "update": 6,
+      "weighted_actor_loss": -2.846785517409444,
+      "weighted_entropy": 0.826579247202192,
+      "weighted_value_MSE": 0.2645713091936029
+    },
+    {
+      "motions": 2,
+      "return": -0.6380641179857519,
+      "steps": 3,
+      "subject": "ReMIND-020",
+      "target_removed_mm3": 0.0,
+      "update": 6,
+      "weighted_actor_loss": 0.6284514162689447,
+      "weighted_entropy": 0.7641419768333435,
+      "weighted_value_MSE": 0.048987477959599346
+    },
+    {
+      "motions": 2,
+      "return": -0.4453761683718954,
+      "steps": 3,
+      "subject": "ReMIND-025",
+      "target_removed_mm3": 0.0,
+      "update": 6,
+      "weighted_actor_loss": 0.5256989151239395,
+      "weighted_entropy": 0.6865002512931824,
+      "weighted_value_MSE": 0.03168147914887716
+    },
+    {
+      "motions": 9,
+      "return": -3.4442859159942416,
+      "steps": 10,
+      "subject": "ReMIND-008",
+      "target_removed_mm3": 0.0,
+      "update": 7,
+      "weighted_actor_loss": -7.625604599714279,
+      "weighted_entropy": 0.8680153369903565,
+      "weighted_value_MSE": 0.4037809863686561
+    },
+    {
+      "motions": 6,
+      "return": -5.169501083489905,
+      "steps": 7,
+      "subject": "ReMIND-010",
+      "target_removed_mm3": 0.0,
+      "update": 7,
+      "weighted_actor_loss": -12.219013184309006,
+      "weighted_entropy": 0.8225350209644862,
+      "weighted_value_MSE": 1.9059680862618344
+    },
+    {
+      "motions": 0,
+      "return": 0.0,
+      "steps": 1,
+      "subject": "ReMIND-020",
+      "target_removed_mm3": 0.0,
+      "update": 7,
+      "weighted_actor_loss": 0.4045464098453522,
+      "weighted_entropy": 0.7711360454559326,
+      "weighted_value_MSE": 0.18491299450397491
+    },
+    {
+      "motions": 2,
+      "return": 0.5024392514199558,
+      "steps": 3,
+      "subject": "ReMIND-025",
+      "target_removed_mm3": 0.953674795218559,
+      "update": 7,
+      "weighted_actor_loss": 1.580578088760376,
+      "weighted_entropy": 0.6695642868677775,
+      "weighted_value_MSE": 0.20829260100920996
+    },
+    {
+      "motions": 2,
+      "return": -2.641655299998096,
+      "steps": 3,
+      "subject": "ReMIND-008",
+      "target_removed_mm3": 0.0,
+      "update": 8,
+      "weighted_actor_loss": -2.1046248078346252,
+      "weighted_entropy": 0.9338824947675068,
+      "weighted_value_MSE": 0.4208644131819407
+    },
+    {
+      "motions": 1,
+      "return": -0.3381524176923881,
+      "steps": 2,
+      "subject": "ReMIND-010",
+      "target_removed_mm3": 0.0,
+      "update": 8,
+      "weighted_actor_loss": 1.2168847918510437,
+      "weighted_entropy": 0.8317529261112213,
+      "weighted_value_MSE": 0.2372661605477333
+    },
+    {
+      "motions": 0,
+      "return": 0.0,
+      "steps": 1,
+      "subject": "ReMIND-020",
+      "target_removed_mm3": 0.0,
+      "update": 8,
+      "weighted_actor_loss": 0.4468923807144165,
+      "weighted_entropy": 0.7424843311309814,
+      "weighted_value_MSE": 0.3514058589935303
+    },
+    {
+      "motions": 5,
+      "return": -2.857125364609791,
+      "steps": 6,
+      "subject": "ReMIND-025",
+      "target_removed_mm3": 0.0,
+      "update": 8,
+      "weighted_actor_loss": -2.3576284050941467,
+      "weighted_entropy": 0.5917673607667288,
+      "weighted_value_MSE": 0.351325349882245
+    }
+  ],
+  "input_sha256": {
+    "build/balanced-teacher-il64-v1/attempt-01/result.json": "ed6292fa743c2f3349899ebb43df7208adb2f2f4687d2dd543eb50661dba36a8",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01.supervision/receipt.json": "e1f18ca5dae011057f0c945690d71e9ba909041f7aa495e5ce4493e57f805fa2",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-01/ReMIND-008/complete-trace.json": "862220345256aad86cf21363e5d7a403249dbd2e64dabdf53ed64e103e77ae8d",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-01/ReMIND-008/gradient-contribution.json": "b2a3e23840aa3cf029251730e980f8dddb201cae4cf80a146135f2a0ae338a86",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-01/ReMIND-010/complete-trace.json": "ee8230b45a2cb58a0abc810aec662e2f94724f6acac44be83d4cad837de5b8fb",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-01/ReMIND-010/gradient-contribution.json": "a7aef4c94ae0735591f4a3a450fe3b040346950e64e717d4ebb3ab3e12ceae6e",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-01/ReMIND-020/complete-trace.json": "1ae3506e9831993c047272b9d872e2661c34b6b15d816e914366dec6da64a9c9",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-01/ReMIND-020/gradient-contribution.json": "3fcc2c195bbee00210acc49420a8f2bec4eeda3a99a8e8e492c8557f818a7ae9",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-01/ReMIND-025/complete-trace.json": "0f1ea5a5a28b52d3dac0482c07056630f2be1cf37387ee09dc3a11b18f7d39d2",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-01/ReMIND-025/gradient-contribution.json": "0ab2e5831d91c3e72544390d1281a030cbbb6dfb65813f88bf2af88ec15dedeb",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-01/update.json": "3ea59dc1e274a1515354be0ee903a208bce8e62596a9b5ae80942f7ebfab0536",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-02/ReMIND-008/complete-trace.json": "c0ed7cf9698d0c570947401b7c89c513dc96a367f0d21fc57b5a8e9b7820b48e",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-02/ReMIND-008/gradient-contribution.json": "9bacb65aadfadead41103011f9ffeaf46ffc0913364e0cfa784c9a80023b0cb1",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-02/ReMIND-010/complete-trace.json": "e92832bbf2f910b05c2977bfd0d51547b3d8eae1b03a88796ffc045d2d7f12c9",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-02/ReMIND-010/gradient-contribution.json": "1ccff9acd025985e33129090e99b9c78ad5c5d59c3569729fe6aa3b4f4372fd5",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-02/ReMIND-020/complete-trace.json": "29abb97f9ab8f25fab6171da2326321e72a23e6b9975c9ed0f23909277cbdf3f",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-02/ReMIND-020/gradient-contribution.json": "370f0776df0fdf94202934db358fbb78472f664e3bff45cb6582ce2fd87001a5",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-02/ReMIND-025/complete-trace.json": "324ce7cf07af000c32a502ecf92d57db32424c4c183e2e70a804910316296ebf",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-02/ReMIND-025/gradient-contribution.json": "e3324a814717543577a4722d6a294fb810347e608c830c55d8aa2ec527272f00",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-02/update.json": "6270993d825674c5691196476943b3a06910825bcd5979e404e69dfc9b3fa634",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-03/ReMIND-008/complete-trace.json": "f855cbbc83854e9576c25f6b7e8f20c10aa92eeb47ae967be55771a6d9bd3fbb",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-03/ReMIND-008/gradient-contribution.json": "1d3810af9bfe761522ec58764d4894c27675e9634f692b31d0e36011712a004f",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-03/ReMIND-010/complete-trace.json": "b7ee8e68e7a52c4d6760cdef9c147b36eb8569f28c35e71005f96ed66f2ac76b",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-03/ReMIND-010/gradient-contribution.json": "ca05963013f456d00fd1d4d153309e08402bf435ecb174056adac0b2ebbd3009",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-03/ReMIND-020/complete-trace.json": "6ee5838fc47624bc26624dcaa7915c3d92f6af4c84c3df67cf4fba6dfb6fd93b",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-03/ReMIND-020/gradient-contribution.json": "fba10c1f29f579b4d60bfaea6b388ae110ac6a1f0d9445ab88ae0997c4045fbb",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-03/ReMIND-025/complete-trace.json": "07232900d191a6d96106a5f08190a7381daaceb3c381ab6d9aa4a3faa0405701",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-03/ReMIND-025/gradient-contribution.json": "b6a91c13ff7ddf155a4744c7d62522df5867537e966cfd31b82e870f4c4c70ae",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-03/update.json": "a69826a5155b9bd7be9630209d790e5b688d83f430f44d458637914cb9b45e71",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-04/ReMIND-008/complete-trace.json": "af154bec6430034435b9227b8787f6f955fcfbeefa73c47802cd1dae0548e418",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-04/ReMIND-008/gradient-contribution.json": "341c584c02e0c4521d838c26a6891e0a2369523a1898cce5d4f25a666ac5e7cd",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-04/ReMIND-010/complete-trace.json": "e80c3d4a32ef5a07e709ed59cc4f13907849cd9dfc75e650e68d9f02ca1d7c24",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-04/ReMIND-010/gradient-contribution.json": "fcf844d31aff2152dcd37a922e01630ee34c528b1bb26a2afb5cebc7353d7a00",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-04/ReMIND-020/complete-trace.json": "15ad90ab430ced2991c7ad33cb4d030aed8e0b2155ef9eeb53f88e317ccb7dd5",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-04/ReMIND-020/gradient-contribution.json": "f8bec09cfa389621be5f40d970ae91f17a352ca3cf82ed4a01e2f48cacca5198",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-04/ReMIND-025/complete-trace.json": "6c8007a09e8f09da5922d66be5a69079a2870d0c839bc058d5ffd809233efab9",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-04/ReMIND-025/gradient-contribution.json": "2dd1ff56ab0e918520469d7beb8318fc584cb5d03b1fbfadda07f38c7a811308",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-04/update.json": "a69c4f0641bedc0aefb43a87ee663633266a3247964c28602976b5849bf2f61e",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-05/ReMIND-008/complete-trace.json": "51d72d7b0eda231ec01ea969644573e32df172faff260e157138aff8f3d9b2ef",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-05/ReMIND-008/gradient-contribution.json": "9d3fb0160026b6f49148e404aea6cd6f35c1e71eb49d7c6e02e56a72e013a1f7",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-05/ReMIND-010/complete-trace.json": "728e035fcd3515a243ed7370ffde581188fb74af6b121bf0cafe99dbc848ad1a",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-05/ReMIND-010/gradient-contribution.json": "85f6531923a03247bc535f3f8f90936cc5a5983be4ac305a9ec62911123ac169",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-05/ReMIND-020/complete-trace.json": "169a440e7b68e0293dfa534c699c888681403fde3e26bd4c003c455ca007c576",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-05/ReMIND-020/gradient-contribution.json": "d3e3457cc3075b1d28c4d8b76ece314c400b34095371dc8aa159778c04b0b7e3",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-05/ReMIND-025/complete-trace.json": "919dfda03a92cc80b744aea9ccfe5134cd7765640437010caeb26c443dd095c9",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-05/ReMIND-025/gradient-contribution.json": "8d84196e93d9b9d591de4a72305a9a4a49866de2489551670d6f4342adc13952",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-05/update.json": "cceb5de25b48be830e3124f457ef7ecc6b81027ccd238ba26cea24a5fb27019b",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-06/ReMIND-008/complete-trace.json": "a56f4174bd9a9e5470bb7ee0ac4864ab14fbd58fa9632af43527df3c378277b4",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-06/ReMIND-008/gradient-contribution.json": "3d9b2d35db8f9d6898b672042acc944b9131074fe4eeba97587000227a642043",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-06/ReMIND-010/complete-trace.json": "9265482aff3c01e885726f2d4ba0660376c7991631610f3ad2306d75585feed6",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-06/ReMIND-010/gradient-contribution.json": "265b48648032057fbff59296874a55e3f4966e28433eff45a349d30262ef31d1",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-06/ReMIND-020/complete-trace.json": "41f51c06db3c93e202399a0e5ae3599de76c64cdfe98cc9690290173325fc7a1",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-06/ReMIND-020/gradient-contribution.json": "c158ae220a5bd3a7c39d8c8e4d341e57fc1e379045a0ca86413c3c3113f074b4",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-06/ReMIND-025/complete-trace.json": "3acda89b7dc5eb3de8bddeb0b342f8d957f9d5a1b435cd783f6e1446af1c3166",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-06/ReMIND-025/gradient-contribution.json": "d251246891a2cbd97439f74aa5cb8f857aa5c0be61fce8121d2e629a7ec7e802",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-06/update.json": "1fd80e1da2e458124b75fdcce7a9e3085f8e18797428b2440d37df434b4c7393",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-07/ReMIND-008/complete-trace.json": "7d9f55fc16a3e2366376d12728e85cd61d79699cc8ed087f05f2c4e6519f0e7b",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-07/ReMIND-008/gradient-contribution.json": "4661514a4c101edc044fdc8d032a2329deeed3e7b30107350f5dbcf84ef7d66a",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-07/ReMIND-010/complete-trace.json": "dd8752cd65ba0d97f3be893eeb3f76c89262fa6b49dd64a13baa7e4f733b7944",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-07/ReMIND-010/gradient-contribution.json": "0b69b159ad4b66fb116e943b0d3db38225d6a71113a73a25808615292fb30087",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-07/ReMIND-020/complete-trace.json": "fa147b42923983c0294765533e806d9320b44e21c388de3d1ada96abd6b9b655",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-07/ReMIND-020/gradient-contribution.json": "930ec38a7f3d48d9783b7ebf48adbf22dd47be301350d647d4d1a09ef1f50a46",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-07/ReMIND-025/complete-trace.json": "2be355a84902088e58a1b7d6b82a6a733e169d01b792f6078227ada4e443a997",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-07/ReMIND-025/gradient-contribution.json": "ba23868c8be035c0cd7ccc43729fecfe48637aec512098353afe1fbd894862d5",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-07/update.json": "e6cedc4d9bf6a7679cbff8039f112cff2a9560575aebc43512ca930cfd1f1638",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-08/ReMIND-008/complete-trace.json": "eb31ecd54079b25db655b34abe0d81d2daf79c78adfb0107f97406a5b3863134",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-08/ReMIND-008/gradient-contribution.json": "c4e47de27b9e92e60ab625450e16a450f8082193787bcfe444876558bf99dd44",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-08/ReMIND-010/complete-trace.json": "c69c51d0dbd4e5cbeb5b29245bbba6fb23ddfac3dfc37f966fd8ea30707e45bf",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-08/ReMIND-010/gradient-contribution.json": "2ef56778800aab6659b0e4eb475f579afceccf00f4817630bcbf50d62aa4edb5",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-08/ReMIND-020/complete-trace.json": "d6b97ad0a7ad21c4c1238f620a80dc814f188ba146bca7c25c26d02f8735256c",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-08/ReMIND-020/gradient-contribution.json": "610694605b0b35008dc003775733d1465e430292321506dd4c67a0edfce73d9b",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-08/ReMIND-025/complete-trace.json": "c55342766fd51f3718817db7a4d5c9f5aeccfe8a82fdb133613e49073fd075e7",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-08/ReMIND-025/gradient-contribution.json": "3cb2ccc80ffcbaf659937b64671ff1b6cbfcb164af4768439f2fc7750004b6bf",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/RL/update-08/update.json": "721b37e81c13559fe5a48ee35d150779397b549b47fd4d4eb6d27328c657c68d",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/costs.json": "a528b749204968efede3864fb968e1e74cae4d63b0fa839a7910c68ac92413ad",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/result.json": "b75bd91d284cacba2c980283424586ca506799919f6850175b6f4eeea4315aeb",
+    "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/attempt-01/teachers/ReMIND-025/plan.json": "843c09b795a684147dab7d479bcc00b45dcbee8fb4f7054da57a1f25f0ba90bb",
+    "build/five-state-policy-diagnostic-v1/attempt-01/ReMIND-025/state-00.json": "13fa5914bcf4cb88d0c593390acc2bae818fd000cf793e209fd268153118f5ae",
+    "src/resectionlab/patient_planning_accumulation.py": "edb48ae1655b5c905a6bb4aecece4f010ff6e348265f7dc7f45d91f36baa42f9",
+    "src/resectionlab/patient_planning_cohort_sequential.py": "409bbeebc66d947e1045d3292bed930ae3b18cb06d740ea413a2564fb9120e30",
+    "src/resectionlab/patient_planning_learning.py": "4eb8e40adffe2b70e37b9dec9d09f7ddb27ab1f558669f336165cc06658e6434"
+  },
+  "per_step_value_advantage_log_probability_saved": false,
+  "positive_motion_rows": [
+    {
+      "action_id": "nominal-cavity-e61087f95e62a6f05405b6a5",
+      "episode_return": -1.3661357343542722,
+      "exact_root_teacher_action": false,
+      "return_to_go_gamma1": 0.9168388572207332,
+      "reward": 0.9168388572207332,
+      "step_zero_based": 8,
+      "subject": "ReMIND-025",
+      "update": 2
+    },
+    {
+      "action_id": "nominal-cavity-accdfa2b930ed018999e0ac7",
+      "episode_return": -2.4427329880475996,
+      "exact_root_teacher_action": false,
+      "return_to_go_gamma1": -0.38147714732600946,
+      "reward": 0.7280570233192574,
+      "step_zero_based": 4,
+      "subject": "ReMIND-025",
+      "update": 3
+    },
+    {
+      "action_id": "nominal-cavity-87258466cedbbe0e307a22fc",
+      "episode_return": -0.8307595659823767,
+      "exact_root_teacher_action": false,
+      "return_to_go_gamma1": 0.4743923765621917,
+      "reward": 0.9168388572207332,
+      "step_zero_based": 5,
+      "subject": "ReMIND-025",
+      "update": 4
+    },
+    {
+      "action_id": "nominal-cavity-968f3758c3de3eab8c99ca99",
+      "episode_return": 0.5024392514199558,
+      "exact_root_teacher_action": true,
+      "return_to_go_gamma1": 0.5024392514199558,
+      "reward": 0.9168388572207332,
+      "step_zero_based": 0,
+      "subject": "ReMIND-025",
+      "update": 7
+    }
+  ],
+  "saved_decision_fields": [
+    "action_id",
+    "action_ids",
+    "action_mask",
+    "behavior_parameter_hash",
+    "observation_hash",
+    "reward",
+    "step",
+    "terminated"
+  ],
+  "scope": "saved TRAIN JSON and source only; no array/model/checkpoint payload/SELECT reads",
+  "updates": [
+    {
+      "actor_loss": -98.3929965943098,
+      "completed_updates": 1,
+      "entropy": 3.0168035636345545,
+      "gradient_norm_before_clip": 21.33190155029297,
+      "loss": -93.67613283917308,
+      "loss_forward_calls": 41,
+      "module_gradient_norms_before_clip": {
+        "actor": 12.55222225189209,
+        "critic": 14.970110893249512,
+        "encoder": 2.369361400604248,
+        "stop": 8.232505798339844
+      },
+      "value_loss": 9.494062107801438
+    },
+    {
+      "actor_loss": -74.42126488685608,
+      "completed_updates": 2,
+      "entropy": 3.0196836132378806,
+      "gradient_norm_before_clip": 15.179518699645996,
+      "loss": -71.55199415236712,
+      "loss_forward_calls": 42,
+      "module_gradient_norms_before_clip": {
+        "actor": 8.708043098449707,
+        "critic": 11.224099159240723,
+        "encoder": 2.637953281402588,
+        "stop": 4.652827262878418
+      },
+      "value_loss": 5.798934853010412
+    },
+    {
+      "actor_loss": -82.93397829704918,
+      "completed_updates": 3,
+      "entropy": 3.0100962246457734,
+      "gradient_norm_before_clip": 12.847915649414062,
+      "loss": -80.41798714501783,
+      "loss_forward_calls": 48,
+      "module_gradient_norms_before_clip": {
+        "actor": 4.439078330993652,
+        "critic": 10.559584617614746,
+        "encoder": 4.967288017272949,
+        "stop": 3.030649423599243
+      },
+      "value_loss": 5.092188182579268
+    },
+    {
+      "actor_loss": -66.65297969989479,
+      "completed_updates": 4,
+      "entropy": 3.0395376983852618,
+      "gradient_norm_before_clip": 11.267058372497559,
+      "loss": -64.54263225756586,
+      "loss_forward_calls": 46,
+      "module_gradient_norms_before_clip": {
+        "actor": 5.211235046386719,
+        "critic": 7.9253249168396,
+        "encoder": 5.371789455413818,
+        "stop": 2.850059747695923
+      },
+      "value_loss": 4.28148603488461
+    },
+    {
+      "actor_loss": -96.61511296592653,
+      "completed_updates": 5,
+      "entropy": 2.94868335507924,
+      "gradient_norm_before_clip": 27.26761817932129,
+      "loss": -93.15025763958693,
+      "loss_forward_calls": 59,
+      "module_gradient_norms_before_clip": {
+        "actor": 15.18349838256836,
+        "critic": 11.068290710449219,
+        "encoder": 16.27593231201172,
+        "stop": 11.205875396728516
+      },
+      "value_loss": 6.988683338794142
+    },
+    {
+      "actor_loss": -13.101383902132511,
+      "completed_updates": 6,
+      "entropy": 3.2168782031725325,
+      "gradient_norm_before_clip": 6.792896270751953,
+      "loss": -12.580675670877099,
+      "loss_forward_calls": 22,
+      "module_gradient_norms_before_clip": {
+        "actor": 3.7644362449645996,
+        "critic": 1.5639748573303223,
+        "encoder": 4.920947551727295,
+        "stop": 2.3045005798339844
+      },
+      "value_loss": 1.1057544888014763
+    },
+    {
+      "actor_loss": -17.859493285417557,
+      "completed_updates": 7,
+      "entropy": 3.1312506902785526,
+      "gradient_norm_before_clip": 11.547113418579102,
+      "loss": -16.53932812809944,
+      "loss_forward_calls": 21,
+      "module_gradient_norms_before_clip": {
+        "actor": 6.501223087310791,
+        "critic": 2.0927672386169434,
+        "encoder": 7.913537979125977,
+        "stop": 4.905731201171875
+      },
+      "value_loss": 2.7029546681436756
+    },
+    {
+      "actor_loss": -2.7984760403633118,
+      "completed_updates": 8,
+      "entropy": 3.0998871127764382,
+      "gradient_norm_before_clip": 11.599815368652344,
+      "loss": -2.1490440517663956,
+      "loss_forward_calls": 12,
+      "module_gradient_norms_before_clip": {
+        "actor": 6.493515491485596,
+        "critic": 2.751023769378662,
+        "encoder": 7.56013822555542,
+        "stop": 5.259862422943115
+      },
+      "value_loss": 1.3608617826054492
+    }
+  ]
+}

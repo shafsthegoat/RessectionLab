@@ -1,0 +1,85 @@
+Saved TRAIN diagnosis and one prospective RL contrast
+
+Scope: completed scratch-RL8 and IL64 records plus canonical source only. No
+patient arrays, checkpoint payloads, model calls, tests, or active SELECT output
+were read or executed. evidence.json contains compact arithmetic and input pins.
+
+What happened
+
+Scratch RL8 collected 32 episodes: 1 positive, 3 zero, 28 negative. There were
+291 decisions, including 261 motions and 30 STOPs; two episodes used all 24 steps.
+Only four motion rewards were positive, all on 025. Eight motion decisions had
+positive return-to-go; the other253 had negative return-to-go. The exact useful
+025 root action was sampled once, at update 7. It earned +0.916838857, but a later
+unnecessary movement cost 0.414399606, leaving episode return +0.502439251.
+
+The other target-positive025 episodes occurred at updates 2/3/4. At the positive
+action, return-to-go was respectively +0.916838857, -0.381477147, +0.474392377.
+Earlier costs do not enter those targets. Thus it would be false to say every
+positive action was punished because its complete episode was negative.
+
+The loss implements gamma 1 return-to-go minus a detached value baseline. Actor
+score terms sum within each episode and average over four patients; value MSE
+and entropy average over steps within each episode. The coefficients are 0.5 for
+value and 0.01 for entropy. Longer negative trajectories therefore contribute
+many actor terms. This is the declared objective, not an identified math defect.
+All eight global gradient norms exceeded clip 5 (6.79290–27.26762). Entropy stayed
+2.94868–3.21688 nats across changing inventories; there was no demonstrated
+deterministic sampling collapse. Final greedy STOP is not the same as sampling
+STOP almost always:025 root's final STOP probability was 0.366262.
+
+Per-decision values, log-probabilities and advantages were not saved. Episode
+aggregate losses cannot recover their signs or parameter-gradient alignment.
+The final 025 value -1.550997 is a post-training readout, not its update 7 baseline.
+Clipping, entropy strength, critic error and interference are possible factors;
+these records do not identify which caused the useful motion's rank to fall.
+
+What IL64 changes in the interpretation
+
+The unchanged model now reproduces all four teacher plans: 025 useful motion then
+STOP (+0.916838857), and STOP on 008/010/020. That establishes fit capacity for
+these TRAIN states, not generalization or RL convergence. Scratch RL had one
+direct successful-root exposure, while IL64 deliberately supervised that root
+and its correct stopping successor every update. Sparse useful on-policy
+exposure is therefore a concrete contrast to test before changing representation.
+
+One proposed experiment: IL64 initialization, then eight on-policy RL updates
+
+Load the exact fixed IL64 parameter artifact (file SHA 85470cafa0829d22cb0f2a6a02f80cbbbbc5addd183a1e9e585a93c0ead056da;
+parameters sha256:56712968c5fc662fc3f74ea7e0c6c9f87dc46846e04e7cdb19d57809027ce2b8).
+Copy all its tensors exactly, start fresh Adam, and keep the same four TRAIN
+patients/order, sampling seed schedule, full 24-step task, public observations,
+candidate rules, rewards, masks, gamma, value/entropy coefficients and clip.
+No teacher forcing, IL auxiliary loss, reward shaping or SELECT adaptation.
+The critic head was not trained by IL; shared encoder changes can change its
+outputs. Do not silently prefit/reset the critic in this contrast.
+
+Use exactly eight shared updates (32 new complete on-policy episodes), one final
+checkpoint and the same five-state readout plus four complete greedy replays.
+Retain the frozen IL64 baseline. Compare exposure/credit with historical RL8,
+while explicitly charging IL pretraining and teacher cost; this is not a matched
+total-compute claim. A separate admitted warm-start initialization path must
+authenticate original TRAIN lineage; do not bypass the fresh-only registry.
+
+Record, in the existing loss forward, chosen log-probability, value, return-to-go,
+detached advantage and entropy, keyed by observation/action/parameter hash. This
+adds scalar records, not extra forwards. Count useful 025 root selections and
+positive episodes, and evaluate both root movement and immediate successor STOP.
+If useful exposure increases but final 025 return or other cases deteriorate,
+warm-starting alone fails to preserve the demonstrated policy; the new advantage
+records can then locate a credit/critic issue. If exposure does not increase,
+the exploration hypothesis is unsupported. Merely retaining IL64's result does
+not establish an RL benefit. No finite failure proves representation impossibility.
+
+Cost and transfer boundary
+
+Historical RL8's recorded offline RL phases sum to 897.686814s, 63032 previews,
+582 native transitions and 582 forwards (291 collection +291 loss). Its four
+TRAIN greedy checks add 11.221120s, 822 previews, 8 transitions and 4 forwards.
+IL64's completed worker cost 1114.227330s is additional pretraining, not inference.
+The next run must separately report initialization/load, training/reconstruction,
+replay and frozen inference costs, plus all caps/failures. TRAIN remains 008/010/
+020/025; SELECT 013/037 supplies no gradients or protocol tuning, EVAL 067 stays
+closed. Any later fixed SELECT comparison is prospective; no active SELECT
+outcome informed this proposal. Four mostly-STOP tasks do not establish general
+cross-patient planning or the value of long-horizon RL.

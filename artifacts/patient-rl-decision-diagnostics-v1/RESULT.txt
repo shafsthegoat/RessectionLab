@@ -1,0 +1,21 @@
+Make RL failure diagnosis observable without changing training math
+October 10, 2026
+
+The scratch eight-update patient run produced one positive episode out of32;
+only8 of261 motion decisions had positive return-to-go. The useful025 root
+movement was sampled once. Existing records do not contain per-step values or
+advantages, so they cannot identify critic error or the action gradient sign.
+The retained saved-only REPORT and evidence distinguish facts from hypotheses.
+
+An opt-in RL accumulator diagnostic now records action/observation/behavior
+identity, value, return-to-go, detached advantage, chosen log-probability,
+entropy and scalar loss contributions from the existing loss forward. Defaults
+remain unchanged. No extra model forward, RNG draw, loss term or optimizer
+change is introduced. Only detached JSON scalars survive the step.
+
+Canonical integration passes62 generated/regression tests in3.64s, including
+exact two-update loss, gradients, parameters, Adam state, RNG and forward-count
+parity, plus IL/malformed/stale-trace refusal. Cache and balanced-loss controls
+also pass. This makes a later RL experiment diagnosable; it is not evidence of
+RL improvement. Proposed warm-start training remains unexecuted pending richer
+training-task and source-support interpretation checks.

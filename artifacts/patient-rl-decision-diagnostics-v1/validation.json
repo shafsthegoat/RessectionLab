@@ -1,0 +1,17 @@
+{
+  "promotion_adjustment": "removed stage-only test import hook; assertions unchanged",
+  "scope": "generated two-update gradient/parameter/Adam/RNG/forward-count parity; no new patient RL run",
+  "seconds": 3.64,
+  "source_hashes": {
+    "src/resectionlab/patient_planning_accumulation.py": "cebdcff7fe69ce7cb3c54e5e3c309b2a80a0550c5c43c12fe5eedf68008bf27b",
+    "tests/test_patient_rl_decision_diagnostics.py": "ee6ddfc86bb13a87eb9ca126bdbe85e55735342ff45bac209d1c370b27c9cf8e"
+  },
+  "status": "pass",
+  "suite": [
+    "patient_rl_decision_diagnostics",
+    "patient_teacher_trace_cache",
+    "patient_cohort_sequential",
+    "patient_balanced_teacher_loss"
+  ],
+  "tests": 62
+}

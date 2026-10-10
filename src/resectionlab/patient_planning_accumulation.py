@@ -16,10 +16,13 @@ from .spatial_policy import parameter_hash
 
 
 class PatientGradientAccumulator:
-    def __init__(self, session, *, teacher_pins=None):
+    def __init__(self, session, *, teacher_pins=None, rl_diagnostics=False):
         if type(session) is not PatientTrainSession:
             raise TypeError('Exact admitted patient learning session required')
         session.require(session.method)
+        if type(rl_diagnostics) is not bool or (rl_diagnostics and session.method != 'RL'):
+            raise ValueError('RL decision diagnostics require an explicit boolean and an RL session')
+        self.rl_diagnostics = rl_diagnostics
         if session._permit is not None:
             raise ValueError('An admitted loss or accumulation already owns this update')
         self.session = session
@@ -107,6 +110,7 @@ remain until finish. Reconstructed teachers must match the initial trace seal.
                     targets.append(total)
                 targets.reverse()
             local = {'loss': 0., 'actor_loss': 0., 'value_loss': 0., 'entropy': 0.}
+            decisions = [] if self.rl_diagnostics else None
             for step, (row, target) in enumerate(zip(trace.transitions, targets)):
                 guard()
                 logits, value = self.session.policy(row.observation)
@@ -127,6 +131,25 @@ remain until finish. Reconstructed teachers must match the initial trace seal.
                     local['actor_loss'] += float(actor.detach())/episodes
                     local['value_loss'] += float(value_term.detach())/(episodes*count)
                     local['entropy'] += float(entropy.detach())/(episodes*count)
+                    if self.rl_diagnostics:
+                        # Read the existing forward only. Diagnostic scalar math
+                        # stays outside autograd and never changes the loss term.
+                        with torch.no_grad():
+                            decisions.append({
+                                'step': step, 'observation_hash': row.observation.fingerprint,
+                                'action_id': row.action_id, 'action_index': index,
+                                'legal_action_count': int(row.observation.action_mask.sum()),
+                                'reward': float(row.reward), 'terminated': bool(row.terminated),
+                                'return_to_go': float(target),
+                                'return_to_go_model_dtype': float(value.new_tensor(target)),
+                                'value': float(value.detach()),
+                                'detached_advantage': float(value.new_tensor(target)-value.detach()),
+                                'chosen_log_probability': float(distribution.log_prob(
+                                    logits.new_tensor(index, dtype=torch.long))),
+                                'entropy': float(entropy.detach()),
+                                'actor_discount': float(self.session.protocol['gamma']**step),
+                                'actor_score_term': float(actor.detach()),
+                                'value_squared_error': float(value_term.detach())})
                 if not torch.isfinite(term):
                     raise FloatingPointError('Nonfinite accumulated patient loss')
                 local['loss'] += float(term.detach())
@@ -141,6 +164,15 @@ remain until finish. Reconstructed teachers must match the initial trace seal.
                 'patient_group': trace.context.patient_group, 'trace_seal': seal,
                 'steps': count, 'loss_forward_calls': count, **local}
             if self.session.method == 'RL': row['return'] = targets[0]
+            if self.rl_diagnostics:
+                row['rl_decision_diagnostics'] = {
+                    'version': 'patient-RL-decision-scalars-v1',
+                    'scope': 'same_on_policy_loss_forwards_before_shared_update',
+                    'behavior_parameter_hash': self.before,
+                    'episodes_in_update': len(self.order),
+                    'value_weight': self.session.protocol['value_weight'],
+                    'entropy_weight': self.session.protocol['entropy_weight'],
+                    'decisions': decisions}
             self.rows.append(row)
             self.loss += local['loss']; self.actor += local['actor_loss']
             self.value += local['value_loss']; self.entropy += local['entropy']
