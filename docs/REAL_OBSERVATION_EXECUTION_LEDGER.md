@@ -897,3 +897,20 @@ snapshot. Failure counts remained 15 exhausted plus 39 historical BrokenPipe
 records. Recovery remains unlaunched; no download was interrupted. The latest
 small metadata receipt is build/acquisition-continuity-20261010/
 small-20261010T005411582932Z.json (SHA256 d0ce4d5b2ef44c63aea62da8da930e00767806450f05859e2f1f392940e4ccfc).
+
+
+### October 9: positive generated checks of the existing critical-constraint consumers
+
+Read-only source review confirmed that both route APIs already resolve the
+case-owned critical registry internally. The original missing explicit-mask
+argument is not an active wiring defect. The [new canonical tests](../artifacts/generated-critical-consumer-controls-v1/ROOT_REVIEW.md)
+exercise actual saved-case load, static/native search, critical bindings and
+stale refinement through BridgeRuntime. All three pass. Only the resolver is
+replaced by a declared generated resolved result, retaining real admission and
+without inventing human review. One static and two native candidates retain
+requested geometry but become FORBIDDEN_COLLISION under the exclusion.
+
+These are consumer integration controls. Actual positive real registry
+admission/route alteration, critical mask/domain rendering and learned planning
+remain separate unmet requirements. No patient payload, model inference or
+training was used, and production planning code was unchanged.

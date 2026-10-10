@@ -82,3 +82,14 @@ image/annotation pair, source review and domain evidence; test a real route
 alteration/refusal through the desktop/API, positive save/reopen and stale-result
 behavior; quantify annotation errors against independent real references.
 The current missing-evidence checks cannot prove those outcomes.
+
+### Generated consumer follow-up under later human steering
+
+The later steering permits generated software controls. The [three positive
+bridge controls](../artifacts/generated-critical-consumer-controls-v1/ROOT_REVIEW.md)
+now prove that both actual route APIs consume resolved vessel exclusions and
+reject stale route/run bindings. They keep requested geometry unchanged and
+inject only the typed resolver result; real-source admission remains untouched.
+All fixture provenance is explicitly simulated, with no fictional human review.
+These controls pass in canonical tests but do not close the real-pair, rendering
+or compatible learned-planning requirements above.

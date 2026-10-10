@@ -1,0 +1,178 @@
+{
+  "scope": "read_only_current_source_gap_audit_plus_generated_consumer_tests",
+  "head": "edd491de4049d331d20c2476403926c423b47009",
+  "closed": [
+    {
+      "claim": "No missing explicit critical-mask argument in either desktop route operation.",
+      "evidence": [
+        "src/resectionlab/planning.py:439",
+        "src/resectionlab/desktop_bridge.py:1203",
+        "src/resectionlab/native_routes.py:141"
+      ]
+    },
+    {
+      "claim": "Canonical vessels affect native configuration, route/run bindings and independent geometry replay; unsupported native functional evidence refuses.",
+      "evidence": [
+        "src/resectionlab/native_resection.py:516",
+        "src/resectionlab/native_simulation.py:441",
+        "src/resectionlab/native_refinement.py:120",
+        "src/resectionlab/evaluation.py:877",
+        "src/resectionlab/desktop_bridge.py:575"
+      ]
+    },
+    {
+      "claim": "Real positive component save/reopen and desktop receipt inspection already have committed tests; the source-positive geometry kernel probe is separate completed evidence.",
+      "evidence": [
+        "tests/test_lausanne_sub476_component.py:166",
+        "artifacts/lausanne-critical-geometry-probe-v1/RESULT.md"
+      ]
+    }
+  ],
+  "not_closed": [
+    {
+      "claim": "No generic critical annotation import operation or critical mask/coverage viewer assets. importNifti accepts structural/tumor/brain only; CasePayload criticalEvidence is metadata, and auxiliary imported labels remain display-only.",
+      "evidence": [
+        "src/resectionlab/desktop_bridge.py:1079",
+        "src/resectionlab/desktop_bridge.py:444",
+        "desktop/src/types.ts:138",
+        "desktop/src/case-data.ts"
+      ]
+    },
+    {
+      "claim": "No positive real-source route-effect demonstration: component tests explicitly avoid planning; source-frame component has no admitted access/target and spatial admission is false.",
+      "evidence": [
+        "tests/test_lausanne_sub476_component.py:166",
+        "artifacts/lausanne-critical-geometry-probe-v1/RESULT.md"
+      ]
+    },
+    {
+      "claim": "No eligible critical-aware learned desktop path: nativeTraining/trainPatient refuse, and historical spatial adapter rejects eligible critical evidence.",
+      "evidence": [
+        "src/resectionlab/data_policy.py:25",
+        "src/resectionlab/desktop_bridge.py:950",
+        "src/resectionlab/native_spatial_task.py:923"
+      ]
+    }
+  ],
+  "generated_test_boundary": {
+    "direct_registry_feasible_without_false_review": false,
+    "reason": "CriticalStructureEvidence requires observed reference provenance, forbids simulated annotation provenance, and eligibility requires source_human_reviewed. No such review was fabricated.",
+    "feasible_scope": "Actual BridgeRuntime loadCase/generateRoutes/generateNativeRoutes/inspectRefinement with only the resolver replaced by explicit generated CriticalConstraints; geometry, planners, protocol, stale binding and admission guards are genuine.",
+    "not_proved": [
+      "registry/source admission",
+      "critical anatomy rendering",
+      "learned planning",
+      "real patient route benefit"
+    ]
+  },
+  "focused_tests": {
+    "passed": 3,
+    "command": "PYTHONPATH=src .venv/bin/python -B -m pytest -q build/critical-planning-gap-audit-v1/test_generated_critical_consumers.py",
+    "results": [
+      {
+        "operation": "generateRoutes",
+        "clear_feasible": 1,
+        "blocked_rejected": 1,
+        "same_requested_geometry": true,
+        "stale_error": "ROUTE_UNAVAILABLE",
+        "receipt": {
+          "path": "build/critical-planning-gap-audit-v1/final-tmp/test_actual_bridge_routes_cons0/consumer-result.json",
+          "sha256": "8c3150218cb23b7b2f0daddeb6626a2d55b9e43e89000992909c4275fb6e68d6",
+          "bytes": 17089
+        }
+      },
+      {
+        "operation": "generateNativeRoutes",
+        "clear_feasible": 2,
+        "blocked_rejected": 2,
+        "same_requested_geometry": true,
+        "stale_error": "ROUTE_UNAVAILABLE",
+        "receipt": {
+          "path": "build/critical-planning-gap-audit-v1/final-tmp/test_actual_bridge_routes_cons1/consumer-result.json",
+          "sha256": "e59c74c75b4389f6e4c642731a478bcfbb0baf24676824644e81685de123f599",
+          "bytes": 42292
+        }
+      }
+    ],
+    "evidence": [
+      {
+        "path": "build/critical-planning-gap-audit-v1/test_generated_critical_consumers.py",
+        "sha256": "7b56a6aa89da405927b89099597d203209234d636b32cccc46dcfd2d1f8745d9",
+        "bytes": 7386
+      },
+      {
+        "path": "build/critical-planning-gap-audit-v1/tests-final.txt",
+        "sha256": "73606f0fdd8d2b1efa0d8609f2509e54e938c1ad166b776dd787b0dfba86b15a",
+        "bytes": 98
+      }
+    ]
+  },
+  "one_next_slice": {
+    "action": "Promote the focused generated consumer controls as tests/test_generated_critical_consumers.py; no planner or admission rewrite is needed for this slice.",
+    "acceptance": "Both actual route operations keep identical requested geometry while the explicitly generated resolved exclusion changes feasible to FORBIDDEN_COLLISION; evidence model identity changes; old run/route bindings refuse; real registry and learned admission still refuse."
+  },
+  "caveat": "tests/test_planning.py:136 still expects unsourced raw-mask overrides to work; it is stale relative to require_canonical_masks and is not evidence of current positive registry integration. This audit did not run that historical test.",
+  "prohibited_work": {
+    "real_payload_reads": 0,
+    "model_calls": 0,
+    "tracked_edits": 0,
+    "broad_test_runs": 0
+  },
+  "source_pins": [
+    {
+      "path": "src/resectionlab/critical_evidence.py",
+      "sha256": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99",
+      "bytes": 29592
+    },
+    {
+      "path": "src/resectionlab/planning.py",
+      "sha256": "e1c1e377a8bdf4416c7b0f7e3f0c3c6d12d63ad46f174d0b0700b86f598a2b24",
+      "bytes": 31212
+    },
+    {
+      "path": "src/resectionlab/native_routes.py",
+      "sha256": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea",
+      "bytes": 8680
+    },
+    {
+      "path": "src/resectionlab/native_resection.py",
+      "sha256": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+      "bytes": 30492
+    },
+    {
+      "path": "src/resectionlab/native_simulation.py",
+      "sha256": "64552e5e5b5c245d4e815d0943ef4e9e5837b38d251ea891479c2a86ce026749",
+      "bytes": 34916
+    },
+    {
+      "path": "src/resectionlab/native_refinement.py",
+      "sha256": "eec54a623eeff6a6efae64823c93746083602018cf2f3b187b7763487bc0f3c4",
+      "bytes": 34315
+    },
+    {
+      "path": "src/resectionlab/native_spatial_task.py",
+      "sha256": "503acba2bfe14dc6f744bd2099e45b018cfa2011de4e35b30e0e8c70abdb6255",
+      "bytes": 62405
+    },
+    {
+      "path": "src/resectionlab/desktop_bridge.py",
+      "sha256": "3b9bf8e4671e368efffbc93cda5d9934a3084bd5e387a1caac34c9d716eadb92",
+      "bytes": 104631
+    },
+    {
+      "path": "src/resectionlab/data_policy.py",
+      "sha256": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208",
+      "bytes": 7928
+    },
+    {
+      "path": "desktop/src/types.ts",
+      "sha256": "997c43242c987158793845e8c0954414979b5d0da5f153ba3cf4aa2d3c8a2b28",
+      "bytes": 13895
+    },
+    {
+      "path": "desktop/src/case-data.ts",
+      "sha256": "06546601279541a204da813f2e3b5a875265dabc8d4da7eb96464a5efb9b865d",
+      "bytes": 8829
+    }
+  ]
+}
