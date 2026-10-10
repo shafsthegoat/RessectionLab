@@ -24,3 +24,7 @@ the remaining two rows, complete authenticated input manifest and bounded
 comparison execution are still pending. [Follow-up evidence](followup-index.json)
 adds canonical import checks and root validation. Even a successful numerical
 comparison would not establish measured-force fidelity or clinical utility.
+
+Archival note: the whole-package whitespace check reports trailing spaces in
+the byte-preserved historical pytest failure logs. Those logs remain exact for
+their recorded hashes; source and documentation whitespace checks pass separately.

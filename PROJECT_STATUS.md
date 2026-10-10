@@ -2,6 +2,8 @@
 
 Current integrated results, October 9:
 
+- **Why more probe training would not help yet:** the [shared-task diagnostic](artifacts/shared-probe-decision-audit-v1/REPORT.txt) shows that removing two probes preserves the final cavity while improving generated return from 1.109 to 1.295. Probing changes contact history but adds no anatomical information in this task. A separately declared retained-surface contact objective makes tool choice meaningful in a small demonstration; it is a proposed new task, with no policy training or production reward change.
+
 - **Numerical comparison preparation:** the [separate native comparator](artifacts/hbe-v5-native-comparison-integration-v1/RESULT.md) is integrated with 91 passing canonical checks, unchanged mathematical thresholds and explicit source/receipt authentication. The original generated comparator remains generated-only. Actual twelve-row comparison is pending the final two runs; no physical validation follows from these software checks.
 
 - **Physical-measurement follow-up:** the [public methods audit](artifacts/menichetti-physical-protocol-investigation-v1/README.md) corroborates brain-level trial grouping and the nominal indentation protocol. Per-trial timing, actual indentation and stored-force preprocessing remain missing, so constitutive validation remains a data dependency. No protected force responses were opened and no fit was run.

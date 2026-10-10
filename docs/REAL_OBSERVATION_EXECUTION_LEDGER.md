@@ -997,3 +997,22 @@ evidence and the full chain before and after comparison. This slice ran no
 native process or actual bulk verifier. The original nine-row mapping remains
 historical; N16 now makes ten complete rows, with two executions and the complete
 comparison still outstanding. Measured-force and patient validation remain open.
+
+### October 10: current probe action is dominated under the removal objective
+
+The [shared-engine diagnostic](../artifacts/shared-probe-decision-audit-v1/REPORT.txt)
+compares actual generated state arrays and full normalized candidate inventories.
+Probing after shallow aspiration changes contact history, tool state and budget,
+but not tissue, cavity, free space or anatomical channels. Deleting both probes
+from the scripted history preserves the exact final removed-mask hash and raises
+return from 1.109 to 1.295. Current width-2 SEARCH returns 3.353 after 24 branch
+calls and hits its cap; no optimum is established.
+
+A separate prospective objective was declared before its demonstration: contact
+and retain one public goal cell. Shallow aspiration plus probe succeeds; shallow
+aspiration alone misses contact, and deeper aspiration destroys the goal. This
+is a hypothetical geometric task, not observed anatomy or new sensor information.
+No search, learning or reward tuning used that objective. The 368-preview audit
+took 1.624 seconds of worker time, with no model, checkpoint or patient access.
+Existing checkpoint/desktop integration remains first; a versioned mode/goal-aware
+task and actor would be needed before testing useful learned probing.

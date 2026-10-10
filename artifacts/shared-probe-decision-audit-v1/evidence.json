@@ -1,0 +1,204 @@
+{
+  "model_calls": 0,
+  "optimizer_updates": 0,
+  "patient_reads": 0,
+  "probe_changes_action_ids_history_current_tool_and_remaining_budget": true,
+  "probe_immediate_reward": -0.061,
+  "probe_keeps_physical_inventory_equal": true,
+  "probe_keeps_remaining_cavity_connected_free_and_base_images_equal": true,
+  "probe_new_contact_cells": [
+    [
+      5,
+      6,
+      2
+    ],
+    [
+      6,
+      5,
+      2
+    ],
+    [
+      6,
+      6,
+      3
+    ],
+    [
+      6,
+      7,
+      2
+    ],
+    [
+      7,
+      6,
+      2
+    ]
+  ],
+  "proposed_public_geometric_contact_task": {
+    "comparison_from_current_committed_histories": {
+      "deep_aspirate_then_stop": {
+        "goal_retained": false,
+        "nonstop_actions": 1,
+        "proposed_contact_return": -1.039,
+        "removed_mm3": 5.0,
+        "retained_goal_contact": false,
+        "roundtrip_motion_mm": 9.0,
+        "tool_changes": 0
+      },
+      "open_probe_then_stop": {
+        "goal_retained": true,
+        "nonstop_actions": 2,
+        "proposed_contact_return": 0.708,
+        "removed_mm3": 1.0,
+        "retained_goal_contact": true,
+        "roundtrip_motion_mm": 2.0,
+        "tool_changes": 1
+      },
+      "open_then_stop": {
+        "goal_retained": true,
+        "nonstop_actions": 1,
+        "proposed_contact_return": -0.231,
+        "removed_mm3": 1.0,
+        "retained_goal_contact": false,
+        "roundtrip_motion_mm": 1.0,
+        "tool_changes": 0
+      },
+      "stop": {
+        "goal_retained": true,
+        "nonstop_actions": 0,
+        "proposed_contact_return": 0.0,
+        "removed_mm3": 0.0,
+        "retained_goal_contact": false,
+        "roundtrip_motion_mm": 0,
+        "tool_changes": 0
+      }
+    },
+    "goal_defined_before_transitions": true,
+    "goal_native_index": [
+      6,
+      6,
+      3
+    ],
+    "goal_semantics": "retained source cell must have a committed tangential probe contact; no biological inference",
+    "objective": "terminal completion1 minus .2 per removed mm3, .03 per nonstop action, .001 per roundtrip mm, .03 per tool change; contact potential may be gained and lost",
+    "objective_was_not_used_for_training_or_search": true
+  },
+  "runtime_seconds": 1.624040791997686,
+  "schema": "shared-probe-decision-audit-v1",
+  "scope": "generated software research diagnostic only; no learning or clinical/anatomical evidence",
+  "source_hash": "sha256:271789605cf5b6510f47995b743782d3d298d44b780a39e9929aec72b37b18b4",
+  "source_sha256": {
+    "data_policy.py": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208",
+    "development_episode.py": "bf9e6f89eb90a3483af2f95491e5937d6b8748b53425d72b4448c27880c83da6",
+    "native_resection.py": "0cbbe2904f6b87cfb97d555121cc70690989d70a971361ec417735a7061e3a3c",
+    "native_spatial_task.py": "503acba2bfe14dc6f744bd2099e45b018cfa2011de4e35b30e0e8c70abdb6255",
+    "observed_search.py": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+    "sequential_spatial_observation.py": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+    "shared_episode.py": "81d6b1faac3433f1a2eb09ff4ef70e773b69922c056495caf1a879fbbc381a4d",
+    "simulation.py": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253",
+    "spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4"
+  },
+  "torch_imported": false,
+  "total_preview_calls": 368,
+  "unchanged_objective_comparison": {
+    "return_gain_removing_probes": 0.18599999999999994,
+    "same_final_removed_hash": "sha256:f23b5ed79449a287ebb18ed44307fa56e68670a702eb9864d278443ebe5a67a6",
+    "scripted_return": 1.109,
+    "scripted_rewards": [
+      -0.231,
+      -0.061,
+      -0.4650000000000001,
+      -0.065,
+      1.931,
+      0.0
+    ],
+    "without_probes_return": 1.295,
+    "without_probes_rewards": [
+      -0.231,
+      -0.43500000000000005,
+      1.961,
+      0.0
+    ]
+  },
+  "unchanged_objective_search": {
+    "accounting": {
+      "actor_forward_calls": 0,
+      "beam_pruned_prefixes": 16,
+      "beam_width": 2,
+      "call_cap_reached": true,
+      "completed_layers": 3,
+      "eager_transition_calls": 0,
+      "estimated_incremental_return": 3.353,
+      "evaluated_transition_prefixes": 24,
+      "expanded_nodes": 6,
+      "final_policy_state_hash": null,
+      "guidance": "none",
+      "implicit_stop_evaluations": "all evaluated prefixes; known zero incremental reward",
+      "implicit_stop_prefix_count": 25,
+      "initial_policy_state_hash": null,
+      "layers": [
+        {
+          "completed": true,
+          "depth": 1,
+          "expanded_nodes": 1,
+          "model_transition_calls": 5,
+          "negative_prefixes_evaluated": 3,
+          "negative_prefixes_pending_at_cap": 0,
+          "negative_prefixes_pruned_by_beam": 3,
+          "negative_prefixes_retained": 0
+        },
+        {
+          "completed": true,
+          "depth": 2,
+          "expanded_nodes": 2,
+          "model_transition_calls": 9,
+          "negative_prefixes_evaluated": 0,
+          "negative_prefixes_pending_at_cap": 0,
+          "negative_prefixes_pruned_by_beam": 0,
+          "negative_prefixes_retained": 0
+        },
+        {
+          "completed": true,
+          "depth": 3,
+          "expanded_nodes": 2,
+          "model_transition_calls": 8,
+          "negative_prefixes_evaluated": 0,
+          "negative_prefixes_pending_at_cap": 0,
+          "negative_prefixes_pruned_by_beam": 0,
+          "negative_prefixes_retained": 0
+        },
+        {
+          "completed": false,
+          "depth": 4,
+          "expanded_nodes": 1,
+          "model_transition_calls": 2,
+          "negative_prefixes_evaluated": 0,
+          "negative_prefixes_pending_at_cap": 0,
+          "negative_prefixes_pruned_by_beam": 0,
+          "negative_prefixes_retained": 0
+        }
+      ],
+      "lazy_planning_transition_calls": 24,
+      "max_calls": 24,
+      "model_transition_calls": 24,
+      "negative_prefixes_evaluated": 3,
+      "negative_prefixes_pruned_by_beam": 3,
+      "negative_prefixes_retained": 0,
+      "objective_source": "unchanged_permitted_nominal_target",
+      "observation_requests": 6,
+      "peak_next_layer_states": 3,
+      "planning_seconds": 0.5847064999397844,
+      "policy_state_check_seconds": 0.0,
+      "policy_state_checks": 0,
+      "root_legal_nonstop_actions": 5,
+      "stop_baseline_return": 0.0,
+      "time_cap_reached": false,
+      "transition_mode": "lazy_planning"
+    },
+    "modes": [
+      "aspirate",
+      "stop"
+    ],
+    "preview_calls_including_replay": 114,
+    "return": 3.353
+  }
+}
