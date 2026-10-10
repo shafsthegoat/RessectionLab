@@ -30,9 +30,9 @@ RECEIPT_PINS = {
 MODEL_META = "data/models/gliomoda-v1.0.2/t1c-t2f-pinned-v1"
 CASE4_PREP = "outputs/scan-target/resect-case4-prep-v1/attempt-01"
 MODEL_BACKEND = "accepted_full128_recompute_stage0_cpu_v3_requires_case4_adaptation"
-# A future reviewed patient-specific worker/supervisor release must set this
-# to its exact SHA in a new candidate. The generated-only v3 release is invalid.
-CASE4_FORWARD_RELEASE_SHA256 = None
+# Exact independently reviewed Case4 DEVELOPMENT forward. A different release,
+# including the earlier generated-only v3 control, is invalid.
+CASE4_FORWARD_RELEASE_SHA256 = "1a567a0ae656c78732dcac6215776a4917bf3d2f51015ab85617e91c5169af15"
 
 
 class DiagnosticHandoffError(ValueError):
@@ -327,11 +327,10 @@ def decode_model_output(prepared, logits, *, input_receipt: dict,
 
 def read_accepted_forward(model_backend_dir: Path, input_receipt: dict,
                           checkpoint_sha256: str) -> tuple[Any, dict]:
-    """Verify one supervised result; fail closed until its release is pinned.
+    """Verify the one pinned, supervised DEVELOPMENT result before decoding.
 
     This routine opens only the saved output, not patient source images or
-    checkpoint. It cannot run before an independently reviewed release digest
-    is fixed in a new source version.
+    checkpoint. A different release digest still fails closed.
     """
     if CASE4_FORWARD_RELEASE_SHA256 is None:
         raise DiagnosticHandoffError("no reviewed Case4 patient-forward release exists")
@@ -495,11 +494,10 @@ def write_unverified_display_control(prepared, display, destination: Path) -> di
 
 def write_case4_display_from_saved(root: Path, handoff_dir: Path,
                                    model_backend_dir: Path, destination: Path) -> dict:
-    """Prospective patient display path: independently rebind every saved input.
+    """Decode only the pinned Case4 DEVELOPMENT output into an unreviewed layer.
 
-    This opens patient scans only when called by a separately reviewed release.
-    At present the release pin is intentionally unset and the call refuses
-    before any payload read.
+    Rebind saved scans, input, network output and coverage; this grants no
+    planning, evaluation, anatomical or clinical admission.
     """
     if CASE4_FORWARD_RELEASE_SHA256 is None:
         raise DiagnosticHandoffError("no reviewed Case4 patient-forward release exists")

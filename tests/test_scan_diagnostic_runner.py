@@ -7,6 +7,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = ROOT / "data/models/gliomoda-v1.0.2/t1c-t2f-pinned-v1"
@@ -111,13 +112,16 @@ class DiagnosticHandoffControls(unittest.TestCase):
                 decode_model_output(prepared, logits,
                                     input_receipt=input_receipt,
                                     accepted_forward={"status": "accepted_case4_development_single128"})
-            with self.assertRaises(DiagnosticHandoffError):
-                read_accepted_forward(work / "nonexistent-model-release", input_receipt,
-                                      "0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3")
-            with self.assertRaises(DiagnosticHandoffError):
-                write_case4_display_from_saved(ROOT, work / "handoff",
-                                               work / "nonexistent-model-release",
-                                               work / "patient-display")
+            # Preserve explicit unreleased-gate controls without opening Case4
+            # patient scans after the separate exact DEVELOPMENT pin is set.
+            with patch("resectionlab.scan_diagnostic_runner.CASE4_FORWARD_RELEASE_SHA256", None):
+                with self.assertRaises(DiagnosticHandoffError):
+                    read_accepted_forward(work / "nonexistent-model-release", input_receipt,
+                                          "0e29f882310fe8cb076d6cadb982067ef53c6a32231f40ae17d9c173aa4307b3")
+                with self.assertRaises(DiagnosticHandoffError):
+                    write_case4_display_from_saved(ROOT, work / "handoff",
+                                                   work / "nonexistent-model-release",
+                                                   work / "patient-display")
             display = prepared.decode_supplied_logits_for_display(
                 logits[0], np.ones((128, 128, 128), np.uint8))
             artifact = write_unverified_display_control(prepared, display, work / "display")

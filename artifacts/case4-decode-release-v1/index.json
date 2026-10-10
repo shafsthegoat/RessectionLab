@@ -1,0 +1,32 @@
+{
+  "canonical-tests.txt": {
+    "bytes": 1381,
+    "sha256": "4c92cf5591de2524d5595c7ac042e8a9ffda0708791c5298e6c3c28b60dc4a75",
+    "source": "build/case4-decode-canonical-tests.txt"
+  },
+  "contract.json": {
+    "bytes": 4544,
+    "sha256": "a035e97270daf5d92471604d640bb7ad218cb7ef345e7fa01181010d4da784da",
+    "source": "build/scan-target-estimator-research/case4-diagnostic-runner-v1/decode_backend/pair-contract.json"
+  },
+  "prospective-review.md": {
+    "bytes": 4166,
+    "sha256": "b17e763e27a2ca089374de06a0b497dffcb7180fb4fe1d9e01483dd9cd800c5c",
+    "source": "build/scan-target-estimator-independent/case4-display-decode-v1-prospective-review.md"
+  },
+  "source-gate-test.py": {
+    "bytes": 1479,
+    "sha256": "8a00f26150a1cb4b02b6d29e80c66773de00d67d90bddffcbea5d15a478c5b98",
+    "source": "build/scan-target-estimator-research/case4-diagnostic-runner-v1/decode_backend/test_decode_gate.py"
+  },
+  "supervisor.py": {
+    "bytes": 26641,
+    "sha256": "aafd212764fe014cbe6889b2568320151a4c152d000cd74cda32e1d4ee7fc490",
+    "source": "build/scan-target-estimator-research/case4-diagnostic-runner-v1/decode_backend/supervise_pair.py"
+  },
+  "worker.py": {
+    "bytes": 5806,
+    "sha256": "e119b3fd01d64f64bcbd0327f39be21ba8ddf8220c42926cc462ac04bff164cd",
+    "source": "build/scan-target-estimator-research/case4-diagnostic-runner-v1/decode_backend/pair_worker.py"
+  }
+}
