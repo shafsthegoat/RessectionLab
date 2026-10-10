@@ -1,0 +1,93 @@
+Independent saved-result audit — fixed public-motion-ranking IL64
+
+PASS for saved evidence consistency; the experimental result is negative.
+The prepared auditor passed on its first execution: 9,752 checks, 555 source/
+metadata files, 0.194947 s and 35,913,728 B peak RSS. No patient arrays, weights,
+project imports, model calls, optimizer work or native replay were performed.
+
+Exact terminal boundary
+HEAD 3d6d997e79b7752518984ad4aeb5a0ef22bc2dc3
+Release 37365da5ec1421a6cd9665f1c10011497ee0c79b46bf0f76f766f1039ce7f33d
+Source index efe3917d049e3278f2f68c7229f811692050efbc15e6591ac69c4f9eb92028aa
+Result 754c84febe5ba90741510ecf852e47bde26e83f0965604079762cce6a4ebaeaf
+Receipt f949086895c9d210a3c5b8eb784e8650f9c3172e9f203f1b4062f03b3f33bceb
+Worker final 7654ffe656ecce85065b852b74f0de842091f2f15ae0114c397e94dea9e06015
+
+All 64 shared update records form an exact parameter-hash chain from the original
+IL initialization; every update contains all four ordered TRAIN contributions,
+29 loss forwards and the unchanged 4 STOP / 25 motion balanced weights. The
+protocol projects exactly to the original IL protocol when only the ranking
+supervision key is removed. All 29 cached teachers retain the saved physical
+history, source/model identity, observations, legal inventory and action labels.
+The new checkpoint was saved and reloaded once according to bound worker records.
+The audit authenticated those records; it did not independently decode tensors.
+Final checkpoint SHA 2825ad738591f786f1fa5b3383cd74c4126e1ab57f0494b04b2c8c52e44bfa0e
+Final parameter hash sha256:ec843adeb3ce854c2d516848b5f26a4f855a25d3f4369b28543e1ae6be7c1ed6
+
+Complete outcomes (target mm3; public return; actions)
+002: ranking 0; 0; STOP. Original IL and SEARCH also STOP.
+015: ranking 50.544738767; 49.502510641; 24 motions, HORIZON.
+     Original IL/SEARCH 55.313110349; 54.866215036; 13 motions + STOP.
+018: ranking 0; 0; STOP. Original IL and SEARCH also STOP.
+045: ranking 40.054370954; 38.805652145; 24 motions, HORIZON.
+     Original IL 48.637450445; 47.508437887; 24 motions, HORIZON.
+     SEARCH 48.637450445; 48.181962921; 12 motions + STOP.
+
+All four new routes have complete sealed histories and accepted saved independent
+full-tool certificates. No favorable-action/reward gate was imposed. The original
+IL attempt remains failed; its 045 outcome uses the separately accepted exact-plan
+checker recovery, never a rewritten receipt. Ranking loses 5 target cells on 015
+(53 vs 58) and 9 on 045 (42 vs 51). All routes have zero outside-supplied-target
+removal. This is not zero contact: retained-contact upper bounds are 147.819519
+and 139.236623 mm3 on the two moving routes. Full unchanged target denominators
+remain 7,386.207580 and 24,128.943798 mm3 respectively; progress is only about
+0.6843% and 0.1660%. Vascular/function coverage and exterior tool exposure remain
+unassessed. These are annotation-assisted simulation outcomes, not surgery or
+physical validation.
+
+The 015 path grows from 56.895313 to 112.228125 mm and 0 to 7 tool changes. The
+045 path is similar in length (199.012558 vs 198.718809 mm), but tool changes rise
+7 to 11 and target progress falls. Thus the intended efficiency problem was not
+resolved; neither negative route is hidden by its positive nominal return.
+
+Saved-state ranking diagnosis
+Independent scalar softmax/rank/CE checks and independently oriented unordered
+reward-pair enumeration agree with all 29 new and 29 saved-original readouts.
+Equal reward pairs are excluded; logit ties have separate counts (zero here).
+Correct strict pairs: ranking 2,757 / 4,970; original IL 2,915 / 4,970.
+Mean public immediate regret: ranking 2.357738748; original 1.221554038.
+Same balanced ranking surrogate: ranking 0.337240967; original 0.323586844.
+Teacher action accuracy: ranking 5 / 29; original 11 / 29.
+Motion mean teacher CE: ranking 2.511062105; original 2.368115973.
+STOP mean CE: ranking 0.000277844; original 0.000436380.
+
+Pre-update ranking loss decreases from 1.180353460 to 0.336070326, with seven
+increases across consecutive updates. Final post-update loss is 0.337240967;
+these are different evaluation times. Gradient norms span 0.202031448 to
+1.999200940, below the fixed clipping threshold on all 64 updates. The failure
+therefore is neither global STOP collapse nor demonstrated clipping saturation.
+The fixed intervention regresses even on its own final surrogate relative to
+the old checkpoint, as well as pair counts, immediate regret and complete routes.
+This evidence rejects improvement for this one declared 64-update contrast; it
+does not isolate a general cause or establish that ranking losses cannot work.
+Pairwise counts weight each pair equally, whereas the optimized loss normalizes
+reward gaps within each state and balances STOP/motion groups. They are distinct
+metrics. Immediate reward ranking also does not prove long-horizon route utility.
+
+Actual work and limits
+64 IL updates, 1,856 loss forwards, 29 endpoint forwards, 50 greedy forwards =
+1,935 total (limit 1,981); 318,080 confirmed training pair terms; 9,940 endpoint
+pair evaluations; 256 cache uses; 8 source visits; 1 checkpoint reload; 14,108
+native previews (limit 70,080). Zero RL updates, search, private-reference or
+SELECT/EVAL access. Parent 823.282349 s (limit 960), sampled RSS 1,595,539,456 B
+(limit 3 GiB), output 12,043,763 B (limit 128 MiB); exit zero, no cleanup errors
+or surviving owned PIDs. Nested inclusive cost scopes must not be summed.
+Original failed IL owned time 727.792213 s and separate accepted-045 recovery
+38.405892 s remain separate historical costs. No equal-compute or replicated
+runtime claim is made; ranking adds pair work and the final trajectories differ.
+
+Evidence in this directory: audit_saved.py, audit-attempt-01.log,
+audit-result.json, input-index.json, update-summary.json,
+teacher-readout-summary.json. Original run remains under
+build/public-motion-ranking-il64-v1/IL64/attempt-01 and attempt-01.supervision.
+No copied weights, acquired arrays, bulk traces or canonical edits.

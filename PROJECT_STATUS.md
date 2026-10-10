@@ -1,20 +1,23 @@
 # Project status
 
-**Current priority, October 10:** improve the measured action-ranking failure while
-repairing a separately diagnosed new-patient starting-condition blocker. The matched scratch RL run completed eight updates
-and 32 episodes, but is worse than greedy search and accepted imitation on all four
-TRAIN cases. It removes 24/30 target cells on 015/045 versus search's 58/51, and
-removes 20.027/16.212 mm³ outside the supplied target on 002/018 without target gain.
-Independent saved-result audit passes 10,874 checks. Positive training exposure was
-present: 16 positive episodes and 291 positive cuts, all with positive continuation
-return. This failure is not explained by absent reward exposure; the precise cause
-still needs testing. All 64 imitation updates remain preserved, including the
-separately accepted unchanged045 route after the numerical checker correction.
-No learned advantage or useful transfer is established. The fixed SELECT013
-attempt now refuses construction: its outer opening plane meets the crop boundary,
-leaving no in-grid free-space seed. All four arms are unstarted, so no transfer
-outcome exists. 037 remains held and EVAL067 closed. Earlier SELECT all-STOP outcomes remain historical results from the earlier
-starting condition, not predictions of this new comparison.
+**Current priority, October 10:** complete the fixed-model new-patient comparison
+before another learning sweep. The public motion-ranking contrast completed all
+64 updates and four full TRAIN routes, but regressed relative to original
+imitation: 53/42 target cells on 015/045 versus 58/51, with both routes reaching
+the 24-movement horizon. STOP on 002/018 was preserved. The independent saved audit
+passes 9,752 checks; lower training loss did not produce better complete decisions.
+The earlier scratch RL failure, original imitation attempt and separate accepted
+045 checker recovery remain preserved. No learned advantage or useful transfer
+is established.
+
+The fixed SELECT013 comparison previously failed before inference because its
+opening plane met the crop boundary and had no in-grid free-space seed. A separate
+real-source expansion now preserves every original MRI/label overlap and all
+35,260 target cells while restoring omitted support coverage. Intended-use
+qualification and explicit partial-domain inference integration are the next
+steps. The original four unstarted arms remain failed; no changed-condition
+transfer result exists yet. 037 remains held and EVAL067 closed. Earlier SELECT
+all-STOP outcomes belong to an earlier starting condition.
 
 The four recovered TRAIN cases exposed a separate initialization problem: an
 S-only entry plane can start tools inside assumed S∨T tissue, and unknown image
@@ -30,7 +33,7 @@ See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cr
 
 Current integrated results, October 10:
 
-- **The next model contrast is integrated:** [public motion-ranking supervision](artifacts/public-motion-ranking-integration-v1/RESULT.txt) passes 217 canonical controls. It replaces winner-only motion labels with graded public reward ordering while retaining STOP supervision, model inputs, initialization and the fixed 29-state/64-update experiment. Complete route efficiency is the success criterion; no new training result is claimed yet.
+- **Graded motion supervision regresses despite lower training loss:** [the completed IL64 contrast](artifacts/public-motion-ranking-il64-result-v1/REPORT.txt) loses five target cells on 015 and nine on 045 versus original imitation; it preserves STOP on 002/018. Correct saved-state pairs fall 2,915→2,757 of 4,970 and mean public regret rises 1.222→2.358. All four complete routes pass saved certificate checks; the independent audit passes 9,752 checks. Runtime is 823.282 s with 1.596 GB sampled peak. No clipping or STOP collapse explains this failure. Keep the original frozen models for the repaired SELECT comparison; this variant is not promoted as an improvement.
 
 - **Geometry is the measured iteration bottleneck:** [the completed function profile](artifacts/native-preview-function-profile-v1/RESULT.txt) spends 90.93% of its 20.560-second greedy window in native previews. The later attempt failed a tuple-versus-list history comparison; all saved episode metrics exactly match the earlier accepted route, but no new independent geometry audit ran. Reuse of the existing exact capsule cache is the single proposed speed contrast; hit rate and benefit remain unmeasured.
 

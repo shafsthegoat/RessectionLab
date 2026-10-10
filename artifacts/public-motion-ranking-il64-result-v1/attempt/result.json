@@ -1,0 +1,306 @@
+{
+  "SELECT_EVAL_opened": false,
+  "TRAIN": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "TRAIN_greedy": {
+    "ReMIND-002": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "complete_tool_path_length_mm": 0.0,
+      "motion_count": 0,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:ec843adeb3ce854c2d516848b5f26a4f855a25d3f4369b28543e1ae6be7c1ed6",
+      "plan_seal": "sha256:c139bfcff039ff2dc3b4f5d002397ce461d79f1754c9646331980998296be2c7",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0,
+      "terminal_reason": "STOP",
+      "tool_changes": 0
+    },
+    "ReMIND-015": {
+      "actions": [
+        "nominal-cavity-be1c3eab54bd4a165243885e",
+        "nominal-cavity-590f5741850adeebd6f870e1",
+        "nominal-cavity-616e7bc2e3a53106ae3ae033",
+        "nominal-cavity-9c28d00d788111a9cef7a366",
+        "nominal-cavity-265d004f4ce9538aa6ea0e65",
+        "nominal-cavity-16fc3925a9e043d84003c1fe",
+        "nominal-cavity-98ec80d2f1ab5fd57701ca74",
+        "nominal-cavity-a4a48d13c431380119f6bbc7",
+        "nominal-cavity-223e3f024c326f0a45ec3ffe",
+        "nominal-cavity-5a66a5a0e162fb4bbf763ef8",
+        "nominal-cavity-5769e3137a61dfe19d5b1102",
+        "nominal-cavity-a0255cac81dce997ad26b48b",
+        "nominal-cavity-964aeeba8c627929dace7352",
+        "nominal-cavity-625c3f12ec0fa534f51dcd96",
+        "nominal-cavity-aadb595e3c1f84d4058a1a98",
+        "nominal-cavity-f7e302d2c3d91ab13ebc62c9",
+        "nominal-cavity-55ba991ab3a057429e90d992",
+        "nominal-cavity-9ca0ecc1ba3425a2a6d079da",
+        "nominal-cavity-cb0751ca24f733c37a435956",
+        "nominal-cavity-cbbbd551aea4c24ad8e19b19",
+        "nominal-cavity-25d77ea933c4aadc3daafa87",
+        "nominal-cavity-8ac0972a0b9ac101aa6cb217",
+        "nominal-cavity-a8441a1bbeb3606f6d501ed3",
+        "nominal-cavity-88ed8d3dd7f94c7153f1ccb8"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "complete_tool_path_length_mm": 112.22812547999983,
+      "motion_count": 24,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:ec843adeb3ce854c2d516848b5f26a4f855a25d3f4369b28543e1ae6be7c1ed6",
+      "plan_seal": "sha256:c55b0aac05c25b3e5ff701b8a3965ef7c9d56971c55087bedff2a09b67d5e730",
+      "public_return": 49.502510641308916,
+      "steps": 24,
+      "target_removed_mm3": 50.54473876678892,
+      "terminal_reason": "HORIZON",
+      "tool_changes": 7
+    },
+    "ReMIND-018": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "complete_tool_path_length_mm": 0.0,
+      "motion_count": 0,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:ec843adeb3ce854c2d516848b5f26a4f855a25d3f4369b28543e1ae6be7c1ed6",
+      "plan_seal": "sha256:bcd7a944544c92ad94d1af63acba63ba644c8b4f78f2dc69ea0eecc04cfb3ea2",
+      "public_return": 0.0,
+      "steps": 1,
+      "target_removed_mm3": 0.0,
+      "terminal_reason": "STOP",
+      "tool_changes": 0
+    },
+    "ReMIND-045": {
+      "actions": [
+        "nominal-cavity-04a6300abba0b606e29c5a89",
+        "nominal-cavity-9dac9d3d5e435f6bb26c94aa",
+        "nominal-cavity-34d66fcf5f3d07f4796972fe",
+        "nominal-cavity-c05f13c53886b3c858d436d8",
+        "nominal-cavity-6c597bc1ee3afd4e45521ea3",
+        "nominal-cavity-92503b1206e1096071bb9b45",
+        "nominal-cavity-d97cd7a0a3710ac0f699cad2",
+        "nominal-cavity-9d64bb347c2c2d81b07b8534",
+        "nominal-cavity-8075e367960e6c806968b717",
+        "nominal-cavity-1eeda33ac4aeb6f12f4391bb",
+        "nominal-cavity-33d67208f7cddde22d3d6fc0",
+        "nominal-cavity-c2221b873e9272306497051e",
+        "nominal-cavity-9c5a8a3dafbbdb249b1bc5bd",
+        "nominal-cavity-e4efe311c88399dbdf3e7fed",
+        "nominal-cavity-cc0583359aeb26d7cd245d54",
+        "nominal-cavity-c8184b29ab7d04113f95c026",
+        "nominal-cavity-8665d9acf76b7dd1c81bd52d",
+        "nominal-cavity-e8dbe71bcfb1dda8fc87437c",
+        "nominal-cavity-6a69177e95c444d656213b64",
+        "nominal-cavity-e23e2ce8c39c3163652d760d",
+        "nominal-cavity-2d73cc14e67368a2f3a606a3",
+        "nominal-cavity-8cc88ec4b425a92af413ceb6",
+        "nominal-cavity-7b78a255d812c9ef6a1c043b",
+        "nominal-cavity-0e3c25f4611c602fd2b211be"
+      ],
+      "checkpoint_reloaded": true,
+      "complete": true,
+      "complete_tool_path_length_mm": 198.71880942677097,
+      "motion_count": 24,
+      "outside_interpretation": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "parameter_hash": "sha256:ec843adeb3ce854c2d516848b5f26a4f855a25d3f4369b28543e1ae6be7c1ed6",
+      "plan_seal": "sha256:ba98838b06167cb9343ffa967ad92f0bbcb8397ee65d328cd59c26d196a85b89",
+      "public_return": 38.805652145018584,
+      "steps": 24,
+      "target_removed_mm3": 40.05437095444535,
+      "terminal_reason": "HORIZON",
+      "tool_changes": 11
+    }
+  },
+  "checkpoint_loads": 1,
+  "checkpoints": {
+    "IL": {
+      "bytes": 137636,
+      "parameter_hash": "sha256:ec843adeb3ce854c2d516848b5f26a4f855a25d3f4369b28543e1ae6be7c1ed6",
+      "path": "IL-final.psckpt",
+      "sha256": "2825ad738591f786f1fa5b3383cd74c4126e1ab57f0494b04b2c8c52e44bfa0e"
+    }
+  },
+  "complete_wall_seconds": 819.1949247501325,
+  "completed_source_visits": 8,
+  "confirmed_ranking_pair_terms": 318080,
+  "endpoint_pair_evaluations": 9940,
+  "endpoint_teacher_metrics": {
+    "STOP_count": 4,
+    "STOP_mean_NLL": 0.0002778441019017919,
+    "balanced_mean_CE": 1.2556699744019488,
+    "motion_count": 25,
+    "motion_mean_NLL": 2.511062104701996,
+    "original_IL_ranking": {
+      "STOP_count": 4,
+      "balanced_ranking_objective": 0.3235868442590038,
+      "correct_pairs": 2915,
+      "logit_tied_pairs": 0,
+      "mean_public_nominal_regret": 1.2215540380913708,
+      "motion_count": 25,
+      "reversed_pairs": 2055,
+      "state_count": 29,
+      "strict_motion_pairs": 4970
+    },
+    "ranking": {
+      "STOP_count": 4,
+      "balanced_ranking_objective": 0.33724096743263615,
+      "correct_pairs": 2757,
+      "logit_tied_pairs": 0,
+      "mean_public_nominal_regret": 2.35773874769552,
+      "motion_count": 25,
+      "reversed_pairs": 2213,
+      "state_count": 29,
+      "strict_motion_pairs": 4970
+    },
+    "teacher_action_accuracy": 0.1724137931034483,
+    "unweighted_mean_CE": 2.164747034274397
+  },
+  "fresh_common_initialization_verified": true,
+  "initial_parameter_hash": "sha256:5629c3092ed7ef3d9609f51ec2e4e7fdecd7de5b95053bffd6abbf79afaf89d9",
+  "loss_forward_calls": 1856,
+  "method": "IL",
+  "native_preview_entries": 14108,
+  "optimizer_updates": {
+    "IL": 64,
+    "RL": 0
+  },
+  "original_IL_comparison_sha256": "fd91ffda467bc66fe948d779c9dabb81edbf459701fe9c1af6ed624c9573a0bb",
+  "post_exposure_condition": "public-union-post-exposure-axis0-v1",
+  "private_reference_reads": 0,
+  "public_motion_ranking_corpus_hash": "sha256:5147c784a1e4aee38ffd2cf95881c40914f9807727d54eeaa4dce618100da0be",
+  "same_initial_parameters_as_original_IL": true,
+  "search_calls": 0,
+  "selection_readiness": {
+    "execution_admitted": false,
+    "meaning": "fixed updates, authenticated reload, 29 teacher readouts and four complete TRAIN replays; performance may be negative",
+    "ready": true
+  },
+  "status": "complete_matched_TRAIN_endpoint",
+  "teacher_cache": {
+    "RL_reuse": false,
+    "array_bytes": 228140810,
+    "cache_seal": "sha256:86676b7b34d90fb8757f984f7c39c2122229982ed4bcf762d35a6707ef7f96f1",
+    "complete": true,
+    "learning_protocol_hash": "sha256:65fd88ba268e5c79ea8b0d4204ab6efe5b313d11c4b82b0820c6e6ef2010473e",
+    "memory_scope": "owned crop buffers plus JSON byte estimate; Python overhead and tree RSS remain supervised",
+    "metadata_json_bytes": 441861,
+    "mode": "cache_complete_replayed_TRAIN_teacher_traces_v1",
+    "readout_rows": 29,
+    "trace_reuses": 256,
+    "traces": [
+      {
+        "array_bytes": 7867396,
+        "context_hash": "sha256:b0553f9709d5068ccdf301c8cb17661b5462299c4f4a9521edd932c2f73db6bf",
+        "independent_replay_hash": "sha256:295b26f268313a51b97b8f6a40da750392b71b08eb77286db607b442030ffc3e",
+        "metadata_json_bytes": 11958,
+        "observations": [
+          "sha256:a3fe250d66db7d7d04ae81931828aa34fb5a8cccc6697e81e54f142c70b3ef06"
+        ],
+        "plan_seal": "sha256:0ecedb8f9177d766752a3d8d99da054e7b40fc3b39d77220bdfcc6597a5cb8ea",
+        "steps": 1,
+        "stop_steps": 1,
+        "subject": "ReMIND-002",
+        "trace_seal": "sha256:1a59bc38584e7b193bb22f0b18d6729c4ce6920cda1a27bedd3d175584b96f11"
+      },
+      {
+        "array_bytes": 110138771,
+        "context_hash": "sha256:acf85ef2debbee30ae0daf586b4bfb738e4280a58e8e1d45914276ac8b43eac6",
+        "independent_replay_hash": "sha256:2ed710aa6659a724a6b67702a14898540be5455fdcbf534cca2cb879df60eec1",
+        "metadata_json_bytes": 200312,
+        "observations": [
+          "sha256:99bedb2f37c12c84ad4fb51111a81bda8c10aed9af6ca97d282ed2fc5bfa8c44",
+          "sha256:2f4dc91f5a29df91301c7707453ed52575ea7df4ac3167b361364aca20a80a86",
+          "sha256:38ec2ffa4e35849b7a748b11484e37e67fc43e40d758a0c56462da9326f9575f",
+          "sha256:650b05250d3a140756e03057d5a52b72e46a7221cdd053c9d3ab1dfd7d342f6a",
+          "sha256:baec617f896772b2ffaae8dd201d253d790cda39364a89acbd9adbc3218c59ae",
+          "sha256:4e9e3950ab8efa7572d0907dd50a706b7970ac7941b4a67d69db980ece0be90e",
+          "sha256:fc6202d5be830c186350c002e1268b9ef587447021aaf9bef97ea0fac4767076",
+          "sha256:52820cf3aed0e4425f98cb80e72b8a93307a7847dfc7b4420a75a6db8663d33e",
+          "sha256:519932f96463350c0cd807583d6a784b3ac4325310e3ecbd5828e08226c6efc1",
+          "sha256:918a89d0b9f58d01cf17fd33af6d48e1ff39edb9f5b0722462c6745c30cd7dd8",
+          "sha256:429c5108d9b1c4918077c89879d4d9fdc008f60947650403e2267515061ddab0",
+          "sha256:3ad39e9702d980569ece43c8815b26859a7ffbd547f2ea7a7224134e12eff079",
+          "sha256:80710401a93370f8aec8159189a66d79444a600cb5fe382d4cdd5a02c4a0b7d1",
+          "sha256:bf1f87a48671ee89dea55913c2948d63c20686be2f5d63ab82c63ad19b6c598a"
+        ],
+        "plan_seal": "sha256:b1a32259d479ae86f34cc09da7964da8c790c911e42440cd736c20c7c460866b",
+        "steps": 14,
+        "stop_steps": 1,
+        "subject": "ReMIND-015",
+        "trace_seal": "sha256:fbf27fb91a56966079e4711bc3fd1d46521c16c60756ce10b9ba2ce94f114c85"
+      },
+      {
+        "array_bytes": 7866880,
+        "context_hash": "sha256:5b88572d23331f29615463ff7129ab6660f21a804110d979ef25d326729ac33e",
+        "independent_replay_hash": "sha256:9e6e5787407392bedeba442e8625edfd9fbdd14273904405d5e2dfa93c434ec6",
+        "metadata_json_bytes": 11725,
+        "observations": [
+          "sha256:5312ee05f0bb91a936083652e38fd8ba9b384421ba200588dd94b0e241e05685"
+        ],
+        "plan_seal": "sha256:d38cd1d02ccdd2e34b9e523a781ab1930654fe65ac04715eb430771afad050bf",
+        "steps": 1,
+        "stop_steps": 1,
+        "subject": "ReMIND-018",
+        "trace_seal": "sha256:cb20a9e1509c05d5285dd52a1f2c43bcbf39afd508dac80cb3697a30ad75fdbc"
+      },
+      {
+        "array_bytes": 102267763,
+        "context_hash": "sha256:88972aa216d4bb66244ead8c6d97b2c5976da3843391723548d8cf8ec137330c",
+        "independent_replay_hash": "sha256:948dd10671d863fc33de29a8164bf2d8c73cce25e6ce1f046a76ff5596f58ba1",
+        "metadata_json_bytes": 217866,
+        "observations": [
+          "sha256:f1b76f48f457bc2dbe05aec280f28de06f428d1a2225c4515799a9872ae0edba",
+          "sha256:4f9ae26779202a8e3ed056028eec959c71c120aa6e3d081438e84eb3b6a54a7f",
+          "sha256:cfe8cc8c9a80d47b477980737067ff612ac6780d45c98a1048bd0e384e279fe7",
+          "sha256:cbcc03c929e1937b83b9a783ce30d215df85557f73321d3df8dd4ab293bdde06",
+          "sha256:94d2f37bd176481f1ee7d2de0cb61b1c22eee8c93632deefc42fb05735a009ba",
+          "sha256:3034f53857463c84b4b61e1f4e59f8a1bfd723b23548b6c806bd7e1f4818e6f1",
+          "sha256:413493c93811d3c73f7267f7432201c94faa28bb501efb84e0a4d7e096e288b4",
+          "sha256:0b74e0aee0eec6929a29f9342a0082cfe0ac0aeb0d1fcbfb007d2c6477f0d910",
+          "sha256:cbc4b2d5ea7451bab94b589fa28d8bfccf6a6489abae03f8f963d1b1322f6d5c",
+          "sha256:335a8e0fec9206b52eee0969f625d6517fb344324cd4b6936369fd1f26eb2131",
+          "sha256:1da33c3a2a3891f7240d7cf45cbb480e8a2a1dd85de1d458acf8db5922edfbd4",
+          "sha256:6ce86b87593ddac604a0d0b1f6ee6329f91a8d8ca3d3138e81d8a9a7a50d802f",
+          "sha256:bfb83876cf7daf568f636322ac416622af0f37422eefe333ad3e5c5af584e83d"
+        ],
+        "plan_seal": "sha256:4318c8f32194d8e28af43fa2f6a99417166a88520ca9a19208401bf9c5dc8498",
+        "steps": 13,
+        "stop_steps": 1,
+        "subject": "ReMIND-045",
+        "trace_seal": "sha256:a241e03f4b33dfbaea3c712890b22c2aefb22826efecd3260b8facd267c5427f"
+      }
+    ]
+  },
+  "teacher_decisions": 29,
+  "teacher_logit_forwards": 29,
+  "teacher_statuses": {
+    "ReMIND-002": "complete_replayed",
+    "ReMIND-015": "complete_replayed",
+    "ReMIND-018": "complete_replayed",
+    "ReMIND-045": "complete_replayed"
+  },
+  "teacher_steps": {
+    "ReMIND-002": 1,
+    "ReMIND-015": 14,
+    "ReMIND-018": 1,
+    "ReMIND-045": 13
+  },
+  "teacher_trace_reuses": 256,
+  "total_policy_forward_calls": 1935,
+  "training_dynamics_sha256": "5327546254e458527b70674fe66c22a8419483c07fb15111ea1d0805917879d2"
+}

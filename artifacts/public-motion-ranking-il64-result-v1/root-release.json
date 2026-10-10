@@ -1,0 +1,463 @@
+{
+  "SELECT_EVAL_execution": false,
+  "TRAIN": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "attempts": 1,
+  "automatic_retry": false,
+  "baseline_inputs": {
+    "ReMIND-002:0": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-002/state-00.json",
+      "sha256": "a218135fe9bf2f6965aad8e3e73d8942f8844156dbb9e183394ca993649d124d"
+    },
+    "ReMIND-015:0": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-015/state-00.json",
+      "sha256": "13f20551c7029dbf6ff801ef43cf6a9da945ae5f5c2a702b832a6c620d224e4b"
+    },
+    "ReMIND-015:1": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-015/state-01.json",
+      "sha256": "dfcb9f1d3cae2e18b048e9a9e1601d85d155ad77fe31fbe130561bcf033c463e"
+    },
+    "ReMIND-015:10": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-015/state-10.json",
+      "sha256": "e9b0b0045d46cb919a22efee1eaf6573c5644036dc3074e66417fb2d0a8938ce"
+    },
+    "ReMIND-015:11": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-015/state-11.json",
+      "sha256": "38e6b0dacc0c123ab9a151ae40b28dcb2683821c6b03348a8d225ef99ed887e0"
+    },
+    "ReMIND-015:12": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-015/state-12.json",
+      "sha256": "5f352f6c675a54217acb88701fcdc55398d7d0088b0a1fff6872a7e77da2e209"
+    },
+    "ReMIND-015:13": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-015/state-13.json",
+      "sha256": "6f57d8d0d9b40bfdcf4daf14e8f288fc08fc3176097d53cd7ad075768ade7a5d"
+    },
+    "ReMIND-015:2": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-015/state-02.json",
+      "sha256": "145f3194db204c2f4e59b8a42be2ef5c083792bdf604d2ccaa46a6893979bde6"
+    },
+    "ReMIND-015:3": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-015/state-03.json",
+      "sha256": "822f0f9cdcd330a8b533312266fcadc28d3a779f107566c80b71bdda242b0186"
+    },
+    "ReMIND-015:4": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-015/state-04.json",
+      "sha256": "12ae8364301221eaad26e01c4bbd573956145d8ee42119a2674f6a08424d7871"
+    },
+    "ReMIND-015:5": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-015/state-05.json",
+      "sha256": "3d8a532b2aac95eec87e75eeefdcd16237d6cbc00cd3213bb51f1a1954331258"
+    },
+    "ReMIND-015:6": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-015/state-06.json",
+      "sha256": "73ba770eb1ec63e14638cce36737f95229136bf7ba03146b42fa4c9e2d85126a"
+    },
+    "ReMIND-015:7": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-015/state-07.json",
+      "sha256": "1b88805e0769574ba8b55800b4796a1ef81168d1a18f21a6a1cad63ce4209817"
+    },
+    "ReMIND-015:8": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-015/state-08.json",
+      "sha256": "76e17557f9040b1cff2503a10e09014d6ad6f3c4e6492582ee6e9abdd360b60f"
+    },
+    "ReMIND-015:9": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-015/state-09.json",
+      "sha256": "4316fda50f4c94b4cbcaacf2f23afb89faa1a2361ffcbca9cf425a7ba2876610"
+    },
+    "ReMIND-018:0": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-018/state-00.json",
+      "sha256": "24fd4d4c6f09b0560c6b3d33d6fe698dbf917c7d607b3dbcbc8254f5d2e34875"
+    },
+    "ReMIND-045:0": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-045/state-00.json",
+      "sha256": "7b001dbfddcaf12c39a496d777be74ce7fd342d887df7f635f120703d73732cb"
+    },
+    "ReMIND-045:1": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-045/state-01.json",
+      "sha256": "f9d1a377d2bf468daabb78d71e2c96985853f04d4f11df1634c0815bfbe85e0e"
+    },
+    "ReMIND-045:10": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-045/state-10.json",
+      "sha256": "56f2dff748f0b5cc10590bd76a767339fe874b597424da55183b73c48c5c3b7d"
+    },
+    "ReMIND-045:11": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-045/state-11.json",
+      "sha256": "574475418fbe5a87c3c25e285aa7e97edfe1606ea65863ac08cdc0192f699807"
+    },
+    "ReMIND-045:12": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-045/state-12.json",
+      "sha256": "010e8e9780a767e6a3dab09b802ea507923c22c371e248defd8860344383f336"
+    },
+    "ReMIND-045:2": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-045/state-02.json",
+      "sha256": "0e53cc265424c8719aaeb3500e68b2ba814b3345228116201d63744ba16cad1b"
+    },
+    "ReMIND-045:3": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-045/state-03.json",
+      "sha256": "bbd786afb124d74bf393342902d2cb1be6e2f16b2832adf672bfbb1804297245"
+    },
+    "ReMIND-045:4": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-045/state-04.json",
+      "sha256": "922971a85a078f66a91c0f995e5ab699281ac8055e3ffc4094886d8014cfa3d4"
+    },
+    "ReMIND-045:5": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-045/state-05.json",
+      "sha256": "5c15501d64390522d623ffbd72413edcde5d48fbe7da281f03d19c95d7581955"
+    },
+    "ReMIND-045:6": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-045/state-06.json",
+      "sha256": "fd9c567228b294642aa15e48ad22c37e1c59f569c6652b0ecff9d2c23acaf9f5"
+    },
+    "ReMIND-045:7": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-045/state-07.json",
+      "sha256": "39fb7c2cc2b62e8b0d414d60cb46771f9188a7e50d41dc59a323657e3c0a64c3"
+    },
+    "ReMIND-045:8": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-045/state-08.json",
+      "sha256": "a334bfcf6fcfb72b96712ef385bf0f13b717d1f59e50f37b14d0fa4079422e8d"
+    },
+    "ReMIND-045:9": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/teacher-readout/ReMIND-045/state-09.json",
+      "sha256": "aed4cd1e13d4b15d38b768feff237acf78d9ecba48e182dc3ef0049ae6b1346c"
+    },
+    "outcomes": {
+      "path": "build/post-exposure-il045-recovery-result-v1/four-TRAIN-outcomes.json",
+      "sha256": "8b7334f9975dde70677403a2215e5a962b2ac0f6a4d9d87d9362bdc6bdafaa5c"
+    },
+    "parent": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01.supervision/receipt.json",
+      "sha256": "c9702883bcbdb9fb524a99b88fde1cac464116d399fce8aa63d866b57b4a1c82"
+    },
+    "plan_ReMIND-002": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-002/plan.json",
+      "sha256": "1614f9d2206038c3bda4f85eb0906c31464715b305d11a03827d61b00396d09b"
+    },
+    "plan_ReMIND-015": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-015/plan.json",
+      "sha256": "66dadfe3b434996fb03284757b6b76d32baf310d7154f122172e79008402bb58"
+    },
+    "plan_ReMIND-018": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-018/plan.json",
+      "sha256": "9c1b11d559158387dc0e92760973e825f437526274677b85ed83f6d24aca2000"
+    },
+    "plan_ReMIND-045": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-045/plan.json",
+      "sha256": "7411153dabdb28c5d1a85c9d278db9671080231329eab434182dff677c417b84"
+    },
+    "recovery_parent": {
+      "path": "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01.supervision/receipt.json",
+      "sha256": "c159b91ab2015dfd54dee677eb683b27e335a62657ba51838c398ed2d391a98e"
+    },
+    "recovery_result": {
+      "path": "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01/result.json",
+      "sha256": "432535613f699604a4b0f3b0aaa0fedebbe932e5ca6b7006beedd66ff823a7ce"
+    },
+    "release": {
+      "path": "build/post-exposure-learning-v1/IL64/root-release.json",
+      "sha256": "f0df97b2e0222b3656d755ce1ebdaee388b381ae8e2616e5a67e9c50dfdc888b"
+    },
+    "result": {
+      "path": "build/post-exposure-learning-v1/IL64/attempt-01/result.json",
+      "sha256": "eedc4857c184d94913976cb5b59e01341e1b3a8bb0f001af43f8d079e3d87975"
+    }
+  },
+  "claim": "same world/model/init, distinct endpoint/objective and measured costs; no equal-cost or held-out claim",
+  "closed_roles": {
+    "EVAL": [
+      "ReMIND-067"
+    ],
+    "SELECT": [
+      "ReMIND-013",
+      "ReMIND-037"
+    ]
+  },
+  "cohort_limits": {
+    "checkpoint_bytes": 8388608,
+    "max_native_previews": 7297920,
+    "max_optimizer_updates": 128,
+    "max_policy_forwards": 18624,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "output_bytes": 134217728,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 900
+  },
+  "completion": "fixed own updates and reloaded endpoint,29 teacher logits,4 complete learned replays; no performance threshold",
+  "execution_limits": {
+    "endpoint_pair_evaluations": 9940,
+    "loss_forward_cap": 1856,
+    "native_preview_cap": 70080,
+    "parent_seconds": 960,
+    "policy_forward_cap": 1981,
+    "ranking_pair_terms_per_update": 4970,
+    "ranking_pair_terms_total": 318080,
+    "source_visits": 8,
+    "teacher_cache_payload_bytes": 268435456,
+    "teacher_trace_reuses": 256,
+    "updates": 64,
+    "worker_seconds": 900
+  },
+  "expected_head": "3d6d997e79b7752518984ad4aeb5a0ef22bc2dc3",
+  "inputs": {
+    "initial_release": {
+      "path": "build/cross-patient-planning-v1/fixed-four-train-eight-updates-v1/root-release.json",
+      "sha256": "c1cde8eb92f9df5d85ccb91ed0e591adb1da70e011582f3be116d237fecf72db"
+    },
+    "metrics_ReMIND-002": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/episode-metrics.json",
+      "sha256": "59a3e11e3bd662063df245ba485ff36b4001c0445c688f572421ea42e1a83789"
+    },
+    "metrics_ReMIND-015": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/episode-metrics.json",
+      "sha256": "3ff9a551a4cad52e26936c797cdaf0b6923a6ddf5ae894867c8dd517a99359d9"
+    },
+    "metrics_ReMIND-018": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/episode-metrics.json",
+      "sha256": "911e0d6060b4e16188a054ff2f736be90f897796db48b22c2b85a3faf16cb012"
+    },
+    "metrics_ReMIND-045": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/episode-metrics.json",
+      "sha256": "fa67b7ee6862222d480d60a570161e7990082e854e0327814191a629a48f6e21"
+    },
+    "parent": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01.supervision/receipt.json",
+      "sha256": "664b7ac101e8c79e512d52f971f424b5e2b1bbeaa7d7b1502c110afb4364f233"
+    },
+    "plan_ReMIND-002": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/greedy-plan.json",
+      "sha256": "757449e8ac744daee89dd085924a27c8a7a4fc571a1c906994188bf08c4989bc"
+    },
+    "plan_ReMIND-015": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/greedy-plan.json",
+      "sha256": "954ec5204482ba6c91867e34e61700470f060c74b702711e57414a77cb2cfcf1"
+    },
+    "plan_ReMIND-018": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/greedy-plan.json",
+      "sha256": "4d0b9a0029293e787a99c276bd6bca9430bc0722c2eaaecd88bb193d4e1e5040"
+    },
+    "plan_ReMIND-045": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/greedy-plan.json",
+      "sha256": "da7b49d6fde2c97c9f6911f42475afb7a4cc946e8c894e8267cc4a82679c58c1"
+    },
+    "release": {
+      "path": "build/remind-post-exposure-feasibility-v1/root-release.json",
+      "sha256": "8315099d95b16a9dacac54a65c4d84d6385e458534b6dab26b73a37555d4af1a"
+    },
+    "replay_ReMIND-002": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-002/independent-episode.json",
+      "sha256": "40d784c101280b97bc902fc77acdf363e5243b1bfab3cfeeb4feb276713acae8"
+    },
+    "replay_ReMIND-015": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-015/independent-episode.json",
+      "sha256": "bcaf1303133576b7a281eec3915a3088f95306b17ef655041222f85272387547"
+    },
+    "replay_ReMIND-018": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-018/independent-episode.json",
+      "sha256": "20d0f0be9e4aa990136d47e5e2c91c2df140492b130d850fcb641e737bf7e6cb"
+    },
+    "replay_ReMIND-045": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/ReMIND-045/independent-episode.json",
+      "sha256": "a18c03193e4968bf2f2caa44257117c51107091ee0bdfe18083b7f5edd1b0db9"
+    },
+    "result": {
+      "path": "build/remind-post-exposure-feasibility-v1/attempt-01/result.json",
+      "sha256": "7a57fd74f58b15d6975be4459fe4f46e6396dfa9e2f3c0fec0ef68cf5e550358"
+    },
+    "source_index": {
+      "path": "build/remind-post-exposure-feasibility-v1/source-index.json",
+      "sha256": "4ac60917a28368056b1b0d07481a88f447be4116ec677fed1bb31dd2766c7b50"
+    }
+  },
+  "learning_protocol": {
+    "architecture": {
+      "critic_candidate_context": true,
+      "encoder_channels": [
+        8,
+        16
+      ],
+      "hidden_features": 32,
+      "physical_reference_mm": 10.0,
+      "ray_samples": 5
+    },
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "clinical_claim": false,
+    "cohort_execution": {
+      "accumulation": "complete-trace-actionwise-shared-gradient-v1",
+      "heldout_execution": false,
+      "il_motion_supervision": {
+        "STOP_states": 4,
+        "corpus_hash": "sha256:5147c784a1e4aee38ffd2cf95881c40914f9807727d54eeaa4dce618100da0be",
+        "motion_states": 25,
+        "state_count": 29,
+        "version": "public_nominal_motion_gap_ranking_v1"
+      },
+      "il_teacher_weighting": "balanced_STOP_motion_CE_v1",
+      "live_source_patients": 1,
+      "max_steps": 24,
+      "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+      "patient_order": [
+        "ReMIND-002",
+        "ReMIND-015",
+        "ReMIND-018",
+        "ReMIND-045"
+      ],
+      "post_exposure_condition": "public-union-post-exposure-axis0-v1",
+      "proposal_config": {
+        "intermediate_opening_mm": 1.0,
+        "max_candidates": 120,
+        "nominal_min_membership": 0.0,
+        "offsets_source_voxels": [
+          [
+            0,
+            0
+          ],
+          [
+            -2,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            -2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            -2,
+            -2
+          ],
+          [
+            -2,
+            2
+          ],
+          [
+            2,
+            -2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            -3,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            0,
+            -3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "tool_footprint_opening": true
+      },
+      "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+      "retained_prefix_diagnostics": true,
+      "retention_mode": "return_plus_opening_depth_volume_v1",
+      "search": {
+        "beam_width": 2,
+        "max_calls": 5640,
+        "seconds": 300
+      },
+      "task_condition": "PARTIAL_TARGET_PROGRESS",
+      "teacher_cache_payload_bytes": 268435456,
+      "teacher_decisions": 29,
+      "teacher_observations": "cache_complete_replayed_TRAIN_teacher_traces_v1",
+      "teacher_source": "fixed_saved_greedy_complete_histories_v1",
+      "teacher_steps": [
+        1,
+        14,
+        1,
+        13
+      ]
+    },
+    "entropy_weight": 0.01,
+    "eps": 1e-08,
+    "gamma": 1.0,
+    "initialization": "same_fresh_spatial_parameters_no_checkpoint_load",
+    "learning_rate": 0.001,
+    "max_gradient_norm": 5.0,
+    "methods": [
+      "IL",
+      "RL"
+    ],
+    "patient_adaptation": false,
+    "population_training": true,
+    "private_training_reward": false,
+    "public_target_context_variant": "full-supplied-public-target-context-v1",
+    "rl_episodes": 4,
+    "scope": "fixed_four_TRAIN_shared_population_pilot",
+    "seed": 20261010,
+    "updates_per_method": 64,
+    "value_weight": 0.5,
+    "version": "fixed-four-TRAIN-post-exposure-learning-v1"
+  },
+  "learning_protocol_hash": "sha256:65fd88ba268e5c79ea8b0d4204ab6efe5b313d11c4b82b0820c6e6ef2010473e",
+  "limits": {
+    "max_native_previews": 7297920,
+    "max_optimizer_updates": 128,
+    "max_policy_forwards": 18624,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 900
+  },
+  "method": "IL",
+  "new_four_training": true,
+  "output": "build/public-motion-ranking-il64-v1/IL64/attempt-01",
+  "parent_seconds": 960,
+  "public_manifest_index": {
+    "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json",
+    "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8"
+  },
+  "ranking_inputs": {
+    "input-pins.json": {
+      "path": "build/public-motion-ranking-v1/input-pins.json",
+      "sha256": "7048bbb3e64b5d36e3429da690e37093bf141b9f49625f4b5f500f0f36a50665"
+    },
+    "label-summary.json": {
+      "path": "build/public-motion-ranking-v1/label-summary.json",
+      "sha256": "8571e0f16520fa72662a4d66d7f9ac41cb08939cd360f17542e0798428a0013e"
+    },
+    "public-score-corpus.json": {
+      "path": "build/public-motion-ranking-v1/public-score-corpus.json",
+      "sha256": "d4c9ade78e50171544ebc9076a6332d864586bdf3cfdd334944be058486781a4"
+    }
+  },
+  "source_index": {
+    "path": "build/public-motion-ranking-il64-v1/IL64/source-index.json",
+    "sha256": "efe3917d049e3278f2f68c7229f811692050efbc15e6591ac69c4f9eb92028aa"
+  },
+  "status": "released_one_attempt",
+  "supervision_bytes": 16777216,
+  "version": "public-motion-ranking-IL64-v1"
+}

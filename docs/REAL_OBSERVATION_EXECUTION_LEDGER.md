@@ -1500,3 +1500,25 @@ access. The consumed attempt is preserved; any format-only successor is separate
 Latest human steering prioritizes a cross-patient geometric planning experiment,
 so this repair is deferred rather than blocking that experiment. See
 [failure evidence](../artifacts/hbe-v5-torsion-format-failure-v1/REPORT.txt).
+
+### October 10: public motion-ranking IL64 completed, negative
+
+The same four TRAIN cases, initialization, 29 cached teacher states and 64 updates
+produce worse complete routes than original imitation: 015 falls 58→53 target
+cells and 045 falls 51→42, both with 24 movements/HORIZON. STOP002/018 is retained.
+Zero outside-target removal is distinct from positive retained-contact bounds.
+Pair correctness is 2,757/4,970 versus 2,915; public immediate regret 2.357739 versus
+1.221554. The new final ranking objective itself is worse (0.337241 vs 0.323587),
+despite pre-update loss falling 1.180353→0.336070 and no clipping. This rejects
+improvement for this fixed contrast; it does not isolate a general cause.
+
+Independent saved audit: 9,752 checks, 555 source/evidence files, 0.195 s; no
+scientific replay by the auditor. All four saved complete full-tool certificates
+are accepted. Owned run: 823.282 s, 1,595,539,456 B sampled peak, 1,935 forwards,
+14,108 previews, 318,080 training pair terms, one final reload, clean exit. Costs
+are not matched to earlier runs; nested timing scopes must not be summed. Exact
+receipts and compact evidence: [result](../artifacts/public-motion-ranking-il64-result-v1/REPORT.txt).
+
+No SELECT/EVAL exposure or updates occurred. Continue the original frozen IL/RL
+comparison on separately restored SELECT013 acquired coverage; preserve the
+original EMPTY_FIXED_K attempt. No new architecture or training sweep is started.

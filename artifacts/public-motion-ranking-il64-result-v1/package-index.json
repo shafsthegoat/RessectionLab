@@ -1,0 +1,95 @@
+{
+  "status": "complete_matched_TRAIN_experiment_negative_result",
+  "files": [
+    {
+      "source": "build/public-motion-ranking-il64-independent-v1/REPORT.txt",
+      "packaged": "REPORT.txt",
+      "bytes": 6043,
+      "sha256": "aeb12653c37af6c6c94f93d66bede32301a698858325a4b7e9e813ae073a5346"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-independent-v1/audit_saved.py",
+      "packaged": "audit_saved.py",
+      "bytes": 26563,
+      "sha256": "9cbf3fbf1656e749f37d5908816d02cc60725483a0cc387e70ef0f76f2daf72f"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-independent-v1/audit-attempt-01.log",
+      "packaged": "audit-attempt-01.log",
+      "bytes": 2111,
+      "sha256": "cb663c5743cf62e5f41e1e61e292cd6718c4139be248297b4d82055079cdf244"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-independent-v1/audit-result.json",
+      "packaged": "audit-result.json",
+      "bytes": 28892,
+      "sha256": "45c4e36c228af7aa1401c1c2cfa66493c7ce9f72b183e0ee9414fb9bd13382c0"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-independent-v1/input-index.json",
+      "packaged": "input-index.json",
+      "bytes": 109531,
+      "sha256": "d7009a491aa2963ea008d65668e695e8cd793d039de1b022c157f7a3a9a1e0d0"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-independent-v1/update-summary.json",
+      "packaged": "update-summary.json",
+      "bytes": 52078,
+      "sha256": "12a7278b4afc85413902f6c87e21363f0950210437623452a8d7c0b528f7eec7"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-independent-v1/teacher-readout-summary.json",
+      "packaged": "teacher-readout-summary.json",
+      "bytes": 51435,
+      "sha256": "d18d38d035a921a8f980e5f9ba1e2fb57ec2be8bec3a9dc1d6a39ab2375f46f8"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-v1/IL64/attempt-01/result.json",
+      "packaged": "attempt/result.json",
+      "bytes": 13685,
+      "sha256": "754c84febe5ba90741510ecf852e47bde26e83f0965604079762cce6a4ebaeaf"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-v1/IL64/attempt-01/costs.json",
+      "packaged": "attempt/costs.json",
+      "bytes": 96215,
+      "sha256": "3023657112be788e6e2cd4cda3d222621020f18474a3976a41387d638b462b52"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-v1/IL64/attempt-01/training-dynamics.json",
+      "packaged": "attempt/training-dynamics.json",
+      "bytes": 54644,
+      "sha256": "5327546254e458527b70674fe66c22a8419483c07fb15111ea1d0805917879d2"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-v1/IL64/attempt-01/endpoint-teacher-metrics.json",
+      "packaged": "attempt/endpoint-teacher-metrics.json",
+      "bytes": 891,
+      "sha256": "87f0351898f1c4b0995222035f4162d84a0eed257cda67c02fc156377a337ee9"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-v1/IL64/attempt-01.supervision/receipt.json",
+      "packaged": "supervision/receipt.json",
+      "bytes": 1905,
+      "sha256": "f949086895c9d210a3c5b8eb784e8650f9c3172e9f203f1b4062f03b3f33bceb"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-v1/IL64/attempt-01.supervision/worker-final.json",
+      "packaged": "supervision/worker-final.json",
+      "bytes": 778,
+      "sha256": "7654ffe656ecce85065b852b74f0de842091f2f15ae0114c397e94dea9e06015"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-v1/IL64/root-release.json",
+      "packaged": "root-release.json",
+      "bytes": 18471,
+      "sha256": "37365da5ec1421a6cd9665f1c10011497ee0c79b46bf0f76f766f1039ce7f33d"
+    },
+    {
+      "source": "build/public-motion-ranking-il64-v1/IL64/source-index.json",
+      "packaged": "source-index.json",
+      "bytes": 22568,
+      "sha256": "efe3917d049e3278f2f68c7229f811692050efbc15e6591ac69c4f9eb92028aa"
+    }
+  ]
+}

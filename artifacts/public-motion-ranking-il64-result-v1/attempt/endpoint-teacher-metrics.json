@@ -1,0 +1,31 @@
+{
+  "STOP_count": 4,
+  "STOP_mean_NLL": 0.0002778441019017919,
+  "balanced_mean_CE": 1.2556699744019488,
+  "motion_count": 25,
+  "motion_mean_NLL": 2.511062104701996,
+  "original_IL_ranking": {
+    "STOP_count": 4,
+    "balanced_ranking_objective": 0.3235868442590038,
+    "correct_pairs": 2915,
+    "logit_tied_pairs": 0,
+    "mean_public_nominal_regret": 1.2215540380913708,
+    "motion_count": 25,
+    "reversed_pairs": 2055,
+    "state_count": 29,
+    "strict_motion_pairs": 4970
+  },
+  "ranking": {
+    "STOP_count": 4,
+    "balanced_ranking_objective": 0.33724096743263615,
+    "correct_pairs": 2757,
+    "logit_tied_pairs": 0,
+    "mean_public_nominal_regret": 2.35773874769552,
+    "motion_count": 25,
+    "reversed_pairs": 2213,
+    "state_count": 29,
+    "strict_motion_pairs": 4970
+  },
+  "teacher_action_accuracy": 0.1724137931034483,
+  "unweighted_mean_CE": 2.164747034274397
+}

@@ -1,0 +1,49 @@
+{
+  "SELECT_EVAL_execution": false,
+  "automatic_retry": false,
+  "canonical_result_status": "complete_matched_TRAIN_endpoint",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 960,
+    "output_bytes": 134217728,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 900,
+    "worker_log_bytes": 8388608
+  },
+  "checkpoints": {
+    "IL": {
+      "bytes": 137636,
+      "parameter_hash": "sha256:ec843adeb3ce854c2d516848b5f26a4f855a25d3f4369b28543e1ae6be7c1ed6",
+      "path": "IL-final.psckpt",
+      "sha256": "2825ad738591f786f1fa5b3383cd74c4126e1ab57f0494b04b2c8c52e44bfa0e"
+    }
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 823.2823490411974,
+  "endpoint_control_sha256": "2a7a44df83f1e6829eeb3799ad9619ef11d091144055b061171155c55346db7e",
+  "exit_code": 0,
+  "final_owned_pids": [],
+  "output_bytes": 12043763,
+  "private_reference_execution": false,
+  "release_sha256": "37365da5ec1421a6cd9665f1c10011497ee0c79b46bf0f76f766f1039ce7f33d",
+  "result_sha256": "754c84febe5ba90741510ecf852e47bde26e83f0965604079762cce6a4ebaeaf",
+  "sampled_peak_rss_bytes": 1595539456,
+  "samples": 3913,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/public-motion-ranking-il64-v1/IL64/source-index.json",
+    "sha256": "efe3917d049e3278f2f68c7229f811692050efbc15e6591ac69c4f9eb92028aa"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 24595,
+  "worker_final_sha256": "7654ffe656ecce85065b852b74f0de842091f2f15ae0114c397e94dea9e06015",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}
