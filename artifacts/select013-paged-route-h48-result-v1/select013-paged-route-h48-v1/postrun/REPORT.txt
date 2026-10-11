@@ -1,0 +1,17 @@
+H48 complete-route comparison: saved terminal extraction
+
+Both arms selected STOP (return 0, no target/outside/contact removal), with complete independent replay. The original arm exhausted its retained beam normally at layer 36: 70 expanded states, 805 transitions, 116.480 seconds of search, 8,424 full-cost native previews. The paged arm reached horizon 48: 95 expanded states, 1,950 transitions, 330.593 seconds of search, 13,408 full-cost previews. Neither arm hit time or call caps. Both first-23-layer H24 controls matched exactly.
+
+The original beam's recorded maximum removed depth remained 4.5 mm. The paged beam remained at 5.5 mm despite 24 more allowed actions; its opening path had removed about 121 mm3 outside the supplied target at step 47, compared with about 81 mm3 at step 23. At step 47 its two retained prefixes still had 13 and 7 legal motions; the 20 next children were horizon-terminal. This is distinct from the original arm's empty frontier. All recorded retained/terminal progress had zero target removal, and all 805/1,950 evaluated cumulative returns were negative. These statements do not identify physical target removal for every evaluated state or establish global infeasibility.
+
+Paging verified 1,942 added tool/cell candidates: 711 legal, 1,102 rejected by the access aperture, 129 shaft-blocked. It recorded 66 OBSTRUCTION_SELECTION_CAP tool/cell omissions across expanded catalogs and no CANDIDATE_CAP omissions. All 4,940 emitted proximal/distal nominal target rays were shaft-blocked. The longer horizon alone did not resolve this proposal/retention bottleneck; the independent causal audit owns the terminal-cell diagnosis and successor recommendation.
+
+Whole owned run: 457.998 seconds, sampled peak 544,047,104 bytes, 21,832 native previews, clean reaping, no learned forwards/checkpoint loads/updates. Source/construction, search, rollout, replay, and independent-audit scopes are reported separately in costs.json; nested native timers must not be summed with their parent phases. This is one fixed ordered comparison, not a timing generalization or clinical safety result. Held 037 and EVAL 067 remained closed.
+
+Executed HEAD 7cd2d61aaf49bcc89de12cd0e957b7cdab00efb6.
+Result SHA-256 8dcbf51e12fc4a1175f52422bd5e4b745ce6d35300fd589b8b4b23404d7bdcf2.
+Parent receipt SHA-256 f4924629b70c0c6a1a6b3bdf19b7fa7953076021a1788dfac7b5e2c26cde8b44.
+Release SHA-256 a957077b04785355b3fd1c8354743526e4e70ae6087de249e325386badad8e3e.
+Source-index SHA-256 23bf8d7bb299a05f7f24dfa5d372b6aec6ee4f0f47a88e1f007a8109d458526f.
+
+The stdlib extractor passed its first execution; no repair/failure was required. compact_terminal.py rechecks every extracted source/output/inventory pin and produces compact-scalars.json plus the 440-file inventory hash manifest. The lean list retains exact result, receipt, costs, runtime sources, failed and corrected generated-control evidence, world/H24 controls, plans, complete histories, metrics and independent certificates. Raw inventories/pages, duplicate full projection and bulk supervision samples remain local. No arrays or weights are copied; H24 and H48 negative results remain intact.

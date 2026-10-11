@@ -39,3 +39,5 @@ growth is 60.340 MiB, free space 332.854 GiB, and free after reservations
 332.713 GiB. A single h48 continuation is reserved at 128 MiB for preparation;
 root archive allowance stays 16 MiB. Later archive copies are not included in
 that dated scan. See `milestone-handoff-03.json` and `milestone-handoff-04.json`.
+
+At 10:30:13 UTC, the h48 closure measures **118.352 MiB** additional project growth and **332.808 GiB** free. The root archive reservation increases to 24 MiB before copying the compact result; source preparation is separately reserved. See `milestone-closure-05.json`. This dated measurement precedes the new archive and further source preparation; no dataset download or deletion occurred.

@@ -1,0 +1,29 @@
+{
+  "first23_layer_records_independently_equal": true,
+  "omitted_blocker_witness": {
+    "path": "build/select013-paged-route-review-v1/h48-omitted-blocker-witness.json",
+    "sha256": "c9de2cdccd0c938f9a88f3325e0e03f4ee98f8a1c52c9beafe265e05363624ad"
+  },
+  "parent": {
+    "cleanup_errors": [],
+    "elapsed_seconds": 457.9984334579203,
+    "final_owned_pids": [],
+    "output_bytes": 49088969,
+    "sampled_peak_rss_bytes": 544047104
+  },
+  "phase_preview_totals": {
+    "original_lazy_beam.independent_audit": 0,
+    "original_lazy_beam.replay": 117,
+    "original_lazy_beam.rollout": 0,
+    "original_lazy_beam.search": 8073,
+    "original_lazy_beam.source_and_construction": 234,
+    "paged_obstruction_lazy_beam.independent_audit": 0,
+    "paged_obstruction_lazy_beam.replay": 117,
+    "paged_obstruction_lazy_beam.rollout": 117,
+    "paged_obstruction_lazy_beam.search": 13057,
+    "paged_obstruction_lazy_beam.source_and_construction": 117
+  },
+  "scope": "Independent stdlib-only read of pinned terminal saved records; no arrays, replay or native execution.",
+  "total_previews": 21832,
+  "total_transitions": 2759
+}

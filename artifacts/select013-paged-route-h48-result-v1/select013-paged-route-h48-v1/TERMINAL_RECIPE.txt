@@ -1,0 +1,37 @@
+Prepared while h48 runs; do not execute or scan attempt output before root terminal.
+No canonical/runtime source is changed. No models, arrays, native calls or fits.
+
+After root gives actual terminal receipt and result hashes:
+python3 build/select013-paged-route-h48-v1/extract_terminal.py --receipt-sha256 ACTUAL_RECEIPT_SHA --result-sha256 ACTUAL_RESULT_SHA --output build/select013-paged-route-h48-v1/postrun/terminal-projection.json
+If a killed/failed attempt lacks both result file and parent result pin, omit only
+--result-sha256. Both arm slots remain. Existing unpinned results are refused.
+
+Use existing h24 saved methodology: result/accounting, costs, terminal parent,
+release/index/owned sources; both world/horizon/first23 controls; sealed plans,
+full histories/metrics and independent certificates. Hash full inventories/pages
+but omit duplicate selection accounting and bulk ledger copies from Git. Preserve
+all incomplete execution step files and exact failure receipts if closure fails.
+The projection itself joins the lean archive; no weights or arrays enter it.
+Canonical implementation is already bound by commit7cd2d61 and source index.
+Do not copy previous h24 source or negative result into a second result tree.
+
+Interpret in this order:
+1. Complete, capped, exhausted or forced-h48 termination? Report paid costs first.
+2. Selected accepted full-route return/target/outside/contact/path/tool switches,
+   againstSTOP0 and matched original. A deeper negative prefix is not a success.
+3. First23 identical? Compare retained h24→h48 opening depth, target progress,
+   cumulative outside removal, actual return and legal frontier at47. Keep raw
+   insertion distance distinct from removed-opening depth. Unknown future actions
+   after48 remain unknown; a live47 frontier alone cannot justify another doubling.
+4. Inspect target-family legality and failure dispositions plus paging/evidence/
+   selection omissions. If target stays blocked with depth plateau and only more
+   lateral clearing, diagnose the emitted geometric/retention constraint using
+   saved rows before proposing another change. If target is reached but every
+   complete return is nonpositive, separate complete cost from lack of discovery.
+5. Choose at most one next causal contrast only after actual terminal evidence.
+   No automatich96, goal-prior sweep or training change. Any useful planning gain
+   remains in this explicit public geometric task, not evidence of clinical safety.
+
+This is a compact projection/archival recipe, not an extra approval or audit layer.
+It reuses build/select013-paged-route-review-v1/audit_saved_result.py's completed
+h24 record joins; the assigned independent auditor remains responsible for audit.

@@ -1,0 +1,126 @@
+{
+  "baseline_sha256": "db2e3bad35aadd68f23111b9498270d019debf27486c696cc7ef48bd1fff67c8",
+  "capacity": {
+    "additional_reservable_bytes": 10586054656,
+    "allocation_allowed": true,
+    "conservative_growth_plus_reservations_bytes": 151363584,
+    "free_after_outstanding_reservations_bytes": 357322498048,
+    "free_bytes": 357349761024,
+    "growth_highwater_bytes": 124100608,
+    "outstanding_reserved_bytes": 27262976,
+    "reservation_scope_overruns": []
+  },
+  "closed_h48_reservation": {
+    "allocation_kind": "existing-data h48 matched two-arm complete-route successor; source/preparation only until separate root scientific launch",
+    "began_at_utc": "2026-10-11T10:20:14.913298+00:00",
+    "closed_at_utc": "2026-10-11T10:30:14.179903+00:00",
+    "created_at_utc": "2026-10-11T10:11:49.128498+00:00",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 56020992,
+    "owner": "/root/goal_conditioned_policy",
+    "pilot": false,
+    "requested_caps": "<=96MiB outputs +16MiB supervision +small source/controls inside128MiB; no arrays/model copies, downloads, dependencies or purchases",
+    "reserved_bytes": 134217728,
+    "scope_current_allocated_bytes": 56020992,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/select013-paged-route-h48-v1"
+    ],
+    "status": "closed",
+    "terminal_note": "Storage release only; success/admission not inferred from exit status.",
+    "terminal_receipt": {
+      "path": "build/select013-paged-route-h48-v1/attempt-01.supervision/receipt.json",
+      "sha256": "f4924629b70c0c6a1a6b3bdf19b7fa7953076021a1788dfac7b5e2c26cde8b44"
+    }
+  },
+  "h48_output_logical_bytes": 49088969,
+  "limits": "One metadata-only postmilestone scan after root reported no numeric worker; source owner asked to hold generated compute. Receipt hash and recorded result binding verified, no result/patient/model bodies reopened. No download, data/model copy, deletion, scientific execution or baseline reset. Root archive forecast is pending, not claimed completed.",
+  "measurement": {
+    "allocated_bytes": {
+      ".git": 139853824,
+      ".pytest_cache": 1146880,
+      ".tools": 1643302912,
+      ".venv": 3054829568,
+      "@root-files-and-directory": 634880,
+      "artifacts": 1760210944,
+      "build": 17143869440,
+      "data": 356137631744,
+      "desktop": 18945323008,
+      "dist": 2575773696,
+      "docs": 2220032,
+      "launchers": 409600,
+      "manifests": 5275648,
+      "outputs": 14765998080,
+      "packaging": 544768,
+      "research": 53248,
+      "scripts": 9527296,
+      "src": 6578176,
+      "tests": 20115456
+    },
+    "ended_at_utc": "2026-10-11T10:30:13.818898+00:00",
+    "free_bytes": 357349761024,
+    "method": "du -k -d 1 .; allocated file blocks, no bodies or symlink traversal; statvfs f_bavail",
+    "started_at_utc": "2026-10-11T10:29:57.539102+00:00",
+    "total_allocated_bytes": 416213299200
+  },
+  "recorded_at_utc": "2026-10-11T10:30:14.181379+00:00",
+  "root_archive_previous_reserved_bytes": 16777216,
+  "root_archive_reservation": {
+    "created_at_utc": "2026-10-11T09:34:37.781715+00:00",
+    "increase_note": "Root-authorized conservative increase: less than3MiB remains from8MiB after measured growth, with forthcoming~1.5MiB switch archive plus Git/accounting.",
+    "increased_at_utc": "2026-10-11T09:52:27.207519+00:00",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 13856768,
+    "owner": "/root",
+    "pending_archive_forecast": {
+      "block_metadata_and_storage_record_allowance_bytes": 1048576,
+      "compact_h48_archive_max_bytes": 3145728,
+      "conservative_git_growth_allowance_bytes": 3145728,
+      "limitation": "Forecast, not a measured copy. Keeps both artifact and Git storage plus overhead; actual archived usage measured at a later safe milestone.",
+      "total_pending_forecast_bytes": 7340032
+    },
+    "pilot": false,
+    "previous_reserved_bytes": 8388608,
+    "reservation_increase_history": [
+      {
+        "at_utc": "2026-10-11T10:30:14.180921+00:00",
+        "observed_scope_growth_bytes": 13856768,
+        "pending_forecast_bytes": 7340032,
+        "previous_bytes": 16777216,
+        "reason": "Root requested space forecast/reservation for completed h48 compact archive before copying."
+      }
+    ],
+    "reserved_bytes": 25165824,
+    "scope_current_allocated_bytes": 1943961600,
+    "scope_initial_allocated_bytes": 1930104832,
+    "scopes": [
+      "artifacts",
+      ".git",
+      "docs",
+      "src",
+      "scripts",
+      "tests",
+      "manifests",
+      "build/storage-extension-v1"
+    ],
+    "status": "prepared"
+  },
+  "schema": "storage-extension-archive-forecast-closure-v1",
+  "source_preparation_reservation": {
+    "allocation_kind": "source/design/tests preparation only, no test execution, arrays, models, dependencies, downloads or scientific job",
+    "created_at_utc": "2026-10-11T10:23:58.562007+00:00",
+    "initial_scope_measurement": "Not performed during active h48. Zero is a conservative accounting origin, not a measured empty-directory claim. Any existing source bytes will count at next safe milestone.",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 28672,
+    "owner": "/root/n36_result_audit_fresh",
+    "pilot": false,
+    "reserved_bytes": 2097152,
+    "scope_current_allocated_bytes": 28672,
+    "scope_initial_allocated_bytes": 0,
+    "scope_note": "Owner confirmed actual folder hybrid-public-bound-v1; earlier hybrid-public-reward-bound-v1 was not created. Same2MiB, no scan.",
+    "scopes": [
+      "build/hybrid-public-bound-v1"
+    ],
+    "status": "prepared"
+  }
+}

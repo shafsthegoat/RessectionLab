@@ -1,0 +1,75 @@
+{
+  "decision_model_hash": "sha256:4b7d3d18b74d24af71d6ac54b0204ab06a93edc8dbfd0d9f66c9fdae9fcd2d0c",
+  "original_decision_model_hash": "sha256:d9a6b888898e58f2a41634e0d2ce6a0a408aa806692bb96c2bad957dbbedd2a3",
+  "original_source_hash": "sha256:01b0bc9e3586b0f797f132d072b809a7570a9a0c6eae86392aa35417e4a06bda",
+  "post_exposure_authority": {
+    "capability_serialized": false,
+    "same_canonical_capability": true,
+    "same_prepared_object": true
+  },
+  "proposal_config": {
+    "intermediate_opening_mm": 1.0,
+    "max_candidates": 120,
+    "nominal_min_membership": 0.0,
+    "obstruction_opening": true,
+    "obstruction_page_size": 8,
+    "offsets_source_voxels": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "tool_footprint_opening": true
+  },
+  "proposal_rule_hash": "sha256:2d77415249e00289315fc9fb37e4871118fecfd9b4524acbed25d0a18968eb17",
+  "source_hash": "sha256:a09a2cb40f860f271a355b8cdb4ff24b73c34e8b2c8d0c3f566774aac04927d6",
+  "source_physics_equal": true
+}

@@ -1,0 +1,25 @@
+...................F........................                             [100%]
+=================================== FAILURES ===================================
+________ test_h24_exact_pre_extension_identity_and_first23_real_layers _________
+
+    def test_h24_exact_pre_extension_identity_and_first23_real_layers():
+        from dataclasses import fields,replace
+        import hashlib,importlib.util,os,sys
+        from pathlib import Path
+        from resectionlab.observed_search import observed_beam_search
+        root=next(p for p in Path(__file__).resolve().parents if (p/'src/resectionlab').is_dir())
+        case=independent_cells_case()
+        support=np.zeros(case.observed_support.shape,bool);support[2,2,1]=support[5,2,1]=True
+        case=replace(case,observed_support=support,structural_intensity=support.astype(np.float32),reference_target=support,nominal_target=support)
+        a=NativeSpatialTask(case,max_steps=24);b=NativeSpatialTask(case,max_steps=48)
+        options=dict(max_calls=1000,beam_width=2,seconds=20,transition_mode='lazy_planning',
+                     retention_mode='return_plus_opening_depth_volume_v1',retained_prefix_diagnostics=True)
+        pa,ra=observed_beam_search(a,**options);pb,rb=observed_beam_search(b,**options)
+>       assert len(ra['layers'])==24 and len(rb['layers'])==48
+E       AssertionError: assert (3 == 24)
+E        +  where 3 = len([{'depth': 1, 'completed': True, 'expanded_nodes': 1, 'model_transition_calls': 2, ...}, {'depth': 2, 'completed': Tru...del_transition_calls': 2, ...}, {'depth': 3, 'completed': True, 'expanded_nodes': 2, 'model_transition_calls': 0, ...}])
+
+build/select013-paged-route-h48-v1/tests/test_native_spatial_horizon.py:212: AssertionError
+=========================== short test summary info ============================
+FAILED build/select013-paged-route-h48-v1/tests/test_native_spatial_horizon.py::test_h24_exact_pre_extension_identity_and_first23_real_layers
+1 failed, 43 passed in 7.76s

@@ -1,0 +1,93 @@
+{
+  "arms": {
+    "original_lazy_beam": {
+      "actions": [
+        "STOP"
+      ],
+      "call_cap_reached": false,
+      "completed_layers": 36,
+      "endpoint": "STOP",
+      "expanded_nodes": 70,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 35259.99659456868,
+        "total_reward": 0.0
+      },
+      "planning_seconds": 116.47962266695686,
+      "previews": 8424,
+      "status": "complete_replayed",
+      "time_cap_reached": false,
+      "transitions": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 805
+      }
+    },
+    "paged_obstruction_lazy_beam": {
+      "actions": [
+        "STOP"
+      ],
+      "call_cap_reached": false,
+      "completed_layers": 48,
+      "endpoint": "STOP",
+      "expanded_nodes": 95,
+      "extra_pairs_verified": 1942,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 35259.99659456868,
+        "total_reward": 0.0
+      },
+      "page_groups": 95,
+      "page_records": 370,
+      "planning_seconds": 330.59264233289286,
+      "previews": 13408,
+      "status": "complete_replayed",
+      "time_cap_reached": false,
+      "transitions": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 1950
+      }
+    }
+  },
+  "checks_passed": true,
+  "comparison": {
+    "contact_delta": 0.0,
+    "criterion": "complete accepted route with return above both STOP0 and original baseline; no clinical safety claim",
+    "nominal_return_improvement": 0.0,
+    "outside_target_delta": 0.0,
+    "positive_complete_return": false,
+    "target_improvement": 0.0,
+    "target_progress": false
+  },
+  "parent_status": "complete",
+  "receipt_sha256": "f4924629b70c0c6a1a6b3bdf19b7fa7953076021a1788dfac7b5e2c26cde8b44",
+  "result_sha256": "8dcbf51e12fc4a1175f52422bd5e4b745ce6d35300fd589b8b4b23404d7bdcf2",
+  "status": "complete_SELECT013_paged_route_h48_comparison"
+}

@@ -1,0 +1,9 @@
+{
+  "decision_model_hash": "sha256:4b7d3d18b74d24af71d6ac54b0204ab06a93edc8dbfd0d9f66c9fdae9fcd2d0c",
+  "new_horizon": 48,
+  "old_decision_model_hash": "sha256:fce0095f0583453206ef6a50bef3afc05be9a72dd27846c4abcb6a9624fc232b",
+  "old_horizon": 24,
+  "only_model_horizon_changed": true,
+  "prior_source_admission_scope": "historical h24 context authenticates source; fresh h48 diagnostic task is separately declared",
+  "source_hash": "sha256:a09a2cb40f860f271a355b8cdb4ff24b73c34e8b2c8d0c3f566774aac04927d6"
+}

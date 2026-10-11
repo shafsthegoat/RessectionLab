@@ -1,0 +1,204 @@
+{
+  "failure_rule": "if a rollout/replay fails before complete-history exists, additionally retain that arm attempt/step JSON and exact failure certificate/log; never discard unfinished evidence",
+  "file_count": 39,
+  "files": [
+    {
+      "bytes": 1409039,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/result.json",
+      "sha256": "8dcbf51e12fc4a1175f52422bd5e4b745ce6d35300fd589b8b4b23404d7bdcf2"
+    },
+    {
+      "bytes": 5532,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/costs.json",
+      "sha256": "ec73681060a42980846fef9dbf6a7119264de9974b85410b9afb13bdc1691743"
+    },
+    {
+      "bytes": 1407422,
+      "path": "build/select013-paged-route-h48-v1/attempt-01.supervision/receipt.json",
+      "sha256": "f4924629b70c0c6a1a6b3bdf19b7fa7953076021a1788dfac7b5e2c26cde8b44"
+    },
+    {
+      "bytes": 15229,
+      "path": "build/select013-paged-route-h48-v1/attempt-01.supervision/declaration.json",
+      "sha256": "91c1ca363a558cb14fdba90b5fdab78c0877eaabb13d4ac58350fc00e2b94731"
+    },
+    {
+      "bytes": 281,
+      "path": "build/select013-paged-route-h48-v1/attempt-01.supervision/worker-final.json",
+      "sha256": "36a74d0d15f59e057fd6fa799070dfe67b0fd65be9660d1f4c30202c5577d469"
+    },
+    {
+      "bytes": 7424,
+      "path": "build/select013-paged-route-h48-v1/root-release.json",
+      "sha256": "a957077b04785355b3fd1c8354743526e4e70ae6087de249e325386badad8e3e"
+    },
+    {
+      "bytes": 24008,
+      "path": "build/select013-paged-route-h48-v1/source-index.json",
+      "sha256": "23bf8d7bb299a05f7f24dfa5d372b6aec6ee4f0f47a88e1f007a8109d458526f"
+    },
+    {
+      "bytes": 6416,
+      "path": "build/select013-paged-route-h48-v1/comparison_contract.py",
+      "sha256": "22ffd92bb134d1a7548f38a8e833427ed3b9aa0af7d9ff2fef90e922dc673c7a"
+    },
+    {
+      "bytes": 21509,
+      "path": "build/select013-paged-route-h48-v1/select_worker.py",
+      "sha256": "00e7f7ffe05af00162978f7abfab18e3e33587c0b7dd94a0ff0c197ed9865ebd"
+    },
+    {
+      "bytes": 12108,
+      "path": "build/select013-paged-route-h48-v1/run_owned.py",
+      "sha256": "dc0ca78c7ae97cba373ec08a4fce5941522dd503b3df9516903df45abf97fc2c"
+    },
+    {
+      "bytes": 4501,
+      "path": "build/select013-paged-route-h48-v1/freeze-runtime.py",
+      "sha256": "7b53a8aa811376be80022c177ab9e7fc4fe14fa987adddca0d2c63451b1569fc"
+    },
+    {
+      "bytes": 8094,
+      "path": "build/select013-paged-route-h48-v1/test_owned_generated.py",
+      "sha256": "4b91ced0d705d9b9f454c9197d22f3b72d67adc21b7fcd1c91f92d3941302cf3"
+    },
+    {
+      "bytes": 2067,
+      "path": "build/select013-paged-route-h48-v1/controls-01.json",
+      "sha256": "712f4ea469d67368a7dbb2878702364b80abcb08c080c7824980e16fb1546c3c"
+    },
+    {
+      "bytes": 1981,
+      "path": "build/select013-paged-route-h48-v1/controls-01.log",
+      "sha256": "42aa0dd82832cab87048bab8241248c2be5f35f5805b7d044265536787f439d9"
+    },
+    {
+      "bytes": 2295,
+      "path": "build/select013-paged-route-h48-v1/controls-02.json",
+      "sha256": "ac94395a7615a2ac8c881a8ff287a13b7e2b11b946cbd4f438a9d09d02ff79b8"
+    },
+    {
+      "bytes": 99,
+      "path": "build/select013-paged-route-h48-v1/controls-02.log",
+      "sha256": "1e893a5d508c6ca8d5408c6968dbffcd18d0ed623b27d4c209302468931f7673"
+    },
+    {
+      "bytes": 7350,
+      "path": "build/select013-paged-route-h48-v1/extract_terminal.py",
+      "sha256": "8feab25cd629c2b16952a88cf4a3273419c5ce22be249865e611b0e92d791b5e"
+    },
+    {
+      "bytes": 2729,
+      "path": "build/select013-paged-route-h48-v1/TERMINAL_RECIPE.txt",
+      "sha256": "d2198a2411bb0ea25e1c95de791b722ea80ae116772c2c8a542d4825adb428e9"
+    },
+    {
+      "bytes": 19337,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/original_lazy_beam/original-world-control.json",
+      "sha256": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e"
+    },
+    {
+      "bytes": 510,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/original_lazy_beam/horizon-change.json",
+      "sha256": "e7d07fe0a5e95d4b60f3e81cd55a949c7783d56c99665ed5742ed3bb862dd613"
+    },
+    {
+      "bytes": 247,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/original_lazy_beam/h24-prefix-control.json",
+      "sha256": "127895a9376be1467934f281594323cc945d1d6e90b257ca8d580173dfb8049d"
+    },
+    {
+      "bytes": 548,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/original_lazy_beam/selected-action-plan.json",
+      "sha256": "73aa270766e873dfe89ea2b067d75c61fb4a7fb316a4ae331433133e3b9e3f79"
+    },
+    {
+      "bytes": 432,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/original_lazy_beam/complete-history.json",
+      "sha256": "0ebf154e97d8122b156ae4d92b93f02768d5e388344411f4088b37d9faade522"
+    },
+    {
+      "bytes": 21463,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/original_lazy_beam/rollout-metrics.json",
+      "sha256": "3e681f5d5201cf4cbbc79b61b4fd61e076f2fca37d20fd268a79a6b5989ffa8a"
+    },
+    {
+      "bytes": 21463,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/original_lazy_beam/replay-metrics.json",
+      "sha256": "3e681f5d5201cf4cbbc79b61b4fd61e076f2fca37d20fd268a79a6b5989ffa8a"
+    },
+    {
+      "bytes": 2494,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/original_lazy_beam/independent-episode.json",
+      "sha256": "e84d0ab1997d4ecc8953aa539ac123347748e8fb398ed59033276c87850e2963"
+    },
+    {
+      "bytes": 19337,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/original-world-control.json",
+      "sha256": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e"
+    },
+    {
+      "bytes": 1445,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/declared-rule-change.json",
+      "sha256": "17bf13d89f01920f64739ec100089eea7efa10b0edf7f03ae1cdccda2be85449"
+    },
+    {
+      "bytes": 510,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/horizon-change.json",
+      "sha256": "ebda170472f14903bd037b1b9ebbc96ecadf81a15928d5ca404fe6ffb9509204"
+    },
+    {
+      "bytes": 247,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/h24-prefix-control.json",
+      "sha256": "127895a9376be1467934f281594323cc945d1d6e90b257ca8d580173dfb8049d"
+    },
+    {
+      "bytes": 548,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/selected-action-plan.json",
+      "sha256": "d9dab610ce0d12033bbf08cc45728d453e7523aa35520515bfc0382b4532576a"
+    },
+    {
+      "bytes": 432,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/complete-history.json",
+      "sha256": "1a39b58c1ff20bd4fc8764976ab2ed29e2569ff5c52f55cad9de320181f12caf"
+    },
+    {
+      "bytes": 21463,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/rollout-metrics.json",
+      "sha256": "713baeaecb5c29374ce27b2a7c3770dbe8eb5d708c53515fe07d1020ef10e234"
+    },
+    {
+      "bytes": 21463,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/replay-metrics.json",
+      "sha256": "713baeaecb5c29374ce27b2a7c3770dbe8eb5d708c53515fe07d1020ef10e234"
+    },
+    {
+      "bytes": 2493,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/independent-episode.json",
+      "sha256": "b107b149acd6e5b4c2932c703bf13cb59d5cd5585f7357cc8faa3eba6a2e1d7e"
+    },
+    {
+      "bytes": 3201,
+      "path": "build/select013-paged-route-h48-v1/compact_terminal.py",
+      "sha256": "cf879d862561d55e2e0222cdcddd6ef18b300abded210d8a1d730470c621f14c"
+    },
+    {
+      "bytes": 254035,
+      "path": "build/select013-paged-route-h48-v1/postrun/compact-scalars.json",
+      "sha256": "a8d48b0b019fe4cd6609f559d42930da5a7c613380cc4246aad4eb913932929c"
+    },
+    {
+      "bytes": 128065,
+      "path": "build/select013-paged-route-h48-v1/postrun/inventory-manifest.json",
+      "sha256": "b39d9eb114676d0797030f6b039ffe65f73bd7877459387e9de0768a888049c6"
+    },
+    {
+      "bytes": 3159,
+      "path": "build/select013-paged-route-h48-v1/postrun/REPORT.txt",
+      "sha256": "6ac992070d63f993b05359197dfb5708ab54580a8cf82c43403064dfc0704541"
+    }
+  ],
+  "independent_review": "Add the independent reviewer's compact H48 report/witness/index after its final handoff; no duplicate audit executed here.",
+  "omitted": "full inventory/page JSON; duplicate selection accounting; per-step copies where complete history retained; canonical source already in Git",
+  "total_bytes": 3460976
+}

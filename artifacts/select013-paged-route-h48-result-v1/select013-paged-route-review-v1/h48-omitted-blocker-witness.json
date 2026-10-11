@@ -1,0 +1,574 @@
+{
+  "all_legal_ray_axis_distances": [
+    {
+      "action_id": "nominal-cavity-b7f6d25bfc39a2d5836ff757",
+      "cell_center_to_infinite_axis_mm": 0.999999999999994,
+      "family": "exposed_opening",
+      "tool_id": "generic_suction",
+      "voxel": [
+        8,
+        93,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-fbeb40b7ffb9dd24f5b49468",
+      "cell_center_to_infinite_axis_mm": 2.2360678047311944,
+      "family": "exposed_opening",
+      "tool_id": "generic_suction",
+      "voxel": [
+        7,
+        91,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-a5e3393787828a4bbaa164e2",
+      "cell_center_to_infinite_axis_mm": 2.2360678047311944,
+      "family": "exposed_opening",
+      "tool_id": "generic_suction",
+      "voxel": [
+        7,
+        93,
+        87
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-6ffb043514360995c75aaa38",
+      "cell_center_to_infinite_axis_mm": 4.000000000000008,
+      "family": "exposed_opening",
+      "tool_id": "generic_suction",
+      "voxel": [
+        6,
+        88,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-c7f09fe02aedc749c841302a",
+      "cell_center_to_infinite_axis_mm": 3.99999961367768,
+      "family": "obstruction_opening",
+      "tool_id": "generic_suction",
+      "voxel": [
+        5,
+        92,
+        89
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-22457eca31c1d12c5f3528f2",
+      "cell_center_to_infinite_axis_mm": 3.6055511683174557,
+      "family": "obstruction_opening",
+      "tool_id": "generic_suction",
+      "voxel": [
+        5,
+        95,
+        87
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-7a381b446f8f32d56f4b7f2c",
+      "cell_center_to_infinite_axis_mm": 2.236067934307648,
+      "family": "obstruction_opening",
+      "tool_id": "generic_suction",
+      "voxel": [
+        6,
+        90,
+        84
+      ]
+    }
+  ],
+  "blocker": [
+    7,
+    92,
+    85
+  ],
+  "bound_tools": {
+    "generic_aspirator_tip_radius_mm": 1.7,
+    "generic_suction_tip_radius_mm": 1.0,
+    "source": "src/resectionlab/geometry.py",
+    "source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184"
+  },
+  "cell_center_inference": {
+    "center_mm": [
+      -54.37899999920633,
+      -15.888999999667107,
+      -18.27829563649272
+    ],
+    "left_action": "nominal-cavity-fbeb40b7ffb9dd24f5b49468",
+    "right_action": "nominal-cavity-a5e3393787828a4bbaa164e2",
+    "rule": "Affine maps preserve midpoint: ([7,91,83]+[7,93,87])/2 = [7,92,85]. Use only saved tip_mm for these source-center endpoints."
+  },
+  "conclusion": "No currently emitted legal ray can contain this whole blocker cell: all four base rays use radius1 suction while the saved minimum over original axes is1.5811388148; all three shifted legal suction axes miss even its center by>2mm. Every hypothetical larger-tool action is currently nonlegal. Nevertheless both centered-tool proposals for this actual blocker were suppressed by the optimistic radial-coverage gate.",
+  "depth": 47,
+  "exact_rows": [
+    {
+      "file": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/pages/166410d0dc42e97ead56ab095c66cce813db189f668a12c1eff54c5b512b8247/page00.json",
+      "file_sha256": "a58f8ed4792633a3486bad99a86ebb780e421538b76d7c546062592a90e61917",
+      "pointer": "/ledger/12",
+      "row": {
+        "action_id": "nominal-cavity-b7f6d25bfc39a2d5836ff757",
+        "column_index": 2,
+        "endpoint_center_in_actor_crop": true,
+        "entry_mm": [
+          -59.87899999920143,
+          -16.888999999694033,
+          -18.27829563649273
+        ],
+        "family": "exposed_opening",
+        "feasible": true,
+        "offset_source_voxels": [
+          2,
+          0
+        ],
+        "proposal_id": "nominal-cavity-b7f6d25bfc39a2d5836ff757",
+        "proposal_reason": "PROPOSED_UNCERTIFIED",
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "tip_mm": [
+          -53.378999999201426,
+          -16.888999999662204,
+          -18.27829563649273
+        ],
+        "tool_id": "generic_suction",
+        "verification": "NATIVE_VERIFIED",
+        "voxel": [
+          8,
+          93,
+          85
+        ]
+      }
+    },
+    {
+      "file": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/pages/166410d0dc42e97ead56ab095c66cce813db189f668a12c1eff54c5b512b8247/page00.json",
+      "file_sha256": "a58f8ed4792633a3486bad99a86ebb780e421538b76d7c546062592a90e61917",
+      "pointer": "/ledger/18",
+      "row": {
+        "action_id": "nominal-cavity-fbeb40b7ffb9dd24f5b49468",
+        "column_index": 3,
+        "endpoint_center_in_actor_crop": true,
+        "entry_mm": [
+          -59.878999999211224,
+          -14.88899999969404,
+          -16.278295829653885
+        ],
+        "family": "exposed_opening",
+        "feasible": true,
+        "offset_source_voxels": [
+          0,
+          -2
+        ],
+        "proposal_id": "nominal-cavity-fbeb40b7ffb9dd24f5b49468",
+        "proposal_reason": "PROPOSED_UNCERTIFIED",
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "tip_mm": [
+          -54.378999999211224,
+          -14.888999999667107,
+          -16.278295829653885
+        ],
+        "tool_id": "generic_suction",
+        "verification": "NATIVE_VERIFIED",
+        "voxel": [
+          7,
+          91,
+          83
+        ]
+      }
+    },
+    {
+      "file": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/pages/166410d0dc42e97ead56ab095c66cce813db189f668a12c1eff54c5b512b8247/page00.json",
+      "file_sha256": "a58f8ed4792633a3486bad99a86ebb780e421538b76d7c546062592a90e61917",
+      "pointer": "/ledger/48",
+      "row": {
+        "action_id": "nominal-cavity-a5e3393787828a4bbaa164e2",
+        "column_index": 8,
+        "endpoint_center_in_actor_crop": true,
+        "entry_mm": [
+          -59.87899999920143,
+          -16.88899999969404,
+          -20.278295443331558
+        ],
+        "family": "exposed_opening",
+        "feasible": true,
+        "offset_source_voxels": [
+          2,
+          2
+        ],
+        "proposal_id": "nominal-cavity-a5e3393787828a4bbaa164e2",
+        "proposal_reason": "PROPOSED_UNCERTIFIED",
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "tip_mm": [
+          -54.378999999201426,
+          -16.888999999667107,
+          -20.278295443331558
+        ],
+        "tool_id": "generic_suction",
+        "verification": "NATIVE_VERIFIED",
+        "voxel": [
+          7,
+          93,
+          87
+        ]
+      }
+    },
+    {
+      "file": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/pages/166410d0dc42e97ead56ab095c66cce813db189f668a12c1eff54c5b512b8247/page00.json",
+      "file_sha256": "a58f8ed4792633a3486bad99a86ebb780e421538b76d7c546062592a90e61917",
+      "pointer": "/ledger/54",
+      "row": {
+        "action_id": "nominal-cavity-6ffb043514360995c75aaa38",
+        "column_index": 9,
+        "endpoint_center_in_actor_crop": true,
+        "entry_mm": [
+          -59.87899999922592,
+          -11.88899999969403,
+          -18.27829563649273
+        ],
+        "family": "exposed_opening",
+        "feasible": true,
+        "offset_source_voxels": [
+          -3,
+          0
+        ],
+        "proposal_id": "nominal-cavity-6ffb043514360995c75aaa38",
+        "proposal_reason": "PROPOSED_UNCERTIFIED",
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "tip_mm": [
+          -55.37899999922591,
+          -11.888999999671995,
+          -18.27829563649273
+        ],
+        "tool_id": "generic_suction",
+        "verification": "NATIVE_VERIFIED",
+        "voxel": [
+          6,
+          88,
+          85
+        ]
+      }
+    },
+    {
+      "file": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/pages/166410d0dc42e97ead56ab095c66cce813db189f668a12c1eff54c5b512b8247/page00.json",
+      "file_sha256": "a58f8ed4792633a3486bad99a86ebb780e421538b76d7c546062592a90e61917",
+      "pointer": "/ledger/188",
+      "row": {
+        "action_id": null,
+        "blocker_voxel": [
+          7,
+          92,
+          85
+        ],
+        "column_index": 42,
+        "evidence_hashes": [
+          "sha256:45d3c49e9f0bed2421a89cd22f208587bc24a5e27df8a1f254e0c3747106980d",
+          "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c",
+          "sha256:af10f1d1213e7e97373e06d683cfe763eaa49c48a15dd24bb5df190e6850750f"
+        ],
+        "family": "obstruction_opening",
+        "feasible": false,
+        "offset_source_voxels": [
+          1,
+          0
+        ],
+        "original_axis_min_corner_bound_mm": 1.5811388148134555,
+        "proposal_id": null,
+        "proposal_reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+        "public_nominal_priority": false,
+        "reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+        "tool_id": "generic_suction",
+        "verification": "PROVIDER_DISPOSITION",
+        "voxel": [
+          7,
+          92,
+          85
+        ]
+      }
+    },
+    {
+      "file": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/pages/166410d0dc42e97ead56ab095c66cce813db189f668a12c1eff54c5b512b8247/page00.json",
+      "file_sha256": "a58f8ed4792633a3486bad99a86ebb780e421538b76d7c546062592a90e61917",
+      "pointer": "/ledger/189",
+      "row": {
+        "action_id": null,
+        "blocker_voxel": [
+          7,
+          92,
+          85
+        ],
+        "column_index": 42,
+        "evidence_hashes": [
+          "sha256:45d3c49e9f0bed2421a89cd22f208587bc24a5e27df8a1f254e0c3747106980d",
+          "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c",
+          "sha256:af10f1d1213e7e97373e06d683cfe763eaa49c48a15dd24bb5df190e6850750f"
+        ],
+        "family": "obstruction_opening",
+        "feasible": false,
+        "offset_source_voxels": [
+          1,
+          0
+        ],
+        "original_axis_min_corner_bound_mm": 1.5811388148134555,
+        "proposal_id": null,
+        "proposal_reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+        "public_nominal_priority": false,
+        "reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+        "tool_id": "generic_aspirator",
+        "verification": "PROVIDER_DISPOSITION",
+        "voxel": [
+          7,
+          92,
+          85
+        ]
+      }
+    },
+    {
+      "file": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/pages/166410d0dc42e97ead56ab095c66cce813db189f668a12c1eff54c5b512b8247/page03.json",
+      "file_sha256": "eb250d378a5f0b4a990230b4f67fc27349fae788397642397f075f27bbcf7b6d",
+      "pointer": "/ledger/6",
+      "row": {
+        "action_id": "nominal-cavity-c7f09fe02aedc749c841302a",
+        "blocker_voxel": [
+          5,
+          92,
+          89
+        ],
+        "column_index": 29,
+        "endpoint_center_in_actor_crop": true,
+        "entry_mm": [
+          -59.87899999920633,
+          -15.888999999694038,
+          -22.2782952501704
+        ],
+        "evidence_hashes": [
+          "sha256:410c7ac2375b50c7dca67b21dc1078e5a0a865caaa9d188cd3e47d7b32bd6f10",
+          "sha256:520361970ee4389a96110c87fd1e397e930bc55b8850f1be478e13ad13b28169",
+          "sha256:5c857800c333cf20677b89177be3f58fbc5efb2491095edd435444cd594f1c97",
+          "sha256:7a99d03870f07c57aaa31ac99e86ccf3bc3a897e6a4b7fff6071a248048e23d9",
+          "sha256:9a289b36f7fd9e042181a43d89a5524e093950aabe2a3f53927b75a960767453",
+          "sha256:9defef6eedc3c6ffb41517cfc2d9cf8be2b7b5b0ef4bfea07eadd48617d3bf25",
+          "sha256:ae9df310296da9ab5714d484e6241cb8d5370ab398c8b1b03ff99fbdfff2e708",
+          "sha256:b39c6a47bc030b00d6882da4472d8806417ffdadec33c1d49b37e243f11184b9",
+          "sha256:b6b2576c89923c2505ef3903e370c53a99aa54b4e9bed88d35b34a5e842ea108",
+          "sha256:bf70c74e88aaf887276779841d04a4b889221af5874518f3934fe550aebe915b",
+          "sha256:c798b9f8bce042022caa60de207b6bd7495326e34c6fb168777416de1ed1569b",
+          "sha256:cca3d7d144425548a487f85199a59d85df1a600175e2026f24cc547363461c60",
+          "sha256:eb04ce729cb5f6a67d609c78908495457b01b6471269a26ce3493e1c962b691b",
+          "sha256:f26ae4b8b79610727fc428e0c442ae51f6803eab6ba3eb031cebb58e43009a71"
+        ],
+        "family": "obstruction_opening",
+        "feasible": true,
+        "offset_source_voxels": [
+          1,
+          4
+        ],
+        "original_axis_min_corner_bound_mm": 2.121320241120471,
+        "proposal_id": "nominal-cavity-c7f09fe02aedc749c841302a",
+        "proposal_reason": "PROPOSED_UNCERTIFIED",
+        "public_nominal_priority": false,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "tip_mm": [
+          -56.37899999920632,
+          -15.888999999676898,
+          -22.2782952501704
+        ],
+        "tool_id": "generic_suction",
+        "verification": "NATIVE_VERIFIED",
+        "voxel": [
+          5,
+          92,
+          89
+        ]
+      }
+    },
+    {
+      "file": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/pages/166410d0dc42e97ead56ab095c66cce813db189f668a12c1eff54c5b512b8247/page04.json",
+      "file_sha256": "56a4cc299127be54490a667529884bb191376967ade9f33233019e471ff77d1c",
+      "pointer": "/ledger/0",
+      "row": {
+        "action_id": "nominal-cavity-22457eca31c1d12c5f3528f2",
+        "blocker_voxel": [
+          5,
+          95,
+          87
+        ],
+        "column_index": 30,
+        "endpoint_center_in_actor_crop": true,
+        "entry_mm": [
+          -59.878999999191635,
+          -18.888999999694036,
+          -20.278295443331558
+        ],
+        "evidence_hashes": [
+          "sha256:14af27c3f739cd966dc6bc48f658ec3152db7a72af9227d5b35ac31c865985a5",
+          "sha256:217df2df998060badf49c7d129b4fc2f06ed553043ad8366ecfa1e3858e32620",
+          "sha256:4dbf98ad491f294d8e70a49849144a7342a33864ac717074338d5a15fd027569",
+          "sha256:7056f8da5a9941b6d3bda642c1c5fb70ae8e2315b5fdcc3e602ef6aa48653a68",
+          "sha256:7bf8d572d4a25691a351b0d93eb4d214ed2428be99c3b10d9452f405addbe811",
+          "sha256:954ca67545295e602a98180eaa42958661457d5680f9d35d5443f353e1245c01",
+          "sha256:98490d1def188f5da04c5e2d739e768d42bafa4352608e7cf1052b6327672acb",
+          "sha256:a65a409f57d5ca18e59d2284b52e62cb5ef441a7d03902347f1ee7aa2a2ba032",
+          "sha256:c89de2e54573b7a61cb450429443601910c34c3648c5aedbc7030cd7985177b3",
+          "sha256:fbb690126abbf54e7c4baaac06f23449ce0c56936d861d74a5dfb9fa55cfd9a6"
+        ],
+        "family": "obstruction_opening",
+        "feasible": true,
+        "offset_source_voxels": [
+          4,
+          2
+        ],
+        "original_axis_min_corner_bound_mm": 2.5495097473258936,
+        "proposal_id": "nominal-cavity-22457eca31c1d12c5f3528f2",
+        "proposal_reason": "PROPOSED_UNCERTIFIED",
+        "public_nominal_priority": false,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "tip_mm": [
+          -56.378999999191635,
+          -18.888999999676898,
+          -20.278295443331558
+        ],
+        "tool_id": "generic_suction",
+        "verification": "NATIVE_VERIFIED",
+        "voxel": [
+          5,
+          95,
+          87
+        ]
+      }
+    },
+    {
+      "file": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/pages/166410d0dc42e97ead56ab095c66cce813db189f668a12c1eff54c5b512b8247/page04.json",
+      "file_sha256": "56a4cc299127be54490a667529884bb191376967ade9f33233019e471ff77d1c",
+      "pointer": "/ledger/4",
+      "row": {
+        "action_id": "nominal-cavity-7a381b446f8f32d56f4b7f2c",
+        "blocker_voxel": [
+          6,
+          90,
+          84
+        ],
+        "column_index": 33,
+        "endpoint_center_in_actor_crop": true,
+        "entry_mm": [
+          -59.87899999921612,
+          -13.88899999969403,
+          -17.278295733073307
+        ],
+        "evidence_hashes": [
+          "sha256:13ebe9034ad5ffd2204a43b84b8840322b469657498464cbc393104738f4a95d",
+          "sha256:2cb392104dbe22bd47a7d09beb5ad9d62585b9731f27e942bd6afe93a4c031f8",
+          "sha256:77a00a3bf6d318de6b8ba7fd8e709f4714ee399e8eeace69f220d63e86c1ecd6",
+          "sha256:7b148b6bb2a08c9da1b720533e46335c4930545834462b8e6a657218f548f4be",
+          "sha256:81c9e5e4db19337e7dd35e167798f97cb153a2b472eaafc30ae7e8d207b984bf",
+          "sha256:949ebc41be03d4361284cc6abcae5a09b6909e8910fc1c65f8b3e9b70a4ff651",
+          "sha256:b674cdf5c59345c472f3b7a5553d0f11d744ab144667a91efdbfa90fa2d742c4",
+          "sha256:b75a455a3cdc77282eb233a1874c837b552de7ff090fc9a2ff54a16fdd11dfa5",
+          "sha256:f7ed85ad8b9da5eacefbb95072ef02666cf595aafc69a2d3d1c7b88b9d26922b",
+          "sha256:facb06bb4b29f729116624a65200028db5bd2845b346e3c7527825f317f082c6"
+        ],
+        "family": "obstruction_opening",
+        "feasible": true,
+        "offset_source_voxels": [
+          -1,
+          -1
+        ],
+        "original_axis_min_corner_bound_mm": 2.121320241120456,
+        "proposal_id": "nominal-cavity-7a381b446f8f32d56f4b7f2c",
+        "proposal_reason": "PROPOSED_UNCERTIFIED",
+        "public_nominal_priority": false,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "tip_mm": [
+          -55.37899999921612,
+          -13.888999999671995,
+          -17.278295733073307
+        ],
+        "tool_id": "generic_suction",
+        "verification": "NATIVE_VERIFIED",
+        "voxel": [
+          6,
+          90,
+          84
+        ]
+      }
+    }
+  ],
+  "limits": "This demonstrates current-catalog lack of a clearing action, not infeasibility of all routes or feasibility of the omitted centered stroke. The first-blocker evidence hash is saved, not independently regenerated.",
+  "prefix": [
+    "nominal-cavity-47aa1884912081efc8859324",
+    "nominal-cavity-2dedd5c30b3c2a46ecd7b8ed",
+    "nominal-cavity-833227750e3e818246a4028e",
+    "nominal-cavity-66203c3ebbeaad3b2305958e",
+    "nominal-cavity-d57cc0e4ecd4f9e20606a30f",
+    "nominal-cavity-de28e926609770492469a1f9",
+    "nominal-cavity-1dd5f6052e9f74ef3d894808",
+    "nominal-cavity-66ed824ac6fd10c7c2136ec4",
+    "nominal-cavity-bf54c6038f02131f77cb0070",
+    "nominal-cavity-83cffbb1e7281f99814666d1",
+    "nominal-cavity-8402ac8e80757b6488fcd652",
+    "nominal-cavity-1afa4b26bb5a55b1ed5eab8a",
+    "nominal-cavity-a549a91b4d7e663e39065be5",
+    "nominal-cavity-cb9eabef925336a257bcf413",
+    "nominal-cavity-5ec2443c6c1350a611a724d4",
+    "nominal-cavity-7f309b399dc32e01d940f812",
+    "nominal-cavity-530434d2d41e6e1941900281",
+    "nominal-cavity-20899577eeae335e70019e0d",
+    "nominal-cavity-0081875352031aba48b6cc58",
+    "nominal-cavity-227478c6d542c5dda31d3eea",
+    "nominal-cavity-607358dcd0ad23f0a5e27038",
+    "nominal-cavity-2665a1322fd5e892cf593baf",
+    "nominal-cavity-1e579dd40fbcd3b43f565094",
+    "nominal-cavity-10d1a8d205310ee9ed7d827b",
+    "nominal-cavity-e33c04aabe79ed27f6e290ef",
+    "nominal-cavity-a535a707a5ae121db9bf3f68",
+    "nominal-cavity-5159fea0096814a948984a4b",
+    "nominal-cavity-955ca386a63c12f641e38092",
+    "nominal-cavity-6ffc99cb50a3724526a1e396",
+    "nominal-cavity-54e58b43feb7293f531c8000",
+    "nominal-cavity-c68610aed544d34a22dddae4",
+    "nominal-cavity-1dda094f587a38d9d057628d",
+    "nominal-cavity-00fe2adfdd1f51219e21cce1",
+    "nominal-cavity-07bb4070f8ed6d802554da10",
+    "nominal-cavity-51549636b5ae5c8d2f657d86",
+    "nominal-cavity-2dc0c0c8db534a1951037c60",
+    "nominal-cavity-19076f6199ce68f0705b216d",
+    "nominal-cavity-1c7b39c1fcb7db140c99fe2e",
+    "nominal-cavity-1714a012b7baca72e20ccf35",
+    "nominal-cavity-603366aea887f09248f277cd",
+    "nominal-cavity-6ed86ecfb96807d38bb32ba6",
+    "nominal-cavity-b8cab13883317fb329402e92",
+    "nominal-cavity-216cdffd80a53c6f94027efe",
+    "nominal-cavity-3be6d54e7c3b77c5392aaaf2",
+    "nominal-cavity-22e2f84ab4ccba373fe67cef",
+    "nominal-cavity-128615e494494e6be048a390",
+    "nominal-cavity-e46bc4d0753a452cc5dd7685"
+  ],
+  "recorded_original_axis_min_corner_bound_mm": 1.5811388148134555,
+  "result_sha256": "8dcbf51e12fc4a1175f52422bd5e4b745ce6d35300fd589b8b4b23404d7bdcf2",
+  "scope": "Saved metadata arithmetic only, no native geometry execution, no acquired arrays or new previews.",
+  "source_pages": [
+    {
+      "bytes": 223280,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/pages/166410d0dc42e97ead56ab095c66cce813db189f668a12c1eff54c5b512b8247/page00.json",
+      "sha256": "a58f8ed4792633a3486bad99a86ebb780e421538b76d7c546062592a90e61917"
+    },
+    {
+      "bytes": 45844,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/pages/166410d0dc42e97ead56ab095c66cce813db189f668a12c1eff54c5b512b8247/page01.json",
+      "sha256": "03c09b0dfc11042489f7b3969fba0f6d325a9e486971ea1166ab2b18ee7a3566"
+    },
+    {
+      "bytes": 44369,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/pages/166410d0dc42e97ead56ab095c66cce813db189f668a12c1eff54c5b512b8247/page02.json",
+      "sha256": "00d6340c811ed99a16baa459e3df03da13900d54660d91282e7359bc7f60af79"
+    },
+    {
+      "bytes": 45097,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/pages/166410d0dc42e97ead56ab095c66cce813db189f668a12c1eff54c5b512b8247/page03.json",
+      "sha256": "eb250d378a5f0b4a990230b4f67fc27349fae788397642397f075f27bbcf7b6d"
+    },
+    {
+      "bytes": 46124,
+      "path": "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/pages/166410d0dc42e97ead56ab095c66cce813db189f668a12c1eff54c5b512b8247/page04.json",
+      "sha256": "56a4cc299127be54490a667529884bb191376967ade9f33233019e471ff77d1c"
+    }
+  ],
+  "state_hash": "sha256:4b3a244bc867da8d6fbe062bb9de60d2ef3e5b90cc1671dd29a5044078e1424f"
+}
