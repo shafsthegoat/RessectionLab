@@ -1,0 +1,29 @@
+{
+  "version": "focused-corridor-runtime-source-v1",
+  "source_only": true,
+  "files": {
+    "comparison_contract.py": "9f13ee1d277f6ec714c52017c43d5f47ece65e98f1864947e38c38522b3356f3",
+    "select_worker.py": "d29fa50349b71592eb8aaa476cb767f3e7cca9fa3b8d3cce65a6f9db386228b8",
+    "run_owned.py": "9d4b51047f653084f44f86808399260fa261fb29c06078d1bdde70bf52d2608e",
+    "freeze-runtime.py": "e82406c475ab5b8120b67a526e1f11225ee4ff2c1703ddc959b4111084f93295"
+  },
+  "scalar_contract_control": {
+    "path": "build/select013-focused-corridor-v1/runtime-controls-01/receipt.json",
+    "sha256": "496a7fa85051f73799f55865e27cf72ea609bca621a40e480c0093af0ae40fd4",
+    "status": "PASS",
+    "checks": 5
+  },
+  "helper_controls": {
+    "promotion_index": {
+      "path": "build/select013-focused-corridor-v1/promotion-index.json",
+      "sha256": "7a3c201547afd6d6f0ce87080a98574871a6263efa02e71f052c6c91222ae511"
+    },
+    "receipt": {
+      "path": "build/select013-focused-corridor-v1/controls-03.json",
+      "sha256": "8aea3aaadba2910be3eb95d198a16b522f3848f49f84595dcb77f549be0d8524"
+    },
+    "status": "PASS13",
+    "selector_import": "canonical resectionlab.focused_corridor_selector, byte-identical to tested local selector"
+  },
+  "scope": "same owned monitor/budgets; exact completed recursive negative; sealed context and physical-action packets reconstructed by canonical focused adapter; independent exploration and authoritative replay"
+}

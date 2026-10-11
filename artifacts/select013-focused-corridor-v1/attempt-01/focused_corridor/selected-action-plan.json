@@ -1,0 +1,30 @@
+{
+  "action_record_scope": "sealed focus, current catalog, state and physical action; replay recertifies before every commit",
+  "action_records": [
+    {
+      "action_id": "STOP",
+      "current_tool": null,
+      "decision_model_hash": "sha256:5fc041113fa1e2b1fb44796709e48dcc96ac7f85db08e0c4a7cf437efa490519",
+      "focus": null,
+      "physical_action": null,
+      "query_catalog_digest": "sha256:19516d3dbb2fb8f5df931ccc9862e30733bc4a2dc6e504cf673d71195a924107",
+      "schema": "focused-public-goal-action-v1",
+      "seal": "sha256:6ae414d8b64a6437ea0a4c1e8f33c326a42afc8dc5ae62f665f06f6fef624ae8",
+      "source_hash": "sha256:a649ef37f08282cc86b814a4a01dc3ea3cf5ce8bd7b1190d716ab47bf770c5a4",
+      "source_state_hash": "sha256:8e42982139ee66ad8c2157585c450c3f856f38ed1f139dcbd1b79c1968e471d5",
+      "steps_taken": 0
+    }
+  ],
+  "actions": [
+    "STOP"
+  ],
+  "decision_model_hash": "sha256:5fc041113fa1e2b1fb44796709e48dcc96ac7f85db08e0c4a7cf437efa490519",
+  "max_steps": 48,
+  "objective": "unchanged_public_nominal_reward",
+  "parameter_hash": null,
+  "proposal_rule_hash": "sha256:ddbc8acf8b2a697a426838326edb57a3421e8441bcbb1b0ba6869b12c20e2bd7",
+  "seal": "sha256:66eee106b4044a8b09ae534b250197b84d97e39979477e0228f4f37b1e7ebbd7",
+  "search_complete": true,
+  "source_hash": "sha256:a649ef37f08282cc86b814a4a01dc3ea3cf5ce8bd7b1190d716ab47bf770c5a4",
+  "updates": 0
+}

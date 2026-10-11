@@ -1,0 +1,234 @@
+{
+  "files": [
+    {
+      "path": "comparison_contract.py",
+      "original_path": "build/select013-focused-corridor-v1/comparison_contract.py",
+      "bytes": 8508,
+      "sha256": "9f13ee1d277f6ec714c52017c43d5f47ece65e98f1864947e38c38522b3356f3"
+    },
+    {
+      "path": "select_worker.py",
+      "original_path": "build/select013-focused-corridor-v1/select_worker.py",
+      "bytes": 22436,
+      "sha256": "d29fa50349b71592eb8aaa476cb767f3e7cca9fa3b8d3cce65a6f9db386228b8"
+    },
+    {
+      "path": "run_owned.py",
+      "original_path": "build/select013-focused-corridor-v1/run_owned.py",
+      "bytes": 12194,
+      "sha256": "9d4b51047f653084f44f86808399260fa261fb29c06078d1bdde70bf52d2608e"
+    },
+    {
+      "path": "freeze-runtime.py",
+      "original_path": "build/select013-focused-corridor-v1/freeze-runtime.py",
+      "bytes": 4200,
+      "sha256": "e82406c475ab5b8120b67a526e1f11225ee4ff2c1703ddc959b4111084f93295"
+    },
+    {
+      "path": "HANDOFF.txt",
+      "original_path": "build/select013-focused-corridor-v1/HANDOFF.txt",
+      "bytes": 3671,
+      "sha256": "2a11870f24d74dfef5504b1a57f38a4aa8e5535434849ed1070097ab33a3398e"
+    },
+    {
+      "path": "runtime-source-ready.json",
+      "original_path": "build/select013-focused-corridor-v1/runtime-source-ready.json",
+      "bytes": 1452,
+      "sha256": "c4a56550613f15391ce6cf4b2bc707dc08d78062caef4fc3fabdfa20398c165b"
+    },
+    {
+      "path": "source-index.json",
+      "original_path": "build/select013-focused-corridor-v1/source-index.json",
+      "bytes": 32753,
+      "sha256": "a7ef9e49f555f7b588296c0cee35874b56e52c48dbe840cffefac66c32d8ffd1"
+    },
+    {
+      "path": "root-release.json",
+      "original_path": "build/select013-focused-corridor-v1/root-release.json",
+      "bytes": 9721,
+      "sha256": "3bc3bdfb5d5d0c278289aee6a49712674d8cf2fcc2894eace3308606eec1e287"
+    },
+    {
+      "path": "test_serialized_completion.py",
+      "original_path": "build/select013-focused-corridor-v1/test_serialized_completion.py",
+      "bytes": 2285,
+      "sha256": "7c2204a5083a5a6224afa574d064b0aca50d1cff6082fa82c174cb0c8a91ed16"
+    },
+    {
+      "path": "runtime-controls-01/receipt.json",
+      "original_path": "build/select013-focused-corridor-v1/runtime-controls-01/receipt.json",
+      "bytes": 791,
+      "sha256": "496a7fa85051f73799f55865e27cf72ea609bca621a40e480c0093af0ae40fd4"
+    },
+    {
+      "path": "runtime-controls-01/stdout.log",
+      "original_path": "build/select013-focused-corridor-v1/runtime-controls-01/stdout.log",
+      "bytes": 373,
+      "sha256": "b844602ee8b827df5924fd45dd9b4083c6d5924f80008b4dd64069140b16285b"
+    },
+    {
+      "path": "attempt-01/result.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/result.json",
+      "bytes": 113384,
+      "sha256": "046e9da6086020475e57b7eb79a3cc793d12283c77c1414ff01a98657cd7295d"
+    },
+    {
+      "path": "attempt-01/costs.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/costs.json",
+      "bytes": 5043,
+      "sha256": "18beaa5728787e1df3ec51cfe166c3f2a656ddf94e134efc6d497a4be3b2f641"
+    },
+    {
+      "path": "attempt-01.supervision/receipt.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01.supervision/receipt.json",
+      "bytes": 105886,
+      "sha256": "db4f92d736fc57f7b5176988f51e5928b6eac72d2ed0ce22dfa51977db1cfed9"
+    },
+    {
+      "path": "attempt-01.supervision/declaration.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01.supervision/declaration.json",
+      "bytes": 22054,
+      "sha256": "332f4c81fe234a88220e43169021970890278f00e7b6118540e2b4c09ea67145"
+    },
+    {
+      "path": "attempt-01.supervision/worker-final.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01.supervision/worker-final.json",
+      "bytes": 282,
+      "sha256": "6678b0d3f39ec5aef72bb18291fa6a5974a83d770221d05b4c24160067a6c66b"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/selected-action-plan.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/fresh_STOP/selected-action-plan.json",
+      "bytes": 548,
+      "sha256": "73aa270766e873dfe89ea2b067d75c61fb4a7fb316a4ae331433133e3b9e3f79"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/rollout-metrics.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/fresh_STOP/rollout-metrics.json",
+      "bytes": 21463,
+      "sha256": "3e681f5d5201cf4cbbc79b61b4fd61e076f2fca37d20fd268a79a6b5989ffa8a"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/independent-episode.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/fresh_STOP/independent-episode.json",
+      "bytes": 2493,
+      "sha256": "d3e364dac0ba56ab34d3cb71986537379459e563c2fe1c14458f90f6f2893ee2"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/replay-binding.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/fresh_STOP/replay-binding.json",
+      "bytes": 215,
+      "sha256": "d493a2fe63139a0cbb7ecac458c60ff2aaee3558523206e504af471acc423f91"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/horizon-change.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/fresh_STOP/horizon-change.json",
+      "bytes": 370,
+      "sha256": "33909cef28f82e1e37616635c150697b9632526c1804aa5b0b809cd2c4deca5a"
+    },
+    {
+      "path": "attempt-01/focused_corridor/selected-action-plan.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/focused_corridor/selected-action-plan.json",
+      "bytes": 1387,
+      "sha256": "fe267bfe229eacf900dc5033dfbaedb8f89b2e0c22db926fe7bceb83671f679f"
+    },
+    {
+      "path": "attempt-01/focused_corridor/rollout-metrics.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/focused_corridor/rollout-metrics.json",
+      "bytes": 21463,
+      "sha256": "8e18eafc0861628e812b2bfb451bd8db299c50f3c57717afe53b1c97e4abbd0d"
+    },
+    {
+      "path": "attempt-01/focused_corridor/independent-episode.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/focused_corridor/independent-episode.json",
+      "bytes": 2493,
+      "sha256": "3cb76d9e2b3678637362cbddca3005abd9b834b109040da3ac0ac970e8fb5c0c"
+    },
+    {
+      "path": "attempt-01/focused_corridor/replay-binding.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/focused_corridor/replay-binding.json",
+      "bytes": 215,
+      "sha256": "723ca17e1ef03205facba0dac5d518a06f2842a7d1b3516262016b453231472a"
+    },
+    {
+      "path": "attempt-01/focused_corridor/horizon-change.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/focused_corridor/horizon-change.json",
+      "bytes": 370,
+      "sha256": "2f136bec95fdc101bdfd2f165eb0d226261814ed1d3ec504812206e7f6dd061a"
+    },
+    {
+      "path": "attempt-01/focused_corridor/exploration-geometry.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/focused_corridor/exploration-geometry.json",
+      "bytes": 1395,
+      "sha256": "22ce89abb12828b1e03cb2086d78c2928c99715a7aba187db36177d10fe6b63a"
+    },
+    {
+      "path": "attempt-01/focused_corridor/original-world-control.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/focused_corridor/original-world-control.json",
+      "bytes": 19337,
+      "sha256": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e"
+    },
+    {
+      "path": "attempt-01/focused_corridor/declared-rule-change.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/focused_corridor/declared-rule-change.json",
+      "bytes": 1505,
+      "sha256": "8830e8b32930e19b11453e9c02f7d4c97e2e560199902a3ad0511b458781c2d7"
+    },
+    {
+      "path": "attempt-01/focused_corridor/source/admitted-public-bindings.json",
+      "original_path": "build/select013-focused-corridor-v1/attempt-01/focused_corridor/source/admitted-public-bindings.json",
+      "bytes": 19556,
+      "sha256": "905df5ad7194060ccff5406a0a612131e1e86b921797c8209a20724fc16c40be"
+    },
+    {
+      "path": "independent/audit_saved_focused_corridor.py",
+      "original_path": "build/select013-paged-route-review-v1/audit_saved_focused_corridor.py",
+      "bytes": 27105,
+      "sha256": "4069e5f5de8463d796053ae9fea460371569b9988999487cccb28ba315abdcce"
+    },
+    {
+      "path": "independent/focused-corridor-saved-audit.json",
+      "original_path": "build/select013-paged-route-review-v1/focused-corridor-saved-audit.json",
+      "bytes": 82614,
+      "sha256": "eb367ed36c5a80f7a189ac6f4e663e877dda30b058850b913ca9c22ea2a0aa2a"
+    },
+    {
+      "path": "independent/focused-corridor-source-review.txt",
+      "original_path": "build/select013-paged-route-review-v1/focused-corridor-source-review.txt",
+      "bytes": 10296,
+      "sha256": "affa9f47ed53bc7a149bdde61c6339135f7eb73d7e400ab24fd1bb25b170f3f5"
+    },
+    {
+      "path": "postrun/REPORT.txt",
+      "original_path": "build/select013-focused-corridor-v1/postrun/REPORT.txt",
+      "bytes": 5240,
+      "sha256": "13b6292d363979fa90cfdae5fb9df91640af362d63b1d692a832b86428c4a08c"
+    },
+    {
+      "path": "postrun/diagnose_saved.py",
+      "original_path": "build/select013-focused-corridor-v1/postrun/diagnose_saved.py",
+      "bytes": 11253,
+      "sha256": "86c588328df8478e95e3e0828244a7b7df295a23096ac8a429da7da40c4cd852"
+    },
+    {
+      "path": "postrun/diagnosis.json",
+      "original_path": "build/select013-focused-corridor-v1/postrun/diagnosis.json",
+      "bytes": 47039,
+      "sha256": "16fa45a324f5ebdfe34d157c03fb3f4cf98a19ce8ebede64ada6fbad9dc0218e"
+    },
+    {
+      "path": "postrun/raw-trace-pointer.json",
+      "original_path": "build/select013-focused-corridor-v1/postrun/raw-trace-pointer.json",
+      "bytes": 368,
+      "sha256": "1eceafd186dd6b5ff354d8905fe662685afd7e446a9e97393767e1c500fee6c2"
+    }
+  ],
+  "evidence_bytes": 621758,
+  "excluded_bulk_trace": {
+    "path": "build/select013-focused-corridor-v1/attempt-01/focused_corridor/selection.json",
+    "sha256": "a84461e39394a7d94e267e77981ce9a68565bb0d0c253061afd89bd089bce892",
+    "bytes": 9611764
+  },
+  "runtime_head": "70349e0e3e6de4b3a8ac1b1796de611ae0ebd603",
+  "reproduction": "Canonical selector/task/tests are pinned in the runtime commit; restore ignored runtime helpers to their original paths. Full saved audit additionally requires the local hash-pinned bulk trace and historical evidence. Source enforcement, scalar audits and selected STOP replay are distinct from replaying every exploratory query."
+}
