@@ -1,0 +1,32 @@
+{
+  "acquired_arrays_or_frozen_model_allowed": false,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-public-bound-v1/controls-attempt-01/fresh-pycache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-public-bound-v1/controls-attempt-01/generated_child.py",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-public-bound-v1/controls-attempt-01/generated-tmp"
+  ],
+  "elapsed_seconds": 1.2959233750589192,
+  "exit_code": 0,
+  "files": {
+    "build/hybrid-fixed-four-switch-regression-v1/fallback_policy.py": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+    "build/hybrid-fixed-four-switch-regression-v1/hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+    "build/hybrid-public-bound-v1/bound_policy.py": "1d8638947a69608d145fa93c6735bd86ac82b56fe1497e9d104ad534ec2ba56f",
+    "build/hybrid-public-bound-v1/run_generated_controls.py": "6fd4bef4b4ade3ab376cb098736a224cc71f96e1f61c152868691f396ca680d5",
+    "build/hybrid-public-bound-v1/stage/resectionlab/public_reward_bound.py": "3ee4bce8f75100e849c3a094b2e3ac3bad9e1813b9db6f523f027eecbe580778",
+    "build/hybrid-public-bound-v1/tests/conftest.py": "3704e928b8aec820021325cfdbb5c80d9fc97101c8631b250f529c0c147197f9",
+    "build/hybrid-public-bound-v1/tests/test_bound_policy.py": "9b726eee9fd38cec34ec8146d2b06a9f042f58d934cf0e38af320831c9cf078f",
+    "build/hybrid-public-bound-v1/tests/test_public_reward_bound.py": "1a2b1f9e1a82747e47fb5bbcedb4032d7e1dc6c40a12390322bb1b4b43dbf7e9"
+  },
+  "generated_only": true,
+  "hard_seconds": 30,
+  "log_sha256": "2079b8b4add6f0c8a47082f2332714219d4945de15164e03497de6f5ec5abdb8",
+  "observed_child_maxrss": 90439680,
+  "source_unchanged": true,
+  "threads": 1,
+  "timeout": false
+}

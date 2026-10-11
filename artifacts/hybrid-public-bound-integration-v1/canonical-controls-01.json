@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_public_reward_bound.py"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 0.4110425829421729,
+  "hard_seconds": 30,
+  "threads": 1,
+  "log_sha256": "690966242a5d877b373a2b31d0cfbc5a4c9e2c7620ab5690a265cab18c45622b",
+  "source_sha256": "3ee4bce8f75100e849c3a094b2e3ac3bad9e1813b9db6f523f027eecbe580778"
+}

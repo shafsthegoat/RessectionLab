@@ -1,0 +1,56 @@
+[
+  {
+    "source": "build/hybrid-public-bound-v1/bound_policy.py",
+    "path": "bound_policy.py",
+    "sha256": "1d8638947a69608d145fa93c6735bd86ac82b56fe1497e9d104ad534ec2ba56f",
+    "bytes": 13553
+  },
+  {
+    "source": "build/hybrid-public-bound-v1/tests/test_bound_policy.py",
+    "path": "tests/test_bound_policy.py",
+    "sha256": "9b726eee9fd38cec34ec8146d2b06a9f042f58d934cf0e38af320831c9cf078f",
+    "bytes": 4572
+  },
+  {
+    "source": "build/hybrid-public-bound-v1/tests/conftest.py",
+    "path": "tests/conftest.py",
+    "sha256": "3704e928b8aec820021325cfdbb5c80d9fc97101c8631b250f529c0c147197f9",
+    "bytes": 384
+  },
+  {
+    "source": "build/hybrid-public-bound-v1/run_generated_controls.py",
+    "path": "run_generated_controls.py",
+    "sha256": "6fd4bef4b4ade3ab376cb098736a224cc71f96e1f61c152868691f396ca680d5",
+    "bytes": 2923
+  },
+  {
+    "source": "build/hybrid-public-bound-v1/controls-attempt-01/receipt.json",
+    "path": "controls-attempt-01/receipt.json",
+    "sha256": "0b883cd453310bf92ad021633a15a73ca1ba4e5f7bcde0fa66bd2bbde5395e2a",
+    "bytes": 2209
+  },
+  {
+    "source": "build/hybrid-public-bound-v1/controls-attempt-01/stdout.log",
+    "path": "controls-attempt-01/stdout.log",
+    "sha256": "2079b8b4add6f0c8a47082f2332714219d4945de15164e03497de6f5ec5abdb8",
+    "bytes": 99
+  },
+  {
+    "source": "build/hybrid-public-bound-v1/canonical-controls-01.json",
+    "path": "canonical-controls-01.json",
+    "sha256": "3359f6f506894f74a0463158ade3eca8c3c714fef1d6009b29910030fa8246bb",
+    "bytes": 430
+  },
+  {
+    "source": "build/hybrid-public-bound-v1/canonical-controls-01.log",
+    "path": "canonical-controls-01.log",
+    "sha256": "690966242a5d877b373a2b31d0cfbc5a4c9e2c7620ab5690a265cab18c45622b",
+    "bytes": 99
+  },
+  {
+    "source": "build/hybrid-public-bound-review-v1/source-review.json",
+    "path": "source-review.json",
+    "sha256": "bd86849b27b35b372b7cabfbd2a4bf33824591e617b123b143e230062eb2d44f",
+    "bytes": 4218
+  }
+]
