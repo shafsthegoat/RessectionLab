@@ -1,0 +1,294 @@
+{
+  "all_rows_E_cells": 9,
+  "all_rows_proximal_external_unassessed": true,
+  "aperture_clearance_range_mm": [
+    1.599999999999993,
+    4.6
+  ],
+  "baseline_cells": 93,
+  "baseline_mm3": 92.99999101800587,
+  "baseline_rank_1based": 9,
+  "baseline_raw_order": 1,
+  "best_cells": 83,
+  "best_mm3": 82.99999198381168,
+  "best_raw_order": 61,
+  "check_count": 597,
+  "checks_sha256": "sha256:605379826bdef08d2b74ce4197a46ee52355c2a2da2b9cd4185bd69763db4a1a",
+  "costs": {
+    "phases": {
+      "initial_ranking": {
+        "native_previews": 0,
+        "wall_seconds": 0.10827416693791747
+      },
+      "saved_baseline_comparison": {
+        "native_previews": 0,
+        "wall_seconds": 0.00042099994607269764
+      },
+      "source_construction": {
+        "native_previews": 117,
+        "wall_seconds": 1.667940457817167
+      }
+    },
+    "provider_and_native_profile": {
+      "initial_ranking": {
+        "provider_tool_footprint_endpoint_calls": 26,
+        "provider_tool_footprint_endpoint_inclusive_seconds": 0.02258604415692389,
+        "providerpropose_calls": 1,
+        "providerpropose_inclusive_seconds": 0.06231825007125735
+      },
+      "source_construction": {
+        "feasible": 37,
+        "native_preview_seconds": 1.0469470431562513,
+        "provider_tool_footprint_endpoint_calls": 26,
+        "provider_tool_footprint_endpoint_inclusive_seconds": 0.021183333126828074,
+        "providerpropose_calls": 1,
+        "providerpropose_inclusive_seconds": 0.058079042006284,
+        "rejected:SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 80
+      }
+    },
+    "scope": "phase wall includes all source/setup/helper/comparison; provider/native timers are nested, not additive; helper geometry call counts cover only explicit helper calls"
+  },
+  "execution_seconds": 1.809565959032625,
+  "full_target_cells": 35260,
+  "goal_count": 26,
+  "helper_accounting": {
+    "base_enumeration_calls": 1,
+    "base_enumeration_wall_seconds": 0.06239212513901293,
+    "bbox_cells_charged": 31442,
+    "helper_capsule_cover_calls": 52,
+    "helper_containment_calls": 26,
+    "native_preview_calls": 0,
+    "native_transitions": 0,
+    "wall_seconds": 0.10110329114831984
+  },
+  "limitations": [
+    "Optimistic native-grid geometry proxy; not preparation action count, true minimal removal, route feasibility or patient improvement.",
+    "Exact tools lack completed resolution-consistency validation; full route test held pending that separate generated result.",
+    "All goals retain proximal outside-image and declared E uncertainty.",
+    "Timer scopes are nested; native/provider/helper durations must not be summed as disjoint costs."
+  ],
+  "next_best_cells": 86,
+  "output_bytes": 149121,
+  "parent_seconds": 4.384093958185986,
+  "receipt_sha256": "44ff4d89b80395700a9e56137989d5a6b504a63f59847d3e298a3a8d08e71b2b",
+  "reduction_cells": 10,
+  "reduction_fraction": 0.10752688172043012,
+  "reported_unresolved_interaction_cells_per_row": 0,
+  "result_sha256": "823687e42979c259d3167a07684ed69efc8a14ae4d602a7a3d9cc3d386f51a65",
+  "rows": [
+    {
+      "estimated_nominal_preparation_cells": 93,
+      "estimated_nominal_preparation_volume_mm3": 92.99999101800587,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 105,
+      "optimistically_tip_contained_cells": 12,
+      "raw_order": 1
+    },
+    {
+      "estimated_nominal_preparation_cells": 325,
+      "estimated_nominal_preparation_volume_mm3": 324.9999686113108,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 366,
+      "optimistically_tip_contained_cells": 41,
+      "raw_order": 2
+    },
+    {
+      "estimated_nominal_preparation_cells": 95,
+      "estimated_nominal_preparation_volume_mm3": 94.9999908248447,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 107,
+      "optimistically_tip_contained_cells": 12,
+      "raw_order": 7
+    },
+    {
+      "estimated_nominal_preparation_cells": 318,
+      "estimated_nominal_preparation_volume_mm3": 317.9999692873749,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 358,
+      "optimistically_tip_contained_cells": 40,
+      "raw_order": 8
+    },
+    {
+      "estimated_nominal_preparation_cells": 89,
+      "estimated_nominal_preparation_volume_mm3": 88.9999914043282,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 100,
+      "optimistically_tip_contained_cells": 11,
+      "raw_order": 13
+    },
+    {
+      "estimated_nominal_preparation_cells": 338,
+      "estimated_nominal_preparation_volume_mm3": 337.99996735576326,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 380,
+      "optimistically_tip_contained_cells": 42,
+      "raw_order": 14
+    },
+    {
+      "estimated_nominal_preparation_cells": 91,
+      "estimated_nominal_preparation_volume_mm3": 90.99999121116703,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 103,
+      "optimistically_tip_contained_cells": 12,
+      "raw_order": 19
+    },
+    {
+      "estimated_nominal_preparation_cells": 322,
+      "estimated_nominal_preparation_volume_mm3": 321.99996890105257,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 363,
+      "optimistically_tip_contained_cells": 41,
+      "raw_order": 20
+    },
+    {
+      "estimated_nominal_preparation_cells": 89,
+      "estimated_nominal_preparation_volume_mm3": 88.9999914043282,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 100,
+      "optimistically_tip_contained_cells": 11,
+      "raw_order": 25
+    },
+    {
+      "estimated_nominal_preparation_cells": 317,
+      "estimated_nominal_preparation_volume_mm3": 316.9999693839555,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 356,
+      "optimistically_tip_contained_cells": 39,
+      "raw_order": 26
+    },
+    {
+      "estimated_nominal_preparation_cells": 102,
+      "estimated_nominal_preparation_volume_mm3": 101.99999014878063,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 116,
+      "optimistically_tip_contained_cells": 14,
+      "raw_order": 31
+    },
+    {
+      "estimated_nominal_preparation_cells": 315,
+      "estimated_nominal_preparation_volume_mm3": 314.99996957711664,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 355,
+      "optimistically_tip_contained_cells": 40,
+      "raw_order": 32
+    },
+    {
+      "estimated_nominal_preparation_cells": 87,
+      "estimated_nominal_preparation_volume_mm3": 86.99999159748936,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 98,
+      "optimistically_tip_contained_cells": 11,
+      "raw_order": 37
+    },
+    {
+      "estimated_nominal_preparation_cells": 309,
+      "estimated_nominal_preparation_volume_mm3": 308.9999701566001,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 348,
+      "optimistically_tip_contained_cells": 39,
+      "raw_order": 38
+    },
+    {
+      "estimated_nominal_preparation_cells": 88,
+      "estimated_nominal_preparation_volume_mm3": 87.99999150090878,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 100,
+      "optimistically_tip_contained_cells": 12,
+      "raw_order": 43
+    },
+    {
+      "estimated_nominal_preparation_cells": 328,
+      "estimated_nominal_preparation_volume_mm3": 327.9999683215691,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 370,
+      "optimistically_tip_contained_cells": 42,
+      "raw_order": 44
+    },
+    {
+      "estimated_nominal_preparation_cells": 86,
+      "estimated_nominal_preparation_volume_mm3": 85.99999169406993,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 97,
+      "optimistically_tip_contained_cells": 11,
+      "raw_order": 49
+    },
+    {
+      "estimated_nominal_preparation_cells": 326,
+      "estimated_nominal_preparation_volume_mm3": 325.99996851473026,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 367,
+      "optimistically_tip_contained_cells": 41,
+      "raw_order": 50
+    },
+    {
+      "estimated_nominal_preparation_cells": 97,
+      "estimated_nominal_preparation_volume_mm3": 96.99999063168353,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 109,
+      "optimistically_tip_contained_cells": 12,
+      "raw_order": 55
+    },
+    {
+      "estimated_nominal_preparation_cells": 315,
+      "estimated_nominal_preparation_volume_mm3": 314.99996957711664,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 354,
+      "optimistically_tip_contained_cells": 39,
+      "raw_order": 56
+    },
+    {
+      "estimated_nominal_preparation_cells": 83,
+      "estimated_nominal_preparation_volume_mm3": 82.99999198381168,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 94,
+      "optimistically_tip_contained_cells": 11,
+      "raw_order": 61
+    },
+    {
+      "estimated_nominal_preparation_cells": 327,
+      "estimated_nominal_preparation_volume_mm3": 326.99996841814965,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 368,
+      "optimistically_tip_contained_cells": 41,
+      "raw_order": 62
+    },
+    {
+      "estimated_nominal_preparation_cells": 94,
+      "estimated_nominal_preparation_volume_mm3": 93.99999092142528,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 104,
+      "optimistically_tip_contained_cells": 10,
+      "raw_order": 67
+    },
+    {
+      "estimated_nominal_preparation_cells": 322,
+      "estimated_nominal_preparation_volume_mm3": 321.99996890105257,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 361,
+      "optimistically_tip_contained_cells": 39,
+      "raw_order": 68
+    },
+    {
+      "estimated_nominal_preparation_cells": 86,
+      "estimated_nominal_preparation_volume_mm3": 85.99999169406993,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 97,
+      "optimistically_tip_contained_cells": 11,
+      "raw_order": 73
+    },
+    {
+      "estimated_nominal_preparation_cells": 301,
+      "estimated_nominal_preparation_volume_mm3": 300.9999709292448,
+      "external_workspace_unassessed_cells": 9,
+      "occupied_shaft_cells": 339,
+      "optimistically_tip_contained_cells": 38,
+      "raw_order": 74
+    }
+  ],
+  "sampled_peak_rss_bytes": 546832384,
+  "scope": "saved JSON and source hashes only; no project imports, original arrays, native geometry or model execution; stored geometric flags checked for consistency, not independently recomputed",
+  "source_files_verified": 169,
+  "source_unknown_domain_cells": 176294,
+  "status": "PASS",
+  "worker_scope_seconds": 3.7264458751305938
+}

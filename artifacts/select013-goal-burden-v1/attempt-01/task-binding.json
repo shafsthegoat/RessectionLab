@@ -1,0 +1,77 @@
+{
+  "decision_model_hash": "sha256:5fc041113fa1e2b1fb44796709e48dcc96ac7f85db08e0c4a7cf437efa490519",
+  "initial_state_hash": "sha256:8e42982139ee66ad8c2157585c450c3f856f38ed1f139dcbd1b79c1968e471d5",
+  "native_decision_model_hash": "sha256:83b9f5f307bf99fcd92449b26bfdc61ba156117b08b8b1e55ebdbcefc3f35888",
+  "post_exposure_authority": {
+    "capability_serialized": false,
+    "same_canonical_capability": true,
+    "same_prepared_object": true
+  },
+  "proposal_config": {
+    "intermediate_opening_mm": 1.0,
+    "max_candidates": 120,
+    "nominal_min_membership": 0.0,
+    "obstruction_opening": true,
+    "obstruction_page_size": 8,
+    "obstruction_selection_rule": "target_ray_coverage_v3",
+    "offsets_source_voxels": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "tool_footprint_opening": true
+  },
+  "scope": "same initial focused public world; no page certification or task observation before burden helper",
+  "source_hash": "sha256:a649ef37f08282cc86b814a4a01dc3ea3cf5ce8bd7b1190d716ab47bf770c5a4",
+  "source_physics_equal": true,
+  "task_contract_horizon": 48
+}

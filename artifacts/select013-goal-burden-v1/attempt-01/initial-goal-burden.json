@@ -1,0 +1,2999 @@
+{
+  "actor_crop_used_to_clip_score": false,
+  "base_catalog_digest": "sha256:3710e5e28fbfb83359066549c4b781fd4b229e71e6cfe79c1a965214b0b93598",
+  "base_emitted_count": 117,
+  "base_enumeration_calls": 1,
+  "base_enumeration_wall_seconds": 0.06239212513901293,
+  "base_omitted_pairs": 0,
+  "bbox_cells_charged": 31442,
+  "complete": true,
+  "geometry_count_scope": "helper only; base enumeration wall separate; caller charges construction and provider geometry",
+  "helper_capsule_cover_calls": 52,
+  "helper_containment_calls": 26,
+  "limits": {
+    "max_bbox_cells_per_query": 262144,
+    "max_goals": 120,
+    "max_total_bbox_cells": 4000000,
+    "seconds": 30
+  },
+  "minimum_score_tie_count": 1,
+  "native_decision_model_hash": "sha256:83b9f5f307bf99fcd92449b26bfdc61ba156117b08b8b1e55ebdbcefc3f35888",
+  "native_preview_calls": 0,
+  "native_transitions": 0,
+  "not_claimed": [
+    "feasibility",
+    "action_count_lower_bound",
+    "complete_reachability",
+    "clinical_risk"
+  ],
+  "original_first_same_tool_goal": {
+    "entry_mm": [
+      -59.878999999211224,
+      -14.888999999694036,
+      -18.27829563649273
+    ],
+    "tip_mm": [
+      -41.37899999921122,
+      -14.888999999603442,
+      -18.27829563649273
+    ],
+    "tool_id": "generic_suction"
+  },
+  "private_reference_used": false,
+  "ranked_physical_goals": [
+    {
+      "entry_mm": [
+        -59.87899999919654,
+        -17.888999999694036,
+        -18.27829563649273
+      ],
+      "tip_mm": [
+        -41.37899999919653,
+        -17.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999201426,
+        -16.888999999694036,
+        -20.278295443331558
+      ],
+      "tip_mm": [
+        -41.378999999201426,
+        -16.888999999603442,
+        -20.278295443331558
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999211224,
+        -14.88899999969403,
+        -21.27829534675098
+      ],
+      "tip_mm": [
+        -40.37899999921122,
+        -14.88899999959854,
+        -21.27829534675098
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.87899999922102,
+        -12.888999999694036,
+        -20.278295443331558
+      ],
+      "tip_mm": [
+        -41.378999999221016,
+        -12.888999999603442,
+        -20.278295443331558
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999201426,
+        -16.888999999694036,
+        -16.278295829653885
+      ],
+      "tip_mm": [
+        -41.378999999201426,
+        -16.888999999603442,
+        -16.278295829653885
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999201426,
+        -16.888999999694036,
+        -18.27829563649273
+      ],
+      "tip_mm": [
+        -41.378999999201426,
+        -16.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999211224,
+        -14.88899999969403,
+        -20.278295443331558
+      ],
+      "tip_mm": [
+        -40.37899999921122,
+        -14.88899999959854,
+        -20.278295443331558
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694036,
+        -16.278295829653885
+      ],
+      "tip_mm": [
+        -41.37899999921122,
+        -14.888999999603442,
+        -16.278295829653885
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694036,
+        -18.27829563649273
+      ],
+      "tip_mm": [
+        -41.37899999921122,
+        -14.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694036,
+        -15.278295926234478
+      ],
+      "tip_mm": [
+        -41.37899999921122,
+        -14.888999999603442,
+        -15.278295926234478
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.87899999922102,
+        -12.888999999694036,
+        -18.27829563649273
+      ],
+      "tip_mm": [
+        -41.378999999221016,
+        -12.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.87899999922591,
+        -11.888999999694036,
+        -18.27829563649273
+      ],
+      "tip_mm": [
+        -41.37899999922591,
+        -11.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.87899999922102,
+        -12.88899999969403,
+        -16.278295829653885
+      ],
+      "tip_mm": [
+        -40.378999999221016,
+        -12.88899999959854,
+        -16.278295829653885
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999211224,
+        -14.88899999969404,
+        -21.27829534675098
+      ],
+      "tip_mm": [
+        -12.378999999211224,
+        -14.888999999461433,
+        -21.27829534675098
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999221016,
+        -12.88899999969404,
+        -20.278295443331558
+      ],
+      "tip_mm": [
+        -12.378999999221016,
+        -12.888999999461433,
+        -20.278295443331558
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999221016,
+        -12.888999999694033,
+        -16.278295829653885
+      ],
+      "tip_mm": [
+        -13.378999999221016,
+        -12.888999999466321,
+        -16.278295829653885
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.87899999922592,
+        -11.888999999694033,
+        -18.27829563649273
+      ],
+      "tip_mm": [
+        -13.378999999225911,
+        -11.888999999466321,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694034,
+        -20.278295443331558
+      ],
+      "tip_mm": [
+        -11.378999999211224,
+        -14.88899999945653,
+        -20.278295443331558
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999221016,
+        -12.88899999969404,
+        -18.27829563649273
+      ],
+      "tip_mm": [
+        -12.378999999221016,
+        -12.888999999461433,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694034,
+        -16.278295829653885
+      ],
+      "tip_mm": [
+        -11.378999999211224,
+        -14.88899999945653,
+        -16.278295829653885
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694034,
+        -15.278295926234478
+      ],
+      "tip_mm": [
+        -11.378999999211224,
+        -14.88899999945653,
+        -15.278295926234478
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694034,
+        -18.27829563649273
+      ],
+      "tip_mm": [
+        -11.378999999211224,
+        -14.88899999945653,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.87899999920143,
+        -16.888999999694043,
+        -20.278295443331558
+      ],
+      "tip_mm": [
+        -10.378999999201426,
+        -16.88899999945164,
+        -20.278295443331558
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.87899999919653,
+        -17.888999999694043,
+        -18.27829563649273
+      ],
+      "tip_mm": [
+        -10.37899999919653,
+        -17.88899999945164,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.87899999920143,
+        -16.888999999694043,
+        -16.278295829653885
+      ],
+      "tip_mm": [
+        -10.378999999201426,
+        -16.88899999945164,
+        -16.278295829653885
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.87899999920143,
+        -16.888999999694036,
+        -18.27829563649273
+      ],
+      "tip_mm": [
+        -9.378999999201426,
+        -16.88899999944674,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction"
+    }
+  ],
+  "ranking_raw_orders": [
+    61,
+    49,
+    73,
+    37,
+    43,
+    13,
+    25,
+    19,
+    1,
+    67,
+    7,
+    55,
+    31,
+    74,
+    38,
+    32,
+    56,
+    26,
+    8,
+    20,
+    68,
+    2,
+    50,
+    62,
+    44,
+    14
+  ],
+  "rows": [
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-4b67609f6423a7ad38d860c3",
+          "family": "proximal_nominal",
+          "raw_order": 1
+        }
+      ],
+      "endpoint_voxel": [
+        20,
+        91,
+        85
+      ],
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694036,
+        -18.27829563649273
+      ],
+      "estimated_nominal_preparation_cells": 93,
+      "estimated_nominal_preparation_volume_mm3": 92.99999101800587,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 105,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -41.37899999921122,
+          -14.888999999603442,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009211225,
+          -14.888999999713624,
+          -18.27829563649273
+        ]
+      },
+      "optimistically_tip_contained_cells": 12,
+      "physical_start_mm": [
+        -60.879000009211225,
+        -14.888999999698934,
+        -18.27829563649273
+      ],
+      "preparation_indices_digest": "7ad60dada015f7e54028e073094c487c89d1f85d3b06fc001c0245c01bd9cbf3",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 1,
+      "shaft_supercover_cells": 171,
+      "shaft_sweep": {
+        "end_mm": [
+          -44.37899999921122,
+          -14.888999999618132,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.8790000092112,
+          -14.889000000188632,
+          -18.27829563649273
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 4.6,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -41.37899999921122,
+        -14.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-6a5d17272c0360489e69df02",
+          "family": "distal_nominal",
+          "raw_order": 2
+        }
+      ],
+      "endpoint_voxel": [
+        50,
+        91,
+        85
+      ],
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694034,
+        -18.27829563649273
+      ],
+      "estimated_nominal_preparation_cells": 325,
+      "estimated_nominal_preparation_volume_mm3": 324.9999686113108,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 366,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -11.378999999211224,
+          -14.88899999945653,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009211225,
+          -14.888999999713622,
+          -18.27829563649273
+        ]
+      },
+      "optimistically_tip_contained_cells": 41,
+      "physical_start_mm": [
+        -60.879000009211225,
+        -14.888999999698932,
+        -18.27829563649273
+      ],
+      "preparation_indices_digest": "c802d1d4baa89737bce86d5c2aac005341b74dc1ff03b27281edadd8b976dac2",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 2,
+      "shaft_supercover_cells": 441,
+      "shaft_sweep": {
+        "end_mm": [
+          -14.378999999211224,
+          -14.88899999947122,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.8790000092112,
+          -14.88900000018863,
+          -18.27829563649273
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 4.599999999999998,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -11.378999999211224,
+        -14.88899999945653,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-0ec81de5c224f9003c45a372",
+          "family": "proximal_nominal",
+          "raw_order": 7
+        }
+      ],
+      "endpoint_voxel": [
+        20,
+        89,
+        85
+      ],
+      "entry_mm": [
+        -59.87899999922102,
+        -12.888999999694036,
+        -18.27829563649273
+      ],
+      "estimated_nominal_preparation_cells": 95,
+      "estimated_nominal_preparation_volume_mm3": 94.9999908248447,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 107,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -41.378999999221016,
+          -12.888999999603442,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.87900000922102,
+          -12.888999999713624,
+          -18.27829563649273
+        ]
+      },
+      "optimistically_tip_contained_cells": 12,
+      "physical_start_mm": [
+        -60.87900000922102,
+        -12.888999999698934,
+        -18.27829563649273
+      ],
+      "preparation_indices_digest": "dda97b5f9ffa49bff4079daa23c64dc0fc02942c7358d2ec848c0c421a483e40",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 7,
+      "shaft_supercover_cells": 171,
+      "shaft_sweep": {
+        "end_mm": [
+          -44.378999999221016,
+          -12.888999999618132,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.87900000922102,
+          -12.889000000188632,
+          -18.27829563649273
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 2.6,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -41.378999999221016,
+        -12.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-254a877311ed3873a6f14ada",
+          "family": "distal_nominal",
+          "raw_order": 8
+        }
+      ],
+      "endpoint_voxel": [
+        49,
+        89,
+        85
+      ],
+      "entry_mm": [
+        -59.878999999221016,
+        -12.88899999969404,
+        -18.27829563649273
+      ],
+      "estimated_nominal_preparation_cells": 318,
+      "estimated_nominal_preparation_volume_mm3": 317.9999692873749,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 358,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -12.378999999221016,
+          -12.888999999461433,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009221016,
+          -12.888999999713628,
+          -18.27829563649273
+        ]
+      },
+      "optimistically_tip_contained_cells": 40,
+      "physical_start_mm": [
+        -60.879000009221016,
+        -12.888999999698937,
+        -18.27829563649273
+      ],
+      "preparation_indices_digest": "dc7f62df0ac9cefde02ee19ad52e94c5ca4f6674fe5440af2877d09f8c3e8346",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 8,
+      "shaft_supercover_cells": 432,
+      "shaft_sweep": {
+        "end_mm": [
+          -15.378999999221016,
+          -12.888999999476123,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.87900000922102,
+          -12.889000000188636,
+          -18.27829563649273
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 2.6000000000000036,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -12.378999999221016,
+        -12.888999999461433,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-589c7cb35cd5a5951de38520",
+          "family": "proximal_nominal",
+          "raw_order": 13
+        }
+      ],
+      "endpoint_voxel": [
+        20,
+        93,
+        85
+      ],
+      "entry_mm": [
+        -59.878999999201426,
+        -16.888999999694036,
+        -18.27829563649273
+      ],
+      "estimated_nominal_preparation_cells": 89,
+      "estimated_nominal_preparation_volume_mm3": 88.9999914043282,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 100,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -41.378999999201426,
+          -16.888999999603442,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.87900000920143,
+          -16.888999999713622,
+          -18.27829563649273
+        ]
+      },
+      "optimistically_tip_contained_cells": 11,
+      "physical_start_mm": [
+        -60.87900000920143,
+        -16.88899999969893,
+        -18.27829563649273
+      ],
+      "preparation_indices_digest": "ac05af9d1327a040dfa0ca3c502994717326b0f43db64b124e9d64fe70881d9c",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 13,
+      "shaft_supercover_cells": 171,
+      "shaft_sweep": {
+        "end_mm": [
+          -44.378999999201426,
+          -16.888999999618132,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.87900000920143,
+          -16.88900000018863,
+          -18.27829563649273
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 2.6,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -41.378999999201426,
+        -16.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-e18a03142eba14c568bc9715",
+          "family": "distal_nominal",
+          "raw_order": 14
+        }
+      ],
+      "endpoint_voxel": [
+        52,
+        93,
+        85
+      ],
+      "entry_mm": [
+        -59.87899999920143,
+        -16.888999999694036,
+        -18.27829563649273
+      ],
+      "estimated_nominal_preparation_cells": 338,
+      "estimated_nominal_preparation_volume_mm3": 337.99996735576326,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 380,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -9.378999999201426,
+          -16.88899999944674,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009201434,
+          -16.888999999713622,
+          -18.27829563649273
+        ]
+      },
+      "optimistically_tip_contained_cells": 42,
+      "physical_start_mm": [
+        -60.879000009201434,
+        -16.88899999969893,
+        -18.27829563649273
+      ],
+      "preparation_indices_digest": "6ac457794cb7ff3c48422040014fa7d7ab613bbc3e37e792960779dd26103ac7",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 14,
+      "shaft_supercover_cells": 459,
+      "shaft_sweep": {
+        "end_mm": [
+          -12.378999999201426,
+          -16.88899999946143,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.87900000920143,
+          -16.88900000018863,
+          -18.27829563649273
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 2.6,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -9.378999999201426,
+        -16.88899999944674,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-fffb7a4f5b20237cdcab6332",
+          "family": "proximal_nominal",
+          "raw_order": 19
+        }
+      ],
+      "endpoint_voxel": [
+        20,
+        91,
+        83
+      ],
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694036,
+        -16.278295829653885
+      ],
+      "estimated_nominal_preparation_cells": 91,
+      "estimated_nominal_preparation_volume_mm3": 90.99999121116703,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 103,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -41.37899999921122,
+          -14.888999999603442,
+          -16.278295829653885
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009211225,
+          -14.888999999713624,
+          -16.278295829653885
+        ]
+      },
+      "optimistically_tip_contained_cells": 12,
+      "physical_start_mm": [
+        -60.879000009211225,
+        -14.888999999698934,
+        -16.278295829653885
+      ],
+      "preparation_indices_digest": "79dbbe34b492ffb0d08522cf2093504a8237432fdad39c9ec218ad8ba1988e5e",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 19,
+      "shaft_supercover_cells": 171,
+      "shaft_sweep": {
+        "end_mm": [
+          -44.37899999921122,
+          -14.888999999618132,
+          -16.278295829653885
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.8790000092112,
+          -14.889000000188632,
+          -16.278295829653885
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 2.6000001931611565,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -41.37899999921122,
+        -14.888999999603442,
+        -16.278295829653885
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-4b2cebbd1cce0d2bf747c960",
+          "family": "distal_nominal",
+          "raw_order": 20
+        }
+      ],
+      "endpoint_voxel": [
+        50,
+        91,
+        83
+      ],
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694034,
+        -16.278295829653885
+      ],
+      "estimated_nominal_preparation_cells": 322,
+      "estimated_nominal_preparation_volume_mm3": 321.99996890105257,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 363,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -11.378999999211224,
+          -14.88899999945653,
+          -16.278295829653885
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009211225,
+          -14.888999999713622,
+          -16.278295829653885
+        ]
+      },
+      "optimistically_tip_contained_cells": 41,
+      "physical_start_mm": [
+        -60.879000009211225,
+        -14.888999999698932,
+        -16.278295829653885
+      ],
+      "preparation_indices_digest": "c4e7f441998307f2813545d03aaa7b95257bb02dd09544067ab2ace31254f4e6",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 20,
+      "shaft_supercover_cells": 441,
+      "shaft_sweep": {
+        "end_mm": [
+          -14.378999999211224,
+          -14.88899999947122,
+          -16.278295829653885
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.8790000092112,
+          -14.88900000018863,
+          -16.278295829653885
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 2.6000001931611565,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -11.378999999211224,
+        -14.88899999945653,
+        -16.278295829653885
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-e8064ead1c38640891d0aba3",
+          "family": "proximal_nominal",
+          "raw_order": 25
+        }
+      ],
+      "endpoint_voxel": [
+        21,
+        91,
+        87
+      ],
+      "entry_mm": [
+        -59.878999999211224,
+        -14.88899999969403,
+        -20.278295443331558
+      ],
+      "estimated_nominal_preparation_cells": 89,
+      "estimated_nominal_preparation_volume_mm3": 88.9999914043282,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 100,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -40.37899999921122,
+          -14.88899999959854,
+          -20.278295443331558
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009211225,
+          -14.888999999713619,
+          -20.278295443331558
+        ]
+      },
+      "optimistically_tip_contained_cells": 11,
+      "physical_start_mm": [
+        -60.879000009211225,
+        -14.888999999698928,
+        -20.278295443331558
+      ],
+      "preparation_indices_digest": "82b630814c4096672d7181c7e97b6ccd3eb9ed9b9502f91a4ccab9fd4f169651",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 25,
+      "shaft_supercover_cells": 180,
+      "shaft_sweep": {
+        "end_mm": [
+          -43.37899999921122,
+          -14.88899999961323,
+          -20.278295443331558
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.8790000092112,
+          -14.889000000188629,
+          -20.278295443331558
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 2.6000001931611707,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -40.37899999921122,
+        -14.88899999959854,
+        -20.278295443331558
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-ebe45f111de381e81ced9226",
+          "family": "distal_nominal",
+          "raw_order": 26
+        }
+      ],
+      "endpoint_voxel": [
+        50,
+        91,
+        87
+      ],
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694034,
+        -20.278295443331558
+      ],
+      "estimated_nominal_preparation_cells": 317,
+      "estimated_nominal_preparation_volume_mm3": 316.9999693839555,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 356,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -11.378999999211224,
+          -14.88899999945653,
+          -20.278295443331558
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009211225,
+          -14.888999999713622,
+          -20.278295443331558
+        ]
+      },
+      "optimistically_tip_contained_cells": 39,
+      "physical_start_mm": [
+        -60.879000009211225,
+        -14.888999999698932,
+        -20.278295443331558
+      ],
+      "preparation_indices_digest": "19f4dbc6a36fd35598c299cc18fe904ca31f9b250d0a6b508e772f992e8a51cc",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 26,
+      "shaft_supercover_cells": 441,
+      "shaft_sweep": {
+        "end_mm": [
+          -14.378999999211224,
+          -14.88899999947122,
+          -20.278295443331558
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.8790000092112,
+          -14.88900000018863,
+          -20.278295443331558
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 2.6000001931611707,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -11.378999999211224,
+        -14.88899999945653,
+        -20.278295443331558
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-e4eccf19b67bc010a75bf118",
+          "family": "proximal_nominal",
+          "raw_order": 31
+        }
+      ],
+      "endpoint_voxel": [
+        21,
+        89,
+        83
+      ],
+      "entry_mm": [
+        -59.87899999922102,
+        -12.88899999969403,
+        -16.278295829653885
+      ],
+      "estimated_nominal_preparation_cells": 102,
+      "estimated_nominal_preparation_volume_mm3": 101.99999014878063,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 116,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -40.378999999221016,
+          -12.88899999959854,
+          -16.278295829653885
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.87900000922102,
+          -12.888999999713619,
+          -16.278295829653885
+        ]
+      },
+      "optimistically_tip_contained_cells": 14,
+      "physical_start_mm": [
+        -60.87900000922102,
+        -12.888999999698928,
+        -16.278295829653885
+      ],
+      "preparation_indices_digest": "30ca669da77933054063ed3a4eaccfba7b5dde1771e5004cacea2c6f6b6dd780",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 31,
+      "shaft_supercover_cells": 180,
+      "shaft_sweep": {
+        "end_mm": [
+          -43.378999999221016,
+          -12.88899999961323,
+          -16.278295829653885
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.87900000922102,
+          -12.889000000188629,
+          -16.278295829653885
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.7715730118393664,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -40.378999999221016,
+        -12.88899999959854,
+        -16.278295829653885
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-11fbe184cc12660f9469b9fb",
+          "family": "distal_nominal",
+          "raw_order": 32
+        }
+      ],
+      "endpoint_voxel": [
+        48,
+        89,
+        83
+      ],
+      "entry_mm": [
+        -59.878999999221016,
+        -12.888999999694033,
+        -16.278295829653885
+      ],
+      "estimated_nominal_preparation_cells": 315,
+      "estimated_nominal_preparation_volume_mm3": 314.99996957711664,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 355,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -13.378999999221016,
+          -12.888999999466321,
+          -16.278295829653885
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009221016,
+          -12.88899999971362,
+          -16.278295829653885
+        ]
+      },
+      "optimistically_tip_contained_cells": 40,
+      "physical_start_mm": [
+        -60.879000009221016,
+        -12.88899999969893,
+        -16.278295829653885
+      ],
+      "preparation_indices_digest": "fefeb03fb2c2405366bb5d919bcd7bf82623c5ab730e3a59fbbd127b86030619",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 32,
+      "shaft_supercover_cells": 423,
+      "shaft_sweep": {
+        "end_mm": [
+          -16.378999999221016,
+          -12.888999999481012,
+          -16.278295829653885
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.87900000922102,
+          -12.88900000018863,
+          -16.278295829653885
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.7715730118393678,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -13.378999999221016,
+        -12.888999999466321,
+        -16.278295829653885
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-531f5f601efa78248907a372",
+          "family": "proximal_nominal",
+          "raw_order": 37
+        }
+      ],
+      "endpoint_voxel": [
+        20,
+        89,
+        87
+      ],
+      "entry_mm": [
+        -59.87899999922102,
+        -12.888999999694036,
+        -20.278295443331558
+      ],
+      "estimated_nominal_preparation_cells": 87,
+      "estimated_nominal_preparation_volume_mm3": 86.99999159748936,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 98,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -41.378999999221016,
+          -12.888999999603442,
+          -20.278295443331558
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.87900000922102,
+          -12.888999999713624,
+          -20.278295443331558
+        ]
+      },
+      "optimistically_tip_contained_cells": 11,
+      "physical_start_mm": [
+        -60.87900000922102,
+        -12.888999999698934,
+        -20.278295443331558
+      ],
+      "preparation_indices_digest": "cbcfe421466f8d1835efba6b21601e30e29141c71d4d2a52d2f1cd7b4bf50134",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 37,
+      "shaft_supercover_cells": 171,
+      "shaft_sweep": {
+        "end_mm": [
+          -44.378999999221016,
+          -12.888999999618132,
+          -20.278295443331558
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.87900000922102,
+          -12.889000000188632,
+          -20.278295443331558
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.7715730118393802,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -41.378999999221016,
+        -12.888999999603442,
+        -20.278295443331558
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-f59e7f2f2d6a8e3be69d8a0b",
+          "family": "distal_nominal",
+          "raw_order": 38
+        }
+      ],
+      "endpoint_voxel": [
+        49,
+        89,
+        87
+      ],
+      "entry_mm": [
+        -59.878999999221016,
+        -12.88899999969404,
+        -20.278295443331558
+      ],
+      "estimated_nominal_preparation_cells": 309,
+      "estimated_nominal_preparation_volume_mm3": 308.9999701566001,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 348,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -12.378999999221016,
+          -12.888999999461433,
+          -20.278295443331558
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009221016,
+          -12.888999999713628,
+          -20.278295443331558
+        ]
+      },
+      "optimistically_tip_contained_cells": 39,
+      "physical_start_mm": [
+        -60.879000009221016,
+        -12.888999999698937,
+        -20.278295443331558
+      ],
+      "preparation_indices_digest": "2794642a6ff319df517f8485c4a149a239821f837d76476a7787222f9c85bf39",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 38,
+      "shaft_supercover_cells": 432,
+      "shaft_sweep": {
+        "end_mm": [
+          -15.378999999221016,
+          -12.888999999476123,
+          -20.278295443331558
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.87900000922102,
+          -12.889000000188636,
+          -20.278295443331558
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.7715730118393829,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -12.378999999221016,
+        -12.888999999461433,
+        -20.278295443331558
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-828223801dd26ad5a1168590",
+          "family": "proximal_nominal",
+          "raw_order": 43
+        }
+      ],
+      "endpoint_voxel": [
+        20,
+        93,
+        83
+      ],
+      "entry_mm": [
+        -59.878999999201426,
+        -16.888999999694036,
+        -16.278295829653885
+      ],
+      "estimated_nominal_preparation_cells": 88,
+      "estimated_nominal_preparation_volume_mm3": 87.99999150090878,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 100,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -41.378999999201426,
+          -16.888999999603442,
+          -16.278295829653885
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.87900000920143,
+          -16.888999999713622,
+          -16.278295829653885
+        ]
+      },
+      "optimistically_tip_contained_cells": 12,
+      "physical_start_mm": [
+        -60.87900000920143,
+        -16.88899999969893,
+        -16.278295829653885
+      ],
+      "preparation_indices_digest": "c1851613d47fe421f7dbe4af1392648dc60cc3ca80ede578313d17a2b187085e",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 43,
+      "shaft_supercover_cells": 171,
+      "shaft_sweep": {
+        "end_mm": [
+          -44.378999999201426,
+          -16.888999999618132,
+          -16.278295829653885
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.87900000920143,
+          -16.88900000018863,
+          -16.278295829653885
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.7715730118393704,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -41.378999999201426,
+        -16.888999999603442,
+        -16.278295829653885
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-b3c0add6ef29cb490675ca80",
+          "family": "distal_nominal",
+          "raw_order": 44
+        }
+      ],
+      "endpoint_voxel": [
+        51,
+        93,
+        83
+      ],
+      "entry_mm": [
+        -59.87899999920143,
+        -16.888999999694043,
+        -16.278295829653885
+      ],
+      "estimated_nominal_preparation_cells": 328,
+      "estimated_nominal_preparation_volume_mm3": 327.9999683215691,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 370,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -10.378999999201426,
+          -16.88899999945164,
+          -16.278295829653885
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009201434,
+          -16.88899999971363,
+          -16.278295829653885
+        ]
+      },
+      "optimistically_tip_contained_cells": 42,
+      "physical_start_mm": [
+        -60.879000009201434,
+        -16.88899999969894,
+        -16.278295829653885
+      ],
+      "preparation_indices_digest": "e5d0cdd6f4d8769f44a3c29f2f38bac1fde02c0e28c3ba52dd144c7b1662f7b5",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 44,
+      "shaft_supercover_cells": 450,
+      "shaft_sweep": {
+        "end_mm": [
+          -13.378999999201426,
+          -16.888999999466332,
+          -16.278295829653885
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.87900000920143,
+          -16.889000000188638,
+          -16.278295829653885
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.771573011839365,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -10.378999999201426,
+        -16.88899999945164,
+        -16.278295829653885
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-213c669a3b27970350926cda",
+          "family": "proximal_nominal",
+          "raw_order": 49
+        }
+      ],
+      "endpoint_voxel": [
+        20,
+        93,
+        87
+      ],
+      "entry_mm": [
+        -59.878999999201426,
+        -16.888999999694036,
+        -20.278295443331558
+      ],
+      "estimated_nominal_preparation_cells": 86,
+      "estimated_nominal_preparation_volume_mm3": 85.99999169406993,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 97,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -41.378999999201426,
+          -16.888999999603442,
+          -20.278295443331558
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.87900000920143,
+          -16.888999999713622,
+          -20.278295443331558
+        ]
+      },
+      "optimistically_tip_contained_cells": 11,
+      "physical_start_mm": [
+        -60.87900000920143,
+        -16.88899999969893,
+        -20.278295443331558
+      ],
+      "preparation_indices_digest": "73a9ca14c940571fb2c864ab627d5aa9c1d43e551975e7ef3d6af26bf6f638e8",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 49,
+      "shaft_supercover_cells": 171,
+      "shaft_sweep": {
+        "end_mm": [
+          -44.378999999201426,
+          -16.888999999618132,
+          -20.278295443331558
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.87900000920143,
+          -16.88900000018863,
+          -20.278295443331558
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.7715730118393802,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -41.378999999201426,
+        -16.888999999603442,
+        -20.278295443331558
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-a2ec8f2cee01f6ac73aafc87",
+          "family": "distal_nominal",
+          "raw_order": 50
+        }
+      ],
+      "endpoint_voxel": [
+        51,
+        93,
+        87
+      ],
+      "entry_mm": [
+        -59.87899999920143,
+        -16.888999999694043,
+        -20.278295443331558
+      ],
+      "estimated_nominal_preparation_cells": 326,
+      "estimated_nominal_preparation_volume_mm3": 325.99996851473026,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 367,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -10.378999999201426,
+          -16.88899999945164,
+          -20.278295443331558
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009201434,
+          -16.88899999971363,
+          -20.278295443331558
+        ]
+      },
+      "optimistically_tip_contained_cells": 41,
+      "physical_start_mm": [
+        -60.879000009201434,
+        -16.88899999969894,
+        -20.278295443331558
+      ],
+      "preparation_indices_digest": "4ef65fcf2b96fec040c85e6a2b5d0487565bfc11cbcbab9ad9d3c09fdaee2997",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 50,
+      "shaft_supercover_cells": 450,
+      "shaft_sweep": {
+        "end_mm": [
+          -13.378999999201426,
+          -16.888999999466332,
+          -20.278295443331558
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.87900000920143,
+          -16.889000000188638,
+          -20.278295443331558
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.7715730118393753,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -10.378999999201426,
+        -16.88899999945164,
+        -20.278295443331558
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-ceaaf499e89f871b3b12a06c",
+          "family": "proximal_nominal",
+          "raw_order": 55
+        }
+      ],
+      "endpoint_voxel": [
+        20,
+        88,
+        85
+      ],
+      "entry_mm": [
+        -59.87899999922591,
+        -11.888999999694036,
+        -18.27829563649273
+      ],
+      "estimated_nominal_preparation_cells": 97,
+      "estimated_nominal_preparation_volume_mm3": 96.99999063168353,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 109,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -41.37899999922591,
+          -11.888999999603442,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.87900000922591,
+          -11.888999999713624,
+          -18.27829563649273
+        ]
+      },
+      "optimistically_tip_contained_cells": 12,
+      "physical_start_mm": [
+        -60.87900000922591,
+        -11.888999999698934,
+        -18.27829563649273
+      ],
+      "preparation_indices_digest": "2e5da029c2fb6eb62244341003a4015ec98a31c990bb3ed15b02a51b28d3b666",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 55,
+      "shaft_supercover_cells": 171,
+      "shaft_sweep": {
+        "end_mm": [
+          -44.37899999922591,
+          -11.888999999618132,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.8790000092259,
+          -11.889000000188632,
+          -18.27829563649273
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.6,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -41.37899999922591,
+        -11.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-1540f53e03b8928adaa9bc99",
+          "family": "distal_nominal",
+          "raw_order": 56
+        }
+      ],
+      "endpoint_voxel": [
+        48,
+        88,
+        85
+      ],
+      "entry_mm": [
+        -59.87899999922592,
+        -11.888999999694033,
+        -18.27829563649273
+      ],
+      "estimated_nominal_preparation_cells": 315,
+      "estimated_nominal_preparation_volume_mm3": 314.99996957711664,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 354,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -13.378999999225911,
+          -11.888999999466321,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.87900000922592,
+          -11.88899999971362,
+          -18.27829563649273
+        ]
+      },
+      "optimistically_tip_contained_cells": 39,
+      "physical_start_mm": [
+        -60.87900000922592,
+        -11.88899999969893,
+        -18.27829563649273
+      ],
+      "preparation_indices_digest": "c49168e6e4eb34b097c72f23509923eff52b9ee43bcabb8348cdb4c30a8ff4b8",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 56,
+      "shaft_supercover_cells": 423,
+      "shaft_sweep": {
+        "end_mm": [
+          -16.37899999922591,
+          -11.888999999481012,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.87900000922593,
+          -11.88900000018863,
+          -18.27829563649273
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.5999999999999965,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -13.378999999225911,
+        -11.888999999466321,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-d8cd64483346e65374142adb",
+          "family": "proximal_nominal",
+          "raw_order": 61
+        }
+      ],
+      "endpoint_voxel": [
+        20,
+        94,
+        85
+      ],
+      "entry_mm": [
+        -59.87899999919654,
+        -17.888999999694036,
+        -18.27829563649273
+      ],
+      "estimated_nominal_preparation_cells": 83,
+      "estimated_nominal_preparation_volume_mm3": 82.99999198381168,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 94,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -41.37899999919653,
+          -17.888999999603442,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.87900000919654,
+          -17.888999999713622,
+          -18.27829563649273
+        ]
+      },
+      "optimistically_tip_contained_cells": 11,
+      "physical_start_mm": [
+        -60.87900000919654,
+        -17.88899999969893,
+        -18.27829563649273
+      ],
+      "preparation_indices_digest": "3c7f1cef56ea5f95f622bf3920ade9fb4300bfa459d302ca3de2bcd1332cd78c",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 61,
+      "shaft_supercover_cells": 171,
+      "shaft_sweep": {
+        "end_mm": [
+          -44.37899999919653,
+          -17.888999999618132,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.87900000919655,
+          -17.88900000018863,
+          -18.27829563649273
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.6,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -41.37899999919653,
+        -17.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-466d224b17692a084f2e5a40",
+          "family": "distal_nominal",
+          "raw_order": 62
+        }
+      ],
+      "endpoint_voxel": [
+        51,
+        94,
+        85
+      ],
+      "entry_mm": [
+        -59.87899999919653,
+        -17.888999999694043,
+        -18.27829563649273
+      ],
+      "estimated_nominal_preparation_cells": 327,
+      "estimated_nominal_preparation_volume_mm3": 326.99996841814965,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 368,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -10.37899999919653,
+          -17.88899999945164,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.87900000919653,
+          -17.88899999971363,
+          -18.27829563649273
+        ]
+      },
+      "optimistically_tip_contained_cells": 41,
+      "physical_start_mm": [
+        -60.87900000919653,
+        -17.88899999969894,
+        -18.27829563649273
+      ],
+      "preparation_indices_digest": "ec66299edad0e52d97712dd7c60c0671f6d28d670c7569ae6446611035b828a3",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 62,
+      "shaft_supercover_cells": 450,
+      "shaft_sweep": {
+        "end_mm": [
+          -13.37899999919653,
+          -17.888999999466332,
+          -18.27829563649273
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.87900000919655,
+          -17.889000000188638,
+          -18.27829563649273
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.599999999999993,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -10.37899999919653,
+        -17.88899999945164,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-580ce4390b695785b3bb2482",
+          "family": "proximal_nominal",
+          "raw_order": 67
+        }
+      ],
+      "endpoint_voxel": [
+        20,
+        91,
+        82
+      ],
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694036,
+        -15.278295926234478
+      ],
+      "estimated_nominal_preparation_cells": 94,
+      "estimated_nominal_preparation_volume_mm3": 93.99999092142528,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 104,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -41.37899999921122,
+          -14.888999999603442,
+          -15.278295926234478
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009211225,
+          -14.888999999713624,
+          -15.278295926234478
+        ]
+      },
+      "optimistically_tip_contained_cells": 10,
+      "physical_start_mm": [
+        -60.879000009211225,
+        -14.888999999698934,
+        -15.278295926234478
+      ],
+      "preparation_indices_digest": "045a29a7082209e192eb429217c92f8eec33bf904a1e187866e67923057d492f",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 67,
+      "shaft_supercover_cells": 171,
+      "shaft_sweep": {
+        "end_mm": [
+          -44.37899999921122,
+          -14.888999999618132,
+          -15.278295926234478
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.8790000092112,
+          -14.889000000188632,
+          -15.278295926234478
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.600000289741749,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -41.37899999921122,
+        -14.888999999603442,
+        -15.278295926234478
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-56ddffc073b6282b01c53f6d",
+          "family": "distal_nominal",
+          "raw_order": 68
+        }
+      ],
+      "endpoint_voxel": [
+        50,
+        91,
+        82
+      ],
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694034,
+        -15.278295926234478
+      ],
+      "estimated_nominal_preparation_cells": 322,
+      "estimated_nominal_preparation_volume_mm3": 321.99996890105257,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 361,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -11.378999999211224,
+          -14.88899999945653,
+          -15.278295926234478
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009211225,
+          -14.888999999713622,
+          -15.278295926234478
+        ]
+      },
+      "optimistically_tip_contained_cells": 39,
+      "physical_start_mm": [
+        -60.879000009211225,
+        -14.888999999698932,
+        -15.278295926234478
+      ],
+      "preparation_indices_digest": "675e213af868df119145e4eb74dce0bc0ac51e318cc86028b857077f43e21604",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 68,
+      "shaft_supercover_cells": 441,
+      "shaft_sweep": {
+        "end_mm": [
+          -14.378999999211224,
+          -14.88899999947122,
+          -15.278295926234478
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.8790000092112,
+          -14.88900000018863,
+          -15.278295926234478
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.600000289741749,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -11.378999999211224,
+        -14.88899999945653,
+        -15.278295926234478
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-630c5328dca3cef162f610c8",
+          "family": "proximal_nominal",
+          "raw_order": 73
+        }
+      ],
+      "endpoint_voxel": [
+        21,
+        91,
+        88
+      ],
+      "entry_mm": [
+        -59.878999999211224,
+        -14.88899999969403,
+        -21.27829534675098
+      ],
+      "estimated_nominal_preparation_cells": 86,
+      "estimated_nominal_preparation_volume_mm3": 85.99999169406993,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 97,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -40.37899999921122,
+          -14.88899999959854,
+          -21.27829534675098
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009211225,
+          -14.888999999713619,
+          -21.27829534675098
+        ]
+      },
+      "optimistically_tip_contained_cells": 11,
+      "physical_start_mm": [
+        -60.879000009211225,
+        -14.888999999698928,
+        -21.27829534675098
+      ],
+      "preparation_indices_digest": "0f81dc963ec90a71a136dcf57ac5a6ae3a0a4b172d1f733ce0c8a55284c42c1f",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 73,
+      "shaft_supercover_cells": 180,
+      "shaft_sweep": {
+        "end_mm": [
+          -43.37899999921122,
+          -14.88899999961323,
+          -21.27829534675098
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.8790000092112,
+          -14.889000000188629,
+          -21.27829534675098
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.600000289741749,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -40.37899999921122,
+        -14.88899999959854,
+        -21.27829534675098
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    },
+    {
+      "aliases": [
+        {
+          "action_id": "nominal-cavity-285763d4e4b0ff1c496ced2d",
+          "family": "distal_nominal",
+          "raw_order": 74
+        }
+      ],
+      "endpoint_voxel": [
+        49,
+        91,
+        88
+      ],
+      "entry_mm": [
+        -59.878999999211224,
+        -14.88899999969404,
+        -21.27829534675098
+      ],
+      "estimated_nominal_preparation_cells": 301,
+      "estimated_nominal_preparation_volume_mm3": 300.9999709292448,
+      "external_workspace_unassessed_cells": 9,
+      "full_tool_cells_outside_actor_crop": 0,
+      "hard_exclusion_supercover_cells": 0,
+      "interaction_domain_declared": true,
+      "native_coverage": {
+        "entry_in_native_grid": true,
+        "inward_or_lateral_crop_uncertain": false,
+        "orthogonal_native_grid": true,
+        "outside_native_faces": [
+          {
+            "native_axis": 0,
+            "part": "shaft",
+            "proximal_only_unassessed": true,
+            "side": -1
+          },
+          {
+            "native_axis": 0,
+            "part": "active_tip",
+            "proximal_only_unassessed": true,
+            "side": -1
+          }
+        ],
+        "outside_native_geometry_is_unassessed": true,
+        "source_axis_aligned": true
+      },
+      "occupied_shaft_cells": 339,
+      "optimistic_active_tip_sweep": {
+        "end_mm": [
+          -12.378999999211224,
+          -14.888999999461433,
+          -21.27829534675098
+        ],
+        "radius_mm": 1.0,
+        "start_mm": [
+          -63.879000009211225,
+          -14.888999999713628,
+          -21.27829534675098
+        ]
+      },
+      "optimistically_tip_contained_cells": 38,
+      "physical_start_mm": [
+        -60.879000009211225,
+        -14.888999999698937,
+        -21.27829534675098
+      ],
+      "preparation_indices_digest": "9503962526a77c3366ba26effa108fda771300276eee94ba4e8654b3629862cf",
+      "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+      "rankable": true,
+      "raw_order": 74,
+      "shaft_supercover_cells": 432,
+      "shaft_sweep": {
+        "end_mm": [
+          -15.378999999211224,
+          -14.888999999476123,
+          -21.27829534675098
+        ],
+        "radius_mm": 1.4,
+        "start_mm": [
+          -160.8790000092112,
+          -14.889000000188636,
+          -21.27829534675098
+        ]
+      },
+      "static_aperture": {
+        "clearance_mm": 1.600000289741749,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only"
+      },
+      "tip_mm": [
+        -12.378999999211224,
+        -14.888999999461433,
+        -21.27829534675098
+      ],
+      "tool_id": "generic_suction",
+      "unknown_interaction_cells": 0,
+      "unrankable_reasons": [],
+      "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+    }
+  ],
+  "same_tool_goal_rows": 26,
+  "schema": "initial_public_suction_nominal_preparation_v1",
+  "score_scope": "known native nominal occupied shaft cells minus optimistic full active-tip containment",
+  "seal": "sha256:c75578a29db3ed3404907846d43417881e49c76f5d378c0d329a534bf2a7e08a",
+  "source_hash": "sha256:a649ef37f08282cc86b814a4a01dc3ea3cf5ce8bd7b1190d716ab47bf770c5a4",
+  "source_state_hash": "sha256:8e42982139ee66ad8c2157585c450c3f856f38ed1f139dcbd1b79c1968e471d5",
+  "task_decision_model_hash": "sha256:5fc041113fa1e2b1fb44796709e48dcc96ac7f85db08e0c4a7cf437efa490519",
+  "tool_id": "generic_suction",
+  "top_changed_from_original_first_same_tool": true,
+  "unique_goal_count": 26,
+  "unrankable_goal_count": 0,
+  "wall_seconds": 0.10110329114831984
+}

@@ -1,0 +1,149 @@
+{
+  "baseline_present_count": 1,
+  "baseline_row": {
+    "aliases": [
+      {
+        "action_id": "nominal-cavity-4b67609f6423a7ad38d860c3",
+        "family": "proximal_nominal",
+        "raw_order": 1
+      }
+    ],
+    "endpoint_voxel": [
+      20,
+      91,
+      85
+    ],
+    "entry_mm": [
+      -59.878999999211224,
+      -14.888999999694036,
+      -18.27829563649273
+    ],
+    "estimated_nominal_preparation_cells": 93,
+    "estimated_nominal_preparation_volume_mm3": 92.99999101800587,
+    "external_workspace_unassessed_cells": 9,
+    "full_tool_cells_outside_actor_crop": 0,
+    "hard_exclusion_supercover_cells": 0,
+    "interaction_domain_declared": true,
+    "native_coverage": {
+      "entry_in_native_grid": true,
+      "inward_or_lateral_crop_uncertain": false,
+      "orthogonal_native_grid": true,
+      "outside_native_faces": [
+        {
+          "native_axis": 0,
+          "part": "shaft",
+          "proximal_only_unassessed": true,
+          "side": -1
+        },
+        {
+          "native_axis": 0,
+          "part": "active_tip",
+          "proximal_only_unassessed": true,
+          "side": -1
+        }
+      ],
+      "outside_native_geometry_is_unassessed": true,
+      "source_axis_aligned": true
+    },
+    "occupied_shaft_cells": 105,
+    "optimistic_active_tip_sweep": {
+      "end_mm": [
+        -41.37899999921122,
+        -14.888999999603442,
+        -18.27829563649273
+      ],
+      "radius_mm": 1.0,
+      "start_mm": [
+        -63.879000009211225,
+        -14.888999999713624,
+        -18.27829563649273
+      ]
+    },
+    "optimistically_tip_contained_cells": 12,
+    "physical_start_mm": [
+      -60.879000009211225,
+      -14.888999999698934,
+      -18.27829563649273
+    ],
+    "preparation_indices_digest": "7ad60dada015f7e54028e073094c487c89d1f85d3b06fc001c0245c01bd9cbf3",
+    "prior_cavity_microstep_and_exposure_constraints_ignored_optimistically": true,
+    "rankable": true,
+    "raw_order": 1,
+    "shaft_supercover_cells": 171,
+    "shaft_sweep": {
+      "end_mm": [
+        -44.37899999921122,
+        -14.888999999618132,
+        -18.27829563649273
+      ],
+      "radius_mm": 1.4,
+      "start_mm": [
+        -160.8790000092112,
+        -14.889000000188632,
+        -18.27829563649273
+      ]
+    },
+    "static_aperture": {
+      "clearance_mm": 4.6,
+      "excluded": false,
+      "numerical_margin_mm": 1e-06,
+      "scope": "bounded_source_normal_aperture_necessary_only"
+    },
+    "tip_mm": [
+      -41.37899999921122,
+      -14.888999999603442,
+      -18.27829563649273
+    ],
+    "tool_id": "generic_suction",
+    "unknown_interaction_cells": 0,
+    "unrankable_reasons": [],
+    "whole_cell_rule": "all_eight_affine_corners_at_radius_minus_1e-10"
+  },
+  "first_same_tool_equals_actual_baseline_goal": true,
+  "helper_first_same_tool_goal": {
+    "entry_mm": [
+      -59.878999999211224,
+      -14.888999999694036,
+      -18.27829563649273
+    ],
+    "tip_mm": [
+      -41.37899999921122,
+      -14.888999999603442,
+      -18.27829563649273
+    ],
+    "tool_id": "generic_suction"
+  },
+  "historical_baseline_active_goal": {
+    "entry_mm": [
+      -59.878999999211224,
+      -14.888999999694036,
+      -18.27829563649273
+    ],
+    "tip_mm": [
+      -41.37899999921122,
+      -14.888999999603442,
+      -18.27829563649273
+    ],
+    "tool_id": "generic_suction"
+  },
+  "historical_witness": {
+    "path": "build/select013-preparation-choice-v1/decision5-witness.json",
+    "sha256": "bd655fc084b1a2273110cf2ea89b01e48520efc35007e8d5c97f0f71de6b894a"
+  },
+  "proposed_goal_differs_from_actual_baseline": true,
+  "proposed_ranked_goal": {
+    "entry_mm": [
+      -59.87899999919654,
+      -17.888999999694036,
+      -18.27829563649273
+    ],
+    "tip_mm": [
+      -41.37899999919653,
+      -17.888999999603442,
+      -18.27829563649273
+    ],
+    "tool_id": "generic_suction"
+  },
+  "scope": "comparison only after ranking; prior continuation is not helper input; changed heuristic ordering is not a demonstrated changed complete policy route",
+  "source_model_initial_state_match": true
+}

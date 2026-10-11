@@ -1,0 +1,34 @@
+{
+  "phases": {
+    "initial_ranking": {
+      "native_previews": 0,
+      "wall_seconds": 0.10827416693791747
+    },
+    "saved_baseline_comparison": {
+      "native_previews": 0,
+      "wall_seconds": 0.00042099994607269764
+    },
+    "source_construction": {
+      "native_previews": 117,
+      "wall_seconds": 1.667940457817167
+    }
+  },
+  "provider_and_native_profile": {
+    "initial_ranking": {
+      "provider_tool_footprint_endpoint_calls": 26,
+      "provider_tool_footprint_endpoint_inclusive_seconds": 0.02258604415692389,
+      "providerpropose_calls": 1,
+      "providerpropose_inclusive_seconds": 0.06231825007125735
+    },
+    "source_construction": {
+      "feasible": 37,
+      "native_preview_seconds": 1.0469470431562513,
+      "provider_tool_footprint_endpoint_calls": 26,
+      "provider_tool_footprint_endpoint_inclusive_seconds": 0.021183333126828074,
+      "providerpropose_calls": 1,
+      "providerpropose_inclusive_seconds": 0.058079042006284,
+      "rejected:SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 80
+    }
+  },
+  "scope": "phase wall includes all source/setup/helper/comparison; provider/native timers are nested, not additive; helper geometry call counts cover only explicit helper calls"
+}

@@ -1,0 +1,204 @@
+{
+  "runtime_head": "e4c4105c36974538297f2109292c5d4993bf344d",
+  "files": [
+    {
+      "archive_path": "HANDOFF.txt",
+      "bytes": 3230,
+      "path": "build/select013-goal-burden-v1/HANDOFF.txt",
+      "sha256": "3f8441e9f5f1a7640f63d1a46f44968d2525f49d8627b3b5bb64f84674542af0"
+    },
+    {
+      "archive_path": "comparison_contract.py",
+      "bytes": 4076,
+      "path": "build/select013-goal-burden-v1/comparison_contract.py",
+      "sha256": "815e27d7fb78031df4240d4e24392b5237f8b71c806b058b17321a66732172a1"
+    },
+    {
+      "archive_path": "select_worker.py",
+      "bytes": 14235,
+      "path": "build/select013-goal-burden-v1/select_worker.py",
+      "sha256": "a761ef8c14d2436a5ba3c18a5f245781baf24a9972ffa3db2dfdc5541bdeea63"
+    },
+    {
+      "archive_path": "run_owned.py",
+      "bytes": 12141,
+      "path": "build/select013-goal-burden-v1/run_owned.py",
+      "sha256": "9824ba218e354fce857e5938f88556fb24db83a7d740a1b760951e54fc37e381"
+    },
+    {
+      "archive_path": "freeze-runtime.py",
+      "bytes": 4472,
+      "path": "build/select013-goal-burden-v1/freeze-runtime.py",
+      "sha256": "a337ab25c5d093c85801aae916542e1376ef1ca303d80e5651020970d4a23490"
+    },
+    {
+      "archive_path": "initial_goal_burden.py",
+      "bytes": 15597,
+      "path": "build/select013-goal-burden-v1/initial_goal_burden.py",
+      "sha256": "90746eca09c395ba2fcdfb782b790248b7278fa41e63354ceae9ec02bea9fb61"
+    },
+    {
+      "archive_path": "tests/test_initial_goal_burden.py",
+      "bytes": 11050,
+      "path": "build/select013-goal-burden-v1/tests/test_initial_goal_burden.py",
+      "sha256": "6a6287d0b781db8b12925717ad15f7245924f02495097653cc5184549a5a8b1d"
+    },
+    {
+      "archive_path": "run_generated_controls.py",
+      "bytes": 1935,
+      "path": "build/select013-goal-burden-v1/run_generated_controls.py",
+      "sha256": "e7638617fd212084928c0a51b7db24475de6d2e62ffcd7e028e5e785283f23af"
+    },
+    {
+      "archive_path": "helper-source-ready.json",
+      "bytes": 2544,
+      "path": "build/select013-goal-burden-v1/helper-source-ready.json",
+      "sha256": "fd1569119889e856901358542a3c69f8af7151d6ca37f35769416948a48eafbc"
+    },
+    {
+      "archive_path": "runtime-source-ready.json",
+      "bytes": 1930,
+      "path": "build/select013-goal-burden-v1/runtime-source-ready.json",
+      "sha256": "053f592fb2f90c9b3eaf3f8241d401222349d620027cb8825cbe421df19f5d40"
+    },
+    {
+      "archive_path": "controls-01.json",
+      "bytes": 2218,
+      "path": "build/select013-goal-burden-v1/controls-01.json",
+      "sha256": "82149c53c7eb2852595656f75ef4766fa6900ad4ac05dc07cda7158871e46573"
+    },
+    {
+      "archive_path": "controls-01.log",
+      "bytes": 23744,
+      "path": "build/select013-goal-burden-v1/controls-01.log",
+      "sha256": "08de89888a5d26cdb950e4d2204117d2417ca8ba34a49c1fc9414a702ec97437"
+    },
+    {
+      "archive_path": "controls-02.json",
+      "bytes": 2218,
+      "path": "build/select013-goal-burden-v1/controls-02.json",
+      "sha256": "881f6d01bb5953fa1d9f9573e0a3cef3ecf8c8f3bccc1332a230e07d7c615fd2"
+    },
+    {
+      "archive_path": "controls-02.log",
+      "bytes": 98,
+      "path": "build/select013-goal-burden-v1/controls-02.log",
+      "sha256": "9324d7f9c3371c89ada765dc1a020c1a71c806c73430afb70866285c94b13b80"
+    },
+    {
+      "archive_path": "source-index.json",
+      "bytes": 32982,
+      "path": "build/select013-goal-burden-v1/source-index.json",
+      "sha256": "f2c36a0aa23aed19cffb33813299ab5da7ba3925a766cbc8f743989a0bdc357f"
+    },
+    {
+      "archive_path": "root-release.json",
+      "bytes": 10270,
+      "path": "build/select013-goal-burden-v1/root-release.json",
+      "sha256": "d4ab0e48a61127ecc045f5805473ec1ed962db647a134275e8382dd20183719a"
+    },
+    {
+      "archive_path": "freeze-01/reason.json",
+      "bytes": 352,
+      "path": "build/select013-goal-burden-v1/freeze-01/reason.json",
+      "sha256": "56071983b2f86790eb78d7b24ab67c3745c65c0d60fea4f6f310aa735a624b99"
+    },
+    {
+      "archive_path": "attempt-01.supervision/declaration.json",
+      "bytes": 22411,
+      "path": "build/select013-goal-burden-v1/attempt-01.supervision/declaration.json",
+      "sha256": "14110eefe09ff678025f9baa8626465dd5d6ba175565533cdf56f679327dfe97"
+    },
+    {
+      "archive_path": "attempt-01.supervision/receipt.json",
+      "bytes": 2244,
+      "path": "build/select013-goal-burden-v1/attempt-01.supervision/receipt.json",
+      "sha256": "44ff4d89b80395700a9e56137989d5a6b504a63f59847d3e298a3a8d08e71b2b"
+    },
+    {
+      "archive_path": "attempt-01.supervision/worker-final.json",
+      "bytes": 285,
+      "path": "build/select013-goal-burden-v1/attempt-01.supervision/worker-final.json",
+      "sha256": "2d2ab8cb21d63282de82454a1b7ac1c140af7e78cfc404206393508b19dd8d3c"
+    },
+    {
+      "archive_path": "attempt-01.supervision/worker.log",
+      "bytes": 0,
+      "path": "build/select013-goal-burden-v1/attempt-01.supervision/worker.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "postrun/audit_saved.py",
+      "bytes": 12279,
+      "path": "build/select013-goal-burden-v1/postrun/audit_saved.py",
+      "sha256": "a5bb7b15b6464c78d57c3e4524e16ba8de08403c2367ba4836987fe7849f0abe"
+    },
+    {
+      "archive_path": "postrun/audit.json",
+      "bytes": 10831,
+      "path": "build/select013-goal-burden-v1/postrun/audit.json",
+      "sha256": "054051b0ad95c849648bc1fc02f1fc5876ddf546976b7bda6daf817f6572bd5a"
+    },
+    {
+      "archive_path": "postrun/REPORT.txt",
+      "bytes": 3562,
+      "path": "build/select013-goal-burden-v1/postrun/REPORT.txt",
+      "sha256": "564490e55a9dd5d31b7d431c33f1d802a607017218dd817cf625131e45c5d560"
+    },
+    {
+      "archive_path": "attempt-01/baseline-goal-control.json",
+      "bytes": 4058,
+      "path": "build/select013-goal-burden-v1/attempt-01/baseline-goal-control.json",
+      "sha256": "0fe406d77488ac5488528d6fce3af3b44e9fef021ff14abf28a83c3f85163733"
+    },
+    {
+      "archive_path": "attempt-01/costs.json",
+      "bytes": 1227,
+      "path": "build/select013-goal-burden-v1/attempt-01/costs.json",
+      "sha256": "83ac5da04fb8cab04d1e53c4b3ff209bb4f24c8000bb5cb67049fd13037e0112"
+    },
+    {
+      "archive_path": "attempt-01/initial-goal-burden.json",
+      "bytes": 84504,
+      "path": "build/select013-goal-burden-v1/attempt-01/initial-goal-burden.json",
+      "sha256": "e96e8228a0e0541562cf96630d46f2f4df50bfab68c16a7ba36f770b0e56fa44"
+    },
+    {
+      "archive_path": "attempt-01/original-world-control.json",
+      "bytes": 19337,
+      "path": "build/select013-goal-burden-v1/attempt-01/original-world-control.json",
+      "sha256": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e"
+    },
+    {
+      "archive_path": "attempt-01/result.json",
+      "bytes": 3473,
+      "path": "build/select013-goal-burden-v1/attempt-01/result.json",
+      "sha256": "823687e42979c259d3167a07684ed69efc8a14ae4d602a7a3d9cc3d386f51a65"
+    },
+    {
+      "archive_path": "attempt-01/source/admitted-public-bindings.json",
+      "bytes": 19556,
+      "path": "build/select013-goal-burden-v1/attempt-01/source/admitted-public-bindings.json",
+      "sha256": "905df5ad7194060ccff5406a0a612131e1e86b921797c8209a20724fc16c40be"
+    },
+    {
+      "archive_path": "attempt-01/source/derived-occupancy-assumption.json",
+      "bytes": 11344,
+      "path": "build/select013-goal-burden-v1/attempt-01/source/derived-occupancy-assumption.json",
+      "sha256": "2a131c0388579393ce3015b277e9c50031501f3f4cb53125717408a08d4deae8"
+    },
+    {
+      "archive_path": "attempt-01/source/public-task-derivation.json",
+      "bytes": 4077,
+      "path": "build/select013-goal-burden-v1/attempt-01/source/public-task-derivation.json",
+      "sha256": "037f8f1e1970eb87e9cfbeacce97a6da0b9184e98073fed0aad69c9c245446d1"
+    },
+    {
+      "archive_path": "attempt-01/task-binding.json",
+      "bytes": 1545,
+      "path": "build/select013-goal-burden-v1/attempt-01/task-binding.json",
+      "sha256": "2a463083d02e96421ee11d95a7d04cb0aca079a1fc428828b8df2022865a8705"
+    }
+  ],
+  "reproduction_limit": "Runtime source authority and patient arrays remain in the exact local dependencies. Scalar audit can reproduce this ranking accounting from compact archived report; it does not re-execute geometry."
+}

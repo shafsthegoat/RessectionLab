@@ -1,0 +1,38 @@
+{
+  "caps": {
+    "RSS_bytes": 2147483648,
+    "native_previews": 1000,
+    "output_bytes": 1048576,
+    "parent_seconds": 150,
+    "rank_calls": 1,
+    "supervision_bytes": 8388608,
+    "threads": 1,
+    "transitions": 0,
+    "worker_seconds": 120
+  },
+  "declared_diagnostic_subject_count": 1,
+  "files": {
+    "HANDOFF.txt": "3f8441e9f5f1a7640f63d1a46f44968d2525f49d8627b3b5bb64f84674542af0",
+    "comparison_contract.py": "815e27d7fb78031df4240d4e24392b5237f8b71c806b058b17321a66732172a1",
+    "controls-01.json": "82149c53c7eb2852595656f75ef4766fa6900ad4ac05dc07cda7158871e46573",
+    "controls-01.log": "08de89888a5d26cdb950e4d2204117d2417ca8ba34a49c1fc9414a702ec97437",
+    "controls-02.json": "881f6d01bb5953fa1d9f9573e0a3cef3ecf8c8f3bccc1332a230e07d7c615fd2",
+    "controls-02.log": "9324d7f9c3371c89ada765dc1a020c1a71c806c73430afb70866285c94b13b80",
+    "freeze-runtime.py": "a337ab25c5d093c85801aae916542e1376ef1ca303d80e5651020970d4a23490",
+    "initial_goal_burden.py": "90746eca09c395ba2fcdfb782b790248b7278fa41e63354ceae9ec02bea9fb61",
+    "run_owned.py": "9824ba218e354fce857e5938f88556fb24db83a7d740a1b760951e54fc37e381",
+    "select_worker.py": "a761ef8c14d2436a5ba3c18a5f245781baf24a9972ffa3db2dfdc5541bdeea63",
+    "tests/test_initial_goal_burden.py": "6a6287d0b781db8b12925717ad15f7245924f02495097653cc5184549a5a8b1d"
+  },
+  "helper_controls": {
+    "attempt": "controls-02",
+    "parent_seconds": 0.6086976248770952,
+    "passed": 9,
+    "prior_attempt_preserved": true,
+    "pytest_seconds": 0.48
+  },
+  "information": "current task only to helper; actual baseline goal comparison after helper; no action or route outcome claim",
+  "runtime_validation": "AST only, reused monitor; no runtime generated test or acquired execution by runtime owner",
+  "status": "source_ready_root_metadata_freeze_pending",
+  "storage": "1MiB shared prepared source only; prospective10MiB total requires root/storage begin"
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "initial-goal-burden-helper-ready-v1",
+  "status": "source_ready_generated_pass_acquired_unrun",
+  "files": {
+    "initial_goal_burden.py": {
+      "sha256": "90746eca09c395ba2fcdfb782b790248b7278fa41e63354ceae9ec02bea9fb61",
+      "bytes": 15597
+    },
+    "tests/test_initial_goal_burden.py": {
+      "sha256": "6a6287d0b781db8b12925717ad15f7245924f02495097653cc5184549a5a8b1d",
+      "bytes": 11050
+    },
+    "run_generated_controls.py": {
+      "sha256": "e7638617fd212084928c0a51b7db24475de6d2e62ffcd7e028e5e785283f23af",
+      "bytes": 1935
+    },
+    "controls-01.json": {
+      "sha256": "82149c53c7eb2852595656f75ef4766fa6900ad4ac05dc07cda7158871e46573",
+      "bytes": 2218
+    },
+    "controls-01.log": {
+      "sha256": "08de89888a5d26cdb950e4d2204117d2417ca8ba34a49c1fc9414a702ec97437",
+      "bytes": 23744
+    },
+    "controls-02.json": {
+      "sha256": "881f6d01bb5953fa1d9f9573e0a3cef3ecf8c8f3bccc1332a230e07d7c615fd2",
+      "bytes": 2218
+    },
+    "controls-02.log": {
+      "sha256": "9324d7f9c3371c89ada765dc1a020c1a71c806c73430afb70866285c94b13b80",
+      "bytes": 98
+    }
+  },
+  "controls": {
+    "passed": 9,
+    "pytest_seconds": 0.48,
+    "parent_seconds": 0.6086976248770952,
+    "hard_seconds": 45,
+    "threads": 1,
+    "child_reaped": true,
+    "failed_attempt_preserved": "controls-01",
+    "repair": "one call corrected existing _residual_aperture_test argument order access/tool"
+  },
+  "api": "rank_initial_goals(task, *, limits=Limits(), cancelled=None) -> immutable JSON",
+  "scope": "Initial current existing public nominal-positive generic_suction base rays only. Catalog/world/selector unchanged. No native previews/actions, acquired inputs or weights opened.",
+  "estimate": "occupied full shaft sweep minus optimistic all-corner full active-tip sweep containment; not feasibility, physical risk, action-count bound or executable removal",
+  "eligibility": "Unknown interaction cells, uncertain inward/lateral native clipping, hard-exclusion supercover and excluded/boundary-uncertain aperture are explicit unrankable rows. Proximal out-of-image geometry remains unassessed. Actor crop does not clip the native estimate.",
+  "accounting": "Helper covers/containment and cell-work count are separate from provider enumeration wall. Runtime charges construction/provider geometry and compares actual saved baseline goal only after ranking.",
+  "next": "Root-owned initial-state ranking diagnostic only; a tie or unchanged selected goal does not justify a full continuation comparison."
+}

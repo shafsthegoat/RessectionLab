@@ -1,0 +1,39 @@
+{
+  "schema": "bounded-generated-goal-burden-controls-v1",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-goal-burden-v1/tests/test_initial_goal_burden.py"
+  ],
+  "returncode": 1,
+  "timed_out": false,
+  "wall_seconds": 0.6580007500015199,
+  "hard_seconds": 45,
+  "threads": 1,
+  "child_reaped": true,
+  "source_before": {
+    "build/select013-goal-burden-v1/initial_goal_burden.py": "308782a2db00f7e1b558e005e79bba0f536d0cad42d6da0c5b4c9c0bde8df169",
+    "build/select013-goal-burden-v1/tests/test_initial_goal_burden.py": "6a6287d0b781db8b12925717ad15f7245924f02495097653cc5184549a5a8b1d",
+    "src/resectionlab/native_resection.py": "79363aa6156917514d4aa57e328adcd16babff51518c0c4587e6dcaf94a5723d",
+    "src/resectionlab/native_proposals.py": "aa1be3d50845d2c75c3cd0df382f6fdfee6f5d1059303c90e898baaeeebacde7",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/post_exposure.py": "ce95ca492aef3bb0149d9fb62c22766caad76701f894abaa37327a21acb7970e"
+  },
+  "source_after": {
+    "build/select013-goal-burden-v1/initial_goal_burden.py": "308782a2db00f7e1b558e005e79bba0f536d0cad42d6da0c5b4c9c0bde8df169",
+    "build/select013-goal-burden-v1/tests/test_initial_goal_burden.py": "6a6287d0b781db8b12925717ad15f7245924f02495097653cc5184549a5a8b1d",
+    "src/resectionlab/native_resection.py": "79363aa6156917514d4aa57e328adcd16babff51518c0c4587e6dcaf94a5723d",
+    "src/resectionlab/native_proposals.py": "aa1be3d50845d2c75c3cd0df382f6fdfee6f5d1059303c90e898baaeeebacde7",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/post_exposure.py": "ce95ca492aef3bb0149d9fb62c22766caad76701f894abaa37327a21acb7970e"
+  },
+  "source_unchanged": true,
+  "generated_only": true,
+  "acquired_or_model_inputs": false,
+  "log_sha256": "08de89888a5d26cdb950e4d2204117d2417ca8ba34a49c1fc9414a702ec97437"
+}

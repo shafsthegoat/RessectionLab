@@ -1,0 +1,83 @@
+{
+  "EVAL_execution": false,
+  "SELECT_subject": "ReMIND-013",
+  "arms": {
+    "initial_state": {
+      "goal_count": 26,
+      "minimum_score_tie_count": 1,
+      "proposed_goal_differs_from_actual_baseline": true,
+      "rankable_goal_count": 26,
+      "ranking_raw_orders": [
+        61,
+        49,
+        73,
+        37,
+        43,
+        13,
+        25,
+        19,
+        1,
+        67,
+        7,
+        55,
+        31,
+        74,
+        38,
+        32,
+        56,
+        26,
+        8,
+        20,
+        68,
+        2,
+        50,
+        62,
+        44,
+        14
+      ],
+      "status": "complete_initial_diagnostic"
+    }
+  },
+  "automatic_retry": false,
+  "canonical_result_status": "complete_SELECT013_initial_goal_burden",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 150,
+    "output_bytes": 1048576,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 2147483648,
+    "supervision_bytes": 8388608,
+    "threads": 1,
+    "worker_deadline_seconds": 120,
+    "worker_log_bytes": 8388608
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 4.384093958185986,
+  "exit_code": 0,
+  "final_owned_pids": [],
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "optimizer_updates_on_SELECT": 0,
+  "output_bytes": 149121,
+  "planned_SELECT_denominator": 1,
+  "private_reference_execution": false,
+  "release_sha256": "d4ab0e48a61127ecc045f5805473ec1ed962db647a134275e8382dd20183719a",
+  "result_sha256": "823687e42979c259d3167a07684ed69efc8a14ae4d602a7a3d9cc3d386f51a65",
+  "sampled_peak_rss_bytes": 546832384,
+  "samples": 20,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/select013-goal-burden-v1/source-index.json",
+    "sha256": "f2c36a0aa23aed19cffb33813299ab5da7ba3925a766cbc8f743989a0bdc357f"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 23230,
+  "worker_final_sha256": "2d2ab8cb21d63282de82454a1b7ac1c140af7e78cfc404206393508b19dd8d3c",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

@@ -1,0 +1,6 @@
+{
+  "status": "superseded_before_execution",
+  "cause": "Initial source freeze raced the requested single-case denominator correction in worker/parent; no acquired attempt or root release occurred.",
+  "source_logic_change": "metadata denominator2 to1 only",
+  "source_ready_final": "053f592fb2f90c9b3eaf3f8241d401222349d620027cb8825cbe421df19f5d40"
+}

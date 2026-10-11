@@ -1,0 +1,129 @@
+{
+  "EVAL_opened": false,
+  "arms": {
+    "initial_state": {
+      "goal_count": 26,
+      "minimum_score_tie_count": 1,
+      "proposed_goal_differs_from_actual_baseline": true,
+      "rankable_goal_count": 26,
+      "ranking_raw_orders": [
+        61,
+        49,
+        73,
+        37,
+        43,
+        13,
+        25,
+        19,
+        1,
+        67,
+        7,
+        55,
+        31,
+        74,
+        38,
+        32,
+        56,
+        26,
+        8,
+        20,
+        68,
+        2,
+        50,
+        62,
+        44,
+        14
+      ],
+      "status": "complete_initial_diagnostic"
+    }
+  },
+  "baseline_goal_control": {
+    "baseline_present_count": 1,
+    "first_same_tool_equals_actual_baseline_goal": true,
+    "helper_first_same_tool_goal": {
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694036,
+        -18.27829563649273
+      ],
+      "tip_mm": [
+        -41.37899999921122,
+        -14.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction"
+    },
+    "historical_baseline_active_goal": {
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694036,
+        -18.27829563649273
+      ],
+      "tip_mm": [
+        -41.37899999921122,
+        -14.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction"
+    },
+    "historical_witness": {
+      "path": "build/select013-preparation-choice-v1/decision5-witness.json",
+      "sha256": "bd655fc084b1a2273110cf2ea89b01e48520efc35007e8d5c97f0f71de6b894a"
+    },
+    "proposed_goal_differs_from_actual_baseline": true,
+    "proposed_ranked_goal": {
+      "entry_mm": [
+        -59.87899999919654,
+        -17.888999999694036,
+        -18.27829563649273
+      ],
+      "tip_mm": [
+        -41.37899999919653,
+        -17.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction"
+    },
+    "scope": "comparison only after ranking; prior continuation is not helper input; changed heuristic ordering is not a demonstrated changed complete policy route",
+    "source_model_initial_state_match": true
+  },
+  "checkpoint_loads": 0,
+  "gradient_attempts": 0,
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "held_inputs_opened": false,
+  "helper_accounting": {
+    "base_enumeration_calls": 1,
+    "base_enumeration_wall_seconds": 0.06239212513901293,
+    "bbox_cells_charged": 31442,
+    "helper_capsule_cover_calls": 52,
+    "helper_containment_calls": 26,
+    "native_preview_calls": 0,
+    "native_transitions": 0,
+    "wall_seconds": 0.10110329114831984
+  },
+  "history_complete_attestation": null,
+  "history_scope": "no actions are permitted; no complete-episode claim",
+  "model_forwards": 0,
+  "native_commit_attempts": 0,
+  "native_previews_ranking": 0,
+  "native_previews_total": 117,
+  "native_transition_attempts": 0,
+  "no_action_history": true,
+  "optimizer_attempts": 0,
+  "planned_SELECT_denominator": 1,
+  "private_reference_reads": 0,
+  "rank_helper_calls": 1,
+  "ranking_complete": true,
+  "ranking_report_sha256": "e96e8228a0e0541562cf96630d46f2f4df50bfab68c16a7ba36f770b0e56fa44",
+  "role": "SELECT",
+  "scope": "initial public goal-burden heuristic only; no accepted route, feasibility, action-count lower bound or clinical conclusion",
+  "source_physics_equal": true,
+  "state_unchanged": true,
+  "status": "complete_SELECT013_initial_goal_burden",
+  "subject": "ReMIND-013",
+  "updates": 0,
+  "wall_seconds": 1.809565959032625,
+  "world_equal": true
+}

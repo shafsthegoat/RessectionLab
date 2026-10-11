@@ -1,0 +1,341 @@
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+___ test_discriminates_existing_same_tool_goals_without_preview_or_inventory ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a8cddc0>
+
+    def test_discriminates_existing_same_tool_goals_without_preview_or_inventory(monkeypatch):
+        task = make_task(); state = task._engine.state_hash
+        def forbidden(*args, **kwargs): raise AssertionError('Ranking may not certify or execute')
+        with monkeypatch.context() as m:
+            for name in ('observation', 'candidate_inventory', '_prepare_base', 'step_record'):
+                m.setattr(task, name, forbidden)
+            m.setattr(NativeResectionEngine, 'preview_stroke', forbidden)
+            m.setattr(NativeResectionEngine, 'commit_preview', forbidden)
+>           report = thaw_json(helper.rank_initial_goals(task))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-goal-burden-v1/tests/test_initial_goal_burden.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/select013-goal-burden-v1/initial_goal_burden.py:204: in rank_initial_goals
+    aperture = _residual_aperture_test(tool, engine.config.access, ray.entry_mm, ray.tip_mm)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+access = ToolGeometry(tool_id='generic_suction', tip_radius_mm=1.0, shaft_radius_mm=1.4, working_length_mm=100.0, max_access_angle_deg=45.0, tip_length_mm=3.0, parameter_source='generic research geometry; not a verified commercial device')
+tool = AccessWindow(center_mm=_ImmutableArray([13.5,  1.1, 17.9]), normal_inward=_ImmutableArray([1., 0., 0.]), radius_mm=6.0, window_id='hypothetical-access')
+entry = array([13.5,  1.1, 17.9]), tip = array([21. ,  1.1, 17.9])
+
+    def _residual_aperture_test(access, tool, entry, tip):
+        """Necessary public aperture test, never a native feasibility certificate.
+    
+        Reuse the aperture-plane expression of geometry._check_envelope for the
+        actual represented ray. A straight source-normal sweep has a constant
+        plane intersection. Only clearly negative clearance is excluded; uncertain
+        boundaries and numerical scopes outside this small-mm calculation proceed
+        to native verification. The guard is reporting/selection tolerance only.
+        It does not relax the native aperture or any shaft/domain/removal rule.
+        """
+        entry, tip = np.asarray(entry, float), np.asarray(tip, float)
+>       center, normal = np.asarray(access.center_mm), np.asarray(access.normal_inward)
+                                    ^^^^^^^^^^^^^^^^
+E       AttributeError: 'ToolGeometry' object has no attribute 'center_mm'
+
+src/resectionlab/native_proposals.py:392: AttributeError
+_ test_orthogonal_rotated_reflected_anisotropic_frames_preserve_estimate[False--1] _
+
+rotated = False, sign = -1
+
+    @pytest.mark.parametrize('rotated,sign', [(False,-1), (True,1), (True,-1)])
+    def test_orthogonal_rotated_reflected_anisotropic_frames_preserve_estimate(rotated,sign):
+>       normal = helper.rank_initial_goals(make_task())
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-goal-burden-v1/tests/test_initial_goal_burden.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/select013-goal-burden-v1/initial_goal_burden.py:204: in rank_initial_goals
+    aperture = _residual_aperture_test(tool, engine.config.access, ray.entry_mm, ray.tip_mm)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+access = ToolGeometry(tool_id='generic_suction', tip_radius_mm=1.0, shaft_radius_mm=1.4, working_length_mm=100.0, max_access_angle_deg=45.0, tip_length_mm=3.0, parameter_source='generic research geometry; not a verified commercial device')
+tool = AccessWindow(center_mm=_ImmutableArray([13.5,  1.1, 17.9]), normal_inward=_ImmutableArray([1., 0., 0.]), radius_mm=6.0, window_id='hypothetical-access')
+entry = array([13.5,  1.1, 17.9]), tip = array([21. ,  1.1, 17.9])
+
+    def _residual_aperture_test(access, tool, entry, tip):
+        """Necessary public aperture test, never a native feasibility certificate.
+    
+        Reuse the aperture-plane expression of geometry._check_envelope for the
+        actual represented ray. A straight source-normal sweep has a constant
+        plane intersection. Only clearly negative clearance is excluded; uncertain
+        boundaries and numerical scopes outside this small-mm calculation proceed
+        to native verification. The guard is reporting/selection tolerance only.
+        It does not relax the native aperture or any shaft/domain/removal rule.
+        """
+        entry, tip = np.asarray(entry, float), np.asarray(tip, float)
+>       center, normal = np.asarray(access.center_mm), np.asarray(access.normal_inward)
+                                    ^^^^^^^^^^^^^^^^
+E       AttributeError: 'ToolGeometry' object has no attribute 'center_mm'
+
+src/resectionlab/native_proposals.py:392: AttributeError
+_ test_orthogonal_rotated_reflected_anisotropic_frames_preserve_estimate[True-1] _
+
+rotated = True, sign = 1
+
+    @pytest.mark.parametrize('rotated,sign', [(False,-1), (True,1), (True,-1)])
+    def test_orthogonal_rotated_reflected_anisotropic_frames_preserve_estimate(rotated,sign):
+>       normal = helper.rank_initial_goals(make_task())
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-goal-burden-v1/tests/test_initial_goal_burden.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/select013-goal-burden-v1/initial_goal_burden.py:204: in rank_initial_goals
+    aperture = _residual_aperture_test(tool, engine.config.access, ray.entry_mm, ray.tip_mm)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+access = ToolGeometry(tool_id='generic_suction', tip_radius_mm=1.0, shaft_radius_mm=1.4, working_length_mm=100.0, max_access_angle_deg=45.0, tip_length_mm=3.0, parameter_source='generic research geometry; not a verified commercial device')
+tool = AccessWindow(center_mm=_ImmutableArray([13.5,  1.1, 17.9]), normal_inward=_ImmutableArray([1., 0., 0.]), radius_mm=6.0, window_id='hypothetical-access')
+entry = array([13.5,  1.1, 17.9]), tip = array([21. ,  1.1, 17.9])
+
+    def _residual_aperture_test(access, tool, entry, tip):
+        """Necessary public aperture test, never a native feasibility certificate.
+    
+        Reuse the aperture-plane expression of geometry._check_envelope for the
+        actual represented ray. A straight source-normal sweep has a constant
+        plane intersection. Only clearly negative clearance is excluded; uncertain
+        boundaries and numerical scopes outside this small-mm calculation proceed
+        to native verification. The guard is reporting/selection tolerance only.
+        It does not relax the native aperture or any shaft/domain/removal rule.
+        """
+        entry, tip = np.asarray(entry, float), np.asarray(tip, float)
+>       center, normal = np.asarray(access.center_mm), np.asarray(access.normal_inward)
+                                    ^^^^^^^^^^^^^^^^
+E       AttributeError: 'ToolGeometry' object has no attribute 'center_mm'
+
+src/resectionlab/native_proposals.py:392: AttributeError
+_ test_orthogonal_rotated_reflected_anisotropic_frames_preserve_estimate[True--1] _
+
+rotated = True, sign = -1
+
+    @pytest.mark.parametrize('rotated,sign', [(False,-1), (True,1), (True,-1)])
+    def test_orthogonal_rotated_reflected_anisotropic_frames_preserve_estimate(rotated,sign):
+>       normal = helper.rank_initial_goals(make_task())
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-goal-burden-v1/tests/test_initial_goal_burden.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/select013-goal-burden-v1/initial_goal_burden.py:204: in rank_initial_goals
+    aperture = _residual_aperture_test(tool, engine.config.access, ray.entry_mm, ray.tip_mm)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+access = ToolGeometry(tool_id='generic_suction', tip_radius_mm=1.0, shaft_radius_mm=1.4, working_length_mm=100.0, max_access_angle_deg=45.0, tip_length_mm=3.0, parameter_source='generic research geometry; not a verified commercial device')
+tool = AccessWindow(center_mm=_ImmutableArray([13.5,  1.1, 17.9]), normal_inward=_ImmutableArray([1., 0., 0.]), radius_mm=6.0, window_id='hypothetical-access')
+entry = array([13.5,  1.1, 17.9]), tip = array([21. ,  1.1, 17.9])
+
+    def _residual_aperture_test(access, tool, entry, tip):
+        """Necessary public aperture test, never a native feasibility certificate.
+    
+        Reuse the aperture-plane expression of geometry._check_envelope for the
+        actual represented ray. A straight source-normal sweep has a constant
+        plane intersection. Only clearly negative clearance is excluded; uncertain
+        boundaries and numerical scopes outside this small-mm calculation proceed
+        to native verification. The guard is reporting/selection tolerance only.
+        It does not relax the native aperture or any shaft/domain/removal rule.
+        """
+        entry, tip = np.asarray(entry, float), np.asarray(tip, float)
+>       center, normal = np.asarray(access.center_mm), np.asarray(access.normal_inward)
+                                    ^^^^^^^^^^^^^^^^
+E       AttributeError: 'ToolGeometry' object has no attribute 'center_mm'
+
+src/resectionlab/native_proposals.py:392: AttributeError
+_______ test_private_reference_and_actor_crop_do_not_change_native_score _______
+
+    def test_private_reference_and_actor_crop_do_not_change_native_score():
+>       a = helper.rank_initial_goals(make_task())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-goal-burden-v1/tests/test_initial_goal_burden.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/select013-goal-burden-v1/initial_goal_burden.py:204: in rank_initial_goals
+    aperture = _residual_aperture_test(tool, engine.config.access, ray.entry_mm, ray.tip_mm)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+access = ToolGeometry(tool_id='generic_suction', tip_radius_mm=1.0, shaft_radius_mm=1.4, working_length_mm=100.0, max_access_angle_deg=45.0, tip_length_mm=3.0, parameter_source='generic research geometry; not a verified commercial device')
+tool = AccessWindow(center_mm=_ImmutableArray([13.5,  1.1, 17.9]), normal_inward=_ImmutableArray([1., 0., 0.]), radius_mm=6.0, window_id='hypothetical-access')
+entry = array([13.5,  1.1, 17.9]), tip = array([21. ,  1.1, 17.9])
+
+    def _residual_aperture_test(access, tool, entry, tip):
+        """Necessary public aperture test, never a native feasibility certificate.
+    
+        Reuse the aperture-plane expression of geometry._check_envelope for the
+        actual represented ray. A straight source-normal sweep has a constant
+        plane intersection. Only clearly negative clearance is excluded; uncertain
+        boundaries and numerical scopes outside this small-mm calculation proceed
+        to native verification. The guard is reporting/selection tolerance only.
+        It does not relax the native aperture or any shaft/domain/removal rule.
+        """
+        entry, tip = np.asarray(entry, float), np.asarray(tip, float)
+>       center, normal = np.asarray(access.center_mm), np.asarray(access.normal_inward)
+                                    ^^^^^^^^^^^^^^^^
+E       AttributeError: 'ToolGeometry' object has no attribute 'center_mm'
+
+src/resectionlab/native_proposals.py:392: AttributeError
+______ test_unknown_and_inward_native_clipping_cannot_rank_as_low_burden _______
+
+    def test_unknown_and_inward_native_clipping_cannot_rank_as_low_burden():
+>       unknown = helper.rank_initial_goals(make_task(unknown=True))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-goal-burden-v1/tests/test_initial_goal_burden.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/select013-goal-burden-v1/initial_goal_burden.py:204: in rank_initial_goals
+    aperture = _residual_aperture_test(tool, engine.config.access, ray.entry_mm, ray.tip_mm)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+access = ToolGeometry(tool_id='generic_suction', tip_radius_mm=1.0, shaft_radius_mm=1.4, working_length_mm=100.0, max_access_angle_deg=45.0, tip_length_mm=3.0, parameter_source='generic research geometry; not a verified commercial device')
+tool = AccessWindow(center_mm=_ImmutableArray([13.5,  1.1, 17.9]), normal_inward=_ImmutableArray([1., 0., 0.]), radius_mm=6.0, window_id='hypothetical-access')
+entry = array([13.5,  1.1, 17.9]), tip = array([21. ,  1.1, 17.9])
+
+    def _residual_aperture_test(access, tool, entry, tip):
+        """Necessary public aperture test, never a native feasibility certificate.
+    
+        Reuse the aperture-plane expression of geometry._check_envelope for the
+        actual represented ray. A straight source-normal sweep has a constant
+        plane intersection. Only clearly negative clearance is excluded; uncertain
+        boundaries and numerical scopes outside this small-mm calculation proceed
+        to native verification. The guard is reporting/selection tolerance only.
+        It does not relax the native aperture or any shaft/domain/removal rule.
+        """
+        entry, tip = np.asarray(entry, float), np.asarray(tip, float)
+>       center, normal = np.asarray(access.center_mm), np.asarray(access.normal_inward)
+                                    ^^^^^^^^^^^^^^^^
+E       AttributeError: 'ToolGeometry' object has no attribute 'center_mm'
+
+src/resectionlab/native_proposals.py:392: AttributeError
+_ test_real_post_exposure_endpoints_and_full_sweeps_include_native_microsteps __
+
+    def test_real_post_exposure_endpoints_and_full_sweeps_include_native_microsteps():
+        S,T,Ds = arrays(); case = post_source(S,T,Ds, proposal=True, tools=GENERIC_TOOLS)
+        case = replace(case, proposal_config=replace(case.proposal_config, max_candidates=120,
+            tool_footprint_opening=True, obstruction_opening=True, obstruction_page_size=8,
+            obstruction_selection_rule='target_ray_coverage_v3'))
+        task = FocusedPagedObstructionTask(case,max_steps=48)
+>       report = helper.rank_initial_goals(task)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-goal-burden-v1/tests/test_initial_goal_burden.py:117: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/select013-goal-burden-v1/initial_goal_burden.py:204: in rank_initial_goals
+    aperture = _residual_aperture_test(tool, engine.config.access, ray.entry_mm, ray.tip_mm)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+access = ToolGeometry(tool_id='generic_suction', tip_radius_mm=1.0, shaft_radius_mm=1.4, working_length_mm=100.0, max_access_angle_deg=45.0, tip_length_mm=3.0, parameter_source='generic research geometry; not a verified commercial device')
+tool = AccessWindow(center_mm=_ImmutableArray([7.5, 8. , 8. ]), normal_inward=_ImmutableArray([1., 0., 0.]), radius_mm=6.0, window_id='public-union-post-exposure-axis0-v1')
+entry = array([7.5, 8. , 8. ]), tip = array([8., 8., 8.])
+
+    def _residual_aperture_test(access, tool, entry, tip):
+        """Necessary public aperture test, never a native feasibility certificate.
+    
+        Reuse the aperture-plane expression of geometry._check_envelope for the
+        actual represented ray. A straight source-normal sweep has a constant
+        plane intersection. Only clearly negative clearance is excluded; uncertain
+        boundaries and numerical scopes outside this small-mm calculation proceed
+        to native verification. The guard is reporting/selection tolerance only.
+        It does not relax the native aperture or any shaft/domain/removal rule.
+        """
+        entry, tip = np.asarray(entry, float), np.asarray(tip, float)
+>       center, normal = np.asarray(access.center_mm), np.asarray(access.normal_inward)
+                                    ^^^^^^^^^^^^^^^^
+E       AttributeError: 'ToolGeometry' object has no attribute 'center_mm'
+
+src/resectionlab/native_proposals.py:392: AttributeError
+_______ test_physical_aliases_do_not_spend_extra_queries_or_change_score _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bc7aff0>
+
+    def test_physical_aliases_do_not_spend_extra_queries_or_change_score(monkeypatch):
+>       task = make_task(); baseline = helper.rank_initial_goals(task)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-goal-burden-v1/tests/test_initial_goal_burden.py:148: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/select013-goal-burden-v1/initial_goal_burden.py:204: in rank_initial_goals
+    aperture = _residual_aperture_test(tool, engine.config.access, ray.entry_mm, ray.tip_mm)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+access = ToolGeometry(tool_id='generic_suction', tip_radius_mm=1.0, shaft_radius_mm=1.4, working_length_mm=100.0, max_access_angle_deg=45.0, tip_length_mm=3.0, parameter_source='generic research geometry; not a verified commercial device')
+tool = AccessWindow(center_mm=_ImmutableArray([13.5,  1.1, 17.9]), normal_inward=_ImmutableArray([1., 0., 0.]), radius_mm=6.0, window_id='hypothetical-access')
+entry = array([13.5,  1.1, 17.9]), tip = array([21. ,  1.1, 17.9])
+
+    def _residual_aperture_test(access, tool, entry, tip):
+        """Necessary public aperture test, never a native feasibility certificate.
+    
+        Reuse the aperture-plane expression of geometry._check_envelope for the
+        actual represented ray. A straight source-normal sweep has a constant
+        plane intersection. Only clearly negative clearance is excluded; uncertain
+        boundaries and numerical scopes outside this small-mm calculation proceed
+        to native verification. The guard is reporting/selection tolerance only.
+        It does not relax the native aperture or any shaft/domain/removal rule.
+        """
+        entry, tip = np.asarray(entry, float), np.asarray(tip, float)
+>       center, normal = np.asarray(access.center_mm), np.asarray(access.normal_inward)
+                                    ^^^^^^^^^^^^^^^^
+E       AttributeError: 'ToolGeometry' object has no attribute 'center_mm'
+
+src/resectionlab/native_proposals.py:392: AttributeError
+_ test_caps_cancellation_and_noninitial_query_refuse_without_partial_ordering __
+
+    def test_caps_cancellation_and_noninitial_query_refuse_without_partial_ordering():
+        task = make_task(); state = task._engine.state_hash
+        for limits in (helper.Limits(max_goals=1), helper.Limits(max_bbox_cells_per_query=1)):
+            with pytest.raises(helper.BurdenLimit) as exc: helper.rank_initial_goals(task,limits=limits)
+            assert not exc.value.accounting['complete'] and not exc.value.accounting['ranked_physical_goals']
+        with pytest.raises(InterruptedError): helper.rank_initial_goals(task,cancelled=lambda:True)
+        assert task._engine.state_hash == state and task._base_inventory is None
+>       with pytest.raises(TypeError): helper.rank_initial_goals(task)['complete'] = False
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-goal-burden-v1/tests/test_initial_goal_burden.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/select013-goal-burden-v1/initial_goal_burden.py:204: in rank_initial_goals
+    aperture = _residual_aperture_test(tool, engine.config.access, ray.entry_mm, ray.tip_mm)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+access = ToolGeometry(tool_id='generic_suction', tip_radius_mm=1.0, shaft_radius_mm=1.4, working_length_mm=100.0, max_access_angle_deg=45.0, tip_length_mm=3.0, parameter_source='generic research geometry; not a verified commercial device')
+tool = AccessWindow(center_mm=_ImmutableArray([13.5,  1.1, 17.9]), normal_inward=_ImmutableArray([1., 0., 0.]), radius_mm=6.0, window_id='hypothetical-access')
+entry = array([13.5,  1.1, 17.9]), tip = array([21. ,  1.1, 17.9])
+
+    def _residual_aperture_test(access, tool, entry, tip):
+        """Necessary public aperture test, never a native feasibility certificate.
+    
+        Reuse the aperture-plane expression of geometry._check_envelope for the
+        actual represented ray. A straight source-normal sweep has a constant
+        plane intersection. Only clearly negative clearance is excluded; uncertain
+        boundaries and numerical scopes outside this small-mm calculation proceed
+        to native verification. The guard is reporting/selection tolerance only.
+        It does not relax the native aperture or any shaft/domain/removal rule.
+        """
+        entry, tip = np.asarray(entry, float), np.asarray(tip, float)
+>       center, normal = np.asarray(access.center_mm), np.asarray(access.normal_inward)
+                                    ^^^^^^^^^^^^^^^^
+E       AttributeError: 'ToolGeometry' object has no attribute 'center_mm'
+
+src/resectionlab/native_proposals.py:392: AttributeError
+=========================== short test summary info ============================
+FAILED build/select013-goal-burden-v1/tests/test_initial_goal_burden.py::test_discriminates_existing_same_tool_goals_without_preview_or_inventory
+FAILED build/select013-goal-burden-v1/tests/test_initial_goal_burden.py::test_orthogonal_rotated_reflected_anisotropic_frames_preserve_estimate[False--1]
+FAILED build/select013-goal-burden-v1/tests/test_initial_goal_burden.py::test_orthogonal_rotated_reflected_anisotropic_frames_preserve_estimate[True-1]
+FAILED build/select013-goal-burden-v1/tests/test_initial_goal_burden.py::test_orthogonal_rotated_reflected_anisotropic_frames_preserve_estimate[True--1]
+FAILED build/select013-goal-burden-v1/tests/test_initial_goal_burden.py::test_private_reference_and_actor_crop_do_not_change_native_score
+FAILED build/select013-goal-burden-v1/tests/test_initial_goal_burden.py::test_unknown_and_inward_native_clipping_cannot_rank_as_low_burden
+FAILED build/select013-goal-burden-v1/tests/test_initial_goal_burden.py::test_real_post_exposure_endpoints_and_full_sweeps_include_native_microsteps
+FAILED build/select013-goal-burden-v1/tests/test_initial_goal_burden.py::test_physical_aliases_do_not_spend_extra_queries_or_change_score
+FAILED build/select013-goal-burden-v1/tests/test_initial_goal_burden.py::test_caps_cancellation_and_noninitial_query_refuse_without_partial_ordering
+9 failed in 0.52s
