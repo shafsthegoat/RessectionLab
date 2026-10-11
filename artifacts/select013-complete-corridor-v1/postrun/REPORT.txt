@@ -1,0 +1,72 @@
+COMPLETE CORRIDOR RESULT: COMPLETE NEGATIVE
+
+Both accepted selected plans are STOP0. The entire 48-motion nominal exploration
+also passed its separate independent geometry check. It removed74 non-target
+cells (73.999992853mm3), zero target, return -16.893798572. No positive prefix
+was discarded. This is not evidence of global inaccessibility or clinical safety.
+
+Depth and focus
+Four tool/goal keys shared only two transverse goal columns. Actual cuts covered
+33 transverse cell columns, compared with55 for the saved historical47-step
+opening trajectory. Maximum removed cell-center depth was5.5mm (native layer7),
+the same historical paged maximum; original nonpaged beam maximum was4.5mm.
+The new route used41 suction and7 aspirator actions, against historical21/26.
+It removed less normal tissue than that historical121-cell opening prefix but
+neither produced target access. Histories differ; timings are not matched.
+
+Current blockers did disappear, then further dependency layers appeared. On the
+first suction corridor,7 layer4 blockers were cleared by step4;8 layer5 blockers
+appeared at step5. After resuming, step27 cleared its remaining layer5 set and
+steps28–32 worked through layer6. At step33 a complete8-cell layer7 failure set
+appeared with no legal direct blocker removal. This is preparation progress,
+not penetration to the18.5mm target endpoint.
+
+Why it switched
+Switches occurred at actions8,27,33,35,43,45,47. Each prior goal remained
+shaft-blocked and had zero emitted legal action removing its current first
+blockers. Every one of2,496 exact-goal diagnostics had a complete first-failure
+set; none was truncated. All pages were enumerated. However, the global16-cell
+proposal allocation omitted6–17 eligible cells per state. At the first switch,
+all5 current goal blockers were aperture-eligible but only1 was selected;
+4 were omitted. At the layer7 switch, only1 of8 was selected. This remains a
+candidate-allocation confound, not evidence those omitted rays are feasible.
+Static aperture exclusion affects the late offset-aspirator corridor at action43;
+it does not explain the first four switches. No post-action48 inventory exists.
+
+Observed prerequisite witnesses
+After action10, an actual cut outside the center-suction goal's unchanged five
+first blockers made2 legal blocker-removing actions available (previously0).
+The selected co-blockers and aperture eligibility were also exactly unchanged.
+The same pattern occurs after37 for offset suction (0→2) and after38 for center
+aspirator (0→1). These three observations support an earlier side preparation
+that a direct-overlap-only selector cannot choose for its active goal. A fourth
+unlock after44 changes proposal allocation too and is not clean evidence.
+Regenerated BASE proposal geometry may also contribute to the increased legal
+count even when the recorded obstruction allocation is unchanged. These are
+witnesses of useful indirect preparation, not proof that the SAME previously
+blocked preparation ray became feasible; that exact physical join is missing.
+
+What is missing
+Rejected extra-candidate sidecars and the full per-page physical legal list were
+not saved. We cannot name the exact newly enabled preparation ray or establish
+its own blocker chain from this record alone. The witnesses establish an
+observed dependency effect, not that any particular depth2 rule must succeed.
+
+One next change
+Only when the active goal has no direct legal progress: inspect up to32 CURRENT
+emitted blocker-clearance ray/tool pairs, obtain their paid current first-failure
+sidecars, and select an already legal action removing those prerequisite cells.
+Refresh after each real commit; no stale ID, new catalog family, reward change,
+fit, or horizon extension. Keep best positive complete-prefix/STOP objective and
+all geometry checks. This tests the observed direct-overlap limitation while
+leaving candidate-allocation uncertainty explicit.
+
+Cost/scope
+9,895 full previews include2,496 goal diagnostics; parent140.531s/659.8MB as
+recorded in receipt. All source, exploration and geometry costs retained.
+Annotation-assisted S union T and fixed simulated post-exposure assumptions;
+SELECT013 is development-exposed,037 held, EVAL closed. No models or training.
+The independent evaluator owns arithmetic/geometry acceptance audit separately.
+This diagnosis used only saved JSON/source and scalar arithmetic, no arrays,
+new previews, replay, fitting or model loads. Exact input hashes and step/switch
+projections are in diagnosis.json; diagnose_saved.py is reproducible.

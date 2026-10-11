@@ -1,0 +1,106 @@
+Complete-corridor terminal saved audit: PASS, useful-route result NEGATIVE
+
+Both sealed selected plans are STOP, with zero return and target removal.
+The persistent selector completed48 charged preparations and independently
+audited that whole exploration, but every incremental reward was negative.
+Recomputed cumulative return is -16.893798571567377. Thus best positive prefix
+length0 and STOP selection are correct; this was not a timeout/preview cap
+disguised as a negative result. The exploration removes74 distinct outside-
+target cells,73.99999285303693 mm3, and no target cells. It is not an accepted
+useful route, and none of its negative preparatory prefix costs were erased.
+
+The stdlib audit independently binds result, receipt, release, frozen index,
+worker-final record, both plan seals, both complete-history seals, rollout
+metrics and fresh replay bindings. Both selected episode certificates accept
+the same complete STOP histories and report no target-access success. The
+separate exploration certificate binds the exact saved48-motion history hash,
+has48 checked actions, full-tool/frontier checks, no failures and zero
+unsupported volume. Both original source/world/context controls equal their
+historical pins; h24 admission precedes the explicit fresh h48/rule change.
+Prepared authority remains the same canonical capability/object. SELECT013
+only is recorded; held037 remains closed, EVAL remains closed, and no weights,
+forwards, gradients, optimizer updates or private-reference reads are recorded.
+
+Current-blocker causality is locally coherent. Every selected preparation
+removes at least one member of its selected physical goal's current complete
+first-failure set. Action IDs, pre-state hashes, successor-state hashes, rewards
+and removed-cell overlaps agree with all48 saved committed records. Goals are
+four unique tool/entry/tip geometries in eight contiguous runs, including
+revisits, rather than eight different corridors. All2496 goal diagnostics
+(52 per state) are shaft-blocked; none is feasible and no first set is truncated.
+No diagnostic goal is omitted by the120-goal cap. All192 declared pages finish.
+
+The preparations reach at most5.5 mm entry-to-tip distance; the four chosen
+target rays request18.5 mm. These distances do not certify cleared corridor
+depth. The selector hits the48-action horizon while still in preparation.
+It does not observe the successor goal inventory after action48, so the audit
+cannot say that all goals remain blocked in that final successor. It also
+cannot infer that a longer horizon would succeed or be worthwhile.
+
+Two limitations must be separated.
+
+PROVEN CANDIDATE OMISSION: all48 states censor some blocker cells under the
+16-cell selection rule (529 omitted-cell mentions, not distinct cells).
+At six of seven goal switches, the abandoned goal has aperture-eligible
+current blocker cells outside the selected set. At step33 the central suction
+goal has eight complete first-blockers, all16 centered tool pairs pass the
+static aperture necessary filter, but only[7,90,84] is selected; seven cells
+are omitted and no current legal action removes an active blocker. Step43
+differs: [3,86,85] fails both centered-tool aperture filters. These are honest
+catalog limitations. An aperture pass is not native feasibility, and omitted
+pairs were not queried. Their omission cannot alone be claimed as the exact
+geometric cause of a switch or the sole cause of no useful route.
+
+SUPPORTED INDIRECT-PREPARATION HYPOTHESIS: three saved adjacent-state witnesses
+concern previously pursued physical goals, not necessarily the action's then-
+selected goal. Action10 removes[3,89,83], outside the central suction goal's
+five-cell first set; its legal overlap count changes0 to2 next state. Action37
+removes[3,87,86], outside the offset suction goal's five-cell first set; that
+count changes0 to2. Action38 removes[3,88,83], outside the central aspirator
+goal's five-cell first set; that count changes0 to1. In each case the exact
+physical goal, its first-blocker set, selected blocker allocation and per-tool
+static aperture records are unchanged. This supports the idea that a useful
+preparation can lie outside the desired goal's current first-failure set.
+
+It does not identify a fixed rejected ray becoming legal. The cavity can
+change generated base geometry, and the saved report lacks the complete
+physical legal-action list and rejected-extra sidecars needed to separate
+regenerated candidates from changed certification of identical geometry.
+The selected next contrast is therefore depth2 dependency diagnostics only
+when direct active-goal progress is unavailable, while holding v3 catalog,
+h48, public inputs, geometry and reward fixed. This isolates the supported
+hypothesis. It does not pre-approve a complete-route claim, assume a known
+successful sequence, or prescribe a simultaneous catalog change. Every
+preparation cost and native/independent complete-route acceptance must still
+count. This result gives no basis for a blind horizon increase or learning
+claim, and it does not establish physical tissue unreachability.
+
+Costs reconcile exactly:9895 total native previews,351 fresh STOP and9544
+persistent corridor. The9193 search previews are5616 base +1081 extra +2496
+goal diagnostics. Source/selected-STOP overhead accounts for the other702.
+There are52 native transitions:48 exploration, two selected rollouts and two
+fresh replays. Search sees1727 legal catalog candidates across192 pages.
+No rejected attempt escapes the cap, accounting failure, blocked preview
+attempt, time overshoot, or partial accepted arm is recorded. Worker138.059630 s;
+parent140.531022 s; sampled peak RSS659750912 bytes; output8347398 bytes.
+The parent terminates cleanly with exit0, no survivors or cleanup errors.
+Independent exploration and episode checks are included in phase/wall costs.
+
+Exact terminal pins:
+HEAD 75ba5344d59ed8c96cad22ba9a47f94f3dbe2f61
+result.json 6aecbed77aa0235abaa03147d2cd2769cdab712dba1b1bcbe69449b4a725cd84
+receipt.json e69d62cb95c92f59140f71cfcec8b9df3969dda6cacb9213cc31ab73b3876caf
+root-release.json 447442457d29f1f74a19d1284a04b2f6cf6f1fba00999f9b5ac30f81489e7206
+source-index.json 82994d955b6d3c4c93132ecfb874d6b8034c072d08fe44c6bd6fda7489edaf73
+persistent_corridor/selection.json 316fd5f092cc61b764257d2a152b820c6d757597db11df330adcdbd53560e8de
+persistent_corridor/exploration-geometry.json efb485d2b377e843d7ec7e321b81fa74758024d2d5bdc4f1ee61df5ed16514b3
+fresh_STOP/independent-episode.json 5121eeb6c40ad932fb3e48a40378945f88ce25a6337ea57b8e9f00ac235fa9ca
+persistent_corridor/independent-episode.json 383efbb32a425dce1b723f5b1b5172342e4daf8ffb403ac0c5e207bfc0c7df35
+
+Compact preservation: this review, audit_saved_complete_corridor.py and
+complete-corridor-saved-audit.json. The JSON retains all48 scalar/cell trace
+rows, seven switch witnesses, the three indirect-preparation witnesses and
+source hashes. Keep root result/receipt/release/index/costs, selected plans,
+replay bindings and three independent certificates; avoid duplicating the
+8.17 MB raw selection/history document or prior source inventories. Reviewer
+used saved JSON and stdlib only: no acquired arrays, native replay or tests.

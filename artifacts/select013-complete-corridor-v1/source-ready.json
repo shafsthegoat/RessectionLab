@@ -1,0 +1,18 @@
+{
+  "version": "source-ready-v1",
+  "files": {
+    "corridor_selector.py": "80c83cbce23083519762ce443c8eb908dde43917a44d5e2f0e49263d8893b41e",
+    "comparison_contract.py": "41946a9e83c25550460fcf1e685f2d83f8cdd1266a0cdce01dba0677094709d8",
+    "select_worker.py": "31e2f4dac7bae2e3c61185ca522fdbe784a68d98a89f8c3b0ae425861973136c",
+    "freeze-runtime.py": "c8ef85da4bdf4fc6c07b5e2069d81d73b603f47c82ea8fc5cbce0bcaff43f6a5",
+    "run_owned.py": "78b681642695bfef91fb6196141e5e105a7bbde41e109b4f539fd7f2c7dbf966",
+    "run_generated_controls.py": "5f64a0ab2551dc692e4167e8423e71d4dd6b31956d29175d03b41e9d9897da3d"
+  },
+  "tests": {
+    "test_corridor_selector.py": "edf6e24a47703e1e6754b54cf397cb2daa9d3392d2c003a33002885458d3bff7"
+  },
+  "control_receipt_sha256": "674b3482f3062ff8caefeb8dfbdc76064b729b5b688c367ed333e7ca457fe14e",
+  "final_runtime_exact_to_test_receipt": true,
+  "control_scope": "4 real generated native/helper controls; no patient or model; source runtime read/AST only",
+  "post_control_changes": false
+}

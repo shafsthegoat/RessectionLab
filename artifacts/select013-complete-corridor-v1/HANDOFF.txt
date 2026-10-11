@@ -1,0 +1,53 @@
+One fixed h48 persistent public-corridor comparison; no learning or private labels.
+
+Root freezes and executes once at canonical 75ba534. Same authenticated expanded
+SELECT013 public S/T/Ds image/world, unchanged access/tools/rewards. Original
+admission remains the exact historical h24 source control; explicit root release
+owns the h48 v3 diagnostic task. SELECT037 held and EVAL closed. Source-backed
+nominal T is annotation-assisted, not a newly inferred clinical target.
+
+Selector stores physical tool/entry/tip, not a stale action ID. Each state first
+prepares current v3 base/page catalog, refreshes exact goal first-failure sidecars
+on an isolated native clone, then exhausts all catalog pages. Direct goal action
+must map to current certified catalog geometry. Otherwise choose legal action
+actually removing current goal blockers, with blocker-count then unchanged
+reward and raw-order tie rules. Active goal is retained until direct execution
+or no current legal progress; other goals follow fixed base order. Bounded first
+failure truncations and unreachable current goals remain visible. No claim of
+whole-corridor completeness or global reachability.
+
+48 actual nominal exploration steps maximum. Highest cumulative positive prefix
+wins, including every preparation cost; STOP0 wins otherwise. Prefix shorter
+than48 ends with STOP; full48 ends at horizon. Both selected plans seal before
+any independent evaluation. Separate canonical independent geometry checks the
+ENTIRE explored planning history even if selected result is STOP; this does not
+make it an accepted authoritative episode. Selected plans then have authoritative
+rollout, fresh uncached native replay and independent full-tool episode audits.
+Failure/caps stay unresolved, never an accepted partial STOP.
+
+Caps: worker600s, parent660s, sampled owned tree3GiB, one thread,30k full previews,
+48 exploration +48 rollout +48 replay plus2 fresh STOP transitions (146 total).
+Selector local cap480s. Source/construction, isolated goal queries, selection,
+rollout, replay and independent geometry are all charged. Output28MiB plus
+supervision8MiB plus preparation1MiB =37MiB total; no model/data copies or
+unmonitored pycache. Historical h48 search is quality context only; no matched
+wall ratio. Useful result requires accepted geometry AND target>0 AND return>0.
+
+Generated controls: attempt01 4PASS1.30s. Final attempt02 4PASS1.32s,
+parent1.7507s/90,341,376B, hard30s/one thread/acquired-denial. Final test covers
+real native complementary negative preparations then positive target, current
+state refresh, exact native/independent replay and separate exploration audit,
+private-reference permutation, time refusal, and prefix/STOP/horizon semantics.
+Attempt01 source preserved; final source matches attempt02 receipt exactly.
+No acquired payload/model/checkpoint was opened during preparation.
+
+Metadata-only freeze (root supplies full HEAD; fresh prefix MUST NOT exist):
+  test ! -e build/select013-complete-corridor-v1/freeze-pycache
+  .venv/bin/python -I -B -X pycache_prefix=build/select013-complete-corridor-v1/freeze-pycache build/select013-complete-corridor-v1/freeze-runtime.py --head <full-75ba534-HEAD>
+Freezer emits pending_root_release template; root writes distinct root-release.json
+with only status=released_one_attempt and computes its SHA. No automatic retry.
+Owned launch (fresh launch prefix MUST NOT exist; -B prevents writes):
+  test ! -e build/select013-complete-corridor-v1/launch-pycache
+  .venv/bin/python -I -B -X pycache_prefix=build/select013-complete-corridor-v1/launch-pycache build/select013-complete-corridor-v1/run_owned.py --release build/select013-complete-corridor-v1/root-release.json --release-sha256 <exact-sha256>
+Parent creates lease/fresh child prefix in monitored supervision and retains
+Popen ownership. Root alone launches acquired execution. No canonical files edited.

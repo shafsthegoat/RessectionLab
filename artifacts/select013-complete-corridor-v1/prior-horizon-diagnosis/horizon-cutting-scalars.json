@@ -1,0 +1,304 @@
+{
+  "scope": "stdlib saved scalar/source review only; no arrays, geometry, models or fitting",
+  "tool_statistics": {
+    "generic_aspirator": {
+      "actions": 26,
+      "removed_cells": 98,
+      "cells_per_action": {
+        "1": 2,
+        "2": 6,
+        "3": 6,
+        "4": 4,
+        "5": 4,
+        "6": 2,
+        "8": 1,
+        "10": 1
+      }
+    },
+    "generic_suction": {
+      "actions": 21,
+      "removed_cells": 23,
+      "cells_per_action": {
+        "1": 19,
+        "2": 2
+      }
+    }
+  },
+  "all_removed_cells": 121,
+  "removed_axial_indices": {
+    "3": 15,
+    "4": 33,
+    "5": 40,
+    "6": 26,
+    "7": 7
+  },
+  "removed_distinct_transverse_columns": 55,
+  "current_nominal_rays": 52,
+  "nominal_rays_blocked": 52,
+  "proximal_goal_depth_mm_min_max": [
+    18.5,
+    19.500000000000007
+  ],
+  "current_base_legal_count": 4,
+  "current_extra_legal_count": 9,
+  "new_extra_legal_removed_histogram": {
+    "1": 9
+  },
+  "native_affine": [
+    [
+      1.0,
+      4.897e-12,
+      -1.0873523253007476e-27,
+      -61.37899999965685
+    ],
+    [
+      4.897e-12,
+      -1.0,
+      2.2204458347983412e-16,
+      76.1110000002986
+    ],
+    [
+      0.0,
+      -2.220446049250313e-16,
+      -0.9999999034194179,
+      66.72169615415781
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "inputs": {
+    "build/select013-residual-blocker-v1/postrun/causal-evidence-v2.json": "589e4772b27ce89989783b18cb8145fc17bf0578165c70b8f12773ee56da0ab6",
+    "build/select013-residual-blocker-v1/attempt-01/source/public-task-derivation.json": "037f8f1e1970eb87e9cfbeacce97a6da0b9184e98073fed0aad69c9c245446d1",
+    "src/resectionlab/native_resection.py": "79363aa6156917514d4aa57e328adcd16babff51518c0c4587e6dcaf94a5723d",
+    "src/resectionlab/native_proposals.py": "fc135cb1bf8a3cbacfeb097eeabee5cd9fafc5dee7a89eebd2b9b43ab63c8d12",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/post_exposure.py": "ce95ca492aef3bb0149d9fb62c22766caad76701f894abaa37327a21acb7970e"
+  },
+  "current_legal_actions": [
+    {
+      "source_path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-012.json",
+      "sha256": "4a5f49c6a5495c4dbdeb46a8de0222dda5cbfa169b0c6358092770f15ccc79fd",
+      "tool": "generic_suction",
+      "voxel": [
+        8,
+        93,
+        85
+      ],
+      "removed_indices_native": [
+        [
+          8,
+          93,
+          85
+        ]
+      ]
+    },
+    {
+      "source_path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-018.json",
+      "sha256": "a0cb46a80f2cdd9b3ee034999386a5efd2b7e1b49c6376e1896fe2b3f4d9551b",
+      "tool": "generic_suction",
+      "voxel": [
+        7,
+        91,
+        83
+      ],
+      "removed_indices_native": [
+        [
+          7,
+          91,
+          83
+        ]
+      ]
+    },
+    {
+      "source_path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-048.json",
+      "sha256": "92b93acaba9fb3e5ef9491c248998ba2da9f70a2dfe8b0922f9515f154973bc4",
+      "tool": "generic_suction",
+      "voxel": [
+        7,
+        93,
+        87
+      ],
+      "removed_indices_native": [
+        [
+          7,
+          93,
+          87
+        ]
+      ]
+    },
+    {
+      "source_path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-054.json",
+      "sha256": "bf60e6a03153cfc4ff5c65088f5db29d7368af4891c54305f183abf280a3a134",
+      "tool": "generic_suction",
+      "voxel": [
+        6,
+        88,
+        85
+      ],
+      "removed_indices_native": [
+        [
+          6,
+          88,
+          85
+        ]
+      ]
+    },
+    {
+      "source_path": "build/select013-residual-blocker-v1/attempt-01/prospective/extra-02.json",
+      "sha256": "29ff8a03e188974e20775475907b7b05cfe9b1c8d8a5e4affb46b53c475eeec8",
+      "tool": "generic_suction",
+      "voxel": [
+        4,
+        89,
+        82
+      ],
+      "removed_indices_native": [
+        [
+          4,
+          89,
+          82
+        ]
+      ]
+    },
+    {
+      "source_path": "build/select013-residual-blocker-v1/attempt-01/prospective/extra-06.json",
+      "sha256": "6d5b3d5427fa6f86395f0a5ba93dfaf2bc02e0e546927962ab3deae247e33560",
+      "tool": "generic_suction",
+      "voxel": [
+        5,
+        88,
+        84
+      ],
+      "removed_indices_native": [
+        [
+          5,
+          88,
+          84
+        ]
+      ]
+    },
+    {
+      "source_path": "build/select013-residual-blocker-v1/attempt-01/prospective/extra-08.json",
+      "sha256": "19d12b6cb0631fc0b95ff625429b765313dd05e86af1de434ce129febc40678e",
+      "tool": "generic_suction",
+      "voxel": [
+        5,
+        88,
+        86
+      ],
+      "removed_indices_native": [
+        [
+          5,
+          88,
+          86
+        ]
+      ]
+    },
+    {
+      "source_path": "build/select013-residual-blocker-v1/attempt-01/prospective/extra-11.json",
+      "sha256": "854e58a6bcf2fd716b32de638f38ab44fc8079201198c9f1a9cd5224e10aa979",
+      "tool": "generic_suction",
+      "voxel": [
+        5,
+        92,
+        89
+      ],
+      "removed_indices_native": [
+        [
+          5,
+          92,
+          89
+        ]
+      ]
+    },
+    {
+      "source_path": "build/select013-residual-blocker-v1/attempt-01/prospective/extra-12.json",
+      "sha256": "442960cbf5c32cfa6af21a880f9458893b06227b9a2f0a706af6ec4291e6c0ba",
+      "tool": "generic_suction",
+      "voxel": [
+        5,
+        95,
+        87
+      ],
+      "removed_indices_native": [
+        [
+          5,
+          95,
+          87
+        ]
+      ]
+    },
+    {
+      "source_path": "build/select013-residual-blocker-v1/attempt-01/prospective/extra-15.json",
+      "sha256": "e16e4b23e8807a3c1b86b1b53cedbc949229cb2abd3d25b3a57f0af94771a9a2",
+      "tool": "generic_suction",
+      "voxel": [
+        6,
+        90,
+        84
+      ],
+      "removed_indices_native": [
+        [
+          6,
+          90,
+          84
+        ]
+      ]
+    },
+    {
+      "source_path": "build/select013-residual-blocker-v1/attempt-01/prospective/extra-17.json",
+      "sha256": "c0c4985d1d1602fecb7283fd2b98f94892545c5fe271cbb5dc8d33f665713965",
+      "tool": "generic_suction",
+      "voxel": [
+        6,
+        90,
+        88
+      ],
+      "removed_indices_native": [
+        [
+          6,
+          90,
+          88
+        ]
+      ]
+    },
+    {
+      "source_path": "build/select013-residual-blocker-v1/attempt-01/prospective/extra-19.json",
+      "sha256": "7af0e15bac02367d8468fd724d910314c1e3fe5c5770313d7b0b69dc67ec1165",
+      "tool": "generic_suction",
+      "voxel": [
+        6,
+        92,
+        88
+      ],
+      "removed_indices_native": [
+        [
+          6,
+          92,
+          88
+        ]
+      ]
+    },
+    {
+      "source_path": "build/select013-residual-blocker-v1/attempt-01/prospective/extra-21.json",
+      "sha256": "43914be59cb3927079c0c7ef0a782dbec605e721cf63a9cbe27b5ed0a5bbc408",
+      "tool": "generic_suction",
+      "voxel": [
+        6,
+        93,
+        88
+      ],
+      "removed_indices_native": [
+        [
+          6,
+          93,
+          88
+        ]
+      ]
+    }
+  ]
+}

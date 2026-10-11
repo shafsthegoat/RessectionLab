@@ -1,0 +1,31 @@
+{
+  "acquired_arrays_or_frozen_model_allowed": false,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-complete-corridor-v1/controls-attempt-02/fresh-pycache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-complete-corridor-v1/controls-attempt-02/generated_child.py",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-complete-corridor-v1/controls-attempt-02/generated-tmp"
+  ],
+  "elapsed_seconds": 1.7507129579316825,
+  "exit_code": 0,
+  "files": {
+    "build/select013-complete-corridor-v1/comparison_contract.py": "41946a9e83c25550460fcf1e685f2d83f8cdd1266a0cdce01dba0677094709d8",
+    "build/select013-complete-corridor-v1/corridor_selector.py": "80c83cbce23083519762ce443c8eb908dde43917a44d5e2f0e49263d8893b41e",
+    "build/select013-complete-corridor-v1/freeze-runtime.py": "c8ef85da4bdf4fc6c07b5e2069d81d73b603f47c82ea8fc5cbce0bcaff43f6a5",
+    "build/select013-complete-corridor-v1/run_generated_controls.py": "5f64a0ab2551dc692e4167e8423e71d4dd6b31956d29175d03b41e9d9897da3d",
+    "build/select013-complete-corridor-v1/run_owned.py": "78b681642695bfef91fb6196141e5e105a7bbde41e109b4f539fd7f2c7dbf966",
+    "build/select013-complete-corridor-v1/select_worker.py": "31e2f4dac7bae2e3c61185ca522fdbe784a68d98a89f8c3b0ae425861973136c",
+    "build/select013-complete-corridor-v1/tests/test_corridor_selector.py": "edf6e24a47703e1e6754b54cf397cb2daa9d3392d2c003a33002885458d3bff7"
+  },
+  "generated_only": true,
+  "hard_seconds": 30,
+  "log_sha256": "bc9507cf730567da3d80c9df14fc5d069992b9bda90f54ce5b21db23cc23d1b1",
+  "observed_child_maxrss": 90341376,
+  "source_unchanged": true,
+  "threads": 1,
+  "timeout": false
+}

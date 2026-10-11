@@ -1,0 +1,936 @@
+{
+  "schema": "saved-corridor-causal-diagnosis-v1",
+  "inputs": {
+    "build/select013-complete-corridor-v1/attempt-01/result.json": {
+      "sha256": "6aecbed77aa0235abaa03147d2cd2769cdab712dba1b1bcbe69449b4a725cd84",
+      "bytes": 11286
+    },
+    "build/select013-complete-corridor-v1/attempt-01.supervision/receipt.json": {
+      "sha256": "e69d62cb95c92f59140f71cfcec8b9df3969dda6cacb9213cc31ab73b3876caf",
+      "bytes": 7855
+    },
+    "build/select013-complete-corridor-v1/attempt-01/persistent_corridor/selection.json": {
+      "sha256": "316fd5f092cc61b764257d2a152b820c6d757597db11df330adcdbd53560e8de",
+      "bytes": 8169023
+    },
+    "build/select013-complete-corridor-v1/attempt-01/persistent_corridor/original-world-control.json": {
+      "sha256": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e",
+      "bytes": 19337
+    },
+    "build/select013-paged-route-h48-v1/attempt-01/result.json": {
+      "sha256": "8dcbf51e12fc4a1175f52422bd5e4b745ce6d35300fd589b8b4b23404d7bdcf2",
+      "bytes": 1409039
+    },
+    "build/select013-target-ray-priority-v1/horizon-cutting-scalars.json": {
+      "sha256": "ca21b73c8f8b6fff2cf2590734fbd8cfa8e7f963a8d7d35739dc23b7ec1f13a5",
+      "bytes": 7186
+    }
+  },
+  "complete_run_negative": true,
+  "selected_outcomes": {
+    "fresh_STOP": {
+      "clinical_deficit_probability": null,
+      "complete_tool_path_length_mm": 0.0,
+      "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+      "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+      "language_surrogate": null,
+      "motor_surrogate": null,
+      "nonstop_actions": 0,
+      "normal_removed_mm3": 0.0,
+      "partial_contact_reward_weight": 0.0,
+      "positive_target_source_cells_removed": 0,
+      "reference_target_fraction_removed": 0.0,
+      "simulated_removed_volume_mm3": 0.0,
+      "target_removed_mm3": 0.0,
+      "tool_changes": 0,
+      "total_reference_target_mm3": 35259.99659456868,
+      "total_reward": 0.0
+    },
+    "persistent_corridor": {
+      "clinical_deficit_probability": null,
+      "complete_tool_path_length_mm": 0.0,
+      "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+      "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+      "language_surrogate": null,
+      "motor_surrogate": null,
+      "nonstop_actions": 0,
+      "normal_removed_mm3": 0.0,
+      "partial_contact_reward_weight": 0.0,
+      "positive_target_source_cells_removed": 0,
+      "reference_target_fraction_removed": 0.0,
+      "simulated_removed_volume_mm3": 0.0,
+      "target_removed_mm3": 0.0,
+      "tool_changes": 0,
+      "total_reference_target_mm3": 35259.99659456868,
+      "total_reward": 0.0
+    }
+  },
+  "exploration": {
+    "moves": 48,
+    "removed_cells": 74,
+    "distinct_transverse_removed_columns": 33,
+    "axial_layers": {
+      "5": 24,
+      "6": 11,
+      "4": 26,
+      "3": 10,
+      "7": 3
+    },
+    "max_removed_center_depth_mm": 5.500000000000002,
+    "target_removed_mm3": 0.0,
+    "normal_removed_mm3": 73.99999285303689,
+    "return": -16.893798571567377,
+    "physical_tool_goal_keys": 4,
+    "transverse_goal_columns": 2,
+    "cut_tool_counts": {
+      "generic_aspirator": 7,
+      "generic_suction": 41
+    },
+    "goal_diagnostics": 2496,
+    "diagnostic_truncations": 0,
+    "goal_diagnostic_cap_omissions": 0,
+    "global16_cell_selection_omission_range": [
+      6,
+      17
+    ]
+  },
+  "steps": [
+    {
+      "step": 1,
+      "goal": 1,
+      "cut_tool": "generic_aspirator",
+      "removed_cells": 6,
+      "removed_current_blockers": 4,
+      "first_blockers": 7,
+      "first_blocker_layers": [
+        4
+      ],
+      "whole_run_max_removed_center_depth_mm": 3.5,
+      "cumulative_reward": -1.2383998841233015,
+      "legal_direct_blocker_removing_actions": 9
+    },
+    {
+      "step": 2,
+      "goal": 1,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 3,
+      "first_blocker_layers": [
+        4
+      ],
+      "whole_run_max_removed_center_depth_mm": 3.5,
+      "cumulative_reward": -1.5053998648271851,
+      "legal_direct_blocker_removing_actions": 5
+    },
+    {
+      "step": 3,
+      "goal": 1,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 2,
+      "first_blocker_layers": [
+        4
+      ],
+      "whole_run_max_removed_center_depth_mm": 3.5,
+      "cumulative_reward": -1.7423998455310687,
+      "legal_direct_blocker_removing_actions": 4
+    },
+    {
+      "step": 4,
+      "goal": 1,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        4
+      ],
+      "whole_run_max_removed_center_depth_mm": 3.5,
+      "cumulative_reward": -1.9793998262349524,
+      "legal_direct_blocker_removing_actions": 3
+    },
+    {
+      "step": 5,
+      "goal": 1,
+      "cut_tool": "generic_aspirator",
+      "removed_cells": 7,
+      "removed_current_blockers": 1,
+      "first_blockers": 8,
+      "first_blocker_layers": [
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -3.449799691042138,
+      "legal_direct_blocker_removing_actions": 1
+    },
+    {
+      "step": 6,
+      "goal": 1,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 7,
+      "first_blocker_layers": [
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -3.718799671746021,
+      "legal_direct_blocker_removing_actions": 1
+    },
+    {
+      "step": 7,
+      "goal": 1,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 6,
+      "first_blocker_layers": [
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -3.957799652449905,
+      "legal_direct_blocker_removing_actions": 1
+    },
+    {
+      "step": 8,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        3
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -4.192799633153788,
+      "legal_direct_blocker_removing_actions": 5
+    },
+    {
+      "step": 9,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        3
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -4.427799613857672,
+      "legal_direct_blocker_removing_actions": 5
+    },
+    {
+      "step": 10,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        3
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -4.662799594561555,
+      "legal_direct_blocker_removing_actions": 5
+    },
+    {
+      "step": 11,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 2,
+      "first_blocker_layers": [
+        4
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -4.899799575265439,
+      "legal_direct_blocker_removing_actions": 8
+    },
+    {
+      "step": 12,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        4
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -5.136799555969322,
+      "legal_direct_blocker_removing_actions": 6
+    },
+    {
+      "step": 13,
+      "goal": 2,
+      "cut_tool": "generic_aspirator",
+      "removed_cells": 6,
+      "removed_current_blockers": 2,
+      "first_blockers": 5,
+      "first_blocker_layers": [
+        3,
+        4
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -6.405199440092623,
+      "legal_direct_blocker_removing_actions": 14
+    },
+    {
+      "step": 14,
+      "goal": 2,
+      "cut_tool": "generic_aspirator",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 3,
+      "first_blocker_layers": [
+        3,
+        4
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -6.639599420796507,
+      "legal_direct_blocker_removing_actions": 9
+    },
+    {
+      "step": 15,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 2,
+      "first_blocker_layers": [
+        4
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -6.90659940150039,
+      "legal_direct_blocker_removing_actions": 4
+    },
+    {
+      "step": 16,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        4
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -7.143599382204274,
+      "legal_direct_blocker_removing_actions": 3
+    },
+    {
+      "step": 17,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        3
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -7.378599362908157,
+      "legal_direct_blocker_removing_actions": 3
+    },
+    {
+      "step": 18,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 3,
+      "first_blocker_layers": [
+        4,
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -7.615599343612041,
+      "legal_direct_blocker_removing_actions": 3
+    },
+    {
+      "step": 19,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 2,
+      "first_blocker_layers": [
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -7.854599324315924,
+      "legal_direct_blocker_removing_actions": 3
+    },
+    {
+      "step": 20,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -8.093599305019808,
+      "legal_direct_blocker_removing_actions": 2
+    },
+    {
+      "step": 21,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 3,
+      "first_blocker_layers": [
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -8.332599285723692,
+      "legal_direct_blocker_removing_actions": 8
+    },
+    {
+      "step": 22,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 2,
+      "first_blocker_layers": [
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -8.571599266427576,
+      "legal_direct_blocker_removing_actions": 6
+    },
+    {
+      "step": 23,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -8.81059924713146,
+      "legal_direct_blocker_removing_actions": 3
+    },
+    {
+      "step": 24,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 8,
+      "first_blocker_layers": [
+        4,
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -9.047599227835343,
+      "legal_direct_blocker_removing_actions": 12
+    },
+    {
+      "step": 25,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 7,
+      "first_blocker_layers": [
+        4,
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -9.284599208539227,
+      "legal_direct_blocker_removing_actions": 9
+    },
+    {
+      "step": 26,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 6,
+      "first_blocker_layers": [
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -9.52359918924311,
+      "legal_direct_blocker_removing_actions": 1
+    },
+    {
+      "step": 27,
+      "goal": 1,
+      "cut_tool": "generic_aspirator",
+      "removed_cells": 4,
+      "removed_current_blockers": 3,
+      "first_blockers": 3,
+      "first_blocker_layers": [
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 4.500000000000004,
+      "cumulative_reward": -10.393999111998646,
+      "legal_direct_blocker_removing_actions": 4
+    },
+    {
+      "step": 28,
+      "goal": 1,
+      "cut_tool": "generic_aspirator",
+      "removed_cells": 5,
+      "removed_current_blockers": 4,
+      "first_blockers": 8,
+      "first_blocker_layers": [
+        6
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -11.436399015438063,
+      "legal_direct_blocker_removing_actions": 2
+    },
+    {
+      "step": 29,
+      "goal": 1,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 4,
+      "first_blocker_layers": [
+        6
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -11.707398996141947,
+      "legal_direct_blocker_removing_actions": 1
+    },
+    {
+      "step": 30,
+      "goal": 1,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 3,
+      "first_blocker_layers": [
+        6
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -11.94839897684583,
+      "legal_direct_blocker_removing_actions": 1
+    },
+    {
+      "step": 31,
+      "goal": 1,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 2,
+      "first_blocker_layers": [
+        6
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -12.189398957549713,
+      "legal_direct_blocker_removing_actions": 1
+    },
+    {
+      "step": 32,
+      "goal": 1,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        6
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -12.430398938253596,
+      "legal_direct_blocker_removing_actions": 1
+    },
+    {
+      "step": 33,
+      "goal": 3,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 2,
+      "first_blocker_layers": [
+        4
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -12.66739891895748,
+      "legal_direct_blocker_removing_actions": 2
+    },
+    {
+      "step": 34,
+      "goal": 3,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        4
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -12.904398899661363,
+      "legal_direct_blocker_removing_actions": 1
+    },
+    {
+      "step": 35,
+      "goal": 4,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        3
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -13.139398880365246,
+      "legal_direct_blocker_removing_actions": 2
+    },
+    {
+      "step": 36,
+      "goal": 4,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 3,
+      "first_blocker_layers": [
+        3
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -13.374398861069128,
+      "legal_direct_blocker_removing_actions": 4
+    },
+    {
+      "step": 37,
+      "goal": 4,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 2,
+      "first_blocker_layers": [
+        3
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -13.609398841773011,
+      "legal_direct_blocker_removing_actions": 3
+    },
+    {
+      "step": 38,
+      "goal": 4,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        3
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -13.844398822476894,
+      "legal_direct_blocker_removing_actions": 2
+    },
+    {
+      "step": 39,
+      "goal": 4,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        3
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -14.079398803180776,
+      "legal_direct_blocker_removing_actions": 1
+    },
+    {
+      "step": 40,
+      "goal": 4,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        4
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -14.31639878388466,
+      "legal_direct_blocker_removing_actions": 2
+    },
+    {
+      "step": 41,
+      "goal": 4,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 4,
+      "first_blocker_layers": [
+        3,
+        4
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -14.553398764588543,
+      "legal_direct_blocker_removing_actions": 2
+    },
+    {
+      "step": 42,
+      "goal": 4,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 3,
+      "first_blocker_layers": [
+        3,
+        4
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -14.790398745292427,
+      "legal_direct_blocker_removing_actions": 1
+    },
+    {
+      "step": 43,
+      "goal": 2,
+      "cut_tool": "generic_aspirator",
+      "removed_cells": 4,
+      "removed_current_blockers": 2,
+      "first_blockers": 5,
+      "first_blocker_layers": [
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -15.660798668047962,
+      "legal_direct_blocker_removing_actions": 2
+    },
+    {
+      "step": 44,
+      "goal": 2,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 3,
+      "first_blocker_layers": [
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.5,
+      "cumulative_reward": -15.929798648751845,
+      "legal_direct_blocker_removing_actions": 2
+    },
+    {
+      "step": 45,
+      "goal": 1,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 8,
+      "first_blocker_layers": [
+        7
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.500000000000002,
+      "cumulative_reward": -16.172798629455727,
+      "legal_direct_blocker_removing_actions": 1
+    },
+    {
+      "step": 46,
+      "goal": 1,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 7,
+      "first_blocker_layers": [
+        7
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.500000000000002,
+      "cumulative_reward": -16.41579861015961,
+      "legal_direct_blocker_removing_actions": 1
+    },
+    {
+      "step": 47,
+      "goal": 3,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 2,
+      "first_blocker_layers": [
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.500000000000002,
+      "cumulative_reward": -16.654798590863493,
+      "legal_direct_blocker_removing_actions": 1
+    },
+    {
+      "step": 48,
+      "goal": 3,
+      "cut_tool": "generic_suction",
+      "removed_cells": 1,
+      "removed_current_blockers": 1,
+      "first_blockers": 1,
+      "first_blocker_layers": [
+        5
+      ],
+      "whole_run_max_removed_center_depth_mm": 5.500000000000002,
+      "cumulative_reward": -16.893798571567377,
+      "legal_direct_blocker_removing_actions": 1
+    }
+  ],
+  "switches": [
+    {
+      "at_step": 8,
+      "from_goal": 1,
+      "to_goal": 2,
+      "first_blocker_count": 5,
+      "selected_first_blockers": 1,
+      "aperture_eligible_first_blockers": 5,
+      "first_blocker_layers": [
+        5
+      ],
+      "reason": "zero current legal action removing first blockers; exact goal still shaft-blocked"
+    },
+    {
+      "at_step": 27,
+      "from_goal": 2,
+      "to_goal": 1,
+      "first_blocker_count": 5,
+      "selected_first_blockers": 1,
+      "aperture_eligible_first_blockers": 5,
+      "first_blocker_layers": [
+        5
+      ],
+      "reason": "zero current legal action removing first blockers; exact goal still shaft-blocked"
+    },
+    {
+      "at_step": 33,
+      "from_goal": 1,
+      "to_goal": 3,
+      "first_blocker_count": 8,
+      "selected_first_blockers": 1,
+      "aperture_eligible_first_blockers": 8,
+      "first_blocker_layers": [
+        7
+      ],
+      "reason": "zero current legal action removing first blockers; exact goal still shaft-blocked"
+    },
+    {
+      "at_step": 35,
+      "from_goal": 3,
+      "to_goal": 4,
+      "first_blocker_count": 5,
+      "selected_first_blockers": 2,
+      "aperture_eligible_first_blockers": 5,
+      "first_blocker_layers": [
+        5
+      ],
+      "reason": "zero current legal action removing first blockers; exact goal still shaft-blocked"
+    },
+    {
+      "at_step": 43,
+      "from_goal": 4,
+      "to_goal": 2,
+      "first_blocker_count": 2,
+      "selected_first_blockers": 1,
+      "aperture_eligible_first_blockers": 1,
+      "first_blocker_layers": [
+        3,
+        4
+      ],
+      "reason": "zero current legal action removing first blockers; exact goal still shaft-blocked"
+    },
+    {
+      "at_step": 45,
+      "from_goal": 2,
+      "to_goal": 1,
+      "first_blocker_count": 2,
+      "selected_first_blockers": 1,
+      "aperture_eligible_first_blockers": 2,
+      "first_blocker_layers": [
+        5
+      ],
+      "reason": "zero current legal action removing first blockers; exact goal still shaft-blocked"
+    },
+    {
+      "at_step": 47,
+      "from_goal": 1,
+      "to_goal": 3,
+      "first_blocker_count": 6,
+      "selected_first_blockers": 2,
+      "aperture_eligible_first_blockers": 6,
+      "first_blocker_layers": [
+        7
+      ],
+      "reason": "zero current legal action removing first blockers; exact goal still shaft-blocked"
+    }
+  ],
+  "observed_prerequisite_unlocks": [
+    {
+      "after_action": 10,
+      "goal": 1,
+      "preparation_goal": 2,
+      "removed_first_blocker_overlap": 0,
+      "exact_first_blocker_set_unchanged": true,
+      "exact_group_selection_and_aperture_eligibility_unchanged": true,
+      "legal_direct_blocker_actions_before": 0,
+      "legal_direct_blocker_actions_after": 2,
+      "evidence_scope": "observed side-cell preparation precedes newly available legal removal; exact rejected extra-ray sidecars were not saved"
+    },
+    {
+      "after_action": 37,
+      "goal": 3,
+      "preparation_goal": 4,
+      "removed_first_blocker_overlap": 0,
+      "exact_first_blocker_set_unchanged": true,
+      "exact_group_selection_and_aperture_eligibility_unchanged": true,
+      "legal_direct_blocker_actions_before": 0,
+      "legal_direct_blocker_actions_after": 2,
+      "evidence_scope": "observed side-cell preparation precedes newly available legal removal; exact rejected extra-ray sidecars were not saved"
+    },
+    {
+      "after_action": 38,
+      "goal": 2,
+      "preparation_goal": 4,
+      "removed_first_blocker_overlap": 0,
+      "exact_first_blocker_set_unchanged": true,
+      "exact_group_selection_and_aperture_eligibility_unchanged": true,
+      "legal_direct_blocker_actions_before": 0,
+      "legal_direct_blocker_actions_after": 1,
+      "evidence_scope": "observed side-cell preparation precedes newly available legal removal; exact rejected extra-ray sidecars were not saved"
+    },
+    {
+      "after_action": 44,
+      "goal": 1,
+      "preparation_goal": 2,
+      "removed_first_blocker_overlap": 0,
+      "exact_first_blocker_set_unchanged": true,
+      "exact_group_selection_and_aperture_eligibility_unchanged": false,
+      "legal_direct_blocker_actions_before": 0,
+      "legal_direct_blocker_actions_after": 1,
+      "evidence_scope": "observed side-cell preparation precedes newly available legal removal; exact rejected extra-ray sidecars were not saved"
+    }
+  ],
+  "historical_depth": {
+    "original_lazy_beam": {
+      "max_saved_opening_depth_mm": 4.500000000000003,
+      "prefix_length_at_first_max_depth": 2,
+      "first_max_depth_prefix_return": -1.2787998841433015,
+      "first_max_depth_prefix_removed_mm3": 5.999999420516508,
+      "comparison_scope": "retained prefix diagnostic, not accepted positive route or matched runtime"
+    },
+    "paged_obstruction_lazy_beam": {
+      "max_saved_opening_depth_mm": 5.500000000000005,
+      "prefix_length_at_first_max_depth": 47,
+      "first_max_depth_prefix_return": -26.381397663689913,
+      "first_max_depth_prefix_removed_mm3": 120.99998831374961,
+      "comparison_scope": "retained prefix diagnostic, not accepted positive route or matched runtime"
+    }
+  },
+  "next_single_change": "When active goal has no direct legal progress, perform bounded depth2 exact current emitted preparation-ray prerequisite diagnostics; choose legal action removing its current blockers, refresh after real commit. No changed catalog, reward, horizon or model. All additional queries and preparation costs charged.",
+  "limitations": [
+    "No rejected extra-candidate sidecars or complete legal candidate geometry were saved; causal ray-specific blocker chain cannot be reconstructed here.",
+    "Global16-cell allocation omits active goal blockers and remains a confound.",
+    "Static necessary aperture exclusion affects a late corridor but is not the cause of the first switches.",
+    "No post-action48 refreshed inventory was generated; final observed blocker sets belong to pre-action48.",
+    "No proof that any h48 complete positive route exists or that all routes fail."
+  ],
+  "reader_note": "One exploratory console projection treated selected_cells (a scalar count) as a list and failed before output; corrected by reading target_ray_groups.selected_co_blockers. Experiment files unchanged."
+}

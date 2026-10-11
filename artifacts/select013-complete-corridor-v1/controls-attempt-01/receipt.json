@@ -1,0 +1,27 @@
+{
+  "acquired_arrays_or_frozen_model_allowed": false,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-complete-corridor-v1/controls-attempt-01/fresh-pycache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-complete-corridor-v1/controls-attempt-01/generated_child.py",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-complete-corridor-v1/controls-attempt-01/generated-tmp"
+  ],
+  "elapsed_seconds": 1.7464250829070807,
+  "exit_code": 0,
+  "files": {
+    "build/select013-complete-corridor-v1/corridor_selector.py": "d128c5ee66db84d3bb793bbf717c499d9681bbad5c875c70e68947dd2663af57",
+    "build/select013-complete-corridor-v1/run_generated_controls.py": "5f64a0ab2551dc692e4167e8423e71d4dd6b31956d29175d03b41e9d9897da3d",
+    "build/select013-complete-corridor-v1/tests/test_corridor_selector.py": "bb30fc9115a142336ebce5f291898ee4d19b65b26591370a9c84d0fda6608b0a"
+  },
+  "generated_only": true,
+  "hard_seconds": 30,
+  "log_sha256": "a040e19bb29542ee594a84f25f5d3481197aa83a1beebae31768eab37e3de90b",
+  "observed_child_maxrss": 90554368,
+  "source_unchanged": true,
+  "threads": 1,
+  "timeout": false
+}

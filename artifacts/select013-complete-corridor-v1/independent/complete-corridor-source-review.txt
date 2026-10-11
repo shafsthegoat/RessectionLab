@@ -1,0 +1,88 @@
+Complete-corridor runtime: one-pass independent source GO
+
+No blocking source flaw found. Reviewed selector, source admission/worker,
+comparison contract, freezer, retained owned supervisor and saved final four
+generated controls. No numerical tests, native/acquired replay, arrays,
+checkpoints or new experiments were run by this reviewer. Scope is the frozen
+prototype and one declared run, not exhaustive route discovery.
+
+The selector starts a fresh planning clone that substitutes the permitted
+nominal field for evaluator reference values. Goal membership and candidate
+scores use this planning view. The generated private-reference permutation
+control verifies path/report invariance. Active goals persist as exact tool,
+entry and tip geometry, not a stale action ID or union of unrelated endpoint
+blocker sets. Every state re-diagnoses these physical goals on an isolated
+clone. Their first-failure fingerprints bind source, committed state, native
+model, tool and endpoints. The sidecar remains a bounded current witness.
+
+Only a current catalog action ID with the current page certificate can commit.
+Diagnostic-only geometry cannot become an executable action. Diagnostic
+previews cannot evict live page certificates because they use a separate
+engine. Page enumeration finishes before a winner is chosen; current-state
+catalogs and certificates regenerate after every committed preparation.
+The persistent goal gets priority while it has a legal removal or direct goal
+action; otherwise a currently actionable public goal may take over. This is
+a deterministic bounded heuristic, not a proof that every corridor was tried.
+
+All preparation rewards accumulate from the fresh root. The highest strictly
+positive cumulative prefix wins against STOP0; the returned prefix ends in
+STOP unless its48th action already reaches the horizon. A negative preparatory
+trace cannot be reported as an improved selected route. The complete-result
+status permits an honest negative STOP result; scientific success separately
+requires positive accepted total return and target progress. Merely removing
+blockers, keeping a goal active or exhausting the horizon is not success.
+
+Time, cancellation or native-budget failure raises incomplete search with its
+partial trace retained. The worker does not evaluate that best_sequence as an
+accepted plan: if either arm has no completed sealed plan, evaluation is
+refused. Original source admission is checked against the pinned historical
+world/context before the explicit fresh h48/rule change. Physical source and
+prepared post-exposure authority are preserved; the old historical action
+prefix is not transplanted into the new-rule task.
+
+Both fresh STOP and persistent-corridor plans seal before any evaluator runs.
+The full nominal exploration then gets a separate independent source-cell
+geometry audit, including when its selected winner is STOP. This audit is
+explicitly geometry-only, not authoritative episode acceptance. Each selected
+plan subsequently receives a complete authoritative rollout, a fresh replay
+with identical full history, and independent complete-episode acceptance.
+Only then are outcomes compared. The retained h48 result is labeled historical
+quality context, with no matched-runtime comparison claim.
+
+Bounds are coherent:48 selector transitions,48 rollout and48 replay for the
+corridor plus the two STOP baseline transitions give146 total. Per state the
+catalog stays120+32 with page8/certificate128 and at most120 diagnostic goals.
+The existing previews for source construction, discovery, diagnostics,
+rollout and replay all pass through the counted native entry and30000 total
+cap. Search480 s, worker600 s, parent660 s; one thread;3 GiB;28 MiB diagnostic
+output plus8 MiB supervision. Guard failures cannot become successful capped
+results. Separate phase costs include independent audit, hooks restore in
+finally, output/failure records persist, and the owned parent checks source
+pins, completion, final child status, limits and cleanup.
+
+The nonblocking stale supervisor declaration was corrected before launch.
+Verified the exact one-line diff against preserved run_owned_before_scope_fix.py:
+completion_scope now describes fresh STOP and persistent public corridor,
+both plans sealed before exploration geometry and selected rollout/replay.
+No other parent source bytes changed. Execution and acceptance are unchanged;
+no numerical rerun or further source review was needed for this correction.
+
+Exact reviewed pins:
+HEAD 75ba5344d59ed8c96cad22ba9a47f94f3dbe2f61
+source-index.json 82994d955b6d3c4c93132ecfb874d6b8034c072d08fe44c6bd6fda7489edaf73
+corridor_selector.py 80c83cbce23083519762ce443c8eb908dde43917a44d5e2f0e49263d8893b41e
+select_worker.py 31e2f4dac7bae2e3c61185ca522fdbe784a68d98a89f8c3b0ae425861973136c
+comparison_contract.py 41946a9e83c25550460fcf1e685f2d83f8cdd1266a0cdce01dba0677094709d8
+run_owned.py ccfea9b792455b7febbf2fac32a4818db19455490984c37acb014258cad84e5d
+run_owned_before_scope_fix.py 78b681642695bfef91fb6196141e5e105a7bbde41e109b4f539fd7f2c7dbf966
+freeze-runtime.py c8ef85da4bdf4fc6c07b5e2069d81d73b603f47c82ea8fc5cbce0bcaff43f6a5
+tests/test_corridor_selector.py edf6e24a47703e1e6754b54cf397cb2daa9d3392d2c003a33002885458d3bff7
+controls-attempt-02/receipt.json 674b3482f3062ff8caefeb8dfbdc76064b729b5b688c367ed333e7ca457fe14e
+controls-attempt-02/stdout.log bc9507cf730567da3d80c9df14fc5d069992b9bda90f54ce5b21db23cc23d1b1
+
+Final saved controls:4 passed in1.32 s, parent1.7507129579316825 s, exit0,
+no timeout, one thread, source unchanged. They cover two real generated
+negative preparations to positive target removal, persistent refreshed goal,
+full replay/episode acceptance plus exploration geometry, private-reference
+invariance, refusal of capped selection, and prefix/STOP/horizon arithmetic.
+The acquired experiment and its final saved-result acceptance remain root-owned.

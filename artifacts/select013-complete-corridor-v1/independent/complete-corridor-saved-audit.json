@@ -1,0 +1,4062 @@
+{
+  "censoring": {
+    "diagnostic_goal_omissions": 0,
+    "selection_omitted_cell_mentions": 529,
+    "states_with_cell_selection_omissions": 48,
+    "switches_with_eligible_active_blockers_unselected": 6,
+    "truncated_first_failure_sets": 0
+  },
+  "compact_exploration_trace": [
+    {
+      "action_id": "nominal-cavity-ca085e35455d8fb8a4f6222a",
+      "cumulative_return": -1.2383998841233015,
+      "current_goal_legal_preparations": 9,
+      "goal_current_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          85
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          91,
+          84
+        ],
+        [
+          4,
+          91,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ],
+        [
+          4,
+          92,
+          85
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 1,
+      "overlap": 4,
+      "preparation_entry_to_tip_mm": 2.5,
+      "removed_cells": [
+        [
+          4,
+          90,
+          85
+        ],
+        [
+          4,
+          91,
+          84
+        ],
+        [
+          4,
+          91,
+          85
+        ],
+        [
+          4,
+          91,
+          86
+        ],
+        [
+          4,
+          92,
+          85
+        ],
+        [
+          5,
+          91,
+          85
+        ]
+      ],
+      "result_state_hash": "sha256:1e0bec1f68c8f6d33f6ec396521196ccc789ef4f85f04780b6030b148fc578d2",
+      "reward": -1.2383998841233015,
+      "selection_omitted_cells": 16,
+      "source_state_hash": "sha256:8e42982139ee66ad8c2157585c450c3f856f38ed1f139dcbd1b79c1968e471d5",
+      "step": 1
+    },
+    {
+      "action_id": "nominal-cavity-d5e68713973c5ec775a89181",
+      "cumulative_return": -1.5053998648271851,
+      "current_goal_legal_preparations": 5,
+      "goal_current_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 1,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 2.5,
+      "removed_cells": [
+        [
+          4,
+          90,
+          84
+        ]
+      ],
+      "result_state_hash": "sha256:10843333adae3675db81b926cff369366faeb1447296cab38933d2e376e0f465",
+      "reward": -0.2669999807038836,
+      "selection_omitted_cells": 12,
+      "source_state_hash": "sha256:1e0bec1f68c8f6d33f6ec396521196ccc789ef4f85f04780b6030b148fc578d2",
+      "step": 2
+    },
+    {
+      "action_id": "nominal-cavity-1fda187de3a5ec9879ea2f48",
+      "cumulative_return": -1.7423998455310687,
+      "current_goal_legal_preparations": 4,
+      "goal_current_blockers": [
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 1,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 2.5,
+      "removed_cells": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "result_state_hash": "sha256:3e031e8db87b3b707c8bd672e326eab85692f8ccf78ad760b89d2e007f89807d",
+      "reward": -0.2369999807038836,
+      "selection_omitted_cells": 11,
+      "source_state_hash": "sha256:10843333adae3675db81b926cff369366faeb1447296cab38933d2e376e0f465",
+      "step": 3
+    },
+    {
+      "action_id": "nominal-cavity-c0c1430c698aaa5ef80b5f92",
+      "cumulative_return": -1.9793998262349524,
+      "current_goal_legal_preparations": 3,
+      "goal_current_blockers": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 1,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 2.500000000000007,
+      "removed_cells": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "result_state_hash": "sha256:1b84c0307302a8d44fb389f983467fffdfae39ddb6ae011f9d8524ca799d9182",
+      "reward": -0.2369999807038836,
+      "selection_omitted_cells": 10,
+      "source_state_hash": "sha256:3e031e8db87b3b707c8bd672e326eab85692f8ccf78ad760b89d2e007f89807d",
+      "step": 4
+    },
+    {
+      "action_id": "nominal-cavity-50ff68b2c3af3583af3a4dd8",
+      "cumulative_return": -3.449799691042138,
+      "current_goal_legal_preparations": 1,
+      "goal_current_blockers": [
+        [
+          5,
+          90,
+          84
+        ],
+        [
+          5,
+          90,
+          85
+        ],
+        [
+          5,
+          90,
+          86
+        ],
+        [
+          5,
+          91,
+          84
+        ],
+        [
+          5,
+          91,
+          86
+        ],
+        [
+          5,
+          92,
+          84
+        ],
+        [
+          5,
+          92,
+          85
+        ],
+        [
+          5,
+          92,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 1,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 3.500000000000007,
+      "removed_cells": [
+        [
+          4,
+          93,
+          84
+        ],
+        [
+          5,
+          92,
+          85
+        ],
+        [
+          5,
+          93,
+          84
+        ],
+        [
+          5,
+          93,
+          85
+        ],
+        [
+          5,
+          93,
+          86
+        ],
+        [
+          5,
+          94,
+          85
+        ],
+        [
+          6,
+          93,
+          85
+        ]
+      ],
+      "result_state_hash": "sha256:954aa6d320195ac9faa9f9dba9f413f4e67d9d605cd8f4dc4ba667aaa28ab427",
+      "reward": -1.4703998648071852,
+      "selection_omitted_cells": 17,
+      "source_state_hash": "sha256:1b84c0307302a8d44fb389f983467fffdfae39ddb6ae011f9d8524ca799d9182",
+      "step": 5
+    },
+    {
+      "action_id": "nominal-cavity-fe6811d53003d0184ca6db57",
+      "cumulative_return": -3.718799671746021,
+      "current_goal_legal_preparations": 1,
+      "goal_current_blockers": [
+        [
+          5,
+          90,
+          84
+        ],
+        [
+          5,
+          90,
+          85
+        ],
+        [
+          5,
+          90,
+          86
+        ],
+        [
+          5,
+          91,
+          84
+        ],
+        [
+          5,
+          91,
+          86
+        ],
+        [
+          5,
+          92,
+          84
+        ],
+        [
+          5,
+          92,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 1,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 3.500000000000007,
+      "removed_cells": [
+        [
+          5,
+          92,
+          84
+        ]
+      ],
+      "result_state_hash": "sha256:15eadf8619c178f710733586eb06470e1c6e6cd7dc192a5fdf7dd05d28bac3ed",
+      "reward": -0.2689999807038836,
+      "selection_omitted_cells": 17,
+      "source_state_hash": "sha256:954aa6d320195ac9faa9f9dba9f413f4e67d9d605cd8f4dc4ba667aaa28ab427",
+      "step": 6
+    },
+    {
+      "action_id": "nominal-cavity-a7ff25125cecd398b9c25a5b",
+      "cumulative_return": -3.957799652449905,
+      "current_goal_legal_preparations": 1,
+      "goal_current_blockers": [
+        [
+          5,
+          90,
+          84
+        ],
+        [
+          5,
+          90,
+          85
+        ],
+        [
+          5,
+          90,
+          86
+        ],
+        [
+          5,
+          91,
+          84
+        ],
+        [
+          5,
+          91,
+          86
+        ],
+        [
+          5,
+          92,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 1,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 3.500000000000007,
+      "removed_cells": [
+        [
+          5,
+          92,
+          86
+        ]
+      ],
+      "result_state_hash": "sha256:72803c6403a595240cabdaa48dd26db23b3c3bab9c8fe55e3f0d556c80578219",
+      "reward": -0.2389999807038836,
+      "selection_omitted_cells": 16,
+      "source_state_hash": "sha256:15eadf8619c178f710733586eb06470e1c6e6cd7dc192a5fdf7dd05d28bac3ed",
+      "step": 7
+    },
+    {
+      "action_id": "nominal-cavity-0d5deea30a360b10c1fd9237",
+      "cumulative_return": -4.192799633153788,
+      "current_goal_legal_preparations": 5,
+      "goal_current_blockers": [
+        [
+          3,
+          89,
+          85
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 1.5,
+      "removed_cells": [
+        [
+          3,
+          89,
+          85
+        ]
+      ],
+      "result_state_hash": "sha256:1076ad9a40fce7269b46a50514c09cb78fd6afe12983011d06610d25fc13f95c",
+      "reward": -0.2349999807038836,
+      "selection_omitted_cells": 15,
+      "source_state_hash": "sha256:72803c6403a595240cabdaa48dd26db23b3c3bab9c8fe55e3f0d556c80578219",
+      "step": 8
+    },
+    {
+      "action_id": "nominal-cavity-d85011fd178f135e62cba559",
+      "cumulative_return": -4.427799613857672,
+      "current_goal_legal_preparations": 5,
+      "goal_current_blockers": [
+        [
+          3,
+          89,
+          84
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 1.5,
+      "removed_cells": [
+        [
+          3,
+          89,
+          84
+        ]
+      ],
+      "result_state_hash": "sha256:9f2f4a69b971662808be453ebf95e8c8ead185a37303b75a0644e347319e1a9f",
+      "reward": -0.2349999807038836,
+      "selection_omitted_cells": 14,
+      "source_state_hash": "sha256:1076ad9a40fce7269b46a50514c09cb78fd6afe12983011d06610d25fc13f95c",
+      "step": 9
+    },
+    {
+      "action_id": "nominal-cavity-7484c76c7bfff5258e57f2d1",
+      "cumulative_return": -4.662799594561555,
+      "current_goal_legal_preparations": 5,
+      "goal_current_blockers": [
+        [
+          3,
+          89,
+          83
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 1.5,
+      "removed_cells": [
+        [
+          3,
+          89,
+          83
+        ]
+      ],
+      "result_state_hash": "sha256:81b1f919369e9b935c2a1ce07ee81112952e8ad0bce4680ae1e2acaee2709661",
+      "reward": -0.2349999807038836,
+      "selection_omitted_cells": 13,
+      "source_state_hash": "sha256:9f2f4a69b971662808be453ebf95e8c8ead185a37303b75a0644e347319e1a9f",
+      "step": 10
+    },
+    {
+      "action_id": "nominal-cavity-fbf8f44dbacbd4b8a76aee37",
+      "cumulative_return": -4.899799575265439,
+      "current_goal_legal_preparations": 8,
+      "goal_current_blockers": [
+        [
+          4,
+          89,
+          85
+        ],
+        [
+          4,
+          91,
+          87
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 2.5,
+      "removed_cells": [
+        [
+          4,
+          89,
+          85
+        ]
+      ],
+      "result_state_hash": "sha256:85c50b2b22078fda128768782101d080d5c1eaa8f28683e55e996afb9af17221",
+      "reward": -0.2369999807038836,
+      "selection_omitted_cells": 13,
+      "source_state_hash": "sha256:81b1f919369e9b935c2a1ce07ee81112952e8ad0bce4680ae1e2acaee2709661",
+      "step": 11
+    },
+    {
+      "action_id": "nominal-cavity-43b9a12d3836baf8eb21f180",
+      "cumulative_return": -5.136799555969322,
+      "current_goal_legal_preparations": 6,
+      "goal_current_blockers": [
+        [
+          4,
+          91,
+          87
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 2.5,
+      "removed_cells": [
+        [
+          4,
+          91,
+          87
+        ]
+      ],
+      "result_state_hash": "sha256:6900287225b46153b8e3640919983ff42ff0a06c0a357189b5efe4338d369559",
+      "reward": -0.2369999807038836,
+      "selection_omitted_cells": 12,
+      "source_state_hash": "sha256:85c50b2b22078fda128768782101d080d5c1eaa8f28683e55e996afb9af17221",
+      "step": 12
+    },
+    {
+      "action_id": "nominal-cavity-ff3ce5670bfb8bbce704c372",
+      "cumulative_return": -6.405199440092623,
+      "current_goal_legal_preparations": 14,
+      "goal_current_blockers": [
+        [
+          3,
+          88,
+          85
+        ],
+        [
+          4,
+          89,
+          84
+        ],
+        [
+          4,
+          89,
+          86
+        ],
+        [
+          4,
+          90,
+          83
+        ],
+        [
+          4,
+          90,
+          87
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 2,
+      "preparation_entry_to_tip_mm": 2.5,
+      "removed_cells": [
+        [
+          4,
+          88,
+          87
+        ],
+        [
+          4,
+          89,
+          86
+        ],
+        [
+          4,
+          89,
+          87
+        ],
+        [
+          4,
+          89,
+          88
+        ],
+        [
+          4,
+          90,
+          87
+        ],
+        [
+          5,
+          89,
+          87
+        ]
+      ],
+      "result_state_hash": "sha256:1ee25d425dd5e47abd24de745660be8df01d27ba7c9441eea168c2776aad6245",
+      "reward": -1.2683998841233015,
+      "selection_omitted_cells": 12,
+      "source_state_hash": "sha256:6900287225b46153b8e3640919983ff42ff0a06c0a357189b5efe4338d369559",
+      "step": 13
+    },
+    {
+      "action_id": "nominal-cavity-39d7b627fe5c5c0565ba2c78",
+      "cumulative_return": -6.639599420796507,
+      "current_goal_legal_preparations": 9,
+      "goal_current_blockers": [
+        [
+          3,
+          88,
+          85
+        ],
+        [
+          4,
+          89,
+          84
+        ],
+        [
+          4,
+          90,
+          83
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 0.5000000000000071,
+      "removed_cells": [
+        [
+          3,
+          88,
+          85
+        ]
+      ],
+      "result_state_hash": "sha256:37001b6193847f3ba3659810582bac32c74ff80917d290ab2f60bd92bd03e1e3",
+      "reward": -0.2343999807038836,
+      "selection_omitted_cells": 8,
+      "source_state_hash": "sha256:1ee25d425dd5e47abd24de745660be8df01d27ba7c9441eea168c2776aad6245",
+      "step": 14
+    },
+    {
+      "action_id": "nominal-cavity-6451a4933acc36217465e1f5",
+      "cumulative_return": -6.90659940150039,
+      "current_goal_legal_preparations": 4,
+      "goal_current_blockers": [
+        [
+          4,
+          89,
+          84
+        ],
+        [
+          4,
+          90,
+          83
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 2.5,
+      "removed_cells": [
+        [
+          4,
+          89,
+          84
+        ]
+      ],
+      "result_state_hash": "sha256:de3bd6f119f1371bbefaf34a87db10f08aa31d88514a4d4f9c2a910b67fdf7a3",
+      "reward": -0.2669999807038836,
+      "selection_omitted_cells": 7,
+      "source_state_hash": "sha256:37001b6193847f3ba3659810582bac32c74ff80917d290ab2f60bd92bd03e1e3",
+      "step": 15
+    },
+    {
+      "action_id": "nominal-cavity-9158aeb1995a15a3cde9a770",
+      "cumulative_return": -7.143599382204274,
+      "current_goal_legal_preparations": 3,
+      "goal_current_blockers": [
+        [
+          4,
+          90,
+          83
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 2.5,
+      "removed_cells": [
+        [
+          4,
+          90,
+          83
+        ]
+      ],
+      "result_state_hash": "sha256:ba581e670439caca5ffd63901db6cf436aa94dad266fd949d12768164128455d",
+      "reward": -0.2369999807038836,
+      "selection_omitted_cells": 6,
+      "source_state_hash": "sha256:de3bd6f119f1371bbefaf34a87db10f08aa31d88514a4d4f9c2a910b67fdf7a3",
+      "step": 16
+    },
+    {
+      "action_id": "nominal-cavity-17ae7fe749113b10bf90f945",
+      "cumulative_return": -7.378599362908157,
+      "current_goal_legal_preparations": 3,
+      "goal_current_blockers": [
+        [
+          3,
+          88,
+          84
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 1.500000000000007,
+      "removed_cells": [
+        [
+          3,
+          88,
+          84
+        ]
+      ],
+      "result_state_hash": "sha256:6772d07ca64e648cfff25e76051be61d82ef5ab738f2a8eb957a9f52a8d3c9b2",
+      "reward": -0.2349999807038836,
+      "selection_omitted_cells": 7,
+      "source_state_hash": "sha256:ba581e670439caca5ffd63901db6cf436aa94dad266fd949d12768164128455d",
+      "step": 17
+    },
+    {
+      "action_id": "nominal-cavity-5aa4fc485db1f7eb55e8528f",
+      "cumulative_return": -7.615599343612041,
+      "current_goal_legal_preparations": 3,
+      "goal_current_blockers": [
+        [
+          4,
+          89,
+          83
+        ],
+        [
+          5,
+          90,
+          84
+        ],
+        [
+          5,
+          90,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 2.5,
+      "removed_cells": [
+        [
+          4,
+          89,
+          83
+        ]
+      ],
+      "result_state_hash": "sha256:7672639dfe13833c1a4b6610a7c55378048f2ed5338da999b22ce24a106c5347",
+      "reward": -0.2369999807038836,
+      "selection_omitted_cells": 9,
+      "source_state_hash": "sha256:6772d07ca64e648cfff25e76051be61d82ef5ab738f2a8eb957a9f52a8d3c9b2",
+      "step": 18
+    },
+    {
+      "action_id": "nominal-cavity-2408e277c99c1f5b6930f4f5",
+      "cumulative_return": -7.854599324315924,
+      "current_goal_legal_preparations": 3,
+      "goal_current_blockers": [
+        [
+          5,
+          90,
+          84
+        ],
+        [
+          5,
+          90,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 3.5,
+      "removed_cells": [
+        [
+          5,
+          90,
+          84
+        ]
+      ],
+      "result_state_hash": "sha256:6351c08ef5894112cddd0af2f01668a5df2360c3cbc6a58edfd6c8bbd6f75302",
+      "reward": -0.2389999807038836,
+      "selection_omitted_cells": 9,
+      "source_state_hash": "sha256:7672639dfe13833c1a4b6610a7c55378048f2ed5338da999b22ce24a106c5347",
+      "step": 19
+    },
+    {
+      "action_id": "nominal-cavity-946f1ef894192c7a2e7c5ff6",
+      "cumulative_return": -8.093599305019808,
+      "current_goal_legal_preparations": 2,
+      "goal_current_blockers": [
+        [
+          5,
+          90,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 3.5,
+      "removed_cells": [
+        [
+          5,
+          90,
+          86
+        ]
+      ],
+      "result_state_hash": "sha256:7cefe165ecb535065e5e6e30e4e1b3b187006619c5fa5b7f3b8507ef3c8445dd",
+      "reward": -0.2389999807038836,
+      "selection_omitted_cells": 8,
+      "source_state_hash": "sha256:6351c08ef5894112cddd0af2f01668a5df2360c3cbc6a58edfd6c8bbd6f75302",
+      "step": 20
+    },
+    {
+      "action_id": "nominal-cavity-54071fee7cbfa197ba6f9a35",
+      "cumulative_return": -8.332599285723692,
+      "current_goal_legal_preparations": 8,
+      "goal_current_blockers": [
+        [
+          5,
+          89,
+          85
+        ],
+        [
+          5,
+          91,
+          83
+        ],
+        [
+          5,
+          91,
+          87
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 3.5,
+      "removed_cells": [
+        [
+          5,
+          89,
+          85
+        ]
+      ],
+      "result_state_hash": "sha256:debc2b2c4b5d729ab22cd4ced6d6c263f18a2e1bd9bc322ee3376540701b5d94",
+      "reward": -0.2389999807038836,
+      "selection_omitted_cells": 10,
+      "source_state_hash": "sha256:7cefe165ecb535065e5e6e30e4e1b3b187006619c5fa5b7f3b8507ef3c8445dd",
+      "step": 21
+    },
+    {
+      "action_id": "nominal-cavity-de9b275409040349b052a17c",
+      "cumulative_return": -8.571599266427576,
+      "current_goal_legal_preparations": 6,
+      "goal_current_blockers": [
+        [
+          5,
+          91,
+          83
+        ],
+        [
+          5,
+          91,
+          87
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 3.5,
+      "removed_cells": [
+        [
+          5,
+          91,
+          83
+        ]
+      ],
+      "result_state_hash": "sha256:c5aa2dac807039d5f935c55e0261475b3f8e13b0eae974bd85dda2359ac6b9a8",
+      "reward": -0.2389999807038836,
+      "selection_omitted_cells": 9,
+      "source_state_hash": "sha256:debc2b2c4b5d729ab22cd4ced6d6c263f18a2e1bd9bc322ee3376540701b5d94",
+      "step": 22
+    },
+    {
+      "action_id": "nominal-cavity-2293253c591b2859e40adbfc",
+      "cumulative_return": -8.81059924713146,
+      "current_goal_legal_preparations": 3,
+      "goal_current_blockers": [
+        [
+          5,
+          91,
+          87
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 3.5,
+      "removed_cells": [
+        [
+          5,
+          91,
+          87
+        ]
+      ],
+      "result_state_hash": "sha256:bce24f970c0434907d8104dc14e832b3d2b2b97c18891fdbdcf20d57c99330df",
+      "reward": -0.2389999807038836,
+      "selection_omitted_cells": 8,
+      "source_state_hash": "sha256:c5aa2dac807039d5f935c55e0261475b3f8e13b0eae974bd85dda2359ac6b9a8",
+      "step": 23
+    },
+    {
+      "action_id": "nominal-cavity-883361cb4a658d5c4d021b20",
+      "cumulative_return": -9.047599227835343,
+      "current_goal_legal_preparations": 12,
+      "goal_current_blockers": [
+        [
+          4,
+          88,
+          85
+        ],
+        [
+          4,
+          91,
+          88
+        ],
+        [
+          5,
+          89,
+          84
+        ],
+        [
+          5,
+          89,
+          86
+        ],
+        [
+          5,
+          90,
+          83
+        ],
+        [
+          5,
+          90,
+          87
+        ],
+        [
+          5,
+          92,
+          83
+        ],
+        [
+          5,
+          92,
+          87
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 2.500000000000007,
+      "removed_cells": [
+        [
+          4,
+          88,
+          85
+        ]
+      ],
+      "result_state_hash": "sha256:30b98693e9555bd633317aa8fcf0c76f015669509820d85e943e1f229febe609",
+      "reward": -0.2369999807038836,
+      "selection_omitted_cells": 11,
+      "source_state_hash": "sha256:bce24f970c0434907d8104dc14e832b3d2b2b97c18891fdbdcf20d57c99330df",
+      "step": 24
+    },
+    {
+      "action_id": "nominal-cavity-b9f693712c0ce810f07d0070",
+      "cumulative_return": -9.284599208539227,
+      "current_goal_legal_preparations": 9,
+      "goal_current_blockers": [
+        [
+          4,
+          91,
+          88
+        ],
+        [
+          5,
+          89,
+          84
+        ],
+        [
+          5,
+          89,
+          86
+        ],
+        [
+          5,
+          90,
+          83
+        ],
+        [
+          5,
+          90,
+          87
+        ],
+        [
+          5,
+          92,
+          83
+        ],
+        [
+          5,
+          92,
+          87
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 2.5,
+      "removed_cells": [
+        [
+          4,
+          91,
+          88
+        ]
+      ],
+      "result_state_hash": "sha256:8b8d5253f6d614cbeaf1391d05800ced18bd68ca5893b86a4cd2371c7f496d9b",
+      "reward": -0.2369999807038836,
+      "selection_omitted_cells": 10,
+      "source_state_hash": "sha256:30b98693e9555bd633317aa8fcf0c76f015669509820d85e943e1f229febe609",
+      "step": 25
+    },
+    {
+      "action_id": "nominal-cavity-9150213d0df7fa44e81a721b",
+      "cumulative_return": -9.52359918924311,
+      "current_goal_legal_preparations": 1,
+      "goal_current_blockers": [
+        [
+          5,
+          89,
+          84
+        ],
+        [
+          5,
+          89,
+          86
+        ],
+        [
+          5,
+          90,
+          83
+        ],
+        [
+          5,
+          90,
+          87
+        ],
+        [
+          5,
+          92,
+          83
+        ],
+        [
+          5,
+          92,
+          87
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 3.5,
+      "removed_cells": [
+        [
+          5,
+          90,
+          83
+        ]
+      ],
+      "result_state_hash": "sha256:a8a3de08d47ad281a44743365dcf0f26c2692d8d6470d202a178a433c253cd31",
+      "reward": -0.2389999807038836,
+      "selection_omitted_cells": 9,
+      "source_state_hash": "sha256:8b8d5253f6d614cbeaf1391d05800ced18bd68ca5893b86a4cd2371c7f496d9b",
+      "step": 26
+    },
+    {
+      "action_id": "nominal-cavity-6717c5573ded47978e5879a3",
+      "cumulative_return": -10.393999111998646,
+      "current_goal_legal_preparations": 4,
+      "goal_current_blockers": [
+        [
+          5,
+          90,
+          85
+        ],
+        [
+          5,
+          91,
+          84
+        ],
+        [
+          5,
+          91,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 1,
+      "overlap": 3,
+      "preparation_entry_to_tip_mm": 3.5,
+      "removed_cells": [
+        [
+          5,
+          90,
+          85
+        ],
+        [
+          5,
+          91,
+          84
+        ],
+        [
+          5,
+          91,
+          86
+        ],
+        [
+          6,
+          91,
+          85
+        ]
+      ],
+      "result_state_hash": "sha256:81ad5b978ae33b4252f106ed61e33fc7e1591084497013bfd2e3fbb0daaf6507",
+      "reward": -0.8703999227555343,
+      "selection_omitted_cells": 8,
+      "source_state_hash": "sha256:a8a3de08d47ad281a44743365dcf0f26c2692d8d6470d202a178a433c253cd31",
+      "step": 27
+    },
+    {
+      "action_id": "nominal-cavity-6500579e7c64b9d770fef40f",
+      "cumulative_return": -11.436399015438063,
+      "current_goal_legal_preparations": 2,
+      "goal_current_blockers": [
+        [
+          6,
+          90,
+          84
+        ],
+        [
+          6,
+          90,
+          85
+        ],
+        [
+          6,
+          90,
+          86
+        ],
+        [
+          6,
+          91,
+          84
+        ],
+        [
+          6,
+          91,
+          86
+        ],
+        [
+          6,
+          92,
+          84
+        ],
+        [
+          6,
+          92,
+          85
+        ],
+        [
+          6,
+          92,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 1,
+      "overlap": 4,
+      "preparation_entry_to_tip_mm": 4.5,
+      "removed_cells": [
+        [
+          6,
+          90,
+          85
+        ],
+        [
+          6,
+          91,
+          84
+        ],
+        [
+          6,
+          91,
+          86
+        ],
+        [
+          6,
+          92,
+          85
+        ],
+        [
+          7,
+          91,
+          85
+        ]
+      ],
+      "result_state_hash": "sha256:443bc09e1f586dc7c46e4e617753ab0ee0a6829691839e70f3d5b9bc54b52334",
+      "reward": -1.0423999034394178,
+      "selection_omitted_cells": 13,
+      "source_state_hash": "sha256:81ad5b978ae33b4252f106ed61e33fc7e1591084497013bfd2e3fbb0daaf6507",
+      "step": 28
+    },
+    {
+      "action_id": "nominal-cavity-e54940bba011ab47f9a9e349",
+      "cumulative_return": -11.707398996141947,
+      "current_goal_legal_preparations": 1,
+      "goal_current_blockers": [
+        [
+          6,
+          90,
+          84
+        ],
+        [
+          6,
+          90,
+          86
+        ],
+        [
+          6,
+          92,
+          84
+        ],
+        [
+          6,
+          92,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 1,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 4.5,
+      "removed_cells": [
+        [
+          6,
+          90,
+          84
+        ]
+      ],
+      "result_state_hash": "sha256:c314c2a226a6b0d478d8b687c8d79dfa67246126623302d90b1746da80113f82",
+      "reward": -0.2709999807038836,
+      "selection_omitted_cells": 9,
+      "source_state_hash": "sha256:443bc09e1f586dc7c46e4e617753ab0ee0a6829691839e70f3d5b9bc54b52334",
+      "step": 29
+    },
+    {
+      "action_id": "nominal-cavity-73177de3fcd59106f3728808",
+      "cumulative_return": -11.94839897684583,
+      "current_goal_legal_preparations": 1,
+      "goal_current_blockers": [
+        [
+          6,
+          90,
+          86
+        ],
+        [
+          6,
+          92,
+          84
+        ],
+        [
+          6,
+          92,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 1,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 4.5,
+      "removed_cells": [
+        [
+          6,
+          90,
+          86
+        ]
+      ],
+      "result_state_hash": "sha256:aad08b1f0d35f788c8de9a61fe7aa16fc007cc739a248d552d6ca8a0ec350103",
+      "reward": -0.2409999807038836,
+      "selection_omitted_cells": 8,
+      "source_state_hash": "sha256:c314c2a226a6b0d478d8b687c8d79dfa67246126623302d90b1746da80113f82",
+      "step": 30
+    },
+    {
+      "action_id": "nominal-cavity-d466da3e806156b0fc05604e",
+      "cumulative_return": -12.189398957549713,
+      "current_goal_legal_preparations": 1,
+      "goal_current_blockers": [
+        [
+          6,
+          92,
+          84
+        ],
+        [
+          6,
+          92,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 1,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 4.500000000000007,
+      "removed_cells": [
+        [
+          6,
+          92,
+          84
+        ]
+      ],
+      "result_state_hash": "sha256:a3a406c980766bb7300b206209b0c3995a6239e7dc6dff7a5b17fc68e4471b14",
+      "reward": -0.2409999807038836,
+      "selection_omitted_cells": 7,
+      "source_state_hash": "sha256:aad08b1f0d35f788c8de9a61fe7aa16fc007cc739a248d552d6ca8a0ec350103",
+      "step": 31
+    },
+    {
+      "action_id": "nominal-cavity-70f54602f6687958c1316634",
+      "cumulative_return": -12.430398938253596,
+      "current_goal_legal_preparations": 1,
+      "goal_current_blockers": [
+        [
+          6,
+          92,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 1,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 4.500000000000007,
+      "removed_cells": [
+        [
+          6,
+          92,
+          86
+        ]
+      ],
+      "result_state_hash": "sha256:e5c97849b80a74a8c12d8fce52cac45e37b78ed3e95879e8e267bb5225db5607",
+      "reward": -0.2409999807038836,
+      "selection_omitted_cells": 6,
+      "source_state_hash": "sha256:a3a406c980766bb7300b206209b0c3995a6239e7dc6dff7a5b17fc68e4471b14",
+      "step": 32
+    },
+    {
+      "action_id": "nominal-cavity-529e86c0d2490b2625760fc9",
+      "cumulative_return": -12.66739891895748,
+      "current_goal_legal_preparations": 2,
+      "goal_current_blockers": [
+        [
+          4,
+          88,
+          84
+        ],
+        [
+          4,
+          88,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 3,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 2.500000000000007,
+      "removed_cells": [
+        [
+          4,
+          88,
+          84
+        ]
+      ],
+      "result_state_hash": "sha256:95474bdf768bb3eb0ce31722673dc672139b90964095c6f9a8845d765b56270b",
+      "reward": -0.2369999807038836,
+      "selection_omitted_cells": 13,
+      "source_state_hash": "sha256:e5c97849b80a74a8c12d8fce52cac45e37b78ed3e95879e8e267bb5225db5607",
+      "step": 33
+    },
+    {
+      "action_id": "nominal-cavity-de568d7ceffab3ff76462192",
+      "cumulative_return": -12.904398899661363,
+      "current_goal_legal_preparations": 1,
+      "goal_current_blockers": [
+        [
+          4,
+          88,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 3,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 2.500000000000007,
+      "removed_cells": [
+        [
+          4,
+          88,
+          86
+        ]
+      ],
+      "result_state_hash": "sha256:723bc2c823ad63957bc9c55468b77f6bc354f86d8f1d882e0bdad4952290b3f3",
+      "reward": -0.2369999807038836,
+      "selection_omitted_cells": 12,
+      "source_state_hash": "sha256:95474bdf768bb3eb0ce31722673dc672139b90964095c6f9a8845d765b56270b",
+      "step": 34
+    },
+    {
+      "action_id": "nominal-cavity-524fae1048d21e67067a9e64",
+      "cumulative_return": -13.139398880365246,
+      "current_goal_legal_preparations": 2,
+      "goal_current_blockers": [
+        [
+          3,
+          87,
+          85
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 4,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 1.500000000000007,
+      "removed_cells": [
+        [
+          3,
+          87,
+          85
+        ]
+      ],
+      "result_state_hash": "sha256:76f0882d32fc02f94bb619f85bc16496fd7b81871b3ffbcc6bd1b5e54be1a745",
+      "reward": -0.2349999807038836,
+      "selection_omitted_cells": 14,
+      "source_state_hash": "sha256:723bc2c823ad63957bc9c55468b77f6bc354f86d8f1d882e0bdad4952290b3f3",
+      "step": 35
+    },
+    {
+      "action_id": "nominal-cavity-6995d57599cae01d457cdf2f",
+      "cumulative_return": -13.374398861069128,
+      "current_goal_legal_preparations": 4,
+      "goal_current_blockers": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ],
+        [
+          3,
+          88,
+          83
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 4,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 1.500000000000007,
+      "removed_cells": [
+        [
+          3,
+          87,
+          84
+        ]
+      ],
+      "result_state_hash": "sha256:72d8d0dcac5a114b52e0142510a4557b6f8e8f06bcf8cc7690bbcad82c84827e",
+      "reward": -0.2349999807038836,
+      "selection_omitted_cells": 13,
+      "source_state_hash": "sha256:76f0882d32fc02f94bb619f85bc16496fd7b81871b3ffbcc6bd1b5e54be1a745",
+      "step": 36
+    },
+    {
+      "action_id": "nominal-cavity-eb2540d2704a9b72c4fa3e3d",
+      "cumulative_return": -13.609398841773011,
+      "current_goal_legal_preparations": 3,
+      "goal_current_blockers": [
+        [
+          3,
+          87,
+          86
+        ],
+        [
+          3,
+          88,
+          83
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 4,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 1.500000000000007,
+      "removed_cells": [
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "result_state_hash": "sha256:964d962b5fbba06693566d602619318283d6100d1a6548d97d0a5f2334d6d8fa",
+      "reward": -0.2349999807038836,
+      "selection_omitted_cells": 12,
+      "source_state_hash": "sha256:72d8d0dcac5a114b52e0142510a4557b6f8e8f06bcf8cc7690bbcad82c84827e",
+      "step": 37
+    },
+    {
+      "action_id": "nominal-cavity-a793ad83e689c2fac8b6ef6f",
+      "cumulative_return": -13.844398822476894,
+      "current_goal_legal_preparations": 2,
+      "goal_current_blockers": [
+        [
+          3,
+          88,
+          83
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 4,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 1.500000000000007,
+      "removed_cells": [
+        [
+          3,
+          88,
+          83
+        ]
+      ],
+      "result_state_hash": "sha256:89b75fb4ee329637f22b8c0b12307e167bb0916aaa8c4448453162cf9a4fcaed",
+      "reward": -0.2349999807038836,
+      "selection_omitted_cells": 14,
+      "source_state_hash": "sha256:964d962b5fbba06693566d602619318283d6100d1a6548d97d0a5f2334d6d8fa",
+      "step": 38
+    },
+    {
+      "action_id": "nominal-cavity-2e05a3354540669058fe8862",
+      "cumulative_return": -14.079398803180776,
+      "current_goal_legal_preparations": 1,
+      "goal_current_blockers": [
+        [
+          3,
+          87,
+          83
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 4,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 1.500000000000007,
+      "removed_cells": [
+        [
+          3,
+          87,
+          83
+        ]
+      ],
+      "result_state_hash": "sha256:5d4255b9e7a618656db2a6aec3d884f251346468761391cbf2c4b59fad8016b0",
+      "reward": -0.2349999807038836,
+      "selection_omitted_cells": 14,
+      "source_state_hash": "sha256:89b75fb4ee329637f22b8c0b12307e167bb0916aaa8c4448453162cf9a4fcaed",
+      "step": 39
+    },
+    {
+      "action_id": "nominal-cavity-4c2e18a7652460b267b406e0",
+      "cumulative_return": -14.31639878388466,
+      "current_goal_legal_preparations": 2,
+      "goal_current_blockers": [
+        [
+          4,
+          87,
+          85
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 4,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 2.500000000000007,
+      "removed_cells": [
+        [
+          4,
+          87,
+          85
+        ]
+      ],
+      "result_state_hash": "sha256:c92df16f7418e06d289b75eea36654b4662dcd56fac7a8106d72a0065fa407e8",
+      "reward": -0.2369999807038836,
+      "selection_omitted_cells": 13,
+      "source_state_hash": "sha256:5d4255b9e7a618656db2a6aec3d884f251346468761391cbf2c4b59fad8016b0",
+      "step": 40
+    },
+    {
+      "action_id": "nominal-cavity-90f613673a9ae1917eb211cb",
+      "cumulative_return": -14.553398764588543,
+      "current_goal_legal_preparations": 2,
+      "goal_current_blockers": [
+        [
+          3,
+          86,
+          85
+        ],
+        [
+          4,
+          87,
+          84
+        ],
+        [
+          4,
+          87,
+          86
+        ],
+        [
+          4,
+          88,
+          83
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 4,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 2.500000000000007,
+      "removed_cells": [
+        [
+          4,
+          87,
+          84
+        ]
+      ],
+      "result_state_hash": "sha256:2729efb576aa7d09fb7eb6eb721a9e7c9dc3b41d2bdd0608ae40b54f01e15f9d",
+      "reward": -0.2369999807038836,
+      "selection_omitted_cells": 13,
+      "source_state_hash": "sha256:c92df16f7418e06d289b75eea36654b4662dcd56fac7a8106d72a0065fa407e8",
+      "step": 41
+    },
+    {
+      "action_id": "nominal-cavity-c04df9b9542d7c1f4ca72972",
+      "cumulative_return": -14.790398745292427,
+      "current_goal_legal_preparations": 1,
+      "goal_current_blockers": [
+        [
+          3,
+          86,
+          85
+        ],
+        [
+          4,
+          87,
+          86
+        ],
+        [
+          4,
+          88,
+          83
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 4,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 2.500000000000007,
+      "removed_cells": [
+        [
+          4,
+          87,
+          86
+        ]
+      ],
+      "result_state_hash": "sha256:59b00d68142ab113616b96bef7a789bb9538e417fe5f4529d0eb4ed2688bb2ef",
+      "reward": -0.2369999807038836,
+      "selection_omitted_cells": 12,
+      "source_state_hash": "sha256:2729efb576aa7d09fb7eb6eb721a9e7c9dc3b41d2bdd0608ae40b54f01e15f9d",
+      "step": 42
+    },
+    {
+      "action_id": "nominal-cavity-f893050668688705b3cf0723",
+      "cumulative_return": -15.660798668047962,
+      "current_goal_legal_preparations": 2,
+      "goal_current_blockers": [
+        [
+          5,
+          89,
+          84
+        ],
+        [
+          5,
+          89,
+          86
+        ],
+        [
+          5,
+          90,
+          87
+        ],
+        [
+          5,
+          92,
+          83
+        ],
+        [
+          5,
+          92,
+          87
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 2,
+      "preparation_entry_to_tip_mm": 3.5,
+      "removed_cells": [
+        [
+          5,
+          88,
+          85
+        ],
+        [
+          5,
+          89,
+          84
+        ],
+        [
+          5,
+          89,
+          86
+        ],
+        [
+          6,
+          89,
+          85
+        ]
+      ],
+      "result_state_hash": "sha256:89b5f5ae30139586e0a59c71fa122170aea01dd16b5f8a693a744c32e55448b8",
+      "reward": -0.8703999227555343,
+      "selection_omitted_cells": 14,
+      "source_state_hash": "sha256:59b00d68142ab113616b96bef7a789bb9538e417fe5f4529d0eb4ed2688bb2ef",
+      "step": 43
+    },
+    {
+      "action_id": "nominal-cavity-8402f0f52140c3cf869628c1",
+      "cumulative_return": -15.929798648751845,
+      "current_goal_legal_preparations": 2,
+      "goal_current_blockers": [
+        [
+          5,
+          90,
+          87
+        ],
+        [
+          5,
+          92,
+          83
+        ],
+        [
+          5,
+          92,
+          87
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 2,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 3.5,
+      "removed_cells": [
+        [
+          5,
+          90,
+          87
+        ]
+      ],
+      "result_state_hash": "sha256:0efe331abf0bf6f7ddda7bd124f0b5e2d273f8408cf6d08b37297baa86c7a24f",
+      "reward": -0.2689999807038836,
+      "selection_omitted_cells": 11,
+      "source_state_hash": "sha256:89b5f5ae30139586e0a59c71fa122170aea01dd16b5f8a693a744c32e55448b8",
+      "step": 44
+    },
+    {
+      "action_id": "nominal-cavity-254479f6148440a4baaab545",
+      "cumulative_return": -16.172798629455727,
+      "current_goal_legal_preparations": 1,
+      "goal_current_blockers": [
+        [
+          7,
+          90,
+          84
+        ],
+        [
+          7,
+          90,
+          85
+        ],
+        [
+          7,
+          90,
+          86
+        ],
+        [
+          7,
+          91,
+          84
+        ],
+        [
+          7,
+          91,
+          86
+        ],
+        [
+          7,
+          92,
+          84
+        ],
+        [
+          7,
+          92,
+          85
+        ],
+        [
+          7,
+          92,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 1,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 5.5,
+      "removed_cells": [
+        [
+          7,
+          90,
+          85
+        ]
+      ],
+      "result_state_hash": "sha256:73edbf8b09c112946c8f9fb185958135aa6c71cad2a9f84de9d7363b7ac6af9e",
+      "reward": -0.2429999807038836,
+      "selection_omitted_cells": 10,
+      "source_state_hash": "sha256:0efe331abf0bf6f7ddda7bd124f0b5e2d273f8408cf6d08b37297baa86c7a24f",
+      "step": 45
+    },
+    {
+      "action_id": "nominal-cavity-639aed9875f1855cd00bc069",
+      "cumulative_return": -16.41579861015961,
+      "current_goal_legal_preparations": 1,
+      "goal_current_blockers": [
+        [
+          7,
+          90,
+          84
+        ],
+        [
+          7,
+          90,
+          86
+        ],
+        [
+          7,
+          91,
+          84
+        ],
+        [
+          7,
+          91,
+          86
+        ],
+        [
+          7,
+          92,
+          84
+        ],
+        [
+          7,
+          92,
+          85
+        ],
+        [
+          7,
+          92,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 1,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 5.5,
+      "removed_cells": [
+        [
+          7,
+          90,
+          86
+        ]
+      ],
+      "result_state_hash": "sha256:411925032073d04346e064a306354d40655f5f98cc2408d4afe28635d3a0c214",
+      "reward": -0.2429999807038836,
+      "selection_omitted_cells": 9,
+      "source_state_hash": "sha256:73edbf8b09c112946c8f9fb185958135aa6c71cad2a9f84de9d7363b7ac6af9e",
+      "step": 46
+    },
+    {
+      "action_id": "nominal-cavity-7f2ad52faa3ccdfcedda07b9",
+      "cumulative_return": -16.654798590863493,
+      "current_goal_legal_preparations": 1,
+      "goal_current_blockers": [
+        [
+          5,
+          88,
+          84
+        ],
+        [
+          5,
+          88,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 3,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 3.500000000000007,
+      "removed_cells": [
+        [
+          5,
+          88,
+          84
+        ]
+      ],
+      "result_state_hash": "sha256:975b5a4a9ef52fa8a0e840c3147bbef2968cc8e86b807ba03a4d3f2e76773c0d",
+      "reward": -0.2389999807038836,
+      "selection_omitted_cells": 8,
+      "source_state_hash": "sha256:411925032073d04346e064a306354d40655f5f98cc2408d4afe28635d3a0c214",
+      "step": 47
+    },
+    {
+      "action_id": "nominal-cavity-5065f23901504440d232b399",
+      "cumulative_return": -16.893798571567377,
+      "current_goal_legal_preparations": 1,
+      "goal_current_blockers": [
+        [
+          5,
+          88,
+          86
+        ]
+      ],
+      "goal_entry_to_tip_mm": 18.500000000000007,
+      "goal_id": 3,
+      "overlap": 1,
+      "preparation_entry_to_tip_mm": 3.500000000000007,
+      "removed_cells": [
+        [
+          5,
+          88,
+          86
+        ]
+      ],
+      "result_state_hash": "sha256:f625ba7d4af6c5074f68edef30507c0105913f081ab77f675117a5522b0045dd",
+      "reward": -0.2389999807038836,
+      "selection_omitted_cells": 7,
+      "source_state_hash": "sha256:975b5a4a9ef52fa8a0e840c3147bbef2968cc8e86b807ba03a4d3f2e76773c0d",
+      "step": 48
+    }
+  ],
+  "costs": {
+    "base_search_previews": 5616,
+    "cleanup_clean": true,
+    "diagnostic_previews": 2496,
+    "extra_search_previews": 1081,
+    "legal_catalog_candidates": 1727,
+    "native_transitions": 52,
+    "output_bytes": 8347398,
+    "pages": 192,
+    "parent_seconds": 140.53102224995382,
+    "previews": 9895,
+    "sampled_peak_rss_bytes": 659750912,
+    "search_previews": 9193,
+    "worker_seconds": 138.05962987500243
+  },
+  "exploration": {
+    "chosen_goal_entry_to_tip_mm": [
+      18.5
+    ],
+    "contiguous_goal_runs": 8,
+    "distinct_outside_cells": 74,
+    "independent_geometry_feasible": true,
+    "max_preparation_entry_to_tip_mm": 5.5,
+    "outside_mm3": 73.99999285303693,
+    "post_action48_goals_observed": false,
+    "return": -16.893798571567377,
+    "steps": 48,
+    "target_removed": 0,
+    "unique_physical_goals": 4
+  },
+  "goal_segments": [
+    {
+      "from_step": 1,
+      "goal_id": 1
+    },
+    {
+      "from_step": 8,
+      "goal_id": 2
+    },
+    {
+      "from_step": 27,
+      "goal_id": 1
+    },
+    {
+      "from_step": 33,
+      "goal_id": 3
+    },
+    {
+      "from_step": 35,
+      "goal_id": 4
+    },
+    {
+      "from_step": 43,
+      "goal_id": 2
+    },
+    {
+      "from_step": 45,
+      "goal_id": 1
+    },
+    {
+      "from_step": 47,
+      "goal_id": 3
+    }
+  ],
+  "goals": [
+    {
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694036,
+        -18.27829563649273
+      ],
+      "goal_id": 1,
+      "tip_mm": [
+        -41.37899999921122,
+        -14.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.878999999211224,
+        -14.888999999694036,
+        -18.27829563649273
+      ],
+      "goal_id": 2,
+      "tip_mm": [
+        -41.37899999921122,
+        -14.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "entry_mm": [
+        -59.87899999922102,
+        -12.888999999694036,
+        -18.27829563649273
+      ],
+      "goal_id": 3,
+      "tip_mm": [
+        -41.378999999221016,
+        -12.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "entry_mm": [
+        -59.87899999922102,
+        -12.888999999694036,
+        -18.27829563649273
+      ],
+      "goal_id": 4,
+      "tip_mm": [
+        -41.378999999221016,
+        -12.888999999603442,
+        -18.27829563649273
+      ],
+      "tool_id": "generic_aspirator"
+    }
+  ],
+  "indirect_preparation_witnesses": [
+    {
+      "action_step": 10,
+      "after_source_state_hash": "sha256:81b1f919369e9b935c2a1ce07ee81112952e8ad0bce4680ae1e2acaee2709661",
+      "before_source_state_hash": "sha256:9f2f4a69b971662808be453ebf95e8c8ead185a37303b75a0644e347319e1a9f",
+      "interpretation": "supports indirect preparation; changing base geometries and absent legal/rejected ray lists prevent fixed-ray causal attribution",
+      "legal_overlap_counts": [
+        0,
+        2
+      ],
+      "previously_pursued_goal_id": 1,
+      "removed_elsewhere": [
+        [
+          3,
+          89,
+          83
+        ]
+      ],
+      "unchanged_allocation": {
+        "aperture_pairs": [
+          {
+            "clearance_mm": 1.885786505919686,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_aspirator",
+            "voxel": [
+              5,
+              90,
+              84
+            ]
+          },
+          {
+            "clearance_mm": 3.1857865059196864,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_suction",
+            "voxel": [
+              5,
+              90,
+              84
+            ]
+          },
+          {
+            "clearance_mm": 2.3000000000000016,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_aspirator",
+            "voxel": [
+              5,
+              90,
+              85
+            ]
+          },
+          {
+            "clearance_mm": 3.600000000000002,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_suction",
+            "voxel": [
+              5,
+              90,
+              85
+            ]
+          },
+          {
+            "clearance_mm": 1.8857865059196959,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_aspirator",
+            "voxel": [
+              5,
+              90,
+              86
+            ]
+          },
+          {
+            "clearance_mm": 3.185786505919696,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_suction",
+            "voxel": [
+              5,
+              90,
+              86
+            ]
+          },
+          {
+            "clearance_mm": 2.300000096580578,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_aspirator",
+            "voxel": [
+              5,
+              91,
+              84
+            ]
+          },
+          {
+            "clearance_mm": 3.6000000965805783,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_suction",
+            "voxel": [
+              5,
+              91,
+              84
+            ]
+          },
+          {
+            "clearance_mm": 2.3000000965805922,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_aspirator",
+            "voxel": [
+              5,
+              91,
+              86
+            ]
+          },
+          {
+            "clearance_mm": 3.6000000965805925,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_suction",
+            "voxel": [
+              5,
+              91,
+              86
+            ]
+          }
+        ],
+        "selected_cells": [
+          [
+            5,
+            90,
+            84
+          ]
+        ]
+      },
+      "unchanged_first_blockers": [
+        [
+          5,
+          90,
+          84
+        ],
+        [
+          5,
+          90,
+          85
+        ],
+        [
+          5,
+          90,
+          86
+        ],
+        [
+          5,
+          91,
+          84
+        ],
+        [
+          5,
+          91,
+          86
+        ]
+      ]
+    },
+    {
+      "action_step": 37,
+      "after_source_state_hash": "sha256:964d962b5fbba06693566d602619318283d6100d1a6548d97d0a5f2334d6d8fa",
+      "before_source_state_hash": "sha256:72d8d0dcac5a114b52e0142510a4557b6f8e8f06bcf8cc7690bbcad82c84827e",
+      "interpretation": "supports indirect preparation; changing base geometries and absent legal/rejected ray lists prevent fixed-ray causal attribution",
+      "legal_overlap_counts": [
+        0,
+        2
+      ],
+      "previously_pursued_goal_id": 3,
+      "removed_elsewhere": [
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "unchanged_allocation": {
+        "aperture_pairs": [
+          {
+            "clearance_mm": 0.13772237037308122,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_aspirator",
+            "voxel": [
+              5,
+              88,
+              84
+            ]
+          },
+          {
+            "clearance_mm": 1.4377223703730815,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_suction",
+            "voxel": [
+              5,
+              88,
+              84
+            ]
+          },
+          {
+            "clearance_mm": 0.3000000000000016,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_aspirator",
+            "voxel": [
+              5,
+              88,
+              85
+            ]
+          },
+          {
+            "clearance_mm": 1.6000000000000019,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_suction",
+            "voxel": [
+              5,
+              88,
+              85
+            ]
+          },
+          {
+            "clearance_mm": 0.1377223703730861,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_aspirator",
+            "voxel": [
+              5,
+              88,
+              86
+            ]
+          },
+          {
+            "clearance_mm": 1.4377223703730864,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_suction",
+            "voxel": [
+              5,
+              88,
+              86
+            ]
+          },
+          {
+            "clearance_mm": 1.0639320656923577,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_aspirator",
+            "voxel": [
+              5,
+              89,
+              84
+            ]
+          },
+          {
+            "clearance_mm": 2.363932065692358,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_suction",
+            "voxel": [
+              5,
+              89,
+              84
+            ]
+          },
+          {
+            "clearance_mm": 1.0639320656923643,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_aspirator",
+            "voxel": [
+              5,
+              89,
+              86
+            ]
+          },
+          {
+            "clearance_mm": 2.3639320656923646,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_suction",
+            "voxel": [
+              5,
+              89,
+              86
+            ]
+          }
+        ],
+        "selected_cells": [
+          [
+            5,
+            88,
+            84
+          ],
+          [
+            5,
+            89,
+            84
+          ]
+        ]
+      },
+      "unchanged_first_blockers": [
+        [
+          5,
+          88,
+          84
+        ],
+        [
+          5,
+          88,
+          85
+        ],
+        [
+          5,
+          88,
+          86
+        ],
+        [
+          5,
+          89,
+          84
+        ],
+        [
+          5,
+          89,
+          86
+        ]
+      ]
+    },
+    {
+      "action_step": 38,
+      "after_source_state_hash": "sha256:89b75fb4ee329637f22b8c0b12307e167bb0916aaa8c4448453162cf9a4fcaed",
+      "before_source_state_hash": "sha256:964d962b5fbba06693566d602619318283d6100d1a6548d97d0a5f2334d6d8fa",
+      "interpretation": "supports indirect preparation; changing base geometries and absent legal/rejected ray lists prevent fixed-ray causal attribution",
+      "legal_overlap_counts": [
+        0,
+        1
+      ],
+      "previously_pursued_goal_id": 2,
+      "removed_elsewhere": [
+        [
+          3,
+          88,
+          83
+        ]
+      ],
+      "unchanged_allocation": {
+        "aperture_pairs": [
+          {
+            "clearance_mm": 1.0639320656923577,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_aspirator",
+            "voxel": [
+              5,
+              89,
+              84
+            ]
+          },
+          {
+            "clearance_mm": 2.363932065692358,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_suction",
+            "voxel": [
+              5,
+              89,
+              84
+            ]
+          },
+          {
+            "clearance_mm": 1.0639320656923643,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_aspirator",
+            "voxel": [
+              5,
+              89,
+              86
+            ]
+          },
+          {
+            "clearance_mm": 2.3639320656923646,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_suction",
+            "voxel": [
+              5,
+              89,
+              86
+            ]
+          },
+          {
+            "clearance_mm": 1.0639321952688126,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_aspirator",
+            "voxel": [
+              5,
+              90,
+              87
+            ]
+          },
+          {
+            "clearance_mm": 2.363932195268813,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_suction",
+            "voxel": [
+              5,
+              90,
+              87
+            ]
+          },
+          {
+            "clearance_mm": 1.0639321952687983,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_aspirator",
+            "voxel": [
+              5,
+              92,
+              83
+            ]
+          },
+          {
+            "clearance_mm": 2.3639321952687986,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_suction",
+            "voxel": [
+              5,
+              92,
+              83
+            ]
+          },
+          {
+            "clearance_mm": 1.0639321952688108,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_aspirator",
+            "voxel": [
+              5,
+              92,
+              87
+            ]
+          },
+          {
+            "clearance_mm": 2.363932195268811,
+            "excluded": false,
+            "numerical_margin_mm": 1e-06,
+            "scope": "bounded_source_normal_aperture_necessary_only",
+            "tool_id": "generic_suction",
+            "voxel": [
+              5,
+              92,
+              87
+            ]
+          }
+        ],
+        "selected_cells": [
+          [
+            5,
+            89,
+            84
+          ],
+          [
+            5,
+            92,
+            83
+          ]
+        ]
+      },
+      "unchanged_first_blockers": [
+        [
+          5,
+          89,
+          84
+        ],
+        [
+          5,
+          89,
+          86
+        ],
+        [
+          5,
+          90,
+          87
+        ],
+        [
+          5,
+          92,
+          83
+        ],
+        [
+          5,
+          92,
+          87
+        ]
+      ]
+    }
+  ],
+  "pins": {
+    "build/select013-complete-corridor-v1/attempt-01.supervision/receipt.json": "e69d62cb95c92f59140f71cfcec8b9df3969dda6cacb9213cc31ab73b3876caf",
+    "build/select013-complete-corridor-v1/attempt-01.supervision/worker-final.json": "ca1a94fa331b08dd93d6a671302a758e943d4481393eec5100e82aad6e9b3c40",
+    "build/select013-complete-corridor-v1/attempt-01/costs.json": "785d6d37a47f363663693e5cfe00854522d7a8e65778b20a74f6bd0ed5511393",
+    "build/select013-complete-corridor-v1/attempt-01/fresh_STOP/horizon-change.json": "33909cef28f82e1e37616635c150697b9632526c1804aa5b0b809cd2c4deca5a",
+    "build/select013-complete-corridor-v1/attempt-01/fresh_STOP/independent-episode.json": "5121eeb6c40ad932fb3e48a40378945f88ce25a6337ea57b8e9f00ac235fa9ca",
+    "build/select013-complete-corridor-v1/attempt-01/fresh_STOP/original-world-control.json": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e",
+    "build/select013-complete-corridor-v1/attempt-01/fresh_STOP/replay-binding.json": "d493a2fe63139a0cbb7ecac458c60ff2aaee3558523206e504af471acc423f91",
+    "build/select013-complete-corridor-v1/attempt-01/fresh_STOP/rollout-metrics.json": "3e681f5d5201cf4cbbc79b61b4fd61e076f2fca37d20fd268a79a6b5989ffa8a",
+    "build/select013-complete-corridor-v1/attempt-01/fresh_STOP/selected-action-plan.json": "73aa270766e873dfe89ea2b067d75c61fb4a7fb316a4ae331433133e3b9e3f79",
+    "build/select013-complete-corridor-v1/attempt-01/persistent_corridor/declared-rule-change.json": "8830e8b32930e19b11453e9c02f7d4c97e2e560199902a3ad0511b458781c2d7",
+    "build/select013-complete-corridor-v1/attempt-01/persistent_corridor/exploration-geometry.json": "efb485d2b377e843d7ec7e321b81fa74758024d2d5bdc4f1ee61df5ed16514b3",
+    "build/select013-complete-corridor-v1/attempt-01/persistent_corridor/horizon-change.json": "2f136bec95fdc101bdfd2f165eb0d226261814ed1d3ec504812206e7f6dd061a",
+    "build/select013-complete-corridor-v1/attempt-01/persistent_corridor/independent-episode.json": "383efbb32a425dce1b723f5b1b5172342e4daf8ffb403ac0c5e207bfc0c7df35",
+    "build/select013-complete-corridor-v1/attempt-01/persistent_corridor/original-world-control.json": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e",
+    "build/select013-complete-corridor-v1/attempt-01/persistent_corridor/replay-binding.json": "723ca17e1ef03205facba0dac5d518a06f2842a7d1b3516262016b453231472a",
+    "build/select013-complete-corridor-v1/attempt-01/persistent_corridor/rollout-metrics.json": "8e18eafc0861628e812b2bfb451bd8db299c50f3c57717afe53b1c97e4abbd0d",
+    "build/select013-complete-corridor-v1/attempt-01/persistent_corridor/selected-action-plan.json": "9daff8cbb5df0764e7229e0469dae0e5596188b3b9c55ceeb3ed1b2e90eb80e6",
+    "build/select013-complete-corridor-v1/attempt-01/persistent_corridor/selection.json": "316fd5f092cc61b764257d2a152b820c6d757597db11df330adcdbd53560e8de",
+    "build/select013-complete-corridor-v1/attempt-01/result.json": "6aecbed77aa0235abaa03147d2cd2769cdab712dba1b1bcbe69449b4a725cd84",
+    "build/select013-complete-corridor-v1/root-release.json": "447442457d29f1f74a19d1284a04b2f6cf6f1fba00999f9b5ac30f81489e7206",
+    "build/select013-complete-corridor-v1/source-index.json": "82994d955b6d3c4c93132ecfb874d6b8034c072d08fe44c6bd6fda7489edaf73",
+    "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/comparison-world.json": "2dc67df3216033c72540cf2d83e3c614f3a5e62a2fb31ad3cf8c653925213995",
+    "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/context.json": "178b81f87c8363a3f0c55be411b2085739e349415bbacc73a0fe3e90ad124887"
+  },
+  "selected_both": [
+    "STOP"
+  ],
+  "selected_return": 0,
+  "selected_target": 0,
+  "status": "PASS_saved_only",
+  "switch_witnesses": [
+    {
+      "aperture_pairs": [
+        {
+          "clearance_mm": 3.1857865059196864,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            90,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 1.885786505919686,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            90,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 3.600000000000002,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            90,
+            85
+          ]
+        },
+        {
+          "clearance_mm": 2.3000000000000016,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            90,
+            85
+          ]
+        },
+        {
+          "clearance_mm": 3.185786505919696,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            90,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 1.8857865059196959,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            90,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 3.6000000965805783,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            91,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 2.300000096580578,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            91,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 3.6000000965805925,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            91,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 2.3000000965805922,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            91,
+            86
+          ]
+        }
+      ],
+      "eligible_but_unselected": [
+        [
+          5,
+          90,
+          85
+        ],
+        [
+          5,
+          90,
+          86
+        ],
+        [
+          5,
+          91,
+          84
+        ],
+        [
+          5,
+          91,
+          86
+        ]
+      ],
+      "next_goal_id": 2,
+      "no_centered_tool_passes_aperture": [],
+      "previous_goal": {
+        "current_catalog_action_id": "nominal-cavity-40de8e1282c6b4900e3af483",
+        "current_status": "no_current_legal_blocker_removal_or_goal",
+        "direct_legal_goal_available": false,
+        "eligible_legal_preparations": 0,
+        "entry_mm": [
+          -59.878999999211224,
+          -14.888999999694036,
+          -18.27829563649273
+        ],
+        "feasible": false,
+        "first_failure_set_complete": true,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "retained_blocker_cells": [
+          [
+            5,
+            90,
+            84
+          ],
+          [
+            5,
+            90,
+            85
+          ],
+          [
+            5,
+            90,
+            86
+          ],
+          [
+            5,
+            91,
+            84
+          ],
+          [
+            5,
+            91,
+            86
+          ]
+        ],
+        "sidecar_fingerprint": "sha256:ee356ed82cd43d07022217e22bed5c2da0440dbb0ac93910cac0bbb0ff6c3778",
+        "tip_mm": [
+          -41.37899999921122,
+          -14.888999999603442,
+          -18.27829563649273
+        ],
+        "tool_id": "generic_suction"
+      },
+      "previous_goal_id": 1,
+      "selected_current_blockers": [
+        [
+          5,
+          90,
+          84
+        ]
+      ],
+      "step": 8
+    },
+    {
+      "aperture_pairs": [
+        {
+          "clearance_mm": 2.363932065692358,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            89,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 1.0639320656923577,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            89,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 2.3639320656923646,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            89,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 1.0639320656923643,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            89,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 2.3639321952687986,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            92,
+            83
+          ]
+        },
+        {
+          "clearance_mm": 1.0639321952687983,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            92,
+            83
+          ]
+        },
+        {
+          "clearance_mm": 2.363932195268813,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            90,
+            87
+          ]
+        },
+        {
+          "clearance_mm": 1.0639321952688126,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            90,
+            87
+          ]
+        },
+        {
+          "clearance_mm": 2.363932195268811,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            92,
+            87
+          ]
+        },
+        {
+          "clearance_mm": 1.0639321952688108,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            92,
+            87
+          ]
+        }
+      ],
+      "eligible_but_unselected": [
+        [
+          5,
+          89,
+          86
+        ],
+        [
+          5,
+          90,
+          87
+        ],
+        [
+          5,
+          92,
+          83
+        ],
+        [
+          5,
+          92,
+          87
+        ]
+      ],
+      "next_goal_id": 1,
+      "no_centered_tool_passes_aperture": [],
+      "previous_goal": {
+        "current_catalog_action_id": "nominal-cavity-5da7959b3010922a45289251",
+        "current_status": "no_current_legal_blocker_removal_or_goal",
+        "direct_legal_goal_available": false,
+        "eligible_legal_preparations": 0,
+        "entry_mm": [
+          -59.878999999211224,
+          -14.888999999694036,
+          -18.27829563649273
+        ],
+        "feasible": false,
+        "first_failure_set_complete": true,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "retained_blocker_cells": [
+          [
+            5,
+            89,
+            84
+          ],
+          [
+            5,
+            89,
+            86
+          ],
+          [
+            5,
+            90,
+            87
+          ],
+          [
+            5,
+            92,
+            83
+          ],
+          [
+            5,
+            92,
+            87
+          ]
+        ],
+        "sidecar_fingerprint": "sha256:8828dbb855dd90c8c01bbaec0f12c126befa75ed85ac2b0025ba4def69a2d9b4",
+        "tip_mm": [
+          -41.37899999921122,
+          -14.888999999603442,
+          -18.27829563649273
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "previous_goal_id": 2,
+      "selected_current_blockers": [
+        [
+          5,
+          89,
+          84
+        ]
+      ],
+      "step": 27
+    },
+    {
+      "aperture_pairs": [
+        {
+          "clearance_mm": 3.1857865059196873,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            7,
+            90,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 1.885786505919687,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            7,
+            90,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 3.6000000000000036,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            7,
+            90,
+            85
+          ]
+        },
+        {
+          "clearance_mm": 2.3000000000000034,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            7,
+            90,
+            85
+          ]
+        },
+        {
+          "clearance_mm": 3.185786505919698,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            7,
+            90,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 1.8857865059196977,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            7,
+            90,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 3.6000000965805783,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            7,
+            91,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 2.300000096580578,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            7,
+            91,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 3.6000000965805925,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            7,
+            91,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 2.3000000965805922,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            7,
+            91,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 3.185786505919683,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            7,
+            92,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 1.8857865059196826,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            7,
+            92,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 3.5999999999999965,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            7,
+            92,
+            85
+          ]
+        },
+        {
+          "clearance_mm": 2.2999999999999963,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            7,
+            92,
+            85
+          ]
+        },
+        {
+          "clearance_mm": 3.1857865059196926,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            7,
+            92,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 1.8857865059196923,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            7,
+            92,
+            86
+          ]
+        }
+      ],
+      "eligible_but_unselected": [
+        [
+          7,
+          90,
+          85
+        ],
+        [
+          7,
+          90,
+          86
+        ],
+        [
+          7,
+          91,
+          84
+        ],
+        [
+          7,
+          91,
+          86
+        ],
+        [
+          7,
+          92,
+          84
+        ],
+        [
+          7,
+          92,
+          85
+        ],
+        [
+          7,
+          92,
+          86
+        ]
+      ],
+      "next_goal_id": 3,
+      "no_centered_tool_passes_aperture": [],
+      "previous_goal": {
+        "current_catalog_action_id": "nominal-cavity-4f76525a80843e1ea28d9ef8",
+        "current_status": "no_current_legal_blocker_removal_or_goal",
+        "direct_legal_goal_available": false,
+        "eligible_legal_preparations": 0,
+        "entry_mm": [
+          -59.878999999211224,
+          -14.888999999694036,
+          -18.27829563649273
+        ],
+        "feasible": false,
+        "first_failure_set_complete": true,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "retained_blocker_cells": [
+          [
+            7,
+            90,
+            84
+          ],
+          [
+            7,
+            90,
+            85
+          ],
+          [
+            7,
+            90,
+            86
+          ],
+          [
+            7,
+            91,
+            84
+          ],
+          [
+            7,
+            91,
+            86
+          ],
+          [
+            7,
+            92,
+            84
+          ],
+          [
+            7,
+            92,
+            85
+          ],
+          [
+            7,
+            92,
+            86
+          ]
+        ],
+        "sidecar_fingerprint": "sha256:acc48cee0b8e2ee0b2ea380c0ba7a49a1720a6ca03deb39313cdfc56f7bb8e14",
+        "tip_mm": [
+          -41.37899999921122,
+          -14.888999999603442,
+          -18.27829563649273
+        ],
+        "tool_id": "generic_suction"
+      },
+      "previous_goal_id": 1,
+      "selected_current_blockers": [
+        [
+          7,
+          90,
+          84
+        ]
+      ],
+      "step": 33
+    },
+    {
+      "aperture_pairs": [
+        {
+          "clearance_mm": 2.363932065692358,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            89,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 1.0639320656923577,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            89,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 1.4377223703730815,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            88,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 0.13772237037308122,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            88,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 2.3639320656923646,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            89,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 1.0639320656923643,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            89,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 1.6000000000000019,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            88,
+            85
+          ]
+        },
+        {
+          "clearance_mm": 0.3000000000000016,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            88,
+            85
+          ]
+        },
+        {
+          "clearance_mm": 1.4377223703730864,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            88,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 0.1377223703730861,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            88,
+            86
+          ]
+        }
+      ],
+      "eligible_but_unselected": [
+        [
+          5,
+          88,
+          85
+        ],
+        [
+          5,
+          88,
+          86
+        ],
+        [
+          5,
+          89,
+          86
+        ]
+      ],
+      "next_goal_id": 4,
+      "no_centered_tool_passes_aperture": [],
+      "previous_goal": {
+        "current_catalog_action_id": "nominal-cavity-a6aef11fea7faed81a84c7df",
+        "current_status": "no_current_legal_blocker_removal_or_goal",
+        "direct_legal_goal_available": false,
+        "eligible_legal_preparations": 0,
+        "entry_mm": [
+          -59.87899999922102,
+          -12.888999999694036,
+          -18.27829563649273
+        ],
+        "feasible": false,
+        "first_failure_set_complete": true,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "retained_blocker_cells": [
+          [
+            5,
+            88,
+            84
+          ],
+          [
+            5,
+            88,
+            85
+          ],
+          [
+            5,
+            88,
+            86
+          ],
+          [
+            5,
+            89,
+            84
+          ],
+          [
+            5,
+            89,
+            86
+          ]
+        ],
+        "sidecar_fingerprint": "sha256:3bcee7e06f1c50ed7fa3b6892b757959d23d582a37148c9b4756e9d27832637e",
+        "tip_mm": [
+          -41.378999999221016,
+          -12.888999999603442,
+          -18.27829563649273
+        ],
+        "tool_id": "generic_suction"
+      },
+      "previous_goal_id": 3,
+      "selected_current_blockers": [
+        [
+          5,
+          88,
+          84
+        ],
+        [
+          5,
+          89,
+          84
+        ]
+      ],
+      "step": 35
+    },
+    {
+      "aperture_pairs": [
+        {
+          "clearance_mm": 0.9944488316825444,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            4,
+            88,
+            83
+          ]
+        },
+        {
+          "clearance_mm": -0.3055511683174559,
+          "excluded": true,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            4,
+            88,
+            83
+          ]
+        },
+        {
+          "clearance_mm": -0.4000000000000017,
+          "excluded": true,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            3,
+            86,
+            85
+          ]
+        },
+        {
+          "clearance_mm": -1.700000000000002,
+          "excluded": true,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            3,
+            86,
+            85
+          ]
+        }
+      ],
+      "eligible_but_unselected": [],
+      "next_goal_id": 2,
+      "no_centered_tool_passes_aperture": [
+        [
+          3,
+          86,
+          85
+        ]
+      ],
+      "previous_goal": {
+        "current_catalog_action_id": "nominal-cavity-b89171f9c0437e38b054d3ff",
+        "current_status": "no_current_legal_blocker_removal_or_goal",
+        "direct_legal_goal_available": false,
+        "eligible_legal_preparations": 0,
+        "entry_mm": [
+          -59.87899999922102,
+          -12.888999999694036,
+          -18.27829563649273
+        ],
+        "feasible": false,
+        "first_failure_set_complete": true,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "retained_blocker_cells": [
+          [
+            3,
+            86,
+            85
+          ],
+          [
+            4,
+            88,
+            83
+          ]
+        ],
+        "sidecar_fingerprint": "sha256:aeff1698e7a8b1a1302a0b387326bf39909c6e00f0e612b2a6911a1afd019adf",
+        "tip_mm": [
+          -41.378999999221016,
+          -12.888999999603442,
+          -18.27829563649273
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "previous_goal_id": 4,
+      "selected_current_blockers": [
+        [
+          4,
+          88,
+          83
+        ]
+      ],
+      "step": 43
+    },
+    {
+      "aperture_pairs": [
+        {
+          "clearance_mm": 2.3639321952687986,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            92,
+            83
+          ]
+        },
+        {
+          "clearance_mm": 1.0639321952687983,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            92,
+            83
+          ]
+        },
+        {
+          "clearance_mm": 2.363932195268811,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            5,
+            92,
+            87
+          ]
+        },
+        {
+          "clearance_mm": 1.0639321952688108,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            5,
+            92,
+            87
+          ]
+        }
+      ],
+      "eligible_but_unselected": [
+        [
+          5,
+          92,
+          87
+        ]
+      ],
+      "next_goal_id": 1,
+      "no_centered_tool_passes_aperture": [],
+      "previous_goal": {
+        "current_catalog_action_id": "nominal-cavity-7c170ce36fffd62d9979542a",
+        "current_status": "no_current_legal_blocker_removal_or_goal",
+        "direct_legal_goal_available": false,
+        "eligible_legal_preparations": 0,
+        "entry_mm": [
+          -59.878999999211224,
+          -14.888999999694036,
+          -18.27829563649273
+        ],
+        "feasible": false,
+        "first_failure_set_complete": true,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "retained_blocker_cells": [
+          [
+            5,
+            92,
+            83
+          ],
+          [
+            5,
+            92,
+            87
+          ]
+        ],
+        "sidecar_fingerprint": "sha256:977d85ff9484ec6c95c1917e9c2fd2c66e5e7b85c67f06927fbce7ba07afffb2",
+        "tip_mm": [
+          -41.37899999921122,
+          -14.888999999603442,
+          -18.27829563649273
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "previous_goal_id": 2,
+      "selected_current_blockers": [
+        [
+          5,
+          92,
+          83
+        ]
+      ],
+      "step": 45
+    },
+    {
+      "aperture_pairs": [
+        {
+          "clearance_mm": 3.1857865059196873,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            7,
+            90,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 1.885786505919687,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            7,
+            90,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 3.6000000965805783,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            7,
+            91,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 2.300000096580578,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            7,
+            91,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 3.6000000965805925,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            7,
+            91,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 2.3000000965805922,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            7,
+            91,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 3.185786505919683,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            7,
+            92,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 1.8857865059196826,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            7,
+            92,
+            84
+          ]
+        },
+        {
+          "clearance_mm": 3.5999999999999965,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            7,
+            92,
+            85
+          ]
+        },
+        {
+          "clearance_mm": 2.2999999999999963,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            7,
+            92,
+            85
+          ]
+        },
+        {
+          "clearance_mm": 3.1857865059196926,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_suction",
+          "voxel": [
+            7,
+            92,
+            86
+          ]
+        },
+        {
+          "clearance_mm": 1.8857865059196923,
+          "excluded": false,
+          "numerical_margin_mm": 1e-06,
+          "scope": "bounded_source_normal_aperture_necessary_only",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            7,
+            92,
+            86
+          ]
+        }
+      ],
+      "eligible_but_unselected": [
+        [
+          7,
+          91,
+          86
+        ],
+        [
+          7,
+          92,
+          84
+        ],
+        [
+          7,
+          92,
+          85
+        ],
+        [
+          7,
+          92,
+          86
+        ]
+      ],
+      "next_goal_id": 3,
+      "no_centered_tool_passes_aperture": [],
+      "previous_goal": {
+        "current_catalog_action_id": "nominal-cavity-f3814693aee31ab305c3902d",
+        "current_status": "no_current_legal_blocker_removal_or_goal",
+        "direct_legal_goal_available": false,
+        "eligible_legal_preparations": 0,
+        "entry_mm": [
+          -59.878999999211224,
+          -14.888999999694036,
+          -18.27829563649273
+        ],
+        "feasible": false,
+        "first_failure_set_complete": true,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "retained_blocker_cells": [
+          [
+            7,
+            90,
+            84
+          ],
+          [
+            7,
+            91,
+            84
+          ],
+          [
+            7,
+            91,
+            86
+          ],
+          [
+            7,
+            92,
+            84
+          ],
+          [
+            7,
+            92,
+            85
+          ],
+          [
+            7,
+            92,
+            86
+          ]
+        ],
+        "sidecar_fingerprint": "sha256:d76b32a39ea7953e24716441ad3d822083cf321725a726dfd6735ae82b916871",
+        "tip_mm": [
+          -41.37899999921122,
+          -14.888999999603442,
+          -18.27829563649273
+        ],
+        "tool_id": "generic_suction"
+      },
+      "previous_goal_id": 1,
+      "selected_current_blockers": [
+        [
+          7,
+          90,
+          84
+        ],
+        [
+          7,
+          91,
+          84
+        ]
+      ],
+      "step": 47
+    }
+  ]
+}

@@ -1,0 +1,254 @@
+{
+  "files": [
+    {
+      "path": "comparison_contract.py",
+      "bytes": 4507,
+      "sha256": "41946a9e83c25550460fcf1e685f2d83f8cdd1266a0cdce01dba0677094709d8"
+    },
+    {
+      "path": "corridor_selector.py",
+      "bytes": 10923,
+      "sha256": "80c83cbce23083519762ce443c8eb908dde43917a44d5e2f0e49263d8893b41e"
+    },
+    {
+      "path": "select_worker.py",
+      "bytes": 19368,
+      "sha256": "31e2f4dac7bae2e3c61185ca522fdbe784a68d98a89f8c3b0ae425861973136c"
+    },
+    {
+      "path": "run_owned.py",
+      "bytes": 12148,
+      "sha256": "ccfea9b792455b7febbf2fac32a4818db19455490984c37acb014258cad84e5d"
+    },
+    {
+      "path": "freeze-runtime.py",
+      "bytes": 4137,
+      "sha256": "c8ef85da4bdf4fc6c07b5e2069d81d73b603f47c82ea8fc5cbce0bcaff43f6a5"
+    },
+    {
+      "path": "source-ready.json",
+      "bytes": 1027,
+      "sha256": "46ed636f261ed7706195fc5d5ef781ffa31ff2ddf086331bac14ead99426fc04"
+    },
+    {
+      "path": "source-index.json",
+      "bytes": 29804,
+      "sha256": "82994d955b6d3c4c93132ecfb874d6b8034c072d08fe44c6bd6fda7489edaf73"
+    },
+    {
+      "path": "root-release.json",
+      "bytes": 8045,
+      "sha256": "447442457d29f1f74a19d1284a04b2f6cf6f1fba00999f9b5ac30f81489e7206"
+    },
+    {
+      "path": "release-template.json",
+      "bytes": 8045,
+      "sha256": "82d1515aa25496b4796427e7a31c670032eab81ca2eda63528e3f31a7eeadabe"
+    },
+    {
+      "path": "HANDOFF.txt",
+      "bytes": 3892,
+      "sha256": "21659f50cbd71d9ad4b62ccf5c2b8448b45ece5c02bd42ca5b5d1edf7d5a688c"
+    },
+    {
+      "path": "run_generated_controls.py",
+      "bytes": 2811,
+      "sha256": "5f64a0ab2551dc692e4167e8423e71d4dd6b31956d29175d03b41e9d9897da3d"
+    },
+    {
+      "path": "tests/test_corridor_selector.py",
+      "bytes": 3128,
+      "sha256": "edf6e24a47703e1e6754b54cf397cb2daa9d3392d2c003a33002885458d3bff7"
+    },
+    {
+      "path": "controls-attempt-01/receipt.json",
+      "bytes": 1583,
+      "sha256": "b95b70e42ee50568528d76e7948a14d7241651cc776002376e7d7691ac221548"
+    },
+    {
+      "path": "controls-attempt-01/stdout.log",
+      "bytes": 98,
+      "sha256": "a040e19bb29542ee594a84f25f5d3481197aa83a1beebae31768eab37e3de90b"
+    },
+    {
+      "path": "controls-attempt-01/generated_child.py",
+      "bytes": 942,
+      "sha256": "9c47fcfaf03383c930221395f8b23db770dbd169fb9535eea70db6d6a3cf1d56"
+    },
+    {
+      "path": "controls-attempt-02/receipt.json",
+      "bytes": 2102,
+      "sha256": "674b3482f3062ff8caefeb8dfbdc76064b729b5b688c367ed333e7ca457fe14e"
+    },
+    {
+      "path": "controls-attempt-02/stdout.log",
+      "bytes": 98,
+      "sha256": "bc9507cf730567da3d80c9df14fc5d069992b9bda90f54ce5b21db23cc23d1b1"
+    },
+    {
+      "path": "controls-attempt-02/generated_child.py",
+      "bytes": 942,
+      "sha256": "9c47fcfaf03383c930221395f8b23db770dbd169fb9535eea70db6d6a3cf1d56"
+    },
+    {
+      "path": "controls-attempt-01/tested-corridor-selector.py",
+      "bytes": 9365,
+      "sha256": "d128c5ee66db84d3bb793bbf717c499d9681bbad5c875c70e68947dd2663af57"
+    },
+    {
+      "path": "attempt-01/result.json",
+      "bytes": 11286,
+      "sha256": "6aecbed77aa0235abaa03147d2cd2769cdab712dba1b1bcbe69449b4a725cd84"
+    },
+    {
+      "path": "attempt-01/costs.json",
+      "bytes": 5056,
+      "sha256": "785d6d37a47f363663693e5cfe00854522d7a8e65778b20a74f6bd0ed5511393"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/selected-action-plan.json",
+      "bytes": 548,
+      "sha256": "73aa270766e873dfe89ea2b067d75c61fb4a7fb316a4ae331433133e3b9e3f79"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/rollout-metrics.json",
+      "bytes": 21463,
+      "sha256": "3e681f5d5201cf4cbbc79b61b4fd61e076f2fca37d20fd268a79a6b5989ffa8a"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/replay-binding.json",
+      "bytes": 215,
+      "sha256": "d493a2fe63139a0cbb7ecac458c60ff2aaee3558523206e504af471acc423f91"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/independent-episode.json",
+      "bytes": 2494,
+      "sha256": "5121eeb6c40ad932fb3e48a40378945f88ce25a6337ea57b8e9f00ac235fa9ca"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/original-world-control.json",
+      "bytes": 19337,
+      "sha256": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/horizon-change.json",
+      "bytes": 370,
+      "sha256": "33909cef28f82e1e37616635c150697b9632526c1804aa5b0b809cd2c4deca5a"
+    },
+    {
+      "path": "attempt-01/persistent_corridor/selected-action-plan.json",
+      "bytes": 548,
+      "sha256": "9daff8cbb5df0764e7229e0469dae0e5596188b3b9c55ceeb3ed1b2e90eb80e6"
+    },
+    {
+      "path": "attempt-01/persistent_corridor/rollout-metrics.json",
+      "bytes": 21463,
+      "sha256": "8e18eafc0861628e812b2bfb451bd8db299c50f3c57717afe53b1c97e4abbd0d"
+    },
+    {
+      "path": "attempt-01/persistent_corridor/replay-binding.json",
+      "bytes": 215,
+      "sha256": "723ca17e1ef03205facba0dac5d518a06f2842a7d1b3516262016b453231472a"
+    },
+    {
+      "path": "attempt-01/persistent_corridor/independent-episode.json",
+      "bytes": 2493,
+      "sha256": "383efbb32a425dce1b723f5b1b5172342e4daf8ffb403ac0c5e207bfc0c7df35"
+    },
+    {
+      "path": "attempt-01/persistent_corridor/original-world-control.json",
+      "bytes": 19337,
+      "sha256": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e"
+    },
+    {
+      "path": "attempt-01/persistent_corridor/horizon-change.json",
+      "bytes": 370,
+      "sha256": "2f136bec95fdc101bdfd2f165eb0d226261814ed1d3ec504812206e7f6dd061a"
+    },
+    {
+      "path": "attempt-01/persistent_corridor/exploration-geometry.json",
+      "bytes": 1395,
+      "sha256": "efb485d2b377e843d7ec7e321b81fa74758024d2d5bdc4f1ee61df5ed16514b3"
+    },
+    {
+      "path": "attempt-01/persistent_corridor/declared-rule-change.json",
+      "bytes": 1505,
+      "sha256": "8830e8b32930e19b11453e9c02f7d4c97e2e560199902a3ad0511b458781c2d7"
+    },
+    {
+      "path": "attempt-01.supervision/receipt.json",
+      "bytes": 7855,
+      "sha256": "e69d62cb95c92f59140f71cfcec8b9df3969dda6cacb9213cc31ab73b3876caf"
+    },
+    {
+      "path": "attempt-01.supervision/declaration.json",
+      "bytes": 20556,
+      "sha256": "ae2ffb838e6d9929280edc7c220bee385f3b6855007ca7e7f1c1ddc7f53df06f"
+    },
+    {
+      "path": "attempt-01.supervision/worker-final.json",
+      "bytes": 273,
+      "sha256": "ca1a94fa331b08dd93d6a671302a758e943d4481393eec5100e82aad6e9b3c40"
+    },
+    {
+      "path": "attempt-01.supervision/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "postrun/diagnose_saved.py",
+      "bytes": 7931,
+      "sha256": "38aec8feb7ede1682666bef98102acae675b8786410325938b4bebd45676632f"
+    },
+    {
+      "path": "postrun/diagnosis.json",
+      "bytes": 28143,
+      "sha256": "9754a3b395ab23c55d9a92574c812d1eb43ea0bbdf56cde18f3623a187d48019"
+    },
+    {
+      "path": "postrun/REPORT.txt",
+      "bytes": 4563,
+      "sha256": "0c0b79d590c2aee8f62cd0637643851e6abcf26027e0d78f6e61f1651ca0385b"
+    },
+    {
+      "path": "independent/complete-corridor-source-review.txt",
+      "bytes": 5889,
+      "sha256": "c7822601a007a213a44fe6b047891366474cd55019d7ebbcf0da7c38c393ad30"
+    },
+    {
+      "path": "independent/complete-corridor-result-review.txt",
+      "bytes": 7204,
+      "sha256": "d075cf5b86af196025b6149e9a98e2114c021a1ba7680816efc850bd94d6ae8a"
+    },
+    {
+      "path": "independent/complete-corridor-saved-audit.json",
+      "bytes": 99988,
+      "sha256": "ca4ded9a92af0a5a36e259ff8a374f28a982f6ceed1ef9247624bc21e7dc82d6"
+    },
+    {
+      "path": "independent/audit_saved_complete_corridor.py",
+      "bytes": 15059,
+      "sha256": "46cf9bad8afa98c6dd069654e64f7ffe2cf0f73edd781f3489149ad033f566e2"
+    },
+    {
+      "path": "prior-horizon-diagnosis/horizon-cutting-report.txt",
+      "bytes": 7230,
+      "sha256": "4a967185eec4edf2bf56cd4a863442b4e639071f505827fe6f34805e3bc4d5ed"
+    },
+    {
+      "path": "prior-horizon-diagnosis/horizon-cutting-scalars.json",
+      "bytes": 7186,
+      "sha256": "ca21b73c8f8b6fff2cf2590734fbd8cfa8e7f963a8d7d35739dc23b7ec1f13a5"
+    }
+  ],
+  "local_full_trace": [
+    {
+      "source": "build/select013-complete-corridor-v1/attempt-01/persistent_corridor/selection.json",
+      "archive": "attempt-01/persistent_corridor/selection.json",
+      "sha256": "316fd5f092cc61b764257d2a152b820c6d757597db11df330adcdbd53560e8de",
+      "bytes": 8169023,
+      "reason": "Full 8MB generated trace remains local and ignored; compact audited48-step projections committed instead."
+    }
+  ],
+  "reproduction": "Restore archived runtime helpers to their original build paths; source-index pins canonical Git source and historical source/metadata inputs. Full saved audit additionally requires locally retained full selection.json with its exact hash. No patient arrays or weights committed."
+}
