@@ -1,0 +1,111 @@
+.......F..........                                                       [100%]
+=================================== FAILURES ===================================
+_________________ test_head_only_fit_scoring_freeze_and_costs __________________
+
+    def test_head_only_fit_scoring_freeze_and_costs():
+        policy, traces, manifest = generated_fixture()
+        before = parameter_hash(policy)
+        flags = [(p.requires_grad, p._version) for p in policy.parameters()]
+        corpus = corpus_for(policy, traces, manifest)
+        fitted = fit_continuation_value(policy, corpus, max_scores=2)
+        report = fitted.report
+        assert report['initial_head_hash'] == parameter_hash(policy.actor)
+        assert report['fitted_head_hash'] != report['initial_head_hash']
+        assert report['final_weighted_mse'] < report['updates'][0]['weighted_mse_before_update']
+        assert report['costs']['head_optimizer_steps'] == report['costs']['head_backward_calls'] == 64
+        assert report['costs']['base_policy_forwards'] == report['costs']['base_optimizer_steps'] == 0
+        trace = traces[0][2]; obs = trace.transitions[0].observation
+        scores = fitted.score_actions(obs, trace.context)
+        assert len(scores) == len(obs.action_ids) and scores[0] == 0.
+        assert fitted.costs['policy_forwards_completed'] == fitted.costs['head_forwards'] == 1
+        masked = obs.action_mask.copy(); masked[2] = False
+>       scores = fitted.score_actions(replace(obs, action_mask=masked), trace.context)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_spatial_continuation_value.py:165: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/dataclasses.py:1588: in replace
+    return obj.__class__(**changes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+<string>:17: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = SpatialObservation(image_channels=_FrozenArray([[[[0.      , 0.015625, 0.03125 , 0.046875],
+                [0.0625  ,...age': mappingproxy({'source_kind': 'unavailable', 'derivation': '', 'derived_from': ()})}), public_target_context=None)
+
+    def __post_init__(self):
+        # This DTO is public: constructing/replacing it directly must not bypass
+        # the permitted-input gates applied by the convenience builder.
+        images = _real(self.image_channels, "image_channels")
+        if images.ndim != 4 or images.shape[0] != len(CHANNEL_NAMES):
+            raise SpatialInputError("Actor volumes require the exact six-channel XYZ schema")
+        coverage, available = np.asarray(self.coverage), np.asarray(self.channel_available)
+        if coverage.dtype != bool or coverage.shape != images.shape or available.dtype != bool or available.shape != (len(CHANNEL_NAMES),):
+            raise SpatialInputError("Coverage and channel availability require exact boolean schema")
+        if np.any(images[~coverage] != 0):
+            raise SpatialInputError("Uncovered samples must be zero with explicit false coverage")
+        if not isinstance(self.channel_provenance, Mapping) or set(self.channel_provenance) != set(CHANNEL_NAMES):
+            raise SpatialInputError("Every channel requires its exact provenance record")
+        channels = {}
+        for index, name in enumerate(CHANNEL_NAMES):
+            record = self.channel_provenance[name]
+            if not isinstance(record, Mapping) or set(record) != {"source_kind", "derivation", "derived_from"}:
+                raise SpatialInputError("Channel provenance has unknown or missing fields")
+            if not available[index] and (coverage[index].any() or images[index].any()):
+                raise SpatialInputError("Unavailable channels cannot carry values or coverage")
+            channels[name] = ObservedChannel(images[index] if available[index] else None,
+                coverage[index] if available[index] else None, **record)
+        permitted = SpatialInputs(channels, self.affine_ras_mm, self.track, self.source_id)
+        spacing = _real(self.spacing_mm, "spacing_mm", np.float64)
+        if spacing.shape != (3,) or not np.allclose(spacing, np.linalg.norm(permitted.affine_ras_mm[:3, :3], axis=0), rtol=1e-8, atol=1e-12):
+            raise SpatialInputError("Voxel spacing must match the declared physical affine")
+        identifiers, tool_ids = tuple(self.action_ids), tuple(self.action_tool_ids)
+        if not 1 <= len(identifiers) <= MAX_ACTIONS or len(tool_ids) != len(identifiers):
+            raise SpatialInputError("Bounded aligned action and tool identifiers are required")
+        for identifier in identifiers:
+            _text(identifier, "action_id", 128)
+        if identifiers[0] != "STOP" or len(set(identifiers)) != len(identifiers) or tool_ids[0] is not None:
+            raise SpatialInputError("Distinct action IDs must begin with geometry-free STOP")
+        for tool_id in tool_ids[1:]:
+            _text(tool_id, "action_tool_id", 128)
+        # Physical coordinates retain float64 until the policy transforms them
+        # into normalized source-grid coordinates. Float32 RAS rounding can
+        # move an exactly covered oblique-boundary ray outside the image.
+        geometry = _real(self.action_geometry, "action_geometry", np.float64)
+        if geometry.shape != (len(identifiers), len(ACTION_GEOMETRY_NAMES)):
+            raise SpatialInputError("Action geometry requires the exact sixteen-column schema")
+        if geometry[0, 0] != 1 or np.any(geometry[0, 1:] != 0) or np.any(geometry[1:, 0] != 0):
+            raise SpatialInputError("Only STOP may carry the stop flag; STOP has no tool geometry")
+        tool_dimensions = {}
+        for row, tool_id in zip(geometry[1:], tool_ids[1:]):
+            vector = row[4:7].astype(np.float64) - row[1:4]
+            distance = np.linalg.norm(vector)
+            if distance <= 1e-9 or not np.allclose(row[7:10], vector / distance, rtol=2e-5, atol=2e-6):
+                raise SpatialInputError("Instrument axis must agree with the declared entry and tip")
+            if np.any(row[10:14] <= 0) or row[13] >= row[12] or not 0 <= row[14] < 90 or row[15] not in (0, 1):
+                raise SpatialInputError("Complete-tool dimensions or tool-change flag are invalid")
+            dimensions = tuple(float(v) for v in row[10:15])
+            if tool_id in tool_dimensions and dimensions != tool_dimensions[tool_id]:
+                raise SpatialInputError("A tool ID cannot name different instrument dimensions")
+            tool_dimensions[tool_id] = dimensions
+        state = _real(self.state_features, "state_features", np.float64)
+        if state.shape != (len(STATE_FEATURE_NAMES),):
+            raise SpatialInputError("Observed procedure state requires the exact ten-column schema")
+        if (state[0] != int(state[0]) or state[1] != int(state[1]) or not 0 <= state[0] <= state[1]
+                or not 1 <= state[1] <= 1024 or state[2] not in (0, 1)
+                or not np.isclose(np.linalg.norm(state[6:9]), 1, rtol=0, atol=2e-6) or state[9] <= 0):
+            raise SpatialInputError("Observed action budget, tool presence or access geometry is invalid")
+        if state[2] == 0 and np.any(geometry[1:, 15] != 0):
+            raise SpatialInputError("An absent current instrument cannot trigger a tool-change flag")
+        mask = np.asarray(self.action_mask)
+        expected_mask = np.full(len(identifiers), state[0] < state[1], bool)
+        expected_mask[0] = True
+        if mask.dtype != bool or mask.shape != expected_mask.shape or not np.array_equal(mask, expected_mask):
+>           raise SpatialInputError("Actor masking is restricted to STOP and observed action budget")
+E           resectionlab.spatial_observations.SpatialInputError: Actor masking is restricted to STOP and observed action budget
+
+src/resectionlab/spatial_observations.py:340: SpatialInputError
+=========================== short test summary info ============================
+FAILED tests/test_spatial_continuation_value.py::test_head_only_fit_scoring_freeze_and_costs
+1 failed, 17 passed in 1.76s

@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train-continuation-value-v1/model-controls-02-tmp",
+    "tests/test_spatial_continuation_value.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 2.001673541031778,
+  "timed_out": false,
+  "source_sha256": {
+    "src/resectionlab/spatial_continuation_value.py": "9655b7f4062b02317b6b1283a7e215eea80b0d68df0c22ebaa39145de7660d99",
+    "tests/test_spatial_continuation_value.py": "422cfe45da49a98dec9e3b152363fdb657c186ab98d84d2c62ac31bf62249f59"
+  },
+  "source_unchanged": true,
+  "child_reaped": true,
+  "scope": "Generated module control rerun after test-only mask fixture repair; originalfailure retained"
+}

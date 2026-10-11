@@ -1,0 +1,35 @@
+{
+  "schema": "continuation-action-value-source-v1",
+  "sources": {
+    "src/resectionlab/spatial_continuation_value.py": "9655b7f4062b02317b6b1283a7e215eea80b0d68df0c22ebaa39145de7660d99",
+    "tests/test_spatial_continuation_value.py": "422cfe45da49a98dec9e3b152363fdb657c186ab98d84d2c62ac31bf62249f59"
+  },
+  "evidence": [
+    {
+      "path": "model-controls-01.json",
+      "sha256": "1d3cb76351dbe571177c5ad78c784f8abf59f56a0cbc8d4d078fa878e678410e",
+      "bytes": 934
+    },
+    {
+      "path": "model-controls-01.log",
+      "sha256": "c56c0eccb6af8fe2fbe9c463d6d02643cedbb39a9a447c06e9b4d68a4285676d",
+      "bytes": 8198
+    },
+    {
+      "path": "model-controls-02.json",
+      "sha256": "70b9a3514e5fa4bab919b3be0f3c69366acfb57dd1374369ece5277bb4c05e3e",
+      "bytes": 946
+    },
+    {
+      "path": "model-controls-02.log",
+      "sha256": "c6a5059265d7c1992f17143712e53973d532f20dd4a1b6168aae44dbe4dfc24b",
+      "bytes": 99
+    },
+    {
+      "path": "independent/source-review.txt",
+      "sha256": "66c34e4a85010693153d8647664af007d60773378dbd441bcbfb97231dfb1403",
+      "bytes": 3470
+    }
+  ],
+  "scope": "Generated source verification only; acquired36trace/497state reconstruction and64stepheadfit not executed"
+}

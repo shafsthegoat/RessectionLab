@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train-continuation-value-v1/model-controls-01-tmp",
+    "tests/test_spatial_continuation_value.py"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 2.1663879579864442,
+  "timed_out": false,
+  "source_sha256": {
+    "src/resectionlab/spatial_continuation_value.py": "9655b7f4062b02317b6b1283a7e215eea80b0d68df0c22ebaa39145de7660d99",
+    "tests/test_spatial_continuation_value.py": "2d15f87b4188e8243ffe3c92fadb31032093e8fa08809569eb1111b23a518b19"
+  },
+  "source_unchanged": true,
+  "child_reaped": true,
+  "scope": "Generated head module controls, no acquired patient records or existing weights"
+}

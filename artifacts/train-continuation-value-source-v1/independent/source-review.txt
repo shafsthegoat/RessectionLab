@@ -1,0 +1,57 @@
+Direct logged-action continuation head — independent source pass
+
+Verdict: no material blocker in the reviewed model module. No tests, fitting,
+native calls, patient arrays, or checkpoint payloads were executed/read here.
+
+Reviewed SHA256:
+src/resectionlab/spatial_continuation_value.py
+9655b7f4062b02317b6b1283a7e215eea80b0d68df0c22ebaa39145de7660d99
+tests/test_spatial_continuation_value.py
+2d15f87b4188e8243ffe3c92fadb31032093e8fa08809569eb1111b23a518b19
+Independent saved-data target checker (prepared, unrun):
+recorded_target_checks.py
+7a7e9b39c0fc9f03b7e92b250e67dbcd3e2d47d44beac4dc20b2eeeba082d977
+
+The target forces the recorded current action, then takes its best remaining
+recorded prefix, permitting STOP only after that mandatory action. Negative
+current-action costs are preserved. Each trace keeps its own realized label;
+there is no cross-trace maximum, bootstrap beyond the complete horizon, or Q*
+claim. STOP remains exactly zero and contributes no fitted-head gradient.
+
+Features are detached copies of the exact existing actor-input matrix from one
+full frozen-policy forward. The separate head is initialized by deepcopy of
+the IL actor. Encoder, original actor, STOP head and base critic remain guarded
+by parameter hashes, identities, versions, evaluation mode and empty gradients.
+No geometry query or observation construction occurs inside the head module.
+Feature extraction, head training and scoring costs are distinguished.
+
+Root's final deployment rule is a full certified-inventory comparison: baseline
+maximizes actual positive immediate nominal return; hybrid ranks those same
+actually positive candidates by positive predicted Q, otherwise falls back to
+greedy. Original inventory order breaks ties. STOP is chosen only when no
+actually positive candidate exists. This supports a productive-continuation
+ranking experiment. It does not test negative preparation or learned avoidance
+of negative actions; the actual-reward guard supplies that avoidance.
+
+The saved-corpus census supplied by the runner owner has no negative-immediate,
+positive-recovered-prefix examples. Historical SEARCH is greedy, not a matched
+beam baseline. These limitations must remain in the result interpretation.
+
+Runner joins still required by the declared experiment (not new review gates):
+exact 4 teachers +32 RL episodes, 29+468=497 decisions, 64 head updates; complete
+source/observation/history authentication; exact initial IL checkpoint identity;
+all reconstruction, feature, source and final independent replay costs counted.
+The module intentionally permits smaller bounded generated corpora and fewer
+updates, so the actual runner must enforce these experiment-specific counts.
+
+The proposed reconstruction uses one fresh authoritative replay of each saved
+action sequence, independent geometry validation, then planning_clone and the
+existing owned trace admission API. This fits current APIs if the context
+requires nominal==reference and exact saved observations/actions/rewards and
+history match. The historical RL behavior hash is provenance of the saved
+episode; it must not be described as behavior produced by the loaded IL actor.
+No raw saved JSON becomes a live admitted trace without that reconstruction.
+
+The independent checker uses direct prefix enumeration, rather than the
+producer's backward recurrence, and will inspect authenticated saved evidence
+after the single owned experiment completes. It creates no live trace or model.
