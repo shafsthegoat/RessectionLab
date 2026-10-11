@@ -1,0 +1,223 @@
+{
+  "schema": "hbe-ogden-shape-declaration-v1",
+  "status": "prepared_not_released",
+  "specimen": "HBE_01_03",
+  "specimen_role": "DEVELOPMENT",
+  "alpha_candidates": [
+    2,
+    -8
+  ],
+  "ordered_new_runs": [
+    [
+      "compression",
+      16,
+      60
+    ],
+    [
+      "compression",
+      24,
+      60
+    ],
+    [
+      "tension",
+      16,
+      60
+    ],
+    [
+      "tension",
+      24,
+      60
+    ],
+    [
+      "compression",
+      24,
+      120
+    ],
+    [
+      "tension",
+      24,
+      120
+    ]
+  ],
+  "caps": {
+    "total_seconds": 1200,
+    "cleanup_reserve_seconds": 10,
+    "preparation_seconds": 45,
+    "readout_seconds": 90,
+    "profile_seconds": 45,
+    "sampled_group_rss_bytes": 1073741824,
+    "new_output_bytes": 2147483648,
+    "run_output_bytes": 603979776,
+    "native_seconds": [
+      120,
+      180,
+      60,
+      180,
+      300,
+      300
+    ],
+    "threads": 1,
+    "attempts": 1,
+    "native_calls": 6,
+    "positive_scale_profiles": 2,
+    "baseline_reproduction_calls": 1,
+    "mesher_calls": 0,
+    "new_measured_member_reads": 0,
+    "held_out_member_reads": 0,
+    "automatic_retry": false
+  },
+  "geometry": {
+    "radius_m": 0.004,
+    "height_m": 0.00489159,
+    "boundary": "original bonded plates and exact inherited half-height reflection",
+    "K_over_mu": "149/3",
+    "reference_mu_Pa": 1000
+  },
+  "endpoints_m": {
+    "compression": -0.00073726,
+    "tension": 0.0007360099999999
+  },
+  "authorized_held_out_members": [],
+  "fit": {
+    "path": "artifacts/hbe-v5-axial-calibration-result-v1/execution/fit.json",
+    "sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a"
+  },
+  "evidence": {
+    "comparison": {
+      "path": "build/hbe-v5-native-twelve-row-comparison-v1/attempt-02/comparison.json",
+      "sha256": "6d3772eac38f8a1a210082a89cb00955f4a9b0d5304700fd0168711b9de99c12"
+    },
+    "independent_audit": {
+      "path": "build/hbe-v5-native-verdict-independent-v1/audit-result.json",
+      "sha256": "97d9eaec96f65e9fa9fea49ec624bba2908e6dceae6a59a8357cb4b6fd8e6f2d"
+    },
+    "independent_report": {
+      "path": "build/hbe-v5-native-verdict-independent-v1/REPORT.txt",
+      "sha256": "372929bff40fc5546320ff0aed11054ebd44ddac2a656decdb0369037d137bac"
+    },
+    "manifest": {
+      "path": "build/hbe-v5-native-manifest-preparation-v1/actual-input-manifest-accounting-v2.json",
+      "sha256": "4ba15123c7d0482a38576528b64a95d0b44bd7cccbd9851e8701fca1834fe69c"
+    },
+    "protocol": {
+      "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    "roles": {
+      "path": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+      "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+    },
+    "v4": {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v4.json",
+      "sha256": "85ed9ca8cb1a9048e885f27424678e97f20cb6dd2e2cbb5cfd6dccfe6dafb52b"
+    },
+    "v5": {
+      "path": "manifests/experiments/hbe-01-03-branch-calibration-v5.json",
+      "sha256": "50c5dbc8c45279245a8dcd9b92d16e9499bad6bc61c6dfbd5b5e307af49a71ce"
+    }
+  },
+  "source_deck_bindings": {
+    "path": "manifests/experiments/hbe-01-03-v5-source-deck-bindings-v1.json",
+    "sha256": "65ab3d9b2056e43e3a193b6d0288078f3617159483e271d0ab3cd0d624fb02e0"
+  },
+  "backend_profile": {
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+    "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+  },
+  "runtime_identity": {
+    "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+    "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+  },
+  "source_paths": [
+    "launchers/hbe_v5_ordinal9_continuation_v1.py",
+    "scripts/febio_runtime.py",
+    "scripts/mechanics_febio_verification.py",
+    "scripts/mechanics_hbe_access.py",
+    "scripts/mechanics_hbe_backend.py",
+    "scripts/mechanics_hbe_branch_calibration_v3.py",
+    "scripts/mechanics_hbe_branch_calibration_v3_readout.py",
+    "scripts/mechanics_hbe_branch_calibration_v4.py",
+    "scripts/mechanics_hbe_branch_calibration_v5.py",
+    "scripts/mechanics_hbe_evaluation.py",
+    "scripts/mechanics_hbe_experiment.py",
+    "scripts/mechanics_hbe_halfheight_global.py",
+    "scripts/mechanics_hbe_halfheight_global_experiment.py",
+    "scripts/mechanics_hbe_halfheight_global_n36.py",
+    "scripts/mechanics_hbe_halfheight_global_n36_experiment.py",
+    "scripts/mechanics_hbe_halfheight_global_n36_readout.py",
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal.py",
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py",
+    "scripts/mechanics_hbe_halfheight_global_readout.py",
+    "scripts/mechanics_hbe_halfheight_mesh.py",
+    "scripts/mechanics_hbe_halfheight_readout.py",
+    "scripts/mechanics_hbe_halfheight_spatial.py",
+    "scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+    "scripts/mechanics_hbe_halfheight_spatial_readout.py",
+    "scripts/mechanics_hbe_halfheight_temporal_common.py",
+    "scripts/mechanics_hbe_mesh.py",
+    "scripts/mechanics_hbe_ogden_comparison.py",
+    "scripts/mechanics_hbe_ogden_comparison_experiment.py",
+    "scripts/mechanics_hbe_outputs.py",
+    "scripts/mechanics_hbe_physics.py",
+    "scripts/mechanics_hbe_readout.py",
+    "scripts/mechanics_hbe_v5_axial_calibration.py",
+    "scripts/mechanics_hbe_v5_axial_calibration_experiment.py",
+    "scripts/mechanics_hbe_v5_comparison.py",
+    "scripts/mechanics_hbe_v5_fitted_confirmation.py",
+    "scripts/mechanics_hbe_v5_fitted_confirmation_experiment.py",
+    "scripts/mechanics_hbe_v5_frame.py",
+    "scripts/mechanics_hbe_v5_n12_admission.py",
+    "scripts/mechanics_hbe_v5_n12_saved_replay.py",
+    "scripts/mechanics_hbe_v5_n8_canary.py",
+    "scripts/mechanics_hbe_v5_n8_one_shot.py",
+    "scripts/mechanics_hbe_v5_native_comparison.py",
+    "scripts/mechanics_hbe_v5_remaining_one_shot.py",
+    "scripts/mechanics_hbe_v5_source_bindings.py",
+    "scripts/mechanics_hbe_v5_stream.py",
+    "scripts/mechanics_patient_constraints.py"
+  ],
+  "scientific_limits": {
+    "candidate_rationale": "one moderate opposite-sign shape probe fixed before new solves; no published fitted parameters",
+    "alpha_domain": "exactly {2,-8}; no optimization or automatic extension",
+    "retained_baseline": "alpha2 accepted N16/N24 S60 readouts; original N36/S120 fit retained separately",
+    "comparison_grid": "both candidates N24/S60; new alpha additionally N24/S120 temporal screen",
+    "screen": "unchanged per-stream Jacobian/residual/balance/motion/energy checks plus original v4 pairwise force/probe limits; two-grid diagnostic only",
+    "no_original_v5_qualification_transfer": true,
+    "continuum_error_bound": false,
+    "physical_validation_pass": null,
+    "empirical_tolerance": null,
+    "all_60_signed_processed_cycleavg_values": true,
+    "fitted_offset": false,
+    "fitted_sign": false,
+    "held_out_validation": false,
+    "fitted_mu_native_confirmation": false,
+    "patient_property_assignment": false
+  },
+  "resource_forecast": {
+    "native_seconds_analogue": [
+      46.446,
+      68.423,
+      10.5123,
+      65.7557,
+      136.846,
+      128.8728
+    ],
+    "compression_N24_S120_is_unmeasured_estimate": true,
+    "total_native_seconds_approx": 457,
+    "total_with_preparation_readout_estimate_seconds": [
+      600,
+      720
+    ],
+    "conditioning_of_new_alpha_unknown": true,
+    "old_peak_native_RSS_bytes": 496304128,
+    "estimated_retained_products_bytes": [
+      1300000000,
+      1500000000
+    ],
+    "hard_aggregate_output_bytes": 2147483648,
+    "hard_per_run_directory_bytes": 603979776,
+    "plot_or_dump_output_enabled": false,
+    "automatic_cleanup": false,
+    "source_reservation_is_not_execution_storage": true
+  }
+}

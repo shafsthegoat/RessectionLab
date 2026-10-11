@@ -125,7 +125,8 @@ def _contract_key(contract):
             contract['v5_declaration_sha256'], contract['v4_declaration_sha256'],
             contract['source_deck_sha256'], contract['adapted_deck_sha256'],
             tuple(contract['times']), tuple(contract['full_coordinates_m']),
-            tuple(contract['native_coordinates_m']),contract.get('fixed_fit_sha256'))
+            tuple(contract['native_coordinates_m']),contract.get('fixed_fit_sha256'),
+            contract.get('ogden_alpha', 2.), contract.get('shape_declaration_sha256'))
 
 
 def _freeze_geometry_arrays(mesh):
@@ -176,16 +177,28 @@ FIXED_MU_PA = 715.361571139082
 
 def evaluate_prepared_frame(contract, prepared, node_record, element_record):
     """Original reference-only entrypoint; its material admission is unchanged."""
-    if contract['mu_Pa'] != 1000.:
+    if contract['mu_Pa'] != 1000. or contract.get('ogden_alpha', 2.) != 2.:
         raise ValueError('Pinned HBE reference material or radius differs')
     return _evaluate_prepared_frame(contract, prepared, node_record, element_record)
 
 
 def evaluate_fitted_frame(contract, prepared, node_record, element_record, *, primitive_sink=None):
     """Fixed-fit equations only; hash authentication/execution belongs to caller."""
-    if (contract.get('fixed_fit_sha256') != FIXED_FIT_SHA256
+    if (contract.get('ogden_alpha', 2.) != 2. or contract.get('fixed_fit_sha256') != FIXED_FIT_SHA256
             or type(contract.get('mu_Pa')) is not float or contract['mu_Pa'] != FIXED_MU_PA):
         raise ValueError('Exact accepted fixed fit required')
+    return _evaluate_prepared_frame(contract, prepared, node_record, element_record,
+                                    primitive_sink=primitive_sink)
+
+
+def evaluate_ogden_frame(contract, prepared, node_record, element_record, *, primitive_sink=None):
+    """Explicit shape-comparison lane; source/execution admission stays external."""
+    digest = contract.get('shape_declaration_sha256')
+    if (contract.get('mu_Pa') != 1000. or contract.get('ogden_alpha') != -8.
+            or contract.get('fixed_fit_sha256') is not None
+            or not isinstance(digest, str) or len(digest) != 64
+            or any(c not in '0123456789abcdef' for c in digest)):
+        raise ValueError('Exact declared reference-scale shape contract required')
     return _evaluate_prepared_frame(contract, prepared, node_record, element_record,
                                     primitive_sink=primitive_sink)
 
@@ -232,7 +245,7 @@ def _evaluate_prepared_frame(contract, prepared, node_record, element_record, *,
     native_ratios = _ratios(native_mesh, current, raw,
                             coordinate_m=native_coordinate, half=half, mu_Pa=mu)
     native_ratios['primitive_consistency'] = primitive_ratio
-    native_state = native_mesh.deformation(current, mu)
+    native_state = native_mesh.deformation(current, mu, ogden_alpha=contract.get('ogden_alpha', 2.))
     top, bottom = np.asarray(native_mesh._top), np.asarray(native_mesh._bottom)
     native_force = float(-raw[top, 2].sum())
     bottom_force = float(raw[bottom, 2].sum())
@@ -247,7 +260,7 @@ def _evaluate_prepared_frame(contract, prepared, node_record, element_record, *,
         raise ValueError('Pinned HBE full/half height differs')
     full_ratios = _ratios(full_mesh, full_current, full_raw,
                           coordinate_m=full_coordinate, half=False, mu_Pa=mu)
-    full_state = full_mesh.deformation(full_current, mu)
+    full_state = full_mesh.deformation(full_current, mu, ogden_alpha=contract.get('ogden_alpha', 2.))
     full_force = float(-full_raw[np.asarray(full_mesh._top), 2].sum())
     if primitive_sink is not None:
         full_top = np.asarray(full_mesh._top)

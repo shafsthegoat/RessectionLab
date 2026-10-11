@@ -1,0 +1,58 @@
+SOURCE READY; GENERATED37PASS WITH OUTER FIXTURE-OUTPUT CAP FAILURE RETAINED. NO NATIVE RUN OR MEASURED READ. See CONTROL-RESULT.txt. Do not repeat attempt03.
+
+Scope: HBE_01_03 DEVELOPMENT only. Compare retained alpha=2 to the single
+predeclared alpha=-8 shape probe. Positive common mu is profiled once per
+candidate from all 60 already exposed signed cycle-average samples. One
+additional fit_scale call only reproduces the original saved alpha2 arithmetic.
+No offset, sign change, new alpha, new specimen, archive access or torsion.
+
+Generated controls (root dispatch, one global numerical slot):
+  .venv/bin/python -I -S -B -X pycache_prefix=/ABS/REPO/build/hbe-ogden-shape-v1/comparison-proposal/unused-parent-cache build/hbe-ogden-shape-v1/comparison-proposal/run_generated_controls_v3.py
+The existing owned sampler/cleanup is reused: 20 s total / 16 s worker,
+512 MiB sampled group RSS, one thread, 256 KiB generated-output cap. Both
+success and failure are retained. Source index d8b2983e74541bf49f4b7788927d4b48368d655567f6f78dd8481241739a5f07.
+Runner afae79ea65d6b5decf2898c4d52d78a6b988cb167be9f7e0a870e4f9b6dfc480.
+
+Promote exactly source.patch after tests/root review. Unrelated later source
+commits are permitted: the actual release binds the historical promoted blobs
+for mechanics/lifecycle sources, not the current repository HEAD as a whole.
+False release remains preserved. Root creates a distinct JSON by changing only:
+  execution_released=true; source_commit=<promoted full Git SHA>;
+  execution_storage_receipt={path:<new executed storage reservation>,sha256:<digest>}.
+The amended5MiB source reservation does not authorize the native products.
+Then use a fresh never-created parent cache path and run once:
+  .venv/bin/python -I -S -B -X pycache_prefix=/ABS/REPO/build/hbe-ogden-shape-run-caches-v1/unused-parent scripts/mechanics_hbe_ogden_comparison_experiment.py --root /ABS/REPO --release <relative new release JSON> --release-sha256 <exact SHA> --execute
+Dropping --execute performs source/runtime preflight; it does not open native
+products or exposed fit.json. Source preflight does hash the pinned interpreter
+and numerical runtime files. No automatic retry or source mutation is included.
+
+Actual sequence: prepare exact inherited decks/meshes; compression N16/S60,
+compression N24/S60, tension N16/S60, tension N24/S60, each immediately followed
+by complete stream checks; two-grid screen; compression N24/S120 and tension
+N24/S120, each checked; temporal screen; two common-scale profiles. No reference
+native replay or remeshing. All new native states use the independent general-
+alpha energy oracle, positive sampled/logged J, residual, reaction balance,
+prescribed motion, symmetry/reconstruction and energy-work checks. Existing
+v4 pairwise force/probe limits are reused. This is NOT the old three-grid trend/
+conditional compression qualification; no continuum error bound is claimed.
+
+Forecast from actual alpha2 receipts (seconds): comp N16 46.446, comp N24
+68.423, tension N16 10.5123, tension N24 65.7557, tension N24/S120 128.8728.
+Comp N24/S120 136.846 is an unmeasured estimate (2 x its S60). Sum about457
+native seconds; preparation/readout suggests600–720 seconds if conditioning
+is comparable. New alpha conditioning is unknown. Enforced operation cap1200
+seconds including startup/finalization, with10-second cleanup reserve. Six
+native calls maximum,1GiB sampled group RSS,1thread; no auto-refinement.
+
+Retained new products estimate1.3–1.5GB. Whole output tree hard cap2GiB logical;
+each native directory576MiB including specimen deck, node/element/solver logs,
+console, receipt, execution and readout. Existing Output subtree has no plot
+or dump; undeclared plot/dump is rejected. Any unexpected output also prevents
+final exact inventory publication. Budget2GiB+1MiB allocated-block overhead
+for the <=100 files/directories; retain all files on success/failure. Startup requires50GiB free plus the entire2GiB output budget; each owned RSS/output sampling pass refuses if free space falls below50GiB. Source preparation remains within amended5MiB; all three generated attempts retained.
+
+A smaller same-data residual would support only model-adequacy improvement at
+the screened resolution. It cannot establish independent measured validation,
+noise/zero-reference correction, living tissue properties, retraction, cutting,
+fracture or operative force fidelity. Original poor fit and failed torsion
+format attempt stay unchanged. Fitted-mu native confirmation is not performed.

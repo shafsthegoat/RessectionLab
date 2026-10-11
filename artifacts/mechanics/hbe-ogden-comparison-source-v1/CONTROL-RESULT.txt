@@ -1,0 +1,36 @@
+Generated controls: 37 assertions/tests passed; complete guard receipt; actual worker exit0.
+Outer result: FAILED, generated-output cap exceeded. Do not interpret this as an
+in-cap supervision pass. No further retry or receipt rewrite was performed.
+
+Attempt01: namespace bootstrap error before collection,0.274s; clean exit1/reap.
+Attempt02:30 tests completed before full fake-parent readout arrays exceeded the
+256KiB generated-output cap;1.328s,89,323,352B sampled RSS; contained kill/reap.
+The arrays are generated fixture data, retained only in ignored failure outputs.
+Attempt03: fake-parent readout changed to a scalar record only. Scientific stream
+fixtures and executing mechanics sources unchanged. All37 tests passed1.16s;
+worker guard elapsed1.214775417s, no unexpected refusals; outer1.696304458s,
+88,817,664B sampled group RSS across14samples, exit0, no cleanup fallback,
+no errors or remaining group members. Saved fixture tree was355,876 logical
+bytes/308files before additive postrun-source-fixity.txt. The inherited256KiB
+output ceiling was too small for the retained lifecycle receipts. No RSS or
+wall cap exceeded. Parent failure is preserved, not relabeled as success.
+All hash-bound source/index payloads passed the additive saved-only postrun
+fixity check. No checkpoint, archive, source specimen measurement or FE access.
+
+Final source index: d8b2983e74541bf49f4b7788927d4b48368d655567f6f78dd8481241739a5f07
+Patch:40ec325ca151d35e4c03b697f0199a0d54bee7cdd137a39c98fea126a342ec01
+False release unchanged:f5cf94153f79f6bdeb44f7e8549964cdf805d90dc8c45b164622d2f49e65d3fd
+Test:410147d7d9b83e6ed33722804c3b83ae1f55dea8a5eee30a3dc07ed13cf83af5
+Attempt03 runner:afae79ea65d6b5decf2898c4d52d78a6b988cb167be9f7e0a870e4f9b6dfc480
+Attempt03 supervisor:944193095b70867aa92f174ae81c2cb4ffa3088ca2a475c07475b12ffe55d116
+Attempt03 guard:0562ac54196f6f4fab60b603a0dfe33e5fd90315c4beff81053c54bdba245576
+Attempt03 log:2a4cb4d32458e82bb1571577706f3dad9a6edd3b95920fa8e8d031472b94cac7
+
+Canonical promotion (root only): git apply source.patch; retain false-release
+and compact negative/positive test evidence; commit the six exact staged files.
+The source binds only existing mechanics/lifecycle dependencies. The old alpha2
+fitted/numerical public entrypoints retain their default equations. Root may run
+relevant canonical regression tests in its next slot; no new review gate is
+introduced. Actual six-solve execution remains closed until root separately
+binds the committed source and begun2049MiB output reservation. Native startup
+requires at least52GiB free, with50GiB monitored floor; no automatic cleanup.

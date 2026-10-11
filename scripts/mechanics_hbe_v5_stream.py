@@ -78,12 +78,17 @@ def evaluate_stream(contract, mesh_manifest, node_lines, element_lines, solver_l
 
 
 def evaluated_frames(contract, mesh_manifest, node_lines, element_lines, solver_lines,
-                     *, reconstruction=None, fitted=False, primitive_caps=None):
+                     *, reconstruction=None, fitted=False, ogden_shape=False, primitive_caps=None):
     """Stream-local primitives; caller may reduce each yielded state then discard it.
 
     Reference numerical result is byte-equivalent before provenance to the old
     evaluate_stream. No raw state list is retained. fitted is not an IO release.
     """
+    if ogden_shape:
+        if fitted or contract.get('mu_Pa') != 1000. or contract.get('ogden_alpha') != -8.:
+            raise ValueError('Separate declared Ogden reference-scale lane required')
+    elif contract.get('ogden_alpha', 2.) != 2.:
+        raise ValueError('Original numerical/fitted lanes remain alpha two')
     if fitted:
         if contract.get('fixed_fit_sha256') != frame.FIXED_FIT_SHA256 or contract.get('mu_Pa') != frame.FIXED_MU_PA:
             raise ValueError('Fixed fitted contract required')
@@ -123,7 +128,9 @@ def evaluated_frames(contract, mesh_manifest, node_lines, element_lines, solver_
         if node['step'] != index or element['step'] != index:
             raise ValueError('Native primitive frame order differs')
         primitive = []
-        if fitted:
+        if ogden_shape:
+            result = frame.evaluate_ogden_frame(contract, prepared, node, element, primitive_sink=primitive.append)
+        elif fitted:
             result = frame.evaluate_fitted_frame(contract, prepared, node, element, primitive_sink=primitive.append)
         else:
             result = frame._evaluate_prepared_frame(contract, prepared, node, element, primitive_sink=primitive.append)

@@ -1,0 +1,18 @@
+SOURCE REVIEW: GO for the declared six-solve DEVELOPMENT comparison; no material source blocker found.
+
+The constitutive change is explicit: alpha 2 to -8, with c1=2*mu, unchanged K/mu=149/3, original mesh, bonded boundaries, radius/height and signed displacement endpoints. shape_deck reverses only m1 and the prescribed S120 time/load schedule before comparing the complete XML tree. The independent energy readout uses 2*mu/alpha^2 times the sum of isochoric principal-stretch powers minus three, plus the inherited cell-average-J bulk energy. Alpha2 keeps its old literal arithmetic; the original reference and fixed-fit entrypoints reject the new exponent. Prepared-frame identity now binds alpha and declaration.
+
+Readout matching is coherent. Both candidates use N24/S60 for the primary comparison, each with one positive common mu scale fitted to the same 30 compression plus 30 tension signed processed cycle-average values, same equal-mode quadrature weights, no offset/sign fitting or row removal. No new specimen/archive reader is introduced. The original finer-grid alpha2 fit is reproduced separately, not substituted for the matched-grid baseline. Scaling both shear and bulk coefficients preserves the declared constitutive ratio; fitted-scale FE confirmation is explicitly absent.
+
+Numerical acceptance remains separate from fit improvement: all six new streams must pass the existing primitive, sampled-J, residual, balance, motion and independent energy/work checks. N16/N24 spatial and N24 S60/S120 temporal force/probe differences use inherited limits and exact common coordinates. Failed readouts/screens are written before refusal; worse fitted outcomes are retained. Two-grid agreement is not continuum convergence, and the new report explicitly refuses alpha2 qualification transfer, held-out validation, empirical pass/fail, patient assignment and physical-validation claims. Lower equal_branch_RMSE would be descriptive in-sample improvement only; inspect both branch errors, signed endpoint biases and residuals, not completion status alone.
+
+Reviewed generated test source covers exact deck deltas, independent analytic -8 energy/force streams, closed old lanes, signed-value/weight preservation, missing/worse screens, scope refusal and retained parent failures. Tests were not executed by this reviewer. The storage-floor repair now requires 50 GiB plus reserved output initially and monitors 50 GiB during stages; root owns final runtime qualification. No acquired/fit/primitive payload was opened and no numerical code or solver was run here.
+
+Exact source pins (all matched current source-index.json):
+mechanics_hbe_ogden_comparison.py: 0dbf5a83ac001a7ce0db70790b79e6040a8c3e4c787a1ae6fed3b671b8ca4a7b
+mechanics_hbe_ogden_comparison_experiment.py: aa974110a5b57a7cd409ffa43feceaf348b4635647ded3ca2e21282c7a32bd03
+mechanics_hbe_v5_frame.py: 5d9d86ad83b6ebebbc36c2c25cabacfe87b3fc23955ab9ea34303492180f4aa6
+mechanics_hbe_v5_stream.py: 7b41ad8fd2e92484266a5d782460e1685a38c6deb64ce3681fe622216e2fb639
+hbe-01-03-ogden-shape-comparison-v1.json: ae6a4d4217d7531c2c112eeed5e565548050bf69c757998f74b3ed4b720ebc2f
+test_hbe_ogden_comparison.py: 9fa432dd5c9e3e22be3a7f3d784c2c9ad7f414a3e028b678fb66b10eb57d990d
+mechanics_hbe_physics.py: 8e7e37564486bd34bc254726cd112086112baaaa2fa19435793e60630b1b13d2
