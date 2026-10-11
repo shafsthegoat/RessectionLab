@@ -1,0 +1,21 @@
+{
+  "actions": 5,
+  "clinical_validation": false,
+  "desktop_admitted": false,
+  "episode_bytes": 25713,
+  "episode_id": "sha256:33cbb8bdea5873acece2461fbf1c992791ff7cae18ba2099c4bc1724cd76717a",
+  "episode_sha256": "42d30a5ba9c4e24cf2074f45ccbef8511475de2d436ddb449af44daef0b37312",
+  "factory_and_fresh_replay_seconds": 0.44962983299046755,
+  "frames": 6,
+  "generated_seconds": 4.0,
+  "independent_tool_pair_checker": false,
+  "memory_observed_not_capped": true,
+  "native_masks_unchanged": true,
+  "original_patient_reads": 0,
+  "policy_updates": 0,
+  "schema": "generated-persistent-passive-proof-v1",
+  "source_sha256": "2b431550499d2165ff868236bd46e65eb0a6a28410355576db528d4509c4d5c4",
+  "status": "completed",
+  "weight_reads": 0,
+  "worker_peak_rss_bytes": 67125248
+}

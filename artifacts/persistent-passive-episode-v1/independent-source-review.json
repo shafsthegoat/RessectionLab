@@ -1,0 +1,66 @@
+{
+  "review": "independent source review of generated persistent passive task",
+  "reviewer": "/root/goal_conditioned_policy",
+  "decision": "GO for the narrow generated-only opt-in source",
+  "review_method": "Source inspection, file hashing and saved test-log inspection only; no reviewer tests, model, patient or native execution.",
+  "bindings": {
+    "staged_source": {
+      "path": "build/hybrid-persistent-passive-v1/stage/resectionlab/persistent_passive.py",
+      "sha256": "2b431550499d2165ff868236bd46e65eb0a6a28410355576db528d4509c4d5c4"
+    },
+    "promoted_source": {
+      "path": "src/resectionlab/persistent_passive.py",
+      "sha256": "2b431550499d2165ff868236bd46e65eb0a6a28410355576db528d4509c4d5c4"
+    },
+    "staged_tests": {
+      "path": "build/hybrid-persistent-passive-v1/tests/test_persistent_passive.py",
+      "sha256": "81a6d9ac0fc90c55f5e49e374f9acff6191b7eed31027aa66f666fc26681113f"
+    },
+    "canonical_tests": {
+      "path": "tests/test_persistent_passive.py",
+      "sha256": "4e894d176c8052785ce1db3110c13146439bdec8e380cf3d01d9bee6c07d9333",
+      "reviewed_delta": "Only staged import-path injection and its unused imports removed."
+    },
+    "source_index": {
+      "path": "build/hybrid-persistent-passive-v1/source-index.json",
+      "sha256": "0d39b14e949f894c94c4374e415cc39a2bd0585468810fea77a632f3938ab7d2",
+      "canonical_dependency_pins_verified": 4
+    },
+    "author_controls": {
+      "path": "build/hybrid-persistent-passive-v1/test-output-v2.txt",
+      "sha256": "340e680c7210127fac8208ab1b4ad30fbf2be4dac6905b412c0239877a88dcfe",
+      "saved_result": "13 passed in 3.04s"
+    },
+    "root_canonical_controls": {
+      "path": "build/hybrid-persistent-passive-v1/canonical-tests.log",
+      "sha256": "3f8120fffcd05e938f134d9289e9792117c08c3a1ce7c460508b3f10bf6f64c8",
+      "saved_result": "115 passed in 7.21s"
+    }
+  },
+  "reviewed_scope": [
+    "Fixed generated support shell and explicit pre-existing free tunnel; complete 6 mm held shaft and tip occupy the void without episode-time removal.",
+    "One-tool four-action/five-frame and paired five-action/six-frame sequences preserve explicit operative poses, phase and generated clock.",
+    "Primary full-tool motion checks retain the other tool; second withdrawal checks the moving tool at its recorded access pose.",
+    "Geometry refusal and precommit cancellation leave operative state unchanged; interruption after sealing reports a durable committed transition.",
+    "State seals, held-clone independence, delayed generated-status visibility, exact fresh replay and versioned history/frame export.",
+    "Existing atomic native-stroke behavior remains separate; no canonical engine or geometry changes in this slice."
+  ],
+  "closed_findings": [
+    "Removed silent omission of the parked moving-tool envelope during the second withdrawal.",
+    "Added cancellation check after geometry and durable postcommit interruption handling.",
+    "Replaced the superficial free-approach positive fixture with a full-tool hold inside an explicit generated tunnel.",
+    "Replaced ambiguous retained=false output with retained_at_depth, exact pose_status and physical_absence_claim=false; both final access poses remain recorded.",
+    "Strengthened exact second-tool pose, parked-tool checker argument, clone and replay-tamper controls."
+  ],
+  "limitations": [
+    "Generated software/geometry continuity only; inspection status changes visible status and STOP reason but does not change the physical decision sequence. Package 2 is incomplete.",
+    "The second tool is preset in the initial state; its insertion is not simulated.",
+    "Withdrawal returns to recorded access poses, not proven physical absence. Consumers must preserve those poses.",
+    "Independent motion checking covers tissue and access only. Tool-tool clearance uses the primary checker, not an independent pair checker.",
+    "Fresh replay authenticates the same implementation and source. Legacy native metrics/history evaluators are not passive-episode authority.",
+    "A refused required motion leaves a failed fixed episode; this is not a general controller with a fallback action.",
+    "Generated durations are not measured operative time. No sensor accuracy, injury, physiology, clinical, patient, policy-learning or desktop admission claim."
+  ],
+  "supersedes_reviewed_source": "94919644c7050eb2b46c82d0403e9561719f5dc38b81bfd14b3cc6c7a22a345b",
+  "remaining_material_source_findings": []
+}

@@ -1,0 +1,647 @@
+{
+  "actions": [
+    "PASSIVE_MOVE",
+    "ACQUIRE_GENERATED_STATUS",
+    "PASSIVE_WITHDRAW",
+    "PASSIVE_WITHDRAW_STATIONARY",
+    "STOP"
+  ],
+  "decisionModelHash": "sha256:7e194ca924330fb826a5e5907b8fae96be9b135459d68335578f58e71626b98e",
+  "episodeId": "sha256:33cbb8bdea5873acece2461fbf1c992791ff7cae18ba2099c4bc1724cd76717a",
+  "finalStateHash": "sha256:cf6cdc8f86cca5602aab78c64c8c8cf48efa9d989c2d2ffb436bfdb133fe677a",
+  "frameMeaning": "operative state after each committed passive action; not legacy native stroke frames",
+  "frames": [
+    {
+      "frameIndex": 0,
+      "operative": {
+        "elapsed_generated_seconds": 0.0,
+        "inspection_status": "not_acquired",
+        "moving_tool": {
+          "activation": "off",
+          "physical_absence_claim": false,
+          "pose": {
+            "axis_unit": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "tip_mm": [
+              6.5,
+              6.0,
+              0.5
+            ]
+          },
+          "pose_status": "access_pose_recorded",
+          "retained_at_depth": false,
+          "tool_id": "generated-passive-probe"
+        },
+        "other_tool": {
+          "activation": "off",
+          "physical_absence_claim": false,
+          "pose": {
+            "axis_unit": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "tip_mm": [
+              5.5,
+              6.0,
+              6.5
+            ]
+          },
+          "pose_status": "held_in_declared_void",
+          "retained_at_depth": true,
+          "tool_id": "generated-narrow-parked-tool"
+        },
+        "phase": "ready"
+      }
+    },
+    {
+      "frameIndex": 1,
+      "operative": {
+        "elapsed_generated_seconds": 1.0,
+        "inspection_status": "not_acquired",
+        "moving_tool": {
+          "activation": "passive_only",
+          "physical_absence_claim": false,
+          "pose": {
+            "axis_unit": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "tip_mm": [
+              6.5,
+              6.0,
+              6.5
+            ]
+          },
+          "pose_status": "held_in_declared_void",
+          "retained_at_depth": true,
+          "tool_id": "generated-passive-probe"
+        },
+        "other_tool": {
+          "activation": "off",
+          "physical_absence_claim": false,
+          "pose": {
+            "axis_unit": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "tip_mm": [
+              5.5,
+              6.0,
+              6.5
+            ]
+          },
+          "pose_status": "held_in_declared_void",
+          "retained_at_depth": true,
+          "tool_id": "generated-narrow-parked-tool"
+        },
+        "phase": "held"
+      }
+    },
+    {
+      "frameIndex": 2,
+      "operative": {
+        "elapsed_generated_seconds": 2.0,
+        "inspection_status": "unresolved",
+        "moving_tool": {
+          "activation": "passive_only",
+          "physical_absence_claim": false,
+          "pose": {
+            "axis_unit": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "tip_mm": [
+              6.5,
+              6.0,
+              6.5
+            ]
+          },
+          "pose_status": "held_in_declared_void",
+          "retained_at_depth": true,
+          "tool_id": "generated-passive-probe"
+        },
+        "other_tool": {
+          "activation": "off",
+          "physical_absence_claim": false,
+          "pose": {
+            "axis_unit": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "tip_mm": [
+              5.5,
+              6.0,
+              6.5
+            ]
+          },
+          "pose_status": "held_in_declared_void",
+          "retained_at_depth": true,
+          "tool_id": "generated-narrow-parked-tool"
+        },
+        "phase": "inspected"
+      }
+    },
+    {
+      "frameIndex": 3,
+      "operative": {
+        "elapsed_generated_seconds": 3.0,
+        "inspection_status": "unresolved",
+        "moving_tool": {
+          "activation": "off",
+          "physical_absence_claim": false,
+          "pose": {
+            "axis_unit": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "tip_mm": [
+              6.5,
+              6.0,
+              0.5
+            ]
+          },
+          "pose_status": "access_pose_recorded",
+          "retained_at_depth": false,
+          "tool_id": "generated-passive-probe"
+        },
+        "other_tool": {
+          "activation": "off",
+          "physical_absence_claim": false,
+          "pose": {
+            "axis_unit": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "tip_mm": [
+              5.5,
+              6.0,
+              6.5
+            ]
+          },
+          "pose_status": "held_in_declared_void",
+          "retained_at_depth": true,
+          "tool_id": "generated-narrow-parked-tool"
+        },
+        "phase": "withdrawn"
+      }
+    },
+    {
+      "frameIndex": 4,
+      "operative": {
+        "elapsed_generated_seconds": 4.0,
+        "inspection_status": "unresolved",
+        "moving_tool": {
+          "activation": "off",
+          "physical_absence_claim": false,
+          "pose": {
+            "axis_unit": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "tip_mm": [
+              6.5,
+              6.0,
+              0.5
+            ]
+          },
+          "pose_status": "access_pose_recorded",
+          "retained_at_depth": false,
+          "tool_id": "generated-passive-probe"
+        },
+        "other_tool": {
+          "activation": "off",
+          "physical_absence_claim": false,
+          "pose": {
+            "axis_unit": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "tip_mm": [
+              5.5,
+              6.0,
+              0.5
+            ]
+          },
+          "pose_status": "access_pose_recorded",
+          "retained_at_depth": false,
+          "tool_id": "generated-narrow-parked-tool"
+        },
+        "phase": "both_withdrawn"
+      }
+    },
+    {
+      "frameIndex": 5,
+      "operative": {
+        "elapsed_generated_seconds": 4.0,
+        "inspection_status": "unresolved",
+        "moving_tool": {
+          "activation": "off",
+          "physical_absence_claim": false,
+          "pose": {
+            "axis_unit": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "tip_mm": [
+              6.5,
+              6.0,
+              0.5
+            ]
+          },
+          "pose_status": "access_pose_recorded",
+          "retained_at_depth": false,
+          "tool_id": "generated-passive-probe"
+        },
+        "other_tool": {
+          "activation": "off",
+          "physical_absence_claim": false,
+          "pose": {
+            "axis_unit": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "tip_mm": [
+              5.5,
+              6.0,
+              0.5
+            ]
+          },
+          "pose_status": "access_pose_recorded",
+          "retained_at_depth": false,
+          "tool_id": "generated-narrow-parked-tool"
+        },
+        "phase": "stopped"
+      }
+    }
+  ],
+  "history": [
+    {
+      "action_id": "PASSIVE_MOVE",
+      "clinical_deficit_probability": null,
+      "contact_indices_native": [],
+      "duration_generated_seconds": 1.0,
+      "elapsed_generated_seconds": 1.0,
+      "geometry": {
+        "clearance_definition": "conservative lower bound capped at 10 mm; contact is rejected",
+        "clearance_mm": 0.7,
+        "exposure_definition": "unique affine cells in conservative full-tool envelope; upper bound, not removal",
+        "exposure_volume_mm3": 0.0,
+        "failures": [],
+        "feasible": true,
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "unknowns": [
+          "tool_geometry_outside_image_unassessed"
+        ]
+      },
+      "independent_tissue_geometry": {
+        "checker_version": "independent-cell-capsule-v1",
+        "feasible": true,
+        "stationary_tool_pair_independently_checked": false,
+        "unknowns": [
+          "geometry_checks_only_supplied_anatomical_obstacles",
+          "proximal_tool_outside_image_coverage_unassessed"
+        ]
+      },
+      "information_event": null,
+      "interaction_mode": "passive_motion",
+      "operative_after": "sha256:44d7b70b0522559ac11e113104fb1db18f9d78299e038f5bad0ca7ac0d562a4f",
+      "operative_before": "sha256:a15f80cf14c1b9e24fdeddd37e055bf79ea8d9fd67e412205a8f75191ee71686",
+      "physiological_response": null,
+      "pose_after": {
+        "axis_unit": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "tip_mm": [
+          6.5,
+          6.0,
+          6.5
+        ]
+      },
+      "pose_before": {
+        "axis_unit": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "tip_mm": [
+          6.5,
+          6.0,
+          0.5
+        ]
+      },
+      "removed_indices_native": [],
+      "result_state_hash": "sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3",
+      "reward": 0.0,
+      "source_state_hash": "sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3",
+      "stop_reason": null,
+      "time_source": "fixed_generated_schedule_not_measured_surgical_time",
+      "tool_id": "generated-passive-probe"
+    },
+    {
+      "action_id": "ACQUIRE_GENERATED_STATUS",
+      "clinical_deficit_probability": null,
+      "contact_indices_native": [],
+      "duration_generated_seconds": 1.0,
+      "elapsed_generated_seconds": 2.0,
+      "geometry": null,
+      "independent_tissue_geometry": null,
+      "information_event": {
+        "input_fingerprint": "sha256:4e54c254d40ea5f0cafc215849bfa9a9edf4b290eba9c6bb6ba03db52a65351b",
+        "meaning": "generated protocol status; no anatomy, sensor or clinical inference",
+        "status": "unresolved",
+        "version": "generated-registration-status-v1"
+      },
+      "interaction_mode": "generated_information",
+      "operative_after": "sha256:d2b55970367e026d403441f09ffb44b580b7645b03b3941558c81cc2b60ed37f",
+      "operative_before": "sha256:44d7b70b0522559ac11e113104fb1db18f9d78299e038f5bad0ca7ac0d562a4f",
+      "physiological_response": null,
+      "pose_after": {
+        "axis_unit": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "tip_mm": [
+          6.5,
+          6.0,
+          6.5
+        ]
+      },
+      "pose_before": {
+        "axis_unit": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "tip_mm": [
+          6.5,
+          6.0,
+          6.5
+        ]
+      },
+      "removed_indices_native": [],
+      "result_state_hash": "sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3",
+      "reward": 0.0,
+      "source_state_hash": "sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3",
+      "stop_reason": null,
+      "time_source": "fixed_generated_schedule_not_measured_surgical_time",
+      "tool_id": "generated-passive-probe"
+    },
+    {
+      "action_id": "PASSIVE_WITHDRAW",
+      "clinical_deficit_probability": null,
+      "contact_indices_native": [],
+      "duration_generated_seconds": 1.0,
+      "elapsed_generated_seconds": 3.0,
+      "geometry": {
+        "clearance_definition": "conservative lower bound capped at 10 mm; contact is rejected",
+        "clearance_mm": 0.7,
+        "exposure_definition": "unique affine cells in conservative full-tool envelope; upper bound, not removal",
+        "exposure_volume_mm3": 0.0,
+        "failures": [],
+        "feasible": true,
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "unknowns": [
+          "tool_geometry_outside_image_unassessed"
+        ]
+      },
+      "independent_tissue_geometry": {
+        "checker_version": "independent-cell-capsule-v1",
+        "feasible": true,
+        "stationary_tool_pair_independently_checked": false,
+        "unknowns": [
+          "geometry_checks_only_supplied_anatomical_obstacles",
+          "proximal_tool_outside_image_coverage_unassessed"
+        ]
+      },
+      "information_event": null,
+      "interaction_mode": "passive_motion",
+      "operative_after": "sha256:4cc849bf1ae6c3b39a5862693ccf27db0734f95b82f2b0117f55b151e7b9fe09",
+      "operative_before": "sha256:d2b55970367e026d403441f09ffb44b580b7645b03b3941558c81cc2b60ed37f",
+      "physiological_response": null,
+      "pose_after": {
+        "axis_unit": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "tip_mm": [
+          6.5,
+          6.0,
+          0.5
+        ]
+      },
+      "pose_before": {
+        "axis_unit": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "tip_mm": [
+          6.5,
+          6.0,
+          6.5
+        ]
+      },
+      "removed_indices_native": [],
+      "result_state_hash": "sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3",
+      "reward": 0.0,
+      "source_state_hash": "sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3",
+      "stop_reason": null,
+      "time_source": "fixed_generated_schedule_not_measured_surgical_time",
+      "tool_id": "generated-passive-probe"
+    },
+    {
+      "action_id": "PASSIVE_WITHDRAW_STATIONARY",
+      "clinical_deficit_probability": null,
+      "contact_indices_native": [],
+      "duration_generated_seconds": 1.0,
+      "elapsed_generated_seconds": 4.0,
+      "geometry": {
+        "clearance_definition": "conservative lower bound capped at 10 mm; contact is rejected",
+        "clearance_mm": 0.7,
+        "exposure_definition": "unique affine cells in conservative full-tool envelope; upper bound, not removal",
+        "exposure_volume_mm3": 0.0,
+        "failures": [],
+        "feasible": true,
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "unknowns": [
+          "tool_geometry_outside_image_unassessed"
+        ]
+      },
+      "independent_tissue_geometry": {
+        "checker_version": "independent-cell-capsule-v1",
+        "feasible": true,
+        "stationary_tool_pair_independently_checked": false,
+        "unknowns": [
+          "geometry_checks_only_supplied_anatomical_obstacles",
+          "proximal_tool_outside_image_coverage_unassessed"
+        ]
+      },
+      "information_event": null,
+      "interaction_mode": "passive_motion",
+      "operative_after": "sha256:cdebe376c862272cc4d41505c8bf69d661106d3a9164676e4b750f8f8fc1d4fe",
+      "operative_before": "sha256:4cc849bf1ae6c3b39a5862693ccf27db0734f95b82f2b0117f55b151e7b9fe09",
+      "physiological_response": null,
+      "pose_after": {
+        "axis_unit": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "tip_mm": [
+          5.5,
+          6.0,
+          0.5
+        ]
+      },
+      "pose_before": {
+        "axis_unit": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "tip_mm": [
+          5.5,
+          6.0,
+          6.5
+        ]
+      },
+      "removed_indices_native": [],
+      "result_state_hash": "sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3",
+      "reward": 0.0,
+      "source_state_hash": "sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3",
+      "stop_reason": null,
+      "time_source": "fixed_generated_schedule_not_measured_surgical_time",
+      "tool_id": "generated-narrow-parked-tool"
+    },
+    {
+      "action_id": "STOP",
+      "clinical_deficit_probability": null,
+      "contact_indices_native": [],
+      "duration_generated_seconds": 0.0,
+      "elapsed_generated_seconds": 4.0,
+      "geometry": null,
+      "independent_tissue_geometry": null,
+      "information_event": null,
+      "interaction_mode": "stop",
+      "operative_after": "sha256:2af59e4ede51f65fb2d30519687461631d16bd3a6cbc5a8b9ff171ffe884401a",
+      "operative_before": "sha256:cdebe376c862272cc4d41505c8bf69d661106d3a9164676e4b750f8f8fc1d4fe",
+      "physiological_response": null,
+      "pose_after": {
+        "axis_unit": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "tip_mm": [
+          6.5,
+          6.0,
+          0.5
+        ]
+      },
+      "pose_before": {
+        "axis_unit": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "tip_mm": [
+          6.5,
+          6.0,
+          0.5
+        ]
+      },
+      "removed_indices_native": [],
+      "result_state_hash": "sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3",
+      "reward": 0.0,
+      "source_state_hash": "sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3",
+      "stop_reason": "generated_registration_unresolved",
+      "time_source": "fixed_generated_schedule_not_measured_surgical_time",
+      "tool_id": null
+    }
+  ],
+  "physicalHistoryCanonicalJson": "[{\"action_id\":\"PASSIVE_MOVE\",\"clinical_deficit_probability\":null,\"contact_indices_native\":[],\"duration_generated_seconds\":1.0,\"elapsed_generated_seconds\":1.0,\"geometry\":{\"clearance_definition\":\"conservative lower bound capped at 10 mm; contact is rejected\",\"clearance_mm\":0.7,\"exposure_definition\":\"unique affine cells in conservative full-tool envelope; upper bound, not removal\",\"exposure_volume_mm3\":0.0,\"failures\":[],\"feasible\":true,\"geometry_version\":\"rigid-capsules-exact-orthogonal-cells-v2\",\"unknowns\":[\"tool_geometry_outside_image_unassessed\"]},\"independent_tissue_geometry\":{\"checker_version\":\"independent-cell-capsule-v1\",\"feasible\":true,\"stationary_tool_pair_independently_checked\":false,\"unknowns\":[\"geometry_checks_only_supplied_anatomical_obstacles\",\"proximal_tool_outside_image_coverage_unassessed\"]},\"information_event\":null,\"interaction_mode\":\"passive_motion\",\"operative_after\":\"sha256:44d7b70b0522559ac11e113104fb1db18f9d78299e038f5bad0ca7ac0d562a4f\",\"operative_before\":\"sha256:a15f80cf14c1b9e24fdeddd37e055bf79ea8d9fd67e412205a8f75191ee71686\",\"physiological_response\":null,\"pose_after\":{\"axis_unit\":[0.0,0.0,1.0],\"tip_mm\":[6.5,6.0,6.5]},\"pose_before\":{\"axis_unit\":[0.0,0.0,1.0],\"tip_mm\":[6.5,6.0,0.5]},\"removed_indices_native\":[],\"result_state_hash\":\"sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3\",\"reward\":0.0,\"source_state_hash\":\"sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3\",\"stop_reason\":null,\"time_source\":\"fixed_generated_schedule_not_measured_surgical_time\",\"tool_id\":\"generated-passive-probe\"},{\"action_id\":\"ACQUIRE_GENERATED_STATUS\",\"clinical_deficit_probability\":null,\"contact_indices_native\":[],\"duration_generated_seconds\":1.0,\"elapsed_generated_seconds\":2.0,\"geometry\":null,\"independent_tissue_geometry\":null,\"information_event\":{\"input_fingerprint\":\"sha256:4e54c254d40ea5f0cafc215849bfa9a9edf4b290eba9c6bb6ba03db52a65351b\",\"meaning\":\"generated protocol status; no anatomy, sensor or clinical inference\",\"status\":\"unresolved\",\"version\":\"generated-registration-status-v1\"},\"interaction_mode\":\"generated_information\",\"operative_after\":\"sha256:d2b55970367e026d403441f09ffb44b580b7645b03b3941558c81cc2b60ed37f\",\"operative_before\":\"sha256:44d7b70b0522559ac11e113104fb1db18f9d78299e038f5bad0ca7ac0d562a4f\",\"physiological_response\":null,\"pose_after\":{\"axis_unit\":[0.0,0.0,1.0],\"tip_mm\":[6.5,6.0,6.5]},\"pose_before\":{\"axis_unit\":[0.0,0.0,1.0],\"tip_mm\":[6.5,6.0,6.5]},\"removed_indices_native\":[],\"result_state_hash\":\"sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3\",\"reward\":0.0,\"source_state_hash\":\"sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3\",\"stop_reason\":null,\"time_source\":\"fixed_generated_schedule_not_measured_surgical_time\",\"tool_id\":\"generated-passive-probe\"},{\"action_id\":\"PASSIVE_WITHDRAW\",\"clinical_deficit_probability\":null,\"contact_indices_native\":[],\"duration_generated_seconds\":1.0,\"elapsed_generated_seconds\":3.0,\"geometry\":{\"clearance_definition\":\"conservative lower bound capped at 10 mm; contact is rejected\",\"clearance_mm\":0.7,\"exposure_definition\":\"unique affine cells in conservative full-tool envelope; upper bound, not removal\",\"exposure_volume_mm3\":0.0,\"failures\":[],\"feasible\":true,\"geometry_version\":\"rigid-capsules-exact-orthogonal-cells-v2\",\"unknowns\":[\"tool_geometry_outside_image_unassessed\"]},\"independent_tissue_geometry\":{\"checker_version\":\"independent-cell-capsule-v1\",\"feasible\":true,\"stationary_tool_pair_independently_checked\":false,\"unknowns\":[\"geometry_checks_only_supplied_anatomical_obstacles\",\"proximal_tool_outside_image_coverage_unassessed\"]},\"information_event\":null,\"interaction_mode\":\"passive_motion\",\"operative_after\":\"sha256:4cc849bf1ae6c3b39a5862693ccf27db0734f95b82f2b0117f55b151e7b9fe09\",\"operative_before\":\"sha256:d2b55970367e026d403441f09ffb44b580b7645b03b3941558c81cc2b60ed37f\",\"physiological_response\":null,\"pose_after\":{\"axis_unit\":[0.0,0.0,1.0],\"tip_mm\":[6.5,6.0,0.5]},\"pose_before\":{\"axis_unit\":[0.0,0.0,1.0],\"tip_mm\":[6.5,6.0,6.5]},\"removed_indices_native\":[],\"result_state_hash\":\"sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3\",\"reward\":0.0,\"source_state_hash\":\"sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3\",\"stop_reason\":null,\"time_source\":\"fixed_generated_schedule_not_measured_surgical_time\",\"tool_id\":\"generated-passive-probe\"},{\"action_id\":\"PASSIVE_WITHDRAW_STATIONARY\",\"clinical_deficit_probability\":null,\"contact_indices_native\":[],\"duration_generated_seconds\":1.0,\"elapsed_generated_seconds\":4.0,\"geometry\":{\"clearance_definition\":\"conservative lower bound capped at 10 mm; contact is rejected\",\"clearance_mm\":0.7,\"exposure_definition\":\"unique affine cells in conservative full-tool envelope; upper bound, not removal\",\"exposure_volume_mm3\":0.0,\"failures\":[],\"feasible\":true,\"geometry_version\":\"rigid-capsules-exact-orthogonal-cells-v2\",\"unknowns\":[\"tool_geometry_outside_image_unassessed\"]},\"independent_tissue_geometry\":{\"checker_version\":\"independent-cell-capsule-v1\",\"feasible\":true,\"stationary_tool_pair_independently_checked\":false,\"unknowns\":[\"geometry_checks_only_supplied_anatomical_obstacles\",\"proximal_tool_outside_image_coverage_unassessed\"]},\"information_event\":null,\"interaction_mode\":\"passive_motion\",\"operative_after\":\"sha256:cdebe376c862272cc4d41505c8bf69d661106d3a9164676e4b750f8f8fc1d4fe\",\"operative_before\":\"sha256:4cc849bf1ae6c3b39a5862693ccf27db0734f95b82f2b0117f55b151e7b9fe09\",\"physiological_response\":null,\"pose_after\":{\"axis_unit\":[0.0,0.0,1.0],\"tip_mm\":[5.5,6.0,0.5]},\"pose_before\":{\"axis_unit\":[0.0,0.0,1.0],\"tip_mm\":[5.5,6.0,6.5]},\"removed_indices_native\":[],\"result_state_hash\":\"sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3\",\"reward\":0.0,\"source_state_hash\":\"sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3\",\"stop_reason\":null,\"time_source\":\"fixed_generated_schedule_not_measured_surgical_time\",\"tool_id\":\"generated-narrow-parked-tool\"},{\"action_id\":\"STOP\",\"clinical_deficit_probability\":null,\"contact_indices_native\":[],\"duration_generated_seconds\":0.0,\"elapsed_generated_seconds\":4.0,\"geometry\":null,\"independent_tissue_geometry\":null,\"information_event\":null,\"interaction_mode\":\"stop\",\"operative_after\":\"sha256:2af59e4ede51f65fb2d30519687461631d16bd3a6cbc5a8b9ff171ffe884401a\",\"operative_before\":\"sha256:cdebe376c862272cc4d41505c8bf69d661106d3a9164676e4b750f8f8fc1d4fe\",\"physiological_response\":null,\"pose_after\":{\"axis_unit\":[0.0,0.0,1.0],\"tip_mm\":[6.5,6.0,0.5]},\"pose_before\":{\"axis_unit\":[0.0,0.0,1.0],\"tip_mm\":[6.5,6.0,0.5]},\"removed_indices_native\":[],\"result_state_hash\":\"sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3\",\"reward\":0.0,\"source_state_hash\":\"sha256:c59b2888c81644676e9edde5c500a56e8db04e1d0cdb780b9e37d8c1c46d1bb3\",\"stop_reason\":\"generated_registration_unresolved\",\"time_source\":\"fixed_generated_schedule_not_measured_surgical_time\",\"tool_id\":null}]",
+  "physicalHistoryHash": "sha256:f3b5794546258b19a12e6b5b3a442eb4b9e872678206157a5c2fbb7df2945f84",
+  "protocol": {
+    "generated_seconds": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    "hold_pose": {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tip_mm": [
+        6.5,
+        6.0,
+        6.5
+      ]
+    },
+    "movement_scope": "one passive rigid tool, other tool stationary; no active cutting",
+    "moving_tool_id": "generated-passive-probe",
+    "start_pose": {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tip_mm": [
+        6.5,
+        6.0,
+        0.5
+      ]
+    },
+    "stationary_exit_pose": {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tip_mm": [
+        5.5,
+        6.0,
+        0.5
+      ]
+    },
+    "stationary_pose": {
+      "axis_unit": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "tip_mm": [
+        5.5,
+        6.0,
+        6.5
+      ]
+    },
+    "stationary_tool_id": "generated-narrow-parked-tool",
+    "time_meaning": "declared generated schedule; not measured surgical duration",
+    "version": "generated-persistent-passive-v1"
+  },
+  "schema": "resectionlab.generated-persistent-passive-episode.v1",
+  "scope": "generated passive geometry and declared time only; no surgical or sensor validation",
+  "sourceHash": "sha256:c0f4fb9e6bcde3c263d23596e54f393b985394ce243afb066a685c3a3e9c0195"
+}

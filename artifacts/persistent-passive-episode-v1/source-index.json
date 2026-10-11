@@ -1,0 +1,21 @@
+{
+  "candidate": {
+    "path": "build/hybrid-persistent-passive-v1/stage/resectionlab/persistent_passive.py",
+    "sha256": "2b431550499d2165ff868236bd46e65eb0a6a28410355576db528d4509c4d5c4",
+    "promote_to": "src/resectionlab/persistent_passive.py"
+  },
+  "focused_test": {
+    "path": "build/hybrid-persistent-passive-v1/tests/test_persistent_passive.py",
+    "sha256": "81a6d9ac0fc90c55f5e49e374f9acff6191b7eed31027aa66f666fc26681113f",
+    "result": "13 passed in 3.04 s",
+    "saved_output_path": "build/hybrid-persistent-passive-v1/test-output-v2.txt",
+    "saved_output_sha256": "340e680c7210127fac8208ab1b4ad30fbf2be4dac6905b412c0239877a88dcfe"
+  },
+  "canonical_dependency_sha256": {
+    "src/resectionlab/native_spatial_task.py": "8237f90b3b512d03452be027e6e7e337f69da3e8127f169fe870a56c47418c32",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/evaluation.py": "dbfac0b3d8acd3f8461581c96a5ae9421ed341a03559d3ab8ba0589e8a0d028a",
+    "src/resectionlab/sequential_spatial_observation.py": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3"
+  },
+  "scope": "generated-only passive continuity; no full Package 2, patient, trained policy or desktop admission"
+}
