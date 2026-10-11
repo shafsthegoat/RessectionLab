@@ -1,0 +1,79 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-next-iteration-v1/runner/absent-controls-01-cache",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-next-iteration-v1/runner/controls-01-tmp",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-next-iteration-v1/runner/test_runner.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 4.9272698340937495,
+  "stop_reason": null,
+  "sampled_peak_group_rss_bytes": 392478720,
+  "rss_samples": 90,
+  "owned_lifecycle": {
+    "verified": true,
+    "child_reaped": true,
+    "exit_code": 0,
+    "remaining_owned_pids": [],
+    "errors": [],
+    "events": [
+      {
+        "phase": "bind",
+        "pid": 45046,
+        "pgid": 45046,
+        "start_identity": [
+          1791740623,
+          203783
+        ]
+      },
+      {
+        "phase": "cleanup.pre_signal_exit",
+        "pid": 45046,
+        "start_identity": [
+          1791740623,
+          203783
+        ],
+        "wait_returncode": 0,
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0
+      },
+      {
+        "phase": "cleanup.wait",
+        "pid": 45046,
+        "start_identity": [
+          1791740623,
+          203783
+        ],
+        "wait_returncode": 0,
+        "direct_child_reaped": true,
+        "grace_seconds": 0.5
+      }
+    ],
+    "remaining_state_unknown": false,
+    "owned_root_pid": 45046,
+    "owned_root_start_identity": [
+      1791740623,
+      203783
+    ]
+  },
+  "source_sha256": {
+    "build/continuation-next-iteration-v1/runner/bootstrap_smoke.py": "0cd0db0e915a9652da535e1bd6184f8fde591d24cdf6a8ba40dd0b75bc22cbc2",
+    "build/continuation-next-iteration-v1/runner/common.py": "ddebf7cf1cd227047cf023d78958cdc063c4345e275eff52049893e237675f8d",
+    "build/continuation-next-iteration-v1/runner/freeze_sources.py": "72c8dac75b677c2f73311653ea599e7242719f0ed707d12295e9ef81d4171625",
+    "build/continuation-next-iteration-v1/runner/inputs.py": "f00f9d49f6292822416e22e96cb07e7c6f077fd8d1cdc76dbf64dc2acddaf482",
+    "build/continuation-next-iteration-v1/runner/run_owned.py": "952f88bed6711cff66dff83e1401e28d50d2196930bd959aefe934ca8cc60054",
+    "build/continuation-next-iteration-v1/runner/test_runner.py": "21346d0f97b6870a3bcd32b2c93742e07bb1ed15e8cf281a95ef2d595b16d3bb",
+    "build/continuation-next-iteration-v1/runner/worker.py": "d60c3c49f308e6ff6dc37f6438f0fb7be0ea53bd966b233d28b5dc46915d858f",
+    "build/continuation-next-iteration-v1/runner/config.json": "c757c565b62c8a115e5824b9b915cf66c15c40c3314368e67c8671fded7a14c4"
+  },
+  "source_unchanged": true,
+  "scope": "Generated runner gates and actual isolated import/bootstrap plus existing saved JSON joins; no patient arrays, checkpoint load, fitting or native calls."
+}
