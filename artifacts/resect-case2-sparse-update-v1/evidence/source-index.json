@@ -1,0 +1,39 @@
+{
+  "execution_released": false,
+  "generated_controls": {
+    "log": {
+      "path": "build/hybrid-real-observation-case2-v1/generated-attempt-01/controls.log",
+      "sha256": "505b048eca0d279784a20a5e90abdc0747042c3bbb94819870216bec62b927e6"
+    },
+    "receipt": {
+      "path": "build/hybrid-real-observation-case2-v1/generated-attempt-01/receipt.json",
+      "sha256": "4f5aaffa4c26bed52ef2f9115385179d46e36b81b1c5398fcfe1676271219320"
+    },
+    "tests": {
+      "path": "build/hybrid-real-observation-case2-v1/test_case2_glue.py",
+      "sha256": "64e93732c7268984ed23d8366b97035c250a14d3eaa78f6faba8a9c249b2defa"
+    }
+  },
+  "runtime": {
+    "executable": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "executable_sha256": "2498a31965647f1507a53e391842b23c29d96f0ef4550475f34a1d2b30c23ddb",
+    "nibabel": "5.4.2",
+    "numpy": "2.5.3",
+    "prefix": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]"
+  },
+  "schema": "hybrid-real-observation-case2-phase-v1-source-index",
+  "sources": {
+    "build/hybrid-real-observation-case2-v1/case2_adapter.py": "77f3d9003cb867b7be9fea67425c5ef252ecc54dae05faeda0d33386ab50918b",
+    "build/hybrid-real-observation-case2-v1/protocol.json": "559486e645e1741bfe1bd74e1e1d283faccc724e571b1a2b238df4b46b2d52b9",
+    "build/hybrid-real-observation-case2-v1/run_phase.py": "3310266fa7dcbcd0cc5ad127b7f8dbd733cf0a95fbbc84074992d584ecc63f8d",
+    "manifests/experiments/resect-case4-sparse-update-v1.json": "64229fe7523a65a90a878b02050273424ff8c9fb9f84d76c28110f097c2d7c5e",
+    "manifests/resect-component-cohort-v1.json": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
+    "scripts/mechanics_patient_comparison.py": "cacd557107fa7bca3d83873faa776f16c70864366e89c096f9f1ae09ac402587",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+    "scripts/run_resect_case4_sparse_update.py": "0ab08e48899017707451d1d67528decbdf1452f0c5828c8c2ac2f3a1bbc797f6",
+    "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc"
+  }
+}

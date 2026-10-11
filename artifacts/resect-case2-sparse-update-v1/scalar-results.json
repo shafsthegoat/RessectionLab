@@ -1,0 +1,458 @@
+{
+  "B_residuals": {
+    "inverse_distance_squared": {
+      "meaning": "residual on the six conditioning observations, not validation",
+      "per_landmark": [
+        {
+          "error_mm": 0.0,
+          "row_id": 1
+        },
+        {
+          "error_mm": 0.0,
+          "row_id": 14
+        },
+        {
+          "error_mm": 0.0,
+          "row_id": 13
+        },
+        {
+          "error_mm": 0.0,
+          "row_id": 9
+        },
+        {
+          "error_mm": 0.0,
+          "row_id": 2
+        },
+        {
+          "error_mm": 0.0,
+          "row_id": 11
+        }
+      ],
+      "summary": {
+        "count": 6,
+        "maximum_mm": 0.0,
+        "median_mm": 0.0,
+        "rms_mm": 0.0
+      }
+    },
+    "no_shift": {
+      "meaning": "residual on the six conditioning observations, not validation",
+      "per_landmark": [
+        {
+          "error_mm": 3.6635898321253184,
+          "row_id": 1
+        },
+        {
+          "error_mm": 1.7909743902973554,
+          "row_id": 14
+        },
+        {
+          "error_mm": 4.083171599429532,
+          "row_id": 13
+        },
+        {
+          "error_mm": 2.896788550108032,
+          "row_id": 9
+        },
+        {
+          "error_mm": 1.9094304958026092,
+          "row_id": 2
+        },
+        {
+          "error_mm": 3.3968882639018374,
+          "row_id": 11
+        }
+      ],
+      "summary": {
+        "count": 6,
+        "maximum_mm": 4.083171599429532,
+        "median_mm": 3.1468384070049344,
+        "rms_mm": 3.0789048008156232
+      }
+    },
+    "proper_rigid": {
+      "meaning": "residual on the six conditioning observations, not validation",
+      "per_landmark": [
+        {
+          "error_mm": 0.9156641088398274,
+          "row_id": 1
+        },
+        {
+          "error_mm": 1.6093769247082894,
+          "row_id": 14
+        },
+        {
+          "error_mm": 1.3209932453708764,
+          "row_id": 13
+        },
+        {
+          "error_mm": 1.163044021607577,
+          "row_id": 9
+        },
+        {
+          "error_mm": 1.7262482971926498,
+          "row_id": 2
+        },
+        {
+          "error_mm": 1.125953935154297,
+          "row_id": 11
+        }
+      ],
+      "summary": {
+        "count": 6,
+        "maximum_mm": 1.7262482971926498,
+        "median_mm": 1.2420186334892267,
+        "rms_mm": 1.3400208234802127
+      }
+    }
+  },
+  "clinical_injury_probability": null,
+  "confidence_interval": null,
+  "coverage": {
+    "all_destination_inside": 16,
+    "all_destination_rows": 16,
+    "all_source_inside": 16,
+    "all_source_rows": 16,
+    "meaning": "native voxel-cell inclusion, not ultrasound signal or tissue support"
+  },
+  "fit_rows": 6,
+  "methods": {
+    "inverse_distance_squared": {
+      "all_supported": {
+        "count": 10,
+        "maximum_mm": 2.9345718520191046,
+        "median_mm": 1.6009580213232737,
+        "rms_mm": 1.8552453988320334
+      },
+      "excluded_counts": {},
+      "per_landmark": [
+        {
+          "error_mm": 2.2367475575215736,
+          "row_id": 3,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.7176825159362992,
+          "row_id": 4,
+          "status": "supported"
+        },
+        {
+          "error_mm": 1.1046550941853845,
+          "row_id": 5,
+          "status": "supported"
+        },
+        {
+          "error_mm": 1.0843700610582856,
+          "row_id": 6,
+          "status": "supported"
+        },
+        {
+          "error_mm": 2.722865550508133,
+          "row_id": 7,
+          "status": "supported"
+        },
+        {
+          "error_mm": 2.9345718520191046,
+          "row_id": 8,
+          "status": "supported"
+        },
+        {
+          "error_mm": 2.097260948461163,
+          "row_id": 10,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.5668352058303003,
+          "row_id": 12,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.6401006921208859,
+          "row_id": 15,
+          "status": "supported"
+        },
+        {
+          "error_mm": 2.312981294631743,
+          "row_id": 16,
+          "status": "supported"
+        }
+      ]
+    },
+    "no_shift": {
+      "all_supported": {
+        "count": 10,
+        "maximum_mm": 5.19387310303525,
+        "median_mm": 2.8066968857420527,
+        "rms_mm": 3.347873280244579
+      },
+      "excluded_counts": {},
+      "per_landmark": [
+        {
+          "error_mm": 4.892039430035997,
+          "row_id": 3,
+          "status": "supported"
+        },
+        {
+          "error_mm": 2.813133290046882,
+          "row_id": 4,
+          "status": "supported"
+        },
+        {
+          "error_mm": 2.8002604814372227,
+          "row_id": 5,
+          "status": "supported"
+        },
+        {
+          "error_mm": 2.2244136870793647,
+          "row_id": 6,
+          "status": "supported"
+        },
+        {
+          "error_mm": 5.19387310303525,
+          "row_id": 7,
+          "status": "supported"
+        },
+        {
+          "error_mm": 3.121665038412353,
+          "row_id": 8,
+          "status": "supported"
+        },
+        {
+          "error_mm": 3.5811245939197636,
+          "row_id": 10,
+          "status": "supported"
+        },
+        {
+          "error_mm": 2.6978157669438825,
+          "row_id": 12,
+          "status": "supported"
+        },
+        {
+          "error_mm": 2.4649407154876983,
+          "row_id": 15,
+          "status": "supported"
+        },
+        {
+          "error_mm": 2.1325114009303707,
+          "row_id": 16,
+          "status": "supported"
+        }
+      ]
+    },
+    "proper_rigid": {
+      "all_supported": {
+        "count": 10,
+        "maximum_mm": 3.2384623582512706,
+        "median_mm": 1.508631220569115,
+        "rms_mm": 1.8595732900704334
+      },
+      "excluded_counts": {},
+      "per_landmark": [
+        {
+          "error_mm": 2.576551087454617,
+          "row_id": 3,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.7548925381171125,
+          "row_id": 4,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.3863197946953517,
+          "row_id": 5,
+          "status": "supported"
+        },
+        {
+          "error_mm": 1.0513103453476005,
+          "row_id": 6,
+          "status": "supported"
+        },
+        {
+          "error_mm": 3.2384623582512706,
+          "row_id": 7,
+          "status": "supported"
+        },
+        {
+          "error_mm": 2.694635129144384,
+          "row_id": 8,
+          "status": "supported"
+        },
+        {
+          "error_mm": 2.0351397811452787,
+          "row_id": 10,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.4255028908101824,
+          "row_id": 12,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.42502038562420297,
+          "row_id": 15,
+          "status": "supported"
+        },
+        {
+          "error_mm": 1.9659520957906296,
+          "row_id": 16,
+          "status": "supported"
+        }
+      ]
+    }
+  },
+  "paired_differences": {
+    "no_shift_minus_inverse_distance_squared": {
+      "count": 10,
+      "definition": "Euclidean error first minus second; negative favors first",
+      "mean_error_difference_mm": 1.550370673505591,
+      "per_landmark": [
+        {
+          "error_difference_mm": 2.655291872514423,
+          "row_id": 3
+        },
+        {
+          "error_difference_mm": 2.0954507741105832,
+          "row_id": 4
+        },
+        {
+          "error_difference_mm": 1.6956053872518382,
+          "row_id": 5
+        },
+        {
+          "error_difference_mm": 1.1400436260210791,
+          "row_id": 6
+        },
+        {
+          "error_difference_mm": 2.4710075525271167,
+          "row_id": 7
+        },
+        {
+          "error_difference_mm": 0.18709318639324835,
+          "row_id": 8
+        },
+        {
+          "error_difference_mm": 1.4838636454586007,
+          "row_id": 10
+        },
+        {
+          "error_difference_mm": 2.1309805611135824,
+          "row_id": 12
+        },
+        {
+          "error_difference_mm": 1.8248400233668125,
+          "row_id": 15
+        },
+        {
+          "error_difference_mm": -0.18046989370137245,
+          "row_id": 16
+        }
+      ]
+    },
+    "no_shift_minus_proper_rigid": {
+      "count": 10,
+      "definition": "Euclidean error first minus second; negative favors first",
+      "mean_error_difference_mm": 1.6367991100948154,
+      "per_landmark": [
+        {
+          "error_difference_mm": 2.3154883425813795,
+          "row_id": 3
+        },
+        {
+          "error_difference_mm": 2.0582407519297696,
+          "row_id": 4
+        },
+        {
+          "error_difference_mm": 2.413940686741871,
+          "row_id": 5
+        },
+        {
+          "error_difference_mm": 1.1731033417317642,
+          "row_id": 6
+        },
+        {
+          "error_difference_mm": 1.955410744783979,
+          "row_id": 7
+        },
+        {
+          "error_difference_mm": 0.427029909267969,
+          "row_id": 8
+        },
+        {
+          "error_difference_mm": 1.5459848127744849,
+          "row_id": 10
+        },
+        {
+          "error_difference_mm": 2.2723128761337,
+          "row_id": 12
+        },
+        {
+          "error_difference_mm": 2.039920329863495,
+          "row_id": 15
+        },
+        {
+          "error_difference_mm": 0.16655930513974115,
+          "row_id": 16
+        }
+      ]
+    },
+    "proper_rigid_minus_inverse_distance_squared": {
+      "count": 10,
+      "definition": "Euclidean error first minus second; negative favors first",
+      "mean_error_difference_mm": -0.08642843658922428,
+      "per_landmark": [
+        {
+          "error_difference_mm": 0.3398035299330435,
+          "row_id": 3
+        },
+        {
+          "error_difference_mm": 0.037210022180813374,
+          "row_id": 4
+        },
+        {
+          "error_difference_mm": -0.7183352994900328,
+          "row_id": 5
+        },
+        {
+          "error_difference_mm": -0.03305971571068511,
+          "row_id": 6
+        },
+        {
+          "error_difference_mm": 0.5155968077431377,
+          "row_id": 7
+        },
+        {
+          "error_difference_mm": -0.23993672287472068,
+          "row_id": 8
+        },
+        {
+          "error_difference_mm": -0.06212116731588413,
+          "row_id": 10
+        },
+        {
+          "error_difference_mm": -0.14133231502011795,
+          "row_id": 12
+        },
+        {
+          "error_difference_mm": -0.21508030649668297,
+          "row_id": 15
+        },
+        {
+          "error_difference_mm": -0.3470291988411136,
+          "row_id": 16
+        }
+      ]
+    }
+  },
+  "patient_group": "RESECT:Case2",
+  "physical_action_response_validated": false,
+  "primary_comparison": {
+    "definition": "RMS(proper_rigid)-RMS(no_shift), negative favors rigid",
+    "required_all_V_count": 10,
+    "rms_difference_mm": -1.4882999901741456,
+    "status": "available"
+  },
+  "role": "TRAIN",
+  "schema": "resect-case2-derived-scalar-results-v1",
+  "validation_rows": 10
+}

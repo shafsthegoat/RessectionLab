@@ -1,0 +1,211 @@
+{
+  "B_conditioning_metrics_not_validation": {
+    "inverse_distance_squared": {
+      "count": 6,
+      "maximum_mm": 0.0,
+      "median_mm": 0.0,
+      "rms_mm": 0.0
+    },
+    "no_shift": {
+      "count": 6,
+      "maximum_mm": 4.083171599429532,
+      "median_mm": 3.1468384070049344,
+      "rms_mm": 3.0789048008156232
+    },
+    "proper_rigid": {
+      "count": 6,
+      "maximum_mm": 1.726248297192676,
+      "median_mm": 1.2420186334892187,
+      "rms_mm": 1.340020823480216
+    }
+  },
+  "B_ids": [
+    1,
+    14,
+    13,
+    9,
+    2,
+    11
+  ],
+  "B_source_rank_ratio": 0.7383477255131279,
+  "V_ids": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    10,
+    12,
+    15,
+    16
+  ],
+  "V_metrics_mm": {
+    "inverse_distance_squared": {
+      "count": 10,
+      "maximum_mm": 2.9345718520191046,
+      "median_mm": 1.6009580213232737,
+      "rms_mm": 1.8552453988320337
+    },
+    "no_shift": {
+      "count": 10,
+      "maximum_mm": 5.19387310303525,
+      "median_mm": 2.8066968857420527,
+      "rms_mm": 3.347873280244579
+    },
+    "proper_rigid": {
+      "count": 10,
+      "maximum_mm": 3.238462358251259,
+      "median_mm": 1.5086312205690984,
+      "rms_mm": 1.8595732900704318
+    }
+  },
+  "V_now_consumed": true,
+  "V_scalar_errors_mm": [
+    {
+      "inverse_distance_squared": 2.2367475575215736,
+      "no_shift": 4.892039430035997,
+      "proper_rigid": 2.576551087454635,
+      "row_id": 3
+    },
+    {
+      "inverse_distance_squared": 0.7176825159362992,
+      "no_shift": 2.813133290046882,
+      "proper_rigid": 0.7548925381171239,
+      "row_id": 4
+    },
+    {
+      "inverse_distance_squared": 1.1046550941853845,
+      "no_shift": 2.8002604814372227,
+      "proper_rigid": 0.3863197946953399,
+      "row_id": 5
+    },
+    {
+      "inverse_distance_squared": 1.0843700610582856,
+      "no_shift": 2.2244136870793647,
+      "proper_rigid": 1.0513103453475763,
+      "row_id": 6
+    },
+    {
+      "inverse_distance_squared": 2.722865550508133,
+      "no_shift": 5.19387310303525,
+      "proper_rigid": 3.238462358251259,
+      "row_id": 7
+    },
+    {
+      "inverse_distance_squared": 2.9345718520191046,
+      "no_shift": 3.121665038412353,
+      "proper_rigid": 2.6946351291443786,
+      "row_id": 8
+    },
+    {
+      "inverse_distance_squared": 2.097260948461163,
+      "no_shift": 3.5811245939197636,
+      "proper_rigid": 2.0351397811452854,
+      "row_id": 10
+    },
+    {
+      "inverse_distance_squared": 0.5668352058303003,
+      "no_shift": 2.6978157669438825,
+      "proper_rigid": 0.42550289081018183,
+      "row_id": 12
+    },
+    {
+      "inverse_distance_squared": 0.6401006921208859,
+      "no_shift": 2.4649407154876983,
+      "proper_rigid": 0.42502038562421013,
+      "row_id": 15
+    },
+    {
+      "inverse_distance_squared": 2.312981294631743,
+      "no_shift": 2.1325114009303707,
+      "proper_rigid": 1.9659520957906202,
+      "row_id": 16
+    }
+  ],
+  "agreement_tolerance": 1e-10,
+  "audit_elapsed_seconds": 0.057876457925885916,
+  "audit_peak_RSS_bytes": 37076992,
+  "case": "RESECT:Case2",
+  "checks": 375,
+  "chronology_basis": "Authenticated phase prerequisites and reviewed freeze/reveal ordering; saved times corroborate, not hostile-host proof.",
+  "coverage": {
+    "destination": {
+      "B_inside": 6,
+      "V_inside": 10,
+      "excluded": 0,
+      "inside_cell_box": 16,
+      "outside_cell_box": 0,
+      "total": 16
+    },
+    "source": {
+      "B_inside": 6,
+      "V_inside": 10,
+      "excluded": 0,
+      "inside_cell_box": 16,
+      "outside_cell_box": 0,
+      "total": 16
+    }
+  },
+  "limitations": [
+    "One TRAIN person and10 correlated V, not patient-held-out generalization.",
+    "Six during-US B observations are supplied; no causal action-response or dense-field validation.",
+    "Unknown calibrated measurement uncertainty: IDW-rigid0.0043mm gap is not material/mechanistic proof.",
+    "Cell-box inclusion is not US signal, anatomy, cavity or clinical validation.",
+    "V consumed for future adapted methods; role unchanged."
+  ],
+  "maximum_numeric_disagreement": 1.4921397450962104e-13,
+  "original_tag_opens": 1,
+  "paired_scalar_errors": {
+    "no_shift_minus_inverse_distance_squared": {
+      "exact_tie_rows": 0,
+      "first_lower_error_rows": 1,
+      "mean_error_difference_mm": 1.5503706735055913,
+      "second_lower_error_rows": 9
+    },
+    "no_shift_minus_proper_rigid": {
+      "exact_tie_rows": 0,
+      "first_lower_error_rows": 0,
+      "mean_error_difference_mm": 1.6367991100948174,
+      "second_lower_error_rows": 10
+    },
+    "proper_rigid_minus_inverse_distance_squared": {
+      "exact_tie_rows": 0,
+      "first_lower_error_rows": 7,
+      "mean_error_difference_mm": -0.08642843658922626,
+      "second_lower_error_rows": 3
+    }
+  },
+  "phase_seconds": {
+    "evaluate": 0.2831637500785291,
+    "fit": 0.2746802920009941,
+    "qualify": 0.5464849998243153
+  },
+  "primary_rigid_minus_static_RMS_mm": -1.4882999901741472,
+  "process_evidence": "Three exit0 accepted owned phases; source supervisor kills group/reaps in finally, no independent survivor sampling in these receipts.",
+  "rigid_reconstruction": {
+    "algorithm": "committed Case4 Horn quaternion, independent of production Kabsch",
+    "maximum_eigenvalue_gap_mm2": 922.8196610353282,
+    "rotation_max_difference": 1.8318679906315083e-15,
+    "translation_max_difference_mm": 1.4921397450962104e-13
+  },
+  "role": "TRAIN",
+  "schema": "hybrid-case2-independent-numerical-audit-v1",
+  "scope": {
+    "image_reads": 0,
+    "other_original_reads": 0,
+    "patient_coordinates_written": 0,
+    "production_fit_evaluation_calls": 0,
+    "solver_model_training_calls": 0
+  },
+  "secondary_IDW_minus_rigid_RMS_mm": -0.004327891238398163,
+  "status": "PASS",
+  "tag_bytes": 1097,
+  "tag_sha256": "a93b42da9a88eec1736fc287501d80b9aba89330ccaf970f6b0398c60b5a4a22",
+  "total_saved_output_bytes": 47403,
+  "worker_peak_RSS_bytes": {
+    "evaluate": 53854208,
+    "fit": 53772288,
+    "qualify": 61718528
+  }
+}

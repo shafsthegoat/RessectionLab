@@ -1,0 +1,16 @@
+{
+  "schema": "hybrid-case2-independent-review-index-v1",
+  "decision": "PASS_corrected_independent_numerical_audit",
+  "scientific_run_repeated": false,
+  "original_tag_opens_across_two_audit_processes": 2,
+  "image_or_other_original_reads": 0,
+  "patient_coordinates_in_package": false,
+  "files": {
+    "REPORT.txt": "39d5999c121ddb0cce7476eb7e3b5b52fb51a4a24bd3b2c383538fd33c23ba2d",
+    "audit.py": "e7e7cbcc4e2f928ee506e08f58d14967ce56a3363e1f9076cc20d65f2f7e8bfb",
+    "result.json": "b9e44eb4925c70ff46b0ba75f5c1f905ee20ebb4e9ecf29f16e498c9e3637a62",
+    "input-index.json": "1688f312ddf77d4e11d27474c0f21cd4812d695e85ed107e6f2fec38bb4c5d27",
+    "audit-attempt-01.py": "477b983df01e62da96328c31eae9506a33bceec6fa41858a6f0ce3df06e7d064",
+    "failure.json": "b92dce6ed964ff82ac5775b228fb53f65ec68f7bab1a474ca817413319bbecc3"
+  }
+}

@@ -1,0 +1,84 @@
+PASS: independent numerical reproduction of the frozen Case2 comparison.
+
+The corrected audit completed 375 checks in 0.057876s, observed peak RSS
+37,076,992B, one numerical thread and a 30s alarm. It reused the committed
+Case4 Horn-quaternion rigid reconstruction (independent of production Kabsch),
+scalar all-six inverse-distance-squared interpolation and scalar error summaries.
+Maximum disagreement with saved coefficients/predictions/errors/summaries was
+1.49214e-13, below the inherited 1e-10 numerical agreement limit. No production
+fit/evaluation helper, model training, native solver or image reader was called.
+
+There are 16 unique source rows, fixed B=[1,14,13,9,2,11] and
+V=[3,4,5,6,7,8,10,12,15,16]. Source-only FPS was independently reproduced;
+B rank ratio is 0.7383477255131279. All ten V were retained and supported.
+
+Method                         V RMS mm    V median mm    V maximum mm
+No shift                       3.34787328  2.80669689     5.19387310
+Proper rigid                   1.85957329  1.50863122     3.23846236
+All-six inverse-distance^2     1.85524540  1.60095802     2.93457185
+
+Primary RMS(rigid)-RMS(static) = -1.4882999901741472mm.
+Secondary RMS(IDW)-RMS(rigid) = -0.004327891238398163mm.
+Rigid improves all ten V over static. IDW improves nine and worsens row16.
+Rigid has lower error than IDW on seven of ten V and lower mean and median
+error; IDW's slightly lower RMS/maximum does not establish a material advantage,
+a mechanics mechanism, or a reason to tune/select using these now-exposed V.
+No calibrated measurement covariance, prediction interval or clinical tolerance
+is available. Six B residuals are conditioning evidence, not validation:
+rigid RMS 1.34002082mm; exact-coincidence IDW RMS 0mm.
+
+All 16 source and all 16 destination positions are within the saved native
+full-cell image boxes, independently checked using the saved active affines.
+This includes all six B and all ten V, with no exclusions. Cell-box inclusion
+does not establish ultrasound signal, anatomical, retained tissue or cavity
+coverage. The saved frame declares a documented world-mm convention, not
+anatomical registration accuracy or measured physical uncertainty.
+
+All three phases have authenticated root releases, unchanged source/role pins,
+exit0 accepted results, exact prerequisite joins and exclusive attempt records.
+The full model/field freeze precedes V evaluation; the one-shot reveal marker
+binds the exact freeze. The freeze/hash graph and separately saved phase times
+establish the declared order on the cooperative host; file times corroborate it.
+These receipts describe inherited dedicated-group kill/reap cleanup; they do not
+contain an independent surviving-process census or hard/live RSS enforcement.
+
+Phase       Owned seconds   Observed worker peak RSS bytes
+Qualify     0.54648500      61,718,528
+Fit         0.27468029      53,772,288
+Evaluate    0.28316375      53,854,208
+Total       1.10432904
+All are below 30s each; total saved attempt output is 47,403B, below 4MiB.
+
+Only the exact released 1,097B Case2 tag was opened for numerical reproduction:
+SHA256 a93b42da9a88eec1736fc287501d80b9aba89330ccaf970f6b0398c60b5a4a22.
+No image/header original, other patient, force curve or weight was opened.
+The output report/result/input index contain no patient coordinates. Full saved
+coordinates and field artifacts remain in the original attempt, bound by hashes.
+
+Reviewer failure preserved separately: attempt01 passed 204 metadata/fixity
+checks and opened the authorized tag once, then failed before numerical parsing
+because a local variable named re shadowed the regex module. Root explicitly
+authorized one corrected execution. audit-attempt-01.py and failure.json retain
+that negative; the repair renamed the variable and used a distinct failure path.
+The corrected run opened the same tag once and passed. Thus two audit-process
+tag opens occurred in total. The scientific experiment, field and receipts were
+not rerun, changed or tuned.
+
+Case2 remains TRAIN; Case4 remains exposed DEVELOPMENT. The ten Case2 V are now
+consumed for future adapted methods. This is one-person conditional landmark
+observation agreement given six intraoperative observations. It does not prove
+patient-held-out generalization, dense displacement accuracy, causal tool/tissue
+response, surgical safety, clinical benefit or uncertainty calibration.
+
+Exact primary evidence:
+source-index 0cf9ff70ff7b10b51e74ec29484687cbb81e1b8060cba917a8e0171e41fce461
+freeze 65af70b6997bad00f3d3c2cb4553f5a6d72843194573866390b7ee930c402453
+evaluation b44c61c43f6754a820e47985c8eb2272e219660f3e2bf91d7dd50662886e58b9
+evaluate-result bb491df8ce54e278448b55c55f23feb37e3ca0b4d3deb57f976a0992aa61b827
+audit.py e7e7cbcc4e2f928ee506e08f58d14967ce56a3363e1f9076cc20d65f2f7e8bfb
+result.json b9e44eb4925c70ff46b0ba75f5c1f905ee20ebb4e9ecf29f16e498c9e3637a62
+input-index.json 1688f312ddf77d4e11d27474c0f21cd4812d695e85ed107e6f2fec38bb4c5d27
+
+Reproduction command (the exact tag remains separately access-controlled):
+env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 .venv/bin/python -I -B build/hybrid-case2-independent-v1/audit.py
+The script preserves existing outputs; do not silently rerun into this directory.
