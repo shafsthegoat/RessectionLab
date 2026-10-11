@@ -1,0 +1,144 @@
+{
+  "accepted_plan_claim": false,
+  "archive_bytes": 14458393,
+  "archive_files": 539,
+  "branches": [
+    {
+      "accepted_plan_claim": false,
+      "actual_first_blockers_removed": [
+        [
+          4,
+          89,
+          82
+        ]
+      ],
+      "after_reasons": {
+        "NATIVE_CONNECTED_STROKE": 4,
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 113
+      },
+      "index": 0,
+      "native_replay_exact": true,
+      "newly_feasible_count": 0,
+      "ordinal": 2,
+      "prefix_plus_prep_STOP_return": -26.648397644393796,
+      "prep_outside_target_mm3": 0.9999999034194179,
+      "prep_reward": -0.2669999807038836,
+      "prep_target_mm3": 0.0,
+      "repreviewed_original_rays": 117
+    },
+    {
+      "accepted_plan_claim": false,
+      "actual_first_blockers_removed": [
+        [
+          5,
+          88,
+          84
+        ]
+      ],
+      "after_reasons": {
+        "NATIVE_CONNECTED_STROKE": 4,
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 113
+      },
+      "index": 1,
+      "native_replay_exact": true,
+      "newly_feasible_count": 0,
+      "ordinal": 6,
+      "prefix_plus_prep_STOP_return": -26.6503976443938,
+      "prep_outside_target_mm3": 0.9999999034194179,
+      "prep_reward": -0.2689999807038836,
+      "prep_target_mm3": 0.0,
+      "repreviewed_original_rays": 117
+    },
+    {
+      "accepted_plan_claim": false,
+      "actual_first_blockers_removed": [
+        [
+          5,
+          88,
+          86
+        ]
+      ],
+      "after_reasons": {
+        "NATIVE_CONNECTED_STROKE": 5,
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 112
+      },
+      "index": 2,
+      "native_replay_exact": true,
+      "newly_feasible_count": 1,
+      "ordinal": 8,
+      "prefix_plus_prep_STOP_return": -26.6503976443938,
+      "prep_outside_target_mm3": 0.9999999034194179,
+      "prep_reward": -0.2689999807038836,
+      "prep_target_mm3": 0.0,
+      "repreviewed_original_rays": 117
+    }
+  ],
+  "costs": {
+    "STOP_calls": 1,
+    "checkpoint_loads": 0,
+    "model_forwards": 0,
+    "native_commit_attempts": 53,
+    "native_commits": 53,
+    "native_previews": 6445,
+    "output_bytes": 15756307,
+    "parent_seconds": 93.63709712494165,
+    "phases": {
+      "fixed47_reconstruction": {
+        "complete_wall_seconds": 72.87186695891432,
+        "native_preview_entries": 5683,
+        "native_transition_calls": 47,
+        "native_transition_inclusive_seconds": 3.4075457060243934,
+        "native_transition_returned": 47
+      },
+      "independent_full_history_geometry": {
+        "complete_wall_seconds": 5.116392916068435,
+        "native_preview_entries": 0
+      },
+      "old_frontier_inventory": {
+        "complete_wall_seconds": 2.7941954580601305,
+        "native_preview_entries": 149,
+        "task_clone_calls": 5,
+        "task_clone_inclusive_seconds": 0.4931128330063075,
+        "task_clone_returned": 5
+      },
+      "original_negative_prefix_STOP": {
+        "complete_wall_seconds": 0.42245516716502607,
+        "native_preview_entries": 0,
+        "native_transition_calls": 1,
+        "native_transition_inclusive_seconds": 0.13473416701890528,
+        "native_transition_returned": 1
+      },
+      "prospective_catalog_and_branches": {
+        "complete_wall_seconds": 8.115907417144626,
+        "native_preview_entries": 496
+      },
+      "source_and_construction": {
+        "complete_wall_seconds": 1.6726282499730587,
+        "inventory_build_or_terminal_empty_calls": 1,
+        "inventory_request_calls": 3,
+        "inventory_request_inclusive_seconds": 1.1235810422804207,
+        "inventory_request_returned": 3,
+        "native_preview_entries": 117,
+        "task_clone_calls": 1,
+        "task_clone_inclusive_seconds": 0.0006953750271350145,
+        "task_clone_returned": 1
+      }
+    },
+    "sampled_peak_rss_bytes": 553926656,
+    "supervision_bytes_before_receipt": 16467,
+    "updates": 0,
+    "worker_seconds": 91.03108591702767
+  },
+  "new_dispositions": {
+    "FULL_TOOL_APERTURE_PREFILTER": 31,
+    "OBSTRUCTION_SELECTION_CAP": 17,
+    "PROPOSED_UNCERTIFIED": 22
+  },
+  "old_dispositions": {
+    "OBSTRUCTION_SELECTION_CAP": 6,
+    "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED": 32,
+    "PROPOSED_UNCERTIFIED": 32
+  },
+  "parent": "complete",
+  "status": "complete_prospective_residual_frontier_diagnostic"
+}

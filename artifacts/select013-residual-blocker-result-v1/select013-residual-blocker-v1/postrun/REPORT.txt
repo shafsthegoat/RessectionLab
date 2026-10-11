@@ -1,0 +1,18 @@
+Residual-catalog diagnostic: complete, but no useful route established
+
+The exact old47-action opening prefix and final inventory were reproduced. Parent93.637097s, sampled peak553,926,656B;6,445 native previews,53 native commits plus1 STOP,0models/updates. All4 independent full-history geometry checks passed (original47 and three48-action native histories). Native clone replay is reported separately. These are diagnostic negative histories, not accepted new-rule task routes.
+
+Old catalog:35 sampled first-failure cells,16 selected,32 extra tool pairs;32pairs suppressed by the radial prerequisite and6 selection-capped. Native results were3legal,23aperture-refused,6shaft-refused.
+New catalog: same35 evidence cells,16selected,22extra pairs;31pairs excluded by the declared static aperture prerequisite,17selection-capped across11cells. All22 verified:9legal,13shaft-refused,0aperture refusals. Sidecars were untruncated; completeness remains limited to first rejected intervals of emitted rays.
+
+Critical cell[7,92,85]: radial eligibility is repaired, but BOTH suction and aspirator are now OBSTRUCTION_SELECTION_CAP. Their necessary aperture margins are+3.6 and+2.3mm; native feasibility was never queried. Its public-target rays13/14 and intermediate ray82 retain exactly the same first-blocker sets after all3 preparations. Five co-blockers in the proximal first set are likewise selection-capped. This is demonstrated selection coverage loss, not a native refusal of the critical centered action.
+
+Branches remove one non-target cell each:
+0: [4,89,82], incremental−0.266999981;0newly feasible original rays. Some first sets shrink, others reveal another blocker.
+1: [5,88,84], incremental−0.268999981;0newly feasible original rays. Its co-blocker[5,88,86] remains in the central target rays.
+2: [5,88,86], incremental−0.268999981;ONE original ray becomes feasible: exposed_opening ray36 to[7,89,87], hypothetical increment−0.242999981. It was NOT executed and has no target gain. Target rays along that direction reveal later first blockers. All52 original nominal-target rays remain shaft-blocked in every branch.
+Prefix+prep+STOP returns are−26.648397644,−26.650397644,−26.650397644; root STOP remains0. These independent one-prep results neither establish nor refute a sequential co-blocker route.
+
+Saved-only priority falsification: of27 aperture-eligible cells, the critical cell ranks18 by target-ray frequency and also18 by inverse-first-set-size share; a16-cell cap still excludes it.26of27 eligible cells already occur in a target-ray first set, so a relevance Boolean alone is weak. The justified next source contrast is deterministic coverage across blocked public-target ray groups, with explicit alias handling and all co-blocker dispositions, rather than another frequency-only scalar. Keep the existing16cell/32pair limits and native verification. No private labels, reward changes, fitting or new execution are implied.
+
+Archive: lean-archive-list-v2.json lists38files/2,043,805B before this report/list. causal-evidence-v2.json is lossless for original47nativehistory and each exact branch prep; each full branch history reconstructs from the shared prefix plus prep. Output JSON manifest pins verbose originals; originals remain untouched. The first over-budget lean list and full projection remain local. One exploratory scalar query used a nonexistent sidecar key before correction; no runtime data or conclusion depended on it.

@@ -1,0 +1,47 @@
+{
+  "EVAL_execution": false,
+  "SELECT_subject": "ReMIND-013",
+  "arms": {},
+  "automatic_retry": false,
+  "canonical_result_status": "complete_prospective_residual_frontier_diagnostic",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 240,
+    "output_bytes": 16777216,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 8388608,
+    "threads": 1,
+    "worker_deadline_seconds": 210,
+    "worker_log_bytes": 8388608
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 93.63709712494165,
+  "exit_code": 0,
+  "final_owned_pids": [],
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "optimizer_updates_on_SELECT": 0,
+  "output_bytes": 15756307,
+  "planned_SELECT_denominator": 2,
+  "private_reference_execution": false,
+  "release_sha256": "7c0d91b63c5922285976660ffc4d9ac2d7377ab8a8147ec39b021eb64fc80db7",
+  "result_sha256": "532581e440afdf656c8a3f24ed730e30beba45470588f9e5a337932e97ffb12c",
+  "sampled_peak_rss_bytes": 553926656,
+  "samples": 448,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/select013-residual-blocker-v1/runtime-source-index.json",
+    "sha256": "83afce441ab2fd109e7e7e83b76d6ff20450f719838bba03096a4352622cc54e"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 16467,
+  "worker_final_sha256": "70ed4e75f0c47d3d32f5e3609e4e7d4d77cf7573b89a206854e09e022d98a6c7",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

@@ -1,0 +1,31 @@
+{
+  "status": "pass",
+  "exit_code": 0,
+  "timeout": false,
+  "hard_seconds": 30,
+  "wall_seconds": 0.7766319580000001,
+  "single_thread": true,
+  "child_reaped": true,
+  "acquired_inputs": false,
+  "models_or_optimizers": false,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-residual-blocker-v1/tests/test_residual_blocker.py",
+    "-k",
+    "actual_residual_blocker"
+  ],
+  "source_pins": {
+    "stage/resectionlab/native_proposals.py": "8d92d6f4c68f394f17d6c2357d8748e7abab8bfac0b555dbf3bb5d81df325a31",
+    "tests/conftest.py": "12f786c978032b622eecc8b62704b453b91beeca97d191b45cb396d801436ecd",
+    "tests/test_residual_blocker.py": "48e604438af212a2db9dcee497763637a3f1cb94cd3e9fa28357f2e4a566ff94"
+  },
+  "source_unchanged": true,
+  "log_sha256": "b15d1304016424bca7181856146d46c45e70ce7134258381aa54d024244ce588",
+  "prior_preserved": "controls-01.json",
+  "correction": "Fixture follows exact emitted goal geometry and explicitly verifies coincident nominal DUPLICATE_GEOMETRY aliases; production unchanged."
+}

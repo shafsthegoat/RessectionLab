@@ -1,0 +1,27 @@
+{
+  "status": "failed",
+  "exit_code": 1,
+  "timeout": false,
+  "hard_seconds": 30,
+  "wall_seconds": 0.655814542,
+  "single_thread": true,
+  "child_reaped": true,
+  "acquired_inputs": false,
+  "models_or_optimizers": false,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-residual-blocker-v1/tests/test_residual_blocker.py"
+  ],
+  "source_pins": {
+    "stage/resectionlab/native_proposals.py": "8d92d6f4c68f394f17d6c2357d8748e7abab8bfac0b555dbf3bb5d81df325a31",
+    "tests/conftest.py": "12f786c978032b622eecc8b62704b453b91beeca97d191b45cb396d801436ecd",
+    "tests/test_residual_blocker.py": "5f6ea07f518991a8c759952ce0ea4f8771766ec41666e58d1d9cdeb21f783b42"
+  },
+  "source_unchanged": true,
+  "log_sha256": "2179766d89c6c6d61e8ae9aedf1d9356ecd7d79b95bc4324b44d8933ded3c20c"
+}

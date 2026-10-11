@@ -1,0 +1,416 @@
+{
+  "base_reason_counts": {
+    "NATIVE_CONNECTED_STROKE": 4,
+    "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 113
+  },
+  "branches": [
+    {
+      "after_reason_counts": {
+        "NATIVE_CONNECTED_STROKE": 4,
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 113
+      },
+      "branch": 0,
+      "extra": 2,
+      "increment": -0.2669999807038836,
+      "newly_feasible": [],
+      "removed": [
+        [
+          4,
+          89,
+          82
+        ]
+      ],
+      "total": -26.648397644393796
+    },
+    {
+      "after_reason_counts": {
+        "NATIVE_CONNECTED_STROKE": 4,
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 113
+      },
+      "branch": 1,
+      "extra": 6,
+      "increment": -0.2689999807038836,
+      "newly_feasible": [],
+      "removed": [
+        [
+          5,
+          88,
+          84
+        ]
+      ],
+      "total": -26.6503976443938
+    },
+    {
+      "after_reason_counts": {
+        "NATIVE_CONNECTED_STROKE": 5,
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 112
+      },
+      "branch": 2,
+      "extra": 8,
+      "increment": -0.2689999807038836,
+      "newly_feasible": [
+        36
+      ],
+      "removed": [
+        [
+          5,
+          88,
+          86
+        ]
+      ],
+      "total": -26.6503976443938
+    }
+  ],
+  "candidate_witness": {
+    "affected_rays": [
+      {
+        "blocked_indices_native": [
+          [
+            7,
+            92,
+            85
+          ],
+          [
+            7,
+            92,
+            86
+          ],
+          [
+            7,
+            93,
+            84
+          ],
+          [
+            7,
+            93,
+            86
+          ],
+          [
+            7,
+            94,
+            84
+          ],
+          [
+            7,
+            94,
+            86
+          ]
+        ],
+        "proposal": {
+          "column_index": 2,
+          "entry_mm": [
+            -59.878999999201426,
+            -16.888999999694036,
+            -18.27829563649273
+          ],
+          "family": "proximal_nominal",
+          "offset_source_voxels": [
+            2,
+            0
+          ],
+          "proposal_id": "nominal-cavity-77ff70df3249e93731482941",
+          "tip_mm": [
+            -41.378999999201426,
+            -16.888999999603442,
+            -18.27829563649273
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            20,
+            93,
+            85
+          ]
+        },
+        "ray": 13
+      },
+      {
+        "blocked_indices_native": [
+          [
+            7,
+            92,
+            85
+          ],
+          [
+            7,
+            93,
+            84
+          ],
+          [
+            7,
+            93,
+            86
+          ]
+        ],
+        "proposal": {
+          "column_index": 2,
+          "entry_mm": [
+            -59.87899999920143,
+            -16.888999999694036,
+            -18.27829563649273
+          ],
+          "family": "distal_nominal",
+          "offset_source_voxels": [
+            2,
+            0
+          ],
+          "proposal_id": "nominal-cavity-5128ac924857b1e8bad1b51e",
+          "tip_mm": [
+            -9.378999999201426,
+            -16.88899999944674,
+            -18.27829563649273
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            52,
+            93,
+            85
+          ]
+        },
+        "ray": 14
+      },
+      {
+        "blocked_indices_native": [
+          [
+            7,
+            92,
+            85
+          ],
+          [
+            7,
+            93,
+            84
+          ],
+          [
+            7,
+            93,
+            86
+          ]
+        ],
+        "proposal": {
+          "column_index": 2,
+          "entry_mm": [
+            -59.87899999920143,
+            -16.888999999694043,
+            -18.27829563649273
+          ],
+          "family": "intermediate_opening",
+          "offset_source_voxels": [
+            2,
+            0
+          ],
+          "proposal_id": "nominal-cavity-955a670e318fa816e6e51306",
+          "tip_mm": [
+            -52.378999999201426,
+            -16.888999999657315,
+            -18.27829563649273
+          ],
+          "tool_id": "generic_suction",
+          "voxel": [
+            9,
+            93,
+            85
+          ]
+        },
+        "ray": 82
+      }
+    ],
+    "aperture_rows": [
+      {
+        "clearance_mm": 3.5999999999999965,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only",
+        "tool_id": "generic_suction",
+        "voxel": [
+          7,
+          92,
+          85
+        ]
+      },
+      {
+        "clearance_mm": 2.2999999999999963,
+        "excluded": false,
+        "numerical_margin_mm": 1e-06,
+        "scope": "bounded_source_normal_aperture_necessary_only",
+        "tool_id": "generic_aspirator",
+        "voxel": [
+          7,
+          92,
+          85
+        ]
+      }
+    ],
+    "currently_feasible_base_or_extra_removes": false,
+    "omitted_pairs": [
+      {
+        "blocker_voxel": [
+          7,
+          92,
+          85
+        ],
+        "column_index": 42,
+        "evidence_hashes": [
+          "sha256:45d3c49e9f0bed2421a89cd22f208587bc24a5e27df8a1f254e0c3747106980d",
+          "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c",
+          "sha256:af10f1d1213e7e97373e06d683cfe763eaa49c48a15dd24bb5df190e6850750f"
+        ],
+        "family": "obstruction_opening",
+        "offset_source_voxels": [
+          1,
+          0
+        ],
+        "original_axis_min_corner_bound_mm": 1.5811388148134555,
+        "proposal_id": null,
+        "public_nominal_priority": false,
+        "reason": "OBSTRUCTION_SELECTION_CAP",
+        "tool_id": "generic_suction",
+        "voxel": [
+          7,
+          92,
+          85
+        ]
+      },
+      {
+        "blocker_voxel": [
+          7,
+          92,
+          85
+        ],
+        "column_index": 42,
+        "evidence_hashes": [
+          "sha256:45d3c49e9f0bed2421a89cd22f208587bc24a5e27df8a1f254e0c3747106980d",
+          "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c",
+          "sha256:af10f1d1213e7e97373e06d683cfe763eaa49c48a15dd24bb5df190e6850750f"
+        ],
+        "family": "obstruction_opening",
+        "offset_source_voxels": [
+          1,
+          0
+        ],
+        "original_axis_min_corner_bound_mm": 1.5811388148134555,
+        "proposal_id": null,
+        "public_nominal_priority": false,
+        "reason": "OBSTRUCTION_SELECTION_CAP",
+        "tool_id": "generic_aspirator",
+        "voxel": [
+          7,
+          92,
+          85
+        ]
+      }
+    ],
+    "voxel": [
+      7,
+      92,
+      85
+    ]
+  },
+  "censoring": {
+    "aperture_excluded_pairs": 31,
+    "emitted_pairs": 22,
+    "feasible_extras_not_branched": [
+      11,
+      12,
+      15,
+      17,
+      19,
+      21
+    ],
+    "retained_blocker_cells": 35,
+    "selection_omitted_cells": 11,
+    "selection_omitted_pairs": 17,
+    "surviving_pairs": 39
+  },
+  "claim": "one local exposed-opening unlock; no target gain or accepted route",
+  "costs": {
+    "STOP": 1,
+    "clean": true,
+    "native_commits": 53,
+    "output_bytes": 15756307,
+    "parent_seconds": 93.63709712494165,
+    "previews": 6445,
+    "sampled_peak_rss_bytes": 553926656,
+    "worker_seconds": 91.03108591702767
+  },
+  "extras_reason_counts": {
+    "NATIVE_CONNECTED_STROKE": 9,
+    "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 13
+  },
+  "independent_certificates": [
+    {
+      "feasible": true,
+      "motions": 47,
+      "path": "independent/original-prefix.json",
+      "sha256": "024e22e927998c3dc58fec71f40a13a81636a942e015e8fa0b384b726eaa3ed2"
+    },
+    {
+      "feasible": true,
+      "motions": 48,
+      "path": "independent/branch-00.json",
+      "sha256": "b338a1e57357d606d5a2eb0be8b24f105fb9fbeb6713da8e7ab20bdf39803499"
+    },
+    {
+      "feasible": true,
+      "motions": 48,
+      "path": "independent/branch-01.json",
+      "sha256": "4eada7fd92cc430b2ba3d09abbd38a88b96ca9a408acc702fd99caf1a594673f"
+    },
+    {
+      "feasible": true,
+      "motions": 48,
+      "path": "independent/branch-02.json",
+      "sha256": "6e79d68fd58f0b4521f7c2f2d0e07806cd6bce3621e61e9d5d382f813a9f373f"
+    }
+  ],
+  "original47_exact": true,
+  "original_return": -26.381397663689913,
+  "pins": {
+    "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/comparison-world.json": "2dc67df3216033c72540cf2d83e3c614f3a5e62a2fb31ad3cf8c653925213995",
+    "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/context.json": "178b81f87c8363a3f0c55be411b2085739e349415bbacc73a0fe3e90ad124887",
+    "build/select013-paged-route-h48-v1/attempt-01/paged_obstruction_lazy_beam/pages/166410d0dc42e97ead56ab095c66cce813db189f668a12c1eff54c5b512b8247/page00.json": "a58f8ed4792633a3486bad99a86ebb780e421538b76d7c546062592a90e61917",
+    "build/select013-paged-route-h48-v1/attempt-01/result.json": "8dcbf51e12fc4a1175f52422bd5e4b745ce6d35300fd589b8b4b23404d7bdcf2",
+    "build/select013-residual-blocker-v1/attempt-01.supervision/receipt.json": "cd744522216e3e6bf27fed44c1c5be67c225a4cd0f8d5e8aa4ad477dfbab213d",
+    "build/select013-residual-blocker-v1/attempt-01/costs.json": "d82cc9e97853697783c1b18885e88f29d021ee977333da30077a6855f9f69d04",
+    "build/select013-residual-blocker-v1/attempt-01/independent/branch-00.json": "b338a1e57357d606d5a2eb0be8b24f105fb9fbeb6713da8e7ab20bdf39803499",
+    "build/select013-residual-blocker-v1/attempt-01/independent/branch-01.json": "4eada7fd92cc430b2ba3d09abbd38a88b96ca9a408acc702fd99caf1a594673f",
+    "build/select013-residual-blocker-v1/attempt-01/independent/branch-02.json": "6e79d68fd58f0b4521f7c2f2d0e07806cd6bce3621e61e9d5d382f813a9f373f",
+    "build/select013-residual-blocker-v1/attempt-01/independent/original-prefix.json": "024e22e927998c3dc58fec71f40a13a81636a942e015e8fa0b384b726eaa3ed2",
+    "build/select013-residual-blocker-v1/attempt-01/old-authority.json": "f35194529de4ef80512fc2defd14a1448f98291de0feab3c7bc1efb6744bd269",
+    "build/select013-residual-blocker-v1/attempt-01/old-frontier/page00.json": "a58f8ed4792633a3486bad99a86ebb780e421538b76d7c546062592a90e61917",
+    "build/select013-residual-blocker-v1/attempt-01/original-native-history.json": "524a7dba77777ae541878a2f6d75af511b45399ce7c05f65e124320dce4918ec",
+    "build/select013-residual-blocker-v1/attempt-01/original-prefix-STOP.json": "6df66ee0ca3f1b18988af3ade928bc950ead7628cea5b48f2a8672a41310be48",
+    "build/select013-residual-blocker-v1/attempt-01/original-world-control.json": "38c713c4f8b7f29d23aefd90a7dc9a798846c4f685cb06051bb32ee9a0ba7296",
+    "build/select013-residual-blocker-v1/attempt-01/prefix-controls.json": "850be3c90392aebbb0d3367a3ddb93d2cb95f162ab92a1be91c81270462e116e",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/branch-00/result.json": "c7326800b7961fe45ff9f82f552f917dcdd7c65ed46283aa9478e86d64dd690a",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/branch-01/result.json": "8ef7fa9208cd86671759314ea8eaf4fd6f309e31035a450886a09a8ce8eb557b",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/branch-02/result.json": "6f1e9e37d88930fe729eb1b2e07b6f3101154b7f556cc622f6ca0977be1e9182",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/branch-selection.json": "94398fcd2d2ab050bb9bc3df69bd0aec363d2c37a16b159c5809364398a17084",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-00.json": "46744495d34d1a482b0a2e89a37ca4e10dda47ce474765777e0f6453bdfe2a4a",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-01.json": "a46b1e16b22cca8ff7fbfca73743ed5d0a1372ef6175797c7a33a3f1cffc2247",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-02.json": "29ff8a03e188974e20775475907b7b05cfe9b1c8d8a5e4affb46b53c475eeec8",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-03.json": "97b9f48ee0daff2cf4f83d36bde8a9fe81aa74593551b97fe589c8ac8945670b",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-04.json": "803e429d28dc65629bc84f6cbbee727ded2bad96fba4e706c191ba42af8d7309",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-05.json": "626812dfadac1ef7f92a53d4d265ecd97923b1171dfb13cd5d40760166809dea",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-06.json": "6d5b3d5427fa6f86395f0a5ba93dfaf2bc02e0e546927962ab3deae247e33560",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-07.json": "1c684caa3bccf15f4b9a8453bcc9ad2e4a2149d907fe57eed07034a7da0a41ac",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-08.json": "19d12b6cb0631fc0b95ff625429b765313dd05e86af1de434ce129febc40678e",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-09.json": "1044481cb4709a6b2db54a9cf7804dce36e4b5bb90ae5d15a3936f5fb0ed299a",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-10.json": "896aba3b0a7855fabb735cef95466976c391cfff70b9973c3936c66e66e6139c",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-11.json": "854e58a6bcf2fd716b32de638f38ab44fc8079201198c9f1a9cd5224e10aa979",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-12.json": "442960cbf5c32cfa6af21a880f9458893b06227b9a2f0a706af6ec4291e6c0ba",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-13.json": "81c55421b0e6f0c464a39b9b428f8467bc2643ab598f4492de7cbe7b3325c395",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-14.json": "c7e69109125e0804ab4bbf0cb84b718d62e92e36f05edb6431505c11b8b58232",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-15.json": "e16e4b23e8807a3c1b86b1b53cedbc949229cb2abd3d25b3a57f0af94771a9a2",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-16.json": "c547e93da6a369bef17872547252509e59ed8bcaad21aa0417c0d5c58ae10309",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-17.json": "c0c4985d1d1602fecb7283fd2b98f94892545c5fe271cbb5dc8d33f665713965",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-18.json": "b125430c07f755847b422c018a04d5f9a5174fbfb8ba68fb4cb54dbad8642bfd",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-19.json": "7af0e15bac02367d8468fd724d910314c1e3fe5c5770313d7b0b69dc67ec1165",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-20.json": "d81ec1dc9aabbbb81088eb138e004032608b219ec80c635cf5f0d65a5b50151a",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/extra-21.json": "43914be59cb3927079c0c7ef0a782dbec605e721cf63a9cbe27b5ed0a5bbc408",
+    "build/select013-residual-blocker-v1/attempt-01/prospective/prospective-catalog.json": "d13444a6b788a5dfc82d40f1048b1a5bf946cda443d0dcb51e1cfd546a8ad5c8",
+    "build/select013-residual-blocker-v1/attempt-01/result.json": "532581e440afdf656c8a3f24ed730e30beba45470588f9e5a337932e97ffb12c",
+    "build/select013-residual-blocker-v1/root-release.json": "7c0d91b63c5922285976660ffc4d9ac2d7377ab8a8147ec39b021eb64fc80db7",
+    "build/select013-residual-blocker-v1/runtime-source-index.json": "83afce441ab2fd109e7e7e83b76d6ff20450f719838bba03096a4352622cc54e"
+  },
+  "status": "PASS_saved_only"
+}

@@ -49,3 +49,9 @@ is 168.211 MiB with 332.760 GiB free (332.698 GiB after remaining reservations).
 Residual-blocker preparation is reserved at 32 MiB and compact root archives at
 32 MiB. The subsequent v2 compact archive is not included in this dated scan.
 See `milestone-closure-07.json`; no new data or dependencies were acquired.
+
+The 11:02:32 UTC snapshot closes the residual-blocker diagnostic. Growth is
+189.438 MiB, free space 332.713 GiB, and root archive allowance remains32 MiB.
+The later 2.03 MiB compact result archive, Git changes and separate1 MiB
+source-only preparation reservation are not included in this dated scan.
+See `milestone-closure-08.json`; no new dataset or dependency was acquired.

@@ -1,0 +1,88 @@
+..FF...                                                                  [100%]
+=================================== FAILURES ===================================
+______ test_actual_residual_blocker_cut_then_target_full_replay[1-False] _______
+
+sign = 1, rotated = False
+
+    @pytest.mark.parametrize('sign,rotated', [(1, False), (-1, True)])
+    def test_actual_residual_blocker_cut_then_target_full_replay(sign, rotated):
+        # Original suction cannot fully contain an off-axis cell. Aspirator's
+        # optimistic radial envelope can, but that tool cannot fit this aperture.
+        # The old filter therefore suppresses the useful centered suction attempt.
+        case = source(cap=120, sign=sign, rotated=rotated)
+        blocker = (4 if sign > 0 else 11, 10, 9)
+        goal = (9 if sign > 0 else 6, 9, 9)
+        support = np.zeros(case.observed_support.shape, bool)
+        support[blocker] = support[goal] = True
+        target = np.zeros(support.shape, np.float32); target[goal] = 1
+        case = replace(case, observed_support=support, nominal_target=target, reference_target=target,
+            access=AccessWindow(case.access.center_mm, case.access.normal_inward, 2.5))
+        previous = PagedObstructionTask(case_with_rule(case, None), max_steps=3).planning_clone()
+        old_pages = list(previous.planning_action_pages())
+        old_rows = old_pages[0][0].candidate_inventory()['ledger']
+        suppressed = [r for r in old_rows if tuple(r.get('blocker_voxel') or ()) == blocker]
+        assert len(suppressed) == 2
+        assert all(r['proposal_reason'] == 'ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED' for r in suppressed)
+        assert not any(ids for _, ids in old_pages)
+        task = PagedObstructionTask(case_with_rule(case), max_steps=3)
+        planner = task.planning_clone(); pages = list(planner.planning_action_pages())
+        rows = [r for p, _ in pages for r in p.candidate_inventory()['ledger']
+                if r['verification'] == 'NATIVE_VERIFIED']
+        candidate = next(r for r in rows if r['family'] == 'obstruction_opening'
+            and tuple(r['voxel']) == blocker and r['tool_id'] == 'generic_suction' and r['feasible'])
+        first = candidate['action_id']
+        task.step(first)
+        assert task.metrics()['history'][0]['reward'] < 0
+        assert task.metrics()['history'][0]['removed_indices_native'] == [list(blocker)]
+        successors = list(task.planning_clone().planning_action_pages())
+>       target_ray = next(r for p, _ in successors for r in p.candidate_inventory()['ledger']
+            if r['verification'] == 'NATIVE_VERIFIED'
+            if r['family'] in ('proximal_nominal', 'distal_nominal') and r['tool_id'] == 'generic_suction' and r['feasible'])
+E       StopIteration
+
+build/select013-residual-blocker-v1/tests/test_residual_blocker.py:106: StopIteration
+______ test_actual_residual_blocker_cut_then_target_full_replay[-1-True] _______
+
+sign = -1, rotated = True
+
+    @pytest.mark.parametrize('sign,rotated', [(1, False), (-1, True)])
+    def test_actual_residual_blocker_cut_then_target_full_replay(sign, rotated):
+        # Original suction cannot fully contain an off-axis cell. Aspirator's
+        # optimistic radial envelope can, but that tool cannot fit this aperture.
+        # The old filter therefore suppresses the useful centered suction attempt.
+        case = source(cap=120, sign=sign, rotated=rotated)
+        blocker = (4 if sign > 0 else 11, 10, 9)
+        goal = (9 if sign > 0 else 6, 9, 9)
+        support = np.zeros(case.observed_support.shape, bool)
+        support[blocker] = support[goal] = True
+        target = np.zeros(support.shape, np.float32); target[goal] = 1
+        case = replace(case, observed_support=support, nominal_target=target, reference_target=target,
+            access=AccessWindow(case.access.center_mm, case.access.normal_inward, 2.5))
+        previous = PagedObstructionTask(case_with_rule(case, None), max_steps=3).planning_clone()
+        old_pages = list(previous.planning_action_pages())
+        old_rows = old_pages[0][0].candidate_inventory()['ledger']
+        suppressed = [r for r in old_rows if tuple(r.get('blocker_voxel') or ()) == blocker]
+        assert len(suppressed) == 2
+        assert all(r['proposal_reason'] == 'ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED' for r in suppressed)
+        assert not any(ids for _, ids in old_pages)
+        task = PagedObstructionTask(case_with_rule(case), max_steps=3)
+        planner = task.planning_clone(); pages = list(planner.planning_action_pages())
+        rows = [r for p, _ in pages for r in p.candidate_inventory()['ledger']
+                if r['verification'] == 'NATIVE_VERIFIED']
+        candidate = next(r for r in rows if r['family'] == 'obstruction_opening'
+            and tuple(r['voxel']) == blocker and r['tool_id'] == 'generic_suction' and r['feasible'])
+        first = candidate['action_id']
+        task.step(first)
+        assert task.metrics()['history'][0]['reward'] < 0
+        assert task.metrics()['history'][0]['removed_indices_native'] == [list(blocker)]
+        successors = list(task.planning_clone().planning_action_pages())
+>       target_ray = next(r for p, _ in successors for r in p.candidate_inventory()['ledger']
+            if r['verification'] == 'NATIVE_VERIFIED'
+            if r['family'] in ('proximal_nominal', 'distal_nominal') and r['tool_id'] == 'generic_suction' and r['feasible'])
+E       StopIteration
+
+build/select013-residual-blocker-v1/tests/test_residual_blocker.py:106: StopIteration
+=========================== short test summary info ============================
+FAILED build/select013-residual-blocker-v1/tests/test_residual_blocker.py::test_actual_residual_blocker_cut_then_target_full_replay[1-False]
+FAILED build/select013-residual-blocker-v1/tests/test_residual_blocker.py::test_actual_residual_blocker_cut_then_target_full_replay[-1-True]
+2 failed, 5 passed in 0.52s

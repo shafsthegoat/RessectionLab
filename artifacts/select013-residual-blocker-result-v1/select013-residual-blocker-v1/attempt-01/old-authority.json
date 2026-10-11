@@ -1,0 +1,121 @@
+{
+  "decision_model_hash": "sha256:4b7d3d18b74d24af71d6ac54b0204ab06a93edc8dbfd0d9f66c9fdae9fcd2d0c",
+  "new_rule_generated_prefix": false,
+  "post_exposure_authority": {
+    "capability_serialized": false,
+    "same_canonical_capability": true,
+    "same_prepared_object": true
+  },
+  "prefix": [
+    "nominal-cavity-47aa1884912081efc8859324",
+    "nominal-cavity-2dedd5c30b3c2a46ecd7b8ed",
+    "nominal-cavity-833227750e3e818246a4028e",
+    "nominal-cavity-66203c3ebbeaad3b2305958e",
+    "nominal-cavity-d57cc0e4ecd4f9e20606a30f",
+    "nominal-cavity-de28e926609770492469a1f9",
+    "nominal-cavity-1dd5f6052e9f74ef3d894808",
+    "nominal-cavity-66ed824ac6fd10c7c2136ec4",
+    "nominal-cavity-bf54c6038f02131f77cb0070",
+    "nominal-cavity-83cffbb1e7281f99814666d1",
+    "nominal-cavity-8402ac8e80757b6488fcd652",
+    "nominal-cavity-1afa4b26bb5a55b1ed5eab8a",
+    "nominal-cavity-a549a91b4d7e663e39065be5",
+    "nominal-cavity-cb9eabef925336a257bcf413",
+    "nominal-cavity-5ec2443c6c1350a611a724d4",
+    "nominal-cavity-7f309b399dc32e01d940f812",
+    "nominal-cavity-530434d2d41e6e1941900281",
+    "nominal-cavity-20899577eeae335e70019e0d",
+    "nominal-cavity-0081875352031aba48b6cc58",
+    "nominal-cavity-227478c6d542c5dda31d3eea",
+    "nominal-cavity-607358dcd0ad23f0a5e27038",
+    "nominal-cavity-2665a1322fd5e892cf593baf",
+    "nominal-cavity-1e579dd40fbcd3b43f565094",
+    "nominal-cavity-10d1a8d205310ee9ed7d827b",
+    "nominal-cavity-e33c04aabe79ed27f6e290ef",
+    "nominal-cavity-a535a707a5ae121db9bf3f68",
+    "nominal-cavity-5159fea0096814a948984a4b",
+    "nominal-cavity-955ca386a63c12f641e38092",
+    "nominal-cavity-6ffc99cb50a3724526a1e396",
+    "nominal-cavity-54e58b43feb7293f531c8000",
+    "nominal-cavity-c68610aed544d34a22dddae4",
+    "nominal-cavity-1dda094f587a38d9d057628d",
+    "nominal-cavity-00fe2adfdd1f51219e21cce1",
+    "nominal-cavity-07bb4070f8ed6d802554da10",
+    "nominal-cavity-51549636b5ae5c8d2f657d86",
+    "nominal-cavity-2dc0c0c8db534a1951037c60",
+    "nominal-cavity-19076f6199ce68f0705b216d",
+    "nominal-cavity-1c7b39c1fcb7db140c99fe2e",
+    "nominal-cavity-1714a012b7baca72e20ccf35",
+    "nominal-cavity-603366aea887f09248f277cd",
+    "nominal-cavity-6ed86ecfb96807d38bb32ba6",
+    "nominal-cavity-b8cab13883317fb329402e92",
+    "nominal-cavity-216cdffd80a53c6f94027efe",
+    "nominal-cavity-3be6d54e7c3b77c5392aaaf2",
+    "nominal-cavity-22e2f84ab4ccba373fe67cef",
+    "nominal-cavity-128615e494494e6be048a390",
+    "nominal-cavity-e46bc4d0753a452cc5dd7685"
+  ],
+  "proposal_config": {
+    "intermediate_opening_mm": 1.0,
+    "max_candidates": 120,
+    "nominal_min_membership": 0.0,
+    "obstruction_opening": true,
+    "obstruction_page_size": 8,
+    "offsets_source_voxels": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "tool_footprint_opening": true
+  },
+  "source_hash": "sha256:a09a2cb40f860f271a355b8cdb4ff24b73c34e8b2c8d0c3f566774aac04927d6"
+}

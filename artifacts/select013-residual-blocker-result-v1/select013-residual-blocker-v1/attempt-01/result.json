@@ -1,0 +1,1425 @@
+{
+  "EVAL_opened": false,
+  "STOP_calls": 1,
+  "accepted_plan_claim": false,
+  "all_extra_pairs_verified": true,
+  "base_count": 117,
+  "branch_count": 3,
+  "branch_results": [
+    {
+      "accepted_plan_claim": false,
+      "complete_new_rule_task_episode": false,
+      "deterministic_native_commit_replay_exact": true,
+      "extra_ordinal": 2,
+      "first_blockers_removed": [
+        [
+          4,
+          89,
+          82
+        ]
+      ],
+      "independent_geometry_certificate": "written separately by the existing independent history checker",
+      "index": 0,
+      "native_state": {
+        "history_hash": "sha256:33d8bb4d85cc01ab8204f571680cc606109093e8098d01b2aaef01605dbf46a6",
+        "history_length": 48,
+        "masks": {
+          "connected_free_mask": "sha256:60389b7e515548593c3a886cfba52cd6e9e75b05fbd090b28bff94b7ae642a08",
+          "contact_mask": "sha256:db2eb5b32fda2e9f6312e54716ca98e303e10d4230d26161dd8a087ec6395d13",
+          "probe_contact_mask": "sha256:646c730fc998dd583dce0743b7067a8c05a286e43c2a148a92940421f57c3c50",
+          "remaining_mask": "sha256:e4c5472a7c51b950a643b7d5ffdde9ce9dd059bbda4efc49026332dd5c4f33da",
+          "removed_mask": "sha256:28582be280f2faa1a65c065ed159dcb4b687f3e8740ca978242c9ae1e7ba3620"
+        },
+        "model_hash": "sha256:882c0c2ffac577a0c3707cf2e0ad148b810c6bb24d7fa53f96c3da8e5eb70065",
+        "revision": 48,
+        "source_hash": "sha256:a09a2cb40f860f271a355b8cdb4ff24b73c34e8b2c8d0c3f566774aac04927d6",
+        "state_hash": "sha256:b0d746b96e22791a8225d863eb31de702a879adb092d48f9a90cf5444f5e61b6"
+      },
+      "newly_feasible_original_rays": [],
+      "prefix_plus_prep_STOP_return": -26.648397644393796,
+      "prefix_return": -26.381397663689913,
+      "reason_changes": [],
+      "remaining_sampled_first_blockers": [
+        [
+          2,
+          87,
+          82
+        ],
+        [
+          3,
+          86,
+          85
+        ],
+        [
+          3,
+          86,
+          86
+        ],
+        [
+          3,
+          92,
+          80
+        ],
+        [
+          3,
+          93,
+          80
+        ],
+        [
+          4,
+          88,
+          82
+        ],
+        [
+          4,
+          88,
+          83
+        ],
+        [
+          4,
+          95,
+          82
+        ],
+        [
+          4,
+          95,
+          88
+        ],
+        [
+          5,
+          87,
+          84
+        ],
+        [
+          5,
+          87,
+          85
+        ],
+        [
+          5,
+          87,
+          86
+        ],
+        [
+          5,
+          88,
+          84
+        ],
+        [
+          5,
+          88,
+          86
+        ],
+        [
+          5,
+          92,
+          81
+        ],
+        [
+          5,
+          92,
+          89
+        ],
+        [
+          5,
+          95,
+          87
+        ],
+        [
+          5,
+          96,
+          84
+        ],
+        [
+          6,
+          90,
+          83
+        ],
+        [
+          6,
+          90,
+          84
+        ],
+        [
+          6,
+          90,
+          88
+        ],
+        [
+          6,
+          92,
+          88
+        ],
+        [
+          6,
+          93,
+          88
+        ],
+        [
+          6,
+          94,
+          83
+        ],
+        [
+          6,
+          94,
+          87
+        ],
+        [
+          6,
+          94,
+          88
+        ],
+        [
+          6,
+          95,
+          84
+        ],
+        [
+          6,
+          95,
+          86
+        ],
+        [
+          7,
+          92,
+          85
+        ],
+        [
+          7,
+          92,
+          86
+        ],
+        [
+          7,
+          93,
+          84
+        ],
+        [
+          7,
+          93,
+          86
+        ],
+        [
+          7,
+          94,
+          84
+        ],
+        [
+          7,
+          94,
+          86
+        ]
+      ],
+      "root_STOP_return": 0.0
+    },
+    {
+      "accepted_plan_claim": false,
+      "complete_new_rule_task_episode": false,
+      "deterministic_native_commit_replay_exact": true,
+      "extra_ordinal": 6,
+      "first_blockers_removed": [
+        [
+          5,
+          88,
+          84
+        ]
+      ],
+      "independent_geometry_certificate": "written separately by the existing independent history checker",
+      "index": 1,
+      "native_state": {
+        "history_hash": "sha256:31e59145396d19f18b925519551726f8fdabddce242d5562b84cbbe045f10b55",
+        "history_length": 48,
+        "masks": {
+          "connected_free_mask": "sha256:485e68ee8552ce805f486a547e28e8d51b481e5a1ce97a2c144a8adf7a7bb8d9",
+          "contact_mask": "sha256:bf576d6ba002438858fb380479c940a908bbb550d2710ae2f4bb58ce2f83f8c4",
+          "probe_contact_mask": "sha256:646c730fc998dd583dce0743b7067a8c05a286e43c2a148a92940421f57c3c50",
+          "remaining_mask": "sha256:f41485c7634dcdd90ad04be4e92d2275b04ad7cab444d23b08bc32482b941b81",
+          "removed_mask": "sha256:42fa3ffb9365e498d897f6adc9ff3706fc9e4517fbce2721d47bde83f06e00da"
+        },
+        "model_hash": "sha256:882c0c2ffac577a0c3707cf2e0ad148b810c6bb24d7fa53f96c3da8e5eb70065",
+        "revision": 48,
+        "source_hash": "sha256:a09a2cb40f860f271a355b8cdb4ff24b73c34e8b2c8d0c3f566774aac04927d6",
+        "state_hash": "sha256:4b7c4e296c09204ca12e5e6fc4a58971b71290f1636786ad46def19d22a25090"
+      },
+      "newly_feasible_original_rays": [],
+      "prefix_plus_prep_STOP_return": -26.6503976443938,
+      "prefix_return": -26.381397663689913,
+      "reason_changes": [],
+      "remaining_sampled_first_blockers": [
+        [
+          2,
+          87,
+          82
+        ],
+        [
+          3,
+          86,
+          85
+        ],
+        [
+          3,
+          86,
+          86
+        ],
+        [
+          3,
+          92,
+          80
+        ],
+        [
+          3,
+          93,
+          80
+        ],
+        [
+          4,
+          88,
+          82
+        ],
+        [
+          4,
+          88,
+          83
+        ],
+        [
+          4,
+          89,
+          82
+        ],
+        [
+          4,
+          95,
+          82
+        ],
+        [
+          4,
+          95,
+          88
+        ],
+        [
+          5,
+          87,
+          84
+        ],
+        [
+          5,
+          87,
+          85
+        ],
+        [
+          5,
+          87,
+          86
+        ],
+        [
+          5,
+          88,
+          86
+        ],
+        [
+          5,
+          92,
+          81
+        ],
+        [
+          5,
+          92,
+          89
+        ],
+        [
+          5,
+          95,
+          87
+        ],
+        [
+          5,
+          96,
+          84
+        ],
+        [
+          6,
+          90,
+          83
+        ],
+        [
+          6,
+          90,
+          84
+        ],
+        [
+          6,
+          90,
+          88
+        ],
+        [
+          6,
+          92,
+          88
+        ],
+        [
+          6,
+          93,
+          88
+        ],
+        [
+          6,
+          94,
+          83
+        ],
+        [
+          6,
+          94,
+          87
+        ],
+        [
+          6,
+          94,
+          88
+        ],
+        [
+          6,
+          95,
+          84
+        ],
+        [
+          6,
+          95,
+          86
+        ],
+        [
+          7,
+          92,
+          85
+        ],
+        [
+          7,
+          92,
+          86
+        ],
+        [
+          7,
+          93,
+          84
+        ],
+        [
+          7,
+          93,
+          86
+        ],
+        [
+          7,
+          94,
+          84
+        ],
+        [
+          7,
+          94,
+          86
+        ]
+      ],
+      "root_STOP_return": 0.0
+    },
+    {
+      "accepted_plan_claim": false,
+      "complete_new_rule_task_episode": false,
+      "deterministic_native_commit_replay_exact": true,
+      "extra_ordinal": 8,
+      "first_blockers_removed": [
+        [
+          5,
+          88,
+          86
+        ]
+      ],
+      "independent_geometry_certificate": "written separately by the existing independent history checker",
+      "index": 2,
+      "native_state": {
+        "history_hash": "sha256:bcb643984d7ccbd5701efa1d41ca95faffc94f7473044ef9d5e3e4ac1d9194d7",
+        "history_length": 48,
+        "masks": {
+          "connected_free_mask": "sha256:4b1e75287480e32082bd349c32b7cdec918dc783996738da21cfdc4c99be712b",
+          "contact_mask": "sha256:2ea4130ab6c0905e2240308023bbb1d93deb8657f0a5572e8ec1defcd2ad9c05",
+          "probe_contact_mask": "sha256:646c730fc998dd583dce0743b7067a8c05a286e43c2a148a92940421f57c3c50",
+          "remaining_mask": "sha256:c719cd2f160e21cacf42f50a9a2272523a8dfe7bc2acace9585205b8922b2424",
+          "removed_mask": "sha256:deb4d2a4854fe1f70687093be58977ba8bbcd9eaf75ab879beca78834817bb38"
+        },
+        "model_hash": "sha256:882c0c2ffac577a0c3707cf2e0ad148b810c6bb24d7fa53f96c3da8e5eb70065",
+        "revision": 48,
+        "source_hash": "sha256:a09a2cb40f860f271a355b8cdb4ff24b73c34e8b2c8d0c3f566774aac04927d6",
+        "state_hash": "sha256:7f583db1b633e2c38fa1e52c967ff8368c157fe735f7c13ca7d0798f01208d61"
+      },
+      "newly_feasible_original_rays": [
+        {
+          "executed": false,
+          "nominal_increment": -0.2429999807038836,
+          "proposal": {
+            "column_index": 6,
+            "entry_mm": [
+              -59.878999999221016,
+              -12.88899999969404,
+              -20.278295443331558
+            ],
+            "family": "exposed_opening",
+            "offset_source_voxels": [
+              -2,
+              2
+            ],
+            "proposal_id": "nominal-cavity-e511b6add6a59cfede9599f5",
+            "tip_mm": [
+              -54.378999999221016,
+              -12.888999999667107,
+              -20.278295443331558
+            ],
+            "tool_id": "generic_suction",
+            "voxel": [
+              7,
+              89,
+              87
+            ]
+          },
+          "prospective_prefix_prep_ray_return": -26.89339762509768,
+          "ray": 36
+        }
+      ],
+      "prefix_plus_prep_STOP_return": -26.6503976443938,
+      "prefix_return": -26.381397663689913,
+      "reason_changes": [
+        {
+          "after": "NATIVE_CONNECTED_STROKE",
+          "before": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "ray": 36
+        }
+      ],
+      "remaining_sampled_first_blockers": [
+        [
+          2,
+          87,
+          82
+        ],
+        [
+          3,
+          86,
+          85
+        ],
+        [
+          3,
+          86,
+          86
+        ],
+        [
+          3,
+          92,
+          80
+        ],
+        [
+          3,
+          93,
+          80
+        ],
+        [
+          4,
+          88,
+          82
+        ],
+        [
+          4,
+          88,
+          83
+        ],
+        [
+          4,
+          89,
+          82
+        ],
+        [
+          4,
+          95,
+          82
+        ],
+        [
+          4,
+          95,
+          88
+        ],
+        [
+          5,
+          87,
+          84
+        ],
+        [
+          5,
+          87,
+          85
+        ],
+        [
+          5,
+          87,
+          86
+        ],
+        [
+          5,
+          88,
+          84
+        ],
+        [
+          5,
+          92,
+          81
+        ],
+        [
+          5,
+          92,
+          89
+        ],
+        [
+          5,
+          95,
+          87
+        ],
+        [
+          5,
+          96,
+          84
+        ],
+        [
+          6,
+          90,
+          83
+        ],
+        [
+          6,
+          90,
+          84
+        ],
+        [
+          6,
+          90,
+          88
+        ],
+        [
+          6,
+          92,
+          88
+        ],
+        [
+          6,
+          93,
+          88
+        ],
+        [
+          6,
+          94,
+          83
+        ],
+        [
+          6,
+          94,
+          87
+        ],
+        [
+          6,
+          94,
+          88
+        ],
+        [
+          6,
+          95,
+          84
+        ],
+        [
+          6,
+          95,
+          86
+        ],
+        [
+          7,
+          92,
+          85
+        ],
+        [
+          7,
+          92,
+          86
+        ],
+        [
+          7,
+          93,
+          84
+        ],
+        [
+          7,
+          93,
+          86
+        ],
+        [
+          7,
+          94,
+          84
+        ],
+        [
+          7,
+          94,
+          86
+        ]
+      ],
+      "root_STOP_return": 0.0
+    }
+  ],
+  "checkpoint_loads": 0,
+  "context_equal": true,
+  "extra_count": 22,
+  "feasible_extras": 9,
+  "frontier_page_exact": true,
+  "gradient_attempts": 0,
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "held_inputs_opened": false,
+  "independent_certificates": [
+    {
+      "feasible": true,
+      "path": "independent/original-prefix.json",
+      "sha256": "024e22e927998c3dc58fec71f40a13a81636a942e015e8fa0b384b726eaa3ed2"
+    },
+    {
+      "feasible": true,
+      "path": "independent/branch-00.json",
+      "sha256": "b338a1e57357d606d5a2eb0be8b24f105fb9fbeb6713da8e7ab20bdf39803499"
+    },
+    {
+      "feasible": true,
+      "path": "independent/branch-01.json",
+      "sha256": "4eada7fd92cc430b2ba3d09abbd38a88b96ca9a408acc702fd99caf1a594673f"
+    },
+    {
+      "feasible": true,
+      "path": "independent/branch-02.json",
+      "sha256": "6e79d68fd58f0b4521f7c2f2d0e07806cd6bce3621e61e9d5d382f813a9f373f"
+    }
+  ],
+  "independent_geometry_all_feasible": true,
+  "independent_geometry_checks": 4,
+  "limits": {
+    "base_candidates": 120,
+    "branch_cap": 3,
+    "checkpoint_loads": 0,
+    "extra_candidates": 32,
+    "fixed_prefix_steps": 47,
+    "max_steps": 48,
+    "model_forwards": 0,
+    "native_commits_and_STOP": 60,
+    "native_previews": 10000,
+    "sidecar_cells": 16,
+    "threads": 1,
+    "updates": 0
+  },
+  "model_forwards": 0,
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 85.88025987497531,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": null,
+    "history_complete_caller_attestation": true,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 10000,
+      "planning_execution_seconds": 210.0
+    },
+    "native_preview_entries": 6445,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 524,
+          "raised": 0,
+          "rejected": 5921,
+          "rejection_reasons": {
+            "HARD_GEOMETRY:ACCESS_APERTURE": 122,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 5799
+          },
+          "returned": 6445,
+          "returned_microsteps": 138318,
+          "seconds": 69.48118199361488,
+          "started": 6445
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 6445,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "complete_history_awaiting_independent_audit",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "native_commit_attempts": 53,
+  "native_commits": 53,
+  "native_source_unchanged": true,
+  "new_rule_generated_prefix": false,
+  "omitted_pairs": [
+    {
+      "blocker_voxel": [
+        6,
+        94,
+        83
+      ],
+      "column_index": 37,
+      "evidence_hashes": [
+        "sha256:88b581989579ab7392a1dee4ab725959f6cb67fbb3cfa11e79a800bc50479675",
+        "sha256:adf0545a9f241a76391386c5c0871b02c25fd3cc9761e70b4fbe842668b3271b",
+        "sha256:d7f12980745e7c924e2a73e3709521b7db05225873291cbac11695e42e07924a",
+        "sha256:df01d0020f19e28860c5b71c80f221b0b188abfdd9a503e4ccfcb3a9fd44ea97"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        3,
+        -2
+      ],
+      "original_axis_min_corner_bound_mm": 1.5811388148134606,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_suction",
+      "voxel": [
+        6,
+        94,
+        83
+      ]
+    },
+    {
+      "blocker_voxel": [
+        6,
+        94,
+        87
+      ],
+      "column_index": 38,
+      "evidence_hashes": [
+        "sha256:0f67e89926ca7febdf65c4b3a824dc95b1480c15d80770302227340288d776a7",
+        "sha256:3105bf2a9dda006910ff9ebff87898348161029a1f918f8b3fc64eeefbb77c85",
+        "sha256:fcfeb6c0178f9f0003a2628ce060952e081fb75703e92931d74d109778ed46ed"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        3,
+        2
+      ],
+      "original_axis_min_corner_bound_mm": 1.58113881481346,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_suction",
+      "voxel": [
+        6,
+        94,
+        87
+      ]
+    },
+    {
+      "blocker_voxel": [
+        6,
+        94,
+        88
+      ],
+      "column_index": 39,
+      "evidence_hashes": [
+        "sha256:fcfeb6c0178f9f0003a2628ce060952e081fb75703e92931d74d109778ed46ed"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        3,
+        3
+      ],
+      "original_axis_min_corner_bound_mm": 2.1213202411204573,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_suction",
+      "voxel": [
+        6,
+        94,
+        88
+      ]
+    },
+    {
+      "blocker_voxel": [
+        6,
+        95,
+        84
+      ],
+      "column_index": 40,
+      "evidence_hashes": [
+        "sha256:190ef94268e79a3ecb609e33d1116c0e40ca22fafdf7df508d9b9419e230a613",
+        "sha256:53d99ee8c7ebe453fe95e115cf9712d7d879df044f0e00f0e5875c557089afee",
+        "sha256:a971c2783e226636132a1c4d59660fb53fc5065b818dffa759349ecdd2c5da1c",
+        "sha256:dcd95cc1daf1f3cdf0eb4629049ec1c385fda03017ef59021ddd8ae95eda46bc"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        4,
+        -1
+      ],
+      "original_axis_min_corner_bound_mm": 2.1213202411204675,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_suction",
+      "voxel": [
+        6,
+        95,
+        84
+      ]
+    },
+    {
+      "blocker_voxel": [
+        6,
+        95,
+        86
+      ],
+      "column_index": 41,
+      "evidence_hashes": [
+        "sha256:190ef94268e79a3ecb609e33d1116c0e40ca22fafdf7df508d9b9419e230a613",
+        "sha256:53d99ee8c7ebe453fe95e115cf9712d7d879df044f0e00f0e5875c557089afee",
+        "sha256:a971c2783e226636132a1c4d59660fb53fc5065b818dffa759349ecdd2c5da1c",
+        "sha256:dcd95cc1daf1f3cdf0eb4629049ec1c385fda03017ef59021ddd8ae95eda46bc"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        4,
+        1
+      ],
+      "original_axis_min_corner_bound_mm": 2.1213202411204573,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_suction",
+      "voxel": [
+        6,
+        95,
+        86
+      ]
+    },
+    {
+      "blocker_voxel": [
+        7,
+        92,
+        85
+      ],
+      "column_index": 42,
+      "evidence_hashes": [
+        "sha256:45d3c49e9f0bed2421a89cd22f208587bc24a5e27df8a1f254e0c3747106980d",
+        "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c",
+        "sha256:af10f1d1213e7e97373e06d683cfe763eaa49c48a15dd24bb5df190e6850750f"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        1,
+        0
+      ],
+      "original_axis_min_corner_bound_mm": 1.5811388148134555,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_suction",
+      "voxel": [
+        7,
+        92,
+        85
+      ]
+    },
+    {
+      "blocker_voxel": [
+        7,
+        92,
+        85
+      ],
+      "column_index": 42,
+      "evidence_hashes": [
+        "sha256:45d3c49e9f0bed2421a89cd22f208587bc24a5e27df8a1f254e0c3747106980d",
+        "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c",
+        "sha256:af10f1d1213e7e97373e06d683cfe763eaa49c48a15dd24bb5df190e6850750f"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        1,
+        0
+      ],
+      "original_axis_min_corner_bound_mm": 1.5811388148134555,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        7,
+        92,
+        85
+      ]
+    },
+    {
+      "blocker_voxel": [
+        7,
+        92,
+        86
+      ],
+      "column_index": 43,
+      "evidence_hashes": [
+        "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        1,
+        1
+      ],
+      "original_axis_min_corner_bound_mm": 2.1213202411204573,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_suction",
+      "voxel": [
+        7,
+        92,
+        86
+      ]
+    },
+    {
+      "blocker_voxel": [
+        7,
+        92,
+        86
+      ],
+      "column_index": 43,
+      "evidence_hashes": [
+        "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        1,
+        1
+      ],
+      "original_axis_min_corner_bound_mm": 2.1213202411204573,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        7,
+        92,
+        86
+      ]
+    },
+    {
+      "blocker_voxel": [
+        7,
+        93,
+        84
+      ],
+      "column_index": 44,
+      "evidence_hashes": [
+        "sha256:45d3c49e9f0bed2421a89cd22f208587bc24a5e27df8a1f254e0c3747106980d",
+        "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c",
+        "sha256:af10f1d1213e7e97373e06d683cfe763eaa49c48a15dd24bb5df190e6850750f"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        2,
+        -1
+      ],
+      "original_axis_min_corner_bound_mm": 1.5811386926476023,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_suction",
+      "voxel": [
+        7,
+        93,
+        84
+      ]
+    },
+    {
+      "blocker_voxel": [
+        7,
+        93,
+        84
+      ],
+      "column_index": 44,
+      "evidence_hashes": [
+        "sha256:45d3c49e9f0bed2421a89cd22f208587bc24a5e27df8a1f254e0c3747106980d",
+        "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c",
+        "sha256:af10f1d1213e7e97373e06d683cfe763eaa49c48a15dd24bb5df190e6850750f"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        2,
+        -1
+      ],
+      "original_axis_min_corner_bound_mm": 1.5811386926476023,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        7,
+        93,
+        84
+      ]
+    },
+    {
+      "blocker_voxel": [
+        7,
+        93,
+        86
+      ],
+      "column_index": 45,
+      "evidence_hashes": [
+        "sha256:45d3c49e9f0bed2421a89cd22f208587bc24a5e27df8a1f254e0c3747106980d",
+        "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c",
+        "sha256:af10f1d1213e7e97373e06d683cfe763eaa49c48a15dd24bb5df190e6850750f"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        2,
+        1
+      ],
+      "original_axis_min_corner_bound_mm": 1.5811386926476023,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_suction",
+      "voxel": [
+        7,
+        93,
+        86
+      ]
+    },
+    {
+      "blocker_voxel": [
+        7,
+        93,
+        86
+      ],
+      "column_index": 45,
+      "evidence_hashes": [
+        "sha256:45d3c49e9f0bed2421a89cd22f208587bc24a5e27df8a1f254e0c3747106980d",
+        "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c",
+        "sha256:af10f1d1213e7e97373e06d683cfe763eaa49c48a15dd24bb5df190e6850750f"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        2,
+        1
+      ],
+      "original_axis_min_corner_bound_mm": 1.5811386926476023,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        7,
+        93,
+        86
+      ]
+    },
+    {
+      "blocker_voxel": [
+        7,
+        94,
+        84
+      ],
+      "column_index": 46,
+      "evidence_hashes": [
+        "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        3,
+        -1
+      ],
+      "original_axis_min_corner_bound_mm": 1.5811386926476159,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_suction",
+      "voxel": [
+        7,
+        94,
+        84
+      ]
+    },
+    {
+      "blocker_voxel": [
+        7,
+        94,
+        84
+      ],
+      "column_index": 46,
+      "evidence_hashes": [
+        "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        3,
+        -1
+      ],
+      "original_axis_min_corner_bound_mm": 1.5811386926476159,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        7,
+        94,
+        84
+      ]
+    },
+    {
+      "blocker_voxel": [
+        7,
+        94,
+        86
+      ],
+      "column_index": 47,
+      "evidence_hashes": [
+        "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        3,
+        1
+      ],
+      "original_axis_min_corner_bound_mm": 1.5811386926476023,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_suction",
+      "voxel": [
+        7,
+        94,
+        86
+      ]
+    },
+    {
+      "blocker_voxel": [
+        7,
+        94,
+        86
+      ],
+      "column_index": 47,
+      "evidence_hashes": [
+        "sha256:614fe5f98268d4d74e32bbbcba2634603f30199a9ba151c534ee0dafbb769b7c"
+      ],
+      "family": "obstruction_opening",
+      "offset_source_voxels": [
+        3,
+        1
+      ],
+      "original_axis_min_corner_bound_mm": 1.5811386926476023,
+      "proposal_id": null,
+      "public_nominal_priority": false,
+      "reason": "OBSTRUCTION_SELECTION_CAP",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        7,
+        94,
+        86
+      ]
+    }
+  ],
+  "optimizer_attempts": 0,
+  "original_negative_prefix_closed": true,
+  "original_task_state_unchanged": true,
+  "planned_SELECT_denominator": 2,
+  "prefix_exact": true,
+  "prefix_return": -26.381397663689913,
+  "private_reference_reads": 0,
+  "prospective_model_hash": "sha256:74919f2e547d265dad365503bfcb977434167e3c30bdd6eb33fc30cf39c274b1",
+  "prospective_rule_hash": "sha256:ca22c60faa9dc90e7b45612745ed8673d72a056ba836e3ade12f856eaf81c578",
+  "release_sha256": "7c0d91b63c5922285976660ffc4d9ac2d7377ab8a8147ec39b021eb64fc80db7",
+  "role": "SELECT",
+  "sampled_first_blockers": [
+    [
+      2,
+      87,
+      82
+    ],
+    [
+      3,
+      86,
+      85
+    ],
+    [
+      3,
+      86,
+      86
+    ],
+    [
+      3,
+      92,
+      80
+    ],
+    [
+      3,
+      93,
+      80
+    ],
+    [
+      4,
+      88,
+      82
+    ],
+    [
+      4,
+      88,
+      83
+    ],
+    [
+      4,
+      89,
+      82
+    ],
+    [
+      4,
+      95,
+      82
+    ],
+    [
+      4,
+      95,
+      88
+    ],
+    [
+      5,
+      87,
+      84
+    ],
+    [
+      5,
+      87,
+      85
+    ],
+    [
+      5,
+      87,
+      86
+    ],
+    [
+      5,
+      88,
+      84
+    ],
+    [
+      5,
+      88,
+      86
+    ],
+    [
+      5,
+      92,
+      81
+    ],
+    [
+      5,
+      92,
+      89
+    ],
+    [
+      5,
+      95,
+      87
+    ],
+    [
+      5,
+      96,
+      84
+    ],
+    [
+      6,
+      90,
+      83
+    ],
+    [
+      6,
+      90,
+      84
+    ],
+    [
+      6,
+      90,
+      88
+    ],
+    [
+      6,
+      92,
+      88
+    ],
+    [
+      6,
+      93,
+      88
+    ],
+    [
+      6,
+      94,
+      83
+    ],
+    [
+      6,
+      94,
+      87
+    ],
+    [
+      6,
+      94,
+      88
+    ],
+    [
+      6,
+      95,
+      84
+    ],
+    [
+      6,
+      95,
+      86
+    ],
+    [
+      7,
+      92,
+      85
+    ],
+    [
+      7,
+      92,
+      86
+    ],
+    [
+      7,
+      93,
+      84
+    ],
+    [
+      7,
+      93,
+      86
+    ],
+    [
+      7,
+      94,
+      84
+    ],
+    [
+      7,
+      94,
+      86
+    ]
+  ],
+  "scope": "unselected negative old prefix and <=3 prospective one-prep diagnostic branches; no accepted complete route",
+  "status": "complete_prospective_residual_frontier_diagnostic",
+  "subject": "ReMIND-013",
+  "updates": 0,
+  "wall_seconds": 91.03108591702767,
+  "world_equal": true
+}

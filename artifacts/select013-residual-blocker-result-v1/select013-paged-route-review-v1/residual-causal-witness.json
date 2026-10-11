@@ -1,0 +1,1276 @@
+{
+  "branch_effects": [
+    {
+      "affected_first_failure_sets": [
+        {
+          "after": [
+            [
+              3,
+              92,
+              80
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-00/ray-021.json",
+            "sha256": "c2b82e58cd9c973639a739164a2db0f35e7ddf88fbe8212f7a14c47b8ccea8a8"
+          },
+          "before": [
+            [
+              4,
+              89,
+              82
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-021.json",
+            "sha256": "add843660369137a0f0b666f285a9b1ffa83f277edb754d4bb5f69d9207394a0"
+          },
+          "family": "exposed_opening",
+          "ray": 21
+        },
+        {
+          "after": [
+            [
+              3,
+              92,
+              80
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-00/ray-022.json",
+            "sha256": "df9fdf7b1bbcd948e13ef00ab8b942fa6ec78b1841b6caebfda0c2344083d82c"
+          },
+          "before": [
+            [
+              4,
+              89,
+              82
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-022.json",
+            "sha256": "ac258907b3851d1077a82e947c4a0418f63f020f96eac64c0518077596852d29"
+          },
+          "family": "proximal_nominal",
+          "ray": 22
+        },
+        {
+          "after": [
+            [
+              3,
+              92,
+              80
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-00/ray-023.json",
+            "sha256": "91a906d34787f2ca5107cc73b9682384299c2f6acfd9cf839eb41e6dd246fff5"
+          },
+          "before": [
+            [
+              4,
+              89,
+              82
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-023.json",
+            "sha256": "2cb9737e6592594d014e009cccfa33a764a51fd8a9a932895f542f52dbb5f609"
+          },
+          "family": "distal_nominal",
+          "ray": 23
+        },
+        {
+          "after": [
+            [
+              4,
+              88,
+              83
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-00/ray-030.json",
+            "sha256": "05916349209d1c0be478cd6fc6c9ecac1f66f958f3e0933eee6db78b76799516"
+          },
+          "before": [
+            [
+              4,
+              88,
+              83
+            ],
+            [
+              4,
+              89,
+              82
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-030.json",
+            "sha256": "efe0e4b411957a1f44ec36133de680f82f75fbcdf4d703a796c7e07f64cec970"
+          },
+          "family": "exposed_opening",
+          "ray": 30
+        },
+        {
+          "after": [
+            [
+              4,
+              88,
+              83
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-00/ray-031.json",
+            "sha256": "1d1e9c47ae6aa5feb6f14cb3a345ff88b16b9cb42709e6c9ea5808ac3139cc87"
+          },
+          "before": [
+            [
+              4,
+              88,
+              83
+            ],
+            [
+              4,
+              89,
+              82
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-031.json",
+            "sha256": "b2d12611663dd8316e3892b66a81cb5523b44912c8a78bfa74a0933e21671b19"
+          },
+          "family": "proximal_nominal",
+          "ray": 31
+        },
+        {
+          "after": [
+            [
+              4,
+              88,
+              83
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-00/ray-032.json",
+            "sha256": "371c7bd015c7a4ad29fa433f9c405ef5ffb009a9ece4aadfc123bfde1dac48ba"
+          },
+          "before": [
+            [
+              4,
+              88,
+              83
+            ],
+            [
+              4,
+              89,
+              82
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-032.json",
+            "sha256": "15cabe9cf6f12b8b38689355e524724fbcf8c7499d0cee6c2d8d0646e8d35737"
+          },
+          "family": "distal_nominal",
+          "ray": 32
+        },
+        {
+          "after": [
+            [
+              3,
+              92,
+              80
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-00/ray-085.json",
+            "sha256": "6ff6a653d2dee91d42e3c65d072d3b38354e112e6bb3cd40614441a3f9de2435"
+          },
+          "before": [
+            [
+              4,
+              89,
+              82
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-085.json",
+            "sha256": "51da99c4646ff73922733fd6618d9fe7d5a8545cf74f1a963bca14e89a4ac64c"
+          },
+          "family": "intermediate_opening",
+          "ray": 85
+        },
+        {
+          "after": [
+            [
+              4,
+              88,
+              82
+            ],
+            [
+              4,
+              88,
+              83
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-00/ray-088.json",
+            "sha256": "2f52b39c854381964a08b70cbfd2fa3bb748089622ae6c54b20027f5ab4e6b09"
+          },
+          "before": [
+            [
+              4,
+              88,
+              82
+            ],
+            [
+              4,
+              88,
+              83
+            ],
+            [
+              4,
+              89,
+              82
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-088.json",
+            "sha256": "f49ed4ae1ddbb05929a1597f35a39b64fff76c9deeeb2eb8dad8d18a8bb07282"
+          },
+          "family": "intermediate_opening",
+          "ray": 88
+        },
+        {
+          "after": [
+            [
+              3,
+              92,
+              80
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-00/ray-107.json",
+            "sha256": "859e9264231e882524864375d632f4f221dad708e4cc0e080746d236fbb8c9c5"
+          },
+          "before": [
+            [
+              4,
+              89,
+              82
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-107.json",
+            "sha256": "58a56fd478446a4cbd3f2df46267789b3427fd9bf8feda7c8241c9e34a236ae6"
+          },
+          "family": "tool_footprint_opening",
+          "ray": 107
+        }
+      ],
+      "branch": 0,
+      "removed": [
+        [
+          4,
+          89,
+          82
+        ]
+      ]
+    },
+    {
+      "affected_first_failure_sets": [
+        {
+          "after": [
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-01/ray-006.json",
+            "sha256": "5b79f7f656663ff64b07c9eadee6e21b21d5fc5d7ad8426626cd9cfd1768d705"
+          },
+          "before": [
+            [
+              5,
+              88,
+              84
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-006.json",
+            "sha256": "df63ea44415f9d08490a13c1f6075b7ebd8b01961f401744c848522a77c1fa3c"
+          },
+          "family": "exposed_opening",
+          "ray": 6
+        },
+        {
+          "after": [
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-01/ray-007.json",
+            "sha256": "a808f236822b91cb14dbd335d9ca1ff6986907a079ff317e06ee761a61274141"
+          },
+          "before": [
+            [
+              5,
+              88,
+              84
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-007.json",
+            "sha256": "62e79fec5a05138718f95cac7ba87d85ccb151907de1708d231e9fcd27f05640"
+          },
+          "family": "proximal_nominal",
+          "ray": 7
+        },
+        {
+          "after": [
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-01/ray-008.json",
+            "sha256": "d823052351f70d051b3d57b7c6dac29880c642820a177629350f358a9e829e57"
+          },
+          "before": [
+            [
+              5,
+              88,
+              84
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-008.json",
+            "sha256": "4c2142569f5212693ec1c6bba601379ac84f47891af3fd6e89431ff57ea0be66"
+          },
+          "family": "distal_nominal",
+          "ray": 8
+        },
+        {
+          "after": [
+            [
+              5,
+              87,
+              84
+            ],
+            [
+              5,
+              87,
+              85
+            ],
+            [
+              5,
+              87,
+              86
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-01/ray-055.json",
+            "sha256": "31a86be82add586ad734fa708e6fc585a7078482dc83c75f0abebe83be88dd10"
+          },
+          "before": [
+            [
+              5,
+              87,
+              84
+            ],
+            [
+              5,
+              87,
+              85
+            ],
+            [
+              5,
+              87,
+              86
+            ],
+            [
+              5,
+              88,
+              84
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-055.json",
+            "sha256": "fde289bfeb688978481841e257eec3bad9a5a9a868fb0eca52554d1badd7ce3e"
+          },
+          "family": "proximal_nominal",
+          "ray": 55
+        },
+        {
+          "after": [
+            [
+              5,
+              87,
+              85
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-01/ray-056.json",
+            "sha256": "64ba87171776d171daa52cefe5f5327617ef4d3174e78b177011b99e12c94dfa"
+          },
+          "before": [
+            [
+              5,
+              87,
+              85
+            ],
+            [
+              5,
+              88,
+              84
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-056.json",
+            "sha256": "fb60b5c5d9bb635e7e3f7949c5764df951791cc5d34d34381946c29fbc943496"
+          },
+          "family": "distal_nominal",
+          "ray": 56
+        },
+        {
+          "after": [
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-01/ray-080.json",
+            "sha256": "22fe30a89111c6b25c1b6666afe9c92ebc2e5527706f7b9a71c3ed778e66acad"
+          },
+          "before": [
+            [
+              5,
+              88,
+              84
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-080.json",
+            "sha256": "cb50fe67e88b3c30c2d221add0d9ad690b65cb8a9454677269c66ba4a848ff93"
+          },
+          "family": "intermediate_opening",
+          "ray": 80
+        },
+        {
+          "after": [
+            [
+              5,
+              87,
+              85
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-01/ray-096.json",
+            "sha256": "3e8974f4da300553b550efe5a0b976d20044265534dbd89b94474f00081ce8d8"
+          },
+          "before": [
+            [
+              5,
+              87,
+              85
+            ],
+            [
+              5,
+              88,
+              84
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-096.json",
+            "sha256": "7ce952a9a0ff8092f238cab63dbcc8dcfb620f1da544b7fd6d0c2eed1fe65ede"
+          },
+          "family": "intermediate_opening",
+          "ray": 96
+        }
+      ],
+      "branch": 1,
+      "removed": [
+        [
+          5,
+          88,
+          84
+        ]
+      ]
+    },
+    {
+      "affected_first_failure_sets": [
+        {
+          "after": [
+            [
+              5,
+              88,
+              84
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-02/ray-006.json",
+            "sha256": "a344c8b711bb46d19ac8c4e84aff1f354001aea10e2d714b0e8fc8da4b8c613f"
+          },
+          "before": [
+            [
+              5,
+              88,
+              84
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-006.json",
+            "sha256": "df63ea44415f9d08490a13c1f6075b7ebd8b01961f401744c848522a77c1fa3c"
+          },
+          "family": "exposed_opening",
+          "ray": 6
+        },
+        {
+          "after": [
+            [
+              5,
+              88,
+              84
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-02/ray-007.json",
+            "sha256": "58f9601faa2d870e043b0c92dc6f2780008ce6056e03e24beb6d92b59f4f5745"
+          },
+          "before": [
+            [
+              5,
+              88,
+              84
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-007.json",
+            "sha256": "62e79fec5a05138718f95cac7ba87d85ccb151907de1708d231e9fcd27f05640"
+          },
+          "family": "proximal_nominal",
+          "ray": 7
+        },
+        {
+          "after": [
+            [
+              5,
+              88,
+              84
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-02/ray-008.json",
+            "sha256": "0b6bd09a56934fc0392fafe1be817572d151e999a510aeb670009c7b21f10519"
+          },
+          "before": [
+            [
+              5,
+              88,
+              84
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-008.json",
+            "sha256": "4c2142569f5212693ec1c6bba601379ac84f47891af3fd6e89431ff57ea0be66"
+          },
+          "family": "distal_nominal",
+          "ray": 8
+        },
+        {
+          "after": [],
+          "after_feasible": true,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-02/ray-036.json",
+            "sha256": "f6cb688977239e1e291147837fac5cdc7817e65faf439ca659276759a3042d9c"
+          },
+          "before": [
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-036.json",
+            "sha256": "d1e09a819e4ea91be6d7f623767f528257caa1ad887ac75d41dbecdc383ac95c"
+          },
+          "family": "exposed_opening",
+          "ray": 36
+        },
+        {
+          "after": [
+            [
+              6,
+              88,
+              86
+            ],
+            [
+              6,
+              88,
+              87
+            ],
+            [
+              6,
+              88,
+              88
+            ],
+            [
+              6,
+              89,
+              88
+            ],
+            [
+              6,
+              90,
+              88
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-02/ray-037.json",
+            "sha256": "e0379958d7d6d4bd20a18afb6b298ab746147ffb1f0872a436fdd333a97173b3"
+          },
+          "before": [
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-037.json",
+            "sha256": "3b4095cefd9ad759101732cdefac15fdc1a4e76a6a3a1be8d6d726b0d6f121dc"
+          },
+          "family": "proximal_nominal",
+          "ray": 37
+        },
+        {
+          "after": [
+            [
+              6,
+              88,
+              87
+            ],
+            [
+              6,
+              89,
+              88
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-02/ray-038.json",
+            "sha256": "9aaa396de4c95b63224e8d2889fe7093216c7e745fc5c81cb257597dc0c9f8e3"
+          },
+          "before": [
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-038.json",
+            "sha256": "edbf27d7270a0d8137df095b86538ecd7b5ffe7768145ff9cc903aaf7b8290de"
+          },
+          "family": "distal_nominal",
+          "ray": 38
+        },
+        {
+          "after": [
+            [
+              5,
+              87,
+              84
+            ],
+            [
+              5,
+              87,
+              85
+            ],
+            [
+              5,
+              87,
+              86
+            ],
+            [
+              5,
+              88,
+              84
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-02/ray-055.json",
+            "sha256": "8db1c5f9cdde6e175f6835702a82641a3848d5b12d29ed28a800cd73696a91d9"
+          },
+          "before": [
+            [
+              5,
+              87,
+              84
+            ],
+            [
+              5,
+              87,
+              85
+            ],
+            [
+              5,
+              87,
+              86
+            ],
+            [
+              5,
+              88,
+              84
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-055.json",
+            "sha256": "fde289bfeb688978481841e257eec3bad9a5a9a868fb0eca52554d1badd7ce3e"
+          },
+          "family": "proximal_nominal",
+          "ray": 55
+        },
+        {
+          "after": [
+            [
+              5,
+              87,
+              85
+            ],
+            [
+              5,
+              88,
+              84
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-02/ray-056.json",
+            "sha256": "42dc330d40af7ffbe830016f1fbbaf97f45833839804dbd770bd256ef9816c0d"
+          },
+          "before": [
+            [
+              5,
+              87,
+              85
+            ],
+            [
+              5,
+              88,
+              84
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-056.json",
+            "sha256": "fb60b5c5d9bb635e7e3f7949c5764df951791cc5d34d34381946c29fbc943496"
+          },
+          "family": "distal_nominal",
+          "ray": 56
+        },
+        {
+          "after": [
+            [
+              5,
+              88,
+              84
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-02/ray-080.json",
+            "sha256": "5d7336f5ecc924d6560ebd18d7e7336f21e3f671da5799ef55d9024bb6c76e6b"
+          },
+          "before": [
+            [
+              5,
+              88,
+              84
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-080.json",
+            "sha256": "cb50fe67e88b3c30c2d221add0d9ad690b65cb8a9454677269c66ba4a848ff93"
+          },
+          "family": "intermediate_opening",
+          "ray": 80
+        },
+        {
+          "after": [
+            [
+              6,
+              88,
+              87
+            ],
+            [
+              6,
+              89,
+              88
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-02/ray-090.json",
+            "sha256": "c605ee9b76f3c71453f178ffbb283d32f250c458aa39b5b8e5ebd0085c59220e"
+          },
+          "before": [
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-090.json",
+            "sha256": "52ef447cf8e268ae7a1c5b5aa74cf8080871ac38c6b6c4c593ab4758079d46a0"
+          },
+          "family": "intermediate_opening",
+          "ray": 90
+        },
+        {
+          "after": [
+            [
+              5,
+              87,
+              85
+            ],
+            [
+              5,
+              88,
+              84
+            ]
+          ],
+          "after_feasible": false,
+          "after_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/branch-02/ray-096.json",
+            "sha256": "7c5324b509a474b4b3c8f6bed757c792f01fc1f19c4e7e1e6f7fd950d8239f56"
+          },
+          "before": [
+            [
+              5,
+              87,
+              85
+            ],
+            [
+              5,
+              88,
+              84
+            ],
+            [
+              5,
+              88,
+              86
+            ]
+          ],
+          "before_source": {
+            "path": "build/select013-residual-blocker-v1/attempt-01/prospective/base-ray-096.json",
+            "sha256": "7ce952a9a0ff8092f238cab63dbcc8dcfb620f1da544b7fd6d0c2eed1fe65ede"
+          },
+          "family": "intermediate_opening",
+          "ray": 96
+        }
+      ],
+      "branch": 2,
+      "removed": [
+        [
+          5,
+          88,
+          86
+        ]
+      ]
+    }
+  ],
+  "old_radial_gate": [
+    {
+      "action_id": null,
+      "blocker_voxel": [
+        4,
+        89,
+        82
+      ],
+      "column_index": 20,
+      "evidence_hashes": [
+        "sha256:313596df48d4a092caca55585e6661e850f96ca82f87550e7e8dd8a7f07310c1",
+        "sha256:32444d51c71a56e8fe9aeacc59bbcc2551b663fc267f09e6f6672a9fc2902046",
+        "sha256:586bf68a1eee38147ead55861987fe036a9de6d4c8f6b3fa0f9640243ee1c81c",
+        "sha256:791cfaecd69ca32891a8d6a2df08f0c68936c003b33a27afe1ac25c3fe164882",
+        "sha256:7de7a7c3e8d8c62a9cbf64c1caad0584e870fd74534d09875d47574f1925c5db",
+        "sha256:80e34d62b140a0f8972cc22b0c13a1019f603a3e99d65130de13d038cbd31792",
+        "sha256:8615a307b078caf413bcb72d7bb63ebeedc97d7713a77a69e7c99b6dca478514",
+        "sha256:9a7f7d6a2d2baf25d0de19fe4a2f708a06b75f9a9973b983bebe3cde6a46f51e",
+        "sha256:9b734c7e5dd32782b657d1577331c4161fd042537cfdd5aa9080d91a2cd1e3c6"
+      ],
+      "family": "obstruction_opening",
+      "feasible": false,
+      "offset_source_voxels": [
+        -2,
+        -3
+      ],
+      "original_axis_min_corner_bound_mm": 1.581138692647618,
+      "proposal_id": null,
+      "proposal_reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+      "public_nominal_priority": false,
+      "reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+      "tool_id": "generic_suction",
+      "verification": "PROVIDER_DISPOSITION",
+      "voxel": [
+        4,
+        89,
+        82
+      ]
+    },
+    {
+      "action_id": null,
+      "blocker_voxel": [
+        4,
+        89,
+        82
+      ],
+      "column_index": 20,
+      "evidence_hashes": [
+        "sha256:313596df48d4a092caca55585e6661e850f96ca82f87550e7e8dd8a7f07310c1",
+        "sha256:32444d51c71a56e8fe9aeacc59bbcc2551b663fc267f09e6f6672a9fc2902046",
+        "sha256:586bf68a1eee38147ead55861987fe036a9de6d4c8f6b3fa0f9640243ee1c81c",
+        "sha256:791cfaecd69ca32891a8d6a2df08f0c68936c003b33a27afe1ac25c3fe164882",
+        "sha256:7de7a7c3e8d8c62a9cbf64c1caad0584e870fd74534d09875d47574f1925c5db",
+        "sha256:80e34d62b140a0f8972cc22b0c13a1019f603a3e99d65130de13d038cbd31792",
+        "sha256:8615a307b078caf413bcb72d7bb63ebeedc97d7713a77a69e7c99b6dca478514",
+        "sha256:9a7f7d6a2d2baf25d0de19fe4a2f708a06b75f9a9973b983bebe3cde6a46f51e",
+        "sha256:9b734c7e5dd32782b657d1577331c4161fd042537cfdd5aa9080d91a2cd1e3c6"
+      ],
+      "family": "obstruction_opening",
+      "feasible": false,
+      "offset_source_voxels": [
+        -2,
+        -3
+      ],
+      "original_axis_min_corner_bound_mm": 1.581138692647618,
+      "proposal_id": null,
+      "proposal_reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+      "public_nominal_priority": false,
+      "reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+      "tool_id": "generic_aspirator",
+      "verification": "PROVIDER_DISPOSITION",
+      "voxel": [
+        4,
+        89,
+        82
+      ]
+    },
+    {
+      "action_id": null,
+      "blocker_voxel": [
+        5,
+        88,
+        84
+      ],
+      "column_index": 26,
+      "evidence_hashes": [
+        "sha256:658aaa77183524f40d1e8456fb4b3f57a31772a83c0b4ba844c32d631b2b92c5",
+        "sha256:7b50eb5efe7aa1696ed7f63cc1cbdb7dc9fb340b635c5a0cb6f881c751eb10de",
+        "sha256:8f077d86c280b55947b7e721f72544b3727f641f63f01d8cf8058c7aff196e0e",
+        "sha256:937b84f65de39dc6ab93aa89e79ebe3414a0de7513e15b8e60e271891ff07c12",
+        "sha256:9d06727430dbcfa075b673ece28b65631002d60a608424bc566e7342eeaa8fef",
+        "sha256:ac44c1c2701e35d648e8adc524b3f80ad9e1348026d51c5bbd93c0fa54bef8d0",
+        "sha256:f4a74e3cb1bcff1e314b28ce2e359c781f1f818bf8442409934a3d01cababe56"
+      ],
+      "family": "obstruction_opening",
+      "feasible": false,
+      "offset_source_voxels": [
+        -3,
+        -1
+      ],
+      "original_axis_min_corner_bound_mm": 1.5811386926476152,
+      "proposal_id": null,
+      "proposal_reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+      "public_nominal_priority": false,
+      "reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+      "tool_id": "generic_suction",
+      "verification": "PROVIDER_DISPOSITION",
+      "voxel": [
+        5,
+        88,
+        84
+      ]
+    },
+    {
+      "action_id": null,
+      "blocker_voxel": [
+        5,
+        88,
+        84
+      ],
+      "column_index": 26,
+      "evidence_hashes": [
+        "sha256:658aaa77183524f40d1e8456fb4b3f57a31772a83c0b4ba844c32d631b2b92c5",
+        "sha256:7b50eb5efe7aa1696ed7f63cc1cbdb7dc9fb340b635c5a0cb6f881c751eb10de",
+        "sha256:8f077d86c280b55947b7e721f72544b3727f641f63f01d8cf8058c7aff196e0e",
+        "sha256:937b84f65de39dc6ab93aa89e79ebe3414a0de7513e15b8e60e271891ff07c12",
+        "sha256:9d06727430dbcfa075b673ece28b65631002d60a608424bc566e7342eeaa8fef",
+        "sha256:ac44c1c2701e35d648e8adc524b3f80ad9e1348026d51c5bbd93c0fa54bef8d0",
+        "sha256:f4a74e3cb1bcff1e314b28ce2e359c781f1f818bf8442409934a3d01cababe56"
+      ],
+      "family": "obstruction_opening",
+      "feasible": false,
+      "offset_source_voxels": [
+        -3,
+        -1
+      ],
+      "original_axis_min_corner_bound_mm": 1.5811386926476152,
+      "proposal_id": null,
+      "proposal_reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+      "public_nominal_priority": false,
+      "reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+      "tool_id": "generic_aspirator",
+      "verification": "PROVIDER_DISPOSITION",
+      "voxel": [
+        5,
+        88,
+        84
+      ]
+    },
+    {
+      "action_id": null,
+      "blocker_voxel": [
+        5,
+        88,
+        86
+      ],
+      "column_index": 27,
+      "evidence_hashes": [
+        "sha256:658aaa77183524f40d1e8456fb4b3f57a31772a83c0b4ba844c32d631b2b92c5",
+        "sha256:7b50eb5efe7aa1696ed7f63cc1cbdb7dc9fb340b635c5a0cb6f881c751eb10de",
+        "sha256:8f077d86c280b55947b7e721f72544b3727f641f63f01d8cf8058c7aff196e0e",
+        "sha256:937b84f65de39dc6ab93aa89e79ebe3414a0de7513e15b8e60e271891ff07c12",
+        "sha256:9d06727430dbcfa075b673ece28b65631002d60a608424bc566e7342eeaa8fef",
+        "sha256:ac44c1c2701e35d648e8adc524b3f80ad9e1348026d51c5bbd93c0fa54bef8d0",
+        "sha256:ce981239ca97e4ac6c1a5457c2d2757bc65134ab51c071b35a39f8a7caf2a46b",
+        "sha256:d232b39c8a47dea8d9d449668c05f6601adda7a4a0f52ddf1b085058cde02dd0",
+        "sha256:f0c969de79a20540117e92428f8b9f91521aca9a58d4187615f0630fb24daddb",
+        "sha256:f4a74e3cb1bcff1e314b28ce2e359c781f1f818bf8442409934a3d01cababe56",
+        "sha256:fdc3aee58a09ee6a68d66e9fc08fe73284f7bbdc0a06278d59f53f7dc5123bdb"
+      ],
+      "family": "obstruction_opening",
+      "feasible": false,
+      "offset_source_voxels": [
+        -3,
+        1
+      ],
+      "original_axis_min_corner_bound_mm": 1.5811386926476019,
+      "proposal_id": null,
+      "proposal_reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+      "public_nominal_priority": false,
+      "reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+      "tool_id": "generic_suction",
+      "verification": "PROVIDER_DISPOSITION",
+      "voxel": [
+        5,
+        88,
+        86
+      ]
+    },
+    {
+      "action_id": null,
+      "blocker_voxel": [
+        5,
+        88,
+        86
+      ],
+      "column_index": 27,
+      "evidence_hashes": [
+        "sha256:658aaa77183524f40d1e8456fb4b3f57a31772a83c0b4ba844c32d631b2b92c5",
+        "sha256:7b50eb5efe7aa1696ed7f63cc1cbdb7dc9fb340b635c5a0cb6f881c751eb10de",
+        "sha256:8f077d86c280b55947b7e721f72544b3727f641f63f01d8cf8058c7aff196e0e",
+        "sha256:937b84f65de39dc6ab93aa89e79ebe3414a0de7513e15b8e60e271891ff07c12",
+        "sha256:9d06727430dbcfa075b673ece28b65631002d60a608424bc566e7342eeaa8fef",
+        "sha256:ac44c1c2701e35d648e8adc524b3f80ad9e1348026d51c5bbd93c0fa54bef8d0",
+        "sha256:ce981239ca97e4ac6c1a5457c2d2757bc65134ab51c071b35a39f8a7caf2a46b",
+        "sha256:d232b39c8a47dea8d9d449668c05f6601adda7a4a0f52ddf1b085058cde02dd0",
+        "sha256:f0c969de79a20540117e92428f8b9f91521aca9a58d4187615f0630fb24daddb",
+        "sha256:f4a74e3cb1bcff1e314b28ce2e359c781f1f818bf8442409934a3d01cababe56",
+        "sha256:fdc3aee58a09ee6a68d66e9fc08fe73284f7bbdc0a06278d59f53f7dc5123bdb"
+      ],
+      "family": "obstruction_opening",
+      "feasible": false,
+      "offset_source_voxels": [
+        -3,
+        1
+      ],
+      "original_axis_min_corner_bound_mm": 1.5811386926476019,
+      "proposal_id": null,
+      "proposal_reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+      "public_nominal_priority": false,
+      "reason": "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED",
+      "tool_id": "generic_aspirator",
+      "verification": "PROVIDER_DISPOSITION",
+      "voxel": [
+        5,
+        88,
+        86
+      ]
+    }
+  ],
+  "result": {
+    "path": "build/select013-residual-blocker-v1/attempt-01/result.json",
+    "sha256": "532581e440afdf656c8a3f24ed730e30beba45470588f9e5a337932e97ffb12c"
+  },
+  "scope": "saved JSON projection only; no geometry rerun",
+  "unlock": {
+    "before_blockers": [
+      [
+        5,
+        88,
+        86
+      ]
+    ],
+    "executed": false,
+    "increment": {
+      "normal_removed_mm3": 0.9999999034194179,
+      "removed_indices_native": [
+        [
+          7,
+          89,
+          87
+        ]
+      ],
+      "reward": -0.2429999807038836,
+      "target_removed_mm3": 0.0
+    },
+    "newly_feasible": true,
+    "proposal": {
+      "column_index": 6,
+      "entry_mm": [
+        -59.878999999221016,
+        -12.88899999969404,
+        -20.278295443331558
+      ],
+      "family": "exposed_opening",
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "proposal_id": "nominal-cavity-e511b6add6a59cfede9599f5",
+      "tip_mm": [
+        -54.378999999221016,
+        -12.888999999667107,
+        -20.278295443331558
+      ],
+      "tool_id": "generic_suction",
+      "voxel": [
+        7,
+        89,
+        87
+      ]
+    }
+  }
+}
