@@ -1,0 +1,30 @@
+{
+  "automatic_retry": false,
+  "candidate_sha256": "674a9377dd020d25a20562fbbcf48d09ccf4d602b916ad69ca00c073fc9173c3",
+  "caps": {
+    "log_bytes": 131072,
+    "sampled_group_rss_bytes": 536870912,
+    "threads": 1,
+    "total_seconds": 20.0,
+    "worker_seconds": 16.0
+  },
+  "exit_code": null,
+  "peak_sampled_group_rss_bytes": 0,
+  "rss_samples": 0,
+  "runner_sha256": "0028ccab855d8aefc7fd20508252d53760ee306c5f3b1cfd2ac1275fdb5abce5",
+  "sampling_limit": "Brief peaks between samples may be missed.",
+  "source_bindings": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-ogden-shape-v1/SOURCE-READY.txt": "90c600917b4f432b2cd8f47beeed823218532e89ea7c0f47449c0764f6323ccf",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-ogden-shape-v1/baseline/mechanics_hbe_mesh.py": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-ogden-shape-v1/baseline/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-ogden-shape-v1/source.patch": "e907a7e2958dbadbc0e3a51112195a8dd962dfec9cb61faafe31c27650235a22",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-ogden-shape-v1/stage/scripts/mechanics_hbe_mesh.py": "72adfb67e50d07381cb1cf216beea1345ba466a4656314f57bc05fa49118f0fb",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-ogden-shape-v1/stage/scripts/mechanics_hbe_physics.py": "8e7e37564486bd34bc254726cd112086112baaaa2fa19435793e60630b1b13d2",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-ogden-shape-v1/stage/tests/test_hbe_ogden_shape.py": "e35e87ebbd1b08759b38e08f31c9e6ebd3759965e2f19c29cbca0852b4759fba",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/launchers/hbe_v5_ordinal9_continuation_v1.py": "8ea24abd2918bc36c289979e4ff15e1d7b0b5614d0ddfe14820254a7d81478b4",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+  },
+  "status": "reserved",
+  "test_sha256": "e35e87ebbd1b08759b38e08f31c9e6ebd3759965e2f19c29cbca0852b4759fba",
+  "version": "hbe-ogden-generated-supervision-v1"
+}

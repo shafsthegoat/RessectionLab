@@ -1,0 +1,27 @@
+{
+  "archive_reads": 0,
+  "combined_output_cap_bytes": 65536,
+  "elapsed_seconds": 0.0015195419546216726,
+  "input_after_sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a",
+  "input_before_sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a",
+  "input_path": "artifacts/hbe-v5-axial-calibration-result-v1/execution/fit.json",
+  "input_sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a",
+  "metrics_bytes": 6958,
+  "metrics_sha256": "e9305aea270dbae00ea8bd34557cd9c75427813a9bb609a312348bedf7d00e83",
+  "native_calls": 0,
+  "new_fits": 0,
+  "other_donor_reads": 0,
+  "schema": "hbe-saved-origin-reference-receipt-v1",
+  "self_peak_rss_bytes": 20955136,
+  "source_sha256": "995cdb4cf31a156e76ce8906762a16346b1f6a8828b9cca441b5cdb136f52ff2",
+  "status": "completed_saved_origin_arithmetic",
+  "thread_environment": {
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "torsion_reads": 0,
+  "wall_cap_seconds": 10
+}

@@ -1,0 +1,92 @@
+HBE shared Ogden shape extension: source preparation only
+
+Status: candidate source and generated controls; tests NOT RUN. No solve, fit,
+archive, measured curve, held donor, model weight or new dependency was opened.
+The storage allocation authorizes at most 1 MiB of source here, not execution.
+
+Concrete implementation
+The two staged existing scripts accept keyword-only ogden_alpha=2. The energy
+oracle uses singular values of the deformation gradient F and J=det(F)>0:
+  W_dev = (2*mu/alpha^2) * sum_i[(J^(-1/3)*lambda_i)^alpha - 1].
+Its unit is Pa; quadrature yields J. This is FEBio's one-term c1=2*mu, m1=alpha
+convention. The unchanged volumetric term is K/4*(Jbar^2-1-2*log(Jbar)), where
+K/mu=149/3 and Jbar is the reference-volume-weighted mean in each hex element.
+The general energy uses SVD/log/expm1, not FEBio eigenvalue or stress code.
+Nonrepresentable results refuse rather than clipping. Finite nonzero alpha is
+the arithmetic API domain; this is not an admissible tissue-parameter range.
+
+The alpha=2 branch retains the original literal energy arithmetic, XML text and
+record keys. Explicit nondefault deck requests change m1 only and add receipt
+fields declaring the parameter override and native_execution_released=false.
+Geometry, full bonding, load endpoints, solver settings, K:mu and all roles stay
+unchanged. The original v5 frame/material admissions are untouched: this source
+does not make old releases authorize another exponent or certify its numerics.
+
+Generated verification prepared
+The test uses only analytic 3x3 gradients and a one-cell rectangular mesh. It
+checks finite-difference energy derivatives against independently derived
+eigenbasis Piola stress, rotation invariance, repeated stretches, infinitesimal
+shear modulus, analytic homogeneous uniaxial/shear expressions, nonuniform cell
+Jbar versus pointwise bulk energy, linearity in mu, bad input/overflow refusal,
+and exact alpha=2 old/new energy/XML/metadata equality. Homogeneous formulas are
+oracle controls only; they cannot replace bonded-specimen equilibrium solves.
+Historical compatibility loads the exact two preserved baseline source files.
+Future native checks still need independent work/energy, balance, positive-J
+and relevant mesh/load-refinement evidence; old alpha=2 PASS does not cover them.
+
+Root-scheduled generated test command (NOT RUN by author)
+From repository root, with an external <=20 s, 512 MiB, one-attempt supervisor:
+  env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 \
+    VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 \
+    HBE_OGDEN_SOURCE_ROOT="$PWD/build/hbe-ogden-shape-v1/stage" \
+    HBE_OGDEN_BASELINE_ROOT="$PWD/build/hbe-ogden-shape-v1/baseline" \
+    .venv/bin/python -B -m pytest -q -p no:cacheprovider \
+    build/hbe-ogden-shape-v1/stage/tests/test_hbe_ogden_shape.py
+The test itself denies process/network entry calls. This command describes a
+payload, not a replacement supervisor or permission to execute now.
+
+Small next measured-model experiment, conditional on source/numerical review
+Use only the same already exposed HBE_01_03 DEVELOPMENT axial records (30 per
+mode), preserving signs, units, quadrature weights and zero-offset estimator.
+A shared alpha and shared positive mu add one shape parameter to the baseline;
+the separate 5.78046-ratio branch scales remain a diagnostic, not a new law.
+At each alpha, use the same bonded geometry and reference mu, then solve mu by
+the existing closed-form weighted least squares. This uses linear mu scaling
+at fixed K:mu; it is a one-dimensional profile, not a two-parameter optimizer.
+Audit the already saved origin/reference information without subtracting a
+force offset: stress-free hyperelasticity cannot explain a true preload.
+
+Proposed first profile domain: [-32,-0.5] union [0.5,32], with alpha=2 retained.
+These are explicit engineering bounds, not published specimen fits or a tissue
+prior. Both signs permit opposing compression/tension asymmetry. The gap keeps
+this first experiment away from the excluded zero-exponent limit and division
+conditioning. Magnitude 32 permits substantial shape changes over the declared
+15% loading while staying finite in the generated controls; actual local FE
+stretches can be larger, so finite energy/equilibrium cannot be presumed.
+Any boundary preference, failed solve or insufficient progress is inconclusive;
+no data-driven expansion of this domain is included.
+
+Proposed budget: at most 8 new distinct alpha profile evaluations, each exactly
+two axial branch solves, plus at most two fitted-mu axial confirmations (18
+native calls maximum). This is a bounded feasibility comparison, not a global
+optimum guarantee. Numerical verification/refinement must have its own explicit
+accounting or consume that cap; retries and expanded sweeps are not implicit.
+The scalar search rule, solver/storage limits and numerical acceptance are
+separate root-frozen prerequisites; no profile runner or fitting release is
+implemented or authorized by this patch. Reuse alpha=2 saved baseline only if
+source, geometry, boundary and coordinate identities are exactly unchanged.
+
+Interpretation limits
+Lower same-data residual would support a shared constitutive-shape explanation
+conditional on geometry, bonding and processing. It would remain post-hoc model
+adequacy on one DEVELOPMENT specimen, not independent measured validation.
+The prior poor fit and torsion format failure remain visible. No held responses
+or donor roles change. Processed ex-vivo force/displacement cannot establish
+living retraction/cutting mechanics, injury thresholds or patient properties.
+
+Primary model provenance already saved locally
+artifacts/febio-runtime-investigation-v1/model-source-FEBioMech__FEOgdenMaterial.cpp
+SHA256 9a4d8dd6aa45adcd8158864b8344567aa734cf912f47c9f7f7a5376c536dadc4
+FEBio commit 32ae206ff4881dfb54f62296cd1558e58ed9fcc6, DevStrainEnergyDensity.
+Measurement/model methods: https://doi.org/10.1007/s10237-023-01739-w
+No source fitted constants, priors or bounds are imported into this proposal.

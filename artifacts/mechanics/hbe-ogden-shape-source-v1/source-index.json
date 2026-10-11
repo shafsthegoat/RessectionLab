@@ -1,0 +1,49 @@
+{
+  "schema": "hbe-ogden-shape-source-proposal-v1",
+  "status": "source_ready_tests_unrun",
+  "execution_released": false,
+  "scientific_scope": "same exposed HBE_01_03 DEVELOPMENT specimen; no held-out validation",
+  "storage_reservation": {
+    "path": "build/storage-extension-v1/source-allocation-10.json",
+    "sha256": "637eb6b84f723fc5dfcb923731d573129e7698d35e905ea68f47f1dccb6042ba",
+    "reserved_bytes": 1048576
+  },
+  "payload_bytes": 169786,
+  "files": [
+    {
+      "path": "build/hbe-ogden-shape-v1/baseline/mechanics_hbe_physics.py",
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+      "size_bytes": 17656
+    },
+    {
+      "path": "build/hbe-ogden-shape-v1/baseline/mechanics_hbe_mesh.py",
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414",
+      "size_bytes": 48654
+    },
+    {
+      "path": "build/hbe-ogden-shape-v1/stage/scripts/mechanics_hbe_physics.py",
+      "sha256": "8e7e37564486bd34bc254726cd112086112baaaa2fa19435793e60630b1b13d2",
+      "size_bytes": 20546
+    },
+    {
+      "path": "build/hbe-ogden-shape-v1/stage/scripts/mechanics_hbe_mesh.py",
+      "sha256": "72adfb67e50d07381cb1cf216beea1345ba466a4656314f57bc05fa49118f0fb",
+      "size_bytes": 49390
+    },
+    {
+      "path": "build/hbe-ogden-shape-v1/stage/tests/test_hbe_ogden_shape.py",
+      "sha256": "e35e87ebbd1b08759b38e08f31c9e6ebd3759965e2f19c29cbca0852b4759fba",
+      "size_bytes": 9444
+    },
+    {
+      "path": "build/hbe-ogden-shape-v1/SOURCE-READY.txt",
+      "sha256": "90c600917b4f432b2cd8f47beeed823218532e89ea7c0f47449c0764f6323ccf",
+      "size_bytes": 6071
+    },
+    {
+      "path": "build/hbe-ogden-shape-v1/source.patch",
+      "sha256": "e907a7e2958dbadbc0e3a51112195a8dd962dfec9cb61faafe31c27650235a22",
+      "size_bytes": 18025
+    }
+  ]
+}

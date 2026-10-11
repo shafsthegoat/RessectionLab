@@ -1,0 +1,350 @@
+--- a/scripts/mechanics_hbe_physics.py
++++ b/scripts/mechanics_hbe_physics.py
+@@ -18,6 +18,55 @@
+ GAUSS = np.array(list(itertools.product((-1/math.sqrt(3), 1/math.sqrt(3)), repeat=3)))
+ SITES = np.vstack((GAUSS, SIGNS, np.zeros((1, 3))))
+ K_OVER_MU = 149/3
++
++
++def checked_ogden_alpha(value):
++    """Finite nonzero exponent; no inferred tissue range or alpha=0 limit."""
++    if isinstance(value, (bool, np.bool_)) or not isinstance(value, (int, float, np.integer, np.floating)):
++        raise ValueError("Finite nonzero scalar Ogden exponent required")
++    result = float(value)
++    if not math.isfinite(result) or result == 0:
++        raise ValueError("Finite nonzero scalar Ogden exponent required")
++    return result
++
++
++def ogden_isochoric_density(gradients, mu_Pa, *, ogden_alpha=2.):
++    """Independent spectral energy, Pa, at positive-J deformation gradients.
++
++    FEBio's one-term convention is c1=2*mu, m1=alpha. This function never
++    identifies parameters, supplies equilibrium, or claims material stability.
++    The literal alpha=2 arithmetic is retained for baseline compatibility.
++    """
++    alpha = checked_ogden_alpha(ogden_alpha)
++    mu = positive_finite(mu_Pa)
++    F = np.asarray(gradients, dtype=np.float64)
++    if F.ndim < 2 or F.shape[-2:] != (3, 3) or not np.isfinite(F).all():
++        raise ValueError("Finite 3 by 3 deformation gradients required")
++    J = np.linalg.det(F)
++    if np.any(J <= 0) or not np.isfinite(J).all():
++        raise ValueError("Positive finite deformation Jacobian required")
++    try:
++        with np.errstate(over='raise', divide='raise', invalid='raise'):
++            if alpha == 2.:
++                Ibar = np.sum(F**2, axis=(-1, -2))*J**(-2/3)
++                energy = mu/2*(Ibar-3)
++            else:
++                # SVD obtains principal stretches without differentiating
++                # eigenvectors, including repeated-stretch states.
++                stretches = np.linalg.svd(F, compute_uv=False)
++                if np.any(stretches <= 0) or not np.isfinite(stretches).all():
++                    raise ValueError("Positive finite principal stretches required")
++                log_bar = np.log(stretches)-np.log(J)[..., None]/3
++                # Sum(log_bar)=0 analytically. Remove its roundoff remainder,
++                # then expm1 avoids subtracting three near unity at small strain.
++                log_bar -= np.mean(log_bar, axis=-1, keepdims=True)
++                exponent = alpha*log_bar
++                energy = (2*mu/alpha**2)*np.sum(np.expm1(exponent), axis=-1)
++    except (FloatingPointError, np.linalg.LinAlgError, OverflowError, ZeroDivisionError) as error:
++        raise ValueError("Unrepresentable Ogden energy; no clipping") from error
++    if not np.isfinite(energy).all():
++        raise ValueError("Nonfinite Ogden energy")
++    return energy
+ 
+ 
+ def positive_finite(value):
+@@ -141,8 +190,9 @@
+     def rest_volume_m3(self):
+         return float(self._volumes.sum())
+ 
+-    def deformation(self, current_nodes_m, mu_Pa):
++    def deformation(self, current_nodes_m, mu_Pa, *, ogden_alpha=2.):
+         current = finite_array(current_nodes_m, self._nodes.shape)
++        alpha = checked_ogden_alpha(ogden_alpha)
+         mu = float(mu_Pa)
+         if not math.isfinite(mu) or mu <= 0:
+             raise ValueError("Positive finite stiffness required")
+@@ -153,15 +203,21 @@
+             raise ValueError("Nonpositive or nonfinite deformed Jacobian")
+         J = jacobians[:, :8]
+         Jbar = np.sum(J*self._weights, axis=1)/self._volumes
+-        Ibar = np.sum(gradients[:, :8]**2, axis=(-1, -2))*J**(-2/3)
+-        dev = mu/2*(Ibar-3)
++        if alpha == 2.:
++            Ibar = np.sum(gradients[:, :8]**2, axis=(-1, -2))*J**(-2/3)
++            dev = mu/2*(Ibar-3)
++        else:
++            dev = ogden_isochoric_density(gradients[:, :8], mu, ogden_alpha=alpha)
+         # FEBio three-field pressure uses the reference-volume-weighted cell J.
+         volumetric = K_OVER_MU*mu/4*(Jbar**2-1-2*np.log(Jbar))
+         energy = np.sum(dev*self._weights, axis=1)+self._volumes*volumetric
+         if not np.isfinite(energy).all():
+             raise ValueError("Nonfinite reconstructed energy")
+-        return {'minimum_sampled_J': float(jacobians.min()), 'cell_volume_ratios': Jbar,
+-                'energy_J': float(energy.sum()), 'cell_energy_J': energy}
++        result = {'minimum_sampled_J': float(jacobians.min()), 'cell_volume_ratios': Jbar,
++                  'energy_J': float(energy.sum()), 'cell_energy_J': energy}
++        if alpha != 2.:
++            result['ogden_alpha'] = alpha
++        return result
+ 
+     def probe_map(self, points_m):
+         """Rest-coordinate inverse map; ties use first canonical element ID."""
+@@ -199,7 +255,7 @@
+         displacement = finite_array(current_nodes_m, self._nodes.shape)-self._nodes
+         return np.array([np.asarray(weights) @ displacement[self._cells[index]] for index, weights in probe_map])
+ 
+-    def read_frame(self, current_nodes_m, raw_reactions_N, *, mu_Pa, branch, fraction):
++    def read_frame(self, current_nodes_m, raw_reactions_N, *, mu_Pa, branch, fraction, ogden_alpha=2.):
+         mu_Pa = positive_finite(mu_Pa)
+         current = finite_array(current_nodes_m, self._nodes.shape)
+         reaction = finite_array(raw_reactions_N, self._nodes.shape)
+@@ -225,7 +281,7 @@
+         boundary_error = float(np.max(np.linalg.norm(current[boundary]-prescribed[boundary], axis=1)))
+         free = np.array(sorted(set(range(len(current)))-set(boundary)), dtype=int)
+         free_reaction = float(np.max(np.linalg.norm(reaction[free], axis=1))) if len(free) else 0.
+-        result = self.deformation(current, mu_Pa)
++        result = self.deformation(current, mu_Pa, ogden_alpha=ogden_alpha)
+         result.update(fraction=float(fraction), input_coordinate=float(amount),
+                       applied_force_N=float(-reaction[top, 2].sum()),
+                       applied_torque_Nm=float(-moments[top, 2].sum()),
+--- a/scripts/mechanics_hbe_mesh.py
++++ b/scripts/mechanics_hbe_mesh.py
+@@ -350,10 +350,19 @@
+     return child
+ 
+ 
+-def specimen_deck(mesh, branch, steps, mu_Pa, protocol):
+-    """Return deterministic FEBio XML and loading metadata; never run FEBio."""
++def specimen_deck(mesh, branch, steps, mu_Pa, protocol, *, ogden_alpha=2.):
++    """Return deterministic FEBio XML; default exponent-2 bytes stay unchanged.
++
++    An explicit nondefault exponent is source preparation only, never an
++    amendment of the frozen protocol or authorization to solve its new deck.
++    """
+     if not math.isfinite(mu_Pa) or mu_Pa <= 0:
+         raise ValueError("Positive finite SI shear modulus required")
++    if (isinstance(ogden_alpha, (bool, np.bool_))
++            or not isinstance(ogden_alpha, (int, float, np.integer, np.floating))
++            or not math.isfinite(float(ogden_alpha)) or float(ogden_alpha) == 0):
++        raise ValueError("Finite nonzero scalar Ogden exponent required")
++    alpha = float(ogden_alpha)
+     X, cells = np.asarray(mesh["rest_nodes_m"], float), np.asarray(mesh["elements_hex8"])
+     determinants, _ = rest_jacobians(X, cells)
+     if np.any(determinants <= 0):
+@@ -381,7 +390,7 @@
+     material = _child(_child(root, "Material"), "material", id="1", name="specimen_material", type="Ogden")
+     for term in range(1, 7):
+         _child(material, f"c{term}", format(2*mu_Pa if term == 1 else 0, ".17g"))
+-        _child(material, f"m{term}", 2)
++        _child(material, f"m{term}", format(alpha, ".17g") if term == 1 and alpha != 2. else 2)
+     _child(material, "k", format(149*mu_Pa/3, ".17g")); _child(material, "pressure_model", 1)
+     mesh_xml = _child(root, "Mesh"); nodes = _child(mesh_xml, "Nodes", name="specimen_nodes")
+     for i, point in enumerate(X, 1):
+@@ -433,6 +442,9 @@
+         "restart_output":"runtime default DUMP_NEVER; solver command must not enable dump output",
+         "plot_output":"PLOT_NEVER", "load_controller_count":len(curves),
+         "min_residual_N2":residual, "deck_sha256":hashlib.sha256(xml.encode()).hexdigest()}
++    if alpha != 2.:
++        record.update(ogden_alpha=alpha, material_parameter_override=True,
++                      baseline_protocol_amended=False, native_execution_released=False)
+     return xml, record
+ 
+ 
+--- /dev/null
++++ b/tests/test_hbe_ogden_shape.py
+@@ -0,0 +1,191 @@
++"""Generated arithmetic/XML only; no measured inputs, solves or fitting.
++
++HBE_OGDEN_SOURCE_ROOT selects this ignored stage for its first controlled run.
++HBE_OGDEN_BASELINE_ROOT selects the exact preserved sources for byte regression.
++Ordinary canonical tests need no measured source and skip that historical test
++only when no independently pinned old-source directory was supplied.
++"""
++import hashlib
++import importlib.util
++import math
++import os
++from pathlib import Path
++import subprocess
++import xml.etree.ElementTree as ET
++
++import numpy as np
++import pytest
++
++ROOT=Path(__file__).resolve().parents[1]
++SOURCE=Path(os.environ.get('HBE_OGDEN_SOURCE_ROOT',ROOT))
++
++
++def load(name,path,expected=None):
++    raw=path.read_bytes()
++    if expected is not None:assert hashlib.sha256(raw).hexdigest()==expected
++    spec=importlib.util.spec_from_loader(name,loader=None,origin=str(path))
++    module=importlib.util.module_from_spec(spec);module.__file__=str(path)
++    exec(compile(raw,str(path),'exec'),module.__dict__)
++    return module
++
++
++p=load('ogden_shape_physics',SOURCE/'scripts/mechanics_hbe_physics.py')
++d=load('ogden_shape_deck',SOURCE/'scripts/mechanics_hbe_mesh.py')
++
++
++@pytest.fixture(autouse=True)
++def no_process_or_network(monkeypatch):
++    import socket
++    def forbidden(*args,**kwargs):raise AssertionError('Generated-only arithmetic/XML')
++    monkeypatch.setattr(subprocess,'Popen',forbidden)
++    for name in ('connect','connect_ex','bind','listen','accept','sendto'):
++        monkeypatch.setattr(socket.socket,name,forbidden)
++    monkeypatch.setattr(socket,'create_connection',forbidden)
++
++
++def hex_fixture(module=p):
++    X=np.array([[-.004,-.004,0],[.004,-.004,0],[.004,.004,0],[-.004,.004,0],
++                [-.004,-.004,.006],[.004,-.004,.006],[.004,.004,.006],[-.004,.004,.006]])
++    return X,module.HexMesh(X,[[1,2,3,4,5,6,7,8]],[5,6,7,8],[1,2,3,4],radius_m=.004,height_m=.006)
++
++
++def deck_fixture():
++    # Analytic rectangular cell; not an actual HBE specimen mesh or input file.
++    X,_=hex_fixture();cells=np.arange(1,9)[None,:]
++    faces=cells[0,d.HEX_FACES];boundaries={}
++    for name,rows in (('bottom',faces[:1]),('top',faces[1:2]),('side',faces[2:])):
++        boundaries[name]={'node_ids':sorted(set(rows.flat)),'faces_quad4':rows.tolist()}
++    mesh={'rest_nodes_m':X.tolist(),'elements_hex8':cells.tolist(),'boundaries':boundaries}
++    protocol={'geometry':{'radius_m':.004,'height_m':.006},
++        'loading':{'base_equal_pseudotime_steps':4,'fine_repeat_equal_pseudotime_steps':8,'branches':[
++            {'id':'compression','mode':'axial','strain_endpoint':-.15},
++            {'id':'tension','mode':'axial','strain_endpoint':.15}]},
++        'solver':{'symmetric_stiffness':1,'max_refs':15,'dtol':1e-8,'etol':1e-8,'rtol':1e-8}}
++    return mesh,protocol
++
++
++def analytic_piola(F,mu,alpha):
++    # Independent analytic stress via B eigenvectors; production energy uses SVD.
++    J=np.linalg.det(F);eigen,Q=np.linalg.eigh(F@F.T)
++    powers=(np.sqrt(eigen)*J**(-1/3))**alpha
++    kirchhoff=(2*mu/alpha)*(Q@np.diag(powers-np.mean(powers))@Q.T)
++    return kirchhoff@np.linalg.inv(F).T
++
++
++@pytest.mark.parametrize('alpha',[-32.,-8.,-.5,.5,2.,8.,32.])
++@pytest.mark.parametrize('F',[
++    np.eye(3),np.eye(3)*1.03,
++    np.diag([1.15,.93,1.02]),
++    np.array([[1.,.15,.04],[0.,1.,-.03],[0.,0.,1.]])])
++def test_energy_derivative_matches_independent_piola(alpha,F):
++    mu=1234.;expected=analytic_piola(F,mu,alpha);finite=np.zeros((3,3));step=1e-6
++    for i in range(3):
++        for j in range(3):
++            delta=np.zeros((3,3));delta[i,j]=step
++            finite[i,j]=(p.ogden_isochoric_density(F+delta,mu,ogden_alpha=alpha)
++                         -p.ogden_isochoric_density(F-delta,mu,ogden_alpha=alpha))/(2*step)
++    np.testing.assert_allclose(finite,expected,rtol=2e-6,atol=2e-6*mu)
++
++
++@pytest.mark.parametrize('alpha',[-32.,-8.,-.5,.5,2.,8.,32.])
++def test_rigid_zero_repeated_stretches_and_small_strain_shear(alpha):
++    angle=.37;Q=np.array([[math.cos(angle),-math.sin(angle),0],
++        [math.sin(angle),math.cos(angle),0],[0,0,1.]])
++    assert p.ogden_isochoric_density(Q,1000.,ogden_alpha=alpha)==pytest.approx(0,abs=1e-11)
++    assert p.ogden_isochoric_density(1.07*Q,1000.,ogden_alpha=alpha)==pytest.approx(0,abs=1e-11)
++    gamma=1e-4;F=np.eye(3);F[0,1]=gamma
++    energy=p.ogden_isochoric_density(F,1000.,ogden_alpha=alpha)
++    assert 2*energy/gamma**2==pytest.approx(1000.,rel=3e-6)
++    np.testing.assert_allclose(p.ogden_isochoric_density(Q@F,1000.,ogden_alpha=alpha),energy,rtol=3e-6,atol=1e-11)
++
++
++@pytest.mark.parametrize('alpha',[-8.,-.5,.5,2.,8.])
++def test_homogeneous_uniaxial_analytic_force_and_simple_shear(alpha):
++    mu=1000.;step=1e-6
++    for stretch in (.85,1.15):
++        def energy(lam):
++            return p.ogden_isochoric_density(np.diag([lam,lam**-.5,lam**-.5]),mu,ogden_alpha=alpha)
++        derivative=(energy(stretch+step)-energy(stretch-step))/(2*step)
++        expected=2*mu/alpha*(stretch**(alpha-1)-stretch**(-alpha/2-1))
++        assert derivative==pytest.approx(expected,rel=2e-6,abs=.002)
++    gamma=.13;F=np.eye(3);F[0,1]=gamma
++    q=math.asinh(gamma/2)
++    expected=8*mu/alpha**2*math.sinh(alpha*q/2)**2
++    assert p.ogden_isochoric_density(F,mu,ogden_alpha=alpha)==pytest.approx(expected,rel=2e-10)
++
++
++@pytest.mark.parametrize('alpha',[-8.,.5,8.])
++def test_nonuniform_cell_J_bulk_term_and_mu_scaling(alpha):
++    X,mesh=hex_fixture();moved=X.copy();moved[6]+=[.0007,.0002,.0001]
++    result=mesh.deformation(moved,1000.,ogden_alpha=alpha)
++    dev=0.;point_vol=0.;weights=[];Js=[]
++    for q in p.GAUSS:
++        step=1e-5
++        D=np.array([(p.shape_functions(q+np.eye(3)[i]*step)
++                     -p.shape_functions(q-np.eye(3)[i]*step))/(2*step) for i in range(3)]).T
++        A=X.T@D;F=moved.T@D@np.linalg.inv(A);w=np.linalg.det(A);J=np.linalg.det(F)
++        eig=np.linalg.eigvalsh(F.T@F);stretches=np.sqrt(eig)*J**(-1/3)
++        dev+=2*1000/alpha**2*(sum(stretches**alpha)-3)*w
++        point_vol+=p.K_OVER_MU*1000/4*(J*J-1-2*math.log(J))*w
++        weights.append(w);Js.append(J)
++    Jbar=sum(w*j for w,j in zip(weights,Js))/sum(weights)
++    expected=dev+sum(weights)*p.K_OVER_MU*1000/4*(Jbar*Jbar-1-2*math.log(Jbar))
++    assert result['energy_J']==pytest.approx(expected,rel=2e-8,abs=1e-15)
++    assert abs(result['energy_J']-(dev+point_vol))>1e-9
++    assert result['ogden_alpha']==alpha
++    assert mesh.deformation(moved,2000.,ogden_alpha=alpha)['energy_J']==pytest.approx(2*result['energy_J'],rel=1e-14)
++
++
++@pytest.mark.parametrize('alpha',[0.,True,False,float('nan'),float('inf'),'2',[2.]])
++def test_invalid_exponent_refuses_energy_and_deck(alpha):
++    with pytest.raises(ValueError,match='exponent'):
++        p.ogden_isochoric_density(np.eye(3),1000.,ogden_alpha=alpha)
++    mesh,protocol=deck_fixture()
++    with pytest.raises(ValueError,match='exponent'):
++        d.specimen_deck(mesh,'compression',4,1000.,protocol,ogden_alpha=alpha)
++
++
++def test_invalid_gradient_and_unrepresentable_energy_refuse():
++    for F in (np.diag([-1.,1.,1.]),np.diag([0.,1.,1.]),np.ones((2,3)),np.eye(3)*float('nan')):
++        with pytest.raises(ValueError):p.ogden_isochoric_density(F,1000.,ogden_alpha=-8.)
++    with pytest.raises(ValueError,match='Unrepresentable'):
++        p.ogden_isochoric_density(np.diag([2.,.5,1.]),1000.,ogden_alpha=1e6)
++
++
++@pytest.mark.parametrize('alpha',[-8.,.5,8.])
++def test_only_first_exponent_and_receipt_change_in_deck(alpha):
++    mesh,protocol=deck_fixture()
++    xml,old=d.specimen_deck(mesh,'compression',4,1000.,protocol)
++    changed,new=d.specimen_deck(mesh,'compression',4,1000.,protocol,ogden_alpha=alpha)
++    first,second=ET.fromstring(xml),ET.fromstring(changed)
++    assert float(second.findtext('Material/material/m1'))==alpha
++    assert second.findtext('Material/material/c1')=='2000'
++    assert second.findtext('Material/material/k')==first.findtext('Material/material/k')
++    second.find('Material/material/m1').text='2'
++    assert ET.tostring(first)==ET.tostring(second)
++    for key in old:
++        if key!='deck_sha256':assert new[key]==old[key]
++    assert new['ogden_alpha']==alpha and new['native_execution_released'] is False
++    assert new['baseline_protocol_amended'] is False
++
++
++def test_alpha2_default_xml_metadata_and_energy_exact_historical_compatibility():
++    baseline=os.environ.get('HBE_OGDEN_BASELINE_ROOT')
++    if not baseline:pytest.skip('exact historical source directory supplied for controlled source review')
++    path=Path(baseline)
++    oldp=load('old_physics',path/'mechanics_hbe_physics.py',
++        '00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d')
++    oldd=load('old_deck',path/'mechanics_hbe_mesh.py',
++        'b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414')
++    X,newmesh=hex_fixture();_,oldmesh=hex_fixture(oldp)
++    for F in (np.eye(3),np.diag([1.1,.93,1.02]),np.array([[1.,.1,0],[0,1.,0],[0,0,1.]])):
++        moved=X@F.T
++        expected=oldmesh.deformation(moved,1000.)
++        for actual in (newmesh.deformation(moved,1000.),newmesh.deformation(moved,1000.,ogden_alpha=2.)):
++            assert set(actual)==set(expected)
++            for key in expected:np.testing.assert_array_equal(actual[key],expected[key])
++    mesh,protocol=deck_fixture()
++    for branch in ('compression','tension'):
++        expected=oldd.specimen_deck(mesh,branch,4,1000.,protocol)
++        assert d.specimen_deck(mesh,branch,4,1000.,protocol)==expected
++        assert d.specimen_deck(mesh,branch,4,1000.,protocol,ogden_alpha=2.)==expected

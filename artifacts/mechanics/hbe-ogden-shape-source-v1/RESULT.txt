@@ -1,0 +1,64 @@
+Generated source controls passed; reference-position limitation found
+
+The exact source candidate index674a9377dd020d25a20562fbbcf48d09ccf4d602b916ad69ca00c073fc9173c3
+and patche907a7e2958dbadbc0e3a51112195a8dd962dfec9cb61faafe31c27650235a22
+are unchanged. Both generated executions ran55 arithmetic/XML controls, all
+passing in0.20s. No native solver, fit, curve archive or held donor was opened.
+
+Attempt01 remains a FAILED overall run: its strict file guard denied pytest's
+ordinary /System/Library/CoreServices/SystemVersion.plist read. The root then
+authorized exactly that read-only OS metadata allowance and a separate retry.
+No science/test source changed. Attempt02 PASS:0.715650625s total,57,376,768B
+sampled group RSS/6 samples, exit0, direct child reaped, empty remaining group,
+no cleanup fallback/errors and no unexpected guard denials. Peaks between RSS
+samples may be missed; this is generated code verification, not native validation.
+
+Saved-fit origin arithmetic was separately authorized on the same60 exposed
+DEVELOPMENT rows, inputSHA b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a.
+It rechecked identical input bytes afterward. No force offset was fitted,
+subtracted or extrapolated; no new model coefficient was estimated.
+
+Neither branch has a sample at exactly zero displacement. Closest coordinates
+are compression -13.110338983um and tension +11.860338983um. Force at the true
+unloaded reference is therefore unknown in this saved fit. Compression forces
+are negative at all30 negative displacements. Tension has4 negative forces at
+positive displacement,26 positive, and no exact-zero force sample.
+
+Nearest three compression forces are -0.100653,-0.583729,-1.255775mN. Its first
+two finite incremental slopes are +19.345706,+26.913409N/m. The corresponding
+tension forces are -0.107621,-0.211787,-0.340868mN and slopes -4.171546,-5.169292N/m.
+The same local reference-model slopes are positive, approximately41-43N/m.
+These are finite sampled secants, not identified infinitesimal tangents, and
+the two branches' nearest coordinates differ. No empirical noise floor or
+reference-position uncertainty is supplied by the saved fit.
+
+Consequence for the proposed alpha experiment
+The source extension is verified for generated arithmetic and default alpha2
+compatibility. A shared shape exponent remains a conditional way to investigate
+larger-strain compression/tension asymmetry. However, the saved near-origin
+feature cannot be interpreted as ordinary stress-free, positive-tangent loading
+without resolving reference/loading/processing or measurement uncertainty.
+A constant force offset alone cannot change a negative incremental slope.
+The feature is not proof of a specific acquisition or processing fault. Verify
+those source assumptions before claiming a physically better constitutive law;
+an alpha-only fit could otherwise absorb an unmodelled loading/reference effect.
+Any fit would remain post-hoc one-specimen DEVELOPMENT adequacy. No living-brain
+retraction/cutting, injury threshold, patient property or held-out improvement
+is established. Prior poor axial fit and failed torsion attempt remain intact.
+
+Exact retained evidence
+generated-controls/attempt-01/supervisor.json:
+  d2383fe6082a0477b1e73c900aa2faa6577541d9eb7f2f4bea6d7ff1bc33306e
+generated-controls/attempt-02/supervisor.json:
+  6b4b7f814762ab792b4289087fee81c17bdee16442e699e93dafda2175e00479
+generated-controls/attempt-02/worker/guard-receipt.json:
+  d1f9a823300671e4f55192f705f16fc83873b42e3c246ce4ac032c1c1ec1bcd1
+run_generated_controls_v2.py:
+  0028ccab855d8aefc7fd20508252d53760ee306c5f3b1cfd2ac1275fdb5abce5
+origin-reference-v1/inspect_saved_origin.py:
+  995cdb4cf31a156e76ce8906762a16346b1f6a8828b9cca441b5cdb136f52ff2
+origin-reference-v1/metrics.json:
+  e9305aea270dbae00ea8bd34557cd9c75427813a9bb609a312348bedf7d00e83
+origin-reference-v1/receipt.json:
+  ee3bcc82ae2c3dc40888df67ffeb8987d55a9a5441d626c2e16a6557c8423ae6
+Saved arithmetic0.001519542s,20,955,136B self peak; excludes interpreter startup.

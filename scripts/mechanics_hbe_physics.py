@@ -20,6 +20,55 @@ SITES = np.vstack((GAUSS, SIGNS, np.zeros((1, 3))))
 K_OVER_MU = 149/3
 
 
+def checked_ogden_alpha(value):
+    """Finite nonzero exponent; no inferred tissue range or alpha=0 limit."""
+    if isinstance(value, (bool, np.bool_)) or not isinstance(value, (int, float, np.integer, np.floating)):
+        raise ValueError("Finite nonzero scalar Ogden exponent required")
+    result = float(value)
+    if not math.isfinite(result) or result == 0:
+        raise ValueError("Finite nonzero scalar Ogden exponent required")
+    return result
+
+
+def ogden_isochoric_density(gradients, mu_Pa, *, ogden_alpha=2.):
+    """Independent spectral energy, Pa, at positive-J deformation gradients.
+
+    FEBio's one-term convention is c1=2*mu, m1=alpha. This function never
+    identifies parameters, supplies equilibrium, or claims material stability.
+    The literal alpha=2 arithmetic is retained for baseline compatibility.
+    """
+    alpha = checked_ogden_alpha(ogden_alpha)
+    mu = positive_finite(mu_Pa)
+    F = np.asarray(gradients, dtype=np.float64)
+    if F.ndim < 2 or F.shape[-2:] != (3, 3) or not np.isfinite(F).all():
+        raise ValueError("Finite 3 by 3 deformation gradients required")
+    J = np.linalg.det(F)
+    if np.any(J <= 0) or not np.isfinite(J).all():
+        raise ValueError("Positive finite deformation Jacobian required")
+    try:
+        with np.errstate(over='raise', divide='raise', invalid='raise'):
+            if alpha == 2.:
+                Ibar = np.sum(F**2, axis=(-1, -2))*J**(-2/3)
+                energy = mu/2*(Ibar-3)
+            else:
+                # SVD obtains principal stretches without differentiating
+                # eigenvectors, including repeated-stretch states.
+                stretches = np.linalg.svd(F, compute_uv=False)
+                if np.any(stretches <= 0) or not np.isfinite(stretches).all():
+                    raise ValueError("Positive finite principal stretches required")
+                log_bar = np.log(stretches)-np.log(J)[..., None]/3
+                # Sum(log_bar)=0 analytically. Remove its roundoff remainder,
+                # then expm1 avoids subtracting three near unity at small strain.
+                log_bar -= np.mean(log_bar, axis=-1, keepdims=True)
+                exponent = alpha*log_bar
+                energy = (2*mu/alpha**2)*np.sum(np.expm1(exponent), axis=-1)
+    except (FloatingPointError, np.linalg.LinAlgError, OverflowError, ZeroDivisionError) as error:
+        raise ValueError("Unrepresentable Ogden energy; no clipping") from error
+    if not np.isfinite(energy).all():
+        raise ValueError("Nonfinite Ogden energy")
+    return energy
+
+
 def positive_finite(value):
     value = float(value)
     if not math.isfinite(value) or value <= 0:
@@ -141,8 +190,9 @@ class HexMesh:
     def rest_volume_m3(self):
         return float(self._volumes.sum())
 
-    def deformation(self, current_nodes_m, mu_Pa):
+    def deformation(self, current_nodes_m, mu_Pa, *, ogden_alpha=2.):
         current = finite_array(current_nodes_m, self._nodes.shape)
+        alpha = checked_ogden_alpha(ogden_alpha)
         mu = float(mu_Pa)
         if not math.isfinite(mu) or mu <= 0:
             raise ValueError("Positive finite stiffness required")
@@ -153,15 +203,21 @@ class HexMesh:
             raise ValueError("Nonpositive or nonfinite deformed Jacobian")
         J = jacobians[:, :8]
         Jbar = np.sum(J*self._weights, axis=1)/self._volumes
-        Ibar = np.sum(gradients[:, :8]**2, axis=(-1, -2))*J**(-2/3)
-        dev = mu/2*(Ibar-3)
+        if alpha == 2.:
+            Ibar = np.sum(gradients[:, :8]**2, axis=(-1, -2))*J**(-2/3)
+            dev = mu/2*(Ibar-3)
+        else:
+            dev = ogden_isochoric_density(gradients[:, :8], mu, ogden_alpha=alpha)
         # FEBio three-field pressure uses the reference-volume-weighted cell J.
         volumetric = K_OVER_MU*mu/4*(Jbar**2-1-2*np.log(Jbar))
         energy = np.sum(dev*self._weights, axis=1)+self._volumes*volumetric
         if not np.isfinite(energy).all():
             raise ValueError("Nonfinite reconstructed energy")
-        return {'minimum_sampled_J': float(jacobians.min()), 'cell_volume_ratios': Jbar,
-                'energy_J': float(energy.sum()), 'cell_energy_J': energy}
+        result = {'minimum_sampled_J': float(jacobians.min()), 'cell_volume_ratios': Jbar,
+                  'energy_J': float(energy.sum()), 'cell_energy_J': energy}
+        if alpha != 2.:
+            result['ogden_alpha'] = alpha
+        return result
 
     def probe_map(self, points_m):
         """Rest-coordinate inverse map; ties use first canonical element ID."""
@@ -199,7 +255,7 @@ class HexMesh:
         displacement = finite_array(current_nodes_m, self._nodes.shape)-self._nodes
         return np.array([np.asarray(weights) @ displacement[self._cells[index]] for index, weights in probe_map])
 
-    def read_frame(self, current_nodes_m, raw_reactions_N, *, mu_Pa, branch, fraction):
+    def read_frame(self, current_nodes_m, raw_reactions_N, *, mu_Pa, branch, fraction, ogden_alpha=2.):
         mu_Pa = positive_finite(mu_Pa)
         current = finite_array(current_nodes_m, self._nodes.shape)
         reaction = finite_array(raw_reactions_N, self._nodes.shape)
@@ -225,7 +281,7 @@ class HexMesh:
         boundary_error = float(np.max(np.linalg.norm(current[boundary]-prescribed[boundary], axis=1)))
         free = np.array(sorted(set(range(len(current)))-set(boundary)), dtype=int)
         free_reaction = float(np.max(np.linalg.norm(reaction[free], axis=1))) if len(free) else 0.
-        result = self.deformation(current, mu_Pa)
+        result = self.deformation(current, mu_Pa, ogden_alpha=ogden_alpha)
         result.update(fraction=float(fraction), input_coordinate=float(amount),
                       applied_force_N=float(-reaction[top, 2].sum()),
                       applied_torque_Nm=float(-moments[top, 2].sum()),

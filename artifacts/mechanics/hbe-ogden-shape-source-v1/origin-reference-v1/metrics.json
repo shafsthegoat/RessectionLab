@@ -1,0 +1,186 @@
+{
+  "alpha_fitted": false,
+  "branches": {
+    "compression": {
+      "coordinate_range_m": [
+        -0.00073726,
+        -1.3110338983051408e-05
+      ],
+      "coordinate_sign_counts": {
+        "negative": 30,
+        "positive": 0,
+        "zero": 0
+      },
+      "coordinate_units": "m",
+      "exact_zero_coordinate_observed": false,
+      "force_coordinate_product_sign_counts": {
+        "negative": 0,
+        "positive": 30,
+        "zero": 0
+      },
+      "force_offset_estimated": false,
+      "force_offset_subtracted": false,
+      "force_units": "N",
+      "local_tangent_identified": false,
+      "measured_source_sha256": "bada734592217ce8134317cbe929223be0436e2d6010a7df4f249b6678ba3a43",
+      "minimum_absolute_sample_coordinate_m": 1.3110338983051408e-05,
+      "nearest_three_samples": [
+        {
+          "coordinate_m": -1.3110338983051408e-05,
+          "observed_force_N": -0.0001006533829094,
+          "observed_force_over_coordinate_N_per_m": 7.6774050647753045,
+          "reference_force_N_at_mu1000Pa": -0.000552936594041089,
+          "reference_force_over_coordinate_N_per_m": 42.17561382325096,
+          "saved_row_index": 0
+        },
+        {
+          "coordinate_m": -3.808101694915308e-05,
+          "observed_force_N": -0.0005837287772248,
+          "observed_force_over_coordinate_N_per_m": 15.328602647461127,
+          "reference_force_N_at_mu1000Pa": -0.0016148054486309358,
+          "reference_force_over_coordinate_N_per_m": 42.40447283188557,
+          "saved_row_index": 1
+        },
+        {
+          "coordinate_m": -6.305169491525487e-05,
+          "observed_force_N": -0.0012557748380053,
+          "observed_force_over_coordinate_N_per_m": 19.916591293749264,
+          "reference_force_N_at_mu1000Pa": -0.0026882829911842685,
+          "reference_force_over_coordinate_N_per_m": 42.63617329871111,
+          "saved_row_index": 2
+        }
+      ],
+      "observed_force_range_N": [
+        -0.0477954342488358,
+        -0.0001006533829094
+      ],
+      "observed_force_sign_counts": {
+        "negative": 30,
+        "positive": 0,
+        "zero": 0
+      },
+      "observed_forces_at_exact_zero_coordinate_N": [],
+      "reference_forces_at_exact_zero_coordinate_N": [],
+      "sample_count": 30,
+      "secant_units": "N/m",
+      "successive_near_origin_secants": [
+        {
+          "delta_coordinate_m": -2.4970677966101675e-05,
+          "near_origin_pair_saved_indices": [
+            0,
+            1
+          ],
+          "observed_secant_slope_N_per_m": 19.345705990489606,
+          "reference_secant_slope_N_per_m": 42.52463052991035
+        },
+        {
+          "delta_coordinate_m": -2.497067796610179e-05,
+          "near_origin_pair_saved_indices": [
+            1,
+            2
+          ],
+          "observed_secant_slope_N_per_m": 26.913408666469383,
+          "reference_secant_slope_N_per_m": 42.98952331252682
+        }
+      ],
+      "zero_force_offset_identifiable_from_saved_origin": false
+    },
+    "tension": {
+      "coordinate_range_m": [
+        1.186033898305027e-05,
+        0.0007360099999999
+      ],
+      "coordinate_sign_counts": {
+        "negative": 0,
+        "positive": 30,
+        "zero": 0
+      },
+      "coordinate_units": "m",
+      "exact_zero_coordinate_observed": false,
+      "force_coordinate_product_sign_counts": {
+        "negative": 4,
+        "positive": 26,
+        "zero": 0
+      },
+      "force_offset_estimated": false,
+      "force_offset_subtracted": false,
+      "force_units": "N",
+      "local_tangent_identified": false,
+      "measured_source_sha256": "750bd806e5fc18083e157a31cb019456bd80ef779cf97d5f1d298e52c9d96fc8",
+      "minimum_absolute_sample_coordinate_m": 1.186033898305027e-05,
+      "nearest_three_samples": [
+        {
+          "coordinate_m": 1.186033898305027e-05,
+          "observed_force_N": -0.0001076210063486,
+          "observed_force_over_coordinate_N_per_m": -9.07402448634919,
+          "reference_force_N_at_mu1000Pa": 0.0004990118040996609,
+          "reference_force_over_coordinate_N_per_m": 42.0739917141326,
+          "saved_row_index": 0
+        },
+        {
+          "coordinate_m": 3.683101694915195e-05,
+          "observed_force_N": -0.0002117873385143,
+          "observed_force_over_coordinate_N_per_m": -5.750244116438291,
+          "reference_force_N_at_mu1000Pa": 0.0015412594446288959,
+          "reference_force_over_coordinate_N_per_m": 41.84677948905736,
+          "saved_row_index": 1
+        },
+        {
+          "coordinate_m": 6.180169491525362e-05,
+          "observed_force_N": -0.0003408680636518,
+          "observed_force_over_coordinate_N_per_m": -5.515513192950772,
+          "reference_force_N_at_mu1000Pa": 0.002572140499272387,
+          "reference_force_over_coordinate_N_per_m": 41.61925498644443,
+          "saved_row_index": 2
+        }
+      ],
+      "observed_force_range_N": [
+        -0.0003408680636518,
+        0.0067443403855547
+      ],
+      "observed_force_sign_counts": {
+        "negative": 4,
+        "positive": 26,
+        "zero": 0
+      },
+      "observed_forces_at_exact_zero_coordinate_N": [],
+      "reference_forces_at_exact_zero_coordinate_N": [],
+      "sample_count": 30,
+      "secant_units": "N/m",
+      "successive_near_origin_secants": [
+        {
+          "delta_coordinate_m": 2.4970677966101678e-05,
+          "near_origin_pair_saved_indices": [
+            0,
+            1
+          ],
+          "observed_secant_slope_N_per_m": -4.171546015174614,
+          "reference_secant_slope_N_per_m": 41.73886035229449
+        },
+        {
+          "delta_coordinate_m": 2.4970677966101675e-05,
+          "near_origin_pair_saved_indices": [
+            1,
+            2
+          ],
+          "observed_secant_slope_N_per_m": -5.169291971676955,
+          "reference_secant_slope_N_per_m": 41.28366302440559
+        }
+      ],
+      "zero_force_offset_identifiable_from_saved_origin": false
+    }
+  },
+  "constitutive_validation_pass": null,
+  "donor_role": "DEVELOPMENT",
+  "first_successive_secant_ratio_compression_over_tension": -4.637538677535079,
+  "formula": "Origin secant = F/u for each nonzero sample; successive secant = (F_j-F_i)/(u_j-u_i) on nearest three |u| samples. No regression, intercept, subtraction or extrapolated origin.",
+  "independent_validation": false,
+  "input_sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a",
+  "interpretation_limit": "Finite sampled secants are not an infinitesimal tangent. Force at missing u=0 is unknown; nonzero force at nonzero displacement cannot establish a preload. Reference identification and processing uncertainty are not resolved by these saved rows.",
+  "nearest_nonzero_coordinate_magnitudes_equal_exactly": false,
+  "nearest_nonzero_origin_secant_ratio_compression_over_tension": -0.8460859981505521,
+  "offset_fitted_or_subtracted": false,
+  "rows": 60,
+  "schema": "hbe-saved-origin-reference-v1",
+  "specimen": "HBE_01_03"
+}

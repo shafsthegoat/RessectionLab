@@ -1,0 +1,83 @@
+Reference/loading semantics and magnitude of the local signed-force deviation
+
+Conclusion: keep the tested optional alpha capability, but no fitted physical
+improvement claim yet. The local signed-force feature is small relative to the
+large existing model mismatch. It is a property of a processed cyclic average;
+it does not establish a negative physical tangent on an initial loading ramp,
+a faulty instrument, or an identifiable force offset. No noise bound follows.
+
+1. Already admitted source metadata
+Creator README data/mechanics/zenodo-8095559/README.txt, SHA
+93ded300be0e16ea2cdee8bb2838a149e2da6291d2e84013709dcd3ccebd2ad5:
+The released data have moving-average/interpolation processing and averaged
+loading/unloading, intended as a slow-rate hyperelastic approximation. Axial
+columns are displacement[m] and normal force[N]; c3 is the third cycle. Height
+is determined from test data. The README does not specify a zero-force tare,
+displacement-origin identification procedure, filter parameters or uncertainty.
+
+Primary paper Methods 2.3/2.5:
+https://link.springer.com/article/10.1007/s10237-023-01739-w
+The glued specimens undergo three axial cycles at 40 um/s between stretches 0.85
+and 1.15 at 37 C. The authors describe moving-average/low-pass filtering,
+displacement resampling, and loading/unloading averaging of hysteretic records;
+they retain 60 points per mode and use cycle 3 as preconditioned response. These
+methods do not make the averaged coordinates a chronological loading ramp or
+provide this specimen's noise/tare uncertainty. Their normal-error assumption
+in parameter estimation is not a measured error bound for these saved samples.
+
+2. Exact local conversion
+scripts/mechanics_hbe_access.py:415 parse_member_csv, SHA
+cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab:
+Requires the declared header/columns/units, parses float coordinate/force, then
+passes every row to curve; no unit conversion, averaging, filter, row deletion,
+sign replacement, zero subtraction or origin insertion occurs here.
+scripts/mechanics_hbe_evaluation.py:22 curve, SHA
+275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098:
+Requires finite paired vectors and strictly monotone, correctly signed loading
+coordinates. It does not force response signs or monotonicity. The v5 axial
+declaration specifies comma-separated displacement,force headers, columns 0/1,
+units m/N and exactly 30 rows per branch. Original interpolation and quadrature are
+unchanged; measured responses are not interpolated or modified locally.
+
+3. What the exposed 60 saved samples show
+Neither branch contains exact u=0. Closest points are -13.110338983 um and
++11.860338983 um. Their 24.970677966 um gap matches the near-origin within-branch
+spacing. Together with 30+30 rows, this is consistent with an even 60-point grid
+across the whole compression/tension mode; it does not prove the original
+instrument lacked an unloaded reference. No zero-force value can be recovered
+from this saved grid without an additional assumption or extrapolation.
+
+Tensile peak is 6.744340386 mN. All four negative forces occur at the first four
+positive coordinates; magnitudes relative to that peak are:
+  u 11.8603 um: F -0.107621 mN, 1.595723%
+  u 36.8310 um: F -0.211787 mN, 3.140223%
+  u 61.8017 um: F -0.340868 mN, 5.054135%
+  u 86.7724 um: F -0.112020 mN, 1.660949%
+They are small localized signed deviations, not a global sign reversal. For
+scale, the unchanged common-mu baseline's weighted tensile RMSE reproduces as
+8.641906583 mN, 128.135682% of measured peak. The earlier 5.78046 ratio of independent
+branch amplitudes remains an important same-data model-adequacy diagnostic.
+These local deviations do not by themselves explain that much larger mismatch.
+
+4. Knowable limits and next interpretation
+Filtering/hysteresis averaging, a reference-position/tare residual, and small
+measurement errors are compatible explanations; the available metadata cannot
+distinguish or quantify them. A constant force shift would leave the observed
+negative finite interval slopes unchanged. Those slopes are not infinitesimal
+moduli or measured evidence of living-tissue instability. No points should be
+dropped or offset fitted in response to this inspection.
+A later shared-alpha fit could be reported as improvement of this processed
+DEVELOPMENT proxy conditional on the fixed boundaries/geometry, while retaining
+all points and separately displaying the origin residual. It could not resolve
+the unknown reference/noise semantics, count as independent donor/mode testing,
+or validate living retraction/cutting/patient properties. No alpha fit or native
+solve was performed here, and the original failed torsion attempt is unchanged.
+
+5. Arithmetic provenance
+Exact saved input artifacts/hbe-v5-axial-calibration-result-v1/execution/fit.json
+SHAb6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a,
+unchanged before/after both saved-only calculations. negative_force_fraction.py
+SHA3ea838048f18c9e7eaa2f8349b478439c75ce5c20d0f8e418ae4ee13b8b14662
+records the four fractions and reproduces baseline RMSE without a new fit.
+No raw CSV/archive, held response, extra donor, solver, checkpoint or dependency
+was opened. Primary methods were browsed as text; no source download was saved.

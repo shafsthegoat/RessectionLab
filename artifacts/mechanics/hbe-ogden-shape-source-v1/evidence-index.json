@@ -1,0 +1,171 @@
+{
+  "files": [
+    {
+      "path": "source-index.json",
+      "original_path": "build/hbe-ogden-shape-v1/source-index.json",
+      "bytes": 1832,
+      "sha256": "674a9377dd020d25a20562fbbcf48d09ccf4d602b916ad69ca00c073fc9173c3"
+    },
+    {
+      "path": "source.patch",
+      "original_path": "build/hbe-ogden-shape-v1/source.patch",
+      "bytes": 18025,
+      "sha256": "e907a7e2958dbadbc0e3a51112195a8dd962dfec9cb61faafe31c27650235a22"
+    },
+    {
+      "path": "SOURCE-READY.txt",
+      "original_path": "build/hbe-ogden-shape-v1/SOURCE-READY.txt",
+      "bytes": 6071,
+      "sha256": "90c600917b4f432b2cd8f47beeed823218532e89ea7c0f47449c0764f6323ccf"
+    },
+    {
+      "path": "RESULT.txt",
+      "original_path": "build/hbe-ogden-shape-v1/RESULT.txt",
+      "bytes": 4034,
+      "sha256": "1c107247cb86bfb8f95e84e00b2e7360ad1f0e32722d2a3cceaebce10d8ad6e8"
+    },
+    {
+      "path": "run_generated_controls.py",
+      "original_path": "build/hbe-ogden-shape-v1/run_generated_controls.py",
+      "bytes": 12558,
+      "sha256": "4b6fed08dcd9cce56eed0e0e1e3041951f73bbae1805416e7a523c7742925dcc"
+    },
+    {
+      "path": "canonical-controls/receipt.json",
+      "original_path": "build/hbe-ogden-shape-v1/canonical-controls/receipt.json",
+      "bytes": 895,
+      "sha256": "974488a20250b153a74512b5281b20ed08ee725200369955aa3fdb8728b2188d"
+    },
+    {
+      "path": "canonical-controls/pytest.log",
+      "original_path": "build/hbe-ogden-shape-v1/canonical-controls/pytest.log",
+      "bytes": 180,
+      "sha256": "c764c9a5bc81b5b6282c614b04ff7619a792a93b99bcd2876680ac171776de88"
+    },
+    {
+      "path": "origin-reference-v1/SOURCE-TRACE.txt",
+      "original_path": "build/hbe-ogden-shape-v1/origin-reference-v1/SOURCE-TRACE.txt",
+      "bytes": 5291,
+      "sha256": "c8170eba454e10cf1b6c0ea5420a37c6b3a7b305ad1c672e4f0f220099b96d7f"
+    },
+    {
+      "path": "origin-reference-v1/inspect_saved_origin.py",
+      "original_path": "build/hbe-ogden-shape-v1/origin-reference-v1/inspect_saved_origin.py",
+      "bytes": 8555,
+      "sha256": "995cdb4cf31a156e76ce8906762a16346b1f6a8828b9cca441b5cdb136f52ff2"
+    },
+    {
+      "path": "origin-reference-v1/metrics.json",
+      "original_path": "build/hbe-ogden-shape-v1/origin-reference-v1/metrics.json",
+      "bytes": 6958,
+      "sha256": "e9305aea270dbae00ea8bd34557cd9c75427813a9bb609a312348bedf7d00e83"
+    },
+    {
+      "path": "origin-reference-v1/negative-force-fraction.json",
+      "original_path": "build/hbe-ogden-shape-v1/origin-reference-v1/negative-force-fraction.json",
+      "bytes": 1703,
+      "sha256": "9b61af4ce7e90275c5feb769d22a1e5879b74fac04dd0aac0a52a0d619852e1d"
+    },
+    {
+      "path": "origin-reference-v1/negative_force_fraction.py",
+      "original_path": "build/hbe-ogden-shape-v1/origin-reference-v1/negative_force_fraction.py",
+      "bytes": 2759,
+      "sha256": "3ea838048f18c9e7eaa2f8349b478439c75ce5c20d0f8e418ae4ee13b8b14662"
+    },
+    {
+      "path": "origin-reference-v1/receipt.json",
+      "original_path": "build/hbe-ogden-shape-v1/origin-reference-v1/receipt.json",
+      "bytes": 1096,
+      "sha256": "ee3bcc82ae2c3dc40888df67ffeb8987d55a9a5441d626c2e16a6557c8423ae6"
+    },
+    {
+      "path": "generated-controls/attempt-01/supervisor.json",
+      "original_path": "build/hbe-ogden-shape-v1/generated-controls/attempt-01/supervisor.json",
+      "bytes": 3535,
+      "sha256": "d2383fe6082a0477b1e73c900aa2faa6577541d9eb7f2f4bea6d7ff1bc33306e"
+    },
+    {
+      "path": "generated-controls/attempt-01/intent.json",
+      "original_path": "build/hbe-ogden-shape-v1/generated-controls/attempt-01/intent.json",
+      "bytes": 2667,
+      "sha256": "176e50f2834f85e3eb0f661daac095030480091da1baae89362b93d3bab68c07"
+    },
+    {
+      "path": "generated-controls/attempt-01/pytest.log",
+      "original_path": "build/hbe-ogden-shape-v1/generated-controls/attempt-01/pytest.log",
+      "bytes": 99,
+      "sha256": "f3f19083992ba0f47684358ea851299f5c2f4b18520d3c125e70567bebe80846"
+    },
+    {
+      "path": "generated-controls/attempt-01/worker/guard-receipt.json",
+      "original_path": "build/hbe-ogden-shape-v1/generated-controls/attempt-01/worker/guard-receipt.json",
+      "bytes": 1188,
+      "sha256": "1ae76b034987c972713705ef144e3e4e1da7d5eab70aff5c5d40fcc837a2fb08"
+    },
+    {
+      "path": "generated-controls/attempt-01/worker/junit.xml",
+      "original_path": "build/hbe-ogden-shape-v1/generated-controls/attempt-01/worker/junit.xml",
+      "bytes": 5941,
+      "sha256": "a33ac6a48578b19741806c8bed961ca0b74fc10ac17a8476537d377b28d5904c"
+    },
+    {
+      "path": "generated-controls/attempt-02/supervisor.json",
+      "original_path": "build/hbe-ogden-shape-v1/generated-controls/attempt-02/supervisor.json",
+      "bytes": 3538,
+      "sha256": "6b4b7f814762ab792b4289087fee81c17bdee16442e699e93dafda2175e00479"
+    },
+    {
+      "path": "generated-controls/attempt-02/intent.json",
+      "original_path": "build/hbe-ogden-shape-v1/generated-controls/attempt-02/intent.json",
+      "bytes": 2667,
+      "sha256": "a40313676858fda8eb31afb45bc99d2e0a57ff5783add80ec4664962917a0323"
+    },
+    {
+      "path": "generated-controls/attempt-02/pytest.log",
+      "original_path": "build/hbe-ogden-shape-v1/generated-controls/attempt-02/pytest.log",
+      "bytes": 99,
+      "sha256": "f3f19083992ba0f47684358ea851299f5c2f4b18520d3c125e70567bebe80846"
+    },
+    {
+      "path": "generated-controls/attempt-02/worker/guard-receipt.json",
+      "original_path": "build/hbe-ogden-shape-v1/generated-controls/attempt-02/worker/guard-receipt.json",
+      "bytes": 1083,
+      "sha256": "d1f9a823300671e4f55192f705f16fc83873b42e3c246ce4ac032c1c1ec1bcd1"
+    },
+    {
+      "path": "generated-controls/attempt-02/worker/junit.xml",
+      "original_path": "build/hbe-ogden-shape-v1/generated-controls/attempt-02/worker/junit.xml",
+      "bytes": 5941,
+      "sha256": "f4c78a372d6d4d7668fddbf74ae0a947a75afa63863d1d40a492231a8f767a7e"
+    },
+    {
+      "path": "baseline/mechanics_hbe_mesh.py",
+      "original_path": "build/hbe-ogden-shape-v1/baseline/mechanics_hbe_mesh.py",
+      "bytes": 48654,
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+    },
+    {
+      "path": "baseline/mechanics_hbe_physics.py",
+      "original_path": "build/hbe-ogden-shape-v1/baseline/mechanics_hbe_physics.py",
+      "bytes": 17656,
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    }
+  ],
+  "canonical": [
+    {
+      "path": "scripts/mechanics_hbe_physics.py",
+      "sha256": "8e7e37564486bd34bc254726cd112086112baaaa2fa19435793e60630b1b13d2"
+    },
+    {
+      "path": "scripts/mechanics_hbe_mesh.py",
+      "sha256": "72adfb67e50d07381cb1cf216beea1345ba466a4656314f57bc05fa49118f0fb"
+    },
+    {
+      "path": "tests/test_hbe_ogden_shape.py",
+      "sha256": "287cb4a184e5337bf05f23553a204f60b729a3b557200d1c73aa7d5307f22fa7"
+    }
+  ],
+  "integration_delta": "Production scripts equal staged source. Canonical test defaults to tracked exact baseline rather than skipping when no ignored baseline directory is configured. Canonical132test run verifies this portable form.",
+  "bulk_data_included": false,
+  "fitting_or_FE_executed": false
+}

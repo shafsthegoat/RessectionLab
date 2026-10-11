@@ -1,0 +1,18 @@
+{
+  "actual_archive_response_reads": 0,
+  "elapsed_pytest_seconds": 0.25309612485580146,
+  "error": null,
+  "expected_refusals": [
+    "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/forbidden-generated-probe.zip",
+    "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/forbidden-predictions.json",
+    "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/forbidden-response.csv",
+    "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/sources/forbidden-source.bin"
+  ],
+  "no_process_or_network_from_tests": true,
+  "pytest_exit_code": 0,
+  "test_sha256": "e35e87ebbd1b08759b38e08f31c9e6ebd3759965e2f19c29cbca0852b4759fba",
+  "unexpected_refusals": [
+    "read_outside_source_runtime_generated_fixture:/System/Library/CoreServices/SystemVersion.plist"
+  ],
+  "version": "hbe-ogden-generated-guard-v1"
+}

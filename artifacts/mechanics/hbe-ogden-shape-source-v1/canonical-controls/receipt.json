@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-ogden-shape-v1/canonical-controls/tmp",
+    "tests/test_hbe_ogden_shape.py",
+    "tests/test_mechanics_hbe_physics.py",
+    "tests/test_mechanics_hbe_physics_review.py",
+    "tests/test_mechanics_hbe_mesh.py",
+    "tests/test_mechanics_hbe_mesh_review.py",
+    "tests/test_mechanics_hbe_readout.py",
+    "tests/test_mechanics_hbe_readout_review.py"
+  ],
+  "one_thread": true,
+  "timeout_seconds": 45,
+  "scope": "generated arithmetic/XML/readout regression only; no specimen solve or new measurements",
+  "exit_code": 0,
+  "parent_seconds": 0.7206223329994828
+}

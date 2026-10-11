@@ -350,10 +350,19 @@ def _child(parent, tag, value=None, **attributes):
     return child
 
 
-def specimen_deck(mesh, branch, steps, mu_Pa, protocol):
-    """Return deterministic FEBio XML and loading metadata; never run FEBio."""
+def specimen_deck(mesh, branch, steps, mu_Pa, protocol, *, ogden_alpha=2.):
+    """Return deterministic FEBio XML; default exponent-2 bytes stay unchanged.
+
+    An explicit nondefault exponent is source preparation only, never an
+    amendment of the frozen protocol or authorization to solve its new deck.
+    """
     if not math.isfinite(mu_Pa) or mu_Pa <= 0:
         raise ValueError("Positive finite SI shear modulus required")
+    if (isinstance(ogden_alpha, (bool, np.bool_))
+            or not isinstance(ogden_alpha, (int, float, np.integer, np.floating))
+            or not math.isfinite(float(ogden_alpha)) or float(ogden_alpha) == 0):
+        raise ValueError("Finite nonzero scalar Ogden exponent required")
+    alpha = float(ogden_alpha)
     X, cells = np.asarray(mesh["rest_nodes_m"], float), np.asarray(mesh["elements_hex8"])
     determinants, _ = rest_jacobians(X, cells)
     if np.any(determinants <= 0):
@@ -381,7 +390,7 @@ def specimen_deck(mesh, branch, steps, mu_Pa, protocol):
     material = _child(_child(root, "Material"), "material", id="1", name="specimen_material", type="Ogden")
     for term in range(1, 7):
         _child(material, f"c{term}", format(2*mu_Pa if term == 1 else 0, ".17g"))
-        _child(material, f"m{term}", 2)
+        _child(material, f"m{term}", format(alpha, ".17g") if term == 1 and alpha != 2. else 2)
     _child(material, "k", format(149*mu_Pa/3, ".17g")); _child(material, "pressure_model", 1)
     mesh_xml = _child(root, "Mesh"); nodes = _child(mesh_xml, "Nodes", name="specimen_nodes")
     for i, point in enumerate(X, 1):
@@ -433,6 +442,9 @@ def specimen_deck(mesh, branch, steps, mu_Pa, protocol):
         "restart_output":"runtime default DUMP_NEVER; solver command must not enable dump output",
         "plot_output":"PLOT_NEVER", "load_controller_count":len(curves),
         "min_residual_N2":residual, "deck_sha256":hashlib.sha256(xml.encode()).hexdigest()}
+    if alpha != 2.:
+        record.update(ogden_alpha=alpha, material_parameter_override=True,
+                      baseline_protocol_amended=False, native_execution_released=False)
     return xml, record
 
 

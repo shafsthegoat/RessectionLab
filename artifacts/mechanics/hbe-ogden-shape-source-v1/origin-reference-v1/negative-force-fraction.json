@@ -1,0 +1,47 @@
+{
+  "baseline_weighted_RMSE_N_reproduction": 0.008641906582590212,
+  "baseline_weighted_RMSE_percent_of_tensile_peak": 128.1356824916458,
+  "elapsed_seconds": 0.00046524987556040287,
+  "formula": "100*abs(F_negative)/max(F_tension); original RMSE=sqrt(sum(w*(fixed_scale*g-y)^2)/sum(w))",
+  "input_sha256_before_and_after": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a",
+  "maximum_negative_force_percent_of_tensile_peak": 5.054134936336917,
+  "native_calls": 0,
+  "negative_count": 4,
+  "negative_samples": [
+    {
+      "absolute_force_percent_of_tensile_peak": 1.595723231572164,
+      "coordinate_m": 1.186033898305027e-05,
+      "force_N": -0.0001076210063486,
+      "saved_row_index": 0
+    },
+    {
+      "absolute_force_percent_of_tensile_peak": 3.140223156113452,
+      "coordinate_m": 3.683101694915195e-05,
+      "force_N": -0.0002117873385143,
+      "saved_row_index": 1
+    },
+    {
+      "absolute_force_percent_of_tensile_peak": 5.054134936336917,
+      "coordinate_m": 6.180169491525362e-05,
+      "force_N": -0.0003408680636518,
+      "saved_row_index": 2
+    },
+    {
+      "absolute_force_percent_of_tensile_peak": 1.6609493967568592,
+      "coordinate_m": 8.67723728813553e-05,
+      "force_N": -0.0001120200809491,
+      "saved_row_index": 3
+    }
+  ],
+  "new_fits": 0,
+  "noise_bound_inferred": false,
+  "offset_or_sign_fitted": false,
+  "raw_curve_or_archive_reads": 0,
+  "role": "DEVELOPMENT",
+  "rows_removed": 0,
+  "schema": "hbe-saved-negative-force-fraction-v1",
+  "source_sha256": "3ea838048f18c9e7eaa2f8349b478439c75ce5c20d0f8e418ae4ee13b8b14662",
+  "specimen": "HBE_01_03",
+  "tensile_peak_force_N": 0.0067443403855547,
+  "tension_sample_count": 30
+}
