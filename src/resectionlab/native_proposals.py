@@ -370,6 +370,7 @@ OBSTRUCTION_OPENING_VERSION = "permitted-first-obstruction-opening-v1"
 OBSTRUCTION_OPENING_FAMILY = "obstruction_opening"
 OBSTRUCTION_CELLS_PER_PREVIEW = 16
 OBSTRUCTION_SELECTED_CELLS = 16
+PAGED_OBSTRUCTION_VERSION = "permitted-first-obstruction-paged-v1"
 
 
 @dataclass(frozen=True)
@@ -388,6 +389,7 @@ class NominalCavityProposalConfig:
     intermediate_opening_mm: float | None = None
     tool_footprint_opening: bool = False
     obstruction_opening: bool = False
+    obstruction_page_size: int | None = None
 
     def __post_init__(self):
         offsets = AxisColumnProposalConfig(self.offsets_source_voxels).offsets_source_voxels
@@ -395,6 +397,10 @@ class NominalCavityProposalConfig:
             raise ValueError("Tool-footprint opening must be an explicit bool")
         if type(self.obstruction_opening) is not bool:
             raise ValueError("Obstruction opening must be an explicit bool")
+        if self.obstruction_page_size is not None and (type(self.obstruction_page_size) is not int
+                or self.obstruction_page_size != 8 or not self.obstruction_opening
+                or not self.tool_footprint_opening):
+            raise ValueError("Paged obstruction requires enabled footprint/obstruction and exactly eight per page")
         limit = 120 if self.tool_footprint_opening else 96
         if type(self.max_candidates) is not int or not 1 <= self.max_candidates <= limit:
             raise ValueError(f"Nominal/cavity candidate cap must be between one and{limit}")
@@ -418,6 +424,8 @@ class NominalCavityProposalConfig:
 
     @property
     def version(self):
+        if self.obstruction_page_size is not None:
+            return PAGED_OBSTRUCTION_VERSION
         if self.obstruction_opening:
             return OBSTRUCTION_OPENING_VERSION
         if self.tool_footprint_opening:
@@ -430,6 +438,7 @@ class NominalCavityProposalConfig:
         record.pop("intermediate_opening_mm")
         record.pop("tool_footprint_opening")
         record.pop("obstruction_opening")
+        record.pop("obstruction_page_size")
         legacy = {"version": NOMINAL_CAVITY_PROPOSAL_VERSION, **record,
             "families": NOMINAL_CAVITY_FAMILIES, "order": "column_tool_family",
             "deduplication": "identical_tool_entry_tip", "crop_clipping": False,
@@ -457,6 +466,10 @@ class NominalCavityProposalConfig:
                 obstruction_priority="permitted_public_nominal_membership_above_declared_threshold_then_native_index",
                 obstruction_rule="uncovered_eight_corner_radial_bound_across_declared_columns_and_existing_tips; cell_center_endpoint",
                 obstruction_budget="shared_max_candidates; bounded_evidence_is_incomplete_discovery; explicit_all_retained_cell_tool_dispositions")
+        if self.obstruction_page_size is not None:
+            legacy.update(obstruction_page_size=self.obstruction_page_size,
+                obstruction_budget="original_base_cap_preserved; up_to_16_selected_cells_times_two_tools; all_pairs_paged_before_layer_retention",
+                page_certificate_limit=128, page_order="original_base_then_contiguous_eight_pair_pages")
         return semantic_digest(legacy)
 
     def to_record(self):
@@ -464,6 +477,8 @@ class NominalCavityProposalConfig:
         record = asdict(self)
         if not self.obstruction_opening:
             record.pop("obstruction_opening")
+        if self.obstruction_page_size is None:
+            record.pop("obstruction_page_size")
         return record
 
 
@@ -948,6 +963,11 @@ class PreparedNominalCavityProposer:
         seen = {(r.tool_id, r.entry_mm, r.tip_mm): r.proposal_id for r in rays}
         ordered = sorted(cells, key=lambda c: (not bool(self._nominal[c] > self._config.nominal_min_membership), c))
         selected = selection_omitted = 0
+        candidate_cap = self._config.max_candidates
+        if self._config.obstruction_page_size is not None:
+            if len(self._native.tools) > 2:
+                raise ValueError("Paged obstruction permits at most two registered tools")
+            candidate_cap = len(batch.proposals) + OBSTRUCTION_SELECTED_CELLS * len(self._native.tools)
         for ordinal, cell in enumerate(ordered):
             if cancelled is not None and cancelled():
                 raise InterruptedError("Obstruction opening preparation cancelled")
@@ -973,7 +993,7 @@ class PreparedNominalCavityProposer:
                 if disposition is None:
                     if key in seen:
                         identifier, disposition = seen[key], "DUPLICATE_GEOMETRY"
-                    elif len(rays) >= self._config.max_candidates:
+                    elif len(rays) >= candidate_cap:
                         disposition = "CANDIDATE_CAP"
                     else:
                         identifier = "nominal-cavity-" + semantic_digest({"model": self._model_hash,
@@ -994,6 +1014,10 @@ class PreparedNominalCavityProposer:
             "discovery_complete": False,
             "scope": "bounded first rejected intervals of emitted base rays only; not all blockers or paths",
             "priority": "permitted_public_nominal_membership_then_native_index; no_reference_or_reward_queries"}
+        if self._config.obstruction_page_size is not None:
+            accounting.update(added_preview_calls=0, added_candidates_to_verify=len(rays)-len(batch.proposals),
+                base_candidate_cap=self._config.max_candidates, added_candidate_cap=32,
+                page_size=self._config.obstruction_page_size, certification="deferred_explicit_pages")
         result = NominalCavityBatch(batch.model_hash, cavity, batch.nominal_target_hash,
             batch.nominal_provenance_hash, tuple(rays), tuple(ledger))
         object.__setattr__(result, "_obstruction_accounting", freeze_json(accounting))

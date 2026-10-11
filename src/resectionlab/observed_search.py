@@ -206,7 +206,8 @@ def _opening_frontier(children, opening, width):
 def observed_beam_search(task, *, max_calls: int, beam_width: int, seconds: float = 2.,
                          policy=None, objective_source: str = "observed_scan_estimator_only",
                          transition_mode: str = "eager", retained_prefix_diagnostics: bool = False,
-                         retention_mode: str = "return_only"):
+                         retention_mode: str = "return_only",
+                         action_expansion: str = "single_inventory"):
     """Run observed beam search with optional, state-checked actor ordering.
 
 The before/after state_dict hashes cover parameters and registered buffers,
@@ -231,7 +232,7 @@ Old modes add no new output fields.
     arguments = dict(max_calls=max_calls, beam_width=beam_width, seconds=seconds, policy=policy,
                      objective_source=objective_source, transition_mode=transition_mode,
                      retained_prefix_diagnostics=retained_prefix_diagnostics,
-                     retention_mode=retention_mode,
+                     retention_mode=retention_mode, action_expansion=action_expansion,
                      started=started, integrity=integrity)
     if policy is None:
         return _observed_beam_search(task, **arguments)
@@ -267,7 +268,7 @@ Old modes add no new output fields.
 
 
 def _observed_beam_search(task, *, max_calls, beam_width, seconds, policy,
-                          objective_source, transition_mode, retained_prefix_diagnostics, retention_mode, started, integrity):
+                          objective_source, transition_mode, retained_prefix_diagnostics, retention_mode, action_expansion, started, integrity):
     """Return the best evaluated prefix and accounting within declared bounds.
 
 Every prefix has a known zero-increment STOP option. Negative opening prefixes
@@ -292,6 +293,12 @@ planning clone. It defers successor observations, not current-action geometry.
         raise ValueError("retained_prefix_diagnostics must be an explicit bool")
     if retention_mode not in {"return_only", "return_plus_opening_depth_v1", "return_plus_opening_depth_volume_v1", "return_plus_axial_layer_volume_v1"}:
         raise ValueError("Unknown observed-search retention mode")
+    if action_expansion not in {"single_inventory", "obstruction_pages_v1"}:
+        raise ValueError("Unknown action expansion contract")
+    paged = action_expansion == "obstruction_pages_v1"
+    if paged and (transition_mode != "lazy_planning" or policy is not None
+                  or not callable(getattr(task, "planning_action_pages", None))):
+        raise ValueError("Paged expansion requires the explicit nominal lazy task without actor ordering")
     axial_lane = retention_mode == "return_plus_axial_layer_volume_v1"
     volume_lane = retention_mode == "return_plus_opening_depth_volume_v1" or axial_lane
     opening_lane = retention_mode == "return_plus_opening_depth_v1" or volume_lane
@@ -314,6 +321,7 @@ planning clone. It defers successor observations, not current-action geometry.
     peak_next_layer_states = 0
     truncated, root_inventory = False, 0
     layers = []
+    page_records = []
     if opening_lane:
         frontier_opening = {(): None}
     if volume_lane:
@@ -348,6 +356,10 @@ planning clone. It defers successor observations, not current-action geometry.
             "beam_pruned_prefixes": beam_pruned,
             "peak_next_layer_states": peak_next_layer_states,
             "layers": [dict(row) for row in layers], **integrity,
+            **({"action_expansion": action_expansion, "action_pages": list(page_records),
+                "all_pages_before_layer_completion": True,
+                "stop_transition_calls": 0, "stop_evaluation": "implicit_zero_at_every_prefix",
+                "page_ranking": "one_shared_existing_layer_accumulator; no_per_page_retention"} if paged else {}),
             **({"opening_depth_retention": {
                 "version": retention_mode, "terminal_objective_changed": False,
                 "scope": "newly_removed_actor_covered_cell_centres_from_public_aperture_plane",
@@ -409,136 +421,188 @@ planning clone. It defers successor observations, not current-action geometry.
             for value, prefix, node in frontier:
                 if node.terminated:
                     continue
-                observation_requests += 1
-                observation = node.observation()
-                actions = _legal_actions(observation)
-                if retained_prefix_diagnostics and prefix:
-                    frontier_progress[prefix].update(legal_nonstop_actions=len(actions),
-                        successor_inventory_status="observed_during_normal_expansion")
-                if not prefix:
-                    root_inventory = len(actions)
-                expanded_nodes += 1
-                layer["expanded_nodes"] += 1
-                if policy is not None and actions and calls < max_calls:
-                    check_time()
-                    import torch
-                    actor_calls += 1
-                    with torch.no_grad():
-                        logits, _ = policy(observation)
-                    scores = logits.detach().cpu().numpy()
-                    if scores.shape != (len(observation.action_ids),) or not np.isfinite(
-                            scores[[index for index, _ in actions]]).all():
-                        raise ValueError("Actor ordering requires finite scores for every legal action")
-                    # Stable ties retain the task's original inventory order.
-                    actions.sort(key=lambda row: -float(scores[row[0]]))
-                for _, action in actions:
-                    if calls >= max_calls:
-                        truncated = True
-                        break
-                    check_time()
-                    child = node.clone()
-                    extra = int(opening_lane and opening_child is not None
-                                and all(row[1] != opening_child[1] for row in children))
-                    peak_next_layer_states = max(peak_next_layer_states, len(children) + extra + 1)
-                    calls += 1
-                    layer["model_transition_calls"] += 1
-                    if transition_mode == "lazy_planning":
-                        lazy_calls += 1
-                        outcome = child.advance_planning(action)
+                if paged:
+                    expanded_nodes += 1
+                    layer["expanded_nodes"] += 1
+                node_action_count = 0
+                node_seen = set()
+
+                def action_pages():
+                    nonlocal observation_requests, expanded_nodes
+                    if paged:
+                        expected_pages = None
+                        observed_pages = 0
+                        for page, allowed in node.planning_action_pages():
+                            check_time()
+                            info = page.planning_page_record()
+                            if expected_pages is None:
+                                expected_pages = 1 + info["additional_page_count"]
+                            if (info["page_index"] != observed_pages
+                                    or 1+info["additional_page_count"] != expected_pages
+                                    or not 1 <= expected_pages <= 5):
+                                raise ValueError("Changed or unordered bounded page catalog")
+                            observed_pages += 1
+                            observation = page.observation()
+                            legal = _legal_actions(observation)
+                            allowed = tuple(allowed)
+                            if (len(set(allowed)) != len(allowed)
+                                    or not set(allowed) <= {action for _, action in legal}
+                                    or node_seen.intersection(allowed)):
+                                raise ValueError("Duplicate, foreign or uncertified paged action")
+                            if info["page_index"] and len(allowed) > 8:
+                                raise ValueError("Extra page exceeds eight candidates")
+                            node_seen.update(allowed)
+                            actions = [(i, a) for i, a in legal if a in allowed]
+                            record = {**info, "prefix": list(prefix), "complete": False,
+                                      "legal_actions": len(actions), "evaluated_actions": 0}
+                            page_records.append(record)
+                            yield page, observation, actions, record
+                        if observed_pages != expected_pages:
+                            raise ValueError("Page iterator omitted declared pages")
                     else:
-                        eager_calls += 1
-                        outcome = child.step(action)
-                    if not math.isfinite(outcome.reward):
-                        raise FloatingPointError("Nonfinite observed-model transition reward")
-                    total, path = value + outcome.reward, (*prefix, action)
-                    if not math.isfinite(total):
-                        raise FloatingPointError("Nonfinite observed-model prefix return")
-                    evaluated_prefixes += 1
-                    if total < 0:
-                        negative_evaluated += 1
-                        layer["negative_prefixes_evaluated"] += 1
-                    if total > incumbent:
-                        incumbent, sequence = total, path
-                        incumbent_terminated = child.terminated
-                    if opening_lane:
-                        if volume_lane:
-                            if axial_lane:
-                                new_depth, new_volume, new_layer = _public_removed_opening_depth(
-                                    observation, outcome, action, with_volume=True, with_axial_layer=True)
-                                indices = [value for value in (frontier_layer[prefix], new_layer) if value is not None]
-                                opening_layer = max(indices) if indices else None
-                            else:
-                                new_depth, new_volume = _public_removed_opening_depth(
-                                    observation, outcome, action, with_volume=True)
-                            opening_volume = frontier_volume[prefix] + new_volume
-                            if not math.isfinite(opening_volume):
-                                raise FloatingPointError("Nonfinite accumulated opening removal volume")
+                        observation_requests += 1
+                        observation = node.observation()
+                        actions = _legal_actions(observation)
+                        expanded_nodes += 1
+                        layer["expanded_nodes"] += 1
+                        yield node, observation, actions, None
+
+                for page_node, observation, actions, page_record in action_pages():
+                    if paged:
+                        observation_requests += 1
+                    node_action_count += len(actions)
+                    if retained_prefix_diagnostics and prefix:
+                        frontier_progress[prefix].update(legal_nonstop_actions=node_action_count,
+                            successor_inventory_status=("partially_observed_pages" if paged else "observed_during_normal_expansion"))
+                    if not prefix:
+                        root_inventory = node_action_count
+                    if policy is not None and actions and calls < max_calls:
+                        check_time()
+                        import torch
+                        actor_calls += 1
+                        with torch.no_grad():
+                            logits, _ = policy(observation)
+                        scores = logits.detach().cpu().numpy()
+                        if scores.shape != (len(observation.action_ids),) or not np.isfinite(
+                                scores[[index for index, _ in actions]]).all():
+                            raise ValueError("Actor ordering requires finite scores for every legal action")
+                        actions.sort(key=lambda row: -float(scores[row[0]]))
+                    for _, action in actions:
+                        if calls >= max_calls:
+                            truncated = True
+                            break
+                        check_time()
+                        child = page_node.clone()
+                        extra = int(opening_lane and opening_child is not None
+                                    and all(row[1] != opening_child[1] for row in children))
+                        peak_next_layer_states = max(peak_next_layer_states, len(children) + extra + 1)
+                        calls += 1
+                        layer["model_transition_calls"] += 1
+                        if page_record is not None:
+                            page_record["evaluated_actions"] += 1
+                        if transition_mode == "lazy_planning":
+                            lazy_calls += 1
+                            outcome = child.advance_planning(action)
                         else:
-                            new_depth = _public_removed_opening_depth(observation, outcome, action)
-                        depths = [value for value in (frontier_opening[prefix], new_depth) if value is not None]
-                        opening_depth = max(depths) if depths else None
-                    if retained_prefix_diagnostics:
-                        progress = _prefix_progress(frontier_progress[prefix], path, total, outcome)
-                        if child.terminated:
-                            progress["successor_inventory_status"] = "terminal_not_observed"
-                            insort(terminal_progress, (total, path, progress), key=lambda row: (-row[0], row[1]))
-                            if len(terminal_progress) > beam_width:
-                                terminal_progress.pop()
-                            layer["retained_prefix_diagnostics"]["best_terminal_prefixes"] = [
-                                row[2] for row in terminal_progress]
-                    if not child.terminated:
-                        child_count += 1
-                        negative_children += int(total < 0)
+                            eager_calls += 1
+                            outcome = child.step(action)
+                        if not math.isfinite(outcome.reward):
+                            raise FloatingPointError("Nonfinite observed-model transition reward")
+                        total, path = value + outcome.reward, (*prefix, action)
+                        if not math.isfinite(total):
+                            raise FloatingPointError("Nonfinite observed-model prefix return")
+                        evaluated_prefixes += 1
+                        if total < 0:
+                            negative_evaluated += 1
+                            layer["negative_prefixes_evaluated"] += 1
+                        if total > incumbent:
+                            incumbent, sequence = total, path
+                            incumbent_terminated = child.terminated
                         if opening_lane:
-                            child_opening[path] = opening_depth
                             if volume_lane:
-                                child_volume[path] = opening_volume
-                            if axial_lane:
-                                child_layer[path] = opening_layer
-                            if opening_depth is not None and (opening_child is None or
-                                    (-(opening_layer if axial_lane else opening_depth), *((-opening_volume,) if volume_lane else ()), -total, path) <
-                                    (-(child_layer[opening_child[1]] if axial_lane else child_opening[opening_child[1]]), *((-child_volume[opening_child[1]],)
-                                      if volume_lane else ()), -opening_child[0], opening_child[1])):
-                                opening_child = (total, path, child)
-                        # Retain the exact best beam incrementally. All actions
-                        # still execute, but full native child states do not
-                        # accumulate until the end of a potentially wide layer.
-                        insort(children, (total, path, child), key=lambda row: (-row[0], row[1]))
+                                if axial_lane:
+                                    new_depth, new_volume, new_layer = _public_removed_opening_depth(
+                                        observation, outcome, action, with_volume=True, with_axial_layer=True)
+                                    indices = [value for value in (frontier_layer[prefix], new_layer) if value is not None]
+                                    opening_layer = max(indices) if indices else None
+                                else:
+                                    new_depth, new_volume = _public_removed_opening_depth(
+                                        observation, outcome, action, with_volume=True)
+                                opening_volume = frontier_volume[prefix] + new_volume
+                                if not math.isfinite(opening_volume):
+                                    raise FloatingPointError("Nonfinite accumulated opening removal volume")
+                            else:
+                                new_depth = _public_removed_opening_depth(observation, outcome, action)
+                            depths = [value for value in (frontier_opening[prefix], new_depth) if value is not None]
+                            opening_depth = max(depths) if depths else None
                         if retained_prefix_diagnostics:
-                            child_progress[path] = progress
-                        if len(children) > beam_width:
-                            discarded = children.pop()
-                            if retained_prefix_diagnostics and not opening_lane:
-                                child_progress.pop(discarded[1])
-                            del discarded
-                        if opening_lane:
-                            live_paths = {row[1] for row in children}
-                            if opening_child is not None:
-                                live_paths.add(opening_child[1])
-                            child_opening = {key: value for key, value in child_opening.items() if key in live_paths}
-                            if volume_lane:
-                                child_volume = {key: value for key, value in child_volume.items() if key in live_paths}
-                            if axial_lane:
-                                child_layer = {key: value for key, value in child_layer.items() if key in live_paths}
+                            progress = _prefix_progress(frontier_progress[prefix], path, total, outcome)
+                            if child.terminated:
+                                progress["successor_inventory_status"] = "terminal_not_observed"
+                                insort(terminal_progress, (total, path, progress), key=lambda row: (-row[0], row[1]))
+                                if len(terminal_progress) > beam_width:
+                                    terminal_progress.pop()
+                                layer["retained_prefix_diagnostics"]["best_terminal_prefixes"] = [
+                                    row[2] for row in terminal_progress]
+                        if not child.terminated:
+                            child_count += 1
+                            negative_children += int(total < 0)
+                            if opening_lane:
+                                child_opening[path] = opening_depth
+                                if volume_lane:
+                                    child_volume[path] = opening_volume
+                                if axial_lane:
+                                    child_layer[path] = opening_layer
+                                if opening_depth is not None and (opening_child is None or
+                                        (-(opening_layer if axial_lane else opening_depth), *((-opening_volume,) if volume_lane else ()), -total, path) <
+                                        (-(child_layer[opening_child[1]] if axial_lane else child_opening[opening_child[1]]), *((-child_volume[opening_child[1]],)
+                                          if volume_lane else ()), -opening_child[0], opening_child[1])):
+                                    opening_child = (total, path, child)
+                            # Retain the exact best beam incrementally. All actions
+                            # still execute, but full native child states do not
+                            # accumulate until the end of a potentially wide layer.
+                            insort(children, (total, path, child), key=lambda row: (-row[0], row[1]))
                             if retained_prefix_diagnostics:
-                                child_progress = {key: value for key, value in child_progress.items() if key in live_paths}
-                            selected = _opening_frontier(children, opening_child, beam_width)
-                            layer["opening_depth_retention"] = [
-                                {"actions": list(row[1]), "estimated_incremental_return": row[0],
-                                 "opening_depth_mm": child_opening[row[1]],
-                                 **({"opening_removed_volume_mm3": child_volume[row[1]]} if volume_lane else {}),
-                                 **({"opening_axial_layer": child_layer[row[1]]} if axial_lane else {}),
-                                 "reason": "best_return_and_opening" if row is children[0] and opening_child is not None and row[1] == opening_child[1]
-                                     else "best_return" if row is children[0]
-                                     else "opening" if opening_child is not None and row[1] == opening_child[1]
-                                     else "return_fill"}
-                                for row in selected]
-                        if retained_prefix_diagnostics:
-                            layer["retained_prefix_diagnostics"]["retained_nonterminal_prefixes"] = [
-                                child_progress[row[1]] for row in (selected if opening_lane else children)]
-                        if opening_lane:
-                            del selected  # Do not retain obsolete child states through the next action.
-                    del child
+                                child_progress[path] = progress
+                            if len(children) > beam_width:
+                                discarded = children.pop()
+                                if retained_prefix_diagnostics and not opening_lane:
+                                    child_progress.pop(discarded[1])
+                                del discarded
+                            if opening_lane:
+                                live_paths = {row[1] for row in children}
+                                if opening_child is not None:
+                                    live_paths.add(opening_child[1])
+                                child_opening = {key: value for key, value in child_opening.items() if key in live_paths}
+                                if volume_lane:
+                                    child_volume = {key: value for key, value in child_volume.items() if key in live_paths}
+                                if axial_lane:
+                                    child_layer = {key: value for key, value in child_layer.items() if key in live_paths}
+                                if retained_prefix_diagnostics:
+                                    child_progress = {key: value for key, value in child_progress.items() if key in live_paths}
+                                selected = _opening_frontier(children, opening_child, beam_width)
+                                layer["opening_depth_retention"] = [
+                                    {"actions": list(row[1]), "estimated_incremental_return": row[0],
+                                     "opening_depth_mm": child_opening[row[1]],
+                                     **({"opening_removed_volume_mm3": child_volume[row[1]]} if volume_lane else {}),
+                                     **({"opening_axial_layer": child_layer[row[1]]} if axial_lane else {}),
+                                     "reason": "best_return_and_opening" if row is children[0] and opening_child is not None and row[1] == opening_child[1]
+                                         else "best_return" if row is children[0]
+                                         else "opening" if opening_child is not None and row[1] == opening_child[1]
+                                         else "return_fill"}
+                                    for row in selected]
+                            if retained_prefix_diagnostics:
+                                layer["retained_prefix_diagnostics"]["retained_nonterminal_prefixes"] = [
+                                    child_progress[row[1]] for row in (selected if opening_lane else children)]
+                            if opening_lane:
+                                del selected  # Do not retain obsolete child states through the next action.
+                        del child
+                    if page_record is not None:
+                        page_record["complete"] = not truncated
+                    if truncated:
+                        break
+                if paged and not truncated and retained_prefix_diagnostics and prefix:
+                    frontier_progress[prefix].update(successor_inventory_status="all_declared_pages_observed_during_expansion")
                 if truncated:
                     break
             if truncated:

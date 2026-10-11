@@ -1,0 +1,41 @@
+{
+  "files": [
+    {
+      "archive_path": "canonical-controls.json",
+      "bytes": 1256,
+      "sha256": "4849d1c9601e071538aace0d35562b54b303a761d85ec974a02088db13028d6d",
+      "source": "build/select013-paged-route-v1/canonical-controls-01.json"
+    },
+    {
+      "archive_path": "canonical-controls.log",
+      "bytes": 192,
+      "sha256": "3806442f83c96ce234250d52bac2fabf8d9ffe616c2ca65ef060917f75722645",
+      "source": "build/select013-paged-route-v1/canonical-controls-01.log"
+    },
+    {
+      "archive_path": "staged-controls.json",
+      "bytes": 1336,
+      "sha256": "38f18fa71dcccdf28281c78422a7694d69b2aab36905332d9c6746205ed742ff",
+      "source": "build/select013-paged-route-v1/controls-01.json"
+    },
+    {
+      "archive_path": "staged-controls.log",
+      "bytes": 99,
+      "sha256": "a1a6c2d6610524fd3b3dc80f9b017abf05a5be2f4c3f05fa5fa95daeba907739",
+      "source": "build/select013-paged-route-v1/controls-01.log"
+    },
+    {
+      "archive_path": "promotion-index.json",
+      "bytes": 2123,
+      "sha256": "fd45117cb14dc32b9aaca5a7d2735fb3a51d607e87b336f5672dec5d4475c965",
+      "source": "build/select013-paged-route-v1/promotion-index.json"
+    },
+    {
+      "archive_path": "independent-source-review.txt",
+      "bytes": 4474,
+      "sha256": "b198fa52cfe0fec23ead5d46a6294e0d1280e725018859ed77da82bb66ca57d7",
+      "source": "build/select013-paged-route-review-v1/source-review.txt"
+    }
+  ],
+  "scope": "source integration and generated controls only; no acquired execution or arrays"
+}

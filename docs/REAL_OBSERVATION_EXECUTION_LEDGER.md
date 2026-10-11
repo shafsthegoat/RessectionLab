@@ -1864,3 +1864,20 @@ The completed comparison's reservation is closed; 128 MiB for complete-route
 preparation and 16 MiB for root archives remain reserved. These are dated
 allocated-block estimates, not continuous disk accounting. No download,
 dependency installation, deletion or paid infrastructure is introduced.
+
+## October 11 — Complete-route obstruction expansion integrated
+
+[The opt-in page-aware task](../artifacts/select013-paged-route-integration-v1/INTEGRATION.md)
+preserves the base inventory and evaluates up to 32 additional cell/tool pairs,
+in certificate-safe pages, before completing a shared search layer. Each successor
+regenerates its own public obstruction evidence. The original native geometry,
+reward and default task/search fingerprints remain unchanged. Independent source
+review finds no blocker. Canonical generated controls pass 128 tests in 5.02 s
+(5.468 s parent), with ten separate historical-opening-source comparisons skipped.
+A real native generated control reaches target after two negative preparations
+and passes fresh replay plus independent geometry and episode acceptance.
+
+The bounded SELECT013 full-route pair remains the next actual experiment, with
+the same horizon, beam width, retention and time/call limits. No model refit or
+additional data is required. This integration result supports executable software
+behavior only; no acquired useful route or physical interaction is claimed yet.

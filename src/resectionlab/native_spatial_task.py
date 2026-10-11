@@ -608,6 +608,10 @@ class NativeSpatialTask:
         if (not isinstance(case, NativeSpatialCase) or type(max_steps) is not int
                 or not 1 <= max_steps <= MAX_NATIVE_SPATIAL_STEPS):
             raise ValueError(f"A typed native source and horizon1–{MAX_NATIVE_SPATIAL_STEPS} are required")
+        if case.proposal_config is not None and case.proposal_config.obstruction_page_size is not None:
+            from .paged_obstruction import PagedObstructionTask
+            if type(self) is not PagedObstructionTask:
+                raise ValueError("Paged proposals require the explicit page-aware native task")
         if not isinstance(reward, RewardSpec) or reward.motor_per_mm3 or reward.language_per_mm3 or reward.graph_edge_cost:
             raise ValueError("Functional and graph costs must be disabled: function remains unassessed")
         if _planning and (case.nominal_target is None or not np.array_equal(case.reference_target, case.nominal_target)):

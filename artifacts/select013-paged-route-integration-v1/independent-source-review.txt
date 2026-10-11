@@ -1,0 +1,67 @@
+One-pass independent paged lifecycle/source review: GO for integration.
+
+Scope: four staged production files, their diff from canonical source, relevant
+unchanged native commit/clone behavior, compact generated fixtures, and saved
+67-control receipt. No acquired input, native replay, tests, or numerical run.
+No concrete blocker found.
+
+Certificate lifetime and replay
+The unselected task prepares base proposals and first-blocker evidence once per
+state. It permits <=120 base certificates and rejects unaccounted prior previews.
+Each page clones this clean engine and verifies <=8 extra candidates, giving a
+per-engine registry bound <=128. Explicit identity checks verify every live
+inventory certificate remains registered. The base never receives extra-page
+previews, so later pages cannot evict certificates from earlier page clones.
+Children clone the selected page and commit through the unchanged native engine;
+native source/state/config/digest checks remain authoritative. Successful commit
+clears the native registry and task page caches. Durable committed interruption
+also clears caches. Page inventory requests refuse stale state identities.
+Authoritative replay regenerates the current state's same public catalog, locates
+the requested stable action ID, certifies its page, and uses ordinary native commit
+and scoring. It does not inject a prior search certificate or stale action record.
+
+State-local discovery and all-page competition
+Added discovery uses only already paid original-base first-rejection sidecars;
+extra pages never recursively generate evidence for one another. A successor
+builds fresh base evidence after an actual committed action. Page zero expands
+base legal actions; later pages expand only their own legal additions, avoiding
+duplicate base expansions even though base certificates remain present.
+All pages feed the same existing layer return/opening accumulator. Incremental
+top-beam retention is shared across pages, equivalent to comparing that entire
+layer; there is no per-page beam selection. Declared page indices/counts and action
+uniqueness are checked. A layer completes only after every page of every expanded
+node is exhausted. Call/time caps leave incomplete page/layer accounting. The
+bounded runner must reject capped search as accepted completion even though the
+generic search API retains an evaluated incumbent for diagnostics.
+
+Default behavior and bounds
+obstruction_page_size=None preserves old records/fingerprints. Ordinary tasks
+reject an enabled paged configuration, and full-catalog observation is explicitly
+unavailable on an unselected paged task. Search paging requires lazy planning and
+no actor ordering. Native physics, tip/shaft geometry, microstep order, reward and
+private-reference separation are unchanged. This opt-in expands candidate capacity
+from <=120 base candidates to those base candidates plus <=32 extras, rather than
+silently claiming a 120-candidate total. Extras remain <=16 selected actual cells
+times <=2 tools, divided into at most four eight-pair pages. First-failure evidence
+and 16-cell selection remain incomplete discovery of all possible paths.
+For the declared 24-step/width-two search, <=47 nodes and <=47*152=7,144 motion
+transitions per arm are consistent; implicit STOP makes no search transition.
+Ordinary authoritative rollout/replay costs must remain separately counted.
+
+Saved evidence
+67 generated controls passed, exit 0, reaped, no timeout, parent 3.217207417 s.
+Controls include native two-negative-preparation then target route with fresh
+replay; 120+8 native certificate lifetime; 32 extras across pages; late-page
+opening retention; cap/cancellation lifecycle; private-reference parity; and
+unchanged defaults. Their receipt and all staged source/test/patch pins match.
+These controls validate the software path, not success on acquired anatomy.
+
+Production SHA256:
+native_proposals.py ec35077fc63e19dff422d2072c7fbe705f798ae46696ae5978f040db4b0e73a8
+native_spatial_task.py f30a536aa2960f854765eca54504dbd3d43a9698ccfd9f9c8b12712d32b5afbf
+observed_search.py cb970256f027ac1a278e844e35cfcf1d54b8f81828f8cd165652784b454a417b
+paged_obstruction.py f0e3721bd438c858cf2bba8481d4917962d1416dcd9e19d726c91e36e2fb07a1
+Test SHA256: 0376e14dc420d61464d657f9bcd40c9429f41bc90b08d75752b912118163ce7d
+Controls receipt SHA256: 38f18fa71dcccdf28281c78422a7694d69b2aab36905332d9c6746205ed742ff
+
+Root owns canonical integration and the separately bounded acquired runner.

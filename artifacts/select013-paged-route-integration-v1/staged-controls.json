@@ -1,0 +1,31 @@
+{
+  "acquired_inputs": false,
+  "child_reaped": true,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "build/select013-paged-route-v1/tests/test_paged_route.py",
+    "tests/test_obstruction_opening_proposals.py",
+    "tests/test_observed_search.py"
+  ],
+  "exit_code": 0,
+  "hard_seconds": 30,
+  "log_sha256": "a1a6c2d6610524fd3b3dc80f9b017abf05a5be2f4c3f05fa5fa95daeba907739",
+  "single_thread": true,
+  "source_pins": {
+    "stage/resectionlab/native_proposals.py": "ec35077fc63e19dff422d2072c7fbe705f798ae46696ae5978f040db4b0e73a8",
+    "stage/resectionlab/native_spatial_task.py": "f30a536aa2960f854765eca54504dbd3d43a9698ccfd9f9c8b12712d32b5afbf",
+    "stage/resectionlab/observed_search.py": "cb970256f027ac1a278e844e35cfcf1d54b8f81828f8cd165652784b454a417b",
+    "stage/resectionlab/paged_obstruction.py": "f0e3721bd438c858cf2bba8481d4917962d1416dcd9e19d726c91e36e2fb07a1",
+    "tests/conftest.py": "9a1acaa11a063e53a95d8d4a355130149dbee3b6aefc075aabc1ec567cb90b06",
+    "tests/test_paged_route.py": "0376e14dc420d61464d657f9bcd40c9429f41bc90b08d75752b912118163ce7d"
+  },
+  "source_unchanged": true,
+  "status": "pass",
+  "timeout": false,
+  "wall_seconds": 3.217207417
+}

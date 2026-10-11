@@ -1,0 +1,36 @@
+{
+  "controls": {
+    "path": "build/select013-paged-route-v1/controls-01.json",
+    "sha256": "38f18fa71dcccdf28281c78422a7694d69b2aab36905332d9c6746205ed742ff"
+  },
+  "head_before": "19f273bd5bc2176770ea5e1ccd863dc8d5c846c3",
+  "patch_sha256": "91a802346c8fa9149d3f470b354e3af59572e49554d299718d5cf1b9ee6509b8",
+  "production": {
+    "src/resectionlab/native_proposals.py": {
+      "after_sha256": "ec35077fc63e19dff422d2072c7fbe705f798ae46696ae5978f040db4b0e73a8",
+      "before_sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+      "staged_path": "build/select013-paged-route-v1/stage/resectionlab/native_proposals.py"
+    },
+    "src/resectionlab/native_spatial_task.py": {
+      "after_sha256": "f30a536aa2960f854765eca54504dbd3d43a9698ccfd9f9c8b12712d32b5afbf",
+      "before_sha256": "8237f90b3b512d03452be027e6e7e337f69da3e8127f169fe870a56c47418c32",
+      "staged_path": "build/select013-paged-route-v1/stage/resectionlab/native_spatial_task.py"
+    },
+    "src/resectionlab/observed_search.py": {
+      "after_sha256": "cb970256f027ac1a278e844e35cfcf1d54b8f81828f8cd165652784b454a417b",
+      "before_sha256": "52ed888c43a5b8405b4dd2407b583dcff59e21cf3c08b68a6c6571107b0268fd",
+      "staged_path": "build/select013-paged-route-v1/stage/resectionlab/observed_search.py"
+    },
+    "src/resectionlab/paged_obstruction.py": {
+      "after_sha256": "f0e3721bd438c858cf2bba8481d4917962d1416dcd9e19d726c91e36e2fb07a1",
+      "before_sha256": null,
+      "staged_path": "build/select013-paged-route-v1/stage/resectionlab/paged_obstruction.py"
+    }
+  },
+  "test": {
+    "delta_after_controls_01": "historical path/pin portability plus full independent-episode acceptance assertion; production unchanged; root canonical integration pending",
+    "path": "build/select013-paged-route-v1/tests/test_paged_route.py",
+    "portability": "historical source controls require three exact SHA256-pinned before files or PAGED_ROUTE_BASELINE_DIR; all other controls remain mandatory; no stage injection in test",
+    "sha256": "83c534de2120d564217e5aa1987ed64d2b8eabf6bf0e0a882e5dfd6aac5707a5"
+  }
+}
