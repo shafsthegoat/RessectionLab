@@ -1,0 +1,73 @@
+{
+  "archive_root": "artifacts/native-cut-union-digest-cache-v1",
+  "files": [
+    {
+      "source": "build/native-cut-union-v1/optimization/RESULT.txt",
+      "destination": "RESULT.txt",
+      "bytes": 1851,
+      "sha256": "a2c54bc8d198bc3be43093900e050fe2ab8cf123b9f923901880b996ea78b225"
+    },
+    {
+      "source": "build/native-cut-union-v1/optimization/pair-01/receipt.json",
+      "destination": "pair-01/receipt.json",
+      "bytes": 4359,
+      "sha256": "4e8b14229e48d47f54c37b853f502f4d7afbc90df83b6140c225f4a382244e95"
+    },
+    {
+      "source": "build/native-cut-union-v1/optimization/pair-01/tests.log",
+      "destination": "pair-01/tests.log",
+      "bytes": 99,
+      "sha256": "c074d63de7cbb871ea7e80801a5a54128b7cad28eb0c32baaee2bde973cd81f1"
+    },
+    {
+      "source": "build/native-cut-union-v1/optimization/pair-01/baseline.json",
+      "destination": "pair-01/baseline.json",
+      "bytes": 21854,
+      "sha256": "65fe3966d00aa9c6ce6503847cc098ce65951af063e3e92bd0513c59c7ecafbc"
+    },
+    {
+      "source": "build/native-cut-union-v1/optimization/pair-01/candidate.json",
+      "destination": "pair-01/candidate.json",
+      "bytes": 21852,
+      "sha256": "19e864038c6684cc021875759a3e614497d9014e2931329002ac1339445533af"
+    },
+    {
+      "source": "build/native-cut-union-v1/optimization/dispatch-source-index.json",
+      "destination": "dispatch-source-index.json",
+      "bytes": 18439,
+      "sha256": "4a9a2966f5b8c588ab53044d08f76a6992c707a90616fed54549cac53a1fdf63"
+    },
+    {
+      "source": "build/native-cut-union-v1/optimization/profile_fixed_row.py",
+      "destination": "profile_fixed_row.py",
+      "bytes": 6285,
+      "sha256": "f6ec156895de637fe93187273fedf7c65678674476a11a326314e339ca537bf0"
+    },
+    {
+      "source": "build/native-cut-union-v1/optimization/run_owned_pair.py",
+      "destination": "run_owned_pair.py",
+      "bytes": 9344,
+      "sha256": "f9ff3c9790b08afe908f08172d3980286482df9ee1294620b2fbba462a26ac9c"
+    },
+    {
+      "source": "build/native-cut-union-v1/optimization/dispatch_worker.py",
+      "destination": "dispatch_worker.py",
+      "bytes": 1709,
+      "sha256": "9950972cb0e95de8ef730f2d4de3de5bda03c7d12d5e6cad82f852476cfbcac3"
+    },
+    {
+      "source": "build/native-cut-union-v1/optimization/test_digest_cache.py",
+      "destination": "test_digest_cache.py",
+      "bytes": 3285,
+      "sha256": "853a1692b3081885afab340eea85bc684197c222fbbeec1a4e2c6271be9f435c"
+    },
+    {
+      "source": "build/native-cut-union-v1/stage/resectionlab/native_cut_union.py",
+      "destination": "baseline/native_cut_union.py",
+      "bytes": 7570,
+      "sha256": "bd74877ae7448a7acc42d83f837e1933bb73564d45efc356929178f9dc5ba241"
+    }
+  ],
+  "payload_bytes": 96647,
+  "omissions": "No full histories, arrays, weights, duplicate progress/declaration or old preparation reports. Candidate module and portable test are canonical changes in same root commit. All omitted executed source remains hash-bound in dispatch index."
+}

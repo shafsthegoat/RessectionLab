@@ -1,0 +1,612 @@
+{
+  "acquired_inputs": false,
+  "exact_full_history_sha256": "f698a40ffe3c679ae6f82b86b42aecbd0339d28544f4860eb99fb845f6b8c2c4",
+  "harness_sha256": "f6ec156895de637fe93187273fedf7c65678674476a11a326314e339ca537bf0",
+  "independent_audit_seconds": 6.429475249955431,
+  "independent_certificate": {
+    "action_count": 10,
+    "checker_version": "independent-native-cut-union-v1",
+    "claimed_source_tissue_volume_mm3": 101.06250000000004,
+    "complete_tool_checked": true,
+    "contained_source_tissue_volume_mm3": 101.06250000000004,
+    "failures": [],
+    "feasible": true,
+    "first_failed_action": null,
+    "first_unsupported_position_mm": null,
+    "first_unsupported_source_voxel": null,
+    "frontier_checked": true,
+    "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated; declared idealized cumulative subcell cutting/evacuation",
+    "source_case_hash": "sha256:74a69984450c85d8dc282b84dadae965145b962bd9ceb402bb99c8385ee2e6fa",
+    "source_voxel_volume_mm3": 0.015625000000000007,
+    "unsupported_source_tissue_volume_mm3": 0.0
+  },
+  "model_calls": 0,
+  "native_seconds": 10.810763377230614,
+  "numerical_row_seconds": 11.187723708106205,
+  "peak_rss_bytes": 204881920,
+  "projection": {
+    "actions": [
+      {
+        "cut_union_attempt": {
+          "budget_refused": false,
+          "leaf_tests": 2165348,
+          "new_leaf_count": 625244,
+          "peak_tracked_cells": 369,
+          "witness_rows": 7033
+        },
+        "cut_union_committed": {
+          "after_digest": "sha256:e53e6325983c8d094c32e49c0a531e548b894a6a5c7208259131891a84394d50",
+          "before_digest": "sha256:ce22dcb99735e650ad5d3f24c49c77058be749883aa67170f23b91cc52200339",
+          "coverage_only_progress": false,
+          "leaf_tests": 2165348,
+          "new_leaf_count": 625244
+        },
+        "entry_mm": [
+          0.0,
+          0.0,
+          -2
+        ],
+        "failure_tip_mm": null,
+        "frozen_reward": -3.182875000000001,
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "index": 1,
+        "kind": "side_preparation",
+        "nominal_target_source_credit_mm3": 0.0,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "removed_physical_mm3": 14.789062500000007,
+        "removed_physical_target_mm3": 0.0,
+        "removed_source_cell_mm3": 15.734375000000007,
+        "result_state_hash": "sha256:9994f8817298d11ea161570c83bf3781f8df18b6a3ae2129992e37e643c29ecc",
+        "source_state_hash": "sha256:a505b3766e74d8c51decf903cc8a905a717f7bfd08a0f4dc08766c107b175017",
+        "status": "accepted",
+        "tip_mm": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "cut_union_attempt": {
+          "budget_refused": false,
+          "leaf_tests": 1629816,
+          "new_leaf_count": 438188,
+          "peak_tracked_cells": 532,
+          "witness_rows": 5403
+        },
+        "cut_union_committed": {
+          "after_digest": "sha256:4c623e91defc8a8fd79551d3e9aa69124e656380541c2711000669a13eb0e2ca",
+          "before_digest": "sha256:e53e6325983c8d094c32e49c0a531e548b894a6a5c7208259131891a84394d50",
+          "coverage_only_progress": false,
+          "leaf_tests": 1629816,
+          "new_leaf_count": 438188
+        },
+        "entry_mm": [
+          1.8,
+          0.0,
+          -2
+        ],
+        "failure_tip_mm": null,
+        "frozen_reward": -2.3985000000000007,
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "index": 2,
+        "kind": "side_preparation",
+        "nominal_target_source_credit_mm3": 0.0,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "removed_physical_mm3": 11.148437500000005,
+        "removed_physical_target_mm3": 0.0,
+        "removed_source_cell_mm3": 11.812500000000005,
+        "result_state_hash": "sha256:00a76c6250c36c8ab594b67d510d75cf852dc8cd6ea76a3f4a9a988e5ef39d58",
+        "source_state_hash": "sha256:9994f8817298d11ea161570c83bf3781f8df18b6a3ae2129992e37e643c29ecc",
+        "status": "accepted",
+        "tip_mm": [
+          1.8,
+          0.0,
+          1.0
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "cut_union_attempt": {
+          "budget_refused": false,
+          "leaf_tests": 1500175,
+          "new_leaf_count": 420158,
+          "peak_tracked_cells": 659,
+          "witness_rows": 5133
+        },
+        "cut_union_committed": {
+          "after_digest": "sha256:dcdc658a9fd8b651104df1442cbbde540c154085b20e9684d7d6bd627b7323ce",
+          "before_digest": "sha256:4c623e91defc8a8fd79551d3e9aa69124e656380541c2711000669a13eb0e2ca",
+          "coverage_only_progress": false,
+          "leaf_tests": 1500175,
+          "new_leaf_count": 420158
+        },
+        "entry_mm": [
+          0.0,
+          1.8,
+          -2
+        ],
+        "failure_tip_mm": null,
+        "frozen_reward": -2.3235000000000006,
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "index": 3,
+        "kind": "side_preparation",
+        "nominal_target_source_credit_mm3": 0.0,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "removed_physical_mm3": 10.804687500000005,
+        "removed_physical_target_mm3": 0.0,
+        "removed_source_cell_mm3": 11.437500000000005,
+        "result_state_hash": "sha256:a3c8e19a7addd7368425bbd0ac0751e306c01694ba8f42e144e6531bcaf12907",
+        "source_state_hash": "sha256:00a76c6250c36c8ab594b67d510d75cf852dc8cd6ea76a3f4a9a988e5ef39d58",
+        "status": "accepted",
+        "tip_mm": [
+          0.0,
+          1.8,
+          1.0
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "cut_union_attempt": {
+          "budget_refused": false,
+          "leaf_tests": 1500175,
+          "new_leaf_count": 420158,
+          "peak_tracked_cells": 786,
+          "witness_rows": 5133
+        },
+        "cut_union_committed": {
+          "after_digest": "sha256:18c20dce17efac1e748f78e23a979e80d8bc86c5abae4ca4cd637d3d17e9df18",
+          "before_digest": "sha256:dcdc658a9fd8b651104df1442cbbde540c154085b20e9684d7d6bd627b7323ce",
+          "coverage_only_progress": false,
+          "leaf_tests": 1500175,
+          "new_leaf_count": 420158
+        },
+        "entry_mm": [
+          -1.8,
+          0.0,
+          -2
+        ],
+        "failure_tip_mm": null,
+        "frozen_reward": -2.3235000000000006,
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "index": 4,
+        "kind": "side_preparation",
+        "nominal_target_source_credit_mm3": 0.0,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "removed_physical_mm3": 10.804687500000005,
+        "removed_physical_target_mm3": 0.0,
+        "removed_source_cell_mm3": 11.437500000000005,
+        "result_state_hash": "sha256:f570d97075698c4dc6ed7641760277837cbba4e76e3e7811540e7c9d147cd7f9",
+        "source_state_hash": "sha256:a3c8e19a7addd7368425bbd0ac0751e306c01694ba8f42e144e6531bcaf12907",
+        "status": "accepted",
+        "tip_mm": [
+          -1.8,
+          0.0,
+          1.0
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "cut_union_attempt": {
+          "budget_refused": false,
+          "leaf_tests": 1370534,
+          "new_leaf_count": 402128,
+          "peak_tracked_cells": 877,
+          "witness_rows": 4863
+        },
+        "cut_union_committed": {
+          "after_digest": "sha256:61910113ddde6412e6efbee222032158a00f4326aa59995340b9f0ad2c62b2b0",
+          "before_digest": "sha256:18c20dce17efac1e748f78e23a979e80d8bc86c5abae4ca4cd637d3d17e9df18",
+          "coverage_only_progress": false,
+          "leaf_tests": 1370534,
+          "new_leaf_count": 402128
+        },
+        "entry_mm": [
+          0.0,
+          -1.8,
+          -2
+        ],
+        "failure_tip_mm": null,
+        "frozen_reward": -2.248500000000001,
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "index": 5,
+        "kind": "side_preparation",
+        "nominal_target_source_credit_mm3": 0.0,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "removed_physical_mm3": 10.460937500000005,
+        "removed_physical_target_mm3": 0.0,
+        "removed_source_cell_mm3": 11.062500000000005,
+        "result_state_hash": "sha256:fee18be78ee9cd6db5de58f601d8704bd05991276e30c003397d63741a19bc94",
+        "source_state_hash": "sha256:f570d97075698c4dc6ed7641760277837cbba4e76e3e7811540e7c9d147cd7f9",
+        "status": "accepted",
+        "tip_mm": [
+          0.0,
+          -1.8,
+          1.0
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "cut_union_attempt": {
+          "budget_refused": false,
+          "leaf_tests": 1057844,
+          "new_leaf_count": 292388,
+          "peak_tracked_cells": 939,
+          "witness_rows": 3695
+        },
+        "cut_union_committed": {
+          "after_digest": "sha256:5de6681712f4fe6cd1347eb4b692caf20d4bdc8e258414e25bb0d101165a16f9",
+          "before_digest": "sha256:61910113ddde6412e6efbee222032158a00f4326aa59995340b9f0ad2c62b2b0",
+          "coverage_only_progress": false,
+          "leaf_tests": 1057844,
+          "new_leaf_count": 292388
+        },
+        "entry_mm": [
+          1.8,
+          1.8,
+          -2
+        ],
+        "failure_tip_mm": null,
+        "frozen_reward": -1.6672500000000008,
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "index": 6,
+        "kind": "side_preparation",
+        "nominal_target_source_credit_mm3": 0.0,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "removed_physical_mm3": 7.7265625000000036,
+        "removed_physical_target_mm3": 0.0,
+        "removed_source_cell_mm3": 8.156250000000004,
+        "result_state_hash": "sha256:57d0974d38309438c544723a797a37dc328e005781cc14210476b60b13586df7",
+        "source_state_hash": "sha256:fee18be78ee9cd6db5de58f601d8704bd05991276e30c003397d63741a19bc94",
+        "status": "accepted",
+        "tip_mm": [
+          1.8,
+          1.8,
+          1.0
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "cut_union_attempt": {
+          "budget_refused": false,
+          "leaf_tests": 1057844,
+          "new_leaf_count": 292388,
+          "peak_tracked_cells": 1014,
+          "witness_rows": 3695
+        },
+        "cut_union_committed": {
+          "after_digest": "sha256:fcc5d76ba4cac26d540453ccaf969c7ce579dbc3f24be28dc8c03772a5b4d71f",
+          "before_digest": "sha256:5de6681712f4fe6cd1347eb4b692caf20d4bdc8e258414e25bb0d101165a16f9",
+          "coverage_only_progress": false,
+          "leaf_tests": 1057844,
+          "new_leaf_count": 292388
+        },
+        "entry_mm": [
+          -1.8,
+          1.8,
+          -2
+        ],
+        "failure_tip_mm": null,
+        "frozen_reward": -1.6672500000000008,
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "index": 7,
+        "kind": "side_preparation",
+        "nominal_target_source_credit_mm3": 0.0,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "removed_physical_mm3": 7.7265625000000036,
+        "removed_physical_target_mm3": 0.0,
+        "removed_source_cell_mm3": 8.156250000000004,
+        "result_state_hash": "sha256:566c402e6c474f90121b482831b9a8039b3b5a29de28991f8551993b877e0ae2",
+        "source_state_hash": "sha256:57d0974d38309438c544723a797a37dc328e005781cc14210476b60b13586df7",
+        "status": "accepted",
+        "tip_mm": [
+          -1.8,
+          1.8,
+          1.0
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "cut_union_attempt": {
+          "budget_refused": false,
+          "leaf_tests": 1057844,
+          "new_leaf_count": 292388,
+          "peak_tracked_cells": 1089,
+          "witness_rows": 3695
+        },
+        "cut_union_committed": {
+          "after_digest": "sha256:8fccc8b57e6f4791ee6dab068f00962146dcc92d9ff6af7cf12c46cb074558df",
+          "before_digest": "sha256:fcc5d76ba4cac26d540453ccaf969c7ce579dbc3f24be28dc8c03772a5b4d71f",
+          "coverage_only_progress": false,
+          "leaf_tests": 1057844,
+          "new_leaf_count": 292388
+        },
+        "entry_mm": [
+          -1.8,
+          -1.8,
+          -2
+        ],
+        "failure_tip_mm": null,
+        "frozen_reward": -1.6672500000000008,
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "index": 8,
+        "kind": "side_preparation",
+        "nominal_target_source_credit_mm3": 0.0,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "removed_physical_mm3": 7.7265625000000036,
+        "removed_physical_target_mm3": 0.0,
+        "removed_source_cell_mm3": 8.156250000000004,
+        "result_state_hash": "sha256:a11e1cf6a92d442d84a8ac30c615973263fe79f7615472e153cbec675c2803c4",
+        "source_state_hash": "sha256:566c402e6c474f90121b482831b9a8039b3b5a29de28991f8551993b877e0ae2",
+        "status": "accepted",
+        "tip_mm": [
+          -1.8,
+          -1.8,
+          1.0
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "cut_union_attempt": {
+          "budget_refused": false,
+          "leaf_tests": 1057844,
+          "new_leaf_count": 292388,
+          "peak_tracked_cells": 1164,
+          "witness_rows": 3695
+        },
+        "cut_union_committed": {
+          "after_digest": "sha256:24c195a8b38c9bda71c964b25605e7c51f34e33f82f2cd6858397d2dd3daa3ad",
+          "before_digest": "sha256:8fccc8b57e6f4791ee6dab068f00962146dcc92d9ff6af7cf12c46cb074558df",
+          "coverage_only_progress": false,
+          "leaf_tests": 1057844,
+          "new_leaf_count": 292388
+        },
+        "entry_mm": [
+          1.8,
+          -1.8,
+          -2
+        ],
+        "failure_tip_mm": null,
+        "frozen_reward": -1.6672500000000008,
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "index": 9,
+        "kind": "side_preparation",
+        "nominal_target_source_credit_mm3": 0.0,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "removed_physical_mm3": 7.7265625000000036,
+        "removed_physical_target_mm3": 0.0,
+        "removed_source_cell_mm3": 8.156250000000004,
+        "result_state_hash": "sha256:ee92810a5ae6aacf67dddf7f6dc96ebfa94ce3fe4f7cac055c6a41d4762d2cb8",
+        "source_state_hash": "sha256:a11e1cf6a92d442d84a8ac30c615973263fe79f7615472e153cbec675c2803c4",
+        "status": "accepted",
+        "tip_mm": [
+          1.8,
+          -1.8,
+          1.0
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      {
+        "cut_union_attempt": {
+          "budget_refused": false,
+          "leaf_tests": 561932,
+          "new_leaf_count": 233788,
+          "peak_tracked_cells": 1209,
+          "witness_rows": 2576
+        },
+        "cut_union_committed": {
+          "after_digest": "sha256:6c28bcd3400778279f0d9fde7911c6fcda6d92c933094d09f2ea71a7037c47ea",
+          "before_digest": "sha256:24c195a8b38c9bda71c964b25605e7c51f34e33f82f2cd6858397d2dd3daa3ad",
+          "coverage_only_progress": false,
+          "leaf_tests": 561932,
+          "new_leaf_count": 233788
+        },
+        "entry_mm": [
+          0,
+          0,
+          -2
+        ],
+        "failure_tip_mm": null,
+        "frozen_reward": 2.416600021681191,
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "index": 10,
+        "kind": "target_stroke",
+        "nominal_target_source_credit_mm3": 3.2046875180676593,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "removed_physical_mm3": 6.953125000000003,
+        "removed_physical_target_mm3": 3.204687500000002,
+        "removed_source_cell_mm3": 6.953125000000003,
+        "result_state_hash": "sha256:d8e0437197e57dfc9473ddc3f7dd291ec2600837535e3cddc96c58290582fbb4",
+        "source_state_hash": "sha256:ee92810a5ae6aacf67dddf7f6dc96ebfa94ce3fe4f7cac055c6a41d4762d2cb8",
+        "status": "accepted",
+        "tip_mm": [
+          0.0,
+          0.0,
+          2.2
+        ],
+        "tool_id": "generic_aspirator"
+      }
+    ],
+    "affine": [
+      [
+        0.25,
+        0.0,
+        0.0,
+        -5.5
+      ],
+      [
+        0.0,
+        0.25,
+        0.0,
+        -5.5
+      ],
+      [
+        0.0,
+        0.0,
+        0.25,
+        -5.5
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "continuum_rationale": {
+      "aperture_margin_mm": 0.7544155877284284,
+      "disk_cover_margin_mm": 0.42720779386421404,
+      "interpretation": "Continuous ideal cutting union covers the prescribed final shaft; whole-cell/native temporal acceptance remains an outcome.",
+      "preparation_shaft_highest_z_mm": -0.2999999999999998,
+      "preparation_to_target_plane_gap_mm": 0.09999999999999964,
+      "target_shaft_highest_z_mm": 0.9000000000000004,
+      "target_stroke_cap_penetration_mm": 1.1000000000000005
+    },
+    "coverage": {
+      "attempted_leaf_tests": 12959356,
+      "attempted_new_leaf_count": 3709216,
+      "attempted_witness_rows": 44921,
+      "budget_refusals": 0,
+      "committed_new_leaf_count": 3709216,
+      "coverage_only_accepted_actions": 0,
+      "final_coverage_digest": "sha256:6c28bcd3400778279f0d9fde7911c6fcda6d92c933094d09f2ea71a7037c47ea",
+      "partially_certified_occupied_cells": 1168,
+      "peak_tracked_cells": 1209,
+      "scope": "attempted counters include rejected work; committed counters exclude discarded previews"
+    },
+    "cut_union_spec": {
+      "max_depth": 3,
+      "max_leaf_tests_per_preview": 4194304,
+      "max_tracked_cells": 4096,
+      "mode": "cumulative_affine_subcell_cut_union_v1"
+    },
+    "exact_continuous_target_cap_mm3": 5.0684361477915365,
+    "fixed_tool": {
+      "max_access_angle_deg": 45.0,
+      "parameter_source": "generic research geometry; not a verified commercial device",
+      "shaft_radius_mm": 2.7,
+      "tip_length_mm": 4.0,
+      "tip_radius_mm": 1.7,
+      "tool_id": "generic_aspirator",
+      "working_length_mm": 90.0
+    },
+    "grid": {
+      "name": "aligned-aspirator",
+      "phase_source_voxels": [
+        0,
+        0,
+        0
+      ],
+      "rotation_xyz_degrees": [
+        0,
+        0,
+        0
+      ],
+      "sampling": "aligned",
+      "tool_id": "generic_aspirator"
+    },
+    "native": {
+      "accepted_actions": 10,
+      "committed_history_hash": "sha256:64c07ccc2071e14ebcb04b712925decb63bc0d4f7cd40e41e5cffd1745989f2c",
+      "complete_sequence": true,
+      "contacted_physical_upper_mm3": 131.88281250000006,
+      "feasible": true,
+      "frozen_reward_total": -16.729274978318816,
+      "partial_cells_kept_occupied": true,
+      "removed_cells": 6468,
+      "removed_outer_voxelization_excess_mm3": 5.1953125,
+      "removed_physical_mm3": 95.86718750000004,
+      "removed_physical_target_mm3": 3.2046875000000026,
+      "removed_source_cell_mm3": 101.06250000000004,
+      "target_stroke_removed_physical_target_mm3": 3.204687500000002,
+      "target_stroke_status": "accepted"
+    },
+    "native_calls": 10,
+    "native_config_hash": "sha256:1e5e2cb27f7f8529533dc0a1ae3cce54c2b7c7566bcd3173d9c6009b5ccac67a",
+    "physical_actions_sha256": "sha256:2da88abdbe13cd8984e10616b52622c823e7d88c3c6c731e9fb1731ccee7c519",
+    "planned_actions": 10,
+    "row_id": "aligned-aspirator-0.25mm",
+    "shape": [
+      45,
+      45,
+      57
+    ],
+    "source_hash": "sha256:74a69984450c85d8dc282b84dadae965145b962bd9ceb402bb99c8385ee2e6fa",
+    "spacing_mm": 0.25,
+    "static_not_executable": {
+      "contact_cells": 8837,
+      "contact_physical_upper_mm3": 131.88281250000006,
+      "contained_cells": 6444,
+      "contained_physical_lower_mm3": 95.49218750000004,
+      "scope": "planned active-sweep union; contained lower is reference only, not an experimental removal ceiling"
+    }
+  },
+  "projection_sha256": "78eaf55ebb3d3046bcce59d18e0ab7241d35822cff41a5ed83ff3956c0b314c1",
+  "retained_native_and_work_exact": true,
+  "retained_report_sha256": "3784d71445463bd97ef717ffb0a191852cab0cc75ae85bfe4d26b8c8dff36d42",
+  "row_id": "aligned-aspirator-0.25mm",
+  "schema": "one_fixed_generated_union_digest_profile_v1",
+  "source_sha256": "10bc2eb2b4b7034f8d6c51791cd4c6bd6d2a5e235cf18a11f8a1c55b67e92443",
+  "timer_scope": "Inclusive/nested; no additive attribution. Instrumentation overhead is included.",
+  "timers": {
+    "leaf_corner_distance": {
+      "calls": 52687,
+      "seconds_inclusive": 2.538834580918774
+    },
+    "ledger_canonical_json_freeze_thaw_hash": {
+      "calls": 543,
+      "seconds_inclusive": 1.0145960291847587
+    },
+    "preview_cover": {
+      "calls": 510,
+      "seconds_inclusive": 5.476830535335466
+    },
+    "preview_digest_property": {
+      "calls": 1041,
+      "seconds_inclusive": 1.2852407817263156
+    },
+    "preview_finish_step": {
+      "calls": 510,
+      "seconds_inclusive": 1.1070598291698843
+    },
+    "preview_freeze": {
+      "calls": 11,
+      "seconds_inclusive": 0.037985335336998105
+    },
+    "result_history_json_digest": {
+      "calls": 20,
+      "seconds_inclusive": 0.3823613745626062
+    }
+  },
+  "variant": "candidate"
+}

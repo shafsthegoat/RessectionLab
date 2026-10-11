@@ -1,0 +1,111 @@
+{
+  "acquired_inputs": false,
+  "caps": {
+    "cleanup_reserve_seconds": 6.0,
+    "execution_seconds": 114.0,
+    "output_bytes": 98304,
+    "sampled_group_rss_bytes": 2147483648,
+    "threads": 1,
+    "total_seconds": 120.0,
+    "total_stage_bytes": 204800
+  },
+  "cleanup_errors": [],
+  "comparison": {
+    "baseline_digest_json_calls": 1144,
+    "baseline_native_seconds": 11.704384252196178,
+    "baseline_result_sha256": "65fe3966d00aa9c6ce6503847cc098ce65951af063e3e92bd0513c59c7ecafbc",
+    "candidate_digest_json_calls": 543,
+    "candidate_native_seconds": 10.810763377230614,
+    "candidate_result_sha256": "19e864038c6684cc021875759a3e614497d9014e2931329002ac1339445533af",
+    "exact_semantic_parity": true,
+    "full_history_sha256": "f698a40ffe3c679ae6f82b86b42aecbd0339d28544f4860eb99fb845f6b8c2c4",
+    "row_id": "aligned-aspirator-0.25mm"
+  },
+  "comparison_scope": "One instrumented ordered fixed-row pair; not a production speedup estimate",
+  "elapsed_seconds": 38.712981374934316,
+  "failure": null,
+  "model_calls": 0,
+  "output_bytes_before_receipt": 47991,
+  "phase_order": [
+    "tests",
+    "baseline",
+    "candidate"
+  ],
+  "phases": [
+    {
+      "child_reaped": true,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "-I",
+        "-B",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-union-v1/optimization/dispatch_worker.py",
+        "--phase",
+        "tests",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-union-v1/optimization/pair-01/tests.json"
+      ],
+      "elapsed_seconds": 1.3599140418227762,
+      "log_sha256": "c074d63de7cbb871ea7e80801a5a54128b7cad28eb0c32baaee2bde973cd81f1",
+      "phase": "tests",
+      "remaining_owned_pids": [],
+      "returncode": 0,
+      "sampled_peak_rss_bytes": 86589440,
+      "samples": 6,
+      "stop_reason": null
+    },
+    {
+      "child_reaped": true,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "-I",
+        "-B",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-union-v1/optimization/dispatch_worker.py",
+        "--phase",
+        "baseline",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-union-v1/optimization/pair-01/baseline.json"
+      ],
+      "elapsed_seconds": 19.062830625101924,
+      "log_sha256": "48b11abaab672e46bfa8aa8abacce9fb6d3a449796e776fdf308de4b2ac559e4",
+      "phase": "baseline",
+      "remaining_owned_pids": [],
+      "returncode": 0,
+      "sampled_peak_rss_bytes": 200671232,
+      "samples": 91,
+      "stop_reason": null
+    },
+    {
+      "child_reaped": true,
+      "cleanup_actions": [],
+      "cleanup_errors": [],
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "-I",
+        "-B",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-union-v1/optimization/dispatch_worker.py",
+        "--phase",
+        "candidate",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-union-v1/optimization/pair-01/candidate.json"
+      ],
+      "elapsed_seconds": 18.207768375054002,
+      "log_sha256": "e720dc87ac78a74a7e145b99f54308adfbc215aeedab32d4605bf1e79a699acd",
+      "phase": "candidate",
+      "remaining_owned_pids": [],
+      "returncode": 0,
+      "sampled_peak_rss_bytes": 208535552,
+      "samples": 87,
+      "stop_reason": null
+    }
+  ],
+  "remaining_owned_pids": [],
+  "sampled_peak_group_rss_bytes": 208535552,
+  "schema": "owned_one_row_union_digest_cache_pair_v1",
+  "source_index_sha256": "4a9a2966f5b8c588ab53044d08f76a6992c707a90616fed54549cac53a1fdf63",
+  "stage_bytes_before_receipt": 111163,
+  "status": "complete"
+}

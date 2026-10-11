@@ -1,0 +1,30 @@
+One fixed generated-row digest-cache comparison
+
+Aligned generic aspirator, 0.25 mm grid, unchanged ten-action sequence and union
+model. Candidate-overlay tests passed 60/60 before the ordered baseline→candidate
+pair. Both workers independently passed full-history geometry checking.
+Exact history hash, scientific projection, sparse proof counters, state hashes,
+removal and frozen rewards matched; no checker or geometry change was made.
+
+Native execution: 11.704384→10.810763s (0.893621s,7.63% lower in this pair).
+Canonical ledger JSON/hash calls: 1144→543 (601 avoided).
+Their measured time: 2.194695→1.014596s.
+Independent audit: 6.449406→6.429475s; unchanged implementation.
+Leaf-distance calls: 52,687 in each arm; timing 2.357118→2.538835s.
+Result-history digest calls: 20 in each arm; timing 0.364762→0.382361s.
+The digest cache removes redundant serialization; it does not reduce leaf tests
+or optimize independent checking. Nested function timers must not be summed.
+
+Parent completed in 38.712981 s, peak sampled group RSS 208,535,552 B, all 3 children
+reaped, no cleanup errors or remaining owned processes. Both profiles used fresh
+one-thread processes, baseline first. This single instrumented ordered pair is
+attribution evidence, not a general production latency or memory improvement
+claim; run order, instrumentation and allocator effects remain uncontrolled.
+No 18-row rerun, acquired input, model call or clinical inference occurred.
+
+Immutable receipt SHA256:
+4e8b14229e48d47f54c37b853f502f4d7afbc90df83b6140c225f4a382244e95
+Full history SHA256 (both arms; history contents not archived):
+f698a40ffe3c679ae6f82b86b42aecbd0339d28544f4860eb99fb845f6b8c2c4
+Candidate helper 10bc2eb2…; original helper bd74877a… is archived for mandatory
+portable regression tests. Complete source hashes remain in dispatch index.

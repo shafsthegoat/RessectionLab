@@ -53,16 +53,24 @@ class CutUnionLimit(RuntimeError):
     """Reject the whole preview; never commit a partially updated certificate."""
 
 
-def ledger_digest(spec, ledger):
+def _validated_ledger_items(spec, ledger):
     if type(spec) is not CutUnionSpec or len(ledger) > spec.max_tracked_cells:
         raise ValueError("Invalid cumulative cutting ledger or declaration")
-    rows = []
-    for cell, mask in sorted(ledger.items()):
+    items = tuple(sorted(ledger.items()))
+    for cell, mask in items:
         if (type(cell) is not tuple or len(cell) != 3 or any(type(v) is not int or v < 0 for v in cell)
                 or type(mask) is not int or not 0 < mask <= spec.full_mask):
             raise ValueError("Invalid canonical cumulative cutting ledger entry")
-        rows.append({"index": list(cell), "covered_bits_hex": format(mask, "x")})
+    return items
+
+
+def _digest_ledger_items(spec, items):
+    rows = [{"index": list(cell), "covered_bits_hex": format(mask, "x")} for cell, mask in items]
     return semantic_digest({"mode": MODE, "spec": spec.to_record(), "cells": rows})
+
+
+def ledger_digest(spec, ledger):
+    return _digest_ledger_items(spec, _validated_ledger_items(spec, ledger))
 
 
 def _exposed(cell, free):
@@ -82,6 +90,9 @@ class PreviewCutCoverage:
             raise TypeError("An explicit typed cumulative cutting declaration is required")
         ledger_digest(spec, ledger)
         self.spec, self.cells = spec, dict(ledger)
+        # A content key also detects out-of-band edits to the public working
+        # dictionary. Never trust a dirty flag or mutable-object identity here.
+        self._cached_digest_key = self._cached_digest_value = None
         self.affine = np.asarray(affine, float)
         if self.affine.shape != (4, 4) or not np.isfinite(self.affine).all():
             raise ValueError("Finite affine cell partition required")
@@ -93,7 +104,15 @@ class PreviewCutCoverage:
 
     @property
     def digest(self):
-        return ledger_digest(self.spec, self.cells)
+        items = _validated_ledger_items(self.spec, self.cells)
+        # Spec types are included so bool/int equality cannot hide a changed
+        # declaration. All cell/index/mask types were checked above, on hits too.
+        spec_key = tuple((key, type(value), value) for key, value in self.spec.to_record().items())
+        key = (spec_key, items)
+        if key != self._cached_digest_key:
+            self._cached_digest_value = _digest_ledger_items(self.spec, items)
+            self._cached_digest_key = key
+        return self._cached_digest_value
 
     def cover(self, occupied, direct_whole_cells, connected_free, start, end, radius):
         """Certify only NEW leaves in this one capsule, after its shaft passed.
