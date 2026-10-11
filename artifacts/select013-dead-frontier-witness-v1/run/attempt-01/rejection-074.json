@@ -1,0 +1,119 @@
+{
+  "action_id": "nominal-cavity-fea38438d7db0285556ecdea",
+  "column_index": 12,
+  "diagnostic": {
+    "axis_unit": [
+      1.0,
+      4.896985740886425e-12,
+      0.0
+    ],
+    "blocked_cell_count": 4,
+    "blocked_indices_hash": "sha256:c772a588a0f60962027bcdad85b8eb5faa2f05f930f8d20fb0af659c7a807392",
+    "blocked_indices_native": [
+      [
+        5,
+        90,
+        87
+      ],
+      [
+        5,
+        90,
+        89
+      ],
+      [
+        5,
+        92,
+        87
+      ],
+      [
+        5,
+        92,
+        89
+      ]
+    ],
+    "cell_limit": 32,
+    "complete_first_failure_set": true,
+    "decision_model_hash": "sha256:b7885a968eb145c1d45c13b1af2d4ea8e667dfb97c5f6110bc200c01d1dd74b5",
+    "entry_mm": [
+      -59.878999999211224,
+      -14.88899999969404,
+      -21.27829534675098
+    ],
+    "failure_interval_index": 24,
+    "failure_tip_meaning": "endpoint of first rejected microstep, not exact first-contact time",
+    "failure_tip_mm": [
+      -54.90976923874969,
+      -14.888999999669705,
+      -21.27829534675098
+    ],
+    "fingerprint": "sha256:88b7e3d956ce9fc4fcdad2aae0ed07725a93e31f807b547faca6ee79c55b09c9",
+    "interaction_mode": "aspirate",
+    "native_affine_hash": "sha256:27003b4f2f6a3549c8a032e345c71a80286cb142cfc8b91612007f024717b987",
+    "planned_microsteps": 196,
+    "previous_tip_mm": [
+      -55.158487187518915,
+      -14.888999999670924,
+      -21.27829534675098
+    ],
+    "prior_temporary_removal_hash_scope": "ordered completed microstep native shape/dtype/bytes SHA256 digests; cells are disjoint by native remaining-mask updates",
+    "prior_temporary_removals_committed": false,
+    "prior_temporary_removals_hash": "sha256:da975d4e7f9804665e878635a64ed28e42136965b673ca55eeaaad68944037cd",
+    "prior_temporary_removed_count": 0,
+    "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+    "requested_tip_mm": [
+      -12.378999999211224,
+      -14.888999999461433,
+      -21.27829534675098
+    ],
+    "retained_cell_count": 4,
+    "scope": "all remaining cells in first rejected shaft sweep, not minimal blockers; subsequent corridor unknown; re-preview after preparation",
+    "shaft_sweep_end_mm": [
+      -57.90976923874969,
+      -14.888999999684396,
+      -21.27829534675098
+    ],
+    "shaft_sweep_start_mm": [
+      -155.15848718751892,
+      -14.889000000160623,
+      -21.27829534675098
+    ],
+    "source_hash": "sha256:01b0bc9e3586b0f797f132d072b809a7570a9a0c6eae86392aa35417e4a06bda",
+    "source_shape": [
+      131,
+      154,
+      117
+    ],
+    "source_state_hash": "sha256:5f127a07d9fc66d85fa7c758dc2fc1d8f7c26aa99c0a3ac991df00adedc66d16",
+    "temporal_rule": "shaft_sweep_must_clear_prior_cavity_before_endpoint_cut_credit",
+    "tool": {
+      "max_access_angle_deg": 45.0,
+      "parameter_source": "generic research geometry; not a verified commercial device",
+      "shaft_radius_mm": 1.4,
+      "tip_length_mm": 3.0,
+      "tip_radius_mm": 1.0,
+      "tool_id": "generic_suction",
+      "working_length_mm": 100.0
+    },
+    "truncated": false,
+    "version": "native-first-shaft-obstruction-v1"
+  },
+  "entry_mm": [
+    -59.878999999211224,
+    -14.88899999969404,
+    -21.27829534675098
+  ],
+  "family": "distal_nominal",
+  "feasible": false,
+  "first_returned_microstep_start_mm": [
+    -60.879000009211225,
+    -14.888999999698937,
+    -21.27829534675098
+  ],
+  "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+  "tip_mm": [
+    -12.378999999211224,
+    -14.888999999461433,
+    -21.27829534675098
+  ],
+  "tool_id": "generic_suction"
+}

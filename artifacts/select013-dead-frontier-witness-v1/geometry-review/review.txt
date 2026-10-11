@@ -1,0 +1,127 @@
+MATHEMATICAL REVIEW: FIXED SELECT013 FIRST-SHAFT-BLOCKER COVERAGE
+
+Conclusion
+GO for the one fixed, bounded diagnostic under the reviewed native model and
+existing execution caps. The revised whole-cell exclusion is a conservative
+necessary-condition diagnostic. It is not an independent geometry certificate,
+an accessible-removal certificate, a global reachability result, or clinical
+physics. No patient arrays/images, checkpoint/weights, or science run were read
+or executed by this reviewer. No canonical source was edited.
+
+Exact-arithmetic proof
+Let V(c) be the eight corners of a native affine cell. The cell is their convex
+hull. A closed finite capsule C(a,b,r) is convex. Hence the entire cell is inside
+the capsule iff every corner is inside: max_v dist(v,[a,b]) <= r. This is stronger
+than a center test and applies to rotated, reflected, and anisotropic cells.
+
+For a fixed emitted endpoint q, tool length L, computed inward axis u, and
+physical start s (including post-exposure pre-entry), the full active capsule is
+C(s-Lu,q,r). In exact axial arithmetic each native microstep active centerline
+[p_previous-Lu,p_current] is a subsegment of [s-Lu,q]. Thus its capsule is a subset
+of this full capsule. A cell removable in a native microstep must therefore fit
+the full capsule. Exclusion from every full capsule for every possible endpoint
+on every frozen column and tool excludes removal of that cell by any sequence
+using this same family. Native whole-cell removal cannot accumulate partial-cell
+credit from successive strokes. This implication does not require exposure or
+shaft clearance because those additional conditions only restrict removal.
+
+The helper enumerates every in-grid axial source index for each of the 13 fixed
+columns and each configured tool. All current emitted base, intermediate, and
+tool-footprint families choose such an endpoint and reconstruct tip/entry with
+the same native matrix-vector expressions as the helper. Footprint preparation
+uses a batched transform to choose an endpoint, but actual ray emission repeats
+the scalar transform. It is therefore incorrect to claim an actual emitted-ray
+matrix-expression mismatch here. Original/native affine reconciliation can cause
+tiny endpoint-dependent entry drift; full enumeration retains that drift instead
+of substituting one idealized line per column. Negative/nonpositive depth cannot
+be an admissible inward stroke, and represented lengths below 1e-9 mm are refused
+by the native preview and now safely skipped before normalization.
+
+Caps and projections
+Finite-segment distances include spherical proximal and distal capsule ends.
+The full sweep includes the actual pre-entry start, not merely the access plane.
+Ignoring these caps or pre-entry could incorrectly exclude a removable cell.
+
+An infinite cylinder about an axis is a still larger relaxation. Project each
+cell corner orthogonally to the access plane. If a column's possible projected
+entries lie on a segment S, max_v dist(project(v),S) is a lower bound on the
+farthest-corner radius needed at every individual candidate entry e in S. Taking
+the minimum of this bound over columns remains a necessary-only radial test.
+Different corners may choose different nearest points of S: passing it does not
+establish one shared feasible entry. It also ignores finite axial caps. The
+reviewed helper uses the stronger finite-capsule enumeration, not this projected
+relaxation. Neither a projected pass nor a whole-sweep pass proves that any one
+microstep can contain the cell.
+
+Numerical boundaries and minimal fix
+The native kernel intentionally requires distance <= r-1e-10 mm. Failure of that
+inward-tolerance test alone is not a robust geometric exclusion. In particular,
+an exactly tangent corner must not become categorical evidence of an action-space
+gap merely because of that tolerance or floating-point transform differences.
+
+The reviewed helper keeps the native result separate and repeats the same native
+kernel at radius r+1e-6+1e-10 mm, cancelling its inward tolerance and giving a
+1e-6 mm outward reporting band. Cells failing the native test but passing this
+enlarged test are explicitly roundoff-ambiguous. Only failure of every enlarged
+capsule can enter outside_every_fixed_axis_tip_envelope.
+
+The fixed cushion is deliberately restricted to bounded millimetre coordinates:
+finite full-grid world corners, finite access and tool dimensions, a combined
+coordinate/span/tool bound <=10,000 mm, and active length >=1 mm. Outside that
+scope all supplied cells are unknown and no containment calls/exclusions occur.
+This prevents interpreting a fixed absolute tolerance as valid for arbitrarily
+large finite affine inputs. At the admitted bounded binary64 scales the 1e-6 mm
+reporting band is much larger than elementary affine/interpolation/distance
+roundoff. Actual native and helper axes/start calculations are shared, so no
+model-level angular extrapolation is silently introduced. This remains a
+source-bound floating-point diagnostic; the code is not interval arithmetic or
+a formally verified error-bound implementation. No claim about the original
+scanner frame or physical anatomy follows from the native-affine reconciliation
+record. In particular, its 1e-6 mm reconciliation bound must not be confused with
+this reporting-only cushion or summed implicitly into a physical certificate.
+
+Meaning of an actual first-shaft-blocker exclusion
+The first-hit sidecar is copied from the native engine's first rejected interval,
+with source/config/state/action/failure bindings. It is not independently
+reconstructed. If a retained actual blocker is outside all enlarged envelopes,
+the frozen family cannot remove that whole native cell and cannot clear that
+cell from this ray's shaft sweep through prior cuts in the same family. This does
+not certify a minimal blocker, enumerate later blockers, establish a complete
+blocker set when truncated, or show that no different tool/axis/path could work.
+Passing never proves accessible removal: shaft-before-cut timing, connectivity,
+exposure, hard geometry, aperture, candidate emission/caps, and finite microstep
+containment remain unresolved.
+
+Narrow generated evidence
+The reviewer ran generated_bound_controls.py once (0.175 seconds reported by the
+execution tool). Twelve small control records passed: both generic radii across
+all 13 axes in identity and oblique/reflected/anisotropic frames; tangent,
++0.5e-6 mm, and +2e-6 mm radial boundaries; infinite-cylinder-versus-finite-cap
+distinction; and full-sweep-versus-microstep distinction. The last control has an
+8 mm axial cell that fits the full sweep yet none of 65 small active microsteps,
+providing a concrete counterexample to interpreting a pass as removability.
+The between-column identity cell has a center radius sqrt(2) but requires a
+whole-cell radius sqrt(4.5)=2.12132034356 mm, exceeding both generic tip radii
+(1.0 and 1.7 mm). This is a concrete counterexample to center-only coverage.
+
+Separately, the owner's saved controls-01.json and unchanged source pins were
+read, not rerun: ten generated controls passed, exit 0, reaped, parent wall
+1.437599166 seconds. These cover the actual helper's reflected post-exposure
+first-hit/state preservation, tangent/anisotropic ambiguity, out-of-scale
+unknown fallback, and covered versus all-axis-uncovered actual generated cells.
+
+Exact source SHA256 at review and reviewer control execution
+src/resectionlab/native_resection.py
+79363aa6156917514d4aa57e328adcd16babff51518c0c4587e6dcaf94a5723d
+src/resectionlab/geometry.py
+426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184
+src/resectionlab/native_proposals.py
+9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59
+src/resectionlab/post_exposure.py
+ce95ca492aef3bb0149d9fb62c22766caad76701f894abaa37327a21acb7970e
+build/select013-dead-frontier-witness-v1/blocker_coverage.py
+a449cb0db3011b953353185bf6c9247d68c20f4ee962501c2c9113e34eb48e25
+build/select013-dead-frontier-witness-v1/test_witness.py
+d085b5f44498fca24eb63653bfdc6b2f14694268d5b613b7353696af4fbd31c0
+
+Reviewer outputs are confined to ignored build/blocker-geometry-bound-review-v1.

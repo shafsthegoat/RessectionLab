@@ -1,0 +1,4357 @@
+{
+  "ambiguous_unique_cells": 0,
+  "cell_rows": [
+    {
+      "cell": [
+        2,
+        87,
+        82
+      ],
+      "classification": "excluded_by_all_enlarged_envelopes",
+      "enlarged_tool_axis_pairs": [],
+      "rejected_ray_count": 5
+    },
+    {
+      "cell": [
+        3,
+        87,
+        84
+      ],
+      "classification": "excluded_by_all_enlarged_envelopes",
+      "enlarged_tool_axis_pairs": [],
+      "rejected_ray_count": 14
+    },
+    {
+      "cell": [
+        3,
+        87,
+        86
+      ],
+      "classification": "excluded_by_all_enlarged_envelopes",
+      "enlarged_tool_axis_pairs": [],
+      "rejected_ray_count": 19
+    },
+    {
+      "cell": [
+        3,
+        88,
+        82
+      ],
+      "classification": "excluded_by_all_enlarged_envelopes",
+      "enlarged_tool_axis_pairs": [],
+      "rejected_ray_count": 4
+    },
+    {
+      "cell": [
+        3,
+        92,
+        81
+      ],
+      "classification": "excluded_by_all_enlarged_envelopes",
+      "enlarged_tool_axis_pairs": [],
+      "rejected_ray_count": 14
+    },
+    {
+      "cell": [
+        3,
+        94,
+        82
+      ],
+      "classification": "excluded_by_all_enlarged_envelopes",
+      "enlarged_tool_axis_pairs": [],
+      "rejected_ray_count": 14
+    },
+    {
+      "cell": [
+        4,
+        88,
+        84
+      ],
+      "classification": "inside_optimistic_envelope",
+      "enlarged_tool_axis_pairs": [
+        [
+          9,
+          "generic_aspirator"
+        ]
+      ],
+      "rejected_ray_count": 4
+    },
+    {
+      "cell": [
+        4,
+        88,
+        86
+      ],
+      "classification": "inside_optimistic_envelope",
+      "enlarged_tool_axis_pairs": [
+        [
+          9,
+          "generic_aspirator"
+        ]
+      ],
+      "rejected_ray_count": 8
+    },
+    {
+      "cell": [
+        4,
+        90,
+        84
+      ],
+      "classification": "excluded_by_all_enlarged_envelopes",
+      "enlarged_tool_axis_pairs": [],
+      "rejected_ray_count": 17
+    },
+    {
+      "cell": [
+        4,
+        90,
+        86
+      ],
+      "classification": "excluded_by_all_enlarged_envelopes",
+      "enlarged_tool_axis_pairs": [],
+      "rejected_ray_count": 31
+    },
+    {
+      "cell": [
+        4,
+        92,
+        84
+      ],
+      "classification": "excluded_by_all_enlarged_envelopes",
+      "enlarged_tool_axis_pairs": [],
+      "rejected_ray_count": 27
+    },
+    {
+      "cell": [
+        4,
+        94,
+        88
+      ],
+      "classification": "excluded_by_all_enlarged_envelopes",
+      "enlarged_tool_axis_pairs": [],
+      "rejected_ray_count": 9
+    },
+    {
+      "cell": [
+        5,
+        90,
+        87
+      ],
+      "classification": "inside_optimistic_envelope",
+      "enlarged_tool_axis_pairs": [
+        [
+          4,
+          "generic_aspirator"
+        ],
+        [
+          6,
+          "generic_aspirator"
+        ]
+      ],
+      "rejected_ray_count": 4
+    },
+    {
+      "cell": [
+        5,
+        90,
+        89
+      ],
+      "classification": "excluded_by_all_enlarged_envelopes",
+      "enlarged_tool_axis_pairs": [],
+      "rejected_ray_count": 4
+    },
+    {
+      "cell": [
+        5,
+        92,
+        87
+      ],
+      "classification": "inside_optimistic_envelope",
+      "enlarged_tool_axis_pairs": [
+        [
+          4,
+          "generic_aspirator"
+        ],
+        [
+          8,
+          "generic_aspirator"
+        ]
+      ],
+      "rejected_ray_count": 4
+    },
+    {
+      "cell": [
+        5,
+        92,
+        89
+      ],
+      "classification": "excluded_by_all_enlarged_envelopes",
+      "enlarged_tool_axis_pairs": [],
+      "rejected_ray_count": 4
+    },
+    {
+      "cell": [
+        5,
+        93,
+        84
+      ],
+      "classification": "inside_optimistic_envelope",
+      "enlarged_tool_axis_pairs": [
+        [
+          2,
+          "generic_aspirator"
+        ],
+        [
+          7,
+          "generic_aspirator"
+        ]
+      ],
+      "rejected_ray_count": 4
+    },
+    {
+      "cell": [
+        5,
+        93,
+        86
+      ],
+      "classification": "inside_optimistic_envelope",
+      "enlarged_tool_axis_pairs": [
+        [
+          2,
+          "generic_aspirator"
+        ],
+        [
+          8,
+          "generic_aspirator"
+        ]
+      ],
+      "rejected_ray_count": 4
+    },
+    {
+      "cell": [
+        5,
+        95,
+        84
+      ],
+      "classification": "excluded_by_all_enlarged_envelopes",
+      "enlarged_tool_axis_pairs": [],
+      "rejected_ray_count": 4
+    }
+  ],
+  "censored_first_rejection_sets": 0,
+  "committed_outside_target_mm3": 43.99999575045438,
+  "committed_target_mm3": 0.0,
+  "committed_unique_cells": 44,
+  "containment_kernel_calls": 6708,
+  "excluded_unique_cells": 13,
+  "maximum_first_set_size": 4,
+  "metadata_files": 50,
+  "models_weights_arrays_read_by_audit": false,
+  "native_preview_entries": 1521,
+  "no_survivors": true,
+  "optimistically_containable_unique_cells": 6,
+  "output_bytes": 1803441,
+  "parent_seconds": 24.375523666851223,
+  "phase_costs": {
+    "actual_cell_capacity": {
+      "complete_wall_seconds": 1.953072499949485,
+      "native_preview_entries": 0
+    },
+    "diagnostic_STOP_closure": {
+      "complete_wall_seconds": 0.0600126248318702,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 2,
+      "inventory_request_inclusive_seconds": 0.02239162498153746,
+      "inventory_request_returned": 2,
+      "native_preview_entries": 0,
+      "native_transition_calls": 1,
+      "native_transition_inclusive_seconds": 0.048229708103463054,
+      "native_transition_returned": 1
+    },
+    "first_rejection_sidecars": {
+      "complete_wall_seconds": 4.902354167075828,
+      "native_preview_entries": 117
+    },
+    "fixed_prefix_replay": {
+      "complete_wall_seconds": 13.473785000154749,
+      "inventory_build_or_terminal_empty_calls": 11,
+      "inventory_request_calls": 23,
+      "inventory_request_inclusive_seconds": 13.115669750375673,
+      "inventory_request_returned": 23,
+      "native_preview_entries": 1287,
+      "native_transition_calls": 11,
+      "native_transition_inclusive_seconds": 13.402293166145682,
+      "native_transition_returned": 11
+    },
+    "public_construction": {
+      "complete_wall_seconds": 1.4925498338416219,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.1360442920122296,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 117,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.001291625201702118,
+      "task_clone_returned": 1
+    }
+  },
+  "prefix": [
+    {
+      "actions": [
+        "nominal-cavity-7f1a5747d69d0235913a18ca"
+      ],
+      "estimated_incremental_return": -0.6383999420716507,
+      "history_hash": "sha256:35411e0b5b0142605b5eb7675ede8763054912acdfd9b976b5e6fdcd62ac541d",
+      "legal_nonstop_actions": 37,
+      "max_insertion_distance_mm": 4.200000010000004,
+      "outside_supplied_target_removed_mm3": 2.999999710258254,
+      "removed_cell_count": 3,
+      "source_state_after": "sha256:1ff5d71d46842f2672e0d52afcf631bfff5a74780e29a08a9ab69fab83833839",
+      "step": 1,
+      "target_removed_mm3": 0.0
+    },
+    {
+      "actions": [
+        "nominal-cavity-7f1a5747d69d0235913a18ca",
+        "nominal-cavity-fd1d4cb74d6925b8da2a39e9"
+      ],
+      "estimated_incremental_return": -1.2787998841433015,
+      "history_hash": "sha256:ffdd9d8cd760b3ea2780bc19ab77d9e02f8f9973f0336d14ad4789aae8580269",
+      "legal_nonstop_actions": 33,
+      "max_insertion_distance_mm": 5.200000009999997,
+      "outside_supplied_target_removed_mm3": 5.999999420516508,
+      "removed_cell_count": 3,
+      "source_state_after": "sha256:76ad40d21d354209c70bbcb59760fa595470b1df8027dd3e5c1fbc41edb2da2b",
+      "step": 2,
+      "target_removed_mm3": 0.0
+    },
+    {
+      "actions": [
+        "nominal-cavity-7f1a5747d69d0235913a18ca",
+        "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+        "nominal-cavity-41e1f0b77645464d7846b3c2"
+      ],
+      "estimated_incremental_return": -2.517199768266603,
+      "history_hash": "sha256:e6b19474c5352845db37a54e1c655609a308be92eacc9f20256f84b1d5746fb8",
+      "legal_nonstop_actions": 30,
+      "max_insertion_distance_mm": 5.200000009999997,
+      "outside_supplied_target_removed_mm3": 11.999998841033015,
+      "removed_cell_count": 6,
+      "source_state_after": "sha256:8832399faf3172a461e55fbf8829867e76add256c114b914f87f0d0de7cc1f35",
+      "step": 3,
+      "target_removed_mm3": 0.0
+    },
+    {
+      "actions": [
+        "nominal-cavity-7f1a5747d69d0235913a18ca",
+        "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+        "nominal-cavity-41e1f0b77645464d7846b3c2",
+        "nominal-cavity-f15644d605ad3b57b70b9792"
+      ],
+      "estimated_incremental_return": -4.557599575125439,
+      "history_hash": "sha256:427e4c9a4cb7b7764a756c58888343b43587596c2b66b8febe917f649b739e86",
+      "legal_nonstop_actions": 22,
+      "max_insertion_distance_mm": 5.200000009999997,
+      "outside_supplied_target_removed_mm3": 21.999997875227194,
+      "removed_cell_count": 10,
+      "source_state_after": "sha256:01c225eee13ba4a141fbbad75824625a7fb3a68caecb1b99f66a08d94ae792d6",
+      "step": 4,
+      "target_removed_mm3": 0.0
+    },
+    {
+      "actions": [
+        "nominal-cavity-7f1a5747d69d0235913a18ca",
+        "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+        "nominal-cavity-41e1f0b77645464d7846b3c2",
+        "nominal-cavity-f15644d605ad3b57b70b9792",
+        "nominal-cavity-4db63ac16ece6cad42f2944c"
+      ],
+      "estimated_incremental_return": -5.593999478564856,
+      "history_hash": "sha256:a5a0c11f671864321a29b2f13ecfb677d2a1bef10fa4e2e4aea98b4931bbf288",
+      "legal_nonstop_actions": 17,
+      "max_insertion_distance_mm": 5.200000009999997,
+      "outside_supplied_target_removed_mm3": 26.999997392324282,
+      "removed_cell_count": 5,
+      "source_state_after": "sha256:240ac90705f09a32a9f8864223ac6de02d0bcc37b135ed220c1f4331d6c62840",
+      "step": 5,
+      "target_removed_mm3": 0.0
+    },
+    {
+      "actions": [
+        "nominal-cavity-7f1a5747d69d0235913a18ca",
+        "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+        "nominal-cavity-41e1f0b77645464d7846b3c2",
+        "nominal-cavity-f15644d605ad3b57b70b9792",
+        "nominal-cavity-4db63ac16ece6cad42f2944c",
+        "nominal-cavity-26001e5457d45da5305dbf73"
+      ],
+      "estimated_incremental_return": -6.632399382004274,
+      "history_hash": "sha256:c44614a875adef3edfb43c3d4d7533da26bb59c00cb0f6ab10e6f785da276933",
+      "legal_nonstop_actions": 12,
+      "max_insertion_distance_mm": 5.200000009999997,
+      "outside_supplied_target_removed_mm3": 31.99999690942137,
+      "removed_cell_count": 5,
+      "source_state_after": "sha256:64257290385c63bea52dddd86ddf9a6cb7a8668bb5decb29c4424f5a27719205",
+      "step": 6,
+      "target_removed_mm3": 0.0
+    },
+    {
+      "actions": [
+        "nominal-cavity-7f1a5747d69d0235913a18ca",
+        "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+        "nominal-cavity-41e1f0b77645464d7846b3c2",
+        "nominal-cavity-f15644d605ad3b57b70b9792",
+        "nominal-cavity-4db63ac16ece6cad42f2944c",
+        "nominal-cavity-26001e5457d45da5305dbf73",
+        "nominal-cavity-d68d7b1baf18495211225bb8"
+      ],
+      "estimated_incremental_return": -7.468799304759808,
+      "history_hash": "sha256:099b01b82ce87f358563d1dae361da67dfe459f8956e789aab1623f35e84dbec",
+      "legal_nonstop_actions": 9,
+      "max_insertion_distance_mm": 5.200000009999997,
+      "outside_supplied_target_removed_mm3": 35.99999652309904,
+      "removed_cell_count": 4,
+      "source_state_after": "sha256:d16e430afd7ba12cf40edbda6a1a4ab8bca95ad5cdc6d2b404bdbc56a599a028",
+      "step": 7,
+      "target_removed_mm3": 0.0
+    },
+    {
+      "actions": [
+        "nominal-cavity-7f1a5747d69d0235913a18ca",
+        "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+        "nominal-cavity-41e1f0b77645464d7846b3c2",
+        "nominal-cavity-f15644d605ad3b57b70b9792",
+        "nominal-cavity-4db63ac16ece6cad42f2944c",
+        "nominal-cavity-26001e5457d45da5305dbf73",
+        "nominal-cavity-d68d7b1baf18495211225bb8",
+        "nominal-cavity-ae98c3369539ab867329cf7f"
+      ],
+      "estimated_incremental_return": -8.10719924683146,
+      "history_hash": "sha256:c55cec6d770423833fa2e34cd386d9e60c3e76d86121eacff0578456fd8a738e",
+      "legal_nonstop_actions": 5,
+      "max_insertion_distance_mm": 5.200000009999997,
+      "outside_supplied_target_removed_mm3": 38.999996233357294,
+      "removed_cell_count": 3,
+      "source_state_after": "sha256:2f2adaf5f653ce53715ec6c5011c79f8d510aa9b340c6957b484a876ec4a8c9b",
+      "step": 8,
+      "target_removed_mm3": 0.0
+    },
+    {
+      "actions": [
+        "nominal-cavity-7f1a5747d69d0235913a18ca",
+        "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+        "nominal-cavity-41e1f0b77645464d7846b3c2",
+        "nominal-cavity-f15644d605ad3b57b70b9792",
+        "nominal-cavity-4db63ac16ece6cad42f2944c",
+        "nominal-cavity-26001e5457d45da5305dbf73",
+        "nominal-cavity-d68d7b1baf18495211225bb8",
+        "nominal-cavity-ae98c3369539ab867329cf7f",
+        "nominal-cavity-230f569a555e45c3494d9bcb"
+      ],
+      "estimated_incremental_return": -8.545599208219226,
+      "history_hash": "sha256:dd67d18bcb9b0efacb3c10811f91d857283eeb521f2a4e8fb26e476373419b63",
+      "legal_nonstop_actions": 3,
+      "max_insertion_distance_mm": 5.200000009999997,
+      "outside_supplied_target_removed_mm3": 40.99999604019613,
+      "removed_cell_count": 2,
+      "source_state_after": "sha256:1cd0688d02e4343aa0088e7726b177e65272e02e104b542642f784c88f177aaf",
+      "step": 9,
+      "target_removed_mm3": 0.0
+    },
+    {
+      "actions": [
+        "nominal-cavity-7f1a5747d69d0235913a18ca",
+        "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+        "nominal-cavity-41e1f0b77645464d7846b3c2",
+        "nominal-cavity-f15644d605ad3b57b70b9792",
+        "nominal-cavity-4db63ac16ece6cad42f2944c",
+        "nominal-cavity-26001e5457d45da5305dbf73",
+        "nominal-cavity-d68d7b1baf18495211225bb8",
+        "nominal-cavity-ae98c3369539ab867329cf7f",
+        "nominal-cavity-230f569a555e45c3494d9bcb",
+        "nominal-cavity-cf24087a663742ad65b47ece"
+      ],
+      "estimated_incremental_return": -8.983999169606994,
+      "history_hash": "sha256:751140342c4a0d8fe75897a7cb35f35395880fa4e077419c595f9434903530ca",
+      "legal_nonstop_actions": 1,
+      "max_insertion_distance_mm": 5.200000009999997,
+      "outside_supplied_target_removed_mm3": 42.99999584703497,
+      "removed_cell_count": 2,
+      "source_state_after": "sha256:11e2e4f19f4508e29c5ad698df7526dc70770beba212e8f2970fe25aa0182e26",
+      "step": 10,
+      "target_removed_mm3": 0.0
+    },
+    {
+      "actions": [
+        "nominal-cavity-7f1a5747d69d0235913a18ca",
+        "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+        "nominal-cavity-41e1f0b77645464d7846b3c2",
+        "nominal-cavity-f15644d605ad3b57b70b9792",
+        "nominal-cavity-4db63ac16ece6cad42f2944c",
+        "nominal-cavity-26001e5457d45da5305dbf73",
+        "nominal-cavity-d68d7b1baf18495211225bb8",
+        "nominal-cavity-ae98c3369539ab867329cf7f",
+        "nominal-cavity-230f569a555e45c3494d9bcb",
+        "nominal-cavity-cf24087a663742ad65b47ece",
+        "nominal-cavity-361f04eae61fbcbdc17f9701"
+      ],
+      "estimated_incremental_return": -9.220399150310877,
+      "history_hash": "sha256:85aec9286a54ec39f282f83d354ce0855226376f57125aff5f7d0d2d5d11de45",
+      "legal_nonstop_actions": 0,
+      "max_insertion_distance_mm": 5.200000009999997,
+      "outside_supplied_target_removed_mm3": 43.99999575045438,
+      "removed_cell_count": 1,
+      "source_state_after": "sha256:5f127a07d9fc66d85fa7c758dc2fc1d8f7c26aa99c0a3ac991df00adedc66d16",
+      "step": 11,
+      "target_removed_mm3": 0.0
+    }
+  ],
+  "prefix_return": -9.220399150310877,
+  "ray_rows": [
+    {
+      "action_id": "nominal-cavity-672ca6ba5bf250683e75753f",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 0,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 24,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:533ea068b45ce8483a99170ad8b35e41640af307c8f1d9533970f11ecd9c46e4",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-fdc20dcd4d0e68b80a03a8ae",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 0,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 80,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:f4dcf2ab7c05f769a1fec46148f30dbd7461fd47186e17730ef63e3c7b38e65c",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-eea3fdb7921914deee6a1262",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 0,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 200,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:5d759514c7056ca085189fb70d75816fb6a45f91fa6f96e52077c28e9d5afb86",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-c5ab87c0a7aba81cd4a61914",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 0,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 26,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:5539d49f34d8b5f2c92b54003b4444b3de62188bf31dce2763738b50f1bfb971",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-c3d968967b65c69a4078ac86",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 0,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 82,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:adc10fa7b701920775655668e63ecf808935b4150f700aca7dc624d42f30322f",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-5fc5dbca4fe62b06753a91f3",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 0,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 202,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:883b245f787cfcebaf4dfd21fdf9d2695d01b2a6bcd26b3c83717a192684b0cb",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-a5e025f354bb9f3df109a459",
+      "blocked_cells": [
+        [
+          4,
+          88,
+          84
+        ],
+        [
+          4,
+          88,
+          86
+        ],
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 1,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          4,
+          88,
+          84
+        ],
+        [
+          4,
+          88,
+          86
+        ]
+      ],
+      "planned_microsteps": 24,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:974b4facdd1de796f972aa61e18191331721cf35c5de7a256a1d4d02c5e99f6a",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-8bb132b464d95e32ae7121da",
+      "blocked_cells": [
+        [
+          4,
+          88,
+          84
+        ],
+        [
+          4,
+          88,
+          86
+        ],
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 1,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          4,
+          88,
+          84
+        ],
+        [
+          4,
+          88,
+          86
+        ]
+      ],
+      "planned_microsteps": 80,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:63a4a5ff839f04ea63b56d355bafd5a3d950c8262b60980a68d03cee14112d31",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-c684e35657286a848761bfc6",
+      "blocked_cells": [
+        [
+          4,
+          88,
+          84
+        ],
+        [
+          4,
+          88,
+          86
+        ],
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 1,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          4,
+          88,
+          84
+        ],
+        [
+          4,
+          88,
+          86
+        ]
+      ],
+      "planned_microsteps": 196,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:316b3140055124d3cc3deaf4bb92feb7ef7a0844aef2762b728b0dc18d9c5b21",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-648f16791a8b25dd92310736",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 1,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 19,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 26,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:09c68e655dd3bf02ed5355114fdc7ed6a9c42d382a8648e2c7cb58dd5e798c64",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-53ed84b1bbe3cfdf3ac5a34a",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 1,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 19,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 82,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:9313c6e5adb39fb6031a35eac1e853829e2e6ffebd11ccf6f2a19903598046f8",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-f7327223a3948fb80f6ebbc2",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 1,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 19,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 198,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:6d833af9263a6c72ed651cc59f4d5e96c214e0c6f0bf3be949e086f7ea42a323",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-fc9a597d96b9c9f1f4ca869b",
+      "blocked_cells": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 2,
+      "excluded_blockers": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 24,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:fe4e43388bf736b66ca01900c828d90188d95287c76857059b00633f2602f1f2",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-9622e1ce65b6eea770e64e11",
+      "blocked_cells": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 2,
+      "excluded_blockers": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 80,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:3a0db3a68259ebad37c72de352db0468daf4dc6158b35d483086490b82f0bc09",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-0343467608f3841e89222146",
+      "blocked_cells": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 2,
+      "excluded_blockers": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 208,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:5ebbf2ec1625132705be5e40ed320613af192baf5af3588bf3f19b6c98ce782a",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-a14474650767b06fa9ba64b1",
+      "blocked_cells": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 2,
+      "excluded_blockers": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 26,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:98aef3993527524f9bbf2677b043b6c568261189697c9c2159b57cb610b2e33e",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-dc1051690cca0368a444496a",
+      "blocked_cells": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 2,
+      "excluded_blockers": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 82,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:5438683f6f22746422c3ac4d4a82c8f189eba92691149fc6716f79d069f3b087",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-d449819eb6b5cea8ad659127",
+      "blocked_cells": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 2,
+      "excluded_blockers": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 210,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:f7242851412c78097b235e9dc6524840fd7139d2a3cafbf26c3e9f9f1d123b2c",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-4863d1d8376db5c4d4b2c185",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 3,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 24,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:f403700c5954d19b135773c97450c66e9527c7e94debfcf7199c71923b9a5567",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-a2c64f526e35afe6bbbcb81b",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 3,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 80,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:7854b8c39e8af5bb69aa8791921028135099a5a35571fab7f20f36bd08578d8b",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-81c22aac0f9a20d0dcc7c3ed",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 3,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 200,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:90239fa2f7c6266e0cb6a841754eb7a7871acb2ae86b132989e2ec0a2124f9bf",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-12943efaa957cece5fddf38f",
+      "blocked_cells": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "column_index": 3,
+      "excluded_blockers": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "failure_interval_index": 19,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 26,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:751ce2c64a1b6153b2f380587be6decef5d10cee7d3749cea2cbbe75c8b16eed",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-cc2e50ca7497524a6ff912bd",
+      "blocked_cells": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "column_index": 3,
+      "excluded_blockers": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "failure_interval_index": 19,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 82,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:a4f22d92310334af6dbd3660c2f5954527932a2fdb3d8ad3075ef014be758adc",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-1430b936a02848c81c100114",
+      "blocked_cells": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "column_index": 3,
+      "excluded_blockers": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "failure_interval_index": 19,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 202,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:9c06e20e624054f3fc35061a1cec7cc50d5101537d809022e1ba9c3e5b9536cc",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-705c1ce1f2f643581cb6b86f",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 4,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 24,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:1d7f5d105ce033d22bd2b5c4f44d6c9da28d26d3302ddf07e305032d9140f192",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-b2965941d57fbcfc205c6c85",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 4,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 84,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:16668b1423aa016ffb08a1875d5c7e96d7d3de196fb8ef83f81b0c42f0ccb55c",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-bacd815c95b8970f13c956d2",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 4,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 200,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:41d35d47ddd344c71f2e5b8ef610c9bb6b0a10f9342e32f67548ed3859c25a92",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-b0b19679a79c2b791c49f416",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 4,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 26,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:88fb928010551648f7591ba69203d0dd94758b98a00521d31796a9c48eb6f3fb",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-8b60c4a28df0fd6fe6727715",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 4,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 86,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:b89e098368a133c051c0a05a80e64e1418a596794e042dbb28af4cfe4dcca08c",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-746edbe3de8ed4f211cc0488",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 4,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 202,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:73a87242b153348345f95902308c3fb7e74d2ddcfe10d1d8a76d6cd547f19e83",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-8d94483da14a724e7a49a69d",
+      "blocked_cells": [
+        [
+          3,
+          88,
+          82
+        ]
+      ],
+      "column_index": 5,
+      "excluded_blockers": [
+        [
+          3,
+          88,
+          82
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 20,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:a6dcc0c67b1f5304318ee447f94c709e14261409d17d59b840f6b111270e207c",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-0ffbc7d0b2b0d277c2c5ad5b",
+      "blocked_cells": [
+        [
+          3,
+          88,
+          82
+        ]
+      ],
+      "column_index": 5,
+      "excluded_blockers": [
+        [
+          3,
+          88,
+          82
+        ]
+      ],
+      "failure_interval_index": 16,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 84,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:771efa17d17679fdf74132e959479770ee3b2449cbca6bdf1dfb3d6f188ce2ab",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-b5e482c5dedd1bffc9c6c270",
+      "blocked_cells": [
+        [
+          3,
+          88,
+          82
+        ]
+      ],
+      "column_index": 5,
+      "excluded_blockers": [
+        [
+          3,
+          88,
+          82
+        ]
+      ],
+      "failure_interval_index": 16,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 192,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:e061b371b7effe92725b5eeba414944b4e10eb510bbf41d0a6d913144940c3c4",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-a1a7c8a21de1e93b913d43bf",
+      "blocked_cells": [
+        [
+          2,
+          87,
+          82
+        ]
+      ],
+      "column_index": 5,
+      "excluded_blockers": [
+        [
+          2,
+          87,
+          82
+        ]
+      ],
+      "failure_interval_index": 15,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 22,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:6062af6f6a0975e6adc86bc931ab8c069054a069fe21cb0d827483d105a94f46",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-11e447c3d85c23957aabbfcf",
+      "blocked_cells": [
+        [
+          2,
+          87,
+          82
+        ]
+      ],
+      "column_index": 5,
+      "excluded_blockers": [
+        [
+          2,
+          87,
+          82
+        ]
+      ],
+      "failure_interval_index": 15,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 86,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:304b13f23efdd456989f35ab26cecfbac30fbb5d17274180980f5f56ecd92f62",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-483a478c1a315cbdd389ac3a",
+      "blocked_cells": [
+        [
+          2,
+          87,
+          82
+        ]
+      ],
+      "column_index": 5,
+      "excluded_blockers": [
+        [
+          2,
+          87,
+          82
+        ]
+      ],
+      "failure_interval_index": 15,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 194,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:a2445f3d26f0465125db5788d25b76f4e59c6eefa81024401b1b78ec2420247d",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-6cf4a1965a1a794b5cbac7bd",
+      "blocked_cells": [
+        [
+          4,
+          88,
+          86
+        ],
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 6,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          4,
+          88,
+          86
+        ]
+      ],
+      "planned_microsteps": 24,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:840fada0497433c35d9e697b961765426c59895aba2594f47c64694fe07ec047",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-b4b3aae0683ccc661c021bdb",
+      "blocked_cells": [
+        [
+          4,
+          88,
+          86
+        ],
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 6,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          4,
+          88,
+          86
+        ]
+      ],
+      "planned_microsteps": 80,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:2139f66eadd04887128393855816b8824f0a1096d4db13166d4281292a548c72",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-ae758082ddcdcfae1fdda875",
+      "blocked_cells": [
+        [
+          4,
+          88,
+          86
+        ],
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 6,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          4,
+          88,
+          86
+        ]
+      ],
+      "planned_microsteps": 196,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:8014a7031140bf946301f061e112947ccb97fc86707331836059947a7ce0bc02",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-e60f643633e1ec9a1c0e5e97",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 6,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 19,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 26,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:072ab004bdbb072829834190b15fe3e1eeab98a453937bafef5e35ba3060c618",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-1699541194be5aa9e33ae217",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 6,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 19,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 82,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:f7e40bd14ca9f1211c8896f8dffea6bd03bc04e09d34f4824369377d99b7e930",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-ff06ee2fd023c8d8e02bd37b",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 6,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 19,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 198,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:4733fdc97918f7f52e9cc69862183290a5ceabe94075b84f8d229d1ce1185cc0",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-409ba90d58a019f60c5bd5bf",
+      "blocked_cells": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "column_index": 7,
+      "excluded_blockers": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 20,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:78eeca17c48be6781008b0f84eddeca77fd1d1edf10f35b2df73fadf599fc990",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-2890ac07981ba6c2b2fe05f5",
+      "blocked_cells": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "column_index": 7,
+      "excluded_blockers": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "failure_interval_index": 16,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 80,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:79f2dfc9ece999b58054c201a2bbeb0dc85910ed2bac1b7dc16cb7c54434659c",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-09a056b146b596a77f2c0e04",
+      "blocked_cells": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "column_index": 7,
+      "excluded_blockers": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "failure_interval_index": 16,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 204,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:eb147cf97bf265bfca0b1f38ea5dd2a23c0e7bd4fe65a3faf5a236fc59b729dd",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-2eb1ff94608d86afd57882c5",
+      "blocked_cells": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "column_index": 7,
+      "excluded_blockers": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 22,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:a774a03a085ba22258ef2f96e3da3a003f85699c3141755a655ddd7ceed1c61c",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-67f6f70365f27b9bc2709aba",
+      "blocked_cells": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "column_index": 7,
+      "excluded_blockers": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 82,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:215879fe94a5be4479b6838a7d54b9860667338864011ca39414b05693120587",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-8f0801afbae232b992a656c7",
+      "blocked_cells": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "column_index": 7,
+      "excluded_blockers": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 206,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:dc9f7179d244752a2aa9fb9f975082fa4d05d77ac67327a4d2fe89a202209c45",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-568cc79b4a64b94e2bff7036",
+      "blocked_cells": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "column_index": 8,
+      "excluded_blockers": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 24,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:0d0cc31e0304c52efc002b56067cc7d0a453ba936ecb3fbb678d5b3b04af2f18",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-3301b26e9d42ffcba16adc68",
+      "blocked_cells": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "column_index": 8,
+      "excluded_blockers": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 80,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:c78043eda205e7421bad0de188c84d86392648e26e1b69d67cb966b37f0587e5",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-aba8d2f1219670615375db09",
+      "blocked_cells": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "column_index": 8,
+      "excluded_blockers": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 204,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:365749e189d149752adcccb55555ebb65037542cb6f3ccfdc8a5c205d46103fc",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-2a6e67f5b0806be4a8743ced",
+      "blocked_cells": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "column_index": 8,
+      "excluded_blockers": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 26,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:cca7bff44eb74b0d373df1107e6c599488b220cc950d970f18f1c93f9ce786a2",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-552fd85294f3fff7340ceae0",
+      "blocked_cells": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "column_index": 8,
+      "excluded_blockers": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 82,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:2aad792de144a6441af5e6e5091c6aec95dd824a5ea092fa2236d76cf8157320",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-1f2a99a8104fdc07e48d5a7a",
+      "blocked_cells": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "column_index": 8,
+      "excluded_blockers": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 206,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:bcef4fbf0fd5a8f0a3227a6485cfa20518b02a8266e3f7f6fb502c4e9befb46a",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-e5f203e0cad87fe1508d43a4",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 9,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 20,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:363ff08406177e8560d4a28cebc98706c7f74aaf04a6446fa30700f20f0dd3be",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-1cbd5005a1baab3ce7852d9d",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 9,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 16,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 80,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:c1726141b1400e2428892c194c1d3c9c48af5619796f127ab90eb2e03e723438",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-9531c7101e5bba6988c7fbac",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 9,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 16,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 192,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:42ee7d238367a55d55ef7beea21373b3cdb913d15d987098a3fa9683fa41a5b7",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-7e6e259eb592b2facd43e4e2",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 9,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 22,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:0c647a7f6b108032f0f43d58b48cdbcbbdcf15b65ee4a9844f4d8a58ae0c73ef",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-ddb1e3d609177414e53b9b11",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 9,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 82,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:f807621ea733c63b8ece3da8a2bb7776c6ce342e0c6d164e1601fd451998107f",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-94492d14c8e8fa12e8d4ff1c",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 9,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 194,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:2960b07482d274fdd7f758ac33b65d82d84a4da183aecefcecec9c9026a70ef3",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-fcf49ce38556897f286a15ef",
+      "blocked_cells": [
+        [
+          5,
+          93,
+          84
+        ],
+        [
+          5,
+          93,
+          86
+        ],
+        [
+          5,
+          95,
+          84
+        ]
+      ],
+      "column_index": 10,
+      "excluded_blockers": [
+        [
+          5,
+          95,
+          84
+        ]
+      ],
+      "failure_interval_index": 25,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          5,
+          93,
+          84
+        ],
+        [
+          5,
+          93,
+          86
+        ]
+      ],
+      "planned_microsteps": 28,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:7131197b9d135b1c8a6619a49805af2f134245d94b72b618f32a18fa93813667",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-3b919ee563a1f39244e21fb9",
+      "blocked_cells": [
+        [
+          5,
+          93,
+          84
+        ],
+        [
+          5,
+          93,
+          86
+        ],
+        [
+          5,
+          95,
+          84
+        ]
+      ],
+      "column_index": 10,
+      "excluded_blockers": [
+        [
+          5,
+          95,
+          84
+        ]
+      ],
+      "failure_interval_index": 24,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          5,
+          93,
+          84
+        ],
+        [
+          5,
+          93,
+          86
+        ]
+      ],
+      "planned_microsteps": 80,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:cf27835a1bd1489258a4ce44a1d327b60b5ed6a609d1c428178683a1bc7f282f",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-1cf6d8e13c24141aae280d8b",
+      "blocked_cells": [
+        [
+          5,
+          93,
+          84
+        ],
+        [
+          5,
+          93,
+          86
+        ],
+        [
+          5,
+          95,
+          84
+        ]
+      ],
+      "column_index": 10,
+      "excluded_blockers": [
+        [
+          5,
+          95,
+          84
+        ]
+      ],
+      "failure_interval_index": 24,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          5,
+          93,
+          84
+        ],
+        [
+          5,
+          93,
+          86
+        ]
+      ],
+      "planned_microsteps": 204,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:86e189f0a3e2deaf18e86a3e9af56dd7e3650c91f8846207084d57ee09732126",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-3dc776d104da9ee60806366b",
+      "blocked_cells": [
+        [
+          3,
+          94,
+          82
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 10,
+      "excluded_blockers": [
+        [
+          3,
+          94,
+          82
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 23,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 30,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:23bc9781e939f56de8366f6ccceefb5c4dac174ff0a7b19550363ca12289a695",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-6360d52fc68dba6a01f5decf",
+      "blocked_cells": [
+        [
+          3,
+          94,
+          82
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 10,
+      "excluded_blockers": [
+        [
+          3,
+          94,
+          82
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 23,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 82,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:eae5fe562db2157d654195b575381b5713974bcdf04e97f8685eaf257b98bfd0",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-cd3d3189b8998b42be523a2c",
+      "blocked_cells": [
+        [
+          3,
+          94,
+          82
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 10,
+      "excluded_blockers": [
+        [
+          3,
+          94,
+          82
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 23,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 206,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:5d7a0523600ff9599312d47ecc0c106f539666374f957b0bf6181ac4bbadd914",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-4e01a18429fa71dfad0573b0",
+      "blocked_cells": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "column_index": 11,
+      "excluded_blockers": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "failure_interval_index": 16,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 28,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:022ded179d259f86a607c7f5bd5cc1ea906fe0cc6943616c0db9bc1048cdcd09",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-0155b659bb6ceade80e4486d",
+      "blocked_cells": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "column_index": 11,
+      "excluded_blockers": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "failure_interval_index": 16,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 80,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:ec90c588ee9cd683dc2d5243aa67acbcc88f18572f9ccc80bbbf7ea1d8696a98",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-18fcf7c9f11966cb28559e00",
+      "blocked_cells": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "column_index": 11,
+      "excluded_blockers": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "failure_interval_index": 16,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 200,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:638df483bb5e5fc69ddd85fa4060612f088867bdb2a5e5631c1bc8f0a34dbb6f",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-ae9778a6e4033f9ae406a943",
+      "blocked_cells": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "column_index": 11,
+      "excluded_blockers": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 30,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:dc754addcbe3e401e6ddafd50157e8565f9596d731af05623187fae8f43defac",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-560259e6715546cc2bc00f5d",
+      "blocked_cells": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "column_index": 11,
+      "excluded_blockers": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 82,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:166a4c5c0152fbde0c30a772b563c62e43bdd37b6f6ec9ef2d0b65dc2300327a",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-11071cf66a8c39da5a800162",
+      "blocked_cells": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "column_index": 11,
+      "excluded_blockers": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 202,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:aace3e19d9f3b3de73e095e8786bad85141e02a798f661fe5b7d70c79462ea60",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-e51d755b2faaccc9f1fb4c88",
+      "blocked_cells": [
+        [
+          5,
+          90,
+          87
+        ],
+        [
+          5,
+          90,
+          89
+        ],
+        [
+          5,
+          92,
+          87
+        ],
+        [
+          5,
+          92,
+          89
+        ]
+      ],
+      "column_index": 12,
+      "excluded_blockers": [
+        [
+          5,
+          90,
+          89
+        ],
+        [
+          5,
+          92,
+          89
+        ]
+      ],
+      "failure_interval_index": 25,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          5,
+          90,
+          87
+        ],
+        [
+          5,
+          92,
+          87
+        ]
+      ],
+      "planned_microsteps": 28,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:8a514021accc934ba3f28a67953c46c0e3d4673b838d9e1f330674c7601a1eaa",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-4fcb9b7fd3f46a86e857e1f3",
+      "blocked_cells": [
+        [
+          5,
+          90,
+          87
+        ],
+        [
+          5,
+          90,
+          89
+        ],
+        [
+          5,
+          92,
+          87
+        ],
+        [
+          5,
+          92,
+          89
+        ]
+      ],
+      "column_index": 12,
+      "excluded_blockers": [
+        [
+          5,
+          90,
+          89
+        ],
+        [
+          5,
+          92,
+          89
+        ]
+      ],
+      "failure_interval_index": 24,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          5,
+          90,
+          87
+        ],
+        [
+          5,
+          92,
+          87
+        ]
+      ],
+      "planned_microsteps": 84,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:ed2742e5919e80ac315dc785ae2acb339dffb5825d441fe1fcb9d09a0de3096f",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-fea38438d7db0285556ecdea",
+      "blocked_cells": [
+        [
+          5,
+          90,
+          87
+        ],
+        [
+          5,
+          90,
+          89
+        ],
+        [
+          5,
+          92,
+          87
+        ],
+        [
+          5,
+          92,
+          89
+        ]
+      ],
+      "column_index": 12,
+      "excluded_blockers": [
+        [
+          5,
+          90,
+          89
+        ],
+        [
+          5,
+          92,
+          89
+        ]
+      ],
+      "failure_interval_index": 24,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          5,
+          90,
+          87
+        ],
+        [
+          5,
+          92,
+          87
+        ]
+      ],
+      "planned_microsteps": 196,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:88b7e3d956ce9fc4fcdad2aae0ed07725a93e31f807b547faca6ee79c55b09c9",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-83157ed51334878bf344416f",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 12,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 23,
+      "family": "exposed_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 30,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:3a71aaa359eb49c3a7fef3b6b5a85560e60b1979dc718531fc7d364ead03a124",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-c4709a68a662bc63f9d7b4f8",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 12,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 23,
+      "family": "proximal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 86,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:5b6d8e60908278fcf4f602cfbc1dc9f9f68dd7a72d1c19978955f044686aa3ed",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-858d73c6c3e44a96da5e0358",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 12,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 23,
+      "family": "distal_nominal",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 198,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:913a884e1c094e4cac302d89eb552cb96adffa967e52a117435372765917168a",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-e2ab3a3390143b81f0541fdb",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 0,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 28,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:b7df6a1ab5b93186198c8bde27bd2262325f1d5e75da55949bf47612fececa69",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-6ffb7560e875216631cb2262",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 0,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 30,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:d8a3017893dec688f390078067baabfad85f286b9ac0b2365ae5c8f7087ed710",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-47f9ead76b6045c67ec14a78",
+      "blocked_cells": [
+        [
+          4,
+          88,
+          84
+        ],
+        [
+          4,
+          88,
+          86
+        ],
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 1,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          4,
+          88,
+          84
+        ],
+        [
+          4,
+          88,
+          86
+        ]
+      ],
+      "planned_microsteps": 28,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:41f586eb9558b61e8afb79a4379c6201c4c8690da4011385913f3f83edbc4096",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-d7c3841141df672772f3c4e5",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 1,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 19,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 30,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:083d42b835b787254b9e68025ba5cdbe91841509bbb421edfd493418656c84e8",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-4494f3ea90be3cf119989c3a",
+      "blocked_cells": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 2,
+      "excluded_blockers": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 28,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:c3b8a82f2a437b0a743ea98a03cee8a01ee92a0e621a9b5434ec94f74083d6b0",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-c9d367e8755eecf537dc5c89",
+      "blocked_cells": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 2,
+      "excluded_blockers": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 30,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:edbd55511c5b5fd08f5a10eb4bffaee6818fb8bdc987d3199d376206cae26821",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-56a6bfa7eb43861454226a77",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 3,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 28,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:7eabd34b40a8a8ecfc49530c8c0fb0ac234bdb8bf7c7e89f530ff905762e3498",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-4df2044ae74103fc55e1a6e5",
+      "blocked_cells": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "column_index": 3,
+      "excluded_blockers": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "failure_interval_index": 19,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 30,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:855126c5572ef050eba5f3079c8fd472884d02821fb3d1d584a51078660ae47b",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-50b2ca778f149dbd63438ba0",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 4,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 28,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:a9d42840c4c78b54340229c9de79e8beb6a49ba4a2ce251e5eb80c5dc9d497b3",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-0d332a872aecad6e91574fc2",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 4,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 30,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:60cb839faa18c11bdeb534c341b332fd1069850f658703707654d95cae33fb8c",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-8741af5c150610dcd47bad14",
+      "blocked_cells": [
+        [
+          3,
+          88,
+          82
+        ]
+      ],
+      "column_index": 5,
+      "excluded_blockers": [
+        [
+          3,
+          88,
+          82
+        ]
+      ],
+      "failure_interval_index": 16,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 24,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:c3423c98fb8ee3ba70047ffe124cfe95d3415400c3023318b2016f3cd74892b5",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-036bd0720601f18d71a1aa2e",
+      "blocked_cells": [
+        [
+          2,
+          87,
+          82
+        ]
+      ],
+      "column_index": 5,
+      "excluded_blockers": [
+        [
+          2,
+          87,
+          82
+        ]
+      ],
+      "failure_interval_index": 15,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 26,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:eaa6e24785474b0a4c3722513d4a85bb1ced5f7fb58d47b46098d6eeb36e5a16",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-9702bee1b0ea0da7dca7dc55",
+      "blocked_cells": [
+        [
+          4,
+          88,
+          86
+        ],
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 6,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          4,
+          88,
+          86
+        ]
+      ],
+      "planned_microsteps": 28,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:79a311f5e4aa953af318c8bedec1d1fdf7dbdc0d1e111863cc933818a85a66f3",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-a5bef7ee0ee0e88184f31400",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 6,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 19,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 30,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:1ef8d87b7dc6319ce988a5fce5794731583a3056a17a666bbbf1858d81152c96",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-bc18503265ce7577d3142ce6",
+      "blocked_cells": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "column_index": 7,
+      "excluded_blockers": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "failure_interval_index": 16,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 24,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:1dfb70bc5c6ffbeb1e402c616267ca8a0d6d17cadf01029e2ae1e8e7a02feb46",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-5a6fe7ee53795568deb7b2dc",
+      "blocked_cells": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "column_index": 7,
+      "excluded_blockers": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 26,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:60ebe1ec7b2f16ee171719ab64ab1c8f9b131f5167a8fe59289fa6cc8824189e",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-e958707bf095c3a269c6545f",
+      "blocked_cells": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "column_index": 8,
+      "excluded_blockers": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "failure_interval_index": 20,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 28,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:e2071d7d0104db57e447cd61933f0bdc3f42b5e8b0b59f6faa3cf0183c3e8fbe",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-d728dbd8853473290684e052",
+      "blocked_cells": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "column_index": 8,
+      "excluded_blockers": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 30,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:320292ac9d53259ed7fe78518451e6dabb29d31598b5db3e05260d407b9bbfc6",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-0149517635e97cc60964c7eb",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 9,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 16,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 24,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:7f841d64528e01799cad463f67445fe929aeb387f7484f9dffbac06376b6348c",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-81a00fecf06bed58bd7afcf2",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 9,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 26,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:8e01342c4e8fe82f068f28879b7589d80922ab7af3314e3a798466cd65901ead",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-0d12888e4e3a4f028f615a19",
+      "blocked_cells": [
+        [
+          5,
+          93,
+          84
+        ],
+        [
+          5,
+          93,
+          86
+        ],
+        [
+          5,
+          95,
+          84
+        ]
+      ],
+      "column_index": 10,
+      "excluded_blockers": [
+        [
+          5,
+          95,
+          84
+        ]
+      ],
+      "failure_interval_index": 24,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          5,
+          93,
+          84
+        ],
+        [
+          5,
+          93,
+          86
+        ]
+      ],
+      "planned_microsteps": 32,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:d6deb5600463a3cd2fb1e411245ab170d8f2e86af650693e90010a2f6eb3de2d",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-3187ed22525eb902a414dde2",
+      "blocked_cells": [
+        [
+          3,
+          94,
+          82
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 10,
+      "excluded_blockers": [
+        [
+          3,
+          94,
+          82
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 23,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 34,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:f70f2f0893672f36781578cb4462afdf62427293f95458796da324059db4110f",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-0d3e1e14f0702d08af0de4a6",
+      "blocked_cells": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "column_index": 11,
+      "excluded_blockers": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "failure_interval_index": 16,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 32,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:d6d8f7c682d0d4124a046e4d838b7cad54989d23d85a87733fe8bce106249987",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-46325bfb276065dc8f15ff84",
+      "blocked_cells": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "column_index": 11,
+      "excluded_blockers": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 34,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:ecc068035c2dce211def2e2ef78e2c8c92e96e0d5ccca0736e8b859e1f0400e0",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-a8d81fa4ea28e9287e3e3a99",
+      "blocked_cells": [
+        [
+          5,
+          90,
+          87
+        ],
+        [
+          5,
+          90,
+          89
+        ],
+        [
+          5,
+          92,
+          87
+        ],
+        [
+          5,
+          92,
+          89
+        ]
+      ],
+      "column_index": 12,
+      "excluded_blockers": [
+        [
+          5,
+          90,
+          89
+        ],
+        [
+          5,
+          92,
+          89
+        ]
+      ],
+      "failure_interval_index": 24,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [
+        [
+          5,
+          90,
+          87
+        ],
+        [
+          5,
+          92,
+          87
+        ]
+      ],
+      "planned_microsteps": 32,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:3d37c53ec83a4d1858b4e169bd2fd1bcdca9639c80975633512dc9c1c9ce7b09",
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-0a192a76a9b58d1502c17d50",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 12,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 23,
+      "family": "intermediate_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 34,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:553b2f5980373ba56a8b000fea5b2a99f30d9654bf952f543942fdab9395f20e",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-6bf71332e59782381822b90a",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 0,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          84
+        ],
+        [
+          4,
+          90,
+          86
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "tool_footprint_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 22,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:98d758a7d7dc87d520d8b874cb09abaf29321c11912d6abe3263a3d22a53cc49",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-321428ebd10817f5cdfaa8fb",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 1,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 19,
+      "family": "tool_footprint_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 22,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:6168bd92419e16e1a5a8ab63bd6a72527d600d4100c235b950549b8befad76fd",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-05375df99eccce17c2ffa7bf",
+      "blocked_cells": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 2,
+      "excluded_blockers": [
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "tool_footprint_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 22,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:76b4a57e9dc34a51c2822d05d9feb099a2fc9eb63382891039766444f5a07360",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-d0f26d6c1bdd204562cbae54",
+      "blocked_cells": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "column_index": 3,
+      "excluded_blockers": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "failure_interval_index": 19,
+      "family": "tool_footprint_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 22,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:c95541b813c38b5c614e733c684d8acca5ce42671eb42b92ec8b4c6bfe3a7c8a",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-ff2a5a1942a5f0771bfdb41a",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 4,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "tool_footprint_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 22,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:39022a3b7339530a05ff4f6399ac235946f7a8e1c31885bbb2da67a98b4bbee1",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-de5300f554af9f1af186bad9",
+      "blocked_cells": [
+        [
+          2,
+          87,
+          82
+        ]
+      ],
+      "column_index": 5,
+      "excluded_blockers": [
+        [
+          2,
+          87,
+          82
+        ]
+      ],
+      "failure_interval_index": 15,
+      "family": "tool_footprint_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 18,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:3db8797e73bf0c5d99ee6a11d6001c2e31bf8b064920c6063a048801d9afaf7b",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-bcb1bfe7337f13586810b091",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 6,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 19,
+      "family": "tool_footprint_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 22,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:c5d02293c5193173dd2b7e38816409d40825121968dd5431160ae2dbdf10aaaa",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-f5e5fb2654ba5ffc8b577ae2",
+      "blocked_cells": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "column_index": 7,
+      "excluded_blockers": [
+        [
+          3,
+          94,
+          82
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "tool_footprint_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 18,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:792a41331c06b7ca8bc21c3cb54047cda770dc23fcaaca5caf7974e6c79a8aba",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-48390db4290b96a68c4e1441",
+      "blocked_cells": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "column_index": 8,
+      "excluded_blockers": [
+        [
+          4,
+          94,
+          88
+        ]
+      ],
+      "failure_interval_index": 21,
+      "family": "tool_footprint_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 22,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:63118eb5ab4ddba24866e820c1c8c5085f59c1315690d1d21de850388340332d",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-c162e591aa17f484f7532143",
+      "blocked_cells": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "column_index": 9,
+      "excluded_blockers": [
+        [
+          3,
+          87,
+          84
+        ],
+        [
+          3,
+          87,
+          86
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "tool_footprint_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 18,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:5e6f815695d3e36cf639bf465f2dee79a3c9b6ff1ee92c0dc788f2187cc1c9fb",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-97156c1f898f797eb99e6887",
+      "blocked_cells": [
+        [
+          3,
+          94,
+          82
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "column_index": 10,
+      "excluded_blockers": [
+        [
+          3,
+          94,
+          82
+        ],
+        [
+          4,
+          92,
+          84
+        ]
+      ],
+      "failure_interval_index": 23,
+      "family": "tool_footprint_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 26,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:4f15ac1ecaeaed3094564a3780d6d3dacb45053ca4124e138226879ff1294def",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-41b30e5b2c2b10a985bf5e27",
+      "blocked_cells": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "column_index": 11,
+      "excluded_blockers": [
+        [
+          3,
+          92,
+          81
+        ]
+      ],
+      "failure_interval_index": 17,
+      "family": "tool_footprint_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 26,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:205e7df8c12d245e9ffac7fbc6f467be11921d19da85e4625f23dad71a77931c",
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-dccbfeb2bc752e0e805569d0",
+      "blocked_cells": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "column_index": 12,
+      "excluded_blockers": [
+        [
+          4,
+          90,
+          86
+        ]
+      ],
+      "failure_interval_index": 23,
+      "family": "tool_footprint_opening",
+      "first_set_complete": true,
+      "optimistically_containable_blockers": [],
+      "planned_microsteps": 26,
+      "prior_temporary_removed_count": 0,
+      "sidecar_fingerprint": "sha256:21d37126789043579ccbb6e659808a43f7bbf494310b64b1e8f660b3dd23b6f8",
+      "tool_id": "generic_aspirator"
+    }
+  ],
+  "rays_with_at_least_one_excluded_blocker": 117,
+  "rays_with_discarded_temporary_removal": 0,
+  "rays_with_only_optimistically_containable_blockers": 0,
+  "rejected_rays": 117,
+  "sampled_peak_rss_bytes": 447610880,
+  "scope": "Saved-record integrity and aggregation only; native geometry is not recomputed. Fixed first-rejection evidence and optimistic coverage do not certify a legal clearing sequence, full corridor, global unreachability or an accepted plan.",
+  "source_files": 94,
+  "source_guard_before_root_successor_edits": "d16f97740351c571de3ded98081b9a4215b5fecb457b26ad1ee58385c09bb0b7",
+  "source_head": "593a148fe72d57641bb428c60eecaabbe768369e",
+  "terminal_pins": {
+    "costs": "a237c5b0467a12552355ed2bd9319a054c9e1853ff201b9cdf87314678c78ce0",
+    "receipt": "085f40abf2ccad5133e8ddd283c97a80ec6a57d1d2acf240e52b3cec7da96cb0",
+    "release": "8866a10e14574b79c46f93be9f5f4f4f8f3e827e9f82c94a5742a18d988a1477",
+    "result": "e23d75b1171936af24ff0834e37a46e8426bd8b28a0a5f5017848cd78e65c0a2",
+    "source_index": "71879696c1194859f8280b3865804c18a545d09011929fb0a8c39a7a4274a008"
+  },
+  "worker_seconds": 21.924137041904032
+}

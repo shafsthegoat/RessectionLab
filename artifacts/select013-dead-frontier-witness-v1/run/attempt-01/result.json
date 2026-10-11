@@ -1,0 +1,149 @@
+{
+  "EVAL_opened": false,
+  "accepted_plan_claim": false,
+  "additional_containment_kernel_calls": 6708,
+  "cells_outside_all_fixed_axis_envelopes": [
+    [
+      2,
+      87,
+      82
+    ],
+    [
+      3,
+      87,
+      84
+    ],
+    [
+      3,
+      87,
+      86
+    ],
+    [
+      3,
+      88,
+      82
+    ],
+    [
+      3,
+      92,
+      81
+    ],
+    [
+      3,
+      94,
+      82
+    ],
+    [
+      4,
+      90,
+      84
+    ],
+    [
+      4,
+      90,
+      86
+    ],
+    [
+      4,
+      92,
+      84
+    ],
+    [
+      4,
+      94,
+      88
+    ],
+    [
+      5,
+      90,
+      89
+    ],
+    [
+      5,
+      92,
+      89
+    ],
+    [
+      5,
+      95,
+      84
+    ]
+  ],
+  "checkpoint_loads": 0,
+  "classified_cells": 19,
+  "committed_actions": 11,
+  "complete_episode": true,
+  "context_equal": true,
+  "diagnostic_STOP_calls": 1,
+  "diagnostic_previews": 117,
+  "failure_semantics": "first rejected shaft interval, not exact first contact or complete corridor",
+  "final_legal_motions": 0,
+  "final_source_state_hash": "sha256:5f127a07d9fc66d85fa7c758dc2fc1d8f7c26aa99c0a3ac991df00adedc66d16",
+  "first_shaft_rejections": 117,
+  "gradient_attempts": 0,
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "held_inputs_opened": false,
+  "independent_replay_certificate": false,
+  "lineage_scope": "authenticated historical metadata for source reconstruction only; no frozen-policy capability constructed",
+  "model_forwards": 0,
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 21.90059133293107,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": null,
+    "history_complete_caller_attestation": true,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 2000,
+      "planning_execution_seconds": 180.0
+    },
+    "native_preview_entries": 1521,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 206,
+          "raised": 0,
+          "rejected": 1315,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 1315
+          },
+          "returned": 1521,
+          "returned_microsteps": 28538,
+          "seconds": 14.74487550673075,
+          "started": 1521
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 1521,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "complete_history_awaiting_independent_audit",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "optimizer_attempts": 0,
+  "outside_supplied_target_removed_mm3": 43.99999575045438,
+  "planned_SELECT_denominator": 2,
+  "prefix_exact": true,
+  "private_reference_reads": 0,
+  "public_prefix_return": -9.220399150310877,
+  "role": "SELECT",
+  "scope": "one selected saved negative prefix; actual current blockers and frozen-axis capacity, not a new accepted plan",
+  "source_protocol_limits_scope": "historical context envelope preserved; smaller current owned limits enforced separately",
+  "state_unchanged_by_diagnostics": true,
+  "status": "complete_fixed_dead_frontier_diagnostic",
+  "subject": "ReMIND-013",
+  "target_removed_mm3": 0.0,
+  "unselected_negative_prefix": true,
+  "updates": 0,
+  "wall_seconds": 21.924137041904032,
+  "world_equal": true
+}

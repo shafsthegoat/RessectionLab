@@ -1,0 +1,65 @@
+{
+  "arms": [
+    "fixed_dead_frontier"
+  ],
+  "attempts": 1,
+  "automatic_retry": false,
+  "coverage": "actual first-rejection sampled cells; optimistic full active sweeps over existing fixed13 axes/endpoints; no future sequence or clinical certificate",
+  "expected_head": "593a148fe72d57641bb428c60eecaabbe768369e",
+  "limits": {
+    "cells_per_sidecar": 32,
+    "classified_unique_cells": 128,
+    "closure_STOP_calls": 1,
+    "diagnostic_previews": 120,
+    "fixed_prefix_commits": 11,
+    "model_forwards": 0,
+    "native_previews": 2000,
+    "threads": 1,
+    "updates": 0
+  },
+  "models_or_weights_loaded": false,
+  "output": "build/select013-dead-frontier-witness-v1/attempt-01",
+  "parent_seconds": 210,
+  "prior_pins": {
+    "context": {
+      "path": "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/context.json",
+      "sha256": "178b81f87c8363a3f0c55be411b2085739e349415bbacc73a0fe3e90ad124887"
+    },
+    "lineage": {
+      "path": "build/select013-lazy-beam-recovery-v1/attempt-01/IL64-lineage.json",
+      "sha256": "e1fe8425d052af596f3a830645e306c47b85f135264e39f81a45f632c3ae3172"
+    },
+    "receipt": {
+      "path": "build/select013-lazy-beam-recovery-v1/attempt-01.supervision/receipt.json",
+      "sha256": "83031cb5bdeb9c9ee6bd47dcf53f28e3c7ea7f83207bc94b174d8501b994f232"
+    },
+    "release": {
+      "path": "build/select013-lazy-beam-recovery-v1/root-release.json",
+      "sha256": "43e7cdf0e43a014154cc15236bbb4df1818ed1577b3cee5b8d75ac368e9aa3d9"
+    },
+    "result": {
+      "path": "build/select013-lazy-beam-recovery-v1/attempt-01/result.json",
+      "sha256": "96e0b98069689a7ad6f1b986423f527ce931e04034b33605d3ebaf48e9e9d761"
+    },
+    "selection": {
+      "path": "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/selection.json",
+      "sha256": "8f62656d1081ea247499cb1ff7ed8b803bf2249d3e700703d3806506a151c8f4"
+    },
+    "world": {
+      "path": "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/comparison-world.json",
+      "sha256": "2dc67df3216033c72540cf2d83e3c614f3a5e62a2fb31ad3cf8c653925213995"
+    }
+  },
+  "public_index": {
+    "path": "build/select013-expanded-public-preparation-v1/public-inputs-v1/public-select-index.json",
+    "sha256": "a5a7ed8b504b3f768666cdec4c77908d680ff242eb157afb0f377b95105dc389"
+  },
+  "selection": "exact saved first11 opening-lane actions only; terminal STOP closes negative diagnostic history",
+  "source_index": {
+    "path": "build/select013-dead-frontier-witness-v1/source-index.json",
+    "sha256": "71879696c1194859f8280b3865804c18a545d09011929fb0a8c39a7a4274a008"
+  },
+  "status": "released_one_attempt",
+  "training_or_private_reference_execution": false,
+  "worker_seconds": 180
+}

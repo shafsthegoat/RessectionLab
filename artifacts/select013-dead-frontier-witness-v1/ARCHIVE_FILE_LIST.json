@@ -1,0 +1,1130 @@
+{
+  "bound_bytes": 2097152,
+  "entries": [
+    {
+      "archive_path": "source-snapshots/build/goal-conditioned-policy-v1/darwin_fast_sampler.py",
+      "bytes": 9482,
+      "reason": "Ignored executed runtime source unavailable from Git",
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+      "source_path": "build/select013-dead-frontier-independent-v1/archive-source-snapshots/build/goal-conditioned-policy-v1/darwin_fast_sampler.py"
+    },
+    {
+      "archive_path": "source-snapshots/build/goal-conditioned-policy-v1/run_contact_owned.py",
+      "bytes": 8730,
+      "reason": "Ignored executed runtime source unavailable from Git",
+      "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7",
+      "source_path": "build/select013-dead-frontier-independent-v1/archive-source-snapshots/build/goal-conditioned-policy-v1/run_contact_owned.py"
+    },
+    {
+      "archive_path": "source-snapshots/build/select013-dead-frontier-witness-v1/blocker_coverage.py",
+      "bytes": 9094,
+      "reason": "Ignored executed runtime source unavailable from Git",
+      "sha256": "a449cb0db3011b953353185bf6c9247d68c20f4ee962501c2c9113e34eb48e25",
+      "source_path": "build/select013-dead-frontier-independent-v1/archive-source-snapshots/build/select013-dead-frontier-witness-v1/blocker_coverage.py"
+    },
+    {
+      "archive_path": "source-snapshots/build/select013-dead-frontier-witness-v1/comparison_contract.py",
+      "bytes": 5642,
+      "reason": "Ignored executed runtime source unavailable from Git",
+      "sha256": "732b46fd98bb93edd7c8bcc711a75376721b71926302450079f30ce621326050",
+      "source_path": "build/select013-dead-frontier-independent-v1/archive-source-snapshots/build/select013-dead-frontier-witness-v1/comparison_contract.py"
+    },
+    {
+      "archive_path": "source-snapshots/build/select013-dead-frontier-witness-v1/freeze-runtime.py",
+      "bytes": 3584,
+      "reason": "Ignored executed runtime source unavailable from Git",
+      "sha256": "5a8943b701b1857d5c084c694f204055f05a7b464f29d2490d11610ec4f60104",
+      "source_path": "build/select013-dead-frontier-independent-v1/archive-source-snapshots/build/select013-dead-frontier-witness-v1/freeze-runtime.py"
+    },
+    {
+      "archive_path": "source-snapshots/build/select013-dead-frontier-witness-v1/run_owned.py",
+      "bytes": 12106,
+      "reason": "Ignored executed runtime source unavailable from Git",
+      "sha256": "a33b0a7fac5bb5de7a340866a970e41d2bab074dff2c6f095c80c45997b47da1",
+      "source_path": "build/select013-dead-frontier-independent-v1/archive-source-snapshots/build/select013-dead-frontier-witness-v1/run_owned.py"
+    },
+    {
+      "archive_path": "source-snapshots/build/select013-dead-frontier-witness-v1/select_worker.py",
+      "bytes": 13591,
+      "reason": "Ignored executed runtime source unavailable from Git",
+      "sha256": "8a9ebfa8974bbc5a721995beaafde12c3147fac2fe158dfbc0b4d8b1cd134af9",
+      "source_path": "build/select013-dead-frontier-independent-v1/archive-source-snapshots/build/select013-dead-frontier-witness-v1/select_worker.py"
+    },
+    {
+      "archive_path": "source-snapshots/build/select013-lazy-beam-recovery-v1/comparison_contract.py",
+      "bytes": 43968,
+      "reason": "Ignored executed runtime source unavailable from Git",
+      "sha256": "5f0e15aac211bce9e7817c11dcc2cf435de1d5c04d41e839a79a7e0b41cf2119",
+      "source_path": "build/select013-dead-frontier-independent-v1/archive-source-snapshots/build/select013-lazy-beam-recovery-v1/comparison_contract.py"
+    },
+    {
+      "archive_path": "source-snapshots/build/select013-lazy-beam-recovery-v1/freeze-runtime.py",
+      "bytes": 10217,
+      "reason": "Ignored executed runtime source unavailable from Git",
+      "sha256": "7522e783b641e410359ffba8bd92f41a0161102e303e5c0d863c5ab3751e1969",
+      "source_path": "build/select013-dead-frontier-independent-v1/archive-source-snapshots/build/select013-lazy-beam-recovery-v1/freeze-runtime.py"
+    },
+    {
+      "archive_path": "source-snapshots/build/select013-lazy-beam-recovery-v1/run_owned.py",
+      "bytes": 12065,
+      "reason": "Ignored executed runtime source unavailable from Git",
+      "sha256": "d4c68ec70a11f83cd234657c4c61f1dd996e00534fe2d611274e03e76300a1bf",
+      "source_path": "build/select013-dead-frontier-independent-v1/archive-source-snapshots/build/select013-lazy-beam-recovery-v1/run_owned.py"
+    },
+    {
+      "archive_path": "source-snapshots/build/select013-lazy-beam-recovery-v1/select_worker.py",
+      "bytes": 16220,
+      "reason": "Ignored executed runtime source unavailable from Git",
+      "sha256": "703b1b53a21d00de197765a50a22454ea5d0bfc0c815ed9ff93e59237b205fc2",
+      "source_path": "build/select013-dead-frontier-independent-v1/archive-source-snapshots/build/select013-lazy-beam-recovery-v1/select_worker.py"
+    },
+    {
+      "archive_path": "audit/REPORT.txt",
+      "bytes": 3057,
+      "reason": "Exact source review, full audit, failed audit attempt and compact all-ray/cell/prefix joins",
+      "sha256": "ce6fcc6499d3b32ddd73d476a53b751f17eb43a0a5ec3423ba69b1fcdd0d7d38",
+      "source_path": "build/select013-dead-frontier-independent-v1/REPORT.txt"
+    },
+    {
+      "archive_path": "audit/source-review-index.json",
+      "bytes": 1727,
+      "reason": "Exact source review, full audit, failed audit attempt and compact all-ray/cell/prefix joins",
+      "sha256": "1b1164d2e3890668e670d618a0c39d78b0d8fb9b18450b87591e1c97d1dc3e97",
+      "source_path": "build/select013-dead-frontier-independent-v1/source-review-index.json"
+    },
+    {
+      "archive_path": "audit/current-source-guard.json",
+      "bytes": 15544,
+      "reason": "Exact source review, full audit, failed audit attempt and compact all-ray/cell/prefix joins",
+      "sha256": "d16f97740351c571de3ded98081b9a4215b5fecb457b26ad1ee58385c09bb0b7",
+      "source_path": "build/select013-dead-frontier-independent-v1/current-source-guard.json"
+    },
+    {
+      "archive_path": "audit/SAVED_RESULT_REPORT.txt",
+      "bytes": 4679,
+      "reason": "Exact source review, full audit, failed audit attempt and compact all-ray/cell/prefix joins",
+      "sha256": "da1a10e2d5d88714fc1d59d0c647f5aca6722007c4e838219d96188136ba6047",
+      "source_path": "build/select013-dead-frontier-independent-v1/SAVED_RESULT_REPORT.txt"
+    },
+    {
+      "archive_path": "audit/saved-review-index.json",
+      "bytes": 2813,
+      "reason": "Exact source review, full audit, failed audit attempt and compact all-ray/cell/prefix joins",
+      "sha256": "f988a6277c4629e4fbc1ab3467cbc6c90e1324af52e1b3dd8c350e2f014bb0e1",
+      "source_path": "build/select013-dead-frontier-independent-v1/saved-review-index.json"
+    },
+    {
+      "archive_path": "audit/audit_saved.py",
+      "bytes": 25529,
+      "reason": "Exact source review, full audit, failed audit attempt and compact all-ray/cell/prefix joins",
+      "sha256": "a70cb85252a60a858f23957cc702cae1fa23f9896a0ff5b2c59efbb791f8658b",
+      "source_path": "build/select013-dead-frontier-independent-v1/audit_saved.py"
+    },
+    {
+      "archive_path": "audit/audit-result-01.json",
+      "bytes": 147,
+      "reason": "Exact source review, full audit, failed audit attempt and compact all-ray/cell/prefix joins",
+      "sha256": "a4b3c7fc4ff4746912a60d56ab05d8245349a34f14af8551dd147120aa762169",
+      "source_path": "build/select013-dead-frontier-independent-v1/audit-result-01.json"
+    },
+    {
+      "archive_path": "audit/audit-result-02.json",
+      "bytes": 410,
+      "reason": "Exact source review, full audit, failed audit attempt and compact all-ray/cell/prefix joins",
+      "sha256": "7f2ccaa6084a9092df97e0891c349d69348d481ff79e9d2247c389a12b2b6fa7",
+      "source_path": "build/select013-dead-frontier-independent-v1/audit-result-02.json"
+    },
+    {
+      "archive_path": "audit/compact-result.json",
+      "bytes": 104083,
+      "reason": "Exact source review, full audit, failed audit attempt and compact all-ray/cell/prefix joins",
+      "sha256": "9699d58fbac51469bc32072d5cedb9d43272b2161da2a6469c27200418972fb5",
+      "source_path": "build/select013-dead-frontier-independent-v1/compact-result.json"
+    },
+    {
+      "archive_path": "audit/input-hashes.json",
+      "bytes": 35737,
+      "reason": "Exact source review, full audit, failed audit attempt and compact all-ray/cell/prefix joins",
+      "sha256": "0923f37f7bec40f9f351659abfaa0992e5049bc91db4dc49579334b27a9e47ff",
+      "source_path": "build/select013-dead-frontier-independent-v1/input-hashes.json"
+    },
+    {
+      "archive_path": "run/root-release.json",
+      "bytes": 2718,
+      "reason": "Exact root-owned release and historical source/metadata closure",
+      "sha256": "8866a10e14574b79c46f93be9f5f4f4f8f3e827e9f82c94a5742a18d988a1477",
+      "source_path": "build/select013-dead-frontier-witness-v1/root-release.json"
+    },
+    {
+      "archive_path": "run/source-index.json",
+      "bytes": 18940,
+      "reason": "Exact root-owned release and historical source/metadata closure",
+      "sha256": "71879696c1194859f8280b3865804c18a545d09011929fb0a8c39a7a4274a008",
+      "source_path": "build/select013-dead-frontier-witness-v1/source-index.json"
+    },
+    {
+      "archive_path": "run/attempt-01.supervision/receipt.json",
+      "bytes": 1685,
+      "reason": "Terminal cost/cleanup/result binding",
+      "sha256": "085f40abf2ccad5133e8ddd283c97a80ec6a57d1d2acf240e52b3cec7da96cb0",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01.supervision/receipt.json"
+    },
+    {
+      "archive_path": "run/attempt-01.supervision/worker-final.json",
+      "bytes": 278,
+      "reason": "Terminal cost/cleanup/result binding",
+      "sha256": "49422153542e389f8f2dfefafc0e2fdea68d82d86b020b4b926b4acda39e0769",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01.supervision/worker-final.json"
+    },
+    {
+      "archive_path": "run/attempt-01/result.json",
+      "bytes": 3943,
+      "reason": "Small original result, complete emitted-ray ledger or tool/axis coverage table",
+      "sha256": "e23d75b1171936af24ff0834e37a46e8426bd8b28a0a5f5017848cd78e65c0a2",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/result.json"
+    },
+    {
+      "archive_path": "run/attempt-01/costs.json",
+      "bytes": 3427,
+      "reason": "Small original result, complete emitted-ray ledger or tool/axis coverage table",
+      "sha256": "a237c5b0467a12552355ed2bd9319a054c9e1853ff201b9cdf87314678c78ce0",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/costs.json"
+    },
+    {
+      "archive_path": "run/attempt-01/world-control.json",
+      "bytes": 14251,
+      "reason": "Small original result, complete emitted-ray ledger or tool/axis coverage table",
+      "sha256": "2e6e639e28a3bde19bc79c465843022e4a2740b8ffe7dbae4fd39113978603cd",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/world-control.json"
+    },
+    {
+      "archive_path": "run/attempt-01/dead-frontier-inventory.json",
+      "bytes": 204651,
+      "reason": "Small original result, complete emitted-ray ledger or tool/axis coverage table",
+      "sha256": "3957c5c7af6d239e9f939b9cf1d007e97136bdc8d44eff013fd98ef9dc25bd88",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/dead-frontier-inventory.json"
+    },
+    {
+      "archive_path": "run/attempt-01/actual-blocker-capacity.json",
+      "bytes": 132308,
+      "reason": "Small original result, complete emitted-ray ledger or tool/axis coverage table",
+      "sha256": "e6fe994f45834be83740743dc9c9f198bcba55b55cc47083b0e183f7966b7961",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/actual-blocker-capacity.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-000.json",
+      "bytes": 3490,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "79c146823eff2699c1ee75f254c07378fb849226f0101fcddd2da2bcc18bcf3a",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-000.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-001.json",
+      "bytes": 3487,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "bf4653fc47ac411482a12f3061efb4ac18c55c60b0a8408d81404e9e0b029fcd",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-001.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-002.json",
+      "bytes": 3490,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "bf974db311f973780e7cd34063b73add897e992483ae10c6dd65316602fab3f9",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-002.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-003.json",
+      "bytes": 3489,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "5e05b41470d1c1551fac08e7076ae7c25d86a6c5f5967b4ce140206f8e627779",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-003.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-004.json",
+      "bytes": 3489,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "87e8ff6cade747d7cd4bdead49dfd27dff621c017d40dedc3ffcd4c06b7b5af6",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-004.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-005.json",
+      "bytes": 3490,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "f021d293197893a24f712738e6cb114b45b221f96dea1fe674619a08728e762c",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-005.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-006.json",
+      "bytes": 3541,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "cea56dd5aa94edd286998b6bedd90ed3afb92c383d2980d58723960b5de5aa21",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-006.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-007.json",
+      "bytes": 3537,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "53c0adfac41fcbac2ab855e4202768da592b82597f4d0ed475a1d285f91f904e",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-007.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-008.json",
+      "bytes": 3536,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "8ce3b61ba580ac2ba9f510769778c1e2f627809ef15b0e766d7c342508d73b31",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-008.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-009.json",
+      "bytes": 3440,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "2806e3da5496dc2b72088bca16c1c6db0ae9a206db954f2e60b6c757b7027d5f",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-009.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-010.json",
+      "bytes": 3438,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "b2e2705aeca08e920a40938edba8169a85f38a8d7f4936baa6dd10d42e21ae72",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-010.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-011.json",
+      "bytes": 3436,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "c5b1ba2a9e3fd20d155b0d054aba330be78a9b8283165ef5593b2f28df2643f3",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-011.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-012.json",
+      "bytes": 3381,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "bfd70ae4e98e00c48b9515a35222dc0ad9f89c69b4c2d137df5505ceb3dca850",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-012.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-013.json",
+      "bytes": 3387,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "de2d481487edd3f2cd6c714ad28e23ecbb8965b290c101859f440bcc3b04a2dc",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-013.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-014.json",
+      "bytes": 3379,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "3c680d73a8410e562c6dba4480ab193eb7ebf24a0d8b7e8feebb41ea634cf836",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-014.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-015.json",
+      "bytes": 3384,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "224d97060974cd7050d86f173d7bb327b8f28a9ba0acc4521e644c6675f645a5",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-015.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-016.json",
+      "bytes": 3392,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "497e4a00691f886ae2507e3ccc6be0411d4d1634939ee37ce9dc023de881cd4d",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-016.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-017.json",
+      "bytes": 3381,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "5d2e0db748226921ac4e678339bcd8bfeab5c8cb3ec2d03808c90fa10dbcbb39",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-017.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-018.json",
+      "bytes": 3448,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "733286493be80996851f0edea92fe5fb89a17bdb219bbc1e94add3f0aadb87c5",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-018.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-019.json",
+      "bytes": 3445,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "5b171a537796a3867c72887c73ec3bcb06a7eb3905c062d2ca42a04c99e6840c",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-019.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-020.json",
+      "bytes": 3448,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "114767fbbfa14bd5868e4ad8a255739418a24926ff7218933ff1b364cd9aed9a",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-020.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-021.json",
+      "bytes": 3398,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "9cee035b8b3412956076f3def3d6fcc5ce931c4fbd79cb212d4398eddbd1aa43",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-021.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-022.json",
+      "bytes": 3395,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "cb88016c99f22545d009f16dbd6a5e21973a2d468149033050d7ee4fd4ca76e8",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-022.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-023.json",
+      "bytes": 3394,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "85eabb5fdb780d508c12cdd722a410ae42ed94e013a2f1423f6fb37f7c7881c4",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-023.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-024.json",
+      "bytes": 3397,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "28263899abacacab6a233529480e8a43b6db2bd139dc4bfe40b2a9e72c616bdd",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-024.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-025.json",
+      "bytes": 3387,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "3f39f71247f5203124a8cd7320e6dae66f6a042487c5feddc2fb82bbde9c4f0c",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-025.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-026.json",
+      "bytes": 3397,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "e0cc5372506deb7ebb10c12d281281918d3ce2b36df70802fe020691090ad0ee",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-026.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-027.json",
+      "bytes": 3396,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "419872ac3f349f72aa3d65fd76819801faaf900ceec28c0013c77f8fc456cf95",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-027.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-028.json",
+      "bytes": 3391,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "37f9f26e5fede12042ccbb3535b7fafb622a24f00bc4afb5fdd5690bf6d6b463",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-028.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-029.json",
+      "bytes": 3397,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "eebcb3150d2b5dc6f55066133233593a8ffde78a57339370ebf762757c4c6928",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-029.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-030.json",
+      "bytes": 3398,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "6ff9430cd53730616f1009f0411943308bad2aa55ed1308ccbae50715f86d7ae",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-030.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-031.json",
+      "bytes": 3392,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "266b054f3d16a65c0f946b041c4f69f31357ca897e66842a67dd47d2d8087028",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-031.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-032.json",
+      "bytes": 3395,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "6a7579b0d17291f084a5aa054ef405d8cc7db56e6c6228baaa74bb91901b1d57",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-032.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-033.json",
+      "bytes": 3400,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "5879e6e0b8ff8bb6b507031cd118513ae8050895d387401c844f23015c1c9fa2",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-033.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-034.json",
+      "bytes": 3392,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "1675c1cbefb271e2297cadfac0e2043ef550b2df6ebb904bf7775080bb7c0bb3",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-034.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-035.json",
+      "bytes": 3399,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "0eed50cfa779c53a73b15176b33366b531ab6a14459259768f7003cdc15402f4",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-035.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-036.json",
+      "bytes": 3448,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "5b3053c59504fbb7367635090c66f63ac86512854ac486c416b709060fe8728a",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-036.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-037.json",
+      "bytes": 3444,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "cd709a1a94ea4f844c78511209c223adcf343daae7dd0d74cb248b1f75847759",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-037.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-038.json",
+      "bytes": 3443,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "79fa24fa934d9f19ba03cd9509e441810fa2ad95cb95eae6692eb0f78c11d430",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-038.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-039.json",
+      "bytes": 3398,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "51db7cc073cb915648d7e06b454269e785c47838e3af03c873b3c437b522149e",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-039.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-040.json",
+      "bytes": 3396,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "6e7dcc7c8f5708075376d4dacf9abf062ae4160be15377bcbc9da92c0b36eaa8",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-040.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-041.json",
+      "bytes": 3394,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "f76bf484445404b1378b40854e9dd923389b575094471a4d63a38a039c438108",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-041.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-042.json",
+      "bytes": 3396,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "24b1683999ffb0d8d8a8b80f816ac82e0ad5e9be5bd9f003bef4e00844f013bd",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-042.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-043.json",
+      "bytes": 3393,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "ae0aee8544fa329da74fde96a4653ef94cd86a844391e9bd4bbf7be66b55b3e5",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-043.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-044.json",
+      "bytes": 3392,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "dd94e65e9f3bfd247475b3634a0f37cc245b1eacc3b7eaacb6233024615bcaaf",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-044.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-045.json",
+      "bytes": 3392,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "fa4aef4fa8356b373267870661a5f6a03c6242def8da6118c6125e928b5145f4",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-045.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-046.json",
+      "bytes": 3394,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "5ecf082d9a868fdc8e733c199c753dd3dcb3115a22ee77576ff82b2047e011fb",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-046.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-047.json",
+      "bytes": 3392,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "b88ba4d048e5742843ed1b44f556de828cbc66e98f8990905ccbe4b93183d10c",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-047.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-048.json",
+      "bytes": 3390,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "40d597333d073027c2d33c11f899a901fbe7356856fdcf9b7205ded151cfc06a",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-048.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-049.json",
+      "bytes": 3396,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "23d03fd142f026765c8ffd2bc7195519375efaa470918e1f5b3aea2a10e71624",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-049.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-050.json",
+      "bytes": 3389,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "4bafabb44ef28bb090ea13d17a3b5180c01fc28c91723b0a578fa3b5f7301b66",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-050.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-051.json",
+      "bytes": 3393,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "90713ac4c6e6af4105ee80b7f6d1a23a4ab8049d7e588a2593c8102930e89e40",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-051.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-052.json",
+      "bytes": 3401,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "17cd8624260f15dc315d280213ab57e16b80f04f4108ff4b2ef12fd73eac669c",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-052.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-053.json",
+      "bytes": 3394,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "2af7a9a627aad4ce2e149e3740ffe1d4f8a8b683dbcfa3be9ff6169fc3840c58",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-053.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-054.json",
+      "bytes": 3432,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "2b4580c93f935eaf42783496e43edff91d8ba8f75bdbc2ee4f6cb28ac044c549",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-054.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-055.json",
+      "bytes": 3430,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "7aa1a2133b372bc317aa7f08c34581713f981a4406cdc38ec5294d2233e717d4",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-055.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-056.json",
+      "bytes": 3437,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "ad0d8552e1200782fa939c5bec573f19ea6fa261c5506e1a3a3fbf69e996bc76",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-056.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-057.json",
+      "bytes": 3436,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "9b8c1961c5c4d6f9ac6dc7428393a56f2da6d88fbf7f7256498e2aa793bacf6f",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-057.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-058.json",
+      "bytes": 3434,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "57756a7a3b4d7d461cefecd3a0fa52562430abd4511b0eb6d55b8d9fb2f66ed8",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-058.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-059.json",
+      "bytes": 3440,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "7bf241c0603e987c4f95a5517023ba0ffe32403720af770070de6f9bf7f53952",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-059.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-060.json",
+      "bytes": 3481,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "289f4c9f0e442d8d02b627c38917594a00a2c9ea7f412ba2ac838887953e25dc",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-060.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-061.json",
+      "bytes": 3484,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "b2194389917ab5cef8e986195846887abb5a3d831926fc12d871da4fef6d4818",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-061.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-062.json",
+      "bytes": 3479,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "9a39515984c29ee2c4c90846c451f5ea81fab9c7f99da7a599bef2f0be3f4aac",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-062.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-063.json",
+      "bytes": 3430,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "1199c58ad22b7e95da99a8781f713a737cad8a85ad988fa3bcd70d3740953fbe",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-063.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-064.json",
+      "bytes": 3438,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "2abeb171617e34180a47a5c0e0cfea466e1daccdc14e014b9f16953c9b428847",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-064.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-065.json",
+      "bytes": 3435,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "d9457e55435d2271bec65db23394f92d50c759411117532b651461524a3bf014",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-065.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-066.json",
+      "bytes": 3397,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "339494a68808de362586f0232b47a414a9c47763063d3daa3b08643b551b8ba3",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-066.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-067.json",
+      "bytes": 3398,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "4ef6bc9ad2910e3021b2f16f41f64a008ea6dc52c7db47d2bf203acfc3eba5bb",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-067.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-068.json",
+      "bytes": 3396,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "0da0f4c75ce03b4fcb13652ff9cd1944c64eb126b28f11263ca6e82ccd09d5a4",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-068.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-069.json",
+      "bytes": 3398,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "c6ada756652aff90b0b54f0bd443233c3afe7114af2298e6d88c28531b640876",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-069.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-070.json",
+      "bytes": 3394,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "ee011312a1e22e1e05e5a7db3c69d9c2facaed4a12bb715369f5d3dac180176a",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-070.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-071.json",
+      "bytes": 3395,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "476e4ae41337691593c01216e8bd5664fafc5b3a15f06611ec88362cca30185b",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-071.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-072.json",
+      "bytes": 3540,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "10c40437590022ff980b6afde731a9c398d8370a8df83f6f8326f5920977c471",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-072.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-073.json",
+      "bytes": 3534,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "154d863def5673e8f0dc6696ac1247b714c173539ff10490b620940d306ee288",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-073.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-074.json",
+      "bytes": 3540,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "5dc928b6336fd2679bb6dfce5e47382d4029309afe6ce3b78260046bb6e67ba6",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-074.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-075.json",
+      "bytes": 3384,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "d7aba3996910150d5685e7755efc002477f1876fa8ba8cc49671990d8983bfdb",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-075.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-076.json",
+      "bytes": 3386,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "695c0d59ad0ba11fbe7c8b64ed97c3ac509f61f1ac7637bfe47479b8ad73e6f1",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-076.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-077.json",
+      "bytes": 3390,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "e755502207d7920da97e979a8396816e926c0e917c3a9ce7c5d9569b32e0dea1",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-077.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-078.json",
+      "bytes": 3484,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "da91002e550b74a25c68a6521729f1db20dceaddcd1738ab4196f554dda0bd77",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-078.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-079.json",
+      "bytes": 3492,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "89d3cadff26a24186322151c77283f490daf06c242ca71513472ade041d6b70e",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-079.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-080.json",
+      "bytes": 3537,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "6e09f82e9ffe2370885800197bf849e723a40077f6c49e58c82e4cdc0a583cfb",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-080.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-081.json",
+      "bytes": 3444,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "34ae5706f12ce6ae5979713a67c4f2a0048196b3bb196600ae8292946889f371",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-081.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-082.json",
+      "bytes": 3382,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "4d9f01d89f79a8706ea9f8471d0ee4e17af297ef9cf93683a8f02395952fa7f5",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-082.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-083.json",
+      "bytes": 3390,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "c3b5d186d565844a946d9a34933bf5f607a94783afcdb70f278bd3eae3f21d11",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-083.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-084.json",
+      "bytes": 3442,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "81031b908bea97cb55db9d863b7257a2eaed421c1c40ff382784bb84d174110f",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-084.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-085.json",
+      "bytes": 3402,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "40749121e5065863ea9bcb5c30658e666ae7161befba2bee34fb0648a9e06734",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-085.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-086.json",
+      "bytes": 3391,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "cab2ae53ff692dd055087cb50daf3d741d57359dce4dff2e3be0fae0de588d98",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-086.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-087.json",
+      "bytes": 3399,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "743ad614746fa5b5bcc2b0450a9638e74ea05acc98a78649fed38267b83c7592",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-087.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-088.json",
+      "bytes": 3403,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "d6c096c8d1f7e6590b73c11d7ac42bfc45ed8d3748c98b4a97b678aa82d2bc98",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-088.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-089.json",
+      "bytes": 3400,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "b827b31250486f1cc5cd2413459cff0895526f0425473d8ed96133985b9cbfd0",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-089.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-090.json",
+      "bytes": 3444,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "3404686cd6180f822945ea47cf310505f264a7d99575be1211602cde98ac7215",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-090.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-091.json",
+      "bytes": 3402,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "6b88564b6d46df863092bb487b2d2f268924734cf4424f442145b2bfa10fd74c",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-091.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-092.json",
+      "bytes": 3400,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "75e20d4d57f116e7a0a8d789075e9e74771a0ff863519710edbfed5a2def6ba5",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-092.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-093.json",
+      "bytes": 3399,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "76d03e7d7d388e4297d9bcdd8a321e5ab1793deecb8b2891297db5ec143228a8",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-093.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-094.json",
+      "bytes": 3391,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "10bdf50d43e77d847cee4661201c285e1eaeb9ba8892d06575546254c568cee1",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-094.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-095.json",
+      "bytes": 3399,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "80ae6490ff6151529d4c6eac753d2881934f308d5ecd2b1ea6445e33a585f539",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-095.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-096.json",
+      "bytes": 3436,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "984cf8b4bd4e4a89958234077d563d2926e23546518d4bc6ac921e4b0d9f3401",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-096.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-097.json",
+      "bytes": 3438,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "ded5619967caf774269eded6d43670fdb79ba0d9a79e5b6c914a5b6d58347922",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-097.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-098.json",
+      "bytes": 3491,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "1e34b337c71e94bb24bbde3299fe3e16283f3a81756668a68f7e4cb51df41ab5",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-098.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-099.json",
+      "bytes": 3443,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "13138bb348ecfbe40e8f373651bb468e253f6cec6dc6a2411151b9616607c45f",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-099.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-100.json",
+      "bytes": 3397,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "b20c791daa111283b663d1b131555562eb626b2960eb5bbae9987b89996b2f8a",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-100.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-101.json",
+      "bytes": 3400,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "8751eca01e2a293a2cb6340959a6d135460249eb59be4ba93f50de48cc360597",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-101.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-102.json",
+      "bytes": 3545,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "b5a9382b502e9f1f3b3b98aefd1032aad82e61529ec4a3f06b05be267fd56467",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-102.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-103.json",
+      "bytes": 3386,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "8ce32ecfb8c677e9f63eddf8386a3dba6232cec47b2fd2bac930001b15cab08c",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-103.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-104.json",
+      "bytes": 3500,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "b58f9477e2287efa292583da2bf28b8f62124cb60794e231166c44f66cff58a0",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-104.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-105.json",
+      "bytes": 3445,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "b21e2eaa2efb7fd25883fe7d6d53875d9d76d20f04e443d512cc2d3db61965de",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-105.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-106.json",
+      "bytes": 3394,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "f768a4be7e7b86296773eeb63cffdab65b2eef311fb96d787db6915d60e6a777",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-106.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-107.json",
+      "bytes": 3401,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "6ed76dd1abc72aee0d7994d8de4224a077c6d2570a193e95a129625acce3ea92",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-107.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-108.json",
+      "bytes": 3407,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "89d7b564b4da5c7d8e76fdc224dbf4245e2013408bf58dbc8e662caf18eb0162",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-108.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-109.json",
+      "bytes": 3400,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "41c57d0335db5166aba92d419654cb2f0ccf7e958b6c98e84a162da3b027366f",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-109.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-110.json",
+      "bytes": 3403,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "ea0d1b04f73b2944cd66430dc868ef85eaa1c8017ffc092bfb4994526565be00",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-110.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-111.json",
+      "bytes": 3398,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "fa321bc538ba32d24aa8cdaf08c07c69ff31424f655ca90a969e54f48daf4ab4",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-111.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-112.json",
+      "bytes": 3403,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "e75e7f7e1c3269ee7d9571e3f89b7bcfe179ae3522928b96fd31a127c13e6c10",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-112.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-113.json",
+      "bytes": 3438,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "967639662ec3e5d7a6e7ed3075d8b65bf567ea12eaee85ab4b560bf5e24ceb90",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-113.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-114.json",
+      "bytes": 3443,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "9f6ed526d1dc7311230347cb06f211a55b3554bde1e0f97cb9ea3efef7101ec7",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-114.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-115.json",
+      "bytes": 3407,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "b51830cfb2d3679d1f4f5a4225699a8c4ac5014cae302b6d6431d24f28ff627e",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-115.json"
+    },
+    {
+      "archive_path": "run/attempt-01/rejection-116.json",
+      "bytes": 3397,
+      "reason": "Original bounded first-rejection sidecar, complete cell list and semantic seal",
+      "sha256": "e7096b8aa034166788b6d6748a5666504faf14ae4cfe0773a36eead71829165e",
+      "source_path": "build/select013-dead-frontier-witness-v1/attempt-01/rejection-116.json"
+    },
+    {
+      "archive_path": "validation/test_witness.py",
+      "bytes": 11910,
+      "reason": "Exact previously executed generated controls and saved terminal evidence; not rerun",
+      "sha256": "d085b5f44498fca24eb63653bfdc6b2f14694268d5b613b7353696af4fbd31c0",
+      "source_path": "build/select013-dead-frontier-witness-v1/test_witness.py"
+    },
+    {
+      "archive_path": "validation/controls-01.json",
+      "bytes": 1310,
+      "reason": "Exact previously executed generated controls and saved terminal evidence; not rerun",
+      "sha256": "951b009a43544ebaec1c3871f705250d970065c72bd3b62a1ea520105c3bb375",
+      "source_path": "build/select013-dead-frontier-witness-v1/controls-01.json"
+    },
+    {
+      "archive_path": "validation/controls-01.log",
+      "bytes": 99,
+      "reason": "Exact previously executed generated controls and saved terminal evidence; not rerun",
+      "sha256": "6d97c2d09fd6e45e041267688c17323e17d7cc29a69c4f02b3ff00b18f29486c",
+      "source_path": "build/select013-dead-frontier-witness-v1/controls-01.log"
+    },
+    {
+      "archive_path": "prior-lazy/observed_beam/selection.json",
+      "bytes": 121313,
+      "reason": "Predetermined source/context and opening-lane prefix provenance; metadata only",
+      "sha256": "8f62656d1081ea247499cb1ff7ed8b803bf2249d3e700703d3806506a151c8f4",
+      "source_path": "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/selection.json"
+    },
+    {
+      "archive_path": "prior-lazy/observed_beam/comparison-world.json",
+      "bytes": 6751,
+      "reason": "Predetermined source/context and opening-lane prefix provenance; metadata only",
+      "sha256": "2dc67df3216033c72540cf2d83e3c614f3a5e62a2fb31ad3cf8c653925213995",
+      "source_path": "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/comparison-world.json"
+    },
+    {
+      "archive_path": "prior-lazy/observed_beam/context.json",
+      "bytes": 11618,
+      "reason": "Predetermined source/context and opening-lane prefix provenance; metadata only",
+      "sha256": "178b81f87c8363a3f0c55be411b2085739e349415bbacc73a0fe3e90ad124887",
+      "source_path": "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/context.json"
+    },
+    {
+      "archive_path": "prior-lazy/IL64-lineage.json",
+      "bytes": 1206,
+      "reason": "Predetermined source/context and opening-lane prefix provenance; metadata only",
+      "sha256": "e1fe8425d052af596f3a830645e306c47b85f135264e39f81a45f632c3ae3172",
+      "source_path": "build/select013-lazy-beam-recovery-v1/attempt-01/IL64-lineage.json"
+    },
+    {
+      "archive_path": "public-metadata/ReMIND-013-public-inputs.json",
+      "bytes": 17736,
+      "reason": "Qualified partial-domain input hashes and held037 denominator; no payload",
+      "sha256": "841261035a7d7be5c55984e717b8d65b712065a708e9260231ebcd49cc4d700e",
+      "source_path": "build/select013-expanded-public-preparation-v1/public-inputs-v1/ReMIND-013-public-inputs.json"
+    },
+    {
+      "archive_path": "public-metadata/public-select-index.json",
+      "bytes": 1678,
+      "reason": "Qualified partial-domain input hashes and held037 denominator; no payload",
+      "sha256": "a5a7ed8b504b3f768666cdec4c77908d680ff242eb157afb0f377b95105dc389",
+      "source_path": "build/select013-expanded-public-preparation-v1/public-inputs-v1/public-select-index.json"
+    },
+    {
+      "archive_path": "public-metadata/original-public-select-index-v2.json",
+      "bytes": 1565,
+      "reason": "Original held037 row equality",
+      "sha256": "adc7232f0fd05300f90078385bc2576150eccc882712e31bfc97534f68680d5f",
+      "source_path": "build/remind-select-public-preparation-v1/public-select-index-v2.json"
+    },
+    {
+      "archive_path": "FULL_AUDIT_INPUT_REQUIREMENTS.json",
+      "bytes": 55817,
+      "reason": "Explicit original-path list and pins for full audit rerun, including omitted histories",
+      "sha256": "6174a5bace94c8fb9cb7a77ce5f414287c29645520e9b0779d36278f39f38cdc",
+      "source_path": "build/select013-dead-frontier-independent-v1/FULL_AUDIT_INPUT_REQUIREMENTS.json"
+    },
+    {
+      "archive_path": "CANONICAL_SOURCE_REPRODUCTION.json",
+      "bytes": 9749,
+      "reason": "Exact83 canonical Git blob paths and SHA256 hashes",
+      "sha256": "a1976ae9ca401635f76d3b4b7c541b0b9a33e5572f4070b8a9a5b962b4c9c25f",
+      "source_path": "build/select013-dead-frontier-independent-v1/CANONICAL_SOURCE_REPRODUCTION.json"
+    },
+    {
+      "archive_path": "ARCHIVE_REPRODUCTION.txt",
+      "bytes": 5239,
+      "reason": "Reproduction scope, limitations and exact canonical/saved-audit commands",
+      "sha256": "b2631e71a10db845b06b937eda88e92a2acabd9aeb5b6788362a5a53cd37c2c3",
+      "source_path": "build/select013-dead-frontier-independent-v1/ARCHIVE_REPRODUCTION.txt"
+    }
+  ],
+  "entry_count": 160,
+  "scope": "Exact compact saved witness evidence; no arrays, weights or repeated large histories",
+  "source_commit": "593a148fe72d57641bb428c60eecaabbe768369e",
+  "status": "READY_FOR_ROOT_ARCHIVAL_COPY",
+  "total_bytes": 1367379
+}

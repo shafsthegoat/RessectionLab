@@ -1,0 +1,174 @@
+{
+  "scope": "generated numerical controls only; no patient arrays/images/checkpoints or science run",
+  "passed": true,
+  "records": [
+    {
+      "control": "all_13_axis_cell_corners",
+      "frame": "identity",
+      "tool": "generic_suction",
+      "outcomes": [
+        {
+          "cell": [
+            1,
+            0,
+            0
+          ],
+          "minimum_over_13_farthest_corner_distance_mm": 0.7071067811865476,
+          "native_capacity": true,
+          "enlarged_capacity": true
+        },
+        {
+          "cell": [
+            1,
+            1,
+            1
+          ],
+          "minimum_over_13_farthest_corner_distance_mm": 2.1213203435596424,
+          "native_capacity": false,
+          "enlarged_capacity": false
+        }
+      ]
+    },
+    {
+      "control": "all_13_axis_cell_corners",
+      "frame": "identity",
+      "tool": "generic_aspirator",
+      "outcomes": [
+        {
+          "cell": [
+            1,
+            0,
+            0
+          ],
+          "minimum_over_13_farthest_corner_distance_mm": 0.7071067811865476,
+          "native_capacity": true,
+          "enlarged_capacity": true
+        },
+        {
+          "cell": [
+            1,
+            1,
+            1
+          ],
+          "minimum_over_13_farthest_corner_distance_mm": 2.1213203435596424,
+          "native_capacity": false,
+          "enlarged_capacity": false
+        }
+      ]
+    },
+    {
+      "control": "all_13_axis_cell_corners",
+      "frame": "oblique_reflected_anisotropic",
+      "tool": "generic_suction",
+      "outcomes": [
+        {
+          "cell": [
+            1,
+            0,
+            0
+          ],
+          "minimum_over_13_farthest_corner_distance_mm": 0.7211102550927971,
+          "native_capacity": true,
+          "enlarged_capacity": true
+        },
+        {
+          "cell": [
+            1,
+            1,
+            1
+          ],
+          "minimum_over_13_farthest_corner_distance_mm": 2.163330765278393,
+          "native_capacity": false,
+          "enlarged_capacity": false
+        }
+      ]
+    },
+    {
+      "control": "all_13_axis_cell_corners",
+      "frame": "oblique_reflected_anisotropic",
+      "tool": "generic_aspirator",
+      "outcomes": [
+        {
+          "cell": [
+            1,
+            0,
+            0
+          ],
+          "minimum_over_13_farthest_corner_distance_mm": 0.7211102550927971,
+          "native_capacity": true,
+          "enlarged_capacity": true
+        },
+        {
+          "cell": [
+            1,
+            1,
+            1
+          ],
+          "minimum_over_13_farthest_corner_distance_mm": 2.163330765278393,
+          "native_capacity": false,
+          "enlarged_capacity": false
+        }
+      ]
+    },
+    {
+      "control": "tangent_boundary",
+      "tool": "generic_suction",
+      "radial_excess_mm": 0.0,
+      "native_capacity": false,
+      "enlarged_capacity": true
+    },
+    {
+      "control": "tangent_boundary",
+      "tool": "generic_suction",
+      "radial_excess_mm": 5e-07,
+      "native_capacity": false,
+      "enlarged_capacity": true
+    },
+    {
+      "control": "tangent_boundary",
+      "tool": "generic_suction",
+      "radial_excess_mm": 2e-06,
+      "native_capacity": false,
+      "enlarged_capacity": false
+    },
+    {
+      "control": "tangent_boundary",
+      "tool": "generic_aspirator",
+      "radial_excess_mm": 0.0,
+      "native_capacity": false,
+      "enlarged_capacity": true
+    },
+    {
+      "control": "tangent_boundary",
+      "tool": "generic_aspirator",
+      "radial_excess_mm": 5e-07,
+      "native_capacity": false,
+      "enlarged_capacity": true
+    },
+    {
+      "control": "tangent_boundary",
+      "tool": "generic_aspirator",
+      "radial_excess_mm": 2e-06,
+      "native_capacity": false,
+      "enlarged_capacity": false
+    },
+    {
+      "control": "infinite_cylinder_cannot_prove_finite_capsule",
+      "infinite_capacity": true,
+      "finite_capacity": false
+    },
+    {
+      "control": "full_sweep_pass_does_not_prove_microstep_containment",
+      "full_capacity": true,
+      "microstep_capsules_checked": 65,
+      "microstep_capacity": false
+    }
+  ],
+  "source_sha256": {
+    "src/resectionlab/native_resection.py": "79363aa6156917514d4aa57e328adcd16babff51518c0c4587e6dcaf94a5723d",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/native_proposals.py": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+    "src/resectionlab/post_exposure.py": "ce95ca492aef3bb0149d9fb62c22766caad76701f894abaa37327a21acb7970e",
+    "build/select013-dead-frontier-witness-v1/blocker_coverage.py": "a449cb0db3011b953353185bf6c9247d68c20f4ee962501c2c9113e34eb48e25"
+  }
+}

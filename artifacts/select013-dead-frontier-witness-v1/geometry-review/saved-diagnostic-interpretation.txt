@@ -1,0 +1,71 @@
+Independent interpretation of saved attempt-01 diagnostic records
+
+Result and parent-receipt SHA256 match the values supplied by root:
+result: e23d75b1171936af24ff0834e37a46e8426bd8b28a0a5f5017848cd78e65c0a2
+receipt: 085f40abf2ccad5133e8ddd283c97a80ec6a57d1d2acf240e52b3cec7da96cb0
+Capacity file SHA256:
+e6fe994f45834be83740743dc9c9f198bcba55b55cc47083b0e183f7966b7961
+
+Numerical and set checks
+- Numerical applicability is true, with coordinate/span/tool bound
+  254.00000000064153 mm against the admitted maximum 10,000 mm.
+- The 1e-6 mm enlarged reporting envelope was used separately from native
+  r-1e-10 mm containment. There are zero roundoff-ambiguous cells.
+- Exactly 26 column/tool pairs each checked 129 positive source endpoints.
+  There were zero degenerate endpoints. Two envelope calls per endpoint give
+  exactly 26*129*2 = 6,708 containment calls, without further native previews.
+- The 117 saved rejection sidecars contain 19 distinct cells. Their union exactly
+  equals the disjoint union of 13 excluded cells and six optimistic-capacity cells.
+  Both sidecar_evidence_truncated and classification_truncated are false.
+  No retained cell is unclassified.
+- Every one of the 117 rejected rays contains at least one excluded cell;
+  101 rays contain only excluded cells. Thus the structural finding is attached
+  to every current rejection, not merely to an isolated blocker example.
+- All six optimistic-capacity cells fit only generic_aspirator envelopes among
+  the saved pairs. None of the 19 cells passes the generic_suction full sweep.
+  The six passes still carry no microstep, exposure, or shaft-clearance guarantee.
+- The saved inventory is complete for its declared family: 130 slots, 13
+  duplicates, 117 emitted/rejected, zero accepted, zero omitted, cap 120, and
+  13 remaining decision steps. Candidate-cap clipping and exhaustion of the
+  episode step limit do not explain this specific frontier.
+
+Identity checks
+All 117 sidecar fingerprints were regenerated from canonical sorted JSON and
+matched. Sidecar entry, endpoint, tool ID, retained counts, complete-set flag,
+rejected status, and uncommitted temporary-removal flag match their records.
+All share exactly one source, final committed state, native affine, native
+decision model, and source shape. Source and final state agree with the saved
+inventory/result, and the affine agrees with the saved world-control record.
+The native model hash agrees with the saved native prefix history metadata;
+the separate planning/inventory decision-model hash is not conflated with it.
+
+source: sha256:01b0bc9e3586b0f797f132d072b809a7570a9a0c6eae86392aa35417e4a06bda
+state: sha256:5f127a07d9fc66d85fa7c758dc2fc1d8f7c26aa99c0a3ac991df00adedc66d16
+native affine: sha256:27003b4f2f6a3549c8a032e345c71a80286cb142cfc8b91612007f024717b987
+native model: sha256:b7885a968eb145c1d45c13b1af2d4ea8e667dfb97c5f6110bc200c01d1dd74b5
+planning model: sha256:d9a6b888898e58f2a41634e0d2ce6a0a408aa806692bb96c2bad957dbbedd2a3
+source shape: [131,154,117]
+
+Interpretation and recommendation
+This is a demonstrated limitation of the frozen 13-column action family under
+the current native whole-cell removal semantics. Each present rejected ray has
+at least one blocker that cannot be removed by any tested depth on those columns
+using either generic tool. More learning cannot make those geometrically absent
+cell-removal actions available. The diagnostic does not establish that physical
+tissue is unreachable, that the entire task lacks a useful route, or that every
+alternative earlier prefix would yield the same outcome. It diagnoses one saved
+frontier and the global cell-capacity restriction of its frozen geometry family.
+
+A minimal proposal-family contrast is justified: add a bounded, deterministic
+obstruction-centered translated source-normal opening family using only these
+authenticated first-hit cells. Keep the same prefix state, native cell semantics,
+shaft-before-cut rule, tools, source domains, access/world, and reward. Ask first
+whether a new candidate passes native checks and actually removes an excluded
+blocker, then whether re-preview unlocks an original blocked ray. Later target
+progress is a separate outcome. Do not relax tip/shaft radii or removal physics,
+expand into a broad axis search, or treat optimistic capacity as permission to
+cut. This is an implementation recommendation, not authorization for another run;
+root controls the timing after the frozen050 comparison.
+
+This follow-up used saved diagnostic JSON and metadata only. No image/source
+arrays, checkpoints, native previews, or new patient execution were performed.

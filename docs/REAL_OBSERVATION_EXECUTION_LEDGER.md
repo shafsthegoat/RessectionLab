@@ -1,5 +1,29 @@
 # Real-observation execution ledger
 
+## Targeted data and storage steering, October 11
+
+The latest human supplement retains the four hybrid packages and requires the
+failure → cause → targeted change → baseline comparison → independent validation
+cycle. Additional datasets are candidates, not a download queue. Reuse current
+data first; require a specific missing measurement, eligible smallest subset,
+bounded experiment/success criterion and verified peak footprint before an
+addition. SurgSync, DRENDS, STIR, Edinburgh/Pernet, TopBrain, BraTioUS and LARK
+are not currently selected for acquisition. Missing recorded actions must not
+become invented measured demonstrations; cross-domain results stay distinct.
+
+The shared extension ceiling is 10 GiB additional resident growth and at least
+50 GiB free disk. This supersedes conflicting blanket continuous-download
+instructions below. One acquisition/storage owner coordinates reservations;
+only one new dataset pilot may be materialized at a time. Count partials,
+extraction, cache/dependency/model growth, agent copies and outputs. Preserve
+existing data, unique weights, unfinished experiments and user files. Cleanup
+is limited to verified unused, reproducible temporary files from this extension.
+No new dataset is needed for the current shortlist-transfer and action-family
+failures. One scientific worker runs at a time; source preparation and saved
+independent evaluation can proceed in parallel. Compact numerical storage
+baseline/reservations live under `build/storage-extension-v1` until the next
+coherent result archive. Do not substitute additional review loops for execution.
+
 ## Hybrid world-model steering, October 10
 
 The latest human attachment is preserved byte-for-byte in [HYBRID_WORLD_MODEL_STEERING.md](HYBRID_WORLD_MODEL_STEERING.md), SHA256 `ac1e704d81a79d4f5c4501ba2696910174062f49d952d26ca22c44ec42ebeec9`. Its review cites main `4d1d0ff`, the starting baseline for this cycle. This addendum supersedes the earlier next-step ordering while retaining all historical failures, patient roles, full-supergoal requirements and the October 8 permission for separately labeled generated experience. Bibliographic access claims remain attributed to the supplied review until independently checked for an implemented mechanism.
@@ -1742,3 +1766,14 @@ Generated runner controls pass 18 tests, including both plan seals followed by
 uncached independent replay; canonical tests pass 88 plus nine subtests, with
 three missing-historical-source skips. The actual patient comparison remains
 unrun at this commit. No model, task/reward, patient role or fitted cohort changes.
+
+## October 11 — Fixed action-family obstruction measured
+
+[The completed dead-frontier diagnostic](../artifacts/select013-dead-frontier-witness-v1/RESULT.md)
+ties every one of 117 current rejected rays to at least one of 13 cells outside
+all enlarged whole-tool-column removal envelopes. The diagnostic exactly replays
+eleven preselected negative motions, with no target progress and no model calls.
+Independent saved and mathematical checks support the bounded claim. Parent wall
+is 24.376 s at 447.61 MB sampled peak; the source/current-state distinction and
+failed audit-only parsing attempt remain recorded. This motivates a same-cap
+existing obstruction-opening contrast, not new tissue parameters or more RL.

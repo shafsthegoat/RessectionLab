@@ -1,0 +1,59 @@
+{
+  "archival_reproduction": "The audit preserves original repository/build paths and writes outputs exclusively. Reproduce in a clean copied review directory with the pinned source guard and saved inputs; no acquired arrays or weights are needed.",
+  "files": {
+    "REPORT.txt": {
+      "bytes": 3057,
+      "path": "build/select013-dead-frontier-independent-v1/REPORT.txt",
+      "sha256": "ce6fcc6499d3b32ddd73d476a53b751f17eb43a0a5ec3423ba69b1fcdd0d7d38"
+    },
+    "SAVED_RESULT_REPORT.txt": {
+      "bytes": 4679,
+      "path": "build/select013-dead-frontier-independent-v1/SAVED_RESULT_REPORT.txt",
+      "sha256": "da1a10e2d5d88714fc1d59d0c647f5aca6722007c4e838219d96188136ba6047"
+    },
+    "audit-result-01.json": {
+      "bytes": 147,
+      "path": "build/select013-dead-frontier-independent-v1/audit-result-01.json",
+      "sha256": "a4b3c7fc4ff4746912a60d56ab05d8245349a34f14af8551dd147120aa762169"
+    },
+    "audit-result-02.json": {
+      "bytes": 410,
+      "path": "build/select013-dead-frontier-independent-v1/audit-result-02.json",
+      "sha256": "7f2ccaa6084a9092df97e0891c349d69348d481ff79e9d2247c389a12b2b6fa7"
+    },
+    "audit_saved.py": {
+      "bytes": 25529,
+      "path": "build/select013-dead-frontier-independent-v1/audit_saved.py",
+      "sha256": "a70cb85252a60a858f23957cc702cae1fa23f9896a0ff5b2c59efbb791f8658b"
+    },
+    "compact-result.json": {
+      "bytes": 104083,
+      "path": "build/select013-dead-frontier-independent-v1/compact-result.json",
+      "sha256": "9699d58fbac51469bc32072d5cedb9d43272b2161da2a6469c27200418972fb5"
+    },
+    "current-source-guard.json": {
+      "bytes": 15544,
+      "path": "build/select013-dead-frontier-independent-v1/current-source-guard.json",
+      "sha256": "d16f97740351c571de3ded98081b9a4215b5fecb457b26ad1ee58385c09bb0b7"
+    },
+    "input-hashes.json": {
+      "bytes": 35737,
+      "path": "build/select013-dead-frontier-independent-v1/input-hashes.json",
+      "sha256": "0923f37f7bec40f9f351659abfaa0992e5049bc91db4dc49579334b27a9e47ff"
+    },
+    "source-review-index.json": {
+      "bytes": 1727,
+      "path": "build/select013-dead-frontier-independent-v1/source-review-index.json",
+      "sha256": "1b1164d2e3890668e670d618a0c39d78b0d8fb9b18450b87591e1c97d1dc3e97"
+    }
+  },
+  "scope": "saved-only fixed dead-frontier witness audit; no scientific rerun",
+  "status": "PASS",
+  "terminal_pins": {
+    "costs": "a237c5b0467a12552355ed2bd9319a054c9e1853ff201b9cdf87314678c78ce0",
+    "receipt": "085f40abf2ccad5133e8ddd283c97a80ec6a57d1d2acf240e52b3cec7da96cb0",
+    "release": "8866a10e14574b79c46f93be9f5f4f4f8f3e827e9f82c94a5742a18d988a1477",
+    "result": "e23d75b1171936af24ff0834e37a46e8426bd8b28a0a5f5017848cd78e65c0a2",
+    "source_index": "71879696c1194859f8280b3865804c18a545d09011929fb0a8c39a7a4274a008"
+  }
+}

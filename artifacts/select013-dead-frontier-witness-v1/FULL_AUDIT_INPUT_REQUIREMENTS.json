@@ -1,0 +1,1166 @@
+{
+  "external_bytes": 4454048,
+  "external_count": 59,
+  "inputs": {
+    "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01.supervision/receipt.json": {
+      "archived_as": null,
+      "bytes": 1227,
+      "required_external_saved_input": true,
+      "sha256": "c159b91ab2015dfd54dee677eb683b27e335a62657ba51838c398ed2d391a98e"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01/native-replay.json": {
+      "archived_as": null,
+      "bytes": 856630,
+      "required_external_saved_input": true,
+      "sha256": "529405a10f37c12f9ee4138fd0ef0d0824d7c3fba6f877802890971cc4bae862"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/attempt-01/result.json": {
+      "archived_as": null,
+      "bytes": 2698,
+      "required_external_saved_input": true,
+      "sha256": "432535613f699604a4b0f3b0aaa0fedebbe932e5ca6b7006beedd66ff823a7ce"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/root-release.json": {
+      "archived_as": null,
+      "bytes": 3769,
+      "required_external_saved_input": true,
+      "sha256": "e5dd29dc93460dc40c66a27dcf79986736797fd65ae9277e0e8026ea860d1797"
+    },
+    "build/post-exposure-IL045-evaluation-recovery-v1/source-index.json": {
+      "archived_as": null,
+      "bytes": 16563,
+      "required_external_saved_input": true,
+      "sha256": "1fd10c334fc8a83bcf8141c010adf3948339632c1b3db6829c0ece8182011957"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01.supervision/receipt.json": {
+      "archived_as": null,
+      "bytes": 1637,
+      "required_external_saved_input": true,
+      "sha256": "c9702883bcbdb9fb524a99b88fde1cac464116d399fce8aa63d866b57b4a1c82"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01.supervision/worker-final.json": {
+      "archived_as": null,
+      "bytes": 685,
+      "required_external_saved_input": true,
+      "sha256": "226d5a0e0efd2eafecd7301ff09bb7e302aa2a9a0bccbf818c00916cd98ff4fa"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/IL/update-64/update.json": {
+      "archived_as": null,
+      "bytes": 1854,
+      "required_external_saved_input": true,
+      "sha256": "1bda364b5b5410ee5bdb956ab097b1a366c1f8ec9091de7eab33533ddb3499f4"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/ReMIND-002-context.json": {
+      "archived_as": null,
+      "bytes": 7179,
+      "required_external_saved_input": true,
+      "sha256": "c9deade0dce17907a7d079b4065feb1c4fafa0a4f1a05299634f5f30e559c027"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/ReMIND-015-context.json": {
+      "archived_as": null,
+      "bytes": 7089,
+      "required_external_saved_input": true,
+      "sha256": "8f27652878c637034c4725c8a753ae0844800692cdbaeba5b8dfab148a137410"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/ReMIND-018-context.json": {
+      "archived_as": null,
+      "bytes": 7177,
+      "required_external_saved_input": true,
+      "sha256": "28d6084b58fa90fc6c38aefccbd240b6e95806fb7d7fd4358c8651f496a4b3e0"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/ReMIND-045-context.json": {
+      "archived_as": null,
+      "bytes": 7168,
+      "required_external_saved_input": true,
+      "sha256": "c967fed33bc10336e1470145090e1ab2173cac6135e25b4ec164dcc995f64427"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-002/native-replay.json": {
+      "archived_as": null,
+      "bytes": 25622,
+      "required_external_saved_input": true,
+      "sha256": "4611a32b328cd07d8c642e4246711a5255bd9b86435aaa290493c68316806d42"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-002/plan.json": {
+      "archived_as": null,
+      "bytes": 1065,
+      "required_external_saved_input": true,
+      "sha256": "1614f9d2206038c3bda4f85eb0906c31464715b305d11a03827d61b00396d09b"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-015/native-replay.json": {
+      "archived_as": null,
+      "bytes": 471096,
+      "required_external_saved_input": true,
+      "sha256": "fc1f64be0a38aa2c3c192595d8b0cf5bf4a0464aaa3898f74a6f9b5421e92bf4"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-015/plan.json": {
+      "archived_as": null,
+      "bytes": 447176,
+      "required_external_saved_input": true,
+      "sha256": "66dadfe3b434996fb03284757b6b76d32baf310d7154f122172e79008402bb58"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-018/native-replay.json": {
+      "archived_as": null,
+      "bytes": 25643,
+      "required_external_saved_input": true,
+      "sha256": "f4a61aa5ca95158d0deef861d11a7a892e728eb011d68cb9609f0a1f05bf0404"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-018/plan.json": {
+      "archived_as": null,
+      "bytes": 1065,
+      "required_external_saved_input": true,
+      "sha256": "9c1b11d559158387dc0e92760973e825f437526274677b85ed83f6d24aca2000"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/TRAIN-greedy/IL/ReMIND-045/plan.json": {
+      "archived_as": null,
+      "bytes": 832875,
+      "required_external_saved_input": true,
+      "sha256": "7411153dabdb28c5d1a85c9d278db9671080231329eab434182dff677c417b84"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/checkpoint-reload.json": {
+      "archived_as": null,
+      "bytes": 238,
+      "required_external_saved_input": true,
+      "sha256": "d4441ca39c88921651639fd3bfb2896c1e04b7a3e5e693e3357cf5db6079865a"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/configuration.json": {
+      "archived_as": null,
+      "bytes": 4264,
+      "required_external_saved_input": true,
+      "sha256": "55f11d31f34f5f44d697d25f010b1a6acd1a462533cf4ecf1010c36e8af1713b"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/result.json": {
+      "archived_as": null,
+      "bytes": 9786,
+      "required_external_saved_input": true,
+      "sha256": "eedc4857c184d94913976cb5b59e01341e1b3a8bb0f001af43f8d079e3d87975"
+    },
+    "build/post-exposure-learning-v1/IL64/attempt-01/training-dynamics.json": {
+      "archived_as": null,
+      "bytes": 51785,
+      "required_external_saved_input": true,
+      "sha256": "6d3a58f1e44c433e287418cd165b891108320436d93f056a9913700be04a86cd"
+    },
+    "build/post-exposure-learning-v1/IL64/root-release.json": {
+      "archived_as": null,
+      "bytes": 9080,
+      "required_external_saved_input": true,
+      "sha256": "f0df97b2e0222b3656d755ce1ebdaee388b381ae8e2616e5a67e9c50dfdc888b"
+    },
+    "build/post-exposure-learning-v1/IL64/source-index.json": {
+      "archived_as": null,
+      "bytes": 13888,
+      "required_external_saved_input": true,
+      "sha256": "126d67f10cd57255c8df47c42f1a92d2a4f1c49fd9476eaf199103b18c3a15f1"
+    },
+    "build/post-exposure-select013-comparison-v1/attempt-01.supervision/receipt.json": {
+      "archived_as": null,
+      "bytes": 1958,
+      "required_external_saved_input": true,
+      "sha256": "cb2320d9920faef28aae1e26337099ea2c1b2685dbdb8a57a494a93f46d9f5fc"
+    },
+    "build/post-exposure-select013-comparison-v1/attempt-01/result.json": {
+      "archived_as": null,
+      "bytes": 2984,
+      "required_external_saved_input": true,
+      "sha256": "c4cec9dc15611c4dce99f45ee5707574342527b1f9dbf838c616424edade9812"
+    },
+    "build/post-exposure-select013-comparison-v1/root-release.json": {
+      "archived_as": null,
+      "bytes": 5883,
+      "required_external_saved_input": true,
+      "sha256": "e257ccbd5a2d2119da3597d1e7c032925ce466b3c073ce27b5ee393dad9a3048"
+    },
+    "build/post-exposure-select013-expanded-comparison-v1/attempt-01.supervision/receipt.json": {
+      "archived_as": null,
+      "bytes": 39893,
+      "required_external_saved_input": true,
+      "sha256": "b82152d6ee1998b027a5628e9fb9ccf25092e55f5b78273ee58204d7ae98f4e8"
+    },
+    "build/post-exposure-select013-expanded-comparison-v1/attempt-01/observed_beam/comparison-world.json": {
+      "archived_as": null,
+      "bytes": 6751,
+      "required_external_saved_input": true,
+      "sha256": "2dc67df3216033c72540cf2d83e3c614f3a5e62a2fb31ad3cf8c653925213995"
+    },
+    "build/post-exposure-select013-expanded-comparison-v1/attempt-01/observed_beam/search-unresolved.json": {
+      "archived_as": null,
+      "bytes": 17245,
+      "required_external_saved_input": true,
+      "sha256": "d704f79bfd6ae2b3646a28cd6da4938d063d9d0262f84a420dd4fa6d7f5b5397"
+    },
+    "build/post-exposure-select013-expanded-comparison-v1/attempt-01/result.json": {
+      "archived_as": null,
+      "bytes": 47193,
+      "required_external_saved_input": true,
+      "sha256": "1aaedaf178bc4921f3e5ebe7dd058a5853ceb0a66db72f78ea9169edbc9e8dde"
+    },
+    "build/post-exposure-select013-expanded-comparison-v1/root-release.json": {
+      "archived_as": null,
+      "bytes": 11803,
+      "required_external_saved_input": true,
+      "sha256": "1cabbdf803598f03e04d878e99c0385616a79fb4982c1c0e060bd1e1ec7a98e4"
+    },
+    "build/post-exposure-select013-expanded-comparison-v1/source-index.json": {
+      "archived_as": null,
+      "bytes": 18475,
+      "required_external_saved_input": true,
+      "sha256": "345c6aa3a07ea322b9c2d41f955f11a69f8950db91c26c7478139d85f8bbd797"
+    },
+    "build/remind-select-public-preparation-v1/public-select-index-v2.json": {
+      "archived_as": "public-metadata/original-public-select-index-v2.json",
+      "bytes": 1565,
+      "required_external_saved_input": false,
+      "sha256": "adc7232f0fd05300f90078385bc2576150eccc882712e31bfc97534f68680d5f"
+    },
+    "build/remind-select-public-preparation-v1/public-select-inputs-v1/ReMIND-013-public-inputs-v1.json": {
+      "archived_as": null,
+      "bytes": 14172,
+      "required_external_saved_input": true,
+      "sha256": "563963e7cf6ae7c1dff9f163db3208bf1af89b5611bc20e76a84c442a2b407a8"
+    },
+    "build/select013-dead-frontier-independent-v1/current-source-guard.json": {
+      "archived_as": "audit/current-source-guard.json",
+      "bytes": 15544,
+      "required_external_saved_input": false,
+      "sha256": "d16f97740351c571de3ded98081b9a4215b5fecb457b26ad1ee58385c09bb0b7"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01.supervision/receipt.json": {
+      "archived_as": "run/attempt-01.supervision/receipt.json",
+      "bytes": 1685,
+      "required_external_saved_input": false,
+      "sha256": "085f40abf2ccad5133e8ddd283c97a80ec6a57d1d2acf240e52b3cec7da96cb0"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01.supervision/worker-final.json": {
+      "archived_as": "run/attempt-01.supervision/worker-final.json",
+      "bytes": 278,
+      "required_external_saved_input": false,
+      "sha256": "49422153542e389f8f2dfefafc0e2fdea68d82d86b020b4b926b4acda39e0769"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/actual-blocker-capacity.json": {
+      "archived_as": "run/attempt-01/actual-blocker-capacity.json",
+      "bytes": 132308,
+      "required_external_saved_input": false,
+      "sha256": "e6fe994f45834be83740743dc9c9f198bcba55b55cc47083b0e183f7966b7961"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/closed-negative-diagnostic-history.json": {
+      "archived_as": null,
+      "bytes": 331540,
+      "required_external_saved_input": true,
+      "sha256": "8b203b46f9ae33b2779d7e4d8bdd18e37e0eeb20f5ae0308dba1548b866f3b8d"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/costs.json": {
+      "archived_as": "run/attempt-01/costs.json",
+      "bytes": 3427,
+      "required_external_saved_input": false,
+      "sha256": "a237c5b0467a12552355ed2bd9319a054c9e1853ff201b9cdf87314678c78ce0"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/dead-frontier-inventory.json": {
+      "archived_as": "run/attempt-01/dead-frontier-inventory.json",
+      "bytes": 204651,
+      "required_external_saved_input": false,
+      "sha256": "3957c5c7af6d239e9f939b9cf1d007e97136bdc8d44eff013fd98ef9dc25bd88"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/diagnostic-prefix-history.json": {
+      "archived_as": null,
+      "bytes": 331351,
+      "required_external_saved_input": true,
+      "sha256": "0eb2e6f46d135bb63e3d703931dc51bdd7b2f4d131e249b3ec833b0178261efa"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/prefix-01.json": {
+      "archived_as": null,
+      "bytes": 24996,
+      "required_external_saved_input": true,
+      "sha256": "d47eb2bd06807b6be8908978c8e719f2dd406e5ac80390c86a758eaf97be89a4"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/prefix-02.json": {
+      "archived_as": null,
+      "bytes": 35179,
+      "required_external_saved_input": true,
+      "sha256": "fd701e74fa93310276a9a2d75be94de22a849dabc7fbd679ab73a1e1a24eb6f1"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/prefix-03.json": {
+      "archived_as": null,
+      "bytes": 34250,
+      "required_external_saved_input": true,
+      "sha256": "18b9dda89783b106221d7337b1f69257e87837dc30aa55d9a5e80afe2c76dc49"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/prefix-04.json": {
+      "archived_as": null,
+      "bytes": 46209,
+      "required_external_saved_input": true,
+      "sha256": "15f74ddc59a8a4c3fcbbdf8c850fa03d74f8d1473d35ef5c4b7406c11f725573"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/prefix-05.json": {
+      "archived_as": null,
+      "bytes": 27964,
+      "required_external_saved_input": true,
+      "sha256": "f566b8fd177477d2ec04246967cbef4ae1d52356c68188fbc809dac6d432d64b"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/prefix-06.json": {
+      "archived_as": null,
+      "bytes": 33192,
+      "required_external_saved_input": true,
+      "sha256": "97aac5d878a1a39f1efe24064f90b690ce945131bcdec145f780e933a492557a"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/prefix-07.json": {
+      "archived_as": null,
+      "bytes": 26936,
+      "required_external_saved_input": true,
+      "sha256": "9fa300ad5f89539eb4ad8a9a4b1113ad75b1f3de516f1d486882fc22d42e2a83"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/prefix-08.json": {
+      "archived_as": null,
+      "bytes": 42051,
+      "required_external_saved_input": true,
+      "sha256": "a30b26f6463c8a2e022405daf408b75771b90d0e1e4b3e22ecbee4ba782e5e5d"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/prefix-09.json": {
+      "archived_as": null,
+      "bytes": 30191,
+      "required_external_saved_input": true,
+      "sha256": "737a5ad0cae22e39ab0210e768e1746fb984f5de685c7e0b1f5e363f447fad0d"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/prefix-10.json": {
+      "archived_as": null,
+      "bytes": 26957,
+      "required_external_saved_input": true,
+      "sha256": "ba2396ee767777b3884882c937c91646fcb12a7706385609a97bc625b81f289c"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/prefix-11.json": {
+      "archived_as": null,
+      "bytes": 18306,
+      "required_external_saved_input": true,
+      "sha256": "5209f47533ab3e3d9792ef423b276d0671c1df2c8a0c030c93607b4d37c060e8"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-000.json": {
+      "archived_as": "run/attempt-01/rejection-000.json",
+      "bytes": 3490,
+      "required_external_saved_input": false,
+      "sha256": "79c146823eff2699c1ee75f254c07378fb849226f0101fcddd2da2bcc18bcf3a"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-001.json": {
+      "archived_as": "run/attempt-01/rejection-001.json",
+      "bytes": 3487,
+      "required_external_saved_input": false,
+      "sha256": "bf4653fc47ac411482a12f3061efb4ac18c55c60b0a8408d81404e9e0b029fcd"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-002.json": {
+      "archived_as": "run/attempt-01/rejection-002.json",
+      "bytes": 3490,
+      "required_external_saved_input": false,
+      "sha256": "bf974db311f973780e7cd34063b73add897e992483ae10c6dd65316602fab3f9"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-003.json": {
+      "archived_as": "run/attempt-01/rejection-003.json",
+      "bytes": 3489,
+      "required_external_saved_input": false,
+      "sha256": "5e05b41470d1c1551fac08e7076ae7c25d86a6c5f5967b4ce140206f8e627779"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-004.json": {
+      "archived_as": "run/attempt-01/rejection-004.json",
+      "bytes": 3489,
+      "required_external_saved_input": false,
+      "sha256": "87e8ff6cade747d7cd4bdead49dfd27dff621c017d40dedc3ffcd4c06b7b5af6"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-005.json": {
+      "archived_as": "run/attempt-01/rejection-005.json",
+      "bytes": 3490,
+      "required_external_saved_input": false,
+      "sha256": "f021d293197893a24f712738e6cb114b45b221f96dea1fe674619a08728e762c"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-006.json": {
+      "archived_as": "run/attempt-01/rejection-006.json",
+      "bytes": 3541,
+      "required_external_saved_input": false,
+      "sha256": "cea56dd5aa94edd286998b6bedd90ed3afb92c383d2980d58723960b5de5aa21"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-007.json": {
+      "archived_as": "run/attempt-01/rejection-007.json",
+      "bytes": 3537,
+      "required_external_saved_input": false,
+      "sha256": "53c0adfac41fcbac2ab855e4202768da592b82597f4d0ed475a1d285f91f904e"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-008.json": {
+      "archived_as": "run/attempt-01/rejection-008.json",
+      "bytes": 3536,
+      "required_external_saved_input": false,
+      "sha256": "8ce3b61ba580ac2ba9f510769778c1e2f627809ef15b0e766d7c342508d73b31"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-009.json": {
+      "archived_as": "run/attempt-01/rejection-009.json",
+      "bytes": 3440,
+      "required_external_saved_input": false,
+      "sha256": "2806e3da5496dc2b72088bca16c1c6db0ae9a206db954f2e60b6c757b7027d5f"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-010.json": {
+      "archived_as": "run/attempt-01/rejection-010.json",
+      "bytes": 3438,
+      "required_external_saved_input": false,
+      "sha256": "b2e2705aeca08e920a40938edba8169a85f38a8d7f4936baa6dd10d42e21ae72"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-011.json": {
+      "archived_as": "run/attempt-01/rejection-011.json",
+      "bytes": 3436,
+      "required_external_saved_input": false,
+      "sha256": "c5b1ba2a9e3fd20d155b0d054aba330be78a9b8283165ef5593b2f28df2643f3"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-012.json": {
+      "archived_as": "run/attempt-01/rejection-012.json",
+      "bytes": 3381,
+      "required_external_saved_input": false,
+      "sha256": "bfd70ae4e98e00c48b9515a35222dc0ad9f89c69b4c2d137df5505ceb3dca850"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-013.json": {
+      "archived_as": "run/attempt-01/rejection-013.json",
+      "bytes": 3387,
+      "required_external_saved_input": false,
+      "sha256": "de2d481487edd3f2cd6c714ad28e23ecbb8965b290c101859f440bcc3b04a2dc"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-014.json": {
+      "archived_as": "run/attempt-01/rejection-014.json",
+      "bytes": 3379,
+      "required_external_saved_input": false,
+      "sha256": "3c680d73a8410e562c6dba4480ab193eb7ebf24a0d8b7e8feebb41ea634cf836"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-015.json": {
+      "archived_as": "run/attempt-01/rejection-015.json",
+      "bytes": 3384,
+      "required_external_saved_input": false,
+      "sha256": "224d97060974cd7050d86f173d7bb327b8f28a9ba0acc4521e644c6675f645a5"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-016.json": {
+      "archived_as": "run/attempt-01/rejection-016.json",
+      "bytes": 3392,
+      "required_external_saved_input": false,
+      "sha256": "497e4a00691f886ae2507e3ccc6be0411d4d1634939ee37ce9dc023de881cd4d"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-017.json": {
+      "archived_as": "run/attempt-01/rejection-017.json",
+      "bytes": 3381,
+      "required_external_saved_input": false,
+      "sha256": "5d2e0db748226921ac4e678339bcd8bfeab5c8cb3ec2d03808c90fa10dbcbb39"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-018.json": {
+      "archived_as": "run/attempt-01/rejection-018.json",
+      "bytes": 3448,
+      "required_external_saved_input": false,
+      "sha256": "733286493be80996851f0edea92fe5fb89a17bdb219bbc1e94add3f0aadb87c5"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-019.json": {
+      "archived_as": "run/attempt-01/rejection-019.json",
+      "bytes": 3445,
+      "required_external_saved_input": false,
+      "sha256": "5b171a537796a3867c72887c73ec3bcb06a7eb3905c062d2ca42a04c99e6840c"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-020.json": {
+      "archived_as": "run/attempt-01/rejection-020.json",
+      "bytes": 3448,
+      "required_external_saved_input": false,
+      "sha256": "114767fbbfa14bd5868e4ad8a255739418a24926ff7218933ff1b364cd9aed9a"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-021.json": {
+      "archived_as": "run/attempt-01/rejection-021.json",
+      "bytes": 3398,
+      "required_external_saved_input": false,
+      "sha256": "9cee035b8b3412956076f3def3d6fcc5ce931c4fbd79cb212d4398eddbd1aa43"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-022.json": {
+      "archived_as": "run/attempt-01/rejection-022.json",
+      "bytes": 3395,
+      "required_external_saved_input": false,
+      "sha256": "cb88016c99f22545d009f16dbd6a5e21973a2d468149033050d7ee4fd4ca76e8"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-023.json": {
+      "archived_as": "run/attempt-01/rejection-023.json",
+      "bytes": 3394,
+      "required_external_saved_input": false,
+      "sha256": "85eabb5fdb780d508c12cdd722a410ae42ed94e013a2f1423f6fb37f7c7881c4"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-024.json": {
+      "archived_as": "run/attempt-01/rejection-024.json",
+      "bytes": 3397,
+      "required_external_saved_input": false,
+      "sha256": "28263899abacacab6a233529480e8a43b6db2bd139dc4bfe40b2a9e72c616bdd"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-025.json": {
+      "archived_as": "run/attempt-01/rejection-025.json",
+      "bytes": 3387,
+      "required_external_saved_input": false,
+      "sha256": "3f39f71247f5203124a8cd7320e6dae66f6a042487c5feddc2fb82bbde9c4f0c"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-026.json": {
+      "archived_as": "run/attempt-01/rejection-026.json",
+      "bytes": 3397,
+      "required_external_saved_input": false,
+      "sha256": "e0cc5372506deb7ebb10c12d281281918d3ce2b36df70802fe020691090ad0ee"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-027.json": {
+      "archived_as": "run/attempt-01/rejection-027.json",
+      "bytes": 3396,
+      "required_external_saved_input": false,
+      "sha256": "419872ac3f349f72aa3d65fd76819801faaf900ceec28c0013c77f8fc456cf95"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-028.json": {
+      "archived_as": "run/attempt-01/rejection-028.json",
+      "bytes": 3391,
+      "required_external_saved_input": false,
+      "sha256": "37f9f26e5fede12042ccbb3535b7fafb622a24f00bc4afb5fdd5690bf6d6b463"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-029.json": {
+      "archived_as": "run/attempt-01/rejection-029.json",
+      "bytes": 3397,
+      "required_external_saved_input": false,
+      "sha256": "eebcb3150d2b5dc6f55066133233593a8ffde78a57339370ebf762757c4c6928"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-030.json": {
+      "archived_as": "run/attempt-01/rejection-030.json",
+      "bytes": 3398,
+      "required_external_saved_input": false,
+      "sha256": "6ff9430cd53730616f1009f0411943308bad2aa55ed1308ccbae50715f86d7ae"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-031.json": {
+      "archived_as": "run/attempt-01/rejection-031.json",
+      "bytes": 3392,
+      "required_external_saved_input": false,
+      "sha256": "266b054f3d16a65c0f946b041c4f69f31357ca897e66842a67dd47d2d8087028"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-032.json": {
+      "archived_as": "run/attempt-01/rejection-032.json",
+      "bytes": 3395,
+      "required_external_saved_input": false,
+      "sha256": "6a7579b0d17291f084a5aa054ef405d8cc7db56e6c6228baaa74bb91901b1d57"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-033.json": {
+      "archived_as": "run/attempt-01/rejection-033.json",
+      "bytes": 3400,
+      "required_external_saved_input": false,
+      "sha256": "5879e6e0b8ff8bb6b507031cd118513ae8050895d387401c844f23015c1c9fa2"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-034.json": {
+      "archived_as": "run/attempt-01/rejection-034.json",
+      "bytes": 3392,
+      "required_external_saved_input": false,
+      "sha256": "1675c1cbefb271e2297cadfac0e2043ef550b2df6ebb904bf7775080bb7c0bb3"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-035.json": {
+      "archived_as": "run/attempt-01/rejection-035.json",
+      "bytes": 3399,
+      "required_external_saved_input": false,
+      "sha256": "0eed50cfa779c53a73b15176b33366b531ab6a14459259768f7003cdc15402f4"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-036.json": {
+      "archived_as": "run/attempt-01/rejection-036.json",
+      "bytes": 3448,
+      "required_external_saved_input": false,
+      "sha256": "5b3053c59504fbb7367635090c66f63ac86512854ac486c416b709060fe8728a"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-037.json": {
+      "archived_as": "run/attempt-01/rejection-037.json",
+      "bytes": 3444,
+      "required_external_saved_input": false,
+      "sha256": "cd709a1a94ea4f844c78511209c223adcf343daae7dd0d74cb248b1f75847759"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-038.json": {
+      "archived_as": "run/attempt-01/rejection-038.json",
+      "bytes": 3443,
+      "required_external_saved_input": false,
+      "sha256": "79fa24fa934d9f19ba03cd9509e441810fa2ad95cb95eae6692eb0f78c11d430"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-039.json": {
+      "archived_as": "run/attempt-01/rejection-039.json",
+      "bytes": 3398,
+      "required_external_saved_input": false,
+      "sha256": "51db7cc073cb915648d7e06b454269e785c47838e3af03c873b3c437b522149e"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-040.json": {
+      "archived_as": "run/attempt-01/rejection-040.json",
+      "bytes": 3396,
+      "required_external_saved_input": false,
+      "sha256": "6e7dcc7c8f5708075376d4dacf9abf062ae4160be15377bcbc9da92c0b36eaa8"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-041.json": {
+      "archived_as": "run/attempt-01/rejection-041.json",
+      "bytes": 3394,
+      "required_external_saved_input": false,
+      "sha256": "f76bf484445404b1378b40854e9dd923389b575094471a4d63a38a039c438108"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-042.json": {
+      "archived_as": "run/attempt-01/rejection-042.json",
+      "bytes": 3396,
+      "required_external_saved_input": false,
+      "sha256": "24b1683999ffb0d8d8a8b80f816ac82e0ad5e9be5bd9f003bef4e00844f013bd"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-043.json": {
+      "archived_as": "run/attempt-01/rejection-043.json",
+      "bytes": 3393,
+      "required_external_saved_input": false,
+      "sha256": "ae0aee8544fa329da74fde96a4653ef94cd86a844391e9bd4bbf7be66b55b3e5"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-044.json": {
+      "archived_as": "run/attempt-01/rejection-044.json",
+      "bytes": 3392,
+      "required_external_saved_input": false,
+      "sha256": "dd94e65e9f3bfd247475b3634a0f37cc245b1eacc3b7eaacb6233024615bcaaf"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-045.json": {
+      "archived_as": "run/attempt-01/rejection-045.json",
+      "bytes": 3392,
+      "required_external_saved_input": false,
+      "sha256": "fa4aef4fa8356b373267870661a5f6a03c6242def8da6118c6125e928b5145f4"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-046.json": {
+      "archived_as": "run/attempt-01/rejection-046.json",
+      "bytes": 3394,
+      "required_external_saved_input": false,
+      "sha256": "5ecf082d9a868fdc8e733c199c753dd3dcb3115a22ee77576ff82b2047e011fb"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-047.json": {
+      "archived_as": "run/attempt-01/rejection-047.json",
+      "bytes": 3392,
+      "required_external_saved_input": false,
+      "sha256": "b88ba4d048e5742843ed1b44f556de828cbc66e98f8990905ccbe4b93183d10c"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-048.json": {
+      "archived_as": "run/attempt-01/rejection-048.json",
+      "bytes": 3390,
+      "required_external_saved_input": false,
+      "sha256": "40d597333d073027c2d33c11f899a901fbe7356856fdcf9b7205ded151cfc06a"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-049.json": {
+      "archived_as": "run/attempt-01/rejection-049.json",
+      "bytes": 3396,
+      "required_external_saved_input": false,
+      "sha256": "23d03fd142f026765c8ffd2bc7195519375efaa470918e1f5b3aea2a10e71624"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-050.json": {
+      "archived_as": "run/attempt-01/rejection-050.json",
+      "bytes": 3389,
+      "required_external_saved_input": false,
+      "sha256": "4bafabb44ef28bb090ea13d17a3b5180c01fc28c91723b0a578fa3b5f7301b66"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-051.json": {
+      "archived_as": "run/attempt-01/rejection-051.json",
+      "bytes": 3393,
+      "required_external_saved_input": false,
+      "sha256": "90713ac4c6e6af4105ee80b7f6d1a23a4ab8049d7e588a2593c8102930e89e40"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-052.json": {
+      "archived_as": "run/attempt-01/rejection-052.json",
+      "bytes": 3401,
+      "required_external_saved_input": false,
+      "sha256": "17cd8624260f15dc315d280213ab57e16b80f04f4108ff4b2ef12fd73eac669c"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-053.json": {
+      "archived_as": "run/attempt-01/rejection-053.json",
+      "bytes": 3394,
+      "required_external_saved_input": false,
+      "sha256": "2af7a9a627aad4ce2e149e3740ffe1d4f8a8b683dbcfa3be9ff6169fc3840c58"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-054.json": {
+      "archived_as": "run/attempt-01/rejection-054.json",
+      "bytes": 3432,
+      "required_external_saved_input": false,
+      "sha256": "2b4580c93f935eaf42783496e43edff91d8ba8f75bdbc2ee4f6cb28ac044c549"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-055.json": {
+      "archived_as": "run/attempt-01/rejection-055.json",
+      "bytes": 3430,
+      "required_external_saved_input": false,
+      "sha256": "7aa1a2133b372bc317aa7f08c34581713f981a4406cdc38ec5294d2233e717d4"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-056.json": {
+      "archived_as": "run/attempt-01/rejection-056.json",
+      "bytes": 3437,
+      "required_external_saved_input": false,
+      "sha256": "ad0d8552e1200782fa939c5bec573f19ea6fa261c5506e1a3a3fbf69e996bc76"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-057.json": {
+      "archived_as": "run/attempt-01/rejection-057.json",
+      "bytes": 3436,
+      "required_external_saved_input": false,
+      "sha256": "9b8c1961c5c4d6f9ac6dc7428393a56f2da6d88fbf7f7256498e2aa793bacf6f"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-058.json": {
+      "archived_as": "run/attempt-01/rejection-058.json",
+      "bytes": 3434,
+      "required_external_saved_input": false,
+      "sha256": "57756a7a3b4d7d461cefecd3a0fa52562430abd4511b0eb6d55b8d9fb2f66ed8"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-059.json": {
+      "archived_as": "run/attempt-01/rejection-059.json",
+      "bytes": 3440,
+      "required_external_saved_input": false,
+      "sha256": "7bf241c0603e987c4f95a5517023ba0ffe32403720af770070de6f9bf7f53952"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-060.json": {
+      "archived_as": "run/attempt-01/rejection-060.json",
+      "bytes": 3481,
+      "required_external_saved_input": false,
+      "sha256": "289f4c9f0e442d8d02b627c38917594a00a2c9ea7f412ba2ac838887953e25dc"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-061.json": {
+      "archived_as": "run/attempt-01/rejection-061.json",
+      "bytes": 3484,
+      "required_external_saved_input": false,
+      "sha256": "b2194389917ab5cef8e986195846887abb5a3d831926fc12d871da4fef6d4818"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-062.json": {
+      "archived_as": "run/attempt-01/rejection-062.json",
+      "bytes": 3479,
+      "required_external_saved_input": false,
+      "sha256": "9a39515984c29ee2c4c90846c451f5ea81fab9c7f99da7a599bef2f0be3f4aac"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-063.json": {
+      "archived_as": "run/attempt-01/rejection-063.json",
+      "bytes": 3430,
+      "required_external_saved_input": false,
+      "sha256": "1199c58ad22b7e95da99a8781f713a737cad8a85ad988fa3bcd70d3740953fbe"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-064.json": {
+      "archived_as": "run/attempt-01/rejection-064.json",
+      "bytes": 3438,
+      "required_external_saved_input": false,
+      "sha256": "2abeb171617e34180a47a5c0e0cfea466e1daccdc14e014b9f16953c9b428847"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-065.json": {
+      "archived_as": "run/attempt-01/rejection-065.json",
+      "bytes": 3435,
+      "required_external_saved_input": false,
+      "sha256": "d9457e55435d2271bec65db23394f92d50c759411117532b651461524a3bf014"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-066.json": {
+      "archived_as": "run/attempt-01/rejection-066.json",
+      "bytes": 3397,
+      "required_external_saved_input": false,
+      "sha256": "339494a68808de362586f0232b47a414a9c47763063d3daa3b08643b551b8ba3"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-067.json": {
+      "archived_as": "run/attempt-01/rejection-067.json",
+      "bytes": 3398,
+      "required_external_saved_input": false,
+      "sha256": "4ef6bc9ad2910e3021b2f16f41f64a008ea6dc52c7db47d2bf203acfc3eba5bb"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-068.json": {
+      "archived_as": "run/attempt-01/rejection-068.json",
+      "bytes": 3396,
+      "required_external_saved_input": false,
+      "sha256": "0da0f4c75ce03b4fcb13652ff9cd1944c64eb126b28f11263ca6e82ccd09d5a4"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-069.json": {
+      "archived_as": "run/attempt-01/rejection-069.json",
+      "bytes": 3398,
+      "required_external_saved_input": false,
+      "sha256": "c6ada756652aff90b0b54f0bd443233c3afe7114af2298e6d88c28531b640876"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-070.json": {
+      "archived_as": "run/attempt-01/rejection-070.json",
+      "bytes": 3394,
+      "required_external_saved_input": false,
+      "sha256": "ee011312a1e22e1e05e5a7db3c69d9c2facaed4a12bb715369f5d3dac180176a"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-071.json": {
+      "archived_as": "run/attempt-01/rejection-071.json",
+      "bytes": 3395,
+      "required_external_saved_input": false,
+      "sha256": "476e4ae41337691593c01216e8bd5664fafc5b3a15f06611ec88362cca30185b"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-072.json": {
+      "archived_as": "run/attempt-01/rejection-072.json",
+      "bytes": 3540,
+      "required_external_saved_input": false,
+      "sha256": "10c40437590022ff980b6afde731a9c398d8370a8df83f6f8326f5920977c471"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-073.json": {
+      "archived_as": "run/attempt-01/rejection-073.json",
+      "bytes": 3534,
+      "required_external_saved_input": false,
+      "sha256": "154d863def5673e8f0dc6696ac1247b714c173539ff10490b620940d306ee288"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-074.json": {
+      "archived_as": "run/attempt-01/rejection-074.json",
+      "bytes": 3540,
+      "required_external_saved_input": false,
+      "sha256": "5dc928b6336fd2679bb6dfce5e47382d4029309afe6ce3b78260046bb6e67ba6"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-075.json": {
+      "archived_as": "run/attempt-01/rejection-075.json",
+      "bytes": 3384,
+      "required_external_saved_input": false,
+      "sha256": "d7aba3996910150d5685e7755efc002477f1876fa8ba8cc49671990d8983bfdb"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-076.json": {
+      "archived_as": "run/attempt-01/rejection-076.json",
+      "bytes": 3386,
+      "required_external_saved_input": false,
+      "sha256": "695c0d59ad0ba11fbe7c8b64ed97c3ac509f61f1ac7637bfe47479b8ad73e6f1"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-077.json": {
+      "archived_as": "run/attempt-01/rejection-077.json",
+      "bytes": 3390,
+      "required_external_saved_input": false,
+      "sha256": "e755502207d7920da97e979a8396816e926c0e917c3a9ce7c5d9569b32e0dea1"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-078.json": {
+      "archived_as": "run/attempt-01/rejection-078.json",
+      "bytes": 3484,
+      "required_external_saved_input": false,
+      "sha256": "da91002e550b74a25c68a6521729f1db20dceaddcd1738ab4196f554dda0bd77"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-079.json": {
+      "archived_as": "run/attempt-01/rejection-079.json",
+      "bytes": 3492,
+      "required_external_saved_input": false,
+      "sha256": "89d3cadff26a24186322151c77283f490daf06c242ca71513472ade041d6b70e"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-080.json": {
+      "archived_as": "run/attempt-01/rejection-080.json",
+      "bytes": 3537,
+      "required_external_saved_input": false,
+      "sha256": "6e09f82e9ffe2370885800197bf849e723a40077f6c49e58c82e4cdc0a583cfb"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-081.json": {
+      "archived_as": "run/attempt-01/rejection-081.json",
+      "bytes": 3444,
+      "required_external_saved_input": false,
+      "sha256": "34ae5706f12ce6ae5979713a67c4f2a0048196b3bb196600ae8292946889f371"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-082.json": {
+      "archived_as": "run/attempt-01/rejection-082.json",
+      "bytes": 3382,
+      "required_external_saved_input": false,
+      "sha256": "4d9f01d89f79a8706ea9f8471d0ee4e17af297ef9cf93683a8f02395952fa7f5"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-083.json": {
+      "archived_as": "run/attempt-01/rejection-083.json",
+      "bytes": 3390,
+      "required_external_saved_input": false,
+      "sha256": "c3b5d186d565844a946d9a34933bf5f607a94783afcdb70f278bd3eae3f21d11"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-084.json": {
+      "archived_as": "run/attempt-01/rejection-084.json",
+      "bytes": 3442,
+      "required_external_saved_input": false,
+      "sha256": "81031b908bea97cb55db9d863b7257a2eaed421c1c40ff382784bb84d174110f"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-085.json": {
+      "archived_as": "run/attempt-01/rejection-085.json",
+      "bytes": 3402,
+      "required_external_saved_input": false,
+      "sha256": "40749121e5065863ea9bcb5c30658e666ae7161befba2bee34fb0648a9e06734"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-086.json": {
+      "archived_as": "run/attempt-01/rejection-086.json",
+      "bytes": 3391,
+      "required_external_saved_input": false,
+      "sha256": "cab2ae53ff692dd055087cb50daf3d741d57359dce4dff2e3be0fae0de588d98"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-087.json": {
+      "archived_as": "run/attempt-01/rejection-087.json",
+      "bytes": 3399,
+      "required_external_saved_input": false,
+      "sha256": "743ad614746fa5b5bcc2b0450a9638e74ea05acc98a78649fed38267b83c7592"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-088.json": {
+      "archived_as": "run/attempt-01/rejection-088.json",
+      "bytes": 3403,
+      "required_external_saved_input": false,
+      "sha256": "d6c096c8d1f7e6590b73c11d7ac42bfc45ed8d3748c98b4a97b678aa82d2bc98"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-089.json": {
+      "archived_as": "run/attempt-01/rejection-089.json",
+      "bytes": 3400,
+      "required_external_saved_input": false,
+      "sha256": "b827b31250486f1cc5cd2413459cff0895526f0425473d8ed96133985b9cbfd0"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-090.json": {
+      "archived_as": "run/attempt-01/rejection-090.json",
+      "bytes": 3444,
+      "required_external_saved_input": false,
+      "sha256": "3404686cd6180f822945ea47cf310505f264a7d99575be1211602cde98ac7215"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-091.json": {
+      "archived_as": "run/attempt-01/rejection-091.json",
+      "bytes": 3402,
+      "required_external_saved_input": false,
+      "sha256": "6b88564b6d46df863092bb487b2d2f268924734cf4424f442145b2bfa10fd74c"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-092.json": {
+      "archived_as": "run/attempt-01/rejection-092.json",
+      "bytes": 3400,
+      "required_external_saved_input": false,
+      "sha256": "75e20d4d57f116e7a0a8d789075e9e74771a0ff863519710edbfed5a2def6ba5"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-093.json": {
+      "archived_as": "run/attempt-01/rejection-093.json",
+      "bytes": 3399,
+      "required_external_saved_input": false,
+      "sha256": "76d03e7d7d388e4297d9bcdd8a321e5ab1793deecb8b2891297db5ec143228a8"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-094.json": {
+      "archived_as": "run/attempt-01/rejection-094.json",
+      "bytes": 3391,
+      "required_external_saved_input": false,
+      "sha256": "10bdf50d43e77d847cee4661201c285e1eaeb9ba8892d06575546254c568cee1"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-095.json": {
+      "archived_as": "run/attempt-01/rejection-095.json",
+      "bytes": 3399,
+      "required_external_saved_input": false,
+      "sha256": "80ae6490ff6151529d4c6eac753d2881934f308d5ecd2b1ea6445e33a585f539"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-096.json": {
+      "archived_as": "run/attempt-01/rejection-096.json",
+      "bytes": 3436,
+      "required_external_saved_input": false,
+      "sha256": "984cf8b4bd4e4a89958234077d563d2926e23546518d4bc6ac921e4b0d9f3401"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-097.json": {
+      "archived_as": "run/attempt-01/rejection-097.json",
+      "bytes": 3438,
+      "required_external_saved_input": false,
+      "sha256": "ded5619967caf774269eded6d43670fdb79ba0d9a79e5b6c914a5b6d58347922"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-098.json": {
+      "archived_as": "run/attempt-01/rejection-098.json",
+      "bytes": 3491,
+      "required_external_saved_input": false,
+      "sha256": "1e34b337c71e94bb24bbde3299fe3e16283f3a81756668a68f7e4cb51df41ab5"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-099.json": {
+      "archived_as": "run/attempt-01/rejection-099.json",
+      "bytes": 3443,
+      "required_external_saved_input": false,
+      "sha256": "13138bb348ecfbe40e8f373651bb468e253f6cec6dc6a2411151b9616607c45f"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-100.json": {
+      "archived_as": "run/attempt-01/rejection-100.json",
+      "bytes": 3397,
+      "required_external_saved_input": false,
+      "sha256": "b20c791daa111283b663d1b131555562eb626b2960eb5bbae9987b89996b2f8a"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-101.json": {
+      "archived_as": "run/attempt-01/rejection-101.json",
+      "bytes": 3400,
+      "required_external_saved_input": false,
+      "sha256": "8751eca01e2a293a2cb6340959a6d135460249eb59be4ba93f50de48cc360597"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-102.json": {
+      "archived_as": "run/attempt-01/rejection-102.json",
+      "bytes": 3545,
+      "required_external_saved_input": false,
+      "sha256": "b5a9382b502e9f1f3b3b98aefd1032aad82e61529ec4a3f06b05be267fd56467"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-103.json": {
+      "archived_as": "run/attempt-01/rejection-103.json",
+      "bytes": 3386,
+      "required_external_saved_input": false,
+      "sha256": "8ce32ecfb8c677e9f63eddf8386a3dba6232cec47b2fd2bac930001b15cab08c"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-104.json": {
+      "archived_as": "run/attempt-01/rejection-104.json",
+      "bytes": 3500,
+      "required_external_saved_input": false,
+      "sha256": "b58f9477e2287efa292583da2bf28b8f62124cb60794e231166c44f66cff58a0"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-105.json": {
+      "archived_as": "run/attempt-01/rejection-105.json",
+      "bytes": 3445,
+      "required_external_saved_input": false,
+      "sha256": "b21e2eaa2efb7fd25883fe7d6d53875d9d76d20f04e443d512cc2d3db61965de"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-106.json": {
+      "archived_as": "run/attempt-01/rejection-106.json",
+      "bytes": 3394,
+      "required_external_saved_input": false,
+      "sha256": "f768a4be7e7b86296773eeb63cffdab65b2eef311fb96d787db6915d60e6a777"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-107.json": {
+      "archived_as": "run/attempt-01/rejection-107.json",
+      "bytes": 3401,
+      "required_external_saved_input": false,
+      "sha256": "6ed76dd1abc72aee0d7994d8de4224a077c6d2570a193e95a129625acce3ea92"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-108.json": {
+      "archived_as": "run/attempt-01/rejection-108.json",
+      "bytes": 3407,
+      "required_external_saved_input": false,
+      "sha256": "89d7b564b4da5c7d8e76fdc224dbf4245e2013408bf58dbc8e662caf18eb0162"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-109.json": {
+      "archived_as": "run/attempt-01/rejection-109.json",
+      "bytes": 3400,
+      "required_external_saved_input": false,
+      "sha256": "41c57d0335db5166aba92d419654cb2f0ccf7e958b6c98e84a162da3b027366f"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-110.json": {
+      "archived_as": "run/attempt-01/rejection-110.json",
+      "bytes": 3403,
+      "required_external_saved_input": false,
+      "sha256": "ea0d1b04f73b2944cd66430dc868ef85eaa1c8017ffc092bfb4994526565be00"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-111.json": {
+      "archived_as": "run/attempt-01/rejection-111.json",
+      "bytes": 3398,
+      "required_external_saved_input": false,
+      "sha256": "fa321bc538ba32d24aa8cdaf08c07c69ff31424f655ca90a969e54f48daf4ab4"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-112.json": {
+      "archived_as": "run/attempt-01/rejection-112.json",
+      "bytes": 3403,
+      "required_external_saved_input": false,
+      "sha256": "e75e7f7e1c3269ee7d9571e3f89b7bcfe179ae3522928b96fd31a127c13e6c10"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-113.json": {
+      "archived_as": "run/attempt-01/rejection-113.json",
+      "bytes": 3438,
+      "required_external_saved_input": false,
+      "sha256": "967639662ec3e5d7a6e7ed3075d8b65bf567ea12eaee85ab4b560bf5e24ceb90"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-114.json": {
+      "archived_as": "run/attempt-01/rejection-114.json",
+      "bytes": 3443,
+      "required_external_saved_input": false,
+      "sha256": "9f6ed526d1dc7311230347cb06f211a55b3554bde1e0f97cb9ea3efef7101ec7"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-115.json": {
+      "archived_as": "run/attempt-01/rejection-115.json",
+      "bytes": 3407,
+      "required_external_saved_input": false,
+      "sha256": "b51830cfb2d3679d1f4f5a4225699a8c4ac5014cae302b6d6431d24f28ff627e"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/rejection-116.json": {
+      "archived_as": "run/attempt-01/rejection-116.json",
+      "bytes": 3397,
+      "required_external_saved_input": false,
+      "sha256": "e7096b8aa034166788b6d6748a5666504faf14ae4cfe0773a36eead71829165e"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/result.json": {
+      "archived_as": "run/attempt-01/result.json",
+      "bytes": 3943,
+      "required_external_saved_input": false,
+      "sha256": "e23d75b1171936af24ff0834e37a46e8426bd8b28a0a5f5017848cd78e65c0a2"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/source/admitted-public-bindings.json": {
+      "archived_as": null,
+      "bytes": 19556,
+      "required_external_saved_input": true,
+      "sha256": "905df5ad7194060ccff5406a0a612131e1e86b921797c8209a20724fc16c40be"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/source/derived-occupancy-assumption.json": {
+      "archived_as": null,
+      "bytes": 11344,
+      "required_external_saved_input": true,
+      "sha256": "2a131c0388579393ce3015b277e9c50031501f3f4cb53125717408a08d4deae8"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/source/public-task-derivation.json": {
+      "archived_as": null,
+      "bytes": 4077,
+      "required_external_saved_input": true,
+      "sha256": "037f8f1e1970eb87e9cfbeacce97a6da0b9184e98073fed0aad69c9c245446d1"
+    },
+    "build/select013-dead-frontier-witness-v1/attempt-01/world-control.json": {
+      "archived_as": "run/attempt-01/world-control.json",
+      "bytes": 14251,
+      "required_external_saved_input": false,
+      "sha256": "2e6e639e28a3bde19bc79c465843022e4a2740b8ffe7dbae4fd39113978603cd"
+    },
+    "build/select013-dead-frontier-witness-v1/root-release.json": {
+      "archived_as": "run/root-release.json",
+      "bytes": 2718,
+      "required_external_saved_input": false,
+      "sha256": "8866a10e14574b79c46f93be9f5f4f4f8f3e827e9f82c94a5742a18d988a1477"
+    },
+    "build/select013-dead-frontier-witness-v1/source-index.json": {
+      "archived_as": "run/source-index.json",
+      "bytes": 18940,
+      "required_external_saved_input": false,
+      "sha256": "71879696c1194859f8280b3865804c18a545d09011929fb0a8c39a7a4274a008"
+    },
+    "build/select013-expanded-public-preparation-v1/actual-domain-qc-v1/ReMIND-013-crop-mr-domains/conversion-result.json": {
+      "archived_as": null,
+      "bytes": 19409,
+      "required_external_saved_input": true,
+      "sha256": "bf9174ee066f2ce744a4b3ace1ae048954733981c8126e461c15a75d7c89a057"
+    },
+    "build/select013-expanded-public-preparation-v1/actual-domain-qc-v1/ReMIND-013-saved-domain-review/saved-domain-review.json": {
+      "archived_as": null,
+      "bytes": 8118,
+      "required_external_saved_input": true,
+      "sha256": "6479dd6df8a9d81a05438e481533b2083a7d95cb5889f93b3c4dea038f6d6a7d"
+    },
+    "build/select013-expanded-public-preparation-v1/public-inputs-v1/ReMIND-013-public-inputs.json": {
+      "archived_as": "public-metadata/ReMIND-013-public-inputs.json",
+      "bytes": 17736,
+      "required_external_saved_input": false,
+      "sha256": "841261035a7d7be5c55984e717b8d65b712065a708e9260231ebcd49cc4d700e"
+    },
+    "build/select013-expanded-public-preparation-v1/public-inputs-v1/public-select-index.json": {
+      "archived_as": "public-metadata/public-select-index.json",
+      "bytes": 1678,
+      "required_external_saved_input": false,
+      "sha256": "a5a7ed8b504b3f768666cdec4c77908d680ff242eb157afb0f377b95105dc389"
+    },
+    "build/select013-expanded-public-preparation-v1/root-visual-review.json": {
+      "archived_as": null,
+      "bytes": 1539,
+      "required_external_saved_input": true,
+      "sha256": "1471e4e32b4fa09d7565664f279489d4b60a8eab149471e82475ee6539a58a86"
+    },
+    "build/select013-lazy-beam-recovery-v1/attempt-01.supervision/receipt.json": {
+      "archived_as": null,
+      "bytes": 133929,
+      "required_external_saved_input": true,
+      "sha256": "83031cb5bdeb9c9ee6bd47dcf53f28e3c7ea7f83207bc94b174d8501b994f232"
+    },
+    "build/select013-lazy-beam-recovery-v1/attempt-01/IL64-lineage.json": {
+      "archived_as": "prior-lazy/IL64-lineage.json",
+      "bytes": 1206,
+      "required_external_saved_input": false,
+      "sha256": "e1fe8425d052af596f3a830645e306c47b85f135264e39f81a45f632c3ae3172"
+    },
+    "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/comparison-world.json": {
+      "archived_as": "prior-lazy/observed_beam/comparison-world.json",
+      "bytes": 6751,
+      "required_external_saved_input": false,
+      "sha256": "2dc67df3216033c72540cf2d83e3c614f3a5e62a2fb31ad3cf8c653925213995"
+    },
+    "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/context.json": {
+      "archived_as": "prior-lazy/observed_beam/context.json",
+      "bytes": 11618,
+      "required_external_saved_input": false,
+      "sha256": "178b81f87c8363a3f0c55be411b2085739e349415bbacc73a0fe3e90ad124887"
+    },
+    "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/selection.json": {
+      "archived_as": "prior-lazy/observed_beam/selection.json",
+      "bytes": 121313,
+      "required_external_saved_input": false,
+      "sha256": "8f62656d1081ea247499cb1ff7ed8b803bf2249d3e700703d3806506a151c8f4"
+    },
+    "build/select013-lazy-beam-recovery-v1/attempt-01/result.json": {
+      "archived_as": null,
+      "bytes": 173405,
+      "required_external_saved_input": true,
+      "sha256": "96e0b98069689a7ad6f1b986423f527ce931e04034b33605d3ebaf48e9e9d761"
+    },
+    "build/select013-lazy-beam-recovery-v1/root-release.json": {
+      "archived_as": null,
+      "bytes": 11036,
+      "required_external_saved_input": true,
+      "sha256": "43e7cdf0e43a014154cc15236bbb4df1818ed1577b3cee5b8d75ac368e9aa3d9"
+    },
+    "build/select013-lazy-beam-recovery-v1/source-index.json": {
+      "archived_as": null,
+      "bytes": 17972,
+      "required_external_saved_input": true,
+      "sha256": "1a9793219207a94ff3c71f654d50b02c7c196ab4cf3f0198260d4ea45aa258e1"
+    },
+    "manifests/experiments/remind-component-cohort-v1.json": {
+      "archived_as": null,
+      "bytes": 70925,
+      "required_external_saved_input": true,
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+    }
+  },
+  "scope": "Exact saved-JSON inputs read by audit_saved.py; no arrays/weights/native execution needed. Canonical source was separately guarded at execution commit.",
+  "source_commit": "593a148fe72d57641bb428c60eecaabbe768369e"
+}
