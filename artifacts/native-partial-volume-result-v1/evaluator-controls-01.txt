@@ -1,0 +1,11 @@
+Root execution, 2026-10-11, before the fixed 18-row comparison.
+Command: .venv/bin/python -I -B build/native-partial-volume-v1/independent-review/test_plane_volume_evaluator.py
+Exit status: 0
+Output:
+............
+----------------------------------------------------------------------
+Ran 12 tests in 0.003s
+
+OK
+
+Generated geometry/interval controls only; no native run, patient input or clinical validation.

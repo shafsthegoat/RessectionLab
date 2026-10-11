@@ -1,0 +1,87 @@
+{
+  "all_18_projection_hash_pairs_equal": true,
+  "all_18_saved_projections_exactly_equal": true,
+  "five_original_false_flags": [
+    {
+      "exact_saved_projection_hash": "sha256:bb81fb08d5074fea7fe916e0742dbda9a368f27977a225277b6e06a4f912a8ea",
+      "original_flag": false,
+      "row_id": "aligned-aspirator-1mm",
+      "same_retained_hash": true,
+      "saved_failure_tip_mm": [
+        0.0,
+        0.0,
+        0.9375
+      ],
+      "source_derived_live_mismatch_path": "actions[0].failure_tip_mm[0:3]"
+    },
+    {
+      "exact_saved_projection_hash": "sha256:39ba2a4106fbef46b7110cd8220809e894dbe8bc9f50383b8f676adc0651c4a7",
+      "original_flag": false,
+      "row_id": "half-phase-suction-1mm",
+      "same_retained_hash": true,
+      "saved_failure_tip_mm": [
+        0.0,
+        0.0,
+        2.076470588235294
+      ],
+      "source_derived_live_mismatch_path": "actions[9].failure_tip_mm[0:3]"
+    },
+    {
+      "exact_saved_projection_hash": "sha256:f485bd00c61e92eafb854722a5054872190b80de35250ac6e1c4f2f520f4308b",
+      "original_flag": false,
+      "row_id": "tilted-suction-1mm",
+      "same_retained_hash": true,
+      "saved_failure_tip_mm": [
+        0.0,
+        0.0,
+        0.8125
+      ],
+      "source_derived_live_mismatch_path": "actions[0].failure_tip_mm[0:3]"
+    },
+    {
+      "exact_saved_projection_hash": "sha256:d520562499934a4fbd0bd98f5bdd9541f29b7478ae8a67814b0d67da37918344",
+      "original_flag": false,
+      "row_id": "tilted-aspirator-1mm",
+      "same_retained_hash": true,
+      "saved_failure_tip_mm": [
+        0.0,
+        0.0,
+        0.25
+      ],
+      "source_derived_live_mismatch_path": "actions[0].failure_tip_mm[0:3]"
+    },
+    {
+      "exact_saved_projection_hash": "sha256:c4f86c40800ef9fb4fb27410d050bdfe2bd88dfabc333e2579f1f6c8bfe78375",
+      "original_flag": false,
+      "row_id": "tilted-aspirator-0.5mm",
+      "same_retained_hash": true,
+      "saved_failure_tip_mm": [
+        0.0,
+        1.8,
+        0.9375
+      ],
+      "source_derived_live_mismatch_path": "actions[2].failure_tip_mm[0:3]"
+    }
+  ],
+  "independent_saved_geometry_audit": "audit-result-02.json",
+  "original_report_sha256": "c9265daaf186b025403ee499a333f0e2811feab66f65e10a98a3d97f17300ee9",
+  "original_reported_criterion": {
+    "additional_default_completions": [
+      "aligned-suction-0.5mm",
+      "tilted-suction-0.5mm"
+    ],
+    "all_18_rows_present": true,
+    "all_nonempty_audits_accepted": true,
+    "all_physical_bounds_respected": true,
+    "all_six_fine_row_bounds_strictly_tightened": true,
+    "legacy_action_whole_cell_reward_projection_unchanged": false,
+    "lost_default_completions": [],
+    "lost_union_completions": [],
+    "meets_predeclared_useful_criterion": false,
+    "primary_outcome": "conservative_physical_volume_bound_tightening",
+    "target_or_reward_improvement_is_not_actor_success": true
+  },
+  "repair_recommendation": "Separate saved-only exact-JSON parity and criterion certificate, preserving original report. Do not drop fields or enlarge numeric tolerance; no native rerun.",
+  "schema": "partial-volume-saved-parity-type-diagnosis-v1",
+  "source_explanation": "NativeStrokeResult.finish stores tuple(failure_tip ndarray), preserving numpy.float64 elements. Runner equivalent accepts only exact type int/float as numeric, otherwise requires type identity. Its live numpy.float64 elements differ from decoded baseline float although values serialize identically. Container tuple/list alone is accepted by the runner. Saved JSON erases these scalar types; runtime cause is derived from authenticated source and aligned five-refusal pattern, not recovered from JSON type metadata."
+}

@@ -1,0 +1,30 @@
+Independent partial-evacuation result audit — fixed generated18-row matrix
+
+PASS: 41,187 saved-source/scalar/geometry checks. The original report criterion remains FALSE because five in-memory parity flags are false. Independently, all18 complete legacy projections are exactly JSON-equal to the retained union baseline, and all18 stored projection-hash pairs are equal. No numeric value or outcome was excluded beyond the predeclared new-state identity/readout/timing fields. With exact saved parity, the primary volume-bound criterion is met. A separate additive correction can establish that result; this audit does not rewrite the original report.
+
+Material comparison defect: native finish() preserves numpy.float64 items in failure_tip_mm, while the runner comparison recognizes only exact Python int/float types and otherwise requires type identity. All five false flags occur at rejected-action failure tips. The tuple/list containers themselves are handled. Source-derived affected paths and exact values are preserved in parity-diagnosis.json. Scientific histories, first refusals, whole-cell source/target credit and every reward match exactly.
+
+All18 rows and180 slots remain:141 accepted,5 rejected,34 unexecuted suffix actions,146 native calls. Completion stays13/18, retaining all11 default completions and the same two union recoveries. All15 nonempty committed-prefix certificates pass;3 empty prefixes have no invented certificate. Partial cells remain whole-parent shaft obstacles.
+
+Primary new evidence: all six0.25mm conservative physical-volume lower bounds rise by4.226929–13.907959mm³. Against the unchanged planned-contact upper bound, the remaining gap narrows28.2679–39.8357%. Every other row also preserves or increases the lower bound; no value exceeds its unchanged upper bound. The lower bound is the plane-clipped subset of certified evacuated leaf union; it is not exact total continuous cut-union volume.
+
+Fine-grid rows (mm³; gap reduction relative to previous U−L):
+row | physical lower old → new | gain | gap reduction | target shortfall vs exact cap
+aligned-suction-0.25mm | 22.851563 → 27.078491 | 4.226929 | 28.2679% | 35.5342%
+aligned-aspirator-0.25mm | 95.867188 → 107.598633 | 11.731445 | 32.5732% | 17.4627%
+half-phase-suction-0.25mm | 21.625000 → 27.675049 | 6.050049 | 39.8357% | 31.0732%
+half-phase-aspirator-0.25mm | 94.062500 → 107.970459 | 13.907959 | 38.9715% | 13.9498%
+tilted-suction-0.25mm | 22.164062 → 27.218107 | 5.054044 | 32.9724% | 31.4535%
+tilted-aspirator-0.25mm | 94.992187 → 107.455559 | 12.463371 | 33.4868% | 13.3886%
+
+Target undercredit remains: fine suction31.0732–35.5342% (previously65.6–73.8%); fine aspirator13.3886–17.4627%. Each physical target intersection lies inside the cumulative source-mass interval and below its exact analytic cap. The evaluator independently verifies each represented parent target mass against its float32 rounding-bin enclosure, including rotated/tissue-boundary cells. Source-support volume and true analytic tissue intersection stay separate; no uniform target placement or per-action reuse of target mass is assumed. Target readout gains do not change reward or count as actor success.
+
+Independent work: reloaded all15 checked sparse unions, verified their source/history/state/geometry digests, recomputed parent rounding intervals, source/delta counts and cumulative target bounds, then reran the frozen face-clipping evaluator.25,513 whole parents are counted once;6,355 partial parents require225,258 selected leaf visits and22,390 face clips across all rows. This took2.6683s within the2.7633s saved audit. Canonical independent replay had already checked executed capsule containment/exposure/shaft ordering before exporting these unions; this audit does not repeat native geometry.
+
+Experiment costs:54.7607s native time nested in57.1252s numerical rows;37.7181s separate independent audits plus evaluator clipping;95.4375s worker within96.4224s parent. Peak528,400,384B; cleanup clean, no survivors. Attempted68,307,262 leaf tests/15,344,344 new-leaf events/219,045 witness rows match unchanged union work. Worker ratio0.95997 to historical99.4168s is descriptive and unpaired, not a speed claim.
+
+Limits: assumed idealized cut AND evacuation, generated analytic planes, no measured tissue/force/device behavior, no patient acquisition, no training/policy change and no claim of convergence or clinical validity. Planned upper bound includes all prescribed sweeps, even unexecuted suffixes. Partial-cell collision/connectivity remains conservative and unchanged.
+
+Reviewer-only failure retained: audit-result-01.json used system Python without int.bit_count and stopped before geometry clipping. The unchanged auditor passed as audit-result-02.json under the experiment .venv Python; no model, input, source or tolerance was changed.
+
+Reproducibility: compact archive retains this report/auditor/scalar audit/parity diagnosis and exact hash pointers. Full706,504B report and all sparse geometry remain local and required for full saved re-evaluation; they are excluded from Git compaction.

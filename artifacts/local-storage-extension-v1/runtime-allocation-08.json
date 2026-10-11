@@ -1,0 +1,86 @@
+{
+  "baseline_sha256": "db2e3bad35aadd68f23111b9498270d019debf27486c696cc7ef48bd1fff67c8",
+  "capacity": {
+    "additional_reservable_bytes": 8902533120,
+    "allocation_allowed": true,
+    "conservative_growth_plus_reservations_bytes": 1834885120,
+    "free_after_outstanding_reservations_bytes": 355588304896,
+    "free_bytes": 355673239552,
+    "growth_highwater_bytes": 1749950464,
+    "outstanding_reserved_bytes": 84934656,
+    "reservation_scope_overruns": []
+  },
+  "existing_open_reservations": {
+    "hbe-ogden-shape-prep": {
+      "reserved_bytes": 8388608,
+      "scopes": [
+        "build/hbe-ogden-shape-v1"
+      ],
+      "status": "prepared"
+    },
+    "root-archive-bookkeeping": {
+      "reserved_bytes": 50331648,
+      "scopes": [
+        "artifacts",
+        ".git",
+        "docs",
+        "src",
+        "scripts",
+        "tests",
+        "manifests",
+        "build/storage-extension-v1"
+      ],
+      "status": "prepared"
+    },
+    "select013-target-ray-priority-prep": {
+      "reserved_bytes": 1048576,
+      "scopes": [
+        "build/select013-target-ray-priority-v1"
+      ],
+      "status": "prepared"
+    }
+  },
+  "free_space_check": {
+    "at_utc": "2026-10-11T13:43:33.013630+00:00",
+    "free_bytes": 355673239552
+  },
+  "latest_project_scan_ended_at_utc": "2026-10-11T13:36:46.898431+00:00",
+  "ledger_sha256": "b66854230d47fad8cb59e977e362948323d218a1d3fa7746a5a37df272bd2dbf",
+  "limits": "Prepared coordinated allowance only; no runtime begin or fullproject scan. Completed records and baseline unchanged. Root owns source integration, controls and timed dispatch; storage waits final closure before full milestone.",
+  "recorded_at_utc": "2026-10-11T13:43:33.015028+00:00",
+  "reservation": {
+    "allocation_kind": "one existing generated18-row partial-evacuation volume/target-bound iteration; coordinated source/tests/compact reports/supervision; prepared only",
+    "budget_components": {
+      "bounded_run_reports_bytes": 16777216,
+      "source_tests_reports_preparation_bytes": 5242880,
+      "supervision_and_small_temp_bytes": 3145728,
+      "total_bytes": 25165824
+    },
+    "constraints": "No new dataset/dependencies/worktree/deletion, no data/model copies; no tests/numerical execution until root release.",
+    "coordination": "Shared parent covers producer/ and runner/; root assigns reviewer/runner and owns canonical commits and numerical dispatch.",
+    "created_at_utc": "2026-10-11T13:43:33.013744+00:00",
+    "forecast_basis": {
+      "no_baseline_copies_needed": true,
+      "owner_compact18row_reports_forecast_bytes": 16777216,
+      "prior_completed18row_union_allocated_bytes": 733184,
+      "producer_source_and_tests_expected_max_bytes": 102400,
+      "reduction_note": "Reduced64MiB suggestion to24MiB using owner forecast;3MiB supervision margin added to5MiB prep+16MiB outputs. Future increases require explicit amendment.",
+      "root_source_ceiling_bytes": 5242880,
+      "suggested_root_total_bytes": 67108864
+    },
+    "launch_authorized_by_storage_reservation": false,
+    "measurement": "Only exact new source scope allocated-block metadata plus statvfs; global growth uses unchanged last full snapshot. Zero origin includes all existing source within ceiling.",
+    "observed_scope_growth_highwater_bytes": 0,
+    "owner": "/root/goal_conditioned_policy",
+    "pilot": false,
+    "reserved_bytes": 25165824,
+    "scope_current_allocated_bytes": 0,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/native-partial-volume-v1"
+    ],
+    "status": "prepared"
+  },
+  "reservation_id": "native-partial-volume-prep",
+  "schema": "storage-extension-coordinated-iteration-allocation-v1"
+}

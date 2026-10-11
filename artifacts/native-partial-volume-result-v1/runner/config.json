@@ -1,0 +1,14 @@
+{
+  "version": "native-partial-volume-fixed18-v1",
+  "execution_released": false,
+  "retained_union_declaration": {"path": "build/native-cut-union-v1/declaration.json", "sha256": "0f909c16508e642e8f570214505e472edf92fd0ea78525779d7c0ab38896aefe"},
+  "retained_union_report": {"path": "build/native-cut-union-v1/run-01/report.json", "sha256": "3784d71445463bd97ef717ffb0a191852cab0cc75ae85bfe4d26b8c8dff36d42"},
+  "mode": "cumulative_affine_subcell_evacuation_v2",
+  "parent_mass_semantics": "public_float32_nominal_fraction_rounding_bin_midpoints_outward_float64_clipped_0_1_zero_outside_source_support",
+  "unchanged": ["18 fixed scenes", "180 planned action slots", "tools", "actions", "microstep", "source support", "whole-parent shaft envelope", "whole-cell reward"],
+  "physical_volume_tolerance_mm3": 1e-8,
+  "success": {"additional_completions_over_default_minimum": 1, "default_completion_regressions": 0, "union_completion_regressions": 0, "fine_rows_requiring_strict_gap_reduction": 6, "all_rows_accounted": 18, "all_nonempty_audits_pass": true, "all_new_lower_bounds_above_union_whole_cell_lower": true},
+  "caps": {"cooperative_worker_seconds": 170, "parent_wall_seconds": 180, "cleanup_reserve_seconds": 10, "worker_peak_rss_bytes": 2147483648, "output_bytes": 8388608, "source_bytes": 5242880, "max_native_strokes": 180, "max_independent_audits": 18, "max_grid_cells": 2000000, "threads": 1},
+  "output_directory": "build/native-partial-volume-v1/run-01",
+  "scope": "generated representation model; no training, policy change, patient data or measured mechanics"
+}

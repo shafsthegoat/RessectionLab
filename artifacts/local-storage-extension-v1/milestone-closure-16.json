@@ -1,0 +1,122 @@
+{
+  "baseline_sha256": "db2e3bad35aadd68f23111b9498270d019debf27486c696cc7ef48bd1fff67c8",
+  "capacity_after_closure": {
+    "additional_reservable_bytes": 8921747456,
+    "allocation_allowed": true,
+    "conservative_growth_plus_reservations_bytes": 1815670784,
+    "free_after_outstanding_reservations_bytes": 355593871360,
+    "free_bytes": 355653640192,
+    "growth_highwater_bytes": 1755901952,
+    "outstanding_reserved_bytes": 59768832,
+    "reservation_scope_overruns": []
+  },
+  "checks": {
+    "10GiB_growth_plus_reservations_passed": true,
+    "50GiB_floor_after_all_reservations_passed": true,
+    "iteration_24MiB_ceiling_passed": true,
+    "no_open_scope_overruns": true,
+    "stage_16MiB_components_ceiling_passed": true
+  },
+  "closed_reservation_id": "native-partial-volume-prep",
+  "closed_status": "closed",
+  "iteration_accounting": {
+    "conservative_positive_project_growth_bytes": 5951488,
+    "final_scan_ended_at_utc": "2026-10-11T14:01:03.149090+00:00",
+    "launcher_logical_output_before_receipt_bytes": 3294395,
+    "launcher_output_cap_bytes": 8388608,
+    "method_limit": "Conservative project-level positive growth includes canonical, caches, archive, Git and any unrelated intervening writes; cannot attribute each block to this experiment. Allocated blocks are not physical APFS unique storage. Transient peaks between scans may be missed.",
+    "positive_growth_by_top_level_bytes": {
+      ".git": 872448,
+      "artifacts": 1130496,
+      "build": 3891200,
+      "src": 24576,
+      "tests": 32768
+    },
+    "reference_full_scan_ended_at_utc": "2026-10-11T13:36:46.898431+00:00",
+    "shared_ceiling_bytes": 25165824,
+    "stage_allocated_bytes": 3858432,
+    "stage_components_ceiling_bytes": 16777216,
+    "stage_within_components_ceiling": true,
+    "within_shared_ceiling": true
+  },
+  "ledger_sha256": "3ef84cd85fa4b808f518d996682a6d722752a006aedd7be4df9b5b1e23126aa7",
+  "limits": "One full project allocated-block milestone; no deletion, acquisition, dependency install, numerical run or source edits. Original baseline and completed receipts retained. Final ledger/snapshot writes and later root archival/docs/commit writes occur after scan timestamp and are explicitly excluded until next milestone. Nested scopes/breakdowns are not added twice.",
+  "measurement": {
+    "allocated_bytes": {
+      ".git": 149725184,
+      ".pytest_cache": 1146880,
+      ".tools": 1643302912,
+      ".venv": 3054829568,
+      "@root-files-and-directory": 651264,
+      "artifacts": 1781530624,
+      "build": 17267904512,
+      "data": 356137070592,
+      "desktop": 18945323008,
+      "dist": 2575773696,
+      "docs": 2220032,
+      "launchers": 409600,
+      "manifests": 5283840,
+      "outputs": 16143257600,
+      "packaging": 544768,
+      "research": 53248,
+      "scripts": 9601024,
+      "src": 6701056,
+      "tests": 20262912
+    },
+    "ended_at_utc": "2026-10-11T14:01:03.149090+00:00",
+    "free_bytes": 355653640192,
+    "method": "du -k -d 1 .; allocated file blocks, no bodies or symlink traversal; statvfs f_bavail",
+    "started_at_utc": "2026-10-11T14:00:46.687271+00:00",
+    "total_allocated_bytes": 417745592320
+  },
+  "original_terminal": {
+    "path": "build/native-partial-volume-v1/run-01/launcher.json",
+    "sha256": "d9be4f777fdf07567c5aa9ce4ed45a1c4ac0c96ae5b071b089d4150fd4ec177a"
+  },
+  "recorded_at_utc": "2026-10-11T14:01:03.585932+00:00",
+  "remaining_open_reservations": {
+    "hbe-ogden-shape-prep": {
+      "observed_scope_growth_highwater_bytes": 5136384,
+      "reserved_bytes": 8388608,
+      "scopes": [
+        "build/hbe-ogden-shape-v1"
+      ],
+      "status": "prepared"
+    },
+    "root-archive-bookkeeping": {
+      "observed_scope_growth_highwater_bytes": 45654016,
+      "reserved_bytes": 50331648,
+      "scopes": [
+        "artifacts",
+        ".git",
+        "docs",
+        "src",
+        "scripts",
+        "tests",
+        "manifests",
+        "build/storage-extension-v1"
+      ],
+      "status": "prepared"
+    },
+    "select013-target-ray-priority-prep": {
+      "observed_scope_growth_highwater_bytes": 241664,
+      "reserved_bytes": 1048576,
+      "scopes": [
+        "build/select013-target-ray-priority-v1"
+      ],
+      "status": "prepared"
+    }
+  },
+  "root_archive": {
+    "observed_growth_highwater_bytes": 45654016,
+    "remaining_bytes": 4677632,
+    "reserved_bytes": 50331648,
+    "scope_current_allocated_bytes": 1975758848,
+    "within_ceiling": true
+  },
+  "schema": "storage-extension-milestone-closure-v1",
+  "terminal_binding": {
+    "path": "build/storage-extension-v1/native-partial-volume-terminal-01.json",
+    "sha256": "5a9745d3c77b4a0fc684850fbfc9e2da8afbbf0c3e4753d892b3dd7c81d76bbc"
+  }
+}

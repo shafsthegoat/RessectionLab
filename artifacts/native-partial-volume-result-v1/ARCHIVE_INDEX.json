@@ -1,0 +1,176 @@
+{
+  "files": [
+    {
+      "bytes": 2434,
+      "path": "REPRODUCE.md",
+      "sha256": "979e6b9751bf73f5aedc9e390a84c3ac6a0eddb0fd1e0a7ec6f6dd70003bb3c1"
+    },
+    {
+      "bytes": 7470,
+      "path": "RESULT.md",
+      "sha256": "02013e8ba2d52c4eddd856965ff2cf4ba122467237b2b361df2bc2459926685d"
+    },
+    {
+      "bytes": 408,
+      "path": "evaluator-controls-01.txt",
+      "sha256": "0dc7edf287f5290b6074ded8697a9c91f505c22baad4b6f9811943083e82708c"
+    },
+    {
+      "bytes": 5134,
+      "path": "independent-review/RESULT.txt",
+      "sha256": "f98f8a7d02fa73536dc63acad82c97faa054b5a7c702424df04fda0b89010130"
+    },
+    {
+      "bytes": 5721,
+      "path": "independent-review/archive-manifest.json",
+      "sha256": "eef4a6ca15c9169bc72ffcc569f98e640d0b0ce8b51f598a0c94575da5303475"
+    },
+    {
+      "bytes": 2707,
+      "path": "independent-review/audit-result-01.json",
+      "sha256": "71f04386e61961b013e334cd26b1f5a80790e14f826c8619548501522a78de32"
+    },
+    {
+      "bytes": 23387,
+      "path": "independent-review/audit-result-02.json",
+      "sha256": "b881c0aee0f2af8046fe3e24f2500c894eb9e377e97ccbe34e5997a63e02016b"
+    },
+    {
+      "bytes": 18718,
+      "path": "independent-review/audit_saved_result.py",
+      "sha256": "3e59133cd28d2010f4057ee5dc6a3422e29c9f205acb508c221f57718c31bd64"
+    },
+    {
+      "bytes": 3675,
+      "path": "independent-review/parity-diagnosis.json",
+      "sha256": "07c6bb4755382e19cb8cd83f613320087c30580b060bf2bc4b21bbd2f44f707e"
+    },
+    {
+      "bytes": 12597,
+      "path": "independent-review/plane_volume_evaluator.py",
+      "sha256": "21df1470e7a65c62eaae4857c8b7c435b1ae448783934465d3cf3bdef2a82522"
+    },
+    {
+      "bytes": 6136,
+      "path": "independent-review/test_plane_volume_evaluator.py",
+      "sha256": "6ce28ed3d54936277bde0132416986e9e5ea7c1865c5199a61e0581b9030a2eb"
+    },
+    {
+      "bytes": 3252,
+      "path": "plot_result.py",
+      "sha256": "e45d7049dbfe411b173636a9c1ae04dab8384a0788f3f0c3e2d401865c5ac258"
+    },
+    {
+      "bytes": 98,
+      "path": "repair-controls-01.log",
+      "sha256": "ea1e061c27e6d298c1d2880db333e777f6b97cea348da885a5aca09ce6f354a2"
+    },
+    {
+      "bytes": 260,
+      "path": "root-controls-01.log",
+      "sha256": "08dc831f9f9fab9a94cdb60d46ade2b8d88bf813131e0c3670adddb0a9068689"
+    },
+    {
+      "bytes": 747,
+      "path": "run-01/intent.json",
+      "sha256": "8ff2e4d3bb06fe8b15f5a0e9fd09dac39b1623ae574193ee289de9b81d9438e6"
+    },
+    {
+      "bytes": 2478,
+      "path": "run-01/launcher.json",
+      "sha256": "d9be4f777fdf07567c5aa9ce4ed45a1c4ac0c96ae5b071b089d4150fd4ec177a"
+    },
+    {
+      "bytes": 642,
+      "path": "run-01/progress.json",
+      "sha256": "758d7d19e744771db42d1e526bba717c54d5a3cec725365e5ef39865f2bf2765"
+    },
+    {
+      "bytes": 706504,
+      "path": "run-01/report.json",
+      "sha256": "c9265daaf186b025403ee499a333f0e2811feab66f65e10a98a3d97f17300ee9"
+    },
+    {
+      "bytes": 0,
+      "path": "run-01/worker.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 3829,
+      "path": "runner/README.txt",
+      "sha256": "bf08c68724d8116c28030a174bf6e2bd9deb9deae3202e1058c4c842a33430d6"
+    },
+    {
+      "bytes": 1580,
+      "path": "runner/config.json",
+      "sha256": "4092c2524de267c0584c6eaf4c345645fcd95d1a0aefd879c04e9f330b672433"
+    },
+    {
+      "bytes": 1665,
+      "path": "runner/freeze_sources.py",
+      "sha256": "d635de077ee2b1a8f999b6a7758cbb535afc4f7c7018bc3fc5ee78cbe4636b81"
+    },
+    {
+      "bytes": 15760,
+      "path": "runner/probe_partial.py",
+      "sha256": "23929e6b1d449153365761ea906640ec24a50fb762dc4488ed3b1fb7f2fae6bd"
+    },
+    {
+      "bytes": 7423,
+      "path": "runner/run_owned.py",
+      "sha256": "9f049b89fc4adc4b4aa955b8d4d2aa9341289d68f8bdf8a6697e930f0720242c"
+    },
+    {
+      "bytes": 17003,
+      "path": "runner/source-index.json",
+      "sha256": "c625f7c69e1cfa2bb2dbd7fc4051c6fa20c3a24bc75c623006ebabf1fb952263"
+    },
+    {
+      "bytes": 5398,
+      "path": "runner/test_runner.py",
+      "sha256": "968c9d5c05e990f66893c06fa22e7df2868c1e8bd37306ffa742bcbbc85fa6af"
+    },
+    {
+      "bytes": 2563,
+      "path": "runner-repair/DIAGNOSIS.txt",
+      "sha256": "a57232cb7e0093caa494c715a3a604c2c6cdfbe67b4c3845052d5988a6d48624"
+    },
+    {
+      "bytes": 735,
+      "path": "runner-repair/proposed-source.patch",
+      "sha256": "c58df23ca64ceba68bc0be3a860dd25e0b6811b12ab1461297b82993a61f391b"
+    },
+    {
+      "bytes": 6910,
+      "path": "runner-repair/repair_saved_parity.py",
+      "sha256": "bcf9f505cac1c5328d875cee66be96ab75ff6d3f68183d08cb14f883b788142f"
+    },
+    {
+      "bytes": 11107,
+      "path": "runner-repair/saved-parity-correction.json",
+      "sha256": "1d9c5d364b0aa07847eaaad06a10c7c850f7f71413226e8c4cc4151caedbe1e8"
+    },
+    {
+      "bytes": 2882,
+      "path": "runner-repair/test_saved_parity.py",
+      "sha256": "1531cd114046034eb6d2c5357f47a3142c84d1d82eb9cf2a44f1a536f6e9eba2"
+    },
+    {
+      "bytes": 9482,
+      "path": "runtime/darwin_fast_sampler.py",
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c"
+    },
+    {
+      "bytes": 8730,
+      "path": "runtime/run_contact_owned.py",
+      "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7"
+    },
+    {
+      "bytes": 121991,
+      "path": "volume-comparison.png",
+      "sha256": "237fc23f0e4f25ac8265052ca450a5bb245499dd6222d14fbce524e43ea191cb"
+    }
+  ],
+  "logical_bytes": 1019426,
+  "scope": "compact generated experiment records, no sparse geometry/patient payloads/weights"
+}

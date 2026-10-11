@@ -1,0 +1,23 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "cleanup_reserve_seconds": 10,
+    "cooperative_worker_seconds": 170,
+    "max_grid_cells": 2000000,
+    "max_independent_audits": 18,
+    "max_native_strokes": 180,
+    "output_bytes": 8388608,
+    "parent_wall_seconds": 180,
+    "source_bytes": 5242880,
+    "threads": 1,
+    "worker_peak_rss_bytes": 2147483648
+  },
+  "planned_action_slots": 180,
+  "planned_rows": 18,
+  "rss_samples": 0,
+  "sampled_peak_group_rss_bytes": 0,
+  "schema": "owned_partial_volume_matrix_v1",
+  "scope": "generated representation model; no training, policy change, patient data or measured mechanics",
+  "source_index_sha256": "c625f7c69e1cfa2bb2dbd7fc4051c6fa20c3a24bc75c623006ebabf1fb952263",
+  "status": "running"
+}

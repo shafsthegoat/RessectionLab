@@ -1,0 +1,42 @@
+The original run remains completed, with its useful criterion recorded false.
+Original report SHA256:
+c9265daaf186b025403ee499a333f0e2811feab66f65e10a98a3d97f17300ee9
+
+Read-only comparison of the two saved JSON reports found all 18 projected
+action/reward/native records exactly equal, with matching stored projection
+SHA256 pairs. This is stronger than the original 1e-10 numerical tolerance.
+The five false in-memory comparisons coincide with these refused actions:
+  aligned-aspirator-1mm, action 1: [0.0, 0.0, 0.9375]
+  half-phase-suction-1mm, action 10: [0.0, 0.0, 2.076470588235294]
+  tilted-suction-1mm, action 1: [0.0, 0.0, 0.8125]
+  tilted-aspirator-1mm, action 1: [0.0, 0.0, 0.25]
+  tilted-aspirator-0.5mm, action 3: [0.0, 1.8, 0.9375]
+All retain reason SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE.
+
+Source cause: native_resection.py finish constructs tuple(failure_tip) from
+an ndarray. The elements retain numpy.float64. The runner's equivalent()
+accepts its numeric branch only when type(value) is exactly int or float;
+its fallback requires identical types. JSON-loaded baseline coordinates
+are ordinary float, so even equal coordinates fail before any numeric test.
+Serialization used for the already recorded projection hashes and final
+report converts these coordinates to ordinary JSON numbers.
+
+Proposed future source change normalizes only the current projection through
+the same finite JSON representation before the existing comparison. It does
+not change the existing tolerance, exclusions, actions, rewards or criterion.
+The patch is unapplied; all executed source remains frozen.
+
+The separate saved-only correction script binds the exact original runner,
+config, report, prior report, default report and launcher receipt. It first
+reproduces the original false criterion. It then requires exact canonical
+JSON equality and verifies every stored projection digest. Only those parity
+flags change in a temporary copy before the exact frozen criterion runs.
+Only the parity aggregate and overall useful criterion may differ. Original
+files and false result remain intact. No native/independent history replay,
+analytic clipping, reward computation or new physical measurement occurs.
+
+Six proposed scalar/JSON controls include the NumPy failure-tip reproduction,
+changed coordinate/type/length negatives, exact actual saved comparison,
+re-sealed reward mutation, and preservation of an independent physical failure.
+Root schedules controls and certificate publication. No test or publication
+has been executed by the author of this diagnosis.

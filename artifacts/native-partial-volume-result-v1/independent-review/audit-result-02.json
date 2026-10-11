@@ -1,0 +1,584 @@
+{
+  "all_whole_cell_rewards_and_projected_histories_unchanged": true,
+  "checks": 41187,
+  "costs": {
+    "independent_audits_plus_clipping_seconds": 37.718122833641246,
+    "native_seconds": 54.76072344975546,
+    "nonpaired_worker_ratio": 0.9599727569070835,
+    "numerical_rows_seconds": 57.12516754376702,
+    "parent_seconds": 96.42239312501624,
+    "polled_group_peak_rss_bytes": 528400384,
+    "retained_union_worker_seconds": 99.4168446669355,
+    "this_audit_elapsed_seconds": 2.763257957994938,
+    "this_saved_geometry_recalculation_seconds": 2.6682976640295237,
+    "worker_peak_rss_bytes": 528400384,
+    "worker_seconds": 95.43746245792136
+  },
+  "counts": {
+    "accepted": 141,
+    "certificates": 15,
+    "complete": 13,
+    "empty": 3,
+    "rejected": 5,
+    "unexecuted_prior_refusal": 34
+  },
+  "fine_rows_summary": {
+    "count": 6,
+    "maximum_gap_reduction_fraction": 0.3983571244855959,
+    "maximum_physical_lower_gain_mm3": 13.907958984374957,
+    "minimum_gap_reduction_fraction": 0.2826786180773242,
+    "minimum_physical_lower_gain_mm3": 4.226928710937489
+  },
+  "inputs": {
+    "artifacts/native-generic-discretization-v1/run-01/report.json": {
+      "bytes": 252072,
+      "sha256": "8e40ef8f6c4504c8eedb020687250c59cb4e58f869fe02bf530a9a001761bc9f"
+    },
+    "build/native-cut-union-v1/declaration.json": {
+      "bytes": 7614,
+      "sha256": "0f909c16508e642e8f570214505e472edf92fd0ea78525779d7c0ab38896aefe"
+    },
+    "build/native-cut-union-v1/run-01/report.json": {
+      "bytes": 398620,
+      "sha256": "3784d71445463bd97ef717ffb0a191852cab0cc75ae85bfe4d26b8c8dff36d42"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/aligned-aspirator-0.25mm.json": {
+      "bytes": 559332,
+      "sha256": "19c9f98bd7acd33cccc154cdfaf7e61825bdb4b191789eab064dbe088bb34e4c"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/aligned-aspirator-0.5mm.json": {
+      "bytes": 99716,
+      "sha256": "d04e26541cbdd3b114e1c8f5fbc85746e66f07b574245dba25bdbf85f34018ed"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/aligned-suction-0.25mm.json": {
+      "bytes": 175225,
+      "sha256": "96c7f28880ce6cdc516e63b6571588dd81bbd537ce5f6c54979f1d6282835fe6"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/aligned-suction-0.5mm.json": {
+      "bytes": 35581,
+      "sha256": "c1b4b29c8d988c1f196c1db5172ac8ef5715247f54730a565e6380b4a5b556b1"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/aligned-suction-1mm.json": {
+      "bytes": 8931,
+      "sha256": "21533833b3e7cc48b07cc2033331f5f4baec46571da5a2cc15ae872464442ad0"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/half-phase-aspirator-0.25mm.json": {
+      "bytes": 548769,
+      "sha256": "279c64795918758a60327e01bab723f820877ac3cc97f9d79f9f20ca5869d363"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/half-phase-aspirator-0.5mm.json": {
+      "bytes": 92151,
+      "sha256": "cf29d913ae1e3bd4f4601f11e828f3bf905c872851209e420e63ff2b90c72fab"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/half-phase-aspirator-1mm.json": {
+      "bytes": 15714,
+      "sha256": "6da94ffa88fd0f69874a5be9b856deebeb19a1b82ce1ed95ce4429e46b1d8a80"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/half-phase-suction-0.25mm.json": {
+      "bytes": 177874,
+      "sha256": "ba9c5c69d66f82ae639d9a72fe13ebf746c99b778e7e3b1b7fd7ee54d6ae4b5d"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/half-phase-suction-0.5mm.json": {
+      "bytes": 31714,
+      "sha256": "450fa5248ef0bc4733065b2de2c210ab0514d8ebc696fc9d1df54c896b65c487"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/half-phase-suction-1mm.json": {
+      "bytes": 4637,
+      "sha256": "818a64f0849a4ee5ad7d6182d4f4813dceef92c5d908d6fb781acf108ef244dc"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/tilted-aspirator-0.25mm.json": {
+      "bytes": 576997,
+      "sha256": "cf7973014f6b863e13851c4b11b8a60905f3972798422577d2a8690d04a008b1"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/tilted-aspirator-0.5mm.json": {
+      "bytes": 37336,
+      "sha256": "feb5f4361d36ca5d31858d4b5c9b7d96d8959525930b6c0b8e9c92640774314d"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/tilted-suction-0.25mm.json": {
+      "bytes": 184527,
+      "sha256": "eba41c84b735888cbbb45dbaf1a5d7091c9c1b4f7556fa72de4bf67cc13129b0"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/tilted-suction-0.5mm.json": {
+      "bytes": 37998,
+      "sha256": "29f55c18c074d8f5c4b9e18ec60eba43d3d00074ca0a2e7f27e18df0c4a4f640"
+    },
+    "build/native-partial-volume-v1/run-01/launcher.json": {
+      "bytes": 2478,
+      "sha256": "d9be4f777fdf07567c5aa9ce4ed45a1c4ac0c96ae5b071b089d4150fd4ec177a"
+    },
+    "build/native-partial-volume-v1/run-01/report.json": {
+      "bytes": 706504,
+      "sha256": "c9265daaf186b025403ee499a333f0e2811feab66f65e10a98a3d97f17300ee9"
+    },
+    "build/native-partial-volume-v1/runner/config.json": {
+      "bytes": 1580,
+      "sha256": "4092c2524de267c0584c6eaf4c345645fcd95d1a0aefd879c04e9f330b672433"
+    },
+    "build/native-partial-volume-v1/runner/source-index.json": {
+      "bytes": 17003,
+      "sha256": "c625f7c69e1cfa2bb2dbd7fc4051c6fa20c3a24bc75c623006ebabf1fb952263"
+    }
+  },
+  "limitations": [
+    "Certified subcell evacuation is an idealized model assumption, not measured biological removal.",
+    "Independent capsule/exposure/shaft proof is the saved canonical checker certificate; this audit independently reclips its exported geometry, without native replay.",
+    "Planned contact upper bound includes prescribed but potentially unexecuted actions; it is unchanged and conservative, not exact cut-union volume.",
+    "Outer voxelization remains separated from physical volume; partial cells remain conservative whole-cell shaft obstacles.",
+    "Whole-cell rewards and prescribed histories remain unchanged; no policy, clinical, force, device or patient benefit is inferred.",
+    "Historical timing ratios are descriptive, not a paired speed experiment."
+  ],
+  "meets_primary_criterion_using_exact_saved_parity": true,
+  "original_false_parity_rows": [
+    "aligned-aspirator-1mm",
+    "half-phase-suction-1mm",
+    "tilted-suction-1mm",
+    "tilted-aspirator-1mm",
+    "tilted-aspirator-0.5mm"
+  ],
+  "original_reported_criterion": {
+    "additional_default_completions": [
+      "aligned-suction-0.5mm",
+      "tilted-suction-0.5mm"
+    ],
+    "all_18_rows_present": true,
+    "all_nonempty_audits_accepted": true,
+    "all_physical_bounds_respected": true,
+    "all_six_fine_row_bounds_strictly_tightened": true,
+    "legacy_action_whole_cell_reward_projection_unchanged": false,
+    "lost_default_completions": [],
+    "lost_union_completions": [],
+    "meets_predeclared_useful_criterion": false,
+    "primary_outcome": "conservative_physical_volume_bound_tightening",
+    "target_or_reward_improvement_is_not_actor_success": true
+  },
+  "rows": [
+    {
+      "accepted_actions": 10,
+      "complete": true,
+      "exact_continuous_target_cap_mm3": 0.4356341812977854,
+      "first_refusal": null,
+      "frozen_return": -4.162400000000001,
+      "gap_after_mm3": 46.90625,
+      "gap_before_mm3": 57.0,
+      "gap_reduction_fraction": 0.17708333333333334,
+      "gap_reduction_mm3": 10.09375,
+      "physical_lower_after_mm3": 24.59375,
+      "physical_lower_before_mm3": 14.5,
+      "physical_target_after_mm3": 0.20781250000000018,
+      "physical_target_before_mm3": 0.0,
+      "planned_contact_upper_mm3": 71.5,
+      "remaining_target_shortfall_mm3": 0.22782168129778524,
+      "row_id": "aligned-suction-1mm",
+      "source_evacuated_mm3": 31.25,
+      "spacing_mm": 1.0,
+      "target_cap_undercredit_fraction": 0.5229655777218586
+    },
+    {
+      "accepted_actions": 0,
+      "complete": false,
+      "exact_continuous_target_cap_mm3": 5.0684361477915365,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          0.9375
+        ],
+        "index": 1,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+      },
+      "frozen_return": 0.0,
+      "gap_after_mm3": 194.5,
+      "gap_before_mm3": 194.5,
+      "gap_reduction_fraction": 0.0,
+      "gap_reduction_mm3": 0.0,
+      "physical_lower_after_mm3": 0.0,
+      "physical_lower_before_mm3": 0.0,
+      "physical_target_after_mm3": 0.0,
+      "physical_target_before_mm3": 0.0,
+      "planned_contact_upper_mm3": 194.5,
+      "remaining_target_shortfall_mm3": 5.0684361477915365,
+      "row_id": "aligned-aspirator-1mm",
+      "source_evacuated_mm3": 0.0,
+      "spacing_mm": 1.0,
+      "target_cap_undercredit_fraction": 1.0
+    },
+    {
+      "accepted_actions": 9,
+      "complete": false,
+      "exact_continuous_target_cap_mm3": 0.4356341812977854,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          2.076470588235294
+        ],
+        "index": 10,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+      },
+      "frozen_return": -1.124,
+      "gap_after_mm3": 69.15625,
+      "gap_before_mm3": 80.0,
+      "gap_reduction_fraction": 0.135546875,
+      "gap_reduction_mm3": 10.84375,
+      "physical_lower_after_mm3": 14.84375,
+      "physical_lower_before_mm3": 4.0,
+      "physical_target_after_mm3": 0.0,
+      "physical_target_before_mm3": 0.0,
+      "planned_contact_upper_mm3": 84.0,
+      "remaining_target_shortfall_mm3": 0.4356341812977854,
+      "row_id": "half-phase-suction-1mm",
+      "source_evacuated_mm3": 14.84375,
+      "spacing_mm": 1.0,
+      "target_cap_undercredit_fraction": 1.0
+    },
+    {
+      "accepted_actions": 10,
+      "complete": true,
+      "exact_continuous_target_cap_mm3": 5.0684361477915365,
+      "first_refusal": null,
+      "frozen_return": -10.602399985694886,
+      "gap_after_mm3": 111.5859375,
+      "gap_before_mm3": 148.0,
+      "gap_reduction_fraction": 0.24604096283783783,
+      "gap_reduction_mm3": 36.4140625,
+      "physical_lower_after_mm3": 92.4140625,
+      "physical_lower_before_mm3": 56.0,
+      "physical_target_after_mm3": 3.5937500000000013,
+      "physical_target_before_mm3": 0.8000000000000007,
+      "planned_contact_upper_mm3": 204.0,
+      "remaining_target_shortfall_mm3": 1.4746861477915352,
+      "row_id": "half-phase-aspirator-1mm",
+      "source_evacuated_mm3": 92.4140625,
+      "spacing_mm": 1.0,
+      "target_cap_undercredit_fraction": 0.290954863549795
+    },
+    {
+      "accepted_actions": 0,
+      "complete": false,
+      "exact_continuous_target_cap_mm3": 0.4356341812977854,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          0.8125
+        ],
+        "index": 1,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+      },
+      "frozen_return": 0.0,
+      "gap_after_mm3": 67.49999999999997,
+      "gap_before_mm3": 67.49999999999997,
+      "gap_reduction_fraction": 0.0,
+      "gap_reduction_mm3": 0.0,
+      "physical_lower_after_mm3": 0.0,
+      "physical_lower_before_mm3": 0.0,
+      "physical_target_after_mm3": 0.0,
+      "physical_target_before_mm3": 0.0,
+      "planned_contact_upper_mm3": 67.49999999999997,
+      "remaining_target_shortfall_mm3": 0.4356341812977854,
+      "row_id": "tilted-suction-1mm",
+      "source_evacuated_mm3": 0.0,
+      "spacing_mm": 1.0,
+      "target_cap_undercredit_fraction": 1.0
+    },
+    {
+      "accepted_actions": 0,
+      "complete": false,
+      "exact_continuous_target_cap_mm3": 5.0684361477915365,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          0.25
+        ],
+        "index": 1,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+      },
+      "frozen_return": 0.0,
+      "gap_after_mm3": 197.49999999999994,
+      "gap_before_mm3": 197.49999999999994,
+      "gap_reduction_fraction": 0.0,
+      "gap_reduction_mm3": 0.0,
+      "physical_lower_after_mm3": 0.0,
+      "physical_lower_before_mm3": 0.0,
+      "physical_target_after_mm3": 0.0,
+      "physical_target_before_mm3": 0.0,
+      "planned_contact_upper_mm3": 197.49999999999994,
+      "remaining_target_shortfall_mm3": 5.0684361477915365,
+      "row_id": "tilted-aspirator-1mm",
+      "source_evacuated_mm3": 0.0,
+      "spacing_mm": 1.0,
+      "target_cap_undercredit_fraction": 1.0
+    },
+    {
+      "accepted_actions": 10,
+      "complete": true,
+      "exact_continuous_target_cap_mm3": 0.4356341812977854,
+      "first_refusal": null,
+      "frozen_return": -4.612400000000001,
+      "gap_after_mm3": 19.416015625000007,
+      "gap_before_mm3": 26.625000000000004,
+      "gap_reduction_fraction": 0.2707599765258214,
+      "gap_reduction_mm3": 7.2089843749999964,
+      "physical_lower_after_mm3": 25.646484375,
+      "physical_lower_before_mm3": 18.437500000000004,
+      "physical_target_after_mm3": 0.26621093750000024,
+      "physical_target_before_mm3": 0.0,
+      "planned_contact_upper_mm3": 45.06250000000001,
+      "remaining_target_shortfall_mm3": 0.16942324379778517,
+      "row_id": "aligned-suction-0.5mm",
+      "source_evacuated_mm3": 29.173828125,
+      "spacing_mm": 0.5,
+      "target_cap_undercredit_fraction": 0.38891173161174175
+    },
+    {
+      "accepted_actions": 10,
+      "complete": true,
+      "exact_continuous_target_cap_mm3": 5.0684361477915365,
+      "first_refusal": null,
+      "frozen_return": -16.357400046491627,
+      "gap_after_mm3": 47.70898437500003,
+      "gap_before_mm3": 70.62500000000001,
+      "gap_reduction_fraction": 0.3244745575221236,
+      "gap_reduction_mm3": 22.916015624999986,
+      "physical_lower_after_mm3": 103.103515625,
+      "physical_lower_before_mm3": 80.18750000000001,
+      "physical_target_after_mm3": 3.796093750000001,
+      "physical_target_before_mm3": 1.587500000000001,
+      "planned_contact_upper_mm3": 150.81250000000003,
+      "remaining_target_shortfall_mm3": 1.2723423977915354,
+      "row_id": "aligned-aspirator-0.5mm",
+      "source_evacuated_mm3": 114.166015625,
+      "spacing_mm": 0.5,
+      "target_cap_undercredit_fraction": 0.25103253956270744
+    },
+    {
+      "accepted_actions": 10,
+      "complete": true,
+      "exact_continuous_target_cap_mm3": 0.4356341812977854,
+      "first_refusal": null,
+      "frozen_return": -3.262400000000001,
+      "gap_after_mm3": 22.905273437500014,
+      "gap_before_mm3": 34.500000000000014,
+      "gap_reduction_fraction": 0.3360790307971012,
+      "gap_reduction_mm3": 11.594726562499996,
+      "physical_lower_after_mm3": 26.0947265625,
+      "physical_lower_before_mm3": 14.500000000000004,
+      "physical_target_after_mm3": 0.19316406250000018,
+      "physical_target_before_mm3": 0.0,
+      "planned_contact_upper_mm3": 49.000000000000014,
+      "remaining_target_shortfall_mm3": 0.24247011879778524,
+      "row_id": "half-phase-suction-0.5mm",
+      "source_evacuated_mm3": 26.0947265625,
+      "spacing_mm": 0.5,
+      "target_cap_undercredit_fraction": 0.5565911244049982
+    },
+    {
+      "accepted_actions": 10,
+      "complete": true,
+      "exact_continuous_target_cap_mm3": 5.0684361477915365,
+      "first_refusal": null,
+      "frozen_return": -14.00239998569489,
+      "gap_after_mm3": 47.66699218750003,
+      "gap_before_mm3": 75.50000000000001,
+      "gap_reduction_fraction": 0.3686491100993375,
+      "gap_reduction_mm3": 27.833007812499986,
+      "physical_lower_after_mm3": 103.8330078125,
+      "physical_lower_before_mm3": 76.00000000000001,
+      "physical_target_after_mm3": 3.6167968750000012,
+      "physical_target_before_mm3": 1.300000000000001,
+      "planned_contact_upper_mm3": 151.50000000000003,
+      "remaining_target_shortfall_mm3": 1.4516392727915353,
+      "row_id": "half-phase-aspirator-0.5mm",
+      "source_evacuated_mm3": 103.8330078125,
+      "spacing_mm": 0.5,
+      "target_cap_undercredit_fraction": 0.2864077262616905
+    },
+    {
+      "accepted_actions": 10,
+      "complete": true,
+      "exact_continuous_target_cap_mm3": 0.4356341812977854,
+      "first_refusal": null,
+      "frozen_return": -4.420574326783045,
+      "gap_after_mm3": 20.05701579043689,
+      "gap_before_mm3": 28.750000000000004,
+      "gap_reduction_fraction": 0.302364668158717,
+      "gap_reduction_mm3": 8.692984209563114,
+      "physical_lower_after_mm3": 25.755484209563104,
+      "physical_lower_before_mm3": 17.06249999999999,
+      "physical_target_after_mm3": 0.2248820488975811,
+      "physical_target_before_mm3": 0.034854727748714655,
+      "planned_contact_upper_mm3": 45.81249999999999,
+      "remaining_target_shortfall_mm3": 0.21075213240020432,
+      "row_id": "tilted-suction-0.5mm",
+      "source_evacuated_mm3": 30.096191406249993,
+      "spacing_mm": 0.5,
+      "target_cap_undercredit_fraction": 0.48378236017283727
+    },
+    {
+      "accepted_actions": 2,
+      "complete": false,
+      "exact_continuous_target_cap_mm3": 5.0684361477915365,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          1.8,
+          0.9375
+        ],
+        "index": 3,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+      },
+      "frozen_return": -4.471999999999999,
+      "gap_after_mm3": 122.68189389978382,
+      "gap_before_mm3": 132.26929908129685,
+      "gap_reduction_fraction": 0.07248397963929867,
+      "gap_reduction_mm3": 9.587405181513027,
+      "physical_lower_after_mm3": 28.505606100216156,
+      "physical_lower_before_mm3": 18.91820091870313,
+      "physical_target_after_mm3": 0.0,
+      "physical_target_before_mm3": 0.0,
+      "planned_contact_upper_mm3": 151.18749999999997,
+      "remaining_target_shortfall_mm3": 5.0684361477915365,
+      "row_id": "tilted-aspirator-0.5mm",
+      "source_evacuated_mm3": 33.01855468749999,
+      "spacing_mm": 0.5,
+      "target_cap_undercredit_fraction": 1.0
+    },
+    {
+      "accepted_actions": 10,
+      "complete": true,
+      "exact_continuous_target_cap_mm3": 0.4356341812977854,
+      "first_refusal": null,
+      "frozen_return": -5.116149995306137,
+      "gap_after_mm3": 10.726196289062514,
+      "gap_before_mm3": 14.953125000000004,
+      "gap_reduction_fraction": 0.2826786180773242,
+      "gap_reduction_mm3": 4.226928710937489,
+      "physical_lower_after_mm3": 27.0784912109375,
+      "physical_lower_before_mm3": 22.85156250000001,
+      "physical_target_after_mm3": 0.28083496093750027,
+      "physical_target_before_mm3": 0.11406250000000029,
+      "planned_contact_upper_mm3": 37.804687500000014,
+      "remaining_target_shortfall_mm3": 0.15479922036028515,
+      "row_id": "aligned-suction-0.25mm",
+      "source_evacuated_mm3": 28.8880615234375,
+      "spacing_mm": 0.25,
+      "target_cap_undercredit_fraction": 0.3553422275064073
+    },
+    {
+      "accepted_actions": 10,
+      "complete": true,
+      "exact_continuous_target_cap_mm3": 5.0684361477915365,
+      "first_refusal": null,
+      "frozen_return": -16.729274978318816,
+      "gap_after_mm3": 24.284179687500057,
+      "gap_before_mm3": 36.015625000000014,
+      "gap_reduction_fraction": 0.32573210412147374,
+      "gap_reduction_mm3": 11.731445312499957,
+      "physical_lower_after_mm3": 107.5986328125,
+      "physical_lower_before_mm3": 95.86718750000004,
+      "physical_target_after_mm3": 4.183349609375002,
+      "physical_target_before_mm3": 3.2046875000000026,
+      "planned_contact_upper_mm3": 131.88281250000006,
+      "remaining_target_shortfall_mm3": 0.8850865384165347,
+      "row_id": "aligned-aspirator-0.25mm",
+      "source_evacuated_mm3": 113.1962890625,
+      "spacing_mm": 0.25,
+      "target_cap_undercredit_fraction": 0.17462714585093322
+    },
+    {
+      "accepted_actions": 10,
+      "complete": true,
+      "exact_continuous_target_cap_mm3": 0.4356341812977854,
+      "first_refusal": null,
+      "frozen_return": -4.507399997317793,
+      "gap_after_mm3": 9.137451171875014,
+      "gap_before_mm3": 15.187500000000004,
+      "gap_reduction_fraction": 0.3983571244855959,
+      "gap_reduction_mm3": 6.050048828124989,
+      "physical_lower_after_mm3": 27.675048828125,
+      "physical_lower_before_mm3": 21.62500000000001,
+      "physical_target_after_mm3": 0.30026855468750024,
+      "physical_target_before_mm3": 0.1500000000000002,
+      "planned_contact_upper_mm3": 36.812500000000014,
+      "remaining_target_shortfall_mm3": 0.13536562661028517,
+      "row_id": "half-phase-suction-0.25mm",
+      "source_evacuated_mm3": 27.675048828125,
+      "spacing_mm": 0.25,
+      "target_cap_undercredit_fraction": 0.3107323355734421
+    },
+    {
+      "accepted_actions": 10,
+      "complete": true,
+      "exact_continuous_target_cap_mm3": 5.0684361477915365,
+      "first_refusal": null,
+      "frozen_return": -15.529899980330473,
+      "gap_after_mm3": 21.779541015625057,
+      "gap_before_mm3": 35.687500000000014,
+      "gap_reduction_fraction": 0.3897151379159356,
+      "gap_reduction_mm3": 13.907958984374957,
+      "physical_lower_after_mm3": 107.970458984375,
+      "physical_lower_before_mm3": 94.06250000000004,
+      "physical_target_after_mm3": 4.361401367187502,
+      "physical_target_before_mm3": 3.0375000000000023,
+      "planned_contact_upper_mm3": 129.75000000000006,
+      "remaining_target_shortfall_mm3": 0.7070347806040349,
+      "row_id": "half-phase-aspirator-0.25mm",
+      "source_evacuated_mm3": 107.970458984375,
+      "spacing_mm": 0.25,
+      "target_cap_undercredit_fraction": 0.13949762017069314
+    },
+    {
+      "accepted_actions": 10,
+      "complete": true,
+      "exact_continuous_target_cap_mm3": 0.4356341812977854,
+      "first_refusal": null,
+      "frozen_return": -5.045654012465475,
+      "gap_after_mm3": 10.27408062337014,
+      "gap_before_mm3": 15.328124999999982,
+      "gap_reduction_fraction": 0.32972358828166193,
+      "gap_reduction_mm3": 5.054044376629843,
+      "physical_lower_after_mm3": 27.218106876629825,
+      "physical_lower_before_mm3": 22.164062499999982,
+      "physical_target_after_mm3": 0.29861182102075834,
+      "physical_target_before_mm3": 0.11551748837485533,
+      "planned_contact_upper_mm3": 37.492187499999964,
+      "remaining_target_shortfall_mm3": 0.13702236027702708,
+      "row_id": "tilted-suction-0.25mm",
+      "source_evacuated_mm3": 29.555725097656243,
+      "spacing_mm": 0.25,
+      "target_cap_undercredit_fraction": 0.31453537431068346
+    },
+    {
+      "accepted_actions": 10,
+      "complete": true,
+      "exact_continuous_target_cap_mm3": 5.0684361477915365,
+      "first_refusal": null,
+      "frozen_return": -16.89326669592302,
+      "gap_after_mm3": 24.75537889932373,
+      "gap_before_mm3": 37.21874999999997,
+      "gap_reduction_fraction": 0.3348680732339547,
+      "gap_reduction_mm3": 12.463371100676241,
+      "physical_lower_after_mm3": 107.45555860067616,
+      "physical_lower_before_mm3": 94.99218749999991,
+      "physical_target_after_mm3": 4.389845815668565,
+      "physical_target_before_mm3": 3.161777750881094,
+      "planned_contact_upper_mm3": 132.2109374999999,
+      "remaining_target_shortfall_mm3": 0.6785903321229716,
+      "row_id": "tilted-aspirator-0.25mm",
+      "source_evacuated_mm3": 114.68774414062497,
+      "spacing_mm": 0.25,
+      "target_cap_undercredit_fraction": 0.13388554424596094
+    }
+  ],
+  "status": "PASS",
+  "work": {
+    "evaluator_face_clips": 22390,
+    "evaluator_full_parent_boxes": 25513,
+    "evaluator_leaf_visits": 225258,
+    "evaluator_partial_parent_boxes": 6355,
+    "leaf_tests": 68307262,
+    "new_leaf_count": 15344344,
+    "witness_rows": 219045
+  }
+}

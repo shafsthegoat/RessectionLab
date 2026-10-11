@@ -1,0 +1,14 @@
+{
+  "evidence_basis": "Original owned launcher affirms child_reaped true, exit0, remaining_owned_pids empty, cleanup_errors empty, stop_reason null; root separately reports all scientific jobs terminal. This is a transparent storage cleanup binding, not a fresh process census.",
+  "launcher_useful_criterion_met": false,
+  "note": "Exit0/cleanup does not imply scientific usefulness; original report and failures/limits remain unchanged.",
+  "original_terminal": {
+    "path": "build/native-partial-volume-v1/run-01/launcher.json",
+    "sha256": "d9be4f777fdf07567c5aa9ce4ed45a1c4ac0c96ae5b071b089d4150fd4ec177a"
+  },
+  "recorded_at_utc": "2026-10-11T14:00:46.686216+00:00",
+  "remaining_owned_pids": [],
+  "schema": "storage-owner-terminal-binding-v1",
+  "scientific_status_not_reinterpreted": true,
+  "worker_termination_confirmed": true
+}

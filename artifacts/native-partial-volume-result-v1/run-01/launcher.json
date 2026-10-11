@@ -1,0 +1,61 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "cleanup_reserve_seconds": 10,
+    "cooperative_worker_seconds": 170,
+    "max_grid_cells": 2000000,
+    "max_independent_audits": 18,
+    "max_native_strokes": 180,
+    "output_bytes": 8388608,
+    "parent_wall_seconds": 180,
+    "source_bytes": 5242880,
+    "threads": 1,
+    "worker_peak_rss_bytes": 2147483648
+  },
+  "child_reaped": true,
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-partial-volume-v1/run-01/absent-worker-cache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-partial-volume-v1/runner/probe_partial.py",
+    "--worker",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-partial-volume-v1/run-01",
+    "--source-index-sha256",
+    "c625f7c69e1cfa2bb2dbd7fc4051c6fa20c3a24bc75c623006ebabf1fb952263"
+  ],
+  "elapsed_seconds": 96.42239312501624,
+  "output_bytes_before_receipt": 3294395,
+  "planned_action_slots": 180,
+  "planned_rows": 18,
+  "remaining_owned_pids": [],
+  "report_sha256": "c9265daaf186b025403ee499a333f0e2811feab66f65e10a98a3d97f17300ee9",
+  "rss_samples": 462,
+  "sampled_peak_group_rss_bytes": 528400384,
+  "schema": "owned_partial_volume_matrix_v1",
+  "scope": "generated representation model; no training, policy change, patient data or measured mechanics",
+  "source_index_sha256": "c625f7c69e1cfa2bb2dbd7fc4051c6fa20c3a24bc75c623006ebabf1fb952263",
+  "status": "completed",
+  "stop_reason": null,
+  "useful_criterion": {
+    "additional_default_completions": [
+      "aligned-suction-0.5mm",
+      "tilted-suction-0.5mm"
+    ],
+    "all_18_rows_present": true,
+    "all_nonempty_audits_accepted": true,
+    "all_physical_bounds_respected": true,
+    "all_six_fine_row_bounds_strictly_tightened": true,
+    "legacy_action_whole_cell_reward_projection_unchanged": false,
+    "lost_default_completions": [],
+    "lost_union_completions": [],
+    "meets_predeclared_useful_criterion": false,
+    "primary_outcome": "conservative_physical_volume_bound_tightening",
+    "target_or_reward_improvement_is_not_actor_success": true
+  },
+  "worker_exit_code": 0
+}

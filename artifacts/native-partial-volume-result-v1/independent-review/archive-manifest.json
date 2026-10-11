@@ -1,0 +1,142 @@
+{
+  "excluded_but_retained_local": [
+    {
+      "bytes": 706504,
+      "path": "build/native-partial-volume-v1/run-01/report.json",
+      "sha256": "c9265daaf186b025403ee499a333f0e2811feab66f65e10a98a3d97f17300ee9"
+    },
+    {
+      "bytes": 8931,
+      "path": "build/native-partial-volume-v1/run-01/geometry/aligned-suction-1mm.json",
+      "sha256": "21533833b3e7cc48b07cc2033331f5f4baec46571da5a2cc15ae872464442ad0"
+    },
+    {
+      "bytes": 4637,
+      "path": "build/native-partial-volume-v1/run-01/geometry/half-phase-suction-1mm.json",
+      "sha256": "818a64f0849a4ee5ad7d6182d4f4813dceef92c5d908d6fb781acf108ef244dc"
+    },
+    {
+      "bytes": 15714,
+      "path": "build/native-partial-volume-v1/run-01/geometry/half-phase-aspirator-1mm.json",
+      "sha256": "6da94ffa88fd0f69874a5be9b856deebeb19a1b82ce1ed95ce4429e46b1d8a80"
+    },
+    {
+      "bytes": 35581,
+      "path": "build/native-partial-volume-v1/run-01/geometry/aligned-suction-0.5mm.json",
+      "sha256": "c1b4b29c8d988c1f196c1db5172ac8ef5715247f54730a565e6380b4a5b556b1"
+    },
+    {
+      "bytes": 99716,
+      "path": "build/native-partial-volume-v1/run-01/geometry/aligned-aspirator-0.5mm.json",
+      "sha256": "d04e26541cbdd3b114e1c8f5fbc85746e66f07b574245dba25bdbf85f34018ed"
+    },
+    {
+      "bytes": 31714,
+      "path": "build/native-partial-volume-v1/run-01/geometry/half-phase-suction-0.5mm.json",
+      "sha256": "450fa5248ef0bc4733065b2de2c210ab0514d8ebc696fc9d1df54c896b65c487"
+    },
+    {
+      "bytes": 92151,
+      "path": "build/native-partial-volume-v1/run-01/geometry/half-phase-aspirator-0.5mm.json",
+      "sha256": "cf29d913ae1e3bd4f4601f11e828f3bf905c872851209e420e63ff2b90c72fab"
+    },
+    {
+      "bytes": 37998,
+      "path": "build/native-partial-volume-v1/run-01/geometry/tilted-suction-0.5mm.json",
+      "sha256": "29f55c18c074d8f5c4b9e18ec60eba43d3d00074ca0a2e7f27e18df0c4a4f640"
+    },
+    {
+      "bytes": 37336,
+      "path": "build/native-partial-volume-v1/run-01/geometry/tilted-aspirator-0.5mm.json",
+      "sha256": "feb5f4361d36ca5d31858d4b5c9b7d96d8959525930b6c0b8e9c92640774314d"
+    },
+    {
+      "bytes": 175225,
+      "path": "build/native-partial-volume-v1/run-01/geometry/aligned-suction-0.25mm.json",
+      "sha256": "96c7f28880ce6cdc516e63b6571588dd81bbd537ce5f6c54979f1d6282835fe6"
+    },
+    {
+      "bytes": 559332,
+      "path": "build/native-partial-volume-v1/run-01/geometry/aligned-aspirator-0.25mm.json",
+      "sha256": "19c9f98bd7acd33cccc154cdfaf7e61825bdb4b191789eab064dbe088bb34e4c"
+    },
+    {
+      "bytes": 177874,
+      "path": "build/native-partial-volume-v1/run-01/geometry/half-phase-suction-0.25mm.json",
+      "sha256": "ba9c5c69d66f82ae639d9a72fe13ebf746c99b778e7e3b1b7fd7ee54d6ae4b5d"
+    },
+    {
+      "bytes": 548769,
+      "path": "build/native-partial-volume-v1/run-01/geometry/half-phase-aspirator-0.25mm.json",
+      "sha256": "279c64795918758a60327e01bab723f820877ac3cc97f9d79f9f20ca5869d363"
+    },
+    {
+      "bytes": 184527,
+      "path": "build/native-partial-volume-v1/run-01/geometry/tilted-suction-0.25mm.json",
+      "sha256": "eba41c84b735888cbbb45dbaf1a5d7091c9c1b4f7556fa72de4bf67cc13129b0"
+    },
+    {
+      "bytes": 576997,
+      "path": "build/native-partial-volume-v1/run-01/geometry/tilted-aspirator-0.25mm.json",
+      "sha256": "cf7973014f6b863e13851c4b11b8a60905f3972798422577d2a8690d04a008b1"
+    }
+  ],
+  "files": [
+    {
+      "bytes": 5134,
+      "path": "build/native-partial-volume-v1/independent-review/RESULT.txt",
+      "sha256": "f98f8a7d02fa73536dc63acad82c97faa054b5a7c702424df04fda0b89010130"
+    },
+    {
+      "bytes": 18718,
+      "path": "build/native-partial-volume-v1/independent-review/audit_saved_result.py",
+      "sha256": "3e59133cd28d2010f4057ee5dc6a3422e29c9f205acb508c221f57718c31bd64"
+    },
+    {
+      "bytes": 2707,
+      "path": "build/native-partial-volume-v1/independent-review/audit-result-01.json",
+      "sha256": "71f04386e61961b013e334cd26b1f5a80790e14f826c8619548501522a78de32"
+    },
+    {
+      "bytes": 23387,
+      "path": "build/native-partial-volume-v1/independent-review/audit-result-02.json",
+      "sha256": "b881c0aee0f2af8046fe3e24f2500c894eb9e377e97ccbe34e5997a63e02016b"
+    },
+    {
+      "bytes": 3675,
+      "path": "build/native-partial-volume-v1/independent-review/parity-diagnosis.json",
+      "sha256": "07c6bb4755382e19cb8cd83f613320087c30580b060bf2bc4b21bbd2f44f707e"
+    },
+    {
+      "bytes": 12597,
+      "path": "build/native-partial-volume-v1/independent-review/plane_volume_evaluator.py",
+      "sha256": "21df1470e7a65c62eaae4857c8b7c435b1ae448783934465d3cf3bdef2a82522"
+    },
+    {
+      "bytes": 6136,
+      "path": "build/native-partial-volume-v1/independent-review/test_plane_volume_evaluator.py",
+      "sha256": "6ce28ed3d54936277bde0132416986e9e5ea7c1865c5199a61e0581b9030a2eb"
+    },
+    {
+      "bytes": 2478,
+      "path": "build/native-partial-volume-v1/run-01/launcher.json",
+      "sha256": "d9be4f777fdf07567c5aa9ce4ed45a1c4ac0c96ae5b071b089d4150fd4ec177a"
+    },
+    {
+      "bytes": 1580,
+      "path": "build/native-partial-volume-v1/runner/config.json",
+      "sha256": "4092c2524de267c0584c6eaf4c345645fcd95d1a0aefd879c04e9f330b672433"
+    },
+    {
+      "bytes": 17003,
+      "path": "build/native-partial-volume-v1/runner/source-index.json",
+      "sha256": "c625f7c69e1cfa2bb2dbd7fc4051c6fa20c3a24bc75c623006ebabf1fb952263"
+    }
+  ],
+  "independent_criterion_with_exact_saved_parity": true,
+  "original_report_unchanged": true,
+  "original_reported_criterion_value": false,
+  "reproduction_requires_retained_geometry_and_report": true,
+  "schema": "compact-independent-partial-volume-result-archive-v1",
+  "total_selected_bytes": 93415
+}

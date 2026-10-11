@@ -1,0 +1,11 @@
+--- a/build/native-partial-volume-v1/runner/probe_partial.py
++++ b/build/native-partial-volume-v1/runner/probe_partial.py
+@@ -113,7 +113,7 @@
+         if row[key]!=prior[key]:raise ValueError('Fixed scene/action identity changed: '+key)
+     row['retained_union_projection_sha256']=UNION.BASE.digest(projection(prior))
+     row['current_legacy_projection_sha256']=UNION.BASE.digest(projection(row))
+-    row['legacy_projection_equal_within_tolerance']=equivalent(projection(prior),projection(row))
++    row['legacy_projection_equal_within_tolerance']=equivalent(projection(prior),json.loads(json.dumps(projection(row),allow_nan=False)))
+     if history:
+         PENDING[(case.semantic_hash,UNION.BASE.digest(history))]=row
+     else:

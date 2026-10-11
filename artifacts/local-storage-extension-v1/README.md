@@ -70,3 +70,14 @@ At13:03:11 UTC, the union comparison closes with **254.680 MiB** measured additi
 
 
 October 11, 13:36:46 UTC — completed mechanics and cutting-cache iteration: [final-disk-snapshot-02.json](final-disk-snapshot-02.json) records 1,749,950,464 bytes (1.630 GiB) additional allocated growth, 331.204 GiB free, and 331.148 GiB free after outstanding reservations. Both limits hold, no overruns are recorded, and all native outputs/failures remain. This includes the compact result archives and plot/font cache. Snapshot/status/Git writes after the timestamp are not included; no recursive follow-up scan is needed. No new dataset, weights or dependencies were acquired.
+
+October 11, 14:01:03 UTC — [partial-evacuation closure](milestone-closure-16.json)
+records **1,755,901,952 bytes (1.635 GiB)** cumulative additional allocated growth
+and **331.228 GiB free** (331.173 GiB after remaining reservations). The iteration
+adds **5.676 MiB**, including canonical files, caches, compact archive and Git
+growth, within its closed 24 MiB allowance. The build stage retains 3.680 MiB;
+root archive headroom is 4.461 MiB within 48 MiB. All original outputs remain.
+No acquisition, dependency or deletion occurred. Both global storage limits pass.
+Snapshot copies, this note and subsequent Git writes are outside the dated scan;
+no recursive scan is required. Allocation, source-begin and terminal bindings
+are retained beside the snapshot.

@@ -1,0 +1,40 @@
+{
+  "checks": 785,
+  "error": "'int' object has no attribute 'bit_count'",
+  "inputs": {
+    "artifacts/native-generic-discretization-v1/run-01/report.json": {
+      "bytes": 252072,
+      "sha256": "8e40ef8f6c4504c8eedb020687250c59cb4e58f869fe02bf530a9a001761bc9f"
+    },
+    "build/native-cut-union-v1/declaration.json": {
+      "bytes": 7614,
+      "sha256": "0f909c16508e642e8f570214505e472edf92fd0ea78525779d7c0ab38896aefe"
+    },
+    "build/native-cut-union-v1/run-01/report.json": {
+      "bytes": 398620,
+      "sha256": "3784d71445463bd97ef717ffb0a191852cab0cc75ae85bfe4d26b8c8dff36d42"
+    },
+    "build/native-partial-volume-v1/run-01/geometry/aligned-suction-1mm.json": {
+      "bytes": 8931,
+      "sha256": "21533833b3e7cc48b07cc2033331f5f4baec46571da5a2cc15ae872464442ad0"
+    },
+    "build/native-partial-volume-v1/run-01/launcher.json": {
+      "bytes": 2478,
+      "sha256": "d9be4f777fdf07567c5aa9ce4ed45a1c4ac0c96ae5b071b089d4150fd4ec177a"
+    },
+    "build/native-partial-volume-v1/run-01/report.json": {
+      "bytes": 706504,
+      "sha256": "c9265daaf186b025403ee499a333f0e2811feab66f65e10a98a3d97f17300ee9"
+    },
+    "build/native-partial-volume-v1/runner/config.json": {
+      "bytes": 1580,
+      "sha256": "4092c2524de267c0584c6eaf4c345645fcd95d1a0aefd879c04e9f330b672433"
+    },
+    "build/native-partial-volume-v1/runner/source-index.json": {
+      "bytes": 17003,
+      "sha256": "c625f7c69e1cfa2bb2dbd7fc4051c6fa20c3a24bc75c623006ebabf1fb952263"
+    }
+  },
+  "status": "AUDITOR_FAILURE",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-partial-volume-v1/independent-review/audit_saved_result.py\", line 140, in <module>\n    try:result=audit(args)\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-partial-volume-v1/independent-review/audit_saved_result.py\", line 107, in audit\n    count=len(removed)*leaf_count+sum(x.bit_count() for x in partials.values());need(count==delta_count==prior_evac['certified_leaf_count']==c['evacuated_volume']['certified_leaf_count'],rid+' unique final union count')\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-partial-volume-v1/independent-review/audit_saved_result.py\", line 107, in <genexpr>\n    count=len(removed)*leaf_count+sum(x.bit_count() for x in partials.values());need(count==delta_count==prior_evac['certified_leaf_count']==c['evacuated_volume']['certified_leaf_count'],rid+' unique final union count')\nAttributeError: 'int' object has no attribute 'bit_count'\n"
+}
