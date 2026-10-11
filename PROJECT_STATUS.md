@@ -39,6 +39,8 @@ See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cr
 
 Current integrated results, October 11:
 
+- **The global-cap failure now has a tested local-window successor:** [22 canonical controls and independent source review pass](artifacts/hybrid-public-bound-v2-integration/INTEGRATION.md). Conservative local target/coverage queries replace global unknown-cell boxes while preserving exact checks wherever local coverage is unknown. The same five-case comparison is next; reward, weights, patient roles and the complete v1 negative remain fixed. No acquired improvement is claimed before that run.
+
 - **The first public bound preserves quality but saves no checks:** [the complete five-case pair](artifacts/hybrid-public-bound-v1-result/RESULT.md) retains exact routes/outcomes and all ten independent replays. Both arms use 1,446 online previews; all 1,118 conditional planning queries refuse at the global unknown-cell workspace cap. Setup adds overhead. Next: query a conservative local tool envelope while preserving unknown coverage, then repeat the fixed comparison. No fit, acquisition or held-out claim.
 
 - **A reusable public-target bound is integrated for the next model comparison:** [17 canonical and 20 combined controls pass](artifacts/hybrid-public-bound-integration-v1/INTEGRATION.md), with independent source review. It can skip conditional checks only when an optimistic reward bound cannot change the winner; unknown coverage retains exact checking. The first five-case negative result and charged setup costs are recorded above. No new fit, data or clinical claim.

@@ -1,0 +1,395 @@
+--- /dev/null
++++ b/src/resectionlab/public_reward_window.py
+@@ -0,0 +1,219 @@
++"""Conservative public target potential using bounded native-index windows.
++
++This replaces global unknown-cell box enumeration with two immutable boolean
++snapshots. It accepts only explicit public target, coverage and observed cavity.
++Unknown coverage never becomes empty, even when cavity is true. The window is
++an overestimate of the full active sweep; this is not a geometry/clearance test.
++Frozen policy features and learned weights are not changed.
++"""
++from __future__ import annotations
++
++from dataclasses import dataclass
++import math
++from typing import Callable, Mapping
++
++import numpy as np
++
++from .public_reward_bound import RewardUpperBound
++
++VERSION = "public-full-cell-target-window-bound-v2"
++_EPS = np.finfo(np.float64).eps
++_FIELDS = {"target_per_mm3", "normal_per_mm3", "motor_per_mm3",
++           "language_per_mm3", "action_cost", "motion_per_mm",
++           "tool_change_cost", "graph_edge_cost"}
++MAX_SNAPSHOT_BYTES = 64 * 1024**2
++MAX_WINDOW_CELLS = 1_000_000
++MAX_QUERY_WORKSPACE_BYTES = 8 * 1024**2
++VALIDATION_CHUNK_CELLS = 65536
++# Immutable conversion briefly retains both mutable and immutable snapshots.
++MAX_PREPARE_WORKSPACE_BYTES = 2 * MAX_SNAPSHOT_BYTES + 8 * 1024**2
++
++
++def _immutable(a):
++    a = np.ascontiguousarray(a)
++    return np.frombuffer(a.tobytes(), dtype=a.dtype).reshape(a.shape)
++
++
++@dataclass(frozen=True)
++class PublicTargetWindow:
++    target_positive: np.ndarray
++    target_domain: np.ndarray
++    inverse_lower: np.ndarray
++    inverse_upper: np.ndarray
++    origin: np.ndarray
++    target_cells: int = 0
++    unknown_cells: int = 0
++    snapshot_bytes: int = 0
++    unavailable_reason: str | None = None
++
++    @classmethod
++    def prepare(cls, *, affine, public_target, target_domain, observed_cavity,
++                cancelled: Callable[[], None] = lambda: None):
++        """Validate and copy bounded public state; no scene/private fields.
++
++        Resident payload is two bool grids plus 21 doubles (168 bytes). Numeric
++        validation uses fixed 65,536-cell chunks; it never enumerates unknown
++        coordinates or allocates an array of global cell boxes. Unsupported input
++        returns an unavailable snapshot. Cancellation always propagates.
++        """
++        cancelled()
++        empty = _immutable(np.empty((0, 0, 0), bool))
++        empty3 = _immutable(np.empty((0, 3), float))
++        def unavailable(reason):
++            return cls(empty, empty, empty3, empty3, _immutable(np.zeros(3)),
++                       unavailable_reason=reason)
++        if any(v is None for v in (affine, public_target, target_domain, observed_cavity)):
++            return unavailable("missing_explicit_public_input")
++        a, t, d, c = map(np.asarray, (affine, public_target, target_domain, observed_cavity))
++        if (a.shape != (4, 4) or a.dtype.kind not in "fiu" or
++                not np.isfinite(a).all() or not np.array_equal(a[3], [0, 0, 0, 1])
++                or np.max(np.abs(a)) > 1e6):
++            return unavailable("unsupported_affine")
++        a = a.astype(np.float64)
++        basis = a[:3, :3]
++        spacing = np.linalg.norm(basis, axis=0)
++        if (np.any(spacing < 1e-6) or np.any(spacing > 1e4)
++                or not np.allclose((basis/spacing).T @ (basis/spacing), np.eye(3), rtol=0, atol=1e-8)):
++            return unavailable("unsupported_native_frame")
++        if (t.ndim != 3 or min(t.shape, default=0) < 1 or t.dtype.kind not in "bifu"
++                or d.shape != t.shape or c.shape != t.shape or d.dtype != bool or c.dtype != bool):
++            return unavailable("unsupported_public_grid")
++        size = int(t.size)
++        if 2*size + 168 > MAX_SNAPSHOT_BYTES:
++            return unavailable("public_snapshot_byte_limit")
++        if float(np.max(np.abs(basis)))*max(t.shape)*3 + float(np.max(np.abs(a[:3, 3]))) > 1e9:
++            return unavailable("unsupported_coordinate_magnitude")
++        # Certify a coefficient interval for the exact inverse of the supplied
++        # binary64 affine. E = I - B*A; ||A^-1-B||inf <= ||E||inf*||B||inf/(1-||E||inf).
++        # The 64-epsilon envelope includes the three-term dot/subtraction/sums;
++        # near-singular or poorly resolved inverses are refused, never guessed.
++        try:
++            inv = np.linalg.inv(basis)
++        except np.linalg.LinAlgError:
++            return unavailable("uncertified_inverse")
++        if not np.isfinite(inv).all():
++            return unavailable("uncertified_inverse")
++        residual = np.abs(np.eye(3)-inv@basis) + 64*_EPS*(np.abs(inv)@np.abs(basis)+1.)
++        rho = float(np.nextafter(np.max(np.sum(residual, axis=1)), np.inf))
++        norm = float(np.nextafter(np.max(np.sum(np.abs(inv), axis=1))*(1+64*_EPS), np.inf))
++        condition = norm*float(np.max(np.sum(np.abs(basis), axis=1)))*(1+64*_EPS)
++        if not math.isfinite(rho) or rho >= 1e-8 or condition > 1e8:
++            return unavailable("uncertified_inverse")
++        error = float(np.nextafter((rho/(1-rho))*norm*(1+64*_EPS), np.inf))
++        il = _immutable(np.nextafter(inv-error, -np.inf))
++        iu = _immutable(np.nextafter(inv+error, np.inf))
++        positive = np.empty(t.shape, bool)
++        domain = np.empty(t.shape, bool)
++        # flat slicing makes bounded copies even for non-contiguous input views.
++        pf, df = positive.reshape(-1), domain.reshape(-1)
++        for offset in range(0, size, VALIDATION_CHUNK_CELLS):
++            cancelled()
++            stop = min(offset+VALIDATION_CHUNK_CELLS, size)
++            tv, dv, cv = t.flat[offset:stop], d.flat[offset:stop], c.flat[offset:stop]
++            if not np.isfinite(tv).all() or np.any(tv < 0) or np.any(tv > 1):
++                return unavailable("membership_outside_unit_interval")
++            pf[offset:stop] = (tv > 0) & dv & ~cv
++            df[offset:stop] = dv
++        target_cells = int(np.count_nonzero(positive))
++        unknown_cells = size-int(np.count_nonzero(domain))
++        cancelled()
++        return cls(_immutable(positive), _immutable(domain), il, iu,
++                   _immutable(a[:3, 3]), target_cells, unknown_cells, 2*size+168)
++
++    def _window(self, world_lo, world_hi):
++        """Outward interval inverse of world AABB, expanded by half a cell.
++
++        A removed cell is fully contained in an active capsule, hence its center
++        is in this interval; the additional half-cell expansion also retains
++        cells that merely intersect it. Rotated/reflected grids are permitted.
++        No rounded point or sampled-path approximation can shrink the window.
++        """
++        wl = np.nextafter(world_lo-self.origin, -np.inf)
++        wh = np.nextafter(world_hi-self.origin, np.inf)
++        lower, upper = np.zeros(3), np.zeros(3)
++        for j in range(3):
++            products = np.stack((self.inverse_lower[:, j]*wl[j], self.inverse_lower[:, j]*wh[j],
++                                 self.inverse_upper[:, j]*wl[j], self.inverse_upper[:, j]*wh[j]))
++            lower = np.nextafter(lower+np.nextafter(np.min(products, axis=0), -np.inf), -np.inf)
++            upper = np.nextafter(upper+np.nextafter(np.max(products, axis=0), np.inf), np.inf)
++        lower = np.nextafter(lower-.5, -np.inf)
++        upper = np.nextafter(upper+.5, np.inf)
++        if not np.isfinite(lower).all() or not np.isfinite(upper).all():
++            return None, "nonfinite_index_window"
++        starts, stops = [], []
++        for j, n in enumerate(self.target_domain.shape):
++            start = max(0, min(n, math.ceil(float(lower[j]))))
++            stop = max(0, min(n, math.floor(float(upper[j]))+1))
++            starts.append(start); stops.append(max(start, stop))
++        cells = math.prod(b-a for a, b in zip(starts, stops))
++        # Counting/coverage operations use bool views (no coordinate boxes).
++        # This explicit pessimistic 8B/cell ceiling bounds reduction workspace.
++        if cells > MAX_WINDOW_CELLS or 8*cells > MAX_QUERY_WORKSPACE_BYTES:
++            return None, "public_window_workspace_limit"
++        return tuple(slice(a, b) for a, b in zip(starts, stops)), None
++
++    def bound(self, *, physical_start_mm, tip_mm, axis_unit, tip_length_mm,
++              tip_radius_mm, reward: Mapping[str, float], reward_voxel_volume_mm3,
++              tool_change: bool, interaction_mode="aspirate",
++              cancelled: Callable[[], None] = lambda: None) -> RewardUpperBound:
++        """Full active-sweep AABB potential; outside-image cells earn no reward.
++
++        Unknown *within-grid* target coverage intersecting this envelope makes
++        the bound unavailable. Outside-image space cannot contain a native-grid
++        removed cell; this says nothing about outside-image physical clearance.
++        Motion penalties remain charged by the real scorer, but are not used to
++        tighten this bound. Unsupported geometry always retains exact preview.
++        """
++        cancelled()
++        def unavailable(reason):
++            return RewardUpperBound(None, None, reason)
++        if self.unavailable_reason:
++            return unavailable(self.unavailable_reason)
++        if interaction_mode != "aspirate" or type(tool_change) is not bool:
++            return unavailable("unsupported_interaction")
++        if (not isinstance(reward, Mapping) or set(reward) != _FIELDS or any(type(v) not in (float, int) or not math.isfinite(v) or v < 0
++                                         for v in reward.values())):
++            return unavailable("unsupported_reward")
++        try:
++            p, q, axis = map(lambda v: np.asarray(v, dtype=np.float64),
++                             (physical_start_mm, tip_mm, axis_unit))
++        except (TypeError, ValueError):
++            return unavailable("unsupported_trajectory")
++        if any(v.shape != (3,) or not np.isfinite(v).all() or np.max(np.abs(v)) > 1e6
++               for v in (p, q, axis)):
++            return unavailable("unsupported_trajectory")
++        if (not math.isclose(float(np.linalg.norm(axis)), 1., rel_tol=0, abs_tol=1e-12)
++                or any(type(v) not in (float, int) or not math.isfinite(v) or v <= 0
++                       for v in (tip_length_mm, tip_radius_mm, reward_voxel_volume_mm3))
++                or max(tip_length_mm, tip_radius_mm) > 1e4):
++            return unavailable("unsupported_tool_or_volume")
++        # Interval of every computed microstep p + (q-p)*t, 0 <= t <= 1.
++        delta = q-p
++        dl, du = np.nextafter(delta, -np.inf), np.nextafter(delta, np.inf)
++        lo = np.nextafter(p + np.minimum(dl, 0), -np.inf)
++        hi = np.nextafter(p + np.maximum(du, 0), np.inf)
++        back = -float(tip_length_mm)*axis
++        lo = np.nextafter(lo + np.minimum(np.nextafter(back, -np.inf), 0), -np.inf)
++        hi = np.nextafter(hi + np.maximum(np.nextafter(back, np.inf), 0), np.inf)
++        pad = 64*_EPS*(np.abs(p)+np.abs(q)+abs(tip_length_mm)+abs(tip_radius_mm)+1)
++        lo = np.nextafter(lo-float(tip_radius_mm)-pad, -np.inf)
++        hi = np.nextafter(hi+float(tip_radius_mm)+pad, np.inf)
++        window, reason = self._window(lo, hi)
++        if reason is not None:
++            return unavailable(reason)
++        cancelled()
++        # The inverse AABB window includes every intersecting full affine cell.
++        # Unknown coverage anywhere in that overestimate retains exact preview.
++        if not np.all(self.target_domain[window]):
++            return unavailable("unknown_target_coverage_in_window")
++        count = int(np.count_nonzero(self.target_positive[window]))
++        cancelled()
++        # Match canonical multiplication/subtraction ordering, rounded upwards;
++        # dropping nonnegative normal/motion penalties can only raise reward.
++        upper = np.nextafter(float(count)*float(reward_voxel_volume_mm3), np.inf)
++        upper = np.nextafter(float(reward["target_per_mm3"])*upper, np.inf)
++        upper = np.nextafter(upper-float(reward["action_cost"]), np.inf)
++        upper = np.nextafter(upper-float(reward["tool_change_cost"])*tool_change, np.inf)
++        if not math.isfinite(upper):
++            return unavailable("nonfinite_reward_bound")
++        return RewardUpperBound(float(upper), count, "public_full_cell_window")
+--- /dev/null
++++ b/tests/test_public_reward_window.py
+@@ -0,0 +1,170 @@
++"""Portable generated geometry/nominal-reward bound controls, no patient files."""
++from dataclasses import asdict
++import numpy as np
++import pytest
++
++from resectionlab.public_reward_window import PublicTargetWindow as PublicTargetBoundIndex
++from resectionlab.public_reward_bound import RewardUpperBound
++from resectionlab.geometry import GeometryScene
++from resectionlab.native_resection import contained_capsule_cells
++from resectionlab.simulation import RewardSpec
++
++REWARD = asdict(RewardSpec(target_per_mm3=1., normal_per_mm3=.2,
++                          action_cost=.03, motion_per_mm=.001, tool_change_cost=.03))
++
++
++def prepared(t, *, affine=None, domain=None, cavity=None):
++    return PublicTargetBoundIndex.prepare(affine=np.eye(4) if affine is None else affine,
++        public_target=t, target_domain=np.ones(t.shape, bool) if domain is None else domain,
++        observed_cavity=np.zeros(t.shape, bool) if cavity is None else cavity)
++
++
++def query(index, **changes):
++    args=dict(physical_start_mm=(5.,5.,4.), tip_mm=(5.,5.,8.), axis_unit=(0.,0.,1.),
++              tip_length_mm=3., tip_radius_mm=1.1, reward=REWARD,
++              reward_voxel_volume_mm3=1., tool_change=False)
++    args.update(changes)
++    return index.bound(**args)
++
++
++def test_preentry_back_extent_and_endcap_are_not_entry_tip_samples():
++    t=np.zeros((13,13,13)); t[5,5,1]=1.; t[5,5,9]=1.
++    b=query(prepared(t))
++    assert b.potential_target_cells==2 and b.reward_upper>=1.97
++    assert not b.cannot_change_winner(0.)
++
++
++@pytest.mark.parametrize("angle,reflected,spacing", [(0.,False,(1.,1.,1.)),(.41,True,(.4,.7,.6))])
++def test_upper_bounds_union_of_actual_full_cell_microcapsules(angle,reflected,spacing):
++    # Native containment is the test oracle only, never an input to the bound.
++    c,s=np.cos(angle),np.sin(angle)
++    rotation=np.array([[c,-s,0],[s,c,0],[0,0,-1 if reflected else 1]])
++    a=np.eye(4);a[:3,:3]=rotation @ np.diag(spacing);a[:3,3]=[101.,-23.,8.]
++    t=np.full((11,11,11),.37);t[::2,::2,::2]=1.
++    cavity=np.zeros(t.shape,bool);cavity[5,5,4]=True
++    index=prepared(t,affine=a,cavity=cavity)
++    p=a[:3,:3]@np.array([5.,5.,3.])+a[:3,3]
++    q=a[:3,:3]@np.array([5.,5.,8.])+a[:3,3]
++    axis=(q-p)/np.linalg.norm(q-p); radius=1.4; length=2.
++    scene=GeometryScene(np.zeros(t.shape,bool),a)
++    candidates=np.argwhere(~cavity); removed=set();previous=p
++    for fraction in np.linspace(0,1,17):
++        current=p+(q-p)*fraction
++        cells=contained_capsule_cells(scene,candidates,previous-length*axis,current,radius)
++        removed.update(map(tuple,cells));previous=current
++    assert removed
++    volume=abs(float(np.linalg.det(a[:3,:3])))
++    target=sum(float(t[cell]) for cell in removed)*volume
++    actual=target-.2*(len(removed)*volume-target)-.03-.002*np.linalg.norm(q-p)-.03
++    b=query(index,physical_start_mm=p,tip_mm=q,axis_unit=axis,tip_length_mm=length,
++            tip_radius_mm=radius,reward_voxel_volume_mm3=volume,tool_change=True)
++    assert b.potential_target_cells>=len(removed)
++    assert b.reward_upper>=actual
++
++
++def test_unknown_is_not_zero_even_if_cavity_true_and_outside_envelope_is_separate():
++    t=np.zeros((13,13,13));d=np.ones(t.shape,bool);c=np.zeros(t.shape,bool)
++    d[5,5,5]=False;c[5,5,5]=True
++    assert query(prepared(t,domain=d,cavity=c)).reward_upper is None
++    d[:]=True;d[0,0,0]=False
++    assert query(prepared(t,domain=d)).cannot_change_winner(0.)
++
++
++def test_snapshot_excludes_only_observed_cavity_and_is_immutable():
++    t=np.zeros((13,13,13));t[5,5,5]=1.;c=np.zeros(t.shape,bool)
++    before=prepared(t,cavity=c);c[5,5,5]=True;after=prepared(t,cavity=c)
++    assert query(before).potential_target_cells==1
++    assert query(after).potential_target_cells==0
++    assert query(after).cannot_change_winner(0.)
++    with pytest.raises(ValueError): before.target_positive[5,5,5]=False
++
++
++@pytest.mark.parametrize("bad",[np.nan,-.01,1.01])
++def test_invalid_public_membership_never_prunes(bad):
++    t=np.zeros((13,13,13));t[0,0,0]=bad
++    assert not query(prepared(t)).cannot_change_winner(0.)
++
++
++@pytest.mark.parametrize("change",[{"reward":{**REWARD,"normal_per_mm3":-.1}},
++    {"reward":{**REWARD,"motion_per_mm":float('nan')}}, {"interaction_mode":"probe"},
++    {"axis_unit":(0,0,2)}, {"physical_start_mm":(float('inf'),0,0)}, {"tip_radius_mm":0.}])
++def test_unsupported_queries_retain_exact_preview(change):
++    assert query(prepared(np.zeros((13,13,13))),**change).reward_upper is None
++
++
++def test_missing_coverage_and_sheared_grid_are_unbounded():
++    t=np.zeros((3,3,3));a=np.eye(4);a[0,1]=.01
++    assert prepared(t,affine=a).unavailable_reason=='unsupported_native_frame'
++    missing=PublicTargetBoundIndex.prepare(affine=np.eye(4),public_target=t,
++                                          target_domain=None,observed_cavity=t.astype(bool))
++    assert query(missing).reward_upper is None
++
++
++def test_raw_positive_ties_never_prune_but_STOP_zero_tie_can():
++    assert not RewardUpperBound(1.,1,'test').cannot_change_winner(1.)
++    assert RewardUpperBound(np.nextafter(1.,0.),1,'test').cannot_change_winner(1.)
++    assert RewardUpperBound(0.,0,'test').cannot_change_winner(0.)
++    assert not RewardUpperBound(None,None,'unknown').cannot_change_winner(0.)
++
++
++def test_cancellation_is_not_converted_to_unbounded_success():
++    def cancel():raise TimeoutError('generated cap')
++    with pytest.raises(TimeoutError,match='generated cap'):
++        PublicTargetBoundIndex.prepare(affine=np.eye(4),public_target=np.zeros((3,3,3)),
++            target_domain=np.ones((3,3,3),bool),observed_cavity=np.zeros((3,3,3),bool),cancelled=cancel)
++    with pytest.raises(TimeoutError,match='generated cap'):
++        query(prepared(np.zeros((3,3,3))),cancelled=cancel)
++
++
++def test_more_than_old_million_unknown_cells_far_away_do_not_disable_local_bound():
++    # Deliberately exceeds v1 global coordinate-index cap; no patient shape/data.
++    t=np.zeros((102,102,102),np.float32);d=np.zeros(t.shape,bool)
++    d[:13,:13,:13]=True;t[5,5,5]=.1
++    index=prepared(t,domain=d)
++    assert index.unknown_cells>1_000_000 and index.unavailable_reason is None
++    b=query(index)
++    assert b.potential_target_cells==1 and b.reward_upper>=.97
++    t[:]=0;empty=prepared(t,domain=d)
++    assert query(empty).cannot_change_winner(0.)
++    d[5,5,5]=False
++    assert query(prepared(t,domain=d)).reason=='unknown_target_coverage_in_window'
++    # Arrays are genuine immutable snapshots, independent of later caller edits.
++    d[:]=True;t[:]=1
++    assert query(empty).cannot_change_winner(0.)
++    with pytest.raises(ValueError):empty.target_domain.setflags(write=True)
++
++
++def test_resident_and_local_workspace_limits_refuse_without_large_allocation():
++    large=np.broadcast_to(np.array(0.,np.float32),(400,400,400))
++    domain=np.broadcast_to(np.array(True),large.shape)
++    cavity=np.broadcast_to(np.array(False),large.shape)
++    assert prepared(large,domain=domain,cavity=cavity).unavailable_reason=='public_snapshot_byte_limit'
++    t=np.zeros((102,102,102),bool);index=prepared(t)
++    b=query(index,physical_start_mm=(0.,0.,0.),tip_mm=(101.,101.,101.),
++            axis_unit=np.ones(3)/np.sqrt(3),tip_radius_mm=2.)
++    assert b.reason=='public_window_workspace_limit' and not b.cannot_change_winner(0.)
++
++
++@pytest.mark.parametrize('reflected', [False,True])
++def test_inverse_window_retains_native_cells_near_voxel_faces(reflected):
++    a=np.eye(4);a[:3,:3]=np.array([[0.,-.7,0.],[.09,0.,0.],[0.,0.,-.13 if reflected else .13]])
++    a[:3,3]=[1000.,-123.456,12.]
++    t=np.ones((9,9,9),np.float32);index=prepared(t,affine=a)
++    p=a[:3,:3]@np.array([4.5,4.5,3.5])+a[:3,3]
++    q=a[:3,:3]@np.array([4.5,4.5,7.5])+a[:3,3]
++    axis=(q-p)/np.linalg.norm(q-p);scene=GeometryScene(np.zeros(t.shape,bool),a)
++    cells=contained_capsule_cells(scene,np.argwhere(t>0),p-1.2*axis,q,.9)
++    assert len(cells)>0
++    b=query(index,physical_start_mm=p,tip_mm=q,axis_unit=axis,tip_length_mm=1.2,
++            tip_radius_mm=.9,reward_voxel_volume_mm3=float(abs(np.linalg.det(a[:3,:3]))))
++    assert b.reason=='public_full_cell_window'
++    assert b.potential_target_cells>=len(cells)
++    assert b.reward_upper>=len(cells)*abs(np.linalg.det(a[:3,:3]))-.03
++
++
++def test_strided_public_snapshots_and_ill_conditioned_frame():
++    t=np.zeros((26,26,26),np.float32);t[10,10,10]=.0001
++    index=prepared(t[::2,::2,::2])
++    assert query(index).potential_target_cells==1
++    a=np.diag([1e-6,1e4,1.,1.])
++    assert prepared(np.zeros((3,3,3)),affine=a).unavailable_reason=='uncertified_inverse'

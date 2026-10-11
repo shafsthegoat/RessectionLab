@@ -1,0 +1,60 @@
+--- build/hybrid-public-bound-v1/bound_policy.py
++++ build/hybrid-public-bound-v2/bound_policy.py
+@@ -13,9 +13,10 @@
+ from hybrid_proposal import GeneratedSparseTask
+ from resectionlab.native_spatial_task import NativeSpatialTask
+ from resectionlab.post_exposure import preentry_tip
+-from resectionlab.public_reward_bound import PublicTargetBoundIndex, RewardUpperBound
+-
+-VERSION = "nominal-top8-current-tool-public-bound-v1"
++from resectionlab.public_reward_window import PublicTargetWindow as PublicTargetBoundIndex
++from resectionlab.public_reward_bound import RewardUpperBound
++
++VERSION = "nominal-top8-current-tool-public-window-v2"
+ POLICY = {
+     "version": VERSION,
+     "trigger": "no_strictly_positive_feasible_nominal_reward_in_initial_top8",
+@@ -109,8 +110,9 @@
+                             public_target=self.case.nominal_target,
+                             target_domain=self.case.public_target_domain,
+                             observed_cavity=cavity, cancelled=self._check_cancelled)
+-                        self.costs.count("public_bound_index_target_cells", len(public_index.target_lower))
+-                        self.costs.count("public_bound_index_unknown_cells", len(public_index.unknown_lower))
++                        self.costs.count("public_bound_snapshot_bytes", public_index.snapshot_bytes)
++                        self.costs.count("public_bound_snapshot_target_cells", public_index.target_cells)
++                        self.costs.count("public_bound_snapshot_unknown_cells", public_index.unknown_cells)
+                     tools = {tool.tool_id: tool for tool in self.case.tools}
+                     for ray in self._proposal_batch.proposals:
+                         if ray.proposal_id in queried or (not triggered and ray.tool_id != self._current_tool):
+--- build/hybrid-public-bound-v1/batch_contract.py
++++ build/hybrid-public-bound-v2/batch_contract.py
+@@ -5,9 +5,9 @@
+ FIT_SUBJECTS=['ReMIND-002','ReMIND-015','ReMIND-018','ReMIND-045']
+ SUBJECT='ReMIND-050';SUBJECTS=FIT_SUBJECTS+[SUBJECT]
+ ARMS=('switch_guard','public_bound')
+-VERSION='five-TRAIN-public-reward-bound-comparison-v1'
++VERSION='five-TRAIN-public-reward-window-comparison-v2'
+ TRANSFER_VERSION='frozen-ridge-TRAIN-development-transfer-v1'
+-POLICY_VERSION='nominal-top8-current-tool-public-bound-v1'
++POLICY_VERSION='nominal-top8-current-tool-public-window-v2'
+ CAPS={'worker_seconds':600,'parent_seconds':660,'sampled_rss_bytes':3*1024**3,
+       'output_bytes':108*1024**2,'supervision_bytes':16*1024**2,'log_bytes':2*1024**2,
+       'native_previews':40000,'native_transitions':480,'source_visits':20,'threads':1,
+@@ -156,5 +156,5 @@
+     # A complete negative regression remains a complete measured result.
+ 
+ RUNTIME_FILES=('batch_contract.py','hybrid_proposal.py','patient_regression.py','patient_transfer.py',
+-    'policy_tasks.py','fallback_policy.py','bound_policy.py','stage/resectionlab/public_reward_bound.py',
++    'policy_tasks.py','fallback_policy.py','bound_policy.py','stage/resectionlab/public_reward_window.py',
+     'initial_inventory_worker.py','run_owned.py','freeze-runtime.py')
+--- build/hybrid-public-bound-v1/freeze-runtime.py
++++ build/hybrid-public-bound-v2/freeze-runtime.py
+@@ -22,7 +22,7 @@
+         if relative.startswith('src/'):
+             need(subprocess.check_output(['git','show',head+':'+relative],cwd=ROOT)==read_bytes(path),'uncommitted_runtime_source:'+relative)
+     files.update({r['path']:r['sha256'] for r in refs})
+-    index={'version':'five-TRAIN-public-bound-runtime-v1','head':head,'files':files,'payloads_opened':False}
++    index={'version':'five-TRAIN-public-window-runtime-v2','head':head,'files':files,'payloads_opened':False}
+     encode=lambda v:(json.dumps(v,indent=2,sort_keys=True,allow_nan=False)+'\n').encode()
+     raw=encode(index);ref={'path':(HERE/'source-index.json').relative_to(ROOT).as_posix(),'sha256':hashlib.sha256(raw).hexdigest()}
+     release=template(head,ref)

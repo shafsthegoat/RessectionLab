@@ -1,0 +1,48 @@
+......................FF..                                               [100%]
+=================================== FAILURES ===================================
+_______ test_inverse_window_retains_native_cells_near_voxel_faces[False] _______
+
+reflected = False
+
+    @pytest.mark.parametrize('reflected', [False,True])
+    def test_inverse_window_retains_native_cells_near_voxel_faces(reflected):
+        a=np.eye(4);a[:3,:3]=np.array([[0.,-.7,0.],[.09,0.,0.],[0.,0.,-.13 if reflected else .13]])
+        a[:3,3]=[1000.,-123.456,12.]
+        t=np.ones((9,9,9),np.float32);index=prepared(t,affine=a)
+        p=a[:3,:3]@np.array([4.5,4.5,3.5])+a[:3,3]
+        q=a[:3,:3]@np.array([4.5,4.5,7.5])+a[:3,3]
+        axis=(q-p)/np.linalg.norm(q-p);scene=GeometryScene(np.zeros(t.shape,bool),a)
+        cells=contained_capsule_cells(scene,np.argwhere(t>0),p-1.2*axis,q,.9)
+        assert len(cells)>0
+        b=query(index,physical_start_mm=p,tip_mm=q,axis_unit=axis,tip_length_mm=1.2,
+                tip_radius_mm=.9,reward_voxel_volume_mm3=abs(np.linalg.det(a[:3,:3])))
+>       assert b.potential_target_cells>=len(cells)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: '>=' not supported between instances of 'NoneType' and 'int'
+
+build/hybrid-public-bound-v2/tests/test_public_reward_window.py:160: TypeError
+_______ test_inverse_window_retains_native_cells_near_voxel_faces[True] ________
+
+reflected = True
+
+    @pytest.mark.parametrize('reflected', [False,True])
+    def test_inverse_window_retains_native_cells_near_voxel_faces(reflected):
+        a=np.eye(4);a[:3,:3]=np.array([[0.,-.7,0.],[.09,0.,0.],[0.,0.,-.13 if reflected else .13]])
+        a[:3,3]=[1000.,-123.456,12.]
+        t=np.ones((9,9,9),np.float32);index=prepared(t,affine=a)
+        p=a[:3,:3]@np.array([4.5,4.5,3.5])+a[:3,3]
+        q=a[:3,:3]@np.array([4.5,4.5,7.5])+a[:3,3]
+        axis=(q-p)/np.linalg.norm(q-p);scene=GeometryScene(np.zeros(t.shape,bool),a)
+        cells=contained_capsule_cells(scene,np.argwhere(t>0),p-1.2*axis,q,.9)
+        assert len(cells)>0
+        b=query(index,physical_start_mm=p,tip_mm=q,axis_unit=axis,tip_length_mm=1.2,
+                tip_radius_mm=.9,reward_voxel_volume_mm3=abs(np.linalg.det(a[:3,:3])))
+>       assert b.potential_target_cells>=len(cells)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: '>=' not supported between instances of 'NoneType' and 'int'
+
+build/hybrid-public-bound-v2/tests/test_public_reward_window.py:160: TypeError
+=========================== short test summary info ============================
+FAILED build/hybrid-public-bound-v2/tests/test_public_reward_window.py::test_inverse_window_retains_native_cells_near_voxel_faces[False]
+FAILED build/hybrid-public-bound-v2/tests/test_public_reward_window.py::test_inverse_window_retains_native_cells_near_voxel_faces[True]
+2 failed, 24 passed in 11.45s

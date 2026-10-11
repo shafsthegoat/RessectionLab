@@ -1,0 +1,137 @@
+{
+  "files": [
+    {
+      "bytes": 4407,
+      "retained": "HANDOFF.txt",
+      "sha256": "bc44298e925234790b473caab4c4e52814a2bbc7ed02324a9b142f1f637fd953",
+      "source": "build/hybrid-public-bound-v2/HANDOFF.txt"
+    },
+    {
+      "bytes": 3760,
+      "retained": "source-ready.json",
+      "sha256": "3ead6d11d9f559a9c597e9fc021923213e00df4d66b584ba84ce1ef3819bf388",
+      "source": "build/hybrid-public-bound-v2/source-ready.json"
+    },
+    {
+      "bytes": 21033,
+      "retained": "source.patch",
+      "sha256": "e0303f3d91e3fc98893f4f7ca595ea2487ab9b89cd28cd01d8f568605df0b057",
+      "source": "build/hybrid-public-bound-v2/source.patch"
+    },
+    {
+      "bytes": 3955,
+      "retained": "runtime.diff",
+      "sha256": "8b0403e36457f3f57d65b57278fac59be321908167e9235a19c5a814b76ae755",
+      "source": "build/hybrid-public-bound-v2/runtime.diff"
+    },
+    {
+      "bytes": 13718,
+      "retained": "bound_policy.py",
+      "sha256": "3093f2f99385ce430c63d36257414878129cab10c7c7c2ff04f472061109b789",
+      "source": "build/hybrid-public-bound-v2/bound_policy.py"
+    },
+    {
+      "bytes": 13236,
+      "retained": "batch_contract.py",
+      "sha256": "0b5951ad7da67caa664ca70e23f916eb0fd2200e8d0969cbd2f4d96b6ffb5457",
+      "source": "build/hybrid-public-bound-v2/batch_contract.py"
+    },
+    {
+      "bytes": 2300,
+      "retained": "freeze-runtime.py",
+      "sha256": "0f151c043d9b9acac1449a1d4e68908edf42f67aeb78fd1ebe71821905f541d3",
+      "source": "build/hybrid-public-bound-v2/freeze-runtime.py"
+    },
+    {
+      "bytes": 2923,
+      "retained": "run_generated_controls.py",
+      "sha256": "2e46d85ca9dadf964eb91f172b8c93b54c84489fd1b0118fd45b8bb8eb1b21af",
+      "source": "build/hybrid-public-bound-v2/run_generated_controls.py"
+    },
+    {
+      "bytes": 3014,
+      "retained": "run_corrected_controls.py",
+      "sha256": "a66084d37a8dc469e993d992a36b9b74c863901a0bc4f538c45beb441971d87c",
+      "source": "build/hybrid-public-bound-v2/run_corrected_controls.py"
+    },
+    {
+      "bytes": 516,
+      "retained": "canonical-controls-01.json",
+      "sha256": "ce71afd3739f849e3b65e55f0cb3497b15ed4bd239e17ae5a5e0de364dad2e4e",
+      "source": "build/hybrid-public-bound-v2/canonical-controls-01.json"
+    },
+    {
+      "bytes": 99,
+      "retained": "canonical-controls-01.log",
+      "sha256": "6c036320662e5f12df7c4f3df3d13b1efa5d66458910c1d78c036c726c41fa8a",
+      "source": "build/hybrid-public-bound-v2/canonical-controls-01.log"
+    },
+    {
+      "bytes": 4595,
+      "retained": "tests/test_bound_policy.py",
+      "sha256": "556656101407776f1327949d341b44d8ccabb247a5c045bda12fc257895b2590",
+      "source": "build/hybrid-public-bound-v2/tests/test_bound_policy.py"
+    },
+    {
+      "bytes": 7346,
+      "retained": "tests/test_runtime_glue.py",
+      "sha256": "45d9b4128ca2387d04bbaef03869b049025532aec6846afcc007b1f9df663d1a",
+      "source": "build/hybrid-public-bound-v2/tests/test_runtime_glue.py"
+    },
+    {
+      "bytes": 384,
+      "retained": "tests/conftest.py",
+      "sha256": "3704e928b8aec820021325cfdbb5c80d9fc97101c8631b250f529c0c147197f9",
+      "source": "build/hybrid-public-bound-v2/tests/conftest.py"
+    },
+    {
+      "bytes": 3579,
+      "retained": "controls-attempt-01/receipt.json",
+      "sha256": "a3a80dc15ae7f74330925a36274bdaca76000f7a80d861db8d0b3c4f113cf122",
+      "source": "build/hybrid-public-bound-v2/controls-attempt-01/receipt.json"
+    },
+    {
+      "bytes": 2876,
+      "retained": "controls-attempt-01/stdout.log",
+      "sha256": "37afbf254928f681566fef49297aa7bff5992628de6e5606bedf1f2e5d6e9e2b",
+      "source": "build/hybrid-public-bound-v2/controls-attempt-01/stdout.log"
+    },
+    {
+      "bytes": 8394,
+      "retained": "controls-attempt-01/test_public_reward_window.py",
+      "sha256": "669c387a680a7954d9455e63ef53674b6065a824a164fd10126ab11ea28a0622",
+      "source": "build/hybrid-public-bound-v2/controls-attempt-01/test_public_reward_window.py"
+    },
+    {
+      "bytes": 934,
+      "retained": "controls-attempt-01/generated_child.py",
+      "sha256": "7138e7cef4081db4fb1c6a04b4ef273b8a5f169219a58c2c21ba51639e816270",
+      "source": "build/hybrid-public-bound-v2/controls-attempt-01/generated_child.py"
+    },
+    {
+      "bytes": 3708,
+      "retained": "controls-attempt-02/receipt.json",
+      "sha256": "760acb5a58ee9951075f7e5842aaf97ceac9cb55a757ac6bccc927db64695c55",
+      "source": "build/hybrid-public-bound-v2/controls-attempt-02/receipt.json"
+    },
+    {
+      "bytes": 98,
+      "retained": "controls-attempt-02/stdout.log",
+      "sha256": "b8151e58ad322cbf5d95fbb255dd6e48b9cf8bcd421c7e9c5890e6561e8f9732",
+      "source": "build/hybrid-public-bound-v2/controls-attempt-02/stdout.log"
+    },
+    {
+      "bytes": 1025,
+      "retained": "controls-attempt-02/generated_child.py",
+      "sha256": "f982f4972a91f0b3119829704ab39766eb60eab76ee771a6967aef318e027c4b",
+      "source": "build/hybrid-public-bound-v2/controls-attempt-02/generated_child.py"
+    },
+    {
+      "bytes": 3913,
+      "retained": "source-review.json",
+      "sha256": "5cb4d9e57c6392ade4b5bb59f7ae27581548753945523e45d5a0d804b8991add",
+      "source": "build/hybrid-public-bound-review-v2/source-review.json"
+    }
+  ],
+  "schema": "compact-integration-evidence-v1"
+}

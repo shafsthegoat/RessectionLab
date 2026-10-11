@@ -1,0 +1,19 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_public_reward_window.py"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 0.4146605839487165,
+  "threads": 1,
+  "hard_seconds": 30,
+  "log_sha256": "6c036320662e5f12df7c4f3df3d13b1efa5d66458910c1d78c036c726c41fa8a",
+  "module_sha256": "dacd890094aa0601b565ae70ef08e5be1e24f8f71bad1edecc2f7fe9079e7032",
+  "test_sha256": "4632d483579dea3642a0bbdc5d7d782f6ed3a358a77703881788523e8e4ce69c"
+}
