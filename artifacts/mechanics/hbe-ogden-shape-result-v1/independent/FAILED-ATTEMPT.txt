@@ -1,0 +1,15 @@
+Independent terminal-failure audit — HBE Ogden shape comparison, attempt-01
+
+PASS: 106 saved-metadata/source/scalar checks. The experiment remains FAILED and publication accepted=false. All six declared native runs and six independent readout children completed within their per-stage caps; the four saved mesh/time pair inequalities passed. No comparison.json exists.
+
+The profile traceback identifies ValueError: output cap at the comparison writer's 512 KiB check. The bound source includes full baseline pairwise arrays in that report. The cap is checked before creating the file. All child groups and final cleanup were contained/reaped, with no survivors, cleanup errors or parent resource kill. This is a report serialization failure, not evidence that the FE solves or numerical screen failed.
+
+Two candidate positive-scale profiles and the separate original-scale reproduction precede the failed write in the authenticated source. The parent reports zero COMPLETED PROFILE REPORTS, explicitly allowing interrupted arithmetic; zero is not the number of fits attempted. Their numerical outcomes were not opened or audited here, so no alpha comparison is accepted from this failed attempt. A separately owned saved-readout postprocess can publish them without rerunning FE; it needs its own terminal receipt and numerical audit.
+
+Saved stage times: native 448.955661 s; six readouts 222.928251 s; preparation 3.746676 s; screen 1.107578 s; failed profile 1.324196 s. Sum of these sequential owned stages is 678.062362 s, excluding parent/interstage overhead; failure metadata omits total parent wall time. Maximum sampled child-group RSS was 494,927,872 B against 1 GiB. All per-stage time/output/RSS limits passed; this does not turn a failed publication into a completed comparison.
+
+Scope: exact terminal/publication/release/declaration joins, affected source bytes, all 15 stage outcomes/caps/cleanup, six report-reference identities, the four saved screen scalar inequalities and small profile traceback. No fit values, full readout JSONs, native primitive logs, specimen archive/member, model or solver were opened/executed. The screen JSON was decoded to inspect scalar flags/inequalities, without reconstructing its large difference arrays. Two-grid numerical diagnostics are not inherited v5 qualification, a continuum error bound, independent physical validation, or patient/force-transfer evidence.
+
+Reviewer correction retained: failed-attempt-audit.json and audit_terminal_failed_reader_01.py preserve a reader-only assertion failure. It searched the entire writer module for the first os.open instead of restricting the search to exclusive_json. The corrected source limits that check to the actual function; failed-attempt-audit-02.json passes. No experiment file, calculation, threshold or input changed.
+
+The separate original source-review REPORT.txt remains intact. This report does not supersede the failed attempt or pre-accept any postprocess recovery.

@@ -1,0 +1,108 @@
+{
+  "checks": 113056,
+  "error": "only mu fitted",
+  "inputs": {
+    "artifacts/hbe-v5-axial-calibration-result-v1/execution/fit.json": {
+      "bytes": 7886,
+      "sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a"
+    },
+    "build/hbe-ogden-shape-v1/postprocess-repair/root-release.json": {
+      "bytes": 7785,
+      "sha256": "2faa10458e4a3a8e88341af791eb18154df90410c42509a9a91e2fa0de1ac27c"
+    },
+    "build/hbe-ogden-shape-v1/root-release.json": {
+      "bytes": 6925,
+      "sha256": "674ab5eb044db49289a31bd6c5a78d770a4b7cd8cec6b1a7aff92be5ca40bb28"
+    },
+    "build/hbe-v5-native-manifest-preparation-v1/actual-input-manifest-accounting-v2.json": {
+      "bytes": 35937,
+      "sha256": "4ba15123c7d0482a38576528b64a95d0b44bd7cccbd9851e8701fca1834fe69c"
+    },
+    "build/hbe-v5-native-twelve-row-comparison-v1/attempt-02/comparison.json": {
+      "bytes": 8692939,
+      "sha256": "6d3772eac38f8a1a210082a89cb00955f4a9b0d5304700fd0168711b9de99c12"
+    },
+    "manifests/experiments/hbe-01-03-ogden-shape-comparison-v1.json": {
+      "bytes": 7888,
+      "sha256": "ae6a4d4217d7531c2c112eeed5e565548050bf69c757998f74b3ed4b720ebc2f"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N16-S60-alpha-minus8/readout.json": {
+      "bytes": 538458,
+      "sha256": "2103b808967ea1524286460ef272b5ce1a9703d3d99da19e3929a1d7daeb26da"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N24-S120-alpha-minus8/readout.json": {
+      "bytes": 1075762,
+      "sha256": "a3396c6be33481e851daca30e9377d9f2333050cabd4c84e4491d179f75ce31f"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N24-S60-alpha-minus8/readout.json": {
+      "bytes": 543268,
+      "sha256": "830a3a881d7d7f61f02b3cb52661cad5e291811aab1bbfe0843a09e1caefd3dd"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/numerical-screen.json": {
+      "bytes": 2081287,
+      "sha256": "546722291e7f78ad2c0ca4fb0dae4a8f769ee22188ef1bb4fdaed4db732b49ff"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/publication.json": {
+      "bytes": 183,
+      "sha256": "ce25dff1dc3f31a5a1e0ec599719a04b6710530282803cd9f39b418288df3a6f"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N16-S60-alpha-minus8/readout.json": {
+      "bytes": 537960,
+      "sha256": "c87bdf74606f667aabcdc55ae1a3fdf46e2465996006637ff4042e884353986b"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N24-S120-alpha-minus8/readout.json": {
+      "bytes": 1066513,
+      "sha256": "8a2770b3550d05f740b82dd2ea5352b3feee985afcb988d251b967a1e1977a32"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N24-S60-alpha-minus8/readout.json": {
+      "bytes": 538715,
+      "sha256": "af989d4413e4e08041a15b328c96653154eb9eeb3dd70ce51ff1bac25e1245d9"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/terminal.json": {
+      "bytes": 29639,
+      "sha256": "ca8127909803be8b64758504fc8a01f3d56040c8153c7df0b39fffcbf978a74e"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/worker-profile/request.json": {
+      "bytes": 1733,
+      "sha256": "a3f03ae75f0a7e62eb199c03315500ffc9e432763ad6e5c10c32746ee36297e0"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/arithmetic-accounting.json": {
+      "bytes": 517,
+      "sha256": "489b139acd7097f4f6ee24dde8be3e8c4f81817d59be1b03e93a8aa949d4223b"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/comparison.json": {
+      "bytes": 43535,
+      "sha256": "72497329b4671f2569620ac848c019c9f902f6c346d03fc4879500c94284450b"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/publication.json": {
+      "bytes": 1089,
+      "sha256": "48a84c18a5dbad551dae39f1610ae1e1e28219f9e2bc6705960ba5f0b41ef696"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/terminal.json": {
+      "bytes": 4591,
+      "sha256": "6511243c58ab4b0ae90a7f76fa2cfc732750f75d04156e644d4baa40c1590a7c"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/worker/receipt.json": {
+      "bytes": 1493,
+      "sha256": "04a1e0511374dedd87b2604d033e9adbc34c0916ee84534062d6eb783b372005"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/02-compression-N16-S60-reference/attempt-01/readout.json": {
+      "bytes": 539096,
+      "sha256": "d8af76cca9c40231fa6750bc71abae849c2dbce6ec23412799c58c39d00a21e0"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/03-compression-N24-S60-reference/attempt-01/readout.json": {
+      "bytes": 543777,
+      "sha256": "6a8ee5db83518652949744a605774f23c3d0304d2c20e72367bf65fe35817761"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/09-tension-N16-S60-reference/attempt-01/readout.json": {
+      "bytes": 538733,
+      "sha256": "2c854b9e5a10c2fd24851009810996a5334d59d24b7262a99af892c308b3f576"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/readout.json": {
+      "bytes": 539102,
+      "sha256": "ed473617dd313de397f25f6b29ac9c626f9b0e986a7155caa47a763c6884c3ac"
+    }
+  },
+  "status": "AUDITOR_FAILURE",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-ogden-shape-v1/comparison-proposal/independent-review/audit_recovery.py\", line 180, in <module>\n    try:result=audit_recovery(args)\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-ogden-shape-v1/comparison-proposal/independent-review/audit_recovery.py\", line 173, in audit_recovery\n    need(candidate['fit']['fitted_parameters']==['mu_Pa'],'only mu fitted')\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-ogden-shape-v1/comparison-proposal/independent-review/audit_recovery.py\", line 17, in need\n    if not x:raise AssertionError(label)\nAssertionError: only mu fitted\n"
+}

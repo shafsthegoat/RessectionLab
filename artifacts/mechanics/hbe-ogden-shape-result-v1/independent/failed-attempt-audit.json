@@ -1,0 +1,279 @@
+{
+  "checks": 106,
+  "experiment_status": "failed_shape_comparison",
+  "failure": {
+    "cause": "comparison JSON exceeds 512 KiB write cap",
+    "comparison_file_exists": false,
+    "parent_resource_kill": false
+  },
+  "inputs": {
+    "build/hbe-ogden-shape-v1/root-release.json": {
+      "bytes": 6925,
+      "sha256": "674ab5eb044db49289a31bd6c5a78d770a4b7cd8cec6b1a7aff92be5ca40bb28"
+    },
+    "manifests/experiments/hbe-01-03-ogden-shape-comparison-v1.json": {
+      "bytes": 7888,
+      "sha256": "ae6a4d4217d7531c2c112eeed5e565548050bf69c757998f74b3ed4b720ebc2f"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/finalization-failure.json": {
+      "bytes": 29639,
+      "sha256": "ca8127909803be8b64758504fc8a01f3d56040c8153c7df0b39fffcbf978a74e"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/numerical-screen.json": {
+      "bytes": 2081287,
+      "sha256": "546722291e7f78ad2c0ca4fb0dae4a8f769ee22188ef1bb4fdaed4db732b49ff"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/publication.json": {
+      "bytes": 183,
+      "sha256": "ce25dff1dc3f31a5a1e0ec599719a04b6710530282803cd9f39b418288df3a6f"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/terminal.json": {
+      "bytes": 29639,
+      "sha256": "ca8127909803be8b64758504fc8a01f3d56040c8153c7df0b39fffcbf978a74e"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/worker-profile/readout-console.txt": {
+      "bytes": 1558,
+      "sha256": "5ec3ebf9fcd084abec99db63976ca989717e4e8b195334cc94e37be7b5e3d2f7"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/worker-profile/request.json": {
+      "bytes": 1733,
+      "sha256": "a3f03ae75f0a7e62eb199c03315500ffc9e432763ad6e5c10c32746ee36297e0"
+    },
+    "scripts/mechanics_hbe_ogden_comparison.py": {
+      "bytes": 20516,
+      "sha256": "0dbf5a83ac001a7ce0db70790b79e6040a8c3e4c787a1ae6fed3b671b8ca4a7b"
+    },
+    "scripts/mechanics_hbe_ogden_comparison_experiment.py": {
+      "bytes": 18205,
+      "sha256": "aa974110a5b57a7cd409ffa43feceaf348b4635647ded3ca2e21282c7a32bd03"
+    },
+    "scripts/mechanics_hbe_v5_axial_calibration.py": {
+      "bytes": 18461,
+      "sha256": "20fa7411cb2a194e62c9fc0b4b4b1aa3f4e10f28cba4ac758c4dc190a47fd6be"
+    }
+  },
+  "limitations": [
+    "Saved screen inequalities checked; six full readouts and primitive logs not independently reconstructed in this failure audit.",
+    "Stage-time sum is not end-to-end parent wall time, which the failed terminal does not record.",
+    "Completed-report counter zero does not mean zero fitting arithmetic. No candidate fit comparison or physical qualification is accepted."
+  ],
+  "max_stage_sampled_group_rss_bytes": 494927872,
+  "owned_stage_seconds": {
+    "native": 448.9556613320019,
+    "prepare": 3.746675750007853,
+    "profile": 1.3241956250276417,
+    "readout": 222.92825100081973,
+    "screen": 1.1075778750237077
+  },
+  "profile_accounting": {
+    "completed_reports": 0,
+    "evidence": "hash-bound control flow and exact failure stack; numerical fit values not opened",
+    "separate_original_scale_reproduction_reached": true,
+    "two_candidate_profiles_reached_before_output_error": true
+  },
+  "readout_bindings_not_decoded": {
+    "compression-N16-S60-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N16-S60-alpha-minus8/readout.json",
+      "sha256": "2103b808967ea1524286460ef272b5ce1a9703d3d99da19e3929a1d7daeb26da"
+    },
+    "compression-N24-S120-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N24-S120-alpha-minus8/readout.json",
+      "sha256": "a3396c6be33481e851daca30e9377d9f2333050cabd4c84e4491d179f75ce31f"
+    },
+    "compression-N24-S60-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N24-S60-alpha-minus8/readout.json",
+      "sha256": "830a3a881d7d7f61f02b3cb52661cad5e291811aab1bbfe0843a09e1caefd3dd"
+    },
+    "tension-N16-S60-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N16-S60-alpha-minus8/readout.json",
+      "sha256": "c87bdf74606f667aabcdc55ae1a3fdf46e2465996006637ff4042e884353986b"
+    },
+    "tension-N24-S120-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N24-S120-alpha-minus8/readout.json",
+      "sha256": "8a2770b3550d05f740b82dd2ea5352b3feee985afcb988d251b967a1e1977a32"
+    },
+    "tension-N24-S60-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N24-S60-alpha-minus8/readout.json",
+      "sha256": "af989d4413e4e08041a15b328c96653154eb9eeb3dd70ce51ff1bac25e1245d9"
+    }
+  },
+  "scope": "Independent saved scalar/hash audit; no FE replay, raw primitive or dataset reads. In-sample DEVELOPMENT comparison is not independent physical validation.",
+  "screen_pairs": {
+    "compression/mesh": {
+      "coarse_run": "compression:N16:S60:alpha-minus8",
+      "common_state_count": 61,
+      "diagnostic_only": true,
+      "fine_run": "compression:N24:S60:alpha-minus8",
+      "force_limit_N": 0.001375729852235346,
+      "kind": "mesh",
+      "maximum_force_change_N": 0.00045477620157388654,
+      "maximum_probe_norm_change_m": 3.351810569058053e-06,
+      "pairwise_limit_passed": true,
+      "probe_count": 75,
+      "probe_norm_limit_m": 8e-06
+    },
+    "compression/time": {
+      "coarse_run": "compression:N24:S60:alpha-minus8",
+      "common_state_count": 61,
+      "diagnostic_only": true,
+      "fine_run": "compression:N24:S120:alpha-minus8",
+      "force_limit_N": 0.0001375729852213326,
+      "kind": "step",
+      "maximum_force_change_N": 1.4250128854698119e-12,
+      "maximum_probe_norm_change_m": 1.4142504324301465e-14,
+      "pairwise_limit_passed": true,
+      "probe_count": 75,
+      "probe_norm_limit_m": 8e-07
+    },
+    "tension/mesh": {
+      "coarse_run": "tension:N16:S60:alpha-minus8",
+      "common_state_count": 61,
+      "diagnostic_only": true,
+      "fine_run": "tension:N24:S60:alpha-minus8",
+      "force_limit_N": 0.0004317226448769576,
+      "kind": "mesh",
+      "maximum_force_change_N": 2.8708727483971186e-05,
+      "maximum_probe_norm_change_m": 2.9329032494699887e-06,
+      "pairwise_limit_passed": true,
+      "probe_count": 75,
+      "probe_norm_limit_m": 8e-06
+    },
+    "tension/time": {
+      "coarse_run": "tension:N24:S60:alpha-minus8",
+      "common_state_count": 61,
+      "diagnostic_only": true,
+      "fine_run": "tension:N24:S120:alpha-minus8",
+      "force_limit_N": 4.3172264498557184e-05,
+      "kind": "step",
+      "maximum_force_change_N": 7.071069424435805e-12,
+      "maximum_probe_norm_change_m": 2.8284376165049068e-14,
+      "pairwise_limit_passed": true,
+      "probe_count": 75,
+      "probe_norm_limit_m": 8e-07
+    }
+  },
+  "stages": {
+    "compression-N16-S60-alpha-minus8": {
+      "elapsed_seconds": 45.72345970803872,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 115532621,
+      "peak_sampled_process_group_rss_bytes": 321028096,
+      "status": "completed_within_caps"
+    },
+    "compression-N24-S120-alpha-minus8": {
+      "elapsed_seconds": 128.0182371661067,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 394109864,
+      "peak_sampled_process_group_rss_bytes": 494927872,
+      "status": "completed_within_caps"
+    },
+    "compression-N24-S60-alpha-minus8": {
+      "elapsed_seconds": 68.71958358306438,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 198826119,
+      "peak_sampled_process_group_rss_bytes": 492814336,
+      "status": "completed_within_caps"
+    },
+    "prepare": {
+      "elapsed_seconds": 3.746675750007853,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 1875,
+      "peak_sampled_process_group_rss_bytes": 194002944,
+      "status": "completed_within_caps"
+    },
+    "profile": {
+      "elapsed_seconds": 1.3241956250276417,
+      "exit_code": 1,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 4956,
+      "peak_sampled_process_group_rss_bytes": 126173184,
+      "status": "failed_or_incomplete"
+    },
+    "read-0": {
+      "elapsed_seconds": 14.558278209064156,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 2338,
+      "peak_sampled_process_group_rss_bytes": 147374080,
+      "status": "completed_within_caps"
+    },
+    "read-1": {
+      "elapsed_seconds": 33.55416166689247,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 2339,
+      "peak_sampled_process_group_rss_bytes": 297779200,
+      "status": "completed_within_caps"
+    },
+    "read-2": {
+      "elapsed_seconds": 10.746501000132412,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 2334,
+      "peak_sampled_process_group_rss_bytes": 159399936,
+      "status": "completed_within_caps"
+    },
+    "read-3": {
+      "elapsed_seconds": 34.01687870780006,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 2335,
+      "peak_sampled_process_group_rss_bytes": 316866560,
+      "status": "completed_within_caps"
+    },
+    "read-4": {
+      "elapsed_seconds": 64.62879129196517,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 2340,
+      "peak_sampled_process_group_rss_bytes": 312623104,
+      "status": "completed_within_caps"
+    },
+    "read-5": {
+      "elapsed_seconds": 65.42364012496546,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 2336,
+      "peak_sampled_process_group_rss_bytes": 314900480,
+      "status": "completed_within_caps"
+    },
+    "screen": {
+      "elapsed_seconds": 1.1075778750237077,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 2889,
+      "peak_sampled_process_group_rss_bytes": 92323840,
+      "status": "completed_within_caps"
+    },
+    "tension-N16-S60-alpha-minus8": {
+      "elapsed_seconds": 11.428225792013109,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 60272636,
+      "peak_sampled_process_group_rss_bytes": 128892928,
+      "status": "completed_within_caps"
+    },
+    "tension-N24-S120-alpha-minus8": {
+      "elapsed_seconds": 128.0744942079764,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 387879809,
+      "peak_sampled_process_group_rss_bytes": 494878720,
+      "status": "completed_within_caps"
+    },
+    "tension-N24-S60-alpha-minus8": {
+      "elapsed_seconds": 66.99166087480262,
+      "exit_code": 0,
+      "kill_reason": null,
+      "peak_sampled_active_output_bytes": 195920698,
+      "peak_sampled_process_group_rss_bytes": 492617728,
+      "status": "completed_within_caps"
+    }
+  },
+  "status": "PASS_FAILED_ATTEMPT_ACCOUNTING",
+  "sum_owned_stage_seconds": 678.0623615828808
+}

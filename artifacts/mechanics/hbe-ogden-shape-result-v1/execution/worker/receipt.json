@@ -1,0 +1,37 @@
+{
+  "readout_calls_attempted": 1,
+  "readout_stage": {
+    "active_output_cap_bytes": 1048576,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-I",
+      "-S",
+      "-B",
+      "-X",
+      "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-ogden-recovery-cache-v1/unused-worker",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_hbe_ogden_recovery.py",
+      "--root",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+      "--release",
+      "build/hbe-ogden-shape-v1/postprocess-repair/root-release.json",
+      "--release-sha256",
+      "2faa10458e4a3a8e88341af791eb18154df90410c42509a9a91e2fa0de1ac27c",
+      "--worker",
+      "--deadline",
+      "1383913.259123875"
+    ],
+    "elapsed_seconds": 0.891743625048548,
+    "exit_code": 0,
+    "kill_reason": null,
+    "peak_sampled_active_output_bytes": 1431,
+    "peak_sampled_process_group_rss_bytes": 89718784,
+    "pid": 36630,
+    "sampled_process_group_rss_cap_bytes": 536870912,
+    "status": "completed_within_caps",
+    "wall_cap_seconds": 34.36699095903896
+  },
+  "release": {
+    "path": "build/hbe-ogden-shape-v1/postprocess-repair/root-release.json",
+    "sha256": "2faa10458e4a3a8e88341af791eb18154df90410c42509a9a91e2fa0de1ac27c"
+  }
+}

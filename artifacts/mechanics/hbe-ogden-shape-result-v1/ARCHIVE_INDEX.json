@@ -1,0 +1,243 @@
+{
+  "copy_bytes": 215139,
+  "destination": "artifacts/mechanics/hbe-ogden-shape-result-v1",
+  "entries": [
+    {
+      "bytes": 6793,
+      "sha256": "5013b3ead3749acf00ba9ab165c39837b765325f0d5cb1b1c6a1fffb120da94c",
+      "source": "build/hbe-ogden-shape-v1/result-package/RESULT.md",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/RESULT.md"
+    },
+    {
+      "bytes": 8020,
+      "sha256": "e821c082e1502dbc8a0466b41fe136a151c19ce04fa163d010b6e7b6e99b004b",
+      "source": "build/hbe-ogden-shape-v1/result-package/scalar-summary.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/scalar-summary.json"
+    },
+    {
+      "bytes": 1586,
+      "sha256": "9c438bb96df6852376b47d2618ca5af4ccf74045828178012213614a6c5aebad",
+      "source": "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/intent.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/execution/intent.json"
+    },
+    {
+      "bytes": 43535,
+      "sha256": "72497329b4671f2569620ac848c019c9f902f6c346d03fc4879500c94284450b",
+      "source": "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/comparison.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/execution/comparison.json"
+    },
+    {
+      "bytes": 4591,
+      "sha256": "6511243c58ab4b0ae90a7f76fa2cfc732750f75d04156e644d4baa40c1590a7c",
+      "source": "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/terminal.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/execution/terminal.json"
+    },
+    {
+      "bytes": 1089,
+      "sha256": "48a84c18a5dbad551dae39f1610ae1e1e28219f9e2bc6705960ba5f0b41ef696",
+      "source": "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/publication.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/execution/publication.json"
+    },
+    {
+      "bytes": 517,
+      "sha256": "489b139acd7097f4f6ee24dde8be3e8c4f81817d59be1b03e93a8aa949d4223b",
+      "source": "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/arithmetic-accounting.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/execution/arithmetic-accounting.json"
+    },
+    {
+      "bytes": 1493,
+      "sha256": "04a1e0511374dedd87b2604d033e9adbc34c0916ee84534062d6eb783b372005",
+      "source": "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/worker/receipt.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/execution/worker/receipt.json"
+    },
+    {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/worker/readout-console.txt",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/execution/worker/readout-console.txt"
+    },
+    {
+      "bytes": 29639,
+      "sha256": "ca8127909803be8b64758504fc8a01f3d56040c8153c7df0b39fffcbf978a74e",
+      "source": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/terminal.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/failed-attempt/terminal.json"
+    },
+    {
+      "bytes": 183,
+      "sha256": "ce25dff1dc3f31a5a1e0ec599719a04b6710530282803cd9f39b418288df3a6f",
+      "source": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/publication.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/failed-attempt/publication.json"
+    },
+    {
+      "bytes": 1733,
+      "sha256": "a3f03ae75f0a7e62eb199c03315500ffc9e432763ad6e5c10c32746ee36297e0",
+      "source": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/worker-profile/request.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/failed-attempt/worker-profile/request.json"
+    },
+    {
+      "bytes": 1558,
+      "sha256": "5ec3ebf9fcd084abec99db63976ca989717e4e8b195334cc94e37be7b5e3d2f7",
+      "source": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/worker-profile/readout-console.txt",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/failed-attempt/worker-profile/readout-console.txt"
+    },
+    {
+      "bytes": 6925,
+      "sha256": "674ab5eb044db49289a31bd6c5a78d770a4b7cd8cec6b1a7aff92be5ca40bb28",
+      "source": "build/hbe-ogden-shape-v1/root-release.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/releases/native-root-release.json"
+    },
+    {
+      "bytes": 7785,
+      "sha256": "2faa10458e4a3a8e88341af791eb18154df90410c42509a9a91e2fa0de1ac27c",
+      "source": "build/hbe-ogden-shape-v1/postprocess-repair/root-release.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/releases/postprocess-root-release.json"
+    },
+    {
+      "bytes": 7748,
+      "sha256": "3c08625b012b1196a22ff89566b908c0a34ab89e53b228af77f626ab48f54921",
+      "source": "build/hbe-ogden-shape-v1/postprocess-repair/false-release.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/releases/postprocess-false-release.json"
+    },
+    {
+      "bytes": 1533,
+      "sha256": "e84f4cca795820f5d57da4d7106fac9739743d3c279af07439fcea7a834ccce9",
+      "source": "build/hbe-ogden-shape-v1/postprocess-repair/CONTROL-RESULT.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/generated-controls/summary.json"
+    },
+    {
+      "bytes": 11981,
+      "sha256": "6967ea3ac1840186f9df9d63d0152597a1d1ef4b0b28e5394d96674efe923245",
+      "source": "build/hbe-ogden-shape-v1/postprocess-repair/generated-controls/attempt-01/supervisor.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/generated-controls/supervisor.json"
+    },
+    {
+      "bytes": 98,
+      "sha256": "df496b223cb33efb234280df0a6ec9857ae9ae05964c32c68a02f0d86eedf28e",
+      "source": "build/hbe-ogden-shape-v1/postprocess-repair/generated-controls/attempt-01/pytest.log",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/generated-controls/pytest.log"
+    },
+    {
+      "bytes": 1083,
+      "sha256": "9f7849f112c12f32e57a3d87f7dc1af4867f9f4abd6ac1d026f78d8100238875",
+      "source": "build/hbe-ogden-shape-v1/postprocess-repair/generated-controls/attempt-01/worker/guard-receipt.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/generated-controls/guard-receipt.json"
+    },
+    {
+      "bytes": 2983,
+      "sha256": "b635ba4cf26d4c920f2c97b18c8056549de527a08a35439b538e7ce8fa86e81b",
+      "source": "build/hbe-ogden-shape-v1/comparison-proposal/independent-review/FAILED-ATTEMPT.txt",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/independent/FAILED-ATTEMPT.txt"
+    },
+    {
+      "bytes": 11109,
+      "sha256": "2ce8df3ed0d2752b2b25009336cd2de8f754de55b9153519b635c74ba1ca7c2f",
+      "source": "build/hbe-ogden-shape-v1/comparison-proposal/independent-review/failed-attempt-audit-02.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/independent/failed-attempt-audit.json"
+    },
+    {
+      "bytes": 3338,
+      "sha256": "d2b8f3801aa429844d755b687cf58357c20bc6579d9b7e006eb32aef18baa4f6",
+      "source": "build/hbe-ogden-shape-v1/comparison-proposal/independent-review/RECOVERY-RESULT.txt",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/independent/RECOVERY-RESULT.txt"
+    },
+    {
+      "bytes": 19647,
+      "sha256": "89dbeede7c6e9b71c3b229f9b23e80ea60bc0433ffa220f270c6359fa643236d",
+      "source": "build/hbe-ogden-shape-v1/comparison-proposal/independent-review/audit_recovery.py",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/independent/audit_recovery.py"
+    },
+    {
+      "bytes": 19630,
+      "sha256": "7820729023023180fdefb81cec711e152c205f65f12e904d31ca93ff4c0a39e3",
+      "source": "build/hbe-ogden-shape-v1/comparison-proposal/independent-review/audit_recovery_failed_reader_01.py",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/independent/audit_recovery_failed_reader_01.py"
+    },
+    {
+      "bytes": 6150,
+      "sha256": "7e827600c081ff9e9c6a613625bb1455f598bcb5e38dbb12542c6cf132731ecf",
+      "source": "build/hbe-ogden-shape-v1/comparison-proposal/independent-review/recovery-audit-01.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/independent/recovery-audit-01.json"
+    },
+    {
+      "bytes": 13143,
+      "sha256": "dd91d0258bb86eb7cded81ef3c326090f734270af83f3da8f99239872002c2ec",
+      "source": "build/hbe-ogden-shape-v1/comparison-proposal/independent-review/recovery-audit-02.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/independent/recovery-audit-02.json"
+    },
+    {
+      "bytes": 1249,
+      "sha256": "3f26a391cd33876c9ebefd5ba9756b8c345e70b185c25cf34f0180f52225837b",
+      "source": "build/hbe-ogden-shape-v1/comparison-proposal/independent-review/recovery-audit-index.json",
+      "target": "artifacts/mechanics/hbe-ogden-shape-result-v1/independent/recovery-audit-index.json"
+    }
+  ],
+  "excluded_payloads": [
+    "native primitive logs",
+    "FEBio decks",
+    "full numerical screen signed arrays",
+    "full numerical readout arrays",
+    "runtime binaries/locks"
+  ],
+  "independent_review": {
+    "checks": 113059,
+    "index_sha256": "3f26a391cd33876c9ebefd5ba9756b8c345e70b185c25cf34f0180f52225837b",
+    "status": "PASS_RECOVERY_SAVED_ARITHMETIC"
+  },
+  "maximum_copy_bytes": 524288,
+  "notes": [
+    "All original attempt products retained locally; no cleanup requested.",
+    "Source is already committed; releases bind exact source files instead of duplicating source snapshots."
+  ],
+  "retained_local_only": {
+    "baseline_readouts": {
+      "compression": {
+        "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/03-compression-N24-S60-reference/attempt-01/readout.json",
+        "sha256": "6a8ee5db83518652949744a605774f23c3d0304d2c20e72367bf65fe35817761"
+      },
+      "tension": {
+        "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/readout.json",
+        "sha256": "ed473617dd313de397f25f6b29ac9c626f9b0e986a7155caa47a763c6884c3ac"
+      }
+    },
+    "numerical_screen": {
+      "bytes": 2081287,
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/numerical-screen.json",
+      "sha256": "546722291e7f78ad2c0ca4fb0dae4a8f769ee22188ef1bb4fdaed4db732b49ff"
+    },
+    "six_readouts": {
+      "compression-N16-S60-alpha-minus8": {
+        "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N16-S60-alpha-minus8/readout.json",
+        "sha256": "2103b808967ea1524286460ef272b5ce1a9703d3d99da19e3929a1d7daeb26da"
+      },
+      "compression-N24-S120-alpha-minus8": {
+        "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N24-S120-alpha-minus8/readout.json",
+        "sha256": "a3396c6be33481e851daca30e9377d9f2333050cabd4c84e4491d179f75ce31f"
+      },
+      "compression-N24-S60-alpha-minus8": {
+        "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N24-S60-alpha-minus8/readout.json",
+        "sha256": "830a3a881d7d7f61f02b3cb52661cad5e291811aab1bbfe0843a09e1caefd3dd"
+      },
+      "tension-N16-S60-alpha-minus8": {
+        "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N16-S60-alpha-minus8/readout.json",
+        "sha256": "c87bdf74606f667aabcdc55ae1a3fdf46e2465996006637ff4042e884353986b"
+      },
+      "tension-N24-S120-alpha-minus8": {
+        "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N24-S120-alpha-minus8/readout.json",
+        "sha256": "8a2770b3550d05f740b82dd2ea5352b3feee985afcb988d251b967a1e1977a32"
+      },
+      "tension-N24-S60-alpha-minus8": {
+        "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N24-S60-alpha-minus8/readout.json",
+        "sha256": "af989d4413e4e08041a15b328c96653154eb9eeb3dd70ce51ff1bac25e1245d9"
+      }
+    },
+    "source_fit": {
+      "path": "artifacts/hbe-v5-axial-calibration-result-v1/execution/fit.json",
+      "sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a"
+    }
+  },
+  "root_owned_excluded_files": [
+    "force-comparison.png",
+    "plot-comparison.py"
+  ],
+  "schema": "hbe-ogden-shape-compact-archive-v1"
+}

@@ -1,0 +1,34 @@
+{
+  "accepted": true,
+  "outputs": {
+    "arithmetic-accounting.json": {
+      "bytes": 517,
+      "sha256": "489b139acd7097f4f6ee24dde8be3e8c4f81817d59be1b03e93a8aa949d4223b"
+    },
+    "comparison.json": {
+      "bytes": 43535,
+      "sha256": "72497329b4671f2569620ac848c019c9f902f6c346d03fc4879500c94284450b"
+    },
+    "intent.json": {
+      "bytes": 1586,
+      "sha256": "9c438bb96df6852376b47d2618ca5af4ccf74045828178012213614a6c5aebad"
+    },
+    "terminal.json": {
+      "bytes": 4591,
+      "sha256": "6511243c58ab4b0ae90a7f76fa2cfc732750f75d04156e644d4baa40c1590a7c"
+    },
+    "worker/readout-console.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "worker/receipt.json": {
+      "bytes": 1493,
+      "sha256": "04a1e0511374dedd87b2604d033e9adbc34c0916ee84534062d6eb783b372005"
+    }
+  },
+  "physical_validation_pass": null,
+  "release": {
+    "path": "build/hbe-ogden-shape-v1/postprocess-repair/root-release.json",
+    "sha256": "2faa10458e4a3a8e88341af791eb18154df90410c42509a9a91e2fa0de1ac27c"
+  }
+}

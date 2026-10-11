@@ -1,0 +1,31 @@
+{
+  "checks": 113059,
+  "comparison_sha256": "72497329b4671f2569620ac848c019c9f902f6c346d03fc4879500c94284450b",
+  "files": {
+    "RECOVERY-RESULT.txt": {
+      "bytes": 3338,
+      "sha256": "d2b8f3801aa429844d755b687cf58357c20bc6579d9b7e006eb32aef18baa4f6"
+    },
+    "audit_recovery.py": {
+      "bytes": 19647,
+      "sha256": "89dbeede7c6e9b71c3b229f9b23e80ea60bc0433ffa220f270c6359fa643236d"
+    },
+    "audit_recovery_failed_reader_01.py": {
+      "bytes": 19630,
+      "sha256": "7820729023023180fdefb81cec711e152c205f65f12e904d31ca93ff4c0a39e3"
+    },
+    "recovery-audit-01.json": {
+      "bytes": 6150,
+      "sha256": "7e827600c081ff9e9c6a613625bb1455f598bcb5e38dbb12542c6cf132731ecf"
+    },
+    "recovery-audit-02.json": {
+      "bytes": 13143,
+      "sha256": "dd91d0258bb86eb7cded81ef3c326090f734270af83f3da8f99239872002c2ec"
+    }
+  },
+  "original_failed_attempt_audit_index_sha256": "fafb7e5f4cd04868bb179191f48cbe8c163688a6a2fcf562655521456764ae19",
+  "release_sha256": "2faa10458e4a3a8e88341af791eb18154df90410c42509a9a91e2fa0de1ac27c",
+  "schema": "independent-saved-shape-recovery-audit-v1",
+  "status": "PASS_RECOVERY_SAVED_ARITHMETIC",
+  "terminal_sha256": "6511243c58ab4b0ae90a7f76fa2cfc732750f75d04156e644d4baa40c1590a7c"
+}

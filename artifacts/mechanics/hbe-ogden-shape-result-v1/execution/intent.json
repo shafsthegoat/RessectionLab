@@ -1,0 +1,43 @@
+{
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "baseline_reproductions": 1,
+    "cleanup_seconds": 10,
+    "native_calls": 0,
+    "new_output_bytes": 1048576,
+    "numerical_replays": 0,
+    "positive_scale_profiles": 2,
+    "sampled_group_rss_bytes": 536870912,
+    "threads": 1,
+    "total_seconds": 45,
+    "worker_seconds": 35
+  },
+  "deadline": 1383913.259123875,
+  "release": {
+    "path": "build/hbe-ogden-shape-v1/postprocess-repair/root-release.json",
+    "sha256": "2faa10458e4a3a8e88341af791eb18154df90410c42509a9a91e2fa0de1ac27c"
+  },
+  "upstream": {
+    "console": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/worker-profile/readout-console.txt",
+      "sha256": "5ec3ebf9fcd084abec99db63976ca989717e4e8b195334cc94e37be7b5e3d2f7"
+    },
+    "release": {
+      "path": "build/hbe-ogden-shape-v1/root-release.json",
+      "sha256": "674ab5eb044db49289a31bd6c5a78d770a4b7cd8cec6b1a7aff92be5ca40bb28"
+    },
+    "request": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/worker-profile/request.json",
+      "sha256": "a3f03ae75f0a7e62eb199c03315500ffc9e432763ad6e5c10c32746ee36297e0"
+    },
+    "screen": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/numerical-screen.json",
+      "sha256": "546722291e7f78ad2c0ca4fb0dae4a8f769ee22188ef1bb4fdaed4db732b49ff"
+    },
+    "terminal": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/terminal.json",
+      "sha256": "ca8127909803be8b64758504fc8a01f3d56040c8153c7df0b39fffcbf978a74e"
+    }
+  }
+}

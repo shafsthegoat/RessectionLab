@@ -1,0 +1,317 @@
+{
+  "arithmetic_accounting": {
+    "alpha_optimizer_calls": 0,
+    "count_basis": "calls entered; original traceback places failure after all three completed",
+    "cumulative": {
+      "baseline_reproductions": 2,
+      "positive_scale_profiles": 4
+    },
+    "new_measured_member_reads": 0,
+    "new_native_calls": 0,
+    "numerical_replays": 0,
+    "prior_attempt": {
+      "baseline_reproductions": 1,
+      "completed_reports": 0,
+      "positive_scale_profiles": 2
+    },
+    "recovery_attempt": {
+      "baseline_reproductions": 1,
+      "positive_scale_profiles": 2
+    }
+  },
+  "checks": 113059,
+  "costs": {
+    "new_native_calls": 0,
+    "numerical_replays": 0,
+    "peak_sampled_child_group_rss_bytes": 89718784,
+    "published_output_bytes": 51722,
+    "recovery_child_seconds": 0.891743625048548,
+    "recovery_parent_seconds": 1.586395040852949
+  },
+  "delta_equal_branch_RMSE_N": -0.004140038431209814,
+  "failed_original_retained": true,
+  "full_pair_checks": {
+    "-8/compression/mesh": {
+      "coarse_run": "compression:N16:S60:alpha-minus8",
+      "common_state_count": 61,
+      "diagnostic_only": true,
+      "fine_run": "compression:N24:S60:alpha-minus8",
+      "force_limit_N": 0.001375729852235346,
+      "kind": "mesh",
+      "maximum_force_change_N": 0.00045477620157388654,
+      "maximum_probe_norm_change_m": 3.351810569058053e-06,
+      "pairwise_limit_passed": true,
+      "probe_count": 75,
+      "probe_norm_limit_m": 8e-06
+    },
+    "-8/compression/time": {
+      "coarse_run": "compression:N24:S60:alpha-minus8",
+      "common_state_count": 61,
+      "diagnostic_only": true,
+      "fine_run": "compression:N24:S120:alpha-minus8",
+      "force_limit_N": 0.0001375729852213326,
+      "kind": "step",
+      "maximum_force_change_N": 1.4250128854698119e-12,
+      "maximum_probe_norm_change_m": 1.4142504324301465e-14,
+      "pairwise_limit_passed": true,
+      "probe_count": 75,
+      "probe_norm_limit_m": 8e-07
+    },
+    "-8/tension/mesh": {
+      "coarse_run": "tension:N16:S60:alpha-minus8",
+      "common_state_count": 61,
+      "diagnostic_only": true,
+      "fine_run": "tension:N24:S60:alpha-minus8",
+      "force_limit_N": 0.0004317226448769576,
+      "kind": "mesh",
+      "maximum_force_change_N": 2.8708727483971186e-05,
+      "maximum_probe_norm_change_m": 2.9329032494699887e-06,
+      "pairwise_limit_passed": true,
+      "probe_count": 75,
+      "probe_norm_limit_m": 8e-06
+    },
+    "-8/tension/time": {
+      "coarse_run": "tension:N24:S60:alpha-minus8",
+      "common_state_count": 61,
+      "diagnostic_only": true,
+      "fine_run": "tension:N24:S120:alpha-minus8",
+      "force_limit_N": 4.3172264498557184e-05,
+      "kind": "step",
+      "maximum_force_change_N": 7.071069424435805e-12,
+      "maximum_probe_norm_change_m": 2.8284376165049068e-14,
+      "pairwise_limit_passed": true,
+      "probe_count": 75,
+      "probe_norm_limit_m": 8e-07
+    },
+    "2/compression/mesh": {
+      "coarse_run": "compression:N16:S60:reference",
+      "common_state_count": 61,
+      "diagnostic_only": true,
+      "fine_run": "compression:N24:S60:reference",
+      "force_limit_N": 0.0007309614957316375,
+      "kind": "mesh",
+      "maximum_force_change_N": 0.0002448427926464228,
+      "maximum_probe_norm_change_m": 4.824159828568898e-06,
+      "pairwise_limit_passed": true,
+      "probe_count": 75,
+      "probe_norm_limit_m": 8e-06
+    },
+    "2/tension/mesh": {
+      "coarse_run": "tension:N16:S60:reference",
+      "common_state_count": 61,
+      "diagnostic_only": true,
+      "fine_run": "tension:N24:S60:reference",
+      "force_limit_N": 0.000533026119308562,
+      "kind": "mesh",
+      "maximum_force_change_N": 0.00012070333186100027,
+      "maximum_probe_norm_change_m": 3.650539584205596e-06,
+      "pairwise_limit_passed": true,
+      "probe_count": 75,
+      "probe_norm_limit_m": 8e-06
+    }
+  },
+  "inputs": {
+    "artifacts/hbe-v5-axial-calibration-result-v1/execution/fit.json": {
+      "bytes": 7886,
+      "sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a"
+    },
+    "build/hbe-ogden-shape-v1/postprocess-repair/root-release.json": {
+      "bytes": 7785,
+      "sha256": "2faa10458e4a3a8e88341af791eb18154df90410c42509a9a91e2fa0de1ac27c"
+    },
+    "build/hbe-ogden-shape-v1/root-release.json": {
+      "bytes": 6925,
+      "sha256": "674ab5eb044db49289a31bd6c5a78d770a4b7cd8cec6b1a7aff92be5ca40bb28"
+    },
+    "build/hbe-v5-native-manifest-preparation-v1/actual-input-manifest-accounting-v2.json": {
+      "bytes": 35937,
+      "sha256": "4ba15123c7d0482a38576528b64a95d0b44bd7cccbd9851e8701fca1834fe69c"
+    },
+    "build/hbe-v5-native-twelve-row-comparison-v1/attempt-02/comparison.json": {
+      "bytes": 8692939,
+      "sha256": "6d3772eac38f8a1a210082a89cb00955f4a9b0d5304700fd0168711b9de99c12"
+    },
+    "manifests/experiments/hbe-01-03-ogden-shape-comparison-v1.json": {
+      "bytes": 7888,
+      "sha256": "ae6a4d4217d7531c2c112eeed5e565548050bf69c757998f74b3ed4b720ebc2f"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N16-S60-alpha-minus8/readout.json": {
+      "bytes": 538458,
+      "sha256": "2103b808967ea1524286460ef272b5ce1a9703d3d99da19e3929a1d7daeb26da"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N24-S120-alpha-minus8/readout.json": {
+      "bytes": 1075762,
+      "sha256": "a3396c6be33481e851daca30e9377d9f2333050cabd4c84e4491d179f75ce31f"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N24-S60-alpha-minus8/readout.json": {
+      "bytes": 543268,
+      "sha256": "830a3a881d7d7f61f02b3cb52661cad5e291811aab1bbfe0843a09e1caefd3dd"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/numerical-screen.json": {
+      "bytes": 2081287,
+      "sha256": "546722291e7f78ad2c0ca4fb0dae4a8f769ee22188ef1bb4fdaed4db732b49ff"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/publication.json": {
+      "bytes": 183,
+      "sha256": "ce25dff1dc3f31a5a1e0ec599719a04b6710530282803cd9f39b418288df3a6f"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N16-S60-alpha-minus8/readout.json": {
+      "bytes": 537960,
+      "sha256": "c87bdf74606f667aabcdc55ae1a3fdf46e2465996006637ff4042e884353986b"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N24-S120-alpha-minus8/readout.json": {
+      "bytes": 1066513,
+      "sha256": "8a2770b3550d05f740b82dd2ea5352b3feee985afcb988d251b967a1e1977a32"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N24-S60-alpha-minus8/readout.json": {
+      "bytes": 538715,
+      "sha256": "af989d4413e4e08041a15b328c96653154eb9eeb3dd70ce51ff1bac25e1245d9"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/terminal.json": {
+      "bytes": 29639,
+      "sha256": "ca8127909803be8b64758504fc8a01f3d56040c8153c7df0b39fffcbf978a74e"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/worker-profile/request.json": {
+      "bytes": 1733,
+      "sha256": "a3f03ae75f0a7e62eb199c03315500ffc9e432763ad6e5c10c32746ee36297e0"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/arithmetic-accounting.json": {
+      "bytes": 517,
+      "sha256": "489b139acd7097f4f6ee24dde8be3e8c4f81817d59be1b03e93a8aa949d4223b"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/comparison.json": {
+      "bytes": 43535,
+      "sha256": "72497329b4671f2569620ac848c019c9f902f6c346d03fc4879500c94284450b"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/publication.json": {
+      "bytes": 1089,
+      "sha256": "48a84c18a5dbad551dae39f1610ae1e1e28219f9e2bc6705960ba5f0b41ef696"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/terminal.json": {
+      "bytes": 4591,
+      "sha256": "6511243c58ab4b0ae90a7f76fa2cfc732750f75d04156e644d4baa40c1590a7c"
+    },
+    "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/worker/receipt.json": {
+      "bytes": 1493,
+      "sha256": "04a1e0511374dedd87b2604d033e9adbc34c0916ee84534062d6eb783b372005"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/02-compression-N16-S60-reference/attempt-01/readout.json": {
+      "bytes": 539096,
+      "sha256": "d8af76cca9c40231fa6750bc71abae849c2dbce6ec23412799c58c39d00a21e0"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/03-compression-N24-S60-reference/attempt-01/readout.json": {
+      "bytes": 543777,
+      "sha256": "6a8ee5db83518652949744a605774f23c3d0304d2c20e72367bf65fe35817761"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/09-tension-N16-S60-reference/attempt-01/readout.json": {
+      "bytes": 538733,
+      "sha256": "2c854b9e5a10c2fd24851009810996a5334d59d24b7262a99af892c308b3f576"
+    },
+    "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/readout.json": {
+      "bytes": 539102,
+      "sha256": "ed473617dd313de397f25f6b29ac9c626f9b0e986a7155caa47a763c6884c3ac"
+    }
+  },
+  "limitations": [
+    "In-sample fit improvement is not independent physical validation.",
+    "Two fixed exponents and one positive common scale; no fitted-mu FE confirmation or continuum error bound.",
+    "Numerical scalar and signed spatial/time arrays were reconstructed, but primitive FE geometry/force fields were not replayed.",
+    "Tension residual may remain larger than the observed signal; improvements in a pooled metric do not establish model adequacy."
+  ],
+  "numerical_readout_summaries": {
+    "compression-N16-S60-alpha-minus8": {
+      "frames": 61,
+      "independent_energy_work_ratio": 0.0048567380880123094,
+      "largest_saved_criterion_ratio": 0.0048567380880123094,
+      "minimum_logged_J": 0.976518607122,
+      "minimum_sampled_J": 0.7148281114213031,
+      "numerical_passed": true
+    },
+    "compression-N24-S120-alpha-minus8": {
+      "frames": 121,
+      "independent_energy_work_ratio": 0.0012155336308730172,
+      "largest_saved_criterion_ratio": 0.0012155385290214798,
+      "minimum_logged_J": 0.976167280241,
+      "minimum_sampled_J": 0.6525657682132232,
+      "numerical_passed": true
+    },
+    "compression-N24-S60-alpha-minus8": {
+      "frames": 61,
+      "independent_energy_work_ratio": 0.004861728340956814,
+      "largest_saved_criterion_ratio": 0.004861730268337834,
+      "minimum_logged_J": 0.97616728024,
+      "minimum_sampled_J": 0.6525657682549273,
+      "numerical_passed": true
+    },
+    "tension-N16-S60-alpha-minus8": {
+      "frames": 61,
+      "independent_energy_work_ratio": 0.001378423316803782,
+      "largest_saved_criterion_ratio": 0.001378423316803782,
+      "minimum_logged_J": 1.0,
+      "minimum_sampled_J": 0.8990512231858779,
+      "numerical_passed": true
+    },
+    "tension-N24-S120-alpha-minus8": {
+      "frames": 121,
+      "independent_energy_work_ratio": 0.0003418953811064496,
+      "largest_saved_criterion_ratio": 0.0003418953811064496,
+      "minimum_logged_J": 1.0,
+      "minimum_sampled_J": 0.8961074874337882,
+      "numerical_passed": true
+    },
+    "tension-N24-S60-alpha-minus8": {
+      "frames": 61,
+      "independent_energy_work_ratio": 0.0013675594501302527,
+      "largest_saved_criterion_ratio": 0.0013675594501302527,
+      "minimum_logged_J": 1.0,
+      "minimum_sampled_J": 0.8961074874686143,
+      "numerical_passed": true
+    }
+  },
+  "old_fine_grid_reference_fit_mu_Pa": 715.361571139082,
+  "profiles": {
+    "-8": {
+      "branches": {
+        "compression": {
+          "RMSE_N": 0.002738562298074202,
+          "endpoint_bias_N": 0.0063719466255551666,
+          "negative_observed_values": 30,
+          "normalized_RMSE": 0.12537571403218897
+        },
+        "tension": {
+          "RMSE_N": 0.0053042320228315195,
+          "endpoint_bias_N": 0.006251604422104811,
+          "negative_observed_values": 4,
+          "normalized_RMSE": 1.7444127346432634
+        }
+      },
+      "equal_branch_RMSE_N": 0.004221054418771737,
+      "equal_branch_normalized_RMSE": 1.2366678734516132,
+      "mu_Pa": 602.2738511747128,
+      "scale": 0.6022738511747129
+    },
+    "2": {
+      "branches": {
+        "compression": {
+          "RMSE_N": 0.00808765016336084,
+          "endpoint_bias_N": 0.021692408614968794,
+          "negative_observed_values": 30,
+          "normalized_RMSE": 0.3702654180213361
+        },
+        "tension": {
+          "RMSE_N": 0.008625871673466666,
+          "endpoint_bias_N": 0.012288759646356558,
+          "negative_observed_values": 4,
+          "normalized_RMSE": 2.8368065970389766
+        }
+      },
+      "equal_branch_RMSE_N": 0.008361092849981551,
+      "equal_branch_normalized_RMSE": 2.0229394638478895,
+      "mu_Pa": 714.367055522625,
+      "scale": 0.714367055522625
+    }
+  },
+  "relative_equal_branch_RMSE_reduction": 0.4951551795312199,
+  "scope": "Independent arithmetic from the already exposed 60 signed DEVELOPMENT values and authenticated saved numerical JSONs. No FE, raw specimen archive, raw solver primitives, project fitting imports, tuning or alpha optimization.",
+  "status": "PASS_RECOVERY_SAVED_ARITHMETIC"
+}

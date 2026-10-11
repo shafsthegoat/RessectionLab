@@ -1,0 +1,20 @@
+Independent saved-recovery result audit — HBE_01_03 DEVELOPMENT
+
+PASS: 113,059 checks. Exact terminal6511243c… and comparison72497329… authenticate the separately released postprocess. The original attempt remains failed (publication accepted=false), with its six completed FE/readout products unchanged. Recovery performed two arithmetic scale profiles and one original-scale reproduction, zero FE calls, zero numerical readout replay and zero new measured-member reads. Across original+recovery: four profiles and two baseline reproductions; the original zero count means completed profile reports, not zero computation.
+
+Independently recomputed results (force RMSE in mN):
+                  alpha2       alpha−8
+Compression       8.087650     2.738562
+Tension           8.625872     5.304232
+Equal-branch      8.361093     4.221054
+Common mu (Pa)  714.367056   602.273851
+
+The primary RMSE decreases by4.140038mN (49.5155%). Both candidates use the same60 signed exposed values, original equal-mode trapezoid weights, one positive common scale, no offset/sign fit, and matched N24/S60 reference readouts. I independently reconstructed interpolation, weights, numerator/denominator, scale, every prediction/residual, branch RMSE/MAE/NRMSE/endpoint bias and both pooled metrics; original fine-grid scale reproduction also matches. No canonical fitter was imported or executed.
+
+The improvement does not establish physical adequacy. Alpha−8 tension NRMSE remains1.744413: residual RMS exceeds the observed tension RMS. Its signed endpoint residual (prediction−measurement) remains+6.251604mN; compression endpoint residual is+6.371947mN. All30 compression values and4 tension values are negative and retained. These are already exposed processed cycle-average DEVELOPMENT observations, not new independent donor validation. There was no exponent optimization, fitted-mu FE confirmation, continuum error bound, empirical pass threshold, or patient-property assignment.
+
+Numerical checks: authenticated all six new saved readouts and reconstructed complete energy/work arrays and predicates, residual limits and positive sampled/logged Jacobians. Recomputed all signed force and75×3 probe differences at61 common states for the four new mesh/time pairs and both retained alpha2 mesh pairs. Every saved scalar threshold and compact-to-full baseline pointer matches. No FE primitive fields, raw specimen archive/member or raw solver logs were opened. Numerical diagnostic passage does not inherit earlier v5 qualification or prove everywhere-positive Jacobians/continuum convergence.
+
+Recovery costs: parent1.586395s, child0.891744s; maximum sampled child-group RSS89,718,784B; publication inventory51,722B. Child reaped, no survivors/errors, no fallback cleanup; all recovery time/RSS/output caps met. Prior FE/readout costs remain those of the failed original and are not erased by this cheap postprocess.
+
+Reviewer correction preserved: recovery-audit-01.json and audit_recovery_failed_reader_01.py retain an assertion using the wrong metadata literal ['mu_Pa']; canonical serializer uses ['positive_mu_scale_only']. All113,055 preceding checks passed. Only this reader label was corrected; recovery-audit-02.json passes with exact numeric comparisons unchanged. No experiment source, data, threshold or output was modified.

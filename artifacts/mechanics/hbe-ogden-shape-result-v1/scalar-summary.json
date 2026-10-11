@@ -1,0 +1,212 @@
+{
+  "accounting": {
+    "alpha_optimizer_calls": 0,
+    "count_basis": "calls entered; original traceback places failure after all three completed",
+    "cumulative": {
+      "baseline_reproductions": 2,
+      "positive_scale_profiles": 4
+    },
+    "new_measured_member_reads": 0,
+    "new_native_calls": 0,
+    "numerical_replays": 0,
+    "prior_attempt": {
+      "baseline_reproductions": 1,
+      "completed_reports": 0,
+      "positive_scale_profiles": 2
+    },
+    "recovery_attempt": {
+      "baseline_reproductions": 1,
+      "positive_scale_profiles": 2
+    }
+  },
+  "candidate_metrics": {
+    "-8": {
+      "branches": {
+        "compression": {
+          "MAE": 0.001760333562717784,
+          "RMSE": 0.002738562298074203,
+          "normalized_RMSE": 0.125375714032189,
+          "observed_RMS_denominator": 0.02184284507740553,
+          "response_unit": "N",
+          "row_count": 30,
+          "signed_endpoint_bias": 0.0063719466255551666
+        },
+        "tension": {
+          "MAE": 0.004983023341881963,
+          "RMSE": 0.005304232022831521,
+          "normalized_RMSE": 1.7444127346432632,
+          "observed_RMS_denominator": 0.003040697833426589,
+          "response_unit": "N",
+          "row_count": 30,
+          "signed_endpoint_bias": 0.006251604422104811
+        }
+      },
+      "equal_branch_RMSE_N": 0.004221054418771738,
+      "mu_Pa": 602.2738511747128
+    },
+    "2": {
+      "branches": {
+        "compression": {
+          "MAE": 0.004990191874598024,
+          "RMSE": 0.008087650163360842,
+          "normalized_RMSE": 0.3702654180213361,
+          "observed_RMS_denominator": 0.02184284507740553,
+          "response_unit": "N",
+          "row_count": 30,
+          "signed_endpoint_bias": 0.021692408614968794
+        },
+        "tension": {
+          "MAE": 0.007875911061385651,
+          "RMSE": 0.008625871673466666,
+          "normalized_RMSE": 2.8368065970389753,
+          "observed_RMS_denominator": 0.003040697833426589,
+          "response_unit": "N",
+          "row_count": 30,
+          "signed_endpoint_bias": 0.012288759646356558
+        }
+      },
+      "equal_branch_RMSE_N": 0.008361092849981553,
+      "mu_Pa": 714.3670555226249
+    }
+  },
+  "comparison": {
+    "bytes": 43535,
+    "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01/comparison.json",
+    "sha256": "72497329b4671f2569620ac848c019c9f902f6c346d03fc4879500c94284450b"
+  },
+  "native_stage_costs": {
+    "compression-N16-S60-alpha-minus8": {
+      "elapsed_seconds": 45.72345970803872,
+      "exit_code": 0,
+      "peak_sampled_process_group_rss_bytes": 321028096,
+      "status": "completed_within_caps"
+    },
+    "compression-N24-S120-alpha-minus8": {
+      "elapsed_seconds": 128.0182371661067,
+      "exit_code": 0,
+      "peak_sampled_process_group_rss_bytes": 494927872,
+      "status": "completed_within_caps"
+    },
+    "compression-N24-S60-alpha-minus8": {
+      "elapsed_seconds": 68.71958358306438,
+      "exit_code": 0,
+      "peak_sampled_process_group_rss_bytes": 492814336,
+      "status": "completed_within_caps"
+    },
+    "tension-N16-S60-alpha-minus8": {
+      "elapsed_seconds": 11.428225792013109,
+      "exit_code": 0,
+      "peak_sampled_process_group_rss_bytes": 128892928,
+      "status": "completed_within_caps"
+    },
+    "tension-N24-S120-alpha-minus8": {
+      "elapsed_seconds": 128.0744942079764,
+      "exit_code": 0,
+      "peak_sampled_process_group_rss_bytes": 494878720,
+      "status": "completed_within_caps"
+    },
+    "tension-N24-S60-alpha-minus8": {
+      "elapsed_seconds": 66.99166087480262,
+      "exit_code": 0,
+      "peak_sampled_process_group_rss_bytes": 492617728,
+      "status": "completed_within_caps"
+    }
+  },
+  "numerical_pairs": {
+    "compression/mesh": {
+      "coarse_run": "compression:N16:S60:alpha-minus8",
+      "common_state_count": 61,
+      "diagnostic_only": true,
+      "fine_run": "compression:N24:S60:alpha-minus8",
+      "force_limit_N": 0.001375729852235346,
+      "kind": "mesh",
+      "maximum_force_change_N": 0.00045477620157388654,
+      "maximum_probe_norm_change_m": 3.351810569058053e-06,
+      "pairwise_limit_passed": true,
+      "probe_count": 75,
+      "probe_norm_limit_m": 8e-06
+    },
+    "compression/time": {
+      "coarse_run": "compression:N24:S60:alpha-minus8",
+      "common_state_count": 61,
+      "diagnostic_only": true,
+      "fine_run": "compression:N24:S120:alpha-minus8",
+      "force_limit_N": 0.0001375729852213326,
+      "kind": "step",
+      "maximum_force_change_N": 1.4250128854698119e-12,
+      "maximum_probe_norm_change_m": 1.4142504324301465e-14,
+      "pairwise_limit_passed": true,
+      "probe_count": 75,
+      "probe_norm_limit_m": 8e-07
+    },
+    "tension/mesh": {
+      "coarse_run": "tension:N16:S60:alpha-minus8",
+      "common_state_count": 61,
+      "diagnostic_only": true,
+      "fine_run": "tension:N24:S60:alpha-minus8",
+      "force_limit_N": 0.0004317226448769576,
+      "kind": "mesh",
+      "maximum_force_change_N": 2.8708727483971186e-05,
+      "maximum_probe_norm_change_m": 2.9329032494699887e-06,
+      "pairwise_limit_passed": true,
+      "probe_count": 75,
+      "probe_norm_limit_m": 8e-06
+    },
+    "tension/time": {
+      "coarse_run": "tension:N24:S60:alpha-minus8",
+      "common_state_count": 61,
+      "diagnostic_only": true,
+      "fine_run": "tension:N24:S120:alpha-minus8",
+      "force_limit_N": 4.3172264498557184e-05,
+      "kind": "step",
+      "maximum_force_change_N": 7.071069424435805e-12,
+      "maximum_probe_norm_change_m": 2.8284376165049068e-14,
+      "pairwise_limit_passed": true,
+      "probe_count": 75,
+      "probe_norm_limit_m": 8e-07
+    }
+  },
+  "original_numerical_screen": {
+    "bytes": 2081287,
+    "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/numerical-screen.json",
+    "sha256": "546722291e7f78ad2c0ca4fb0dae4a8f769ee22188ef1bb4fdaed4db732b49ff"
+  },
+  "physical_validation_pass": null,
+  "retained_baseline_references": {
+    "compression": {
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/03-compression-N24-S60-reference/attempt-01/readout.json",
+      "sha256": "6a8ee5db83518652949744a605774f23c3d0304d2c20e72367bf65fe35817761"
+    },
+    "tension": {
+      "path": "outputs/mechanics/hbe-v5-remaining-one-shot-v1/10-tension-N24-S60-reference/attempt-01/readout.json",
+      "sha256": "ed473617dd313de397f25f6b29ac9c626f9b0e986a7155caa47a763c6884c3ac"
+    }
+  },
+  "retained_readouts": {
+    "compression-N16-S60-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N16-S60-alpha-minus8/readout.json",
+      "sha256": "2103b808967ea1524286460ef272b5ce1a9703d3d99da19e3929a1d7daeb26da"
+    },
+    "compression-N24-S120-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N24-S120-alpha-minus8/readout.json",
+      "sha256": "a3396c6be33481e851daca30e9377d9f2333050cabd4c84e4491d179f75ce31f"
+    },
+    "compression-N24-S60-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N24-S60-alpha-minus8/readout.json",
+      "sha256": "830a3a881d7d7f61f02b3cb52661cad5e291811aab1bbfe0843a09e1caefd3dd"
+    },
+    "tension-N16-S60-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N16-S60-alpha-minus8/readout.json",
+      "sha256": "c87bdf74606f667aabcdc55ae1a3fdf46e2465996006637ff4042e884353986b"
+    },
+    "tension-N24-S120-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N24-S120-alpha-minus8/readout.json",
+      "sha256": "8a2770b3550d05f740b82dd2ea5352b3feee985afcb988d251b967a1e1977a32"
+    },
+    "tension-N24-S60-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N24-S60-alpha-minus8/readout.json",
+      "sha256": "af989d4413e4e08041a15b328c96653154eb9eeb3dd70ce51ff1bac25e1245d9"
+    }
+  },
+  "schema": "hbe-ogden-shape-scalar-summary-v1"
+}

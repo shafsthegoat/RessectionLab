@@ -1,0 +1,33 @@
+{
+  "intent": {
+    "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/intent.json",
+    "sha256": "8d0096f3e4b710e0ac7349bfe825ccd30749612405ffb35ca210ad9d52a36505"
+  },
+  "mode": "profile",
+  "reports": {
+    "compression-N16-S60-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N16-S60-alpha-minus8/readout.json",
+      "sha256": "2103b808967ea1524286460ef272b5ce1a9703d3d99da19e3929a1d7daeb26da"
+    },
+    "compression-N24-S120-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N24-S120-alpha-minus8/readout.json",
+      "sha256": "a3396c6be33481e851daca30e9377d9f2333050cabd4c84e4491d179f75ce31f"
+    },
+    "compression-N24-S60-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/compression-N24-S60-alpha-minus8/readout.json",
+      "sha256": "830a3a881d7d7f61f02b3cb52661cad5e291811aab1bbfe0843a09e1caefd3dd"
+    },
+    "tension-N16-S60-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N16-S60-alpha-minus8/readout.json",
+      "sha256": "c87bdf74606f667aabcdc55ae1a3fdf46e2465996006637ff4042e884353986b"
+    },
+    "tension-N24-S120-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N24-S120-alpha-minus8/readout.json",
+      "sha256": "8a2770b3550d05f740b82dd2ea5352b3feee985afcb988d251b967a1e1977a32"
+    },
+    "tension-N24-S60-alpha-minus8": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/tension-N24-S60-alpha-minus8/readout.json",
+      "sha256": "af989d4413e4e08041a15b328c96653154eb9eeb3dd70ce51ff1bac25e1245d9"
+    }
+  }
+}

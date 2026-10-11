@@ -1,0 +1,103 @@
+{
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "baseline_reproductions": 1,
+    "cleanup_seconds": 10,
+    "native_calls": 0,
+    "new_output_bytes": 1048576,
+    "numerical_replays": 0,
+    "positive_scale_profiles": 2,
+    "sampled_group_rss_bytes": 536870912,
+    "threads": 1,
+    "total_seconds": 45,
+    "worker_seconds": 35
+  },
+  "declaration": {
+    "path": "manifests/experiments/hbe-01-03-ogden-shape-comparison-v1.json",
+    "sha256": "ae6a4d4217d7531c2c112eeed5e565548050bf69c757998f74b3ed4b720ebc2f"
+  },
+  "execution_released": true,
+  "output_directory": "outputs/mechanics/hbe-ogden-shape-comparison-v1/postprocess-01",
+  "runtime_source": {
+    "path": "artifacts/hbe-v5-fixed-fit-result-v1/root-release.json",
+    "sha256": "97c182618a90e746971b7375f758dbe5c8b13b7ef68f5c1e696522321146fc3d"
+  },
+  "schema": "hbe-ogden-saved-recovery-release-v1",
+  "source_bindings": {
+    "launchers/hbe_v5_ordinal9_continuation_v1.py": "8ea24abd2918bc36c289979e4ff15e1d7b0b5614d0ddfe14820254a7d81478b4",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "scripts/mechanics_hbe_branch_calibration_v3.py": "66e36a45406e9a8770ce271527c855b2bde1ad0315c3476b0fd210ed5d50bf7d",
+    "scripts/mechanics_hbe_branch_calibration_v3_readout.py": "631cac92f1e78264dcc00a58ce34d5619044874684f890dfa082a1fb0c96e205",
+    "scripts/mechanics_hbe_branch_calibration_v4.py": "2460def39937bfc1eb1686bc7e055ac0ab2893295c1a86630f9ea18f1ca425bc",
+    "scripts/mechanics_hbe_branch_calibration_v5.py": "1f183287e65d008095f004815a1a2344a74f71d935cedddc7388d42d1dbdc016",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_experiment.py": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+    "scripts/mechanics_hbe_halfheight_global.py": "a56c3dd761ed8bab5f57ff9051ce5305743ae2c85e4e91d5398cd0995a0de2d0",
+    "scripts/mechanics_hbe_halfheight_global_experiment.py": "0ea6c6d2026cb32bf470967f5e7b9f08f0ffbdbefeb6fa7426e79e6c37bc91f2",
+    "scripts/mechanics_hbe_halfheight_global_n36.py": "61024ff1b3c874a870bf83d5af84ee37e566ea37ed0f967d52fd3a6ca92b360d",
+    "scripts/mechanics_hbe_halfheight_global_n36_experiment.py": "21d5a26d6edc0075d9bd362968ea1edb15ac5e6c5f4d09123c654376ae3f2e80",
+    "scripts/mechanics_hbe_halfheight_global_n36_readout.py": "d7384416693efb5d8383a4cff06ca2581e678abc7ce630b01f99894d09fb7a27",
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal.py": "5af7a1d9beac06412c9a20c91fb6cf8d3834c2b8eb91c3053541f8d0256a9c93",
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py": "550d8300ebcdef18778026d1150bcd32feca4991bd94a57406a360234800ede1",
+    "scripts/mechanics_hbe_halfheight_global_readout.py": "5a6b3af67f20c8a0f9630e17c5b5c139d6e6528b7999e81f92f38cae5b722343",
+    "scripts/mechanics_hbe_halfheight_mesh.py": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084",
+    "scripts/mechanics_hbe_halfheight_readout.py": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
+    "scripts/mechanics_hbe_halfheight_spatial.py": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da",
+    "scripts/mechanics_hbe_halfheight_spatial_experiment.py": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd",
+    "scripts/mechanics_hbe_halfheight_spatial_readout.py": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c",
+    "scripts/mechanics_hbe_halfheight_temporal_common.py": "6e8824f65a370648ee231d4ac90222455a8a6c0ac8a58d513d48f71e625dd2b5",
+    "scripts/mechanics_hbe_mesh.py": "72adfb67e50d07381cb1cf216beea1345ba466a4656314f57bc05fa49118f0fb",
+    "scripts/mechanics_hbe_ogden_comparison.py": "5d1299eb8e2cdcc10c6cf4470802cc4783720f31a791f1903452cff026f5edf9",
+    "scripts/mechanics_hbe_ogden_comparison_experiment.py": "aa974110a5b57a7cd409ffa43feceaf348b4635647ded3ca2e21282c7a32bd03",
+    "scripts/mechanics_hbe_ogden_recovery.py": "98bd37f1a37316bb461be1e95d7f2df5fa99f4dfcc11d22eeeb958da71b7a3e7",
+    "scripts/mechanics_hbe_outputs.py": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+    "scripts/mechanics_hbe_physics.py": "8e7e37564486bd34bc254726cd112086112baaaa2fa19435793e60630b1b13d2",
+    "scripts/mechanics_hbe_readout.py": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+    "scripts/mechanics_hbe_v5_axial_calibration.py": "20fa7411cb2a194e62c9fc0b4b4b1aa3f4e10f28cba4ac758c4dc190a47fd6be",
+    "scripts/mechanics_hbe_v5_axial_calibration_experiment.py": "5bceed4d7457d178ab4d2be918546bd6e0fac00e36f271fba75b6b63bf6b76fb",
+    "scripts/mechanics_hbe_v5_comparison.py": "895b294ecfc83847e0484f39ac0b9e1a5cda57a4853324a435c238e4c6649fb9",
+    "scripts/mechanics_hbe_v5_fitted_confirmation.py": "80774c4ffa11b4944227a750e25b92145249170f886f6e13996ee39fc803f045",
+    "scripts/mechanics_hbe_v5_fitted_confirmation_experiment.py": "78d9ee5b0c1a2ad404c56f92eab5b7a1ed9c9981bdb657a2405a96ebfeacd6cb",
+    "scripts/mechanics_hbe_v5_frame.py": "5d9d86ad83b6ebebbc36c2c25cabacfe87b3fc23955ab9ea34303492180f4aa6",
+    "scripts/mechanics_hbe_v5_n12_admission.py": "29bbd47b1df7bd08efbca9cea13172e9ba220dec8dd9dbc22915285dffb9b70a",
+    "scripts/mechanics_hbe_v5_n12_saved_replay.py": "c35c3f122599c6415607d12c77c70e5c29070256b9bd2c5b13440513773a020d",
+    "scripts/mechanics_hbe_v5_n8_canary.py": "2e5ac4072f1a8c1f0c8eb9aeb3df6e1fe2e5d6d1732bdc97d74fa3e401536f1a",
+    "scripts/mechanics_hbe_v5_n8_one_shot.py": "82bb01dc2588f750489916c789e7afe85b7a9a6e1ef0fcd5820fe8e70be4f3a0",
+    "scripts/mechanics_hbe_v5_native_comparison.py": "31fc3d66b401cf0c793e498292e8d44335e1e7d5ff11a3b1839238e86e6fc69e",
+    "scripts/mechanics_hbe_v5_remaining_one_shot.py": "90d855b1e9518793480688afbfb133b586a6ccbe5b974be30b6b40624336216b",
+    "scripts/mechanics_hbe_v5_source_bindings.py": "1ab6ee2c46aa93304efffdc88f3e4b6d57ade0a083d0907c3294708b6d093208",
+    "scripts/mechanics_hbe_v5_stream.py": "7b41ad8fd2e92484266a5d782460e1685a38c6deb64ce3681fe622216e2fb639",
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+  },
+  "source_commit": "a9ffe72b291be73d50b702962a77b162110bcd10",
+  "storage_receipt": {
+    "path": "build/storage-extension-v1/hbe-postprocess-begin-01.json",
+    "sha256": "d50b0cc861d0adcfed721c57ec283ba4e0d80e7489b641d88f8afde078f7ec36"
+  },
+  "upstream": {
+    "console": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/worker-profile/readout-console.txt",
+      "sha256": "5ec3ebf9fcd084abec99db63976ca989717e4e8b195334cc94e37be7b5e3d2f7"
+    },
+    "release": {
+      "path": "build/hbe-ogden-shape-v1/root-release.json",
+      "sha256": "674ab5eb044db49289a31bd6c5a78d770a4b7cd8cec6b1a7aff92be5ca40bb28"
+    },
+    "request": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/worker-profile/request.json",
+      "sha256": "a3f03ae75f0a7e62eb199c03315500ffc9e432763ad6e5c10c32746ee36297e0"
+    },
+    "screen": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/numerical-screen.json",
+      "sha256": "546722291e7f78ad2c0ca4fb0dae4a8f769ee22188ef1bb4fdaed4db732b49ff"
+    },
+    "terminal": {
+      "path": "outputs/mechanics/hbe-ogden-shape-comparison-v1/attempt-01/terminal.json",
+      "sha256": "ca8127909803be8b64758504fc8a01f3d56040c8153c7df0b39fffcbf978a74e"
+    }
+  }
+}

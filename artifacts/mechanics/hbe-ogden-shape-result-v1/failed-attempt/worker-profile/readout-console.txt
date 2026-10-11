@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_hbe_ogden_comparison_experiment.py", line 274, in <module>
+    if __name__=='__main__':raise SystemExit(main())
+                                             ^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_hbe_ogden_comparison_experiment.py", line 265, in main
+    worker(root,core,helper,rb,release,declaration,args.worker,args.deadline,
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_hbe_ogden_comparison_experiment.py", line 118, in worker
+    core.finish(root,declaration,request['reports'],out)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_hbe_ogden_comparison.py", line 335, in finish
+    exclusive_json(out/'comparison.json',output,maximum=512*1024)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_hbe_v5_axial_calibration.py", line 92, in exclusive_json
+    raw=canonical(value);need(len(raw)<=maximum,'output cap')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_hbe_v5_axial_calibration.py", line 37, in need
+    raise ValueError(reason)
+ValueError: output cap
