@@ -1,0 +1,74 @@
+{
+  "files": [
+    {
+      "path": "source-ready.json",
+      "bytes": 1809,
+      "sha256": "eacebfca1b447d90d4ec11cf110b14c14738bf46ae949a2ca614a6d7c5e27499"
+    },
+    {
+      "path": "source.patch",
+      "bytes": 10741,
+      "sha256": "c1fb6f329313bc32e46c3078172262547c67d80ae3b3aca8395be810976c5794"
+    },
+    {
+      "path": "before/native_proposals.py",
+      "bytes": 68002,
+      "sha256": "8d92d6f4c68f394f17d6c2357d8748e7abab8bfac0b555dbf3bb5d81df325a31"
+    },
+    {
+      "path": "stage/resectionlab/native_proposals.py",
+      "bytes": 73104,
+      "sha256": "fc135cb1bf8a3cbacfeb097eeabee5cd9fafc5dee7a89eebd2b9b43ab63c8d12"
+    },
+    {
+      "path": "tests/test_target_ray_priority.py",
+      "bytes": 6539,
+      "sha256": "d4fd74498886889d481c1e9b8a5a199d8be99bf8910fbe9c4c3d200a416feacc"
+    },
+    {
+      "path": "tests/conftest.py",
+      "bytes": 318,
+      "sha256": "12f786c978032b622eecc8b62704b453b91beeca97d191b45cb396d801436ecd"
+    },
+    {
+      "path": "portable/test_target_ray_priority.py",
+      "bytes": 6824,
+      "sha256": "679dc9c6fd490a28b02346541865b9f5b360d535240c81622e26bdb5a9267bb7"
+    },
+    {
+      "path": "controls-01.json",
+      "bytes": 1164,
+      "sha256": "696682d9f22d415f5882898e91c1fd4074bbbf0a7a33267924780685ba05ed40"
+    },
+    {
+      "path": "controls-01.log",
+      "bytes": 98,
+      "sha256": "a600ca1478c9964892196afcf4b0c79ab22aefed7615a7d2d537fd529101af47"
+    },
+    {
+      "path": "canonical-controls-01.json",
+      "bytes": 1157,
+      "sha256": "479a575d75242200df63116bf8e8cc9d86f53727628ba9584129a626dbd3feaf"
+    },
+    {
+      "path": "canonical-controls-01.log",
+      "bytes": 180,
+      "sha256": "d1cba66bf919f48339fa1c17aae4e8ee1c68d0aecf71ef19be3710e487c5d169"
+    },
+    {
+      "path": "project_saved_order.py",
+      "bytes": 3463,
+      "sha256": "67023a36969b51f9df9a296ff25950203ba6f66b9124d2d22e798532debdfc1b"
+    },
+    {
+      "path": "saved-order-projection.json",
+      "bytes": 21746,
+      "sha256": "b498acff5d212a29c937148da74cb0f008994d2cef3dc7640a9d93df5c90585d"
+    },
+    {
+      "path": "target-ray-priority-source-review.txt",
+      "bytes": 4415,
+      "sha256": "fe34363f2f7d1da56da3b269aa76abdba8b379520300ade93c9d3cbf70e3c7dd"
+    }
+  ]
+}

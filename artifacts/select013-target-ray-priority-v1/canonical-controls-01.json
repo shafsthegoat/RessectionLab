@@ -1,0 +1,32 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_target_ray_priority.py",
+    "tests/test_residual_blocker.py",
+    "tests/test_paged_obstruction.py",
+    "tests/test_nominal_cavity_proposals.py",
+    "tests/test_nominal_cavity_proposals_review.py",
+    "tests/test_tool_footprint_candidate_cap.py",
+    "tests/test_obstruction_opening_proposals.py",
+    "tests/test_tool_footprint_opening_proposals.py",
+    "tests/test_native_proposals.py",
+    "tests/test_native_proposals_review.py"
+  ],
+  "hard_seconds": 60,
+  "one_thread": true,
+  "elapsed_seconds": 6.076889457879588,
+  "exit_code": 0,
+  "timed_out": false,
+  "no_acquired_inputs": true,
+  "source_sha256": {
+    "src/resectionlab/native_proposals.py": "fc135cb1bf8a3cbacfeb097eeabee5cd9fafc5dee7a89eebd2b9b43ab63c8d12",
+    "tests/test_target_ray_priority.py": "679dc9c6fd490a28b02346541865b9f5b360d535240c81622e26bdb5a9267bb7"
+  },
+  "log_sha256": "d1cba66bf919f48339fa1c17aae4e8ee1c68d0aecf71ef19be3710e487c5d169"
+}

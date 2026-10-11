@@ -1,0 +1,67 @@
+target_ray_coverage_v3: one-pass independent source GO
+
+No actionable defect found in the scoped proposal-ordering delta. Read source
+diff against the preserved exact v2 predecessor, surrounding state/sidecar
+validation, six generated controls, their terminal receipt/log, and saved
+ordering projection/source. No tests, native calls, acquired arrays, model
+loads, or new experiments were performed by this reviewer.
+
+Deployment inputs are appropriate. Groups use permitted nominal membership
+at an existing emitted ray endpoint and that ray's already-paid, validated,
+state-local first shaft-failure sidecar. Source/state/model/affine/tool/entry/
+endpoint and cell evidence checks remain in force. Group construction does
+not query rewards, private reference labels, weights or native previews. The
+geometry, native verifier and aperture necessary-condition test are unchanged.
+No patient ID, witness voxel, proposal ID or saved rank enters production.
+
+The opt-in rule receives a distinct version/fingerprint. None and residual_v2
+paths retain their old records/fingerprints/catalog/accounting; the saved
+parity control compares them directly to predecessor8d92d6f4. Original base
+generation is unchanged. Bounds remain at most120 base rays,16 selected cells,
+two registered tools/32 extra pairs, eight pairs/page and the existing128
+certificate limit. No additional discovery preview is introduced. Emitted
+proposals continue to require native verification.
+
+Ordering semantics are deterministic: eligible public nominal blocker cells
+come first, then one previously unselected eligible cell per declared
+column/tool group per pass, followed by native-index fallback. Sets union
+endpoint aliases within the same group, so repeated aliases and input order
+cannot increase that group's turns. Shared cells consume one global cell
+slot. Different tools remain different groups because their failure sets can
+differ. This is bounded candidate coverage, not equal allocation among every
+possible physical corridor; nominal-cell priority and deterministic group
+order can still leave groups incomplete at the16-cell boundary. Selected,
+unselected and aperture-ineligible retained co-blockers remain explicit.
+
+The saved projection uses52 known nominal-family endpoints plus saved aperture
+results. Runtime membership is endpoint-based, including coincident aliases;
+the projection does not invent unrecorded memberships for other endpoints.
+It moves[7,92,85] from omitted to rank4 (simple frequency rank18), selecting
+four previously omitted cells and omitting four previously selected ones.
+That establishes an ordering effect under these saved inputs. It does not
+establish an executed v3 catalog, feasibility of new pairs, useful return,
+target reachability, or a complete route. In particular column2/suction has
+six retained co-blockers but only two selected; four remain unselected. Only
+14/26 groups have all their retained co-blockers selected, and even that flag
+does not mean the corridor is clear or all later blockers were discovered.
+
+The separate sequential runtime must use each chosen ray's current exact
+failure set for its causal claims. The group union over multiple endpoints
+is a coverage device and need not equal any single endpoint's failure set.
+State regeneration and final native/independent complete-history acceptance
+remain required for a complete-route conclusion. This source GO does not
+pre-approve a result from that separate runtime.
+
+Exact SHA256 pins:
+stage/resectionlab/native_proposals.py fc135cb1bf8a3cbacfeb097eeabee5cd9fafc5dee7a89eebd2b9b43ab63c8d12
+before/native_proposals.py 8d92d6f4c68f394f17d6c2357d8748e7abab8bfac0b555dbf3bb5d81df325a31
+tests/test_target_ray_priority.py d4fd74498886889d481c1e9b8a5a199d8be99bf8910fbe9c4c3d200a416feacc
+controls-01.json 696682d9f22d415f5882898e91c1fd4074bbbf0a7a33267924780685ba05ed40
+controls-01.log a600ca1478c9964892196afcf4b0c79ab22aefed7615a7d2d537fd529101af47
+saved-order-projection.json b498acff5d212a29c937148da74cb0f008994d2cef3dc7640a9d93df5c90585d
+
+Saved controls:6 passed in0.61 s; parent0.773471084 s, exit0, no timeout,
+child reaped, one thread, source unchanged. They cover direct old-rule parity,
+crowded-cap group coverage, alias/shared-cell stability, explicit omitted
+co-blockers, and two generated physical orientations with preparation,
+target removal, STOP, exact fresh history and accepted independent evaluation.

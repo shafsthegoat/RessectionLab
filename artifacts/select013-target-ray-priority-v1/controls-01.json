@@ -1,0 +1,28 @@
+{
+  "schema": "bounded-generated-controls-v1",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-target-ray-priority-v1/tests/test_target_ray_priority.py"
+  ],
+  "one_thread": true,
+  "hard_seconds": 30,
+  "elapsed_seconds": 0.773471084,
+  "exit_code": 0,
+  "timed_out": false,
+  "child_reaped": true,
+  "no_acquired_inputs": true,
+  "source_sha256": {
+    "stage/resectionlab/native_proposals.py": "fc135cb1bf8a3cbacfeb097eeabee5cd9fafc5dee7a89eebd2b9b43ab63c8d12",
+    "before/native_proposals.py": "8d92d6f4c68f394f17d6c2357d8748e7abab8bfac0b555dbf3bb5d81df325a31",
+    "tests/test_target_ray_priority.py": "d4fd74498886889d481c1e9b8a5a199d8be99bf8910fbe9c4c3d200a416feacc",
+    "tests/conftest.py": "12f786c978032b622eecc8b62704b453b91beeca97d191b45cb396d801436ecd"
+  },
+  "source_unchanged": true,
+  "log_sha256": "a600ca1478c9964892196afcf4b0c79ab22aefed7615a7d2d537fd529101af47"
+}

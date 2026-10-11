@@ -1,0 +1,28 @@
+{
+  "schema": "target-ray-group-order-source-ready-v1",
+  "production_before": "8d92d6f4c68f394f17d6c2357d8748e7abab8bfac0b555dbf3bb5d81df325a31",
+  "production_after": "fc135cb1bf8a3cbacfeb097eeabee5cd9fafc5dee7a89eebd2b9b43ab63c8d12",
+  "option": "obstruction_selection_rule=target_ray_coverage_v3",
+  "unchanged_constraints": {
+    "selected_cells": 16,
+    "max_added_tool_pairs": 32,
+    "page_size": 8,
+    "base_cap": 120,
+    "geometry_reward": "unchanged",
+    "no_extra_discovery_previews": true
+  },
+  "test_result": "6 passed in 0.61s; parent0.7735s; generated only",
+  "portable_test_note": "Only repository/archive path resolution and explicit absent-archive skip differ from executed tests; mandatory generated tests unchanged. No stage import injection in canonical test.",
+  "pins": {
+    "before/native_proposals.py": "8d92d6f4c68f394f17d6c2357d8748e7abab8bfac0b555dbf3bb5d81df325a31",
+    "controls-01.json": "696682d9f22d415f5882898e91c1fd4074bbbf0a7a33267924780685ba05ed40",
+    "controls-01.log": "a600ca1478c9964892196afcf4b0c79ab22aefed7615a7d2d537fd529101af47",
+    "portable/test_target_ray_priority.py": "679dc9c6fd490a28b02346541865b9f5b360d535240c81622e26bdb5a9267bb7",
+    "project_saved_order.py": "67023a36969b51f9df9a296ff25950203ba6f66b9124d2d22e798532debdfc1b",
+    "saved-order-projection.json": "b498acff5d212a29c937148da74cb0f008994d2cef3dc7640a9d93df5c90585d",
+    "source.patch": "c1fb6f329313bc32e46c3078172262547c67d80ae3b3aca8395be810976c5794",
+    "stage/resectionlab/native_proposals.py": "fc135cb1bf8a3cbacfeb097eeabee5cd9fafc5dee7a89eebd2b9b43ab63c8d12",
+    "tests/conftest.py": "12f786c978032b622eecc8b62704b453b91beeca97d191b45cb396d801436ecd",
+    "tests/test_target_ray_priority.py": "d4fd74498886889d481c1e9b8a5a199d8be99bf8910fbe9c4c3d200a416feacc"
+  }
+}

@@ -1,0 +1,9 @@
+# Target-corridor candidate coverage
+
+The optional `target_ray_coverage_v3` rule shares the sixteen blocker-cell slots across public goal-corridor groups before native-index fallback. Coincident endpoint/family aliases share one column/tool group; all remaining co-blockers are explicit. Static aperture eligibility, 120 base candidates, 32 extras, eight-pair pages, rewards and full-tool checks remain unchanged. Existing default and residual-v2 behavior are retained.
+
+A saved-state ordering projection moves the previously omitted blocker from frequency rank 18 to group rank 4. Its group still selects only two of six retained co-blockers. This establishes candidate coverage only, not feasible removal or a useful complete route. Six generated controls pass, followed by 125 canonical checks in 5.77 seconds (6.077 seconds parent, sixty-second limit, one thread). Independent source review found no actionable defect. Generated complete preparation/target/replay checks pass for both axis directions.
+
+The next experiment follows a persistent public-target corridor through refreshed current blockers from the original patient start, within the existing 48-step limit. Success requires target progress and positive complete return against STOP, followed by independent geometry evaluation. All preparation costs remain charged. No fitting, RL update, acquisition, held-out access or physical/clinical validation occurred in this integration. SELECT013 remains development-exposed; 037 remains held and EVAL067 closed.
+
+Source: `fc135cb1bf8a3cbacfeb097eeabee5cd9fafc5dee7a89eebd2b9b43ab63c8d12`. The optional historical parity test requires the archived before-source; generated controls do not depend on it. Source, tests, original receipts, ordering projection and independent review are retained here.

@@ -1,0 +1,173 @@
+--- a/src/resectionlab/native_proposals.py
++++ b/src/resectionlab/native_proposals.py
+@@ -373,6 +373,8 @@
+ PAGED_OBSTRUCTION_VERSION = "permitted-first-obstruction-paged-v1"
+ RESIDUAL_OBSTRUCTION_VERSION = "permitted-residual-obstruction-paged-v2"
+ RESIDUAL_OBSTRUCTION_RULE = "residual_aperture_v2"
++TARGET_RAY_OBSTRUCTION_RULE = "target_ray_coverage_v3"
++TARGET_RAY_OBSTRUCTION_VERSION = "permitted-target-ray-coverage-paged-v3"
+ _STATIC_APERTURE_MARGIN_MM = 1e-6
+ 
+ 
+@@ -416,6 +418,50 @@
+     return record
+ 
+ 
++def _target_ray_group_order(cells, groups, eligible, nominal_cells, limit):
++    """Pure public-evidence order; group aliases do not receive extra turns.
++
++    Each group is a declared source-column/tool pair. Its retained first-failure
++    cells are unioned across public-goal endpoints, including coincident family
++    aliases. One pass nominates at most one not-yet-selected cell per group;
++    shared cells are skipped without spending another global cell slot. This is
++    candidate coverage, never proof that all corridor blockers are discovered,
++    feasible to remove, or removable at useful total cost.
++    """
++    cells, eligible, nominal_cells = set(cells), set(eligible), set(nominal_cells)
++    if not eligible <= cells or not nominal_cells <= cells or type(limit) is not int or limit < 1:
++        raise ValueError("Explicit bounded public blocker sets required")
++    merged = {}
++    for key, blockers in groups:
++        blockers = set(blockers)
++        if not blockers <= cells:
++            raise ValueError("Target-ray group contains undeclared evidence")
++        merged.setdefault(tuple(key), set()).update(blockers)
++    order = sorted(eligible & nominal_cells); used = set(order)
++    pending = {key: sorted(blockers & eligible) for key, blockers in merged.items()}
++    while True:
++        added = False
++        for key in sorted(pending):
++            remaining = pending[key]
++            while remaining and remaining[0] in used:
++                remaining.pop(0)
++            if remaining:
++                cell = remaining.pop(0); order.append(cell); used.add(cell); added = True
++        if not added:
++            break
++    order.extend(sorted(eligible-used)); used.update(eligible)
++    order.extend(sorted(cells-used))
++    selected = set(order[:min(limit, len(eligible))])
++    accounting = [{"column_index": key[0], "tool_order": key[1],
++        "retained_co_blockers": sorted(merged[key]),
++        "aperture_eligible_co_blockers": sorted(merged[key] & eligible),
++        "selected_co_blockers": sorted(merged[key] & selected),
++        "unselected_co_blockers": sorted(merged[key]-selected),
++        "all_retained_co_blockers_selected": merged[key] <= selected}
++        for key in sorted(merged)]
++    return order, accounting
++
++
+ @dataclass(frozen=True)
+ class NominalCavityProposalConfig:
+     """A bounded family ledger, never all possible tool paths.
+@@ -447,7 +493,7 @@
+             raise ValueError("Paged obstruction requires enabled footprint/obstruction and exactly eight per page")
+         if self.obstruction_selection_rule is not None and (
+                 type(self.obstruction_selection_rule) is not str
+-                or self.obstruction_selection_rule != RESIDUAL_OBSTRUCTION_RULE
++                or self.obstruction_selection_rule not in (RESIDUAL_OBSTRUCTION_RULE, TARGET_RAY_OBSTRUCTION_RULE)
+                 or self.obstruction_page_size != 8):
+             raise ValueError("Residual blocker selection requires its explicit rule and eight-pair obstruction pages")
+         limit = 120 if self.tool_footprint_opening else 96
+@@ -473,6 +519,8 @@
+ 
+     @property
+     def version(self):
++        if self.obstruction_selection_rule == TARGET_RAY_OBSTRUCTION_RULE:
++            return TARGET_RAY_OBSTRUCTION_VERSION
+         if self.obstruction_selection_rule == RESIDUAL_OBSTRUCTION_RULE:
+             return RESIDUAL_OBSTRUCTION_VERSION
+         if self.obstruction_page_size is not None:
+@@ -522,12 +570,16 @@
+             legacy.update(obstruction_page_size=self.obstruction_page_size,
+                 obstruction_budget="original_base_cap_preserved; up_to_16_selected_cells_times_two_tools; all_pairs_paged_before_layer_retention",
+                 page_certificate_limit=128, page_order="original_base_then_contiguous_eight_pair_pages")
+-        if self.obstruction_selection_rule == RESIDUAL_OBSTRUCTION_RULE:
+-            legacy.update(obstruction_selection_rule=RESIDUAL_OBSTRUCTION_RULE,
++        if self.obstruction_selection_rule in (RESIDUAL_OBSTRUCTION_RULE, TARGET_RAY_OBSTRUCTION_RULE):
++            legacy.update(obstruction_selection_rule=self.obstruction_selection_rule,
+                 obstruction_rule="all_retained_actual_first_blockers; radial_capacity_is_diagnostic_only; cell_center_endpoint",
+                 obstruction_aperture="per_tool_public_static_necessary_filter_before_cell_budget; uncertain_pairs_verified",
+                 obstruction_aperture_margin_mm=_STATIC_APERTURE_MARGIN_MM,
+                 obstruction_selection="first_16_public_nominal_then_native_index_cells_with_at_least_one_not_excluded_tool")
++        if self.obstruction_selection_rule == TARGET_RAY_OBSTRUCTION_RULE:
++            legacy.update(obstruction_selection="public_nominal_members_first_then_round_robin_blocked_public_goal_column_tool_groups_then_native_index",
++                obstruction_group_aliases="same_declared_column_and_tool_union_retained_first_failure_cells; goal_membership_from_public_endpoint_not_family_name",
++                obstruction_group_scope="bounded_first_failure_sets_not_corridor_clearance; no_reward_or_private_queries")
+         return semantic_digest(legacy)
+ 
+     def to_record(self):
+@@ -966,6 +1018,9 @@
+         frame_hash = array_digest(affine)
+         tools = {t.tool_id: t for t in self._native.tools}
+         cells, evidence = {}, []
++        goal_groups = []
++        group_rule = self._config.obstruction_selection_rule == TARGET_RAY_OBSTRUCTION_RULE
++        tool_order = {tool.tool_id: index for index, tool in enumerate(self._native.tools)}
+         for ray, sidecar in zip(batch.proposals, results):
+             if cancelled is not None and cancelled():
+                 raise InterruptedError("Obstruction evidence processing cancelled")
+@@ -1003,6 +1058,9 @@
+                 "blocked_cell_count": total, "retained_cell_count": count, "truncated": total > count})
+             for cell in retained:
+                 cells.setdefault(tuple(int(v) for v in cell), set()).add(fingerprint)
++            if group_rule and self._nominal[ray.voxel] > self._config.nominal_min_membership:
++                goal_groups.append(((ray.column_index, tool_order[ray.tool_id]),
++                    tuple(tuple(int(v) for v in cell) for cell in retained)))
+ 
+         # Original column axes may differ by tiny source/native reconciliation.
+         # The segment between their two extreme projected entries bounds that
+@@ -1023,8 +1081,24 @@
+         seen = {(r.tool_id, r.entry_mm, r.tip_mm): r.proposal_id for r in rays}
+         ordered = sorted(cells, key=lambda c: (not bool(self._nominal[c] > self._config.nominal_min_membership), c))
+         selected = selection_omitted = 0
+-        residual_rule = self._config.obstruction_selection_rule == RESIDUAL_OBSTRUCTION_RULE
++        residual_rule = self._config.obstruction_selection_rule in (RESIDUAL_OBSTRUCTION_RULE, TARGET_RAY_OBSTRUCTION_RULE)
+         static_aperture = []
++        group_accounting, cached_aperture = None, {}
++        if group_rule:
++            eligible = set()
++            for cell in ordered:
++                tip = affine[:3, :3] @ cell + affine[:3, 3]
++                depth = float((tip-access.center_mm) @ normal)
++                if depth > 0:
++                    entry = tip-depth*normal
++                    checks = {tool.tool_id: _residual_aperture_test(access, tool, entry, tip)
++                              for tool in self._native.tools}
++                    cached_aperture[cell] = checks
++                    if any(not check["excluded"] for check in checks.values()):
++                        eligible.add(cell)
++            nominal_cells = {cell for cell in ordered if self._nominal[cell] > self._config.nominal_min_membership}
++            ordered, group_accounting = _target_ray_group_order(ordered, goal_groups, eligible,
++                nominal_cells, OBSTRUCTION_SELECTED_CELLS)
+         candidate_cap = self._config.max_candidates
+         if self._config.obstruction_page_size is not None:
+             if len(self._native.tools) > 2:
+@@ -1043,7 +1117,8 @@
+             pair_filters = {}
+             if residual_rule and depth > 0:
+                 for tool in self._native.tools:
+-                    check = _residual_aperture_test(access, tool, entry, tip)
++                    check = (cached_aperture[cell][tool.tool_id] if group_rule else
++                             _residual_aperture_test(access, tool, entry, tip))
+                     pair_filters[tool.tool_id] = check["excluded"]
+                     static_aperture.append({"voxel": cell, "tool_id": tool.tool_id, **check})
+             no_aperture_pair = bool(pair_filters) and all(pair_filters.values())
+@@ -1091,11 +1166,16 @@
+                 base_candidate_cap=self._config.max_candidates, added_candidate_cap=32,
+                 page_size=self._config.obstruction_page_size, certification="deferred_explicit_pages")
+         if residual_rule:
+-            accounting.update(selection_rule=RESIDUAL_OBSTRUCTION_RULE,
++            accounting.update(selection_rule=self._config.obstruction_selection_rule,
+                 original_axis_bound_role="diagnostic_only_not_an_eligibility_gate",
+                 static_aperture_pairs=static_aperture,
+                 static_aperture_excluded_pairs=sum(row["excluded"] for row in static_aperture),
+                 aperture_scope="public necessary condition only; every emitted pair still requires fresh native verification")
++        if group_rule:
++            accounting.update(priority="public_nominal_cells_first_then_round_robin_blocked_public_goal_column_tool_groups_then_native_index",
++                target_ray_groups=group_accounting,
++                target_ray_group_aliases="same_column_tool_union; public_goal_endpoint_membership_not_family_or_ID",
++                target_ray_group_scope="retained_first_failures_only; unselected_and_ineligible_co_blockers_explicit; no_clearance_or_return_guarantee")
+         result = NominalCavityBatch(batch.model_hash, cavity, batch.nominal_target_hash,
+             batch.nominal_provenance_hash, tuple(rays), tuple(ledger))
+         object.__setattr__(result, "_obstruction_accounting", freeze_json(accounting))
