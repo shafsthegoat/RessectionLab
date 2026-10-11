@@ -1,0 +1,20 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_independent_cut_union.py",
+    "tests/test_native_resection.py",
+    "tests/test_native_spatial_evaluation.py",
+    "tests/test_native_functional_evaluation.py"
+  ],
+  "exit_code": 1,
+  "timeout": false,
+  "parent_seconds": 2.201473084045574,
+  "child_reaped": true,
+  "threads": 1
+}

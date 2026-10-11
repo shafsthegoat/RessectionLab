@@ -1,0 +1,74 @@
+[
+  {
+    "row": "aligned-suction-1mm",
+    "differences": [
+      [
+        "/actions/0/geometry_unknowns",
+        "tuple",
+        "list"
+      ],
+      [
+        "/actions/1/geometry_unknowns",
+        "tuple",
+        "list"
+      ],
+      [
+        "/actions/2/geometry_unknowns",
+        "tuple",
+        "list"
+      ],
+      [
+        "/actions/3/geometry_unknowns",
+        "tuple",
+        "list"
+      ],
+      [
+        "/actions/4/geometry_unknowns",
+        "tuple",
+        "list"
+      ],
+      [
+        "/actions/5/geometry_unknowns",
+        "tuple",
+        "list"
+      ],
+      [
+        "/actions/6/geometry_unknowns",
+        "tuple",
+        "list"
+      ],
+      [
+        "/actions/7/geometry_unknowns",
+        "tuple",
+        "list"
+      ],
+      [
+        "/actions/8/geometry_unknowns",
+        "tuple",
+        "list"
+      ],
+      [
+        "/actions/9/geometry_unknowns",
+        "tuple",
+        "list"
+      ]
+    ],
+    "equal_after_tuple_list_json_normalization": true
+  },
+  {
+    "row": "aligned-aspirator-1mm",
+    "differences": [
+      [
+        "/actions/0/failure_tip_mm",
+        "tuple",
+        "list"
+      ],
+      [
+        "/actions/0/geometry_unknowns",
+        "tuple",
+        "list"
+      ]
+    ],
+    "equal_after_tuple_list_json_normalization": true
+  }
+]

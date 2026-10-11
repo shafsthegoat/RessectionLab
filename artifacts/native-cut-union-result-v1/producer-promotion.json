@@ -1,0 +1,36 @@
+{
+  "schema": "native-cut-union-producer-promotion-v1",
+  "status": "generated_controls_passed_no_acquired_execution",
+  "files": {
+    "stage/resectionlab/native_cut_union.py": "bd74877ae7448a7acc42d83f837e1933bb73564d45efc356929178f9dc5ba241",
+    "stage/resectionlab/native_resection.py": "871f747103358329ad4953f7ad58b8d6952f1860af5832bc5d340c6bba538aee",
+    "tests/test_native_cut_union.py": "e58312705f84b5fe0d82686cec0b11b1c84077a6828cee83f210b308a7ac13fb",
+    "before/native_resection.py": "79363aa6156917514d4aa57e328adcd16babff51518c0c4587e6dcaf94a5723d",
+    "producer.patch": "88be61d22f3e5a3d46e512e627747423845a8d9409ed262a1d4e07ce188954a7",
+    "run_producer_controls.py": "dad23dcb7eb40b41eeb5cb9ab015ce54aaf0e212ad6fed213a3e26427f06d269",
+    "producer-controls-01.json": "c50757de0c95dd828c8dab24f172b536962ca984f3d0d426135c8ea7539a0ffb",
+    "producer-controls-01.log": "eeb100bfcce5d5db0e13df69cc4d8e144d1cd87d6882648b44a2c354a47fd40c"
+  },
+  "controls": {
+    "passed": 131,
+    "pytest_seconds": 3.52,
+    "parent_seconds": 3.669865750009194,
+    "hard_seconds": 45,
+    "threads": 1,
+    "child_reaped": true
+  },
+  "promotion": {
+    "new_helper": "src/resectionlab/native_cut_union.py",
+    "engine": "src/resectionlab/native_resection.py",
+    "tests": "tests/test_native_cut_union.py",
+    "portable_baseline": "artifacts/native-cut-union-integration-v1/baseline/native_resection.py",
+    "portable_test_delta": "Root adjusts only baseline path; exact baseline SHA remains required."
+  },
+  "limitations": [
+    "Explicit idealized exposed active-subcell cutting and evacuation assumption; not validated tissue mechanics.",
+    "Coverage-only progress has zero removal but retains unchanged action/travel costs.",
+    "All uncertified cells remain fully occupied; shaft uses prior cavity.",
+    "This does not repair conservative source voxelization at analytic tissue boundaries.",
+    "No acquired or matched18-row outcome claimed."
+  ]
+}

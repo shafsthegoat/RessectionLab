@@ -1,0 +1,282 @@
+{
+  "version": "native-cut-union-v1",
+  "role": "analytic_generated_representation_contrast_not_training_data",
+  "physical_frame": "RAS+_mm",
+  "anatomy": {
+    "definition": "infinite_half_space_z_greater_than_or_equal_to_zero",
+    "sampled_field_contains_box_mm": [
+      [
+        -5,
+        -5,
+        -5
+      ],
+      [
+        5,
+        5,
+        8
+      ]
+    ],
+    "voxelization": "occupied_if_cell_has_positive_volume_in_half_space",
+    "nominal_target": "half_space_z_greater_than_or_equal_to_2.8_mm; exact cell fraction"
+  },
+  "tools": [
+    {
+      "tool_id": "generic_suction",
+      "tip_radius_mm": 1.0,
+      "shaft_radius_mm": 1.4,
+      "working_length_mm": 100.0,
+      "max_access_angle_deg": 45.0,
+      "tip_length_mm": 3.0,
+      "parameter_source": "generic research geometry; not a verified commercial device"
+    },
+    {
+      "tool_id": "generic_aspirator",
+      "tip_radius_mm": 1.7,
+      "shaft_radius_mm": 2.7,
+      "working_length_mm": 90.0,
+      "max_access_angle_deg": 45.0,
+      "tip_length_mm": 4.0,
+      "parameter_source": "generic research geometry; not a verified commercial device"
+    }
+  ],
+  "entry_mm": [
+    0,
+    0,
+    -2
+  ],
+  "access_radius_mm": 6.0,
+  "preparation_tip_z_mm": 1.0,
+  "target_tip_z_mm": 2.2,
+  "target_start_z_mm": 2.8,
+  "preparation_lattice_mm": {
+    "generic_suction": 1.0,
+    "generic_aspirator": 1.8
+  },
+  "preparation_order_lattice_units": [
+    [
+      0,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      -1,
+      0
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      -1,
+      1
+    ],
+    [
+      -1,
+      -1
+    ],
+    [
+      1,
+      -1
+    ]
+  ],
+  "actions_per_row": 10,
+  "max_tip_step_mm": 0.0625,
+  "spacings_mm": [
+    1.0,
+    0.5,
+    0.25
+  ],
+  "grids": [
+    {
+      "name": "aligned-suction",
+      "sampling": "aligned",
+      "tool_id": "generic_suction",
+      "rotation_xyz_degrees": [
+        0,
+        0,
+        0
+      ],
+      "phase_source_voxels": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "aligned-aspirator",
+      "sampling": "aligned",
+      "tool_id": "generic_aspirator",
+      "rotation_xyz_degrees": [
+        0,
+        0,
+        0
+      ],
+      "phase_source_voxels": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "half-phase-suction",
+      "sampling": "half_voxel_phase",
+      "tool_id": "generic_suction",
+      "rotation_xyz_degrees": [
+        0,
+        0,
+        0
+      ],
+      "phase_source_voxels": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "name": "half-phase-aspirator",
+      "sampling": "half_voxel_phase",
+      "tool_id": "generic_aspirator",
+      "rotation_xyz_degrees": [
+        0,
+        0,
+        0
+      ],
+      "phase_source_voxels": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "name": "tilted-suction",
+      "sampling": "tilted_20_degrees",
+      "tool_id": "generic_suction",
+      "rotation_xyz_degrees": [
+        0,
+        20,
+        0
+      ],
+      "phase_source_voxels": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "tilted-aspirator",
+      "sampling": "tilted_20_degrees",
+      "tool_id": "generic_aspirator",
+      "rotation_xyz_degrees": [
+        0,
+        20,
+        0
+      ],
+      "phase_source_voxels": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "expected_rows": 18,
+  "expected_action_slots": 180,
+  "reward": {
+    "target_per_mm3": 1.0,
+    "normal_per_mm3": 0.2,
+    "motor_per_mm3": 0.0,
+    "language_per_mm3": 0.0,
+    "action_cost": 0.03,
+    "motion_per_mm": 0.001,
+    "tool_change_cost": 0.03,
+    "graph_edge_cost": 0.0
+  },
+  "reward_scope": "unchanged canonical NativeSpatialTask scoring on exact analytic nominal target fractions stored float32; ancillary numerical readout, not an RL score or selected policy",
+  "boundary_accounting": "Initial occupied cells unchanged. Certified partial cut union remains occupied until entire native cell covered and connected. Physical support/target clips and whole-cell credit remain separate. Coverage-only actions receive zero removal credit and retain action/motion costs.",
+  "independent_check": {
+    "distance_backend": "batch",
+    "distance_batch_size": 256,
+    "cut_union_spec": "Explicit CutUnionSpec.to_record() matching experimental config",
+    "scope": "Every committed prefix, including coverage-only progress and later-refused prescribed sequences; full-tool independent audit"
+  },
+  "ordering": "spacing_coarse_to_fine; declared sampling/tool order; all numerical rows then independent history checks",
+  "caps": {
+    "cooperative_worker_seconds": 170,
+    "parent_wall_seconds": 180,
+    "worker_peak_rss_bytes": 2147483648,
+    "max_grid_cells": 2000000,
+    "max_native_strokes": 180,
+    "max_independent_audits": 18,
+    "threads": 1
+  },
+  "failure_policy": "Stop each sequence at first refusal, including explicit coverage-budget refusal. Retain all18rows/180slots; missing/unfinished/capped remain denominator. Audit every committed prefix. No retry or cap increase.",
+  "claims_excluded": [
+    "patient_resolution_validation",
+    "clinical_physics",
+    "learning",
+    "optimal_preparation_count",
+    "monotone_or_completed_convergence",
+    "relative_grid_rotation_as_joint_rigid_transform",
+    "static_coverage_as_executable_clearance",
+    "cut_union_as_validated_mechanics",
+    "initial_partial_occupancy_repair",
+    "matched_runtime_speedup",
+    "coverage_only_progress_as_tissue_removal"
+  ],
+  "experimental_mode": "cumulative_affine_subcell_cut_union_v1",
+  "experimental_cut_union": {
+    "max_depth": 3,
+    "max_tracked_cells": 4096,
+    "max_leaf_tests_per_preview": 4194304
+  },
+  "retained_baseline": {
+    "report_path": "artifacts/native-generic-discretization-v1/run-01/report.json",
+    "report_sha256": "8e40ef8f6c4504c8eedb020687250c59cb4e58f869fe02bf530a9a001761bc9f",
+    "declaration_path": "artifacts/native-generic-discretization-v1/declaration.json",
+    "scope": "Pinned complete default18-row baseline retained; no fresh full baseline run. Generated default parity controls precede release.",
+    "runtime_comparison": "Earlier retained timing, not paired; no speedup claim"
+  },
+  "fixed_baseline_fields": [
+    "physical_frame",
+    "anatomy",
+    "tools",
+    "entry_mm",
+    "access_radius_mm",
+    "preparation_tip_z_mm",
+    "target_tip_z_mm",
+    "target_start_z_mm",
+    "preparation_lattice_mm",
+    "preparation_order_lattice_units",
+    "actions_per_row",
+    "max_tip_step_mm",
+    "spacings_mm",
+    "grids",
+    "expected_rows",
+    "expected_action_slots",
+    "reward",
+    "reward_scope"
+  ],
+  "volume_bounds": "Achieved physical removal must not exceed static contact upper; achieved physical target must not exceed exact final spherical-cap target volume. Single-capsule contained union is reference only, not removal ceiling.",
+  "predeclared_useful_criterion": {
+    "additional_complete_sequences_minimum": 1,
+    "prior_complete_sequence_regressions_allowed": 0,
+    "all18rows_present_required": true,
+    "all_nonempty_prefix_independent_checks_must_pass": true,
+    "physical_target_must_not_exceed_exact_cap": true,
+    "coverage_cap_refusals_are_not_wins": true,
+    "incomplete_audits_block_promotion": true,
+    "target_error_direction_reported_separately": true,
+    "resource_overhead_reported_separately": true,
+    "scope": "Complementary-cut representation; not initial outer voxelization, target-volume convergence, SELECT013 repair, or clinical performance"
+  }
+}

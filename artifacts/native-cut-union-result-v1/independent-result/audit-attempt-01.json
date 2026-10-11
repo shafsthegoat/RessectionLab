@@ -1,0 +1,52 @@
+{
+  "checks": 6,
+  "error": "declaration joins",
+  "inputs": {
+    "artifacts/native-generic-discretization-v1/declaration.json": {
+      "bytes": 4134,
+      "sha256": "a815e89510b153778a82307c3ae142e939c422187a51dcb618ba643ed1164081"
+    },
+    "artifacts/native-generic-discretization-v1/run-01/report.json": {
+      "bytes": 252072,
+      "sha256": "8e40ef8f6c4504c8eedb020687250c59cb4e58f869fe02bf530a9a001761bc9f"
+    },
+    "build/native-cut-union-v1/declaration.json": {
+      "bytes": 7614,
+      "sha256": "0f909c16508e642e8f570214505e472edf92fd0ea78525779d7c0ab38896aefe"
+    },
+    "build/native-cut-union-v1/root-controls/attempt-02.json": {
+      "bytes": 1823,
+      "sha256": "85ccf2a7e7d76f2c9a7fdca474d2a9ab71235c17c4f74fa9335a67245ca7e1f1"
+    },
+    "build/native-cut-union-v1/root-controls/attempt-03.json": {
+      "bytes": 701,
+      "sha256": "988d75a3df7062157e63a9b310854e9953ee98a499371ba4785d6de0f676ea13"
+    },
+    "build/native-cut-union-v1/root-controls/parity-diagnostic.json": {
+      "bytes": 1318,
+      "sha256": "4453e79ab6b043f650b83643c869fff2c83a2d831ab7f612ace95656060809dd"
+    },
+    "build/native-cut-union-v1/root-release.json": {
+      "bytes": 16589,
+      "sha256": "9343cd2a99719863b5de897f2333e5c7a5a07533862f8c87875408f0a8fd8f54"
+    },
+    "build/native-cut-union-v1/run-01/launcher.json": {
+      "bytes": 2334,
+      "sha256": "552cabb0aef3117e96deded3c829fb5e6672d5563dda61cfa7c0442d94805d26"
+    },
+    "build/native-cut-union-v1/run-01/progress.json": {
+      "bytes": 643,
+      "sha256": "5999e4ee89c3f775d578712bf781bfb704e13b316e0ee5552723fc208a5d10b3"
+    },
+    "build/native-cut-union-v1/run-01/prospective-source.json": {
+      "bytes": 24328,
+      "sha256": "993daf5f9f09f80e2fd6ea21ccf3aa7171590ad4972868db15d71969c9b220f7"
+    },
+    "build/native-cut-union-v1/run-01/report.json": {
+      "bytes": 398620,
+      "sha256": "3784d71445463bd97ef717ffb0a191852cab0cc75ae85bfe4d26b8c8dff36d42"
+    }
+  },
+  "status": "FAIL",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-union-v1/independent-result/audit_saved.py\", line 153, in <module>\n    try:result=main()\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-union-v1/independent-result/audit_saved.py\", line 37, in main\n    need(pros['declaration']==d and r['declaration_hash']==semantic(d),'declaration joins')\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-union-v1/independent-result/audit_saved.py\", line 11, in need\n    if not value:raise AssertionError(label)\nAssertionError: declaration joins\n"
+}

@@ -1,0 +1,124 @@
+{
+  "scope": "Lean archive recommendation; no copy/deletion performed by saved-result analysis",
+  "canonical_source_commit": "9fc4a50d66c562b5df065175686c3df3e6685ccb",
+  "files": [
+    {
+      "path": "probe_union.py",
+      "bytes": 23332,
+      "sha256": "0a7168a3c2f071536ec9dbc5b45515cb5d829cbc47c2c316d640d336e2ba1530"
+    },
+    {
+      "path": "declaration.json",
+      "bytes": 7614,
+      "sha256": "0f909c16508e642e8f570214505e472edf92fd0ea78525779d7c0ab38896aefe"
+    },
+    {
+      "path": "test_probe_union.py",
+      "bytes": 8797,
+      "sha256": "76d4c77ef193ba4df1a170db2ce2711d7a9ad6e0b731b648d3e4bd5ec775e856"
+    },
+    {
+      "path": "root-release.json",
+      "bytes": 16589,
+      "sha256": "9343cd2a99719863b5de897f2333e5c7a5a07533862f8c87875408f0a8fd8f54"
+    },
+    {
+      "path": "producer-controls-01.json",
+      "bytes": 4113,
+      "sha256": "c50757de0c95dd828c8dab24f172b536962ca984f3d0d426135c8ea7539a0ffb"
+    },
+    {
+      "path": "producer-controls-01.log",
+      "bytes": 180,
+      "sha256": "eeb100bfcce5d5db0e13df69cc4d8e144d1cd87d6882648b44a2c354a47fd40c"
+    },
+    {
+      "path": "producer-promotion.json",
+      "bytes": 1970,
+      "sha256": "1a5a3d14a703b2b6b291cd97416b4660de64a247d3a72cb1b0814506ce120f9c"
+    },
+    {
+      "path": "run_producer_controls.py",
+      "bytes": 2249,
+      "sha256": "dad23dcb7eb40b41eeb5cb9ab015ce54aaf0e212ad6fed213a3e26427f06d269"
+    },
+    {
+      "path": "root-controls/attempt-01.json",
+      "bytes": 419,
+      "sha256": "5364ee59d139a54c7c1f35b5e5a6346a186f18e6a40b3e08a9f84ce305ae75c1"
+    },
+    {
+      "path": "root-controls/attempt-01.log",
+      "bytes": 9631,
+      "sha256": "61842fdbed09e664fcfa73cf47170f20a3b1597151e2fe201a8359ffffa3b3a3"
+    },
+    {
+      "path": "root-controls/attempt-02.json",
+      "bytes": 1823,
+      "sha256": "85ccf2a7e7d76f2c9a7fdca474d2a9ab71235c17c4f74fa9335a67245ca7e1f1"
+    },
+    {
+      "path": "root-controls/attempt-02.log",
+      "bytes": 3472,
+      "sha256": "7bdc0f53605255ff1fb006082ef4a983edb91dfde37c9d09e1f9434efe225bf2"
+    },
+    {
+      "path": "root-controls/attempt-03.json",
+      "bytes": 701,
+      "sha256": "988d75a3df7062157e63a9b310854e9953ee98a499371ba4785d6de0f676ea13"
+    },
+    {
+      "path": "root-controls/attempt-03.log",
+      "bytes": 99,
+      "sha256": "896a4b9fa3995f0c2a2d8b0fc6cfe439a6487c330dcc00d9220e273df71cfe07"
+    },
+    {
+      "path": "root-controls/parity-diagnostic.json",
+      "bytes": 1318,
+      "sha256": "4453e79ab6b043f650b83643c869fff2c83a2d831ab7f612ace95656060809dd"
+    },
+    {
+      "path": "run-01/report.json",
+      "bytes": 398620,
+      "sha256": "3784d71445463bd97ef717ffb0a191852cab0cc75ae85bfe4d26b8c8dff36d42"
+    },
+    {
+      "path": "run-01/launcher.json",
+      "bytes": 2334,
+      "sha256": "552cabb0aef3117e96deded3c829fb5e6672d5563dda61cfa7c0442d94805d26"
+    },
+    {
+      "path": "run-01/progress.json",
+      "bytes": 643,
+      "sha256": "5999e4ee89c3f775d578712bf781bfb704e13b316e0ee5552723fc208a5d10b3"
+    },
+    {
+      "path": "run-01/prospective-source.json",
+      "bytes": 24328,
+      "sha256": "993daf5f9f09f80e2fd6ea21ccf3aa7171590ad4972868db15d71969c9b220f7"
+    },
+    {
+      "path": "run-01/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "RESULT.md",
+      "bytes": 14716,
+      "sha256": "ba25bb3672937cfae8e22709304423a7425bddb1ad226dfb22a7197558cdd6c0"
+    },
+    {
+      "path": "saved-summary.json",
+      "bytes": 15328,
+      "sha256": "5056e8db9e8ebc733a468df453ac776e61dc29ca8fc6b658f7bb757bfe7513e8"
+    }
+  ],
+  "listed_bytes": 538276,
+  "retain_this_manifest": true,
+  "retained_baseline": {
+    "path": "artifacts/native-generic-discretization-v1",
+    "report_sha256": "8e40ef8f6c4504c8eedb020687250c59cb4e58f869fe02bf530a9a001761bc9f",
+    "duplicate_in_this_archive": false
+  },
+  "omit": "Staged/before canonical source trees, redundant producer patch, arrays, caches, bulk transient proof histories. Canonical producer/checker/tests are recoverable from pinned commit; exact source maps are preserved in release/prospective/report."
+}

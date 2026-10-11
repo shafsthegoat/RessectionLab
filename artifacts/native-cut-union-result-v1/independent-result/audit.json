@@ -1,0 +1,449 @@
+{
+  "additional_complete_rows": [
+    "aligned-suction-0.5mm",
+    "tilted-suction-0.5mm"
+  ],
+  "checks": 4450,
+  "complete_after": 13,
+  "complete_before": 11,
+  "costs": {
+    "independent_audit_seconds": 34.56684212316759,
+    "native_seconds": 62.680213995976374,
+    "nonpaired_worker_ratio": 3.587691281234665,
+    "numerical_rows_seconds": 64.67348750145175,
+    "parent_polled_peak_worker_rss_bytes": 466927616,
+    "parent_seconds": 99.83153516706079,
+    "retained_worker_seconds": 27.710534957936034,
+    "scope": "Native time is nested in numerical rows; rows plus audits nested in worker; parent encompasses worker. Nonpaired historical costs, no causal speed estimate.",
+    "worker_peak_rss_bytes": 471318528,
+    "worker_seconds": 99.4168446669355
+  },
+  "counts": {
+    "accepted": 141,
+    "certificates": 15,
+    "empty_prefix": 3,
+    "rejected": 5,
+    "unexecuted_prior_refusal": 34
+  },
+  "coverage_only_accepted_actions": 5,
+  "coverage_work": {
+    "budget_refusals": 0,
+    "leaf_tests": 68307262,
+    "new_leaf_count": 15344344,
+    "peak_tracked_cells": 1236,
+    "returned_previews_accounted": 146,
+    "witness_rows": 219045
+  },
+  "grouping": {
+    "0.25": {
+      "complete_after": 6,
+      "complete_before": 6,
+      "target_positive_after": 6
+    },
+    "0.5": {
+      "complete_after": 5,
+      "complete_before": 3,
+      "target_positive_after": 3
+    },
+    "1.0": {
+      "complete_after": 2,
+      "complete_before": 2,
+      "target_positive_after": 1
+    }
+  },
+  "inputs": {
+    "artifacts/native-generic-discretization-v1/declaration.json": {
+      "bytes": 4134,
+      "sha256": "a815e89510b153778a82307c3ae142e939c422187a51dcb618ba643ed1164081"
+    },
+    "artifacts/native-generic-discretization-v1/run-01/report.json": {
+      "bytes": 252072,
+      "sha256": "8e40ef8f6c4504c8eedb020687250c59cb4e58f869fe02bf530a9a001761bc9f"
+    },
+    "build/native-cut-union-v1/declaration.json": {
+      "bytes": 7614,
+      "sha256": "0f909c16508e642e8f570214505e472edf92fd0ea78525779d7c0ab38896aefe"
+    },
+    "build/native-cut-union-v1/root-controls/attempt-02.json": {
+      "bytes": 1823,
+      "sha256": "85ccf2a7e7d76f2c9a7fdca474d2a9ab71235c17c4f74fa9335a67245ca7e1f1"
+    },
+    "build/native-cut-union-v1/root-controls/attempt-03.json": {
+      "bytes": 701,
+      "sha256": "988d75a3df7062157e63a9b310854e9953ee98a499371ba4785d6de0f676ea13"
+    },
+    "build/native-cut-union-v1/root-controls/parity-diagnostic.json": {
+      "bytes": 1318,
+      "sha256": "4453e79ab6b043f650b83643c869fff2c83a2d831ab7f612ace95656060809dd"
+    },
+    "build/native-cut-union-v1/root-release.json": {
+      "bytes": 16589,
+      "sha256": "9343cd2a99719863b5de897f2333e5c7a5a07533862f8c87875408f0a8fd8f54"
+    },
+    "build/native-cut-union-v1/run-01/launcher.json": {
+      "bytes": 2334,
+      "sha256": "552cabb0aef3117e96deded3c829fb5e6672d5563dda61cfa7c0442d94805d26"
+    },
+    "build/native-cut-union-v1/run-01/progress.json": {
+      "bytes": 643,
+      "sha256": "5999e4ee89c3f775d578712bf781bfb704e13b316e0ee5552723fc208a5d10b3"
+    },
+    "build/native-cut-union-v1/run-01/prospective-source.json": {
+      "bytes": 24328,
+      "sha256": "993daf5f9f09f80e2fd6ea21ccf3aa7171590ad4972868db15d71969c9b220f7"
+    },
+    "build/native-cut-union-v1/run-01/report.json": {
+      "bytes": 398620,
+      "sha256": "3784d71445463bd97ef717ffb0a191852cab0cc75ae85bfe4d26b8c8dff36d42"
+    }
+  },
+  "limitations": [
+    "Completion criterion concerns fixed generated complementary-cut sequences, not optimality or positive return.",
+    "Full source-cell removal and clipped physical volume are separate; initial occupied outer cells and partial-cell conservative occupancy remain.",
+    "Finite-grid target shortfalls and phase/rotation dependence persist; no convergence or patient-resolution claim.",
+    "No force/material/device validation, human patients, training updates, selected policy or RL improvement.",
+    "Saved report retains history hashes and full-tool certificate summaries, not raw per-leaf history; this metadata audit does not re-establish geometry independently."
+  ],
+  "maximum_per_preview": {
+    "leaf_tests": 2171736,
+    "tracked_cells": 1236,
+    "witness_rows": 7188
+  },
+  "meets_predeclared_useful_criterion": true,
+  "new_target_positive_rows": [
+    "tilted-suction-0.5mm"
+  ],
+  "regressions": [],
+  "rows": [
+    {
+      "accepted": 10,
+      "audit_actions": 10,
+      "complete_after": true,
+      "complete_before": true,
+      "coverage_only": 0,
+      "exact_cap_mm3": 0.4356341812977854,
+      "first_refusal": null,
+      "physical_removed_mm3": 14.5,
+      "return": -4.162400000000001,
+      "row_id": "aligned-suction-1mm",
+      "source_cell_volume_mm3": 19.0,
+      "target_after_mm3": 0.0,
+      "target_before_mm3": 0.0,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 0,
+      "audit_actions": 0,
+      "complete_after": false,
+      "complete_before": false,
+      "coverage_only": 0,
+      "exact_cap_mm3": 5.0684361477915365,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          0.9375
+        ],
+        "index": 1,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+      },
+      "physical_removed_mm3": 0.0,
+      "return": 0.0,
+      "row_id": "aligned-aspirator-1mm",
+      "source_cell_volume_mm3": 0.0,
+      "target_after_mm3": 0.0,
+      "target_before_mm3": 0.0,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 9,
+      "audit_actions": 9,
+      "complete_after": false,
+      "complete_before": false,
+      "coverage_only": 5,
+      "exact_cap_mm3": 0.4356341812977854,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          2.076470588235294
+        ],
+        "index": 10,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+      },
+      "physical_removed_mm3": 4.0,
+      "return": -1.124,
+      "row_id": "half-phase-suction-1mm",
+      "source_cell_volume_mm3": 4.0,
+      "target_after_mm3": 0.0,
+      "target_before_mm3": 0.0,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 10,
+      "audit_actions": 10,
+      "complete_after": true,
+      "complete_before": true,
+      "coverage_only": 0,
+      "exact_cap_mm3": 5.0684361477915365,
+      "first_refusal": null,
+      "physical_removed_mm3": 56.0,
+      "return": -10.602399985694886,
+      "row_id": "half-phase-aspirator-1mm",
+      "source_cell_volume_mm3": 56.0,
+      "target_after_mm3": 0.8000000000000007,
+      "target_before_mm3": 0.8000000000000007,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 0,
+      "audit_actions": 0,
+      "complete_after": false,
+      "complete_before": false,
+      "coverage_only": 0,
+      "exact_cap_mm3": 0.4356341812977854,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          0.8125
+        ],
+        "index": 1,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+      },
+      "physical_removed_mm3": 0.0,
+      "return": 0.0,
+      "row_id": "tilted-suction-1mm",
+      "source_cell_volume_mm3": 0.0,
+      "target_after_mm3": 0.0,
+      "target_before_mm3": 0.0,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 0,
+      "audit_actions": 0,
+      "complete_after": false,
+      "complete_before": false,
+      "coverage_only": 0,
+      "exact_cap_mm3": 5.0684361477915365,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          0.25
+        ],
+        "index": 1,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+      },
+      "physical_removed_mm3": 0.0,
+      "return": 0.0,
+      "row_id": "tilted-aspirator-1mm",
+      "source_cell_volume_mm3": 0.0,
+      "target_after_mm3": 0.0,
+      "target_before_mm3": 0.0,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 10,
+      "audit_actions": 10,
+      "complete_after": true,
+      "complete_before": false,
+      "coverage_only": 0,
+      "exact_cap_mm3": 0.4356341812977854,
+      "first_refusal": null,
+      "physical_removed_mm3": 18.437500000000004,
+      "return": -4.612400000000001,
+      "row_id": "aligned-suction-0.5mm",
+      "source_cell_volume_mm3": 21.250000000000004,
+      "target_after_mm3": 0.0,
+      "target_before_mm3": 0.0,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 10,
+      "audit_actions": 10,
+      "complete_after": true,
+      "complete_before": true,
+      "coverage_only": 0,
+      "exact_cap_mm3": 5.0684361477915365,
+      "first_refusal": null,
+      "physical_removed_mm3": 80.18750000000001,
+      "return": -16.357400046491627,
+      "row_id": "aligned-aspirator-0.5mm",
+      "source_cell_volume_mm3": 89.50000000000001,
+      "target_after_mm3": 1.587500000000001,
+      "target_before_mm3": 1.587500000000001,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 10,
+      "audit_actions": 10,
+      "complete_after": true,
+      "complete_before": true,
+      "coverage_only": 0,
+      "exact_cap_mm3": 0.4356341812977854,
+      "first_refusal": null,
+      "physical_removed_mm3": 14.500000000000004,
+      "return": -3.262400000000001,
+      "row_id": "half-phase-suction-0.5mm",
+      "source_cell_volume_mm3": 14.500000000000004,
+      "target_after_mm3": 0.0,
+      "target_before_mm3": 0.0,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 10,
+      "audit_actions": 10,
+      "complete_after": true,
+      "complete_before": true,
+      "coverage_only": 0,
+      "exact_cap_mm3": 5.0684361477915365,
+      "first_refusal": null,
+      "physical_removed_mm3": 76.00000000000001,
+      "return": -14.00239998569489,
+      "row_id": "half-phase-aspirator-0.5mm",
+      "source_cell_volume_mm3": 76.00000000000001,
+      "target_after_mm3": 1.300000000000001,
+      "target_before_mm3": 1.300000000000001,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 10,
+      "audit_actions": 10,
+      "complete_after": true,
+      "complete_before": false,
+      "coverage_only": 0,
+      "exact_cap_mm3": 0.4356341812977854,
+      "first_refusal": null,
+      "physical_removed_mm3": 17.06249999999999,
+      "return": -4.420574326783045,
+      "row_id": "tilted-suction-0.5mm",
+      "source_cell_volume_mm3": 20.499999999999996,
+      "target_after_mm3": 0.034854727748714655,
+      "target_before_mm3": 0.0,
+      "target_delta_mm3": 0.034854727748714655
+    },
+    {
+      "accepted": 2,
+      "audit_actions": 2,
+      "complete_after": false,
+      "complete_before": false,
+      "coverage_only": 0,
+      "exact_cap_mm3": 5.0684361477915365,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          1.8,
+          0.9375
+        ],
+        "index": 3,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+      },
+      "physical_removed_mm3": 18.91820091870313,
+      "return": -4.471999999999999,
+      "row_id": "tilted-aspirator-0.5mm",
+      "source_cell_volume_mm3": 21.999999999999996,
+      "target_after_mm3": 0.0,
+      "target_before_mm3": 0.0,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 10,
+      "audit_actions": 10,
+      "complete_after": true,
+      "complete_before": true,
+      "coverage_only": 0,
+      "exact_cap_mm3": 0.4356341812977854,
+      "first_refusal": null,
+      "physical_removed_mm3": 22.85156250000001,
+      "return": -5.116149995306137,
+      "row_id": "aligned-suction-0.25mm",
+      "source_cell_volume_mm3": 24.45312500000001,
+      "target_after_mm3": 0.11406250000000029,
+      "target_before_mm3": 0.11406250000000029,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 10,
+      "audit_actions": 10,
+      "complete_after": true,
+      "complete_before": true,
+      "coverage_only": 0,
+      "exact_cap_mm3": 5.0684361477915365,
+      "first_refusal": null,
+      "physical_removed_mm3": 95.86718750000004,
+      "return": -16.729274978318816,
+      "row_id": "aligned-aspirator-0.25mm",
+      "source_cell_volume_mm3": 101.06250000000004,
+      "target_after_mm3": 3.2046875000000026,
+      "target_before_mm3": 3.2046875000000026,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 10,
+      "audit_actions": 10,
+      "complete_after": true,
+      "complete_before": true,
+      "coverage_only": 0,
+      "exact_cap_mm3": 0.4356341812977854,
+      "first_refusal": null,
+      "physical_removed_mm3": 21.62500000000001,
+      "return": -4.507399997317793,
+      "row_id": "half-phase-suction-0.25mm",
+      "source_cell_volume_mm3": 21.62500000000001,
+      "target_after_mm3": 0.1500000000000002,
+      "target_before_mm3": 0.1500000000000002,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 10,
+      "audit_actions": 10,
+      "complete_after": true,
+      "complete_before": true,
+      "coverage_only": 0,
+      "exact_cap_mm3": 5.0684361477915365,
+      "first_refusal": null,
+      "physical_removed_mm3": 94.06250000000004,
+      "return": -15.529899980330473,
+      "row_id": "half-phase-aspirator-0.25mm",
+      "source_cell_volume_mm3": 94.06250000000004,
+      "target_after_mm3": 3.0375000000000023,
+      "target_before_mm3": 3.0375000000000023,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 10,
+      "audit_actions": 10,
+      "complete_after": true,
+      "complete_before": true,
+      "coverage_only": 0,
+      "exact_cap_mm3": 0.4356341812977854,
+      "first_refusal": null,
+      "physical_removed_mm3": 22.164062499999982,
+      "return": -5.045654012465475,
+      "row_id": "tilted-suction-0.25mm",
+      "source_cell_volume_mm3": 24.109374999999986,
+      "target_after_mm3": 0.11551748837485533,
+      "target_before_mm3": 0.11551748837485533,
+      "target_delta_mm3": 0.0
+    },
+    {
+      "accepted": 10,
+      "audit_actions": 10,
+      "complete_after": true,
+      "complete_before": true,
+      "coverage_only": 0,
+      "exact_cap_mm3": 5.0684361477915365,
+      "first_refusal": null,
+      "physical_removed_mm3": 94.99218749999991,
+      "return": -16.89326669592302,
+      "row_id": "tilted-aspirator-0.25mm",
+      "source_cell_volume_mm3": 101.62499999999994,
+      "target_after_mm3": 3.161777750881094,
+      "target_before_mm3": 3.161777750881094,
+      "target_delta_mm3": 0.0
+    }
+  ],
+  "scope": "Saved JSON/hash/scalar audit only; no project imports, patient arrays, native rerun or reconstructed leaf proof. Certificates authenticate reported nonempty prefixes; no certification of rejected actions.",
+  "status": "PASS"
+}
