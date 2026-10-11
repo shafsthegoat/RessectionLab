@@ -1,0 +1,128 @@
+.......................................................EEEE              [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_interruption_durably_seals_worlds_and_only_same_evaluation_can_resume _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1117/test_interruption_durably_seal0')
+
+    @pytest.fixture
+    def selected(tmp_path):
+        torch.set_num_threads(1)
+        case = case_with_evidence()
+        directory = tmp_path / "run"
+        options = dict(access=AccessWindow((3., 3., -.5), (0., 0., 1.), 4.),
+            tools=(NATIVE_GENERIC_TOOLS[0],), selected_entry_mm=(3., 3., -.5),
+            selected_target_mm=(3., 3., 4.), candidate_count=1, max_steps=1, max_actions=2)
+>       report = run_native_refinement(case, directory, budget_seconds=1., seed=11, **options)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_functional_evaluation.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/resectionlab/native_refinement.py:470: in run_native_refinement
+    result = train_patient_policy(template.clone, partitions.optimization, partitions.selection,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<bound method NativeSequentialSimulator.clone of <resectionlab.native_simulation.NativeSequentialSimulator object at ...083886, 4876476225275356082), planning_hash='sha256:5fecd084a05a133a1f985fc47cc272bd62edf47a9032a21cc6b251823354c696'))
+kwargs = {'config': TrainingConfig(seed=11, max_environment_steps=256, max_gradient_steps=32, max_wall_seconds=1.0, max_episode....<locals>.<lambda> at 0x1125585e0>, 'progress': <function run_native_refinement.<locals>.<lambda> at 0x112558720>, ...}
+
+    @wraps(function)
+    def refuse(*args: P.args, **kwargs: P.kwargs) -> NoReturn:
+>       raise DataPolicyError(code, function.__qualname__)
+E       resectionlab.data_policy.DataPolicyError: RECORDED_EXPERIENCE_REQUIRED: train_patient_policy: This historical implicit learning pathway remains closed. The spatial learner can use an explicit October 8 generated-development contract; other recorded or generated workflows require separate source admission.
+
+src/resectionlab/data_policy.py:173: DataPolicyError
+_ ERROR at setup of test_reopening_recomputes_events_even_if_a_forged_report_has_new_hashes _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1117/test_reopening_recomputes_even0')
+
+    @pytest.fixture
+    def selected(tmp_path):
+        torch.set_num_threads(1)
+        case = case_with_evidence()
+        directory = tmp_path / "run"
+        options = dict(access=AccessWindow((3., 3., -.5), (0., 0., 1.), 4.),
+            tools=(NATIVE_GENERIC_TOOLS[0],), selected_entry_mm=(3., 3., -.5),
+            selected_target_mm=(3., 3., 4.), candidate_count=1, max_steps=1, max_actions=2)
+>       report = run_native_refinement(case, directory, budget_seconds=1., seed=11, **options)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_functional_evaluation.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/resectionlab/native_refinement.py:470: in run_native_refinement
+    result = train_patient_policy(template.clone, partitions.optimization, partitions.selection,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<bound method NativeSequentialSimulator.clone of <resectionlab.native_simulation.NativeSequentialSimulator object at ...083886, 4876476225275356082), planning_hash='sha256:5fecd084a05a133a1f985fc47cc272bd62edf47a9032a21cc6b251823354c696'))
+kwargs = {'config': TrainingConfig(seed=11, max_environment_steps=256, max_gradient_steps=32, max_wall_seconds=1.0, max_episode....<locals>.<lambda> at 0x1125bf4c0>, 'progress': <function run_native_refinement.<locals>.<lambda> at 0x1125bf6a0>, ...}
+
+    @wraps(function)
+    def refuse(*args: P.args, **kwargs: P.kwargs) -> NoReturn:
+>       raise DataPolicyError(code, function.__qualname__)
+E       resectionlab.data_policy.DataPolicyError: RECORDED_EXPERIENCE_REQUIRED: train_patient_policy: This historical implicit learning pathway remains closed. The spatial learner can use an explicit October 8 generated-development contract; other recorded or generated workflows require separate source admission.
+
+src/resectionlab/data_policy.py:173: DataPolicyError
+_ ERROR at setup of test_shared_ledger_rejects_a_new_candidate_on_already_revealed_worlds _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1117/test_shared_ledger_rejects_a_n0')
+
+    @pytest.fixture
+    def selected(tmp_path):
+        torch.set_num_threads(1)
+        case = case_with_evidence()
+        directory = tmp_path / "run"
+        options = dict(access=AccessWindow((3., 3., -.5), (0., 0., 1.), 4.),
+            tools=(NATIVE_GENERIC_TOOLS[0],), selected_entry_mm=(3., 3., -.5),
+            selected_target_mm=(3., 3., 4.), candidate_count=1, max_steps=1, max_actions=2)
+>       report = run_native_refinement(case, directory, budget_seconds=1., seed=11, **options)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_functional_evaluation.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/resectionlab/native_refinement.py:470: in run_native_refinement
+    result = train_patient_policy(template.clone, partitions.optimization, partitions.selection,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<bound method NativeSequentialSimulator.clone of <resectionlab.native_simulation.NativeSequentialSimulator object at ...083886, 4876476225275356082), planning_hash='sha256:5fecd084a05a133a1f985fc47cc272bd62edf47a9032a21cc6b251823354c696'))
+kwargs = {'config': TrainingConfig(seed=11, max_environment_steps=256, max_gradient_steps=32, max_wall_seconds=1.0, max_episode....<locals>.<lambda> at 0x1125bf740>, 'progress': <function run_native_refinement.<locals>.<lambda> at 0x1125bf9c0>, ...}
+
+    @wraps(function)
+    def refuse(*args: P.args, **kwargs: P.kwargs) -> NoReturn:
+>       raise DataPolicyError(code, function.__qualname__)
+E       resectionlab.data_policy.DataPolicyError: RECORDED_EXPERIENCE_REQUIRED: train_patient_policy: This historical implicit learning pathway remains closed. The spatial learner can use an explicit October 8 generated-development contract; other recorded or generated workflows require separate source admission.
+
+src/resectionlab/data_policy.py:173: DataPolicyError
+_ ERROR at setup of test_edited_final_partition_cannot_reset_worlds_before_sealing _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1117/test_edited_final_partition_ca0')
+
+    @pytest.fixture
+    def selected(tmp_path):
+        torch.set_num_threads(1)
+        case = case_with_evidence()
+        directory = tmp_path / "run"
+        options = dict(access=AccessWindow((3., 3., -.5), (0., 0., 1.), 4.),
+            tools=(NATIVE_GENERIC_TOOLS[0],), selected_entry_mm=(3., 3., -.5),
+            selected_target_mm=(3., 3., 4.), candidate_count=1, max_steps=1, max_actions=2)
+>       report = run_native_refinement(case, directory, budget_seconds=1., seed=11, **options)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_functional_evaluation.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/resectionlab/native_refinement.py:470: in run_native_refinement
+    result = train_patient_policy(template.clone, partitions.optimization, partitions.selection,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<bound method NativeSequentialSimulator.clone of <resectionlab.native_simulation.NativeSequentialSimulator object at ...083886, 4876476225275356082), planning_hash='sha256:5fecd084a05a133a1f985fc47cc272bd62edf47a9032a21cc6b251823354c696'))
+kwargs = {'config': TrainingConfig(seed=11, max_environment_steps=256, max_gradient_steps=32, max_wall_seconds=1.0, max_episode....<locals>.<lambda> at 0x1125bf380>, 'progress': <function run_native_refinement.<locals>.<lambda> at 0x1125bfec0>, ...}
+
+    @wraps(function)
+    def refuse(*args: P.args, **kwargs: P.kwargs) -> NoReturn:
+>       raise DataPolicyError(code, function.__qualname__)
+E       resectionlab.data_policy.DataPolicyError: RECORDED_EXPERIENCE_REQUIRED: train_patient_policy: This historical implicit learning pathway remains closed. The spatial learner can use an explicit October 8 generated-development contract; other recorded or generated workflows require separate source admission.
+
+src/resectionlab/data_policy.py:173: DataPolicyError
+=========================== short test summary info ============================
+ERROR tests/test_native_functional_evaluation.py::test_interruption_durably_seals_worlds_and_only_same_evaluation_can_resume
+ERROR tests/test_native_functional_evaluation.py::test_reopening_recomputes_events_even_if_a_forged_report_has_new_hashes
+ERROR tests/test_native_functional_evaluation.py::test_shared_ledger_rejects_a_new_candidate_on_already_revealed_worlds
+ERROR tests/test_native_functional_evaluation.py::test_edited_final_partition_cannot_reset_worlds_before_sealing
+55 passed, 4 errors in 1.88s

@@ -1,0 +1,49 @@
+........................................................................ [ 51%]
+.............................................................FF......    [100%]
+=================================== FAILURES ===================================
+_ test_current_default_exact_scalar_state_and_history_parity_with_retained_coarse_rows[0] _
+
+grid_index = 0
+
+    @pytest.mark.parametrize("grid_index", [0, 1])
+    def test_current_default_exact_scalar_state_and_history_parity_with_retained_coarse_rows(grid_index):
+        reset_counts()
+        spec = P.declaration()
+        prior = P.retained_baseline(spec)
+        row, _, config, _ = P.GENERIC.numerical_row(1., spec["grids"][grid_index], spec)
+        old = next(r for r in prior["rows"] if r["row_id"] == row["row_id"])
+        assert config.cut_union is None
+>       assert default_projection(row) == default_projection(old)
+E       AssertionError: assert {'row_id': 'a... 15, 18], ...} == {'row_id': 'a... 15, 18], ...}
+E         
+E         Omitting 14 identical items, use -vv to show
+E         Differing items:
+E         {'actions': [{'index': 1, 'kind': 'side_preparation', 'tool_id': 'generic_suction', 'entry_mm': [0.0, 0.0, -2], ...}, ...], ...}, {'index': 6, 'kind': 'side_preparation', 'tool_id': 'generic_suction', 'entry_mm': [1.0, 1.0, -2], ...}, ...]} != {'actions': [{'index': 1, 'kind': 'side_preparation', 'tool_id': 'generic_suction', 'entry_mm': [0.0, 0.0, -2], ...}, ...], ...}, {'index': 6, 'kind': 'side_preparation', 'tool_id': 'generic_suction', 'entry_mm': [1.0, 1.0, -2], ...}, ...]}
+E         Use -v to get more diff
+
+build/native-cut-union-v1/test_probe_union.py:71: AssertionError
+_ test_current_default_exact_scalar_state_and_history_parity_with_retained_coarse_rows[1] _
+
+grid_index = 1
+
+    @pytest.mark.parametrize("grid_index", [0, 1])
+    def test_current_default_exact_scalar_state_and_history_parity_with_retained_coarse_rows(grid_index):
+        reset_counts()
+        spec = P.declaration()
+        prior = P.retained_baseline(spec)
+        row, _, config, _ = P.GENERIC.numerical_row(1., spec["grids"][grid_index], spec)
+        old = next(r for r in prior["rows"] if r["row_id"] == row["row_id"])
+        assert config.cut_union is None
+>       assert default_projection(row) == default_projection(old)
+E       AssertionError: assert {'row_id': 'a... 15, 18], ...} == {'row_id': 'a... 15, 18], ...}
+E         
+E         Omitting 14 identical items, use -vv to show
+E         Differing items:
+E         {'actions': [{'index': 1, 'kind': 'side_preparation', 'tool_id': 'generic_aspirator', 'entry_mm': [0.0, 0.0, -2], ...}... ...}, {'index': 6, 'kind': 'side_preparation', 'tool_id': 'generic_aspirator', 'entry_mm': [1.8, 1.8, -2], ...}, ...]} != {'actions': [{'index': 1, 'kind': 'side_preparation', 'tool_id': 'generic_aspirator', 'entry_mm': [0.0, 0.0, -2], ...}... ...}, {'index': 6, 'kind': 'side_preparation', 'tool_id': 'generic_aspirator', 'entry_mm': [1.8, 1.8, -2], ...}, ...]}
+E         Use -v to get more diff
+
+build/native-cut-union-v1/test_probe_union.py:71: AssertionError
+=========================== short test summary info ============================
+FAILED build/native-cut-union-v1/test_probe_union.py::test_current_default_exact_scalar_state_and_history_parity_with_retained_coarse_rows[0]
+FAILED build/native-cut-union-v1/test_probe_union.py::test_current_default_exact_scalar_state_and_history_parity_with_retained_coarse_rows[1]
+2 failed, 139 passed in 4.56s

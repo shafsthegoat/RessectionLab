@@ -1,0 +1,23 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "build/native-cut-union-v1/test_probe_union.py"
+  ],
+  "exit_code": 0,
+  "timeout": false,
+  "parent_seconds": 1.4356456249952316,
+  "child_reaped": true,
+  "threads": 1,
+  "source_pins": {
+    "build/native-cut-union-v1/probe_union.py": "0a7168a3c2f071536ec9dbc5b45515cb5d829cbc47c2c316d640d336e2ba1530",
+    "build/native-cut-union-v1/test_probe_union.py": "76d4c77ef193ba4df1a170db2ce2711d7a9ad6e0b731b648d3e4bd5ec775e856",
+    "build/native-cut-union-v1/declaration.json": "0f909c16508e642e8f570214505e472edf92fd0ea78525779d7c0ab38896aefe"
+  },
+  "source_unchanged": true
+}

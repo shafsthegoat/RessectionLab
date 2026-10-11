@@ -1,0 +1,84 @@
+{
+  "checks": [
+    "Enabled preview makes a private ledger copy, modifies only temporary coverage and temporary masks, and installs no coverage on any rejected preview. Budget refusal rolls back all intermediate coverage/removal while returning explicit attempt-cost diagnostics.",
+    "Every feasible result seals its microstep witnesses, spec, before/after digests and coverage-only progress in the existing full-history result digest. Commit validates identity, source-state/model, unchanged result digest and after-ledger digest before installing it.",
+    "Committed ledger is an owned immutable mapping of immutable tuple/int data. Clone shares that immutable committed ledger safely; each subsequent preview copies it and commit replaces only the receiving engine ledger. Reset installs fresh empty coverage without changing the parent clone.",
+    "Coverage-only commits enter full-history ancestry, changing state hash even with unchanged removal masks. Immutable cache/snapshot identity additionally includes committed ledger object/digest. Partial cells remain occupied; no removal or cavity credit is awarded before completion.",
+    "Prior-cavity shaft check precedes all coverage additions and removal. Partial leaf additions require pre-step face exposure; existing contained whole-cell connected components keep their previous simultaneous connectivity semantics. Probe adds no coverage and cannot remove cells.",
+    "Producer leaf enumeration and affine partition agree with independently reconstructed bit order and corners. Both use the declared inward 1e-10 mm capsule margin. Independent checker imports no producing coverage helper and separately checks exposure, shaft, full tool, domain and connectivity.",
+    "The reviewed immediate-removal checker fix prevents retaining full leaf masks for a later remote action. Producer complete(occupied) plus connected-surface removal evacuates newly completed exposed cells in the same microstep; persisted ledgers remain partial.",
+    "Absent cut_union option keeps old config fingerprint/footprint, removal branch, history/metrics and default result digest. New fields appear only under explicit typed CutUnionSpec; source-file identities naturally change."
+  ],
+  "files": [
+    {
+      "bytes": 54127,
+      "path": "src/resectionlab/native_resection.py",
+      "sha256": "871f747103358329ad4953f7ad58b8d6952f1860af5832bc5d340c6bba538aee"
+    },
+    {
+      "bytes": 7570,
+      "path": "src/resectionlab/native_cut_union.py",
+      "sha256": "bd74877ae7448a7acc42d83f837e1933bb73564d45efc356929178f9dc5ba241"
+    },
+    {
+      "bytes": 9768,
+      "path": "src/resectionlab/independent_cut_union.py",
+      "sha256": "13f706606addc9317dc4d6b11f2e84878b5d34cd97f1dcebc0750a67df42af50"
+    },
+    {
+      "bytes": 71835,
+      "path": "src/resectionlab/evaluation.py",
+      "sha256": "ca41baf8f6636d9ce9b4d7c053ddb98014efb26654b89865cf46ab657dd4599f"
+    },
+    {
+      "bytes": 11276,
+      "path": "tests/test_native_cut_union.py",
+      "sha256": "9095b4935c977b570161b745938e29930e622ac89f522e15c26f5331c1e8e7f8"
+    },
+    {
+      "bytes": 7666,
+      "path": "tests/test_independent_cut_union.py",
+      "sha256": "6a3ad2fa17b05f4ab9c2c22ab2a34fd2ea29daf712219ab3aa5abea9f92dd0db"
+    },
+    {
+      "bytes": 4113,
+      "path": "build/native-cut-union-v1/producer-controls-01.json",
+      "sha256": "c50757de0c95dd828c8dab24f172b536962ca984f3d0d426135c8ea7539a0ffb"
+    },
+    {
+      "bytes": 180,
+      "path": "build/native-cut-union-v1/producer-controls-01.log",
+      "sha256": "eeb100bfcce5d5db0e13df69cc4d8e144d1cd87d6882648b44a2c354a47fd40c"
+    },
+    {
+      "bytes": 1823,
+      "path": "build/native-cut-union-v1/root-controls/attempt-02.json",
+      "sha256": "85ccf2a7e7d76f2c9a7fdca474d2a9ab71235c17c4f74fa9335a67245ca7e1f1"
+    },
+    {
+      "bytes": 3472,
+      "path": "build/native-cut-union-v1/root-controls/attempt-02.log",
+      "sha256": "7bdc0f53605255ff1fb006082ef4a983edb91dfde37c9d09e1f9434efe225bf2"
+    },
+    {
+      "bytes": 1318,
+      "path": "build/native-cut-union-v1/root-controls/parity-diagnostic.json",
+      "sha256": "4453e79ab6b043f650b83643c869fff2c83a2d831ab7f612ace95656060809dd"
+    }
+  ],
+  "findings": [],
+  "resource_limits": {
+    "depth": "1..3, 8..512 leaves per cell",
+    "producer_leaf_tests_per_preview_max": 4194304,
+    "resident_cells": "<=4096; producer and checker test capacity before new-key insertion",
+    "scope": "Leaf tests count actual attempted missing-leaf containment work in returned producer previews; independent checker verifies added-leaf geometry and lower-bound/count/cap consistency, not failed producer tests. Owned process limits are still required for whole-run time/RSS. No clinical or physical-device validation is implied.",
+    "witness_rows_per_preview": 8192
+  },
+  "saved_validation": {
+    "canonical_and_runner_attempt02": "139 passed, 2 failed in 4.56 s, parent 4.702793332980946 s, exit1 and reaped. The 131 canonical controls passed; two new retained-row wrapper comparisons failed. Preserve this failed receipt.",
+    "parity_resolution": "Root saved parity-diagnostic.json identifies tuple/list JSON representation only in geometry_unknowns/failure_tip_mm; JSON-normalized values and state/history hashes match both coarse rows. Root corrected only test projection via JSON roundtrip; no production fix or excluded scientific value. Ten runner controls are being rerun by root; not claimed complete here.",
+    "producer": "Exact current producer/helper/checker pins match producer-controls-01: 131 passed in 3.52 s; parent 3.669865750009194 s, exit0 and reaped."
+  },
+  "scope": "One source-only review of promoted producer/checker integration. No project imports, numerical execution, tests, native replay, acquired payloads or models by reviewer. Separate from earlier checker review; original review files preserved.",
+  "status": "source_GO_no_remaining_material_integration_finding"
+}

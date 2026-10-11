@@ -857,7 +857,8 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
                                      cancelled: Callable[[], bool] | None = None,
                                      distance_backend: str = "scalar",
                                      distance_batch_size: int = 256,
-                                     tool_modes: Mapping[str, str] | None = None) -> NativeRemovalAudit:
+                                     tool_modes: Mapping[str, str] | None = None,
+                                     cut_union_spec: Mapping[str, Any] | None = None) -> NativeRemovalAudit:
     """Independent source-cell audit of the native contained-cell cutting model.
 
     All tissue removed in a microstep must be fully inside its active capsule and
@@ -876,6 +877,11 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
     default and near-threshold oracle; hard-exclusion and general motion checks
     remain scalar. The backend and batch size belong in experiment metadata;
     scientific certificate fields are unchanged. No occupancy is cached.
+
+    ``cut_union_spec`` explicitly declares the experimental cumulative cutting
+    abstraction. Its witnesses are recomputed by a separate verifier; the default
+    checker refuses such histories. This changes geometric removal assumptions,
+    not physical validation or any tissue injury claim.
     """
     from collections import deque
     from itertools import product
@@ -928,6 +934,10 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         raise ValueError("Independent native tool check does not support sheared source cells")
     rotation = matrix[:3, :3] / spacing
     corners = np.array(list(product((-.5, .5), repeat=3))) @ matrix[:3, :3].T
+    coverage = None
+    if cut_union_spec is not None:
+        from .independent_cut_union import IndependentCutCoverage
+        coverage = IndependentCutCoverage(dict(cut_union_spec), matrix, remaining.shape)
     catalog = {tool.tool_id: tool for tool in tools}
     if len(catalog) != len(tools):
         raise ValueError("Native tool IDs must be unique")
@@ -958,8 +968,8 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         physical = None if voxel is None else tuple(float(v) for v in matrix[:3, :3] @ voxel + matrix[:3, 3])
         return NativeRemovalAudit(reason is None, () if reason is None else (reason,), action, voxel, physical,
             len(declared) * volume, len(accepted) * volume, len(declared - accepted) * volume,
-            case.semantic_hash, volume, count, checker_version="independent-native-sequence-v2",
-            interpretation=f"Source-grid prefix audit in {geometry_frame}: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+            case.semantic_hash, volume, count, checker_version=("independent-native-sequence-v2" if coverage is None else "independent-native-cut-union-v1"),
+            interpretation=f"Source-grid prefix audit in {geometry_frame}: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated" + ("; declared idealized cumulative subcell cutting/evacuation" if coverage is not None else ""),
             complete_tool_checked=reason is None, frontier_checked=reason is None)
 
     def indices(value: Any) -> np.ndarray:
@@ -979,8 +989,16 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         action_id = str(record.get("action_id", f"native-action-{count}"))
         if record.get("source_hash") != case.semantic_hash or tuple(record.get("source_shape", ())) != remaining.shape or not np.allclose(record.get("native_affine"), matrix):
             raise ValueError("Native history source identity or affine mismatch")
-        if record.get("native_footprint") != "fully_contained_connected_cells_v1":
+        footprint = "fully_contained_connected_cells_v1" if coverage is None else "cumulative_affine_subcell_cut_union_v1"
+        if record.get("native_footprint") != footprint:
             return report("unsupported_native_footprint_model", action_id)
+        if coverage is not None:
+            try:
+                coverage.start(record.get("cut_union"))
+            except (ValueError, TypeError):
+                return report("native_cut_union_action_start_invalid", action_id)
+        elif "cut_union" in record:
+            return report("undeclared_native_cut_union_history", action_id)
         tool = catalog.get(record.get("tool_id"))
         if tool is None:
             return report("unknown_native_tool_configuration", action_id)
@@ -1081,7 +1099,7 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
                 segment = end - start
                 fractions = np.clip(np.sum((vertices - start) * segment, axis=-1) / np.dot(segment, segment), 0, 1)
                 contained = np.all(np.sum((vertices - (start + fractions[..., None] * segment))**2, axis=-1) <= tip_radius**2 + 1e-9, axis=1)
-                if not contained.all():
+                if coverage is None and not contained.all():
                     return report("native_removed_cell_not_fully_contained", action_id, tuple(int(v) for v in removed[np.flatnonzero(~contained)[0]]))
                 # Reachability is checked by an independent explicit graph walk.
                 queue = deque()
@@ -1162,6 +1180,14 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
                 return report("independent_validation_cancelled", action_id)
             if shaft_collision is not None:
                 return report("native_shaft_collides_with_remaining_tissue", action_id)
+            if coverage is not None:
+                try:
+                    coverage.step(micro.get("cut_union"), start, end, tip_radius,
+                                  mode, remaining, free, keys)
+                except (ValueError, TypeError):
+                    return report("native_cut_union_microstep_witness_invalid", action_id)
+            elif "cut_union" in micro:
+                return report("undeclared_native_cut_union_microstep", action_id)
             if keys:
                 remaining[tuple(removed.T)] = False
             accepted.update(keys)
@@ -1185,4 +1211,9 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
             return report("native_macro_tip_mismatch", action_id)
         if "removed_volume_mm3" in record and not np.isclose(record["removed_volume_mm3"], len(macro_removed) * volume, atol=1e-7, rtol=0):
             return report("native_macro_volume_accounting_mismatch", action_id)
+        if coverage is not None:
+            try:
+                coverage.finish(record["cut_union"], len(macro_removed), mode)
+            except (ValueError, TypeError):
+                return report("native_cut_union_action_accounting_invalid", action_id)
     return report()

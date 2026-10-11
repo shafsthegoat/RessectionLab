@@ -1,0 +1,54 @@
+{
+  "blocking_findings_remaining": [],
+  "default_path": "cut_union_spec defaults to None; old footprint/version/containment logic remains, and undeclared union action/microstep sidecars are refused. New certificate version appears only under explicit union spec.",
+  "files": [
+    {
+      "bytes": 9768,
+      "path": "src/resectionlab/independent_cut_union.py",
+      "sha256": "13f706606addc9317dc4d6b11f2e84878b5d34cd97f1dcebc0750a67df42af50"
+    },
+    {
+      "bytes": 71835,
+      "path": "src/resectionlab/evaluation.py",
+      "sha256": "ca41baf8f6636d9ce9b4d7c053ddb98014efb26654b89865cf46ab657dd4599f"
+    },
+    {
+      "bytes": 7666,
+      "path": "tests/test_independent_cut_union.py",
+      "sha256": "6a3ad2fa17b05f4ab9c2c22ab2a34fd2ea29daf712219ab3aa5abea9f92dd0db"
+    },
+    {
+      "bytes": 419,
+      "path": "build/native-cut-union-v1/root-controls/attempt-01.json",
+      "sha256": "5364ee59d139a54c7c1f35b5e5a6346a186f18e6a40b3e08a9f84ce305ae75c1"
+    },
+    {
+      "bytes": 9631,
+      "path": "build/native-cut-union-v1/root-controls/attempt-01.log",
+      "sha256": "61842fdbed09e664fcfa73cf47170f20a3b1597151e2fe201a8359ffffa3b3a3"
+    }
+  ],
+  "proof_semantics": [
+    "Affine subcells tile the original cell. All eight vertices of each added leaf must be inside one current capsule. Convexity therefore supplies the intended conservative geometric certificate per leaf; different original corners cannot be assigned to different capsules to hide an interior gap.",
+    "Verifier uses its own segment projection arithmetic and bit-to-subcell reconstruction. It imports only shared immutable metadata digest support, not producing cut-union geometry/coverage functions.",
+    "Partial leaf additions require a previously free six-face neighbor or declared outside-image boundary. Whole-cell shortcut is independently rechecked and must remove a currently connected cell.",
+    "Outer checker validates original remaining tissue against the entire swept shaft before adding coverage or removing cells; current removals cannot supply their own shaft clearance. It separately preserves hard/domain/access/full-tool checks and independently updates free-space connectivity only after removal.",
+    "Probe mode cannot add coverage, claim leaf work/progress or remove tissue. Aspiration with neither removal nor new coverage cannot be committed as progress.",
+    "Full native cells remain occupied and receive zero removal volume until all leaves are certified. This is an explicit idealized cumulative cutting/evacuation abstraction, not force/tissue/device validation."
+  ],
+  "resolved_finding": {
+    "previous_behavior": "Leaf proof could fill an exposed cell without removing it; a later empty witness could remove that full ledger cell outside the current active capsule. Past geometric coverage alone did not preserve native removal timing.",
+    "reason_sufficient": "Accepted ledger states contain only partial masks. A removed cell must become complete now using a current executed-capsule proof; no full mask can survive for later unrelated reward attribution.",
+    "repair": "Reject any full ledger mask absent from current removed set before accepting the microstep. A source regression now refuses the full-bank step.",
+    "title": "Full coverage could be banked then evacuated by a remote action"
+  },
+  "resource_scope": [
+    "Depth1..3 bounds each cell to8..512 bits; tracked accepted ledger cells<=4096; witness rows<=8192 per action; leaf accounting cap<=4194304; independent proof vertex batches<=64 leaves.",
+    "leaf_tests is asserted at least the added-leaf proof count and summed against declared cap. The checker does not replay unsuccessful producer leaf tests, so this is not independent certification of exact producer work.",
+    "Resident ledger capacity is now checked before adding a new key, so even malformed input cannot make the internal sparse ledger exceed max_tracked_cells. The after-loop check remains defense in depth.",
+    "No total-history deadline/cancellation is added inside leaf arithmetic; outer per-microstep cancellation and owned process limits remain necessary for global timing/RSS claims."
+  ],
+  "scope": "One source-only review; no project imports, native execution, tests, patient data or producer integration validation performed by reviewer.",
+  "status": "source_GO_after_immediate_removal_repair",
+  "validation_evidence": "Root receipt is exit1:55 passed,4 historical implicit-learning fixture setup errors at RECORDED_EXPERIENCE_REQUIRED; no learning ran. It predates the immediate-removal and pre-insertion capacity repairs. Repair tests/source have been reviewed only; root plans combined generated validation after producer promotion."
+}

@@ -1,0 +1,37 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_native_cut_union.py",
+    "tests/test_independent_cut_union.py",
+    "tests/test_native_resection.py",
+    "tests/test_native_spatial_evaluation.py",
+    "tests/test_native_immutable_state.py",
+    "tests/test_native_spatial_task.py",
+    "build/native-cut-union-v1/test_probe_union.py"
+  ],
+  "exit_code": 1,
+  "timeout": false,
+  "parent_seconds": 4.702793332980946,
+  "child_reaped": true,
+  "threads": 1,
+  "source_pins": {
+    "src/resectionlab/native_cut_union.py": "bd74877ae7448a7acc42d83f837e1933bb73564d45efc356929178f9dc5ba241",
+    "src/resectionlab/native_resection.py": "871f747103358329ad4953f7ad58b8d6952f1860af5832bc5d340c6bba538aee",
+    "src/resectionlab/evaluation.py": "ca41baf8f6636d9ce9b4d7c053ddb98014efb26654b89865cf46ab657dd4599f",
+    "src/resectionlab/independent_cut_union.py": "13f706606addc9317dc4d6b11f2e84878b5d34cd97f1dcebc0750a67df42af50",
+    "tests/test_native_cut_union.py": "9095b4935c977b570161b745938e29930e622ac89f522e15c26f5331c1e8e7f8",
+    "tests/test_independent_cut_union.py": "6a3ad2fa17b05f4ab9c2c22ab2a34fd2ea29daf712219ab3aa5abea9f92dd0db",
+    "tests/test_native_resection.py": "3314119eeb22631772927458d49f53c0d77718e684cf560ff64c7be8202534d9",
+    "tests/test_native_spatial_evaluation.py": "925e545c6d28e46cb7e569f965d1ab3a93566001d4e5e3765d023ade58edcc10",
+    "tests/test_native_immutable_state.py": "677fb2e0c961fdb014de279c6474d7b34f01f07515e36685dbde580354004825",
+    "tests/test_native_spatial_task.py": "0666ad71ab4f182a796351f4b42a2d923d490f148f3c7d2103910c1cd720e73d",
+    "build/native-cut-union-v1/test_probe_union.py": "54150f276f87e73e9075ff5c1720dd6ecf39565182aba07e2468b0fabbadb8ee"
+  },
+  "source_unchanged": true
+}

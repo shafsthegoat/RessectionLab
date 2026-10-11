@@ -16,6 +16,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 from hashlib import sha256
 from itertools import product
+from types import MappingProxyType
 import copy
 import json
 from typing import Any, Iterable
@@ -25,6 +26,8 @@ from scipy.ndimage import binary_fill_holes
 
 from .core import array_digest, freeze_json, semantic_digest, thaw_json
 from .post_exposure import PostExposureStart, preentry_tip
+from .native_cut_union import (CutUnionSpec, CutUnionLimit, PreviewCutCoverage,
+                               ledger_digest, MODE as CUT_UNION_MODE, ASSUMPTION as CUT_UNION_ASSUMPTION)
 
 from .geometry import (
     AccessWindow, GeometryScene, ToolGeometry, ToolPose, capsule_voxel_indices,
@@ -107,9 +110,13 @@ class NativeResectionConfig:
     # Optional public simulation domain. Its complement is unavailable, not air.
     interaction_domain: np.ndarray | None = None
     post_exposure: PostExposureStart | None = None
+    # Explicit alternative model; absent preserves historical fingerprints.
+    cut_union: CutUnionSpec | None = None
     _fingerprint: str = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
+        if self.cut_union is not None and type(self.cut_union) is not CutUnionSpec:
+            raise TypeError("Cumulative cutting requires its explicit typed bounded specification")
         tissue = _binary_mask(self.tissue_mask, "tissue_mask")
         labels = np.asarray(self.target_labels)
         if (labels.dtype.kind not in "biuf" or not np.isfinite(labels).all()
@@ -167,8 +174,11 @@ class NativeResectionConfig:
             **({"post_exposure": thaw_json(self.post_exposure.record)} if self.post_exposure is not None else {}),
             "access": asdict(self.access), "tools": [asdict(tool) for tool in self.tools],
             "max_tip_step_mm": self.max_tip_step_mm, "max_microsteps": self.max_microsteps,
-            "partial_cell_policy": "record_contact_keep_occupied_credit_no_removal",
+            "partial_cell_policy": ("record_contact_keep_occupied_credit_no_removal" if self.cut_union is None else
+                "certified_exposed_active_subcells_accumulate_whole_cell_occupancy_until_union_complete"),
             "temporal_rule": "shaft_sweep_must_clear_prior_cavity_before_endpoint_cut_credit",
+            **({"cut_union": self.cut_union.to_record(), "cut_union_assumption": CUT_UNION_ASSUMPTION}
+               if self.cut_union is not None else {}),
         }
         digest = sha256(json.dumps(record, sort_keys=True, default=lambda x: np.asarray(x).tolist()).encode()).hexdigest()
         object.__setattr__(self, "_fingerprint", "sha256:" + digest)
@@ -204,6 +214,7 @@ class NativeMicrostep:
             "active_radius_mm": self.active_radius_mm,
             "removed_indices_native": self.removed_indices_native.tolist(),
             "contact_indices_native": self.contact_indices_native.tolist(),
+            **({"cut_union": thaw_json(self._cut_union_record)} if hasattr(self, "_cut_union_record") else {}),
         }
 
 
@@ -242,6 +253,11 @@ class NativeStrokeResult:
         return getattr(self, "_obstruction_diagnostic", None)
 
     @property
+    def cut_union_attempt(self):
+        """Scalar preview work, including rejected/discarded temporary coverage."""
+        return getattr(self, "_cut_union_attempt", None)
+
+    @property
     def removed_volume_mm3(self) -> float:
         return len(self.removed_indices_native) * self.voxel_volume_mm3
 
@@ -265,6 +281,10 @@ class NativeStrokeResult:
             "temporal_rule": "shaft_sweep_must_clear_prior_cavity_before_endpoint_cut_credit",
             "retraction": "reverse_identical_insertion_path_after_removal_no_in_brain_reorientation",
             "clinical_deficit_probability": None,
+            **({"cut_union": thaw_json(self._cut_union_record),
+                "partial_contact_policy": "certified_exposed_active_subcells_accumulate_whole_cell_occupancy_until_union_complete",
+                "cut_union_assumption": CUT_UNION_ASSUMPTION}
+               if hasattr(self, "_cut_union_record") else {}),
         }
 
 
@@ -343,7 +363,8 @@ class NativeResectionEngine:
     """
 
     def __setattr__(self, name, value):
-        if name in {"_immutable_state", "_committed_snapshots"} and hasattr(self, name):
+        if name in {"_immutable_state", "_committed_snapshots", "_cut_union_ledger",
+                    "_cut_union_digest", "_cut_union_spec_hash"} and hasattr(self, name):
             raise AttributeError("Native state storage mode and snapshot binding are internally owned")
         object.__setattr__(self, name, value)
 
@@ -369,13 +390,32 @@ class NativeResectionEngine:
 
     @property
     def state_hash(self) -> str:
+        self._assert_cut_union()
         return self._state_hash
+
+    def _assert_cut_union(self):
+        if self.config.cut_union is None:
+            if hasattr(self, "_cut_union_ledger"):
+                raise RuntimeError("Cumulative cutting declaration changed")
+            return
+        if (not hasattr(self, "_cut_union_ledger")
+                or semantic_digest(self.config.cut_union.to_record()) != self._cut_union_spec_hash
+                or ledger_digest(self.config.cut_union, self._cut_union_ledger) != self._cut_union_digest):
+            raise RuntimeError("Cumulative cutting state or declaration changed")
+
+    def _install_cut_union(self, ledger, digest):
+        if ledger_digest(self.config.cut_union, ledger) != digest:
+            raise ValueError("Cumulative cutting certificate ledger mismatch")
+        object.__setattr__(self, "_cut_union_ledger", MappingProxyType(dict(ledger)))
+        object.__setattr__(self, "_cut_union_digest", digest)
+        object.__setattr__(self, "_cut_union_spec_hash", semantic_digest(self.config.cut_union.to_record()))
 
     @property
     def decision_model_hash(self) -> str:
         return self.config.fingerprint
 
     def reset(self) -> None:
+        empty = None if self.config.cut_union is None else PreviewCutCoverage(self.config.cut_union, {}, self.config.affine)
         if self._immutable_state:
             # Allocate/capture privately. A failed reset must not discard a
             # live committed state or leave writable arrays with stale seals.
@@ -386,6 +426,8 @@ class NativeResectionEngine:
             history, records, digests = [], {}, {}
             state_hash = "sha256:" + sha256((self.config.fingerprint + ":initial").encode()).hexdigest()
             self._install_snapshots(snapshots)
+            if empty is not None:
+                self._install_cut_union(empty.freeze(), empty.digest)
             self.history, self.revision, self._state_hash = history, 0, state_hash
             self._preview_records, self._preview_digests = records, digests
             return
@@ -399,6 +441,8 @@ class NativeResectionEngine:
         self._state_hash = "sha256:" + sha256((self.config.fingerprint + ":initial").encode()).hexdigest()
         self._preview_records: dict[int, NativeStrokeResult] = {}
         self._preview_digests: dict[int, str] = {}
+        if empty is not None:
+            self._install_cut_union(empty.freeze(), empty.digest)
 
     def _install_snapshots(self, snapshots):
         for name, snapshot in zip(_STATE_MASKS, snapshots):
@@ -408,8 +452,10 @@ class NativeResectionEngine:
     def committed_snapshot_identity(self):
         """Bind cache interpretation as well as mask storage at a task seal."""
         self.committed_mask_digests()
-        return (id(self._committed_snapshots), tuple((id(snapshot), snapshot.identity, snapshot.digest)
+        self._assert_cut_union()
+        identity = (id(self._committed_snapshots), tuple((id(snapshot), snapshot.identity, snapshot.digest)
                 for snapshot in self._committed_snapshots))
+        return identity if self.config.cut_union is None else (*identity, (id(self._cut_union_ledger), self._cut_union_digest))
 
     def committed_mask_digests(self):
         """Exact old digest bytes, reusable only for verified immutable masks."""
@@ -425,6 +471,7 @@ class NativeResectionEngine:
         return {name: snapshot.digest for name, snapshot in zip(_STATE_MASKS, snapshots)}
 
     def clone(self) -> NativeResectionEngine:
+        self._assert_cut_union()
         if self._immutable_state:
             self.committed_mask_digests()
         result = copy.copy(self)
@@ -494,6 +541,9 @@ class NativeResectionEngine:
         removed: list[np.ndarray] = []
         probe_contacts: list[np.ndarray] = []
         unknowns: tuple[str, ...] = ()
+        coverage = (None if self.config.cut_union is None else
+                    PreviewCutCoverage(self.config.cut_union, self._cut_union_ledger, self.config.affine))
+        coverage_before = None if coverage is None else coverage.digest
 
         def finish(feasible: bool, reason: str, failure_tip: np.ndarray | None = None,
                    *, obstruction=None) -> NativeStrokeResult:
@@ -504,11 +554,27 @@ class NativeResectionEngine:
                 self.config.affine, self.config.tissue_mask.shape, self.config.tissue_support_provenance,
                 self.config.voxel_volume_mm3, None if failure_tip is None else tuple(failure_tip), unknowns,
                 interaction_mode=interaction_mode,
+                native_footprint=("fully_contained_connected_cells_v1" if coverage is None else CUT_UNION_MODE),
             )
             if post_record is not None:
                 object.__setattr__(result, "_post_exposure_record", freeze_json(post_record))
             if obstruction is not None:
                 object.__setattr__(result, "_obstruction_diagnostic", obstruction)
+            if coverage is not None:
+                object.__setattr__(result, "_cut_union_attempt", freeze_json({
+                    "source_state_hash": source_state_hash, "decision_model_hash": self.config.fingerprint,
+                    "leaf_tests": coverage.leaf_tests, "new_leaf_count": coverage.new_leaf_count,
+                    "witness_rows": coverage.witness_rows, "peak_tracked_cells": coverage.peak_tracked_cells,
+                    "budget_refused": reason == "CUMULATIVE_CUT_COVERAGE_BUDGET",
+                    "feasible_for_commit": feasible,
+                    "scope": "completed preview proof work; refused work rolled back; not a removal certificate"}))
+            if coverage is not None and feasible:
+                object.__setattr__(result, "_cut_union_record", freeze_json({
+                    "spec": self.config.cut_union.to_record(), "before_digest": coverage_before,
+                    "after_digest": coverage.digest, "new_leaf_count": coverage.new_leaf_count,
+                    "leaf_tests": coverage.leaf_tests,
+                    "coverage_only_progress": not any(len(v) for v in removed) and coverage.new_leaf_count > 0}))
+                object.__setattr__(result, "_cut_union_after", coverage.freeze())
             if feasible:
                 # Bound retained proposal certificates; committed histories are
                 # ordinary JSON and must be independently replayed when loaded.
@@ -623,8 +689,19 @@ class NativeResectionEngine:
                         return finish(False, "PROBE_CONTACT_NOT_EXPOSED", current)
                 probe_contacts.append(_frozen(occupied, np.int64))
                 eligible = _EMPTY
+                coverage_step = None if coverage is None else coverage.empty_step()
             else:
-                eligible = _connected_surface_cells(fully_inside, connected_free)
+                if coverage is None:
+                    eligible = _connected_surface_cells(fully_inside, connected_free)
+                else:
+                    try:
+                        direct = _connected_surface_cells(fully_inside, connected_free)
+                        coverage_step = coverage.cover(occupied, direct, connected_free,
+                                                       active_start, active_end, tool.tip_radius_mm)
+                    except CutUnionLimit:
+                        return finish(False, "CUMULATIVE_CUT_COVERAGE_BUDGET", current)
+                    eligible = _connected_surface_cells(coverage.complete(occupied), connected_free)
+                    coverage_step = coverage.finish_step(coverage_step, eligible)
             if len(eligible):
                 if not temporary_masks_owned:
                     # Copy both before any write; failed previews never mutate
@@ -635,18 +712,24 @@ class NativeResectionEngine:
                 _extend_connected_free(eligible, remaining, connected_free, self.config.interaction_domain)
             contacts.append(_frozen(touched, np.int64))
             removed.append(eligible)
-            records.append(NativeMicrostep(tuple(previous), tuple(current), tuple(active_start), tuple(active_end),
-                                          tool.tip_radius_mm, eligible, _frozen(touched, np.int64)))
+            microstep = NativeMicrostep(tuple(previous), tuple(current), tuple(active_start), tuple(active_end),
+                                        tool.tip_radius_mm, eligible, _frozen(touched, np.int64))
+            if coverage is not None:
+                object.__setattr__(microstep, "_cut_union_record", freeze_json(coverage_step))
+            records.append(microstep)
             previous = current
         if interaction_mode == "probe":
             if not any(len(indices) for indices in probe_contacts):
                 return finish(False, "NO_EXPOSED_PROBE_CONTACT", tip)
             return finish(True, "NATIVE_NONREMOVING_TANGENTIAL_PROBE")
         if not any(len(indices) for indices in removed):
+            if coverage is not None and coverage.new_leaf_count:
+                return finish(True, "NATIVE_CUT_COVERAGE_PROGRESS")
             return finish(False, "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS", tip)
         return finish(True, "NATIVE_CONNECTED_STROKE")
 
     def commit_preview(self, result: NativeStrokeResult) -> NativeStrokeResult:
+        self._assert_cut_union()
         if self._immutable_state:
             self.committed_mask_digests()
         if (not result.feasible or self._preview_records.get(id(result)) is not result
@@ -663,6 +746,13 @@ class NativeResectionEngine:
             raise ValueError("Preview contains already removed tissue")
         if result.interaction_mode == "probe" and len(indices):
             raise ValueError("A probe certificate cannot remove tissue")
+        if self.config.cut_union is not None:
+            proof = getattr(result, "_cut_union_record", None)
+            after = getattr(result, "_cut_union_after", None)
+            if (proof is None or after is None or proof["before_digest"] != self._cut_union_digest
+                    or proof["spec"] != freeze_json(self.config.cut_union.to_record())
+                    or ledger_digest(self.config.cut_union, after) != proof["after_digest"]):
+                raise ValueError("Stale or altered cumulative cutting ledger certificate")
         if self._immutable_state:
             return self._commit_immutable_preview(result, indices)
         self.remaining_mask[tuple(indices.T)] = False
@@ -678,6 +768,8 @@ class NativeResectionEngine:
         # The ancestry includes the full certified history/contact record, not
         # only its cavity: different exposures cannot share a state identity.
         self._state_hash = "sha256:" + sha256((self.state_hash + ":committed:" + self._preview_digests[id(result)]).encode()).hexdigest()
+        if self.config.cut_union is not None:
+            self._install_cut_union(result._cut_union_after, result._cut_union_record["after_digest"])
         self._preview_records.clear()
         self._preview_digests.clear()
         return result
@@ -708,6 +800,8 @@ class NativeResectionEngine:
         history = [*self.history, result.to_history_record()]
         state_hash = "sha256:" + sha256((self.state_hash + ":committed:" + self._preview_digests[id(result)]).encode()).hexdigest()
         self._install_snapshots(snapshots)
+        if self.config.cut_union is not None:
+            self._install_cut_union(result._cut_union_after, result._cut_union_record["after_digest"])
         self.history = history
         self.revision += 1
         self._state_hash = state_hash
@@ -749,6 +843,11 @@ class NativeResectionEngine:
             "tissue_support_provenance": self.config.tissue_support_provenance,
             "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
             "completed_strokes": self.revision, "clinical_deficit_probability": None,
+            **({"cut_union": self.config.cut_union.to_record(), "cut_union_assumption": CUT_UNION_ASSUMPTION,
+                "cut_union_coverage_digest": self._cut_union_digest,
+                "partially_certified_occupied_cells": len(self._cut_union_ledger),
+                "removal_definition": "fully_union_certified_connected_native_cells; all uncertified cells remain occupied"}
+               if self.config.cut_union is not None else {}),
         }
 
 

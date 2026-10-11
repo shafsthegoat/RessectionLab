@@ -1,0 +1,11 @@
+{
+  "files": {
+    "src/resectionlab/native_resection.py": "871f747103358329ad4953f7ad58b8d6952f1860af5832bc5d340c6bba538aee",
+    "src/resectionlab/native_cut_union.py": "bd74877ae7448a7acc42d83f837e1933bb73564d45efc356929178f9dc5ba241",
+    "src/resectionlab/independent_cut_union.py": "13f706606addc9317dc4d6b11f2e84878b5d34cd97f1dcebc0750a67df42af50",
+    "src/resectionlab/evaluation.py": "ca41baf8f6636d9ce9b4d7c053ddb98014efb26654b89865cf46ab657dd4599f",
+    "tests/test_native_cut_union.py": "9095b4935c977b570161b745938e29930e622ac89f522e15c26f5331c1e8e7f8",
+    "tests/test_independent_cut_union.py": "6a3ad2fa17b05f4ab9c2c22ab2a34fd2ea29daf712219ab3aa5abea9f92dd0db"
+  },
+  "review_scope": "Producer/checker and independent geometric witnesses; baseline snapshot remains exact."
+}
