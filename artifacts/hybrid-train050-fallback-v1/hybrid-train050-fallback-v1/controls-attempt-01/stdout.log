@@ -1,0 +1,414 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+________ test_rescues_generated_omitted_positive_once_with_full_replay _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108bd01a0>
+
+    def test_rescues_generated_omitted_positive_once_with_full_replay(monkeypatch):
+        case=fixture();full,scores=order_fixture(monkeypatch,case)
+        events=[];costs=Costs(inventory_callback=events.append)
+        sparse=GeneratedSparseTask(case,mode='ridge_top8',ranker=ranker(),max_steps=2)
+        assert sparse.observed_one_step_search(seconds=5)[0]==('STOP',)
+>       task=GeneratedFallbackTask(case,mode='ridge_top8',ranker=ranker(),max_steps=2,costs=costs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hybrid-train050-fallback-v1/hybrid_proposal.py:256: in __init__
+    super().__init__(case, max_steps=max_steps, cancelled=cancelled)
+src/resectionlab/native_spatial_task.py:629: in __init__
+    self.reset()
+src/resectionlab/native_spatial_task.py:683: in reset
+    return self.observation()
+           ^^^^^^^^^^^^^^^^^^
+src/resectionlab/native_spatial_task.py:793: in observation
+    inventory = self._prepare_inventory()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:80: in _prepare_inventory
+    rewards = nominal_scores(self, inventory)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:35: in nominal_scores
+    view.case.reference_target = task.case.nominal_target
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeSpatialCase(structural_intensity=array([[[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+ ...ontext_variant=None, public_target_domain=None, occupancy_source_support=None, support_domain=None, post_exposure=None)
+name = 'reference_target'
+value = array([[[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+ ...0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.]]], shape=(13, 13, 10), dtype=float32)
+
+>   ???
+E   dataclasses.FrozenInstanceError: cannot assign to field 'reference_target'
+
+<string>:4: FrozenInstanceError
+______ test_positive_shortlist_does_not_expand_even_if_better_is_omitted _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10968e2d0>
+
+    def test_positive_shortlist_does_not_expand_even_if_better_is_omitted(monkeypatch):
+        case=fixture();full,scores=order_fixture(monkeypatch,case,positive_first=True)
+>       task=GeneratedFallbackTask(case,mode='ridge_top8',ranker=ranker(),max_steps=2)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hybrid-train050-fallback-v1/hybrid_proposal.py:256: in __init__
+    super().__init__(case, max_steps=max_steps, cancelled=cancelled)
+src/resectionlab/native_spatial_task.py:629: in __init__
+    self.reset()
+src/resectionlab/native_spatial_task.py:683: in reset
+    return self.observation()
+           ^^^^^^^^^^^^^^^^^^
+src/resectionlab/native_spatial_task.py:793: in observation
+    inventory = self._prepare_inventory()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:80: in _prepare_inventory
+    rewards = nominal_scores(self, inventory)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:35: in nominal_scores
+    view.case.reference_target = task.case.nominal_target
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeSpatialCase(structural_intensity=array([[[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+ ...ontext_variant=None, public_target_domain=None, occupancy_source_support=None, support_domain=None, post_exposure=None)
+name = 'reference_target'
+value = array([[[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+ ...0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.]]], shape=(13, 13, 10), dtype=float32)
+
+>   ???
+E   dataclasses.FrozenInstanceError: cannot assign to field 'reference_target'
+
+<string>:4: FrozenInstanceError
+_ test_private_reference_cannot_change_fallback_catalog_mask_or_nominal_decision _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10968ede0>
+
+    def test_private_reference_cannot_change_fallback_catalog_mask_or_nominal_decision(monkeypatch):
+        case=fixture();order_fixture(monkeypatch,case)
+>       a=GeneratedFallbackTask(case,mode='ridge_top8',ranker=ranker(),max_steps=2)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hybrid-train050-fallback-v1/hybrid_proposal.py:256: in __init__
+    super().__init__(case, max_steps=max_steps, cancelled=cancelled)
+src/resectionlab/native_spatial_task.py:629: in __init__
+    self.reset()
+src/resectionlab/native_spatial_task.py:683: in reset
+    return self.observation()
+           ^^^^^^^^^^^^^^^^^^
+src/resectionlab/native_spatial_task.py:793: in observation
+    inventory = self._prepare_inventory()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:80: in _prepare_inventory
+    rewards = nominal_scores(self, inventory)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:35: in nominal_scores
+    view.case.reference_target = task.case.nominal_target
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeSpatialCase(structural_intensity=array([[[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+ ...ontext_variant=None, public_target_domain=None, occupancy_source_support=None, support_domain=None, post_exposure=None)
+name = 'reference_target'
+value = array([[[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+ ...0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.]]], shape=(13, 13, 10), dtype=float32)
+
+>   ???
+E   dataclasses.FrozenInstanceError: cannot assign to field 'reference_target'
+
+<string>:4: FrozenInstanceError
+__________ test_cached_observation_and_clone_do_not_requery_or_relog ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1098c27e0>
+
+    def test_cached_observation_and_clone_do_not_requery_or_relog(monkeypatch):
+        case=fixture();order_fixture(monkeypatch,case)
+>       events=[];task=GeneratedFallbackTask(case,mode='ridge_top8',ranker=ranker(),max_steps=2,costs=Costs(inventory_callback=events.append))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hybrid-train050-fallback-v1/hybrid_proposal.py:256: in __init__
+    super().__init__(case, max_steps=max_steps, cancelled=cancelled)
+src/resectionlab/native_spatial_task.py:629: in __init__
+    self.reset()
+src/resectionlab/native_spatial_task.py:683: in reset
+    return self.observation()
+           ^^^^^^^^^^^^^^^^^^
+src/resectionlab/native_spatial_task.py:793: in observation
+    inventory = self._prepare_inventory()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:80: in _prepare_inventory
+    rewards = nominal_scores(self, inventory)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:35: in nominal_scores
+    view.case.reference_target = task.case.nominal_target
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeSpatialCase(structural_intensity=array([[[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+ ...ontext_variant=None, public_target_domain=None, occupancy_source_support=None, support_domain=None, post_exposure=None)
+name = 'reference_target'
+value = array([[[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+ ...0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.]]], shape=(13, 13, 10), dtype=float32)
+
+>   ???
+E   dataclasses.FrozenInstanceError: cannot assign to field 'reference_target'
+
+<string>:4: FrozenInstanceError
+______ test_nonpositive_full_catalog_keeps_STOP_and_original_reward_ties _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1098d69f0>
+
+    def test_nonpositive_full_catalog_keeps_STOP_and_original_reward_ties(monkeypatch):
+        case=fixture(nominal_target=np.zeros((13,13,10),bool))
+>       task=GeneratedFallbackTask(case,mode='ridge_top8',ranker=ranker(),max_steps=2)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hybrid-train050-fallback-v1/hybrid_proposal.py:256: in __init__
+    super().__init__(case, max_steps=max_steps, cancelled=cancelled)
+src/resectionlab/native_spatial_task.py:629: in __init__
+    self.reset()
+src/resectionlab/native_spatial_task.py:683: in reset
+    return self.observation()
+           ^^^^^^^^^^^^^^^^^^
+src/resectionlab/native_spatial_task.py:793: in observation
+    inventory = self._prepare_inventory()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:80: in _prepare_inventory
+    rewards = nominal_scores(self, inventory)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:35: in nominal_scores
+    view.case.reference_target = task.case.nominal_target
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeSpatialCase(structural_intensity=array([[[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+ ...ontext_variant=None, public_target_domain=None, occupancy_source_support=None, support_domain=None, post_exposure=None)
+name = 'reference_target'
+value = array([[[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+ ...0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.]]], shape=(13, 13, 10), dtype=float32)
+
+>   ???
+E   dataclasses.FrozenInstanceError: cannot assign to field 'reference_target'
+
+<string>:4: FrozenInstanceError
+________ test_expansion_failure_is_paid_and_never_published_or_retried _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10994fe30>
+
+    def test_expansion_failure_is_paid_and_never_published_or_retried(monkeypatch):
+        case=fixture();order_fixture(monkeypatch,case)
+        events=[];costs=Costs(inventory_callback=events.append);original=NativeResectionEngine.preview_stroke
+        def capped(self,*a,**k):
+            if costs.counts.get('native_previews',0)==10:raise TimeoutError('generated preview cap')
+            return original(self,*a,**k)
+        monkeypatch.setattr(NativeResectionEngine,'preview_stroke',capped)
+        task=GeneratedFallbackTask.__new__(GeneratedFallbackTask)
+        with pytest.raises(TimeoutError,match='generated preview cap'):
+>           task.__init__(case,mode='ridge_top8',ranker=ranker(),max_steps=2,costs=costs)
+
+build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py:128: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hybrid-train050-fallback-v1/hybrid_proposal.py:256: in __init__
+    super().__init__(case, max_steps=max_steps, cancelled=cancelled)
+src/resectionlab/native_spatial_task.py:629: in __init__
+    self.reset()
+src/resectionlab/native_spatial_task.py:683: in reset
+    return self.observation()
+           ^^^^^^^^^^^^^^^^^^
+src/resectionlab/native_spatial_task.py:793: in observation
+    inventory = self._prepare_inventory()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:80: in _prepare_inventory
+    rewards = nominal_scores(self, inventory)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:35: in nominal_scores
+    view.case.reference_target = task.case.nominal_target
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeSpatialCase(structural_intensity=array([[[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+ ...ontext_variant=None, public_target_domain=None, occupancy_source_support=None, support_domain=None, post_exposure=None)
+name = 'reference_target'
+value = array([[[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+ ...0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.]]], shape=(13, 13, 10), dtype=float32)
+
+>   ???
+E   dataclasses.FrozenInstanceError: cannot assign to field 'reference_target'
+
+<string>:4: FrozenInstanceError
+___________ test_unchanged_helper_bytes_and_explicit_policy_contract ___________
+
+    def test_unchanged_helper_bytes_and_explicit_policy_contract():
+        import hashlib
+        from batch_contract import HELPER_SHA
+        assert hashlib.sha256((HERE/'hybrid_proposal.py').read_bytes()).hexdigest()==HELPER_SHA
+>       task=GeneratedFallbackTask(fixture(),mode='ridge_top8',ranker=ranker(),max_steps=2)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hybrid-train050-fallback-v1/hybrid_proposal.py:256: in __init__
+    super().__init__(case, max_steps=max_steps, cancelled=cancelled)
+src/resectionlab/native_spatial_task.py:629: in __init__
+    self.reset()
+src/resectionlab/native_spatial_task.py:683: in reset
+    return self.observation()
+           ^^^^^^^^^^^^^^^^^^
+src/resectionlab/native_spatial_task.py:793: in observation
+    inventory = self._prepare_inventory()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:80: in _prepare_inventory
+    rewards = nominal_scores(self, inventory)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:35: in nominal_scores
+    view.case.reference_target = task.case.nominal_target
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeSpatialCase(structural_intensity=array([[[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+ ...ontext_variant=None, public_target_domain=None, occupancy_source_support=None, support_domain=None, post_exposure=None)
+name = 'reference_target'
+value = array([[[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+ ...0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.]]], shape=(13, 13, 10), dtype=float32)
+
+>   ???
+E   dataclasses.FrozenInstanceError: cannot assign to field 'reference_target'
+
+<string>:4: FrozenInstanceError
+______ test_actual_worker_generated_two_arms_sealed_then_uncached_replay _______
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-train050-fallback-v1/controls-attempt-01/generated-tmp/test_actual_worker_generated_t0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1098826f0>
+
+    def test_actual_worker_generated_two_arms_sealed_then_uncached_replay(tmp_path,monkeypatch):
+        """Actual native generated 7-cube + actual worker, no saved model or patient."""
+        import initial_inventory_worker as worker
+        import torch
+        import test_post_exposure_learning as generated
+        from resectionlab import public_patient_factory as factory
+        monkeypatch.setattr(generated,'factory',factory)
+        folder=tmp_path/'fixture';folder.mkdir();inputs=generated.fixture(folder,'ReMIND-050')
+        manifest=json.loads(inputs['public_manifest_path'].read_bytes())
+        manifest['schema']='remind-fixed-TRAIN-partial-domain-public-inputs-v1'
+        manifest['source_bindings']['intended_use_review_sha256']='e'*64
+        inputs['public_manifest_path'].write_text(json.dumps(manifest))
+        mr={'path':str(inputs['public_manifest_path']),'sha256':factory.sha(inputs['public_manifest_path'])}
+        entry={'public_manifest':mr,'intended_use_review':{'path':'synthetic-review','sha256':'e'*64}}
+        model=RidgePriority(np.zeros(681),np.ones(681),np.zeros(681),0.)
+        raw=json.dumps({'feature_version':model.fingerprint,'data_hash':RIDGE['data_hash'],
+            'mean':[0.]*681,'scale':[1.]*681,'weights':[0.]*681,'intercept':0.}).encode()
+        fake={**RIDGE,'sha256':hashlib.sha256(raw).hexdigest(),'fingerprint':model.fingerprint}
+        for module in (batch_contract,worker,patient_transfer):monkeypatch.setattr(module,'RIDGE',fake)
+        monkeypatch.setattr(patient_transfer,'read_bytes',lambda path,expected,limit:raw)
+        for module in (batch_contract,worker):monkeypatch.setattr(module,'OUTPUT',tmp_path/'actual-worker-output')
+        # The outer generated test owner guards acquired paths. Retain, but do not
+        # install, a permanent process-wide audit hook that would outlive this test.
+        hooks=[];monkeypatch.setattr(worker.sys,'addaudithook',hooks.append)
+        monkeypatch.setattr(torch,'set_num_threads',lambda n:None)
+        monkeypatch.setattr(torch,'set_num_interop_threads',lambda n:None)
+        release=template('generated',{'path':'generated','sha256':'c'*64},entry)
+        release['execution_released']=True
+        old_small=worker.small
+        def synthetic_metadata(path,expected=None):
+            if str(path)==worker.BASELINE['path']:
+                return {'arms':[{'method':'exhaustive','files':{'exhaustive/plan.json':'c'*64},'outcomes':{}}]}
+            if str(path)==str(Path(worker.BASELINE['path']).parent/'exhaustive/plan.json'):
+                return {'actions':[], 'source_hash':'generated-historical-placeholder'}
+            return old_small(path,expected)
+        monkeypatch.setattr(worker,'small',synthetic_metadata)
+>       result=worker.execute(release,'b'*64,{'blocked':0})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py:182: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hybrid-train050-fallback-v1/initial_inventory_worker.py:120: in execute
+    task=record_task(case,admission,mode,folder,costs)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/initial_inventory_worker.py:91: in record_task
+    return cls(case,admission=admission,mode='ridge_top8' if mode=='balanced_ridge_stop_fallback' else 'exhaustive',
+build/hybrid-train050-fallback-v1/patient_transfer.py:61: in __init__
+    super().__init__(case,mode=mode,ranker=ranker,max_steps=max_steps,cancelled=cancelled,costs=costs)
+build/hybrid-train050-fallback-v1/hybrid_proposal.py:256: in __init__
+    super().__init__(case, max_steps=max_steps, cancelled=cancelled)
+src/resectionlab/native_spatial_task.py:629: in __init__
+    self.reset()
+src/resectionlab/native_spatial_task.py:683: in reset
+    return self.observation()
+           ^^^^^^^^^^^^^^^^^^
+src/resectionlab/native_spatial_task.py:793: in observation
+    inventory = self._prepare_inventory()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:80: in _prepare_inventory
+    rewards = nominal_scores(self, inventory)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build/hybrid-train050-fallback-v1/fallback_policy.py:35: in nominal_scores
+    view.case.reference_target = task.case.nominal_target
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeSpatialCase(structural_intensity=array([[[  0.,   1.,   2.,   3.,   4.,   5.,   6.],
+        [  7.,   8.,   9., ...essed_extent; tip_outside_image_still_refused', 'scope': 'public_simulated_post_exposure_search_qualification_only'})))
+name = 'reference_target'
+value = array([[[0., 0., 0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0., 0., 0.],
+    ..., 0., 0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0., 0., 0.]]], dtype=float32)
+
+>   ???
+E   dataclasses.FrozenInstanceError: cannot assign to field 'reference_target'
+
+<string>:4: FrozenInstanceError
+=========================== short test summary info ============================
+FAILED build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py::test_rescues_generated_omitted_positive_once_with_full_replay
+FAILED build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py::test_positive_shortlist_does_not_expand_even_if_better_is_omitted
+FAILED build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py::test_private_reference_cannot_change_fallback_catalog_mask_or_nominal_decision
+FAILED build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py::test_cached_observation_and_clone_do_not_requery_or_relog
+FAILED build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py::test_nonpositive_full_catalog_keeps_STOP_and_original_reward_ties
+FAILED build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py::test_expansion_failure_is_paid_and_never_published_or_retried
+FAILED build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py::test_unchanged_helper_bytes_and_explicit_policy_contract
+FAILED build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py::test_actual_worker_generated_two_arms_sealed_then_uncached_replay
+8 failed in 3.07s

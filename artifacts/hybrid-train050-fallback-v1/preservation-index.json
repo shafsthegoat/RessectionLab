@@ -1,0 +1,220 @@
+{
+  "bytes": 1548988,
+  "external_evidence": "All additional inventories, duplicate public binding copies and earlier audit harness source are bound by saved audit read hashes or retained under ignored build. The previously committed helper/canonical source is reused; no patient arrays/images/model weights included.",
+  "file_count": 35,
+  "includes": [
+    {
+      "archive_path": "hybrid-train050-fallback-v1/root-release.json",
+      "bytes": 3950,
+      "path": "build/hybrid-train050-fallback-v1/root-release.json",
+      "sha256": "6c22d2577e4175a530459bb0952a6e802938ae341324a88303d70339c9049280"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/source-index.json",
+      "bytes": 16283,
+      "path": "build/hybrid-train050-fallback-v1/source-index.json",
+      "sha256": "d557c4b6c762950a846cb1f0e478a49425921447a732581a50af91ae72286d3e"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/source-ready.json",
+      "bytes": 2080,
+      "path": "build/hybrid-train050-fallback-v1/source-ready.json",
+      "sha256": "03c500e87afd86ef42c5104c27fee39a9ba77af2bc2c83d2c1d5d3712ad66ce6"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/inputs.json",
+      "bytes": 400,
+      "path": "build/hybrid-train050-fallback-v1/inputs.json",
+      "sha256": "f5c691f73651f0a1c57b6c32e9dc35ee9a6ef136e6371323e6adcea9ae16560a"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/fallback_policy.py",
+      "bytes": 8087,
+      "path": "build/hybrid-train050-fallback-v1/fallback_policy.py",
+      "sha256": "a11571e4c313583bf72e3bc6b1c7d023c5c4d99bd7737da9a375123e582427b1"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/batch_contract.py",
+      "bytes": 10346,
+      "path": "build/hybrid-train050-fallback-v1/batch_contract.py",
+      "sha256": "5ca469d5b796689b33858bbea2ed4dd424f420f51f7cdf7eba3b458d1b5334c5"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/initial_inventory_worker.py",
+      "bytes": 18040,
+      "path": "build/hybrid-train050-fallback-v1/initial_inventory_worker.py",
+      "sha256": "de4d6be1991461d8cfce541e936868b8a3d291345f38dc8b5a860d43ec2a890f"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/freeze-runtime.py",
+      "bytes": 2833,
+      "path": "build/hybrid-train050-fallback-v1/freeze-runtime.py",
+      "sha256": "d45f39a4d8a1fae537d3a30cde4bb40dac5ef6bd0a625368d5926c6f3316d4b4"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/driver.patch",
+      "bytes": 22261,
+      "path": "build/hybrid-train050-fallback-v1/driver.patch",
+      "sha256": "941f280ecd0635d4a8739775ebc51a13c709f35155ae4ec265a2ce11c86da7c1"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/tests/test_fallback_policy.py",
+      "bytes": 12226,
+      "path": "build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py",
+      "sha256": "0935cc8b238cdbe8b16378b31e27e7f45888512eaaccc1faac4a078292cc1901"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/controls-attempt-01/receipt.json",
+      "bytes": 2331,
+      "path": "build/hybrid-train050-fallback-v1/controls-attempt-01/receipt.json",
+      "sha256": "9919374223df8432d2d62e7ad8515fcb84b959bc0ed48c9245d6027bfba2132b"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/controls-attempt-01/stdout.log",
+      "bytes": 22754,
+      "path": "build/hybrid-train050-fallback-v1/controls-attempt-01/stdout.log",
+      "sha256": "2b15243fbc76a110303cd0f760997b77d04872961bbf85212ae3e2e4c98ba99d"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/controls-attempt-01/failed-source/fallback_policy.py",
+      "bytes": 8065,
+      "path": "build/hybrid-train050-fallback-v1/controls-attempt-01/failed-source/fallback_policy.py",
+      "sha256": "c0bfd3fa6dd3e2079180743918e7f6417700b18e6ba1c8ca1ea3621d2ae9ce28"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/controls-attempt-02/receipt.json",
+      "bytes": 2331,
+      "path": "build/hybrid-train050-fallback-v1/controls-attempt-02/receipt.json",
+      "sha256": "e43a6769c856da8c5a29d255193476e7dbe9c963a2bb385d15add3f344fb8d4a"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/controls-attempt-02/stdout.log",
+      "bytes": 98,
+      "path": "build/hybrid-train050-fallback-v1/controls-attempt-02/stdout.log",
+      "sha256": "da14aad348c052a548298062cebed19fb631298a785b7997668ecc8f179c7aa3"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/attempt-01/result.json",
+      "bytes": 22628,
+      "path": "build/hybrid-train050-fallback-v1/attempt-01/result.json",
+      "sha256": "dbabca44c7c31db7c1d610b6a69184e3b3826091ad61fa9f644cd3a2c8efe3c7"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/attempt-01/sealed-plans.json",
+      "bytes": 144502,
+      "path": "build/hybrid-train050-fallback-v1/attempt-01/sealed-plans.json",
+      "sha256": "877d3701a851736d4ee77c9250094aaaf8428b8fc25c96d98c14202874a9431a"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/attempt-01.supervision/receipt.json",
+      "bytes": 1458,
+      "path": "build/hybrid-train050-fallback-v1/attempt-01.supervision/receipt.json",
+      "sha256": "de944be8efa438901d5f81603fa7a5271b0d2f1bb961600399ee8e3fc1aabb7b"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/attempt-01.supervision/declaration.json",
+      "bytes": 1843,
+      "path": "build/hybrid-train050-fallback-v1/attempt-01.supervision/declaration.json",
+      "sha256": "9f5168d9eaba91fa3ce0bce87d188b31135c6147e38037f9d3a38e8459876bd3"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/plan.json",
+      "bytes": 60328,
+      "path": "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/plan.json",
+      "sha256": "72ce11712bc7a139a564e69a62addcf3c0d053416d73c98d4597e738d1ae621e"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/episode-metrics.json",
+      "bytes": 417843,
+      "path": "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/episode-metrics.json",
+      "sha256": "cf800139936608bdfbe0014a9250709dfebc98290fe018abf2c950ac7993d637"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/independent-episode.json",
+      "bytes": 2626,
+      "path": "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/independent-episode.json",
+      "sha256": "3446f4f82a214894273d16744374b9a0b98b458544b8120c6f9e94511f273464"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/attempt-01/exhaustive/plan.json",
+      "bytes": 71513,
+      "path": "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/plan.json",
+      "sha256": "a0c56040a16a679107673ff7812c3798159166515e4beadf0344ccf8e6247d80"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/episode-metrics.json",
+      "bytes": 399509,
+      "path": "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/episode-metrics.json",
+      "sha256": "57b733afb93b0f6d18f991955c3881762ec730ad02addefd32ab70f5bdfd0eb8"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/independent-episode.json",
+      "bytes": 2625,
+      "path": "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/independent-episode.json",
+      "sha256": "88476effc9d94e84913d1ea14d04133e8ba88d0d816310cad91507552048588f"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/source/admitted-public-bindings.json",
+      "bytes": 16168,
+      "path": "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/source/admitted-public-bindings.json",
+      "sha256": "2cdb567d299606732084129897755b7ebd8081a563d6ba6a31bd0fd07beed57a"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-01.json",
+      "bytes": 59357,
+      "path": "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-01.json",
+      "sha256": "d9d9341884e6c58f8a2dcae5271d4bf0fa83e606ea042ef69d9fc868079c67dd"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-02.json",
+      "bytes": 78043,
+      "path": "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-02.json",
+      "sha256": "39732a824a6f19e3954019b1097eb61320a66eff0ad7ac97f69d40adfe5432fc"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-v1/attempt-01/exhaustive/inventories/state-01.json",
+      "bytes": 70572,
+      "path": "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/inventories/state-01.json",
+      "sha256": "84df656e8fddf202dbec615ffbee3c2bbacabb293cd62c958a3efdf3a18555b7"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-review-v1/source-review.json",
+      "bytes": 2726,
+      "path": "build/hybrid-train050-fallback-review-v1/source-review.json",
+      "sha256": "7d1161e7121224ec2fc89e0e3b01f6ec4e7eb6fd4b1f6d6b0d9188da73d7f840"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-review-v1/runtime-source-delta.json",
+      "bytes": 1350,
+      "path": "build/hybrid-train050-fallback-review-v1/runtime-source-delta.json",
+      "sha256": "149405b2f66462ac4be7f4335f927a11f9986a7e4d327f10af216c9ed6b42d89"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-review-v1/audit_saved.py",
+      "bytes": 28357,
+      "path": "build/hybrid-train050-fallback-review-v1/audit_saved.py",
+      "sha256": "5990fea8958c0290b7c4b41403357a23f835776e30cbd663d06c0ed0abbce05b"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-review-v1/audit.json",
+      "bytes": 31680,
+      "path": "build/hybrid-train050-fallback-review-v1/audit.json",
+      "sha256": "0e98eb9d7abe46e393f4eabadcde3d279bb2b5933387bc724d77fb9c0055e9fd"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-review-v1/REPORT.txt",
+      "bytes": 3482,
+      "path": "build/hybrid-train050-fallback-review-v1/REPORT.txt",
+      "sha256": "20d4ca659a14751f66e3490f4104e8e055e78012aa5119d67c516884df83d2ca"
+    },
+    {
+      "archive_path": "hybrid-train050-fallback-review-v1/audit-initial-failure.txt",
+      "bytes": 293,
+      "path": "build/hybrid-train050-fallback-review-v1/audit-initial-failure.txt",
+      "sha256": "f3882f9639aa50869fc50286d8233ae2a243ac1cd2669c374e1016056a166805"
+    }
+  ],
+  "initial_audit_source_sha256": "6a8be0cb2ee273d3fa1f0e7aa8658935a485e817dcf807a331fc5ed9a8825a4d",
+  "schema": "targeted-fallback-compact-archive-v1",
+  "target_max_bytes": 1572864
+}

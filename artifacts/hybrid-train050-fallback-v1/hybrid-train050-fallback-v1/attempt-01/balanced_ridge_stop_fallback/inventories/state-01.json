@@ -1,0 +1,2080 @@
+{
+  "ledger": [
+    {
+      "action_id": "nominal-cavity-1a617d397a1378edc7aaee20",
+      "column_index": 0,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-1a617d397a1378edc7aaee20",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        56,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-1a617d397a1378edc7aaee20",
+      "column_index": 0,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-1a617d397a1378edc7aaee20",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        56,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-905041fd32af0c538a903bd7",
+      "column_index": 0,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-905041fd32af0c538a903bd7",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        94,
+        56,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-56fd837c25d5f3daf0e660da",
+      "column_index": 0,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-56fd837c25d5f3daf0e660da",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        56,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-56fd837c25d5f3daf0e660da",
+      "column_index": 0,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-56fd837c25d5f3daf0e660da",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        56,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-2de5de3ab6067eb5b827b872",
+      "column_index": 0,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-2de5de3ab6067eb5b827b872",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        94,
+        56,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-38c2df347c5e300b8c774bb6",
+      "column_index": 1,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-38c2df347c5e300b8c774bb6",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        123,
+        54,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-38c2df347c5e300b8c774bb6",
+      "column_index": 1,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-38c2df347c5e300b8c774bb6",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        123,
+        54,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-b9d040babe94241a7f1ed2bd",
+      "column_index": 1,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-b9d040babe94241a7f1ed2bd",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        95,
+        54,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-0258138adda1582ad8744c99",
+      "column_index": 1,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-0258138adda1582ad8744c99",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        123,
+        54,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-0258138adda1582ad8744c99",
+      "column_index": 1,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-0258138adda1582ad8744c99",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        123,
+        54,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-e30f25ccb39f204713575b77",
+      "column_index": 1,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-e30f25ccb39f204713575b77",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        95,
+        54,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-f030538c1b282a9ccb9aa4af",
+      "column_index": 2,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-f030538c1b282a9ccb9aa4af",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        58,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-f030538c1b282a9ccb9aa4af",
+      "column_index": 2,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-f030538c1b282a9ccb9aa4af",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        58,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-b14de8fd2530634e5797c1a1",
+      "column_index": 2,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-b14de8fd2530634e5797c1a1",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        94,
+        58,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-073254fffd74ee0654d28851",
+      "column_index": 2,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-073254fffd74ee0654d28851",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        58,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-073254fffd74ee0654d28851",
+      "column_index": 2,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-073254fffd74ee0654d28851",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        58,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-b9734ec483132f173c0419a0",
+      "column_index": 2,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-b9734ec483132f173c0419a0",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        94,
+        58,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-998125876a6a6a24744f7aae",
+      "column_index": 3,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-998125876a6a6a24744f7aae",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        56,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-998125876a6a6a24744f7aae",
+      "column_index": 3,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-998125876a6a6a24744f7aae",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        56,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-6a0c71aca97a77df2d67f2d8",
+      "column_index": 3,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-6a0c71aca97a77df2d67f2d8",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        100,
+        56,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-80fdaf2e7875ddcf6e2b5061",
+      "column_index": 3,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-80fdaf2e7875ddcf6e2b5061",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        56,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-80fdaf2e7875ddcf6e2b5061",
+      "column_index": 3,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-80fdaf2e7875ddcf6e2b5061",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        56,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-255fa72462c9bafe0a567cc9",
+      "column_index": 3,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-255fa72462c9bafe0a567cc9",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        100,
+        56,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-56c7c6e82d2cf914e5c84927",
+      "column_index": 4,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-56c7c6e82d2cf914e5c84927",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        56,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-56c7c6e82d2cf914e5c84927",
+      "column_index": 4,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-56c7c6e82d2cf914e5c84927",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        56,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-b09bc75a4516d5cdd64c3c64",
+      "column_index": 4,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-b09bc75a4516d5cdd64c3c64",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        93,
+        56,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-63285c012011379ac959af3d",
+      "column_index": 4,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-63285c012011379ac959af3d",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        56,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-63285c012011379ac959af3d",
+      "column_index": 4,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-63285c012011379ac959af3d",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        56,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-d04221e3612bb1d84ea13bf8",
+      "column_index": 4,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-d04221e3612bb1d84ea13bf8",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        93,
+        56,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-69c2feeb6ae533f59d25c37b",
+      "column_index": 5,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-69c2feeb6ae533f59d25c37b",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        123,
+        54,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-69c2feeb6ae533f59d25c37b",
+      "column_index": 5,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-69c2feeb6ae533f59d25c37b",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        123,
+        54,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-56b1540ec964904e34fa409a",
+      "column_index": 5,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-56b1540ec964904e34fa409a",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        101,
+        54,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-4d84913cd5faf2cce8dc6cf4",
+      "column_index": 5,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-4d84913cd5faf2cce8dc6cf4",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        123,
+        54,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-4d84913cd5faf2cce8dc6cf4",
+      "column_index": 5,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-4d84913cd5faf2cce8dc6cf4",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        123,
+        54,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-5cf49c0a2cf210716ecfc806",
+      "column_index": 5,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-5cf49c0a2cf210716ecfc806",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        101,
+        54,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-17e2b0300b3ea4f1e3d4eb83",
+      "column_index": 6,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-17e2b0300b3ea4f1e3d4eb83",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        123,
+        54,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-17e2b0300b3ea4f1e3d4eb83",
+      "column_index": 6,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-17e2b0300b3ea4f1e3d4eb83",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        123,
+        54,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-c837e018788d2a1412f4a54e",
+      "column_index": 6,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-c837e018788d2a1412f4a54e",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        94,
+        54,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-2876fd75faaafd54195aa77c",
+      "column_index": 6,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-2876fd75faaafd54195aa77c",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        123,
+        54,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-2876fd75faaafd54195aa77c",
+      "column_index": 6,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-2876fd75faaafd54195aa77c",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        123,
+        54,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-07420401bcbc88ff67007c71",
+      "column_index": 6,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-07420401bcbc88ff67007c71",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        94,
+        54,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-edaaaf721d02a01769bb381b",
+      "column_index": 7,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-edaaaf721d02a01769bb381b",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        58,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-edaaaf721d02a01769bb381b",
+      "column_index": 7,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-edaaaf721d02a01769bb381b",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        58,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-df1e6e6a423f71a19b5c089f",
+      "column_index": 7,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-df1e6e6a423f71a19b5c089f",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        98,
+        58,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-a7ff08ed87439fb98ecb907b",
+      "column_index": 7,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-a7ff08ed87439fb98ecb907b",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        58,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-a7ff08ed87439fb98ecb907b",
+      "column_index": 7,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-a7ff08ed87439fb98ecb907b",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        58,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-10b36c07b042c5ae33aee731",
+      "column_index": 7,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-10b36c07b042c5ae33aee731",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        98,
+        58,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-5c8ef953ddacc1f8cafcfc56",
+      "column_index": 8,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-5c8ef953ddacc1f8cafcfc56",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        58,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-5c8ef953ddacc1f8cafcfc56",
+      "column_index": 8,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-5c8ef953ddacc1f8cafcfc56",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        58,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-6c5a96fc8bccc5f27f40146e",
+      "column_index": 8,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-6c5a96fc8bccc5f27f40146e",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        92,
+        58,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-ecd0eca3e75828f3f123567f",
+      "column_index": 8,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-ecd0eca3e75828f3f123567f",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        58,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-ecd0eca3e75828f3f123567f",
+      "column_index": 8,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-ecd0eca3e75828f3f123567f",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        58,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-4d1d4bc0f9c3fe211f8f4d7b",
+      "column_index": 8,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-4d1d4bc0f9c3fe211f8f4d7b",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        92,
+        58,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-62edf6728bdfa16657e9fbd4",
+      "column_index": 9,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-62edf6728bdfa16657e9fbd4",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        122,
+        53,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-62edf6728bdfa16657e9fbd4",
+      "column_index": 9,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-62edf6728bdfa16657e9fbd4",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        122,
+        53,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-45373bdd267d6f8ffc01902c",
+      "column_index": 9,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-45373bdd267d6f8ffc01902c",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        95,
+        53,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-e6477f15693f6adbca176354",
+      "column_index": 9,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-e6477f15693f6adbca176354",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        122,
+        53,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-e6477f15693f6adbca176354",
+      "column_index": 9,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-e6477f15693f6adbca176354",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        122,
+        53,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-d133adc384d7487c8126150e",
+      "column_index": 9,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-d133adc384d7487c8126150e",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        95,
+        53,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-307bc86a273a38a30e8db4af",
+      "column_index": 10,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-307bc86a273a38a30e8db4af",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        124,
+        59,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-307bc86a273a38a30e8db4af",
+      "column_index": 10,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-307bc86a273a38a30e8db4af",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        124,
+        59,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-8f69919ba7fbfee26f5d9827",
+      "column_index": 10,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-8f69919ba7fbfee26f5d9827",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        94,
+        59,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-c75b5e02862901b2eeb1c9e1",
+      "column_index": 10,
+      "family": "exposed_opening",
+      "feasible": false,
+      "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-c75b5e02862901b2eeb1c9e1",
+      "query_disposition": "CERTIFIED_REJECTED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        124,
+        59,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-c75b5e02862901b2eeb1c9e1",
+      "column_index": 10,
+      "family": "proximal_nominal",
+      "feasible": false,
+      "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-c75b5e02862901b2eeb1c9e1",
+      "query_disposition": "CERTIFIED_REJECTED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        124,
+        59,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-bc8ef3a3fdfb803008eaf881",
+      "column_index": 10,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-bc8ef3a3fdfb803008eaf881",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        94,
+        59,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-59cd4c3274fd1b00e4971d2c",
+      "column_index": 11,
+      "family": "exposed_opening",
+      "feasible": true,
+      "native_reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-59cd4c3274fd1b00e4971d2c",
+      "query_disposition": "CERTIFIED_LEGAL",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        56,
+        80
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-59cd4c3274fd1b00e4971d2c",
+      "column_index": 11,
+      "family": "proximal_nominal",
+      "feasible": true,
+      "native_reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-59cd4c3274fd1b00e4971d2c",
+      "query_disposition": "CERTIFIED_LEGAL",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        56,
+        80
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-5ac37fe41155831336c29f81",
+      "column_index": 11,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-5ac37fe41155831336c29f81",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        100,
+        56,
+        80
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-3dcff9ed34a6b2bec6ee3d91",
+      "column_index": 11,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-3dcff9ed34a6b2bec6ee3d91",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        56,
+        80
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-3dcff9ed34a6b2bec6ee3d91",
+      "column_index": 11,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-3dcff9ed34a6b2bec6ee3d91",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        56,
+        80
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-cd75e5bd8160b05d1fe2e0c7",
+      "column_index": 11,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-cd75e5bd8160b05d1fe2e0c7",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        100,
+        56,
+        80
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-93aaa06b81065c7ecb2609b2",
+      "column_index": 12,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-93aaa06b81065c7ecb2609b2",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        124,
+        56,
+        86
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-93aaa06b81065c7ecb2609b2",
+      "column_index": 12,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-93aaa06b81065c7ecb2609b2",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        124,
+        56,
+        86
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-f22d138f16da5d4fe63877ca",
+      "column_index": 12,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-f22d138f16da5d4fe63877ca",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        92,
+        56,
+        86
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-6234fc6d0ce3575e9d708034",
+      "column_index": 12,
+      "family": "exposed_opening",
+      "proposal_id": "nominal-cavity-6234fc6d0ce3575e9d708034",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        124,
+        56,
+        86
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-6234fc6d0ce3575e9d708034",
+      "column_index": 12,
+      "family": "proximal_nominal",
+      "proposal_id": "nominal-cavity-6234fc6d0ce3575e9d708034",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        124,
+        56,
+        86
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-14b0c5ca629c7897fd89229a",
+      "column_index": 12,
+      "family": "distal_nominal",
+      "proposal_id": "nominal-cavity-14b0c5ca629c7897fd89229a",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        92,
+        56,
+        86
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-5318c9cd7548a549de1b97ec",
+      "column_index": 0,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-5318c9cd7548a549de1b97ec",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        124,
+        56,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-2385b7c33dea5cdffc2b034d",
+      "column_index": 0,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-2385b7c33dea5cdffc2b034d",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        124,
+        56,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-2082edc783b0fbf2048e4acb",
+      "column_index": 1,
+      "family": "intermediate_opening",
+      "feasible": false,
+      "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-2082edc783b0fbf2048e4acb",
+      "query_disposition": "CERTIFIED_REJECTED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        122,
+        54,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-69e12cec126ef8481b633eae",
+      "column_index": 1,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-69e12cec126ef8481b633eae",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        122,
+        54,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-1dd83758a397fd3c81f1e517",
+      "column_index": 2,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-1dd83758a397fd3c81f1e517",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        124,
+        58,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-8849433da1a84fc156093629",
+      "column_index": 2,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-8849433da1a84fc156093629",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        124,
+        58,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-90ac5a0eb23fc1819a77c6f5",
+      "column_index": 3,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-90ac5a0eb23fc1819a77c6f5",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        124,
+        56,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-800affd618d80e0e8b9ace4c",
+      "column_index": 3,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-800affd618d80e0e8b9ace4c",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        124,
+        56,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-5adceb319fac955e9759f8e0",
+      "column_index": 4,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-5adceb319fac955e9759f8e0",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        124,
+        56,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-94dcbcec274f8c34598cffb5",
+      "column_index": 4,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-94dcbcec274f8c34598cffb5",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        124,
+        56,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-0f1b107a57db8ea956fedd12",
+      "column_index": 5,
+      "family": "intermediate_opening",
+      "feasible": false,
+      "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-0f1b107a57db8ea956fedd12",
+      "query_disposition": "CERTIFIED_REJECTED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        122,
+        54,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-96ce9b9badd9fee3ec5698e7",
+      "column_index": 5,
+      "family": "intermediate_opening",
+      "feasible": false,
+      "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-96ce9b9badd9fee3ec5698e7",
+      "query_disposition": "CERTIFIED_REJECTED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        122,
+        54,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-82aae9294f67dd07fdf7133c",
+      "column_index": 6,
+      "family": "intermediate_opening",
+      "feasible": false,
+      "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-82aae9294f67dd07fdf7133c",
+      "query_disposition": "CERTIFIED_REJECTED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        122,
+        54,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-77567838a402be9d77ef9e05",
+      "column_index": 6,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-77567838a402be9d77ef9e05",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        122,
+        54,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-ff53eea37a1d5d6f9d161426",
+      "column_index": 7,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-ff53eea37a1d5d6f9d161426",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        124,
+        58,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-65215350691e5cb96dbc2d54",
+      "column_index": 7,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-65215350691e5cb96dbc2d54",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        124,
+        58,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-d7fceedace38317a05117955",
+      "column_index": 8,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-d7fceedace38317a05117955",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        124,
+        58,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-7259d5e9fc9f7fc23646f8fb",
+      "column_index": 8,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-7259d5e9fc9f7fc23646f8fb",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        124,
+        58,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-f41c49c8f971933133fd6241",
+      "column_index": 9,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-f41c49c8f971933133fd6241",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        121,
+        53,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-9f0a0c0a3575ec4210104f32",
+      "column_index": 9,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-9f0a0c0a3575ec4210104f32",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        121,
+        53,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-28ebf57f4c106259a0a646fb",
+      "column_index": 10,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-28ebf57f4c106259a0a646fb",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        123,
+        59,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-977f2158292cbc9218a753df",
+      "column_index": 10,
+      "family": "intermediate_opening",
+      "feasible": false,
+      "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-977f2158292cbc9218a753df",
+      "query_disposition": "CERTIFIED_REJECTED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        123,
+        59,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-b9873aaebb96aa869e16bd90",
+      "column_index": 11,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-b9873aaebb96aa869e16bd90",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        124,
+        56,
+        80
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-4130bcfb2e42ebff57fb403a",
+      "column_index": 11,
+      "family": "intermediate_opening",
+      "feasible": false,
+      "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "proposal_id": "nominal-cavity-4130bcfb2e42ebff57fb403a",
+      "query_disposition": "CERTIFIED_REJECTED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        124,
+        56,
+        80
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-02f355e02fe14a17ce57b3dc",
+      "column_index": 12,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-02f355e02fe14a17ce57b3dc",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        123,
+        56,
+        86
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-6f5b4ed0c2f03d72f20b46f1",
+      "column_index": 12,
+      "family": "intermediate_opening",
+      "proposal_id": "nominal-cavity-6f5b4ed0c2f03d72f20b46f1",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        123,
+        56,
+        86
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-1a617d397a1378edc7aaee20",
+      "column_index": 0,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-1a617d397a1378edc7aaee20",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        56,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-9688768ccd57e67aa28d167e",
+      "column_index": 0,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-9688768ccd57e67aa28d167e",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        126,
+        56,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-38c2df347c5e300b8c774bb6",
+      "column_index": 1,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-38c2df347c5e300b8c774bb6",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        123,
+        54,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-96d38fa839f4e7b42ced0fd4",
+      "column_index": 1,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-96d38fa839f4e7b42ced0fd4",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        124,
+        54,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-f030538c1b282a9ccb9aa4af",
+      "column_index": 2,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-f030538c1b282a9ccb9aa4af",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        58,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-c6069afd9785fbe25f55b41c",
+      "column_index": 2,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-c6069afd9785fbe25f55b41c",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        126,
+        58,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-998125876a6a6a24744f7aae",
+      "column_index": 3,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-998125876a6a6a24744f7aae",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        56,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-cc09b634c0155a97711ca236",
+      "column_index": 3,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-cc09b634c0155a97711ca236",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        126,
+        56,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-56c7c6e82d2cf914e5c84927",
+      "column_index": 4,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-56c7c6e82d2cf914e5c84927",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        56,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-305fb1458803d01eb5dfd024",
+      "column_index": 4,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-305fb1458803d01eb5dfd024",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        126,
+        56,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-69c2feeb6ae533f59d25c37b",
+      "column_index": 5,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-69c2feeb6ae533f59d25c37b",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        123,
+        54,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-e6e7c4b4daf2cad706fbfc22",
+      "column_index": 5,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-e6e7c4b4daf2cad706fbfc22",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        124,
+        54,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-17e2b0300b3ea4f1e3d4eb83",
+      "column_index": 6,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-17e2b0300b3ea4f1e3d4eb83",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        123,
+        54,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-f05e28f5d3e3aa18651d8a64",
+      "column_index": 6,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-f05e28f5d3e3aa18651d8a64",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        124,
+        54,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-edaaaf721d02a01769bb381b",
+      "column_index": 7,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-edaaaf721d02a01769bb381b",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        58,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-8574d39791e49eba2fd528e2",
+      "column_index": 7,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-8574d39791e49eba2fd528e2",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        126,
+        58,
+        81
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-5c8ef953ddacc1f8cafcfc56",
+      "column_index": 8,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-5c8ef953ddacc1f8cafcfc56",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        58,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-a312e47ae405bf1d0df3480f",
+      "column_index": 8,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-a312e47ae405bf1d0df3480f",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        126,
+        58,
+        85
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-62edf6728bdfa16657e9fbd4",
+      "column_index": 9,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-62edf6728bdfa16657e9fbd4",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        122,
+        53,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-8915e0e4ef4db9b6f9bd2dff",
+      "column_index": 9,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-8915e0e4ef4db9b6f9bd2dff",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        123,
+        53,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-307bc86a273a38a30e8db4af",
+      "column_index": 10,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-307bc86a273a38a30e8db4af",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        124,
+        59,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-b3f392dc85669827dec73c5f",
+      "column_index": 10,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-b3f392dc85669827dec73c5f",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        59,
+        83
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-59cd4c3274fd1b00e4971d2c",
+      "column_index": 11,
+      "family": "tool_footprint_opening",
+      "feasible": true,
+      "native_reason": "NATIVE_CONNECTED_STROKE",
+      "proposal_id": "nominal-cavity-59cd4c3274fd1b00e4971d2c",
+      "query_disposition": "CERTIFIED_LEGAL",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        125,
+        56,
+        80
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-8544ce00bb0f34574dc8e42c",
+      "column_index": 11,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-8544ce00bb0f34574dc8e42c",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        126,
+        56,
+        80
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-93aaa06b81065c7ecb2609b2",
+      "column_index": 12,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-93aaa06b81065c7ecb2609b2",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "DUPLICATE_GEOMETRY",
+      "tool_id": "generic_suction",
+      "voxel": [
+        124,
+        56,
+        86
+      ]
+    },
+    {
+      "action_id": "nominal-cavity-c1a1eff03a1910b5e4d04d94",
+      "column_index": 12,
+      "family": "tool_footprint_opening",
+      "proposal_id": "nominal-cavity-c1a1eff03a1910b5e4d04d94",
+      "query_disposition": "NOT_QUERIED",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        56,
+        86
+      ]
+    }
+  ],
+  "shortlist": {
+    "additional_selected_ids": [],
+    "exhaustive_over_emitted_catalog": false,
+    "fallback_completed": true,
+    "fallback_policy": {
+      "expansion": "all_remaining_emitted_raw_ids_once_in_original_order",
+      "fit_updates": 0,
+      "omitted_catalog_slots": "not_a_global_exhaustion_claim",
+      "selection": "unchanged_nominal_reward_STOP_zero_original_raw_order_ties",
+      "trigger": "no_strictly_positive_feasible_nominal_reward_in_initial_top8",
+      "version": "nominal-no-positive-top8-exhaustive-fallback-v1"
+    },
+    "fallback_triggered": false,
+    "initial_nominal_scores": [
+      {
+        "action_id": "nominal-cavity-59cd4c3274fd1b00e4971d2c",
+        "nominal_reward": 0.886792245739534
+      }
+    ],
+    "initial_selected_ids": [
+      "nominal-cavity-0f1b107a57db8ea956fedd12",
+      "nominal-cavity-96ce9b9badd9fee3ec5698e7",
+      "nominal-cavity-82aae9294f67dd07fdf7133c",
+      "nominal-cavity-2082edc783b0fbf2048e4acb",
+      "nominal-cavity-4130bcfb2e42ebff57fb403a",
+      "nominal-cavity-c75b5e02862901b2eeb1c9e1",
+      "nominal-cavity-59cd4c3274fd1b00e4971d2c",
+      "nominal-cavity-977f2158292cbc9218a753df"
+    ],
+    "input_binding": "sha256:d90b2965eb38b2d59aebcecbd79729150a40fe3c48eb88c799940e127a85b86c",
+    "legal_count": 1,
+    "not_queried_count": 83,
+    "priority_is_not_legality": true,
+    "priority_scores": [
+      3.0561166845718515,
+      1.325572855612966,
+      1.4716231709831766,
+      1.4970743690485286,
+      2.6411781729068786,
+      -0.5371866949656281,
+      3.4429969587787075,
+      1.1592475910358944,
+      -0.09619304011598073,
+      -1.2377061796605704,
+      1.8468762247331376,
+      1.5678177070503585,
+      1.757071947044755,
+      1.056890158739315,
+      2.089509007481341,
+      2.802555362212552,
+      1.7803995057760678,
+      0.6560831512827701,
+      3.712211673157635,
+      2.256019517110948,
+      3.864087393587998,
+      0.17382269496628316,
+      3.4955316771504754,
+      3.0563432186647694,
+      3.411970735088607,
+      1.283945638389095,
+      2.7195752975712444,
+      3.0909459848771665,
+      -0.9718227722563135,
+      0.8789900891388216,
+      1.8911359517572917,
+      -0.09060525526326968,
+      0.7915233743498513,
+      -2.479166740611911,
+      1.3799255853953196,
+      1.9227220060256278,
+      3.49883883880598,
+      0.993388493086409,
+      1.924259551424965,
+      0.29045164984261196,
+      0.4873043779323172,
+      -1.315764656128613,
+      4.193724528882559,
+      1.8768037346460953,
+      4.177956016988741,
+      1.5220419684416342,
+      2.842214256261246,
+      1.0477099756106425,
+      1.0490664563974863,
+      -0.5423686854559264,
+      1.8183154552280962,
+      2.4112975611070744,
+      3.2138544640123317,
+      2.064679450292292,
+      4.525425096630432,
+      4.038407669667152,
+      0.34802792745390976,
+      1.5371786502773461,
+      0.8422380358545427,
+      1.0292164867301994,
+      1.2693705782695428,
+      3.6954161577351825,
+      7.222113459939141,
+      6.756209248036736,
+      4.92029698674407,
+      2.572559052849106,
+      0.11205368521751291,
+      2.0919170896076342,
+      2.6887786853878577,
+      2.422817900090585,
+      0.7634943394358369,
+      1.5394304389850058,
+      -0.6560868479779287,
+      4.050173290666813,
+      0.782619028871163,
+      4.364418795123114,
+      2.067228695118335,
+      2.9288954694693863,
+      1.847815905101791,
+      3.73296478874961,
+      2.7532614733514866,
+      3.4713110357398747,
+      3.0458251123057996,
+      3.271124282140184,
+      1.976860695225194,
+      1.6551879436559715,
+      1.479493068087533,
+      1.902453598330586,
+      3.157820870272956,
+      3.479572928022639,
+      1.1615457265004547
+    ],
+    "queried_count": 8,
+    "raw_count": 91,
+    "raw_ids": [
+      "nominal-cavity-1a617d397a1378edc7aaee20",
+      "nominal-cavity-905041fd32af0c538a903bd7",
+      "nominal-cavity-56fd837c25d5f3daf0e660da",
+      "nominal-cavity-2de5de3ab6067eb5b827b872",
+      "nominal-cavity-38c2df347c5e300b8c774bb6",
+      "nominal-cavity-b9d040babe94241a7f1ed2bd",
+      "nominal-cavity-0258138adda1582ad8744c99",
+      "nominal-cavity-e30f25ccb39f204713575b77",
+      "nominal-cavity-f030538c1b282a9ccb9aa4af",
+      "nominal-cavity-b14de8fd2530634e5797c1a1",
+      "nominal-cavity-073254fffd74ee0654d28851",
+      "nominal-cavity-b9734ec483132f173c0419a0",
+      "nominal-cavity-998125876a6a6a24744f7aae",
+      "nominal-cavity-6a0c71aca97a77df2d67f2d8",
+      "nominal-cavity-80fdaf2e7875ddcf6e2b5061",
+      "nominal-cavity-255fa72462c9bafe0a567cc9",
+      "nominal-cavity-56c7c6e82d2cf914e5c84927",
+      "nominal-cavity-b09bc75a4516d5cdd64c3c64",
+      "nominal-cavity-63285c012011379ac959af3d",
+      "nominal-cavity-d04221e3612bb1d84ea13bf8",
+      "nominal-cavity-69c2feeb6ae533f59d25c37b",
+      "nominal-cavity-56b1540ec964904e34fa409a",
+      "nominal-cavity-4d84913cd5faf2cce8dc6cf4",
+      "nominal-cavity-5cf49c0a2cf210716ecfc806",
+      "nominal-cavity-17e2b0300b3ea4f1e3d4eb83",
+      "nominal-cavity-c837e018788d2a1412f4a54e",
+      "nominal-cavity-2876fd75faaafd54195aa77c",
+      "nominal-cavity-07420401bcbc88ff67007c71",
+      "nominal-cavity-edaaaf721d02a01769bb381b",
+      "nominal-cavity-df1e6e6a423f71a19b5c089f",
+      "nominal-cavity-a7ff08ed87439fb98ecb907b",
+      "nominal-cavity-10b36c07b042c5ae33aee731",
+      "nominal-cavity-5c8ef953ddacc1f8cafcfc56",
+      "nominal-cavity-6c5a96fc8bccc5f27f40146e",
+      "nominal-cavity-ecd0eca3e75828f3f123567f",
+      "nominal-cavity-4d1d4bc0f9c3fe211f8f4d7b",
+      "nominal-cavity-62edf6728bdfa16657e9fbd4",
+      "nominal-cavity-45373bdd267d6f8ffc01902c",
+      "nominal-cavity-e6477f15693f6adbca176354",
+      "nominal-cavity-d133adc384d7487c8126150e",
+      "nominal-cavity-307bc86a273a38a30e8db4af",
+      "nominal-cavity-8f69919ba7fbfee26f5d9827",
+      "nominal-cavity-c75b5e02862901b2eeb1c9e1",
+      "nominal-cavity-bc8ef3a3fdfb803008eaf881",
+      "nominal-cavity-59cd4c3274fd1b00e4971d2c",
+      "nominal-cavity-5ac37fe41155831336c29f81",
+      "nominal-cavity-3dcff9ed34a6b2bec6ee3d91",
+      "nominal-cavity-cd75e5bd8160b05d1fe2e0c7",
+      "nominal-cavity-93aaa06b81065c7ecb2609b2",
+      "nominal-cavity-f22d138f16da5d4fe63877ca",
+      "nominal-cavity-6234fc6d0ce3575e9d708034",
+      "nominal-cavity-14b0c5ca629c7897fd89229a",
+      "nominal-cavity-5318c9cd7548a549de1b97ec",
+      "nominal-cavity-2385b7c33dea5cdffc2b034d",
+      "nominal-cavity-2082edc783b0fbf2048e4acb",
+      "nominal-cavity-69e12cec126ef8481b633eae",
+      "nominal-cavity-1dd83758a397fd3c81f1e517",
+      "nominal-cavity-8849433da1a84fc156093629",
+      "nominal-cavity-90ac5a0eb23fc1819a77c6f5",
+      "nominal-cavity-800affd618d80e0e8b9ace4c",
+      "nominal-cavity-5adceb319fac955e9759f8e0",
+      "nominal-cavity-94dcbcec274f8c34598cffb5",
+      "nominal-cavity-0f1b107a57db8ea956fedd12",
+      "nominal-cavity-96ce9b9badd9fee3ec5698e7",
+      "nominal-cavity-82aae9294f67dd07fdf7133c",
+      "nominal-cavity-77567838a402be9d77ef9e05",
+      "nominal-cavity-ff53eea37a1d5d6f9d161426",
+      "nominal-cavity-65215350691e5cb96dbc2d54",
+      "nominal-cavity-d7fceedace38317a05117955",
+      "nominal-cavity-7259d5e9fc9f7fc23646f8fb",
+      "nominal-cavity-f41c49c8f971933133fd6241",
+      "nominal-cavity-9f0a0c0a3575ec4210104f32",
+      "nominal-cavity-28ebf57f4c106259a0a646fb",
+      "nominal-cavity-977f2158292cbc9218a753df",
+      "nominal-cavity-b9873aaebb96aa869e16bd90",
+      "nominal-cavity-4130bcfb2e42ebff57fb403a",
+      "nominal-cavity-02f355e02fe14a17ce57b3dc",
+      "nominal-cavity-6f5b4ed0c2f03d72f20b46f1",
+      "nominal-cavity-9688768ccd57e67aa28d167e",
+      "nominal-cavity-96d38fa839f4e7b42ced0fd4",
+      "nominal-cavity-c6069afd9785fbe25f55b41c",
+      "nominal-cavity-cc09b634c0155a97711ca236",
+      "nominal-cavity-305fb1458803d01eb5dfd024",
+      "nominal-cavity-e6e7c4b4daf2cad706fbfc22",
+      "nominal-cavity-f05e28f5d3e3aa18651d8a64",
+      "nominal-cavity-8574d39791e49eba2fd528e2",
+      "nominal-cavity-a312e47ae405bf1d0df3480f",
+      "nominal-cavity-8915e0e4ef4db9b6f9bd2dff",
+      "nominal-cavity-b3f392dc85669827dec73c5f",
+      "nominal-cavity-8544ce00bb0f34574dc8e42c",
+      "nominal-cavity-c1a1eff03a1910b5e4d04d94"
+    ],
+    "selected_ids": [
+      "nominal-cavity-0f1b107a57db8ea956fedd12",
+      "nominal-cavity-96ce9b9badd9fee3ec5698e7",
+      "nominal-cavity-82aae9294f67dd07fdf7133c",
+      "nominal-cavity-2082edc783b0fbf2048e4acb",
+      "nominal-cavity-4130bcfb2e42ebff57fb403a",
+      "nominal-cavity-c75b5e02862901b2eeb1c9e1",
+      "nominal-cavity-59cd4c3274fd1b00e4971d2c",
+      "nominal-cavity-977f2158292cbc9218a753df"
+    ]
+  },
+  "source_state_hash": "sha256:3548f932c3e0166477acf552f54f27d44dec7a9e411c1fd416680ffd01384230",
+  "step": 1
+}

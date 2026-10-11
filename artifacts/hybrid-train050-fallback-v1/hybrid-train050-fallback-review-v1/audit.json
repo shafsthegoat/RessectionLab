@@ -1,0 +1,705 @@
+{
+  "status": "PASS_SAVED_TRAIN050_FALLBACK_COMPARISON_QUALITY_FALSE",
+  "release_sha256": "6c22d2577e4175a530459bb0952a6e802938ae341324a88303d70339c9049280",
+  "source_index_sha256": "d557c4b6c762950a846cb1f0e478a49425921447a732581a50af91ae72286d3e",
+  "runtime_source_files": 137,
+  "parent_sha256": "de944be8efa438901d5f81603fa7a5271b0d2f1bb961600399ee8e3fc1aabb7b",
+  "result_sha256": "dbabca44c7c31db7c1d610b6a69184e3b3826091ad61fa9f644cd3a2c8efe3c7",
+  "fixed_subject": "ReMIND-050",
+  "role": "TRAIN",
+  "planned_arms": 2,
+  "complete_arms": 2,
+  "model_identity": {
+    "data_hash": "sha256:75adaa10137e33a2bd0ef193916f952b59f1d25cc6075cd16f58afbd5fc539a9",
+    "fingerprint": "sha256:4578737059c005c411668ea70b148f1214b483f2d89c677605bbe5e3c67aa57a",
+    "path": "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8.json",
+    "sha256": "6a07215506ac68fa42afce40ad12a9efe9b042d83ee5d5bc1383b249a5ffe824"
+  },
+  "model_parameters_reopened": false,
+  "fit_subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "arms": [
+    {
+      "method": "balanced_ridge_stop_fallback",
+      "endpoint": "STOP",
+      "actions": 13,
+      "nonstop_actions": 12,
+      "target_removed_mm3": 35.28597724595925,
+      "total_target_mm3": 18651.02316214122,
+      "fraction_removed": 0.001891905711509945,
+      "normal_removed_mm3": 0.0,
+      "reward": 34.733524088483954,
+      "contact_upper_bound_mm3": 178.3372363511995,
+      "online_previews": 1017,
+      "replay_previews": 1017,
+      "inventory_previews": [
+        1017,
+        1017
+      ],
+      "source_preparation_seconds": 0.2997825830243528,
+      "source_through_plan_seconds": 9.126844790996984,
+      "replay_source_preparation_seconds": 0.2673780831974,
+      "replay_and_audit_seconds": 15.097794790985063,
+      "online_costs": {
+        "counts": {
+          "fallback_additional_previews": 913,
+          "fallback_gate_states": 13,
+          "fallback_nominal_reward_checks": 3,
+          "fallback_triggered_states": 11,
+          "feature_rows": 1183,
+          "native_previews": 1017,
+          "proposal_calls": 13,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.25135499984025955,
+          "exact_verification": 6.883947952650487,
+          "fallback_nominal_gate": 0.0006455802358686924,
+          "inventory_inclusive": 8.330380543135107,
+          "inventory_logging": 0.027918459614738822,
+          "proposal_enumeration": 1.1177578757051378,
+          "public_features": 0.08483345806598663,
+          "ranking": 0.0008071684278547764
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "fallback_additional_previews": 913,
+          "fallback_gate_states": 13,
+          "fallback_nominal_reward_checks": 3,
+          "fallback_triggered_states": 11,
+          "feature_rows": 1183,
+          "native_previews": 1017,
+          "proposal_calls": 13,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.27515400014817715,
+          "exact_verification": 10.53567156335339,
+          "fallback_nominal_gate": 0.0015353725757449865,
+          "inventory_inclusive": 12.884856916498393,
+          "inventory_logging": 0.03174095810391009,
+          "proposal_enumeration": 1.6996678730938584,
+          "public_features": 0.08973187627270818,
+          "ranking": 0.0009629565756767988
+        }
+      },
+      "fallback_gates": [
+        {
+          "step": 0,
+          "state": "sha256:62d43b1a284fdfa8c38aace5c305c84e0de5fa92ff5dfc20d31b93302d010e58",
+          "initial_legal": 2,
+          "triggered": false,
+          "additional_queries": 0,
+          "final_legal": 2,
+          "selected_action_id": "nominal-cavity-8a1c31805104fc20272351a7",
+          "selected_reward": 4.732045614522767
+        },
+        {
+          "step": 1,
+          "state": "sha256:3548f932c3e0166477acf552f54f27d44dec7a9e411c1fd416680ffd01384230",
+          "initial_legal": 1,
+          "triggered": false,
+          "additional_queries": 0,
+          "final_legal": 1,
+          "selected_action_id": "nominal-cavity-59cd4c3274fd1b00e4971d2c",
+          "selected_reward": 0.886792245739534
+        },
+        {
+          "step": 2,
+          "state": "sha256:c90a6c87a1ddbe5d70b26834f58da24b5e6cbd16307b012c93aa984b619b2926",
+          "initial_legal": 0,
+          "triggered": true,
+          "additional_queries": 83,
+          "final_legal": 30,
+          "selected_action_id": "nominal-cavity-d9ac081ed60926ee0ac69e39",
+          "selected_reward": 6.607442609949143
+        },
+        {
+          "step": 3,
+          "state": "sha256:23408703b6a62e06f6e10fc2aa9fe34babdd0b64de12a952460d0c72a4faf202",
+          "initial_legal": 0,
+          "triggered": true,
+          "additional_queries": 83,
+          "final_legal": 27,
+          "selected_action_id": "nominal-cavity-26495bb2791a1ca51c22a2ca",
+          "selected_reward": 5.683767549247541
+        },
+        {
+          "step": 4,
+          "state": "sha256:ab87e7c07ce3827d7901cdd3932d034ab634285ef67567390b5ee2b1624364f0",
+          "initial_legal": 0,
+          "triggered": true,
+          "additional_queries": 83,
+          "final_legal": 23,
+          "selected_action_id": "nominal-cavity-14c95c7ce65f522c76644a94",
+          "selected_reward": 4.73009248854594
+        },
+        {
+          "step": 5,
+          "state": "sha256:8ff930a4285720d25f3dcbb3e8aedd53cc41d068e50308119961e4ae17cb0992",
+          "initial_legal": 0,
+          "triggered": true,
+          "additional_queries": 83,
+          "final_legal": 19,
+          "selected_action_id": "nominal-cavity-8dc1014b8df0a4d4543c7c41",
+          "selected_reward": 2.8227423671427374
+        },
+        {
+          "step": 6,
+          "state": "sha256:f8db2ca4d2308ca206e08de1a201fdb73ff7f6905ea31703de4a4ebe09a7c943",
+          "initial_legal": 0,
+          "triggered": true,
+          "additional_queries": 83,
+          "final_legal": 15,
+          "selected_action_id": "nominal-cavity-3e4f07f377dc2f326f6a6574",
+          "selected_reward": 2.8227423671427374
+        },
+        {
+          "step": 7,
+          "state": "sha256:281341fa845d48b13b7724a8433b2ff43523f959d650ddbd33d5d346eed67a7b",
+          "initial_legal": 0,
+          "triggered": true,
+          "additional_queries": 83,
+          "final_legal": 11,
+          "selected_action_id": "nominal-cavity-a205d9872e38880bab858532",
+          "selected_reward": 1.8690673064411354
+        },
+        {
+          "step": 8,
+          "state": "sha256:357cf7af09afcf46af4ccddd30a737f0142a5540dd7ace9a9db9b66f4f2898e0",
+          "initial_legal": 0,
+          "triggered": true,
+          "additional_queries": 83,
+          "final_legal": 7,
+          "selected_action_id": "nominal-cavity-9c119ada1cd484944753e43a",
+          "selected_reward": 1.8671141804643083
+        },
+        {
+          "step": 9,
+          "state": "sha256:2836c929608a0a598d0bb28e51cff39fe986288d6fdbfdc1779288ee9d67e1e2",
+          "initial_legal": 0,
+          "triggered": true,
+          "additional_queries": 83,
+          "final_legal": 5,
+          "selected_action_id": "nominal-cavity-f8b18d6fe52d04c1e80c75ba",
+          "selected_reward": 0.9153922457395339
+        },
+        {
+          "step": 10,
+          "state": "sha256:49949038055a1316c4876be65f36ee32ebead50a0aec1d490a06c97381cb2c4a",
+          "initial_legal": 0,
+          "triggered": true,
+          "additional_queries": 83,
+          "final_legal": 3,
+          "selected_action_id": "nominal-cavity-59c9370a42e0d9d613563eb7",
+          "selected_reward": 0.9153922457395339
+        },
+        {
+          "step": 11,
+          "state": "sha256:3a599ecf856668b86fc168e42e0c19e1b6fee01a41be8becb6dcedce96a7d55e",
+          "initial_legal": 0,
+          "triggered": true,
+          "additional_queries": 83,
+          "final_legal": 1,
+          "selected_action_id": "nominal-cavity-bdefa2ac7c095127289ced62",
+          "selected_reward": 0.8809328678090527
+        },
+        {
+          "step": 12,
+          "state": "sha256:bd3cb93ca47fececd1d481386a5ab066116a35667ae63c5be034356253fce848",
+          "initial_legal": 0,
+          "triggered": true,
+          "additional_queries": 83,
+          "final_legal": 0,
+          "selected_action_id": "STOP",
+          "selected_reward": 0.0
+        }
+      ],
+      "STOP_scope": "no_positive_verified_action_after_conditional_expansion; no_global_reachability_claim",
+      "plan_sha256": "72ce11712bc7a139a564e69a62addcf3c0d053416d73c98d4597e738d1ae621e"
+    },
+    {
+      "method": "exhaustive",
+      "endpoint": "STOP",
+      "actions": 12,
+      "nonstop_actions": 11,
+      "target_removed_mm3": 35.28597724595925,
+      "total_target_mm3": 18651.02316214122,
+      "fraction_removed": 0.001891905711509945,
+      "normal_removed_mm3": 0.0,
+      "reward": 34.830406903446026,
+      "contact_upper_bound_mm3": 178.3372363511995,
+      "online_previews": 1092,
+      "replay_previews": 1092,
+      "inventory_previews": [
+        1092,
+        1092
+      ],
+      "source_preparation_seconds": 0.26772383297793567,
+      "source_through_plan_seconds": 9.959360791835934,
+      "replay_source_preparation_seconds": 0.26919554080814123,
+      "replay_and_audit_seconds": 16.478802625089884,
+      "online_costs": {
+        "counts": {
+          "native_previews": 1092,
+          "proposal_calls": 12
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 1.3948235409334302,
+          "exact_verification": 7.446431629825383,
+          "input_binding": 0.020023707766085863,
+          "inventory_inclusive": 9.15490887616761,
+          "inventory_logging": 0.028552833013236523,
+          "proposal_enumeration": 1.2826919597573578
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "native_previews": 1092,
+          "proposal_calls": 12
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 1.369843791006133,
+          "exact_verification": 11.553520107176155,
+          "input_binding": 0.02028400101698935,
+          "inventory_inclusive": 14.117477125255391,
+          "inventory_logging": 0.02985154092311859,
+          "proposal_enumeration": 1.8139391669537872
+        }
+      },
+      "fallback_gates": [],
+      "STOP_scope": "chosen_against_queried_actions_only; no_global_unreachability_claim",
+      "plan_sha256": "a0c56040a16a679107673ff7812c3798159166515e4beadf0344ccf8e6247d80"
+    }
+  ],
+  "comparison": {
+    "TRAIN_only": true,
+    "clinical_validation": null,
+    "favorable_outcome_required_for_completion": false,
+    "no_quality_loss": false,
+    "numeric_tolerance": 1e-07,
+    "preview_ratio": 0.9313186813186813,
+    "reward_difference": -0.09688281496207196,
+    "source_through_plan_wall_ratio": 0.9164086914572475,
+    "target_difference_mm3": 0.0
+  },
+  "counts": {
+    "native_previews": 4218,
+    "native_transitions": 50,
+    "ridge_calls": 26,
+    "source_visits": 4,
+    "model_loads": 1,
+    "refits": 0
+  },
+  "costs": {
+    "worker_seconds": 50.743836250156164,
+    "parent_seconds": 53.11195404198952,
+    "sampled_owned_peak_rss_bytes": 543162368,
+    "output_bytes": 4926758,
+    "supervision_bytes": 3703
+  },
+  "cleanup": {
+    "exit_code": 0,
+    "reaped": true,
+    "remaining": [],
+    "errors": []
+  },
+  "source_scope": {
+    "full_target_voxels": 19557,
+    "source_support_unknown_voxels": 183804,
+    "known_support_zero_target_voxels": 9766,
+    "target_in_unknown_support": 0
+  },
+  "limitations": [
+    "One original TRAIN person outside this fixed ridge fit cohort; no independently held-out SELECT claim.",
+    "Both methods greedily choose current verified reward; negative preparation and globally beneficial routes are not exhausted.",
+    "Fallback STOP after expansion concerns the emitted finite catalog, not all possible tool paths. Positive initial shortlists are not expanded and can still omit higher-reward actions.",
+    "Saved worker performed independent full-tool geometry checks; this reviewer verified saved metadata/history/accounting, not native geometry or patient arrays.",
+    "One fixed-order pair; timings include cache/source components and are not a repeated causal speed estimate.",
+    "RSS ceiling is sampled; dependency binaries/import origins are not independently reconstructed from these source pins.",
+    "S union T rigid material and post-exposure external workspace are declared simulation assumptions, not physical/anatomical validation."
+  ],
+  "read_boundary": {
+    "patient_arrays": false,
+    "model_parameters": false,
+    "original_DICOM": false,
+    "images": false,
+    "production_imports": false,
+    "native_replay": false
+  },
+  "read_pins": {
+    "build/hybrid-train050-fallback-v1/root-release.json": {
+      "sha256": "6c22d2577e4175a530459bb0952a6e802938ae341324a88303d70339c9049280",
+      "bytes": 3950
+    },
+    "build/hybrid-train050-fallback-v1/source-index.json": {
+      "sha256": "d557c4b6c762950a846cb1f0e478a49425921447a732581a50af91ae72286d3e",
+      "bytes": 16283
+    },
+    "build/hybrid-train050-fallback-review-v1/runtime-source-delta.json": {
+      "sha256": "149405b2f66462ac4be7f4335f927a11f9986a7e4d327f10af216c9ed6b42d89",
+      "bytes": 1350
+    },
+    "build/hybrid-train050-fallback-v1/batch_contract.py": {
+      "sha256": "5ca469d5b796689b33858bbea2ed4dd424f420f51f7cdf7eba3b458d1b5334c5",
+      "bytes": 10346
+    },
+    "build/hybrid-train050-fallback-v1/fallback_policy.py": {
+      "sha256": "a11571e4c313583bf72e3bc6b1c7d023c5c4d99bd7737da9a375123e582427b1",
+      "bytes": 8087
+    },
+    "build/hybrid-train050-fallback-v1/freeze-runtime.py": {
+      "sha256": "d45f39a4d8a1fae537d3a30cde4bb40dac5ef6bd0a625368d5926c6f3316d4b4",
+      "bytes": 2833
+    },
+    "build/hybrid-train050-fallback-v1/hybrid_proposal.py": {
+      "sha256": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+      "bytes": 20840
+    },
+    "build/hybrid-train050-fallback-v1/initial_inventory_worker.py": {
+      "sha256": "de4d6be1991461d8cfce541e936868b8a3d291345f38dc8b5a860d43ec2a890f",
+      "bytes": 18040
+    },
+    "build/hybrid-train050-fallback-v1/patient_transfer.py": {
+      "sha256": "0ddeb95fb5fff7917c49e2edbd81e9a81a3d1e57c3fdfa9f3a46ec88977259b2",
+      "bytes": 4687
+    },
+    "build/hybrid-train050-fallback-v1/run_owned.py": {
+      "sha256": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+      "bytes": 9625
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/result.json": {
+      "sha256": "01ace7a4e5efc8b59fb1fe6d8e2996a595923c179e9d9c0af593210c2549b629",
+      "bytes": 21612
+    },
+    "build/hybrid-train050-transfer-v1/source-index.json": {
+      "sha256": "7926ad651b20e35d760cf3b0de3af0c547305204b3a3bc7503702d0986dfe2f6",
+      "bytes": 16035
+    },
+    "artifacts/hybrid-proposal-balanced-v2/result.json": {
+      "sha256": "360253e27ce3992facec4938e018bc02707248c1efad1b6cd318ed7ecd5ed4ca",
+      "bytes": 83257
+    },
+    "artifacts/hybrid-proposal-balanced-v2/parent-receipt.json": {
+      "sha256": "4b275debe63c4dd75bcec7fb2485265a1b9637c808f4a1e741885bfe00e246bf",
+      "bytes": 1540
+    },
+    "artifacts/hybrid-proposal-balanced-v2/root-release.json": {
+      "sha256": "e81ab753baecc359fe6c067278308836d8cbd18804c8fbe2c6a955a6d2e0cb8c",
+      "bytes": 8532
+    },
+    "build/hybrid-train050-preparation-v1/public-inputs-v1/ReMIND-050-public-inputs.json": {
+      "sha256": "588757e8df0e420b3fcae2ac24a75a5276fd33e1722a49c681836938d16dda1d",
+      "bytes": 19178
+    },
+    "build/hybrid-train050-preparation-v1/root-visual-review.json": {
+      "sha256": "bbc15185fa35157a8cd5da6e97d19b6024f0a1f4e659f795c7979670e96b7ec4",
+      "bytes": 2252
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01.supervision/receipt.json": {
+      "sha256": "de944be8efa438901d5f81603fa7a5271b0d2f1bb961600399ee8e3fc1aabb7b",
+      "bytes": 1458
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/result.json": {
+      "sha256": "dbabca44c7c31db7c1d610b6a69184e3b3826091ad61fa9f644cd3a2c8efe3c7",
+      "bytes": 22628
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01.supervision/declaration.json": {
+      "sha256": "9f5168d9eaba91fa3ce0bce87d188b31135c6147e38037f9d3a38e8459876bd3",
+      "bytes": 1843
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/sealed-plans.json": {
+      "sha256": "877d3701a851736d4ee77c9250094aaaf8428b8fc25c96d98c14202874a9431a",
+      "bytes": 144502
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/plan.json": {
+      "sha256": "72ce11712bc7a139a564e69a62addcf3c0d053416d73c98d4597e738d1ae621e",
+      "bytes": 60328
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/episode-metrics.json": {
+      "sha256": "cf800139936608bdfbe0014a9250709dfebc98290fe018abf2c950ac7993d637",
+      "bytes": 417843
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/independent-episode.json": {
+      "sha256": "3446f4f82a214894273d16744374b9a0b98b458544b8120c6f9e94511f273464",
+      "bytes": 2626
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/source/admitted-public-bindings.json": {
+      "sha256": "2cdb567d299606732084129897755b7ebd8081a563d6ba6a31bd0fd07beed57a",
+      "bytes": 16168
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/source/admitted-public-bindings.json": {
+      "sha256": "2cdb567d299606732084129897755b7ebd8081a563d6ba6a31bd0fd07beed57a",
+      "bytes": 16168
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-00.json": {
+      "sha256": "1a96602ffd9638ea6b2ec4af43d48131b26714e1be8c78cefd1f41f9784c4704",
+      "bytes": 59637
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-01.json": {
+      "sha256": "d9d9341884e6c58f8a2dcae5271d4bf0fa83e606ea042ef69d9fc868079c67dd",
+      "bytes": 59357
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-02.json": {
+      "sha256": "39732a824a6f19e3954019b1097eb61320a66eff0ad7ac97f69d40adfe5432fc",
+      "bytes": 78043
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-03.json": {
+      "sha256": "235dcc51c569e15f0ebb11a1a0e8dffb296e87447b750c85bcaf27a89f2c0e2e",
+      "bytes": 78159
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-04.json": {
+      "sha256": "c461bad144615bf70c8995e6222d08b0412c7b0d61876f65ca2e2ab89392e681",
+      "bytes": 78306
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-05.json": {
+      "sha256": "e6f276bd8bd75286cb2769ff5477d284e66dfb5aa16f7f14b2a9f332ceaf97c5",
+      "bytes": 78445
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-06.json": {
+      "sha256": "3c6782b28bec19a1dfa592b12206a1d5a2359d1d76c1777a1afc3547b34991d6",
+      "bytes": 78602
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-07.json": {
+      "sha256": "8b1e1f8300a83e480575b96a715541d99044d6516f06c78b6d8bba80c9fcf6b1",
+      "bytes": 78747
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-08.json": {
+      "sha256": "faf49f7c0c21c17b3452b9c24aebafd7132f6ddc44b5832d36b4eddbcea0ba04",
+      "bytes": 78891
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-09.json": {
+      "sha256": "b394149b7ce0710746dbd7c0bcee96218b29df5b16bfaaea915d732ddb6ac2c5",
+      "bytes": 78972
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-10.json": {
+      "sha256": "d126e95609dc5eb52d9512a3020d7609c8ae7eeb315a582b3cb6f1377cba174f",
+      "bytes": 79052
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-11.json": {
+      "sha256": "c54b36ed220f087c422f78e345626ce49af6040a549862d0b0a6410c50a897a6",
+      "bytes": 79149
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/inventories/state-12.json": {
+      "sha256": "ce7bd7fc96880f27f38785f2198ea120a9a89a2e58e075253dafd4912b431fd5",
+      "bytes": 79205
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/inventories/state-00.json": {
+      "sha256": "1a96602ffd9638ea6b2ec4af43d48131b26714e1be8c78cefd1f41f9784c4704",
+      "bytes": 59637
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/inventories/state-01.json": {
+      "sha256": "d9d9341884e6c58f8a2dcae5271d4bf0fa83e606ea042ef69d9fc868079c67dd",
+      "bytes": 59357
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/inventories/state-02.json": {
+      "sha256": "39732a824a6f19e3954019b1097eb61320a66eff0ad7ac97f69d40adfe5432fc",
+      "bytes": 78043
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/inventories/state-03.json": {
+      "sha256": "235dcc51c569e15f0ebb11a1a0e8dffb296e87447b750c85bcaf27a89f2c0e2e",
+      "bytes": 78159
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/inventories/state-04.json": {
+      "sha256": "c461bad144615bf70c8995e6222d08b0412c7b0d61876f65ca2e2ab89392e681",
+      "bytes": 78306
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/inventories/state-05.json": {
+      "sha256": "e6f276bd8bd75286cb2769ff5477d284e66dfb5aa16f7f14b2a9f332ceaf97c5",
+      "bytes": 78445
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/inventories/state-06.json": {
+      "sha256": "3c6782b28bec19a1dfa592b12206a1d5a2359d1d76c1777a1afc3547b34991d6",
+      "bytes": 78602
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/inventories/state-07.json": {
+      "sha256": "8b1e1f8300a83e480575b96a715541d99044d6516f06c78b6d8bba80c9fcf6b1",
+      "bytes": 78747
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/inventories/state-08.json": {
+      "sha256": "faf49f7c0c21c17b3452b9c24aebafd7132f6ddc44b5832d36b4eddbcea0ba04",
+      "bytes": 78891
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/inventories/state-09.json": {
+      "sha256": "b394149b7ce0710746dbd7c0bcee96218b29df5b16bfaaea915d732ddb6ac2c5",
+      "bytes": 78972
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/inventories/state-10.json": {
+      "sha256": "d126e95609dc5eb52d9512a3020d7609c8ae7eeb315a582b3cb6f1377cba174f",
+      "bytes": 79052
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/inventories/state-11.json": {
+      "sha256": "c54b36ed220f087c422f78e345626ce49af6040a549862d0b0a6410c50a897a6",
+      "bytes": 79149
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/balanced_ridge_stop_fallback/replay/inventories/state-12.json": {
+      "sha256": "ce7bd7fc96880f27f38785f2198ea120a9a89a2e58e075253dafd4912b431fd5",
+      "bytes": 79205
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/plan.json": {
+      "sha256": "a0c56040a16a679107673ff7812c3798159166515e4beadf0344ccf8e6247d80",
+      "bytes": 71513
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/episode-metrics.json": {
+      "sha256": "57b733afb93b0f6d18f991955c3881762ec730ad02addefd32ab70f5bdfd0eb8",
+      "bytes": 399509
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/independent-episode.json": {
+      "sha256": "88476effc9d94e84913d1ea14d04133e8ba88d0d816310cad91507552048588f",
+      "bytes": 2625
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/source/admitted-public-bindings.json": {
+      "sha256": "2cdb567d299606732084129897755b7ebd8081a563d6ba6a31bd0fd07beed57a",
+      "bytes": 16168
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/source/admitted-public-bindings.json": {
+      "sha256": "2cdb567d299606732084129897755b7ebd8081a563d6ba6a31bd0fd07beed57a",
+      "bytes": 16168
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/inventories/state-00.json": {
+      "sha256": "e3f8dd1e2c2e8ae3d420391f9b87ff042b352d5eecd65bec1368adf4378b704d",
+      "bytes": 70593
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/inventories/state-01.json": {
+      "sha256": "84df656e8fddf202dbec615ffbee3c2bbacabb293cd62c958a3efdf3a18555b7",
+      "bytes": 70572
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/inventories/state-02.json": {
+      "sha256": "42134815fa6fbd6501e9ed81fc2ace47e5f19532a8b417fee07783276a9250c5",
+      "bytes": 70698
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/inventories/state-03.json": {
+      "sha256": "7ab7f5436d414927fc774def134d7373074993e9b7897d9583683a9781727771",
+      "bytes": 70845
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/inventories/state-04.json": {
+      "sha256": "51c5e6e9ea450cd1ec7fc725303fec42ac225e2326f1406b368c82fe25ec1b5d",
+      "bytes": 70992
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/inventories/state-05.json": {
+      "sha256": "66aaeb87bfc9816bd3dbf5fe04617db46e69a71ad5ce91892d06900c961db25c",
+      "bytes": 71202
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/inventories/state-06.json": {
+      "sha256": "e9db2054e485a261cc8bba338780d3cb2e2f040126e6b25200ad11a2cca4fc59",
+      "bytes": 71349
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/inventories/state-07.json": {
+      "sha256": "722c35575070b147b1ef53c07abee541b8ba5a81a770b8876b0f4093812e4960",
+      "bytes": 71495
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/inventories/state-08.json": {
+      "sha256": "ae9d0cbfaa63053284f7e409b835b16aa94c71dd4eabc1bc5564af4f8f64ea81",
+      "bytes": 71579
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/inventories/state-09.json": {
+      "sha256": "2b12841d12d1535142f37831b06e0b1f9ca4725afbeb34bb600fb7199fd4bc60",
+      "bytes": 71663
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/inventories/state-10.json": {
+      "sha256": "16613c8cebe7f69d6f9038c5249ec59e7d4caa5b5a637d3caecfa088b6e4241f",
+      "bytes": 71748
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/inventories/state-11.json": {
+      "sha256": "4a22303e010d66d3d9bd5c4bcbedc00c35180a6720a8e9f2ffde6585b30419fd",
+      "bytes": 71811
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/inventories/state-00.json": {
+      "sha256": "e3f8dd1e2c2e8ae3d420391f9b87ff042b352d5eecd65bec1368adf4378b704d",
+      "bytes": 70593
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/inventories/state-01.json": {
+      "sha256": "84df656e8fddf202dbec615ffbee3c2bbacabb293cd62c958a3efdf3a18555b7",
+      "bytes": 70572
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/inventories/state-02.json": {
+      "sha256": "42134815fa6fbd6501e9ed81fc2ace47e5f19532a8b417fee07783276a9250c5",
+      "bytes": 70698
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/inventories/state-03.json": {
+      "sha256": "7ab7f5436d414927fc774def134d7373074993e9b7897d9583683a9781727771",
+      "bytes": 70845
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/inventories/state-04.json": {
+      "sha256": "51c5e6e9ea450cd1ec7fc725303fec42ac225e2326f1406b368c82fe25ec1b5d",
+      "bytes": 70992
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/inventories/state-05.json": {
+      "sha256": "66aaeb87bfc9816bd3dbf5fe04617db46e69a71ad5ce91892d06900c961db25c",
+      "bytes": 71202
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/inventories/state-06.json": {
+      "sha256": "e9db2054e485a261cc8bba338780d3cb2e2f040126e6b25200ad11a2cca4fc59",
+      "bytes": 71349
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/inventories/state-07.json": {
+      "sha256": "722c35575070b147b1ef53c07abee541b8ba5a81a770b8876b0f4093812e4960",
+      "bytes": 71495
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/inventories/state-08.json": {
+      "sha256": "ae9d0cbfaa63053284f7e409b835b16aa94c71dd4eabc1bc5564af4f8f64ea81",
+      "bytes": 71579
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/inventories/state-09.json": {
+      "sha256": "2b12841d12d1535142f37831b06e0b1f9ca4725afbeb34bb600fb7199fd4bc60",
+      "bytes": 71663
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/inventories/state-10.json": {
+      "sha256": "16613c8cebe7f69d6f9038c5249ec59e7d4caa5b5a637d3caecfa088b6e4241f",
+      "bytes": 71748
+    },
+    "build/hybrid-train050-fallback-v1/attempt-01/exhaustive/replay/inventories/state-11.json": {
+      "sha256": "4a22303e010d66d3d9bd5c4bcbedc00c35180a6720a8e9f2ffde6585b30419fd",
+      "bytes": 71811
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/plan.json": {
+      "sha256": "d1b1e040ac819f385472a357b70b4997caa7eac9f5e8755a1712339819e09a16",
+      "bytes": 4381
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/plan.json": {
+      "sha256": "1f62427a35ca6993188697aa2b436e58ca099d1cb078e8362d20d2701c4ce1da",
+      "bytes": 71513
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/source/admitted-public-bindings.json": {
+      "sha256": "273a09c7df05b7dc8591cb3b4452a4b31b936a84519048ea7229d90499a3becf",
+      "bytes": 16168
+    }
+  },
+  "cause": {
+    "original_STOP_step": 2,
+    "rescued_action": "nominal-cavity-d9ac081ed60926ee0ac69e39",
+    "rescued_state": "sha256:c90a6c87a1ddbe5d70b26834f58da24b5e6cbd16307b012c93aa984b619b2926",
+    "positive_shortlist_miss": {
+      "step": 1,
+      "missed_exhaustive_winner": "nominal-cavity-a7ff08ed87439fb98ecb907b",
+      "ridge_rank": 46,
+      "selected": "nominal-cavity-59cd4c3274fd1b00e4971d2c"
+    },
+    "same_saved_removed_cells": true,
+    "additional_actions": 1,
+    "additional_switches": 2,
+    "additional_complete_path_mm": 6.882814962067613,
+    "reward_shortfall_components": {
+      "action_cost": 0.03,
+      "tool_switch_cost": 0.06,
+      "motion_cost": 0.006882814962067613,
+      "sum": 0.0968828149620676
+    },
+    "scope": "Saved same-state and history evidence; no counterfactual patient execution or global route claim."
+  },
+  "historical_exhaustive_control": {
+    "exact_actions": true,
+    "exact_outcomes": true,
+    "exact_source": true,
+    "scope": "historical scalar/action corroboration; timing comparison uses this fresh pair only"
+  }
+}

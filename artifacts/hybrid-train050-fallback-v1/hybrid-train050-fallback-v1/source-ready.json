@@ -1,0 +1,33 @@
+{
+  "acquired_payloads_opened": false,
+  "capability_unchanged": true,
+  "controls": {
+    "failed_attempt_preserved": "controls-attempt-01",
+    "passed": 8,
+    "repaired_terminal_pass": "controls-attempt-02"
+  },
+  "execution_released": false,
+  "files": {
+    "HANDOFF.txt": "3e5fcf681dbf1004f93d092e69176284666812009f48243f7cc7c46f240b2f7b",
+    "batch_contract.py": "5ca469d5b796689b33858bbea2ed4dd424f420f51f7cdf7eba3b458d1b5334c5",
+    "controls-attempt-01/receipt.json": "9919374223df8432d2d62e7ad8515fcb84b959bc0ed48c9245d6027bfba2132b",
+    "controls-attempt-01/stdout.log": "2b15243fbc76a110303cd0f760997b77d04872961bbf85212ae3e2e4c98ba99d",
+    "controls-attempt-02/receipt.json": "e43a6769c856da8c5a29d255193476e7dbe9c963a2bb385d15add3f344fb8d4a",
+    "controls-attempt-02/stdout.log": "da14aad348c052a548298062cebed19fb631298a785b7997668ecc8f179c7aa3",
+    "driver.patch": "941f280ecd0635d4a8739775ebc51a13c709f35155ae4ec265a2ce11c86da7c1",
+    "fallback_policy.py": "a11571e4c313583bf72e3bc6b1c7d023c5c4d99bd7737da9a375123e582427b1",
+    "freeze-runtime.py": "d45f39a4d8a1fae537d3a30cde4bb40dac5ef6bd0a625368d5926c6f3316d4b4",
+    "hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+    "initial_inventory_worker.py": "de4d6be1991461d8cfce541e936868b8a3d291345f38dc8b5a860d43ec2a890f",
+    "inputs.json": "f5c691f73651f0a1c57b6c32e9dc35ee9a6ef136e6371323e6adcea9ae16560a",
+    "patient_transfer.py": "0ddeb95fb5fff7917c49e2edbd81e9a81a3d1e57c3fdfa9f3a46ec88977259b2",
+    "run_generated_controls.py": "4a4aa29377db2ea481398e8970acba78a36b3cf418beddd5f6a1f0fcc7718ee3",
+    "run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+    "tests/test_fallback_policy.py": "0935cc8b238cdbe8b16378b31e27e7f45888512eaaccc1faac4a078292cc1901"
+  },
+  "frozen_helper_unchanged": true,
+  "original_negative_result_sha256": "01ace7a4e5efc8b59fb1fe6d8e2996a595923c179e9d9c0af593210c2549b629",
+  "owned_parent_unchanged": true,
+  "quality_target_unchanged": true,
+  "schema": "TRAIN050-fallback-source-ready-v1"
+}

@@ -1812,3 +1812,21 @@ with clean cleanup and no model/private/held inputs. Independent saved checks
 confirm all prefix and117-ray joins. The next useful comparison must plan a full
 sequence under declared candidate/checking budgets; more one-cell diagnostics
 or broader training do not resolve the remaining route question.
+
+## October 11 — Conditional checking recovers the missing target cells
+
+[The frozen-ranker fallback](../artifacts/hybrid-train050-fallback-v1/RESULT.md)
+reaches the same37 target-cell set and contact bounds as fresh exhaustive, from
+six cells originally. Qualitystillfalse: one extra action/two switches/6.882815mm
+travel account exactly for the0.096882815 return shortfall. Online cost is1017/1092
+previews and9.126845/9.959361s;11/13fallback states pay913extra checks. Both plans
+seal before accepted uncached replay. Independent saved audit passes; parent
+53.111954s/543.16MB sampled,4218total previews/50transitions,clean cleanup.
+The failed generated frozen-copy assignment and corrected audit-only release-hash
+assertion remain recorded. No actual rerun, new fit, private or held-out input.
+
+At the shared second decision,48 current-tool candidates remain unqueried,
+including16positive choices and the search winner. The next single generic
+change compares them before switching tools while retaining the original reward,
+no-positive fallback, full quality criterion and all paid checks. This is model-
+guided geometric planning development; physical and clinical claims remain closed.

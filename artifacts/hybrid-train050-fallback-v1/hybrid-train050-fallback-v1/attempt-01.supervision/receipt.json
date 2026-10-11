@@ -1,0 +1,44 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "feature_count": 681,
+    "fits": 0,
+    "log_bytes": 2097152,
+    "native_previews": 40000,
+    "native_transitions": 96,
+    "output_bytes": 67108864,
+    "parent_seconds": 330,
+    "ridge_calls": 48,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 4,
+    "supervision_bytes": 8388608,
+    "threads": 1,
+    "worker_seconds": 300
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 53.11195404198952,
+  "exit_code": 0,
+  "memory_scope": "whole owned process peak only; no independent per-arm peak attribution",
+  "output_bytes": 4926758,
+  "planned_subjects": [
+    "ReMIND-050"
+  ],
+  "release_sha256": "6c22d2577e4175a530459bb0952a6e802938ae341324a88303d70339c9049280",
+  "remaining_owned_pids": [],
+  "result_sha256": "dbabca44c7c31db7c1d610b6a69184e3b3826091ad61fa9f644cd3a2c8efe3c7",
+  "result_status": "complete_TRAIN050_fallback_comparison",
+  "sampled_peak_rss_bytes": 543162368,
+  "samples": 254,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/hybrid-train050-fallback-v1/source-index.json",
+    "sha256": "d557c4b6c762950a846cb1f0e478a49425921447a732581a50af91ae72286d3e"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 2245,
+  "training_admitted": "none_frozen_ridge_inference_only",
+  "worker_pid": 14897,
+  "worker_termination_confirmed": true
+}

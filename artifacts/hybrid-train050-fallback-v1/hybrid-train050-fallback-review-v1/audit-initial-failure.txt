@@ -1,0 +1,1 @@
+Initial saved-only audit refused historical public_world exact equality because protocol hash correctly changes with runtime_release_sha256. All other world fields and exhaustive outcomes match. Repaired checker accepts only this exact release field delta; no runtime or patient file changed.

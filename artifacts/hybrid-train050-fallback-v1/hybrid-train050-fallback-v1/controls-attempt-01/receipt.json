@@ -1,0 +1,33 @@
+{
+  "acquired_arrays_or_frozen_model_allowed": false,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-train050-fallback-v1/controls-attempt-01/fresh-pycache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-train050-fallback-v1/controls-attempt-01/generated_child.py",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-train050-fallback-v1/controls-attempt-01/generated-tmp"
+  ],
+  "elapsed_seconds": 3.612775791902095,
+  "exit_code": 1,
+  "files": {
+    "build/hybrid-train050-fallback-v1/batch_contract.py": "5ca469d5b796689b33858bbea2ed4dd424f420f51f7cdf7eba3b458d1b5334c5",
+    "build/hybrid-train050-fallback-v1/fallback_policy.py": "c0bfd3fa6dd3e2079180743918e7f6417700b18e6ba1c8ca1ea3621d2ae9ce28",
+    "build/hybrid-train050-fallback-v1/freeze-runtime.py": "d45f39a4d8a1fae537d3a30cde4bb40dac5ef6bd0a625368d5926c6f3316d4b4",
+    "build/hybrid-train050-fallback-v1/hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+    "build/hybrid-train050-fallback-v1/initial_inventory_worker.py": "de4d6be1991461d8cfce541e936868b8a3d291345f38dc8b5a860d43ec2a890f",
+    "build/hybrid-train050-fallback-v1/patient_transfer.py": "0ddeb95fb5fff7917c49e2edbd81e9a81a3d1e57c3fdfa9f3a46ec88977259b2",
+    "build/hybrid-train050-fallback-v1/run_generated_controls.py": "4a4aa29377db2ea481398e8970acba78a36b3cf418beddd5f6a1f0fcc7718ee3",
+    "build/hybrid-train050-fallback-v1/run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+    "build/hybrid-train050-fallback-v1/tests/test_fallback_policy.py": "0935cc8b238cdbe8b16378b31e27e7f45888512eaaccc1faac4a078292cc1901"
+  },
+  "generated_only": true,
+  "hard_seconds": 30,
+  "log_sha256": "2b15243fbc76a110303cd0f760997b77d04872961bbf85212ae3e2e4c98ba99d",
+  "observed_child_maxrss": 276512768,
+  "source_unchanged": true,
+  "threads": 1,
+  "timeout": false
+}

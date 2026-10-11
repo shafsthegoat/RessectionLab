@@ -1,0 +1,317 @@
+--- /dev/null
++++ fallback/fallback_policy.py
+@@ -0,0 +1,153 @@
++"""Versioned no-positive-shortlist expansion; frozen ranker/helper stay unchanged.
++
++The first eight certificates and their ordering are exactly the frozen policy.
++Only when none has strictly positive permitted nominal immediate reward do we
++certify the remaining emitted catalog. This is not a global reachability claim,
++and does not repair a missed better action when a shortlist action is positive.
++"""
++import copy
++import math
++
++from hybrid_proposal import GeneratedSparseTask
++from resectionlab.native_spatial_task import NativeSpatialTask
++
++VERSION = "nominal-no-positive-top8-exhaustive-fallback-v1"
++POLICY = {
++    "version": VERSION,
++    "trigger": "no_strictly_positive_feasible_nominal_reward_in_initial_top8",
++    "expansion": "all_remaining_emitted_raw_ids_once_in_original_order",
++    "selection": "unchanged_nominal_reward_STOP_zero_original_raw_order_ties",
++    "fit_updates": 0,
++    "omitted_catalog_slots": "not_a_global_exhaustion_claim",
++}
++
++
++def nominal_scores(task, inventory):
++    """Canonical reward arithmetic with explicitly public nominal membership.
++
++    A shallow scoring view replaces only the reference pointer. No engine clone,
++    transition, observation, preview, private membership, or learning call occurs.
++    """
++    if task.case.nominal_target is None:
++        raise ValueError("Explicit public nominal target required")
++    view = copy.copy(task)
++    view.case = copy.copy(task.case)
++    object.__setattr__(view.case, 'reference_target', task.case.nominal_target)
++    view._planning = True
++    scores = []
++    for identifier, result in inventory.items():
++        task._check_cancelled()
++        task.costs.count("fallback_nominal_reward_checks")
++        record = NativeSpatialTask._score_record(view,
++            {**result.to_history_record(), "action_id": identifier}, task._current_tool)
++        value = float(record["reward"])
++        if not math.isfinite(value):
++            raise ValueError("Finite public nominal reward required")
++        scores.append({"action_id": identifier, "nominal_reward": value})
++    return scores
++
++
++class NoPositiveFallbackMixin:
++    """Opt-in behavior over the existing generated or admitted sparse task."""
++
++    def _contract_record(self):
++        record = super()._contract_record()
++        if self._selection != "ridge_top8":
++            raise ValueError("Fallback requires the frozen ridge_top8 selector")
++        return {**record, "conditional_catalog_expansion": copy.deepcopy(POLICY)}
++
++    def _prepare_inventory(self):
++        if getattr(self, "_fallback_failure", None) is not None:
++            raise RuntimeError("Failed fallback inventory cannot be resumed")
++        if (self._inventory is not None and
++                getattr(self, "_fallback_complete_state", None) == self._engine.state_hash):
++            return super()._prepare_inventory()  # Retains the normal integrity check.
++        callback = self.costs.inventory_callback
++        self.costs.inventory_callback = None
++        try:
++            inventory = super()._prepare_inventory()
++            if self._terminated:
++                return inventory
++            # The inherited timer covers the initial top8 work; this second
++            # interval covers only the additional gate, expansion and logging.
++            with self.costs.measure("inventory_inclusive"):
++                initial = copy.deepcopy(self._shortlist_record)
++                initial_ids = initial["selected_ids"]
++                raw_ids = initial["raw_ids"]
++                if len(set(raw_ids)) != len(raw_ids) or len(set(initial_ids)) != len(initial_ids):
++                    raise ValueError("Unique emitted proposal IDs required")
++                with self.costs.measure("fallback_nominal_gate"):
++                    rewards = nominal_scores(self, inventory)
++                triggered = not any(row["nominal_reward"] > 0. for row in rewards)
++                self.costs.count("fallback_gate_states")
++                self.costs.count("fallback_triggered_states", int(triggered))
++                additional, outcomes = [], {}
++                if triggered:
++                    queried = set(initial_ids)
++                    for ray in self._proposal_batch.proposals:
++                        if ray.proposal_id in queried:
++                            continue
++                        self._check_cancelled()
++                        with self.costs.measure("exact_verification"):
++                            self.costs.count("native_previews")
++                            self.costs.count("fallback_additional_previews")
++                            result = self._engine.preview_stroke(ray.tool_id, ray.tip_mm, entry_mm=ray.entry_mm)
++                        queried.add(ray.proposal_id)
++                        additional.append(ray.proposal_id)
++                        outcomes[ray.proposal_id] = result
++                        if result.feasible:
++                            inventory[ray.proposal_id] = result
++                # Reward tie order is the original raw order, never rank order.
++                inventory = {identifier: inventory[identifier] for identifier in raw_ids if identifier in inventory}
++                ledger = copy.deepcopy(self._ledger)
++                for row in ledger:
++                    result = outcomes.get(row.get("proposal_id"))
++                    if result is not None:
++                        row.update(query_disposition="CERTIFIED_LEGAL" if result.feasible else "CERTIFIED_REJECTED",
++                            feasible=bool(result.feasible), native_reason=result.reason)
++                selected = initial_ids + additional
++                self._shortlist_record = {**initial, "selected_ids": selected,
++                    "queried_count": len(selected), "not_queried_count": len(raw_ids)-len(selected),
++                    "legal_count": len(inventory), "exhaustive_over_emitted_catalog": len(selected)==len(raw_ids),
++                    "fallback_policy": copy.deepcopy(POLICY), "initial_selected_ids": initial_ids,
++                    "initial_nominal_scores": rewards, "fallback_triggered": triggered,
++                    "additional_selected_ids": additional, "fallback_completed": True}
++                self._check_cancelled()
++                self._inventory, self._ledger = inventory, ledger
++                self._fallback_complete_state = self._engine.state_hash
++                if callback is not None:
++                    with self.costs.measure("inventory_logging"):
++                        keys = ("action_id", "proposal_id", "tool_id", "column_index", "family", "voxel",
++                                "reason", "query_disposition", "feasible", "native_reason")
++                        callback({"step": self._steps, "source_state_hash": self._engine.state_hash,
++                            "shortlist": copy.deepcopy(self._shortlist_record),
++                            "ledger": [{k:r[k] for k in keys if k in r} for r in self._ledger]})
++                return inventory
++        except BaseException as error:
++            # Paid counters survive, but no partial catalog can become a STOP.
++            self._fallback_failure = type(error).__name__ + ": " + str(error)
++            self._inventory = None
++            raise
++        finally:
++            self.costs.inventory_callback = callback
++
++    def _qualify_accounting(self, accounting):
++        value = super()._qualify_accounting(accounting)
++        value.update(method=VERSION, verification_scope="top8_then_conditional_full_emitted_catalog",
++            fallback_policy=copy.deepcopy(POLICY),
++            STOP_meaning="no_positive_verified_action_after_conditional_expansion; no_global_reachability_claim")
++        return value
++
++
++class GeneratedFallbackTask(NoPositiveFallbackMixin, GeneratedSparseTask):
++    """Generated fixture entry; acquired sources still refused by the base."""
++
++
++def admitted_task_class():
++    # Keep the generated entry importable without any acquired-source contract.
++    from patient_transfer import AdmittedTransferTask
++
++    class AdmittedFallbackTask(NoPositiveFallbackMixin, AdmittedTransferTask):
++        pass
++
++    return AdmittedFallbackTask
+--- original/batch_contract.py
++++ fallback/batch_contract.py
+@@ -2,8 +2,12 @@
+ import hashlib,json,os,stat,subprocess
+ from pathlib import Path
+ HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1];OUTPUT=HERE/'attempt-01'
+-SUBJECTS=['ReMIND-050'];SUBJECT=SUBJECTS[0];ARMS=('balanced_ridge_top8','exhaustive')
++SUBJECTS=['ReMIND-050'];SUBJECT=SUBJECTS[0];ARMS=('balanced_ridge_stop_fallback','exhaustive')
+ VERSION='frozen-ridge-TRAIN-development-transfer-v1'
++EXPERIMENT_VERSION='TRAIN050-no-positive-shortlist-fallback-comparison-v1'
++POLICY_VERSION='nominal-no-positive-top8-exhaustive-fallback-v1'
++BASELINE={'path':'build/hybrid-train050-transfer-v1/attempt-01/result.json',
++          'sha256':'01ace7a4e5efc8b59fb1fe6d8e2996a595923c179e9d9c0af593210c2549b629'}
+ CAPS={'worker_seconds':300,'parent_seconds':330,'sampled_rss_bytes':3*1024**3,
+       'output_bytes':64*1024**2,'supervision_bytes':8*1024**2,'log_bytes':2*1024**2,
+       'native_previews':40000,'native_transitions':96,'source_visits':4,'threads':1,
+@@ -62,14 +66,14 @@
+     need(isinstance(manifest,dict) and isinstance(review,dict),'pending_TRAIN050_QC_and_manifest')
+     digest(manifest['sha256']);digest(review['sha256'])
+     return {'version':VERSION,'subject':SUBJECT,'role':'TRAIN','scope':'development_transfer_not_heldout_SELECT',
+-        'methods':list(ARMS),'K':8,'max_steps':24,'refits':0,'optimizer_updates':0,'neural_forwards':0,
++        'methods':['balanced_ridge_top8','exhaustive'],'K':8,'max_steps':24,'refits':0,'optimizer_updates':0,'neural_forwards':0,
+         'training_subjects':['ReMIND-002','ReMIND-015','ReMIND-018','ReMIND-045'],
+         'public_manifest_sha256':manifest['sha256'],'intended_use_review_sha256':review['sha256'],
+         'frozen_ridge_sha256':RIDGE['sha256'],'frozen_ridge_fingerprint':RIDGE['fingerprint'],
+         'training_result_sha256':TRAIN_RESULT['sha256']}
+ 
+ def template(head,index,inputs):
+-    return {'version':VERSION,'execution_released':False,'expected_head':head,'source_index':index,'inputs':inputs,
++    return {'version':EXPERIMENT_VERSION,'policy_version':POLICY_VERSION,'original_negative_result':BASELINE,'execution_released':False,'expected_head':head,'source_index':index,'inputs':inputs,
+         'caps':CAPS,'subjects':SUBJECTS,'arms':list(ARMS),'public_index':inputs['public_manifest'],
+         'cohort':{'path':COHORT,'sha256':COHORT_SHA},'occupancy_condition':OCCUPANCY,'post_exposure_condition':EXPOSURE,
+         'proposal_config':PROPOSALS,'K':8,'horizon':24,'search_seconds':60,'cache_limits':CACHE_LIMITS,
+@@ -91,9 +95,12 @@
+     cohort=small(COHORT,COHORT_SHA);member=[m for m in cohort['members'] if m['subject']==SUBJECT]
+     need(len(member)==1 and member[0]['role']=='TRAIN' and member[0]['patient_group']==manifest['patient_group'],'original_050_TRAIN_role')
+     metadata()
++    baseline=small(BASELINE['path'],BASELINE['sha256'])
++    need(baseline['status']=='complete_TRAIN050_development_transfer' and baseline['comparison']['no_quality_loss'] is False
++         and baseline['ridge_fingerprint']==RIDGE['fingerprint'] and baseline['all_plans_sealed_before_evaluation'], 'original_negative_preserved')
+     head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip();need(head==release['expected_head'],'HEAD_changed')
+     index=small(release['source_index']['path'],release['source_index']['sha256']);need(index['head']==head,'index_HEAD')
+-    required={str((HERE/n).relative_to(ROOT)) for n in ('batch_contract.py','hybrid_proposal.py','patient_transfer.py','initial_inventory_worker.py','run_owned.py')}
++    required={str((HERE/n).relative_to(ROOT)) for n in ('batch_contract.py','hybrid_proposal.py','patient_transfer.py','fallback_policy.py','initial_inventory_worker.py','run_owned.py')}
+     required|={str(p.relative_to(ROOT)) for p in (ROOT/'src/resectionlab').glob('*.py')}
+     required|={'build/goal-conditioned-policy-v1/run_contact_owned.py','build/goal-conditioned-policy-v1/darwin_fast_sampler.py'}
+     need(required<=set(index['files']),'declared_runtime_sources')
+@@ -102,7 +109,8 @@
+     return release,index,True
+ 
+ def complete_result(result,release,release_sha):
+-    need(result['status']=='complete_TRAIN050_development_transfer' and result['release_sha256']==release_sha,'complete_transfer')
++    need(result['status']=='complete_TRAIN050_fallback_comparison' and result['release_sha256']==release_sha,'complete_transfer')
++    need(result['policy_version']==POLICY_VERSION and result['original_negative_result']==BASELINE,'explicit_policy_and_negative')
+     need(result['source_visits']==4 and result['ridge_loads']==1 and result['fits']==result['optimizer_calls']==result['model_calls']==result['checkpoint_loads']==0,'no_training_or_neural_load')
+     need(result['native_transitions']<=96 and result['native_previews']<=40000 and result['ridge_calls']<=48,'work_caps')
+     need(result['blocked_external_calls']==0 and result['all_plans_sealed_before_evaluation'] and result['cache_restored'] and result['ridge_unchanged'],'information_boundary')
+--- original/initial_inventory_worker.py
++++ fallback/initial_inventory_worker.py
+@@ -6,7 +6,7 @@
+     raise ValueError('Fresh nonexistent -X pycache_prefix required before local imports')
+ sys.path.insert(0,str(ROOT/'src'));sys.path.insert(0,str(HERE))
+ from batch_contract import (ARMS,CAPS,CACHE_LIMITS,OUTPUT,RIDGE,COHORT,COHORT_SHA,PROPOSALS,
+-    OCCUPANCY,EXPOSURE,SUBJECT,guard,transfer_record,need,sha,small,read_bytes)
++    OCCUPANCY,EXPOSURE,SUBJECT,POLICY_VERSION,BASELINE,guard,transfer_record,need,sha,small,read_bytes)
+ 
+ 
+ def execute(release,release_sha,external_io):
+@@ -25,6 +25,9 @@
+     from resectionlab.patient_planning_cohort_io import OutputBudget
+     from hybrid_proposal import Costs,RidgePriority
+     from patient_transfer import admit_source,AdmittedTransferTask,load_frozen_ridge
++    from fallback_policy import admitted_task_class,VERSION as FALLBACK_VERSION
++    need(FALLBACK_VERSION==POLICY_VERSION,'exact_fallback_policy')
++    FallbackTask=admitted_task_class()
+     plain=lambda x:thaw_json(freeze_json(x))
+     cohort=read_bytes(COHORT,COHORT_SHA);record=transfer_record(release['inputs'])
+     mr=release['inputs']['public_manifest'];manifest=small(mr['path'],mr['sha256'])
+@@ -33,13 +36,13 @@
+         'worker_seconds':CAPS['worker_seconds'],'memory_bytes':CAPS['sampled_rss_bytes'],'threads':1,
+         'search':{'max_calls':1,'beam_width':1,'seconds':60}}
+     OUTPUT.mkdir(exist_ok=False);sink=OutputBudget(OUTPUT,CAPS['output_bytes'])
+-    result={'status':'started','release_sha256':release_sha,'subject':SUBJECT,'role':'TRAIN',
++    result={'status':'started','policy_version':POLICY_VERSION,'original_negative_result':BASELINE,'release_sha256':release_sha,'subject':SUBJECT,'role':'TRAIN',
+         'scope':'development_transfer_not_heldout_SELECT','source_visits':0,'ridge_loads':0,'fits':0,
+         'native_transitions':0,'model_calls':0,'optimizer_calls':0,'checkpoint_loads':0,'blocked_external_calls':0,
+         'arms':[{'subject':SUBJECT,'method':m,'complete':False,'independent_accepted':False,'status':'not_started','files':{}} for m in ARMS],
+         'source_visits_detail':[],'all_plans_sealed_before_evaluation':False,'ridge_unchanged':False,
+         'cache_restored':False,'SELECT_EVAL_opened':False,
+-        'order_caveat':'one fixed balanced-first pair; no matched historical learning latency or causal speed generalization',
++        'order_caveat':'one fixed fallback-first pair; no matched historical learning latency or causal speed generalization',
+         'clinical_validation':None,'private_reference_loaded':False}
+     started=time.perf_counter();budget=PlanningBudget(NativeResectionEngine,max_native_previews=CAPS['native_previews'],seconds=CAPS['worker_seconds'])
+     original_transition=NativeSpatialTask._transition;original_cover=native_resection.capsule_voxel_indices
+@@ -84,8 +87,9 @@
+                 else:need(current==initial,'same_initial_public_world_and_raw_catalog')
+             events.append(event['source_state_hash'])
+         costs.inventory_callback=emit
+-        return AdmittedTransferTask(case,admission=admission,mode='ridge_top8' if mode=='balanced_ridge_top8' else 'exhaustive',
+-            ranker=ranker if mode=='balanced_ridge_top8' else None,max_steps=24,cancelled=lambda:(check() or False),costs=costs)
++        cls=FallbackTask if mode=='balanced_ridge_stop_fallback' else AdmittedTransferTask
++        return cls(case,admission=admission,mode='ridge_top8' if mode=='balanced_ridge_stop_fallback' else 'exhaustive',
++            ranker=ranker if mode=='balanced_ridge_stop_fallback' else None,max_steps=24,cancelled=lambda:(check() or False),costs=costs)
+     def access(event,args):
+         if event=='open' and args and isinstance(args[0],(str,bytes)):
+             path=Path(os.fsdecode(args[0])).resolve();suffix=path.suffix.lower()
+@@ -158,10 +162,19 @@
+                 'preview_ratio':result['arms'][0]['online_previews']/max(1,result['arms'][1]['online_previews']),
+                 'source_through_plan_wall_ratio':result['arms'][0]['source_through_plan_seconds']/result['arms'][1]['source_through_plan_seconds'],
+                 'favorable_outcome_required_for_completion':False,'TRAIN_only':True,'clinical_validation':None}
++            prior=small(BASELINE['path'],BASELINE['sha256'])
++            prior_exhaustive=next(r for r in prior['arms'] if r['method']=='exhaustive')
++            prior_plan_path=Path(BASELINE['path']).parent/'exhaustive/plan.json'
++            prior_plan=small(prior_plan_path,prior_exhaustive['files']['exhaustive/plan.json'])
++            result['historical_exhaustive_control']={
++                'exact_actions':plans['exhaustive']['actions']==prior_plan['actions'],
++                'exact_outcomes':result['arms'][1]['outcomes']==prior_exhaustive['outcomes'],
++                'exact_source':plans['exhaustive']['source_hash']==prior_plan['source_hash'],
++                'scope':'historical scalar/action corroboration; timing comparison uses this fresh pair only'}
+             result['ridge_calls']=sum(r['online_costs']['counts'].get('ridge_calls',0)+r['replay_costs']['counts'].get('ridge_calls',0) for r in result['arms'])
+             need(result['ridge_calls']<=48,'ridge_call_cap');result['ridge_unchanged']=ranker.fingerprint==RIDGE['fingerprint']
+             result['cache_restored']=native_resection.capsule_voxel_indices is original_cover
+-            budget.complete(history_complete=True);check();result['status']='complete_TRAIN050_development_transfer'
++            budget.complete(history_complete=True);check();result['status']='complete_TRAIN050_fallback_comparison'
+     except BaseException as error:
+         result.update(status='failed_or_unresolved',failure={'type':type(error).__name__,'message':str(error)})
+         if hasattr(error,'accounting') and hasattr(error,'best_sequence'):
+--- original/freeze-runtime.py
++++ fallback/freeze-runtime.py
+@@ -5,27 +5,25 @@
+ if __name__=='__main__' and (not sys.pycache_prefix or Path(sys.pycache_prefix).exists()):
+     raise ValueError('Fresh nonexistent -X pycache_prefix required before local imports')
+ sys.path.insert(0,str(HERE));sys.dont_write_bytecode=True
+-from batch_contract import (need,sha,small,metadata,template,transfer_record,read_bytes,TRAIN_RESULT,TRAIN_PARENT,TRAIN_RELEASE,COHORT,COHORT_SHA)
++from batch_contract import (need,sha,small,metadata,template,transfer_record,read_bytes,TRAIN_RESULT,TRAIN_PARENT,TRAIN_RELEASE,COHORT,COHORT_SHA,BASELINE)
+ 
+ def main():
+     p=argparse.ArgumentParser();p.add_argument('--head',required=True);p.add_argument('--inputs',type=Path,required=True);p.add_argument('--inputs-sha256',required=True);a=p.parse_args()
+     head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip();need(head==a.head,'root_HEAD')
+     for name in ('attempt-01','attempt-01.supervision','source-index.json','release-template.json'):need(not (HERE/name).exists(),'one_fresh_freeze')
+     inputs=small(a.inputs,a.inputs_sha256);transfer_record(inputs);metadata()
+-    refs=[inputs['public_manifest'],inputs['intended_use_review'],TRAIN_RESULT,TRAIN_PARENT,TRAIN_RELEASE,{'path':COHORT,'sha256':COHORT_SHA}]
++    refs=[BASELINE,inputs['public_manifest'],inputs['intended_use_review'],TRAIN_RESULT,TRAIN_PARENT,TRAIN_RELEASE,{'path':COHORT,'sha256':COHORT_SHA}]
+     for ref in refs:read_bytes(ref['path'],ref['sha256'])
+     files={}
+     paths=list((ROOT/'src/resectionlab').glob('*.py'))
+-    paths += [HERE/name for name in ('batch_contract.py','patient_transfer.py','hybrid_proposal.py','initial_inventory_worker.py','run_owned.py','freeze-runtime.py')]
++    paths += [HERE/name for name in ('batch_contract.py','patient_transfer.py','fallback_policy.py','hybrid_proposal.py','initial_inventory_worker.py','run_owned.py','freeze-runtime.py')]
+     paths += [ROOT/'build/goal-conditioned-policy-v1'/name for name in ('run_contact_owned.py','darwin_fast_sampler.py')]
+     for path in paths:
+         relative=path.relative_to(ROOT).as_posix();files[relative]=sha(path)
+         if relative.startswith('src/'):
+             need(subprocess.check_output(['git','show',head+':'+relative],cwd=ROOT)==read_bytes(path),'uncommitted_runtime_source:'+relative)
+-    for name in ('patient_planning_admission.py','public_patient_factory.py'):
+-        need(read_bytes(HERE/'stage/resectionlab'/name)==read_bytes(ROOT/'src/resectionlab'/name),'root_promotion_required')
+     files.update({ref['path']:ref['sha256'] for ref in refs})
+-    index={'version':'frozen-ridge-development-transfer-runtime-v1','head':head,'files':files,'payloads_opened':False}
++    index={'version':'frozen-ridge-fallback-runtime-v1','head':head,'files':files,'payloads_opened':False}
+     encode=lambda v:(json.dumps(v,indent=2,sort_keys=True,allow_nan=False)+'\n').encode()
+     raw=encode(index)
+     import hashlib

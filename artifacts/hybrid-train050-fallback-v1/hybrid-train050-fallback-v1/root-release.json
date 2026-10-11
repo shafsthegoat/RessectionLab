@@ -1,0 +1,145 @@
+{
+  "K": 8,
+  "SELECT_EVAL_closed": true,
+  "arms": [
+    "balanced_ridge_stop_fallback",
+    "exhaustive"
+  ],
+  "cache_limits": {
+    "max_entries": 16384,
+    "max_payload_bytes": 33554432
+  },
+  "caps": {
+    "feature_count": 681,
+    "fits": 0,
+    "log_bytes": 2097152,
+    "native_previews": 40000,
+    "native_transitions": 96,
+    "output_bytes": 67108864,
+    "parent_seconds": 330,
+    "ridge_calls": 48,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 4,
+    "supervision_bytes": 8388608,
+    "threads": 1,
+    "worker_seconds": 300
+  },
+  "cohort": {
+    "path": "manifests/experiments/remind-component-cohort-v1.json",
+    "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+  },
+  "execution_released": true,
+  "expected_head": "d70d814b54929061c299a52507a29fd3910f379c",
+  "horizon": 24,
+  "inputs": {
+    "intended_use_review": {
+      "path": "build/hybrid-train050-preparation-v1/root-visual-review.json",
+      "sha256": "bbc15185fa35157a8cd5da6e97d19b6024f0a1f4e659f795c7979670e96b7ec4"
+    },
+    "public_manifest": {
+      "path": "build/hybrid-train050-preparation-v1/public-inputs-v1/ReMIND-050-public-inputs.json",
+      "sha256": "588757e8df0e420b3fcae2ac24a75a5276fd33e1722a49c681836938d16dda1d"
+    }
+  },
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "original_negative_result": {
+    "path": "build/hybrid-train050-transfer-v1/attempt-01/result.json",
+    "sha256": "01ace7a4e5efc8b59fb1fe6d8e2996a595923c179e9d9c0af593210c2549b629"
+  },
+  "policy_version": "nominal-no-positive-top8-exhaustive-fallback-v1",
+  "post_exposure_condition": "public-union-post-exposure-axis0-v1",
+  "proposal_config": {
+    "intermediate_opening_mm": 1.0,
+    "max_candidates": 120,
+    "nominal_min_membership": 0.0,
+    "offsets_source_voxels": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "tool_footprint_opening": true
+  },
+  "public_index": {
+    "path": "build/hybrid-train050-preparation-v1/public-inputs-v1/ReMIND-050-public-inputs.json",
+    "sha256": "588757e8df0e420b3fcae2ac24a75a5276fd33e1722a49c681836938d16dda1d"
+  },
+  "ridge": {
+    "data_hash": "sha256:75adaa10137e33a2bd0ef193916f952b59f1d25cc6075cd16f58afbd5fc539a9",
+    "fingerprint": "sha256:4578737059c005c411668ea70b148f1214b483f2d89c677605bbe5e3c67aa57a",
+    "path": "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8.json",
+    "sha256": "6a07215506ac68fa42afce40ad12a9efe9b042d83ee5d5bc1383b249a5ffe824"
+  },
+  "scope": "development transfer on one untrained TRAIN anatomy; no held-out SELECT claim",
+  "search_seconds": 60,
+  "source_index": {
+    "path": "build/hybrid-train050-fallback-v1/source-index.json",
+    "sha256": "d557c4b6c762950a846cb1f0e478a49425921447a732581a50af91ae72286d3e"
+  },
+  "subjects": [
+    "ReMIND-050"
+  ],
+  "training_parent": {
+    "path": "artifacts/hybrid-proposal-balanced-v2/parent-receipt.json",
+    "sha256": "4b275debe63c4dd75bcec7fb2485265a1b9637c808f4a1e741885bfe00e246bf"
+  },
+  "training_release": {
+    "path": "artifacts/hybrid-proposal-balanced-v2/root-release.json",
+    "sha256": "e81ab753baecc359fe6c067278308836d8cbd18804c8fbe2c6a955a6d2e0cb8c"
+  },
+  "training_result": {
+    "path": "artifacts/hybrid-proposal-balanced-v2/result.json",
+    "sha256": "360253e27ce3992facec4938e018bc02707248c1efad1b6cd318ed7ecd5ed4ca"
+  },
+  "version": "TRAIN050-no-positive-shortlist-fallback-comparison-v1",
+  "zero_refits": true,
+  "zero_updates": true
+}

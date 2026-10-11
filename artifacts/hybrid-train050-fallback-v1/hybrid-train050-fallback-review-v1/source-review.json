@@ -1,0 +1,36 @@
+{
+  "status": "GO_FOR_EXACT_TARGETED_FALLBACK_DELTA",
+  "scope": "Independent source delta and saved generated-control receipt review; no test rerun, acquired inputs, model weights, native replay or source census.",
+  "bindings": {
+    "source_ready": "build/hybrid-train050-fallback-v1/source-ready.json",
+    "source_ready_sha256": "03c500e87afd86ef42c5104c27fee39a9ba77af2bc2c83d2c1d5d3712ad66ce6",
+    "fallback_policy_sha256": "a11571e4c313583bf72e3bc6b1c7d023c5c4d99bd7737da9a375123e582427b1",
+    "generated_receipt_sha256": "e43a6769c856da8c5a29d255193476e7dbe9c963a2bb385d15add3f344fb8d4a",
+    "generated_log_sha256": "da14aad348c052a548298062cebed19fb631298a785b7997668ecc8f179c7aa3",
+    "preserved_failed_receipt_sha256": "9919374223df8432d2d62e7ad8515fcb84b959bc0ed48c9245d6027bfba2132b",
+    "original_negative_result_sha256": "01ace7a4e5efc8b59fb1fe6d8e2996a595923c179e9d9c0af593210c2549b629"
+  },
+  "generated_evidence": {
+    "tests_passed": 8,
+    "test_seconds": 4.03,
+    "owned_seconds": 4.585588791873306,
+    "observed_child_rss_bytes": 273383424,
+    "exit_code": 0,
+    "timeout": false,
+    "source_unchanged": true,
+    "prior_failure_preserved": true
+  },
+  "findings": [
+    "The sole found defect was assignment to a frozen copied case. The repaired source uses object.__setattr__ on that isolated shallow copy; the original case/reference and immutable state remain unchanged.",
+    "The initial top eight, ranker and public nominal scoring are unchanged. Any strictly positive feasible initial action suppresses expansion. Otherwise each remaining emitted ID is previewed once in original raw order.",
+    "The final feasible catalog uses original raw-order reward ties and STOP zero. Expansion costs and failed work remain counted; failed inventory construction is sticky and cannot silently retry.",
+    "Generated controls cover rescue, positive-shortlist identity, private-reference permutation, cache and model tampering, STOP/ties, interrupted expansion, immutable helper binding and a tiny two-arm sealed-before-replay worker.",
+    "Existing helper, direct frozen loader and owned parent are unchanged. The worker preserves both sealed plans before uncached replay and does not gate completion on favorable quality."
+  ],
+  "limitations": [
+    "The fallback cannot correct the prior rank-46 better action miss when the initial eight already include a positive action.",
+    "Exhaustion covers the emitted catalog, not omitted candidate slots or all possible routes.",
+    "This is prospective source/control evidence only. Actual quality and paid costs require the separately root-owned comparison; no anatomical or clinical conclusion is implied."
+  ],
+  "unresolved_blockers": []
+}
