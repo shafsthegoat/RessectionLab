@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-residual-diagnostic-v1/monitor-exit-repair-v1/controls-01-tmp",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-residual-diagnostic-v1/monitor-exit-repair-v1/test_owned_child_exit.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.19134566700085998,
+  "source_sha256": {
+    "owned_child_exit.py": "aff4b197ea033aef8b160f43eabdd5a03394ae4024b6fc2f59f5241f2fcbfe14",
+    "test_owned_child_exit.py": "879ea3c6fd732ef360454c1bc067428af21a417728fe0ad58329a1aa13fc3b19"
+  },
+  "source_unchanged": true,
+  "no_model_or_dataset_execution": true
+}

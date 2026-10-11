@@ -1,0 +1,51 @@
+{
+  "capacity": {
+    "additional_reservable_bytes": 8904970240,
+    "allocation_allowed": true,
+    "conservative_growth_plus_reservations_bytes": 1832448000,
+    "free_after_outstanding_reservations_bytes": 355561525248,
+    "free_bytes": 355638071296,
+    "growth_highwater_bytes": 1755901952,
+    "outstanding_reserved_bytes": 76546048,
+    "reservation_scope_overruns": []
+  },
+  "free_space_check": {
+    "at_utc": "2026-10-11T14:05:51.543504+00:00",
+    "free_bytes": 355638071296
+  },
+  "latest_full_scan_ended_at_utc": "2026-10-11T14:01:03.149090+00:00",
+  "ledger_sha256": "b12e999889d00e824bfc5a0aee9cefabd4c2a8b9153ce69c8b226c5059b2802d",
+  "limits": "Freshstatvfs and ledger/lexical scope check only; no directory scan, tests, runtime, download, deletion or canonical write. Completed records and immutable baseline retained.",
+  "recorded_at_utc": "2026-10-11T14:05:51.544744+00:00",
+  "reservation": {
+    "accounting_origin": "Zero conservative origin includes any source files already written within root-authorized1MiB. No exact-scope or project scan was performed; this is not a measured empty-directory claim.",
+    "constraints": "No new dataset, dependencies, model weights, downloads, deletion or commits. Root alone schedules numerical work. Total stage ceiling16MiB; source phase<=1MiB until root grants more.",
+    "coordination": "Single enclosing scope for all root-assigned source/review/runtime writers; no overlapping child allocations.",
+    "created_at_utc": "2026-10-11T14:05:51.543624+00:00",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 0,
+    "owner": "/root",
+    "pilot": false,
+    "purpose": "Bounded fine-grid target undercredit diagnosis and targeted improvement on existing generated aligned suction .25 scene; shared source/tests/compact run evidence only.",
+    "reserved_bytes": 16777216,
+    "runtime_begin_authorized": false,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/native-cut-residual-diagnostic-v1"
+    ],
+    "source_phase_authorized_ceiling_bytes": 1048576,
+    "status": "prepared"
+  },
+  "reservation_id": "native-cut-residual-diagnostic-prep",
+  "root_archive_earmark": {
+    "at_utc": "2026-10-11T14:05:51.543626+00:00",
+    "compact_evidence_docs_git_upper_allowance_bytes": 2097152,
+    "existing_root_reservation_unchanged_bytes": 50331648,
+    "iteration_reservation_id": "native-cut-residual-diagnostic-prep",
+    "last_measured_headroom_after_earmark_bytes": 2580480,
+    "last_measured_root_headroom_bytes": 4677632,
+    "measurement_at_utc": "2026-10-11T14:01:03.149090+00:00",
+    "note": "Internal earmark only, no new/overlapping scope or allowance. Includes compact archive, canonical/docs changes and Git for this iteration. Subsequent writes since snapshot are unmeasured and consume remaining root headroom; root must preserve total48MiB cap."
+  },
+  "schema": "storage-extension-free-only-preparation-allocation-v1"
+}

@@ -1,0 +1,14 @@
+{
+  "automatic_retry": false,
+  "child_source": "import os,sys; os.read(int(sys.argv[1]),1)",
+  "child_source_sha256": "8a1846eba00b9d92d58be109f9caec650a80984c165f3742b19123f6d31b9e3d",
+  "errors": [],
+  "helper_sha256": "aff4b197ea033aef8b160f43eabdd5a03394ae4024b6fc2f59f5241f2fcbfe14",
+  "phases": [],
+  "planned_children": 1,
+  "sampler_sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+  "schema": "owned-child-exit-darwin-smoke-v1",
+  "scope": "One blocked-on-pipe benign Python child; no native/model/patient imports",
+  "status": "running",
+  "wall_limit_seconds": 5
+}

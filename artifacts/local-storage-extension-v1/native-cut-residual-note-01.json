@@ -1,0 +1,32 @@
+{
+  "ledger_sha256": "3860e367e48bbb9c89f8218eaf350f6ea5ef5dfe07e86aa1aeb048cdbf4e4ce9",
+  "limits": "Notes only; no scan, free-space recheck, numerical launch, acquisition, deletion or rewrite of prior receipts. Both total allowances unchanged.",
+  "progress_note": {
+    "all_failures_retained": true,
+    "at_utc": "2026-10-11T14:27:39.656030+00:00",
+    "current_numeric_jobs_root_reported": false,
+    "first_matrix": "Monitor failure retained, approximately91KiB",
+    "next_source_work": "Producer/checker terminal-only closure to avoid8192-witness cap on two rows without raising limits",
+    "no_acquisition": true,
+    "second_matrix": "Complete negative retained, approximately2.42MB,64.86s; independent audit finished",
+    "source": "Root explicit update; owner-reported retained outcomes and forecast, no fresh byte measurement",
+    "third_output_forecast": "Approximately3-4MiB within existing16MiB whole-stage ceiling"
+  },
+  "recorded_at_utc": "2026-10-11T14:27:39.657915+00:00",
+  "reservation_id": "native-cut-residual-diagnostic-prep",
+  "root_archive_earmark": {
+    "at_utc": "2026-10-11T14:27:39.656418+00:00",
+    "authority": "Root authorizes internal2-to3MiB earmark; total48MiB unchanged",
+    "compact_evidence_docs_git_upper_allowance_bytes": 3145728,
+    "existing_root_reservation_unchanged_bytes": 50331648,
+    "forecast": "Compact root archive2.4-2.8MiB including retained~895KiB negative and~1MiB final scalar reports plus runners/diagnostics/logs",
+    "iteration_reservation_id": "native-cut-residual-diagnostic-prep",
+    "last_measured_headroom_after_earmark_bytes": 1531904,
+    "last_measured_root_headroom_bytes": 4677632,
+    "measurement_at_utc": "2026-10-11T14:01:03.149090+00:00",
+    "note": "Supersedes preceding2MiB earmark for this iteration, not additive. No fresh scan/free measurement; intervening root writes consume stale measured headroom and final milestone must confirm. No new overall allocation.",
+    "previous_earmark_bytes": 2097152
+  },
+  "schema": "storage-extension-owner-note-only-v1",
+  "stage_ceiling_bytes_unchanged": 16777216
+}

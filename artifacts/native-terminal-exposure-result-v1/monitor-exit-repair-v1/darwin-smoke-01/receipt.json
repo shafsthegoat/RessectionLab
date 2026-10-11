@@ -1,0 +1,107 @@
+{
+  "automatic_retry": false,
+  "child_pid": 40223,
+  "child_source": "import os,sys; os.read(int(sys.argv[1]),1)",
+  "child_source_sha256": "8a1846eba00b9d92d58be109f9caec650a80984c165f3742b19123f6d31b9e3d",
+  "elapsed_seconds": 0.017835082951933146,
+  "errors": [],
+  "helper_sha256": "aff4b197ea033aef8b160f43eabdd5a03394ae4024b6fc2f59f5241f2fcbfe14",
+  "lifecycle": {
+    "child_reaped": true,
+    "errors": [],
+    "events": [
+      {
+        "pgid": 40223,
+        "phase": "bind",
+        "pid": 40223,
+        "start_identity": [
+          1791729615,
+          595071
+        ]
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0,
+        "phase": "sample.observed_exit",
+        "pid": 40223,
+        "start_identity": [
+          1791729615,
+          595071
+        ],
+        "wait_returncode": 0
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0,
+        "phase": "cleanup.pre_signal_exit",
+        "pid": 40223,
+        "start_identity": [
+          1791729615,
+          595071
+        ],
+        "wait_returncode": 0
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.5,
+        "phase": "cleanup.wait",
+        "pid": 40223,
+        "start_identity": [
+          1791729615,
+          595071
+        ],
+        "wait_returncode": 0
+      }
+    ],
+    "exit_code": 0,
+    "owned_root_pid": 40223,
+    "owned_root_start_identity": [
+      1791729615,
+      595071
+    ],
+    "remaining_owned_pids": [],
+    "remaining_state_unknown": false,
+    "verified": true
+  },
+  "phases": [
+    {
+      "elapsed_seconds": 0.007218832848593593,
+      "observation": {
+        "measurement": {
+          "detached_descendant_pids": [],
+          "detached_descendant_start_identities": {},
+          "group_read_seconds": 7.991702295839787e-05,
+          "pgid": 40223,
+          "pids": [
+            40223
+          ],
+          "process_group_resident_bytes": 131072
+        },
+        "rss_observed": true,
+        "state": "running"
+      },
+      "phase": "first_real_live_sample"
+    },
+    {
+      "elapsed_seconds": 0.01778133283369243,
+      "phase": "direct_child_exit_between_samples",
+      "pid": 40223,
+      "wait_returncode": 0
+    },
+    {
+      "observation": {
+        "measurement": null,
+        "rss_observed": false,
+        "state": "exited"
+      },
+      "phase": "second_real_sample_after_exit"
+    }
+  ],
+  "planned_children": 1,
+  "sampler_sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+  "schema": "owned-child-exit-darwin-smoke-v1",
+  "scope": "One blocked-on-pipe benign Python child; no native/model/patient imports",
+  "smoke_source_sha256": "b714941fad8916eb75f8080ecb4e87e4d4c1393695dc45253f177efee8b143cc",
+  "status": "passed",
+  "wall_limit_seconds": 5
+}

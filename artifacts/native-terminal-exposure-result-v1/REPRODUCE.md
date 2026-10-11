@@ -49,3 +49,11 @@ The plot is regenerated from the scalar terminal report with:
 
 All scenes and interactions here are generated. This archive supplies neither
 patient outcomes nor measured surgical forces.
+
+`monitor-exit-repair-v1/` is a prospective reusable lifecycle helper and an
+unapplied patch for a future frozen launcher. Eleven fake-kernel controls and
+one real Darwin child smoke pass in the root receipts. The smoke creates one
+small blocked-on-pipe Python child; it imports no model or patient data. Its
+original output is exclusive and must not be overwritten. This does not rerun
+or retroactively repair the terminal experiment. `MONITOR_REPAIR_INDEX.json`
+binds this later addition separately from the original archive payload.

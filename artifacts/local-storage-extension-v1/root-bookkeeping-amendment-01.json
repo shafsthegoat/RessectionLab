@@ -1,0 +1,43 @@
+{
+  "basis_snapshot": "milestone-closure-17.json",
+  "basis_snapshot_sha256": "fe4223b92ab5bd5f821721459ed53ad4a270c65883dac7985529eca991a840ca",
+  "capacity": {
+    "additional_reservable_bytes": 8901124096,
+    "allocation_allowed": true,
+    "conservative_growth_plus_reservations_bytes": 1836294144,
+    "free_after_outstanding_reservations_bytes": 355539816448,
+    "free_bytes": 355607973888,
+    "growth_highwater_bytes": 1768136704,
+    "outstanding_reserved_bytes": 68157440,
+    "reservation_scope_overruns": []
+  },
+  "historical_overrun_bytes": 303104,
+  "ledger_sha256": "38a403d65a9ef102ba58e7ea735533c0aba2941ca3e40898828c6be09da004d9",
+  "limits": "No full rescan, deletion, data acquisition, weights or dependency growth. User 10GiB/50GiB policy unchanged. Original closure and origin/highwaters retained; later writes outside prior measurement epoch.",
+  "new_root_allowance_bytes": 54525952,
+  "opening_reservation": {
+    "accounting_origin": "Zero origin retains every existing/new byte in exact stage against4MiB total; allocated size of only this exact subtree checked before reserve. No project scan.",
+    "began_at_utc": "2026-10-11T14:47:59.694432+00:00",
+    "constraints": "No data/dependency/model-weight acquisition, no deletion or canonical writes; source agents share enclosing scope without duplicate reservations.",
+    "created_at_utc": "2026-10-11T14:37:44.215042+00:00",
+    "execution_release": "Only one <=45s source-control batch initially. Full paired comparison still unreleased.",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 0,
+    "owner": "/root",
+    "pilot": false,
+    "purpose": "One new generated-opening decision experiment; source preparation initially<=128KiB, future runtime release root-owned.",
+    "reserved_bytes": 4194304,
+    "runtime_begin_authorized": true,
+    "scope_current_allocated_bytes": 0,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/native-opening-coverage-v1"
+    ],
+    "source_phase_authorized_ceiling_bytes": 131072,
+    "status": "running"
+  },
+  "previous_ledger_sha256": "6310a0d4203ac24cf65c86b700790606a598898b9709b1153b1aa38f17eddb7c",
+  "prior_root_allowance_bytes": 50331648,
+  "recorded_at_utc": "2026-10-11T14:47:59.694168+00:00",
+  "schema": "root-bookkeeping-amendment-and-opening-controls-v1"
+}

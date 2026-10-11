@@ -1,0 +1,84 @@
+{
+  "archive_measurement_at_utc": "2026-10-11T14:01:03.149090+00:00",
+  "capacity": {
+    "additional_reservable_bytes": 8904970240,
+    "allocation_allowed": true,
+    "conservative_growth_plus_reservations_bytes": 1832448000,
+    "free_after_outstanding_reservations_bytes": 355553697792,
+    "free_bytes": 355630243840,
+    "growth_highwater_bytes": 1755901952,
+    "outstanding_reserved_bytes": 76546048,
+    "reservation_scope_overruns": []
+  },
+  "free_space_check": {
+    "at_utc": "2026-10-11T14:17:03.770742+00:00",
+    "free_bytes": 355630243840
+  },
+  "ledger_sha256": "faa1bde25d0520a8f903b6f4c9c1bc0a6281158d01db9fa0672bdc0a30d47e32",
+  "limits": "Freshfree+single exact-directory stat and ledger read/write only. No recursive enumeration, fullproject scan, test, numerical launch, acquisition or canonical changes. Immutable baseline and failed/completed evidence preserved.",
+  "recorded_at_utc": "2026-10-11T14:17:03.772008+00:00",
+  "reservation": {
+    "accounting_origin": "Zero conservative origin includes any source files already written within root-authorized1MiB. No exact-scope or project scan was performed; this is not a measured empty-directory claim.",
+    "authority_note": "Root explicitly requested storage activation now; root alone releases numerical matrix after reviewed source/controls. Storage does not launch any process.",
+    "began_at_utc": "2026-10-11T14:17:03.770753+00:00",
+    "budget_components": {
+      "matrix_output_hard_cap_bytes": 8388608,
+      "source_controls_supervision_and_cache_combined_remainder_bytes": 8388608,
+      "total_bytes": 16777216
+    },
+    "constraints": "No new dataset, dependencies, model weights, downloads, deletion or commits. Root alone schedules numerical work. Total stage ceiling16MiB; source phase<=1MiB until root grants more.",
+    "coordination": "Single enclosing scope for all root-assigned source/review/runtime writers; no overlapping child allocations.",
+    "created_at_utc": "2026-10-11T14:05:51.543624+00:00",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 0,
+    "owner": "/root",
+    "pilot": false,
+    "precompute_accounting_baseline": {
+      "existing_source_and_control_bytes_included": true,
+      "last_full_project_scan_at_utc": "2026-10-11T14:01:03.149090+00:00",
+      "method": "Retain original conservative zero allocated-byte origin; all existing and future scope bytes count toward16MiB. No claim of empty scope or fresh byte-size measurement. Final authorized milestone will measure actual allocated blocks.",
+      "scope_initial_allocated_bytes": 0
+    },
+    "prospective_matrix_caps": {
+      "max_independent_audits": 18,
+      "max_native_calls": 180,
+      "parent_seconds": 250,
+      "rows": 18,
+      "rss_bytes": 2147483648,
+      "threads": 1,
+      "worker_seconds": 240
+    },
+    "purpose": "Saved-only residual diagnosis, repaired generated controls and one same-capsule-exposure fixed18 matrix with compact audit; no10stroke diagnostic rerun.",
+    "reserved_bytes": 16777216,
+    "root_reported_existing_work": {
+      "bytes_are_owner_forecast_not_current_measurement": true,
+      "combined_controls01_seconds": 5.06,
+      "controls01_failures": 7,
+      "controls01_passes": 196,
+      "failure_description": "Producer fixture invalid microsteps; short repair controls root-scheduled separately.",
+      "failures_retained": true,
+      "saved_only_diagnosis_approx_bytes": 35840,
+      "saved_only_diagnosis_seconds": 0.182
+    },
+    "runtime_begin_authorized": true,
+    "scope_identity_at_begin": {
+      "at_utc": "2026-10-11T14:17:03.770620+00:00",
+      "device": 16777232,
+      "directory_mtime_ns": 1791728125833085250,
+      "inode": 10441387,
+      "method": "Single directory stat only; no directory enumeration, recursive scope scan or payload reads.",
+      "path": "build/native-cut-residual-diagnostic-v1"
+    },
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/native-cut-residual-diagnostic-v1"
+    ],
+    "source_phase_authorized_ceiling_bytes": 1048576,
+    "status": "running"
+  },
+  "reservation_id": "native-cut-residual-diagnostic-prep",
+  "root_archive_earmark_bytes": 2097152,
+  "root_archive_headroom_last_measured_bytes": 4677632,
+  "root_archive_reserved_bytes_unchanged": 50331648,
+  "schema": "storage-extension-free-only-begin-v1"
+}

@@ -1,0 +1,62 @@
+{
+  "version": "prospective-monitor-repair-archive-v1",
+  "files": [
+    {
+      "archive_path": "monitor-exit-repair-v1/README.txt",
+      "source_path": "build/native-cut-residual-diagnostic-v1/monitor-exit-repair-v1/README.txt",
+      "bytes": 4266,
+      "sha256": "a1141a2cd57d5e68a28e74d3e93e74fa00f0c108b84f22fb53c980cee1021ef6"
+    },
+    {
+      "archive_path": "monitor-exit-repair-v1/darwin-smoke-01/intent.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/monitor-exit-repair-v1/darwin-smoke-01/intent.json",
+      "bytes": 605,
+      "sha256": "d0317b408d16727fcaba55bb659e6c4be7e814ef5ba7065ed3ea3df1dea4528d"
+    },
+    {
+      "archive_path": "monitor-exit-repair-v1/darwin-smoke-01/receipt.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/monitor-exit-repair-v1/darwin-smoke-01/receipt.json",
+      "bytes": 2823,
+      "sha256": "b065e49c7186467184f3dd28f78126e3371f7c9742bf2823011da01e1fb1d8f0"
+    },
+    {
+      "archive_path": "monitor-exit-repair-v1/future-runner.patch",
+      "source_path": "build/native-cut-residual-diagnostic-v1/monitor-exit-repair-v1/future-runner.patch",
+      "bytes": 4020,
+      "sha256": "0053dbd100eb8c744159d8002ad1b13a6007d82e857d3a20da12e8ed916cb877"
+    },
+    {
+      "archive_path": "monitor-exit-repair-v1/owned_child_exit.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/monitor-exit-repair-v1/owned_child_exit.py",
+      "bytes": 10208,
+      "sha256": "aff4b197ea033aef8b160f43eabdd5a03394ae4024b6fc2f59f5241f2fcbfe14"
+    },
+    {
+      "archive_path": "monitor-exit-repair-v1/root-controls-01.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/monitor-exit-repair-v1/root-controls-01.json",
+      "bytes": 957,
+      "sha256": "0228c24e035b19b7c5cbd1b8a1945399dd782a8c1818ce786eaa661074be47b7"
+    },
+    {
+      "archive_path": "monitor-exit-repair-v1/root-controls-01.log",
+      "source_path": "build/native-cut-residual-diagnostic-v1/monitor-exit-repair-v1/root-controls-01.log",
+      "bytes": 99,
+      "sha256": "80cc2ecf12ffc8469e01131917b32ec0682eac22f6e92080be3e6d3a005b8aa8"
+    },
+    {
+      "archive_path": "monitor-exit-repair-v1/smoke_darwin_exit.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/monitor-exit-repair-v1/smoke_darwin_exit.py",
+      "bytes": 5523,
+      "sha256": "b714941fad8916eb75f8080ecb4e87e4d4c1393695dc45253f177efee8b143cc"
+    },
+    {
+      "archive_path": "monitor-exit-repair-v1/test_owned_child_exit.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/monitor-exit-repair-v1/test_owned_child_exit.py",
+      "bytes": 7450,
+      "sha256": "879ea3c6fd732ef360454c1bc067428af21a417728fe0ad58329a1aa13fc3b19"
+    }
+  ],
+  "status": "11_fake_controls_and_one_real_Darwin_child_smoke_passed",
+  "historical_terminal_supervision": "incomplete_or_failed_unchanged",
+  "not_yet_exercised": "full_numerical_launcher_integration"
+}

@@ -1,0 +1,50 @@
+--- a/run_owned.py
++++ b/run_owned.py
+@@ -61,12 +61,16 @@
+     if shutil.disk_usage(ROOT).free<50*1024**3+caps['output_bytes']:raise ValueError('50GiB floor plus output reserve')
+     sys.path.insert(0,str(ROOT/'build/goal-conditioned-policy-v1'))
+     from run_contact_owned import FastDarwinSampler,cleanup_owned,_receipt
++    helper=HERE/'owned_child_exit.py';helper_raw=helper.read_bytes()
++    if hashlib.sha256(helper_raw).hexdigest()!=index['files'][str(helper.relative_to(ROOT))]:raise ValueError('Lifecycle source binding')
++    namespace={'__name__':'owned_child_exit','__file__':str(helper)}
++    exec(compile(helper_raw,str(helper),'exec'),namespace);OwnedChildExit=namespace['OwnedChildExit']
+     output.mkdir(parents=True);started=time.monotonic();sampler=FastDarwinSampler()
+     record={'schema':'owned_same_capsule_exposure_matrix_v1','status':'running','source_index_sha256':a.source_index_sha256,
+         'caps':caps,'planned_rows':18,'planned_action_slots':180,'scope':spec['scope'],'automatic_retry':False,
+         'sampled_peak_group_rss_bytes':0,'rss_samples':0}
+     _receipt(output/'intent.json',record)
+-    process=None;reason=None;errors=[];actions=[];detached={};remaining=[];lease_read=lease_write=None;previous={};stop={'requested':False}
++    owned=None;process=None;reason=None;errors=[];actions=[];detached={};remaining=[];lease_read=lease_write=None;previous={};stop={'requested':False}
+     def interrupted(signum,frame):stop['requested']=True;raise KeyboardInterrupt('termination requested')
+     for sig in (signal.SIGTERM,signal.SIGINT):previous[sig]=signal.signal(sig,interrupted)
+     env={k:v for k,v in os.environ.items() if not k.startswith(('PYTHON','DYLD_','LD_'))};env.update(THREADS,PYTHONDONTWRITEBYTECODE='1')
+@@ -78,11 +82,13 @@
+         with (output/'worker.log').open('x') as log:
+             try:process=subprocess.Popen(command,cwd=ROOT,env=env,stdout=log,stderr=subprocess.STDOUT,pass_fds=(lease_read,),start_new_session=True)
+             finally:os.close(lease_read);lease_read=None
++            owned=OwnedChildExit(process,sampler)
+             while process.poll() is None:
+                 if time.monotonic()-started>=caps['cooperative_worker_seconds']:reason='work_deadline_with_cleanup_reserve';break
+-                measured=sampler.group(process.pid,process.pid);detached.update(measured['detached_descendant_start_identities'])
++                observation=owned.sample()
++                if observation['state']=='exited':break
++                measured=observation['measurement'];detached.update(measured['detached_descendant_start_identities'])
+                 record['rss_samples']+=1;record['sampled_peak_group_rss_bytes']=max(record['sampled_peak_group_rss_bytes'],measured['process_group_resident_bytes'])
+-                if not measured['pids'] and process.poll() is None:reason='live_group_rss_unknown';break
+                 if measured['process_group_resident_bytes']>caps['worker_peak_rss_bytes']:reason='rss_cap';break
+                 if os.fstat(log.fileno()).st_size>64*1024:reason='log_cap';break
+                 if tree_bytes(output,monitor_owned_temporaries=True)>caps['output_bytes']-64*1024:reason='output_cap';break
+@@ -92,7 +98,12 @@
+     finally:
+         try:
+             if process is not None:
+-                try:remaining=cleanup_owned(process,sampler,detached,actions,errors)
++                try:
++                    if owned is None:raise RuntimeError('Owned lifecycle was not initialized')
++                    final_owned=owned.cleanup(deadline=started+caps['parent_wall_seconds'])
++                    record['owned_lifecycle']=final_owned
++                    remaining=final_owned['remaining_owned_pids'];errors.extend(final_owned['errors'])
++                    if not final_owned['verified']:errors.append({'phase':'cleanup.final','message':'Owned cleanup unverified'})
+                 except BaseException as error:
+                     errors.append('cleanup:'+str(error))
+                     try:

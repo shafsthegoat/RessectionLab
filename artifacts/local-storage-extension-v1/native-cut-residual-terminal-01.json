@@ -1,0 +1,57 @@
+{
+  "evidence_basis": "All three owned matrix launchers explicitly affirm child_reaped and no remaining_owned_pids, including original failed monitor/cleanup status. Prospective benign-child smoke is separately verified/reaped/no remaining or unknown state. Root reports all numerical/audit/plot/smoke work terminal. No fresh process census performed.",
+  "monitor_controls": {
+    "exit_code": 0,
+    "path": "build/native-cut-residual-diagnostic-v1/monitor-exit-repair-v1/root-controls-01.json",
+    "sha256": "0228c24e035b19b7c5cbd1b8a1945399dd782a8c1818ce786eaa661074be47b7"
+  },
+  "note": "Storage closure only. Terminal matrix original launcher remains incomplete_or_failed with live_group_rss_unknown and cleanup permission error; childexit0/reap does not rewrite that receipt or certify retrospective RSS/cleanup monitoring.",
+  "original_failures_retained": true,
+  "original_terminal_receipts": [
+    {
+      "child_reaped": true,
+      "cleanup_errors": [],
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-01/launcher.json",
+      "remaining_owned_pids": [],
+      "sha256": "1c6eb8c57543d39e8c9c533e7185bee8f6941c53377d677d4929e508d20b3ebe",
+      "status": "incomplete_or_failed",
+      "stop_reason": "FileNotFoundError:[Errno 2] No such file or directory: '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-residual-diagnostic-v1/comparison-run-01/report.json.tmp'",
+      "worker_exit_code": -15
+    },
+    {
+      "child_reaped": true,
+      "cleanup_errors": [],
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/launcher.json",
+      "remaining_owned_pids": [],
+      "sha256": "373c08eaaa655dd52d5831533210bd57f79a53c805fa5e4cbd57d64c8f458028",
+      "status": "completed",
+      "stop_reason": null,
+      "worker_exit_code": 0
+    },
+    {
+      "child_reaped": true,
+      "cleanup_errors": [
+        "cleanup:[Errno 1] Operation not permitted"
+      ],
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/launcher.json",
+      "remaining_owned_pids": [],
+      "sha256": "6b4048c294821f7bccb29d7219e5a3d705acfa6c0375099cc356b65ac594733c",
+      "status": "incomplete_or_failed",
+      "stop_reason": "live_group_rss_unknown",
+      "worker_exit_code": 0
+    },
+    {
+      "child_reaped": true,
+      "cleanup_errors": [],
+      "path": "build/native-cut-residual-diagnostic-v1/monitor-exit-repair-v1/darwin-smoke-01/receipt.json",
+      "remaining_owned_pids": [],
+      "sha256": "b065e49c7186467184f3dd28f78126e3371f7c9742bf2823011da01e1fb1d8f0",
+      "status": "passed",
+      "worker_exit_code": 0
+    }
+  ],
+  "recorded_at_utc": "2026-10-11T14:41:59.058375+00:00",
+  "remaining_owned_pids": [],
+  "schema": "storage-owner-terminal-binding-v1",
+  "worker_termination_confirmed": true
+}

@@ -81,3 +81,19 @@ No acquisition, dependency or deletion occurred. Both global storage limits pass
 Snapshot copies, this note and subsequent Git writes are outside the dated scan;
 no recursive scan is required. Allocation, source-begin and terminal bindings
 are retained beside the snapshot.
+
+October 11, 14:42:15 UTC — [exposure closure](milestone-closure-17.json) records
+**1,768,136,704 bytes (1.647 GiB)** cumulative additional allocated growth and
+**331.193 GiB free**. The exposure build stage retains **7.016/16 MiB**, and its
+compact archive occupies **2.652/3 MiB**. No acquisition, new dependency or
+deletion occurred. The original failed supervisor remains failed; storage
+closure certifies no scientific or clinical outcome.
+
+The scan also records aggregate root source/archive/Git growth exceeding its
+internal 48 MiB allowance by **296 KiB**. This original record is preserved.
+The [additive amendment](root-bookkeeping-amendment-01.json) allocates 52 MiB
+within the unchanged user 10 GiB total, preserving the original origin and
+growth high-water mark. Root took over the single storage-owner role and began
+the already reserved 4 MiB opening-task source controls; full comparison release
+remained separate. Fresh free space after reservations is above 331 GiB.
+Copies, this note and later Git/source writes are outside the dated scan.

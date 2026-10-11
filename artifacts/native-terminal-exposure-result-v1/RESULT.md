@@ -117,6 +117,16 @@ training sweep or resolution increase. Supervision also needs a prospective
 exit/identity-aware correction before the next owned experiment; the saved
 scientific result does not waive it.
 
+A prospective correction is now prepared and verified separately: 11 controlled
+lifecycle cases pass, and one benign real Darwin child completes its live RSS
+sample, exit between samples and membership-only cleanup in 0.018 seconds.
+The helper accepts a missing sample only after a bounded wait confirms the
+exact child's exit. Unknown live memory, EPERM and unverifiable ownership still
+fail. It records phase/PID/identity evidence, and does not probe a reaped child's
+RSS or signal its old group. The full numerical launcher has not yet exercised
+this helper; the original failure remains unchanged. Source and both root
+receipts are bound in `MONITOR_REPAIR_INDEX.json`.
+
 The compact archive is below its 3 MiB allowance; raw sparse geometry remains
 in one local location with hashes in `ARCHIVE_INDEX.json`. The whole iteration
 uses the coordinated 16 MiB reservation and no additional acquisition.

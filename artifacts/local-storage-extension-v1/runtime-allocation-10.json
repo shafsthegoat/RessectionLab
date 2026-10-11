@@ -1,0 +1,54 @@
+{
+  "capacity": {
+    "additional_reservable_bytes": 8900775936,
+    "allocation_allowed": true,
+    "conservative_growth_plus_reservations_bytes": 1836642304,
+    "free_after_outstanding_reservations_bytes": 355533168640,
+    "free_bytes": 355613908992,
+    "growth_highwater_bytes": 1755901952,
+    "outstanding_reserved_bytes": 80740352,
+    "reservation_scope_overruns": []
+  },
+  "free_space_check": {
+    "at_utc": "2026-10-11T14:37:44.213907+00:00",
+    "free_bytes": 355613908992
+  },
+  "ledger_sha256": "f44800836e4ff86de1aeb65dcaed48d5c4c5b9b338391daaee58dbfb821e5a6d",
+  "limits": "Exact new subtree plus compact archive allocation metadata and free-space check only. No broad scans, numerical work, acquisition or deletion; immutable baseline and previous receipts unchanged.",
+  "previous16MiB_reservation_status": "running",
+  "recorded_at_utc": "2026-10-11T14:37:44.220847+00:00",
+  "reservation": {
+    "accounting_origin": "Zero origin retains every existing/new byte in exact stage against4MiB total; allocated size of only this exact subtree checked before reserve. No project scan.",
+    "constraints": "No data/dependency/model-weight acquisition, no deletion or canonical writes; source agents share enclosing scope without duplicate reservations.",
+    "created_at_utc": "2026-10-11T14:37:44.215042+00:00",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 0,
+    "owner": "/root",
+    "pilot": false,
+    "purpose": "One new generated-opening decision experiment; source preparation initially<=128KiB, future runtime release root-owned.",
+    "reserved_bytes": 4194304,
+    "runtime_begin_authorized": false,
+    "scope_current_allocated_bytes": 0,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/native-opening-coverage-v1"
+    ],
+    "source_phase_authorized_ceiling_bytes": 131072,
+    "status": "prepared"
+  },
+  "reservation_id": "native-opening-coverage-prep",
+  "root_archive_observation": {
+    "allocated_bytes": 2719744,
+    "at_utc": "2026-10-11T14:37:44.219028+00:00",
+    "caveat": "Subtraction is a forecast, not current measured root headroom: other canonical/source/docs/Git/storage writes since last snapshot remain unmeasured.",
+    "last_headroom_less_this_archive_allocated_bytes": 1957888,
+    "last_measured_root_headroom_bytes": 4677632,
+    "method": "du -sk exact compact archive only; no parent-directory/project scan",
+    "owner_reported_logical_bytes": 2587488,
+    "path": "artifacts/native-terminal-exposure-result-v1",
+    "reported_commit": "6d7a142",
+    "root_full_snapshot_at_utc": "2026-10-11T14:01:03.149090+00:00",
+    "within3MiB_earmark": true
+  },
+  "schema": "storage-extension-exact-scope-preparation-allocation-v1"
+}
