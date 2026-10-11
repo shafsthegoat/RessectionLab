@@ -75,6 +75,32 @@ def _same_hash(a, b):
     return _digest(a) == _digest(b)
 
 
+DEVELOPMENT_TRANSFER_VERSION = "frozen-ridge-TRAIN-development-transfer-v1"
+
+
+def validate_development_transfer(value):
+    """Explicit source admission for one bound untrained TRAIN anatomy, never fitting.
+
+    The owning runner authenticates the bound QC and frozen ridge artifacts.
+    This record neither performs anatomical QC nor admits neural checkpoints.
+    """
+    fixed = {"version": DEVELOPMENT_TRANSFER_VERSION,
+        "role": "TRAIN", "scope": "development_transfer_not_heldout_SELECT",
+        "methods": ["balanced_ridge_top8", "exhaustive"], "K": 8, "max_steps": 24,
+        "refits": 0, "optimizer_updates": 0, "neural_forwards": 0,
+        "training_subjects": ["ReMIND-002", "ReMIND-015", "ReMIND-018", "ReMIND-045"]}
+    digests = {"public_manifest_sha256", "intended_use_review_sha256",
+        "frozen_ridge_sha256", "frozen_ridge_fingerprint", "training_result_sha256"}
+    record = _fields(value, set(fixed) | digests | {"subject"}, "exact_TRAIN_development_transfer_required")
+    _need(all(thaw_json(record[k]) == v and (type(record[k]) is int if type(v) is int else True)
+              for k, v in fixed.items()), "fixed_TRAIN_no_refit_contract_required")
+    _need(type(record["subject"]) is str and record["subject"] not in record["training_subjects"],
+          "development_person_must_be_outside_fitted_cohort")
+    for key in digests:
+        _digest(record[key])
+    return record
+
+
 def validate_select_checkpoint_lineage(value, *, learning_protocol_hash=None, learning_protocol=None):
     """Validate declared lineage only; the inference loader authenticates weights.
 
@@ -308,6 +334,9 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
         if derived_occupancy else set()) | ({"partial_source_domain_preserved"} if partial_domain else
             {"derived_full_source_domain_preserved"} if post_inference else set()),
         "exact_public_QC_fields_required")
+    transfer = (protocol.get("development_transfer") if isinstance(protocol, Mapping) else None)
+    if transfer is not None:
+        transfer = validate_development_transfer(transfer)
     checkpoint_reload = isinstance(protocol, Mapping) and protocol.get("initialization") == SELECT_INITIALIZATION
     occupancy_learning = isinstance(protocol, Mapping) and protocol.get("occupancy_learning_protocol") is not None
     occupancy_inference = isinstance(protocol, Mapping) and protocol.get("occupancy_inference_protocol") is not None
@@ -316,12 +345,24 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
           "union_inference_requires_original_full_coverage_frozen_SELECT_condition")
     _need(not occupancy_learning or (derived_occupancy and (not partial_domain or post_start is not None)),
           "union_learning_requires_full_coverage_or_explicit_post_exposure_condition")
-    plan = _fields(protocol, PROTOCOL_FIELDS | ({"checkpoint_lineage"} if checkpoint_reload else set())
+    plan = _fields(protocol, PROTOCOL_FIELDS | ({"development_transfer"} if transfer is not None else set()) | ({"checkpoint_lineage"} if checkpoint_reload else set())
         | ({"occupancy_learning_protocol"} if occupancy_learning else set())
         | ({"occupancy_inference_protocol"} if occupancy_inference else set())
         | ({"occupancy_condition"} if derived_occupancy else set())
         | ({"post_exposure_condition_hash"} if post_start is not None else set()),
         "exact_preflight_protocol_fields_required")
+    if transfer is not None:
+        _need(partial_domain and post_start is not None and not occupancy_learning
+              and not occupancy_inference and not checkpoint_reload
+              and source["subject"] == plan["subject"] == transfer["subject"]
+              and plan["role"] == "TRAIN" and type(plan["max_steps"]) is int and plan["max_steps"] == 24
+              and _same_hash(plan["learning_protocol_hash"], semantic_digest(transfer))
+              and plan["initialization"] == "public_world_search_only"
+              and type(plan["max_optimizer_updates"]) is int and plan["max_optimizer_updates"] == 0
+              and type(plan["max_policy_forwards"]) is int and plan["max_policy_forwards"] == 0
+              and _same_hash(case.support_provenance.get("public_manifest_sha256"), transfer["public_manifest_sha256"])
+              and _same_hash(case.support_provenance.get("development_intended_use_review_sha256"), transfer["intended_use_review_sha256"]),
+              "TRAIN_transfer_requires_unchanged_partial_public_world_zero_learning")
     if post_start is not None:
         from .post_exposure import VERSION as POST_EXPOSURE_VERSION
         _need(post_start.record["version"] == POST_EXPOSURE_VERSION
@@ -355,6 +396,8 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
         semantics = ("derived_simulated_S_union_T_occupancy_assumption", semantics[1])
         expected_condition = PARTIAL_DOMAIN_UNION_OCCUPANCY if explicit_domain else SUPPLIED_TUMOR_UNION_OCCUPANCY
         expected_subjects = PARTIAL_DOMAIN_TRAIN_SUBJECTS if partial_domain else ("ReMIND-008", "ReMIND-010", "ReMIND-020", "ReMIND-025")
+        if transfer is not None:
+            expected_subjects = (transfer["subject"],)
         if occupancy_inference:
             _need(domain == "acquired_patient" and member["role"] == "SELECT"
                   and source["subject"] == UNION_SELECT_SUBJECT
@@ -505,6 +548,7 @@ def make_patient_planning_task(case: NativeSpatialCase, *, cohort_bytes: bytes,
         qc_receipt=qc_receipt, protocol=protocol)
     task = NativeSpatialTask(case, max_steps=plan["max_steps"])
     record = freeze_json({"version": VERSION, "scope": plan["scope"], "subject": source["subject"],
+        **({"development_transfer": plan["development_transfer"]} if "development_transfer" in plan else {}),
         **({} if lineage is None else {"initialization": SELECT_INITIALIZATION, "checkpoint_lineage": lineage}),
         **({"occupancy_condition": plan["occupancy_condition"],
             "occupancy_derivation": case._occupancy_derivation,

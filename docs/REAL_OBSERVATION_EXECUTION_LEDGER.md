@@ -1729,3 +1729,16 @@ the existing four-patient fitted cohort. The next comparison will use the
 existing frozen proposal scorer with zero new fitting, a matched exhaustive
 baseline and unchanged task assumptions. That capability is still in preparation;
 no new patient planning/model result exists. Held037 and closed067 stay closed.
+
+## October 11 — Frozen development-transfer source path integrated
+
+[The small factory/validator extension](../artifacts/hybrid-train050-transfer-preparation-v1/INTEGRATION.md)
+requires an explicit bound TRAIN person outside the original fitted four,
+unchanged public source/domain/QC evidence and zero model updates. Default
+subject lists and all original 54 admission guard calls remain intact. The
+separate fixed050 driver loads the authenticated existing balanced ridge through
+its direct immutable parameter format, not a neural checkpoint interface.
+Generated runner controls pass 18 tests, including both plan seals followed by
+uncached independent replay; canonical tests pass 88 plus nine subtests, with
+three missing-historical-source skips. The actual patient comparison remains
+unrun at this commit. No model, task/reward, patient role or fitted cohort changes.

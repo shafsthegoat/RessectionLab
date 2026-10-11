@@ -1,0 +1,79 @@
+{
+  "status": "GO_CANONICAL_SOURCE_AND_SAVED_MANIFEST_ONLY",
+  "canonical_candidates": {
+    "patient_planning_admission.py": {
+      "baseline_sha256": "ab063b5b5a67b825009dbc9052befb6270ff39d8d5ce87ed555a1ab79394aed9",
+      "stage_sha256": "ff599ea5ba3d026f8342b54ea18a395c24719c57e6d860b41dfb177721247f95",
+      "changed_definitions": [
+        "make_patient_planning_task",
+        "validate_development_transfer",
+        "validate_patient_planning_source"
+      ],
+      "all_original_top_level_constants_preserved": true,
+      "original_need_calls_preserved": 54
+    },
+    "public_patient_factory.py": {
+      "baseline_sha256": "aa4c0a07ecb4988934bb3911927d7ce724037fec63aecad7c50f8a8f2d7a7dc5",
+      "stage_sha256": "da5ec355048effd160b3f7211544cf7ace4912aac4cd21e768ce424e22f9a2aa",
+      "changed_definitions": [
+        "load_public_manifest",
+        "prepare_public_source"
+      ],
+      "all_original_top_level_constants_preserved": true,
+      "original_need_calls_preserved": 0
+    }
+  },
+  "metadata_bindings": {
+    "build/hybrid-train050-preparation-v1/public-inputs-v1/ReMIND-050-public-inputs.json": {
+      "sha256": "588757e8df0e420b3fcae2ac24a75a5276fd33e1722a49c681836938d16dda1d",
+      "bytes": 19178
+    },
+    "build/hybrid-train050-preparation-v1/root-visual-review.json": {
+      "sha256": "bbc15185fa35157a8cd5da6e97d19b6024f0a1f4e659f795c7979670e96b7ec4",
+      "bytes": 2252
+    },
+    "build/hybrid-train050-independent-v1/public-manifest-review.json": {
+      "sha256": "cc18eefefbc6e63912d8276f063c1cc05c2923ca7474f9e96b0a42a6af66dade",
+      "bytes": 2526
+    },
+    "artifacts/hybrid-proposal-balanced-v2/result.json": {
+      "sha256": "360253e27ce3992facec4938e018bc02707248c1efad1b6cd318ed7ecd5ed4ca",
+      "bytes": 83257
+    },
+    "artifacts/hybrid-proposal-balanced-v2/parent-receipt.json": {
+      "sha256": "4b275debe63c4dd75bcec7fb2485265a1b9637c808f4a1e741885bfe00e246bf",
+      "bytes": 1540
+    },
+    "artifacts/hybrid-proposal-balanced-v2/root-release.json": {
+      "sha256": "e81ab753baecc359fe6c067278308836d8cbd18804c8fbe2c6a955a6d2e0cb8c",
+      "bytes": 8532
+    }
+  },
+  "reviewed_opt_in_contract": [
+    "Original fixed-four TRAIN/SELECT constants and all54 original admission guards preserved.",
+    "Optional reusable record binds original TRAIN person outside fixed ridge fitted cohort002/015/018/045; actual runner entry remains050.",
+    "Exact manifest and limited intended-use record hashes checked before array loading; subject/group/role joined against original cohort bytes.",
+    "Partial Ds is preserved; full T and source positive/domain hashes retained; simulated S union T and Ds union T remain declared assumptions.",
+    "Requires h24, post-exposure, public-world-search initialization, zero optimizer updates and zero neural forwards; rejects checkpoint reload and occupancy learning/inference variants.",
+    "Semantic learning protocol hash binds the entire development transfer record.",
+    "Private reference guard, reference equals public target, source/config seals, finite knownness and coverage checks are retained.",
+    "Recorded ridge lineage requires original terminal TRAIN result and immutable model hash; direct frozen loader reviewed as bounded JSON/fingerprint/data-hash path. No model parameter file opened by this reviewer."
+  ],
+  "tests": "Owner-generated controls inspected as source but not executed by this reviewer; root owns test/release coordination.",
+  "not_approved_by_this_report": [
+    "actual patient construction",
+    "model execution",
+    "planning release",
+    "clinical/anatomical validity",
+    "held-out SELECT claim"
+  ],
+  "read_boundary": {
+    "patient_arrays_opened": false,
+    "images_opened": false,
+    "original_DICOM_opened": false,
+    "model_parameters_opened": false,
+    "production_imports": false,
+    "canonical_edits": false
+  },
+  "driver_note": "Separate final driver/source closure and fresh checked pycache-prefix launch remain owned by root/source author; this report binds only the two canonical candidates and saved manifest."
+}

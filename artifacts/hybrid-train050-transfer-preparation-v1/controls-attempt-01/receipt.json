@@ -1,0 +1,35 @@
+{
+  "acquired_arrays_or_frozen_model_allowed": false,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-train050-transfer-v1/controls-attempt-01/fresh-pycache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-train050-transfer-v1/controls-attempt-01/generated_child.py",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-train050-transfer-v1/controls-attempt-01/generated-tmp"
+  ],
+  "elapsed_seconds": 3.8813252090476453,
+  "exit_code": 0,
+  "files": {
+    "build/hybrid-train050-transfer-v1/batch_contract.py": "dabe52b2cbd3362aa65b403214321bd81020e8e88145f2c3d2b812245a98097a",
+    "build/hybrid-train050-transfer-v1/freeze-runtime.py": "2eb4e00a6e22c213d5e2448169865a51e087f12fc420ee669f894d0e142abf05",
+    "build/hybrid-train050-transfer-v1/hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+    "build/hybrid-train050-transfer-v1/initial_inventory_worker.py": "685d4e948bd0f22fe851caedd2c0ed810de459a65c6994998987df27abf61449",
+    "build/hybrid-train050-transfer-v1/patient_transfer.py": "0ddeb95fb5fff7917c49e2edbd81e9a81a3d1e57c3fdfa9f3a46ec88977259b2",
+    "build/hybrid-train050-transfer-v1/prepare_source_patch.initial-draft.py": "2386d7bf24d74ba20df82881a685900e8bd4fe9f442588314a0851a6ae128da3",
+    "build/hybrid-train050-transfer-v1/run_generated_controls.py": "21decffd556daaf5ff397def577080019e2935f0a923b19990a443e38159bdbf",
+    "build/hybrid-train050-transfer-v1/run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+    "build/hybrid-train050-transfer-v1/stage/resectionlab/patient_planning_admission.py": "ff599ea5ba3d026f8342b54ea18a395c24719c57e6d860b41dfb177721247f95",
+    "build/hybrid-train050-transfer-v1/stage/resectionlab/public_patient_factory.py": "da5ec355048effd160b3f7211544cf7ace4912aac4cd21e768ce424e22f9a2aa",
+    "build/hybrid-train050-transfer-v1/tests/test_transfer_source.py": "3f9a1af3073c2d3b0f4c6eea1302c0f3aa997de1c0a70c8ef26c5f785b7d3cac"
+  },
+  "generated_only": true,
+  "hard_seconds": 30,
+  "log_sha256": "64e5565fa27fdaa544e9662902632f47dd64e894270976d8c8f52b2614d74789",
+  "observed_child_maxrss": 274989056,
+  "source_unchanged": true,
+  "threads": 1,
+  "timeout": false
+}

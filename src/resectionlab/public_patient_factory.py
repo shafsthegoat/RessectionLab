@@ -27,9 +27,15 @@ def write(path, value):
     with Path(path).open("x") as stream:
         json.dump(value, stream, indent=2, allow_nan=False); stream.write("\n")
 
-def load_public_manifest(path, expected_sha256, cohort_bytes, *, expected_role="TRAIN", partial_domain=False):
+def load_public_manifest(path, expected_sha256, cohort_bytes, *, expected_role="TRAIN", partial_domain=False, development_transfer=None):
     if type(partial_domain) is not bool or (partial_domain and expected_role not in ("TRAIN", "SELECT")):
         raise ValueError("Partial source domain requires an explicit frozen TRAIN or SELECT role")
+    if development_transfer is not None:
+        from resectionlab.patient_planning_admission import validate_development_transfer
+        development_transfer = validate_development_transfer(development_transfer)
+        if (expected_role != "TRAIN" or not partial_domain
+                or development_transfer["public_manifest_sha256"] != expected_sha256):
+            raise ValueError("TRAIN development transfer requires exact partial-domain manifest")
     raw = Path(path).read_bytes()
     if hashlib.sha256(raw).hexdigest() != expected_sha256:
         raise ValueError("Public manifest changed")
@@ -40,6 +46,12 @@ def load_public_manifest(path, expected_sha256, cohort_bytes, *, expected_role="
     members = [m for m in json.loads(cohort_bytes)["members"] if m["subject"] == subject]
     subjects = ((PARTIAL_DOMAIN_TRAIN_SUBJECTS if expected_role == "TRAIN" else ("ReMIND-013",)) if partial_domain else
         {"TRAIN": TRAIN_SUBJECTS, "SELECT": SELECT_SUBJECTS}.get(expected_role, ()))
+    if development_transfer is not None:
+        subjects = (development_transfer["subject"],)
+        if (manifest.get("schema") != "remind-fixed-TRAIN-partial-domain-public-inputs-v1"
+                or manifest.get("source_bindings", {}).get("intended_use_review_sha256")
+                    != development_transfer["intended_use_review_sha256"]):
+            raise ValueError("TRAIN development intended-use evidence must be explicitly bound")
     keys = PARTIAL_DOMAIN_ARRAY_KEYS if partial_domain else ARRAY_KEYS
     if (subject not in subjects or len(members) != 1 or members[0]["role"] != expected_role
             or manifest["role"] != expected_role or manifest["patient_group"] != members[0]["patient_group"]
@@ -84,7 +96,7 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         learning_protocol_hash=None, proposal_config=None, public_target_context_variant=None,
         expected_role="TRAIN", checkpoint_lineage=None, occupancy_condition="raw_cerebrum_baseline",
         occupancy_learning_protocol=None, occupancy_inference_protocol=None, post_exposure_condition=None,
-        partial_domain_inputs=False):
+        partial_domain_inputs=False, development_transfer=None):
     """Build one public source and admission inputs; caller owns supervised use.
 
     expected_protocol may be None for a first construction; then a learning
@@ -130,6 +142,13 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
             or type(limits.get("max_policy_forwards")) is not int or limits["max_policy_forwards"] != 0
             or public_target_context_variant is None):
         raise ValueError("Derived occupancy is TRAIN search-only with zero model and optimizer budgets and the public target/domain context")
+    if development_transfer is not None:
+        from resectionlab.patient_planning_admission import validate_development_transfer
+        development_transfer = validate_development_transfer(development_transfer)
+        if (expected_role != "TRAIN" or not partial_inputs or post_exposure_condition is None
+                or occupancy_learning or occupancy_inference or checkpoint_lineage is not None
+                or type(limits.get("max_steps")) is not int or limits["max_steps"] != 24):
+            raise ValueError("TRAIN development transfer is a separate zero-update post-exposure source option")
     if expected_protocol is not None:
         if learning_protocol_hash is not None and learning_protocol_hash != expected_protocol["learning_protocol_hash"]:
             raise ValueError("Conflicting learning protocol hashes")
@@ -175,7 +194,7 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         raise ValueError("Only frozen TRAIN or SELECT public construction is supported")
     progress("before_public_array_loading")
     manifest = load_public_manifest(public_manifest_path, public_manifest_sha256, cohort_bytes,
-        expected_role=expected_role, partial_domain=partial_inputs)
+        expected_role=expected_role, partial_domain=partial_inputs, development_transfer=development_transfer)
     subject = manifest["patient_id"]
     if occupancy_inference:
         from resectionlab.patient_planning_admission import UNION_SELECT_SUBJECT
@@ -262,6 +281,7 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
         target_derivation=("unchanged supplied manual whole-tumor region; partial supported progress only; outside region not normal-anatomy truth"
             if subject == "ReMIND-008" else "unchanged supplied NN-derived manual whole-tumor region on declared planning grid; partial supported progress only; source losses retained in public manifest"),
         crop_shape=(64,64,64), support_provenance={"public_manifest_sha256": public_manifest_sha256,
+            **({"development_intended_use_review_sha256": development_transfer["intended_use_review_sha256"]} if development_transfer is not None else {}),
             "supplied_support_file_sha256": manifest["input_files"]["supplied_support"]["sha256"],
             "supplied_target_file_sha256": manifest["input_files"]["supplied_whole_tumor"]["sha256"],
             "target_domain_file_sha256": manifest["input_files"]["whole_tumor_domain"]["sha256"],
@@ -329,6 +349,7 @@ def prepare_public_source(output, original_release, original_release_sha256, exp
     protocol = {"version": VERSION, "scope": "patient_native_planning_experiment",
         "subject": subject, "role": expected_role, "evidence_domain": "acquired_patient",
         "public_source_binding_hash": semantic_digest(binding), "qc_receipt_hash": semantic_digest(qc),
+        **({"development_transfer": thaw_json(development_transfer)} if development_transfer is not None else {}),
         **limits, "initialization": ("public_world_search_only" if derived_occupancy and not occupancy_learning and not occupancy_inference else
             "fresh_seeded_shared_initialization" if expected_role == "TRAIN" else "frozen_TRAIN_checkpoint_reload"), "private_reference_used": False,
         "clinical_claim": False, "split_changes": False, "runtime_release_sha256": original_release_sha256,

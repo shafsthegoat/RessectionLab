@@ -1,0 +1,18 @@
+{
+  "canonical_edits": false,
+  "files": {
+    "HANDOFF.txt": "f109e0e0a3f1e56570bdc8ab40dc31f214ee2cbd9f7252f14cee42b29f5c463a",
+    "tests.patch": "285f9ebf8d33c7ebe01ff1541160c32ffd45daaf986eaaa02992dfb60225b3db",
+    "tests/test_development_transfer_source.py": "e3d80de10e25847e6d6a6e892c50c1ec0dd406364e285e11b23576e44fc84ae8"
+  },
+  "previous_files_all_unchanged": true,
+  "previous_promotion_index_sha256": "177ec8ae16d4f01c16ebbcf3e3a668dc197f5b24c434ab49a17ddf299dfdaaac",
+  "production_sources_unchanged": {
+    "patient_planning_admission.py": "ff599ea5ba3d026f8342b54ea18a395c24719c57e6d860b41dfb177721247f95",
+    "public_patient_factory.py": "da5ec355048effd160b3f7211544cf7ace4912aac4cd21e768ce424e22f9a2aa"
+  },
+  "scientific_execution": false,
+  "status": "source_only_AST_passed_tests_unrun",
+  "target": "tests/test_development_transfer_source.py",
+  "version": "development-transfer-portable-test-successor-v1"
+}
