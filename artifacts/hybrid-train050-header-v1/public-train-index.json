@@ -1,0 +1,32 @@
+{
+  "schema": "remind-public-TRAIN-050-header-index-v1",
+  "status": "header_preparation_only",
+  "subjects": [
+    "ReMIND-050"
+  ],
+  "planned_denominator": 1,
+  "cases": [
+    {
+      "patient_id": "ReMIND-050",
+      "patient_group": "ReMIND:050",
+      "role": "TRAIN",
+      "case": {
+        "path": "build/hybrid-train050-preparation-v1/bindings/ReMIND-050-case.json",
+        "bytes": 92472,
+        "sha256": "2434d015999724e7692b3dedcacf2fc0b231a1e0ebe1b1a4c50c7ad6eed0e670"
+      },
+      "source_binding": {
+        "path": "build/hybrid-train050-preparation-v1/bindings/ReMIND-050-source-binding.json",
+        "bytes": 99596,
+        "sha256": "7badecaa5e0ed17dab18120c38f83ca084cd8730af9a6893bd8e55ea44e1f94f"
+      },
+      "objects": 194,
+      "bytes": 27142222,
+      "public_input_manifest": null,
+      "training_admitted": false
+    }
+  ],
+  "old_roles_and_pilots_unchanged": true,
+  "negative_retained_without_replacement": true,
+  "crop_released": false
+}

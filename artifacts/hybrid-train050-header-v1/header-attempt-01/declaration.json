@@ -1,0 +1,30 @@
+{
+  "caps": {
+    "automatic_retry": false,
+    "log_bytes_per_phase": 1048576,
+    "output_bytes_per_case": 4194304,
+    "sampled_rss_bytes": 1610612736,
+    "seconds_per_case": 60,
+    "threads": 1,
+    "total_seconds": 60
+  },
+  "header_only": true,
+  "parent_sha256": "ecce58401e9a2ba73f4720a5b388c594c87cbb32cfaacde445fd8531b43838bd",
+  "pixel_decode_calls_allowed": 0,
+  "policy_or_training": false,
+  "public_index": {
+    "bytes": 981,
+    "path": "build/hybrid-train050-preparation-v1/public-train-index.json",
+    "sha256": "d1ed2f140d2e82f2dbc3317f4b02701ae9cf003a16437412c7db84e566f2507d"
+  },
+  "public_only": true,
+  "release_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-train050-preparation-v1/released.json",
+  "release_sha256": "c6b601df9b9674ee3944ed7e701a42e001dd138c2db23041ac316aee43ae32e4",
+  "runtime": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/bin/python",
+  "scope": "source qualification only; source-artifact/intended-use review remains separate",
+  "source_index": {
+    "bytes": 5534,
+    "path": "build/hybrid-train050-preparation-v1/source-index.json",
+    "sha256": "46523b9bc41d5610b52492e9951c2a3b5bbe4226ebb3352c84fa7a3f29123cc7"
+  }
+}

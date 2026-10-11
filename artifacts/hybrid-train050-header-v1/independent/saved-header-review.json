@@ -1,0 +1,114 @@
+{
+  "status": "PASS_SAVED_TRAIN050_HEADER_SOURCE_BINDINGS_ONLY",
+  "header": {
+    "path": "build/hybrid-train050-preparation-v1/header-attempt-01/ReMIND-050-headers/result.json",
+    "bytes": 264784,
+    "sha256": "9a9f91bc38173df42e765b8bb886290d22b1aaea48970449a4f0f914a9c1b9ba"
+  },
+  "receipt": {
+    "path": "build/hybrid-train050-preparation-v1/header-attempt-01/receipt.json",
+    "bytes": 2532,
+    "sha256": "8a80c471666b60487ef63c16c5a5ae7ca65cac6ecd0aec759beabead38cf0b43"
+  },
+  "release": {
+    "path": "build/hybrid-train050-preparation-v1/released.json",
+    "bytes": 891,
+    "sha256": "c6b601df9b9674ee3944ed7e701a42e001dd138c2db23041ac316aee43ae32e4"
+  },
+  "source_index": {
+    "path": "build/hybrid-train050-preparation-v1/source-index.json",
+    "bytes": 5534,
+    "sha256": "46523b9bc41d5610b52492e9951c2a3b5bbe4226ebb3352c84fa7a3f29123cc7"
+  },
+  "case": {
+    "path": "build/hybrid-train050-preparation-v1/bindings/ReMIND-050-case.json",
+    "bytes": 92472,
+    "sha256": "2434d015999724e7692b3dedcacf2fc0b231a1e0ebe1b1a4c50c7ad6eed0e670"
+  },
+  "objects": 194,
+  "source_bytes": 27142222,
+  "decode_calls": 0,
+  "supervised_seconds": 0.9949746250640601,
+  "worker_seconds": 0.6899234580341727,
+  "sampled_peak_rss_bytes": 140967936,
+  "worker_self_peak_rss_bytes": 142016512,
+  "reported_shapes": {
+    "structural_t1ce": [
+      216,
+      256,
+      192
+    ],
+    "whole_tumor": [
+      49,
+      73,
+      35
+    ],
+    "cerebrum": [
+      320,
+      401,
+      336
+    ]
+  },
+  "reported_common_frame_uid": "1.3.6.1.4.1.14519.5.2.1.142570635122477893723505465076034098142",
+  "correspondence": "shared_frame_plus_source_description; no explicit source SOP references",
+  "tumor_ancestry": {
+    "algorithm_name": null,
+    "algorithm_type": "MANUAL",
+    "coded_semantics": [
+      {
+        "CodeMeaning": "Morphologically Altered Structure",
+        "CodeValue": "49755003",
+        "CodingSchemeDesignator": "SCT",
+        "sequence": "SegmentedPropertyCategoryCodeSequence"
+      },
+      {
+        "CodeMeaning": "Glioma",
+        "CodeValue": "115240006",
+        "CodingSchemeDesignator": "SCT",
+        "sequence": "SegmentedPropertyTypeCodeSequence"
+      },
+      {
+        "CodeMeaning": "Brain",
+        "CodeValue": "12738006",
+        "CodingSchemeDesignator": "SCT",
+        "sequence": "AnatomicRegionSequence"
+      }
+    ],
+    "description": "Tumor",
+    "label": "Glioma",
+    "number": 1
+  },
+  "support_ancestry": {
+    "algorithm_name": "BrainLab",
+    "algorithm_type": "AUTOMATIC",
+    "coded_semantics": [
+      {
+        "CodeMeaning": "Anatomical Structure",
+        "CodeValue": "123037004",
+        "CodingSchemeDesignator": "SCT",
+        "sequence": "SegmentedPropertyCategoryCodeSequence"
+      },
+      {
+        "CodeMeaning": "Brain",
+        "CodeValue": "12738006",
+        "CodingSchemeDesignator": "SCT",
+        "sequence": "SegmentedPropertyTypeCodeSequence"
+      }
+    ],
+    "description": "Cerebrum",
+    "label": "Brain",
+    "number": 1
+  },
+  "reported_geometry_independently_refit": false,
+  "source_objects_match_exact_case": true,
+  "all_owned_workers_reaped": true,
+  "training_or_planning_admission": false,
+  "limitations": [
+    "No actual image/label pixels inspected; positive counts, target/support overlap, artifact status and coverage remain unknown.",
+    "Matching frame/text references are not expert anatomical alignment or direct SOP ancestry.",
+    "Saved deidentified timestamps and Preop source label do not establish annotation availability at a prospective decision time.",
+    "The automatic BrainLab label remains supplied cerebrum evidence, not validated physical occupancy.",
+    "MR/source-label grids differ. Any later conversion must retain source affines, native MRI samples, explicit source-domain masks and full target denominator; no missing coverage is inferred here."
+  ],
+  "reviewer_original_header_pixel_or_array_opens": 0
+}

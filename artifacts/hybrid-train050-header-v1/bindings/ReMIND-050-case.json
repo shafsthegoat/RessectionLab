@@ -1,0 +1,1262 @@
+{
+  "patient_id": "ReMIND-050",
+  "patient_group": "ReMIND:050",
+  "role": "TRAIN",
+  "parent_bindings": {
+    "source_binding": {
+      "path": "build/hybrid-train050-preparation-v1/bindings/ReMIND-050-source-binding.json",
+      "bytes": 99596,
+      "sha256": "7badecaa5e0ed17dab18120c38f83ca084cd8730af9a6893bd8e55ea44e1f94f"
+    },
+    "cohort": {
+      "path": "manifests/experiments/remind-component-cohort-v1.json",
+      "bytes": 70925,
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+    },
+    "series_metadata": {
+      "path": "build/remind-cohort-expansion-preparation-v1/idc-remind-series-metadata.json",
+      "bytes": 954971,
+      "sha256": "8301d9890e97316c8905448c9ec78e851d43ed18b383455ae138f4b13a8023be"
+    },
+    "source_document": {
+      "path": "data/acquisition/remind-train-seg-v1/source/tcia-collection.html",
+      "bytes": 300380,
+      "sha256": "cb172ef0f1fbdc79880dd7eccd932694175ffb9a6e0d0ba8fe757e9ed87813b9"
+    },
+    "expansion_candidate": {
+      "path": "build/remind-train-public-expansion-candidate-v1/candidate.json",
+      "bytes": 47049,
+      "sha256": "d436dacfc1ed54a2061cd21bb9c309d0403fdf7b98fc637c3a66c00e546084e6"
+    },
+    "acquisition_dependencies": [
+      {
+        "path": "data/acquisition/remind-train-originals-v1/source/train-exact-object-manifest.json",
+        "bytes": 46163813,
+        "sha256": "5b1e51bb923825b96f53f789f2cf464fccb64fc2515b9b47d70c37cc693ae0f5"
+      },
+      {
+        "path": "data/acquisition/remind-train-originals-v1/completion.json",
+        "bytes": 27792379,
+        "sha256": "32e319a3aafb571019ee16da1072c834015f9fdcdb97563fca4c19418f64a61d"
+      },
+      {
+        "path": "data/acquisition/remind-train-seg-v1/source/train-exact-object-manifest.json",
+        "bytes": 194496,
+        "sha256": "87eb3b3fc1b78276f1d58ae873665d89b62e21f65244084cb77a7ee34b736525"
+      },
+      {
+        "path": "data/acquisition/remind-train-seg-v1/completion.json",
+        "bytes": 113667,
+        "sha256": "2b3a5605be4d9f8376e92dc5cdae318077153f8352a8a699d78c8a906a9abd4f"
+      }
+    ]
+  },
+  "series": [
+    {
+      "kind": "structural_t1ce",
+      "Modality": "MR",
+      "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.48569250058377138154161341910901929388",
+      "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.211357873883724125189528556249665787468",
+      "series_uuid": "080373f0-7522-4002-a511-16f30793b709",
+      "source_description": "3D_AX_T1_postcontrast",
+      "annotation_provenance": "Acquired source-described preoperative contrast-enhanced T1 MRI; timing and physical frame await header qualification.",
+      "objects": [
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/006eed2d-ab50-4c14-99f8-c692527a604c.dcm",
+          "bytes": 112810,
+          "sha256": "c274551580ab8f75dd46c456a5848f49877bfbab0bad0e1fbab95f5785c717d3",
+          "expected_md5": "bc13567440e1fd6e6f00067e36051a9e"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/00a2a7ea-873a-4f16-bab6-eff46ba3f4bd.dcm",
+          "bytes": 112810,
+          "sha256": "2d6c1a1ce2a0da8fa747add4dbd6bde752cbee574582ee648a479d7e42d89a4e",
+          "expected_md5": "d244b95cab5fb29e4145eb6b126a4619"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/00ebdfbb-1236-4fcd-97c2-e1fefe4ba9ab.dcm",
+          "bytes": 112814,
+          "sha256": "03fd6a9102d6a658204f5dad7944e55245e36c4a78155dedd9295e6bb1147edc",
+          "expected_md5": "48d862302ddc589306656466905a0f57"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/012ce872-fb3e-4187-babb-b955f600dc41.dcm",
+          "bytes": 112814,
+          "sha256": "0c27b6fb69fed053b1c5657f0090e908ecaee7de119e1d2544bea42e0a43c6da",
+          "expected_md5": "e1411a5c4b4252d479a788ec7a6694d7"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/01bde429-adac-49ec-b24d-afdfcb4429fc.dcm",
+          "bytes": 112814,
+          "sha256": "e40963d7d37282617319c5e7f77c8d99d250b794c926e80a79b2cd5fd10e12e1",
+          "expected_md5": "72de4595aff9441a2889397b610a9d88"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/02144e51-313b-439d-82dd-5ecc12f38aa6.dcm",
+          "bytes": 112806,
+          "sha256": "66b21a14b3f683c759c9034020b58f9d8bdef9b5e1fd3a1cb13c8679622c0f53",
+          "expected_md5": "98d0d8d152011995bba7f5633bed0be9"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/02be15d4-65e2-422e-ae5a-3ce9682f1de4.dcm",
+          "bytes": 112810,
+          "sha256": "80bb566a39b791a87861d46f8311b4279a16167e17124a6634f645eff111fb3c",
+          "expected_md5": "acdaab517a94530a30880fa91856d1d6"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/04476a5a-1b29-4019-aa91-7f634031ed50.dcm",
+          "bytes": 112810,
+          "sha256": "b102cd5af4521dce1376ad96be89e459e45e7da6cb2998d36c56950e37ca17ec",
+          "expected_md5": "9bd7729352d106cb3f2771b92a268a74"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/074099e3-322d-4640-bc2b-d682196b5b13.dcm",
+          "bytes": 112814,
+          "sha256": "0eabdfefe935c6404cde5668aa3e74c2e6179b0c610ad155c32b28a492f6e2fd",
+          "expected_md5": "c829e9f55819c71dab11b69238047601"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/0a286785-e2a8-412f-8c31-20bc760d2d8a.dcm",
+          "bytes": 112808,
+          "sha256": "7433f522f47974388cfc824df023a1e3d38a4eae82a5dba6945f733b9835b56c",
+          "expected_md5": "c71a339c21cd556112885949a17f477c"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/0b34dfb3-cbb5-4c87-9c7c-0b65e9e71f88.dcm",
+          "bytes": 112814,
+          "sha256": "8093b2b884ead5d27d5d73da0652b344167709b6fca680a72820d9537f3da9a6",
+          "expected_md5": "3b20b71f82d5609b6712a7c246f29d92"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/0d722b39-a299-4c5a-a7a4-4a0c32899413.dcm",
+          "bytes": 112812,
+          "sha256": "643d3706b6de260879e7eeb30c044faccb29aaf8bab4b136b807d0fbea5224c0",
+          "expected_md5": "3c31eec750fd954e075e1ae0cf2b27ef"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/0e1b0bbf-9622-4b20-baa7-0811e1831076.dcm",
+          "bytes": 112810,
+          "sha256": "a7bb2d698cb967fa199fb83ec540db6131b69ad457f3bd3d1187258fb6e9972c",
+          "expected_md5": "bea9017cbe649f35ea48d36fd46ced7c"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/100eac1b-ac4c-47c4-be3f-4d7b4ab84bc6.dcm",
+          "bytes": 112810,
+          "sha256": "638f515b2275bcc4fd5929aab4dfdfd94a1b4565773cbd235368f5141506582e",
+          "expected_md5": "138db023fa6943bb9ebf9283b637bd3a"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/10ab39d6-d861-4177-ae08-1e93fc174d0e.dcm",
+          "bytes": 112810,
+          "sha256": "c3de2ba8a94185dcf2e5e1b502ed3d3d8764a787e0d5b73daf203069c2dd50f3",
+          "expected_md5": "ac540d362ec179b6aa62362e6129f896"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/11296a9a-88a1-45eb-92db-5c3ec44ee328.dcm",
+          "bytes": 112806,
+          "sha256": "7b6ac25f49cbafd06b7c915325785dd749f0a11875812d6589176d5a44e4b9a7",
+          "expected_md5": "27f6701b8a4e65f02a6e36ff324bd7f4"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/13be2e18-fb04-4e47-b969-c418f5676bf0.dcm",
+          "bytes": 112814,
+          "sha256": "9f98a2cb09fa44b4566d3d730919dfb587eb225b0d1f6674bdc971320bf08f9c",
+          "expected_md5": "a4cee13a404bc7820668989573cad3bd"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/13f8e828-bd23-4e39-8339-1fa0aa87cc59.dcm",
+          "bytes": 112808,
+          "sha256": "b1849a97bc92cbf2ed7d44279a1981b5e96944f7483e9b2a861c458f9c0ab574",
+          "expected_md5": "5c9c59107e779429bf1a930eac8903ed"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/16752c90-55da-41eb-a919-3287bec8b14f.dcm",
+          "bytes": 112810,
+          "sha256": "375d337924adf5f60bb80ca02d9ce969963cacb3a839d33903b1433311c5807f",
+          "expected_md5": "cb789d0829f3849dc013fef0e04001d5"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/1787c815-e160-4d20-9720-18c58f982906.dcm",
+          "bytes": 112814,
+          "sha256": "67d45fc876026787373b944d31d2c318f87f687a14962263d6594c903f294833",
+          "expected_md5": "a6a3c12d32e304a35334d6d9368ecc68"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/18561577-57d0-4880-9434-2a7d32e101be.dcm",
+          "bytes": 112810,
+          "sha256": "5ed9eef10c0c151e2b5b21f54434c28076905b104372e38416171f80395bba20",
+          "expected_md5": "91a662c92b3ff1618b976e03c1d5142f"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/19b80a83-1eb3-4c30-8e29-221ea133535d.dcm",
+          "bytes": 112812,
+          "sha256": "64ef9b4ddf9931d9dfa1eaa80b443b347d30b690e7881742ca6e303cf9f13603",
+          "expected_md5": "0328bdf1790a5aa216cc612e28a0ae6b"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/1a1e2e66-5e6f-476f-8234-556aa33e3bc1.dcm",
+          "bytes": 112808,
+          "sha256": "93150d98c1591557b78b3e267bd933772d89fbdeb37d0afb92fdd69b1d6e0865",
+          "expected_md5": "93940be9655e35ae22d81de67614532f"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/1a9ece4f-0dfa-4331-9e1b-1025748c8f04.dcm",
+          "bytes": 112814,
+          "sha256": "c9febfd40fb4fc679d80fdcd28d1875dd2315036233b6f9d9423dc9c358e5431",
+          "expected_md5": "99c325ce5689c0b9614032b4985e9a5b"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/1b81ff26-21e6-4f47-89a3-62e464075c87.dcm",
+          "bytes": 112814,
+          "sha256": "8154d4a4c2f0b20edb2547678c3dfd8374c90b59ac2b4bbd4883bc7da2b35d1c",
+          "expected_md5": "4cde3f51dd995fcd56894371cd6bda83"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/1bc3be2c-fb3b-4023-bbe6-ea98b1d5be15.dcm",
+          "bytes": 112810,
+          "sha256": "2daae4ed7a329e75f2a62caf437691500871672309e2a6cbc3a3d868ac448aad",
+          "expected_md5": "5e3b45c06055db4f533093c77be3bb23"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/1c513e2d-2ea3-4608-9a59-c272a7276379.dcm",
+          "bytes": 112814,
+          "sha256": "810622166ea6ce657f2e734b923ff3e03e667e1f67fce3bd816f9173e0eb178f",
+          "expected_md5": "248fbaba03637a98831f5163ef1c8c32"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/1c51c4dd-7aac-4ea0-ba4d-96b05c97abb9.dcm",
+          "bytes": 112806,
+          "sha256": "86b45f2430df4a3f55af67140f603c80686a29ab9df11f29f3c2cb27816f37af",
+          "expected_md5": "273b525ae58b88a1cd09976ae706b410"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/1d40dea2-4adc-4540-bf40-93a2fbf6d2be.dcm",
+          "bytes": 112814,
+          "sha256": "5776dd4f17a72425d6e8711bd1091022cb0a3fb6f73f2a8d7137dff6f01b5b3e",
+          "expected_md5": "a1b8f4db7763380fc84067a7c4c8c5ee"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/1e61702f-f5d3-4304-9e69-16fd8a4e8cfa.dcm",
+          "bytes": 112814,
+          "sha256": "a0b4d0d5fa7cadcbf02c4444c43234a77c784a7762cf238e666dd4b3a9328bf4",
+          "expected_md5": "107b84d2fc3f0e7fe4b1c269d1385fbd"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/20a3c619-34f1-4f78-9d66-2152aeaa260a.dcm",
+          "bytes": 112810,
+          "sha256": "39859eec8781cfe66e77327e957d23f0b557871f2c993d77094ae7c237f5af17",
+          "expected_md5": "5355b44a09495adc0c841967db9d22f6"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/24976ea1-f4cc-42a8-ab1f-4551a99f19e1.dcm",
+          "bytes": 112810,
+          "sha256": "5b9a561410d1b5248a92c052b4a4667a65df74ba772751f09c926e7140f836f9",
+          "expected_md5": "c51dedd8c6bacca329eca2e6becbabba"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/24ada3d0-984c-47e5-a266-3b8119bb2bcb.dcm",
+          "bytes": 112806,
+          "sha256": "772c2e78a350a489f07b8c51bfc3fda8f860cd0d6b815ebeb2a0ff2725171005",
+          "expected_md5": "65c50e17d80a15fa5dffc2d8de706f14"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/24f09110-6f3a-48d1-be3f-bf2f19bdb450.dcm",
+          "bytes": 112810,
+          "sha256": "a17900a1d19a22be62167e9b2f0309968909e4270492b495db7d8ef08a3988be",
+          "expected_md5": "86914bbb25c88595354ef0b3e40cd1c9"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/2672c016-5e25-406f-bf45-5660deddc8f1.dcm",
+          "bytes": 112810,
+          "sha256": "11e30c5f22638b3b04e8c6d03baeffb6189934a5224211da0c0b595d8b0890b5",
+          "expected_md5": "86a30f6e28da236c2eb99dc7bd546093"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/28843958-a282-4906-9f5b-9cd621586be8.dcm",
+          "bytes": 112810,
+          "sha256": "308efc7b3d07bf8a41aea01d5945e637b549331afbfa9837fa0fbaa2ca3edca2",
+          "expected_md5": "19e1f5cf02349bb54e23dcc208a73659"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/2a3585a5-03d5-42ef-b84f-52bead4f14fd.dcm",
+          "bytes": 112814,
+          "sha256": "dd7cea0d21a6b04019f8288f8032892ca893844c5a7b9dc59cd889ac61df7c54",
+          "expected_md5": "1887e75f37f243169b9fcdb3a8f52ab3"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/2ab802ae-84fa-4b8a-9b98-74507cd43b7e.dcm",
+          "bytes": 112810,
+          "sha256": "f6ad1d838dd91912dd3b313c03ea7f90fa001ed907cf7f8b6c0c75acbc380f75",
+          "expected_md5": "fac9472bc80fb0f6bb692bdd1316bc28"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/2c54f0b1-6c0c-45b6-b2b0-d54f0b3ab5e1.dcm",
+          "bytes": 112814,
+          "sha256": "baa0729bd8454012fab0c12561a4c7420d7282ca45043dce1104d461e72b33f0",
+          "expected_md5": "d65305edba835b7b58707b20e6088f2a"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/2e9720d0-ec5a-475b-8d3c-1ec9b60dc3b7.dcm",
+          "bytes": 112810,
+          "sha256": "73b7619783cea1cdf2053113697d97f36208df73803771c9810b598cd5bf9e4b",
+          "expected_md5": "4731431ee2e1d6414fa5932431292e43"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/2ecb5a0d-0721-4a47-8a9b-b03582d27882.dcm",
+          "bytes": 112814,
+          "sha256": "4a5683a748195ee494bd54f45b4e1fd8918c644645db1788e24acb60dc5d7678",
+          "expected_md5": "d98e293708e1d3ef5847096ecbea76d7"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/306412bb-dd6f-4de8-b3f9-89069cebf5ef.dcm",
+          "bytes": 112810,
+          "sha256": "76b4d161471d6141ea5e430b5b018cf34512404f4273261aa942b0e137bacde1",
+          "expected_md5": "8d21395fef67d0776e70daa427760883"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/30923997-d64a-461a-8c32-3bab390287ec.dcm",
+          "bytes": 112810,
+          "sha256": "b9023cfcba02cad05ee6ad91270a386ac6a481500dab3bb6c47e9b7d3a3e34cf",
+          "expected_md5": "07b99eb2ebd87931d0355748640e52a9"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/3343a541-60b2-44a0-9e5d-622edaed7e79.dcm",
+          "bytes": 112810,
+          "sha256": "b74249af0b098d070c86f94ae904ea176c619f5e3a090f127a25436fbb8a6614",
+          "expected_md5": "2f42feac733e20a6717dfc7d5fd23afc"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/37592977-6af3-4c1e-abb7-8fdffba31e40.dcm",
+          "bytes": 112814,
+          "sha256": "0360f14274d01862182e42f17ba59a7a63a8ead0cd1872577eabf1146d99887b",
+          "expected_md5": "0a83e10ba8c813c6a8ca3b595220df5b"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/37c6fc5b-aad6-4eee-ae65-07fb8f0d774f.dcm",
+          "bytes": 112814,
+          "sha256": "895af65c736d440332a9eaebc2625262fe0bf3a245818e0b1806980bdc1dfdec",
+          "expected_md5": "aaff9beb8fdd5a4afc2c2c53c1c1f286"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/3854030a-573b-46bd-bdd7-c29e66a2c4bf.dcm",
+          "bytes": 112814,
+          "sha256": "c90ef24769cffb274c703bf7082693b61eb074828f0a14882d938c78df1f219b",
+          "expected_md5": "ed175e9938ba1f148d8f455deed5ef1f"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/386086ae-d34e-43eb-89bd-34384929f616.dcm",
+          "bytes": 112812,
+          "sha256": "4c7062485cccca107604c74885f25692c0a4a3126a29fc3879ab729500c4a1dc",
+          "expected_md5": "142011a26ed114aa6c0ad267eebb27a9"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/3a62664b-e8e9-4841-bef2-2165e1dcab69.dcm",
+          "bytes": 112806,
+          "sha256": "c9e805508894634558a0df419addef7cff5893fa317d87d58d8bc6e0c512d014",
+          "expected_md5": "9bdb49cf9f9ece09c8e32a5dd2cb3c39"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/3da51d67-cb67-4fc5-b12c-7654d558a488.dcm",
+          "bytes": 112810,
+          "sha256": "52b5fbd4f8e6ececc04875b869d3b553ca062aab351ba7fc20641715aa2636af",
+          "expected_md5": "6e5bab8cfdba09f641f915f4ca05f927"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/3f84cac9-26b3-44dd-b6c2-9ee41b96b7b0.dcm",
+          "bytes": 112810,
+          "sha256": "8e15b2d85cd037404d95603bd4ade456b1abe10aed89aab5eb3102698d38ab24",
+          "expected_md5": "3290c002cb8da27484d2b29327185c69"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/3fca5a52-873c-4e03-af97-37c0561861b1.dcm",
+          "bytes": 112814,
+          "sha256": "840a07235688f4c4c5e777eadeef7199ce63774bf30a5c4f5a31752231c3dbbc",
+          "expected_md5": "adf2e2ec5cdef31765df1b52cb1481a0"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/401b50f3-acde-4af4-a947-b62e94ad0ef4.dcm",
+          "bytes": 112814,
+          "sha256": "39c3b054f06b505511e84446619f59fbbfab259219ca6793b2591de75e2ddec7",
+          "expected_md5": "501c0ef0c5bacea024a8cbb1f947f5ce"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/412d545d-9b5c-427a-ae7c-2d344f32f9c6.dcm",
+          "bytes": 112814,
+          "sha256": "fd940635638555186fc92ee297882b77f14715749790c16243eed5afafa8cf15",
+          "expected_md5": "6c164e838a78ca158c146b55dbea9e94"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/41a4abcf-e333-4882-83ca-6f3ffabe7d30.dcm",
+          "bytes": 112810,
+          "sha256": "d11b94a8185e668640b83f1ff5a4520d65e6d6e82f14c73a5d795e6bb3b7f266",
+          "expected_md5": "74a56bc4f1ce1ee6f45d81d427354abe"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/42d9c190-839e-472d-a891-137a6ed853fc.dcm",
+          "bytes": 112810,
+          "sha256": "e8a10eb0139396c2fb0c30ff235915e34725bce1fbd78612f848827c348aec33",
+          "expected_md5": "edb75fda28cadaec985dd1e9c25c243f"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/42f7f8f4-930c-4393-ad25-d9c4e1d4204a.dcm",
+          "bytes": 112810,
+          "sha256": "dd5979a381ede846b6400aa6ad67d56ba014f70002d2ee42fe9ed38b5bd28d23",
+          "expected_md5": "e3698ce6e980d957aab3fd8bdf4f1555"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/47abb361-8945-4439-a24e-425f9330a1af.dcm",
+          "bytes": 112814,
+          "sha256": "3d39ba95ec9f2e229e66bd4b99bcda34ae73a538e4ea78c10d332e72db203139",
+          "expected_md5": "0cd4a52d103c77a7ad6b8b645081879c"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/49b8cc8b-80bc-451c-b1b3-33e1ee26a0c9.dcm",
+          "bytes": 112810,
+          "sha256": "e8865562eb27806bec335d4b95907d8c8295a132f263489bc9f2f19ba9531d73",
+          "expected_md5": "0f8a9dd9d71ba64f5afa5491f0a3ebae"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/4a32c740-af88-4eb5-9c31-f395bb207f9b.dcm",
+          "bytes": 112812,
+          "sha256": "0e14d6137420c94081c91f6e19346c085cd9568d81458d1d3add6259033d667f",
+          "expected_md5": "f605e36cf21274b8cb92b6a5af5940af"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/4d90ea6a-5bfa-47c1-9c1c-6493a9872bc1.dcm",
+          "bytes": 112812,
+          "sha256": "01e769af6d45bdd8cf37573121ee1591d8ef4f56a082162fa31d724d103e419e",
+          "expected_md5": "c3e6d90e4c400dc44e78a791a1b46c53"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/4e87d947-8a2c-4291-a2a0-cad7820e48e4.dcm",
+          "bytes": 112806,
+          "sha256": "a442fdcd2751f4774cdf7d28ae02b6d89c03956fc6c9d0836e862358de75d9ab",
+          "expected_md5": "dd15e10c7f14879d147b915a69662d51"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/4f825c1b-10a9-4696-ae78-cd6c80914dfa.dcm",
+          "bytes": 112810,
+          "sha256": "8f1d92a507f25f1903a194d8d0e6e505d88216ad4b54871ce8e8114b513cc540",
+          "expected_md5": "876989e65e6ec0aecc0cf7dde75295ec"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/51f858fa-542d-4da7-a04c-b07726fe5e41.dcm",
+          "bytes": 112814,
+          "sha256": "ee6aac01cdb04edcc0f4ef6b8d674a44e766a433feaf0f3a35ccca984e0398ba",
+          "expected_md5": "09d192aebba8baee88850fdbf7cb4e1c"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/58013513-267f-401e-8f14-071e7a8c1e62.dcm",
+          "bytes": 112802,
+          "sha256": "b6f792b98f9447e406aa30805aacefbfc5567f1cdb8ff21537e44ff4e26c2012",
+          "expected_md5": "4b8176239c09fe4ec44990bf6cbb7e65"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/581dba45-f5af-480c-9369-337437702815.dcm",
+          "bytes": 112808,
+          "sha256": "e596a86955d6828a03fd3d84790ba6ab14a635caf7f67c5e26047e7b1e23cf21",
+          "expected_md5": "70f2ce5aab8fe440ecece0478d81c21e"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/58363f76-4d8a-4412-b46c-6fc2a83f35c1.dcm",
+          "bytes": 112810,
+          "sha256": "d36c1f6d974224d515eacba301eaebc947f8b93eccb22d4aa8fdd3a9b78b4353",
+          "expected_md5": "3f003574741036ed2722c25048cd6de4"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/587a57a3-c3a2-4e23-9cea-9cdf4142061b.dcm",
+          "bytes": 112814,
+          "sha256": "c586fe2c6a9ddd4f2d644f9d3b33904051aa06d3fe161dbb7f1cd067745b6b6a",
+          "expected_md5": "d65c09beb0b4a7363e0d378d7b482128"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/5c07ad80-ee69-4677-891c-c6ba9e9582fd.dcm",
+          "bytes": 112814,
+          "sha256": "6483bf18006a437a6232f0bf8a2e89104bb31a6a8c62f1efb0653dc61a77c9b3",
+          "expected_md5": "2e5c8304725422ff80a3ae4e747182b8"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/5c7f0018-8009-46b2-ac1b-dbdf24a83a53.dcm",
+          "bytes": 112806,
+          "sha256": "5381e0aa601188159d91d626640a359d5c352523277f9df595fe3da1b74eca40",
+          "expected_md5": "c4552d9e5f9c514301ac51a058c4195b"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/5db5c7e5-d8b3-43de-b025-08be9ef40822.dcm",
+          "bytes": 112812,
+          "sha256": "1fdcae6fb37f1598fee0509cc2ae69aea4b849726a6e1450eaabb774b3f5d31f",
+          "expected_md5": "cb8ac9c3e334fc3f41be578a95d3156a"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/5e043c9b-e365-4257-a2f2-1ac65de00585.dcm",
+          "bytes": 112814,
+          "sha256": "4f602534daab5b929035bd0e8a5d5214b14299aa43838eb41affc7553a525767",
+          "expected_md5": "83060c4b5d8f056b76eea82398b581c5"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/6156935b-e65f-4365-83e3-2913b1ca6fcf.dcm",
+          "bytes": 112808,
+          "sha256": "3f103a61b88cec0464557fcb91ea104a557aa776d0a327d7a72ca2e8920fcbac",
+          "expected_md5": "4b47db7e03b431307e981d0ef2f3d4c5"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/6195f45c-b82c-460c-8a8e-1962482d857f.dcm",
+          "bytes": 112810,
+          "sha256": "048d68ef5e733aa1a42ff8125d6c7625ae14b8339e6eb0e01483eb85a8d2728f",
+          "expected_md5": "fa4779a6deb110487b1c0c7da8443338"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/622587f5-fd69-4a5c-897b-d03bb3638ee3.dcm",
+          "bytes": 112814,
+          "sha256": "c44346ceb72d316bc956095c52dc148b600256e90145ada54d6ab75714554da3",
+          "expected_md5": "52c5aaa5949059dc5868027eb280a26a"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/626400fd-3334-44bb-afd8-475dbe60d77b.dcm",
+          "bytes": 112810,
+          "sha256": "d2653bc9180b2a669c143e9d3ce6ff522b27decdcd7eec93a74e1b4aa92e6e3c",
+          "expected_md5": "bef2a82e34fa718a703ce092a34bde41"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/626e7ec2-8126-407a-b6e9-6fc4e7693763.dcm",
+          "bytes": 112810,
+          "sha256": "605a0624dadf9583a2217f730e5310110952343c90757a86196b2f5eef15fcea",
+          "expected_md5": "276be45eca7fa64acf0672fa286c1d71"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/6718f9f5-3582-4248-8b28-d7f119d0b2de.dcm",
+          "bytes": 112810,
+          "sha256": "885c2e746dfdef3752d7734d66dbfc773a38f4189ff33aaffd1068cc117b7c2c",
+          "expected_md5": "861f567786d20b5855ff96e1da0da616"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/6d2cdf43-83d0-41e1-8b49-e052ad4d7983.dcm",
+          "bytes": 112814,
+          "sha256": "4ff4de97bb6b1e3a9de1f316b1deeca3876b87a10adbb1834a804b7d621a46cf",
+          "expected_md5": "e72a9acce0f0eb54ad35615edea9ff35"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/6ea5d17d-cbc0-4508-af99-74d914e30efb.dcm",
+          "bytes": 112812,
+          "sha256": "92e0d2bebecd260661b1409b3722571c879b7dcc006588088cfd110f475719d4",
+          "expected_md5": "50629a3d826fa789fae7bf9b0755b0d9"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/6ffeeb11-e4dd-442a-b15f-23b5885d959e.dcm",
+          "bytes": 112814,
+          "sha256": "fa239ec01cfdf0cfcadf8e4c99271aa645537937fbb4f1a97b4c52284d7e8090",
+          "expected_md5": "b048c9c78714b9cfc812e628db9b9325"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/70aaa460-85da-4348-bf5b-5ee684d10caf.dcm",
+          "bytes": 112814,
+          "sha256": "e84f7bfa34cd09ffacc42960ecc9a555032afffb43127d23e4dec785c4a63850",
+          "expected_md5": "5d2d47269b262715da7dad25f056d8a9"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/722a1cd7-df54-447e-8b2d-4adb43cfb967.dcm",
+          "bytes": 112812,
+          "sha256": "742f19f1a2d4f9ab0ac27d201b4df01ed0ca3f8c8026044e91c0f26a2b6ca830",
+          "expected_md5": "870af27b985a63925ca342d0211fdaf2"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/73c45555-6a1e-4f6e-a5c9-8139c7a46a63.dcm",
+          "bytes": 112810,
+          "sha256": "39a7dccb2e0e15e5a79313670fa3cb6066243fc847fc16c368d4bdfd70402bca",
+          "expected_md5": "10df09680135e20bf2f69c04dc73259e"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/750a0228-364e-4855-881d-895a3ff2fa76.dcm",
+          "bytes": 112812,
+          "sha256": "821e73d6d7e74061eefd1809f6c9482a15f4daee62a545d705bf55c12fa2a1d0",
+          "expected_md5": "16e29d61496526c4048c6c4317871dfd"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/782e9048-17e8-48c4-ae15-5b3af60b684c.dcm",
+          "bytes": 112814,
+          "sha256": "3e1943004774588a17146eb59a81776310a6b94871c60c60d95af83bb92dad07",
+          "expected_md5": "472f3f4e8045c8d0ccb0ee45049fb8d4"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/78562668-a4a5-4e54-b9cf-71865644a54c.dcm",
+          "bytes": 112810,
+          "sha256": "82790e7f881e5e65a8793f114f40877fe6a7b1d3015fab3f1bae17835c5146f0",
+          "expected_md5": "612fc86c5cd6a547478b4d6a0554056c"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/78fd4390-7e2e-4fea-be0c-898dbc48c010.dcm",
+          "bytes": 112810,
+          "sha256": "b43689fd9be2bdf9d3781a81017bd06fd35a21d02f55b2f3714a4e1879f61f08",
+          "expected_md5": "95a864f7ce7c22c4090ee1ab65b87bb7"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/79c5b8d7-4172-47fe-81ed-08fc219f8fcf.dcm",
+          "bytes": 112810,
+          "sha256": "687f647da9c16d0f14bdcc7d30e5bd18a1c5ca9b68f54636538ee419374adc43",
+          "expected_md5": "188e41f0fbd6f464c9bd83ed45f9d003"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/7a2a1cd0-14fd-4973-b604-235b2ce2c727.dcm",
+          "bytes": 112808,
+          "sha256": "285f92868c0284ea28d85c0b53bc6af27b763f56b2914c9d0c7b00394e1bc52a",
+          "expected_md5": "e8f89ce4f18c13c8cac43c992b686a8a"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/7a751ab5-b11c-4c06-b11e-f3a433b010cc.dcm",
+          "bytes": 112810,
+          "sha256": "b021ea0bc4d0449d20e7f33108ef5bcfb4a5fb53a4b208eca3715117d0e44129",
+          "expected_md5": "9af2a8b93be96febb4a0be9b5425380c"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/7b6da339-e7cb-4b44-83e6-7054d119d209.dcm",
+          "bytes": 112810,
+          "sha256": "f0a0f07b37928a23ce9e9f2c08cc80a25500cb6dc152d458b5726819644b17ec",
+          "expected_md5": "5b6be30829156d709887ea109095e776"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/7e2d6833-f84e-4e33-a241-eb0c772d41bb.dcm",
+          "bytes": 112810,
+          "sha256": "dbe6545f5339495b5936fb695c84b4d668feb8a56fa40f56dcd9ebfc7baa72f4",
+          "expected_md5": "bd27e1528b90300d2cf9402b248f9df3"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/7f204400-47d2-41ad-9bb3-70e2f50974e5.dcm",
+          "bytes": 112812,
+          "sha256": "bf0752000b342c5248185461a446a91a5abca1da91e7587e2d161b87f4a38ab2",
+          "expected_md5": "89b8430a11187f22842449ccff22e96e"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/82117521-24b2-433d-9a98-d7df9b1e00cb.dcm",
+          "bytes": 112810,
+          "sha256": "0a22ec3f75053e8d3cf12b514ae6313c458224464ad19dd363c535ef08895fe1",
+          "expected_md5": "5687c8b1280314f168a75689371ed53b"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/83ae30c3-7707-4bee-9fbb-ebadec0cc2f9.dcm",
+          "bytes": 112808,
+          "sha256": "2a7269ec3117a920fff98d2de70d1eeb82b4d285047f14fad8f91c64ddcf8365",
+          "expected_md5": "e80f21b6d2a385979b9401e49820389d"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/841baee4-2db7-4005-b1b1-de018ab10f99.dcm",
+          "bytes": 112810,
+          "sha256": "19323ec070fcdb44261805bfcb0eb44f0c6a44bf8ffa1305219c65bfb83d9996",
+          "expected_md5": "3a4e87a51fb80e3ac191bbe5be1b9ebf"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/872aea58-ca4d-4701-8381-a49803df1756.dcm",
+          "bytes": 112806,
+          "sha256": "c68fad27be9bdba2a7c73c04e304a6d6d1c0b1458004a65648eaf1ddb4b2a8ad",
+          "expected_md5": "22ef6c65f072538806a6b2f68ad8389f"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/87b64a70-a91b-4e08-8cdc-003bb8027f23.dcm",
+          "bytes": 112806,
+          "sha256": "a6863faa0eeb2c573871733c8d62965e0d87d49630eca5efaa422ccf827f11f2",
+          "expected_md5": "5b5cd312422528c8aa44e5ce78920a35"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/883a91a7-bddc-4501-af3c-b334be0105d2.dcm",
+          "bytes": 112808,
+          "sha256": "0bc87663b18a924921453d76ad03fba23da2e014071c640d71ac427d28b00bf6",
+          "expected_md5": "0d16ef0a0a8efac418f4fc43c6103c40"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/89f99a12-cc99-43ed-964c-bf6a88414b65.dcm",
+          "bytes": 112806,
+          "sha256": "5e397573ca82ae40421b53d75fe8eb2e621efb0289692b8c41d626b395435554",
+          "expected_md5": "ff13d9bb74bd28e67fb818ed303544e2"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/8a0123e4-623e-4988-9558-6b0bf7d43eca.dcm",
+          "bytes": 112810,
+          "sha256": "8aaa2013ebe52fe6232295349c12ea111ea672b57622c0cbaff9cff2f1ea5d84",
+          "expected_md5": "7da9c898a41cfb61524defe016863a1e"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/8bc33301-3a5d-460a-97c2-3db3f1fcdb02.dcm",
+          "bytes": 112810,
+          "sha256": "0379b0490dfc28198035108b77b550ac0b350fb79ed123b044c5107ae43177a5",
+          "expected_md5": "9a756d639292d6492f35fafda014a042"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/909e23ce-ab8e-4e70-b69f-bf4614580d14.dcm",
+          "bytes": 112808,
+          "sha256": "b6a2b92c91ead19e2fa55456dae8a8fafe987deb60a3a6603c916102129ee95c",
+          "expected_md5": "20fba66fc2a79fe0daf299f32c38e873"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/922ae314-8ba2-45ff-8de5-b9d089d6ed3a.dcm",
+          "bytes": 112810,
+          "sha256": "093ea7967f5482b2466c6db4b917f587063a2c924798263da1e789c098f518c6",
+          "expected_md5": "484dd1f2ecc0f7e9cf13c518c5a65e4d"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/93b5bf00-9bf3-4746-9b4d-78866d98fa91.dcm",
+          "bytes": 112814,
+          "sha256": "20572cb65ef05fa3ade0fe8b2d9dc539f6ff1dfa3982e2089b3efde5099a8db5",
+          "expected_md5": "2decfe3aa275448a227561c12cefbe02"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/94818e96-56e2-46f8-91ea-26029de82ff9.dcm",
+          "bytes": 112806,
+          "sha256": "88aafcd6f00777b896bbd02ff301b1b887f08a53253fecf0d165a21b80cae011",
+          "expected_md5": "5744a39d3fc58578215b09786d5bda4e"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/969b7603-37eb-406b-8474-247d14f0c4ae.dcm",
+          "bytes": 112806,
+          "sha256": "e0400b19f2409b97f790698a394312d62bbeaee4cae2083733463585ff62dfbc",
+          "expected_md5": "f5018e56344f08f032e7d2bc9af2bc94"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/96acebef-644b-4586-b8c1-39712584d9c6.dcm",
+          "bytes": 112814,
+          "sha256": "a7c8dc71d6876f7b4fdb1239cd9b4cfe31ce841b56a6cddefbb065a7ba8855e3",
+          "expected_md5": "8bf5989461bccd6bf62a265b3db2e09d"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/97cd3afe-1592-4fce-9fb1-51e98c8134bb.dcm",
+          "bytes": 112810,
+          "sha256": "94fbffabdf8d9e791ffccbbfcca02517a07d485479c1262014e8c6f4b84aaa8d",
+          "expected_md5": "b1b0930f99f0cc9744e1f3c49cdfcc1a"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/97ec0e53-87e5-45f1-b679-eb05284e1846.dcm",
+          "bytes": 112808,
+          "sha256": "c84437d6774e9800599d70c1245c2e2baee8546e069994ce914c0a69843cb9f9",
+          "expected_md5": "98a832941be091169f479e8701f527ca"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/990d724f-1cec-4730-a587-5f976455f8c7.dcm",
+          "bytes": 112812,
+          "sha256": "3ed2d7e29aafadca3bc33921510868550e46b94525a493afcce3ead4826e4364",
+          "expected_md5": "d212d20ffd6a9deb47b44fed583ea9fb"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/9a5c8449-7406-4cb3-9412-f30cb8205ec8.dcm",
+          "bytes": 112810,
+          "sha256": "ce479be6882acb7abe26e95aabe752708b3583282f44ab6097dd35c8a6c8814a",
+          "expected_md5": "7555634aaa7bd8bf902aed6fa6b8c26e"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/9a62365d-6da3-4107-a9ab-e6061227ebd1.dcm",
+          "bytes": 112810,
+          "sha256": "e8060430ce7f8fc0bc8fd76448b3ff75814c1a3c66cb3ac87fb2036d1214f0e6",
+          "expected_md5": "0fa0e528cf35f565beebe454d3997a9a"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/9cbf604f-30de-401f-9c0b-09ce2dfb2195.dcm",
+          "bytes": 112810,
+          "sha256": "9d9e19eb709a70cece8ee5eb32c8d336ed029167a359c17234843c1d38f943f8",
+          "expected_md5": "7a052413f49fc881ffd7bee9b0c1144d"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/9f95bb94-35a0-4f79-b2dc-73c7c564d512.dcm",
+          "bytes": 112810,
+          "sha256": "3c582ff5752cd6035d8e9e98243a934d824994878fd82f5c2a170a78ab7e2156",
+          "expected_md5": "5c47a6b2accee9b816c82d8173e5ff21"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/a0399f73-5762-4227-b8d0-11079bf6a481.dcm",
+          "bytes": 112806,
+          "sha256": "985496b9ab5f2802196bea7adf93728cd90924bad8d53e00d5f2d1559946ec38",
+          "expected_md5": "3392f14072ef57d0ebe15f760d275be0"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/a1a86db1-4246-4a5d-b837-6453dcbb5558.dcm",
+          "bytes": 112806,
+          "sha256": "9733fa46a807cee342cc10c31db376e04379f871ffd92081aaff562f627f6fa4",
+          "expected_md5": "a849fefddbe6785dfb2cb75cd3802131"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/a2e1ae48-9de7-46c9-a03e-a9c14ffefe04.dcm",
+          "bytes": 112806,
+          "sha256": "c4896649f1a169675406cbeaac1ffd4dabbe7cb2a3be760323fd46db4b704333",
+          "expected_md5": "2f49de0a0c84db1dd625d4b23134ae37"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/a5084b38-e382-43ad-8d74-1ac195d53ec4.dcm",
+          "bytes": 112810,
+          "sha256": "33a1075e6abac85f55ff30b4877562a45344980d2a48438e8f1699ed92fb81a2",
+          "expected_md5": "43ee2f43ca11a183fd267fe2d692e55d"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/a5433af3-e253-44e7-98f6-f3c8ee88f608.dcm",
+          "bytes": 112810,
+          "sha256": "021094f058f8fa8e386a09831204dc39b0d8a77849bcb31323c1fe01d131bf2b",
+          "expected_md5": "9acaa3c3b14aee680abd8b51a6de7e90"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/a6600b22-ca4c-4dab-bc6c-002998672c4d.dcm",
+          "bytes": 112814,
+          "sha256": "b82dc9fcc17e9c2669a13f32b66da06932b4bde322a40585ee51716471c51e8b",
+          "expected_md5": "af38d92572f97cd3c807655b473e7a4b"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/a8911b54-014c-4669-8136-0962303cc42f.dcm",
+          "bytes": 112814,
+          "sha256": "20f710d6e252fd2f3df00e9447ca1881a9702fb95c1e4ae6b72d429d31094abc",
+          "expected_md5": "a70a3c2bb411b5c1fafddb78ccd1f31f"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/adf19ed1-c78c-433c-baad-dd2fefdd81eb.dcm",
+          "bytes": 112812,
+          "sha256": "ddb57484a3e389c8ce12137a307a2512a735d217ded7b44a896749f64ad4e0f9",
+          "expected_md5": "8663630924ec2e8acd5ce13779966802"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/ae5a7efe-afa3-4578-9945-bcd9a6776863.dcm",
+          "bytes": 112812,
+          "sha256": "807ad966bc2a74bbee5ff91fba2bb92e5b230216fdbdc2a98c99b1b9d1d9070f",
+          "expected_md5": "26160b3d22145afae17bcdcf0dd60ec2"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/ae5bfe02-6883-4627-91d8-e087ed625a8b.dcm",
+          "bytes": 112808,
+          "sha256": "417e6ea9117a3d6350b3c22b622ae8bfb5e85a882955de9272ebefc789cc01a2",
+          "expected_md5": "6782041415b48e9102c996fc65af0c03"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/b05edcf5-9c56-428e-9c5c-5df143035049.dcm",
+          "bytes": 112814,
+          "sha256": "f1f5305ae8d619a80e2c6c4575c14506eac6c0eab45f6b195ce825bf41484996",
+          "expected_md5": "6b27fa064a30616cfbc5c8307c4dfbe9"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/b3b6a342-d811-4855-a8ab-ec4085268030.dcm",
+          "bytes": 112810,
+          "sha256": "0ddc8201384d415abc518799494ac7a76c80cf4cd12deb68352bc4d2e1b30818",
+          "expected_md5": "937088309674bd92623b1e2e69441088"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/b42dfcee-eddf-4a73-95f6-7a54659812a4.dcm",
+          "bytes": 112810,
+          "sha256": "68ae0229681971d6ca0cf893f23e78195053042fd5b3816efd9ca7efda75fbf6",
+          "expected_md5": "f7563502bbbf1593d18291dc2398d4b2"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/b614a27d-cdbc-41f4-b8f2-2482bd73111e.dcm",
+          "bytes": 112810,
+          "sha256": "43f7e351faeffb3c3513f241d4f844011ee6fb89bc41012d95bfe4bc543802aa",
+          "expected_md5": "1b10ac7c8bb737f549d66f62d1c02328"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/b6a54197-b171-4175-ac77-9534ca0f5ce7.dcm",
+          "bytes": 112806,
+          "sha256": "66dd190ee704170b1311fc095be87f7468cfe801a0f826ab39df023e639c10e4",
+          "expected_md5": "a1a8f99be927b34c0d5e51fa5ba81950"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/b8793565-d6b9-4e00-b1c8-a49f72d87e4d.dcm",
+          "bytes": 112810,
+          "sha256": "17150c539d3a5109728619f65bc41bf67dcb6948357844306d34ac280c4fff37",
+          "expected_md5": "0fb44699d8481d73f2532851159629c1"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/b884fb63-e2a7-4935-8a19-1eb8338e37f5.dcm",
+          "bytes": 112806,
+          "sha256": "2d567d70790e64b0372e8644bb64bb1d5649c13c4ab1cc46d8181ce31772743f",
+          "expected_md5": "e854cb4f0c0610b0c4f32e501450e1f1"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/b89b2d72-1301-42d4-95d7-ab1b367fda3e.dcm",
+          "bytes": 112814,
+          "sha256": "09786d99f94056463381d8601c5fd488baded1583aa07d3ca51756ca15e5c2fa",
+          "expected_md5": "9aa6d6989f59f8cc3a5b50e3a12cdde3"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/b9d109d6-a934-409d-bac1-0865c1ec3a41.dcm",
+          "bytes": 112806,
+          "sha256": "9cdda32cf94751ee14200a8f40fba714c32f80d983b81439641b413c58f480db",
+          "expected_md5": "322ea66858d930db15b820d2dba6d261"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/c243358b-3df1-4122-9798-cae3bc716e9d.dcm",
+          "bytes": 112812,
+          "sha256": "289c7b85bc96dcf1a35d29b8a8f5863b828a2733f3f8b73b67f132d39cdd3435",
+          "expected_md5": "ab46f2b2a5acf705bbc0422ddaf3116f"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/c2f3c84a-aa1b-4d5c-a35e-edb037f45601.dcm",
+          "bytes": 112806,
+          "sha256": "f630a06a0f0cbc2fba7e97c3b7522d436685dda926231bc6c9c43a0e0d899933",
+          "expected_md5": "ba514cba411627626450991f2857fae7"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/c4323edf-2ddd-4974-8545-5fe419793526.dcm",
+          "bytes": 112814,
+          "sha256": "d1249f6b0d6e3c07672f5216859082246f5a0f216c9cf16cd7f7984b6bbc356b",
+          "expected_md5": "79514ab8eacc0f0f55f413a51af624ee"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/c49f5aa1-b0b2-4fbf-a03b-098fddbae4ae.dcm",
+          "bytes": 112810,
+          "sha256": "6a95831667830aaeeac9a254916939781418cd2890c4de5315b1eae4f707e918",
+          "expected_md5": "59e9617dd46e5499c7d6199a11509a6e"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/c4fd72a8-9a6d-4b04-a6a8-faa83e494f08.dcm",
+          "bytes": 112806,
+          "sha256": "56d34b770dd0fa3d97eb421e78e7526548ab9fe5947c7a798acfcb2c30cef52f",
+          "expected_md5": "e3e752420223c8842d9e81fa9d367307"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/c8394619-5fd6-4f2a-99ba-c4f904fa1a02.dcm",
+          "bytes": 112810,
+          "sha256": "0628dbc48d634ca9ed8fef521d7d04c8d4eb66dc2b3780fe6a28105694768d5c",
+          "expected_md5": "711a4c63f17c2bb7cf1bed2d75745be0"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/cacd4f4d-e50f-4380-9b40-669a4d5b0d68.dcm",
+          "bytes": 112814,
+          "sha256": "b1c83742fab9125aee06b694aab6d4bcb65d0fc896ede8ad867203fb92a1794f",
+          "expected_md5": "8880555b37f64fdb74af6e415919c07b"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/cb1e2582-d1d7-44c6-a1b7-225bc505da9b.dcm",
+          "bytes": 112814,
+          "sha256": "48dbd0708b2472714eab300247916aa5569848c4e222bc6b3fba97a453a2db33",
+          "expected_md5": "e396da1b6f1e614e3de08c99e2b56870"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/cb774a9d-7ee4-439a-9a92-110d037eb215.dcm",
+          "bytes": 112814,
+          "sha256": "937af11f1195d4aadb794dc3381068970737bf411317f8e62ffce39338792ddb",
+          "expected_md5": "6d854ac9acef298682505e727614d82a"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/cc3f9d2c-818d-4f23-be7c-7d60d59f6ce6.dcm",
+          "bytes": 112814,
+          "sha256": "e06525209ab84634ff75451b7677d8d19217f53e39d938c3d914fb5d3f425665",
+          "expected_md5": "51c50ffa6c744090ab6b7c5d055eeace"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/cddb54b8-3f63-45f3-9fde-9704926041f5.dcm",
+          "bytes": 112810,
+          "sha256": "b41d4c17dd9cdfbdf24d6ebd95ac9603e791d4ff544e921aa26993758cd08fd2",
+          "expected_md5": "affd351fb5bd29a98af3f22251688602"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/ce59506d-3f3e-4650-9774-2614c9bea4a8.dcm",
+          "bytes": 112814,
+          "sha256": "baea2dd91708eb923ef8f8e07c1295e9faaee7c4d6a021e38e8b03980b568cff",
+          "expected_md5": "efd129bf24c3689d5f58b9111fb4029d"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/cec1d8e7-1ec8-49fd-8a1f-0bb65562103e.dcm",
+          "bytes": 112810,
+          "sha256": "b2287f2c3b902204c5f288ed0a852865945413aded80f09236cc8eac33a364b1",
+          "expected_md5": "4fc5d68d39eaa9e1a53a3e85d0c4687b"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/d0dc1ddd-03e4-4666-9ec3-541ed64208b2.dcm",
+          "bytes": 112810,
+          "sha256": "d9b9c6229812b2bf12498caa34b5e8cc275cceb1f2684ad9350180b7d512c4af",
+          "expected_md5": "fb6f0b7e0a4d30eb9fd72b28ba685301"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/d15baf70-cb52-40f7-ae38-10f0c8ea2797.dcm",
+          "bytes": 112810,
+          "sha256": "6b0c3682b9fade8b78f4a81754feac76e0ba73352d86809606c7e3ec189fcc2d",
+          "expected_md5": "2240ab6aba0f506aec4357d5057fb7d3"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/d15bca58-fb51-4d4e-84be-2316b5e406cc.dcm",
+          "bytes": 112814,
+          "sha256": "52af3da6a772c6e833e2570438f0e37d36817f54b9efc7065944f7b3aa5af720",
+          "expected_md5": "dc71e288d354ed1fff681d669cea09db"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/d1a6f3e9-fb30-4d64-901f-8a773df0259f.dcm",
+          "bytes": 112810,
+          "sha256": "e99790e18008bc3a87ba1220d052b0c5fc23b3812789f1b3c03179d55c23bc9f",
+          "expected_md5": "83919de1cb8170d2f9251ed1069bf3af"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/d3555f23-66eb-4ad0-a0d2-7771abc9cfd2.dcm",
+          "bytes": 112806,
+          "sha256": "0883316ad2c9fc192d743d8b964f09998c164ad46bac76c9c664fc69e15e4e5a",
+          "expected_md5": "a6ff4ca85b2e56a7c106cc9c7ada9d3d"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/d3a85dc1-88b0-43ae-a09b-3a5f8bf66dd2.dcm",
+          "bytes": 112814,
+          "sha256": "67e94a7708a4feb3cbcb7ea533b62ffcf116713de33bbfe5820b418fc3b4734d",
+          "expected_md5": "d8821a3a1509ae8b28a9031e9a151345"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/d42e6805-2559-47d3-918c-2a135a66880b.dcm",
+          "bytes": 112810,
+          "sha256": "0c4365b6526f043dc3d84454beb82a14eea586f679877cd5eb6fa62bbb921b05",
+          "expected_md5": "0af9a2e32afb1082eaff12438cc570f2"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/d6257b45-e48f-48d5-83d5-1ccb26745879.dcm",
+          "bytes": 112806,
+          "sha256": "bb08b45bb7ffe767171c009c2e987b141393a43f760993fa545c217d26d4d789",
+          "expected_md5": "d62205729d67e18e223d83a7a8511251"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/d6b0e2ed-5238-4e5f-adfe-fd1385130c36.dcm",
+          "bytes": 112810,
+          "sha256": "ea2777ef5e5c75a20d9279b44f1c8c0150530d8cee00b3f498c6441541ec4a21",
+          "expected_md5": "30fcf50612347f54e11dfc3b7d32fc99"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/d948eba0-0605-433c-a743-cfb2117de4bc.dcm",
+          "bytes": 112814,
+          "sha256": "8b6fb89174ff2d6c23ab814f07622e71ed3b544c484c30423d33da28661b2e2b",
+          "expected_md5": "6c51179c6269360b0d67c6aa6fc7df6d"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/d98157f2-3e4f-4210-84f9-05a599b548bb.dcm",
+          "bytes": 112810,
+          "sha256": "4754122d99234703a9033b56c6338ea24e3501ba4e2f5091c4e683b3271509ea",
+          "expected_md5": "885c15aa26a56da9acc9e83bfdbdc3af"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/dab68d1e-c312-46f9-98de-779b84f4ee1a.dcm",
+          "bytes": 112814,
+          "sha256": "0852180979303dc8d28b13dfd3126c0e6ddb08c8e2fdd5f7ad43cd4aa24c459c",
+          "expected_md5": "cd97998df0ec9dfdd5357735af81fe6b"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/dc83d1e7-c07d-4c99-8ac4-7a580ba4f834.dcm",
+          "bytes": 112814,
+          "sha256": "45527052b9e099d4f712da6dfd87e9dcddbb40ffcd97c17d25dfa6ffec184bcd",
+          "expected_md5": "7f0ae5135589ecb043eecf0fa0c7bbb3"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/df8bd428-687a-4561-8711-7580b259948c.dcm",
+          "bytes": 112810,
+          "sha256": "8b2e8d369e1b7b4fd6ee2290431019998648e90ee0860fc194a1aa5c94ace5b5",
+          "expected_md5": "293448461f7bc62dde44da9b28e44b95"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/e06451bc-b8a1-4b5e-ab83-957bcde16cf1.dcm",
+          "bytes": 112810,
+          "sha256": "f17fe0ae8b7d5e3ec3cf62bae9a1bb6ae7ba6fd69ab48f35356c2936d5f51e4a",
+          "expected_md5": "de5f14c72b2bb7d8d70a81be4beb862b"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/e5148a08-f1f0-4605-8c56-03d1fa7bbfe5.dcm",
+          "bytes": 112812,
+          "sha256": "41d636a3c2190a3ddffa44aa7c7ee085f5884dcc42ce2dbebbe7f36504064d58",
+          "expected_md5": "5957b1823428b1c5bebec85eebb79892"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/e5d3d14a-bbc4-4196-baf2-09b5ddfbe9e3.dcm",
+          "bytes": 112814,
+          "sha256": "b29bdd6a358fcad69bdc388e4a699ee421480bf1e7889794bc4f9f090e072208",
+          "expected_md5": "dd1b02ab1385e2e33b0a38f9f4971c3c"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/e5d78ea3-41e6-4a90-86e1-33e3239405f6.dcm",
+          "bytes": 112810,
+          "sha256": "39d37d374d1bf083e340f3d417611a28be39cd861cd19469f422e45008af5d0d",
+          "expected_md5": "962df33a52bfa5f9e09f6b868064d96b"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/eaaa07ce-23c7-4623-860f-19e12a92a0ec.dcm",
+          "bytes": 112814,
+          "sha256": "52c4b8c721f948b046247963bb4e47d856426bb0de6874878dc1fa6cd50ae7ae",
+          "expected_md5": "9fd93f86bf7de28bb94e7eeb9fdbe3ec"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/ec8cfae3-d4e5-4196-a01a-85f21605a060.dcm",
+          "bytes": 112810,
+          "sha256": "6a396bb4362b1c9da07378541ea8473353807345422735a203e5666a420d5f6f",
+          "expected_md5": "951f60ee2351bcdcd30da6ce4eb9594e"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/edadd719-0531-43b2-b0e3-f86d0261582b.dcm",
+          "bytes": 112810,
+          "sha256": "050708a96b0deac4d2b916473f2f926aa0449b95c49dc615de4724ef481181df",
+          "expected_md5": "da2aa4d41b54cb3d43b81bc37d22e252"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/ee489fd3-d3a8-45b0-8106-f0a8aa88593d.dcm",
+          "bytes": 112810,
+          "sha256": "fb1183b6e77998a15a7576f96b9b45d8cfcc20fe0e96424ceff4f67e50a8d13c",
+          "expected_md5": "65dbf5c292a156b52c10bc35e461ae2a"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/ee85768a-587c-458d-8383-1e197cdb2d22.dcm",
+          "bytes": 112806,
+          "sha256": "8a5b826dc4a727e639b41273d0ab8ab873ae10f38233b4d1e268746e31971c3c",
+          "expected_md5": "52014986384c98f5a2fdf1e51f8922c8"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f12eaefc-a6b5-43c5-bb56-5909347d170e.dcm",
+          "bytes": 112814,
+          "sha256": "a8cab70fd52bd5cf41d40814a31691f1f07ebb35362b48605f60a94d176f27a6",
+          "expected_md5": "00f80416c78b786c92a2bc29ba0debad"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f132b024-d789-4672-a2a3-d3bf84f9cbbc.dcm",
+          "bytes": 112806,
+          "sha256": "9f4f722ca54b899e8bb42be55444102f59b4dfd3806f5520fd263c9b9c2f0726",
+          "expected_md5": "b323811d2d3994af4a76e792435ab1fb"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f272b796-db6a-4465-9ea6-ac1948935d79.dcm",
+          "bytes": 112810,
+          "sha256": "2024f45aa3d6d4c947247c8f451c32c7d067adab9194c1ea50425cf187308b9b",
+          "expected_md5": "20310a90f01f9ac5f5464656202144df"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f277611e-c537-4245-ab6c-e097afc72f77.dcm",
+          "bytes": 112812,
+          "sha256": "b85cd4941a997c17ed097ee15c1783fa3d97ab9f813bdb7983e681d79d179c9f",
+          "expected_md5": "68a86d908b7981e3cc3fc2e6abde0579"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f385ab64-dac0-44ab-ac6e-6960bbd724f7.dcm",
+          "bytes": 112814,
+          "sha256": "af21dec0c1a91d00c90eabadcd8fe8b73f638c7a8a2547bf72109321147a66ee",
+          "expected_md5": "8910ac317418e60de4c7421b9cccd88f"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f53f9357-dd55-4ee2-91a6-0cfe00817e11.dcm",
+          "bytes": 112814,
+          "sha256": "c8eadbd1560efd83fa41e664041b6fe9f30e525c15adad13f82e4e463e80c4b1",
+          "expected_md5": "5b85579455682a188e226ddff55a1659"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f54f0d5f-ef04-4ac5-9edb-220f5adf25a1.dcm",
+          "bytes": 112806,
+          "sha256": "880603cc7d14f6f16354cb95d258325cebbb02ee18bd09c7a7a1a2d413c5dfc4",
+          "expected_md5": "3f210d8e20982aaeafce0406adf11da7"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f683c84b-67e8-46ad-9f38-6d0ccbcd5638.dcm",
+          "bytes": 112810,
+          "sha256": "64192b47a59979af98b0e662b61a52aed602db3e99e688904f488d136331a90a",
+          "expected_md5": "19528e0d99f14654c267ce83cf307dce"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f6aa7ef3-9243-4954-a365-7bbbad3d520f.dcm",
+          "bytes": 112806,
+          "sha256": "0e7402028ef87d7526b32d13f82fc61cb3275770169dea77cf6548ad3df5145c",
+          "expected_md5": "5ccd86cabfbb6c14c51cc7431724c935"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f6e6e248-de74-478f-b9ba-639d27bffa32.dcm",
+          "bytes": 112814,
+          "sha256": "cf8b1a11bab9231be42e9115507dff13d3ea999c542ce983234d9363f6c0c7e6",
+          "expected_md5": "5affc4185e05e8be4edefb5175fc545b"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f6fbdfbd-74fc-4154-bd5d-c8cbed401031.dcm",
+          "bytes": 112814,
+          "sha256": "387c7b058cbd61105a3d9a18cba7168e2c70fe6fa6b6cee341d688a7c3ce1199",
+          "expected_md5": "8c68d26846473a75d3cad3f501646a9b"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f6feb2b7-8477-4a0c-bc41-94fa67d321a1.dcm",
+          "bytes": 112814,
+          "sha256": "4876ed79c0ea3796fe831b7a2f44ac5db39b3d676c1663605a3437a7be127fa1",
+          "expected_md5": "5caeca5df46a635414990f687b1a1581"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f874cc6b-31d7-4519-89cf-bdc7771801ea.dcm",
+          "bytes": 112812,
+          "sha256": "f0082f5844cc92ae9c43d574cef11cba300b97b69c19635b9838024282b1b2de",
+          "expected_md5": "1d6722ebcadd9d4630fc2f735b09798f"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f8b3ae2e-0383-4e97-a965-7e744a28a22b.dcm",
+          "bytes": 112814,
+          "sha256": "62d2d496689885fd31379364baa4414c85e62638605aa94319a9ff1951c28be2",
+          "expected_md5": "0d10fe42afbaf467b1b30689d00eb749"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f8d065a8-a8a9-404b-a367-dcbce6830829.dcm",
+          "bytes": 112810,
+          "sha256": "ac2f047cf2dea81d6a7161217cfde0aad651b4401d48367c7ec3f3a4c31c65cf",
+          "expected_md5": "64aa9e3ac50c18348e3bc9800431d232"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/f901b03d-f235-4402-892c-98ec4c2bb74b.dcm",
+          "bytes": 112806,
+          "sha256": "badb1fa06e1328fdd595a0cbea3d56546edadf7853a24a07f556184cc889f1be",
+          "expected_md5": "4ee698ec51a77161af8e719eac16c190"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/fa8dea55-ca46-4a71-ac9f-9e1ba7030657.dcm",
+          "bytes": 112810,
+          "sha256": "858209832a20d63dce50fc6080b94594fb9f09a929a9069391dce9225be6d250",
+          "expected_md5": "cb8d2509fc6c1b46d105a4f934878fb5"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/fd62977f-94f4-4edf-96bb-e6960e73021c.dcm",
+          "bytes": 112812,
+          "sha256": "89fc18aaa987bde55a9a63d42c7797798aac37754e3d5b12753dd680cf48cd2e",
+          "expected_md5": "067d38d7e8efc396ea3909787bab0ded"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/fd98bd88-09ba-472a-95ed-6bfc33b9b2f9.dcm",
+          "bytes": 112810,
+          "sha256": "6b7048d508728759430fff02a18c33b673c5c80c8b5c329994fd350d9abc407f",
+          "expected_md5": "f88904f1ceb8bf2f37d88b3c6f39d994"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/feb4011a-c38d-43a9-be9a-d01db48b74f8.dcm",
+          "bytes": 112814,
+          "sha256": "f33b97eeb641aa52a7a58399010ffe2b70e6f2690e8dc38b0ed792c49854d9b4",
+          "expected_md5": "ebcf1753feac795b63a5c208aaba6e16"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-originals-v1/verified/ReMIND-050/080373f0-7522-4002-a511-16f30793b709/ff81d3ac-fc0c-4f55-a69d-6a5d4d967b61.dcm",
+          "bytes": 112806,
+          "sha256": "e196cd59ba97e9cf393fb402f0fcecd493893e39bb994350d6f4c23a845fc05a",
+          "expected_md5": "88797adae40e55e4d363a6e237e1c9d3"
+        }
+      ]
+    },
+    {
+      "kind": "whole_tumor",
+      "Modality": "SEG",
+      "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.202411972681991147918050168331248018699",
+      "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.211357873883724125189528556249665787468",
+      "series_uuid": "468104cb-e59b-4ded-9355-3125bad79f90",
+      "source_description": "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+      "annotation_provenance": "Source manual preoperative whole-tumor annotation, not a prescribed resection target; retain complete source positives and support mismatch.",
+      "objects": [
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-seg-v1/verified/ReMIND-050/468104cb-e59b-4ded-9355-3125bad79f90/9603c5af-235a-4661-94fe-d57fda23f822.dcm",
+          "bytes": 25602,
+          "sha256": "b4980ce43696d06015fdc0ac5d61588635a80e2e4bea8585e944ec3d631ae5e2",
+          "expected_md5": "7c97b4692735a3d39f63a6a3126f334e"
+        }
+      ]
+    },
+    {
+      "kind": "cerebrum",
+      "Modality": "SEG",
+      "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.180304106582541662198289312755820543525",
+      "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.211357873883724125189528556249665787468",
+      "series_uuid": "74529c89-23d3-41a4-b7ec-f6beb90761ec",
+      "source_description": "cerebrum seg - MR ref: 3D_AX_T1_postcontrast",
+      "annotation_provenance": "Source automatic Brainlab preoperative cerebrum, supplied estimated support rather than independent manual truth or physical occupancy. Preserve source zeros, holes and unknown outside-source domain.",
+      "objects": [
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/remind-train-seg-v1/verified/ReMIND-050/74529c89-23d3-41a4-b7ec-f6beb90761ec/fe2c8498-b5cc-444b-b15e-d927dacbc911.dcm",
+          "bytes": 5456974,
+          "sha256": "52bc57a61e8dc89a0798a0767bbf23afe83e9ad134367f44cfce8f92e7a6da5a",
+          "expected_md5": "b89eb3b0b38a210c1baa885a78193cc7"
+        }
+      ]
+    }
+  ],
+  "stage": "byte_verified_unreviewed",
+  "case_uncertainties": [
+    "Source describes Preop phase; exact timestamps, physical frames and source-SOP linkage await header qualification.",
+    "Manual whole tumor is supplied target evidence, not a prescribed resection target.",
+    "Automatic Brainlab cerebrum is supplied estimated support, not anatomical truth or physical occupancy.",
+    "Native/placed full target counts, any crop losses and all target/support conflicts must remain visible.",
+    "Cross-collection identity and pretrained exposure are unknown.",
+    "Only public three-series metadata bound here; no headers, pixels or arrays opened in this binding step."
+  ]
+}

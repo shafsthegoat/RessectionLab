@@ -1,0 +1,144 @@
+{
+  "status": "header-only source and metadata bound; no acquired headers opened",
+  "files": [
+    {
+      "path": "build/hybrid-train050-preparation-v1/prepare_bindings.py",
+      "bytes": 10792,
+      "sha256": "d10af129f79e312fda51f2ff44d32df57ec3e9c963905ca260d5dab3bf218f1b"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/run_headers_owned.py",
+      "bytes": 15146,
+      "sha256": "ecce58401e9a2ba73f4720a5b388c594c87cbb32cfaacde445fd8531b43838bd"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/test_header_scope.py",
+      "bytes": 3402,
+      "sha256": "87524443fc59c79295c7c47e43632f2cd339247c0dd16ae529ca0787f6ea5539"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/bindings/ReMIND-050-case.json",
+      "bytes": 92472,
+      "sha256": "2434d015999724e7692b3dedcacf2fc0b231a1e0ebe1b1a4c50c7ad6eed0e670"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/bindings/ReMIND-050-source-binding.json",
+      "bytes": 99596,
+      "sha256": "7badecaa5e0ed17dab18120c38f83ca084cd8730af9a6893bd8e55ea44e1f94f"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/public-train-index.json",
+      "bytes": 981,
+      "sha256": "d1ed2f140d2e82f2dbc3317f4b02701ae9cf003a16437412c7db84e566f2507d"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/reader-delta.json",
+      "bytes": 1024,
+      "sha256": "de1fbb63cd297389d15c77e2a5afffbe4778067fc8563f4b49d1a4a187447351"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/stage/src/resectionlab/remind_planning_qc.py",
+      "bytes": 48105,
+      "sha256": "b479a25ac5db212441d9838102c8e5e9d41004bd518dc943b10ad9d76143a38a"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/stage/src/resectionlab/__init__.py",
+      "bytes": 99,
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/stage/scripts/prepare_remind_planning.py",
+      "bytes": 1292,
+      "sha256": "befa1a98b4ddc26868597dab9c62f5fcde95d3af7070807df4e88a4fb8e9fe5e"
+    },
+    {
+      "path": "scripts/convert_remind_development.py",
+      "bytes": 11404,
+      "sha256": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+    },
+    {
+      "path": "build/goal-conditioned-policy-v1/run_contact_owned.py",
+      "bytes": 8730,
+      "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7"
+    },
+    {
+      "path": "build/goal-conditioned-policy-v1/darwin_fast_sampler.py",
+      "bytes": 9482,
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c"
+    },
+    {
+      "path": "src/resectionlab/legacy_transfer_supervisor.py",
+      "bytes": 10427,
+      "sha256": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
+    },
+    {
+      "path": "src/resectionlab/__init__.py",
+      "bytes": 99,
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    {
+      "path": "manifests/experiments/remind-component-cohort-v1.json",
+      "bytes": 70925,
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+    },
+    {
+      "path": "build/remind-cohort-expansion-preparation-v1/idc-remind-series-metadata.json",
+      "bytes": 954971,
+      "sha256": "8301d9890e97316c8905448c9ec78e851d43ed18b383455ae138f4b13a8023be"
+    },
+    {
+      "path": "data/acquisition/remind-train-seg-v1/source/tcia-collection.html",
+      "bytes": 300380,
+      "sha256": "cb172ef0f1fbdc79880dd7eccd932694175ffb9a6e0d0ba8fe757e9ed87813b9"
+    },
+    {
+      "path": "build/remind-train-public-expansion-candidate-v1/candidate.json",
+      "bytes": 47049,
+      "sha256": "d436dacfc1ed54a2061cd21bb9c309d0403fdf7b98fc637c3a66c00e546084e6"
+    },
+    {
+      "path": "data/acquisition/remind-train-originals-v1/source/train-exact-object-manifest.json",
+      "bytes": 46163813,
+      "sha256": "5b1e51bb923825b96f53f789f2cf464fccb64fc2515b9b47d70c37cc693ae0f5"
+    },
+    {
+      "path": "data/acquisition/remind-train-originals-v1/completion.json",
+      "bytes": 27792379,
+      "sha256": "32e319a3aafb571019ee16da1072c834015f9fdcdb97563fca4c19418f64a61d"
+    },
+    {
+      "path": "data/acquisition/remind-train-seg-v1/source/train-exact-object-manifest.json",
+      "bytes": 194496,
+      "sha256": "87eb3b3fc1b78276f1d58ae873665d89b62e21f65244084cb77a7ee34b736525"
+    },
+    {
+      "path": "data/acquisition/remind-train-seg-v1/completion.json",
+      "bytes": 113667,
+      "sha256": "2b3a5605be4d9f8376e92dc5cdae318077153f8352a8a699d78c8a906a9abd4f"
+    },
+    {
+      "path": "build/idc-acquisition-venv/bin/python",
+      "bytes": 18058560,
+      "sha256": "2498a31965647f1507a53e391842b23c29d96f0ef4550475f34a1d2b30c23ddb"
+    }
+  ],
+  "canonical_head_at_freeze": "fe857eed61ad2fc3cace011bcef523f7b43a1923",
+  "scope": "TRAIN050 exact192MR+2publicSEG; header geometry only; crop/model/planning/private closed",
+  "generated_controls": {
+    "tests": 7,
+    "passed": 7,
+    "elapsed_seconds": 0.019,
+    "log": {
+      "path": "build/hybrid-train050-preparation-v1/generated-controls.log",
+      "bytes": 105,
+      "sha256": "55c443882838af1a647fbd8c514e974fa1fc55b0f5546ea5d7e5f0d11fdd0998"
+    }
+  },
+  "runtime": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/bin/python",
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "pydicom": "3.0.1",
+    "single_thread": true
+  }
+}

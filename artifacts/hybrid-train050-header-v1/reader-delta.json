@@ -1,0 +1,24 @@
+{
+  "canonical_source": {
+    "path": "src/resectionlab/remind_planning_qc.py",
+    "bytes": 48091,
+    "sha256": "f35a28f2cdedd777e15031b5cba370c4106c0436eefe9590ca17466d8944b3ca"
+  },
+  "staged_source": {
+    "path": "build/hybrid-train050-preparation-v1/stage/src/resectionlab/remind_planning_qc.py",
+    "bytes": 48105,
+    "sha256": "b479a25ac5db212441d9838102c8e5e9d41004bd518dc943b10ad9d76143a38a"
+  },
+  "only_delta": "Add fixed TRAIN050 to public scope allowlist. Geometry/parser/roles unchanged. Header-only runner; crop-mr-domains gate and planning/admission remain closed for050.",
+  "canonical_cli": {
+    "path": "scripts/prepare_remind_planning.py",
+    "bytes": 1292,
+    "sha256": "befa1a98b4ddc26868597dab9c62f5fcde95d3af7070807df4e88a4fb8e9fe5e"
+  },
+  "staged_cli": {
+    "path": "build/hybrid-train050-preparation-v1/stage/scripts/prepare_remind_planning.py",
+    "bytes": 1292,
+    "sha256": "befa1a98b4ddc26868597dab9c62f5fcde95d3af7070807df4e88a4fb8e9fe5e"
+  },
+  "canonical_files_modified": false
+}

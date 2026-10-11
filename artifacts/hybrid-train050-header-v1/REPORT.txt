@@ -1,0 +1,17 @@
+TRAIN050 public header preparation complete; crop and planning remain closed.
+
+The metadata-selected next person is the lowest ID among 17 unused complete public triples after the predeclared 8 TRAIN cases. The frozen cohort remains TRAIN; no patient selection used image or route performance. The 38 strict-glioma metadata nonmatches remain in the existing denominator.
+
+Exact acquired scope: 192 ceT1 MR + 1 manual whole-tumor SEG + 1 automatic Brainlab cerebrum SEG; 194 files and 27,142,222 bytes. Existing MD5/SHA receipts were joined; the header reader reverified all original bytes and used stop_before_pixels. Zero pixel decodes; no arrays, crop, private ventricular series or model/planner inputs. All 194 post-run stat tuples and 24 source/metadata pins unchanged.
+
+One bounded owned attempt exited 0 with clean reap: 0.995 s parent, 140,967,936 B sampled RSS (worker peak 142,016,512 B). Seven generated scope/terminal controls passed in 0.019 s. No retries.
+
+Header findings: MR 216 × 256 × 192 (10,616,832 voxels); whole-tumor 49 × 73 × 35, MANUAL/Glioma; cerebrum 320 × 401 × 336, AUTOMATIC/BrainLab. All share one FrameOfReferenceUID, but neither SEG contains explicit source SOP references. Pairing is shared frame + source description, not independently established anatomical alignment. Deidentified timing is retained; source Preop does not prove prospective annotation availability.
+
+Same-condition five-array construction is a candidate, not yet demonstrated: use unchanged native-MRI outer crop of both public source domains, bounded affine roundoff and existing nearest-neighbor label placement; preserve image samples, raw S, full T, target domain and explicit Ds. Current source-positive coverage, NN count/volume differences, unknown fractions and overlays are unmeasured. A shared frame cannot close those gaps.
+
+Next minimal source change: append 050 only to the crop-mr-domains TRAIN gate in a separate staged copy (the executed header copy stays fixed). Generated tests must preserve legacy results, reject other new IDs/private series, verify exact header/case/cohort prerequisite and exercise unknown-domain/positive-centre retention. Then root may release one bounded crop attempt. Subsequent saved sample/hash/domain and limited overlay review are required before an exact five-array manifest. Current public_patient_factory/patient_planning_admission still restrict partial-domain TRAIN to 002/015/018/045; do not append 050 to the learning cohort or silently turn this preparation into model access. Any later frozen-ranker evaluation needs a separate explicit 050-only zero-update source admission while original roles/teachers/worlds stay fixed.
+
+No acquired anatomy, material occupancy, safe aperture or clinical validity is asserted; automatic S is an estimate and source-zero is not physical air. Unsupported output remains a retained 050 result without replacement.
+
+Independent saved-header audit PASS: build/hybrid-train050-independent-v1/saved-header-review.json SHA 307a0500dda41611894e6fad7a3577a6ab32d64c28d898f3e602ebc1cf449515. Separate crop-stage, owned two-phase parent, domain-aware saved reviewer and 21 generated controls are now staged but unexecuted. The original executed header source remains unchanged. No five-array manifest exists yet.

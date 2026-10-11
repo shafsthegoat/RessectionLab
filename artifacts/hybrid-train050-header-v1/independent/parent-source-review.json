@@ -1,0 +1,62 @@
+{
+  "status": "GO_EXACT_TRAIN050_HEADER_ONLY_SOURCE_REVIEW",
+  "parent": {
+    "path": "build/hybrid-train050-preparation-v1/run_headers_owned.py",
+    "bytes": 15146,
+    "sha256": "ecce58401e9a2ba73f4720a5b388c594c87cbb32cfaacde445fd8531b43838bd"
+  },
+  "source_index": {
+    "path": "build/hybrid-train050-preparation-v1/source-index.json",
+    "bytes": 5534,
+    "sha256": "46523b9bc41d5610b52492e9951c2a3b5bbe4226ebb3352c84fa7a3f29123cc7"
+  },
+  "prepared_release": {
+    "path": "build/hybrid-train050-preparation-v1/prepared-release.json",
+    "bytes": 892,
+    "sha256": "ceb08d1e20e27f980b38c082b236e4d51d55a563d4511dcacaf24d1cbcd2c65b"
+  },
+  "case_audit": {
+    "path": "build/hybrid-train050-independent-v1/exact-case-audit.json",
+    "bytes": 4020,
+    "sha256": "86d3e2f3f2557ae671fc37b0c5806d75451b1ba688ee024ec5d7f96f4a2e96ae"
+  },
+  "reader_review": {
+    "path": "build/hybrid-train050-independent-v1/reader-source-review.json",
+    "bytes": 1477,
+    "sha256": "8cc798c19b4ddd89200e4096385cd2e7d74e14b83384062e3b85f9b4da20d97d"
+  },
+  "all_24_index_bindings_current": true,
+  "unchanged_owned_helper_functions": [
+    "sha",
+    "need",
+    "cleanup_phase",
+    "final_log_size"
+  ],
+  "single_phase": "headers",
+  "expected_objects": 194,
+  "expected_source_bytes": 27142222,
+  "caps": {
+    "seconds_per_case": 60,
+    "total_seconds": 60,
+    "sampled_rss_bytes": 1610612736,
+    "output_bytes_per_case": 4194304,
+    "log_bytes_per_phase": 1048576,
+    "threads": 1,
+    "automatic_retry": false
+  },
+  "source_review_findings": [
+    "Preflight verifies immutable source/index/case/flat bindings, fixed TRAIN050 and exactly three public series before child dispatch.",
+    "Only execution_released may change from the frozen false release. No crop phase or automatic retry is reachable in the parent loop.",
+    "Terminal acceptance checks expected header status, exact case/reader/patient/role, zero optimizer and pixel-decode calls, no native conversion and no training admission.",
+    "Existing retained-Popen cleanup fallback and final output/log/timeout checks remain; receipts retain failure and denominator.",
+    "Reader source only extends the public-header allowlist; geometry/decoder and domain-crop gate unchanged.",
+    "Owner seven generated controls and metadata check-only logs read as saved evidence; reviewer did not rerun or import them."
+  ],
+  "parent_launch_recipe_condition": "Use -I -B and an absolute -X pycache_prefix whose absence and non-symlink status are checked immediately before launch; worker already uses fresh output/fresh-pycache. This prevents ambient helper .pyc from substituting for verified source.",
+  "limits": [
+    "RSS and output limits are sampled; wall guard excludes preparation and includes bounded cleanup overhead, not a kernel resource limit.",
+    "Interpreter/source pins and recorded versions do not claim a fully hash-closed third-party environment.",
+    "Header success is not alignment/coverage/anatomy or training admission; saved metadata findings require review."
+  ],
+  "patient_headers_arrays_or_geometry_executed_by_reviewer": false
+}

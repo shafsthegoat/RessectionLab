@@ -1,0 +1,37 @@
+{
+  "status": "PASS_HEADER_READER_MINIMAL_SCOPE_EXTENSION_ONLY",
+  "original": {
+    "path": "src/resectionlab/remind_planning_qc.py",
+    "bytes": 48091,
+    "sha256": "f35a28f2cdedd777e15031b5cba370c4106c0436eefe9590ca17466d8944b3ca"
+  },
+  "staged": {
+    "path": "build/hybrid-train050-preparation-v1/stage/src/resectionlab/remind_planning_qc.py",
+    "bytes": 48105,
+    "sha256": "b479a25ac5db212441d9838102c8e5e9d41004bd518dc943b10ad9d76143a38a"
+  },
+  "unchanged_copies": [
+    {
+      "path": "build/hybrid-train050-preparation-v1/stage/src/resectionlab/__init__.py",
+      "bytes": 99,
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/stage/scripts/prepare_remind_planning.py",
+      "bytes": 1292,
+      "sha256": "befa1a98b4ddc26868597dab9c62f5fcde95d3af7070807df4e88a4fb8e9fe5e"
+    }
+  ],
+  "changes": [
+    "PUBLIC_SUBJECTS_BY_ROLE.TRAIN appends only ReMIND-050"
+  ],
+  "all_other_AST_nodes_equal": true,
+  "public_three_series_validation_unchanged": true,
+  "immutable_cohort_and_exact_source_object_validation_unchanged": true,
+  "private_series_rejection_unchanged": true,
+  "header_decoder_geometry_and_timing_code_unchanged": true,
+  "crop_mr_domains_gate_still_excludes_050": true,
+  "factory_and_admission_unchanged": true,
+  "no_actual_header_or_pixel_execution": true,
+  "actual_owned_header_launcher_review": "pending separate frozen launcher source"
+}

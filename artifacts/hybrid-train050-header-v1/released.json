@@ -1,0 +1,24 @@
+{
+  "execution_released": true,
+  "source_index": {
+    "path": "build/hybrid-train050-preparation-v1/source-index.json",
+    "bytes": 5534,
+    "sha256": "46523b9bc41d5610b52492e9951c2a3b5bbe4226ebb3352c84fa7a3f29123cc7"
+  },
+  "public_index": {
+    "path": "build/hybrid-train050-preparation-v1/public-train-index.json",
+    "bytes": 981,
+    "sha256": "d1ed2f140d2e82f2dbc3317f4b02701ae9cf003a16437412c7db84e566f2507d"
+  },
+  "caps": {
+    "seconds_per_case": 60,
+    "total_seconds": 60,
+    "sampled_rss_bytes": 1610612736,
+    "output_bytes_per_case": 4194304,
+    "log_bytes_per_phase": 1048576,
+    "threads": 1,
+    "automatic_retry": false
+  },
+  "scope": "one exact header-only attempt,194objects27142222bytes, no decode/crop/model/planning",
+  "parent_authorization": "root fixedTRAIN050 public header preparation after exact binding; staged whitelist reviewed before execute"
+}

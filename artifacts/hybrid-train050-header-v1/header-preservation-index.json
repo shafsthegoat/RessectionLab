@@ -1,0 +1,111 @@
+{
+  "status": "completed_header_only_no_crop_or_admission",
+  "files": [
+    {
+      "path": "build/hybrid-train050-preparation-v1/REPORT.txt",
+      "bytes": 3304,
+      "sha256": "f0bffc7b5cad40823152b92aaccadf9923a51c74d753a9bb5bea29d38bcc51a2"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/header-summary.json",
+      "bytes": 11283,
+      "sha256": "b202042c12f2c8547e867ea662e02f1bd2a8eef8e8f4d33c4bcac632b0f9d74d"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/post-header-binding-check.json",
+      "bytes": 795,
+      "sha256": "4fb271360d6f92792fae3f6a4a07271af5405cc5561bea76858e6c7b038ad7dc"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/bindings/ReMIND-050-case.json",
+      "bytes": 92472,
+      "sha256": "2434d015999724e7692b3dedcacf2fc0b231a1e0ebe1b1a4c50c7ad6eed0e670"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/bindings/ReMIND-050-source-binding.json",
+      "bytes": 99596,
+      "sha256": "7badecaa5e0ed17dab18120c38f83ca084cd8730af9a6893bd8e55ea44e1f94f"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/public-train-index.json",
+      "bytes": 981,
+      "sha256": "d1ed2f140d2e82f2dbc3317f4b02701ae9cf003a16437412c7db84e566f2507d"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/reader-delta.json",
+      "bytes": 1024,
+      "sha256": "de1fbb63cd297389d15c77e2a5afffbe4778067fc8563f4b49d1a4a187447351"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/reader.patch",
+      "bytes": 659,
+      "sha256": "a419fdd35c2cce598f4a75f29175cdc3864bbf5d5bf76e54eb50a0c28bd87739"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/source-index.json",
+      "bytes": 5534,
+      "sha256": "46523b9bc41d5610b52492e9951c2a3b5bbe4226ebb3352c84fa7a3f29123cc7"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/prepared-release.json",
+      "bytes": 892,
+      "sha256": "ceb08d1e20e27f980b38c082b236e4d51d55a563d4511dcacaf24d1cbcd2c65b"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/released.json",
+      "bytes": 891,
+      "sha256": "c6b601df9b9674ee3944ed7e701a42e001dd138c2db23041ac316aee43ae32e4"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/check-only.log",
+      "bytes": 195,
+      "sha256": "0709f2be3b0d9754f257e4151a67ef192aec6ebec87eb71edc38c0b3762fb5ab"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/generated-controls.log",
+      "bytes": 105,
+      "sha256": "55c443882838af1a647fbd8c514e974fa1fc55b0f5546ea5d7e5f0d11fdd0998"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/test_header_scope.py",
+      "bytes": 3402,
+      "sha256": "87524443fc59c79295c7c47e43632f2cd339247c0dd16ae529ca0787f6ea5539"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/run_headers_owned.py",
+      "bytes": 15146,
+      "sha256": "ecce58401e9a2ba73f4720a5b388c594c87cbb32cfaacde445fd8531b43838bd"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/header-attempt-01/declaration.json",
+      "bytes": 1321,
+      "sha256": "ee4f22281bc2c027e539eefaf18bd3e8a98e44212355478eb1d5cda7ca7056c4"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/header-attempt-01/receipt.json",
+      "bytes": 2532,
+      "sha256": "8a80c471666b60487ef63c16c5a5ae7ca65cac6ecd0aec759beabead38cf0b43"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/header-attempt-01/ReMIND-050-headers-supervisor.json",
+      "bytes": 1813,
+      "sha256": "a213e75ffd76fcd5652ff03a74f5f411c35035cdda1025afca1cdabec5ce2ad1"
+    },
+    {
+      "path": "build/hybrid-train050-independent-v1/saved-header-review.json",
+      "bytes": 3944,
+      "sha256": "307a0500dda41611894e6fad7a3577a6ab32d64c28d898f3e602ebc1cf449515"
+    }
+  ],
+  "full_header_receipt_reference": {
+    "path": "build/hybrid-train050-preparation-v1/header-attempt-01/ReMIND-050-headers/result.json",
+    "bytes": 264784,
+    "sha256": "9a9f91bc38173df42e765b8bb886290d22b1aaea48970449a4f0f914a9c1b9ba"
+  },
+  "no_arrays_or_raw_payloads_in_selection": true,
+  "independent_review": {
+    "path": "build/hybrid-train050-independent-v1/saved-header-review.json",
+    "bytes": 3944,
+    "sha256": "307a0500dda41611894e6fad7a3577a6ab32d64c28d898f3e602ebc1cf449515"
+  }
+}

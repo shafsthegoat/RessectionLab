@@ -1,0 +1,16 @@
+This records header-only preparation, not anatomy or model admission.
+
+Restore the archived files beneath build/hybrid-train050-preparation-v1 using
+their original paths in header-preservation-index.json. The reader patch is
+relative to the canonical scripts/prepare_remind_planning.py and
+src/resectionlab/remind_planning_qc.py at fe857ee. Apply it in an isolated stage,
+retaining the exact source hash recorded by reader-delta.json. Source-index.json
+also binds the existing supervisor helpers and the fixed cohort/catalog records.
+Use the local acquired files only when their declared MD5/SHA256 hashes match;
+no patient payload is included in this archive. The historical release/receipt
+must never overwrite an existing attempt.
+
+The separate native-domain crop followed this header result. Its own conversion,
+coverage and intended-use records are preserved separately; a successful header
+parse alone does not establish registration, image quality, anatomy or useful
+planning.

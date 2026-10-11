@@ -1,0 +1,11 @@
+--- src/resectionlab/remind_planning_qc.py
++++ build/hybrid-train050-preparation-v1/stage/src/resectionlab/remind_planning_qc.py
+@@ -25,7 +25,7 @@
+ MAX_RSS = 2*1024**3
+ MAX_CORNER_MM = .001
+ PUBLIC_SERIES_KINDS = frozenset(("structural_t1ce", "whole_tumor", "cerebrum"))
+-PUBLIC_SUBJECTS_BY_ROLE = {"TRAIN": ("ReMIND-002", "ReMIND-008", "ReMIND-010", "ReMIND-015", "ReMIND-018", "ReMIND-020", "ReMIND-025", "ReMIND-045"),
++PUBLIC_SUBJECTS_BY_ROLE = {"TRAIN": ("ReMIND-002", "ReMIND-008", "ReMIND-010", "ReMIND-015", "ReMIND-018", "ReMIND-020", "ReMIND-025", "ReMIND-045", "ReMIND-050"),
+                            "SELECT": ("ReMIND-013", "ReMIND-037")}
+ 
+ 

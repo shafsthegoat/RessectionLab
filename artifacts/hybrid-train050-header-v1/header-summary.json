@@ -1,0 +1,398 @@
+{
+  "status": "headers_verified_preparation_not_admitted",
+  "patient_id": "ReMIND-050",
+  "role": "TRAIN",
+  "selection_fixed_before_headers": true,
+  "objects": 194,
+  "bytes": 27142222,
+  "pixel_decode_calls": 0,
+  "native_conversion_performed": false,
+  "series": [
+    {
+      "kind": "structural_t1ce",
+      "object_count": 192,
+      "shape_xyz": [
+        216,
+        256,
+        192
+      ],
+      "frame_matches_MRI": true,
+      "slice_position_max_residual_mm": 0.0005138861122251118,
+      "affine_xyz_to_ras_mm": [
+        [
+          0.8997315308679656,
+          0.3726591956573398,
+          -0.07443026790074066,
+          -71.33324326964592
+        ],
+        [
+          0.35035647862789543,
+          -0.8869287489457128,
+          -0.21548534184005635,
+          172.160907437392
+        ],
+        [
+          -0.14631739672582034,
+          0.167801765003433,
+          -0.973666337365719,
+          81.50845697884283
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "ancestry": null,
+      "alignment": null,
+      "distinct_timing_header_values": {
+        "AcquisitionDate": [
+          "null"
+        ],
+        "AcquisitionDateTime": [
+          "null"
+        ],
+        "AcquisitionTime": [
+          "null"
+        ],
+        "ContentDate": [
+          "\"20070308\""
+        ],
+        "ContentTime": [
+          "\"171616\""
+        ],
+        "SeriesDate": [
+          "\"20070308\""
+        ],
+        "SeriesDescription": [
+          "\"3D_AX_T1_postcontrast\""
+        ],
+        "SeriesTime": [
+          "\"171616\""
+        ],
+        "StudyDate": [
+          "\"19821225\""
+        ],
+        "StudyDescription": [
+          "\"Preop\""
+        ],
+        "StudyTime": [
+          "\"171616\""
+        ]
+      }
+    },
+    {
+      "kind": "whole_tumor",
+      "object_count": 1,
+      "shape_xyz": [
+        49,
+        73,
+        35
+      ],
+      "frame_matches_MRI": true,
+      "slice_position_max_residual_mm": 5.024801070124989e-06,
+      "affine_xyz_to_ras_mm": [
+        [
+          0.899731240234375,
+          0.37265907526966036,
+          -0.0744302556022416,
+          66.18539414809527
+        ],
+        [
+          0.3503560439453125,
+          -0.8869285556652248,
+          -0.21548537815126134,
+          119.42392774285719
+        ],
+        [
+          -0.14631690234375,
+          0.167801862886034,
+          -0.9736663757983197,
+          -13.874837785714284
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "ancestry": [
+        {
+          "algorithm_name": null,
+          "algorithm_type": "MANUAL",
+          "coded_semantics": [
+            {
+              "CodeMeaning": "Morphologically Altered Structure",
+              "CodeValue": "49755003",
+              "CodingSchemeDesignator": "SCT",
+              "sequence": "SegmentedPropertyCategoryCodeSequence"
+            },
+            {
+              "CodeMeaning": "Glioma",
+              "CodeValue": "115240006",
+              "CodingSchemeDesignator": "SCT",
+              "sequence": "SegmentedPropertyTypeCodeSequence"
+            },
+            {
+              "CodeMeaning": "Brain",
+              "CodeValue": "12738006",
+              "CodingSchemeDesignator": "SCT",
+              "sequence": "AnatomicRegionSequence"
+            }
+          ],
+          "description": "Tumor",
+          "label": "Glioma",
+          "number": 1
+        }
+      ],
+      "alignment": {
+        "MR_index_to_SEG_index": [
+          [
+            1.0000005097361149,
+            5.758931470589701e-08,
+            -4.1595254740567356e-09,
+            -124.99999519343109
+          ],
+          [
+            -3.7767956068135433e-07,
+            1.000000209573247,
+            -3.1813296663685264e-08,
+            -86.00000149645422
+          ],
+          [
+            3.660635059243855e-07,
+            1.2799362819615467e-07,
+            0.9999999556703165,
+            -94.00000391215659
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "all_explicit_refs_in_selected_MR": false,
+        "correspondence": "shared_frame_plus_source_description",
+        "expert_alignment_review": false,
+        "explicit_SOP_refs_present": false,
+        "frame_uid_matches": true,
+        "identity_cross_frame_assumed": false,
+        "registration_performed": false,
+        "source_description": "tumor seg - MR ref: 3D_AX_T1_postcontrast",
+        "unmatched_explicit_SOP_refs": []
+      },
+      "distinct_timing_header_values": {
+        "AcquisitionDate": [
+          "null"
+        ],
+        "AcquisitionDateTime": [
+          "null"
+        ],
+        "AcquisitionTime": [
+          "null"
+        ],
+        "ContentDate": [
+          "\"20070308\""
+        ],
+        "ContentTime": [
+          "\"173501\""
+        ],
+        "SeriesDate": [
+          "\"20070308\""
+        ],
+        "SeriesDescription": [
+          "\"tumor seg - MR ref: 3D_AX_T1_postcontrast\""
+        ],
+        "SeriesTime": [
+          "\"173501\""
+        ],
+        "StudyDate": [
+          "\"19821225\""
+        ],
+        "StudyDescription": [
+          "\"Preop\""
+        ],
+        "StudyTime": [
+          "\"171616\""
+        ]
+      }
+    },
+    {
+      "kind": "cerebrum",
+      "object_count": 1,
+      "shape_xyz": [
+        320,
+        401,
+        336
+      ],
+      "frame_matches_MRI": true,
+      "slice_position_max_residual_mm": 4.667397311828941e-06,
+      "affine_xyz_to_ras_mm": [
+        [
+          0.368529916,
+          0.15264115320000002,
+          -0.029740964896616953,
+          -11.398429879816671
+        ],
+        [
+          0.14350583560000002,
+          -0.36328589920000004,
+          -0.08610399110646433,
+          126.53266150795189
+        ],
+        [
+          -0.059931403200000004,
+          0.068731636,
+          -0.3890591560946328,
+          57.066612215184364
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "ancestry": [
+        {
+          "algorithm_name": "BrainLab",
+          "algorithm_type": "AUTOMATIC",
+          "coded_semantics": [
+            {
+              "CodeMeaning": "Anatomical Structure",
+              "CodeValue": "123037004",
+              "CodingSchemeDesignator": "SCT",
+              "sequence": "SegmentedPropertyCategoryCodeSequence"
+            },
+            {
+              "CodeMeaning": "Brain",
+              "CodeValue": "12738006",
+              "CodingSchemeDesignator": "SCT",
+              "sequence": "SegmentedPropertyTypeCodeSequence"
+            }
+          ],
+          "description": "Cerebrum",
+          "label": "Brain",
+          "number": 1
+        }
+      ],
+      "alignment": {
+        "MR_index_to_SEG_index": [
+          [
+            2.4414074944729736,
+            7.53683804255445e-08,
+            2.3528187204080453e-08,
+            -106.27928936482057
+          ],
+          [
+            -9.220693230060917e-07,
+            2.441406984635698,
+            -7.450269262632148e-08,
+            -150.2793048254008
+          ],
+          [
+            9.161170483606984e-07,
+            3.255943745172907e-07,
+            2.502617701144964,
+            -73.00000489285547
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "all_explicit_refs_in_selected_MR": false,
+        "correspondence": "shared_frame_plus_source_description",
+        "expert_alignment_review": false,
+        "explicit_SOP_refs_present": false,
+        "frame_uid_matches": true,
+        "identity_cross_frame_assumed": false,
+        "registration_performed": false,
+        "source_description": "cerebrum seg - MR ref: 3D_AX_T1_postcontrast",
+        "unmatched_explicit_SOP_refs": []
+      },
+      "distinct_timing_header_values": {
+        "AcquisitionDate": [
+          "null"
+        ],
+        "AcquisitionDateTime": [
+          "null"
+        ],
+        "AcquisitionTime": [
+          "null"
+        ],
+        "ContentDate": [
+          "\"20070308\""
+        ],
+        "ContentTime": [
+          "\"173501\""
+        ],
+        "SeriesDate": [
+          "\"20070308\""
+        ],
+        "SeriesDescription": [
+          "\"cerebrum seg - MR ref: 3D_AX_T1_postcontrast\""
+        ],
+        "SeriesTime": [
+          "\"173503\""
+        ],
+        "StudyDate": [
+          "\"19821225\""
+        ],
+        "StudyDescription": [
+          "\"Preop\""
+        ],
+        "StudyTime": [
+          "\"171616\""
+        ]
+      }
+    }
+  ],
+  "MR_voxels": 10616832,
+  "within_existing_32million_voxel_case_cap": true,
+  "estimated_native_peak_bytes": 465446990,
+  "estimate_not_measurement": true,
+  "actual_parent_seconds": 0.9949746250640601,
+  "sampled_peak_rss_bytes": 140967936,
+  "worker_ru_maxrss_bytes": 142016512,
+  "clean_reap": true,
+  "source_path_scope": "exact public structural_t1ce/whole_tumor/cerebrum; no ventricular/SELECT/EVAL objects",
+  "correspondence_limit": "Both SEG lack explicit source SOP references. Shared FrameOfReferenceUID and source series descriptions support intended pairing only; not anatomical alignment or segmentation accuracy. No registration performed.",
+  "availability_limit": "Source-described Preop; deidentified timestamps are retained, not proof annotations were available at a clinical decision time.",
+  "geometry_preparation_status": "Header predicates support a candidate native-MRI domain-union crop. No crop grid, decoded label extent or future aperture feasibility has been measured.",
+  "next_step": "Reviewed subject-only extension to existing crop-mr-domains for050, followed by separately released single public crop and saved sample/domain/overlay qualification. Five input arrays=image,S,T,target_domain,Ds; no source-zero air interpretation.",
+  "planning_and_model_admission": false,
+  "full_target_support_mismatch_policy": "Retain original source masks, full target/positive counts, explicit knownness and all failures. Unknown support remains unknown; no repair/selection/replacement.",
+  "source_bindings": {
+    "case": {
+      "path": "build/hybrid-train050-preparation-v1/bindings/ReMIND-050-case.json",
+      "bytes": 92472,
+      "sha256": "2434d015999724e7692b3dedcacf2fc0b231a1e0ebe1b1a4c50c7ad6eed0e670"
+    },
+    "flat": {
+      "path": "build/hybrid-train050-preparation-v1/bindings/ReMIND-050-source-binding.json",
+      "bytes": 99596,
+      "sha256": "7badecaa5e0ed17dab18120c38f83ca084cd8730af9a6893bd8e55ea44e1f94f"
+    },
+    "result": {
+      "path": "build/hybrid-train050-preparation-v1/header-attempt-01/ReMIND-050-headers/result.json",
+      "bytes": 264784,
+      "sha256": "9a9f91bc38173df42e765b8bb886290d22b1aaea48970449a4f0f914a9c1b9ba"
+    },
+    "receipt": {
+      "path": "build/hybrid-train050-preparation-v1/header-attempt-01/receipt.json",
+      "bytes": 2532,
+      "sha256": "8a80c471666b60487ef63c16c5a5ae7ca65cac6ecd0aec759beabead38cf0b43"
+    },
+    "postcheck": {
+      "path": "build/hybrid-train050-preparation-v1/post-header-binding-check.json",
+      "bytes": 795,
+      "sha256": "4fb271360d6f92792fae3f6a4a07271af5405cc5561bea76858e6c7b038ad7dc"
+    }
+  }
+}
