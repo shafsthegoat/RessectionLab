@@ -1,0 +1,57 @@
+Targeted finalization repair, no native rerun
+
+Promotion: apply source.patch at repository root. It changes only the comparison
+output factoring/compact baseline-pair representation, adds the saved-readout
+one-shot runner and its four generated regression controls. Original attempt-01
+and all six native products/readouts remain untouched. The existing full
+numerical-screen.json is authenticated, not copied or recalculated.
+
+Generated controls (20 s / 512 MiB / one thread / no measured inputs):
+.venv/bin/python -I -S -B build/hbe-ogden-shape-v1/postprocess-repair/run_generated_controls.py
+
+After root promotes and commits these exact source bytes, create a separate true
+release with this metadata-only command. It changes only execution_released and
+source_commit and never opens measurements or numerical readouts:
+
+.venv/bin/python -B - <<'PY'
+from pathlib import Path
+import hashlib,json,subprocess
+base=Path('build/hbe-ogden-shape-v1/postprocess-repair')
+source=base/'false-release.json'
+assert hashlib.sha256(source.read_bytes()).hexdigest()=='3c08625b012b1196a22ff89566b908c0a34ab89e53b228af77f626ab48f54921'
+r=json.loads(source.read_bytes())
+r['execution_released']=True
+r['source_commit']=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+for name,digest in r['source_bindings'].items():
+    raw=Path(name).read_bytes()
+    assert hashlib.sha256(raw).hexdigest()==digest,name
+    assert subprocess.check_output(['git','cat-file','blob',r['source_commit']+':'+name])==raw,name
+out=base/'root-release.json'
+raw=(json.dumps(r,sort_keys=True,indent=2)+'\n').encode()
+with out.open('xb') as stream:stream.write(raw)
+print(hashlib.sha256(raw).hexdigest())
+PY
+
+Use the printed digest below. Check-only authenticates source/runtime and storage;
+it does not open upstream numerical reports or measured fit values. Use a fresh
+never-created cache path for each invocation; neither command creates its cache.
+
+.venv/bin/python -I -S -B -X pycache_prefix="$PWD/build/hbe-ogden-postprocess-unused-preflight" scripts/mechanics_hbe_ogden_recovery.py --root "$PWD" --release build/hbe-ogden-shape-v1/postprocess-repair/root-release.json --release-sha256 PRINTED_SHA
+
+The sole saved-readout execution (root dispatch only):
+.venv/bin/python -I -S -B -X pycache_prefix="$PWD/build/hbe-ogden-postprocess-unused-parent" scripts/mechanics_hbe_ogden_recovery.py --root "$PWD" --release build/hbe-ogden-shape-v1/postprocess-repair/root-release.json --release-sha256 PRINTED_SHA --execute
+
+45 s total / 35 s work / 10 s cleanup, 512 MiB sampled group RSS, 1 MiB new
+outputs, one thread, one attempt. Initial free-space floor is 50 GiB + 1 MiB;
+monitor preserves 50 GiB. Existing OwnedStage/supervise_stage/require_stage and
+exact output snapshot finalization are reused. No native calls, primitive energy
+or convergence replay, raw archive/member reads, or new alpha choices. The fixed
+2/-8 comparison, positive common-modulus estimator, signs/all60 values, role,
+geometry/BC/K:mu, and null empirical validation decision are unchanged.
+
+Arithmetic accounting: failed attempt entered and completed 2 candidate profiles
+and 1 baseline reproduction before writer refusal. Its reported zero counts
+completed worker reports. Successful recovery repeats exactly those 2+1 operations;
+cumulative calls are 4 candidate profiles and 2 baseline reproductions. This is
+no alpha optimization or repeated scientific selection. The worker persists call
+entry counts before each operation and keeps failed products if interrupted.

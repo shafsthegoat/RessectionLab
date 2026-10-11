@@ -301,20 +301,30 @@ def profile(saved_fit,references):
         'physical_validation_pass':None,'new_independent_validation':False}
 
 
-def finish(root,declaration,report_bindings,out):
-    numerical={name:read_binding(root,binding,maximum=8*1024**2) for name,binding in report_bindings.items()}
-    checks=screen(numerical,temporal=True)
-    exclusive_json(out/'numerical-screen.json',checks,maximum=4*1024**2)
-    need(checks['passed'],'new shape failed predefined two-grid/time screen')
-    old,pairs=baseline(root,declaration)
+def compact_baseline_pairs(pairs,declaration):
+    """Retain every scalar decision; the accepted source retains signed arrays."""
+    keys=('coarse_run','fine_run','kind','common_state_count','probe_count',
+          'maximum_force_change_N','force_limit_N','maximum_probe_norm_change_m',
+          'probe_norm_limit_m','pairwise_limit_passed','diagnostic_only')
+    return {branch:{**{key:pairs[branch][key] for key in keys},
+        'complete_signed_arrays':{'binding':declaration['evidence']['comparison'],
+            'json_path':['all_adjacent_signed_differences',branch,'N16-N24']},
+        'reference_identity_manifest':declaration['evidence']['manifest']}
+        for branch in AXIAL}
+
+
+def comparison_output(root,declaration,numerical,old,pairs,*,on_arithmetic=None):
+    """Unchanged two profiles and baseline reproduction, shared with recovery."""
+    mark=on_arithmetic or (lambda kind:None)
     # The only measured values opened by this adapter are this already exposed JSON.
     fit=read_binding(root,declaration['fit'],maximum=128*1024)
-    results={'2':profile(fit,old),'-8':profile(fit,{b:numerical[run_name((b,24,60))] for b in AXIAL})}
+    mark('profile');results={'2':profile(fit,old)}
+    mark('profile');results['-8']=profile(fit,{b:numerical[run_name((b,24,60))] for b in AXIAL})
     # Reproduce old common-scale arithmetic, using saved predictions without an FE call.
     from scripts.mechanics_hbe_evaluation import curve,fit_scale
     observed={b:curve(b,fit['modes'][b]['coordinate'],fit['modes'][b]['observed']) for b in AXIAL}
     oldref={b:curve(b,fit['modes'][b]['coordinate'],fit['modes'][b]['reference_prediction']) for b in AXIAL}
-    reproduced=fit_scale(observed,oldref)
+    mark('baseline_reproduction');reproduced=fit_scale(observed,oldref)
     need(reproduced['mu_Pa']==fit['mu_Pa'] and reproduced['scale']==fit['scale'],'original baseline reproduction')
     # All candidate outcomes, including worse outcomes, are retained; no new candidate is chosen.
     output={'schema':'hbe-ogden-shape-comparison-v1','alpha_candidates':list(ALPHAS),
@@ -323,7 +333,7 @@ def finish(root,declaration,report_bindings,out):
         'fixed_K_over_mu':149/3,'grid_for_comparison':'N24/S60','candidates':results,
         'original_alpha2_baseline':{'mu_Pa':fit['mu_Pa'],'scale':fit['scale'],
             'grid':'compression N36/S120; tension N24/S120','reproduced':True},
-        'baseline_pair_screen':pairs,'new_shape_screen_passed':True,
+        'baseline_pair_screen':compact_baseline_pairs(pairs,declaration),'new_shape_screen_passed':True,
         'numerical_qualification_passed':False,'continuum_error_bound':False,
         'physical_validation_pass':None,'empirical_tolerance':None,'held_out_values_used':False,
         'fitted_mu_native_confirmed':False,'patient_properties_assigned':False,
@@ -332,6 +342,16 @@ def finish(root,declaration,report_bindings,out):
             'same exposed processed cycle-average specimen; no independent measured validation',
             'zero reference and noise remain unquantified; all signed values retained',
             'no living-brain retraction, cutting, fracture or tool-contact property qualification']}
-    exclusive_json(out/'comparison.json',output,maximum=512*1024)
     read_binding(root,declaration['fit'],maximum=128*1024)
+    return output
+
+
+def finish(root,declaration,report_bindings,out):
+    numerical={name:read_binding(root,binding,maximum=8*1024**2) for name,binding in report_bindings.items()}
+    checks=screen(numerical,temporal=True)
+    exclusive_json(out/'numerical-screen.json',checks,maximum=4*1024**2)
+    need(checks['passed'],'new shape failed predefined two-grid/time screen')
+    old,pairs=baseline(root,declaration)
+    output=comparison_output(root,declaration,numerical,old,pairs)
+    exclusive_json(out/'comparison.json',output,maximum=512*1024)
     return output

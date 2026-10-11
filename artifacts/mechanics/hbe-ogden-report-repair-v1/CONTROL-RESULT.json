@@ -1,0 +1,32 @@
+{
+  "cleanup": {
+    "contained": true,
+    "direct_child_reaped": true,
+    "errors": [],
+    "exit_code": 0,
+    "fallback_used": false,
+    "remaining_members": []
+  },
+  "elapsed_seconds": 1.1497407499700785,
+  "guard": {
+    "actual_archive_response_reads": 0,
+    "elapsed_pytest_seconds": 0.6560914998408407,
+    "error": null,
+    "expected_refusals": [
+      "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/forbidden-generated-probe.zip",
+      "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/forbidden-predictions.json",
+      "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/forbidden-response.csv",
+      "read_outside_source_runtime_generated_fixture:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/sources/forbidden-source.bin"
+    ],
+    "no_process_or_network_from_tests": true,
+    "pytest_exit_code": 0,
+    "test_sha256": "590048c115492644bd1db5dbb4fb5b43d8a6d7c17cb405de8758c1bc5b979c74",
+    "unexpected_refusals": [],
+    "version": "hbe-ogden-generated-guard-v1"
+  },
+  "peak_sampled_group_rss_bytes": 92209152,
+  "rss_samples": 10,
+  "source_index_sha256": "f93ebfc0b4ae57b85ab504d4202a1c2b8dc1cf59f8e6087b6029a750851be047",
+  "status": "passed",
+  "tests": 4
+}
