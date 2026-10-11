@@ -1,0 +1,23 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "cleanup_reserve_seconds": 10,
+    "cooperative_worker_seconds": 240,
+    "max_grid_cells": 2000000,
+    "max_independent_audits": 18,
+    "max_native_strokes": 180,
+    "output_bytes": 8388608,
+    "parent_wall_seconds": 250,
+    "source_bytes": 1048576,
+    "threads": 1,
+    "worker_peak_rss_bytes": 2147483648
+  },
+  "planned_action_slots": 180,
+  "planned_rows": 18,
+  "rss_samples": 0,
+  "sampled_peak_group_rss_bytes": 0,
+  "schema": "owned_same_capsule_exposure_matrix_v1",
+  "scope": "generated same-capsule exposure representation model; no baseline replay, training, policy change, patient data or measured mechanics",
+  "source_index_sha256": "861561d355a7641146d6dd8136e30a8951457efc6d075b97b1f4e09d04984420",
+  "status": "running"
+}

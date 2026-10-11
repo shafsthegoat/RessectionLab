@@ -1,0 +1,51 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "cleanup_reserve_seconds": 10,
+    "cooperative_worker_seconds": 240,
+    "max_grid_cells": 2000000,
+    "max_independent_audits": 18,
+    "max_native_strokes": 180,
+    "output_bytes": 8388608,
+    "parent_wall_seconds": 250,
+    "source_bytes": 1048576,
+    "threads": 1,
+    "worker_peak_rss_bytes": 2147483648
+  },
+  "child_reaped": true,
+  "cleanup_actions": [
+    {
+      "signal": 15,
+      "target": "owned_process_group"
+    }
+  ],
+  "cleanup_errors": [],
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-residual-diagnostic-v1/comparison-run-01/absent-worker-cache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-residual-diagnostic-v1/comparison/probe_exposure.py",
+    "--worker",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-residual-diagnostic-v1/comparison-run-01",
+    "--source-index-sha256",
+    "861561d355a7641146d6dd8136e30a8951457efc6d075b97b1f4e09d04984420"
+  ],
+  "elapsed_seconds": 1.5872435001656413,
+  "finalization_error": "KeyError:'useful_criterion'",
+  "output_bytes_before_receipt": 91462,
+  "planned_action_slots": 180,
+  "planned_rows": 18,
+  "remaining_owned_pids": [],
+  "report_sha256": "a40c3dc7d7bbd4ef3de0f60f772b32801806cd0c03974c424ab53d64885c6609",
+  "rss_samples": 8,
+  "sampled_peak_group_rss_bytes": 84885504,
+  "schema": "owned_same_capsule_exposure_matrix_v1",
+  "scope": "generated same-capsule exposure representation model; no baseline replay, training, policy change, patient data or measured mechanics",
+  "source_index_sha256": "861561d355a7641146d6dd8136e30a8951457efc6d075b97b1f4e09d04984420",
+  "status": "incomplete_or_failed",
+  "stop_reason": "FileNotFoundError:[Errno 2] No such file or directory: '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-residual-diagnostic-v1/comparison-run-01/report.json.tmp'",
+  "worker_exit_code": -15
+}

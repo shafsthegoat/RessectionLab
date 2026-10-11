@@ -1,0 +1,19 @@
+{
+  "native_call_costs_including_incomplete_row": {
+    "native_strokes_started": 146,
+    "native_strokes_returned": 146,
+    "native_seconds": 56.052396004553884
+  },
+  "returned_preview_coverage_work_including_incomplete_row": {
+    "returned_previews_accounted": 146,
+    "leaf_tests": 68252572,
+    "new_leaf_count": 15506080,
+    "witness_rows": 219622,
+    "peak_tracked_cells": 1409,
+    "budget_refusals": 0
+  },
+  "current_row": "tilted-aspirator-0.25mm",
+  "current_action": 10,
+  "native_call_in_progress": false,
+  "scope": "Completed native runtime only; an interrupted active call is additionally bounded by parent wall time"
+}

@@ -1,0 +1,23 @@
+{
+  "version": "native-terminal-capsule-exposure-fixed18-v1",
+  "execution_released": false,
+  "retained_union_declaration": {"path": "build/native-cut-union-v1/declaration.json", "sha256": "0f909c16508e642e8f570214505e472edf92fd0ea78525779d7c0ab38896aefe"},
+  "retained_baseline_report": {"path": "build/native-partial-volume-v1/run-01/report.json", "sha256": "c9265daaf186b025403ee499a333f0e2811feab66f65e10a98a3d97f17300ee9"},
+  "retained_baseline_parity_correction": {"path": "build/native-partial-volume-v1/runner-repair/saved-parity-correction.json", "sha256": "1d9c5d364b0aa07847eaaad06a10c7c850f7f71413226e8c4cc4151caedbe1e8"},
+  "baseline_source_commit": "b16ffec",
+  "model": "terminal_microstep_parent_exposure_closure",
+  "exposure_mode": "same_step_parent_closure",
+  "closure_schedule": "terminal_microstep_only",
+  "secondary_all_capsule_report": {"path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/report.json", "sha256": "2ff4b774c1fde080fbf0e6854a7b48a85ec4417590347df2191f8a893ff38077"},
+  "prior_exposure_attempt_progress": [
+    {"path": "build/native-cut-residual-diagnostic-v1/comparison-run-01/progress.json", "sha256": "871b2255176684fca86997e15d9f2a226ccc210e5ed7236ff971fde39ebc89b3"},
+    {"path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/progress.json", "sha256": "d91a1b75b3f18b45396d79899676cfa0daea54fa9d8fdf3ca263a3c95a4d91d6"}
+  ],
+  "parent_mass_semantics": "public_float32_nominal_fraction_rounding_bin_midpoints_outward_float64_clipped_0_1_zero_outside_source_support",
+  "unchanged": ["18 fixed scenes", "180 planned action slots", "tools", "actions", "microstep", "source support", "whole-parent shaft envelope", "whole-cell reward rule", "octree depth", "preview caps"],
+  "physical_volume_tolerance_mm3": 1e-8,
+  "success": {"all_baseline_13_completions_retained": true, "all_nonempty_independent_audits_pass": true, "all_six_fine_physical_target_volumes_do_not_regress": true, "fine_rows_requiring_strict_physical_target_gain_minimum": 1, "all_rows_accounted": 18, "all_target_bounds_mass_enclosures_and_caps_pass": true},
+  "caps": {"cooperative_worker_seconds": 240, "parent_wall_seconds": 250, "cleanup_reserve_seconds": 10, "worker_peak_rss_bytes": 2147483648, "output_bytes": 8388608, "source_bytes": 1048576, "max_native_strokes": 180, "max_independent_audits": 18, "max_grid_cells": 2000000, "threads": 1},
+  "output_directory": "build/native-cut-residual-diagnostic-v1/terminal-run-01",
+  "scope": "generated terminal-microstep exposure representation model; no baseline replay, training, policy change, patient data or measured mechanics"
+}

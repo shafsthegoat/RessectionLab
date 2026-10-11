@@ -1,0 +1,31 @@
+{
+  "child_reaped": true,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-residual-diagnostic-v1/model/producer-controls-01-tmp",
+    "tests/test_native_leaf_exposure.py"
+  ],
+  "elapsed_seconds": 0.600956834,
+  "failure": null,
+  "log_sha256": "74fab182bfc726d6a0eb1efb9cd990b5aae686bcaf58869b3e5cad63c3a7ea14",
+  "max_seconds": 30,
+  "returncode": 1,
+  "source_after": {
+    "src/resectionlab/native_cut_union.py": "e9bb3978ac37353fda536c6a0176f6475dd914aa1b2e93de8745d0362f197479",
+    "src/resectionlab/native_resection.py": "dbda0e2ed082b855f8a867256b0a29b6c2b0b6c9272f61d30840ce8120069390",
+    "tests/test_native_leaf_exposure.py": "f28e714a0df3f1279da333f85647d770124d1b2687b14fc73644a336d29ec781"
+  },
+  "source_before": {
+    "src/resectionlab/native_cut_union.py": "e9bb3978ac37353fda536c6a0176f6475dd914aa1b2e93de8745d0362f197479",
+    "src/resectionlab/native_resection.py": "dbda0e2ed082b855f8a867256b0a29b6c2b0b6c9272f61d30840ce8120069390",
+    "tests/test_native_leaf_exposure.py": "f28e714a0df3f1279da333f85647d770124d1b2687b14fc73644a336d29ec781"
+  },
+  "source_unchanged": true,
+  "threads": 1
+}

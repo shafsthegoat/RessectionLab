@@ -1,0 +1,106 @@
+Independent saved scientific validation — terminal-only exposure closure
+
+Saved scientific criterion: TRUE. Overall supervision: FAILED, unchanged.
+Audit status: PASS_SAVED_SCIENCE_SUPERVISION_FAILED. This is not an accepted
+clean owned run or proof of continuously verified resource bounds.
+
+All 18 rows and 180 action slots are accounted: 141 accepted actions, 5 refused
+actions, 34 unexecuted suffix slots, 146 native calls. The original 13 complete
+histories are retained. All 15 nonempty independent geometry certificates pass;
+three empty cases remain not applicable. There are zero preview budget refusals.
+Independent clipping verifies every saved target mass enclosure, cumulative
+target interval and physical-volume bound. All six fine-grid target volumes
+strictly increase against the unchanged b16 partial-volume baseline.
+
+Fine-grid physical target volumes, mm3:
+  Scene                    b16 baseline     Terminal-only    Gain
+  aligned suction          0.28083496094    0.36379394531    +0.08295898438
+  aligned aspirator        4.18334960938    4.60644531250    +0.42309570313
+  half-phase suction       0.30026855469    0.34445800781    +0.04418945313
+  half-phase aspirator     4.36140136719    4.49152832031    +0.13012695313
+  tilted suction           0.29861182102    0.32309467070    +0.02448284968
+  tilted aspirator         4.38984581567    4.58601436006    +0.19616854439
+
+The unchanged cap is 0.43563418130 mm3 for completed suction target strokes and
+5.06843614779 mm3 for completed aspirator target strokes. Fine target undercredit
+remains 16.4910–25.8335% for suction and 9.1151–11.3824% for aspirator. This is a
+useful reduction of conservative representation undercredit, not complete target
+recovery. Rejected/unexecuted target strokes receive an actual committed cap of
+zero; a planned but unexecuted suffix cannot justify credited volume.
+
+The four fine rows completed by the preceding all-microstep closure run retain
+exactly its physical tissue and target volumes. The two previously witness-capped
+fine aspirator rows now complete and produce the volumes above. This comparison
+is descriptive; the primary criterion remains the frozen b16 baseline criterion.
+No favorable comparator substitution occurred. Across all 18 rows, whole-parent
+removed counts, whole-parent physical target volumes and total rewards exactly
+match b16. Full action-result projections differ because certificate/proof work
+differs. Extra partial geometry is not turned into a reward bonus or shaft space.
+
+Scope and independent evidence
+The recorded model is cumulative_affine_terminal_parent_closure_cut_union_v4,
+with exposure_mode=same_step_parent_closure and
+closure_schedule=terminal_microstep_only. Every nonempty row carries the distinct
+independent-native-terminal-parent-closure-v1 certificate with the final-executed-
+microstep restriction. Its exported sparse geometry binds that same spec, source,
+actual history and evacuation state. Canonical source bytes are authenticated
+against Git commit 7ed4ef8 and the exact source index. This audit validates the
+recorded schedule and independently reclips the accepted geometry; it does not
+replay intermediate microsteps or claim intermediate closure performance.
+
+Tools, physical actions, grids, public source hashes, parent-mass declarations,
+depth, proof limits, whole-parent shaft rules and reward coefficients are fixed.
+Accepted action/state and evacuation chains join, unique leaf additions equal
+the final union, and failed previews roll back. The frozen independent evaluator
+recomputed 25,513 full parent boxes, 7,056 partial parents, 238,376 leaf visits and
+22,917 clipping faces. It found no mass/target-cap violation. No native engine,
+producer geometry, original dataset, model fitting or patient inputs were run.
+
+Recorded resource costs (nested scopes, not additive):
+  Native work:                         56.0523960 s
+  Numerical row total:                 58.4678562 s
+  Independent checker:                 36.7647154 s
+  Plane evaluation:                     2.8979468 s
+  Worker / parent elapsed:             99.4181456 / 100.2064018 s
+  Recorded group RSS peak:             528,400,384 B over 483 samples
+  Output bytes before receipt:          3,716,270 B
+  Attempted leaf tests:                68,252,572
+  Attempted new-leaf events:           15,506,080
+  Attempted witness rows:                 219,622
+  Peak tracked partial parents:               1,409
+
+The two earlier exposure attempts retain 139 native calls and 38.8186542 s native
+work, including the interrupted monitor run and the negative all-capsule run.
+All three exposure attempts therefore total 285 started/returned native calls
+and 94.8710502 s recorded native work. These exclude the retained b16 baseline.
+No matched speedup is claimed. The all-capsule attempt ended two histories early.
+
+Supervision failure — retained without reclassification
+The original launcher remains incomplete_or_failed, stop_reason
+live_group_rss_unknown, with cleanup error "Operation not permitted". It also
+records worker_exit_code=0, child_reaped=true, no remaining owned PIDs, completed
+worker report, and final progress with all146 calls returned and no call active.
+The measured peak/time/output are below declared ceilings, but a missing live
+memory sample prevents a claim of uninterrupted resource verification. The
+cleanup error prevents calling resource release clean.
+
+The saved parent logic can record live_group_rss_unknown when a group read has
+no live PIDs while process.poll still reports running. The receipt does not
+identify the missing-sample PID, timestamp or failed cleanup operation. An exit-
+transition race is consistent with the later exit0/completed-report evidence,
+but is not established by these records. Likewise, the generic EPERM does not
+distinguish signaling failure from sampler failure. A later successful sample
+or absence of recorded survivors cannot retrospectively erase either failure.
+No scientific rerun or launcher rewrite occurred for this audit.
+
+Audit command completed exit0 under its 30 s bound in 3.3926 s, including 3.2144 s
+saved re-clipping, with 37,966 checks. Its explicit scope permits independent
+scientific-result validation despite failed supervision and exposes both outcomes.
+The pre-scope-change auditor is preserved separately. All original run files
+remain unchanged. Full re-execution of this saved audit requires the locally
+retained report and hash-pinned sparse geometry; the compact archive excludes
+those larger generated files.
+
+Claims remain limited to this fixed generated model matrix under idealized
+cutting/evacuation and exposure assumptions. No patient, clinical, force,
+biological-mechanics or learned-policy validation is implied.

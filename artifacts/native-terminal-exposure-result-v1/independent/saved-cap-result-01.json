@@ -1,0 +1,723 @@
+{
+  "schema": "saved-aligned-target-cap-diagnosis-v1",
+  "status": "completed_saved_geometry_only",
+  "row_id": "aligned-suction-0.25mm",
+  "inputs": {
+    "report": {
+      "path": "build/native-partial-volume-v1/run-01/report.json",
+      "sha256": "c9265daaf186b025403ee499a333f0e2811feab66f65e10a98a3d97f17300ee9"
+    },
+    "geometry": {
+      "path": "build/native-partial-volume-v1/run-01/geometry/aligned-suction-0.25mm.json",
+      "sha256": "96c7f28880ce6cdc516e63b6571588dd81bbd537ce5f6c54979f1d6282835fe6"
+    },
+    "native_resection_source_sha256": "ddbb5571e401a5da8aa3f68a878f7c97d24342a47d2180441374ad8ebade9e9b",
+    "native_cut_union_source_sha256": "a57c1350e86cbcb67dda27ea994381bce243281a66710292aa1e5a10bef3a326"
+  },
+  "complete_executed_strokes": 10,
+  "final_target_stroke": {
+    "index": 10,
+    "kind": "target_stroke",
+    "tool_id": "generic_suction",
+    "entry_mm": [
+      0,
+      0,
+      -2
+    ],
+    "tip_mm": [
+      0.0,
+      0.0,
+      2.2
+    ],
+    "status": "accepted",
+    "reason": "NATIVE_CONNECTED_STROKE",
+    "source_state_hash": "sha256:702ae5c5e730b24eb6053deee98b76d95ff07166db29042a1d23a7fcb61b4517",
+    "result_state_hash": "sha256:bea76bda166474c5fbacb01eaa9441aec72774c1a5bd42da92b58e358348ce2f",
+    "failure_tip_mm": null,
+    "geometry_unknowns": [
+      "normal_tissue_exposure_unassessed",
+      "tool_geometry_outside_image_unassessed"
+    ],
+    "native_seconds": 0.3763661670964211,
+    "cut_union_attempt": {
+      "leaf_tests": 269160,
+      "new_leaf_count": 89220,
+      "witness_rows": 1140,
+      "peak_tracked_cells": 501,
+      "budget_refused": false
+    },
+    "removed_source_cell_mm3": 2.453125000000001,
+    "removed_physical_mm3": 2.453125000000001,
+    "removed_physical_target_mm3": 0.11406250000000029,
+    "cut_union_committed": {
+      "before_digest": "sha256:decbecc258aaab754c61c0fdadabaa3d7f6760b6065f788b702d175e3f10f9e8",
+      "after_digest": "sha256:4ede713e16bb03d828efc9cd13287594eaf4db7f65fbfe6ad2301443d6a4af87",
+      "new_leaf_count": 89220,
+      "leaf_tests": 269160,
+      "coverage_only_progress": false
+    },
+    "frozen_reward": -0.3921499953061344,
+    "nominal_target_source_credit_mm3": 0.11406250391155487,
+    "partial_evacuation": {
+      "spec": {
+        "version": "certified_evacuated_subcell_volume_v1",
+        "shape": [
+          45,
+          45,
+          57
+        ],
+        "target_fraction_lower_hash": "sha256:14ec5c8844c449c40c34eac22c3d25cef758a3141d00f31914f13321b33f383a",
+        "target_fraction_upper_hash": "sha256:412e465897c9e5874c308b13596bdb76627a6a7e0890eefa402f05f764052792",
+        "provenance": "public_float32_nominal_fraction_rounding_bin_midpoints_outward_float64_clipped_0_1_zero_outside_source_support",
+        "target_semantics": "unlocated_parent_target_mass_bounds"
+      },
+      "before": {
+        "state_digest": "sha256:755f37ad38600b61ae5240a619e9c57dcc08b23276f260ae2f4aa1033dde4db5",
+        "whole_parent_clearance_count": 1408,
+        "partial_certified_leaf_count": 136488,
+        "certified_leaf_count": 857384,
+        "evacuated_source_volume_mm3": 26.16528320312501,
+        "evacuated_target_source_bounds_mm3": [
+          0.0,
+          2.0373565953972548e-44
+        ]
+      },
+      "after": {
+        "state_digest": "sha256:aceeca1dd2d6f26469845dcb049c3577d1fce0f6504a9c9201181deb25c6bc6e",
+        "whole_parent_clearance_count": 1565,
+        "partial_certified_leaf_count": 145324,
+        "certified_leaf_count": 946604,
+        "evacuated_source_volume_mm3": 28.888061523437514,
+        "evacuated_target_source_bounds_mm3": [
+          0.2723388599697501,
+          0.29089356516487913
+        ]
+      },
+      "delta_certified_leaf_count": 89220,
+      "delta_evacuated_source_volume_mm3": 2.7227783203125013,
+      "scope": "certified_subset_of_represented_source_support_under_idealized_evacuation;whole_parent_shaft_envelope_and_reward_unchanged"
+    }
+  },
+  "target_plane_z_mm": 2.8,
+  "leaf_side_mm": 0.03125,
+  "exact_executed_target_cap_mm3": 0.4356341812977854,
+  "actual_certified_target_mm3": 0.28083496093750027,
+  "final_capsule_contained_leaf_target_ceiling_mm3": 0.37937011718750036,
+  "residual_total_mm3": 0.15479922036028515,
+  "depth3_full_leaf_boundary_loss_mm3": 0.05626406411028506,
+  "contained_but_uncertified_target_mm3": 0.09853515625000007,
+  "geometric_loss_fraction_of_residual": 0.3634647770146006,
+  "uncertified_contained_fraction_of_residual": 0.6365352229853993,
+  "final_exposure_partition": {
+    "False": {
+      "parents": 32,
+      "missing_target_mm3": 0.015576171875000003
+    },
+    "True": {
+      "parents": 21,
+      "missing_target_mm3": 0.08295898437500007
+    }
+  },
+  "missing_parents": [
+    {
+      "parent": [
+        19,
+        21,
+        33
+      ],
+      "missing_target_leaves": 54,
+      "missing_target_mm3": 0.0011901855468750043,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        19,
+        23,
+        33
+      ],
+      "missing_target_leaves": 54,
+      "missing_target_mm3": 0.0011901855468750043,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        19,
+        21,
+        34
+      ],
+      "missing_target_leaves": 6,
+      "missing_target_mm3": 0.00018310546875,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        19,
+        22,
+        34
+      ],
+      "missing_target_leaves": 24,
+      "missing_target_mm3": 0.000732421875,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        19,
+        23,
+        34
+      ],
+      "missing_target_leaves": 6,
+      "missing_target_mm3": 0.00018310546875,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        19,
+        20,
+        33
+      ],
+      "missing_target_leaves": 2,
+      "missing_target_mm3": 2.4414062500000347e-05,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        19,
+        24,
+        33
+      ],
+      "missing_target_leaves": 2,
+      "missing_target_mm3": 2.4414062500000347e-05,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        20,
+        20,
+        33
+      ],
+      "missing_target_leaves": 126,
+      "missing_target_mm3": 0.0029479980468750085,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        20,
+        21,
+        34
+      ],
+      "missing_target_leaves": 237,
+      "missing_target_mm3": 0.007232666015625,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        20,
+        23,
+        34
+      ],
+      "missing_target_leaves": 237,
+      "missing_target_mm3": 0.007232666015625,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        20,
+        24,
+        33
+      ],
+      "missing_target_leaves": 126,
+      "missing_target_mm3": 0.0029479980468750085,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        20,
+        20,
+        34
+      ],
+      "missing_target_leaves": 46,
+      "missing_target_mm3": 0.00140380859375,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        20,
+        24,
+        34
+      ],
+      "missing_target_leaves": 46,
+      "missing_target_mm3": 0.00140380859375,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        20,
+        19,
+        33
+      ],
+      "missing_target_leaves": 2,
+      "missing_target_mm3": 2.4414062500000347e-05,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        20,
+        25,
+        33
+      ],
+      "missing_target_leaves": 2,
+      "missing_target_mm3": 2.4414062500000347e-05,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        21,
+        19,
+        33
+      ],
+      "missing_target_leaves": 54,
+      "missing_target_mm3": 0.0011901855468750043,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        21,
+        20,
+        34
+      ],
+      "missing_target_leaves": 237,
+      "missing_target_mm3": 0.007232666015625,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        21,
+        24,
+        34
+      ],
+      "missing_target_leaves": 237,
+      "missing_target_mm3": 0.007232666015625,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        21,
+        25,
+        33
+      ],
+      "missing_target_leaves": 54,
+      "missing_target_mm3": 0.0011901855468750043,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        21,
+        22,
+        35
+      ],
+      "missing_target_leaves": 36,
+      "missing_target_mm3": 0.0010986328125,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        21,
+        19,
+        34
+      ],
+      "missing_target_leaves": 6,
+      "missing_target_mm3": 0.00018310546875,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        21,
+        25,
+        34
+      ],
+      "missing_target_leaves": 6,
+      "missing_target_mm3": 0.00018310546875,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        21,
+        21,
+        35
+      ],
+      "missing_target_leaves": 8,
+      "missing_target_mm3": 0.000244140625,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        21,
+        23,
+        35
+      ],
+      "missing_target_leaves": 8,
+      "missing_target_mm3": 0.000244140625,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        22,
+        19,
+        34
+      ],
+      "missing_target_leaves": 24,
+      "missing_target_mm3": 0.000732421875,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        22,
+        21,
+        35
+      ],
+      "missing_target_leaves": 36,
+      "missing_target_mm3": 0.0010986328125,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        22,
+        22,
+        35
+      ],
+      "missing_target_leaves": 124,
+      "missing_target_mm3": 0.0037841796875,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        22,
+        23,
+        35
+      ],
+      "missing_target_leaves": 36,
+      "missing_target_mm3": 0.0010986328125,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        22,
+        25,
+        34
+      ],
+      "missing_target_leaves": 24,
+      "missing_target_mm3": 0.000732421875,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        23,
+        19,
+        33
+      ],
+      "missing_target_leaves": 54,
+      "missing_target_mm3": 0.0011901855468750043,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        23,
+        19,
+        34
+      ],
+      "missing_target_leaves": 6,
+      "missing_target_mm3": 0.00018310546875,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        23,
+        20,
+        34
+      ],
+      "missing_target_leaves": 237,
+      "missing_target_mm3": 0.007232666015625,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        23,
+        21,
+        35
+      ],
+      "missing_target_leaves": 8,
+      "missing_target_mm3": 0.000244140625,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        23,
+        22,
+        35
+      ],
+      "missing_target_leaves": 36,
+      "missing_target_mm3": 0.0010986328125,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        23,
+        23,
+        35
+      ],
+      "missing_target_leaves": 8,
+      "missing_target_mm3": 0.000244140625,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        23,
+        24,
+        34
+      ],
+      "missing_target_leaves": 237,
+      "missing_target_mm3": 0.007232666015625,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        23,
+        25,
+        33
+      ],
+      "missing_target_leaves": 54,
+      "missing_target_mm3": 0.0011901855468750043,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        23,
+        25,
+        34
+      ],
+      "missing_target_leaves": 6,
+      "missing_target_mm3": 0.00018310546875,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        24,
+        19,
+        33
+      ],
+      "missing_target_leaves": 2,
+      "missing_target_mm3": 2.4414062500000347e-05,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        24,
+        20,
+        33
+      ],
+      "missing_target_leaves": 126,
+      "missing_target_mm3": 0.0029479980468750085,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        24,
+        20,
+        34
+      ],
+      "missing_target_leaves": 46,
+      "missing_target_mm3": 0.00140380859375,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        24,
+        21,
+        34
+      ],
+      "missing_target_leaves": 237,
+      "missing_target_mm3": 0.007232666015625,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        24,
+        23,
+        34
+      ],
+      "missing_target_leaves": 237,
+      "missing_target_mm3": 0.007232666015625,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        24,
+        24,
+        33
+      ],
+      "missing_target_leaves": 126,
+      "missing_target_mm3": 0.0029479980468750085,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        24,
+        24,
+        34
+      ],
+      "missing_target_leaves": 46,
+      "missing_target_mm3": 0.00140380859375,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        24,
+        25,
+        33
+      ],
+      "missing_target_leaves": 2,
+      "missing_target_mm3": 2.4414062500000347e-05,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        25,
+        20,
+        33
+      ],
+      "missing_target_leaves": 2,
+      "missing_target_mm3": 2.4414062500000347e-05,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        25,
+        21,
+        33
+      ],
+      "missing_target_leaves": 54,
+      "missing_target_mm3": 0.0011901855468750043,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        25,
+        21,
+        34
+      ],
+      "missing_target_leaves": 6,
+      "missing_target_mm3": 0.00018310546875,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        25,
+        22,
+        34
+      ],
+      "missing_target_leaves": 24,
+      "missing_target_mm3": 0.000732421875,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        25,
+        23,
+        33
+      ],
+      "missing_target_leaves": 54,
+      "missing_target_mm3": 0.0011901855468750043,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": true
+    },
+    {
+      "parent": [
+        25,
+        23,
+        34
+      ],
+      "missing_target_leaves": 6,
+      "missing_target_mm3": 0.00018310546875,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    },
+    {
+      "parent": [
+        25,
+        24,
+        33
+      ],
+      "missing_target_leaves": 2,
+      "missing_target_mm3": 2.4414062500000347e-05,
+      "has_any_certified_bits": false,
+      "final_whole_parent_face_exposed": false
+    }
+  ],
+  "work": {
+    "candidate_target_leaves": 65340,
+    "contained_target_leaves": 13576,
+    "actual_target_leaves": 10100,
+    "radius_margin_changed_leaf_tests": 0
+  },
+  "interpretation": "Evaluator-only optimistic leaf coverage: removes exposure eligibility but changes neither actual saved geometry nor credited outcome. Final exposure is retrospective, not a reconstructed microstep eligibility certificate.",
+  "no_model_or_native_calls": true,
+  "checks": 65369,
+  "seconds": 0.18228545784950256,
+  "peak_process_rss_bytes": 24838144,
+  "script_sha256": "2d3003d6e71d30856fe90af6e17ed7572a733cb4a75055c69fb16dc01fc10505",
+  "thread_environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  }
+}

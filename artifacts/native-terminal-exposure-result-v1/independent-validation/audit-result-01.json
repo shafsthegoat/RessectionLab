@@ -1,0 +1,758 @@
+{
+  "audit_source_sha256": "cbb86b0587e8e21c98f152be7eea3267e0e2f21fc604891143793a0f0a8c4853",
+  "checks": 21571,
+  "costs": {
+    "baseline_unpaired_worker_seconds": 95.43746245792136,
+    "group_peak_rss_bytes": 333856768,
+    "native_seconds": 38.13929159124382,
+    "nested_independent_row_seconds": 23.84177941805683,
+    "numerical_row_seconds": 39.4830728743691,
+    "output_bytes_before_receipt": 2415980,
+    "parent_seconds": 64.86012312513776,
+    "reported_independent_checker_seconds": 21.909181956667453,
+    "reported_plane_seconds": 1.6423831665888429,
+    "saved_reclipping_seconds": 1.5537058343179524,
+    "this_audit_seconds": 1.6693717080634087,
+    "worker_seconds": 63.83250133297406
+  },
+  "counts": {
+    "accepted": 121,
+    "certificates": 13,
+    "complete": 11,
+    "empty": 5,
+    "rejected": 7,
+    "unexecuted_prior_refusal": 52
+  },
+  "executed_canonical_commit": "bc78bbb8819b3807def161ebc925c1ca99fc317a",
+  "fine_strict_gain_rows": [
+    "aligned-suction-0.25mm",
+    "half-phase-aspirator-0.25mm",
+    "half-phase-suction-0.25mm",
+    "tilted-suction-0.25mm"
+  ],
+  "independently_meets_primary_criterion": false,
+  "inputs": {
+    "build/native-cut-residual-diagnostic-v1/comparison-repair-v1/config.json": {
+      "bytes": 1991,
+      "sha256": "7ee69a20f6caed745cdcc230cfc5f6006beb1887a3d852b265f1e4723f9eaf44"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-repair-v1/source-index.json": {
+      "bytes": 17850,
+      "sha256": "b5247e145e592c053a60193c1189e8d5539795073725b63794c1e889c1b0b531"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-01/launcher.json": {
+      "bytes": 2307,
+      "sha256": "1c6eb8c57543d39e8c9c533e7185bee8f6941c53377d677d4929e508d20b3ebe"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-01/progress.json": {
+      "bytes": 629,
+      "sha256": "871b2255176684fca86997e15d9f2a226ccc210e5ed7236ff971fde39ebc89b3"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/aligned-aspirator-0.5mm.json": {
+      "bytes": 104547,
+      "sha256": "bc9949d9fae12f21061e28300b5319c0f48bae2c4dcef45ae50e5901665bb062"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/aligned-suction-0.25mm.json": {
+      "bytes": 196567,
+      "sha256": "ef45793b21b91464168a3af9bd50515a8efbaf9415c980cf8599cf60c0534a76"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/aligned-suction-0.5mm.json": {
+      "bytes": 35634,
+      "sha256": "9d7f88f33ede196b5f7c79558db9c9cec57e02c4176de09a291a65c7db240b94"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/aligned-suction-1mm.json": {
+      "bytes": 8984,
+      "sha256": "49a94ad22c78d6787a5471fb151df2833e12dfc8548b441e8f6feacc4eccf0ca"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-aspirator-0.25mm.json": {
+      "bytes": 575021,
+      "sha256": "7d38515956cfc9befe7e82b9cda7432a15a163cf2f5b36d2de62f2ac8b7b08cd"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-aspirator-0.5mm.json": {
+      "bytes": 93922,
+      "sha256": "d21fa3447a40cb420e6d37f984eb596c369cdc23b5e18f3cfeb173090e1841e5"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-aspirator-1mm.json": {
+      "bytes": 15767,
+      "sha256": "20b3aa0f410216981d178064891ea00da98249fc0b170d2ed1efcdf1fc68deb2"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-suction-0.25mm.json": {
+      "bytes": 179573,
+      "sha256": "8f1e74246a973c255026c5ac72389b69adecc1a55e29b5fbbada20b7c0e31719"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-suction-0.5mm.json": {
+      "bytes": 31767,
+      "sha256": "3475f9bd0638bcae5c8f4a2012aefbfec99fddd03baf96d234b1e12a8085f192"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-suction-1mm.json": {
+      "bytes": 4690,
+      "sha256": "d3264cb3adb5459cc326d5ca8311b66b292bba50b8f4795caaf4c837faed4897"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/tilted-aspirator-0.5mm.json": {
+      "bytes": 39448,
+      "sha256": "2f53b9ad2ff39f9c2b852af818d1e65176c6f4f496772dab1743c660edeb1f2b"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/tilted-suction-0.25mm.json": {
+      "bytes": 195338,
+      "sha256": "7051c44dbfa52f07be80b05db7d92b5bb2a3761c60022a80e1f2cb017fca6bea"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/tilted-suction-0.5mm.json": {
+      "bytes": 38063,
+      "sha256": "4026bf2cbb117bfb430082182786ea4e1278530ecc5fc91918741d3e9a16dd92"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-02/launcher.json": {
+      "bytes": 3559,
+      "sha256": "373c08eaaa655dd52d5831533210bd57f79a53c805fa5e4cbd57d64c8f458028"
+    },
+    "build/native-cut-residual-diagnostic-v1/comparison-run-02/report.json": {
+      "bytes": 895226,
+      "sha256": "2ff4b774c1fde080fbf0e6854a7b48a85ec4417590347df2191f8a893ff38077"
+    },
+    "build/native-cut-union-v1/declaration.json": {
+      "bytes": 7614,
+      "sha256": "0f909c16508e642e8f570214505e472edf92fd0ea78525779d7c0ab38896aefe"
+    },
+    "build/native-partial-volume-v1/run-01/report.json": {
+      "bytes": 706504,
+      "sha256": "c9265daaf186b025403ee499a333f0e2811feab66f65e10a98a3d97f17300ee9"
+    },
+    "build/native-partial-volume-v1/runner-repair/saved-parity-correction.json": {
+      "bytes": 11107,
+      "sha256": "1d9c5d364b0aa07847eaaad06a10c7c850f7f71413226e8c4cc4151caedbe1e8"
+    }
+  },
+  "limitations": [
+    "Generated idealized evacuation/exposure model; no patient, force, clinical or learned-policy validation.",
+    "Native history constraints are authenticated saved independent checker certificates; this audit independently reclips their final geometry, without native replay.",
+    "The planned contact upper bound can include unexecuted suffixes. The actual target cap is zero unless action10 committed.",
+    "Rewards use the same whole-cell rule; changed physical removals/rewards are reported rather than normalized away.",
+    "Historical timing is not paired. The failed monitor attempt is separate retained provenance, not a model failure or free compute."
+  ],
+  "reported_current_criterion": {
+    "action_result_equality_required": false,
+    "additional_baseline_completions": [],
+    "all_18_rows_present": true,
+    "all_nonempty_audits_accepted": true,
+    "all_physical_bounds_respected": true,
+    "all_six_fine_target_volumes_nonregressing": false,
+    "baseline_completion_count": 13,
+    "lost_baseline_completions": [
+      "aligned-aspirator-0.25mm",
+      "tilted-aspirator-0.25mm"
+    ],
+    "meets_predeclared_useful_criterion": false,
+    "no_preview_budget_refusal": false,
+    "primary_outcome": "certified_physical_target_gain_under_same_capsule_exposure_closure",
+    "strict_fine_target_gain_rows": [
+      "aligned-suction-0.25mm",
+      "half-phase-aspirator-0.25mm",
+      "half-phase-suction-0.25mm",
+      "tilted-suction-0.25mm"
+    ],
+    "target_or_reward_improvement_is_not_actor_success": true
+  },
+  "retained_monitor_failure": {
+    "clean_reap": true,
+    "parent_seconds": 1.5872435001656413,
+    "reason": "FileNotFoundError:[Errno 2] No such file or directory: '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-residual-diagnostic-v1/comparison-run-01/report.json.tmp'",
+    "recorded_native_work": {
+      "native_seconds": 0.6793625834397972,
+      "native_strokes_returned": 11,
+      "native_strokes_started": 11
+    },
+    "scope": "Separate interrupted attempt; costs not silently discarded or included inside fresh run timings.",
+    "status": "incomplete_or_failed",
+    "worker_exit_code": -15
+  },
+  "retained_original_baseline_reported_criterion": {
+    "additional_default_completions": [
+      "aligned-suction-0.5mm",
+      "tilted-suction-0.5mm"
+    ],
+    "all_18_rows_present": true,
+    "all_nonempty_audits_accepted": true,
+    "all_physical_bounds_respected": true,
+    "all_six_fine_row_bounds_strictly_tightened": true,
+    "legacy_action_whole_cell_reward_projection_unchanged": false,
+    "lost_default_completions": [],
+    "lost_union_completions": [],
+    "meets_predeclared_useful_criterion": false,
+    "primary_outcome": "conservative_physical_volume_bound_tightening",
+    "target_or_reward_improvement_is_not_actor_success": true
+  },
+  "rows": [
+    {
+      "accepted_actions": 10,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 0.4356341812977854,
+      "actual_target_gap_mm3": 0.22782168129778524,
+      "complete": true,
+      "first_refusal": null,
+      "physical_tissue_after_mm3": 24.59375,
+      "physical_tissue_before_mm3": 24.59375,
+      "planned_target_cap_mm3": 0.4356341812977854,
+      "reward_after": -4.162400000000001,
+      "reward_before": -4.162400000000001,
+      "row_id": "aligned-suction-1mm",
+      "source_evacuated_mm3": 31.25,
+      "spacing_mm": 1.0,
+      "target_after_mm3": 0.20781250000000018,
+      "target_before_mm3": 0.20781250000000018,
+      "target_gain_mm3": 0.0,
+      "target_source_interval_mm3": [
+        0.20781245827674855,
+        0.5078125
+      ],
+      "target_undercredit_fraction": 0.5229655777218586,
+      "whole_cell_count_after": 19,
+      "whole_cell_count_before": 19,
+      "whole_cell_target_after_mm3": 0.0,
+      "whole_cell_target_before_mm3": 0.0
+    },
+    {
+      "accepted_actions": 0,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 0.0,
+      "actual_target_gap_mm3": 0.0,
+      "complete": false,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          0.9375
+        ],
+        "index": 1,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+      },
+      "physical_tissue_after_mm3": 0.0,
+      "physical_tissue_before_mm3": 0.0,
+      "planned_target_cap_mm3": 5.0684361477915365,
+      "reward_after": 0.0,
+      "reward_before": 0.0,
+      "row_id": "aligned-aspirator-1mm",
+      "source_evacuated_mm3": 0.0,
+      "spacing_mm": 1.0,
+      "target_after_mm3": 0.0,
+      "target_before_mm3": 0.0,
+      "target_gain_mm3": 0.0,
+      "target_source_interval_mm3": [
+        0.0,
+        0.0
+      ],
+      "target_undercredit_fraction": null,
+      "whole_cell_count_after": 0,
+      "whole_cell_count_before": 0,
+      "whole_cell_target_after_mm3": 0.0,
+      "whole_cell_target_before_mm3": 0.0
+    },
+    {
+      "accepted_actions": 9,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 0.0,
+      "actual_target_gap_mm3": 0.0,
+      "complete": false,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          2.076470588235294
+        ],
+        "index": 10,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+      },
+      "physical_tissue_after_mm3": 14.84375,
+      "physical_tissue_before_mm3": 14.84375,
+      "planned_target_cap_mm3": 0.4356341812977854,
+      "reward_after": -1.124,
+      "reward_before": -1.124,
+      "row_id": "half-phase-suction-1mm",
+      "source_evacuated_mm3": 14.84375,
+      "spacing_mm": 1.0,
+      "target_after_mm3": 0.0,
+      "target_before_mm3": 0.0,
+      "target_gain_mm3": 0.0,
+      "target_source_interval_mm3": [
+        0.0,
+        1.4012984643248173e-44
+      ],
+      "target_undercredit_fraction": null,
+      "whole_cell_count_after": 4,
+      "whole_cell_count_before": 4,
+      "whole_cell_target_after_mm3": 0.0,
+      "whole_cell_target_before_mm3": 0.0
+    },
+    {
+      "accepted_actions": 10,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 5.0684361477915365,
+      "actual_target_gap_mm3": 1.4746861477915352,
+      "complete": true,
+      "first_refusal": null,
+      "physical_tissue_after_mm3": 92.4140625,
+      "physical_tissue_before_mm3": 92.4140625,
+      "planned_target_cap_mm3": 5.0684361477915365,
+      "reward_after": -10.602399985694886,
+      "reward_before": -10.602399985694886,
+      "row_id": "half-phase-aspirator-1mm",
+      "source_evacuated_mm3": 92.4140625,
+      "spacing_mm": 1.0,
+      "target_after_mm3": 3.5937500000000013,
+      "target_before_mm3": 3.5937500000000013,
+      "target_gain_mm3": 0.0,
+      "target_source_interval_mm3": [
+        3.1124998629093166,
+        5.512500166893006
+      ],
+      "target_undercredit_fraction": 0.290954863549795,
+      "whole_cell_count_after": 56,
+      "whole_cell_count_before": 56,
+      "whole_cell_target_after_mm3": 0.8000000000000007,
+      "whole_cell_target_before_mm3": 0.8000000000000007
+    },
+    {
+      "accepted_actions": 0,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 0.0,
+      "actual_target_gap_mm3": 0.0,
+      "complete": false,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          0.8125
+        ],
+        "index": 1,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+      },
+      "physical_tissue_after_mm3": 0.0,
+      "physical_tissue_before_mm3": 0.0,
+      "planned_target_cap_mm3": 0.4356341812977854,
+      "reward_after": 0.0,
+      "reward_before": 0.0,
+      "row_id": "tilted-suction-1mm",
+      "source_evacuated_mm3": 0.0,
+      "spacing_mm": 1.0,
+      "target_after_mm3": 0.0,
+      "target_before_mm3": 0.0,
+      "target_gain_mm3": 0.0,
+      "target_source_interval_mm3": [
+        0.0,
+        0.0
+      ],
+      "target_undercredit_fraction": null,
+      "whole_cell_count_after": 0,
+      "whole_cell_count_before": 0,
+      "whole_cell_target_after_mm3": 0.0,
+      "whole_cell_target_before_mm3": 0.0
+    },
+    {
+      "accepted_actions": 0,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 0.0,
+      "actual_target_gap_mm3": 0.0,
+      "complete": false,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          0.25
+        ],
+        "index": 1,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+      },
+      "physical_tissue_after_mm3": 0.0,
+      "physical_tissue_before_mm3": 0.0,
+      "planned_target_cap_mm3": 5.0684361477915365,
+      "reward_after": 0.0,
+      "reward_before": 0.0,
+      "row_id": "tilted-aspirator-1mm",
+      "source_evacuated_mm3": 0.0,
+      "spacing_mm": 1.0,
+      "target_after_mm3": 0.0,
+      "target_before_mm3": 0.0,
+      "target_gain_mm3": 0.0,
+      "target_source_interval_mm3": [
+        0.0,
+        0.0
+      ],
+      "target_undercredit_fraction": null,
+      "whole_cell_count_after": 0,
+      "whole_cell_count_before": 0,
+      "whole_cell_target_after_mm3": 0.0,
+      "whole_cell_target_before_mm3": 0.0
+    },
+    {
+      "accepted_actions": 10,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 0.4356341812977854,
+      "actual_target_gap_mm3": 0.16942324379778517,
+      "complete": true,
+      "first_refusal": null,
+      "physical_tissue_after_mm3": 25.646484375,
+      "physical_tissue_before_mm3": 25.646484375,
+      "planned_target_cap_mm3": 0.4356341812977854,
+      "reward_after": -4.612400000000001,
+      "reward_before": -4.612400000000001,
+      "row_id": "aligned-suction-0.5mm",
+      "source_evacuated_mm3": 29.173828125,
+      "spacing_mm": 0.5,
+      "target_after_mm3": 0.26621093750000024,
+      "target_before_mm3": 0.26621093750000024,
+      "target_gain_mm3": 0.0,
+      "target_source_interval_mm3": [
+        0.26464840397238726,
+        0.3271484375
+      ],
+      "target_undercredit_fraction": 0.38891173161174175,
+      "whole_cell_count_after": 170,
+      "whole_cell_count_before": 170,
+      "whole_cell_target_after_mm3": 0.0,
+      "whole_cell_target_before_mm3": 0.0
+    },
+    {
+      "accepted_actions": 10,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 5.0684361477915365,
+      "actual_target_gap_mm3": 1.2723423977915354,
+      "complete": true,
+      "first_refusal": null,
+      "physical_tissue_after_mm3": 104.3359375,
+      "physical_tissue_before_mm3": 103.103515625,
+      "planned_target_cap_mm3": 5.0684361477915365,
+      "reward_after": -16.357400046491627,
+      "reward_before": -16.357400046491627,
+      "row_id": "aligned-aspirator-0.5mm",
+      "source_evacuated_mm3": 115.3984375,
+      "spacing_mm": 0.5,
+      "target_after_mm3": 3.796093750000001,
+      "target_before_mm3": 3.796093750000001,
+      "target_gain_mm3": 0.0,
+      "target_source_interval_mm3": [
+        3.777343530207872,
+        3.8566406406462197
+      ],
+      "target_undercredit_fraction": 0.25103253956270744,
+      "whole_cell_count_after": 716,
+      "whole_cell_count_before": 716,
+      "whole_cell_target_after_mm3": 1.587500000000001,
+      "whole_cell_target_before_mm3": 1.587500000000001
+    },
+    {
+      "accepted_actions": 10,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 0.4356341812977854,
+      "actual_target_gap_mm3": 0.24247011879778524,
+      "complete": true,
+      "first_refusal": null,
+      "physical_tissue_after_mm3": 26.0947265625,
+      "physical_tissue_before_mm3": 26.0947265625,
+      "planned_target_cap_mm3": 0.4356341812977854,
+      "reward_after": -3.262400000000001,
+      "reward_before": -3.262400000000001,
+      "row_id": "half-phase-suction-0.5mm",
+      "source_evacuated_mm3": 26.0947265625,
+      "spacing_mm": 0.5,
+      "target_after_mm3": 0.19316406250000018,
+      "target_before_mm3": 0.19316406250000018,
+      "target_gain_mm3": 0.0,
+      "target_source_interval_mm3": [
+        0.19316405802965161,
+        0.20000001043081286
+      ],
+      "target_undercredit_fraction": 0.5565911244049982,
+      "whole_cell_count_after": 116,
+      "whole_cell_count_before": 116,
+      "whole_cell_target_after_mm3": 0.0,
+      "whole_cell_target_before_mm3": 0.0
+    },
+    {
+      "accepted_actions": 10,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 5.0684361477915365,
+      "actual_target_gap_mm3": 1.4516392727915353,
+      "complete": true,
+      "first_refusal": null,
+      "physical_tissue_after_mm3": 103.9970703125,
+      "physical_tissue_before_mm3": 103.8330078125,
+      "planned_target_cap_mm3": 5.0684361477915365,
+      "reward_after": -14.00239998569489,
+      "reward_before": -14.00239998569489,
+      "row_id": "half-phase-aspirator-0.5mm",
+      "source_evacuated_mm3": 103.9970703125,
+      "spacing_mm": 0.5,
+      "target_after_mm3": 3.6167968750000012,
+      "target_before_mm3": 3.6167968750000012,
+      "target_gain_mm3": 0.0,
+      "target_source_interval_mm3": [
+        3.4769530147314067,
+        4.428125083446503
+      ],
+      "target_undercredit_fraction": 0.2864077262616905,
+      "whole_cell_count_after": 608,
+      "whole_cell_count_before": 608,
+      "whole_cell_target_after_mm3": 1.300000000000001,
+      "whole_cell_target_before_mm3": 1.300000000000001
+    },
+    {
+      "accepted_actions": 10,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 0.4356341812977854,
+      "actual_target_gap_mm3": 0.21075213240020432,
+      "complete": true,
+      "first_refusal": null,
+      "physical_tissue_after_mm3": 25.836538897063104,
+      "physical_tissue_before_mm3": 25.755484209563104,
+      "planned_target_cap_mm3": 0.4356341812977854,
+      "reward_after": -4.420574326783045,
+      "reward_before": -4.420574326783045,
+      "row_id": "tilted-suction-0.5mm",
+      "source_evacuated_mm3": 30.177246093749993,
+      "spacing_mm": 0.5,
+      "target_after_mm3": 0.2248820488975811,
+      "target_before_mm3": 0.2248820488975811,
+      "target_gain_mm3": 0.0,
+      "target_source_interval_mm3": [
+        0.21764525846811,
+        0.29105046653421596
+      ],
+      "target_undercredit_fraction": 0.48378236017283727,
+      "whole_cell_count_after": 164,
+      "whole_cell_count_before": 164,
+      "whole_cell_target_after_mm3": 0.034854727748714655,
+      "whole_cell_target_before_mm3": 0.034854727748714655
+    },
+    {
+      "accepted_actions": 2,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 0.0,
+      "actual_target_gap_mm3": 0.0,
+      "complete": false,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          1.8,
+          0.9375
+        ],
+        "index": 3,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+      },
+      "physical_tissue_after_mm3": 29.220938131466156,
+      "physical_tissue_before_mm3": 28.505606100216156,
+      "planned_target_cap_mm3": 5.0684361477915365,
+      "reward_after": -4.471999999999999,
+      "reward_before": -4.471999999999999,
+      "row_id": "tilted-aspirator-0.5mm",
+      "source_evacuated_mm3": 33.73388671874999,
+      "spacing_mm": 0.5,
+      "target_after_mm3": 0.0,
+      "target_before_mm3": 0.0,
+      "target_gain_mm3": 0.0,
+      "target_source_interval_mm3": [
+        0.0,
+        0.05951214750530198
+      ],
+      "target_undercredit_fraction": null,
+      "whole_cell_count_after": 176,
+      "whole_cell_count_before": 176,
+      "whole_cell_target_after_mm3": 0.0,
+      "whole_cell_target_before_mm3": 0.0
+    },
+    {
+      "accepted_actions": 10,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 0.4356341812977854,
+      "actual_target_gap_mm3": 0.0718402359852851,
+      "complete": true,
+      "first_refusal": null,
+      "physical_tissue_after_mm3": 27.9677734375,
+      "physical_tissue_before_mm3": 27.0784912109375,
+      "planned_target_cap_mm3": 0.4356341812977854,
+      "reward_after": -5.116149995306137,
+      "reward_before": -5.116149995306137,
+      "row_id": "aligned-suction-0.25mm",
+      "source_evacuated_mm3": 29.77734375,
+      "spacing_mm": 0.25,
+      "target_after_mm3": 0.3637939453125003,
+      "target_before_mm3": 0.28083496093750027,
+      "target_gain_mm3": 0.08295898437500004,
+      "target_source_interval_mm3": [
+        0.3422363165300339,
+        0.4087890780065209
+      ],
+      "target_undercredit_fraction": 0.1649095481242264,
+      "whole_cell_count_after": 1565,
+      "whole_cell_count_before": 1565,
+      "whole_cell_target_after_mm3": 0.11406250000000029,
+      "whole_cell_target_before_mm3": 0.11406250000000029
+    },
+    {
+      "accepted_actions": 0,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 0.0,
+      "actual_target_gap_mm3": 0.0,
+      "complete": false,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "index": 1,
+        "reason": "CUMULATIVE_CUT_COVERAGE_BUDGET"
+      },
+      "physical_tissue_after_mm3": 0.0,
+      "physical_tissue_before_mm3": 107.5986328125,
+      "planned_target_cap_mm3": 5.0684361477915365,
+      "reward_after": 0.0,
+      "reward_before": -16.729274978318816,
+      "row_id": "aligned-aspirator-0.25mm",
+      "source_evacuated_mm3": 0.0,
+      "spacing_mm": 0.25,
+      "target_after_mm3": 0.0,
+      "target_before_mm3": 4.183349609375002,
+      "target_gain_mm3": -4.183349609375002,
+      "target_source_interval_mm3": [
+        0.0,
+        0.0
+      ],
+      "target_undercredit_fraction": null,
+      "whole_cell_count_after": 0,
+      "whole_cell_count_before": 6468,
+      "whole_cell_target_after_mm3": 0.0,
+      "whole_cell_target_before_mm3": 3.2046875000000026
+    },
+    {
+      "accepted_actions": 10,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 0.4356341812977854,
+      "actual_target_gap_mm3": 0.09117617348528517,
+      "complete": true,
+      "first_refusal": null,
+      "physical_tissue_after_mm3": 27.71923828125,
+      "physical_tissue_before_mm3": 27.675048828125,
+      "planned_target_cap_mm3": 0.4356341812977854,
+      "reward_after": -4.507399997317793,
+      "reward_before": -4.507399997317793,
+      "row_id": "half-phase-suction-0.25mm",
+      "source_evacuated_mm3": 27.71923828125,
+      "spacing_mm": 0.25,
+      "target_after_mm3": 0.34445800781250024,
+      "target_before_mm3": 0.30026855468750024,
+      "target_gain_mm3": 0.044189453125,
+      "target_source_interval_mm3": [
+        0.34431151114404196,
+        0.3732177838683129
+      ],
+      "target_undercredit_fraction": 0.20929526974597085,
+      "whole_cell_count_after": 1384,
+      "whole_cell_count_before": 1384,
+      "whole_cell_target_after_mm3": 0.1500000000000002,
+      "whole_cell_target_before_mm3": 0.1500000000000002
+    },
+    {
+      "accepted_actions": 10,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 5.0684361477915365,
+      "actual_target_gap_mm3": 0.5769078274790349,
+      "complete": true,
+      "first_refusal": null,
+      "physical_tissue_after_mm3": 108.7762451171875,
+      "physical_tissue_before_mm3": 107.970458984375,
+      "planned_target_cap_mm3": 5.0684361477915365,
+      "reward_after": -15.529899980330473,
+      "reward_before": -15.529899980330473,
+      "row_id": "half-phase-aspirator-0.25mm",
+      "source_evacuated_mm3": 108.7762451171875,
+      "spacing_mm": 0.25,
+      "target_after_mm3": 4.491528320312502,
+      "target_before_mm3": 4.361401367187502,
+      "target_gain_mm3": 0.130126953125,
+      "target_source_interval_mm3": [
+        4.485473496839403,
+        4.53781745582819
+      ],
+      "target_undercredit_fraction": 0.11382363527069592,
+      "whole_cell_count_after": 6020,
+      "whole_cell_count_before": 6020,
+      "whole_cell_target_after_mm3": 3.0375000000000023,
+      "whole_cell_target_before_mm3": 3.0375000000000023
+    },
+    {
+      "accepted_actions": 10,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 0.4356341812977854,
+      "actual_target_gap_mm3": 0.112539510600834,
+      "complete": true,
+      "first_refusal": null,
+      "physical_tissue_after_mm3": 27.564664493817325,
+      "physical_tissue_before_mm3": 27.218106876629825,
+      "planned_target_cap_mm3": 0.4356341812977854,
+      "reward_after": -5.045654012465475,
+      "reward_before": -5.045654012465475,
+      "row_id": "tilted-suction-0.25mm",
+      "source_evacuated_mm3": 29.902282714843743,
+      "spacing_mm": 0.25,
+      "target_after_mm3": 0.3230946706969514,
+      "target_before_mm3": 0.29861182102075834,
+      "target_gain_mm3": 0.024482849676193075,
+      "target_source_interval_mm3": [
+        0.31998776242835436,
+        0.3425474964169552
+      ],
+      "target_undercredit_fraction": 0.25833489526825176,
+      "whole_cell_count_after": 1543,
+      "whole_cell_count_before": 1543,
+      "whole_cell_target_after_mm3": 0.11551748837485533,
+      "whole_cell_target_before_mm3": 0.11551748837485533
+    },
+    {
+      "accepted_actions": 0,
+      "action_result_projection_equal": false,
+      "actual_target_cap_mm3": 0.0,
+      "actual_target_gap_mm3": 0.0,
+      "complete": false,
+      "first_refusal": {
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "index": 1,
+        "reason": "CUMULATIVE_CUT_COVERAGE_BUDGET"
+      },
+      "physical_tissue_after_mm3": 0.0,
+      "physical_tissue_before_mm3": 107.45555860067616,
+      "planned_target_cap_mm3": 5.0684361477915365,
+      "reward_after": 0.0,
+      "reward_before": -16.89326669592302,
+      "row_id": "tilted-aspirator-0.25mm",
+      "source_evacuated_mm3": 0.0,
+      "spacing_mm": 0.25,
+      "target_after_mm3": 0.0,
+      "target_before_mm3": 4.389845815668565,
+      "target_gain_mm3": -4.389845815668565,
+      "target_source_interval_mm3": [
+        0.0,
+        0.0
+      ],
+      "target_undercredit_fraction": null,
+      "whole_cell_count_after": 0,
+      "whole_cell_count_before": 6504,
+      "whole_cell_target_after_mm3": 0.0,
+      "whole_cell_target_before_mm3": 3.161777750881094
+    }
+  ],
+  "schema": "independent-saved-exposure-matrix-v1",
+  "status": "PASS",
+  "work": {
+    "budget_refusals": 2,
+    "evaluator_face_clips": 13350,
+    "evaluator_full_parent_boxes": 12541,
+    "evaluator_leaf_visits": 136372,
+    "evaluator_partial_parent_boxes": 4304,
+    "leaf_tests": 51380174,
+    "new_leaf_count": 9214974,
+    "peak_tracked_cells": 1360,
+    "witness_rows": 159347
+  }
+}

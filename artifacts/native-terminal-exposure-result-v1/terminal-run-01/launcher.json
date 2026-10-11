@@ -1,0 +1,89 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "cleanup_reserve_seconds": 10,
+    "cooperative_worker_seconds": 240,
+    "max_grid_cells": 2000000,
+    "max_independent_audits": 18,
+    "max_native_strokes": 180,
+    "output_bytes": 8388608,
+    "parent_wall_seconds": 250,
+    "source_bytes": 1048576,
+    "threads": 1,
+    "worker_peak_rss_bytes": 2147483648
+  },
+  "child_reaped": true,
+  "cleanup_actions": [],
+  "cleanup_errors": [
+    "cleanup:[Errno 1] Operation not permitted"
+  ],
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-residual-diagnostic-v1/terminal-run-01/absent-worker-cache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-residual-diagnostic-v1/comparison-terminal-v1/probe_exposure.py",
+    "--worker",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-cut-residual-diagnostic-v1/terminal-run-01",
+    "--source-index-sha256",
+    "8b16ea13c6936fcd6051d1de5255db5565e9d8aa0b4c1c4e91d2dc199abd36d9"
+  ],
+  "elapsed_seconds": 100.2064017909579,
+  "last_saved_progress": {
+    "current_action": 10,
+    "current_row": "tilted-aspirator-0.25mm",
+    "native_call_costs_including_incomplete_row": {
+      "native_seconds": 56.052396004553884,
+      "native_strokes_returned": 146,
+      "native_strokes_started": 146
+    },
+    "native_call_in_progress": false,
+    "returned_preview_coverage_work_including_incomplete_row": {
+      "budget_refusals": 0,
+      "leaf_tests": 68252572,
+      "new_leaf_count": 15506080,
+      "peak_tracked_cells": 1409,
+      "returned_previews_accounted": 146,
+      "witness_rows": 219622
+    },
+    "scope": "Completed native runtime only; an interrupted active call is additionally bounded by parent wall time"
+  },
+  "output_bytes_before_receipt": 3716270,
+  "planned_action_slots": 180,
+  "planned_rows": 18,
+  "remaining_owned_pids": [],
+  "report_sha256": "d3f20430fea84bead52156122c43e6bde40bebb229d5983e808c6e175579a8db",
+  "rss_samples": 483,
+  "sampled_peak_group_rss_bytes": 528400384,
+  "schema": "owned_same_capsule_exposure_matrix_v1",
+  "scope": "generated terminal-microstep exposure representation model; no baseline replay, training, policy change, patient data or measured mechanics",
+  "source_index_sha256": "8b16ea13c6936fcd6051d1de5255db5565e9d8aa0b4c1c4e91d2dc199abd36d9",
+  "status": "incomplete_or_failed",
+  "stop_reason": "live_group_rss_unknown",
+  "useful_criterion": {
+    "action_result_equality_required": false,
+    "additional_baseline_completions": [],
+    "all_18_rows_present": true,
+    "all_nonempty_audits_accepted": true,
+    "all_physical_bounds_respected": true,
+    "all_six_fine_target_volumes_nonregressing": true,
+    "baseline_completion_count": 13,
+    "lost_baseline_completions": [],
+    "meets_predeclared_useful_criterion": true,
+    "no_preview_budget_refusal": true,
+    "primary_outcome": "certified_physical_target_gain_under_same_capsule_exposure_closure",
+    "strict_fine_target_gain_rows": [
+      "aligned-aspirator-0.25mm",
+      "aligned-suction-0.25mm",
+      "half-phase-aspirator-0.25mm",
+      "half-phase-suction-0.25mm",
+      "tilted-aspirator-0.25mm",
+      "tilted-suction-0.25mm"
+    ],
+    "target_or_reward_improvement_is_not_actor_success": true
+  },
+  "worker_exit_code": 0,
+  "worker_report_status": "completed"
+}

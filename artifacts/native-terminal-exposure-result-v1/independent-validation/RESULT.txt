@@ -1,0 +1,90 @@
+Independent saved-result audit: same-capsule parent exposure closure
+
+The audit passes, but the experiment's predefined useful-improvement criterion
+is NEGATIVE. Both facts are retained. All 18 rows and 180 slots are accounted:
+121 accepted actions, 7 refused actions, and 52 unexecuted suffix slots; 128 native
+calls. Only 11 histories complete versus the retained 13. All 13 nonempty prefix
+certificates pass independent full-tool/frontier geometry; five empty cases are
+explicitly not applicable. All saved physical bounds, target mass enclosures,
+and actual committed target caps pass.
+
+Fine-grid physical target volumes (mm3):
+  Scene                    Before          After           Gain
+  aligned suction          0.28083496094   0.36379394531   +0.08295898438
+  aligned aspirator        4.18334960938   0              -4.18334960938
+  half-phase suction       0.30026855469   0.34445800781   +0.04418945313
+  half-phase aspirator     4.36140136719   4.49152832031   +0.13012695313
+  tilted suction           0.29861182102   0.32309467070   +0.02448284968
+  tilted aspirator         4.38984581567   0              -4.38984581567
+
+The two losses are explicit resource refusals, not inferred geometric obstacles.
+Both fine aligned/tilted aspirator rows reject action1 and roll back every
+tentative leaf/removal. They reach the fixed 8,192 witness-row limit. Their leaf
+tests are 2,502,643 and 2,439,978, below 4,194,304; peak resident partial parents
+are 405 and 395, below 4,096. Neither leaf-test nor resident-parent cap explains
+the refusal. Their zero target volume is a failed completion, not zero residual:
+the actual committed target-cap bound is correctly zero because action10 never
+executes; the unchanged planned cap is 5.06843614779 mm3. All nine suffix actions
+remain unexecuted. The criterion also truthfully fails fine-target nonregression
+and no-budget-refusal requirements. No tolerance or denominator was relaxed.
+
+The successful aligned-suction row supports the exposure-lag diagnosis. Its
+0.082958984375 mm3 gain equals the previously measured contribution of missing
+leaf parents face-exposed in the final old whole-removal state. Target undercredit
+falls from 35.5342% to 16.4910% of the executed 0.43563418130 mm3 cap. The remaining
+gap is 0.07184023599 mm3: the prior depth-3 containment boundary gap was
+0.05626406411, leaving 0.01557617188 below that same-depth geometric ceiling.
+This equality is an informative scalar join; this audit does not reconstruct
+every microstep's exposure timing. The new accepted geometry, rather than extra
+contact, is independently reclipped and credited. The four successful fine rows
+keep their original whole-parent removed counts and whole-cell rewards exactly.
+The complete action-result projections differ because certificate work changes;
+they are not mislabeled as unchanged executions. The two truncated rows report
+their lost removals and changed total rewards explicitly.
+
+Fixed tools, actions, grids, source hashes, public parent-mass contracts, static
+upper bounds and analytic cap definitions match the previous matrix. The sole
+declared model intervention is same_step_parent_closure at the same depth and
+proof budgets. Reward coefficients and whole-cell basis are unchanged. Every
+accepted action's source-state and cumulative evacuation chain is checked;
+every failed action retains its input state. Independent geometry digests bind
+the actual source/history and explicit model. The saved bit union is counted
+once, float32 source-mass enclosures are recomputed, and physical tissue/target
+volumes are reclipped with the frozen independent plane evaluator. No native
+engine, producer geometry, raw dataset, learning, or patient input is imported.
+
+Resource accounting:
+  Fresh native work:             38.1392916 s (within row total 39.4830729 s)
+  Independent checker:           21.9091820 s
+  Plane evaluation:               1.6423832 s
+  Worker / owned parent:         63.8325013 / 64.8601231 s
+  Sampled process-group peak:     333,856,768 B
+  Output before receipt:         2,415,980 B
+  Attempted leaf tests:          51,380,174
+  Attempted new-leaf events:      9,214,974
+  Attempted witness rows:           159,347
+  Overall peak tracked parents:       1,360
+
+All counts include returned rejected-preview work. Timing scopes are nested,
+not additive. The 95.4374625 s historical worker time is not a matched speed
+baseline: this run terminates two histories early. No speedup claim is justified.
+The earlier monitor-race attempt remains a separate failed/reaped attempt:
+1.5872435 s parent, 11 started/returned native calls, 0.6793626 s recorded native
+work, child exit -15. It failed while the parent inspected report.json.tmp during
+atomic replacement. Its cost is not silently discarded, and its result is not
+rewritten as a model failure or successful matrix.
+
+Independent audit: exit0, 21,571 checks, 1.6694 s total including 1.5537 s saved
+reclipping. It visited 12,541 full parents, 4,304 partial parents, 136,372 leaf bits
+and 13,350 clipping faces. Executed canonical sources were authenticated against
+Git commit bc78bbb because authorized successor source edits may already exist;
+the exact runtime closure, report and launcher are hash-bound. The audit outcome
+is PASS and independently_meets_primary_criterion is false.
+
+Interpretation: same-capsule exposure closure recovers genuine certified-volume
+undercredit in the successful generated rows, but its witness cost prevents this
+iteration from meeting the full fixed-matrix requirement. The proposed terminal-
+microstep closure schedule is a separate experiment; nothing here assumes it
+will recover the failed rows. Generated evacuation/exposure assumptions remain
+unvalidated tissue mechanics. There is no patient, clinical, force, or learned-
+policy benefit claim. Sparse geometry stays local/hash-pinned for reproduction.

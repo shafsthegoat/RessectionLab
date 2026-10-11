@@ -50,5 +50,9 @@ a witness claims to be terminal. Earlier modes remain available unchanged.
 The combined terminal-schedule batch passes **233 tests in 5.04 s**, including
 exact intermediate witnesses and all-capsule predecessor parity, independent
 early-closure attacks, and the original comparison criteria. Its fixed18 result
-is still pending at this source checkpoint. The original interrupted monitor
-attempt and complete negative comparison remain local and unmodified.
+was still pending at this source checkpoint. The subsequent
+[complete scientific result](../native-terminal-exposure-result-v1/RESULT.md)
+improves all six fine-grid estimates and preserves all 13 completions, with no
+budget refusals. Independent saved checks pass; the terminal supervisor's
+RSS/cleanup failure remains unresolved in its original receipt. The original
+interrupted attempt and complete negative comparison are archived unchanged.

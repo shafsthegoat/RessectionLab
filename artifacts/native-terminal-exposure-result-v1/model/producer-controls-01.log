@@ -1,0 +1,38 @@
+....FF...                                                                [100%]
+=================================== FAILURES ===================================
+______ test_prior_whole_parent_shaft_still_refuses_and_preview_is_atomic _______
+
+    def test_prior_whole_parent_shaft_still_refuses_and_preview_is_atomic():
+        cfg = config()
+        cfg = replace(cfg, tools=(replace(cfg.tools[0], shaft_radius_mm=.8),))
+        engine = NativeResectionEngine(cfg, immutable_state=True)
+        initial = engine.state_hash; empty = engine.evacuated_volume
+        preview = cut(engine, preview=True)
+        assert preview.feasible and engine.state_hash == initial and engine.evacuated_volume == empty
+        clone = engine.clone(); clone.commit_preview(preview)
+        assert engine.state_hash == initial and clone.evacuated_volume == preview.evacuated_volume['after']
+        engine.commit_preview(preview); before = engine.state_hash; volume = engine.evacuated_volume
+        rejected = cut(engine, 7.)
+>       assert not rejected.feasible and rejected.reason == 'SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE'
+E       AssertionError: assert (not False and 'HARD_GEOMETRY:WORKING_REACH' == 'SHAFT_BLOCKE...NATIVE_TISSUE'
+E        +  where False = NativeStrokeResult(feasible=False, reason='HARD_GEOMETRY:WORKING_REACH', tool_id='generated-parent-closure', tip_mm=(n...ide_image_unassessed'), native_footprint='cumulative_affine_parent_closure_evacuation_v3', interaction_mode='aspirate').feasible
+E         
+E         - SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE
+E         + HARD_GEOMETRY:WORKING_REACH)
+
+tests/test_native_leaf_exposure.py:117: AssertionError
+__ test_shared_leaf_budget_refuses_after_temporary_partial_cut_without_commit __
+
+    def test_shared_leaf_budget_refuses_after_temporary_partial_cut_without_commit():
+        engine = NativeResectionEngine(config(leaf_cap=1024), immutable_state=True)
+        state, volume = engine.state_hash, engine.evacuated_volume
+        result = cut(engine)
+        assert not result.feasible and result.reason == 'CUMULATIVE_CUT_COVERAGE_BUDGET'
+>       assert result.cut_union_attempt['new_leaf_count'] > 0
+E       assert 0 > 0
+
+tests/test_native_leaf_exposure.py:128: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_native_leaf_exposure.py::test_prior_whole_parent_shaft_still_refuses_and_preview_is_atomic
+FAILED tests/test_native_leaf_exposure.py::test_shared_leaf_budget_refuses_after_temporary_partial_cut_without_commit
+2 failed, 7 passed in 0.43s

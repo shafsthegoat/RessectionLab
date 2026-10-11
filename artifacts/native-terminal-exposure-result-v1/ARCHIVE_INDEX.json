@@ -1,0 +1,532 @@
+{
+  "version": "native-terminal-exposure-compact-archive-v1",
+  "canonical_commits": {
+    "all_capsule": "bc78bbb",
+    "terminal_only": "7ed4ef8",
+    "baseline": "b16ffec"
+  },
+  "files": [
+    {
+      "archive_path": "archive_result.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/archive_result.py",
+      "bytes": 3196,
+      "sha256": "4123d3f473de834580800ef11c3cbcfb7e03c607a1559bee4f627f0975df822b"
+    },
+    {
+      "archive_path": "comparison/README.txt",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison/README.txt",
+      "bytes": 4372,
+      "sha256": "c2b26bdb6bec6d36309ad36c10617d85c0baa636fb6b6d51d0d86f99103e83db"
+    },
+    {
+      "archive_path": "comparison/config.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison/config.json",
+      "bytes": 1991,
+      "sha256": "563ac0fbf84e8fcc6aa5f8770019b3cb84f2435b9ecaeb72549650a6e730e71b"
+    },
+    {
+      "archive_path": "comparison/freeze_sources.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison/freeze_sources.py",
+      "bytes": 1818,
+      "sha256": "2157a1f6d46b3fd34e0545c09adca18d117c7675a44cf0718ffdaada291f29b7"
+    },
+    {
+      "archive_path": "comparison/probe_exposure.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison/probe_exposure.py",
+      "bytes": 19648,
+      "sha256": "8f6dc04313512d6e71380fcdf6aab0c9616fc359efa11b85b1bfe14c443d3080"
+    },
+    {
+      "archive_path": "comparison/run_owned.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison/run_owned.py",
+      "bytes": 7426,
+      "sha256": "e1c2aa454be15f6806763988610c2e4445dfb2b4c3822b7dd800baf4dc67d7b3"
+    },
+    {
+      "archive_path": "comparison/source-index.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison/source-index.json",
+      "bytes": 17354,
+      "sha256": "861561d355a7641146d6dd8136e30a8951457efc6d075b97b1f4e09d04984420"
+    },
+    {
+      "archive_path": "comparison/test_comparison.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison/test_comparison.py",
+      "bytes": 7123,
+      "sha256": "f3f6efff298af5c23e9db802cdc8205744e944e5ad834958f0d435f5d4d9a21a"
+    },
+    {
+      "archive_path": "comparison-repair-v1/README.txt",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-repair-v1/README.txt",
+      "bytes": 3372,
+      "sha256": "7d784faac85ac4ced8fb7049de32a566b2511e01b8384a4637448cd7565bfa3f"
+    },
+    {
+      "archive_path": "comparison-repair-v1/config.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-repair-v1/config.json",
+      "bytes": 1991,
+      "sha256": "7ee69a20f6caed745cdcc230cfc5f6006beb1887a3d852b265f1e4723f9eaf44"
+    },
+    {
+      "archive_path": "comparison-repair-v1/freeze_sources.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-repair-v1/freeze_sources.py",
+      "bytes": 1984,
+      "sha256": "57a41867be176273f57e2fac29f39b93219ad542324e3829c3ada2b1fe6c8eb1"
+    },
+    {
+      "archive_path": "comparison-repair-v1/probe_exposure.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-repair-v1/probe_exposure.py",
+      "bytes": 19648,
+      "sha256": "8f6dc04313512d6e71380fcdf6aab0c9616fc359efa11b85b1bfe14c443d3080"
+    },
+    {
+      "archive_path": "comparison-repair-v1/run_owned.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-repair-v1/run_owned.py",
+      "bytes": 8595,
+      "sha256": "11b01fad1de2cdc8fc3127f5cf2da5d3f901eebf6e9643da5742e58e911c8315"
+    },
+    {
+      "archive_path": "comparison-repair-v1/source-index.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-repair-v1/source-index.json",
+      "bytes": 17850,
+      "sha256": "b5247e145e592c053a60193c1189e8d5539795073725b63794c1e889c1b0b531"
+    },
+    {
+      "archive_path": "comparison-repair-v1/test_comparison.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-repair-v1/test_comparison.py",
+      "bytes": 7123,
+      "sha256": "f3f6efff298af5c23e9db802cdc8205744e944e5ad834958f0d435f5d4d9a21a"
+    },
+    {
+      "archive_path": "comparison-repair-v1/test_monitor.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-repair-v1/test_monitor.py",
+      "bytes": 5340,
+      "sha256": "909e83a3ac1b2c3e4e2103ea6095e8a7f812b297a894d1ec96785aabd7cd736f"
+    },
+    {
+      "archive_path": "comparison-run-01/intent.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-run-01/intent.json",
+      "bytes": 793,
+      "sha256": "8019b541147a694b43bbb8a451e34f07208cca022213442735288091d734d164"
+    },
+    {
+      "archive_path": "comparison-run-01/launcher.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-run-01/launcher.json",
+      "bytes": 2307,
+      "sha256": "1c6eb8c57543d39e8c9c533e7185bee8f6941c53377d677d4929e508d20b3ebe"
+    },
+    {
+      "archive_path": "comparison-run-01/progress.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-run-01/progress.json",
+      "bytes": 629,
+      "sha256": "871b2255176684fca86997e15d9f2a226ccc210e5ed7236ff971fde39ebc89b3"
+    },
+    {
+      "archive_path": "comparison-run-01/report.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-run-01/report.json",
+      "bytes": 90040,
+      "sha256": "a40c3dc7d7bbd4ef3de0f60f772b32801806cd0c03974c424ab53d64885c6609"
+    },
+    {
+      "archive_path": "comparison-run-01/worker.log",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-run-01/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "comparison-run-02/intent.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/intent.json",
+      "bytes": 793,
+      "sha256": "a0e6044816fd92d5018a61d0eb069c8941c321d16d4586a0f76e5ca50176b41b"
+    },
+    {
+      "archive_path": "comparison-run-02/launcher.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/launcher.json",
+      "bytes": 3559,
+      "sha256": "373c08eaaa655dd52d5831533210bd57f79a53c805fa5e4cbd57d64c8f458028"
+    },
+    {
+      "archive_path": "comparison-run-02/progress.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/progress.json",
+      "bytes": 640,
+      "sha256": "d91a1b75b3f18b45396d79899676cfa0daea54fa9d8fdf3ca263a3c95a4d91d6"
+    },
+    {
+      "archive_path": "comparison-run-02/report.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/report.json",
+      "bytes": 895226,
+      "sha256": "2ff4b774c1fde080fbf0e6854a7b48a85ec4417590347df2191f8a893ff38077"
+    },
+    {
+      "archive_path": "comparison-run-02/worker.log",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "comparison-terminal-v1/README.txt",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-terminal-v1/README.txt",
+      "bytes": 3669,
+      "sha256": "28328a5b4dbe358f01987de6058e591fca8d521bfe0c1a73a76dd1ebb0f83b92"
+    },
+    {
+      "archive_path": "comparison-terminal-v1/config.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-terminal-v1/config.json",
+      "bytes": 2626,
+      "sha256": "95628fb24887cc93c2a5b52ffefa0c993ad07c3c56f0be56c376bc84e34f83ed"
+    },
+    {
+      "archive_path": "comparison-terminal-v1/freeze_sources.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-terminal-v1/freeze_sources.py",
+      "bytes": 2231,
+      "sha256": "d68218ac1060a4683223eb96a91be60b36b2b563d3bf633dcd59a779197a274c"
+    },
+    {
+      "archive_path": "comparison-terminal-v1/probe_exposure.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-terminal-v1/probe_exposure.py",
+      "bytes": 22469,
+      "sha256": "2f50e58fc83396c428d3f472540f0ab966665d80004ea043021f2ef0f7ce1d2f"
+    },
+    {
+      "archive_path": "comparison-terminal-v1/run_owned.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-terminal-v1/run_owned.py",
+      "bytes": 8595,
+      "sha256": "11b01fad1de2cdc8fc3127f5cf2da5d3f901eebf6e9643da5742e58e911c8315"
+    },
+    {
+      "archive_path": "comparison-terminal-v1/source-index.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-terminal-v1/source-index.json",
+      "bytes": 18301,
+      "sha256": "8b16ea13c6936fcd6051d1de5255db5565e9d8aa0b4c1c4e91d2dc199abd36d9"
+    },
+    {
+      "archive_path": "comparison-terminal-v1/test_comparison.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-terminal-v1/test_comparison.py",
+      "bytes": 8358,
+      "sha256": "af1b244165b0a9921345ca5420296dc57b7f8f26eed31f5717c11576f90300c2"
+    },
+    {
+      "archive_path": "comparison-terminal-v1/test_monitor.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/comparison-terminal-v1/test_monitor.py",
+      "bytes": 5340,
+      "sha256": "909e83a3ac1b2c3e4e2103ea6095e8a7f812b297a894d1ec96785aabd7cd736f"
+    },
+    {
+      "archive_path": "independent/RESULT.txt",
+      "source_path": "build/native-cut-residual-diagnostic-v1/independent/RESULT.txt",
+      "bytes": 5339,
+      "sha256": "ef982a5bfa13520d60f23713ea89fb2109bb55d903728064330d8d77709fcddc"
+    },
+    {
+      "archive_path": "independent/diagnose_saved_cap.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/independent/diagnose_saved_cap.py",
+      "bytes": 10527,
+      "sha256": "2d3003d6e71d30856fe90af6e17ed7572a733cb4a75055c69fb16dc01fc10505"
+    },
+    {
+      "archive_path": "independent/index.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/independent/index.json",
+      "bytes": 783,
+      "sha256": "3fb26ade340d9fb7741926edba407787db1ca7ceaedea80d764e5759cd8906fa"
+    },
+    {
+      "archive_path": "independent/saved-cap-result-01.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/independent/saved-cap-result-01.json",
+      "bytes": 18371,
+      "sha256": "affdf2309e5704a4158acacf74e36ce97f56f89f77d59872913f05e86771f5e3"
+    },
+    {
+      "archive_path": "independent-validation/RESULT.txt",
+      "source_path": "build/native-cut-residual-diagnostic-v1/independent-validation/RESULT.txt",
+      "bytes": 5884,
+      "sha256": "e24b1eb90b30a45151841750cbd9b8f52786040f11c512271373e98b7b853e62"
+    },
+    {
+      "archive_path": "independent-validation/archive-manifest.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/independent-validation/archive-manifest.json",
+      "bytes": 6802,
+      "sha256": "e48875fc05f11af3d3b0797f543ffbacd6f67e446702ccf167e8ce2929544107"
+    },
+    {
+      "archive_path": "independent-validation/audit-result-01.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/independent-validation/audit-result-01.json",
+      "bytes": 28265,
+      "sha256": "37d94e0e732a61e8d226f0a3eab09bef8949e4ed05918ac2a4447dd65d9ebbe5"
+    },
+    {
+      "archive_path": "independent-validation/audit_saved_matrix.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/independent-validation/audit_saved_matrix.py",
+      "bytes": 28330,
+      "sha256": "cbb86b0587e8e21c98f152be7eea3267e0e2f21fc604891143793a0f0a8c4853"
+    },
+    {
+      "archive_path": "model/coverage_partition.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/model/coverage_partition.py",
+      "bytes": 6921,
+      "sha256": "a17c5fa31c93f190eab1528a7107af430db1aa98f88653a3dd2b695039494930"
+    },
+    {
+      "archive_path": "model/producer-controls-01.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/model/producer-controls-01.json",
+      "bytes": 1405,
+      "sha256": "0db32ba38a41fed6281f0f564b72199decd47abf7887b364bcafe98dea79f330"
+    },
+    {
+      "archive_path": "model/producer-controls-01.log",
+      "source_path": "build/native-cut-residual-diagnostic-v1/model/producer-controls-01.log",
+      "bytes": 2571,
+      "sha256": "74fab182bfc726d6a0eb1efb9cd990b5aae686bcaf58869b3e5cad63c3a7ea14"
+    },
+    {
+      "archive_path": "model/producer-controls-02.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/model/producer-controls-02.json",
+      "bytes": 1412,
+      "sha256": "70594382004d1ca735373b4cccdc595f690b43c0520c6f7104161f235a311f46"
+    },
+    {
+      "archive_path": "model/producer-controls-02.log",
+      "source_path": "build/native-cut-residual-diagnostic-v1/model/producer-controls-02.log",
+      "bytes": 98,
+      "sha256": "b362ef056d6f4223a2968706879dcd3857ee23f6a5d16e2ebd8cf34153686b97"
+    },
+    {
+      "archive_path": "monitor-controls-01.log",
+      "source_path": "build/native-cut-residual-diagnostic-v1/monitor-controls-01.log",
+      "bytes": 99,
+      "sha256": "f6583ad39d5735669315f38a649d016fa457b86dfcec4f0651265df8dadb84e7"
+    },
+    {
+      "archive_path": "plot_result.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/plot_result.py",
+      "bytes": 2905,
+      "sha256": "a5ca12a80b06431962d2b352a172616b1c55c84c7eef712d67e56a8ce098f05b"
+    },
+    {
+      "archive_path": "root-controls-01.log",
+      "source_path": "build/native-cut-residual-diagnostic-v1/root-controls-01.log",
+      "bytes": 38262,
+      "sha256": "ea8c538389c3b1fcdc0e1dfa2feea8946af28f28d26266d9352cbb995cbf4de6"
+    },
+    {
+      "archive_path": "root-controls-02.log",
+      "source_path": "build/native-cut-residual-diagnostic-v1/root-controls-02.log",
+      "bytes": 260,
+      "sha256": "8a37e4b5f7b15aef6b5cb3d9067b33d31e6fcce467aba5e0fca2c4acb4845f68"
+    },
+    {
+      "archive_path": "terminal-controls-01.log",
+      "source_path": "build/native-cut-residual-diagnostic-v1/terminal-controls-01.log",
+      "bytes": 340,
+      "sha256": "274bdacb6281384e7606506c560896efcd373e338e4cfadfb480ebe3e90aa2f0"
+    },
+    {
+      "archive_path": "terminal-run-01/intent.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/intent.json",
+      "bytes": 799,
+      "sha256": "2fe96b89d22f27c2bd70e1cb6c31ee0680d95ca74fd3833a025fd06958986122"
+    },
+    {
+      "archive_path": "terminal-run-01/launcher.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/launcher.json",
+      "bytes": 3641,
+      "sha256": "6b4048c294821f7bccb29d7219e5a3d705acfa6c0375099cc356b65ac594733c"
+    },
+    {
+      "archive_path": "terminal-run-01/progress.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/progress.json",
+      "bytes": 643,
+      "sha256": "d7d914034993a43cdcd27b3d7ee15164865f2266486e26d798b9c0f477f055ae"
+    },
+    {
+      "archive_path": "terminal-run-01/report.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/report.json",
+      "bytes": 980488,
+      "sha256": "d3f20430fea84bead52156122c43e6bde40bebb229d5983e808c6e175579a8db"
+    },
+    {
+      "archive_path": "terminal-run-01/worker.log",
+      "source_path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "terminal-validation/RESULT.txt",
+      "source_path": "build/native-cut-residual-diagnostic-v1/terminal-validation/RESULT.txt",
+      "bytes": 6764,
+      "sha256": "9a0a83008d258f6835bcd88b4dbafafa7faa0b63b19132273b305b313dde8345"
+    },
+    {
+      "archive_path": "terminal-validation/archive-manifest.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/terminal-validation/archive-manifest.json",
+      "bytes": 7619,
+      "sha256": "0b29490e8296b32eb6dc335a270fd81307bbf53a215a9ba9d73bd6fd0d1f6c46"
+    },
+    {
+      "archive_path": "terminal-validation/audit-result-01.json",
+      "source_path": "build/native-cut-residual-diagnostic-v1/terminal-validation/audit-result-01.json",
+      "bytes": 35134,
+      "sha256": "d1b94af6cb27e12e5b7687038060c4cd97530c13b2fef39456b44888c7372d01"
+    },
+    {
+      "archive_path": "terminal-validation/audit_saved_matrix.pre-supervision-split.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/terminal-validation/audit_saved_matrix.pre-supervision-split.py",
+      "bytes": 32544,
+      "sha256": "f7b03f1beb161690258176849e8da1cef8cb48365ca55d8cc918ac81e1acbf08"
+    },
+    {
+      "archive_path": "terminal-validation/audit_saved_matrix.py",
+      "source_path": "build/native-cut-residual-diagnostic-v1/terminal-validation/audit_saved_matrix.py",
+      "bytes": 33787,
+      "sha256": "3172d880e7574092e037eb916210a7cd05c7e4fde053dfcbe56c9b0f71a749f8"
+    },
+    {
+      "archive_path": "volume-comparison.png",
+      "source_path": "build/native-cut-residual-diagnostic-v1/volume-comparison.png",
+      "bytes": 97721,
+      "sha256": "8ab84a5366176888dba4f27ce42a91b85321ccc1ebe0c042c30a24caa61f77bf"
+    }
+  ],
+  "local_geometry_not_copied": [
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/aligned-aspirator-0.5mm.json",
+      "bytes": 104547,
+      "sha256": "bc9949d9fae12f21061e28300b5319c0f48bae2c4dcef45ae50e5901665bb062"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/aligned-suction-0.25mm.json",
+      "bytes": 196567,
+      "sha256": "ef45793b21b91464168a3af9bd50515a8efbaf9415c980cf8599cf60c0534a76"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/aligned-suction-0.5mm.json",
+      "bytes": 35634,
+      "sha256": "9d7f88f33ede196b5f7c79558db9c9cec57e02c4176de09a291a65c7db240b94"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/aligned-suction-1mm.json",
+      "bytes": 8984,
+      "sha256": "49a94ad22c78d6787a5471fb151df2833e12dfc8548b441e8f6feacc4eccf0ca"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-aspirator-0.25mm.json",
+      "bytes": 575021,
+      "sha256": "7d38515956cfc9befe7e82b9cda7432a15a163cf2f5b36d2de62f2ac8b7b08cd"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-aspirator-0.5mm.json",
+      "bytes": 93922,
+      "sha256": "d21fa3447a40cb420e6d37f984eb596c369cdc23b5e18f3cfeb173090e1841e5"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-aspirator-1mm.json",
+      "bytes": 15767,
+      "sha256": "20b3aa0f410216981d178064891ea00da98249fc0b170d2ed1efcdf1fc68deb2"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-suction-0.25mm.json",
+      "bytes": 179573,
+      "sha256": "8f1e74246a973c255026c5ac72389b69adecc1a55e29b5fbbada20b7c0e31719"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-suction-0.5mm.json",
+      "bytes": 31767,
+      "sha256": "3475f9bd0638bcae5c8f4a2012aefbfec99fddd03baf96d234b1e12a8085f192"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-suction-1mm.json",
+      "bytes": 4690,
+      "sha256": "d3264cb3adb5459cc326d5ca8311b66b292bba50b8f4795caaf4c837faed4897"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/tilted-aspirator-0.5mm.json",
+      "bytes": 39448,
+      "sha256": "2f53b9ad2ff39f9c2b852af818d1e65176c6f4f496772dab1743c660edeb1f2b"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/tilted-suction-0.25mm.json",
+      "bytes": 195338,
+      "sha256": "7051c44dbfa52f07be80b05db7d92b5bb2a3761c60022a80e1f2cb017fca6bea"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/tilted-suction-0.5mm.json",
+      "bytes": 38063,
+      "sha256": "4026bf2cbb117bfb430082182786ea4e1278530ecc5fc91918741d3e9a16dd92"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/geometry/aligned-aspirator-0.25mm.json",
+      "bytes": 601038,
+      "sha256": "bdc7793d43795185d9e82a81574396454885ed3b32f290a4f5735cf631e26791"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/geometry/aligned-aspirator-0.5mm.json",
+      "bytes": 104601,
+      "sha256": "56126363ab35989fa8e265d298fccc413eaa6e6f2376f76e228d8eae2feb7dee"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/geometry/aligned-suction-0.25mm.json",
+      "bytes": 196621,
+      "sha256": "ccf619ba523fc08a9b2db57c911cecc9f01f7196388761ec34093fcbc0012605"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/geometry/aligned-suction-0.5mm.json",
+      "bytes": 35688,
+      "sha256": "5ff6fd0411792cad1ceae161e865a71d828d9564d310b13d710cd42c6430eea4"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/geometry/aligned-suction-1mm.json",
+      "bytes": 9038,
+      "sha256": "8a46b37f5c2a3d5729bba7f70ed58701a7818b49a54a099f53511b3a63597018"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/geometry/half-phase-aspirator-0.25mm.json",
+      "bytes": 575075,
+      "sha256": "c6eb3218589834ae79978ecd27dacd50ec4b38ca2bce0930000918923c299dfc"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/geometry/half-phase-aspirator-0.5mm.json",
+      "bytes": 93976,
+      "sha256": "b0a9fa8ff757825f3f87600c6752bfe104f19ead29ce9251c47f15a6668e777f"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/geometry/half-phase-aspirator-1mm.json",
+      "bytes": 15821,
+      "sha256": "534f7ec3848bb251946b3a7aeaeb4fdaa685842a1ccf4c43a032069ae831fe03"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/geometry/half-phase-suction-0.25mm.json",
+      "bytes": 179627,
+      "sha256": "2bd4af37d19bb35fa428744fdedfdbca255397b75378b33347d9821d0280dba9"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/geometry/half-phase-suction-0.5mm.json",
+      "bytes": 31821,
+      "sha256": "d92e4407b3be7b1c7dd412c23cf4ae18183e5b6a972e973c0cb4ac37e8e7b3d2"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/geometry/half-phase-suction-1mm.json",
+      "bytes": 4744,
+      "sha256": "1d91c6b277851707845e8f4779851bd8c37ed5331c5588b1b573e88a313e5a2a"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/geometry/tilted-aspirator-0.25mm.json",
+      "bytes": 613279,
+      "sha256": "eea6c656fcb33af5168e7426d880fb8e297d4fe091d40618972bb05d3e6724f4"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/geometry/tilted-aspirator-0.5mm.json",
+      "bytes": 39502,
+      "sha256": "2c9eb8f0997b0ed7a0bc747b3d4162065cb1584dfb46bbfa7042e8e04eeeea00"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/geometry/tilted-suction-0.25mm.json",
+      "bytes": 195392,
+      "sha256": "1c830e64a54609473fc6b21229c5165cf239c5847e5df3ed864fcebe3b0adabe"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/terminal-run-01/geometry/tilted-suction-0.5mm.json",
+      "bytes": 38117,
+      "sha256": "cd08954ca1225d4147fd3d483140d0875ce030199d455e499d9632194fc58d5d"
+    }
+  ],
+  "scope": "Generated numerical evidence only; no patient data, weights, clinical outcomes or physical force observations.",
+  "supervision": "Terminal worker completed; original launcher failed. Independent saved science validation does not erase that failure."
+}

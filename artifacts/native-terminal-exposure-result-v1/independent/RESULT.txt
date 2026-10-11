@@ -1,0 +1,79 @@
+Independent aligned-suction residual diagnosis — saved geometry only
+
+The analytic target-cap comparator is appropriate for this completed row. All
+ten declared strokes were accepted and independently audited. The nine side
+preparations end at z=1 mm with a 1 mm tip radius, so none reaches the target
+halfspace z>=2.8 mm. The tenth stroke reaches its declared tip at (0,0,2.2) mm.
+Its final executed capsule contains the complete distal sphere cap. The exact
+cap volume is 0.4356341812977854 mm3; it does not include an unexecuted suffix.
+
+An independent calculation on the saved affine/leaf grid gives:
+  Saved certified physical target:                 0.2808349609375003 mm3
+  All depth-3 leaves contained in final capsule:    0.3793701171875004 mm3
+  Continuous cap:                                 0.4356341812977854 mm3
+  Contained but uncertified:                       0.0985351562500001 mm3
+  Fixed-leaf boundary loss:                        0.0562640641102851 mm3
+
+Thus exposure/eligibility-related undercredit accounts for 63.6535% of the
+0.1547992203602852 mm3 residual; the fixed whole-leaf containment boundary
+accounts for 36.3465%. This is a geometric accounting partition, not a measured
+biological evacuation result. The containment ceiling deliberately ignores
+exposure eligibility and is not a new accepted removal certificate.
+
+There are 13,576 target-intersecting contained leaves and 10,100 certified
+target-intersecting leaves. All 3,476 missing leaves are in 53 parents with
+zero certified bits. At the final saved whole-parent state, 21 such parents
+(0.0829589843750001 mm3 missing target) are face-adjacent to removed parents;
+32 parents (0.0155761718750000 mm3) remain unexposed by that rule. This final
+state partition is retrospective: the saved union does not identify the exact
+microstep in which a neighbor cleared. It does not prove that a missing parent
+was eligible before the last step's cuts.
+
+Source explains the limitation: PreviewCutCoverage.cover evaluates partial
+parent face exposure against connected_free before that microstep's removals;
+only afterward does the engine remove completed parents and extend free space.
+It does not revisit newly exposed partial parents in the same executed capsule.
+Partially evacuated parents also stay wholly occupied for exposure/shaft logic.
+The 21 finally exposed parents are consistent with this exposure-order lag.
+The remaining parents are consistent with the conservative parent-scale exposure
+boundary. A time-resolved causal split between these two effects is not claimed.
+
+Microstep partition cannot explain the missing target leaves here. Every target-
+crossing leaf has its lowest z coordinate above 2.2 mm; its distance to any
+executed vertical capsule is minimized at the most distal executed endpoint.
+The final microstep's capsule therefore contains every target leaf which any
+earlier microstep or the full straight sweep could contain. Radius-margin removal
+changed zero tested leaf memberships. This single-scene argument does not extend
+automatically to bent trajectories, rotations, or other target locations.
+
+Recommended next test: one explicit same-capsule exposure-closure mode, at the
+unchanged depth and action sequence. Every newly counted leaf must be contained
+in the current executed active capsule and connected through declared exposed
+free/evacuated geometry; the preceding shaft check and hard exclusions retain
+their order. Do not seed or choose certificates using the target plane/cap.
+Retain conservative parent occupancy, reward definition, and all default behavior.
+Any changed whole-parent removals/reward values must be reported, not normalized
+away as an unchanged history. Test the actual new certified geometry, not just
+extra contact or a larger geometric ceiling.
+
+Useful-improvement criterion for the already fixed 18-row matrix: retain at
+least the prior 13 complete histories and independent acceptance for every
+nonempty committed prefix; all six fine-grid target volumes nondecrease, with
+at least one declared non-roundoff gain; every target interval and analytic cap
+check still passes. Report aligned-suction target gain relative to 0.28083496094,
+its same-depth geometric headroom 0.09853515625, complete action/reward differences,
+and all work/time/memory caps. Unknown or unsupported coverage cannot become free.
+This is a generated representation/model test, not patient, force, RL, or clinical
+evidence. The already completed saved-only partition is sufficient to avoid a
+separate instrumented ten-stroke diagnostic before that targeted test.
+
+Execution and reproducibility
+One stdlib-only saved calculation, exit0, 0.1823 s, 24,838,144 B process peak RSS,
+30 s alarm, one-thread environment; no native/model calls or new source arrays.
+65,340 local candidate leaf checks and 65,369 assertions. Input report c9265daa...
+and geometry 96c7f288... are hash-checked before decoding. Code imports no producer
+geometry/evaluator, NumPy, or native engine. It uses the farthest box corner for
+sphere containment and rectangular z-plane clipping, joins every saved target
+leaf, and reproduces the independently saved target volume. Original data and
+code are unchanged. Exact hashes and the 53-parent scalar table are in
+saved-cap-result-01.json; no further numerical execution is needed for this report.

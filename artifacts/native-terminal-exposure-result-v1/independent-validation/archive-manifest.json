@@ -1,0 +1,141 @@
+{
+  "canonical_commit": "bc78bbb8819b3807def161ebc925c1ca99fc317a",
+  "criterion": false,
+  "excluded_local_reproduction_inputs": [
+    {
+      "bytes": 104547,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/aligned-aspirator-0.5mm.json",
+      "reason": "retained original/sparse geometry; required for full saved-audit reproduction",
+      "sha256": "bc9949d9fae12f21061e28300b5319c0f48bae2c4dcef45ae50e5901665bb062"
+    },
+    {
+      "bytes": 196567,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/aligned-suction-0.25mm.json",
+      "reason": "retained original/sparse geometry; required for full saved-audit reproduction",
+      "sha256": "ef45793b21b91464168a3af9bd50515a8efbaf9415c980cf8599cf60c0534a76"
+    },
+    {
+      "bytes": 35634,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/aligned-suction-0.5mm.json",
+      "reason": "retained original/sparse geometry; required for full saved-audit reproduction",
+      "sha256": "9d7f88f33ede196b5f7c79558db9c9cec57e02c4176de09a291a65c7db240b94"
+    },
+    {
+      "bytes": 8984,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/aligned-suction-1mm.json",
+      "reason": "retained original/sparse geometry; required for full saved-audit reproduction",
+      "sha256": "49a94ad22c78d6787a5471fb151df2833e12dfc8548b441e8f6feacc4eccf0ca"
+    },
+    {
+      "bytes": 575021,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-aspirator-0.25mm.json",
+      "reason": "retained original/sparse geometry; required for full saved-audit reproduction",
+      "sha256": "7d38515956cfc9befe7e82b9cda7432a15a163cf2f5b36d2de62f2ac8b7b08cd"
+    },
+    {
+      "bytes": 93922,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-aspirator-0.5mm.json",
+      "reason": "retained original/sparse geometry; required for full saved-audit reproduction",
+      "sha256": "d21fa3447a40cb420e6d37f984eb596c369cdc23b5e18f3cfeb173090e1841e5"
+    },
+    {
+      "bytes": 15767,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-aspirator-1mm.json",
+      "reason": "retained original/sparse geometry; required for full saved-audit reproduction",
+      "sha256": "20b3aa0f410216981d178064891ea00da98249fc0b170d2ed1efcdf1fc68deb2"
+    },
+    {
+      "bytes": 179573,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-suction-0.25mm.json",
+      "reason": "retained original/sparse geometry; required for full saved-audit reproduction",
+      "sha256": "8f1e74246a973c255026c5ac72389b69adecc1a55e29b5fbbada20b7c0e31719"
+    },
+    {
+      "bytes": 31767,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-suction-0.5mm.json",
+      "reason": "retained original/sparse geometry; required for full saved-audit reproduction",
+      "sha256": "3475f9bd0638bcae5c8f4a2012aefbfec99fddd03baf96d234b1e12a8085f192"
+    },
+    {
+      "bytes": 4690,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/half-phase-suction-1mm.json",
+      "reason": "retained original/sparse geometry; required for full saved-audit reproduction",
+      "sha256": "d3264cb3adb5459cc326d5ca8311b66b292bba50b8f4795caaf4c837faed4897"
+    },
+    {
+      "bytes": 39448,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/tilted-aspirator-0.5mm.json",
+      "reason": "retained original/sparse geometry; required for full saved-audit reproduction",
+      "sha256": "2f53b9ad2ff39f9c2b852af818d1e65176c6f4f496772dab1743c660edeb1f2b"
+    },
+    {
+      "bytes": 195338,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/tilted-suction-0.25mm.json",
+      "reason": "retained original/sparse geometry; required for full saved-audit reproduction",
+      "sha256": "7051c44dbfa52f07be80b05db7d92b5bb2a3761c60022a80e1f2cb017fca6bea"
+    },
+    {
+      "bytes": 38063,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/geometry/tilted-suction-0.5mm.json",
+      "reason": "retained original/sparse geometry; required for full saved-audit reproduction",
+      "sha256": "4026bf2cbb117bfb430082182786ea4e1278530ecc5fc91918741d3e9a16dd92"
+    },
+    {
+      "bytes": 895226,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/report.json",
+      "reason": "retained original/sparse geometry; required for full saved-audit reproduction",
+      "sha256": "2ff4b774c1fde080fbf0e6854a7b48a85ec4417590347df2191f8a893ff38077"
+    },
+    {
+      "bytes": 706504,
+      "path": "build/native-partial-volume-v1/run-01/report.json",
+      "reason": "retained original/sparse geometry; required for full saved-audit reproduction",
+      "sha256": "c9265daaf186b025403ee499a333f0e2811feab66f65e10a98a3d97f17300ee9"
+    }
+  ],
+  "include": [
+    {
+      "bytes": 28330,
+      "path": "build/native-cut-residual-diagnostic-v1/independent-validation/audit_saved_matrix.py",
+      "sha256": "cbb86b0587e8e21c98f152be7eea3267e0e2f21fc604891143793a0f0a8c4853"
+    },
+    {
+      "bytes": 28265,
+      "path": "build/native-cut-residual-diagnostic-v1/independent-validation/audit-result-01.json",
+      "sha256": "37d94e0e732a61e8d226f0a3eab09bef8949e4ed05918ac2a4447dd65d9ebbe5"
+    },
+    {
+      "bytes": 5884,
+      "path": "build/native-cut-residual-diagnostic-v1/independent-validation/RESULT.txt",
+      "sha256": "e24b1eb90b30a45151841750cbd9b8f52786040f11c512271373e98b7b853e62"
+    },
+    {
+      "bytes": 1991,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-repair-v1/config.json",
+      "sha256": "7ee69a20f6caed745cdcc230cfc5f6006beb1887a3d852b265f1e4723f9eaf44"
+    },
+    {
+      "bytes": 17850,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-repair-v1/source-index.json",
+      "sha256": "b5247e145e592c053a60193c1189e8d5539795073725b63794c1e889c1b0b531"
+    },
+    {
+      "bytes": 3559,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-02/launcher.json",
+      "sha256": "373c08eaaa655dd52d5831533210bd57f79a53c805fa5e4cbd57d64c8f458028"
+    },
+    {
+      "bytes": 2307,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-01/launcher.json",
+      "sha256": "1c6eb8c57543d39e8c9c533e7185bee8f6941c53377d677d4929e508d20b3ebe"
+    },
+    {
+      "bytes": 629,
+      "path": "build/native-cut-residual-diagnostic-v1/comparison-run-01/progress.json",
+      "sha256": "871b2255176684fca86997e15d9f2a226ccc210e5ed7236ff971fde39ebc89b3"
+    }
+  ],
+  "included_bytes": 88815,
+  "original_run_unchanged": true,
+  "schema": "compact-exposure-audit-manifest-v1"
+}

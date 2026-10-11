@@ -1,0 +1,22 @@
+{
+  "schema": "saved-cap-diagnostic-files-v1",
+  "files": [
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/independent/diagnose_saved_cap.py",
+      "bytes": 10527,
+      "sha256": "2d3003d6e71d30856fe90af6e17ed7572a733cb4a75055c69fb16dc01fc10505"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/independent/saved-cap-result-01.json",
+      "bytes": 18371,
+      "sha256": "affdf2309e5704a4158acacf74e36ce97f56f89f77d59872913f05e86771f5e3"
+    },
+    {
+      "path": "build/native-cut-residual-diagnostic-v1/independent/RESULT.txt",
+      "bytes": 5339,
+      "sha256": "ef982a5bfa13520d60f23713ea89fb2109bb55d903728064330d8d77709fcddc"
+    }
+  ],
+  "total_bytes": 34237,
+  "scope": "saved generated geometry only; zero native or model execution"
+}

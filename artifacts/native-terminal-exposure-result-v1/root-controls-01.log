@@ -1,0 +1,536 @@
+FF..FFFFF............................................................... [ 35%]
+........................................................................ [ 70%]
+...........................................................              [100%]
+=================================== FAILURES ===================================
+______ test_native_same_capsule_new_whole_parent_exposes_partial_neighbor ______
+
+    def test_native_same_capsule_new_whole_parent_exposes_partial_neighbor():
+>       old = NativeResectionEngine(config(False), immutable_state=True)
+                                    ^^^^^^^^^^^^^
+
+tests/test_native_leaf_exposure.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_leaf_exposure.py:23: in config
+    return NativeResectionConfig(tissue, tissue.astype(np.int16), np.eye(4),
+<string>:18: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeResectionConfig(tissue_mask=array([[[False, False, False,  True,  True,  True,  True,  True],
+        [False, Fa... 0.5, 0.5, 0.5, 0.5, 0.5],
+        [0. , 0. , 0. , 0.5, 0.5, 0.5, 0.5, 0.5]]]), provenance='unlocated generated mass'))
+
+    def __post_init__(self) -> None:
+        if self.cut_union is not None and type(self.cut_union) is not CutUnionSpec:
+            raise TypeError("Cumulative cutting requires its explicit typed bounded specification")
+        if self.evacuated_volume is not None and (type(self.evacuated_volume) is not EvacuatedVolumeSpec
+                                                 or self.cut_union is None):
+            raise TypeError("Evacuated volume requires explicit typed target mass bounds and cut-union declaration")
+        tissue = _binary_mask(self.tissue_mask, "tissue_mask")
+        if self.evacuated_volume is not None:
+            for fractions in (self.evacuated_volume.target_fraction_lower, self.evacuated_volume.target_fraction_upper):
+                if fractions.shape != tissue.shape or np.any(fractions[~tissue] != 0):
+                    raise ValueError("Target mass bounds must match represented tissue and be zero outside it")
+        labels = np.asarray(self.target_labels)
+        if (labels.dtype.kind not in "biuf" or not np.isfinite(labels).all()
+                or np.any(labels < 0) or np.any(labels > np.iinfo(np.int16).max)
+                or np.any(labels != np.floor(labels))):
+            raise ValueError("Native target labels must be finite nonnegative int16-representable integers")
+        labels = _frozen(labels, np.int16)
+        affine = _frozen(self.affine, float)
+        if tissue.ndim != 3 or min(tissue.shape) < 1 or labels.shape != tissue.shape:
+            raise ValueError("Native tissue and labels must be matching nonempty 3-D grids")
+        if np.any(labels < 0) or np.any((labels > 0) & ~tissue):
+            raise ValueError("Native target labels must be nonnegative and inside tissue")
+        hard = _binary_mask(np.zeros(tissue.shape, bool) if self.hard_exclusion is None else self.hard_exclusion, "hard_exclusion")
+        if hard.shape != tissue.shape:
+            raise ValueError("Native hard exclusions must match the source grid")
+        if self.interaction_domain is not None:
+            domain = _binary_mask(self.interaction_domain, "interaction_domain")
+            if domain.shape != tissue.shape or np.any(tissue & ~domain):
+                raise ValueError("Native interaction domain must contain all modeled tissue on the source grid")
+            object.__setattr__(self, "interaction_domain", domain)
+        if self.post_exposure is not None:
+            if type(self.post_exposure) is not PostExposureStart:
+                raise ValueError("Typed explicit post-exposure start required")
+            self.post_exposure.require_bound(tissue, self.interaction_domain, affine, self.access)
+        # Reuse geometry's physical-frame validation without installing tissue as
+        # a hard exclusion: the distal active region is allowed declared contact.
+        scene = GeometryScene(np.zeros((1, 1, 1), bool), affine)
+        if scene._orthogonal_spacing is None:
+            raise ValueError("Native cell removal currently requires an orthogonal affine, including oblique rotations")
+        if (not isinstance(self.source_hash, str) or not self.source_hash
+                or not isinstance(self.tissue_support_provenance, str) or not self.tissue_support_provenance):
+            raise ValueError("Native source hash and tissue support provenance are mandatory")
+        if not isinstance(self.case_id, str) or not self.case_id:
+            raise ValueError("case_id must be a nonempty string")
+        if not self.tools or len({tool.tool_id for tool in self.tools}) != len(self.tools):
+            raise ValueError("Native tool catalog must have unique nonempty configurations")
+        spacing = np.linalg.norm(affine[:3, :3], axis=0)
+        step = np.asarray(self.max_tip_step_mm)
+        if step.shape != () or step.dtype.kind not in "iuf" or not np.isfinite(step) or not 0 < step <= spacing.min() / 2 + 1e-12:
+>           raise ValueError("Microstep must be positive and no larger than half the smallest native spacing")
+E           ValueError: Microstep must be positive and no larger than half the smallest native spacing
+
+src/resectionlab/native_resection.py:171: ValueError
+_____ test_closure_is_order_independent_and_same_capsule_cells_are_unique ______
+
+    def test_closure_is_order_independent_and_same_capsule_cells_are_unique():
+>       cfg = config(); free = np.zeros(cfg.tissue_mask.shape, bool); free[:, :, :3] = True
+              ^^^^^^^^
+
+tests/test_native_leaf_exposure.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_leaf_exposure.py:23: in config
+    return NativeResectionConfig(tissue, tissue.astype(np.int16), np.eye(4),
+<string>:18: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeResectionConfig(tissue_mask=array([[[False, False, False,  True,  True,  True,  True,  True],
+        [False, Fa... 0.5, 0.5, 0.5, 0.5, 0.5],
+        [0. , 0. , 0. , 0.5, 0.5, 0.5, 0.5, 0.5]]]), provenance='unlocated generated mass'))
+
+    def __post_init__(self) -> None:
+        if self.cut_union is not None and type(self.cut_union) is not CutUnionSpec:
+            raise TypeError("Cumulative cutting requires its explicit typed bounded specification")
+        if self.evacuated_volume is not None and (type(self.evacuated_volume) is not EvacuatedVolumeSpec
+                                                 or self.cut_union is None):
+            raise TypeError("Evacuated volume requires explicit typed target mass bounds and cut-union declaration")
+        tissue = _binary_mask(self.tissue_mask, "tissue_mask")
+        if self.evacuated_volume is not None:
+            for fractions in (self.evacuated_volume.target_fraction_lower, self.evacuated_volume.target_fraction_upper):
+                if fractions.shape != tissue.shape or np.any(fractions[~tissue] != 0):
+                    raise ValueError("Target mass bounds must match represented tissue and be zero outside it")
+        labels = np.asarray(self.target_labels)
+        if (labels.dtype.kind not in "biuf" or not np.isfinite(labels).all()
+                or np.any(labels < 0) or np.any(labels > np.iinfo(np.int16).max)
+                or np.any(labels != np.floor(labels))):
+            raise ValueError("Native target labels must be finite nonnegative int16-representable integers")
+        labels = _frozen(labels, np.int16)
+        affine = _frozen(self.affine, float)
+        if tissue.ndim != 3 or min(tissue.shape) < 1 or labels.shape != tissue.shape:
+            raise ValueError("Native tissue and labels must be matching nonempty 3-D grids")
+        if np.any(labels < 0) or np.any((labels > 0) & ~tissue):
+            raise ValueError("Native target labels must be nonnegative and inside tissue")
+        hard = _binary_mask(np.zeros(tissue.shape, bool) if self.hard_exclusion is None else self.hard_exclusion, "hard_exclusion")
+        if hard.shape != tissue.shape:
+            raise ValueError("Native hard exclusions must match the source grid")
+        if self.interaction_domain is not None:
+            domain = _binary_mask(self.interaction_domain, "interaction_domain")
+            if domain.shape != tissue.shape or np.any(tissue & ~domain):
+                raise ValueError("Native interaction domain must contain all modeled tissue on the source grid")
+            object.__setattr__(self, "interaction_domain", domain)
+        if self.post_exposure is not None:
+            if type(self.post_exposure) is not PostExposureStart:
+                raise ValueError("Typed explicit post-exposure start required")
+            self.post_exposure.require_bound(tissue, self.interaction_domain, affine, self.access)
+        # Reuse geometry's physical-frame validation without installing tissue as
+        # a hard exclusion: the distal active region is allowed declared contact.
+        scene = GeometryScene(np.zeros((1, 1, 1), bool), affine)
+        if scene._orthogonal_spacing is None:
+            raise ValueError("Native cell removal currently requires an orthogonal affine, including oblique rotations")
+        if (not isinstance(self.source_hash, str) or not self.source_hash
+                or not isinstance(self.tissue_support_provenance, str) or not self.tissue_support_provenance):
+            raise ValueError("Native source hash and tissue support provenance are mandatory")
+        if not isinstance(self.case_id, str) or not self.case_id:
+            raise ValueError("case_id must be a nonempty string")
+        if not self.tools or len({tool.tool_id for tool in self.tools}) != len(self.tools):
+            raise ValueError("Native tool catalog must have unique nonempty configurations")
+        spacing = np.linalg.norm(affine[:3, :3], axis=0)
+        step = np.asarray(self.max_tip_step_mm)
+        if step.shape != () or step.dtype.kind not in "iuf" or not np.isfinite(step) or not 0 < step <= spacing.min() / 2 + 1e-12:
+>           raise ValueError("Microstep must be positive and no larger than half the smallest native spacing")
+E           ValueError: Microstep must be positive and no larger than half the smallest native spacing
+
+src/resectionlab/native_resection.py:171: ValueError
+______ test_prior_whole_parent_shaft_still_refuses_and_preview_is_atomic _______
+
+    def test_prior_whole_parent_shaft_still_refuses_and_preview_is_atomic():
+>       engine = NativeResectionEngine(replace(config(), max_tip_step_mm=10.), immutable_state=True)
+                                               ^^^^^^^^
+
+tests/test_native_leaf_exposure.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_leaf_exposure.py:23: in config
+    return NativeResectionConfig(tissue, tissue.astype(np.int16), np.eye(4),
+<string>:18: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeResectionConfig(tissue_mask=array([[[False, False, False,  True,  True,  True,  True,  True],
+        [False, Fa... 0.5, 0.5, 0.5, 0.5, 0.5],
+        [0. , 0. , 0. , 0.5, 0.5, 0.5, 0.5, 0.5]]]), provenance='unlocated generated mass'))
+
+    def __post_init__(self) -> None:
+        if self.cut_union is not None and type(self.cut_union) is not CutUnionSpec:
+            raise TypeError("Cumulative cutting requires its explicit typed bounded specification")
+        if self.evacuated_volume is not None and (type(self.evacuated_volume) is not EvacuatedVolumeSpec
+                                                 or self.cut_union is None):
+            raise TypeError("Evacuated volume requires explicit typed target mass bounds and cut-union declaration")
+        tissue = _binary_mask(self.tissue_mask, "tissue_mask")
+        if self.evacuated_volume is not None:
+            for fractions in (self.evacuated_volume.target_fraction_lower, self.evacuated_volume.target_fraction_upper):
+                if fractions.shape != tissue.shape or np.any(fractions[~tissue] != 0):
+                    raise ValueError("Target mass bounds must match represented tissue and be zero outside it")
+        labels = np.asarray(self.target_labels)
+        if (labels.dtype.kind not in "biuf" or not np.isfinite(labels).all()
+                or np.any(labels < 0) or np.any(labels > np.iinfo(np.int16).max)
+                or np.any(labels != np.floor(labels))):
+            raise ValueError("Native target labels must be finite nonnegative int16-representable integers")
+        labels = _frozen(labels, np.int16)
+        affine = _frozen(self.affine, float)
+        if tissue.ndim != 3 or min(tissue.shape) < 1 or labels.shape != tissue.shape:
+            raise ValueError("Native tissue and labels must be matching nonempty 3-D grids")
+        if np.any(labels < 0) or np.any((labels > 0) & ~tissue):
+            raise ValueError("Native target labels must be nonnegative and inside tissue")
+        hard = _binary_mask(np.zeros(tissue.shape, bool) if self.hard_exclusion is None else self.hard_exclusion, "hard_exclusion")
+        if hard.shape != tissue.shape:
+            raise ValueError("Native hard exclusions must match the source grid")
+        if self.interaction_domain is not None:
+            domain = _binary_mask(self.interaction_domain, "interaction_domain")
+            if domain.shape != tissue.shape or np.any(tissue & ~domain):
+                raise ValueError("Native interaction domain must contain all modeled tissue on the source grid")
+            object.__setattr__(self, "interaction_domain", domain)
+        if self.post_exposure is not None:
+            if type(self.post_exposure) is not PostExposureStart:
+                raise ValueError("Typed explicit post-exposure start required")
+            self.post_exposure.require_bound(tissue, self.interaction_domain, affine, self.access)
+        # Reuse geometry's physical-frame validation without installing tissue as
+        # a hard exclusion: the distal active region is allowed declared contact.
+        scene = GeometryScene(np.zeros((1, 1, 1), bool), affine)
+        if scene._orthogonal_spacing is None:
+            raise ValueError("Native cell removal currently requires an orthogonal affine, including oblique rotations")
+        if (not isinstance(self.source_hash, str) or not self.source_hash
+                or not isinstance(self.tissue_support_provenance, str) or not self.tissue_support_provenance):
+            raise ValueError("Native source hash and tissue support provenance are mandatory")
+        if not isinstance(self.case_id, str) or not self.case_id:
+            raise ValueError("case_id must be a nonempty string")
+        if not self.tools or len({tool.tool_id for tool in self.tools}) != len(self.tools):
+            raise ValueError("Native tool catalog must have unique nonempty configurations")
+        spacing = np.linalg.norm(affine[:3, :3], axis=0)
+        step = np.asarray(self.max_tip_step_mm)
+        if step.shape != () or step.dtype.kind not in "iuf" or not np.isfinite(step) or not 0 < step <= spacing.min() / 2 + 1e-12:
+>           raise ValueError("Microstep must be positive and no larger than half the smallest native spacing")
+E           ValueError: Microstep must be positive and no larger than half the smallest native spacing
+
+src/resectionlab/native_resection.py:171: ValueError
+____ test_shared_leaf_budget_refuses_after_virtual_whole_cut_without_commit ____
+
+    def test_shared_leaf_budget_refuses_after_virtual_whole_cut_without_commit():
+>       engine = NativeResectionEngine(config(leaf_cap=512), immutable_state=True)
+                                       ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_leaf_exposure.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_leaf_exposure.py:23: in config
+    return NativeResectionConfig(tissue, tissue.astype(np.int16), np.eye(4),
+<string>:18: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeResectionConfig(tissue_mask=array([[[False, False, False,  True,  True,  True,  True,  True],
+        [False, Fa... 0.5, 0.5, 0.5, 0.5, 0.5],
+        [0. , 0. , 0. , 0.5, 0.5, 0.5, 0.5, 0.5]]]), provenance='unlocated generated mass'))
+
+    def __post_init__(self) -> None:
+        if self.cut_union is not None and type(self.cut_union) is not CutUnionSpec:
+            raise TypeError("Cumulative cutting requires its explicit typed bounded specification")
+        if self.evacuated_volume is not None and (type(self.evacuated_volume) is not EvacuatedVolumeSpec
+                                                 or self.cut_union is None):
+            raise TypeError("Evacuated volume requires explicit typed target mass bounds and cut-union declaration")
+        tissue = _binary_mask(self.tissue_mask, "tissue_mask")
+        if self.evacuated_volume is not None:
+            for fractions in (self.evacuated_volume.target_fraction_lower, self.evacuated_volume.target_fraction_upper):
+                if fractions.shape != tissue.shape or np.any(fractions[~tissue] != 0):
+                    raise ValueError("Target mass bounds must match represented tissue and be zero outside it")
+        labels = np.asarray(self.target_labels)
+        if (labels.dtype.kind not in "biuf" or not np.isfinite(labels).all()
+                or np.any(labels < 0) or np.any(labels > np.iinfo(np.int16).max)
+                or np.any(labels != np.floor(labels))):
+            raise ValueError("Native target labels must be finite nonnegative int16-representable integers")
+        labels = _frozen(labels, np.int16)
+        affine = _frozen(self.affine, float)
+        if tissue.ndim != 3 or min(tissue.shape) < 1 or labels.shape != tissue.shape:
+            raise ValueError("Native tissue and labels must be matching nonempty 3-D grids")
+        if np.any(labels < 0) or np.any((labels > 0) & ~tissue):
+            raise ValueError("Native target labels must be nonnegative and inside tissue")
+        hard = _binary_mask(np.zeros(tissue.shape, bool) if self.hard_exclusion is None else self.hard_exclusion, "hard_exclusion")
+        if hard.shape != tissue.shape:
+            raise ValueError("Native hard exclusions must match the source grid")
+        if self.interaction_domain is not None:
+            domain = _binary_mask(self.interaction_domain, "interaction_domain")
+            if domain.shape != tissue.shape or np.any(tissue & ~domain):
+                raise ValueError("Native interaction domain must contain all modeled tissue on the source grid")
+            object.__setattr__(self, "interaction_domain", domain)
+        if self.post_exposure is not None:
+            if type(self.post_exposure) is not PostExposureStart:
+                raise ValueError("Typed explicit post-exposure start required")
+            self.post_exposure.require_bound(tissue, self.interaction_domain, affine, self.access)
+        # Reuse geometry's physical-frame validation without installing tissue as
+        # a hard exclusion: the distal active region is allowed declared contact.
+        scene = GeometryScene(np.zeros((1, 1, 1), bool), affine)
+        if scene._orthogonal_spacing is None:
+            raise ValueError("Native cell removal currently requires an orthogonal affine, including oblique rotations")
+        if (not isinstance(self.source_hash, str) or not self.source_hash
+                or not isinstance(self.tissue_support_provenance, str) or not self.tissue_support_provenance):
+            raise ValueError("Native source hash and tissue support provenance are mandatory")
+        if not isinstance(self.case_id, str) or not self.case_id:
+            raise ValueError("case_id must be a nonempty string")
+        if not self.tools or len({tool.tool_id for tool in self.tools}) != len(self.tools):
+            raise ValueError("Native tool catalog must have unique nonempty configurations")
+        spacing = np.linalg.norm(affine[:3, :3], axis=0)
+        step = np.asarray(self.max_tip_step_mm)
+        if step.shape != () or step.dtype.kind not in "iuf" or not np.isfinite(step) or not 0 < step <= spacing.min() / 2 + 1e-12:
+>           raise ValueError("Microstep must be positive and no larger than half the smallest native spacing")
+E           ValueError: Microstep must be positive and no larger than half the smallest native spacing
+
+src/resectionlab/native_resection.py:171: ValueError
+_____ test_explicit_mode_declaration_does_not_modify_legacy_serialization ______
+
+    def test_explicit_mode_declaration_does_not_modify_legacy_serialization():
+        assert CutUnionSpec().to_record() == {'mode': MODE, 'max_depth': 3,
+            'max_tracked_cells': 4096, 'max_leaf_tests_per_preview': 4194304}
+        declared = CutUnionSpec(exposure_mode=PARENT_CLOSURE_EXPOSURE).to_record()
+        assert declared['mode'] == PARENT_CLOSURE_MODE and declared['exposure_mode'] == PARENT_CLOSURE_EXPOSURE
+>       assert config().fingerprint != config(False).fingerprint
+               ^^^^^^^^
+
+tests/test_native_leaf_exposure.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_leaf_exposure.py:23: in config
+    return NativeResectionConfig(tissue, tissue.astype(np.int16), np.eye(4),
+<string>:18: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeResectionConfig(tissue_mask=array([[[False, False, False,  True,  True,  True,  True,  True],
+        [False, Fa... 0.5, 0.5, 0.5, 0.5, 0.5],
+        [0. , 0. , 0. , 0.5, 0.5, 0.5, 0.5, 0.5]]]), provenance='unlocated generated mass'))
+
+    def __post_init__(self) -> None:
+        if self.cut_union is not None and type(self.cut_union) is not CutUnionSpec:
+            raise TypeError("Cumulative cutting requires its explicit typed bounded specification")
+        if self.evacuated_volume is not None and (type(self.evacuated_volume) is not EvacuatedVolumeSpec
+                                                 or self.cut_union is None):
+            raise TypeError("Evacuated volume requires explicit typed target mass bounds and cut-union declaration")
+        tissue = _binary_mask(self.tissue_mask, "tissue_mask")
+        if self.evacuated_volume is not None:
+            for fractions in (self.evacuated_volume.target_fraction_lower, self.evacuated_volume.target_fraction_upper):
+                if fractions.shape != tissue.shape or np.any(fractions[~tissue] != 0):
+                    raise ValueError("Target mass bounds must match represented tissue and be zero outside it")
+        labels = np.asarray(self.target_labels)
+        if (labels.dtype.kind not in "biuf" or not np.isfinite(labels).all()
+                or np.any(labels < 0) or np.any(labels > np.iinfo(np.int16).max)
+                or np.any(labels != np.floor(labels))):
+            raise ValueError("Native target labels must be finite nonnegative int16-representable integers")
+        labels = _frozen(labels, np.int16)
+        affine = _frozen(self.affine, float)
+        if tissue.ndim != 3 or min(tissue.shape) < 1 or labels.shape != tissue.shape:
+            raise ValueError("Native tissue and labels must be matching nonempty 3-D grids")
+        if np.any(labels < 0) or np.any((labels > 0) & ~tissue):
+            raise ValueError("Native target labels must be nonnegative and inside tissue")
+        hard = _binary_mask(np.zeros(tissue.shape, bool) if self.hard_exclusion is None else self.hard_exclusion, "hard_exclusion")
+        if hard.shape != tissue.shape:
+            raise ValueError("Native hard exclusions must match the source grid")
+        if self.interaction_domain is not None:
+            domain = _binary_mask(self.interaction_domain, "interaction_domain")
+            if domain.shape != tissue.shape or np.any(tissue & ~domain):
+                raise ValueError("Native interaction domain must contain all modeled tissue on the source grid")
+            object.__setattr__(self, "interaction_domain", domain)
+        if self.post_exposure is not None:
+            if type(self.post_exposure) is not PostExposureStart:
+                raise ValueError("Typed explicit post-exposure start required")
+            self.post_exposure.require_bound(tissue, self.interaction_domain, affine, self.access)
+        # Reuse geometry's physical-frame validation without installing tissue as
+        # a hard exclusion: the distal active region is allowed declared contact.
+        scene = GeometryScene(np.zeros((1, 1, 1), bool), affine)
+        if scene._orthogonal_spacing is None:
+            raise ValueError("Native cell removal currently requires an orthogonal affine, including oblique rotations")
+        if (not isinstance(self.source_hash, str) or not self.source_hash
+                or not isinstance(self.tissue_support_provenance, str) or not self.tissue_support_provenance):
+            raise ValueError("Native source hash and tissue support provenance are mandatory")
+        if not isinstance(self.case_id, str) or not self.case_id:
+            raise ValueError("case_id must be a nonempty string")
+        if not self.tools or len({tool.tool_id for tool in self.tools}) != len(self.tools):
+            raise ValueError("Native tool catalog must have unique nonempty configurations")
+        spacing = np.linalg.norm(affine[:3, :3], axis=0)
+        step = np.asarray(self.max_tip_step_mm)
+        if step.shape != () or step.dtype.kind not in "iuf" or not np.isfinite(step) or not 0 < step <= spacing.min() / 2 + 1e-12:
+>           raise ValueError("Microstep must be positive and no larger than half the smallest native spacing")
+E           ValueError: Microstep must be positive and no larger than half the smallest native spacing
+
+src/resectionlab/native_resection.py:171: ValueError
+____ test_disabled_mode_matches_committed_partial_volume_predecessor[False] ____
+
+immutable = False
+
+    @pytest.mark.parametrize('immutable', [False, True])
+    def test_disabled_mode_matches_committed_partial_volume_predecessor(immutable):
+        root = Path(__file__).resolve().parents[1]
+        revision = 'b16ffece399a9bd86851e8661cb1a6f05a85ec20'
+        source = subprocess.run(['git', 'show', revision+':src/resectionlab/native_resection.py'],
+            cwd=root, check=True, capture_output=True).stdout
+        assert hashlib.sha256(source).hexdigest() == 'ddbb5571e401a5da8aa3f68a878f7c97d24342a47d2180441374ad8ebade9e9b'
+        old = ModuleType('resectionlab._before_parent_closure'); old.__package__ = 'resectionlab'
+        sys.modules[old.__name__] = old
+        exec(compile(source, '<committed partial-volume engine>', 'exec'), old.__dict__)
+>       cfg = config(False)
+              ^^^^^^^^^^^^^
+
+tests/test_native_leaf_exposure.py:151: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_leaf_exposure.py:23: in config
+    return NativeResectionConfig(tissue, tissue.astype(np.int16), np.eye(4),
+<string>:18: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeResectionConfig(tissue_mask=array([[[False, False, False,  True,  True,  True,  True,  True],
+        [False, Fa... 0.5, 0.5, 0.5, 0.5, 0.5],
+        [0. , 0. , 0. , 0.5, 0.5, 0.5, 0.5, 0.5]]]), provenance='unlocated generated mass'))
+
+    def __post_init__(self) -> None:
+        if self.cut_union is not None and type(self.cut_union) is not CutUnionSpec:
+            raise TypeError("Cumulative cutting requires its explicit typed bounded specification")
+        if self.evacuated_volume is not None and (type(self.evacuated_volume) is not EvacuatedVolumeSpec
+                                                 or self.cut_union is None):
+            raise TypeError("Evacuated volume requires explicit typed target mass bounds and cut-union declaration")
+        tissue = _binary_mask(self.tissue_mask, "tissue_mask")
+        if self.evacuated_volume is not None:
+            for fractions in (self.evacuated_volume.target_fraction_lower, self.evacuated_volume.target_fraction_upper):
+                if fractions.shape != tissue.shape or np.any(fractions[~tissue] != 0):
+                    raise ValueError("Target mass bounds must match represented tissue and be zero outside it")
+        labels = np.asarray(self.target_labels)
+        if (labels.dtype.kind not in "biuf" or not np.isfinite(labels).all()
+                or np.any(labels < 0) or np.any(labels > np.iinfo(np.int16).max)
+                or np.any(labels != np.floor(labels))):
+            raise ValueError("Native target labels must be finite nonnegative int16-representable integers")
+        labels = _frozen(labels, np.int16)
+        affine = _frozen(self.affine, float)
+        if tissue.ndim != 3 or min(tissue.shape) < 1 or labels.shape != tissue.shape:
+            raise ValueError("Native tissue and labels must be matching nonempty 3-D grids")
+        if np.any(labels < 0) or np.any((labels > 0) & ~tissue):
+            raise ValueError("Native target labels must be nonnegative and inside tissue")
+        hard = _binary_mask(np.zeros(tissue.shape, bool) if self.hard_exclusion is None else self.hard_exclusion, "hard_exclusion")
+        if hard.shape != tissue.shape:
+            raise ValueError("Native hard exclusions must match the source grid")
+        if self.interaction_domain is not None:
+            domain = _binary_mask(self.interaction_domain, "interaction_domain")
+            if domain.shape != tissue.shape or np.any(tissue & ~domain):
+                raise ValueError("Native interaction domain must contain all modeled tissue on the source grid")
+            object.__setattr__(self, "interaction_domain", domain)
+        if self.post_exposure is not None:
+            if type(self.post_exposure) is not PostExposureStart:
+                raise ValueError("Typed explicit post-exposure start required")
+            self.post_exposure.require_bound(tissue, self.interaction_domain, affine, self.access)
+        # Reuse geometry's physical-frame validation without installing tissue as
+        # a hard exclusion: the distal active region is allowed declared contact.
+        scene = GeometryScene(np.zeros((1, 1, 1), bool), affine)
+        if scene._orthogonal_spacing is None:
+            raise ValueError("Native cell removal currently requires an orthogonal affine, including oblique rotations")
+        if (not isinstance(self.source_hash, str) or not self.source_hash
+                or not isinstance(self.tissue_support_provenance, str) or not self.tissue_support_provenance):
+            raise ValueError("Native source hash and tissue support provenance are mandatory")
+        if not isinstance(self.case_id, str) or not self.case_id:
+            raise ValueError("case_id must be a nonempty string")
+        if not self.tools or len({tool.tool_id for tool in self.tools}) != len(self.tools):
+            raise ValueError("Native tool catalog must have unique nonempty configurations")
+        spacing = np.linalg.norm(affine[:3, :3], axis=0)
+        step = np.asarray(self.max_tip_step_mm)
+        if step.shape != () or step.dtype.kind not in "iuf" or not np.isfinite(step) or not 0 < step <= spacing.min() / 2 + 1e-12:
+>           raise ValueError("Microstep must be positive and no larger than half the smallest native spacing")
+E           ValueError: Microstep must be positive and no larger than half the smallest native spacing
+
+src/resectionlab/native_resection.py:171: ValueError
+____ test_disabled_mode_matches_committed_partial_volume_predecessor[True] _____
+
+immutable = True
+
+    @pytest.mark.parametrize('immutable', [False, True])
+    def test_disabled_mode_matches_committed_partial_volume_predecessor(immutable):
+        root = Path(__file__).resolve().parents[1]
+        revision = 'b16ffece399a9bd86851e8661cb1a6f05a85ec20'
+        source = subprocess.run(['git', 'show', revision+':src/resectionlab/native_resection.py'],
+            cwd=root, check=True, capture_output=True).stdout
+        assert hashlib.sha256(source).hexdigest() == 'ddbb5571e401a5da8aa3f68a878f7c97d24342a47d2180441374ad8ebade9e9b'
+        old = ModuleType('resectionlab._before_parent_closure'); old.__package__ = 'resectionlab'
+        sys.modules[old.__name__] = old
+        exec(compile(source, '<committed partial-volume engine>', 'exec'), old.__dict__)
+>       cfg = config(False)
+              ^^^^^^^^^^^^^
+
+tests/test_native_leaf_exposure.py:151: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_leaf_exposure.py:23: in config
+    return NativeResectionConfig(tissue, tissue.astype(np.int16), np.eye(4),
+<string>:18: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = NativeResectionConfig(tissue_mask=array([[[False, False, False,  True,  True,  True,  True,  True],
+        [False, Fa... 0.5, 0.5, 0.5, 0.5, 0.5],
+        [0. , 0. , 0. , 0.5, 0.5, 0.5, 0.5, 0.5]]]), provenance='unlocated generated mass'))
+
+    def __post_init__(self) -> None:
+        if self.cut_union is not None and type(self.cut_union) is not CutUnionSpec:
+            raise TypeError("Cumulative cutting requires its explicit typed bounded specification")
+        if self.evacuated_volume is not None and (type(self.evacuated_volume) is not EvacuatedVolumeSpec
+                                                 or self.cut_union is None):
+            raise TypeError("Evacuated volume requires explicit typed target mass bounds and cut-union declaration")
+        tissue = _binary_mask(self.tissue_mask, "tissue_mask")
+        if self.evacuated_volume is not None:
+            for fractions in (self.evacuated_volume.target_fraction_lower, self.evacuated_volume.target_fraction_upper):
+                if fractions.shape != tissue.shape or np.any(fractions[~tissue] != 0):
+                    raise ValueError("Target mass bounds must match represented tissue and be zero outside it")
+        labels = np.asarray(self.target_labels)
+        if (labels.dtype.kind not in "biuf" or not np.isfinite(labels).all()
+                or np.any(labels < 0) or np.any(labels > np.iinfo(np.int16).max)
+                or np.any(labels != np.floor(labels))):
+            raise ValueError("Native target labels must be finite nonnegative int16-representable integers")
+        labels = _frozen(labels, np.int16)
+        affine = _frozen(self.affine, float)
+        if tissue.ndim != 3 or min(tissue.shape) < 1 or labels.shape != tissue.shape:
+            raise ValueError("Native tissue and labels must be matching nonempty 3-D grids")
+        if np.any(labels < 0) or np.any((labels > 0) & ~tissue):
+            raise ValueError("Native target labels must be nonnegative and inside tissue")
+        hard = _binary_mask(np.zeros(tissue.shape, bool) if self.hard_exclusion is None else self.hard_exclusion, "hard_exclusion")
+        if hard.shape != tissue.shape:
+            raise ValueError("Native hard exclusions must match the source grid")
+        if self.interaction_domain is not None:
+            domain = _binary_mask(self.interaction_domain, "interaction_domain")
+            if domain.shape != tissue.shape or np.any(tissue & ~domain):
+                raise ValueError("Native interaction domain must contain all modeled tissue on the source grid")
+            object.__setattr__(self, "interaction_domain", domain)
+        if self.post_exposure is not None:
+            if type(self.post_exposure) is not PostExposureStart:
+                raise ValueError("Typed explicit post-exposure start required")
+            self.post_exposure.require_bound(tissue, self.interaction_domain, affine, self.access)
+        # Reuse geometry's physical-frame validation without installing tissue as
+        # a hard exclusion: the distal active region is allowed declared contact.
+        scene = GeometryScene(np.zeros((1, 1, 1), bool), affine)
+        if scene._orthogonal_spacing is None:
+            raise ValueError("Native cell removal currently requires an orthogonal affine, including oblique rotations")
+        if (not isinstance(self.source_hash, str) or not self.source_hash
+                or not isinstance(self.tissue_support_provenance, str) or not self.tissue_support_provenance):
+            raise ValueError("Native source hash and tissue support provenance are mandatory")
+        if not isinstance(self.case_id, str) or not self.case_id:
+            raise ValueError("case_id must be a nonempty string")
+        if not self.tools or len({tool.tool_id for tool in self.tools}) != len(self.tools):
+            raise ValueError("Native tool catalog must have unique nonempty configurations")
+        spacing = np.linalg.norm(affine[:3, :3], axis=0)
+        step = np.asarray(self.max_tip_step_mm)
+        if step.shape != () or step.dtype.kind not in "iuf" or not np.isfinite(step) or not 0 < step <= spacing.min() / 2 + 1e-12:
+>           raise ValueError("Microstep must be positive and no larger than half the smallest native spacing")
+E           ValueError: Microstep must be positive and no larger than half the smallest native spacing
+
+src/resectionlab/native_resection.py:171: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_native_leaf_exposure.py::test_native_same_capsule_new_whole_parent_exposes_partial_neighbor
+FAILED tests/test_native_leaf_exposure.py::test_closure_is_order_independent_and_same_capsule_cells_are_unique
+FAILED tests/test_native_leaf_exposure.py::test_prior_whole_parent_shaft_still_refuses_and_preview_is_atomic
+FAILED tests/test_native_leaf_exposure.py::test_shared_leaf_budget_refuses_after_virtual_whole_cut_without_commit
+FAILED tests/test_native_leaf_exposure.py::test_explicit_mode_declaration_does_not_modify_legacy_serialization
+FAILED tests/test_native_leaf_exposure.py::test_disabled_mode_matches_committed_partial_volume_predecessor[False]
+FAILED tests/test_native_leaf_exposure.py::test_disabled_mode_matches_committed_partial_volume_predecessor[True]
+7 failed, 196 passed in 5.06s
