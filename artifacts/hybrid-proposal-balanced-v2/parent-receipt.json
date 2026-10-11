@@ -1,0 +1,48 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "feature_count": 681,
+    "fit_rows": 3480,
+    "fits": 2,
+    "log_bytes": 2097152,
+    "native_previews": 40000,
+    "native_transitions": 634,
+    "output_bytes": 67108864,
+    "parent_seconds": 660,
+    "ridge_calls": 442,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 28,
+    "supervision_bytes": 8388608,
+    "threads": 1,
+    "worker_seconds": 600
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 270.4456123751588,
+  "exit_code": 0,
+  "memory_scope": "whole owned process peak only; no independent per-arm peak attribution",
+  "output_bytes": 16588527,
+  "planned_subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "release_sha256": "e81ab753baecc359fe6c067278308836d8cbd18804c8fbe2c6a955a6d2e0cb8c",
+  "remaining_owned_pids": [],
+  "result_sha256": "360253e27ce3992facec4938e018bc02707248c1efad1b6cd318ed7ecd5ed4ca",
+  "result_status": "complete_fixed_TRAIN_balanced_ridge_contrast",
+  "sampled_peak_rss_bytes": 720797696,
+  "samples": 1304,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/hybrid-proposal-balanced-v2/source-index.json",
+    "sha256": "6989829384c2af2becf19b7db5bd9fa39f0cd330411ee30a059cc64342f2b919"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 2258,
+  "training_admitted": "two_fixed_ridge_solves_only",
+  "worker_pid": 9863,
+  "worker_termination_confirmed": true
+}

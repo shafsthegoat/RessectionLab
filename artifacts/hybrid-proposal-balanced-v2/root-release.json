@@ -1,0 +1,275 @@
+{
+  "K": 8,
+  "SELECT_EVAL_closed": true,
+  "arms": [
+    "old_ridge_top8",
+    "balanced_ridge_top8",
+    "exhaustive"
+  ],
+  "cache_limits": {
+    "max_entries": 16384,
+    "max_payload_bytes": 33554432
+  },
+  "cache_scope": "fresh cache before every planning constructor; restored before authoritative replay",
+  "caps": {
+    "feature_count": 681,
+    "fit_rows": 3480,
+    "fits": 2,
+    "log_bytes": 2097152,
+    "native_previews": 40000,
+    "native_transitions": 634,
+    "output_bytes": 67108864,
+    "parent_seconds": 660,
+    "ridge_calls": 442,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 28,
+    "supervision_bytes": 8388608,
+    "threads": 1,
+    "worker_seconds": 600
+  },
+  "cohort": {
+    "path": "manifests/experiments/remind-component-cohort-v1.json",
+    "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+  },
+  "execution_released": true,
+  "expected_head": "3da7d96ff1a0240eda8c06767ddfb64fb65c0b8e",
+  "fit": {
+    "label": "max(0, nominal immediate native reward) if legal, else zero; not safety",
+    "normalization": "original_equal_state_mean_scale_fixed",
+    "ridge_lambda": 0.001,
+    "solves": 2,
+    "state_weights": {
+      "balanced": "equal_state_then_half_positive_half_zero_when_both_present",
+      "old": "equal_then_uniform_within_state"
+    },
+    "states": 29,
+    "teacher_steps": [
+      1,
+      14,
+      1,
+      13
+    ]
+  },
+  "gates": {
+    "all_four_complete": true,
+    "balanced_no_quality_loss_vs_exhaustive": true,
+    "balanced_no_quality_loss_vs_old_ridge": true,
+    "balanced_strict_return_improvement_vs_old_ridge": true,
+    "meaning": "prospective loss-contrast gate; not a retroactive pass of v1 or transfer/clinical claim",
+    "numeric_tolerance": 1e-07,
+    "online_preview_ratio_max": 0.5,
+    "source_through_plan_wall_ratio_max": 0.8
+  },
+  "historical_v1": {
+    "comparison": {
+      "TRAIN_go": false,
+      "all_costs_include_rejected_queries": true,
+      "heuristic_no_quality_loss": false,
+      "heuristic_quality_improvement": false,
+      "heuristic_wall_ratio": 2.200352421221636,
+      "historical_IL64_outcomes": [
+        {
+          "certificate_origin": "original_run",
+          "independent_accepted": true,
+          "motion_count": 0,
+          "outside_target_removed_mm3": 0.0,
+          "public_return": 0.0,
+          "removed_cells": 0,
+          "same_removed_cell_union_as_teacher": true,
+          "steps": 1,
+          "subject": "ReMIND-002",
+          "target_removed_mm3": 0.0,
+          "teacher_motion_count": 0,
+          "teacher_public_return": 0.0,
+          "teacher_target_removed_mm3": 0.0,
+          "terminal_reason": "STOP"
+        },
+        {
+          "certificate_origin": "original_run",
+          "independent_accepted": true,
+          "motion_count": 13,
+          "outside_target_removed_mm3": 0.0,
+          "public_return": 54.86621503580145,
+          "removed_cells": 58,
+          "same_removed_cell_union_as_teacher": true,
+          "steps": 14,
+          "subject": "ReMIND-015",
+          "target_removed_mm3": 55.31311034856145,
+          "teacher_motion_count": 13,
+          "teacher_public_return": 54.866215035801446,
+          "teacher_target_removed_mm3": 55.31311034856145,
+          "terminal_reason": "STOP"
+        },
+        {
+          "certificate_origin": "original_run",
+          "independent_accepted": true,
+          "motion_count": 0,
+          "outside_target_removed_mm3": 0.0,
+          "public_return": 0.0,
+          "removed_cells": 0,
+          "same_removed_cell_union_as_teacher": true,
+          "steps": 1,
+          "subject": "ReMIND-018",
+          "target_removed_mm3": 0.0,
+          "teacher_motion_count": 0,
+          "teacher_public_return": 0.0,
+          "teacher_target_removed_mm3": 0.0,
+          "terminal_reason": "STOP"
+        },
+        {
+          "certificate_origin": "corrected_evaluation_recovery",
+          "independent_accepted": true,
+          "motion_count": 24,
+          "outside_target_removed_mm3": 0.0,
+          "public_return": 47.508437886941074,
+          "removed_cells": 51,
+          "same_removed_cell_union_as_teacher": true,
+          "steps": 24,
+          "subject": "ReMIND-045",
+          "target_removed_mm3": 48.637450444683644,
+          "teacher_motion_count": 12,
+          "teacher_public_return": 48.181962920864926,
+          "teacher_target_removed_mm3": 48.637450444683644,
+          "terminal_reason": "HORIZON"
+        }
+      ],
+      "historical_latency_matched": false,
+      "no_quality_loss_vs_exhaustive": false,
+      "online_wall_ratio": 0.22036749626597343,
+      "preview_ratio": 0.08950617283950617,
+      "totals": {
+        "exhaustive": {
+          "online_previews": 2592,
+          "replay_and_audit_seconds": 71.62476737424731,
+          "replay_previews": 2592,
+          "source_through_plan_seconds": 44.740925583289936
+        },
+        "ridge_top8": {
+          "online_previews": 232,
+          "replay_and_audit_seconds": 25.00953729171306,
+          "replay_previews": 232,
+          "source_through_plan_seconds": 9.85944575141184
+        },
+        "sampled_target_top8": {
+          "online_previews": 32,
+          "replay_and_audit_seconds": 6.022098916815594,
+          "replay_previews": 32,
+          "source_through_plan_seconds": 4.480848456965759
+        }
+      }
+    },
+    "gates": {
+      "all_four_complete": true,
+      "heuristic_comparison": "quality improvement, or equal quality and wall ratio <=0.9",
+      "meaning": "TRAIN go/no-go only; one ordered measurement, no transfer/clinical/sustained-speed claim",
+      "no_quality_loss_vs_exhaustive": true,
+      "numeric_tolerance": 1e-07,
+      "online_preview_ratio_max": 0.5,
+      "source_through_plan_wall_ratio_max": 0.8
+    },
+    "refs": {
+      "attempt-01.supervision/receipt.json": {
+        "path": "build/hybrid-proposal-pilot-v1/attempt-01.supervision/receipt.json",
+        "sha256": "51d8877f66cb50086f98141c83e296c965edb20f9256700d714f9364d1463b99"
+      },
+      "attempt-01/result.json": {
+        "path": "build/hybrid-proposal-pilot-v1/attempt-01/result.json",
+        "sha256": "77deca8508e6a69d78243870ef1dc362f4403e2e4480197052da10af196bad7c"
+      },
+      "attempt-01/training-labels.json": {
+        "path": "build/hybrid-proposal-pilot-v1/attempt-01/training-labels.json",
+        "sha256": "437c2620cceeb191ddf38e3cc932c9e6e7f918c8481110e5319d29b963b248de"
+      },
+      "root-release.json": {
+        "path": "build/hybrid-proposal-pilot-v1/root-release.json",
+        "sha256": "5a093996a88d9cddce08431280fb95fda351242d670d571255377eb054a798f3"
+      }
+    }
+  },
+  "horizon": 24,
+  "no_optimizer_or_neural_model": true,
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "post_exposure_condition": "public-union-post-exposure-axis0-v1",
+  "proposal_config": {
+    "intermediate_opening_mm": 1.0,
+    "max_candidates": 120,
+    "nominal_min_membership": 0.0,
+    "offsets_source_voxels": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "tool_footprint_opening": true
+  },
+  "public_index": {
+    "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json",
+    "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8"
+  },
+  "search_seconds": 60,
+  "source_index": {
+    "path": "build/hybrid-proposal-balanced-v2/source-index.json",
+    "sha256": "6989829384c2af2becf19b7db5bd9fa39f0cd330411ee30a059cc64342f2b919"
+  },
+  "source_world_hashes": {
+    "ReMIND-002": "sha256:27f4414796f49256181161f3f770f4ea75c242059bcc583c01817f65949b0f5b",
+    "ReMIND-015": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524",
+    "ReMIND-018": "sha256:0db487c202c1fef5ce408c6dc593f6a42ce12f6f2b630807174ba9f37727edd6",
+    "ReMIND-045": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938"
+  },
+  "subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "version": "fixed-four-TRAIN-balanced-ridge-contrast-v2"
+}

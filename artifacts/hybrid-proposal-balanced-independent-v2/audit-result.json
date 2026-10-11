@@ -1,0 +1,1098 @@
+{
+  "arms": [
+    {
+      "contact_upper_mm3": 0.0,
+      "endpoint": "STOP",
+      "full_target_mm3": 23149.488478878036,
+      "method": "old_ridge_top8",
+      "motions": 0,
+      "online_previews": 8,
+      "online_seconds": 1.0688912910409272,
+      "outside_mm3": 0.0,
+      "path_mm": 0.0,
+      "return": 0.0,
+      "subject": "ReMIND-002",
+      "target_cells": 0,
+      "target_mm3": 0.0,
+      "tool_changes": 0
+    },
+    {
+      "contact_upper_mm3": 205.9936523325737,
+      "endpoint": "STOP",
+      "full_target_mm3": 7386.207580165663,
+      "method": "old_ridge_top8",
+      "motions": 13,
+      "online_previews": 112,
+      "online_seconds": 3.5660517499782145,
+      "outside_mm3": 0.0,
+      "path_mm": 56.895312759999854,
+      "return": 54.866215035801446,
+      "subject": "ReMIND-015",
+      "target_cells": 58,
+      "target_mm3": 55.313110348561466,
+      "tool_changes": 0
+    },
+    {
+      "contact_upper_mm3": 0.0,
+      "endpoint": "STOP",
+      "full_target_mm3": 1189.2323111979806,
+      "method": "old_ridge_top8",
+      "motions": 0,
+      "online_previews": 8,
+      "online_seconds": 1.3902206250932068,
+      "outside_mm3": 0.0,
+      "path_mm": 0.0,
+      "return": 0.0,
+      "subject": "ReMIND-018",
+      "target_cells": 0,
+      "target_mm3": 0.0,
+      "tool_changes": 0
+    },
+    {
+      "contact_upper_mm3": 202.17920577005748,
+      "endpoint": "STOP",
+      "full_target_mm3": 24128.943798057662,
+      "method": "old_ridge_top8",
+      "motions": 12,
+      "online_previews": 104,
+      "online_seconds": 4.619628250133246,
+      "outside_mm3": 0.0,
+      "path_mm": 96.04064966080533,
+      "return": 48.15140979502283,
+      "subject": "ReMIND-045",
+      "target_cells": 51,
+      "target_mm3": 48.63745044468365,
+      "tool_changes": 1
+    },
+    {
+      "contact_upper_mm3": 0.0,
+      "endpoint": "STOP",
+      "full_target_mm3": 23149.488478878036,
+      "method": "balanced_ridge_top8",
+      "motions": 0,
+      "online_previews": 8,
+      "online_seconds": 1.2601699591614306,
+      "outside_mm3": 0.0,
+      "path_mm": 0.0,
+      "return": 0.0,
+      "subject": "ReMIND-002",
+      "target_cells": 0,
+      "target_mm3": 0.0,
+      "tool_changes": 0
+    },
+    {
+      "contact_upper_mm3": 205.9936523325737,
+      "endpoint": "STOP",
+      "full_target_mm3": 7386.207580165663,
+      "method": "balanced_ridge_top8",
+      "motions": 13,
+      "online_previews": 112,
+      "online_seconds": 4.189346957951784,
+      "outside_mm3": 0.0,
+      "path_mm": 56.895312759999854,
+      "return": 54.866215035801446,
+      "subject": "ReMIND-015",
+      "target_cells": 58,
+      "target_mm3": 55.313110348561466,
+      "tool_changes": 0
+    },
+    {
+      "contact_upper_mm3": 0.0,
+      "endpoint": "STOP",
+      "full_target_mm3": 1189.2323111979806,
+      "method": "balanced_ridge_top8",
+      "motions": 0,
+      "online_previews": 8,
+      "online_seconds": 1.246821332955733,
+      "outside_mm3": 0.0,
+      "path_mm": 0.0,
+      "return": 0.0,
+      "subject": "ReMIND-018",
+      "target_cells": 0,
+      "target_mm3": 0.0,
+      "tool_changes": 0
+    },
+    {
+      "contact_upper_mm3": 202.17920577005748,
+      "endpoint": "STOP",
+      "full_target_mm3": 24128.943798057662,
+      "method": "balanced_ridge_top8",
+      "motions": 12,
+      "online_previews": 104,
+      "online_seconds": 5.655203457921743,
+      "outside_mm3": 0.0,
+      "path_mm": 95.48752381870861,
+      "return": 48.181962920864926,
+      "subject": "ReMIND-045",
+      "target_cells": 51,
+      "target_mm3": 48.63745044468365,
+      "tool_changes": 0
+    },
+    {
+      "contact_upper_mm3": 0.0,
+      "endpoint": "STOP",
+      "full_target_mm3": 23149.488478878036,
+      "method": "exhaustive",
+      "motions": 0,
+      "online_previews": 117,
+      "online_seconds": 8.265992707805708,
+      "outside_mm3": 0.0,
+      "path_mm": 0.0,
+      "return": 0.0,
+      "subject": "ReMIND-002",
+      "target_cells": 0,
+      "target_mm3": 0.0,
+      "tool_changes": 0
+    },
+    {
+      "contact_upper_mm3": 205.9936523325737,
+      "endpoint": "STOP",
+      "full_target_mm3": 7386.207580165663,
+      "method": "exhaustive",
+      "motions": 13,
+      "online_previews": 1217,
+      "online_seconds": 12.527324249967933,
+      "outside_mm3": 0.0,
+      "path_mm": 56.895312759999854,
+      "return": 54.866215035801446,
+      "subject": "ReMIND-015",
+      "target_cells": 58,
+      "target_mm3": 55.313110348561466,
+      "tool_changes": 0
+    },
+    {
+      "contact_upper_mm3": 0.0,
+      "endpoint": "STOP",
+      "full_target_mm3": 1189.2323111979806,
+      "method": "exhaustive",
+      "motions": 0,
+      "online_previews": 75,
+      "online_seconds": 3.619676041183993,
+      "outside_mm3": 0.0,
+      "path_mm": 0.0,
+      "return": 0.0,
+      "subject": "ReMIND-018",
+      "target_cells": 0,
+      "target_mm3": 0.0,
+      "tool_changes": 0
+    },
+    {
+      "contact_upper_mm3": 202.17920577005748,
+      "endpoint": "STOP",
+      "full_target_mm3": 24128.943798057662,
+      "method": "exhaustive",
+      "motions": 12,
+      "online_previews": 1183,
+      "online_seconds": 20.8384471249301,
+      "outside_mm3": 0.0,
+      "path_mm": 95.48752381870861,
+      "return": 48.181962920864926,
+      "subject": "ReMIND-045",
+      "target_cells": 51,
+      "target_mm3": 48.63745044468365,
+      "tool_changes": 0
+    }
+  ],
+  "checks": 4662,
+  "files_unchanged": 283,
+  "fit_seconds": {
+    "balanced_ridge_top8": 0.012607499957084656,
+    "old_ridge_top8": 0.013016332872211933
+  },
+  "fits": 2,
+  "historical_v1_TRAIN_go": false,
+  "limits": "saved consistency only; no arrays/weights/model or new native replay; all-plan chronology is source order plus attestation; TRAIN single ordered pair only; no physical/transfer validation",
+  "loss_contrast_go": true,
+  "loss_fields": {
+    "exhaustive": {
+      "ReMIND-002": [],
+      "ReMIND-015": [],
+      "ReMIND-018": [],
+      "ReMIND-045": []
+    },
+    "old_ridge_top8": {
+      "ReMIND-002": [],
+      "ReMIND-015": [],
+      "ReMIND-018": [],
+      "ReMIND-045": []
+    }
+  },
+  "native_previews": 11296,
+  "native_transitions": 232,
+  "parent": {
+    "cleanup_errors": [],
+    "elapsed_seconds": 270.4456123751588,
+    "output_bytes": 16588527,
+    "remaining_owned_pids": [],
+    "sampled_peak_rss_bytes": 720797696
+  },
+  "peak_rss_bytes": 26902528,
+  "ratios": {
+    "online_wall_ratio": 0.27295356068613713,
+    "preview_ratio": 0.08950617283950617
+  },
+  "ridge_calls": 174,
+  "runtime_seconds": 0.13901850000000002,
+  "source_visits": 28,
+  "states": [
+    {
+      "best_positive_reward_label": 0.0,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.012607864331028291,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.012607864331028293,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": null,
+          "top8_best_label": 0.0,
+          "top8_positive_count": 0
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.012162998480292555,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.012162998480292555,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": null,
+          "top8_best_label": 0.0,
+          "top8_positive_count": 0
+        }
+      },
+      "positive_rows": 0,
+      "raw_rows": 117,
+      "step": 0,
+      "subject": "ReMIND-002",
+      "teacher_action": "STOP"
+    },
+    {
+      "best_positive_reward_label": 5.687669335607047,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.032081770176208564,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.032081770176208564,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 1,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 8
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.03139499553998539,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.0313949955399854,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 1,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 8
+        }
+      },
+      "positive_rows": 39,
+      "raw_rows": 78,
+      "step": 0,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-81c114a0600538d67baf4414"
+    },
+    {
+      "best_positive_reward_label": 5.687669335607047,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.027223923419405265,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.026053982556426363,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 6,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 8
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.02744838449254554,
+          "best_label_rank": 2,
+          "old_weighted_squared_error": 0.02569506966186867,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 8,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 8
+        }
+      },
+      "positive_rows": 36,
+      "raw_rows": 79,
+      "step": 1,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-f4acd820cbfb0ed0423e8ce1"
+    },
+    {
+      "best_positive_reward_label": 5.687669335607047,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.025864033708211612,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.02345301314957347,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 10,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 8
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.02623275789409172,
+          "best_label_rank": 2,
+          "old_weighted_squared_error": 0.022755898356404996,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 10,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 8
+        }
+      },
+      "positive_rows": 33,
+      "raw_rows": 80,
+      "step": 2,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-a5152cdc336beea2377717f9"
+    },
+    {
+      "best_positive_reward_label": 5.687669335607047,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.023370997619154767,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.02067581239863645,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 5,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 8
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.02372363939402774,
+          "best_label_rank": 2,
+          "old_weighted_squared_error": 0.019258420717348273,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 5,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 8
+        }
+      },
+      "positive_rows": 30,
+      "raw_rows": 81,
+      "step": 3,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-1cbd3c4a581f4b88810331ab"
+    },
+    {
+      "best_positive_reward_label": 5.687669335607047,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.021908489288220256,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.018293174059227865,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 5,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 8
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.023201928304246718,
+          "best_label_rank": 2,
+          "old_weighted_squared_error": 0.017156732933015888,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 5,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 8
+        }
+      },
+      "positive_rows": 27,
+      "raw_rows": 82,
+      "step": 4,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-fde756f16b8890d097dfa2b2"
+    },
+    {
+      "best_positive_reward_label": 5.687669335607047,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.01788219394692604,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.014657995256412239,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 5,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 8
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.019975567977764407,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.013384166044561501,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 5,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 8
+        }
+      },
+      "positive_rows": 24,
+      "raw_rows": 85,
+      "step": 5,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-0bff70bcda7abbbf6f4ba2b5"
+    },
+    {
+      "best_positive_reward_label": 5.687669335607047,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.01619110282780188,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.012320659976751138,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 1,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 7
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.020489953444001164,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.011516750895815348,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 1,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 8
+        }
+      },
+      "positive_rows": 20,
+      "raw_rows": 87,
+      "step": 6,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-9191b5ecb52d9653e6653b46"
+    },
+    {
+      "best_positive_reward_label": 5.687669335607047,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.01904043298815687,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.012301315386990403,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 2,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 7
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.028877568073964625,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.012428218337726078,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 4,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 8
+        }
+      },
+      "positive_rows": 16,
+      "raw_rows": 89,
+      "step": 7,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-18a27c9bdaedc0c78c8b1eb5"
+    },
+    {
+      "best_positive_reward_label": 5.687669335607047,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.013151199439606284,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.010000502438421363,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 1,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 6
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.02216134217914547,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.00799648320786156,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 1,
+          "top8_best_label": 5.687669335607047,
+          "top8_positive_count": 7
+        }
+      },
+      "positive_rows": 12,
+      "raw_rows": 91,
+      "step": 8,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-6b6ca940447e253f73e6a608"
+    },
+    {
+      "best_positive_reward_label": 0.9192977538345078,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.0059596181519227034,
+          "best_label_rank": 2,
+          "old_weighted_squared_error": 0.008619425382939852,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 4,
+          "top8_best_label": 0.9192977538345078,
+          "top8_positive_count": 4
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.016333482084118153,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.005258453225152115,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 3,
+          "top8_best_label": 0.9192977538345078,
+          "top8_positive_count": 5
+        }
+      },
+      "positive_rows": 8,
+      "raw_rows": 93,
+      "step": 9,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-75d906bf1966eab441bd14fb"
+    },
+    {
+      "best_positive_reward_label": 0.9192977538345078,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.005808264816589326,
+          "best_label_rank": 2,
+          "old_weighted_squared_error": 0.008243019748041784,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 2,
+          "top8_best_label": 0.9192977538345078,
+          "top8_positive_count": 4
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.017830193525128858,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.004797098093124914,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 1,
+          "top8_best_label": 0.9192977538345078,
+          "top8_positive_count": 5
+        }
+      },
+      "positive_rows": 6,
+      "raw_rows": 93,
+      "step": 10,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-3e0208b4da8b3619067435cd"
+    },
+    {
+      "best_positive_reward_label": 0.9192977538345078,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.004730781111070096,
+          "best_label_rank": 2,
+          "old_weighted_squared_error": 0.007896493520030225,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 2,
+          "top8_best_label": 0.9192977538345078,
+          "top8_positive_count": 4
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.012090494177631014,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.0036688995492128226,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 1,
+          "top8_best_label": 0.9192977538345078,
+          "top8_positive_count": 3
+        }
+      },
+      "positive_rows": 4,
+      "raw_rows": 93,
+      "step": 11,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-db13ac7f68ddec6654723169"
+    },
+    {
+      "best_positive_reward_label": 0.9192977538345078,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.0043066340896560935,
+          "best_label_rank": 2,
+          "old_weighted_squared_error": 0.007989604751064189,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 2,
+          "top8_best_label": 0.9192977538345078,
+          "top8_positive_count": 2
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.009313604639529368,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.003359684826905008,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 1,
+          "top8_best_label": 0.9192977538345078,
+          "top8_positive_count": 2
+        }
+      },
+      "positive_rows": 2,
+      "raw_rows": 93,
+      "step": 12,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-07f21f9720487f7217110137"
+    },
+    {
+      "best_positive_reward_label": 0.0,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.007334254010319071,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.007334254010319071,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": null,
+          "top8_best_label": 0.0,
+          "top8_positive_count": 0
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.003270077000147701,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.003270077000147701,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": null,
+          "top8_best_label": 0.0,
+          "top8_positive_count": 0
+        }
+      },
+      "positive_rows": 0,
+      "raw_rows": 93,
+      "step": 13,
+      "subject": "ReMIND-015",
+      "teacher_action": "STOP"
+    },
+    {
+      "best_positive_reward_label": 0.0,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.010864660705605905,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.010864660705605905,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": null,
+          "top8_best_label": 0.0,
+          "top8_positive_count": 0
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.009115631667296635,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.009115631667296635,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": null,
+          "top8_best_label": 0.0,
+          "top8_positive_count": 0
+        }
+      },
+      "positive_rows": 0,
+      "raw_rows": 75,
+      "step": 0,
+      "subject": "ReMIND-018",
+      "teacher_action": "STOP"
+    },
+    {
+      "best_positive_reward_label": 5.6837701788669515,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.020178642514778987,
+          "best_label_rank": 2,
+          "old_weighted_squared_error": 0.019690170663442856,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 2,
+          "top8_best_label": 5.6837701788669515,
+          "top8_positive_count": 8
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.01684626189601679,
+          "best_label_rank": 6,
+          "old_weighted_squared_error": 0.015885643776867926,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 6,
+          "top8_best_label": 5.6837701788669515,
+          "top8_positive_count": 8
+        }
+      },
+      "positive_rows": 41,
+      "raw_rows": 91,
+      "step": 0,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-2e7122d692aec111fb6a1628"
+    },
+    {
+      "best_positive_reward_label": 5.683770178866951,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.01406840562169741,
+          "best_label_rank": 4,
+          "old_weighted_squared_error": 0.014260579603395922,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 4,
+          "top8_best_label": 5.683770178866951,
+          "top8_positive_count": 7
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.011649656506457256,
+          "best_label_rank": 5,
+          "old_weighted_squared_error": 0.010643996300597354,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 5,
+          "top8_best_label": 5.683770178866951,
+          "top8_positive_count": 8
+        }
+      },
+      "positive_rows": 37,
+      "raw_rows": 91,
+      "step": 1,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-7a69f4a8cd7e8ea71e4af5c2"
+    },
+    {
+      "best_positive_reward_label": 8.542843549770952,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.022670222777908835,
+          "best_label_rank": 7,
+          "old_weighted_squared_error": 0.018956832698573952,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 7,
+          "top8_best_label": 8.542843549770952,
+          "top8_positive_count": 7
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.02648789519914554,
+          "best_label_rank": 7,
+          "old_weighted_squared_error": 0.020461802136982808,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 7,
+          "top8_best_label": 8.542843549770952,
+          "top8_positive_count": 8
+        }
+      },
+      "positive_rows": 34,
+      "raw_rows": 91,
+      "step": 2,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-08ddba04f5981a8ffabfe1ee"
+    },
+    {
+      "best_positive_reward_label": 4.732047805793682,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.008959324030252323,
+          "best_label_rank": 3,
+          "old_weighted_squared_error": 0.009279404879230128,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 3,
+          "top8_best_label": 4.732047805793682,
+          "top8_positive_count": 7
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.0077389353956646345,
+          "best_label_rank": 4,
+          "old_weighted_squared_error": 0.005256494944480454,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 4,
+          "top8_best_label": 4.732047805793682,
+          "top8_positive_count": 8
+        }
+      },
+      "positive_rows": 25,
+      "raw_rows": 91,
+      "step": 3,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-7bdf67f47de6e5ca7ba7d91e"
+    },
+    {
+      "best_positive_reward_label": 4.730094679951585,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.006733261730159356,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.008452655277613717,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 2,
+          "top8_best_label": 4.730094679951585,
+          "top8_positive_count": 7
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.004664381405457944,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.0033973887716053416,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 2,
+          "top8_best_label": 4.730094679951585,
+          "top8_positive_count": 8
+        }
+      },
+      "positive_rows": 21,
+      "raw_rows": 91,
+      "step": 4,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-6c207425fb1c81db3aaf6bde"
+    },
+    {
+      "best_positive_reward_label": 9.496519048686316,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.03818010545928514,
+          "best_label_rank": 2,
+          "old_weighted_squared_error": 0.017306078109408582,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 2,
+          "top8_best_label": 9.496519048686316,
+          "top8_positive_count": 7
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.06532857431836134,
+          "best_label_rank": 6,
+          "old_weighted_squared_error": 0.026558464666839404,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 6,
+          "top8_best_label": 9.496519048686316,
+          "top8_positive_count": 8
+        }
+      },
+      "positive_rows": 18,
+      "raw_rows": 91,
+      "step": 5,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-bca3719c38b5f61afd8f0b51"
+    },
+    {
+      "best_positive_reward_label": 1.8710213090475858,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.0025745944200455313,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.004257710642766644,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 1,
+          "top8_best_label": 1.8710213090475858,
+          "top8_positive_count": 5
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.0017693641559861895,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.0012439409829462585,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 1,
+          "top8_best_label": 1.8710213090475858,
+          "top8_positive_count": 8
+        }
+      },
+      "positive_rows": 9,
+      "raw_rows": 91,
+      "step": 6,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-5adbe8af9ad1faf0cb454802"
+    },
+    {
+      "best_positive_reward_label": 2.822743682120855,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.006355975853776525,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.0043615879535447485,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 1,
+          "top8_best_label": 2.822743682120855,
+          "top8_positive_count": 6
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.018577536786164348,
+          "best_label_rank": 8,
+          "old_weighted_squared_error": 0.0045473957987975195,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 8,
+          "top8_best_label": 2.822743682120855,
+          "top8_positive_count": 7
+        }
+      },
+      "positive_rows": 9,
+      "raw_rows": 91,
+      "step": 7,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-c521d0546ad10479e3c347e3"
+    },
+    {
+      "best_positive_reward_label": 0.9173458101322204,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.0017080573199053132,
+          "best_label_rank": 2,
+          "old_weighted_squared_error": 0.003096473133801789,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 4,
+          "top8_best_label": 0.9173458101322204,
+          "top8_positive_count": 5
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.0010319061839552085,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.0010113784386210928,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 2,
+          "top8_best_label": 0.9173458101322204,
+          "top8_positive_count": 5
+        }
+      },
+      "positive_rows": 5,
+      "raw_rows": 91,
+      "step": 8,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-ca216ec681ac4651f10d5c61"
+    },
+    {
+      "best_positive_reward_label": 0.9173458101322204,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.0017203138842071279,
+          "best_label_rank": 2,
+          "old_weighted_squared_error": 0.003025635367593774,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 2,
+          "top8_best_label": 0.9173458101322204,
+          "top8_positive_count": 3
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.0012414707781103814,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.0010600510454425284,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 1,
+          "top8_best_label": 0.9173458101322204,
+          "top8_positive_count": 3
+        }
+      },
+      "positive_rows": 3,
+      "raw_rows": 91,
+      "step": 9,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-d57e3e6d61827150ad7f6c34"
+    },
+    {
+      "best_positive_reward_label": 1.8690681832054892,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.003502244965782097,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.0032005589618839397,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 1,
+          "top8_best_label": 1.8690681832054892,
+          "top8_positive_count": 4
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.012440509015417142,
+          "best_label_rank": 3,
+          "old_weighted_squared_error": 0.0022574304766394713,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 3,
+          "top8_best_label": 1.8690681832054892,
+          "top8_positive_count": 3
+        }
+      },
+      "positive_rows": 4,
+      "raw_rows": 91,
+      "step": 10,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-88bc1008c2bd9995dae66f1b"
+    },
+    {
+      "best_positive_reward_label": 0.9153926842901237,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.0026887396223342045,
+          "best_label_rank": 3,
+          "old_weighted_squared_error": 0.004410033973899407,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": 3,
+          "top8_best_label": 0.9153926842901237,
+          "top8_positive_count": 2
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.0038390523534085,
+          "best_label_rank": 9,
+          "old_weighted_squared_error": 0.0019736747386299787,
+          "positive_priority_regret": 0.030553125842096684,
+          "teacher_rank": 9,
+          "top8_best_label": 0.884839558448027,
+          "top8_positive_count": 1
+        }
+      },
+      "positive_rows": 2,
+      "raw_rows": 91,
+      "step": 11,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-3532d3d0aba51e03e0899454"
+    },
+    {
+      "best_positive_reward_label": 0.0,
+      "models": {
+        "balanced_ridge_top8": {
+          "balanced_weighted_squared_error": 0.005043560300844229,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.005043560300844229,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": null,
+          "top8_best_label": 0.0,
+          "top8_positive_count": 0
+        },
+        "old_ridge_top8": {
+          "balanced_weighted_squared_error": 0.0021830194028334745,
+          "best_label_rank": 1,
+          "old_weighted_squared_error": 0.0021830194028334745,
+          "positive_priority_regret": 0.0,
+          "teacher_rank": null,
+          "top8_best_label": 0.0,
+          "top8_positive_count": 0
+        }
+      },
+      "positive_rows": 0,
+      "raw_rows": 91,
+      "step": 12,
+      "subject": "ReMIND-045",
+      "teacher_action": "STOP"
+    }
+  ],
+  "status": "PASS_saved_evidence_consistency",
+  "totals": {
+    "balanced_ridge_top8": {
+      "online_previews": 232,
+      "replay_and_audit_seconds": 30.34917604085058,
+      "replay_previews": 232,
+      "source_through_plan_seconds": 12.351541707990691
+    },
+    "exhaustive": {
+      "online_previews": 2592,
+      "replay_and_audit_seconds": 75.05173749895766,
+      "replay_previews": 2592,
+      "source_through_plan_seconds": 45.25144012388773
+    },
+    "old_ridge_top8": {
+      "online_previews": 232,
+      "replay_and_audit_seconds": 26.577163039939478,
+      "replay_previews": 232,
+      "source_through_plan_seconds": 10.644791916245595
+    }
+  },
+  "training_costs": [
+    {
+      "label_collection_seconds": 5.960269249975681,
+      "replay_audit_seconds": 5.496044666972011,
+      "source_preparation_seconds": 0.28942983387969434,
+      "subject": "ReMIND-002"
+    },
+    {
+      "label_collection_seconds": 7.415456999791786,
+      "replay_audit_seconds": 9.384234542027116,
+      "source_preparation_seconds": 0.2376870410516858,
+      "subject": "ReMIND-015"
+    },
+    {
+      "label_collection_seconds": 2.041250291047618,
+      "replay_audit_seconds": 1.6589664581697434,
+      "source_preparation_seconds": 0.23159862495958805,
+      "subject": "ReMIND-018"
+    },
+    {
+      "label_collection_seconds": 13.661817166954279,
+      "replay_audit_seconds": 20.41340170800686,
+      "source_preparation_seconds": 0.25188550003804266,
+      "subject": "ReMIND-045"
+    }
+  ]
+}

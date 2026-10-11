@@ -1,0 +1,44 @@
+Independent source GO for the exact positive/zero-balanced loss contrast.
+
+One prospective change in regression weighting: each represented teacher state
+retains mass 1/S; mixed positive/zero states split that mass equally; single-class
+states retain uniform weights. Total mass stays one, lambda stays 0.001, and the
+original equal-state feature mean/scale remain bit-identical. Weighted centering
+of normalized X and y correctly leaves the intercept unpenalized. Original fit
+operations remain unchanged on the default branch.
+
+Fresh old-ridge control must reproduce the original teacher input/label hashes,
+parameter fingerprint, actions and outcomes exactly. Balanced and old fits use
+the same 29 states, public feature stencil, native proposal provider, top8 rule,
+tools, world, reward and deployment inputs. Two fixed solves and 58 teacher
+readouts are explicit; no optimizer, neural model, SELECT/EVAL or new label
+search is admitted. Readouts disclose raw scalar priorities without influencing
+future fit choices. Negative results still complete the experiment.
+
+Lean exhaustive preserves original raw order and exact certification/decisions;
+it avoids public feature/proxy/scorer work, retains source-state binding, and
+separately records inventory logging. The same fresh-cache and complete uncached
+replay discipline applies to all three arms. All twelve plans precede evaluation.
+Historical v1 remains negative, including its strict contact-versus-STOP clause.
+The new loss_contrast_go is explicitly prospective: no quality loss against
+exhaustive and old ridge, some strict return improvement over old ridge, and the
+declared preview/wall ratios. It does not relabel v1 as passed.
+
+Two draft bookkeeping defects were corrected before testing: predecessor status
+must name the original v1 completion, and parent metadata must declare two solves.
+No remaining source blocker found. Limits remain 600/660 s, 3 GiB sampled owned
+memory, one thread, 40,000 previews, 634 transitions and 28 source visits. The
+442 score-call ceiling covers 384 plan/replay calls plus 58 teacher readouts.
+
+Inspected author controls-01: 37 passed in 23.38 s, bounded parent 23.726836 s,
+one thread, exit zero. Controls cover equal state/class mass, all-zero states,
+both dual and n684 primal coefficient/intercept stationarity, exact old fit and
+routes, feature access forbidden in lean exhaustive, full actual generated
+execute flow and later-source failure preservation. All saved source/log hashes
+match current bytes. Reviewer performed source and saved-evidence checks only,
+with no acquired payloads, weights, model/native calls or duplicate fit.
+
+Single fixed-order TRAIN timing remains preliminary; feature/readout/logging,
+source preparation, fitting and replay costs must remain visible. Neither
+successful TRAIN gates nor geometric certificates establish clinical safety or
+transfer. Exact reviewed source/control pins: source-review-pins.json.

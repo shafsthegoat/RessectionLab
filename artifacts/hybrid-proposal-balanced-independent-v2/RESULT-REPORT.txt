@@ -1,0 +1,73 @@
+Independent saved audit — positive/zero-balanced TRAIN ridge contrast
+
+PASS: the prospective loss_contrast_go is TRUE on independent recomputation.
+The original v1 TRAIN_go remains FALSE and is preserved verbatim. This result
+supports the declared TRAIN loss contrast only; it is not transfer validation.
+
+The prepared stdlib reader passed on its first execution: 4,662 checks in
+0.139 s, peak process RSS 26,902,528 B, 283 consumed source/JSON files unchanged.
+No arrays, weights, fitted models, new geometry or scientific replay were read
+or executed. All twelve sealed plans join complete accepted independent
+certificates and committed histories. The fresh old-ridge parameter fingerprint,
+actions and outcomes match v1. Historical whole metrics differ only by the
+explicit top-level pilot-contract identity; current plan/metrics/certificate
+identities remain exact. This exclusion was source-justified before execution.
+
+All three methods remove 0/58/0/51 target cells on 002/015/018/045, respectively.
+Balanced and exhaustive have identical outcome totals: target removal
+0/55.313110349/0/48.637450445 mm3, outside-target removal zero, returns
+0/54.866215036/0/48.181962921. The two positive routes use 13 and 12 motions,
+then STOP. The other two stop immediately. The old-ridge 045 return remains
+48.151409795: balancing removes its extra tool change and 0.553125842 mm travel,
+recovering exactly 0.030553126 nominal reward. Contact upper bounds also match
+exhaustive; no quality component exceeds the frozen 1e-7 comparison tolerance.
+
+The targeted saved teacher state is 045 step 11 (decision 12): the best positive
+action/teacher rank moves 9 to 3, top8 contains both positive labels instead of
+one, and max-positive-label shortlist regret falls 0.030553125842 to zero.
+Every one of the 29 saved teacher states then has zero such regret. This is
+shortlist coverage of the best immediate positive label, not a Q-value or
+global-route optimum. Across the 25 motion states, exact teacher rank improves
+in 9, worsens in 6 and stays unchanged in 10; the improvement is not uniform.
+
+Recomputed data-fit squared error under the balanced weights decreases from
+0.4774211823 to 0.3827096691. Under the original equal-state/uniform-row weights,
+it increases from 0.2997002600 to 0.3487348294. These are data-fit terms only,
+not total objectives including coefficient regularization. Every state retains
+1/29 mass, mixed positive/zero groups each get 1/58, and absent classes receive
+no invented mass. Per-state ranks, top8 coverage/regret and both weighted errors
+are retained in audit-result.json; no model reconstruction was needed.
+
+Fresh online costs across all four cases:
+                         old ridge       balanced       lean exhaustive
+Native previews          232             232            2,592
+Source-through-plan s    10.644792       12.351542       45.251440
+
+Balanced/exhaustive preview ratio 0.089506 and wall ratio 0.272954 satisfy the
+prospective 0.5/0.8 limits. Balanced is nevertheless 16.03% slower than the fresh
+old ridge in this fixed order. Lean exhaustive has zero feature/scorer work;
+its input-binding time is 0.048660 s and inventory logging is 0.164575 s. Native
+verification, source preparation and logging remain included, so it is still
+an instrumented control. This single ordered run does not isolate a stable
+speed advantage or justify comparison by subtracting cross-run components.
+Nested timing scopes are not summed as separate costs.
+
+Work accounting: 29 teacher states, 2,592 label rows, two fixed solves, 58 teacher
+score readouts, 116 planning/replay linear score calls, 28 source visits,
+232 transitions and 11,296 native previews. No neural forwards, optimizer work,
+checkpoint loads or SELECT/EVAL access occurred according to bound counters.
+Owned run: 270.445612 s, sampled peak 720,797,696 B, output 16,588,527 B; exit zero,
+clean reap, no remaining PIDs/errors. All stayed within the unchanged resource
+caps. Fit times were 0.013016 s old and 0.012607 s balanced; training collection,
+source setup and independent replays remain separately charged.
+
+Full targets and unknown source domains are unchanged. Nonzero contact and
+unassessed post-exposure workspace remain; zero outside-target removal is not
+zero tissue contact or demonstrated safety. The all-plans-before-evaluation
+boundary follows reviewed control flow, saved visit ordering and attestation;
+this reader did not independently trace execution. All labels are public TRAIN
+annotations. No clinical, held-out, population or global-optimality claim is made.
+
+Exact result/receipt/release/index, per-file inputs and reproducer are bound by
+result-review-index.json. The earlier prepared reader was never executed and
+is preserved separately; there was no failed audit execution for this result.

@@ -1,0 +1,34 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "build/hybrid-proposal-balanced-v2/test_hybrid_proposal.py",
+    "build/hybrid-proposal-balanced-v2/test_source_admission.py",
+    "build/hybrid-proposal-balanced-v2/test_patient_sparse.py",
+    "build/hybrid-proposal-balanced-v2/test_balanced_contrast.py",
+    "build/hybrid-proposal-balanced-v2/test_worker_generated.py"
+  ],
+  "elapsed_seconds": 23.726835625,
+  "exit_code": 0,
+  "files": {
+    "build/hybrid-proposal-balanced-v2/batch_contract.py": "3a473fa5553b9d23837b2156157d0dc1be759efe3b23c72727aa028ea757a2f2",
+    "build/hybrid-proposal-balanced-v2/freeze-runtime.py": "d1a9946e38ad2805d8c5d2c91dfa37285751b5e052a5298ab8224debd7bc8a6c",
+    "build/hybrid-proposal-balanced-v2/hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+    "build/hybrid-proposal-balanced-v2/initial_inventory_worker.py": "5e0dce1f66032a4d6d4fada953ebd98e22cfef4cc0f02b940d8a3022a7c14ff8",
+    "build/hybrid-proposal-balanced-v2/patient_sparse.py": "95078d451f0c61a41455f3e8771ea4676c89a6af0035778a50b90c07dc5a52ad",
+    "build/hybrid-proposal-balanced-v2/run_owned.py": "d0d49d66a1d8993e3d3ea467e0141901a83001dae46a6810757ad3761f300c5c",
+    "build/hybrid-proposal-balanced-v2/test_balanced_contrast.py": "775a6ad54be77339f7eafab7f05095892612cabdc60511f6650ec2f67e3d503a",
+    "build/hybrid-proposal-balanced-v2/test_hybrid_proposal.py": "85592a41098949529f34d94e00d65365686db690235fcbffab2f2d1ef66c57bb",
+    "build/hybrid-proposal-balanced-v2/test_patient_sparse.py": "f63f4179c173a1892f71a82f8b7b62ad16b3ca0d80f9ef3524c0f53416622aca",
+    "build/hybrid-proposal-balanced-v2/test_source_admission.py": "9c37498bf4f32e2247d1c3211867d3aa84649bac2cc6a98999ab442ac4c28189",
+    "build/hybrid-proposal-balanced-v2/test_worker_generated.py": "ce9f0154ed46eafab8206073e3d8ef78da061601a921ad520cd9c180fbccab47"
+  },
+  "generated_only": true,
+  "hard_seconds": 30,
+  "log_sha256": "5b258ee32267939e499ae35ec89f64871922d428842c832e101069a3949e55b2",
+  "threads": 1,
+  "timeout": false
+}

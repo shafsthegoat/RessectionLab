@@ -1,0 +1,52 @@
+{
+  "balanced_vs_fresh_old_online_time_ratio": 1.160336604526795,
+  "balanced_vs_lean_exhaustive_online_time_ratio": 0.27295356068613713,
+  "data_fit_squared_error_only_no_ridge_penalty_read": {
+    "balanced_ridge_top8": {
+      "balanced_weighted_squared_error": 0.38270966913086,
+      "old_weighted_squared_error": 0.34873482941367684,
+      "positive_priority_regret": 0.0
+    },
+    "old_ridge_top8": {
+      "balanced_weighted_squared_error": 0.4774211822708958,
+      "old_weighted_squared_error": 0.29970026001800315,
+      "positive_priority_regret": 0.030553125842096684
+    }
+  },
+  "nested_online_seconds": {
+    "balanced_ridge_top8": {
+      "exact_verification": 2.0879716710187495,
+      "input_binding": 0,
+      "inventory_logging": 0.1175695457495749,
+      "proposal_enumeration": 6.832148872315884,
+      "public_features": 0.1954557488206774,
+      "ranking": 0.0018177053425461054
+    },
+    "exhaustive": {
+      "exact_verification": 27.531639514723793,
+      "input_binding": 0.04866004129871726,
+      "inventory_logging": 0.16457475326023996,
+      "proposal_enumeration": 8.957204832695425,
+      "public_features": 0,
+      "ranking": 0
+    },
+    "old_ridge_top8": {
+      "exact_verification": 2.083222711691633,
+      "input_binding": 0,
+      "inventory_logging": 0.10410249978303909,
+      "proposal_enumeration": 5.212535164551809,
+      "public_features": 0.2001517927274108,
+      "ranking": 0.0018995858263224363
+    }
+  },
+  "scope": "arithmetic on authenticated saved scalar fields; no model/weights/native calls",
+  "source": {
+    "audit-result.json": "39ee0a018c9ab1069ba151ecdded4a52c0c23166d8f9b0eb49d8a152a35ba507",
+    "result.json": "360253e27ce3992facec4938e018bc02707248c1efad1b6cd318ed7ecd5ed4ca"
+  },
+  "teacher_rank_changes_across_25_motion_states": {
+    "improved": 9,
+    "unchanged": 10,
+    "worsened": 6
+  }
+}

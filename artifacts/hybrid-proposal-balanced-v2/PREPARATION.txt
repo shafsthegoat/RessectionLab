@@ -1,0 +1,48 @@
+Ready for one root-owned fixed loss contrast; no acquired execution yet.
+
+Arms: fresh original ridge, positive/zero-balanced ridge, lean exhaustive.
+All use the same four TRAIN patients, 29 teacher states, 681 public features,
+lambda 0.001, top8 where applicable, original proposals/world/reward and exact
+native verification. Obstruction remains off. The heuristic is historical only.
+
+Only learned-objective change: each mixed state's positive and zero classes
+receive half its mass; every state still receives equal total mass. Single-class
+states remain uniform, including all-zero states. Both fits use identical
+original normalization. Weighted centering gives the balanced model an exactly
+unpenalized intercept. Fresh old parameters must match v1's fingerprint; its
+teacher labels/data hash, four complete action sequences and outcomes must
+match v1. No original coefficients are loaded.
+
+Exhaustive now bypasses unused features/proxy scoring. Every arm logs the same
+compact ledger schema and separately times logging. Learned arms additionally
+persist full scores/ranks; all 29 teacher-state scores/ranks are saved. No new
+native query is used for a readout. All twelve plans seal before uncached replay.
+The cache condition, owned supervision and source/role boundaries are unchanged.
+
+Prospective decision rule is bound in batch_contract.py before fitting:
+balanced must be no worse in target/return/outside/contact than both controls,
+improve at least one case's return over old ridge, use <=50% exhaustive previews
+and <=80% exhaustive source-through-plan wall. This is a loss-contrast criterion.
+Every v1 gate and its false comparison remain embedded verbatim as historical;
+v2 cannot retroactively promote v1 or establish transfer/clinical improvement.
+
+600s worker / 660s parent, one thread, 3GiB owned sampled RSS, 40,000 previews,
+634 transitions, 28 source visits, 2 fixed solves, <=3,480 fit rows. Linear score
+ceiling442 =384 maximum planning/replay calls +58 teacher readouts. No neural
+forward, optimizer, checkpoint decode, SELECT or EVAL. The extra small solve
+(v1 fit cost .0147s) does not justify expanding the envelope. Construction,
+preparation, native refusals, logging, ranking, replay and total worker costs are
+retained; one ordered run is not a sustained latency estimate.
+
+37 generated controls passed in23.38s, parent23.7268s, one thread/hard30s.
+Covers original parameters, fixed normalization, class/state mass, dual/primal
+KKT, lean no-feature whole-route parity, all12 generated workflow acceptance,
+and correct later-source failure/cleanup. Source pins match that exact receipt.
+Metadata-only template check passes without numpy/torch/resectionlab imports.
+
+No canonical changes. Root supplies the final committed HEAD and freezes:
+.venv/bin/python -B build/hybrid-proposal-balanced-v2/freeze-runtime.py --head <HEAD>
+Then root writes root-release.json with execution_released=true and uses its
+actual byte hash (no predicted serialization hash):
+.venv/bin/python -B build/hybrid-proposal-balanced-v2/run_owned.py --release build/hybrid-proposal-balanced-v2/root-release.json --release-sha256 <SHA256>
+The freezer/parent refuse an existing attempt; there is no automatic retry.

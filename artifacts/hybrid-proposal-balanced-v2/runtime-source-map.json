@@ -1,0 +1,51 @@
+{
+  "canonical_source_commit": "3da7d96ff1a0240eda8c06767ddfb64fb65c0b8e",
+  "noncanonical_sources": [
+    {
+      "original_path": "build/goal-conditioned-policy-v1/darwin_fast_sampler.py",
+      "archive_path": "runtime-source/build/goal-conditioned-policy-v1/darwin_fast_sampler.py",
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c"
+    },
+    {
+      "original_path": "build/goal-conditioned-policy-v1/run_contact_owned.py",
+      "archive_path": "runtime-source/build/goal-conditioned-policy-v1/run_contact_owned.py",
+      "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7"
+    },
+    {
+      "original_path": "build/hybrid-proposal-balanced-v2/batch_contract.py",
+      "archive_path": "runtime-source/build/hybrid-proposal-balanced-v2/batch_contract.py",
+      "sha256": "3a473fa5553b9d23837b2156157d0dc1be759efe3b23c72727aa028ea757a2f2"
+    },
+    {
+      "original_path": "build/hybrid-proposal-balanced-v2/freeze-runtime.py",
+      "archive_path": "runtime-source/build/hybrid-proposal-balanced-v2/freeze-runtime.py",
+      "sha256": "d1a9946e38ad2805d8c5d2c91dfa37285751b5e052a5298ab8224debd7bc8a6c"
+    },
+    {
+      "original_path": "build/hybrid-proposal-balanced-v2/hybrid_proposal.py",
+      "archive_path": "runtime-source/build/hybrid-proposal-balanced-v2/hybrid_proposal.py",
+      "sha256": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8"
+    },
+    {
+      "original_path": "build/hybrid-proposal-balanced-v2/initial_inventory_worker.py",
+      "archive_path": "runtime-source/build/hybrid-proposal-balanced-v2/initial_inventory_worker.py",
+      "sha256": "5e0dce1f66032a4d6d4fada953ebd98e22cfef4cc0f02b940d8a3022a7c14ff8"
+    },
+    {
+      "original_path": "build/hybrid-proposal-balanced-v2/patient_sparse.py",
+      "archive_path": "runtime-source/build/hybrid-proposal-balanced-v2/patient_sparse.py",
+      "sha256": "95078d451f0c61a41455f3e8771ea4676c89a6af0035778a50b90c07dc5a52ad"
+    },
+    {
+      "original_path": "build/hybrid-proposal-balanced-v2/run_owned.py",
+      "archive_path": "runtime-source/build/hybrid-proposal-balanced-v2/run_owned.py",
+      "sha256": "d0d49d66a1d8993e3d3ea467e0141901a83001dae46a6810757ad3761f300c5c"
+    },
+    {
+      "original_path": "build/public-motion-ranking-il64-v1/pilot_contract.py",
+      "archive_path": "runtime-source/build/public-motion-ranking-il64-v1/pilot_contract.py",
+      "sha256": "130be4f52979eb40a0919492a806eb4b2a71e6f76b2ba1173065677492a1fa58"
+    }
+  ],
+  "weights_and_patient_arrays_included": false
+}

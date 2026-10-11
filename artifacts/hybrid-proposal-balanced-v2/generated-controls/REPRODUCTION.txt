@@ -1,0 +1,15 @@
+The saved controls executed from build/hybrid-proposal-balanced-v2 at canonical
+commit 3da7d96. In an isolated reproduction checkout at that commit:
+1. Restore the Python sources listed in ../runtime-source-map.json to their
+   original relative paths. Restore v1 hybrid_proposal.py from the sibling
+   hybrid-proposal-pilot-v1 runtime snapshot to its original build path.
+2. Copy these five test_*.py files into build/hybrid-proposal-balanced-v2.
+3. Copy canonical src/resectionlab/patient_planning_admission.py into
+   build/hybrid-proposal-balanced-v2/stage/resectionlab/patient_planning_admission.py.
+   The candidate is byte-identical to that canonical commit (SHA256
+   ab063b5b5a67b825009dbc9052befb6270ff39d8d5ce87ed555a1ab79394aed9).
+4. Run the exact five-file pytest command in ../controls.json with the same
+   one-thread environment. These controls generate their own tiny fixtures;
+   they do not need acquired arrays or fitted parameters.
+The saved result auditor separately requires the local hash-bound JSON evidence;
+reconstructing tests does not authorize another acquired fit or evaluation.

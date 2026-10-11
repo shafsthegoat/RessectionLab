@@ -1666,3 +1666,27 @@ historical identity mismatch. Full costs and the instrumented exhaustive timing
 limitation are recorded. SELECT/EVAL remain closed. One prospective balanced
 positive/zero loss contrast retains original normalization/features/top8 and
 requires fresh original-ridge plus lean exhaustive controls; it is not a result.
+
+## October 11 — Balanced shortlist meets the prospective TRAIN gate
+
+[The fixed loss contrast](../artifacts/hybrid-proposal-balanced-v2/RESULT.md)
+completes all twelve fresh routes in 270.445612 owned seconds at 720.80 MB
+sampled peak. Positive/zero balancing, with original normalization and all
+29 states retained, restores the 045 best final action (rank9 to3). It now
+matches exhaustive outcomes on all four TRAIN cases with232 versus2,592
+online previews and12.352 versus45.251 seconds against lean exhaustive.
+The fresh original ridge reproduces its prior loss exactly. All current
+replays pass, and the independent saved audit passes4,662 checks. Original
+v1 false gates remain unchanged; the new prospective loss-contrast gate is true.
+This is supervised proposal ordering, not RL, independent patient transfer or
+physical/clinical validation. Fitting-error tradeoffs and the slower fresh
+balanced-versus-old-ridge timing remain visible. No new SELECT/EVAL access.
+
+Parallel diagnosis identifies the exposed013 search's eager construction of
+discarded successor inventories as a concrete computational bottleneck. Its
+37 legal root motions all have negative immediate reward, so another unchanged
+greedy shortlist would STOP. Test the existing lazy transition mode under the
+same world, reward, retention and budgets before changing models or claiming
+that useful enabling sequences are absent. TRAIN050 is already acquired but
+requires public-source/header/domain qualification; held037 and closed067 stay
+protected. See the compact readiness/diagnosis reports once integrated.

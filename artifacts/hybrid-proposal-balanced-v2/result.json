@@ -1,0 +1,2027 @@
+{
+  "SELECT_EVAL_opened": false,
+  "all_plans_sealed_before_evaluation": true,
+  "arms": [
+    {
+      "cache_construction_seconds": 0.012680666986852884,
+      "cache_stats": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 472,
+        "cavity_cached": false,
+        "compute_seconds": 0.23835662915371358,
+        "entries": 461,
+        "evictions": 0,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 11,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 461,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:dae2a8aa2cbc2180aaeea8db61d621e50b7e1234122bb004aed7ddbc4bd137bc",
+        "native_config_hash": "sha256:f02e67abbe450ca24cec3f4f0c9886a49178ea992e9c4049350e2b3318349493",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 0.2654732533264905,
+        "retained_payload_bytes": 6010944,
+        "source_guard_sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+        "source_hash": "sha256:27f4414796f49256181161f3f770f4ea75c242059bcc583c01817f65949b0f5b"
+      },
+      "complete": true,
+      "endpoint": "STOP",
+      "files": {
+        "old_ridge_top8/ReMIND-002/plan.json": "509ac98a53f77457c21da1c250387bff24f8743ba41902e5e0f426410cc5bf66",
+        "old_ridge_top8/ReMIND-002/replay/episode-metrics.json": "ed471b0b8fbcedcd2142a3566b2d81a14f55a7e80e83efc4aa9a9ccd5fa6e5fd",
+        "old_ridge_top8/ReMIND-002/replay/independent-episode.json": "21aa3fe45fa585d5d11d31194b69b9c53b521246ddf27c1b9586b3ad99b1f06f"
+      },
+      "independent_accepted": true,
+      "method": "old_ridge_top8",
+      "online_costs": {
+        "counts": {
+          "feature_rows": 117,
+          "native_previews": 8,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.7613281670492142,
+          "exact_verification": 0.44845704082399607,
+          "inventory_inclusive": 0.6655889169778675,
+          "inventory_logging": 0.0024517918936908245,
+          "proposal_enumeration": 0.19982766709290445,
+          "public_features": 0.00861024996265769,
+          "ranking": 8.25000461190939e-05
+        }
+      },
+      "online_previews": 8,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 23149.488478878036,
+        "total_reward": 0.0
+      },
+      "replay_and_audit_seconds": 1.5525390410330147,
+      "replay_costs": {
+        "counts": {
+          "feature_rows": 117,
+          "native_previews": 8,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 1.1667234578635544,
+          "exact_verification": 0.41690283408388495,
+          "inventory_inclusive": 1.0679988749325275,
+          "inventory_logging": 0.005484916968271136,
+          "proposal_enumeration": 0.6160430000163615,
+          "public_features": 0.008927584160119295,
+          "ranking": 9.433319792151451e-05
+        }
+      },
+      "replay_previews": 8,
+      "replay_source_preparation_seconds": 0.28635525004938245,
+      "source_preparation_seconds": 0.2763040419667959,
+      "source_through_plan_seconds": 1.0688912910409272,
+      "status": "complete",
+      "subject": "ReMIND-002"
+    },
+    {
+      "cache_construction_seconds": 0.011705667013302445,
+      "cache_stats": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 2656,
+        "cavity_cached": false,
+        "compute_seconds": 0.07356750103645027,
+        "entries": 598,
+        "evictions": 0,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 2058,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 598,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:5e2d7e9b486926237289b1d142eb39a0c219f2121bb6320f0b55ba9af430ed51",
+        "native_config_hash": "sha256:7e7c18608ce5b0794047908d4003f55de05e6c07c24a6405fbcec9a02b4f2885",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 0.21579488553106785,
+        "retained_payload_bytes": 789552,
+        "source_guard_sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+        "source_hash": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524"
+      },
+      "complete": true,
+      "endpoint": "STOP",
+      "files": {
+        "old_ridge_top8/ReMIND-015/plan.json": "5e72ca9f6b5336ef3af015189a5912d0dd83357d984b7529c470f11db2229a28",
+        "old_ridge_top8/ReMIND-015/replay/episode-metrics.json": "8df25db47aca5bf6c65d7fe6b6445ad3137acf4cd2b5bb5b94694efa76adefbe",
+        "old_ridge_top8/ReMIND-015/replay/independent-episode.json": "bf70300e17b69b739940d0732a5edd13292446e0b18307fbf6e8b7866db5ff0c"
+      },
+      "independent_accepted": true,
+      "method": "old_ridge_top8",
+      "online_costs": {
+        "counts": {
+          "feature_rows": 1217,
+          "native_previews": 112,
+          "proposal_calls": 14,
+          "ridge_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.24808320798911154,
+          "exact_verification": 0.4737969618290663,
+          "inventory_inclusive": 2.6724378331564367,
+          "inventory_logging": 0.0491290835198015,
+          "proposal_enumeration": 1.9596683729905635,
+          "public_features": 0.0952377081848681,
+          "ranking": 0.0009202950168401003
+        }
+      },
+      "online_previews": 112,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 56.895312759999854,
+        "cumulative_contacted_tissue_upper_bound_mm3": 205.9936523325737,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 150.68054198401225,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 13,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 58,
+        "reference_target_fraction_removed": 0.007488702388637833,
+        "simulated_removed_volume_mm3": 55.31311034856145,
+        "target_removed_mm3": 55.313110348561466,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 7386.207580165663,
+        "total_reward": 54.866215035801446
+      },
+      "replay_and_audit_seconds": 9.467882208060473,
+      "replay_costs": {
+        "counts": {
+          "feature_rows": 1217,
+          "native_previews": 112,
+          "proposal_calls": 14,
+          "ridge_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.37409941712394357,
+          "exact_verification": 0.5765577557031065,
+          "inventory_inclusive": 5.290544875198975,
+          "inventory_logging": 0.08714508451521397,
+          "proposal_enumeration": 4.218151749810204,
+          "public_features": 0.09801925113424659,
+          "ranking": 0.000994539586827159
+        }
+      },
+      "replay_previews": 112,
+      "replay_source_preparation_seconds": 0.257679833099246,
+      "source_preparation_seconds": 0.24662095797248185,
+      "source_through_plan_seconds": 3.5660517499782145,
+      "status": "complete",
+      "subject": "ReMIND-015"
+    },
+    {
+      "cache_construction_seconds": 0.023094709031283855,
+      "cache_stats": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 796,
+        "cavity_cached": false,
+        "compute_seconds": 0.16287933359853923,
+        "entries": 780,
+        "evictions": 0,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 16,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 780,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:9e371ec2af2f541c5073fbca969b23cb934b135dfc2b41e7babb6b82c64805c8",
+        "native_config_hash": "sha256:2fc65db7c23fef5ee34195a0586d92bce021bcf691c3eadf9429707901c29976",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 0.20622532512061298,
+        "retained_payload_bytes": 2280336,
+        "source_guard_sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+        "source_hash": "sha256:0db487c202c1fef5ce408c6dc593f6a42ce12f6f2b630807174ba9f37727edd6"
+      },
+      "complete": true,
+      "endpoint": "STOP",
+      "files": {
+        "old_ridge_top8/ReMIND-018/plan.json": "d0bcc68e3f632ab1740ce7157199a0e01b37941f2f72be24711ac821a7dac052",
+        "old_ridge_top8/ReMIND-018/replay/episode-metrics.json": "f567fd7666bf829f8a7404c247cf81ac53826df83033b9241bdd242a76102d74",
+        "old_ridge_top8/ReMIND-018/replay/independent-episode.json": "4490707e527683f9e73b81ab88abbe8373e14aa1a335c6965c6038b2b7ff9a69"
+      },
+      "independent_accepted": true,
+      "method": "old_ridge_top8",
+      "online_costs": {
+        "counts": {
+          "feature_rows": 75,
+          "native_previews": 8,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.9459468750283122,
+          "exact_verification": 0.2553234579972923,
+          "inventory_inclusive": 0.8544702501967549,
+          "inventory_logging": 0.005477957893162966,
+          "proposal_enumeration": 0.5796906668692827,
+          "public_features": 0.005990334087982774,
+          "ranking": 5.470798350870609e-05
+        }
+      },
+      "online_previews": 8,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 1189.2323111979806,
+        "total_reward": 0.0
+      },
+      "replay_and_audit_seconds": 1.8197463329415768,
+      "replay_costs": {
+        "counts": {
+          "feature_rows": 75,
+          "native_previews": 8,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 1.4631917078513652,
+          "exact_verification": 0.210509916767478,
+          "inventory_inclusive": 1.3885036250576377,
+          "inventory_logging": 0.0059476669412106276,
+          "proposal_enumeration": 1.1432664999738336,
+          "public_features": 0.006237833062186837,
+          "ranking": 5.674990825355053e-05
+        }
+      },
+      "replay_previews": 8,
+      "replay_source_preparation_seconds": 0.26030920911580324,
+      "source_preparation_seconds": 0.3968449579551816,
+      "source_through_plan_seconds": 1.3902206250932068,
+      "status": "complete",
+      "subject": "ReMIND-018"
+    },
+    {
+      "cache_construction_seconds": 0.011856249999254942,
+      "cache_stats": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 3816,
+        "cavity_cached": false,
+        "compute_seconds": 0.29101390670984983,
+        "entries": 1359,
+        "evictions": 0,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 2457,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 1359,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:10243c85aa9188701e5e778c8d8469ebde1116742a2a82fd212cc451170e10f5",
+        "native_config_hash": "sha256:ad04a3e50713565847f1172dc322eff2df6d0c3e8dc2c5612ee174d2e3eadcb3",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 0.49220605520531535,
+        "retained_payload_bytes": 5957568,
+        "source_guard_sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+        "source_hash": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938"
+      },
+      "complete": true,
+      "endpoint": "STOP",
+      "files": {
+        "old_ridge_top8/ReMIND-045/plan.json": "91af22d6995c7e8e2d176f0bf27a5fe009f99b43611871bbd2b4e02b6d61244c",
+        "old_ridge_top8/ReMIND-045/replay/episode-metrics.json": "5286606302ad6d3bfdd6a8aeec73d467379dab062976e1f92546f73402d3e409",
+        "old_ridge_top8/ReMIND-045/replay/independent-episode.json": "34c08021559bd0007db3da9ddd4715b8afc4ea3602589d56ae9ad92372de840c"
+      },
+      "independent_accepted": true,
+      "method": "old_ridge_top8",
+      "online_costs": {
+        "counts": {
+          "feature_rows": 1183,
+          "native_previews": 104,
+          "proposal_calls": 13,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.4290399169549346,
+          "exact_verification": 0.9056452510412782,
+          "inventory_inclusive": 3.630993334343657,
+          "inventory_logging": 0.047043666476383805,
+          "proposal_enumeration": 2.4733484575990587,
+          "public_features": 0.09031350049190223,
+          "ranking": 0.0008420827798545361
+        }
+      },
+      "online_previews": 104,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 96.04064966080533,
+        "cumulative_contacted_tissue_upper_bound_mm3": 202.17920577005748,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 153.54175532537386,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 12,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 51,
+        "reference_target_fraction_removed": 0.0020157306035334575,
+        "simulated_removed_volume_mm3": 48.637450444683644,
+        "target_removed_mm3": 48.63745044468365,
+        "tool_changes": 1,
+        "total_reference_target_mm3": 24128.943798057662,
+        "total_reward": 48.15140979502283
+      },
+      "replay_and_audit_seconds": 13.736995457904413,
+      "replay_costs": {
+        "counts": {
+          "feature_rows": 1183,
+          "native_previews": 104,
+          "proposal_calls": 13,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.6177115421742201,
+          "exact_verification": 1.187084419419989,
+          "inventory_inclusive": 6.9446840833406895,
+          "inventory_logging": 0.07757650082930923,
+          "proposal_enumeration": 5.297683583339676,
+          "public_features": 0.08934704214334488,
+          "ranking": 0.0008375837933272123
+        }
+      },
+      "replay_previews": 104,
+      "replay_source_preparation_seconds": 0.2820065419655293,
+      "source_preparation_seconds": 0.25874399999156594,
+      "source_through_plan_seconds": 4.619628250133246,
+      "status": "complete",
+      "subject": "ReMIND-045"
+    },
+    {
+      "cache_construction_seconds": 0.012622334063053131,
+      "cache_stats": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 522,
+        "cavity_cached": false,
+        "compute_seconds": 0.2686772937886417,
+        "entries": 513,
+        "evictions": 0,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 9,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 513,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:dae2a8aa2cbc2180aaeea8db61d621e50b7e1234122bb004aed7ddbc4bd137bc",
+        "native_config_hash": "sha256:f02e67abbe450ca24cec3f4f0c9886a49178ea992e9c4049350e2b3318349493",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 0.2984960884787142,
+        "retained_payload_bytes": 6835176,
+        "source_guard_sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+        "source_hash": "sha256:27f4414796f49256181161f3f770f4ea75c242059bcc583c01817f65949b0f5b"
+      },
+      "complete": true,
+      "endpoint": "STOP",
+      "files": {
+        "balanced_ridge_top8/ReMIND-002/plan.json": "94a668f894be6c250e478ff5a760879debf788e63492661e73a2d9d64eae5365",
+        "balanced_ridge_top8/ReMIND-002/replay/episode-metrics.json": "7011bdce87383c246c1a65c3096b5a1b243a1bccde01c2310ccb91caf93cc9ef",
+        "balanced_ridge_top8/ReMIND-002/replay/independent-episode.json": "eecf79f3e9777816ad0c16810c34f4b5fe516770fc87c4f083fe58252e5a9988"
+      },
+      "independent_accepted": true,
+      "method": "balanced_ridge_top8",
+      "online_costs": {
+        "counts": {
+          "feature_rows": 117,
+          "native_previews": 8,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.9364764159545302,
+          "exact_verification": 0.4838825415354222,
+          "inventory_inclusive": 0.8400065000168979,
+          "inventory_logging": 0.00339087494648993,
+          "proposal_enumeration": 0.3325937499757856,
+          "public_features": 0.008584082825109363,
+          "ranking": 7.858406752347946e-05
+        }
+      },
+      "online_previews": 8,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 23149.488478878036,
+        "total_reward": 0.0
+      },
+      "replay_and_audit_seconds": 1.7311698750127107,
+      "replay_costs": {
+        "counts": {
+          "feature_rows": 117,
+          "native_previews": 8,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 1.3330389170441777,
+          "exact_verification": 0.4567622481845319,
+          "inventory_inclusive": 1.2317608748562634,
+          "inventory_logging": 0.006383582949638367,
+          "proposal_enumeration": 0.734470458002761,
+          "public_features": 0.008517791982740164,
+          "ranking": 7.866695523262024e-05
+        }
+      },
+      "replay_previews": 8,
+      "replay_source_preparation_seconds": 0.2946185830514878,
+      "source_preparation_seconds": 0.2878538330551237,
+      "source_through_plan_seconds": 1.2601699591614306,
+      "status": "complete",
+      "subject": "ReMIND-002"
+    },
+    {
+      "cache_construction_seconds": 0.011258957907557487,
+      "cache_stats": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 2708,
+        "cavity_cached": false,
+        "compute_seconds": 0.08130214782431722,
+        "entries": 662,
+        "evictions": 0,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 2046,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 662,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:5e2d7e9b486926237289b1d142eb39a0c219f2121bb6320f0b55ba9af430ed51",
+        "native_config_hash": "sha256:7e7c18608ce5b0794047908d4003f55de05e6c07c24a6405fbcec9a02b4f2885",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 0.2221520587336272,
+        "retained_payload_bytes": 918360,
+        "source_guard_sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+        "source_hash": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524"
+      },
+      "complete": true,
+      "endpoint": "STOP",
+      "files": {
+        "balanced_ridge_top8/ReMIND-015/plan.json": "f84f1bb8ee1f79956e255825deddb828b00192f684a5b361c6be8a0a623cbd75",
+        "balanced_ridge_top8/ReMIND-015/replay/episode-metrics.json": "2a7c03c61d994a238d6d43975530909373fcebc5a568fb6e5a547a0f69806cf7",
+        "balanced_ridge_top8/ReMIND-015/replay/independent-episode.json": "c7032ab459f75bcd7f2a261002c0d1a13ec2fd0cc7544328bfbea11ac0607c37"
+      },
+      "independent_accepted": true,
+      "method": "balanced_ridge_top8",
+      "online_costs": {
+        "counts": {
+          "feature_rows": 1217,
+          "native_previews": 112,
+          "proposal_calls": 14,
+          "ridge_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.2895707089919597,
+          "exact_verification": 0.47181375208310783,
+          "inventory_inclusive": 3.221713207429275,
+          "inventory_logging": 0.05307921161875129,
+          "proposal_enumeration": 2.452463040826842,
+          "public_features": 0.0913640814833343,
+          "ranking": 0.0008618724532425404
+        }
+      },
+      "online_previews": 112,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 56.895312759999854,
+        "cumulative_contacted_tissue_upper_bound_mm3": 205.9936523325737,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 150.68054198401225,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 13,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 58,
+        "reference_target_fraction_removed": 0.007488702388637833,
+        "simulated_removed_volume_mm3": 55.31311034856145,
+        "target_removed_mm3": 55.313110348561466,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 7386.207580165663,
+        "total_reward": 54.866215035801446
+      },
+      "replay_and_audit_seconds": 10.558681583032012,
+      "replay_costs": {
+        "counts": {
+          "feature_rows": 1217,
+          "native_previews": 112,
+          "proposal_calls": 14,
+          "ridge_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.4125607921741903,
+          "exact_verification": 0.5609607482329011,
+          "inventory_inclusive": 5.60577475046739,
+          "inventory_logging": 0.09482008405029774,
+          "proposal_enumeration": 4.508486957522109,
+          "public_features": 0.09238349972292781,
+          "ranking": 0.0008986666798591614
+        }
+      },
+      "replay_previews": 112,
+      "replay_source_preparation_seconds": 0.2809075422119349,
+      "source_preparation_seconds": 0.2571407500654459,
+      "source_through_plan_seconds": 4.189346957951784,
+      "status": "complete",
+      "subject": "ReMIND-015"
+    },
+    {
+      "cache_construction_seconds": 0.010848208796232939,
+      "cache_stats": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 788,
+        "cavity_cached": false,
+        "compute_seconds": 0.15940985968336463,
+        "entries": 772,
+        "evictions": 0,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 16,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 772,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:9e371ec2af2f541c5073fbca969b23cb934b135dfc2b41e7babb6b82c64805c8",
+        "native_config_hash": "sha256:2fc65db7c23fef5ee34195a0586d92bce021bcf691c3eadf9429707901c29976",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 0.20207282481715083,
+        "retained_payload_bytes": 2251296,
+        "source_guard_sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+        "source_hash": "sha256:0db487c202c1fef5ce408c6dc593f6a42ce12f6f2b630807174ba9f37727edd6"
+      },
+      "complete": true,
+      "endpoint": "STOP",
+      "files": {
+        "balanced_ridge_top8/ReMIND-018/plan.json": "922edfd752d3db5b4c467c51405022da5bfa7d76a9057ad7e51cbb9104035500",
+        "balanced_ridge_top8/ReMIND-018/replay/episode-metrics.json": "de75d546460d5e5f0d4d16d567d09ec8d76c28366b7fc19050cc76e0b2ffb9a7",
+        "balanced_ridge_top8/ReMIND-018/replay/independent-episode.json": "0e47c3c9c678fabc2441a2ddc8fdbf501cb06559f285012f35fd5ca3340f8774"
+      },
+      "independent_accepted": true,
+      "method": "balanced_ridge_top8",
+      "online_costs": {
+        "counts": {
+          "feature_rows": 75,
+          "native_previews": 8,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.9669020830187947,
+          "exact_verification": 0.2503396647516638,
+          "inventory_inclusive": 0.9094882921781391,
+          "inventory_logging": 0.0056654580403119326,
+          "proposal_enumeration": 0.635101166088134,
+          "public_features": 0.005784250097349286,
+          "ranking": 5.4416945204138756e-05
+        }
+      },
+      "online_previews": 8,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 1189.2323111979806,
+        "total_reward": 0.0
+      },
+      "replay_and_audit_seconds": 1.9983709999360144,
+      "replay_costs": {
+        "counts": {
+          "feature_rows": 75,
+          "native_previews": 8,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 1.6360211670398712,
+          "exact_verification": 0.205774333095178,
+          "inventory_inclusive": 1.574676957912743,
+          "inventory_logging": 0.006771583808586001,
+          "proposal_enumeration": 1.329667708138004,
+          "public_features": 0.0058453751262277365,
+          "ranking": 6.008311174809933e-05
+        }
+      },
+      "replay_previews": 8,
+      "replay_source_preparation_seconds": 0.2604378340765834,
+      "source_preparation_seconds": 0.24134241696447134,
+      "source_through_plan_seconds": 1.246821332955733,
+      "status": "complete",
+      "subject": "ReMIND-018"
+    },
+    {
+      "cache_construction_seconds": 0.011586125008761883,
+      "cache_stats": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 3934,
+        "cavity_cached": false,
+        "compute_seconds": 0.30399156105704606,
+        "entries": 1378,
+        "evictions": 0,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 2556,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 1378,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:10243c85aa9188701e5e778c8d8469ebde1116742a2a82fd212cc451170e10f5",
+        "native_config_hash": "sha256:ad04a3e50713565847f1172dc322eff2df6d0c3e8dc2c5612ee174d2e3eadcb3",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 0.5113678141497076,
+        "retained_payload_bytes": 6514656,
+        "source_guard_sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+        "source_hash": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938"
+      },
+      "complete": true,
+      "endpoint": "STOP",
+      "files": {
+        "balanced_ridge_top8/ReMIND-045/plan.json": "6641d3ac6b8534a6955db3aa7e3d81fed6b2909054c8e48a0d4c72ac62ee2636",
+        "balanced_ridge_top8/ReMIND-045/replay/episode-metrics.json": "f702c3dd9cd6a62ea47005aff6615eaf303e029c7d533dcb4b7c9cd400571d49",
+        "balanced_ridge_top8/ReMIND-045/replay/independent-episode.json": "fcf6bc24c9990c8f3d92e8b287ff47e9c4c2176e22926d440c464b15abf55a70"
+      },
+      "independent_accepted": true,
+      "method": "balanced_ridge_top8",
+      "online_costs": {
+        "counts": {
+          "feature_rows": 1183,
+          "native_previews": 104,
+          "proposal_calls": 13,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.4914745409041643,
+          "exact_verification": 0.8819357126485556,
+          "inventory_inclusive": 4.612563666887581,
+          "inventory_logging": 0.05543400114402175,
+          "proposal_enumeration": 3.411990915425122,
+          "public_features": 0.08972333441488445,
+          "ranking": 0.0008228318765759468
+        }
+      },
+      "online_previews": 104,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 95.48752381870861,
+        "cumulative_contacted_tissue_upper_bound_mm3": 202.17920577005748,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 153.54175532537386,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 12,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 51,
+        "reference_target_fraction_removed": 0.0020157306035334575,
+        "simulated_removed_volume_mm3": 48.637450444683644,
+        "target_removed_mm3": 48.63745044468365,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 24128.943798057662,
+        "total_reward": 48.181962920864926
+      },
+      "replay_and_audit_seconds": 16.060953582869843,
+      "replay_costs": {
+        "counts": {
+          "feature_rows": 1183,
+          "native_previews": 104,
+          "proposal_calls": 13,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.6738352498505265,
+          "exact_verification": 1.1925078767817467,
+          "inventory_inclusive": 7.97226937697269,
+          "inventory_logging": 0.09485091525129974,
+          "proposal_enumeration": 6.237417000113055,
+          "public_features": 0.0899057500064373,
+          "ranking": 0.0008405833505094051
+        }
+      },
+      "replay_previews": 104,
+      "replay_source_preparation_seconds": 0.28025162499397993,
+      "source_preparation_seconds": 0.2648150830063969,
+      "source_through_plan_seconds": 5.655203457921743,
+      "status": "complete",
+      "subject": "ReMIND-045"
+    },
+    {
+      "cache_construction_seconds": 0.01239708298817277,
+      "cache_stats": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 8136,
+        "cavity_cached": false,
+        "compute_seconds": 3.3480945895425975,
+        "entries": 3540,
+        "evictions": 4385,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 211,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 7925,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:dae2a8aa2cbc2180aaeea8db61d621e50b7e1234122bb004aed7ddbc4bd137bc",
+        "native_config_hash": "sha256:f02e67abbe450ca24cec3f4f0c9886a49178ea992e9c4049350e2b3318349493",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 3.8170266046654433,
+        "retained_payload_bytes": 33550296,
+        "source_guard_sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+        "source_hash": "sha256:27f4414796f49256181161f3f770f4ea75c242059bcc583c01817f65949b0f5b"
+      },
+      "complete": true,
+      "endpoint": "STOP",
+      "files": {
+        "exhaustive/ReMIND-002/plan.json": "9d55170ea111460c306eb61d4807878b8824eecbd9e6ec78c9180789342a0da4",
+        "exhaustive/ReMIND-002/replay/episode-metrics.json": "9cd7b99f1d31e12fb890e3777a133462a84431a331428d8ac1b25867add167c2",
+        "exhaustive/ReMIND-002/replay/independent-episode.json": "ac753a797fab1a4f9d4b132c284b2fdf0488d274facb68cb3ea73c8fe2e9ca68"
+      },
+      "independent_accepted": true,
+      "method": "exhaustive",
+      "online_costs": {
+        "counts": {
+          "native_previews": 117,
+          "proposal_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 7.916919749928638,
+          "exact_verification": 7.129807788180187,
+          "input_binding": 0.0018445421010255814,
+          "inventory_inclusive": 7.818062458187342,
+          "inventory_logging": 0.004376708064228296,
+          "proposal_enumeration": 0.4725665000732988
+        }
+      },
+      "online_previews": 117,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 23149.488478878036,
+        "total_reward": 0.0
+      },
+      "replay_and_audit_seconds": 8.913906583096832,
+      "replay_costs": {
+        "counts": {
+          "native_previews": 117,
+          "proposal_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 8.503306082915515,
+          "exact_verification": 7.0578009956516325,
+          "input_binding": 0.0018602500203996897,
+          "inventory_inclusive": 8.374766250140965,
+          "inventory_logging": 0.007488582981750369,
+          "proposal_enumeration": 0.8777267499826849
+        }
+      },
+      "replay_previews": 117,
+      "replay_source_preparation_seconds": 0.2979583339765668,
+      "source_preparation_seconds": 0.27047920785844326,
+      "source_through_plan_seconds": 8.265992707805708,
+      "status": "complete",
+      "subject": "ReMIND-002"
+    },
+    {
+      "cache_construction_seconds": 0.011127917096018791,
+      "cache_stats": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 33258,
+        "cavity_cached": false,
+        "compute_seconds": 0.3910362278111279,
+        "entries": 3190,
+        "evictions": 0,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 30068,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 3190,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:5e2d7e9b486926237289b1d142eb39a0c219f2121bb6320f0b55ba9af430ed51",
+        "native_config_hash": "sha256:7e7c18608ce5b0794047908d4003f55de05e6c07c24a6405fbcec9a02b4f2885",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 2.103022909257561,
+        "retained_payload_bytes": 3953424,
+        "source_guard_sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+        "source_hash": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524"
+      },
+      "complete": true,
+      "endpoint": "STOP",
+      "files": {
+        "exhaustive/ReMIND-015/plan.json": "6c281f3f3f837f180259a4fc3ba7d1b0c26fb7b3f2047832fe82da963b223d79",
+        "exhaustive/ReMIND-015/replay/episode-metrics.json": "e5c1a2190d262faa7d5ea7bcefcc3f3cffa5dab798fb179d8e6ca36934d46c3c",
+        "exhaustive/ReMIND-015/replay/independent-episode.json": "d5b66eee17db26d729d98608b5d24265686ddbeaf7153c4ef53f5129f1fd082f"
+      },
+      "independent_accepted": true,
+      "method": "exhaustive",
+      "online_costs": {
+        "counts": {
+          "native_previews": 1217,
+          "proposal_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.9934373330324888,
+          "exact_verification": 5.749876144807786,
+          "input_binding": 0.02277795854024589,
+          "inventory_inclusive": 11.134806667687371,
+          "inventory_logging": 0.08804650162346661,
+          "proposal_enumeration": 3.16658733272925
+        }
+      },
+      "online_previews": 1217,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 56.895312759999854,
+        "cumulative_contacted_tissue_upper_bound_mm3": 205.9936523325737,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 150.68054198401225,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 13,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 58,
+        "reference_target_fraction_removed": 0.007488702388637833,
+        "simulated_removed_volume_mm3": 55.31311034856145,
+        "target_removed_mm3": 55.313110348561466,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 7386.207580165663,
+        "total_reward": 54.866215035801446
+      },
+      "replay_and_audit_seconds": 21.935147166019306,
+      "replay_costs": {
+        "counts": {
+          "native_previews": 1217,
+          "proposal_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 1.129877292085439,
+          "exact_verification": 7.192986097652465,
+          "input_binding": 0.022720457753166556,
+          "inventory_inclusive": 16.451737542636693,
+          "inventory_logging": 0.10809458303265274,
+          "proposal_enumeration": 5.185756081016734
+        }
+      },
+      "replay_previews": 1217,
+      "replay_source_preparation_seconds": 0.29294120892882347,
+      "source_preparation_seconds": 0.26055283285677433,
+      "source_through_plan_seconds": 12.527324249967933,
+      "status": "complete",
+      "subject": "ReMIND-015"
+    },
+    {
+      "cache_construction_seconds": 0.011046125087887049,
+      "cache_stats": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 6466,
+        "cavity_cached": false,
+        "compute_seconds": 1.349894841434434,
+        "entries": 6315,
+        "evictions": 0,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 151,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 6315,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:9e371ec2af2f541c5073fbca969b23cb934b135dfc2b41e7babb6b82c64805c8",
+        "native_config_hash": "sha256:2fc65db7c23fef5ee34195a0586d92bce021bcf691c3eadf9429707901c29976",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 1.7017174386419356,
+        "retained_payload_bytes": 20963280,
+        "source_guard_sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+        "source_hash": "sha256:0db487c202c1fef5ce408c6dc593f6a42ce12f6f2b630807174ba9f37727edd6"
+      },
+      "complete": true,
+      "endpoint": "STOP",
+      "files": {
+        "exhaustive/ReMIND-018/plan.json": "82ee5de2139c1ad78f61e31d32531b52308cc619376e0feff4afd617c8ef1920",
+        "exhaustive/ReMIND-018/replay/episode-metrics.json": "b7cbcf114499af5f2ff8d31e2da938acee9ac74bb67a1c82c18e87a457fd849a",
+        "exhaustive/ReMIND-018/replay/independent-episode.json": "b3760b18efff08d10772b34c8120b8dadac2fea29600878f16212697f7bdb6bc"
+      },
+      "independent_accepted": true,
+      "method": "exhaustive",
+      "online_costs": {
+        "counts": {
+          "native_previews": 75,
+          "proposal_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 3.289036334026605,
+          "exact_verification": 2.1188158695586026,
+          "input_binding": 0.0015982917975634336,
+          "inventory_inclusive": 3.230083999922499,
+          "inventory_logging": 0.00485037500038743,
+          "proposal_enumeration": 0.9558527918998152
+        }
+      },
+      "online_previews": 75,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 1189.2323111979806,
+        "total_reward": 0.0
+      },
+      "replay_and_audit_seconds": 4.013033916940913,
+      "replay_costs": {
+        "counts": {
+          "native_previews": 75,
+          "proposal_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 3.643825916107744,
+          "exact_verification": 1.7417222505901009,
+          "input_binding": 0.0015619578771293163,
+          "inventory_inclusive": 3.5812963750213385,
+          "inventory_logging": 0.007832000032067299,
+          "proposal_enumeration": 1.5638205839786679
+        }
+      },
+      "replay_previews": 75,
+      "replay_source_preparation_seconds": 0.26064533297903836,
+      "source_preparation_seconds": 0.2547307498753071,
+      "source_through_plan_seconds": 3.619676041183993,
+      "status": "complete",
+      "subject": "ReMIND-018"
+    },
+    {
+      "cache_construction_seconds": 0.012726875022053719,
+      "cache_stats": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 48768,
+        "cavity_cached": false,
+        "compute_seconds": 1.1905534956604242,
+        "entries": 5406,
+        "evictions": 0,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 43362,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 5406,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:10243c85aa9188701e5e778c8d8469ebde1116742a2a82fd212cc451170e10f5",
+        "native_config_hash": "sha256:ad04a3e50713565847f1172dc322eff2df6d0c3e8dc2c5612ee174d2e3eadcb3",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 3.7089595082215965,
+        "retained_payload_bytes": 21872904,
+        "source_guard_sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+        "source_hash": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938"
+      },
+      "complete": true,
+      "endpoint": "STOP",
+      "files": {
+        "exhaustive/ReMIND-045/plan.json": "8fd11dbcbd48ca2d6c75e87d25fa5faa41700db6870aa1920f9509e5bbcf4def",
+        "exhaustive/ReMIND-045/replay/episode-metrics.json": "9faa6cdd29076f9e3f4d22d2477880416b7d4f0895100e74e7f401e9c7413b5c",
+        "exhaustive/ReMIND-045/replay/independent-episode.json": "907af81a03ea747661b41e84ff07d333d4127c2479bd5120f4d0629776eeb26d"
+      },
+      "independent_accepted": true,
+      "method": "exhaustive",
+      "online_costs": {
+        "counts": {
+          "native_previews": 1183,
+          "proposal_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 2.3538000830449164,
+          "exact_verification": 12.533139712177217,
+          "input_binding": 0.022439248859882355,
+          "inventory_inclusive": 19.40690349903889,
+          "inventory_logging": 0.06730116857215762,
+          "proposal_enumeration": 4.36219820799306
+        }
+      },
+      "online_previews": 1183,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 95.48752381870861,
+        "cumulative_contacted_tissue_upper_bound_mm3": 202.17920577005748,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 153.54175532537386,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 12,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 51,
+        "reference_target_fraction_removed": 0.0020157306035334575,
+        "simulated_removed_volume_mm3": 48.637450444683644,
+        "target_removed_mm3": 48.63745044468365,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 24128.943798057662,
+        "total_reward": 48.181962920864926
+      },
+      "replay_and_audit_seconds": 40.18964983290061,
+      "replay_costs": {
+        "counts": {
+          "native_previews": 1183,
+          "proposal_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 2.4945031250827014,
+          "exact_verification": 18.5706364675425,
+          "input_binding": 0.022414749022573233,
+          "inventory_inclusive": 30.443271790165454,
+          "inventory_logging": 0.11781370849348605,
+          "proposal_enumeration": 7.307439751690254
+        }
+      },
+      "replay_previews": 1183,
+      "replay_source_preparation_seconds": 0.28535845899023116,
+      "source_preparation_seconds": 0.2707017499487847,
+      "source_through_plan_seconds": 20.8384471249301,
+      "status": "complete",
+      "subject": "ReMIND-045"
+    }
+  ],
+  "blocked_external_calls": 0,
+  "cache_restored": true,
+  "checkpoint_loads": 0,
+  "comparison": {
+    "all_costs_include_rejected_queries": true,
+    "balanced_no_quality_loss_vs_exhaustive": true,
+    "balanced_no_quality_loss_vs_old_ridge": true,
+    "balanced_strict_return_improvement_vs_old_ridge": true,
+    "historical_IL64_outcomes": [
+      {
+        "certificate_origin": "original_run",
+        "independent_accepted": true,
+        "motion_count": 0,
+        "outside_target_removed_mm3": 0.0,
+        "public_return": 0.0,
+        "removed_cells": 0,
+        "same_removed_cell_union_as_teacher": true,
+        "steps": 1,
+        "subject": "ReMIND-002",
+        "target_removed_mm3": 0.0,
+        "teacher_motion_count": 0,
+        "teacher_public_return": 0.0,
+        "teacher_target_removed_mm3": 0.0,
+        "terminal_reason": "STOP"
+      },
+      {
+        "certificate_origin": "original_run",
+        "independent_accepted": true,
+        "motion_count": 13,
+        "outside_target_removed_mm3": 0.0,
+        "public_return": 54.86621503580145,
+        "removed_cells": 58,
+        "same_removed_cell_union_as_teacher": true,
+        "steps": 14,
+        "subject": "ReMIND-015",
+        "target_removed_mm3": 55.31311034856145,
+        "teacher_motion_count": 13,
+        "teacher_public_return": 54.866215035801446,
+        "teacher_target_removed_mm3": 55.31311034856145,
+        "terminal_reason": "STOP"
+      },
+      {
+        "certificate_origin": "original_run",
+        "independent_accepted": true,
+        "motion_count": 0,
+        "outside_target_removed_mm3": 0.0,
+        "public_return": 0.0,
+        "removed_cells": 0,
+        "same_removed_cell_union_as_teacher": true,
+        "steps": 1,
+        "subject": "ReMIND-018",
+        "target_removed_mm3": 0.0,
+        "teacher_motion_count": 0,
+        "teacher_public_return": 0.0,
+        "teacher_target_removed_mm3": 0.0,
+        "terminal_reason": "STOP"
+      },
+      {
+        "certificate_origin": "corrected_evaluation_recovery",
+        "independent_accepted": true,
+        "motion_count": 24,
+        "outside_target_removed_mm3": 0.0,
+        "public_return": 47.508437886941074,
+        "removed_cells": 51,
+        "same_removed_cell_union_as_teacher": true,
+        "steps": 24,
+        "subject": "ReMIND-045",
+        "target_removed_mm3": 48.637450444683644,
+        "teacher_motion_count": 12,
+        "teacher_public_return": 48.181962920864926,
+        "teacher_target_removed_mm3": 48.637450444683644,
+        "terminal_reason": "HORIZON"
+      }
+    ],
+    "historical_latency_matched": false,
+    "historical_v1_comparison": {
+      "TRAIN_go": false,
+      "all_costs_include_rejected_queries": true,
+      "heuristic_no_quality_loss": false,
+      "heuristic_quality_improvement": false,
+      "heuristic_wall_ratio": 2.200352421221636,
+      "historical_IL64_outcomes": [
+        {
+          "certificate_origin": "original_run",
+          "independent_accepted": true,
+          "motion_count": 0,
+          "outside_target_removed_mm3": 0.0,
+          "public_return": 0.0,
+          "removed_cells": 0,
+          "same_removed_cell_union_as_teacher": true,
+          "steps": 1,
+          "subject": "ReMIND-002",
+          "target_removed_mm3": 0.0,
+          "teacher_motion_count": 0,
+          "teacher_public_return": 0.0,
+          "teacher_target_removed_mm3": 0.0,
+          "terminal_reason": "STOP"
+        },
+        {
+          "certificate_origin": "original_run",
+          "independent_accepted": true,
+          "motion_count": 13,
+          "outside_target_removed_mm3": 0.0,
+          "public_return": 54.86621503580145,
+          "removed_cells": 58,
+          "same_removed_cell_union_as_teacher": true,
+          "steps": 14,
+          "subject": "ReMIND-015",
+          "target_removed_mm3": 55.31311034856145,
+          "teacher_motion_count": 13,
+          "teacher_public_return": 54.866215035801446,
+          "teacher_target_removed_mm3": 55.31311034856145,
+          "terminal_reason": "STOP"
+        },
+        {
+          "certificate_origin": "original_run",
+          "independent_accepted": true,
+          "motion_count": 0,
+          "outside_target_removed_mm3": 0.0,
+          "public_return": 0.0,
+          "removed_cells": 0,
+          "same_removed_cell_union_as_teacher": true,
+          "steps": 1,
+          "subject": "ReMIND-018",
+          "target_removed_mm3": 0.0,
+          "teacher_motion_count": 0,
+          "teacher_public_return": 0.0,
+          "teacher_target_removed_mm3": 0.0,
+          "terminal_reason": "STOP"
+        },
+        {
+          "certificate_origin": "corrected_evaluation_recovery",
+          "independent_accepted": true,
+          "motion_count": 24,
+          "outside_target_removed_mm3": 0.0,
+          "public_return": 47.508437886941074,
+          "removed_cells": 51,
+          "same_removed_cell_union_as_teacher": true,
+          "steps": 24,
+          "subject": "ReMIND-045",
+          "target_removed_mm3": 48.637450444683644,
+          "teacher_motion_count": 12,
+          "teacher_public_return": 48.181962920864926,
+          "teacher_target_removed_mm3": 48.637450444683644,
+          "terminal_reason": "HORIZON"
+        }
+      ],
+      "historical_latency_matched": false,
+      "no_quality_loss_vs_exhaustive": false,
+      "online_wall_ratio": 0.22036749626597343,
+      "preview_ratio": 0.08950617283950617,
+      "totals": {
+        "exhaustive": {
+          "online_previews": 2592,
+          "replay_and_audit_seconds": 71.62476737424731,
+          "replay_previews": 2592,
+          "source_through_plan_seconds": 44.740925583289936
+        },
+        "ridge_top8": {
+          "online_previews": 232,
+          "replay_and_audit_seconds": 25.00953729171306,
+          "replay_previews": 232,
+          "source_through_plan_seconds": 9.85944575141184
+        },
+        "sampled_target_top8": {
+          "online_previews": 32,
+          "replay_and_audit_seconds": 6.022098916815594,
+          "replay_previews": 32,
+          "source_through_plan_seconds": 4.480848456965759
+        }
+      }
+    },
+    "historical_v1_gates": {
+      "all_four_complete": true,
+      "heuristic_comparison": "quality improvement, or equal quality and wall ratio <=0.9",
+      "meaning": "TRAIN go/no-go only; one ordered measurement, no transfer/clinical/sustained-speed claim",
+      "no_quality_loss_vs_exhaustive": true,
+      "numeric_tolerance": 1e-07,
+      "online_preview_ratio_max": 0.5,
+      "source_through_plan_wall_ratio_max": 0.8
+    },
+    "loss_contrast_go": true,
+    "online_wall_ratio": 0.27295356068613713,
+    "preview_ratio": 0.08950617283950617,
+    "totals": {
+      "balanced_ridge_top8": {
+        "online_previews": 232,
+        "replay_and_audit_seconds": 30.34917604085058,
+        "replay_previews": 232,
+        "source_through_plan_seconds": 12.351541707990691
+      },
+      "exhaustive": {
+        "online_previews": 2592,
+        "replay_and_audit_seconds": 75.05173749895766,
+        "replay_previews": 2592,
+        "source_through_plan_seconds": 45.25144012388773
+      },
+      "old_ridge_top8": {
+        "online_previews": 232,
+        "replay_and_audit_seconds": 26.577163039939478,
+        "replay_previews": 232,
+        "source_through_plan_seconds": 10.644791916245595
+      }
+    },
+    "v1_retroactively_promoted": false
+  },
+  "elapsed_seconds": 267.9748528341297,
+  "fit_rows": 2592,
+  "fit_seconds": {
+    "balanced_ridge_top8": 0.012607499957084656,
+    "old_ridge_top8": 0.013016332872211933
+  },
+  "fits": 2,
+  "interpretation": "IL proposal-priority pilot on fixed TRAIN states; no RL or transfer improvement claim",
+  "model_calls": 0,
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 267.9745805840939,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": null,
+    "history_complete_caller_attestation": true,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 40000,
+      "planning_execution_seconds": 600.0
+    },
+    "native_preview_entries": 11296,
+    "native_preview_profile": {
+      "phases": {
+        "execution": {
+          "feasible": 1324,
+          "raised": 0,
+          "rejected": 4324,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 4324
+          },
+          "returned": 5648,
+          "returned_microsteps": 94502,
+          "seconds": 70.98082510614768,
+          "started": 5648
+        },
+        "planning": {
+          "feasible": 1324,
+          "raised": 0,
+          "rejected": 4324,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 4324
+          },
+          "returned": 5648,
+          "returned_microsteps": 94502,
+          "seconds": 57.213352711405605,
+          "started": 5648
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 11296,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {
+      "planning.balanced_ridge_top8.ReMIND-002": {
+        "preview_admissions": 8,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "planning.balanced_ridge_top8.ReMIND-015": {
+        "preview_admissions": 112,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "planning.balanced_ridge_top8.ReMIND-018": {
+        "preview_admissions": 8,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "planning.balanced_ridge_top8.ReMIND-045": {
+        "preview_admissions": 104,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "planning.exhaustive.ReMIND-002": {
+        "preview_admissions": 117,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "planning.exhaustive.ReMIND-015": {
+        "preview_admissions": 1217,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "planning.exhaustive.ReMIND-018": {
+        "preview_admissions": 75,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "planning.exhaustive.ReMIND-045": {
+        "preview_admissions": 1183,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "planning.old_ridge_top8.ReMIND-002": {
+        "preview_admissions": 8,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "planning.old_ridge_top8.ReMIND-015": {
+        "preview_admissions": 112,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "planning.old_ridge_top8.ReMIND-018": {
+        "preview_admissions": 8,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "planning.old_ridge_top8.ReMIND-045": {
+        "preview_admissions": 104,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "replay.balanced_ridge_top8.ReMIND-002": {
+        "preview_admissions": 8,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "replay.balanced_ridge_top8.ReMIND-015": {
+        "preview_admissions": 112,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "replay.balanced_ridge_top8.ReMIND-018": {
+        "preview_admissions": 8,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "replay.balanced_ridge_top8.ReMIND-045": {
+        "preview_admissions": 104,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "replay.exhaustive.ReMIND-002": {
+        "preview_admissions": 117,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "replay.exhaustive.ReMIND-015": {
+        "preview_admissions": 1217,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "replay.exhaustive.ReMIND-018": {
+        "preview_admissions": 75,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "replay.exhaustive.ReMIND-045": {
+        "preview_admissions": 1183,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "replay.old_ridge_top8.ReMIND-002": {
+        "preview_admissions": 8,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "replay.old_ridge_top8.ReMIND-015": {
+        "preview_admissions": 112,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "replay.old_ridge_top8.ReMIND-018": {
+        "preview_admissions": 8,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "replay.old_ridge_top8.ReMIND-045": {
+        "preview_admissions": 104,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "training_labels.ReMIND-002": {
+        "preview_admissions": 117,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "training_labels.ReMIND-015": {
+        "preview_admissions": 1217,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "training_labels.ReMIND-018": {
+        "preview_admissions": 75,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "training_labels.ReMIND-045": {
+        "preview_admissions": 1183,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "training_replay.ReMIND-002": {
+        "preview_admissions": 117,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "training_replay.ReMIND-015": {
+        "preview_admissions": 1217,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "training_replay.ReMIND-018": {
+        "preview_admissions": 75,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      },
+      "training_replay.ReMIND-045": {
+        "preview_admissions": 1183,
+        "raised": 0,
+        "returned": 1,
+        "started": 1,
+        "zero_preview_returns": 0
+      }
+    },
+    "score": null,
+    "status": "complete_history_awaiting_independent_audit",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "native_previews": 11296,
+  "native_transitions": 232,
+  "old_ridge_parameter_identity": true,
+  "online_replay_ridge_calls": 116,
+  "optimizer_calls": 0,
+  "order_caveat": "single fixed order; filesystem and allocator carryover can affect timings",
+  "release_sha256": "e81ab753baecc359fe6c067278308836d8cbd18804c8fbe2c6a955a6d2e0cb8c",
+  "ridge_calls": 174,
+  "ridge_file_sha256": {
+    "balanced_ridge_top8": "6a07215506ac68fa42afce40ad12a9efe9b042d83ee5d5bc1383b249a5ffe824",
+    "old_ridge_top8": "28999bb377a36f52ebf1e51679e53348c8abe9595aab20d824be7451ed02e22f"
+  },
+  "ridge_unchanged": true,
+  "source_visits": 28,
+  "source_visits_detail": [
+    {
+      "admission_hash": "sha256:99b050e1cf0339de4dd57a4833e8065c0308eafe7c62d50626847d2a27877a50",
+      "phase": "training",
+      "source_hash": "sha256:27f4414796f49256181161f3f770f4ea75c242059bcc583c01817f65949b0f5b",
+      "source_read_preparation_validation_seconds": 0.2894293749704957,
+      "status": "complete",
+      "subject": "ReMIND-002"
+    },
+    {
+      "admission_hash": "sha256:04084b3d89010aba8fec503db75e59002d12b66281a91978461d77248b900a1c",
+      "phase": "training",
+      "source_hash": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524",
+      "source_read_preparation_validation_seconds": 0.23768687504343688,
+      "status": "complete",
+      "subject": "ReMIND-015"
+    },
+    {
+      "admission_hash": "sha256:f449ee7adb985a620d92791a9ff44efd5246bb6ba562ef71ed17c1580a78bc56",
+      "phase": "training",
+      "source_hash": "sha256:0db487c202c1fef5ce408c6dc593f6a42ce12f6f2b630807174ba9f37727edd6",
+      "source_read_preparation_validation_seconds": 0.23159841704182327,
+      "status": "complete",
+      "subject": "ReMIND-018"
+    },
+    {
+      "admission_hash": "sha256:7ceda29f5b652be9b9c614227391009555b3e49e095ba238b66d5e62c2df0662",
+      "phase": "training",
+      "source_hash": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938",
+      "source_read_preparation_validation_seconds": 0.2518854581285268,
+      "status": "complete",
+      "subject": "ReMIND-045"
+    },
+    {
+      "admission_hash": "sha256:99b050e1cf0339de4dd57a4833e8065c0308eafe7c62d50626847d2a27877a50",
+      "phase": "planning.old_ridge_top8",
+      "source_hash": "sha256:27f4414796f49256181161f3f770f4ea75c242059bcc583c01817f65949b0f5b",
+      "source_read_preparation_validation_seconds": 0.2763039169367403,
+      "status": "complete",
+      "subject": "ReMIND-002"
+    },
+    {
+      "admission_hash": "sha256:04084b3d89010aba8fec503db75e59002d12b66281a91978461d77248b900a1c",
+      "phase": "planning.old_ridge_top8",
+      "source_hash": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524",
+      "source_read_preparation_validation_seconds": 0.24662045785225928,
+      "status": "complete",
+      "subject": "ReMIND-015"
+    },
+    {
+      "admission_hash": "sha256:f449ee7adb985a620d92791a9ff44efd5246bb6ba562ef71ed17c1580a78bc56",
+      "phase": "planning.old_ridge_top8",
+      "source_hash": "sha256:0db487c202c1fef5ce408c6dc593f6a42ce12f6f2b630807174ba9f37727edd6",
+      "source_read_preparation_validation_seconds": 0.39684408297762275,
+      "status": "complete",
+      "subject": "ReMIND-018"
+    },
+    {
+      "admission_hash": "sha256:7ceda29f5b652be9b9c614227391009555b3e49e095ba238b66d5e62c2df0662",
+      "phase": "planning.old_ridge_top8",
+      "source_hash": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938",
+      "source_read_preparation_validation_seconds": 0.2587439171038568,
+      "status": "complete",
+      "subject": "ReMIND-045"
+    },
+    {
+      "admission_hash": "sha256:99b050e1cf0339de4dd57a4833e8065c0308eafe7c62d50626847d2a27877a50",
+      "phase": "planning.balanced_ridge_top8",
+      "source_hash": "sha256:27f4414796f49256181161f3f770f4ea75c242059bcc583c01817f65949b0f5b",
+      "source_read_preparation_validation_seconds": 0.28785329102538526,
+      "status": "complete",
+      "subject": "ReMIND-002"
+    },
+    {
+      "admission_hash": "sha256:04084b3d89010aba8fec503db75e59002d12b66281a91978461d77248b900a1c",
+      "phase": "planning.balanced_ridge_top8",
+      "source_hash": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524",
+      "source_read_preparation_validation_seconds": 0.2571405000053346,
+      "status": "complete",
+      "subject": "ReMIND-015"
+    },
+    {
+      "admission_hash": "sha256:f449ee7adb985a620d92791a9ff44efd5246bb6ba562ef71ed17c1580a78bc56",
+      "phase": "planning.balanced_ridge_top8",
+      "source_hash": "sha256:0db487c202c1fef5ce408c6dc593f6a42ce12f6f2b630807174ba9f37727edd6",
+      "source_read_preparation_validation_seconds": 0.24134237482212484,
+      "status": "complete",
+      "subject": "ReMIND-018"
+    },
+    {
+      "admission_hash": "sha256:7ceda29f5b652be9b9c614227391009555b3e49e095ba238b66d5e62c2df0662",
+      "phase": "planning.balanced_ridge_top8",
+      "source_hash": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938",
+      "source_read_preparation_validation_seconds": 0.2648150408640504,
+      "status": "complete",
+      "subject": "ReMIND-045"
+    },
+    {
+      "admission_hash": "sha256:99b050e1cf0339de4dd57a4833e8065c0308eafe7c62d50626847d2a27877a50",
+      "phase": "planning.exhaustive",
+      "source_hash": "sha256:27f4414796f49256181161f3f770f4ea75c242059bcc583c01817f65949b0f5b",
+      "source_read_preparation_validation_seconds": 0.2704785829409957,
+      "status": "complete",
+      "subject": "ReMIND-002"
+    },
+    {
+      "admission_hash": "sha256:04084b3d89010aba8fec503db75e59002d12b66281a91978461d77248b900a1c",
+      "phase": "planning.exhaustive",
+      "source_hash": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524",
+      "source_read_preparation_validation_seconds": 0.2605522919911891,
+      "status": "complete",
+      "subject": "ReMIND-015"
+    },
+    {
+      "admission_hash": "sha256:f449ee7adb985a620d92791a9ff44efd5246bb6ba562ef71ed17c1580a78bc56",
+      "phase": "planning.exhaustive",
+      "source_hash": "sha256:0db487c202c1fef5ce408c6dc593f6a42ce12f6f2b630807174ba9f37727edd6",
+      "source_read_preparation_validation_seconds": 0.2547307079657912,
+      "status": "complete",
+      "subject": "ReMIND-018"
+    },
+    {
+      "admission_hash": "sha256:7ceda29f5b652be9b9c614227391009555b3e49e095ba238b66d5e62c2df0662",
+      "phase": "planning.exhaustive",
+      "source_hash": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938",
+      "source_read_preparation_validation_seconds": 0.2707012500613928,
+      "status": "complete",
+      "subject": "ReMIND-045"
+    },
+    {
+      "admission_hash": "sha256:99b050e1cf0339de4dd57a4833e8065c0308eafe7c62d50626847d2a27877a50",
+      "phase": "replay.old_ridge_top8",
+      "source_hash": "sha256:27f4414796f49256181161f3f770f4ea75c242059bcc583c01817f65949b0f5b",
+      "source_read_preparation_validation_seconds": 0.2863543750718236,
+      "status": "complete",
+      "subject": "ReMIND-002"
+    },
+    {
+      "admission_hash": "sha256:04084b3d89010aba8fec503db75e59002d12b66281a91978461d77248b900a1c",
+      "phase": "replay.old_ridge_top8",
+      "source_hash": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524",
+      "source_read_preparation_validation_seconds": 0.2576794170308858,
+      "status": "complete",
+      "subject": "ReMIND-015"
+    },
+    {
+      "admission_hash": "sha256:f449ee7adb985a620d92791a9ff44efd5246bb6ba562ef71ed17c1580a78bc56",
+      "phase": "replay.old_ridge_top8",
+      "source_hash": "sha256:0db487c202c1fef5ce408c6dc593f6a42ce12f6f2b630807174ba9f37727edd6",
+      "source_read_preparation_validation_seconds": 0.26030858396552503,
+      "status": "complete",
+      "subject": "ReMIND-018"
+    },
+    {
+      "admission_hash": "sha256:7ceda29f5b652be9b9c614227391009555b3e49e095ba238b66d5e62c2df0662",
+      "phase": "replay.old_ridge_top8",
+      "source_hash": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938",
+      "source_read_preparation_validation_seconds": 0.2820064169354737,
+      "status": "complete",
+      "subject": "ReMIND-045"
+    },
+    {
+      "admission_hash": "sha256:99b050e1cf0339de4dd57a4833e8065c0308eafe7c62d50626847d2a27877a50",
+      "phase": "replay.balanced_ridge_top8",
+      "source_hash": "sha256:27f4414796f49256181161f3f770f4ea75c242059bcc583c01817f65949b0f5b",
+      "source_read_preparation_validation_seconds": 0.2946179579012096,
+      "status": "complete",
+      "subject": "ReMIND-002"
+    },
+    {
+      "admission_hash": "sha256:04084b3d89010aba8fec503db75e59002d12b66281a91978461d77248b900a1c",
+      "phase": "replay.balanced_ridge_top8",
+      "source_hash": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524",
+      "source_read_preparation_validation_seconds": 0.28090712521225214,
+      "status": "complete",
+      "subject": "ReMIND-015"
+    },
+    {
+      "admission_hash": "sha256:f449ee7adb985a620d92791a9ff44efd5246bb6ba562ef71ed17c1580a78bc56",
+      "phase": "replay.balanced_ridge_top8",
+      "source_hash": "sha256:0db487c202c1fef5ce408c6dc593f6a42ce12f6f2b630807174ba9f37727edd6",
+      "source_read_preparation_validation_seconds": 0.26043754210695624,
+      "status": "complete",
+      "subject": "ReMIND-018"
+    },
+    {
+      "admission_hash": "sha256:7ceda29f5b652be9b9c614227391009555b3e49e095ba238b66d5e62c2df0662",
+      "phase": "replay.balanced_ridge_top8",
+      "source_hash": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938",
+      "source_read_preparation_validation_seconds": 0.28025158285163343,
+      "status": "complete",
+      "subject": "ReMIND-045"
+    },
+    {
+      "admission_hash": "sha256:99b050e1cf0339de4dd57a4833e8065c0308eafe7c62d50626847d2a27877a50",
+      "phase": "replay.exhaustive",
+      "source_hash": "sha256:27f4414796f49256181161f3f770f4ea75c242059bcc583c01817f65949b0f5b",
+      "source_read_preparation_validation_seconds": 0.29795804200693965,
+      "status": "complete",
+      "subject": "ReMIND-002"
+    },
+    {
+      "admission_hash": "sha256:04084b3d89010aba8fec503db75e59002d12b66281a91978461d77248b900a1c",
+      "phase": "replay.exhaustive",
+      "source_hash": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524",
+      "source_read_preparation_validation_seconds": 0.2929410000797361,
+      "status": "complete",
+      "subject": "ReMIND-015"
+    },
+    {
+      "admission_hash": "sha256:f449ee7adb985a620d92791a9ff44efd5246bb6ba562ef71ed17c1580a78bc56",
+      "phase": "replay.exhaustive",
+      "source_hash": "sha256:0db487c202c1fef5ce408c6dc593f6a42ce12f6f2b630807174ba9f37727edd6",
+      "source_read_preparation_validation_seconds": 0.2606452079489827,
+      "status": "complete",
+      "subject": "ReMIND-018"
+    },
+    {
+      "admission_hash": "sha256:7ceda29f5b652be9b9c614227391009555b3e49e095ba238b66d5e62c2df0662",
+      "phase": "replay.exhaustive",
+      "source_hash": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938",
+      "source_read_preparation_validation_seconds": 0.2853583339601755,
+      "status": "complete",
+      "subject": "ReMIND-045"
+    }
+  ],
+  "status": "complete_fixed_TRAIN_balanced_ridge_contrast",
+  "teacher_decisions": 29,
+  "teacher_labels_identity": true,
+  "teacher_score_calls": 58
+}
