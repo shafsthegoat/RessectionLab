@@ -1,0 +1,98 @@
+{
+  "external_staged_patches": [
+    {
+      "path": "build/hybrid-passive-desktop-v1/renderer/source.patch",
+      "sha256": "d1ab8279da57188716fbf8783188717376e8d0e290f3e22f7b6843734a4d0dbc"
+    },
+    {
+      "path": "build/hybrid-passive-desktop-v1/electron/source.patch",
+      "sha256": "959d43cf299ead16f7cb01efd47ba1e5ab523e74279479c892311fb30c4360fa"
+    }
+  ],
+  "files": [
+    {
+      "bytes": 89791,
+      "canonical_before_sha256": "c74c7e1e8ad12341b9226fc12b3a0c8f200cfe9a4e717c296e9852e1496989d2",
+      "sha256": "881ba005b561bd0e07bd871ab6e206673d78b74d7c038c5e97a25579eab79eb3",
+      "stage": "build/hybrid-passive-desktop-v1/stage/desktop/src/App.tsx",
+      "target": "desktop/src/App.tsx"
+    },
+    {
+      "bytes": 4198,
+      "canonical_before_sha256": null,
+      "sha256": "8c5cffee567c5c7dd9bfa78433ea74ab550f7d34b098d18f20cbe2e7a0b9c2ae",
+      "stage": "build/hybrid-passive-desktop-v1/stage/desktop/src/PassiveEpisodePanel.tsx",
+      "target": "desktop/src/PassiveEpisodePanel.tsx"
+    },
+    {
+      "bytes": 7929,
+      "canonical_before_sha256": null,
+      "sha256": "0c6571dad2e098211a4fe38f8736ce247712cc87042c8147c28e2f2a1d2a7295",
+      "stage": "build/hybrid-passive-desktop-v1/stage/desktop/src/persistent-passive-data.ts",
+      "target": "desktop/src/persistent-passive-data.ts"
+    },
+    {
+      "bytes": 3288,
+      "canonical_before_sha256": null,
+      "sha256": "edeec7adcaf706f7db154878aec824381f456a84b5edec65c5ade06cad4a6d16",
+      "stage": "build/hybrid-passive-desktop-v1/stage/desktop/src/persistent-passive-types.ts",
+      "target": "desktop/src/persistent-passive-types.ts"
+    },
+    {
+      "bytes": 8784,
+      "canonical_before_sha256": null,
+      "sha256": "4f5dffacb1019fff28bd8be8c59441ed99f536b3573f5b089b03239c59ccd17a",
+      "stage": "build/hybrid-passive-desktop-v1/stage/desktop/src/persistent-passive-view.ts",
+      "target": "desktop/src/persistent-passive-view.ts"
+    },
+    {
+      "bytes": 14878,
+      "canonical_before_sha256": "6b240304add488a6e853eef111a6e25882855fcb71ecf3da4a453a3a60036085",
+      "sha256": "fe7079bfd7253e4dc38464ba937019d0df0b0cc0325737cd375f520c1b6f5305",
+      "stage": "build/hybrid-passive-desktop-v1/stage/desktop/src/types.ts",
+      "target": "desktop/src/types.ts"
+    },
+    {
+      "bytes": 1972,
+      "canonical_before_sha256": "bd443b095edb86e9e213435ed0e61dd1eee608414e9ff254c773d3befcdd5200",
+      "sha256": "3c1d4be9dd2969c374f2ba97fc385b31523dff8c5e3c4a8a8b7d7f3e0ef9f95b",
+      "stage": "build/hybrid-passive-desktop-v1/stage/desktop/src/workspace-session-types.ts",
+      "target": "desktop/src/workspace-session-types.ts"
+    },
+    {
+      "bytes": 9719,
+      "canonical_before_sha256": "0ab7565ca1061d9edff97d8ad9491d7949c2bfa828ad85df6208034e3afc0fb2",
+      "sha256": "146d8716c678a691eb40276b1fda9cf91caca1cb74d2f7b6546c7beed2846041",
+      "stage": "build/hybrid-passive-desktop-v1/stage/desktop/src/workspace-session.ts",
+      "target": "desktop/src/workspace-session.ts"
+    },
+    {
+      "bytes": 61051,
+      "canonical_before_sha256": null,
+      "sha256": "714612f5866f06e3e5763ee98c185953c7d7aa00cf996a892a4570feae87d196",
+      "stage": "build/hybrid-passive-desktop-v1/stage/desktop/tests/fixtures/persistent-passive-paired.json",
+      "target": "desktop/tests/fixtures/persistent-passive-paired.json"
+    },
+    {
+      "bytes": 2595,
+      "canonical_before_sha256": null,
+      "sha256": "2d32fc4cc1d12c0a825a1d45b711e492856ab0b7fdf879f33684ff8e59f34592",
+      "stage": "build/hybrid-passive-desktop-v1/stage/desktop/tests/persistent-passive-app-save.test.mjs",
+      "target": "desktop/tests/persistent-passive-app-save.test.mjs"
+    },
+    {
+      "bytes": 3934,
+      "canonical_before_sha256": null,
+      "sha256": "a30ea77fae7cefc9604ef2675f1798e794036d60fc5e97d19fce87b9c1a50149",
+      "stage": "build/hybrid-passive-desktop-v1/stage/desktop/tests/persistent-passive-view.test.mjs",
+      "target": "desktop/tests/persistent-passive-view.test.mjs"
+    }
+  ],
+  "schema": "hybrid-passive-desktop-source-stage-v1",
+  "scope": "generated paired passive v1 desktop and saved fresh replay only",
+  "tests": [
+    "5/5 generated Python saved-workspace (staged module preimport); 9/9 actual generated TS hydration including fully rebound source mutation; 24/24 Electron; 7/7 renderer; 4/4 App save switch; TypeScript isolated typecheck 0 errors",
+    "actual generated backend response accepted by Electron validator",
+    "actual generated save/close/reopen accepted by backend, Electron and TS workspace hydrator"
+  ]
+}

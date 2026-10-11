@@ -10,6 +10,7 @@ contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   executePublicSurfaceContactEpisode: args => ipcRenderer.invoke('research:executePublicSurfaceContactEpisode', args),
   inspectDevelopmentEpisodeComparison: args => ipcRenderer.invoke('research:inspectDevelopmentEpisodeComparison', args),
   executeDevelopmentEpisode: args => ipcRenderer.invoke('research:executeDevelopmentEpisode', args),
+  executePersistentPassiveEpisode: args => ipcRenderer.invoke('research:executePersistentPassiveEpisode', args),
   evaluateDevelopmentEpisodeVascular: args => ipcRenderer.invoke('research:evaluateDevelopmentEpisodeVascular', args),
   createSyntheticCase: () => ipcRenderer.invoke('research:createSyntheticCase'),
   openCase: () => ipcRenderer.invoke('research:openCase'),

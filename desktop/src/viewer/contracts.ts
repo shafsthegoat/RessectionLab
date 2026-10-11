@@ -48,6 +48,8 @@ export interface ViewerWorkspaceProps {
   routes: ViewerRoute[];
   cameraMode: "anatomy" | "instruments";
   replay?: ViewerReplay | null;
+  /** Checked generated passive motion; separate from removal replay. */
+  passiveReplay?: ViewerPassiveReplay | null;
   structuralProposal?: ViewerStructuralProposal | null;
   priorLayer?: ViewerPriorLayer | null;
   inspectionTool?: ViewerInspectionTool | null;
@@ -113,4 +115,26 @@ export interface ViewerReplay {
   removedTargetVolumeMm3: number;
   removedNormalVolumeMm3: number;
   residualTargetVolumeMm3: number;
+}
+
+/** A checked display frame, hydrated from a fresh-replayed generated episode.
+ * Neither the generated clock nor these flags establish surgical validity. */
+export interface ViewerPassiveReplay {
+  scope: "generated-persistent-passive-episode";
+  caseHash: string;
+  episodeId: string;
+  frameIndex: number;
+  stepCount: number;
+  shape: Shape3;
+  affine: Affine;
+  phase: "ready" | "held" | "inspected" | "withdrawn" | "both_withdrawn" | "stopped";
+  elapsedGeneratedSeconds: number;
+  inspectionStatus: "not_acquired" | "verified" | "unresolved";
+  event: null | { kind: "generated_inspection" | "stop"; status?: "verified" | "unresolved"; reason?: string };
+  recordedTools: import("./recordedTool").PassiveRecordedToolPose[];
+  /** Locally derived from all accepted frame poses, never trusted from the backend. */
+  recordedEpisodeBounds: import("./recordedTool").RecordedEpisodeBounds;
+  /** Primary geometry checker covers pair clearance; independent checker covers tissue only. */
+  primaryPairClearanceChecked: true;
+  independentTissueMotionChecked: true;
 }

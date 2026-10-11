@@ -51,6 +51,9 @@ import type {PublicContactView} from "./public-contact-data";
 import type {ContactGoalId,ContactSelector} from "./public-contact-types";
 import { EpisodePanel } from "./EpisodePanel";
 import { hydrateDevelopmentEpisode } from "./episode-data";
+import {hydratePersistentPassiveEpisode} from './persistent-passive-view';
+import type {PersistentPassiveView} from './persistent-passive-view';
+import {PassiveEpisodePanel} from './PassiveEpisodePanel';
 import type { EpisodeView } from "./episode-data";
 import type { DevelopmentEpisodeRequest } from "./episode-types";
 import { RefinementPanel } from "./RefinementPanel";
@@ -543,7 +546,9 @@ export default function App() {
   );
   const [routes, setRoutes] = useState<RouteCandidate[]>([]);
   const [episodeView, setEpisodeView] = useState<EpisodeView | null>(null);
-  const [episodeWorkflow,setEpisodeWorkflow] = useState<"aspiration"|"public-contact"|"contact-family">("aspiration");
+  const [passiveView,setPassiveView] = useState<PersistentPassiveView|null>(null);
+  const [passiveStep,setPassiveStep] = useState(0);
+  const [episodeWorkflow,setEpisodeWorkflow] = useState<"aspiration"|"public-contact"|"contact-family"|"passive">("aspiration");
   const [publicContactView,setPublicContactView] = useState<PublicContactView|null>(null);
   const [contactStep,setContactStep] = useState(0);
   const [familyView,setFamilyView] = useState<ContactFamilyView|null>(null);
@@ -791,14 +796,16 @@ export default function App() {
           setCursor(reopened.imagingState.states.primary.cursor);
           setVisibleLayers(reopened.imagingState.states.primary.visibleLayers);
         }
-        setPublicContactView(null); setContactStep(0); setFamilyView(null); setFamilyStep(0); setEpisodeWorkflow("aspiration");
+        setPublicContactView(null); setContactStep(0); setFamilyView(null); setFamilyStep(0);
+        setPassiveView(reopened.passiveView);setPassiveStep(reopened.passiveView?reopened.episodeStep:0);
+        setEpisodeWorkflow(reopened.passiveView?"passive":"aspiration");
         setEpisodeView(reopened.episodeView);
-        setEpisodeStep(reopened.episodeStep);
+        setEpisodeStep(reopened.passiveView?0:reopened.episodeStep);
         setEpisodeVisible(reopened.episodeVisible);
         if (reopened.episodeView && reopened.episodeView.episode.selector !== "RL256_ASPIRATION_MATCHED_SEARCH") setEpisodeSelector(reopened.episodeView.episode.selector);
         if (reopened.episodeVisible) { setCameraMode("instruments"); setPlanningTab("episode"); }
         setMessage(
-          reopened.session ? `Workspace reopened · native image views restored${reopened.episodeView ? " · saved replay revalidated" : ""}` :
+          reopened.session ? `Workspace reopened · native image views restored${reopened.episodeView||reopened.passiveView ? " · saved replay revalidated" : ""}` :
           `${source.metadata.is_synthetic ? "Synthetic fixture" : source.caseId} ready · Source imaging preserved`,
         );
         return true;
@@ -827,6 +834,17 @@ export default function App() {
     if (!displayedEpisodeView || !Number.isInteger(step) || step < 0 || step >= displayedEpisodeView.frames.length) return;
     if (comparison.arm === "search") comparison.setStep(step); else setEpisodeStep(step);
     showEpisode();
+  };
+  const showPassive = () => {
+    resetDisplayToPrimary();
+    if(!passiveView||passiveView.source.caseHash!==activeCaseHash.current)return;
+    setEpisodeWorkflow('passive');clearPrior();clearProposal();setCertifiedReplay(null);
+    setEpisodeVisible(true);setCameraMode('instruments');setPlanningTab('episode');
+    setMessage('Generated paired passive episode · discrete retained and access poses · no patient admission');
+  };
+  const requestPassiveStep = (step:number) => {
+    if(!passiveView||!Number.isInteger(step)||step<0||step>=passiveView.frames.length)return;
+    setPassiveStep(step);showPassive();
   };
   const selectComparisonArm = (arm: "actor" | "search") => {
     if (controlsBlocked || comparison.pending || !comparison.result || arm === comparison.arm) return;
@@ -895,6 +913,21 @@ export default function App() {
       setMessage("Generated software episode executed · all recorded frame masks checked · no patient admission");
     } catch (failure) { if (mounted.current && generation === episodeGeneration.current) reportError(failure); }
     finally { if (mounted.current && generation === episodeGeneration.current) setEpisodePending(false); }
+  };
+  const executePassive = async () => {
+    if(!api?.executePersistentPassiveEpisode||controlsBlocked||readonly)return;
+    const generation=++episodeGeneration.current;
+    setEpisodePending(true);setError(null);
+    try{
+      const result=await api.executePersistentPassiveEpisode({fixture:'generated-persistent-passive-v1',paired:true});
+      const checked=await hydratePersistentPassiveEpisode(result,api);
+      if(!mounted.current||generation!==episodeGeneration.current)return;
+      if(!await installCase(checked.source,api))return;
+      setPassiveView(checked);setPassiveStep(0);setEpisodeWorkflow('passive');setEpisodeVisible(true);
+      setCameraMode('instruments');setPlanningTab('episode');
+      setMessage('Generated paired passive episode · six backend states checked · no patient admission');
+    }catch(failure){if(mounted.current&&generation===episodeGeneration.current)reportError(failure);}
+    finally{if(mounted.current&&generation===episodeGeneration.current)setEpisodePending(false);}
   };
 
   useEffect(() => {
@@ -1152,7 +1185,7 @@ export default function App() {
       if (!api || !payload) return;
       requirePersistableContact(publicContactView);
       requirePersistableContact(familyView);
-      requirePersistableEpisode(displayedEpisodeView);
+      requirePersistableEpisode(episodeWorkflow==='aspiration'?displayedEpisodeView:null);
       const result = await api.saveCase({
         caseHash: payload.caseHash,
         workspace: {
@@ -1163,7 +1196,10 @@ export default function App() {
           overlayOpacity,
           cursor,
           imaging: imaging.snapshot({cursor, visibleLayers}),
-          episodeReplay: episodeView?.source.caseHash === payload.caseHash ? {
+          episodeReplay: episodeWorkflow==='passive'&&passiveView?.source.caseHash===payload.caseHash ? {
+            episodeId:passiveView.episode.episodeId,frameIndex:passiveStep,
+            visible:episodeVisible&&episodeWorkflow==='passive'&&!imaging.selected,
+          } : episodeWorkflow==='aspiration'&&episodeView?.source.caseHash === payload.caseHash ? {
             episodeId: episodeView.episode.episodeId, frameIndex: episodeStep,
             visible: episodeVisible && !imaging.selected,
           } : null,
@@ -1188,11 +1224,14 @@ export default function App() {
     imaging.snapshot,
     imaging.selected,
     episodeView,
+    passiveView,
     displayedEpisodeView,
     publicContactView,
     familyView,
     comparison.pending,
     episodeStep,
+    passiveStep,
+    episodeWorkflow,
     episodeVisible,
     routeA,
     routeB,
@@ -1651,6 +1690,9 @@ export default function App() {
           </div>
         )}
         {episodeVisible && activeContactView && <div className="modeled-replay-notice" role="status"><span>GENERATED · public retained-contact · frame {activeContactStep}/{activeContactView.frames.length-1} · no patient admission</span><button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>}
+        {episodeVisible&&episodeWorkflow==='passive'&&passiveView&&caseData&&passiveView.source.caseHash===caseData.caseHash&&
+          <div className="modeled-replay-notice" role="status"><span>GENERATED · two persistent tool poses · state {passiveStep}/5 · declared {passiveView.frames[passiveStep].elapsedGeneratedSeconds.toFixed(1)} s · no patient admission</span>
+            <button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>}
         <div className="viewer-shell">
           {caseData && (
             <ViewerWorkspace
@@ -1666,6 +1708,7 @@ export default function App() {
               routes={display.primaryOverlaysPermitted ? viewerRoutes : []}
               cameraMode={cameraMode}
               replay={display.primaryOverlaysPermitted ? viewerReplay : null}
+              passiveReplay={display.primaryOverlaysPermitted&&episodeVisible&&episodeWorkflow==='passive'&&passiveView&&caseData&&passiveView.source.caseHash===caseData.caseHash?passiveView.frames[passiveStep]:null}
               structuralProposal={display.primaryOverlaysPermitted ? proposalView : null}
               priorLayer={display.primaryOverlaysPermitted ? priorView : null}
             />
@@ -1738,8 +1781,9 @@ export default function App() {
             </Tabs.Trigger>
           </Tabs.List>
           <Tabs.Content value="episode" className="planning-tab-content">
-            <label className="field-label" htmlFor="episode-workflow">Generated task</label><select id="episode-workflow" value={episodeWorkflow} disabled={controlsBlocked||comparison.pending} onChange={event=>{setEpisodeWorkflow(event.target.value as "aspiration"|"public-contact"|"contact-family");setEpisodeVisible(false);}}><option value="aspiration">Aspiration & trained-transfer comparison</option><option value="public-contact">Public retained-contact goal</option><option value="contact-family">Generated family · learned / search</option></select>
-            {episodeWorkflow === "contact-family" ? <ContactFamilyPanel api={api} view={familyView?.source.caseHash===payload?.caseHash?familyView:null} step={familyStep} busy={controlsBlocked||comparison.pending} visible={episodeVisible} onExecute={executeFamily} onStep={requestFamilyStep} onShow={showFamily} onSource={restoreSourceView} onFocusGoal={()=>{if(familyView){setCursor([...familyView.episode.publicGoal.rasMm]);showFamily();}}} unavailableReason={engineStopped?"The local engine stopped.":readonly?"This browser preview is read only.":!api?.executePublicContactFamilyEpisode||!engineOperations.has("executePublicContactFamilyEpisode")?"This engine does not provide the contact family.":undefined}/> : episodeWorkflow === "public-contact" ? <PublicContactPanel view={publicContactView?.source.caseHash===payload?.caseHash?publicContactView:null} step={contactStep} selector={contactSelector} goalId={contactGoal} busy={controlsBlocked||comparison.pending} visible={episodeVisible} onSelector={setContactSelector} onGoal={setContactGoal} onExecute={executeContact} onStep={requestContactStep} onShow={showContact} onSource={restoreSourceView} onFocusGoal={()=>{if(publicContactView){setCursor([...publicContactView.episode.publicGoal.rasMm]);showContact();}}} unavailableReason={engineStopped?"The local engine stopped.":readonly?"This browser preview is read only.":!api?.executePublicSurfaceContactEpisode||!engineOperations.has("executePublicSurfaceContactEpisode")?"This engine does not provide the public-contact task.":undefined}/> : <>
+            <label className="field-label" htmlFor="episode-workflow">Generated task</label><select id="episode-workflow" value={episodeWorkflow} disabled={controlsBlocked||comparison.pending} onChange={event=>{setEpisodeWorkflow(event.target.value as "aspiration"|"public-contact"|"contact-family"|"passive");setEpisodeVisible(false);}}><option value="aspiration">Aspiration & trained-transfer comparison</option><option value="public-contact">Public retained-contact goal</option><option value="contact-family">Generated family · learned / search</option><option value="passive">Persistent passive pair · generated</option></select>
+            {episodeWorkflow==='passive'?<PassiveEpisodePanel view={passiveView?.source.caseHash===payload?.caseHash?passiveView:null} step={passiveStep} busy={controlsBlocked||comparison.pending} visible={episodeVisible} onExecute={executePassive} onStep={requestPassiveStep} onShow={showPassive} onSource={restoreSourceView} unavailableReason={engineStopped?'The local engine stopped.':readonly?'This browser preview is read only.':!api?.executePersistentPassiveEpisode||!engineOperations.has('executePersistentPassiveEpisode')?'This engine does not provide generated passive episodes.':undefined}/>
+            :episodeWorkflow === "contact-family" ? <ContactFamilyPanel api={api} view={familyView?.source.caseHash===payload?.caseHash?familyView:null} step={familyStep} busy={controlsBlocked||comparison.pending} visible={episodeVisible} onExecute={executeFamily} onStep={requestFamilyStep} onShow={showFamily} onSource={restoreSourceView} onFocusGoal={()=>{if(familyView){setCursor([...familyView.episode.publicGoal.rasMm]);showFamily();}}} unavailableReason={engineStopped?"The local engine stopped.":readonly?"This browser preview is read only.":!api?.executePublicContactFamilyEpisode||!engineOperations.has("executePublicContactFamilyEpisode")?"This engine does not provide the contact family.":undefined}/> : episodeWorkflow === "public-contact" ? <PublicContactPanel view={publicContactView?.source.caseHash===payload?.caseHash?publicContactView:null} step={contactStep} selector={contactSelector} goalId={contactGoal} busy={controlsBlocked||comparison.pending} visible={episodeVisible} onSelector={setContactSelector} onGoal={setContactGoal} onExecute={executeContact} onStep={requestContactStep} onShow={showContact} onSource={restoreSourceView} onFocusGoal={()=>{if(publicContactView){setCursor([...publicContactView.episode.publicGoal.rasMm]);showContact();}}} unavailableReason={engineStopped?"The local engine stopped.":readonly?"This browser preview is read only.":!api?.executePublicSurfaceContactEpisode||!engineOperations.has("executePublicSurfaceContactEpisode")?"This engine does not provide the public-contact task.":undefined}/> : <>
             <EpisodePanel vascularApi={!readonly && !engineStopped && engineOperations.has("evaluateDevelopmentEpisodeVascular") ? api : null} view={displayedEpisodeView?.source.caseHash === payload?.caseHash ? displayedEpisodeView : null} step={displayedEpisodeStep}
               comparison={{actor:episodeView, result:comparison.result, arm:comparison.arm, available:comparisonAvailable, pending:comparison.pending, error:comparison.error, inspect:comparison.inspect, select:selectComparisonArm}}
               selector={episodeSelector} onSelector={setEpisodeSelector} busy={controlsBlocked || comparison.pending}

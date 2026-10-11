@@ -1641,3 +1641,14 @@ four TRAIN patients, world/rewards and exact verification fixed. Online source,
 feature, ranking, query, training and replay costs remain explicit. The generated
 complete runner passes, retaining the original invalid phase-label failure.
 Actual fitting, quality gates and measured timing are pending; SELECT/EVAL stay closed.
+
+## October 11 — Paired passive desktop slice completed
+
+[The integrated Electron workflow](../artifacts/persistent-passive-desktop-v1/RESULT.md)
+passes 72 focused controls and clean-index typecheck/build. A live Mac
+save/quit/restart restores frame4 and both full tool poses after fresh backend
+validation. Independent review and root integration caught and corrected
+active-workflow saving, paired admission, complete source-binding and an
+uncommitted-hook dependency. Negative evidence and screenshot are retained.
+This is fixed generated v1 continuity; v2 observation-dependent movement is not
+yet exposed in the desktop and physical validation remains unresolved.

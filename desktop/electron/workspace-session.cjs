@@ -1,5 +1,6 @@
 'use strict';
 const {validateEpisodeResult}=require('./development-episode.cjs');
+const {validatePersistentPassiveV1Result}=require('./persistent-passive.cjs');
 /** Saved replay authority comes from backend semantic revalidation. Check the
  * response envelope before asset traversal; the renderer checks every prefix. */
 function validateWorkspaceResult(result) {
@@ -10,6 +11,20 @@ function validateWorkspaceResult(result) {
     throw new Error('Reopened workspace has an invalid primary/source binding');
   const replay=session.episodeReplay;
   if (replay!==null) {
+    if (replay?.episode?.schema==='resectionlab.generated-persistent-passive-episode.v1') {
+      if (replay.validation!=='authoritative_generated_passive_replay' ||
+          replay.accountingQualification!=='declared_generated_schedule_not_measured' ||
+          !Number.isSafeInteger(replay.frameIndex) || replay.frameIndex<0 ||
+          replay.frameIndex>=replay.episode.frames?.length || replay.episode.frames?.length!==6 ||
+          typeof replay.visible!=='boolean' ||
+          (replay.visible && session.imagingState?.selectedSeriesId!==null) ||
+          replay.episodeAuthorship!==undefined || replay.episode.replayFrames!==undefined)
+        throw new Error('Reopened generated passive replay lacks source-bound native revalidation');
+      validatePersistentPassiveV1Result({case:result,episode:replay.episode,
+        episodeCanonicalJson:replay.episodeCanonicalJson,sourceBinding:replay.sourceBinding},
+      {origin:'reopened',revalidation:replay.validation});
+      return result;
+    }
     const qualification=replay?.episode?.selector==='RL256_ASPIRATION_TRANSFER'?'imported_computational_provenance_unverified':'historical_timings_not_remeasured';
     if (!replay || replay.validation!=='authoritative_generated_replay' || replay.accountingQualification!==qualification ||
         !Number.isSafeInteger(replay.frameIndex) || replay.frameIndex<0 || replay.frameIndex>=replay.episode?.replayFrames?.length ||

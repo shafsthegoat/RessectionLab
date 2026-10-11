@@ -13,6 +13,7 @@ import {
 import type { Affine, Bounds3, Point3, SlicePlane } from "./coordinates";
 import type {
   ViewerReplay,
+  ViewerPassiveReplay,
   ViewerPriorLayer,
   ViewerRoute,
   ViewerStructuralProposal,
@@ -21,7 +22,7 @@ import type {
 } from "./contracts";
 import { InstrumentDisplayState } from "./inspectionTool";
 import type { InspectionToolDisplay, InstrumentCapsuleDisplay } from "./inspectionTool";
-import { checkedRecordedEpisodeBounds, recordedToolDisplay } from "./recordedTool";
+import { checkedPassiveRecordedTools, checkedRecordedEpisodeBounds, recordedToolDisplay } from "./recordedTool";
 import type { RecordedEpisodeBounds, RecordedToolDisplay } from "./recordedTool";
 import { instrumentCapsuleMeshes, inspectionToolMeshes } from "./inspectionToolGeometry";
 import { fragmentShader, vertexShader } from "./shaders";
@@ -131,6 +132,8 @@ export class VolumeRenderer {
   private readonly inspectionTools = new THREE.Group();
   private readonly recordedTools = new THREE.Group();
   private recordedDisplay: RecordedToolDisplay | null = null;
+  private passiveDisplays: RecordedToolDisplay[] = [];
+  private passiveActive = false;
   private replayBounds: RecordedEpisodeBounds | null = null;
   private fittedReplayId: string | null = null;
   private readonly instrumentDisplay = new InstrumentDisplayState();
@@ -541,6 +544,8 @@ export class VolumeRenderer {
     this.replayGroup.clear();
     this.replayActive = false;
     this.recordedDisplay = null;
+    this.passiveActive = false;
+    this.passiveDisplays = [];
     this.replayBounds = null;
     disposeObject(this.recordedTools);
     this.recordedTools.clear();
@@ -684,6 +689,36 @@ export class VolumeRenderer {
         shape: this.volume.shape,
       });
     }
+    this.requestRender();
+  }
+
+  /** Separate generated passive replay: two persistent capsules, no removal mask.
+   * Acceptance is source-bound and fails closed before any pose is displayed. */
+  setPassiveReplay(replay: ViewerPassiveReplay | null): void {
+    if (!replay) {
+      if (this.passiveActive) this.setReplay(null);
+      return;
+    }
+    // Clear any prior legacy effect and both old capsules before validation.
+    this.setReplay(null);
+    this.setInspectionTool(null);
+    this.setDiagnosticLayer(null, null);
+    this.setStructuralProposal(null);
+    this.setPriorLayer(null);
+    const checked = checkedPassiveRecordedTools(this.volume, replay);
+    this.passiveActive = true;
+    this.replayActive = true;
+    this.instrumentDisplay.setReplay(true);
+    this.passiveDisplays = checked.displays;
+    this.replayBounds = checked.bounds;
+    for (const display of checked.displays)
+      this.recordedTools.add(instrumentCapsuleMeshes(display, replay.scope, display.identity));
+    // Generated passive motion has no removal effect; labels and MRI remain the
+    // unchanged source. The existing two capsule shader slots cover every MPR.
+    this.materials().forEach((shader) => { shader.uniforms.uReplayActive.value = 0; });
+    this.syncInstrumentDisplay();
+    if (this.mode === "instruments" && this.fittedReplayId !== replay.episodeId)
+      this.fitCamera("instruments");
     this.requestRender();
   }
 
@@ -949,8 +984,9 @@ export class VolumeRenderer {
   private syncInstrumentDisplay(): void {
     this.tools.visible = this.instrumentDisplay.routeVisible;
     this.inspectionTools.visible = this.instrumentDisplay.inspected !== null;
-    this.recordedTools.visible = this.replayActive && this.recordedDisplay !== null;
-    const shown = this.recordedTools.visible ? [this.recordedDisplay!] : this.instrumentDisplay.displayed;
+    this.recordedTools.visible = this.replayActive && (this.recordedDisplay !== null || this.passiveDisplays.length > 0);
+    const shown = this.passiveActive ? this.passiveDisplays :
+      this.recordedTools.visible ? [this.recordedDisplay!] : this.instrumentDisplay.displayed;
     this.materials().forEach((shader) => {
       shader.uniforms.uRouteCount.value = shown.length;
       shown.forEach((capsule, index) => {

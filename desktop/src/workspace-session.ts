@@ -2,6 +2,8 @@ import {hydrateCase,validateCaseDescriptor} from './case-data.ts';
 import {hydrateDisplaySeries} from './workspace-imaging-data.ts';
 import {checkedEpisodeAuthority} from './episode-authority.ts';
 import {hydrateDevelopmentEpisode} from './episode-data.ts';
+import {hydratePersistentPassiveEpisode} from './persistent-passive-view.ts';
+import type {PersistentPassiveView} from './persistent-passive-view.ts';
 import {sourceFrameDigest} from './source-integrity.ts';
 import {rasAffine,transformPoint} from './viewer/coordinates.ts';
 import type {CasePayload,ResectionApi,ViewerCase} from './types';
@@ -42,7 +44,8 @@ export function checkedImagingState(primary:CasePayload,series:WorkspaceSessionP
 }
 export interface HydratedWorkspace {
   source:CasePayload;volume:ViewerCase;series:DisplaySeriesView[];imagingState:ImagingSessionState|null;
-  episodeView:EpisodeView|null;episodeStep:number;episodeVisible:boolean;session:WorkspaceSessionPayload|null;
+  episodeView:EpisodeView|null;passiveView:PersistentPassiveView|null;
+  episodeStep:number;episodeVisible:boolean;session:WorkspaceSessionPayload|null;
 }
 /** Publish nothing until every source, selection and optional recorded replay is checked.
  * isCurrent rejects a delayed load even when it reopens the same case identity. */
@@ -72,11 +75,24 @@ export async function hydrateWorkspace(sourceInput:CasePayload,api:ResectionApi,
     requireValue(session.episodeReplay!==undefined,'missing saved replay selection.');
     if(session.episodeReplay){
       const replay=session.episodeReplay;
-      checkedEpisodeAuthority(replay.episode,replay.episodeAuthorship,'reopened');
-      const qualification=replay.episode.selector==='RL256_ASPIRATION_TRANSFER'?'imported_computational_provenance_unverified':'historical_timings_not_remeasured';
-      requireValue(replay.validation==='authoritative_generated_replay'&&replay.accountingQualification===qualification&&replay.episode?.caseHash===source.caseHash&&
-        Number.isSafeInteger(replay.frameIndex)&&replay.frameIndex>=0&&replay.frameIndex<replay.episode.replayFrames.length&&typeof replay.visible==='boolean',
-        'saved episode has no valid backend replay admission.');
+      if(replay.validation==='authoritative_generated_passive_replay'){
+        requireValue(replay.validation==='authoritative_generated_passive_replay'&&
+          replay.episode.schema==='resectionlab.generated-persistent-passive-episode.v1'&&
+          replay.accountingQualification==='declared_generated_schedule_not_measured'&&
+          replay.sourceBinding?.caseHash===source.caseHash&&replay.sourceBinding.sourceHash===replay.episode.sourceHash&&
+          replay.sourceBinding.decisionModelHash===replay.episode.decisionModelHash&&
+          Number.isSafeInteger(replay.frameIndex)&&replay.frameIndex>=0&&
+          replay.frameIndex<replay.episode.frames.length&&typeof replay.visible==='boolean',
+          'saved generated passive episode has no fresh backend replay admission.');
+      }else{
+        requireValue(replay.episode.schema==='resectionlab.shared-native-development-episode.v1',
+          'unsupported saved episode schema.');
+        checkedEpisodeAuthority(replay.episode,replay.episodeAuthorship,'reopened');
+        const qualification=replay.episode.selector==='RL256_ASPIRATION_TRANSFER'?'imported_computational_provenance_unverified':'historical_timings_not_remeasured';
+        requireValue(replay.validation==='authoritative_generated_replay'&&replay.accountingQualification===qualification&&replay.episode?.caseHash===source.caseHash&&
+          Number.isSafeInteger(replay.frameIndex)&&replay.frameIndex>=0&&replay.frameIndex<replay.episode.replayFrames.length&&typeof replay.visible==='boolean',
+          'saved episode has no valid backend replay admission.');
+      }
       requireValue(!replay.visible||imagingState.selectedSeriesId===null,'primary replay cannot be displayed on an auxiliary image.');
     }
   }
@@ -84,7 +100,13 @@ export async function hydrateWorkspace(sourceInput:CasePayload,api:ResectionApi,
   const series:DisplaySeriesView[]=[];
   for(const descriptor of session?.displaySeries??[]){series.push(await hydrateDisplaySeries(source,descriptor,api));current();}
   let episodeView:EpisodeView|null=null;
-  if(session?.episodeReplay){episodeView=await hydrateDevelopmentEpisode({case:source,...session.episodeReplay},api,'reopened');current();}
-  return {source,volume,series,imagingState,episodeView,episodeStep:session?.episodeReplay?.frameIndex??0,
+  let passiveView:PersistentPassiveView|null=null;
+  if(session?.episodeReplay){
+    if(session.episodeReplay.validation==='authoritative_generated_passive_replay')
+      passiveView=await hydratePersistentPassiveEpisode({case:source,...session.episodeReplay},api,'reopened');
+    else episodeView=await hydrateDevelopmentEpisode({case:source,...session.episodeReplay},api,'reopened');
+    current();
+  }
+  return {source,volume,series,imagingState,episodeView,passiveView,episodeStep:session?.episodeReplay?.frameIndex??0,
     episodeVisible:session?.episodeReplay?.visible??false,session};
 }

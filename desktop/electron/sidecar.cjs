@@ -10,12 +10,13 @@ const { EventEmitter } = require('node:events');
 const path = require('node:path');
 const fs = require('node:fs/promises');
 const { episodeRequest, validateEpisodeResult } = require('./development-episode.cjs');
+const { persistentPassiveRequest, validatePersistentPassiveV1Result } = require('./persistent-passive.cjs');
 const { validateWorkspaceResult } = require('./workspace-session.cjs');
 const { AssetRegistry } = require('./assets.cjs');
 const { observedRequest, validateObservedEvent } = require('./observed-landmark-contract.cjs');
 
 const {validateDiagnosticResult,diagnosticRequest}=require('./diagnostic-contract.cjs');
-const OPERATIONS = new Set(['ping', 'publicContactFamilyAvailability', 'executePublicContactFamilyEpisode', 'executePublicSurfaceContactEpisode', 'inspectDevelopmentEpisodeComparison', 'executeDevelopmentEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importDiagnosticLayer', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
+const OPERATIONS = new Set(['ping', 'publicContactFamilyAvailability', 'executePublicContactFamilyEpisode', 'executePublicSurfaceContactEpisode', 'inspectDevelopmentEpisodeComparison', 'executeDevelopmentEpisode', 'executePersistentPassiveEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importDiagnosticLayer', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
 
 class Sidecar extends EventEmitter {
   constructor({ python, cwd, sourcePath, transferDir, executable, runDir, observedSourceRoot }) {
@@ -68,6 +69,9 @@ class Sidecar extends EventEmitter {
     }
     if (op === 'executeDevelopmentEpisode') {
       try { args = episodeRequest(args); } catch (error) { return Promise.reject(error); }
+    }
+    if (op === 'executePersistentPassiveEpisode') {
+      try { args = persistentPassiveRequest(args); } catch (error) { return Promise.reject(error); }
     }
     if (op === 'evaluateDevelopmentEpisodeVascular') {
       try { args=vascularRequest(args); } catch(error) { return Promise.reject(error); }
@@ -122,8 +126,9 @@ class Sidecar extends EventEmitter {
       if (pending.op === 'executePublicSurfaceContactEpisode') validateContactResult(message.result,pending.contactArgs);
       if (pending.op === 'inspectDevelopmentEpisodeComparison') validateComparisonResult(message.result,pending.comparisonArgs);
       if (pending.op === 'executeDevelopmentEpisode') validateEpisodeResult(message.result, pending.episodeArgs);
+      if (pending.op === 'executePersistentPassiveEpisode') validatePersistentPassiveV1Result(message.result);
       if (pending.op === 'loadCase') validateWorkspaceResult(message.result);
-      if (['loadCase', 'importNifti', 'importStructuralEvidence', 'createSyntheticCase', 'executeDevelopmentEpisode', 'executePublicSurfaceContactEpisode', 'executePublicContactFamilyEpisode'].includes(pending.op)) this.assets.clear();
+      if (['loadCase', 'importNifti', 'importStructuralEvidence', 'createSyntheticCase', 'executeDevelopmentEpisode', 'executePersistentPassiveEpisode', 'executePublicSurfaceContactEpisode', 'executePublicContactFamilyEpisode'].includes(pending.op)) this.assets.clear();
       if (!observed) message.result = await this.assets.expose(message.result);
     }
     this.emit('event', { ...message, op: pending.op });

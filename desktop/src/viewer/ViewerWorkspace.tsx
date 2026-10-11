@@ -53,6 +53,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     routes: requestedRoutes,
     cameraMode,
     replay: requestedReplay,
+    passiveReplay: requestedPassiveReplay,
     structuralProposal: requestedProposal,
     priorLayer: requestedPrior,
     inspectionTool,
@@ -61,17 +62,19 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   } = props;
   // This independent image layer cannot share planning/replay overlays.
   const diagnosticRequested = Boolean(diagnosticLayer);
-  const routes = diagnosticRequested ? [] : requestedRoutes;
-  const replay = diagnosticRequested ? null : requestedReplay;
-  const structuralProposal = diagnosticRequested ? null : requestedProposal;
-  const priorLayer = diagnosticRequested ? null : requestedPrior;
+  const passiveReplay = diagnosticRequested ? null : requestedPassiveReplay;
+  const passiveRequested = Boolean(passiveReplay);
+  const routes = diagnosticRequested || passiveRequested ? [] : requestedRoutes;
+  const replay = diagnosticRequested || passiveRequested ? null : requestedReplay;
+  const structuralProposal = diagnosticRequested || passiveRequested ? null : requestedProposal;
+  const priorLayer = diagnosticRequested || passiveRequested ? null : requestedPrior;
   const [diagnosticVisible, setDiagnosticVisible] = useState(true);
   const [displayedDiagnostic, setDisplayedDiagnostic] = useState<CheckedDiagnosticLayer|null>(null);
   const [diagnosticError, setDiagnosticError] = useState<string|null>(null);
   const goalSelection = useMemo(() => {
-    try { return {goal:caseData ? checkedPublicGoal(caseData,diagnosticRequested ? null : (props.publicGoal ?? null)):null,error:null}; }
+    try { return {goal:caseData ? checkedPublicGoal(caseData,diagnosticRequested || passiveRequested ? null : (props.publicGoal ?? null)):null,error:null}; }
     catch (cause) { return {goal:null,error:cause instanceof Error?cause.message:String(cause)}; }
-  },[caseData,props.publicGoal,diagnosticRequested]);
+  },[caseData,props.publicGoal,diagnosticRequested,passiveRequested]);
   const publicGoal = goalSelection.goal;
   const signalName = props.generatedSignal ? "analytic signal" : "MRI";
   const container = useRef<HTMLDivElement>(null),
@@ -93,6 +96,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     [contrast, setContrast] = useState(1),
     [showPlane, setShowPlane] = useState(false),
     [replayError, setReplayError] = useState<string | null>(null),
+    [passiveError, setPassiveError] = useState<string | null>(null),
     [proposalError, setProposalError] = useState<string | null>(null),
     [proposalReviewLabel, setProposalReviewLabel] = useState<string | null>(
       null,
@@ -236,11 +240,26 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   ]);
 
   useEffect(() => {
+    if (!engine.current) return;
+    setPassiveError(null);
+    try {
+      engine.current.setPassiveReplay(passiveReplay ?? null);
+    } catch (cause) {
+      setPassiveError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }, [ready, caseData, passiveReplay?.episodeId, passiveReplay?.frameIndex,
+    passiveReplay?.recordedTools, passiveReplay?.recordedEpisodeBounds,
+    passiveReplay?.primaryPairClearanceChecked, passiveReplay?.independentTissueMotionChecked,
+    passiveReplay?.shape, passiveReplay?.affine, passiveReplay?.phase,
+    passiveReplay?.elapsedGeneratedSeconds, passiveReplay?.inspectionStatus,
+    passiveReplay?.event]);
+
+  useEffect(() => {
     const renderer = engine.current;
     if (!renderer) return;
     setInspectionError(null);
     setDisplayedInspection(null);
-    const suppressed = diagnosticRequested || Boolean(replay || structuralProposal || priorLayer);
+    const suppressed = diagnosticRequested || passiveRequested || Boolean(replay || structuralProposal || priorLayer);
     if (inspectionTool && suppressed) {
       if (inspectionSelection.current.clear(inspectionTool)) latestProps.current.onClearInspection?.();
     }
@@ -253,7 +272,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       setInspectionError(cause instanceof Error ? cause.message : String(cause));
       latestProps.current.onClearInspection?.();
     }
-  }, [ready, caseData, inspectionTool, Boolean(replay), Boolean(structuralProposal), Boolean(priorLayer), diagnosticRequested]);
+  }, [ready, caseData, inspectionTool, Boolean(replay), passiveRequested, Boolean(structuralProposal), Boolean(priorLayer), diagnosticRequested]);
 
   useEffect(() => {
     const renderer = engine.current;
@@ -344,7 +363,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     try {
       setDisplayedPrior(
         engine.current.setPriorLayer(
-          replay || structuralProposal ? null : (priorLayer ?? null),
+          replay || passiveRequested || structuralProposal ? null : (priorLayer ?? null),
         ),
       );
     } catch (cause) {
@@ -354,6 +373,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     ready,
     caseData,
     Boolean(replay),
+    passiveRequested,
     Boolean(structuralProposal),
     priorLayer?.caseHash,
     priorLayer?.proposalId,
@@ -454,7 +474,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
 
   const refs = { axial, coronal, sagittal };
   const modeled = replay && !replayError;
-  const inspected = !diagnosticRequested && !replay && !structuralProposal && !priorLayer &&
+  const passiveMode = passiveReplay && !passiveError;
+  const inspected = !diagnosticRequested && !replay && !passiveRequested && !structuralProposal && !priorLayer &&
     displayedInspection?.caseHash === caseData.caseHash ? displayedInspection : null;
   const clearInspection = () => {
     inspectionSelection.current.clear(inspectionTool ?? null);
@@ -594,9 +615,21 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         >
           <div className="rl-viewer-annotations">
             <span className="rl-viewer-dot" />{" "}
-            {modeled
+            {passiveMode
+              ? `Generated passive replay · frame ${passiveReplay.frameIndex}/${passiveReplay.stepCount}`
+              : modeled
               ? `Modeled residual annotations · step ${replay.step}/${replay.stepCount}`
               : "Source annotation surfaces"}
+            {passiveMode && (
+              <span className="rl-viewer-replay-key">
+                Blue moving tool · amber other tool · {passiveReplay.phase.replaceAll('_', ' ')} · declared {passiveReplay.elapsedGeneratedSeconds.toFixed(1)} s · generated status {passiveReplay.inspectionStatus.replaceAll('_', ' ')} · source {signalName} unchanged · no tissue removal
+              </span>
+            )}
+            {passiveMode && (
+              <span className="rl-viewer-replay-key">
+                Primary pair clearance checked · independent tissue motion checked separately · generated geometry only
+              </span>
+            )}
             {modeled && (
               <span className="rl-viewer-replay-key">
                 Mint mesh: modeled removal · source {signalName} unchanged
@@ -612,7 +645,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             {inspected?.unknowns.includes("tool_geometry_outside_image_unassessed") && (
               <span className="rl-viewer-route-key">Tool extends beyond imaged anatomy · outside tissue unassessed</span>
             )}
-            {!modeled && !inspected &&
+            {!modeled && !passiveRequested && !inspected &&
               routes.slice(0, 2).map((route, index) => {
                 const { slot, color } = routeAppearance(route, index);
                 return (
@@ -626,7 +659,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                   </span>
                 );
               })}
-            {!modeled && !inspected &&
+            {!modeled && !passiveRequested && !inspected &&
               routes.some((route) => route.geometry?.failures?.length) && (
                 <span
                   className="rl-viewer-route-key"
@@ -782,10 +815,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         </label>
         <span>Neurological convention</span>
       </div>
-      {(error || replayError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error) && (
+      {(error || replayError || passiveError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error) && (
         <div className="rl-viewer-error" role="alert">
           <strong>Imaging view needs attention</strong>
-          <p>{error || replayError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error}</p>
+          <p>{error || replayError || passiveError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error}</p>
         </div>
       )}
     </div>

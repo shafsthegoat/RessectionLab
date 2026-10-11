@@ -1,0 +1,14 @@
+(node:9351) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ saving after passive then aspiration selects only the active aspiration replay (1.522209ms)
+✔ saving after aspiration then passive selects only the active passive replay (0.2905ms)
+✔ a contact workflow does not save a stale passive or aspiration replay (0.213417ms)
+✔ an inactive temporary aspiration comparison cannot block saving the active passive replay (0.525042ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 117.916625

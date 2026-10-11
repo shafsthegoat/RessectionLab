@@ -10,6 +10,7 @@ const fs = require('node:fs/promises');
 const os = require('node:os');
 const { pathToFileURL } = require('node:url');
 const { episodeRequest } = require('./development-episode.cjs');
+const { persistentPassiveRequest } = require('./persistent-passive.cjs');
 const { Sidecar } = require('./sidecar.cjs');
 const { createLogger } = require('./logging.cjs');
 const { assertSender, plainArgs } = require('./security.cjs');
@@ -73,6 +74,7 @@ function bindOperations() {
   handle('executePublicSurfaceContactEpisode', async args => { const request=contactRequest(args); return validateContactResult(await engine.request('executePublicSurfaceContactEpisode',request,30000),request); });
   handle('inspectDevelopmentEpisodeComparison', async args => { const request=comparisonRequest(args); return validateComparisonResult(await engine.request('inspectDevelopmentEpisodeComparison',request,30000),request); });
   handle('executeDevelopmentEpisode', args => engine.request('executeDevelopmentEpisode', episodeRequest(args), 30000));
+  handle('executePersistentPassiveEpisode', args => engine.request('executePersistentPassiveEpisode', persistentPassiveRequest(args), 30000));
   handle('evaluateDevelopmentEpisodeVascular', async args => { const request=vascularRequest(args); return validateVascularResult(await engine.request('evaluateDevelopmentEpisodeVascular',request),request); });
   handle('createSyntheticCase', () => engine.request('createSyntheticCase'));
   handle('openCase', async () => {

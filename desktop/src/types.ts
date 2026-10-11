@@ -462,6 +462,7 @@ export interface ResectionApi extends TrainingApi {
   inspectDevelopmentEpisodeComparison?(request: import("./episode-comparison-types").EpisodeComparisonRequest): Promise<import("./episode-comparison-types").EpisodeComparisonResult>;
   evaluateDevelopmentEpisodeVascular?(request: import("./episode-vascular-types").EpisodeVascularRequest): Promise<import("./episode-vascular-types").EpisodeVascularResult>;
   executeDevelopmentEpisode?(args: import("./episode-types").DevelopmentEpisodeRequest): Promise<import("./episode-types").DevelopmentEpisodeResult>;
+  executePersistentPassiveEpisode?(args:{fixture:'generated-persistent-passive-v1';paired:true}):Promise<import('./persistent-passive-types').PersistentPassiveResult>;
   readOnly?: boolean;
   ping(): Promise<unknown>;
   startupCase(): Promise<CasePayload | null>;

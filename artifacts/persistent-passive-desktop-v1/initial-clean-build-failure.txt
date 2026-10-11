@@ -1,0 +1,4 @@
+Initial clean index TypeScript build failed (exit 1):
+src/App.tsx(841,35): error TS2304: Cannot find name 'inspection'.
+src/App.tsx(920,44): error TS2304: Cannot find name 'inspection'.
+Two new passive callbacks referenced an unrelated uncommitted neighboring-inspection hook. Those two calls were removed. Existing pending/workflow/source transitions already invalidate that hook in the working tree. Clean index build now passes; original interface patch reapplies byte-exactly.

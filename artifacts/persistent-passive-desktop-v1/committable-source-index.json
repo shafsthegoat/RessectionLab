@@ -1,0 +1,29 @@
+{
+  "scope": "index bytes, excluding unrelated working-tree edits",
+  "files": {
+    "desktop/electron/main.cjs": "c44ec04eb8d6658d2e4870fee018f4ec79ebc4d8c8b9a64fc059f44ea395f8d9",
+    "desktop/electron/persistent-passive-wiring.test.cjs": "34617dbcf4899523a5791db07845564a79ecc5605c6c573d14c194b356715cf6",
+    "desktop/electron/persistent-passive.cjs": "a1c41e226eceacb775708cd96bc95ec354cb5f803a3dab972785dd6e679ffb62",
+    "desktop/electron/persistent-passive.test.cjs": "63b1bac790cf15c8fb99edc9ff8d78bfbe3d7d3fab51bd28147bdd8891c365d0",
+    "desktop/electron/preload.cjs": "7b2b4df95c1d42929fdd3b44359b0f318e92fc49a17f59422339fbb2234e965c",
+    "desktop/electron/sidecar.cjs": "2fc28e1821988ff457eb23853579ac9461006ce1b7b730b98d12c86cbfcf4a4b",
+    "desktop/electron/workspace-session.cjs": "824715b2d57717754fddff03e685712a3d75cdb25a0f5439a54317f295ae776c",
+    "desktop/src/App.tsx": "75c126f80f205c0c5a84be77a81cacd2c6efa6e699c4f8af2c0fb0c2bcf2ea94",
+    "desktop/src/PassiveEpisodePanel.tsx": "8c5cffee567c5c7dd9bfa78433ea74ab550f7d34b098d18f20cbe2e7a0b9c2ae",
+    "desktop/src/persistent-passive-data.ts": "0c6571dad2e098211a4fe38f8736ce247712cc87042c8147c28e2f2a1d2a7295",
+    "desktop/src/persistent-passive-types.ts": "edeec7adcaf706f7db154878aec824381f456a84b5edec65c5ade06cad4a6d16",
+    "desktop/src/persistent-passive-view.ts": "4f5dffacb1019fff28bd8be8c59441ed99f536b3573f5b089b03239c59ccd17a",
+    "desktop/src/types.ts": "fe7079bfd7253e4dc38464ba937019d0df0b0cc0325737cd375f520c1b6f5305",
+    "desktop/src/viewer/ViewerWorkspace.tsx": "d2cf75fbcbb6f0c8adad539eff650a334251a447b0d0b08762b39cb9e4925023",
+    "desktop/src/viewer/VolumeRenderer.ts": "8c07e52635dc7f45a706fea97434ceb7e3b09768b231945257a2d885b38cdf3f",
+    "desktop/src/viewer/contracts.ts": "1aecae1354958893a2fcd40cebc01e53f5a24e64783e764866ee5857a45c275a",
+    "desktop/src/viewer/passiveRecordedTool.test.mjs": "bb93fe64979ca67636333350db1b0b0083f96f0591bf83f5fdfe87562b928659",
+    "desktop/src/viewer/passiveRenderer.test.mjs": "58af8a12ca10c65e9a6550f71b11aa373295327f60fb0247c8a512f522b01d5e",
+    "desktop/src/viewer/recordedTool.ts": "e501dce617fd1c04f19ee322a45701dfc27726f2a0cb1a5e31316eccedbbce0d",
+    "desktop/src/workspace-session-types.ts": "3c1d4be9dd2969c374f2ba97fc385b31523dff8c5e3c4a8a8b7d7f3e0ef9f95b",
+    "desktop/src/workspace-session.ts": "146d8716c678a691eb40276b1fda9cf91caca1cb74d2f7b6546c7beed2846041",
+    "desktop/tests/fixtures/persistent-passive-paired.json": "714612f5866f06e3e5763ee98c185953c7d7aa00cf996a892a4570feae87d196",
+    "desktop/tests/persistent-passive-app-save.test.mjs": "2d32fc4cc1d12c0a825a1d45b711e492856ab0b7fdf879f33684ff8e59f34592",
+    "desktop/tests/persistent-passive-view.test.mjs": "a30ea77fae7cefc9604ef2675f1798e794036d60fc5e97d19fce87b9c1a50149"
+  }
+}
