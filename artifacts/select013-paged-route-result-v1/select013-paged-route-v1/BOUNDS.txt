@@ -1,0 +1,30 @@
+Prospective complete-route comparison; no acquired release exists yet.
+Two arms: original <=120 original proposals; same original prefix plus <=16
+selected public first-obstruction cells * <=2 tools in <=8-pair pages.
+Both: max_steps24, beam_width2, lazy planning, original return/depth/volume
+retention, frozen tools/world/reward, STOP0, no learning or model forward.
+
+At most 1 + 2*(24-1) = 47 expanded states per arm. Native search transitions
+exclude STOP and are <=47*(120+32)=7144. A conservative declared selector
+ceiling7191 also allows one explicit STOP per expanded state, although current
+search scores STOP implicitly and must report zero STOP transition calls.
+Authoritative selected rollout <=24 native steps and independent fresh replay
+<=24 more, including actual STOPs. Declared total native-transition ceiling is
+2*(7191+48)=14478; actual native motion search bound plus replay is14384.
+
+Conservative preview count per arm:47*152 search +152 initial constructor
++2*24*152 rollout/replay =14592. Per-arm16000 / total32000 leaves1408 per-arm
+headroom, not uncharged queries. A page starts from <=120 base certificates,
+adds <=8, and never exceeds the unchanged engine128-certificate registry.
+The same32-pair allowance is renewed only at a genuinely committed successor
+state. All pairs for an expanded node must be inspected before its layer is
+completed; evidence/16-cell selection truncation remains explicitly unknown.
+
+300s search per arm. Proposed total worker900s/parent960s, one thread,3GiB.
+Storage reservation128MiB; no arrays/checkpoints copied. Output remains bounded.
+Completion requires complete24-layer or exhausted-frontier search with neither
+call nor time cap, plus a complete accepted independent native replay. Capped
+arms retain partial traces and incurred costs, never become accepted STOP.
+Compare entire nominal return, target/outside removal/contact/path/toolchanges
+against STOP and original beam. Clearing a blocker alone is not route success.
+Original reference/nominal fields remain unchanged; no held037/EVAL067 access.

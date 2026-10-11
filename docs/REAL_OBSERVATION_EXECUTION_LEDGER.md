@@ -1881,3 +1881,22 @@ The bounded SELECT013 full-route pair remains the next actual experiment, with
 the same horizon, beam width, retention and time/call limits. No model refit or
 additional data is required. This integration result supports executable software
 behavior only; no acquired useful route or physical interaction is claimed yet.
+
+## October 11 — Complete paged route comparison is negative
+
+[Both full 24-layer searches](../artifacts/select013-paged-route-result-v1/RESULT.md)
+complete and independently replay STOP with zero target progress and return.
+Original versus paged search costs 725/1,318 transitions, 5,382/6,429 previews
+and 77.571/130.910 s. The original saved accounting is reproduced. The independent
+saved audit confirms all 187 pages, phase counts, seals and outcomes. Added moves
+clear earlier co-blockers and increase exploratory depth 4.5→5.5 mm, but every
+target-directed ray still fails shaft clearance; no useful route is recovered.
+
+Horizon24 terminates 43 legal continuations from the two retained depth23 paths.
+The deepest opening is still 13 mm short of proximal target entry. This supports
+one fixed h48 contrast with the same candidate families, beam, retention, world
+and reward, rather than another candidate-cap change or model sweep. A successful
+pruned alternative is not established. Parent218.429 s/546.28 MB sampled,
+12,396 total previews/2,047 transitions, zero learned operations, clean cleanup.
+The compact causal witness avoids copying the 26.28 MB output into Git. This is
+simulator geometry on development-exposed013, not physical or clinical evidence.

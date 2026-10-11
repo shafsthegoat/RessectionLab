@@ -1,0 +1,22 @@
+Matched runner independent review: GO
+
+Scope: one bounded source review plus saved generated-control receipt/pin verification. No tests, acquired data reads, patient replay, source imports, or canonical edits by reviewer. Canonical HEAD e8fe1bb2ee78017df1cab629dd7ad3eb87a70390.
+
+Both arms have horizon 24, beam width 2, 300 search seconds and 7191 selector transitions; per-arm native preview ceiling 16000, total 32000. All selected complete plans are sealed before any rollout, replay or independent evaluation. A capped, timed-out, incomplete, missing, or source-mismatched arm leaves the comparison unresolved and prevents evaluation of either arm. Completed early frontier exhaustion is a valid complete search.
+
+Inherited source admission is obtained independently for both original models. The paged rule creates an explicitly changed model while preserving physical source fields and canonical prepared-object authority. The original arm must match historical selected actions/accounting. Geometry, rewards and physical transition implementation remain the reviewed canonical versions. Candidate pagination alone changes the action family; model-bound tie ordering can differ and should remain disclosed.
+
+Per-arm setup/search/rollout/replay/audit previews and transitions are counted under phase and total ceilings; hooks restore in finally. Parent supervises fresh output, wall time, memory and output size, checks source before/after and owns process cleanup. No learned model or parameter update is permitted. Successful comparisons report accepted complete returns and target/outside/contact outcomes even if improvement is absent.
+
+Saved controls-02: three passed, exit 0, parent 1.811277834 seconds, child reaped, no timeout, no acquired inputs, sources unchanged. The test-only correction correctly recognizes that an empty baseline frontier can exhaust before its call cap; the unresolved paged arm still prevents evaluation of either arm. Runtime bytes were unchanged.
+
+Verified SHA256:
+comparison_contract.py b8b17c553c8b38d1d451647f7f374f548e22925992da0b62b73feae3c6a70ba8
+select_worker.py 78b75bed157a651a7b46b281ac013977fed386aa19e9650a2a7305211fd1a41e
+run_owned.py ae4c3cd19c3561b428ac70655bcc6c72fdc10dccd8d132e1bf31fda2757f8992
+freeze-runtime.py 8900257c929bb3143426c50670d95eee7e01193ee32b779f1c132da6e6dc2349
+test_owned_generated.py b8f98a69d6078e2358ea9d13097a31b26e7a419dd692bbe196567d952cc3cf05
+runner-controls-02.json 2a0de6378646fb200fb4c2f85e896490169d4eca6e9b83d707a54c1c21a6245e
+runner-controls-02.log 2fd77a80df5b9fe9af735aab79fbfd9d9b6d544b08e0d297ba1f9b8d93413ab1
+
+No further test or source review is requested. Root owns the acquired launch; reviewer remains available for a saved-result comparison.

@@ -1,0 +1,265 @@
+{
+  "canonical_source_commit": "e8fe1bb2ee78017df1cab629dd7ad3eb87a70390",
+  "excluded": [
+    "full pages and original inventories (all paged file hashes retained in causal-witness.json)",
+    "duplicate selection.json accounting (present in canonical result)",
+    "canonical source snapshots and stage files already committed in Git",
+    "duplicate rollout/replay step files for single STOP (complete history and metrics retained)"
+  ],
+  "files": [
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/result.json",
+      "bytes": 524810,
+      "path": "build/select013-paged-route-v1/attempt-01/result.json",
+      "sha256": "2c3b860f5006c0e37dbfd9af93786b6a87c7a1118a5b537f4ba6e5443fa51924"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/costs.json",
+      "bytes": 5525,
+      "path": "build/select013-paged-route-v1/attempt-01/costs.json",
+      "sha256": "e908282796d5aa71f702a0360f27574d820cecb2f1f8df8e403f7cd2483507e7"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01.supervision/receipt.json",
+      "bytes": 523191,
+      "path": "build/select013-paged-route-v1/attempt-01.supervision/receipt.json",
+      "sha256": "639702db6c09cf73348ee4440ccf09240d5fdbc7dc297dde0d87614b551d2bd7"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01.supervision/worker-final.json",
+      "bytes": 277,
+      "path": "build/select013-paged-route-v1/attempt-01.supervision/worker-final.json",
+      "sha256": "252aeb812914475fe65b4712c8232401cee4216c8bbed18a412d526f133c836d"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01.supervision/declaration.json",
+      "bytes": 14699,
+      "path": "build/select013-paged-route-v1/attempt-01.supervision/declaration.json",
+      "sha256": "f02a242faa67d2f7e8c19a9c981d40c2898326c06487a21ac060d38d506b5521"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/root-release.json",
+      "bytes": 6204,
+      "path": "build/select013-paged-route-v1/root-release.json",
+      "sha256": "6c79bcd485b9c53f361daee25fc0bebc21523fa55a93db78ac953af41f365b7c"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/source-index.json",
+      "bytes": 23193,
+      "path": "build/select013-paged-route-v1/source-index.json",
+      "sha256": "246cd50e603c0cdb87db5a2bddea37901a39076e141ab11dc091c2d353ff7175"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/comparison_contract.py",
+      "bytes": 5067,
+      "path": "build/select013-paged-route-v1/comparison_contract.py",
+      "sha256": "b8b17c553c8b38d1d451647f7f374f548e22925992da0b62b73feae3c6a70ba8"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/select_worker.py",
+      "bytes": 20343,
+      "path": "build/select013-paged-route-v1/select_worker.py",
+      "sha256": "78b75bed157a651a7b46b281ac013977fed386aa19e9650a2a7305211fd1a41e"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/run_owned.py",
+      "bytes": 12100,
+      "path": "build/select013-paged-route-v1/run_owned.py",
+      "sha256": "ae4c3cd19c3561b428ac70655bcc6c72fdc10dccd8d132e1bf31fda2757f8992"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/freeze-runtime.py",
+      "bytes": 4994,
+      "path": "build/select013-paged-route-v1/freeze-runtime.py",
+      "sha256": "8900257c929bb3143426c50670d95eee7e01193ee32b779f1c132da6e6dc2349"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/test_owned_generated.py",
+      "bytes": 6815,
+      "path": "build/select013-paged-route-v1/test_owned_generated.py",
+      "sha256": "b8f98a69d6078e2358ea9d13097a31b26e7a419dd692bbe196567d952cc3cf05"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/runner-controls-01.json",
+      "bytes": 1166,
+      "path": "build/select013-paged-route-v1/runner-controls-01.json",
+      "sha256": "3b09e1e6a7706db7dfba48a3ad87c3b6f13d70a730a77e8cc41c1b041bca8980"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/runner-controls-01.log",
+      "bytes": 6952,
+      "path": "build/select013-paged-route-v1/runner-controls-01.log",
+      "sha256": "0585354bec94263352080b431336f33e526146b21260fa21bce0df1d594b2b96"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/runner-controls-02.json",
+      "bytes": 1347,
+      "path": "build/select013-paged-route-v1/runner-controls-02.json",
+      "sha256": "2a0de6378646fb200fb4c2f85e896490169d4eca6e9b83d707a54c1c21a6245e"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/runner-controls-02.log",
+      "bytes": 98,
+      "path": "build/select013-paged-route-v1/runner-controls-02.log",
+      "sha256": "2fd77a80df5b9fe9af735aab79fbfd9d9b6d544b08e0d297ba1f9b8d93413ab1"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/promotion-index.json",
+      "bytes": 2123,
+      "path": "build/select013-paged-route-v1/promotion-index.json",
+      "sha256": "fd45117cb14dc32b9aaca5a7d2735fb3a51d607e87b336f5672dec5d4475c965"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/controls-01.json",
+      "bytes": 1336,
+      "path": "build/select013-paged-route-v1/controls-01.json",
+      "sha256": "38f18fa71dcccdf28281c78422a7694d69b2aab36905332d9c6746205ed742ff"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/controls-01.log",
+      "bytes": 99,
+      "path": "build/select013-paged-route-v1/controls-01.log",
+      "sha256": "a1a6c2d6610524fd3b3dc80f9b017abf05a5be2f4c3f05fa5fa95daeba907739"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/canonical-controls-01.json",
+      "bytes": 1256,
+      "path": "build/select013-paged-route-v1/canonical-controls-01.json",
+      "sha256": "4849d1c9601e071538aace0d35562b54b303a761d85ec974a02088db13028d6d"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/canonical-controls-01.log",
+      "bytes": 192,
+      "path": "build/select013-paged-route-v1/canonical-controls-01.log",
+      "sha256": "3806442f83c96ce234250d52bac2fabf8d9ffe616c2ca65ef060917f75722645"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/BOUNDS.txt",
+      "bytes": 2066,
+      "path": "build/select013-paged-route-v1/BOUNDS.txt",
+      "sha256": "f450d4f28c432e998428a51f7a00bc979f080ea9e3b9d6b505226ffde3e13403"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/original_lazy_beam/selected-action-plan.json",
+      "bytes": 548,
+      "path": "build/select013-paged-route-v1/attempt-01/original_lazy_beam/selected-action-plan.json",
+      "sha256": "8e007ac0a9feab4d9f8a066de5bfa850714f919a53a92168c4def0a444be6aec"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/original_lazy_beam/complete-history.json",
+      "bytes": 432,
+      "path": "build/select013-paged-route-v1/attempt-01/original_lazy_beam/complete-history.json",
+      "sha256": "19dccdf4857cd248684823d0dec53c3b3346fc90dca3f6ad36fa4520148758f6"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/original_lazy_beam/independent-episode.json",
+      "bytes": 2493,
+      "path": "build/select013-paged-route-v1/attempt-01/original_lazy_beam/independent-episode.json",
+      "sha256": "ae3c25124b8c0d6da53deae04c70b364224e00424b81ae693e005f7ac61a9f54"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/original_lazy_beam/original-world-control.json",
+      "bytes": 19337,
+      "path": "build/select013-paged-route-v1/attempt-01/original_lazy_beam/original-world-control.json",
+      "sha256": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/original_lazy_beam/rollout-metrics.json",
+      "bytes": 21463,
+      "path": "build/select013-paged-route-v1/attempt-01/original_lazy_beam/rollout-metrics.json",
+      "sha256": "8d679c511a939b3dd11f564afc276fd0ea892a4973edd6626afe36062ebf6bea"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/original_lazy_beam/replay-metrics.json",
+      "bytes": 21463,
+      "path": "build/select013-paged-route-v1/attempt-01/original_lazy_beam/replay-metrics.json",
+      "sha256": "8d679c511a939b3dd11f564afc276fd0ea892a4973edd6626afe36062ebf6bea"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/paged_obstruction_lazy_beam/selected-action-plan.json",
+      "bytes": 548,
+      "path": "build/select013-paged-route-v1/attempt-01/paged_obstruction_lazy_beam/selected-action-plan.json",
+      "sha256": "76d2b9e639cee56508950fcc4c6499cae48d7fdc790ab167fa62bf4e09e2af9e"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/paged_obstruction_lazy_beam/complete-history.json",
+      "bytes": 432,
+      "path": "build/select013-paged-route-v1/attempt-01/paged_obstruction_lazy_beam/complete-history.json",
+      "sha256": "6a9ab5134298281162ba773a1df5c3628b663b906e531c424290ee87e0dc4703"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/paged_obstruction_lazy_beam/independent-episode.json",
+      "bytes": 2493,
+      "path": "build/select013-paged-route-v1/attempt-01/paged_obstruction_lazy_beam/independent-episode.json",
+      "sha256": "3de23deee4b63fd14c3446bc2f21df30946dc971100c96d815e314a38921a4b7"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/paged_obstruction_lazy_beam/original-world-control.json",
+      "bytes": 19337,
+      "path": "build/select013-paged-route-v1/attempt-01/paged_obstruction_lazy_beam/original-world-control.json",
+      "sha256": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/paged_obstruction_lazy_beam/rollout-metrics.json",
+      "bytes": 21463,
+      "path": "build/select013-paged-route-v1/attempt-01/paged_obstruction_lazy_beam/rollout-metrics.json",
+      "sha256": "ec20ae0c2582fe7bb70fb414ca74d1ace1751bb1b62caec12c69195a0c23abf2"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/paged_obstruction_lazy_beam/replay-metrics.json",
+      "bytes": 21463,
+      "path": "build/select013-paged-route-v1/attempt-01/paged_obstruction_lazy_beam/replay-metrics.json",
+      "sha256": "ec20ae0c2582fe7bb70fb414ca74d1ace1751bb1b62caec12c69195a0c23abf2"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/original_lazy_beam/saved-baseline-control.json",
+      "bytes": 137,
+      "path": "build/select013-paged-route-v1/attempt-01/original_lazy_beam/saved-baseline-control.json",
+      "sha256": "08aee77f2ed4401ab59c876e359626a02010bb4e4a7d2a2033ef855fc57dde89"
+    },
+    {
+      "archive_path": "select013-paged-route-v1/attempt-01/paged_obstruction_lazy_beam/declared-rule-change.json",
+      "bytes": 1445,
+      "path": "build/select013-paged-route-v1/attempt-01/paged_obstruction_lazy_beam/declared-rule-change.json",
+      "sha256": "810fbdfc3ebb130d8905ba16aa2da5f24957db07f8da7cbfb524e1a5a51d916e"
+    },
+    {
+      "archive_path": "select013-paged-route-review-v1/source-review.txt",
+      "bytes": 4474,
+      "path": "build/select013-paged-route-review-v1/source-review.txt",
+      "sha256": "b198fa52cfe0fec23ead5d46a6294e0d1280e725018859ed77da82bb66ca57d7"
+    },
+    {
+      "archive_path": "select013-paged-route-review-v1/runner-review.txt",
+      "bytes": 2740,
+      "path": "build/select013-paged-route-review-v1/runner-review.txt",
+      "sha256": "e76a962bd19d7db43950e6aa396dc95f609252ac34f7e6cd0286bf9994be5c56"
+    },
+    {
+      "archive_path": "select013-paged-route-review-v1/audit_saved_result.py",
+      "bytes": 6823,
+      "path": "build/select013-paged-route-review-v1/audit_saved_result.py",
+      "sha256": "d74179e2d4aa825781fb35979e01835f5390e0025554a4a985f09b0efabc6429"
+    },
+    {
+      "archive_path": "select013-paged-route-review-v1/saved-result-audit.json",
+      "bytes": 3047,
+      "path": "build/select013-paged-route-review-v1/saved-result-audit.json",
+      "sha256": "d91e5981a1f4db9e17b366b880e16b9f00c9ad5d7176c9411272018dad85f6be"
+    },
+    {
+      "archive_path": "select013-paged-route-review-v1/causal-witness.json",
+      "bytes": 172191,
+      "path": "build/select013-paged-route-review-v1/causal-witness.json",
+      "sha256": "7f111af006660c8cdb850a4da903e855a99b413fb055fec60a63bec9d3ef4c81"
+    },
+    {
+      "archive_path": "select013-paged-route-review-v1/result-review.txt",
+      "bytes": 4411,
+      "path": "build/select013-paged-route-review-v1/result-review.txt",
+      "sha256": "2d3063ce53d8f907ded0d52b3982479f17458c63aa04a706bb09341c6e8663c2"
+    }
+  ],
+  "payload_bytes": 1490593,
+  "purpose": "Lean exact terminal comparison plus compact causal witness; no copy or deletion performed by reviewer"
+}
