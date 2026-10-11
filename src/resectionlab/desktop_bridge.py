@@ -47,7 +47,7 @@ MAX_PRIOR_PROPOSALS = 16
 MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
-OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
+OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "executePersistentPassiveEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 TRANSFER_SUPERVISOR_SHA256 = "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
 RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
@@ -1172,6 +1172,34 @@ class BridgeSession:
             if "policyVariant" in response:
                 public["policyVariant"] = response["policyVariant"]
             return public
+        if operation == "executePersistentPassiveEpisode":
+            if (set(args) != {"fixture", "paired"} or
+                    args.get("fixture") != "generated-persistent-passive-v1" or
+                    args.get("paired") is not True):
+                raise BridgeError("INVALID_ARGUMENT", "Choose the fixed paired generated passive episode")
+            from .passive_desktop_transport import execute_persistent_passive_episode
+            progress(0.1, "Executing the fixed generated passive tool episode")
+            response = execute_persistent_passive_episode(
+                paired=True, inspection_status="unresolved", cancelled=request.cancelled.is_set)
+            request.check()
+            case, episode = response["case"], response["episode"]
+            if (episode.get("schema") != "resectionlab.generated-persistent-passive-episode.v1" or
+                    episode.get("sourceHash") != response["sourceBinding"]["sourceHash"] or
+                    episode.get("decisionModelHash") != response["sourceBinding"]["decisionModelHash"] or
+                    response["sourceBinding"]["caseHash"] != case.semantic_hash or
+                    episode.get("actions") != ["PASSIVE_MOVE", "ACQUIRE_GENERATED_STATUS",
+                                               "PASSIVE_WITHDRAW", "PASSIVE_WITHDRAW_STATIONARY", "STOP"]):
+                raise BridgeError("EPISODE_BINDING_MISMATCH", "Passive replay differs from the fixed source")
+            _require_json_budget(episode, 2 * 1024 * 1024, "EPISODE_SIZE_LIMIT",
+                                 "Generated passive episode exceeds 2 MiB")
+            installed = self._install_case(case, {}, request)
+            entry = self.cases[case.semantic_hash]
+            entry.episode = json.loads(json.dumps({key: response[key] for key in
+                ("episode", "episodeCanonicalJson", "sourceBinding")}, allow_nan=False))
+            entry.episode_selection = {"episodeId": episode["episodeId"],
+                                       "frameIndex": 0, "visible": True}
+            return {"case": installed, **{key: response[key] for key in
+                    ("episode", "episodeCanonicalJson", "sourceBinding")}}
         if operation == "executePublicSurfaceContactEpisode":
             # A distinct generated public goal on the same native engine and
             # frame exporter. Do not admit an old aspiration checkpoint here.

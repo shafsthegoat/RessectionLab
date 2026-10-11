@@ -169,8 +169,37 @@ def canonical_episode(episode):
 def validate_episode(primary,envelope,cancelled=None):
     """Regenerate the fixed software task; a digest alone cannot certify replay."""
     if envelope is None:return None
-    if not isinstance(envelope,dict) or set(envelope)!={'episode','episodeCanonicalJson'} or len(encoded(envelope))>2*1024**2:
+    if not isinstance(envelope,dict) or len(encoded(envelope))>2*1024**2:
         raise ValueError('Invalid or excessive saved episode envelope')
+    incoming= envelope.get('episode')
+    if type(incoming) is not dict:
+        raise ValueError('Invalid saved episode object')
+    if incoming.get('schema')=='resectionlab.generated-persistent-passive-episode.v1':
+        if set(envelope)!={'episode','episodeCanonicalJson','sourceBinding'}:
+            raise ValueError('Generated passive replay needs its complete source binding')
+        episode=envelope['episode']
+        if (type(episode) is not dict or episode.get('actions')!=[
+                'PASSIVE_MOVE','ACQUIRE_GENERATED_STATUS','PASSIVE_WITHDRAW',
+                'PASSIVE_WITHDRAW_STATIONARY','STOP'] or
+                type(episode.get('history')) is not list or len(episode['history'])!=5 or
+                type(episode['history'][1]) is not dict or
+                type(episode['history'][1].get('information_event')) is not dict):
+            raise ValueError('Unsupported saved generated passive protocol')
+        status=episode['history'][1]['information_event'].get('status')
+        if status not in {'verified','unresolved'}:
+            raise ValueError('Invalid generated information status')
+        from .passive_desktop_transport import execute_persistent_passive_episode
+        expected=execute_persistent_passive_episode(paired=True,inspection_status=status,
+                                                   cancelled=cancelled)
+        if expected['case'].semantic_hash!=primary.semantic_hash:
+            raise ValueError('Saved passive primary differs from the generated source')
+        expected_envelope={key:expected[key] for key in
+                           ('episode','episodeCanonicalJson','sourceBinding')}
+        if encoded(envelope)!=encoded(expected_envelope):
+            raise ValueError('Saved passive action, frame, tool or source binding differs from fresh replay')
+        return deepcopy(envelope)
+    if set(envelope)!={'episode','episodeCanonicalJson'}:
+        raise ValueError('Unknown saved episode envelope fields')
     episode=envelope['episode'];canonical=canonical_episode(episode)
     if canonical!=envelope['episodeCanonicalJson'] or 'sha256:'+sha256(canonical.encode()).hexdigest()!=episode.get('episodeId'):
         raise ValueError('Episode canonical identity mismatch')
@@ -201,9 +230,12 @@ def validate_episode(primary,envelope,cancelled=None):
 
 def replay_state(envelope,supplied=None):
     if supplied is None:return None
+    frame_count=(len(envelope['episode']['frames']) if envelope is not None and
+                 envelope['episode'].get('schema')=='resectionlab.generated-persistent-passive-episode.v1'
+                 else len(envelope['episode']['replayFrames']) if envelope is not None else 0)
     if (envelope is None or not isinstance(supplied,dict) or set(supplied)!={'episodeId','frameIndex','visible'}
             or supplied['episodeId']!=envelope['episode']['episodeId'] or type(supplied['visible']) is not bool
-            or type(supplied['frameIndex']) is not int or not 0<=supplied['frameIndex']<len(envelope['episode']['replayFrames'])):
+            or type(supplied['frameIndex']) is not int or not 0<=supplied['frameIndex']<frame_count):
         raise ValueError('Saved replay selection is stale or malformed')
     return deepcopy(supplied)
 
@@ -284,9 +316,11 @@ def session_descriptor(entry):
             'reasons':['Association and registration unreviewed.','Annotation coverage and source time unknown.','Auxiliary pixels are absent from current policy channels.']})
     replay=None
     if entry.episode is not None and entry.episode_selection is not None:
+        passive=entry.episode['episode'].get('schema')=='resectionlab.generated-persistent-passive-episode.v1'
         replay={**deepcopy(entry.episode),**{k:v for k,v in entry.episode_selection.items() if k!='episodeId'},
-                'validation':'authoritative_generated_replay','accountingQualification':'historical_timings_not_remeasured'}
-        if replay['episode']['selector']=='RL256_ASPIRATION_TRANSFER':
+                'validation':'authoritative_generated_passive_replay' if passive else 'authoritative_generated_replay',
+                'accountingQualification':'declared_generated_schedule_not_measured' if passive else 'historical_timings_not_remeasured'}
+        if not passive and replay['episode']['selector']=='RL256_ASPIRATION_TRANSFER':
             from .legacy_transfer_episode import transfer_authorship
             replay['episodeAuthorship']=transfer_authorship(replay['episode'],live_backend_run=False)
             replay['accountingQualification']='imported_computational_provenance_unverified'

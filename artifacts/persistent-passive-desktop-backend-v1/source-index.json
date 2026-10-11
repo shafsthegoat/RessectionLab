@@ -1,0 +1,27 @@
+{
+  "canonical_before": {
+    "src/resectionlab/desktop_bridge.py": "ea34877af54e6de26b9b116721808e9ef16666e4ad1d2ad02451b2cc2ce298f3",
+    "src/resectionlab/passive_desktop_transport.py": null,
+    "tests/test_passive_v1_transport.py": null
+  },
+  "canonical_v1_episode_id": "sha256:33cbb8bdea5873acece2461fbf1c992791ff7cae18ba2099c4bc1724cd76717a",
+  "promotion": {
+    "src/resectionlab/desktop_bridge.py": {
+      "bytes": 123929,
+      "sha256": "3dec64d57bd075260ec88c701a5e85dafadca017f75cabafb39e4407d46b396f",
+      "source": "build/hybrid-persistent-passive-desktop-v1/stage/resectionlab/desktop_bridge.py"
+    },
+    "src/resectionlab/passive_desktop_transport.py": {
+      "bytes": 4390,
+      "sha256": "aec43e5d1a6181b2d42fc30fd11b01a9a9f7a6adef68ffdc9114319a2569b963",
+      "source": "build/hybrid-persistent-passive-desktop-v1/stage/resectionlab/passive_desktop_transport.py"
+    },
+    "tests/test_passive_v1_transport.py": {
+      "bytes": 1913,
+      "sha256": "6f833810c038950894424e08b33410d6a8d691e56e17a2a0a85e4eec26fdafb9",
+      "source": "build/hybrid-persistent-passive-desktop-v1/tests/test_passive_v1_transport.py"
+    }
+  },
+  "schema": "generated-passive-desktop-v1-source-index",
+  "test": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -B -m pytest -q tests/test_passive_v1_transport.py"
+}

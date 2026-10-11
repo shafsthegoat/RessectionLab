@@ -1,0 +1,36 @@
+{
+  "unchanged": true,
+  "checks": [
+    {
+      "source": "committed_597eae7",
+      "operation": "createSyntheticCase",
+      "code": "SYNTHETIC_CASE_DISABLED",
+      "message": "SYNTHETIC_CASE_DISABLED: createSyntheticCase: This legacy entry point remains closed. Explicitly labeled generated fixtures may be used for software and research development; this operation does not grant patient, clinical or checkpoint eligibility."
+    },
+    {
+      "source": "committed_597eae7",
+      "operation": "trainPatient",
+      "code": "RECORDED_EXPERIENCE_REQUIRED",
+      "message": "RECORDED_EXPERIENCE_REQUIRED: trainPatient: This historical implicit learning pathway remains closed. The spatial learner can use an explicit October 8 generated-development contract; other recorded or generated workflows require separate source admission."
+    },
+    {
+      "source": "working_transport",
+      "operation": "createSyntheticCase",
+      "code": "SYNTHETIC_CASE_DISABLED",
+      "message": "SYNTHETIC_CASE_DISABLED: createSyntheticCase: This legacy entry point remains closed. Explicitly labeled generated fixtures may be used for software and research development; this operation does not grant patient, clinical or checkpoint eligibility."
+    },
+    {
+      "source": "working_transport",
+      "operation": "trainPatient",
+      "code": "RECORDED_EXPERIENCE_REQUIRED",
+      "message": "RECORDED_EXPERIENCE_REQUIRED: trainPatient: This historical implicit learning pathway remains closed. The spatial learner can use an explicit October 8 generated-development contract; other recorded or generated workflows require separate source admission."
+    }
+  ],
+  "original_suite": {
+    "passed": 37,
+    "failed": 27,
+    "setup_errors": 8,
+    "seconds": 14.07
+  },
+  "limitation": "Broad historical tests still expect excluded generic synthetic/training operations. No admission rule was weakened."
+}
