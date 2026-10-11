@@ -1,0 +1,76 @@
+Saved TRAIN finding and one frozen diagnostic — proposed, unexecuted
+
+The negative ranking64 result is not explained by exact within-state descriptor
+collisions: all4,970 unequal-reward pairs have distinct saved logits in both
+endpoints, which a deterministic common actor cannot produce from identical
+complete descriptors. This excludes exact collisions for those pairs, not poor
+conditioning, learned compression or missing footprint sensitivity. Prior saved
+metadata shows teacher-ray sample spacing0.122–0.854mm; coarse axial sampling is
+not demonstrated. No images, observation tensors or weights were read here.
+
+Saved arithmetic weakens direct endpoint STOP dominance. For ranking, summed
+balanced motion-logit gradient L1 is0.428151 from conditional ranking versus
+0.000676590 from the motion/STOP gate. Last-update STOP-head norm0.00937257 is
+below actor0.112400 and encoder0.377195; all64 updates were below clipping. These
+are distinct quantities: head norms do not isolate STOP's encoder contribution,
+scalar-logit derivatives do not determine shared-parameter directions, and
+neither reconstructs Adam's history.
+
+At the ranking endpoint24/25 motion rows have positive immediate regret. For all
+24, independent free-logit descent on the declared ranking+gate objective would
+increase teacher-minus-chosen-motion margin. Correction strength is uneven:
+015step0 regret3.81525 has derivative0.046439, whereas045step11 regret0.0305531
+has derivative1.16121 (both unweighted per-state). Thus wrong labels or a local
+free-logit preference for the lower-reward winner are not shown; unequal gradient
+allocation/shared-feature interference remains plausible. The old endpoint is
+also better on the new surrogate, so metric-weighting disagreement alone cannot
+explain the negative contrast. No causal representation/optimization claim follows.
+
+Reproduce these numbers with derive_saved.py in a fresh copy of this directory
+(or remove only its derived outputs deliberately); it reads the listed JSON and
+source pins, imports stdlib only, and exclusively writes saved-scalar-derivation
+and saved-input-pins. The outputs retain all25 state rows for both endpoints and
+source/update references. Probabilities are recomputed in scalar float64 from the
+saved float32 logits. This is arithmetic on saved evidence, not another model run.
+
+Single conditional diagnostic
+Use only the fixed ranking checkpoint (SHA2825ad738591f786f1fa5b3383cd74c4126e1ab57f0494b04b2c8c52e44bfa0e),
+exact original29 TRAIN teacher states and the same public score corpus. An original
+checkpoint reload is unnecessary: its saved readouts already supply the scalar
+comparison. No SELECT/EVAL, new labels, private references, policy rollout,
+search, optimizer state/step, architecture or checkpoint write is proposed.
+
+The staged gradient_diagnostic helper consumes the existing replay-admitted cache
+and detached traces. The existing owner should reuse its factory, collector,
+independent seal/replay, checkpoint loader, source guard and supervisor; this is
+not a new supervisor or permission to execute. Preserve historical context and
+checkpoint lineage/admission limits, but enforce zero actual optimizer calls in
+the new owned operation. Do not create a PatientTrainSession merely to access a
+cache: retain the actual trace when adding it, then verify against cache.record.
+
+Exact helper work:29 forwards;25motion×3 autograd.grad calls (weighted production
+loss, weighted gate, teacher-minus-chosen-motion margin) plus4 STOP loss calls =
+79VJPs. The ranking component is the actual production gradient minus gate,
+accumulated after detachment in float64. One action graph lives at a time; no
+leaf .grad buffer or parameter value is changed, and requires_grad flags restore
+on success/failure. Require all29 logits to reproduce the saved endpoint exactly.
+Emit per-state component/module norms, alignment with total corpus gradient and
+margin directional derivatives under negative ranking/gate/STOP/full raw gradients.
+Those are instantaneous raw-gradient effects, not predicted Adam updates.
+
+Proposed owned limits:one attempt,180s worker/210s parent,3GiB tree RSS/one thread,
+256MiB existing teacher cache,64MiB gradient-vector payload,16MiB output,one bounded
+checkpoint decode,4 source visits,35,040 native-preview cap and58 total
+collector/replay task steps. No separate geometry queries inside the helper.
+Root and the existing owner bind/verify counters before any release. Failure
+retains partial evidence and is not retried or given a wider cap automatically.
+
+Falsification: if high-regret opening margins receive substantial correctly
+directed corpus motion gradients, an instantaneous allocation/conflict explanation
+weakens. If motion-only direction helps but gate/STOP reverses it, direct shared
+interference is exposed. If even motion corpus gradients oppose the desired
+margins while free-logit derivatives help, parameter sharing or cross-state
+conflict is implicated at this endpoint. None alone proves input insufficiency,
+explains the entire optimization history or warrants another architecture sweep.
+Transfer remains the priority; no helper imports, generated tests or scientific
+execution have occurred in preparing this draft.

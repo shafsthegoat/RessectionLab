@@ -1,0 +1,42 @@
+{
+  "caps": {
+    "autograd_grad_calls": 79,
+    "checkpoint_loads": 1,
+    "collector_replay_steps": 58,
+    "log_bytes": 2097152,
+    "native_previews": 35040,
+    "output_bytes": 16777216,
+    "parent_seconds": 210,
+    "policy_forwards": 29,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 4,
+    "supervision_bytes": 4194304,
+    "threads": 1,
+    "worker_seconds": 180
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/frozen-gradient-diagnostic-owned-v1/attempt-01.supervision/fresh-pycache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/frozen-gradient-diagnostic-owned-v1/initial_inventory_worker.py",
+    "--declaration",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/frozen-gradient-diagnostic-owned-v1/root-release.json",
+    "--declaration-sha256",
+    "e702334009d41838d1ad13daaaf079a434c2da4f4e5eaca06742e51dbb3f0c3e"
+  ],
+  "condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "head": "4d1d0ff193275696c53cc907c8eb8aa79f6f3094",
+  "parent_pid": 98282,
+  "public_index": {
+    "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json",
+    "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8"
+  },
+  "release_sha256": "e702334009d41838d1ad13daaaf079a434c2da4f4e5eaca06742e51dbb3f0c3e",
+  "source_index": {
+    "path": "build/frozen-gradient-diagnostic-owned-v1/source-index.json",
+    "sha256": "f5e312312f7f5faf90c9549a89f60e94f8151622f188a04bf0e5eef8053e7cbf"
+  },
+  "training_admitted": false
+}

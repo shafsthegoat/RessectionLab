@@ -1,0 +1,46 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "autograd_grad_calls": 79,
+    "checkpoint_loads": 1,
+    "collector_replay_steps": 58,
+    "log_bytes": 2097152,
+    "native_previews": 35040,
+    "output_bytes": 16777216,
+    "parent_seconds": 210,
+    "policy_forwards": 29,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 4,
+    "supervision_bytes": 4194304,
+    "threads": 1,
+    "worker_seconds": 180
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 96.57990412507206,
+  "exit_code": 0,
+  "output_bytes": 4279427,
+  "planned_subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "release_sha256": "e702334009d41838d1ad13daaaf079a434c2da4f4e5eaca06742e51dbb3f0c3e",
+  "remaining_owned_pids": [],
+  "result_sha256": "eef9082a81dfb56137c6f072184e699c233a9059bd24630ee1e45c93d681038c",
+  "result_status": "complete_frozen_gradient_diagnostic",
+  "sampled_peak_rss_bytes": 1377370112,
+  "samples": 469,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/frozen-gradient-diagnostic-owned-v1/source-index.json",
+    "sha256": "f5e312312f7f5faf90c9549a89f60e94f8151622f188a04bf0e5eef8053e7cbf"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 2677,
+  "training_admitted": false,
+  "worker_pid": 98284,
+  "worker_termination_confirmed": true
+}

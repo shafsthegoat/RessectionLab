@@ -1,0 +1,25 @@
+{
+  "files": {
+    "REPORT.txt": {
+      "bytes": 5235,
+      "sha256": "a4475bc4550259c91b24f5f4d0ec4bccfe6d7173c86589ae81f1996240d98218"
+    },
+    "derive_saved.py": {
+      "bytes": 5048,
+      "sha256": "16cd38ff06ba026d777789dcd075ad2e629f66b649256fcb503ca23806411223"
+    },
+    "gradient_diagnostic.py": {
+      "bytes": 11870,
+      "sha256": "cc183fcd3e76667ab81a2b117ee3d058269a6831f0fd33318504c81e4d7140dd"
+    },
+    "saved-input-pins.json": {
+      "bytes": 13118,
+      "sha256": "6bad45294c0a2df2abe50ceb9516ce5ccc64e28a55a299b70500173ad3ebe9aa"
+    },
+    "saved-scalar-derivation.json": {
+      "bytes": 35705,
+      "sha256": "4caa97b605327a033ca6d6c9676de3862256d3084f97ccbd22dd9e9cd32112fa"
+    }
+  },
+  "scope": "saved TRAIN scalar derivation plus unexecuted frozen-gradient helper; no runtime release"
+}

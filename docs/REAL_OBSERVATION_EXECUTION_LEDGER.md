@@ -6,7 +6,7 @@ The latest human attachment is preserved byte-for-byte in [HYBRID_WORLD_MODEL_ST
 
 Root coordinates three focused read-only reviews of the actual information boundary, persistent native/desktop state, and an existing-data real-observation validation. The Mac reports 16 GiB RAM, 10 CPU cores and 333 GiB available; one scientific worker at a time remains the local policy for this cycle. No new dependency, data purchase, agreement, remote compute or surgical-video extraction is initiated.
 
-The prepared frozen TRAIN gradient diagnostic has passed its ten generated helper/runner controls (1.32 s pytest; 1.65 s owned wrapper). One bounded, zero-update diagnostic is dispatched on the original 29 TRAIN decisions, with the unchanged ranking checkpoint, 180 s worker/210 s parent and 3 GiB limits. The run completes in 96.580 s at 1.377 GB sampled peak with all 29 forwards, 79 gradient reads, 58 replay/collection steps and no updates; independent interpretation is pending. This closes a specific prior failure diagnosis; it does not replace the four new integrated deliverables or authorize more training sweeps.
+The prepared frozen TRAIN gradient diagnostic has passed its ten generated helper/runner controls (1.32 s pytest; 1.65 s owned wrapper). One bounded, zero-update diagnostic is dispatched on the original 29 TRAIN decisions, with the unchanged ranking checkpoint, 180 s worker/210 s parent and 3 GiB limits. The run completes in 96.580 s at 1.377 GB sampled peak with all 29 forwards, 79 gradient reads, 58 replay/collection steps and no updates; independent saved interpretation passes 573 checks. This closes a specific prior failure diagnosis; it does not replace the four new integrated deliverables or authorize more training sweeps.
 
 
 Updated October 9, 2026. The [October 6 supergoal](SUPERGOAL_REAL_OBSERVATIONS.md)
@@ -1607,3 +1607,9 @@ controls now pass; original failure logs remain committed. The next question is
 whether exact reuse materially expands bounded search coverage. Separately,
 the frozen TRAIN gradient diagnostic is prepared but unexecuted; learned agents
 still pay for expensive candidate inventories before their own forwards.
+
+## Frozen TRAIN diagnosis completed under hybrid steering
+
+[The compact result](../artifacts/frozen-gradient-diagnostic-v1/RESULT.md) preserves the original checkpoint, all 29 readouts, zero updates, full replay bindings and the original test failures. At the frozen endpoint, ranking-only and full gradients each help 12 motion margins, harm 12 and leave one zero. STOP/gate removal changes no signs; corpus accumulation reverses 12 otherwise helpful same-state ranking directions. This supports local parameter/objective conflict, not proof of a universal optimization fix, information loss or clinical performance. No new patient roles or training sweeps are admitted.
+
+Package 1 retains the existing generated near contact episode and exact baseline regression, including private-target invariance upstream of actor tensors. The audit explicitly limits that result: public nominal full-tool previews determine proposal membership, search has finer representation than the actor, and private support/hazards are not qualified by target-only sanitization. Persistent passive motion and a fresh Case2 TRAIN observation comparison are separate pending increments.

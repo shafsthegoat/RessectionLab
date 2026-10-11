@@ -1,0 +1,695 @@
+........................................................................ [ 35%]
+............................F........................................... [ 71%]
+.......................................F........FFFFFFFFF                [100%]
+=================================== FAILURES ===================================
+_ test_historical_source_default_record_fingerprint_inventory_observation_and_replay _
+
+    def test_historical_source_default_record_fingerprint_inventory_observation_and_replay():
+        root=next(p for p in Path(__file__).resolve().parents if (p/'src/resectionlab').is_dir())
+        before=root/'build/obstruction-opening-proposals-v1/before'
+        if not before.is_dir():pytest.skip('Optional frozen historical source comparison unavailable')
+        def load(name):
+            alias='resectionlab._before_obstruction_'+name
+            spec=importlib.util.spec_from_file_location(alias,before/(name+'.py'))
+            module=importlib.util.module_from_spec(spec);sys.modules[alias]=module;spec.loader.exec_module(module)
+            return module
+        prior=load('native_proposals')
+        for kwargs in ({},{'intermediate_opening_mm':1.},
+                {'intermediate_opening_mm':1.,'tool_footprint_opening':True,'max_candidates':120}):
+            old=prior.NominalCavityProposalConfig(**kwargs);new=NominalCavityProposalConfig(**kwargs)
+            assert new.to_record()==asdict(old) and new.fingerprint==old.fingerprint
+        previous=load('native_spatial_task');case=source(enabled=False)
+>       old_case=previous.NativeSpatialCase(**{f.name:getattr(case,f.name) for f in fields(case) if f.init})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: NativeSpatialCase.__init__() got an unexpected keyword argument 'post_exposure'
+
+tests/test_obstruction_opening_proposals.py:240: TypeError
+________________ test_authentication_precedes_any_patient_read _________________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1090/test_authentication_precedes_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1119bfdd0>
+declaration = {'B_ids': [1, 14, 8, 17, 19, 7], 'FEM': False, 'MRI_transfer': False, 'V_ids': [2, 3, 4, 5, 6, 9, ...], ...}
+
+    def test_authentication_precedes_any_patient_read(tmp_path, monkeypatch, declaration):
+        monkeypatch.setattr(r, "ROOT", tmp_path)
+        write(tmp_path, r.MANIFEST, declaration)
+        # Only source/metadata placeholders: no original patient paths exist here.
+        for name in r.SOURCE_NAMES:
+            write(tmp_path, name, b"# inert source binding control\n")
+        hashes = r.source_hashes()
+        declaration["reused_source_sha256"] = {k: v for k, v in hashes.items() if k != r.SOURCE_NAMES[0]}
+        binding = write(tmp_path, r.MANIFEST, declaration)
+        release = {"schema": r.SCHEMA + "-release", "phase": "header-qc", "authorized": True,
+                   "authorizer": "root", "source_commit": "a" * 40,
+                   "declaration_sha256": binding["sha256"], "source_sha256": hashes, "dependencies": {}}
+        name = r.OUTPUT + "/releases/header-qc.json"
+        write(tmp_path, name, release)
+        monkeypatch.setattr(r.subprocess, "run", lambda command, **kwargs:
+                            SimpleNamespace(stdout=(tmp_path / command[2].split(":", 1)[1]).read_bytes()))
+>       assert r.authenticate(name, "header-qc")[1] == release
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_resect_case4_sparse_update.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+release_path = 'artifacts/resect-case4-sparse-update-v1/releases/header-qc.json'
+phase = 'header-qc'
+
+    def authenticate(release_path, phase):
+        """All source/declaration/release checks precede any original patient read."""
+        if phase not in PHASES or release_path != OUTPUT + "/releases/" + phase + ".json":
+            raise ValueError("EXACT_PHASE_RELEASE_REQUIRED")
+        release_bytes = bounded_read(release_path)
+        release = json.loads(release_bytes)
+        expected_keys = {"schema", "phase", "authorized", "authorizer", "source_commit",
+                         "declaration_sha256", "source_sha256", "dependencies"}
+        if (set(release) != expected_keys or release["schema"] != SCHEMA + "-release"
+                or release["phase"] != phase or release["authorized"] is not True
+                or release["authorizer"] != "root"
+                or re.fullmatch(r"[0-9a-f]{40}", release["source_commit"]) is None):
+            raise ValueError("EXPLICIT_ROOT_RELEASE_REQUIRED")
+        protocol = bounded_read(MANIFEST)
+        if digest(protocol) != release["declaration_sha256"]:
+            raise ValueError("DECLARATION_CHANGED")
+        declaration = validate_declaration(json.loads(protocol))
+        if declaration.get("runtime") != runtime_identity():
+>           raise ValueError("RUNTIME_BINDING_CHANGED")
+E           ValueError: RUNTIME_BINDING_CHANGED
+
+scripts/run_resect_case4_sparse_update.py:149: ValueError
+______ test_prerequisite_receipt_identity_before_patient_access[changed0] ______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1090/test_prerequisite_receipt_iden0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x111a263c0>
+declaration = {'B_ids': [1, 14, 8, 17, 19, 7], 'FEM': False, 'MRI_transfer': False, 'V_ids': [2, 3, 4, 5, 6, 9, ...], ...}
+changed = {'schema': 'unrelated'}
+
+    @pytest.mark.parametrize('changed', [
+        {'schema': 'unrelated'}, {'phase': 'evaluate'}, {'exit_code': 9},
+        {'elapsed_seconds': 30.01}, {'elapsed_seconds': -1},
+        {'elapsed_seconds': True}, {'source_sha256': {}},
+        {'release_sha256': '0' * 64}, {'scientific_result_accepted': False},
+    ])
+    def test_prerequisite_receipt_identity_before_patient_access(tmp_path, monkeypatch, declaration, changed):
+        monkeypatch.setattr(r, 'ROOT', tmp_path)
+        for name in r.SOURCE_NAMES:
+            write(tmp_path, name, b'# inert source binding control\n')
+        hashes = r.source_hashes()
+        declaration['reused_source_sha256'] = {k: v for k, v in hashes.items() if k != r.SOURCE_NAMES[0]}
+        protocol = write(tmp_path, r.MANIFEST, declaration)
+        header_release = {'schema': r.SCHEMA + '-release', 'phase': 'header-qc', 'authorized': True,
+                          'authorizer': 'root', 'source_commit': 'a' * 40,
+                          'declaration_sha256': protocol['sha256'], 'source_sha256': hashes,
+                          'dependencies': {}}
+        header = write(tmp_path, r.OUTPUT + '/releases/header-qc.json', header_release)
+        receipt = {'schema': r.SCHEMA + '-supervision', 'phase': 'header-qc', 'status': 'completed',
+                   'scientific_result_accepted': True, 'source_sha256': hashes,
+                   'release_sha256': header['sha256'], 'exit_code': 0, 'elapsed_seconds': .5}
+        frame = write(tmp_path, r.FRAME_PATH, {})
+        supervision = write(tmp_path, r.DEPENDENCY_PATHS['header_supervision'], receipt)
+        release = {**header_release, 'phase': 'fit-freeze',
+                   'dependencies': {'frame_qc': frame, 'header_supervision': supervision}}
+        path = r.OUTPUT + '/releases/fit-freeze.json'
+        write(tmp_path, path, release)
+        monkeypatch.setattr(r.subprocess, 'run', lambda command, **kwargs:
+                            SimpleNamespace(stdout=(tmp_path / command[2].split(':', 1)[1]).read_bytes()))
+>       assert r.authenticate(path, 'fit-freeze')[1] == release
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_resect_case4_sparse_update.py:281: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+release_path = 'artifacts/resect-case4-sparse-update-v1/releases/fit-freeze.json'
+phase = 'fit-freeze'
+
+    def authenticate(release_path, phase):
+        """All source/declaration/release checks precede any original patient read."""
+        if phase not in PHASES or release_path != OUTPUT + "/releases/" + phase + ".json":
+            raise ValueError("EXACT_PHASE_RELEASE_REQUIRED")
+        release_bytes = bounded_read(release_path)
+        release = json.loads(release_bytes)
+        expected_keys = {"schema", "phase", "authorized", "authorizer", "source_commit",
+                         "declaration_sha256", "source_sha256", "dependencies"}
+        if (set(release) != expected_keys or release["schema"] != SCHEMA + "-release"
+                or release["phase"] != phase or release["authorized"] is not True
+                or release["authorizer"] != "root"
+                or re.fullmatch(r"[0-9a-f]{40}", release["source_commit"]) is None):
+            raise ValueError("EXPLICIT_ROOT_RELEASE_REQUIRED")
+        protocol = bounded_read(MANIFEST)
+        if digest(protocol) != release["declaration_sha256"]:
+            raise ValueError("DECLARATION_CHANGED")
+        declaration = validate_declaration(json.loads(protocol))
+        if declaration.get("runtime") != runtime_identity():
+>           raise ValueError("RUNTIME_BINDING_CHANGED")
+E           ValueError: RUNTIME_BINDING_CHANGED
+
+scripts/run_resect_case4_sparse_update.py:149: ValueError
+______ test_prerequisite_receipt_identity_before_patient_access[changed1] ______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1090/test_prerequisite_receipt_iden1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x111c7f200>
+declaration = {'B_ids': [1, 14, 8, 17, 19, 7], 'FEM': False, 'MRI_transfer': False, 'V_ids': [2, 3, 4, 5, 6, 9, ...], ...}
+changed = {'phase': 'evaluate'}
+
+    @pytest.mark.parametrize('changed', [
+        {'schema': 'unrelated'}, {'phase': 'evaluate'}, {'exit_code': 9},
+        {'elapsed_seconds': 30.01}, {'elapsed_seconds': -1},
+        {'elapsed_seconds': True}, {'source_sha256': {}},
+        {'release_sha256': '0' * 64}, {'scientific_result_accepted': False},
+    ])
+    def test_prerequisite_receipt_identity_before_patient_access(tmp_path, monkeypatch, declaration, changed):
+        monkeypatch.setattr(r, 'ROOT', tmp_path)
+        for name in r.SOURCE_NAMES:
+            write(tmp_path, name, b'# inert source binding control\n')
+        hashes = r.source_hashes()
+        declaration['reused_source_sha256'] = {k: v for k, v in hashes.items() if k != r.SOURCE_NAMES[0]}
+        protocol = write(tmp_path, r.MANIFEST, declaration)
+        header_release = {'schema': r.SCHEMA + '-release', 'phase': 'header-qc', 'authorized': True,
+                          'authorizer': 'root', 'source_commit': 'a' * 40,
+                          'declaration_sha256': protocol['sha256'], 'source_sha256': hashes,
+                          'dependencies': {}}
+        header = write(tmp_path, r.OUTPUT + '/releases/header-qc.json', header_release)
+        receipt = {'schema': r.SCHEMA + '-supervision', 'phase': 'header-qc', 'status': 'completed',
+                   'scientific_result_accepted': True, 'source_sha256': hashes,
+                   'release_sha256': header['sha256'], 'exit_code': 0, 'elapsed_seconds': .5}
+        frame = write(tmp_path, r.FRAME_PATH, {})
+        supervision = write(tmp_path, r.DEPENDENCY_PATHS['header_supervision'], receipt)
+        release = {**header_release, 'phase': 'fit-freeze',
+                   'dependencies': {'frame_qc': frame, 'header_supervision': supervision}}
+        path = r.OUTPUT + '/releases/fit-freeze.json'
+        write(tmp_path, path, release)
+        monkeypatch.setattr(r.subprocess, 'run', lambda command, **kwargs:
+                            SimpleNamespace(stdout=(tmp_path / command[2].split(':', 1)[1]).read_bytes()))
+>       assert r.authenticate(path, 'fit-freeze')[1] == release
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_resect_case4_sparse_update.py:281: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+release_path = 'artifacts/resect-case4-sparse-update-v1/releases/fit-freeze.json'
+phase = 'fit-freeze'
+
+    def authenticate(release_path, phase):
+        """All source/declaration/release checks precede any original patient read."""
+        if phase not in PHASES or release_path != OUTPUT + "/releases/" + phase + ".json":
+            raise ValueError("EXACT_PHASE_RELEASE_REQUIRED")
+        release_bytes = bounded_read(release_path)
+        release = json.loads(release_bytes)
+        expected_keys = {"schema", "phase", "authorized", "authorizer", "source_commit",
+                         "declaration_sha256", "source_sha256", "dependencies"}
+        if (set(release) != expected_keys or release["schema"] != SCHEMA + "-release"
+                or release["phase"] != phase or release["authorized"] is not True
+                or release["authorizer"] != "root"
+                or re.fullmatch(r"[0-9a-f]{40}", release["source_commit"]) is None):
+            raise ValueError("EXPLICIT_ROOT_RELEASE_REQUIRED")
+        protocol = bounded_read(MANIFEST)
+        if digest(protocol) != release["declaration_sha256"]:
+            raise ValueError("DECLARATION_CHANGED")
+        declaration = validate_declaration(json.loads(protocol))
+        if declaration.get("runtime") != runtime_identity():
+>           raise ValueError("RUNTIME_BINDING_CHANGED")
+E           ValueError: RUNTIME_BINDING_CHANGED
+
+scripts/run_resect_case4_sparse_update.py:149: ValueError
+______ test_prerequisite_receipt_identity_before_patient_access[changed2] ______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1090/test_prerequisite_receipt_iden2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x111ac1f40>
+declaration = {'B_ids': [1, 14, 8, 17, 19, 7], 'FEM': False, 'MRI_transfer': False, 'V_ids': [2, 3, 4, 5, 6, 9, ...], ...}
+changed = {'exit_code': 9}
+
+    @pytest.mark.parametrize('changed', [
+        {'schema': 'unrelated'}, {'phase': 'evaluate'}, {'exit_code': 9},
+        {'elapsed_seconds': 30.01}, {'elapsed_seconds': -1},
+        {'elapsed_seconds': True}, {'source_sha256': {}},
+        {'release_sha256': '0' * 64}, {'scientific_result_accepted': False},
+    ])
+    def test_prerequisite_receipt_identity_before_patient_access(tmp_path, monkeypatch, declaration, changed):
+        monkeypatch.setattr(r, 'ROOT', tmp_path)
+        for name in r.SOURCE_NAMES:
+            write(tmp_path, name, b'# inert source binding control\n')
+        hashes = r.source_hashes()
+        declaration['reused_source_sha256'] = {k: v for k, v in hashes.items() if k != r.SOURCE_NAMES[0]}
+        protocol = write(tmp_path, r.MANIFEST, declaration)
+        header_release = {'schema': r.SCHEMA + '-release', 'phase': 'header-qc', 'authorized': True,
+                          'authorizer': 'root', 'source_commit': 'a' * 40,
+                          'declaration_sha256': protocol['sha256'], 'source_sha256': hashes,
+                          'dependencies': {}}
+        header = write(tmp_path, r.OUTPUT + '/releases/header-qc.json', header_release)
+        receipt = {'schema': r.SCHEMA + '-supervision', 'phase': 'header-qc', 'status': 'completed',
+                   'scientific_result_accepted': True, 'source_sha256': hashes,
+                   'release_sha256': header['sha256'], 'exit_code': 0, 'elapsed_seconds': .5}
+        frame = write(tmp_path, r.FRAME_PATH, {})
+        supervision = write(tmp_path, r.DEPENDENCY_PATHS['header_supervision'], receipt)
+        release = {**header_release, 'phase': 'fit-freeze',
+                   'dependencies': {'frame_qc': frame, 'header_supervision': supervision}}
+        path = r.OUTPUT + '/releases/fit-freeze.json'
+        write(tmp_path, path, release)
+        monkeypatch.setattr(r.subprocess, 'run', lambda command, **kwargs:
+                            SimpleNamespace(stdout=(tmp_path / command[2].split(':', 1)[1]).read_bytes()))
+>       assert r.authenticate(path, 'fit-freeze')[1] == release
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_resect_case4_sparse_update.py:281: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+release_path = 'artifacts/resect-case4-sparse-update-v1/releases/fit-freeze.json'
+phase = 'fit-freeze'
+
+    def authenticate(release_path, phase):
+        """All source/declaration/release checks precede any original patient read."""
+        if phase not in PHASES or release_path != OUTPUT + "/releases/" + phase + ".json":
+            raise ValueError("EXACT_PHASE_RELEASE_REQUIRED")
+        release_bytes = bounded_read(release_path)
+        release = json.loads(release_bytes)
+        expected_keys = {"schema", "phase", "authorized", "authorizer", "source_commit",
+                         "declaration_sha256", "source_sha256", "dependencies"}
+        if (set(release) != expected_keys or release["schema"] != SCHEMA + "-release"
+                or release["phase"] != phase or release["authorized"] is not True
+                or release["authorizer"] != "root"
+                or re.fullmatch(r"[0-9a-f]{40}", release["source_commit"]) is None):
+            raise ValueError("EXPLICIT_ROOT_RELEASE_REQUIRED")
+        protocol = bounded_read(MANIFEST)
+        if digest(protocol) != release["declaration_sha256"]:
+            raise ValueError("DECLARATION_CHANGED")
+        declaration = validate_declaration(json.loads(protocol))
+        if declaration.get("runtime") != runtime_identity():
+>           raise ValueError("RUNTIME_BINDING_CHANGED")
+E           ValueError: RUNTIME_BINDING_CHANGED
+
+scripts/run_resect_case4_sparse_update.py:149: ValueError
+______ test_prerequisite_receipt_identity_before_patient_access[changed3] ______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1090/test_prerequisite_receipt_iden3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x111a986e0>
+declaration = {'B_ids': [1, 14, 8, 17, 19, 7], 'FEM': False, 'MRI_transfer': False, 'V_ids': [2, 3, 4, 5, 6, 9, ...], ...}
+changed = {'elapsed_seconds': 30.01}
+
+    @pytest.mark.parametrize('changed', [
+        {'schema': 'unrelated'}, {'phase': 'evaluate'}, {'exit_code': 9},
+        {'elapsed_seconds': 30.01}, {'elapsed_seconds': -1},
+        {'elapsed_seconds': True}, {'source_sha256': {}},
+        {'release_sha256': '0' * 64}, {'scientific_result_accepted': False},
+    ])
+    def test_prerequisite_receipt_identity_before_patient_access(tmp_path, monkeypatch, declaration, changed):
+        monkeypatch.setattr(r, 'ROOT', tmp_path)
+        for name in r.SOURCE_NAMES:
+            write(tmp_path, name, b'# inert source binding control\n')
+        hashes = r.source_hashes()
+        declaration['reused_source_sha256'] = {k: v for k, v in hashes.items() if k != r.SOURCE_NAMES[0]}
+        protocol = write(tmp_path, r.MANIFEST, declaration)
+        header_release = {'schema': r.SCHEMA + '-release', 'phase': 'header-qc', 'authorized': True,
+                          'authorizer': 'root', 'source_commit': 'a' * 40,
+                          'declaration_sha256': protocol['sha256'], 'source_sha256': hashes,
+                          'dependencies': {}}
+        header = write(tmp_path, r.OUTPUT + '/releases/header-qc.json', header_release)
+        receipt = {'schema': r.SCHEMA + '-supervision', 'phase': 'header-qc', 'status': 'completed',
+                   'scientific_result_accepted': True, 'source_sha256': hashes,
+                   'release_sha256': header['sha256'], 'exit_code': 0, 'elapsed_seconds': .5}
+        frame = write(tmp_path, r.FRAME_PATH, {})
+        supervision = write(tmp_path, r.DEPENDENCY_PATHS['header_supervision'], receipt)
+        release = {**header_release, 'phase': 'fit-freeze',
+                   'dependencies': {'frame_qc': frame, 'header_supervision': supervision}}
+        path = r.OUTPUT + '/releases/fit-freeze.json'
+        write(tmp_path, path, release)
+        monkeypatch.setattr(r.subprocess, 'run', lambda command, **kwargs:
+                            SimpleNamespace(stdout=(tmp_path / command[2].split(':', 1)[1]).read_bytes()))
+>       assert r.authenticate(path, 'fit-freeze')[1] == release
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_resect_case4_sparse_update.py:281: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+release_path = 'artifacts/resect-case4-sparse-update-v1/releases/fit-freeze.json'
+phase = 'fit-freeze'
+
+    def authenticate(release_path, phase):
+        """All source/declaration/release checks precede any original patient read."""
+        if phase not in PHASES or release_path != OUTPUT + "/releases/" + phase + ".json":
+            raise ValueError("EXACT_PHASE_RELEASE_REQUIRED")
+        release_bytes = bounded_read(release_path)
+        release = json.loads(release_bytes)
+        expected_keys = {"schema", "phase", "authorized", "authorizer", "source_commit",
+                         "declaration_sha256", "source_sha256", "dependencies"}
+        if (set(release) != expected_keys or release["schema"] != SCHEMA + "-release"
+                or release["phase"] != phase or release["authorized"] is not True
+                or release["authorizer"] != "root"
+                or re.fullmatch(r"[0-9a-f]{40}", release["source_commit"]) is None):
+            raise ValueError("EXPLICIT_ROOT_RELEASE_REQUIRED")
+        protocol = bounded_read(MANIFEST)
+        if digest(protocol) != release["declaration_sha256"]:
+            raise ValueError("DECLARATION_CHANGED")
+        declaration = validate_declaration(json.loads(protocol))
+        if declaration.get("runtime") != runtime_identity():
+>           raise ValueError("RUNTIME_BINDING_CHANGED")
+E           ValueError: RUNTIME_BINDING_CHANGED
+
+scripts/run_resect_case4_sparse_update.py:149: ValueError
+______ test_prerequisite_receipt_identity_before_patient_access[changed4] ______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1090/test_prerequisite_receipt_iden4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x111c7e0c0>
+declaration = {'B_ids': [1, 14, 8, 17, 19, 7], 'FEM': False, 'MRI_transfer': False, 'V_ids': [2, 3, 4, 5, 6, 9, ...], ...}
+changed = {'elapsed_seconds': -1}
+
+    @pytest.mark.parametrize('changed', [
+        {'schema': 'unrelated'}, {'phase': 'evaluate'}, {'exit_code': 9},
+        {'elapsed_seconds': 30.01}, {'elapsed_seconds': -1},
+        {'elapsed_seconds': True}, {'source_sha256': {}},
+        {'release_sha256': '0' * 64}, {'scientific_result_accepted': False},
+    ])
+    def test_prerequisite_receipt_identity_before_patient_access(tmp_path, monkeypatch, declaration, changed):
+        monkeypatch.setattr(r, 'ROOT', tmp_path)
+        for name in r.SOURCE_NAMES:
+            write(tmp_path, name, b'# inert source binding control\n')
+        hashes = r.source_hashes()
+        declaration['reused_source_sha256'] = {k: v for k, v in hashes.items() if k != r.SOURCE_NAMES[0]}
+        protocol = write(tmp_path, r.MANIFEST, declaration)
+        header_release = {'schema': r.SCHEMA + '-release', 'phase': 'header-qc', 'authorized': True,
+                          'authorizer': 'root', 'source_commit': 'a' * 40,
+                          'declaration_sha256': protocol['sha256'], 'source_sha256': hashes,
+                          'dependencies': {}}
+        header = write(tmp_path, r.OUTPUT + '/releases/header-qc.json', header_release)
+        receipt = {'schema': r.SCHEMA + '-supervision', 'phase': 'header-qc', 'status': 'completed',
+                   'scientific_result_accepted': True, 'source_sha256': hashes,
+                   'release_sha256': header['sha256'], 'exit_code': 0, 'elapsed_seconds': .5}
+        frame = write(tmp_path, r.FRAME_PATH, {})
+        supervision = write(tmp_path, r.DEPENDENCY_PATHS['header_supervision'], receipt)
+        release = {**header_release, 'phase': 'fit-freeze',
+                   'dependencies': {'frame_qc': frame, 'header_supervision': supervision}}
+        path = r.OUTPUT + '/releases/fit-freeze.json'
+        write(tmp_path, path, release)
+        monkeypatch.setattr(r.subprocess, 'run', lambda command, **kwargs:
+                            SimpleNamespace(stdout=(tmp_path / command[2].split(':', 1)[1]).read_bytes()))
+>       assert r.authenticate(path, 'fit-freeze')[1] == release
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_resect_case4_sparse_update.py:281: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+release_path = 'artifacts/resect-case4-sparse-update-v1/releases/fit-freeze.json'
+phase = 'fit-freeze'
+
+    def authenticate(release_path, phase):
+        """All source/declaration/release checks precede any original patient read."""
+        if phase not in PHASES or release_path != OUTPUT + "/releases/" + phase + ".json":
+            raise ValueError("EXACT_PHASE_RELEASE_REQUIRED")
+        release_bytes = bounded_read(release_path)
+        release = json.loads(release_bytes)
+        expected_keys = {"schema", "phase", "authorized", "authorizer", "source_commit",
+                         "declaration_sha256", "source_sha256", "dependencies"}
+        if (set(release) != expected_keys or release["schema"] != SCHEMA + "-release"
+                or release["phase"] != phase or release["authorized"] is not True
+                or release["authorizer"] != "root"
+                or re.fullmatch(r"[0-9a-f]{40}", release["source_commit"]) is None):
+            raise ValueError("EXPLICIT_ROOT_RELEASE_REQUIRED")
+        protocol = bounded_read(MANIFEST)
+        if digest(protocol) != release["declaration_sha256"]:
+            raise ValueError("DECLARATION_CHANGED")
+        declaration = validate_declaration(json.loads(protocol))
+        if declaration.get("runtime") != runtime_identity():
+>           raise ValueError("RUNTIME_BINDING_CHANGED")
+E           ValueError: RUNTIME_BINDING_CHANGED
+
+scripts/run_resect_case4_sparse_update.py:149: ValueError
+______ test_prerequisite_receipt_identity_before_patient_access[changed5] ______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1090/test_prerequisite_receipt_iden5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1101c1640>
+declaration = {'B_ids': [1, 14, 8, 17, 19, 7], 'FEM': False, 'MRI_transfer': False, 'V_ids': [2, 3, 4, 5, 6, 9, ...], ...}
+changed = {'elapsed_seconds': True}
+
+    @pytest.mark.parametrize('changed', [
+        {'schema': 'unrelated'}, {'phase': 'evaluate'}, {'exit_code': 9},
+        {'elapsed_seconds': 30.01}, {'elapsed_seconds': -1},
+        {'elapsed_seconds': True}, {'source_sha256': {}},
+        {'release_sha256': '0' * 64}, {'scientific_result_accepted': False},
+    ])
+    def test_prerequisite_receipt_identity_before_patient_access(tmp_path, monkeypatch, declaration, changed):
+        monkeypatch.setattr(r, 'ROOT', tmp_path)
+        for name in r.SOURCE_NAMES:
+            write(tmp_path, name, b'# inert source binding control\n')
+        hashes = r.source_hashes()
+        declaration['reused_source_sha256'] = {k: v for k, v in hashes.items() if k != r.SOURCE_NAMES[0]}
+        protocol = write(tmp_path, r.MANIFEST, declaration)
+        header_release = {'schema': r.SCHEMA + '-release', 'phase': 'header-qc', 'authorized': True,
+                          'authorizer': 'root', 'source_commit': 'a' * 40,
+                          'declaration_sha256': protocol['sha256'], 'source_sha256': hashes,
+                          'dependencies': {}}
+        header = write(tmp_path, r.OUTPUT + '/releases/header-qc.json', header_release)
+        receipt = {'schema': r.SCHEMA + '-supervision', 'phase': 'header-qc', 'status': 'completed',
+                   'scientific_result_accepted': True, 'source_sha256': hashes,
+                   'release_sha256': header['sha256'], 'exit_code': 0, 'elapsed_seconds': .5}
+        frame = write(tmp_path, r.FRAME_PATH, {})
+        supervision = write(tmp_path, r.DEPENDENCY_PATHS['header_supervision'], receipt)
+        release = {**header_release, 'phase': 'fit-freeze',
+                   'dependencies': {'frame_qc': frame, 'header_supervision': supervision}}
+        path = r.OUTPUT + '/releases/fit-freeze.json'
+        write(tmp_path, path, release)
+        monkeypatch.setattr(r.subprocess, 'run', lambda command, **kwargs:
+                            SimpleNamespace(stdout=(tmp_path / command[2].split(':', 1)[1]).read_bytes()))
+>       assert r.authenticate(path, 'fit-freeze')[1] == release
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_resect_case4_sparse_update.py:281: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+release_path = 'artifacts/resect-case4-sparse-update-v1/releases/fit-freeze.json'
+phase = 'fit-freeze'
+
+    def authenticate(release_path, phase):
+        """All source/declaration/release checks precede any original patient read."""
+        if phase not in PHASES or release_path != OUTPUT + "/releases/" + phase + ".json":
+            raise ValueError("EXACT_PHASE_RELEASE_REQUIRED")
+        release_bytes = bounded_read(release_path)
+        release = json.loads(release_bytes)
+        expected_keys = {"schema", "phase", "authorized", "authorizer", "source_commit",
+                         "declaration_sha256", "source_sha256", "dependencies"}
+        if (set(release) != expected_keys or release["schema"] != SCHEMA + "-release"
+                or release["phase"] != phase or release["authorized"] is not True
+                or release["authorizer"] != "root"
+                or re.fullmatch(r"[0-9a-f]{40}", release["source_commit"]) is None):
+            raise ValueError("EXPLICIT_ROOT_RELEASE_REQUIRED")
+        protocol = bounded_read(MANIFEST)
+        if digest(protocol) != release["declaration_sha256"]:
+            raise ValueError("DECLARATION_CHANGED")
+        declaration = validate_declaration(json.loads(protocol))
+        if declaration.get("runtime") != runtime_identity():
+>           raise ValueError("RUNTIME_BINDING_CHANGED")
+E           ValueError: RUNTIME_BINDING_CHANGED
+
+scripts/run_resect_case4_sparse_update.py:149: ValueError
+______ test_prerequisite_receipt_identity_before_patient_access[changed6] ______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1090/test_prerequisite_receipt_iden6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x111b4f2f0>
+declaration = {'B_ids': [1, 14, 8, 17, 19, 7], 'FEM': False, 'MRI_transfer': False, 'V_ids': [2, 3, 4, 5, 6, 9, ...], ...}
+changed = {'source_sha256': {}}
+
+    @pytest.mark.parametrize('changed', [
+        {'schema': 'unrelated'}, {'phase': 'evaluate'}, {'exit_code': 9},
+        {'elapsed_seconds': 30.01}, {'elapsed_seconds': -1},
+        {'elapsed_seconds': True}, {'source_sha256': {}},
+        {'release_sha256': '0' * 64}, {'scientific_result_accepted': False},
+    ])
+    def test_prerequisite_receipt_identity_before_patient_access(tmp_path, monkeypatch, declaration, changed):
+        monkeypatch.setattr(r, 'ROOT', tmp_path)
+        for name in r.SOURCE_NAMES:
+            write(tmp_path, name, b'# inert source binding control\n')
+        hashes = r.source_hashes()
+        declaration['reused_source_sha256'] = {k: v for k, v in hashes.items() if k != r.SOURCE_NAMES[0]}
+        protocol = write(tmp_path, r.MANIFEST, declaration)
+        header_release = {'schema': r.SCHEMA + '-release', 'phase': 'header-qc', 'authorized': True,
+                          'authorizer': 'root', 'source_commit': 'a' * 40,
+                          'declaration_sha256': protocol['sha256'], 'source_sha256': hashes,
+                          'dependencies': {}}
+        header = write(tmp_path, r.OUTPUT + '/releases/header-qc.json', header_release)
+        receipt = {'schema': r.SCHEMA + '-supervision', 'phase': 'header-qc', 'status': 'completed',
+                   'scientific_result_accepted': True, 'source_sha256': hashes,
+                   'release_sha256': header['sha256'], 'exit_code': 0, 'elapsed_seconds': .5}
+        frame = write(tmp_path, r.FRAME_PATH, {})
+        supervision = write(tmp_path, r.DEPENDENCY_PATHS['header_supervision'], receipt)
+        release = {**header_release, 'phase': 'fit-freeze',
+                   'dependencies': {'frame_qc': frame, 'header_supervision': supervision}}
+        path = r.OUTPUT + '/releases/fit-freeze.json'
+        write(tmp_path, path, release)
+        monkeypatch.setattr(r.subprocess, 'run', lambda command, **kwargs:
+                            SimpleNamespace(stdout=(tmp_path / command[2].split(':', 1)[1]).read_bytes()))
+>       assert r.authenticate(path, 'fit-freeze')[1] == release
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_resect_case4_sparse_update.py:281: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+release_path = 'artifacts/resect-case4-sparse-update-v1/releases/fit-freeze.json'
+phase = 'fit-freeze'
+
+    def authenticate(release_path, phase):
+        """All source/declaration/release checks precede any original patient read."""
+        if phase not in PHASES or release_path != OUTPUT + "/releases/" + phase + ".json":
+            raise ValueError("EXACT_PHASE_RELEASE_REQUIRED")
+        release_bytes = bounded_read(release_path)
+        release = json.loads(release_bytes)
+        expected_keys = {"schema", "phase", "authorized", "authorizer", "source_commit",
+                         "declaration_sha256", "source_sha256", "dependencies"}
+        if (set(release) != expected_keys or release["schema"] != SCHEMA + "-release"
+                or release["phase"] != phase or release["authorized"] is not True
+                or release["authorizer"] != "root"
+                or re.fullmatch(r"[0-9a-f]{40}", release["source_commit"]) is None):
+            raise ValueError("EXPLICIT_ROOT_RELEASE_REQUIRED")
+        protocol = bounded_read(MANIFEST)
+        if digest(protocol) != release["declaration_sha256"]:
+            raise ValueError("DECLARATION_CHANGED")
+        declaration = validate_declaration(json.loads(protocol))
+        if declaration.get("runtime") != runtime_identity():
+>           raise ValueError("RUNTIME_BINDING_CHANGED")
+E           ValueError: RUNTIME_BINDING_CHANGED
+
+scripts/run_resect_case4_sparse_update.py:149: ValueError
+______ test_prerequisite_receipt_identity_before_patient_access[changed7] ______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1090/test_prerequisite_receipt_iden7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x111c7e9f0>
+declaration = {'B_ids': [1, 14, 8, 17, 19, 7], 'FEM': False, 'MRI_transfer': False, 'V_ids': [2, 3, 4, 5, 6, 9, ...], ...}
+changed = {'release_sha256': '0000000000000000000000000000000000000000000000000000000000000000'}
+
+    @pytest.mark.parametrize('changed', [
+        {'schema': 'unrelated'}, {'phase': 'evaluate'}, {'exit_code': 9},
+        {'elapsed_seconds': 30.01}, {'elapsed_seconds': -1},
+        {'elapsed_seconds': True}, {'source_sha256': {}},
+        {'release_sha256': '0' * 64}, {'scientific_result_accepted': False},
+    ])
+    def test_prerequisite_receipt_identity_before_patient_access(tmp_path, monkeypatch, declaration, changed):
+        monkeypatch.setattr(r, 'ROOT', tmp_path)
+        for name in r.SOURCE_NAMES:
+            write(tmp_path, name, b'# inert source binding control\n')
+        hashes = r.source_hashes()
+        declaration['reused_source_sha256'] = {k: v for k, v in hashes.items() if k != r.SOURCE_NAMES[0]}
+        protocol = write(tmp_path, r.MANIFEST, declaration)
+        header_release = {'schema': r.SCHEMA + '-release', 'phase': 'header-qc', 'authorized': True,
+                          'authorizer': 'root', 'source_commit': 'a' * 40,
+                          'declaration_sha256': protocol['sha256'], 'source_sha256': hashes,
+                          'dependencies': {}}
+        header = write(tmp_path, r.OUTPUT + '/releases/header-qc.json', header_release)
+        receipt = {'schema': r.SCHEMA + '-supervision', 'phase': 'header-qc', 'status': 'completed',
+                   'scientific_result_accepted': True, 'source_sha256': hashes,
+                   'release_sha256': header['sha256'], 'exit_code': 0, 'elapsed_seconds': .5}
+        frame = write(tmp_path, r.FRAME_PATH, {})
+        supervision = write(tmp_path, r.DEPENDENCY_PATHS['header_supervision'], receipt)
+        release = {**header_release, 'phase': 'fit-freeze',
+                   'dependencies': {'frame_qc': frame, 'header_supervision': supervision}}
+        path = r.OUTPUT + '/releases/fit-freeze.json'
+        write(tmp_path, path, release)
+        monkeypatch.setattr(r.subprocess, 'run', lambda command, **kwargs:
+                            SimpleNamespace(stdout=(tmp_path / command[2].split(':', 1)[1]).read_bytes()))
+>       assert r.authenticate(path, 'fit-freeze')[1] == release
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_resect_case4_sparse_update.py:281: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+release_path = 'artifacts/resect-case4-sparse-update-v1/releases/fit-freeze.json'
+phase = 'fit-freeze'
+
+    def authenticate(release_path, phase):
+        """All source/declaration/release checks precede any original patient read."""
+        if phase not in PHASES or release_path != OUTPUT + "/releases/" + phase + ".json":
+            raise ValueError("EXACT_PHASE_RELEASE_REQUIRED")
+        release_bytes = bounded_read(release_path)
+        release = json.loads(release_bytes)
+        expected_keys = {"schema", "phase", "authorized", "authorizer", "source_commit",
+                         "declaration_sha256", "source_sha256", "dependencies"}
+        if (set(release) != expected_keys or release["schema"] != SCHEMA + "-release"
+                or release["phase"] != phase or release["authorized"] is not True
+                or release["authorizer"] != "root"
+                or re.fullmatch(r"[0-9a-f]{40}", release["source_commit"]) is None):
+            raise ValueError("EXPLICIT_ROOT_RELEASE_REQUIRED")
+        protocol = bounded_read(MANIFEST)
+        if digest(protocol) != release["declaration_sha256"]:
+            raise ValueError("DECLARATION_CHANGED")
+        declaration = validate_declaration(json.loads(protocol))
+        if declaration.get("runtime") != runtime_identity():
+>           raise ValueError("RUNTIME_BINDING_CHANGED")
+E           ValueError: RUNTIME_BINDING_CHANGED
+
+scripts/run_resect_case4_sparse_update.py:149: ValueError
+______ test_prerequisite_receipt_identity_before_patient_access[changed8] ______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1090/test_prerequisite_receipt_iden8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x111cd5d90>
+declaration = {'B_ids': [1, 14, 8, 17, 19, 7], 'FEM': False, 'MRI_transfer': False, 'V_ids': [2, 3, 4, 5, 6, 9, ...], ...}
+changed = {'scientific_result_accepted': False}
+
+    @pytest.mark.parametrize('changed', [
+        {'schema': 'unrelated'}, {'phase': 'evaluate'}, {'exit_code': 9},
+        {'elapsed_seconds': 30.01}, {'elapsed_seconds': -1},
+        {'elapsed_seconds': True}, {'source_sha256': {}},
+        {'release_sha256': '0' * 64}, {'scientific_result_accepted': False},
+    ])
+    def test_prerequisite_receipt_identity_before_patient_access(tmp_path, monkeypatch, declaration, changed):
+        monkeypatch.setattr(r, 'ROOT', tmp_path)
+        for name in r.SOURCE_NAMES:
+            write(tmp_path, name, b'# inert source binding control\n')
+        hashes = r.source_hashes()
+        declaration['reused_source_sha256'] = {k: v for k, v in hashes.items() if k != r.SOURCE_NAMES[0]}
+        protocol = write(tmp_path, r.MANIFEST, declaration)
+        header_release = {'schema': r.SCHEMA + '-release', 'phase': 'header-qc', 'authorized': True,
+                          'authorizer': 'root', 'source_commit': 'a' * 40,
+                          'declaration_sha256': protocol['sha256'], 'source_sha256': hashes,
+                          'dependencies': {}}
+        header = write(tmp_path, r.OUTPUT + '/releases/header-qc.json', header_release)
+        receipt = {'schema': r.SCHEMA + '-supervision', 'phase': 'header-qc', 'status': 'completed',
+                   'scientific_result_accepted': True, 'source_sha256': hashes,
+                   'release_sha256': header['sha256'], 'exit_code': 0, 'elapsed_seconds': .5}
+        frame = write(tmp_path, r.FRAME_PATH, {})
+        supervision = write(tmp_path, r.DEPENDENCY_PATHS['header_supervision'], receipt)
+        release = {**header_release, 'phase': 'fit-freeze',
+                   'dependencies': {'frame_qc': frame, 'header_supervision': supervision}}
+        path = r.OUTPUT + '/releases/fit-freeze.json'
+        write(tmp_path, path, release)
+        monkeypatch.setattr(r.subprocess, 'run', lambda command, **kwargs:
+                            SimpleNamespace(stdout=(tmp_path / command[2].split(':', 1)[1]).read_bytes()))
+>       assert r.authenticate(path, 'fit-freeze')[1] == release
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_resect_case4_sparse_update.py:281: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+release_path = 'artifacts/resect-case4-sparse-update-v1/releases/fit-freeze.json'
+phase = 'fit-freeze'
+
+    def authenticate(release_path, phase):
+        """All source/declaration/release checks precede any original patient read."""
+        if phase not in PHASES or release_path != OUTPUT + "/releases/" + phase + ".json":
+            raise ValueError("EXACT_PHASE_RELEASE_REQUIRED")
+        release_bytes = bounded_read(release_path)
+        release = json.loads(release_bytes)
+        expected_keys = {"schema", "phase", "authorized", "authorizer", "source_commit",
+                         "declaration_sha256", "source_sha256", "dependencies"}
+        if (set(release) != expected_keys or release["schema"] != SCHEMA + "-release"
+                or release["phase"] != phase or release["authorized"] is not True
+                or release["authorizer"] != "root"
+                or re.fullmatch(r"[0-9a-f]{40}", release["source_commit"]) is None):
+            raise ValueError("EXPLICIT_ROOT_RELEASE_REQUIRED")
+        protocol = bounded_read(MANIFEST)
+        if digest(protocol) != release["declaration_sha256"]:
+            raise ValueError("DECLARATION_CHANGED")
+        declaration = validate_declaration(json.loads(protocol))
+        if declaration.get("runtime") != runtime_identity():
+>           raise ValueError("RUNTIME_BINDING_CHANGED")
+E           ValueError: RUNTIME_BINDING_CHANGED
+
+scripts/run_resect_case4_sparse_update.py:149: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_obstruction_opening_proposals.py::test_historical_source_default_record_fingerprint_inventory_observation_and_replay
+FAILED tests/test_resect_case4_sparse_update.py::test_authentication_precedes_any_patient_read
+FAILED tests/test_resect_case4_sparse_update.py::test_prerequisite_receipt_identity_before_patient_access[changed0]
+FAILED tests/test_resect_case4_sparse_update.py::test_prerequisite_receipt_identity_before_patient_access[changed1]
+FAILED tests/test_resect_case4_sparse_update.py::test_prerequisite_receipt_identity_before_patient_access[changed2]
+FAILED tests/test_resect_case4_sparse_update.py::test_prerequisite_receipt_identity_before_patient_access[changed3]
+FAILED tests/test_resect_case4_sparse_update.py::test_prerequisite_receipt_identity_before_patient_access[changed4]
+FAILED tests/test_resect_case4_sparse_update.py::test_prerequisite_receipt_identity_before_patient_access[changed5]
+FAILED tests/test_resect_case4_sparse_update.py::test_prerequisite_receipt_identity_before_patient_access[changed6]
+FAILED tests/test_resect_case4_sparse_update.py::test_prerequisite_receipt_identity_before_patient_access[changed7]
+FAILED tests/test_resect_case4_sparse_update.py::test_prerequisite_receipt_identity_before_patient_access[changed8]
+11 failed, 190 passed, 1 warning in 10.50s

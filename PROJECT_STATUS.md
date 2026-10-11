@@ -4,7 +4,7 @@
 
 The actual checkout still matches the attachment's reviewed `4d1d0ff`; no newer committed result resolves the capped search. Existing actions automatically withdraw between strokes, so they do not establish persistent two-tool execution. The existing detached generated planning boundary protects a private target only; it does not establish independence from private support or hazards. Current patient comparisons are annotation-assisted. Reuse existing RESECT observation work, preserving exposed Case4 as development. No additional training sweep is underway.
 
-**Current priority, October 10:** address measured action-selection failure and
+**Retained baseline, October 10:** address measured action-selection failure and
 search cost before further model training. The repaired SELECT013 transfer
 attempt now constructs and independently replays three complete routes, but
 shows no useful target progress: greedy STOP removes nothing; original imitation
@@ -21,10 +21,9 @@ cells on TRAIN015/045 versus original imitation's 58/51, with appropriate STOP
 on 002/018 retained. All results and original failed attempts remain preserved.
 The exact geometry cache now lowers measured TRAIN045 greedy time by 28.45%
 with identical complete outcomes in one pair; full-arm time falls 12.12%. Its
-benefit for beam or RL is still unmeasured. Next validate broader cache use and
-use the prepared bounded frozen TRAIN gradient diagnostic to distinguish
-conflicting action-learning signals, without another training sweep or changing
-evaluation patients.
+benefit for beam or RL is still unmeasured. The frozen TRAIN gradient diagnostic is now complete: shared motion-learning
+signals conflict locally, while removing the STOP/gate contribution changes no
+motion-margin direction. The new hybrid steering governs the next milestone.
 
 The four recovered TRAIN cases exposed a separate initialization problem: an
 S-only entry plane can start tools inside assumed S∨T tissue, and unknown image
@@ -39,6 +38,8 @@ roles remain fixed. No held-out patient or clinical benefit has been demonstrate
 See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cross-patient-experiment-priority-october-10).
 
 Current integrated results, October 10:
+
+- **Frozen diagnostic identifies conflicting motion-learning signals:** [the complete diagnostic](artifacts/frozen-gradient-diagnostic-v1/RESULT.md) reproduces all 29 TRAIN readouts without weight updates. Ranking-only and full gradients each help 12 motion margins, hurt 12 and leave one zero; removing STOP/gate changes no signs. Independent saved audit passes. Runtime is 96.580 s at 1.377 GB sampled peak. This is an endpoint diagnosis, not an Adam-update prediction or a learned improvement. The ten runner controls and all 201 selected baseline/measurement tests pass across the original suite and two repaired stale test fixtures; failures remain recorded.
 
 - **Exact geometry reuse reduces measured planning time:** [the complete TRAIN045 pair](artifacts/native-capsule-cache-train045-result-v1/REPORT.txt) preserves all 12 movements plus STOP, every non-time score, full metrics and accepted independent outcomes. Greedy time falls 16.312→11.672 s (28.45%); construction/selection/replay/audit total falls 35.109→30.855 s (12.12%). Cache hits are 40,083 of 45,354 with 21.39 MB retained array payload. Independent saved audit passes 1,428 checks. This is one baseline-first pair, with no established sustained, beam or RL speed gain.
 

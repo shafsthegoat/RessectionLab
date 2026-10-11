@@ -1,0 +1,162 @@
+{
+  "executed_head": "4d1d0ff193275696c53cc907c8eb8aa79f6f3094",
+  "files": {
+    "helper/REPORT.txt": {
+      "bytes": 5235,
+      "sha256": "a4475bc4550259c91b24f5f4d0ec4bccfe6d7173c86589ae81f1996240d98218",
+      "source_path": "build/public-motion-ranking-v1/frozen-gradient-diagnostic-v1/REPORT.txt"
+    },
+    "helper/derive_saved.py": {
+      "bytes": 5048,
+      "sha256": "16cd38ff06ba026d777789dcd075ad2e629f66b649256fcb503ca23806411223",
+      "source_path": "build/public-motion-ranking-v1/frozen-gradient-diagnostic-v1/derive_saved.py"
+    },
+    "helper/gradient_diagnostic.py": {
+      "bytes": 11870,
+      "sha256": "cc183fcd3e76667ab81a2b117ee3d058269a6831f0fd33318504c81e4d7140dd",
+      "source_path": "build/public-motion-ranking-v1/frozen-gradient-diagnostic-v1/gradient_diagnostic.py"
+    },
+    "helper/index.json": {
+      "bytes": 827,
+      "sha256": "0124829d72bc43c3fb0370706012f0e4e40a2e570ebc1b54191d54e1da7b6f91",
+      "source_path": "build/public-motion-ranking-v1/frozen-gradient-diagnostic-v1/index.json"
+    },
+    "helper/saved-input-pins.json": {
+      "bytes": 13118,
+      "sha256": "6bad45294c0a2df2abe50ceb9516ce5ccc64e28a55a299b70500173ad3ebe9aa",
+      "source_path": "build/public-motion-ranking-v1/frozen-gradient-diagnostic-v1/saved-input-pins.json"
+    },
+    "helper/saved-scalar-derivation.json": {
+      "bytes": 35705,
+      "sha256": "4caa97b605327a033ca6d6c9676de3862256d3084f97ccbd22dd9e9cd32112fa",
+      "source_path": "build/public-motion-ranking-v1/frozen-gradient-diagnostic-v1/saved-scalar-derivation.json"
+    },
+    "helper/test_gradient_diagnostic_generated.py": {
+      "bytes": 14318,
+      "sha256": "9af1a9698d51d2462a14a9a8a192fa87216688f248a681a23c15e2137bf8a1ed",
+      "source_path": "build/public-motion-ranking-v1/frozen-gradient-diagnostic-v1/test_gradient_diagnostic_generated.py"
+    },
+    "independent/REPORT.txt": {
+      "bytes": 4419,
+      "sha256": "0bc34c98a23f451a2188d9f4f768dc21d0ff0461884f4e52912f15b6c984a5a6",
+      "source_path": "build/frozen-gradient-diagnostic-independent-v1/REPORT.txt"
+    },
+    "independent/audit.json": {
+      "bytes": 12053,
+      "sha256": "c5d83244861d585b04576e6f4f2772f588498a9a0e2ef9c8a41d476f41d7c082",
+      "source_path": "build/frozen-gradient-diagnostic-independent-v1/audit.json"
+    },
+    "independent/audit_saved.py": {
+      "bytes": 9707,
+      "sha256": "098098bc600433d73c103dda166e5e7081fecbeedcede17b965f09de01146116",
+      "source_path": "build/frozen-gradient-diagnostic-independent-v1/audit_saved.py"
+    },
+    "independent/index.json": {
+      "bytes": 707,
+      "sha256": "7e84821c5556852db7adb240066da883e6032a30c7d73add4179385b6891aa6a",
+      "source_path": "build/frozen-gradient-diagnostic-independent-v1/index.json"
+    },
+    "independent/inputs.json": {
+      "bytes": 18792,
+      "sha256": "dd9fe64facd8d02c63e8a82cb0febeec7f4fe071512a59c8199f1a76d3adaeb7",
+      "source_path": "build/frozen-gradient-diagnostic-independent-v1/inputs.json"
+    },
+    "result/gradient-alignment.json": {
+      "bytes": 61678,
+      "sha256": "8d287f5067973c799ec5fe3293e146b8a9b98f8f112a3db87890f05814d0c6fd",
+      "source_path": "build/frozen-gradient-diagnostic-owned-v1/attempt-01/gradient-alignment.json"
+    },
+    "result/result.json": {
+      "bytes": 1272,
+      "sha256": "eef9082a81dfb56137c6f072184e699c233a9059bd24630ee1e45c93d681038c",
+      "source_path": "build/frozen-gradient-diagnostic-owned-v1/attempt-01/result.json"
+    },
+    "runner/PREPARATION.json": {
+      "bytes": 2700,
+      "sha256": "f539862a21cbaf99f0f39fad6b72e2bcb9ccec9175f9248a029dff452a2a27e7",
+      "source_path": "build/frozen-gradient-diagnostic-owned-v1/PREPARATION.json"
+    },
+    "runner/batch_contract.py": {
+      "bytes": 7259,
+      "sha256": "9c1b62d1e95c797ef29b04015f9ff029c9646f445bb09e444eaad449a5212c12",
+      "source_path": "build/frozen-gradient-diagnostic-owned-v1/batch_contract.py"
+    },
+    "runner/freeze-runtime.py": {
+      "bytes": 5989,
+      "sha256": "9e07a1a67e8e8f2d5f6541859d7f1a52aaa562d3cb6a5983dd8a3661fbdcdd6b",
+      "source_path": "build/frozen-gradient-diagnostic-owned-v1/freeze-runtime.py"
+    },
+    "runner/initial_inventory_worker.py": {
+      "bytes": 14791,
+      "sha256": "b6ab2640fc95fe916a4b87ca24c8310d797e67fe415ee34f5bc50161ea4d3e34",
+      "source_path": "build/frozen-gradient-diagnostic-owned-v1/initial_inventory_worker.py"
+    },
+    "runner/input-pins.json": {
+      "bytes": 7521,
+      "sha256": "dbf171f3a3876abd153c91ba36c0efbd83639339fec3ed16c3dc02ede17f9d2b",
+      "source_path": "build/frozen-gradient-diagnostic-owned-v1/input-pins.json"
+    },
+    "runner/root-release.json": {
+      "bytes": 6027,
+      "sha256": "e702334009d41838d1ad13daaaf079a434c2da4f4e5eaca06742e51dbb3f0c3e",
+      "source_path": "build/frozen-gradient-diagnostic-owned-v1/root-release.json"
+    },
+    "runner/run_owned.py": {
+      "bytes": 9644,
+      "sha256": "9f3836b2507469dce1c0b67a4495c07eeef4aff827a5b4603c0f0fa7f00ff4df",
+      "source_path": "build/frozen-gradient-diagnostic-owned-v1/run_owned.py"
+    },
+    "runner/source-index.json": {
+      "bytes": 57527,
+      "sha256": "f5e312312f7f5faf90c9549a89f60e94f8151622f188a04bf0e5eef8053e7cbf",
+      "source_path": "build/frozen-gradient-diagnostic-owned-v1/source-index.json"
+    },
+    "runner/test_owned_generated.py": {
+      "bytes": 8559,
+      "sha256": "1c701bc9fb450267d78a646270ace2ee7c2a260ed38a25e7f9519bdcc2b82435",
+      "source_path": "build/frozen-gradient-diagnostic-owned-v1/test_owned_generated.py"
+    },
+    "supervision/declaration.json": {
+      "bytes": 1868,
+      "sha256": "de1b72633efc7351661236a026d12f73316f99cccfb73805932068129b79f9a6",
+      "source_path": "build/frozen-gradient-diagnostic-owned-v1/attempt-01.supervision/declaration.json"
+    },
+    "supervision/receipt.json": {
+      "bytes": 1423,
+      "sha256": "2d3ec70a2d2ef17ba6b8fccaebd69c16c83d1d194eec11a6c934dfb1b4fcc866",
+      "source_path": "build/frozen-gradient-diagnostic-owned-v1/attempt-01.supervision/receipt.json"
+    },
+    "supervision/worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_path": "build/frozen-gradient-diagnostic-owned-v1/attempt-01.supervision/worker.log"
+    },
+    "tests/baseline-and-measurement-tests.json": {
+      "bytes": 732,
+      "sha256": "10ac9a4db8ffae3fa21f84489db65c96b288d1df2b4d236ffc190f0f60e4adc4",
+      "source_path": "build/hybrid-steering-controls-v1/baseline-and-measurement-tests.json"
+    },
+    "tests/baseline-and-measurement-tests.log": {
+      "bytes": 44353,
+      "sha256": "05f07f9c4b8645455c5266d90b3edcc20d5396068d8a849587f390f2530683f6",
+      "source_path": "build/hybrid-steering-controls-v1/baseline-and-measurement-tests.log"
+    },
+    "tests/pytest.log": {
+      "bytes": 99,
+      "sha256": "c3e0b057e32df1e2a82704d3946dc1efcc297972be555e96520be43ceb8af5b3",
+      "source_path": "build/hybrid-steering-controls-v1/pytest.log"
+    },
+    "tests/receipt.json": {
+      "bytes": 1000,
+      "sha256": "5a9684c17e28ef7c9410cb841447051e02b9081cfd97053c9271727af417d19b",
+      "source_path": "build/hybrid-steering-controls-v1/receipt.json"
+    },
+    "tests/repaired-fixtures.log": {
+      "bytes": 99,
+      "sha256": "e06e0f755c6776e6a6e38500d2b6efb46f50ba998830681013512bd0c9d6bfdb",
+      "source_path": "build/hybrid-steering-controls-v1/repaired-fixtures.log"
+    }
+  },
+  "omitted": "patient arrays, checkpoint bytes, regenerated duplicate teacher payloads; unchanged source and original teacher bindings retained by hashes",
+  "schema": "frozen-gradient-diagnostic-archive-v1"
+}

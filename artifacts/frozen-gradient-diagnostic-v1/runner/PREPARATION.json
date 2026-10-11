@@ -1,0 +1,58 @@
+{
+  "actual_execution": {
+    "TRAIN_source_visits": 4,
+    "autograd_grad_calls": 79,
+    "checkpoint_decodes": 1,
+    "collector_replay_steps": 58,
+    "native_preview_cap": 35040,
+    "optimizer_updates": 0,
+    "output_bytes": 16777216,
+    "parent_seconds": 210,
+    "policy_forwards": 29,
+    "rss_bytes": 3221225472,
+    "teacher_states": 29,
+    "worker_seconds": 180
+  },
+  "files": {
+    "build/frozen-gradient-diagnostic-owned-v1/HANDOFF.txt": {
+      "bytes": 3217,
+      "sha256": "9c604d773a5bbdf4988b3f4a968167c12417f66ee44d33d18a256d2ea7cab18e"
+    },
+    "build/frozen-gradient-diagnostic-owned-v1/batch_contract.py": {
+      "bytes": 7259,
+      "sha256": "9c1b62d1e95c797ef29b04015f9ff029c9646f445bb09e444eaad449a5212c12"
+    },
+    "build/frozen-gradient-diagnostic-owned-v1/freeze-runtime.py": {
+      "bytes": 5989,
+      "sha256": "9e07a1a67e8e8f2d5f6541859d7f1a52aaa562d3cb6a5983dd8a3661fbdcdd6b"
+    },
+    "build/frozen-gradient-diagnostic-owned-v1/initial_inventory_worker.py": {
+      "bytes": 14791,
+      "sha256": "b6ab2640fc95fe916a4b87ca24c8310d797e67fe415ee34f5bc50161ea4d3e34"
+    },
+    "build/frozen-gradient-diagnostic-owned-v1/input-pins.json": {
+      "bytes": 7521,
+      "sha256": "dbf171f3a3876abd153c91ba36c0efbd83639339fec3ed16c3dc02ede17f9d2b"
+    },
+    "build/frozen-gradient-diagnostic-owned-v1/run_owned.py": {
+      "bytes": 9644,
+      "sha256": "9f3836b2507469dce1c0b67a4495c07eeef4aff827a5b4603c0f0fa7f00ff4df"
+    },
+    "build/frozen-gradient-diagnostic-owned-v1/test_owned_generated.py": {
+      "bytes": 8559,
+      "sha256": "1c701bc9fb450267d78a646270ace2ee7c2a260ed38a25e7f9519bdcc2b82435"
+    },
+    "build/public-motion-ranking-v1/frozen-gradient-diagnostic-v1/test_gradient_diagnostic_generated.py": {
+      "bytes": 14318,
+      "sha256": "9af1a9698d51d2462a14a9a8a192fa87216688f248a681a23c15e2137bf8a1ed"
+    }
+  },
+  "generated_cases_prepared": 10,
+  "helper_original_index_sha256": "0124829d72bc43c3fb0370706012f0e4e40a2e570ebc1b54191d54e1da7b6f91",
+  "helper_sha256": "cc183fcd3e76667ab81a2b117ee3d058269a6831f0fd33318504c81e4d7140dd",
+  "reconstruction": "Exact historical ranking release37365da5\u2026 and full protocol/limits reproduce checkpoint contexts; actual diagnostic has independent tighter limits and no optimizer/session.",
+  "remaining": "Root-owned bounded generated controls; then metadata-only freeze against the root-supplied current commit and separate root dispatch.",
+  "reviewer": "/root/goal_conditioned_policy",
+  "scope": "source and generated-test preparation only; no scientific imports, acquired payload or checkpoint read, runtime freeze, or execution",
+  "status": "source_review_GO_controls_UNRUN"
+}

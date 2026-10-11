@@ -1,0 +1,448 @@
+{
+  "checks": 573,
+  "counts": {
+    "all25": {
+      "STOP": {
+        "negative": 9,
+        "positive": 15,
+        "zero": 1
+      },
+      "full_corpus": {
+        "negative": 12,
+        "positive": 12,
+        "zero": 1
+      },
+      "gate": {
+        "negative": 16,
+        "positive": 8,
+        "zero": 1
+      },
+      "n": 25,
+      "ranking": {
+        "negative": 12,
+        "positive": 12,
+        "zero": 1
+      },
+      "same_state_ranking": {
+        "negative": 5,
+        "positive": 19,
+        "zero": 1
+      }
+    },
+    "descriptive_regret_gt1": {
+      "STOP": {
+        "negative": 6,
+        "positive": 9,
+        "zero": 0
+      },
+      "full_corpus": {
+        "negative": 6,
+        "positive": 9,
+        "zero": 0
+      },
+      "gate": {
+        "negative": 10,
+        "positive": 5,
+        "zero": 0
+      },
+      "n": 15,
+      "ranking": {
+        "negative": 6,
+        "positive": 9,
+        "zero": 0
+      },
+      "same_state_ranking": {
+        "negative": 5,
+        "positive": 10,
+        "zero": 0
+      }
+    },
+    "positive_regret24": {
+      "STOP": {
+        "negative": 9,
+        "positive": 15,
+        "zero": 0
+      },
+      "full_corpus": {
+        "negative": 12,
+        "positive": 12,
+        "zero": 0
+      },
+      "gate": {
+        "negative": 16,
+        "positive": 8,
+        "zero": 0
+      },
+      "n": 24,
+      "ranking": {
+        "negative": 12,
+        "positive": 12,
+        "zero": 0
+      },
+      "same_state_ranking": {
+        "negative": 5,
+        "positive": 19,
+        "zero": 0
+      }
+    }
+  },
+  "gate_plus_STOP_norm": 0.019796157895983428,
+  "inputs_verified": 143,
+  "ranking_to_full_margin_sign_changes": 0,
+  "rows": [
+    {
+      "STOP": 0.0011691418712061388,
+      "full_corpus": -0.023482333428726288,
+      "gate": -0.005527089814534113,
+      "margin": -0.022261977195739746,
+      "ranking": -0.019124385485398313,
+      "regret": 3.815250390418031,
+      "same_state_ranking": 0.0010435322598676066,
+      "same_state_total": 0.0009568210805407202,
+      "step": 0,
+      "subject": "ReMIND-015"
+    },
+    {
+      "STOP": 0.00045726697889665423,
+      "full_corpus": 0.036426378987348934,
+      "gate": -0.0059120992595414895,
+      "margin": -0.026777803897857666,
+      "ranking": 0.04188121126799377,
+      "regret": 3.8452503904180313,
+      "same_state_ranking": 0.0006996830178657935,
+      "same_state_total": 0.0006077522345648157,
+      "step": 1,
+      "subject": "ReMIND-015"
+    },
+    {
+      "STOP": 0.0008545554007662292,
+      "full_corpus": -0.022220850251392636,
+      "gate": -0.003230306607982099,
+      "margin": -0.01185452938079834,
+      "ranking": -0.019845099044176768,
+      "regret": 3.8452503904180313,
+      "same_state_ranking": 0.0007157806717802409,
+      "same_state_total": 0.0006618317674184445,
+      "step": 2,
+      "subject": "ReMIND-015"
+    },
+    {
+      "STOP": 0.0008000721093095247,
+      "full_corpus": 0.030499994270956565,
+      "gate": -0.00795553583821567,
+      "margin": -0.03545653820037842,
+      "ranking": 0.03765545799986271,
+      "regret": 3.8452503904180313,
+      "same_state_ranking": 0.0008953159488560128,
+      "same_state_total": 0.0007483782884027144,
+      "step": 3,
+      "subject": "ReMIND-015"
+    },
+    {
+      "STOP": 0.0004754128016847193,
+      "full_corpus": 0.036986446761017575,
+      "gate": -0.005943414441210981,
+      "margin": -0.02660149335861206,
+      "ranking": 0.04245444840054384,
+      "regret": 3.8452503904180313,
+      "same_state_ranking": 0.0007608623035915216,
+      "same_state_total": 0.0006392021108283462,
+      "step": 4,
+      "subject": "ReMIND-015"
+    },
+    {
+      "STOP": 0.000803554472322388,
+      "full_corpus": -0.01437846926984086,
+      "gate": -0.003568383394993782,
+      "margin": -0.013696432113647461,
+      "ranking": -0.011613640347169468,
+      "regret": 3.8452503904180313,
+      "same_state_ranking": 0.0004927110618230016,
+      "same_state_total": 0.00041166416586417966,
+      "step": 5,
+      "subject": "ReMIND-015"
+    },
+    {
+      "STOP": 0.0012509854013921286,
+      "full_corpus": -0.017116844835024816,
+      "gate": -0.006548208793883181,
+      "margin": -0.02704310417175293,
+      "ranking": -0.011819621442533762,
+      "regret": 4.798924706772539,
+      "same_state_ranking": 0.001153736999898649,
+      "same_state_total": 0.0009754161145569272,
+      "step": 6,
+      "subject": "ReMIND-015"
+    },
+    {
+      "STOP": -0.0023122232392188444,
+      "full_corpus": 0.24151553753417465,
+      "gate": -0.005259587097029614,
+      "margin": -0.034855544567108154,
+      "ranking": 0.24908734787042314,
+      "regret": 4.798924706772539,
+      "same_state_ranking": 0.0017460940874873985,
+      "same_state_total": 0.001562617393853735,
+      "step": 7,
+      "subject": "ReMIND-015"
+    },
+    {
+      "STOP": 0.0008030491981002262,
+      "full_corpus": -0.01402239690560542,
+      "gate": -0.003626541258744076,
+      "margin": -0.013709187507629395,
+      "ranking": -0.011198904844961569,
+      "regret": 4.798924706772539,
+      "same_state_ranking": 0.00026997247983184363,
+      "same_state_total": 0.0001067283046381944,
+      "step": 8,
+      "subject": "ReMIND-015"
+    },
+    {
+      "STOP": 0.0007395146213894641,
+      "full_corpus": -0.009792089013777806,
+      "gate": -0.0035773606569165315,
+      "margin": -0.014131605625152588,
+      "ranking": -0.006954242978250736,
+      "regret": 0.03055312500000007,
+      "same_state_ranking": 0.002956735586305315,
+      "same_state_total": 0.002714900876176558,
+      "step": 9,
+      "subject": "ReMIND-015"
+    },
+    {
+      "STOP": 0.001126045006314165,
+      "full_corpus": -0.027812156998452034,
+      "gate": -0.0047246100622296595,
+      "margin": -0.018358051776885986,
+      "ranking": -0.024213591942536535,
+      "regret": 0.03055312500000007,
+      "same_state_ranking": 0.0033539288599355012,
+      "same_state_total": 0.0029312151717206234,
+      "step": 10,
+      "subject": "ReMIND-015"
+    },
+    {
+      "STOP": 0.0012716126528392493,
+      "full_corpus": -0.030048531662210963,
+      "gate": -0.005539291568024399,
+      "margin": -0.021795570850372314,
+      "ranking": -0.025780852747025816,
+      "regret": 0.03055312500000007,
+      "same_state_ranking": 0.00368996587625069,
+      "same_state_total": 0.002948525651567107,
+      "step": 11,
+      "subject": "ReMIND-015"
+    },
+    {
+      "STOP": 0.0008760493709997814,
+      "full_corpus": -0.02904506495202686,
+      "gate": -0.002775428144733088,
+      "margin": -0.009390652179718018,
+      "ranking": -0.027145686178293556,
+      "regret": 0.03055312500000007,
+      "same_state_ranking": 0.002193199406729107,
+      "same_state_total": 0.0014588951873979075,
+      "step": 12,
+      "subject": "ReMIND-015"
+    },
+    {
+      "STOP": -0.08852880601333427,
+      "full_corpus": 5.795218590172276,
+      "gate": 0.08548033783525064,
+      "margin": -0.026256144046783447,
+      "ranking": 5.79826705835036,
+      "regret": 3.813301995661462,
+      "same_state_ranking": -0.3621363703387231,
+      "same_state_total": -0.3618224671191532,
+      "step": 0,
+      "subject": "ReMIND-045"
+    },
+    {
+      "STOP": -0.08672877842641197,
+      "full_corpus": 5.659062307230316,
+      "gate": 0.07960804908565687,
+      "margin": -0.14092957973480225,
+      "ranking": 5.666183036571072,
+      "regret": 3.843301995661461,
+      "same_state_ranking": -0.28155373100027103,
+      "same_state_total": -0.2812613306759606,
+      "step": 1,
+      "subject": "ReMIND-045"
+    },
+    {
+      "STOP": -0.08249350603536965,
+      "full_corpus": 5.355255741866804,
+      "gate": 0.07926480802384378,
+      "margin": -0.03645133972167969,
+      "ranking": 5.358484439878331,
+      "regret": 6.702375366565462,
+      "same_state_ranking": -0.20912245409973174,
+      "same_state_total": -0.2087945769735577,
+      "step": 2,
+      "subject": "ReMIND-045"
+    },
+    {
+      "STOP": 0.0014260189310016267,
+      "full_corpus": -0.055449303729491035,
+      "gate": -0.003757971501933625,
+      "margin": -0.011002957820892334,
+      "ranking": -0.053117351158559034,
+      "regret": 2.8915796225881927,
+      "same_state_ranking": 0.004418642448148567,
+      "same_state_total": 0.004400260257565109,
+      "step": 3,
+      "subject": "ReMIND-045"
+    },
+    {
+      "STOP": -0.08690779951782861,
+      "full_corpus": 5.633997782357728,
+      "gate": 0.08328931483814878,
+      "margin": -0.13081371784210205,
+      "ranking": 5.637616267037407,
+      "regret": 2.8915796225881927,
+      "same_state_ranking": -0.1719124696754431,
+      "same_state_total": -0.17132838278145332,
+      "step": 4,
+      "subject": "ReMIND-045"
+    },
+    {
+      "STOP": -0.08237341591432354,
+      "full_corpus": 5.290089314970704,
+      "gate": 0.08365461774551061,
+      "margin": -0.024663269519805908,
+      "ranking": 5.288808113139516,
+      "regret": 7.658003991322924,
+      "same_state_ranking": -0.07546830717443248,
+      "same_state_total": -0.07475453658441637,
+      "step": 5,
+      "subject": "ReMIND-045"
+    },
+    {
+      "STOP": -0.9461615033357127,
+      "full_corpus": 66.67841474292256,
+      "gate": 0.9265130201441806,
+      "margin": -0.20651066303253174,
+      "ranking": 66.69806322611409,
+      "regret": 0.9842286247574622,
+      "same_state_ranking": 21.064388975655927,
+      "same_state_total": 21.076072919689288,
+      "step": 6,
+      "subject": "ReMIND-045"
+    },
+    {
+      "STOP": 0.0015598741113079723,
+      "full_corpus": -0.06452576215527353,
+      "gate": -0.0041799954549905614,
+      "margin": -0.013016223907470703,
+      "ranking": -0.061905640811590945,
+      "regret": 0.9842286247574625,
+      "same_state_ranking": 0.008274351419433862,
+      "same_state_total": 0.008224079196044268,
+      "step": 7,
+      "subject": "ReMIND-045"
+    },
+    {
+      "STOP": -0.6139799977217049,
+      "full_corpus": 43.43688051421009,
+      "gate": 0.5962080757463389,
+      "margin": -0.12941569089889526,
+      "ranking": 43.454652436185455,
+      "regret": 0.030553125842096795,
+      "same_state_ranking": 15.1068203283606,
+      "same_state_total": 15.122903462835392,
+      "step": 8,
+      "subject": "ReMIND-045"
+    },
+    {
+      "STOP": -0.0,
+      "full_corpus": -0.0,
+      "gate": -0.0,
+      "margin": 0.0,
+      "ranking": -0.0,
+      "regret": 0.0,
+      "same_state_ranking": -0.0,
+      "same_state_total": -0.0,
+      "step": 9,
+      "subject": "ReMIND-045"
+    },
+    {
+      "STOP": 0.0016719224987947804,
+      "full_corpus": -0.07654334915192813,
+      "gate": -0.003869418030822141,
+      "margin": -0.010384082794189453,
+      "ranking": -0.07434585361990077,
+      "regret": 0.9842286247574622,
+      "same_state_ranking": 0.01547309460191298,
+      "same_state_total": 0.015362848788272734,
+      "step": 10,
+      "subject": "ReMIND-045"
+    },
+    {
+      "STOP": -1.5421379911191455,
+      "full_corpus": 107.0544794519725,
+      "gate": 1.519701197802328,
+      "margin": -0.3260335624217987,
+      "ranking": 107.07691624528931,
+      "regret": 0.030553125842096684,
+      "same_state_ranking": 84.01983790650509,
+      "same_state_total": 84.20086589015997,
+      "step": 11,
+      "subject": "ReMIND-045"
+    }
+  ],
+  "same_state_help_full_harm": [
+    [
+      "ReMIND-015",
+      0
+    ],
+    [
+      "ReMIND-015",
+      2
+    ],
+    [
+      "ReMIND-015",
+      5
+    ],
+    [
+      "ReMIND-015",
+      6
+    ],
+    [
+      "ReMIND-015",
+      8
+    ],
+    [
+      "ReMIND-015",
+      9
+    ],
+    [
+      "ReMIND-015",
+      10
+    ],
+    [
+      "ReMIND-015",
+      11
+    ],
+    [
+      "ReMIND-015",
+      12
+    ],
+    [
+      "ReMIND-045",
+      3
+    ],
+    [
+      "ReMIND-045",
+      7
+    ],
+    [
+      "ReMIND-045",
+      10
+    ]
+  ],
+  "saved_input_pins_verified": 36,
+  "scope": "Saved scalar identities and bindings only; no gradient recomputation, checkpoint payload, arrays, native/model execution or optimizer.",
+  "source_files_verified": 89,
+  "status": "PASS_saved_scalar_and_source_audit"
+}

@@ -1,0 +1,1809 @@
+{
+  "aggregate_components": {
+    "STOP": {
+      "module_norms": {
+        "actor": 0.005135069758956726,
+        "encoder": 0.01856255758311647,
+        "stop": 0.0033362007147137206
+      },
+      "norm": 0.01954655265423352
+    },
+    "gate": {
+      "module_norms": {
+        "actor": 0.00937417768600468,
+        "encoder": 0.023169279666676593,
+        "stop": 0.016248881465027423
+      },
+      "norm": 0.029811354823724042
+    },
+    "ranking": {
+      "module_norms": {
+        "actor": 0.33615212241364856,
+        "encoder": 1.2197633371507428,
+        "stop": 0.0
+      },
+      "norm": 1.265235491147919
+    }
+  },
+  "aggregate_total": {
+    "module_norms": {
+      "actor": 0.33451425310681376,
+      "encoder": 1.2200349037897238,
+      "stop": 0.013091114695430192
+    },
+    "norm": 1.2651309534118491
+  },
+  "architecture_hash": "sha256:713c904fd34acf597e409c74725cc25253309ea927befb0db5ceb65d9cd3e79a",
+  "cache_seal": "sha256:89f1c271909a420381c4bc58a799ddac4ee47d4ceeee947f895e1e24927a0a38",
+  "checkpoint_writes": 0,
+  "component_corpus_alignment": {
+    "STOP": {
+      "cosine": -0.9234750982158272,
+      "dot": -0.022836568417574192,
+      "module_norms": {
+        "actor": 0.005135069758956726,
+        "encoder": 0.01856255758311647,
+        "stop": 0.0033362007147137206
+      },
+      "norm": 0.01954655265423352
+    },
+    "gate": {
+      "cosine": 0.6071878665408511,
+      "dot": 0.0229002529615262,
+      "module_norms": {
+        "actor": 0.00937417768600468,
+        "encoder": 0.023169279666676593,
+        "stop": 0.016248881465027423
+      },
+      "norm": 0.029811354823724042
+    },
+    "ranking": {
+      "cosine": 0.999877591136899,
+      "dot": 1.6004926447368268,
+      "module_norms": {
+        "actor": 0.33615212241364856,
+        "encoder": 1.2197633371507428,
+        "stop": 0.0
+      },
+      "norm": 1.265235491147919
+    }
+  },
+  "component_cross_dots": {
+    "STOP": {
+      "STOP": 0.0003820677206647229,
+      "gate": -0.00043944836482399447,
+      "ranking": -0.022779187773414925
+    },
+    "gate": {
+      "STOP": -0.00043944836482399447,
+      "gate": 0.0008887168764259731,
+      "ranking": 0.02245098444992422
+    },
+    "ranking": {
+      "STOP": -0.022779187773414925,
+      "gate": 0.02245098444992422,
+      "ranking": 1.6008208480603177
+    }
+  },
+  "corpus_hash": "sha256:5147c784a1e4aee38ffd2cf95881c40914f9807727d54eeaa4dce618100da0be",
+  "counts": {
+    "autograd_grad_calls": 79,
+    "optimizer_updates": 0,
+    "policy_forwards": 29
+  },
+  "estimated_vector_payload_bound_bytes": 15052320,
+  "gradient_parameter_count": 20906,
+  "interpretation": "instantaneous raw-gradient directional derivatives at one fixed endpoint; not Adam steps, optimizer dynamics, causal proof or route performance",
+  "learning_protocol_hash": "sha256:65fd88ba268e5c79ea8b0d4204ab6efe5b313d11c4b82b0820c6e6ef2010473e",
+  "numerics": "autograd gradients float32 then detached float64 vector sums; ranking component equals production total minus gate",
+  "parameter_hash": "sha256:ec843adeb3ce854c2d516848b5f26a4f855a25d3f4369b28543e1ae6be7c1ed6",
+  "private_or_SELECT_access": false,
+  "rows": [
+    {
+      "component_alignment_with_corpus_gradient": {
+        "STOP": {
+          "cosine": -0.9060625264260507,
+          "dot": -0.00019775568283396969,
+          "module_norms": {
+            "actor": 4.932974842204949e-05,
+            "encoder": 0.00016291278940456572,
+            "stop": 2.8081731599711663e-05
+          },
+          "norm": 0.0001725183604159202
+        }
+      },
+      "legal_motion_count": 21,
+      "observation_hash": "sha256:a3fe250d66db7d7d04ae81931828aa34fb5a8cccc6697e81e54f142c70b3ef06",
+      "step": 0,
+      "subject": "ReMIND-002",
+      "teacher_action": "STOP",
+      "weighted_loss": {
+        "STOP": 1.1324831348247244e-06
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": -0.9060625264260507,
+        "dot": -0.00019775568283396969,
+        "module_norms": {
+          "actor": 4.932974842204949e-05,
+          "encoder": 0.00016291278940456572,
+          "stop": 2.8081731599711663e-05
+        },
+        "norm": 0.0001725183604159202
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-be1c3eab54bd4a165243885e",
+      "chosen_overall": "nominal-cavity-be1c3eab54bd4a165243885e",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5714756035848048,
+          "dot": 0.0003490421674872075,
+          "module_norms": {
+            "actor": 0.0001461022307067095,
+            "encoder": 0.00037351854419752546,
+            "stop": 0.00026871858869694697
+          },
+          "norm": 0.000482774941963846
+        },
+        "ranking": {
+          "cosine": -0.7173191872506146,
+          "dot": -0.006666481999300912,
+          "module_norms": {
+            "actor": 0.004888955737330106,
+            "encoder": 0.005482818194636759,
+            "stop": 0.0
+          },
+          "norm": 0.007345963759576605
+        }
+      },
+      "legal_motion_count": 39,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": 0.0011691418712061388,
+        "full_corpus": -0.023482333428726288,
+        "gate": -0.005527089814534113,
+        "ranking": -0.019124385485398313,
+        "same_state_ranking": 0.0010435322598676066,
+        "same_state_total": 0.0009568210805407202
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.6811513553821035,
+          "encoder": 0.1849503164510595,
+          "stop": 0.0
+        },
+        "norm": 0.7058142733709938
+      },
+      "observation_hash": "sha256:99bedb2f37c12c84ad4fb51111a81bda8c10aed9af6ca97d282ed2fc5bfa8c44",
+      "public_nominal_regret": 3.815250390418031,
+      "step": 0,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-81c114a0600538d67baf4414",
+      "teacher_minus_chosen_logit": -0.022261977195739746,
+      "weighted_loss": {
+        "gate": 1.0795592970680445e-05,
+        "ranking": 0.013882879167795181
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": -0.6988897182842385,
+        "dot": -0.006317439831813705,
+        "module_norms": {
+          "actor": 0.004871035962522527,
+          "encoder": 0.005220209699462384,
+          "stop": 0.00026871858869694697
+        },
+        "norm": 0.007144913598810009
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-5582435b501f5970eff8ad98",
+      "chosen_overall": "nominal-cavity-5582435b501f5970eff8ad98",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5709077488043975,
+          "dot": 0.00034450297380156196,
+          "module_norms": {
+            "actor": 0.0001441250823616169,
+            "encoder": 0.0003684663504680797,
+            "stop": 0.000266385820688158
+          },
+          "norm": 0.00047697054023986994
+        },
+        "ranking": {
+          "cosine": -0.7183283859950576,
+          "dot": -0.007047798766541635,
+          "module_norms": {
+            "actor": 0.005162146432859158,
+            "encoder": 0.005787566016558176,
+            "stop": 0.0
+          },
+          "norm": 0.007755235405214955
+        }
+      },
+      "legal_motion_count": 36,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": 0.00045726697889665423,
+        "full_corpus": 0.036426378987348934,
+        "gate": -0.0059120992595414895,
+        "ranking": 0.04188121126799377,
+        "same_state_ranking": 0.0006996830178657935,
+        "same_state_total": 0.0006077522345648157
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.7998597978677858,
+          "encoder": 0.22680712716465865,
+          "stop": 0.0
+        },
+        "norm": 0.8313947132245795
+      },
+      "observation_hash": "sha256:2f4dc91f5a29df91301c7707453ed52575ea7df4ac3167b361364aca20a80a86",
+      "public_nominal_regret": 3.8452503904180313,
+      "step": 1,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-f4acd820cbfb0ed0423e8ce1",
+      "teacher_minus_chosen_logit": -0.026777803897857666,
+      "weighted_loss": {
+        "gate": 1.0643005225574598e-05,
+        "ranking": 0.01386616937816143
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": -0.7007944265259085,
+        "dot": -0.006703295792740072,
+        "module_norms": {
+          "actor": 0.005151819292189554,
+          "encoder": 0.005527390766097469,
+          "stop": 0.000266385820688158
+        },
+        "norm": 0.007560704471540965
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-1ddaaf41c02a98939f839dc7",
+      "chosen_overall": "nominal-cavity-1ddaaf41c02a98939f839dc7",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5713053748301744,
+          "dot": 0.0003746500090352574,
+          "module_norms": {
+            "actor": 0.0001566222568849729,
+            "encoder": 0.0004005006037319579,
+            "stop": 0.000289402899780597
+          },
+          "norm": 0.0005183486310803028
+        },
+        "ranking": {
+          "cosine": -0.7225458638792731,
+          "dot": -0.007644944985393927,
+          "module_norms": {
+            "actor": 0.005546433952698996,
+            "encoder": 0.006259432928278535,
+            "stop": 0.0
+          },
+          "norm": 0.008363218888398766
+        }
+      },
+      "legal_motion_count": 33,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": 0.0008545554007662292,
+        "full_corpus": -0.022220850251392636,
+        "gate": -0.003230306607982099,
+        "ranking": -0.019845099044176768,
+        "same_state_ranking": 0.0007157806717802409,
+        "same_state_total": 0.0006618317674184445
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.4690874523603758,
+          "encoder": 0.1700795817484791,
+          "stop": 0.0
+        },
+        "norm": 0.4989690392095339
+      },
+      "observation_hash": "sha256:38ec2ffa4e35849b7a748b11484e37e67fc43e40d758a0c56462da9326f9575f",
+      "public_nominal_regret": 3.8452503904180313,
+      "step": 2,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-a5152cdc336beea2377717f9",
+      "teacher_minus_chosen_logit": -0.01185452938079834,
+      "weighted_loss": {
+        "gate": 1.1563301086425781e-05,
+        "ranking": 0.013867075555026531
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": -0.7049138207886793,
+        "dot": -0.007270294976358669,
+        "module_norms": {
+          "actor": 0.005536904590795558,
+          "encoder": 0.005976541016229049,
+          "stop": 0.000289402899780597
+        },
+        "norm": 0.00815230697438723
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-3f1a390d503b7bf7e3972910",
+      "chosen_overall": "nominal-cavity-3f1a390d503b7bf7e3972910",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5720173129504654,
+          "dot": 0.0004115906323203494,
+          "module_norms": {
+            "actor": 0.0001714672628666083,
+            "encoder": 0.0004396410492381201,
+            "stop": 0.0003174750693030205
+          },
+          "norm": 0.0005687492365173951
+        },
+        "ranking": {
+          "cosine": -0.7220844226062649,
+          "dot": -0.008288052201748476,
+          "module_norms": {
+            "actor": 0.00603203605368682,
+            "encoder": 0.006776840841092378,
+            "stop": 0.0
+          },
+          "norm": 0.00907254268319942
+        }
+      },
+      "legal_motion_count": 30,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": 0.0008000721093095247,
+        "full_corpus": 0.030499994270956565,
+        "gate": -0.00795553583821567,
+        "ranking": 0.03765545799986271,
+        "same_state_ranking": 0.0008953159488560128,
+        "same_state_total": 0.0007483782884027144
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.9997667879562049,
+          "encoder": 0.2302206101609124,
+          "stop": 0.0
+        },
+        "norm": 1.0259313620526131
+      },
+      "observation_hash": "sha256:650b05250d3a140756e03057d5a52b72e46a7221cdd053c9d3ab1dfd7d342f6a",
+      "public_nominal_regret": 3.8452503904180313,
+      "step": 3,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-1cbd3c4a581f4b88810331ab",
+      "teacher_minus_chosen_logit": -0.03545653820037842,
+      "weighted_loss": {
+        "gate": 1.2683867680607364e-05,
+        "ranking": 0.013873199000954628
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": -0.7043953807662197,
+        "dot": -0.007876461569428127,
+        "module_norms": {
+          "actor": 0.0060182737946696705,
+          "encoder": 0.006465206280472024,
+          "stop": 0.0003174750693030205
+        },
+        "norm": 0.008838512439109407
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-4fbae29cd7409929aca80a75",
+      "chosen_overall": "nominal-cavity-4fbae29cd7409929aca80a75",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5662089416012928,
+          "dot": 0.0004482480651231554,
+          "module_norms": {
+            "actor": 0.00018979086133195962,
+            "encoder": 0.0004820742997989852,
+            "stop": 0.00035093664208900717
+          },
+          "norm": 0.0006257577233502739
+        },
+        "ranking": {
+          "cosine": 0.07119403160179491,
+          "dot": 0.00011159434479621436,
+          "module_norms": {
+            "actor": 0.001164197462325693,
+            "encoder": 0.00042391907566314164,
+            "stop": 0.0
+          },
+          "norm": 0.0012389766398107252
+        }
+      },
+      "legal_motion_count": 27,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": 0.0004754128016847193,
+        "full_corpus": 0.036986446761017575,
+        "gate": -0.005943414441210981,
+        "ranking": 0.04245444840054384,
+        "same_state_ranking": 0.0007608623035915216,
+        "same_state_total": 0.0006392021108283462
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.8191239431310159,
+          "encoder": 0.21440870782471264,
+          "stop": 0.0
+        },
+        "norm": 0.8467202183729681
+      },
+      "observation_hash": "sha256:baec617f896772b2ffaae8dd201d253d790cda39364a89acbd9adbc3218c59ae",
+      "public_nominal_regret": 3.8452503904180313,
+      "step": 4,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-fde756f16b8890d097dfa2b2",
+      "teacher_minus_chosen_logit": -0.02660149335861206,
+      "weighted_loss": {
+        "gate": 1.4019012269272935e-05,
+        "ranking": 0.013866499997675419
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": 0.32371062182905996,
+        "dot": 0.0005598424099193698,
+        "module_norms": {
+          "actor": 0.0011451678637534376,
+          "encoder": 0.0006589118011506047,
+          "stop": 0.00035093664208900717
+        },
+        "norm": 0.001367015261301006
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-ea7eea7cc3ac4d2f30da8aa9",
+      "chosen_overall": "nominal-cavity-ea7eea7cc3ac4d2f30da8aa9",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5659508267082234,
+          "dot": 0.0005018163507258453,
+          "module_norms": {
+            "actor": 0.00021275221245933148,
+            "encoder": 0.0005398130109584362,
+            "stop": 0.0003931179035578484
+          },
+          "norm": 0.0007008589564270914
+        },
+        "ranking": {
+          "cosine": 0.1139900550366712,
+          "dot": 0.00016510170555224653,
+          "module_norms": {
+            "actor": 0.001063961610274353,
+            "encoder": 0.0004226942051799659,
+            "stop": 0.0
+          },
+          "norm": 0.0011448513873993941
+        }
+      },
+      "legal_motion_count": 24,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": 0.000803554472322388,
+        "full_corpus": -0.01437846926984086,
+        "gate": -0.003568383394993782,
+        "ranking": -0.011613640347169468,
+        "same_state_ranking": 0.0004927110618230016,
+        "same_state_total": 0.00041166416586417966
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.5157605727819322,
+          "encoder": 0.16461657912856895,
+          "stop": 0.0
+        },
+        "norm": 0.5413941138951726
+      },
+      "observation_hash": "sha256:4e9e3950ab8efa7572d0907dd50a706b7970ac7941b4a67d69db980ece0be90e",
+      "public_nominal_regret": 3.8452503904180313,
+      "step": 5,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-0bff70bcda7abbbf6f4ba2b5",
+      "teacher_minus_chosen_logit": -0.013696432113647461,
+      "weighted_loss": {
+        "gate": 1.5707015336374752e-05,
+        "ranking": 0.013865133747458458
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": 0.39463329095341304,
+        "dot": 0.0006669180562780918,
+        "module_norms": {
+          "actor": 0.0010505531208220603,
+          "encoder": 0.0007253779567533968,
+          "stop": 0.0003931179035578484
+        },
+        "norm": 0.0013358056467579484
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-885bf6a1a97846ee99e9e05c",
+      "chosen_overall": "nominal-cavity-885bf6a1a97846ee99e9e05c",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5661880752874958,
+          "dot": 0.0006007737315054615,
+          "module_norms": {
+            "actor": 0.0002539278088146586,
+            "encoder": 0.0006461389383489712,
+            "stop": 0.00047060497715733715
+          },
+          "norm": 0.0008387156277698697
+        },
+        "ranking": {
+          "cosine": 0.13826821290837948,
+          "dot": 0.0002693656108643468,
+          "module_norms": {
+            "actor": 0.0014369217348497924,
+            "encoder": 0.000553586839651522,
+            "stop": 0.0
+          },
+          "norm": 0.0015398709235254415
+        }
+      },
+      "legal_motion_count": 20,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": 0.0012509854013921286,
+        "full_corpus": -0.017116844835024816,
+        "gate": -0.006548208793883181,
+        "ranking": -0.011819621442533762,
+        "same_state_ranking": 0.001153736999898649,
+        "same_state_total": 0.0009754161145569272
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.8201305659704978,
+          "encoder": 0.18486166948036178,
+          "stop": 0.0
+        },
+        "norm": 0.8407068348016183
+      },
+      "observation_hash": "sha256:fc6202d5be830c186350c002e1268b9ef587447021aaf9bef97ea0fac4767076",
+      "public_nominal_regret": 4.798924706772539,
+      "step": 6,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-9191b5ecb52d9653e6653b46",
+      "teacher_minus_chosen_logit": -0.02704310417175293,
+      "weighted_loss": {
+        "gate": 1.8796919903252274e-05,
+        "ranking": 0.013890700414776802
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": 0.4102513968083464,
+        "dot": 0.0008701393423698083,
+        "module_norms": {
+          "actor": 0.001323720675968532,
+          "encoder": 0.0009148458133760175,
+          "stop": 0.00047060497715733715
+        },
+        "norm": 0.0016764988323179604
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-96dd5fd479c6cea577f6c479",
+      "chosen_overall": "nominal-cavity-96dd5fd479c6cea577f6c479",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5661603332030191,
+          "dot": 0.0007469731050861611,
+          "module_norms": {
+            "actor": 0.00031631813945915956,
+            "encoder": 0.0008032524102217685,
+            "stop": 0.0005850688774951019
+          },
+          "norm": 0.0010428696904653835
+        },
+        "ranking": {
+          "cosine": 0.23040502689318182,
+          "dot": 0.0005112119220659386,
+          "module_norms": {
+            "actor": 0.0015464587945369602,
+            "encoder": 0.00082715610942052,
+            "stop": 0.0
+          },
+          "norm": 0.0017537736548803552
+        }
+      },
+      "legal_motion_count": 16,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": -0.0023122232392188444,
+        "full_corpus": 0.24151553753417465,
+        "gate": -0.005259587097029614,
+        "ranking": 0.24908734787042314,
+        "same_state_ranking": 0.0017460940874873985,
+        "same_state_total": 0.001562617393853735
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 1.0125149076588131,
+          "encoder": 0.38143537722097437,
+          "stop": 0.0
+        },
+        "norm": 1.0819793829953703
+      },
+      "observation_hash": "sha256:52820cf3aed0e4425f98cb80e72b8a93307a7847dfc7b4420a75a6db8663d33e",
+      "public_nominal_regret": 4.798924706772539,
+      "step": 7,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-18a27c9bdaedc0c78c8b1eb5",
+      "teacher_minus_chosen_logit": -0.034855544567108154,
+      "weighted_loss": {
+        "gate": 2.3365020751953125e-05,
+        "ranking": 0.013895210810005665
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": 0.5006232061631313,
+        "dot": 0.0012581850271520998,
+        "module_norms": {
+          "actor": 0.001398236213268787,
+          "encoder": 0.0012841279191979644,
+          "stop": 0.0005850688774951019
+        },
+        "norm": 0.001986543382957772
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-024c78a3702300dbd45cc630",
+      "chosen_overall": "nominal-cavity-024c78a3702300dbd45cc630",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5651506247781498,
+          "dot": 0.0009858589612840763,
+          "module_norms": {
+            "actor": 0.00042114755824798394,
+            "encoder": 0.0010610123172418615,
+            "stop": 0.0007733679806552616
+          },
+          "norm": 0.001378843876825793
+        },
+        "ranking": {
+          "cosine": -0.02984924870155308,
+          "dot": -4.5294889670435e-05,
+          "module_norms": {
+            "actor": 0.001090270860344432,
+            "encoder": 0.0004999776372150682,
+            "stop": 0.0
+          },
+          "norm": 0.0011994449493959068
+        }
+      },
+      "legal_motion_count": 12,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": 0.0008030491981002262,
+        "full_corpus": -0.01402239690560542,
+        "gate": -0.003626541258744076,
+        "ranking": -0.011198904844961569,
+        "same_state_ranking": 0.00026997247983184363,
+        "same_state_total": 0.0001067283046381944
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.5406361270084566,
+          "encoder": 0.16177977835151072,
+          "stop": 0.0
+        },
+        "norm": 0.5643227077746986
+      },
+      "observation_hash": "sha256:519932f96463350c0cd807583d6a784b3ac4325310e3ecbd5828e08226c6efc1",
+      "public_nominal_regret": 4.798924706772539,
+      "step": 8,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-6b6ca940447e253f73e6a608",
+      "teacher_minus_chosen_logit": -0.013709187507629395,
+      "weighted_loss": {
+        "gate": 3.088474113610573e-05,
+        "ranking": 0.01383817195892334
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": 0.38953168246101183,
+        "dot": 0.0009405640716136412,
+        "module_norms": {
+          "actor": 0.001315877295452828,
+          "encoder": 0.0011458805810884382,
+          "stop": 0.0007733679806552616
+        },
+        "norm": 0.0019085788944412628
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-ee6da51b65724268ee8ef54d",
+      "chosen_overall": "nominal-cavity-ee6da51b65724268ee8ef54d",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5652022692475878,
+          "dot": 0.0014722748809186778,
+          "module_norms": {
+            "actor": 0.0006286752023365997,
+            "encoder": 0.0015843502258427295,
+            "stop": 0.0011549673821215558
+          },
+          "norm": 0.0020589676544146107
+        },
+        "ranking": {
+          "cosine": -0.027782881857034057,
+          "dot": -0.00018800530901730414,
+          "module_norms": {
+            "actor": 0.0050945336472008945,
+            "encoder": 0.0016295758725837347,
+            "stop": 0.0
+          },
+          "norm": 0.005348812074373999
+        }
+      },
+      "legal_motion_count": 8,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": 0.0007395146213894641,
+        "full_corpus": -0.009792089013777806,
+        "gate": -0.0035773606569165315,
+        "ranking": -0.006954242978250736,
+        "same_state_ranking": 0.002956735586305315,
+        "same_state_total": 0.002714900876176558
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.5298064458983761,
+          "encoder": 0.16250833853361318,
+          "stop": 0.0
+        },
+        "norm": 0.5541694959201781
+      },
+      "observation_hash": "sha256:918a89d0b9f58d01cf17fd33af6d48e1ff39edb9f5b0722462c6745c30cd7dd8",
+      "public_nominal_regret": 0.03055312500000007,
+      "step": 9,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-75d906bf1966eab441bd14fb",
+      "teacher_minus_chosen_logit": -0.014131605625152588,
+      "weighted_loss": {
+        "gate": 4.6133995056152344e-05,
+        "ranking": 0.013989772647619247
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": 0.19093177304336753,
+        "dot": 0.0012842695719013737,
+        "module_norms": {
+          "actor": 0.004731003608567444,
+          "encoder": 0.002133307220855376,
+          "stop": 0.0011549673821215558
+        },
+        "norm": 0.005316704288993003
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-4097f150860de00cd6b244a6",
+      "chosen_overall": "nominal-cavity-4097f150860de00cd6b244a6",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5653541900341147,
+          "dot": 0.001958126983244926,
+          "module_norms": {
+            "actor": 0.0008330056891580755,
+            "encoder": 0.0021072349416118483,
+            "stop": 0.0015364327914844597
+          },
+          "norm": 0.002737693061697812
+        },
+        "ranking": {
+          "cosine": -0.03272090414217225,
+          "dot": -0.0002182356063539917,
+          "module_norms": {
+            "actor": 0.005012446356927694,
+            "encoder": 0.0016334052611101152,
+            "stop": 0.0
+          },
+          "norm": 0.005271871700648634
+        }
+      },
+      "legal_motion_count": 6,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": 0.001126045006314165,
+        "full_corpus": -0.027812156998452034,
+        "gate": -0.0047246100622296595,
+        "ranking": -0.024213591942536535,
+        "same_state_ranking": 0.0033539288599355012,
+        "same_state_total": 0.0029312151717206234
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.6209368295459669,
+          "encoder": 0.1847987388955569,
+          "stop": 0.0
+        },
+        "norm": 0.6478526994494853
+      },
+      "observation_hash": "sha256:429c5108d9b1c4918077c89879d4d9fdc008f60947650403e2267515061ddab0",
+      "public_nominal_regret": 0.03055312500000007,
+      "step": 10,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-3e0208b4da8b3619067435cd",
+      "teacher_minus_chosen_logit": -0.018358051776885986,
+      "weighted_loss": {
+        "gate": 6.138324533822015e-05,
+        "ranking": 0.01398447249084711
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": 0.2537832252691723,
+        "dot": 0.0017398913768909346,
+        "module_norms": {
+          "actor": 0.004557230197042114,
+          "encoder": 0.002497440496139136,
+          "stop": 0.0015364327914844597
+        },
+        "norm": 0.005419057281791449
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-57cb4c27a0f9b8d900a5f645",
+      "chosen_overall": "nominal-cavity-57cb4c27a0f9b8d900a5f645",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5652547527916535,
+          "dot": 0.0029186463647314985,
+          "module_norms": {
+            "actor": 0.0012434377380042658,
+            "encoder": 0.0031408681529147804,
+            "stop": 0.0022904298996681296
+          },
+          "norm": 0.00408133057808128
+        },
+        "ranking": {
+          "cosine": -0.035326706929664914,
+          "dot": -0.00023336165507661715,
+          "module_norms": {
+            "actor": 0.004953919068161786,
+            "encoder": 0.0016499069010344368,
+            "stop": 0.0
+          },
+          "norm": 0.005221446822096151
+        }
+      },
+      "legal_motion_count": 4,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": 0.0012716126528392493,
+        "full_corpus": -0.030048531662210963,
+        "gate": -0.005539291568024399,
+        "ranking": -0.025780852747025816,
+        "same_state_ranking": 0.00368996587625069,
+        "same_state_total": 0.002948525651567107
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.7011830140746956,
+          "encoder": 0.19828781787465014,
+          "stop": 0.0
+        },
+        "norm": 0.7286807791786231
+      },
+      "observation_hash": "sha256:3ad39e9702d980569ece43c8815b26859a7ffbd547f2ea7a7224134e12eff079",
+      "public_nominal_regret": 0.03055312500000007,
+      "step": 11,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-db13ac7f68ddec6654723169",
+      "teacher_minus_chosen_logit": -0.021795570850372314,
+      "weighted_loss": {
+        "gate": 9.156703890766948e-05,
+        "ranking": 0.013983104377985
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": 0.35812812710746095,
+        "dot": 0.0026852847096548813,
+        "module_norms": {
+          "actor": 0.004316420538774499,
+          "encoder": 0.003353920190768318,
+          "stop": 0.0022904298996681296
+        },
+        "norm": 0.005926747509291376
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-bb5b3d175691f63b0881cedc",
+      "chosen_overall": "nominal-cavity-bb5b3d175691f63b0881cedc",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5648042067370702,
+          "dot": 0.005760476295844582,
+          "module_norms": {
+            "actor": 0.0024736018282643484,
+            "encoder": 0.006199563072538789,
+            "stop": 0.004520755114763459
+          },
+          "norm": 0.008061669498487231
+        },
+        "ranking": {
+          "cosine": -0.049128107641814286,
+          "dot": -0.00029175609782228955,
+          "module_norms": {
+            "actor": 0.004380695321632257,
+            "encoder": 0.0016865038040229643,
+            "stop": 0.0
+          },
+          "norm": 0.004694122557193694
+        }
+      },
+      "legal_motion_count": 2,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": 0.0008760493709997814,
+        "full_corpus": -0.02904506495202686,
+        "gate": -0.002775428144733088,
+        "ranking": -0.027145686178293556,
+        "same_state_ranking": 0.002193199406729107,
+        "same_state_total": 0.0014588951873979075
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.4360217496295672,
+          "encoder": 0.1678745123952964,
+          "stop": 0.0
+        },
+        "norm": 0.46722245029748677
+      },
+      "observation_hash": "sha256:80710401a93370f8aec8159189a66d79444a600cb5fe382d4cdd5a02c4a0b7d1",
+      "public_nominal_regret": 0.03055312500000007,
+      "step": 12,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-07f21f9720487f7217110137",
+      "teacher_minus_chosen_logit": -0.009390652179718018,
+      "weighted_loss": {
+        "gate": 0.00018110274686478078,
+        "ranking": 0.0139570701867342
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": 0.5084748479670386,
+        "dot": 0.005468720198022293,
+        "module_norms": {
+          "actor": 0.003649464044046612,
+          "encoder": 0.0062060259184646485,
+          "stop": 0.004520755114763459
+        },
+        "norm": 0.008501210050169574
+      }
+    },
+    {
+      "component_alignment_with_corpus_gradient": {
+        "STOP": {
+          "cosine": null,
+          "dot": 0.0,
+          "module_norms": {
+            "actor": 0.0,
+            "encoder": 0.0,
+            "stop": 0.0
+          },
+          "norm": 0.0
+        }
+      },
+      "legal_motion_count": 0,
+      "observation_hash": "sha256:bf1f87a48671ee89dea55913c2948d63c20686be2f5d63ab82c63ad19b6c598a",
+      "step": 13,
+      "subject": "ReMIND-015",
+      "teacher_action": "STOP",
+      "weighted_loss": {
+        "STOP": -0.0
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": null,
+        "dot": 0.0,
+        "module_norms": {
+          "actor": 0.0,
+          "encoder": 0.0,
+          "stop": 0.0
+        },
+        "norm": 0.0
+      }
+    },
+    {
+      "component_alignment_with_corpus_gradient": {
+        "STOP": {
+          "cosine": -0.9234478469205328,
+          "dot": -0.022638812734740228,
+          "module_norms": {
+            "actor": 0.005089915170475262,
+            "encoder": 0.018401672933974822,
+            "stop": 0.0033124942047387026
+          },
+          "norm": 0.019377859042423777
+        }
+      },
+      "legal_motion_count": 17,
+      "observation_hash": "sha256:5312ee05f0bb91a936083652e38fd8ba9b384421ba200588dd94b0e241e05685",
+      "step": 0,
+      "subject": "ReMIND-018",
+      "teacher_action": "STOP",
+      "weighted_loss": {
+        "STOP": 0.0001377895678160712
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": -0.9234478469205328,
+        "dot": -0.022638812734740228,
+        "module_norms": {
+          "actor": 0.005089915170475262,
+          "encoder": 0.018401672933974822,
+          "stop": 0.0033124942047387026
+        },
+        "norm": 0.019377859042423777
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-04a6300abba0b606e29c5a89",
+      "chosen_overall": "nominal-cavity-04a6300abba0b606e29c5a89",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.49588689491934373,
+          "dot": 5.502174494957283e-05,
+          "module_norms": {
+            "actor": 3.625817480128633e-05,
+            "encoder": 5.788949861369781e-05,
+            "stop": 5.500936820913557e-05
+          },
+          "norm": 8.770336299386828e-05
+        },
+        "ranking": {
+          "cosine": -0.9811155288043344,
+          "dot": -0.14406347216216334,
+          "module_norms": {
+            "actor": 0.03061902235823768,
+            "encoder": 0.1119525425158127,
+            "stop": 0.0
+          },
+          "norm": 0.11606419045480443
+        }
+      },
+      "legal_motion_count": 41,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": -0.08852880601333427,
+        "full_corpus": 5.795218590172276,
+        "gate": 0.08548033783525064,
+        "ranking": 5.79826705835036,
+        "same_state_ranking": -0.3621363703387231,
+        "same_state_total": -0.3618224671191532
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 9.154203942711788,
+          "encoder": 5.504221108962101,
+          "stop": 0.0
+        },
+        "norm": 10.681568229483162
+      },
+      "observation_hash": "sha256:f1b76f48f457bc2dbe05aec280f28de06f428d1a2225c4515799a9872ae0edba",
+      "public_nominal_regret": 3.813301995661462,
+      "step": 0,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-2e7122d692aec111fb6a1628",
+      "teacher_minus_chosen_logit": -0.026256144046783447,
+      "weighted_loss": {
+        "gate": 2.326965386600932e-06,
+        "ranking": 0.011036192998290062
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": -0.9810784377074221,
+        "dot": -0.14400845041721377,
+        "module_norms": {
+          "actor": 0.030619796185742072,
+          "encoder": 0.11191090804983307,
+          "stop": 5.500936820913557e-05
+        },
+        "norm": 0.11602424869407797
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-53f4490cbb63cc9520b0625e",
+      "chosen_overall": "nominal-cavity-53f4490cbb63cc9520b0625e",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.4519598509340135,
+          "dot": 5.2438230635674894e-05,
+          "module_norms": {
+            "actor": 3.8535931725393815e-05,
+            "encoder": 5.842897465667412e-05,
+            "stop": 5.925880495347991e-05
+          },
+          "norm": 9.170915482049258e-05
+        },
+        "ranking": {
+          "cosine": -0.9777908038117619,
+          "dot": -0.11656366434417499,
+          "module_norms": {
+            "actor": 0.024709936420094617,
+            "encoder": 0.09093078771026798,
+            "stop": 0.0
+          },
+          "norm": 0.094228388034047
+        }
+      },
+      "legal_motion_count": 37,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": -0.08672877842641197,
+        "full_corpus": 5.659062307230316,
+        "gate": 0.07960804908565687,
+        "ranking": 5.666183036571072,
+        "same_state_ranking": -0.28155373100027103,
+        "same_state_total": -0.2812613306759606
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 9.014503553438846,
+          "encoder": 5.296906279038248,
+          "stop": 0.0
+        },
+        "norm": 10.455548309097727
+      },
+      "observation_hash": "sha256:4f9ae26779202a8e3ed056028eec959c71c120aa6e3d081438e84eb3b6a54a7f",
+      "public_nominal_regret": 3.843301995661461,
+      "step": 1,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-7a69f4a8cd7e8ea71e4af5c2",
+      "teacher_minus_chosen_logit": -0.14092957973480225,
+      "weighted_loss": {
+        "gate": 2.4890898657758953e-06,
+        "ranking": 0.011035941541194916
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": -0.9777426746465083,
+        "dot": -0.11651122611353931,
+        "module_norms": {
+          "actor": 0.024712506228959433,
+          "encoder": 0.0908909459689489,
+          "stop": 5.925880495347991e-05
+        },
+        "norm": 0.09419063400812598
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-94abebd95969746a9636663b",
+      "chosen_overall": "nominal-cavity-94abebd95969746a9636663b",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.4523925944378852,
+          "dot": 5.630463463621174e-05,
+          "module_norms": {
+            "actor": 4.1408102330900746e-05,
+            "encoder": 6.267645208518822e-05,
+            "stop": 6.352202595211668e-05
+          },
+          "norm": 9.83769097181582e-05
+        },
+        "ranking": {
+          "cosine": -0.9722578722446551,
+          "dot": -0.11197929932519815,
+          "module_norms": {
+            "actor": 0.025664417950996485,
+            "encoder": 0.08734518937886067,
+            "stop": 0.0
+          },
+          "norm": 0.09103759913570025
+        }
+      },
+      "legal_motion_count": 34,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": -0.08249350603536965,
+        "full_corpus": 5.355255741866804,
+        "gate": 0.07926480802384378,
+        "ranking": 5.358484439878331,
+        "same_state_ranking": -0.20912245409973174,
+        "same_state_total": -0.2087945769735577
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 9.527757376905502,
+          "encoder": 5.164780116060811,
+          "stop": 0.0
+        },
+        "norm": 10.83757880157899
+      },
+      "observation_hash": "sha256:cfe8cc8c9a80d47b477980737067ff612ac6780d45c98a1048bd0e384e279fe7",
+      "public_nominal_regret": 6.702375366565462,
+      "step": 2,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-08ddba04f5981a8ffabfe1ee",
+      "teacher_minus_chosen_logit": -0.03645133972167969,
+      "weighted_loss": {
+        "gate": 2.6655195597413694e-06,
+        "ranking": 0.011082401499152184
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": -0.972189732945915,
+        "dot": -0.11192299469056195,
+        "module_norms": {
+          "actor": 0.02566909816357537,
+          "encoder": 0.08730272666790578,
+          "stop": 6.352202595211668e-05
+        },
+        "norm": 0.09099820173624405
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-1a59ac469933a2c152f135e3",
+      "chosen_overall": "nominal-cavity-1a59ac469933a2c152f135e3",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.46785339551008187,
+          "dot": 7.841877681248843e-05,
+          "module_norms": {
+            "actor": 5.496739606533285e-05,
+            "encoder": 8.535842792321854e-05,
+            "stop": 8.512022688101815e-05
+          },
+          "norm": 0.00013248746684876446
+        },
+        "ranking": {
+          "cosine": -0.981585177392453,
+          "dot": -0.1079040561923443,
+          "module_norms": {
+            "actor": 0.022498870563353455,
+            "encoder": 0.08392752459129704,
+            "stop": 0.0
+          },
+          "norm": 0.08689090033282709
+        }
+      },
+      "legal_motion_count": 25,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": 0.0014260189310016267,
+        "full_corpus": -0.055449303729491035,
+        "gate": -0.003757971501933625,
+        "ranking": -0.053117351158559034,
+        "same_state_ranking": 0.004418642448148567,
+        "same_state_total": 0.004400260257565109
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.5262251447341532,
+          "encoder": 0.2133442758555637,
+          "stop": 0.0
+        },
+        "norm": 0.5678280399828944
+      },
+      "observation_hash": "sha256:cbcc03c929e1937b83b9a783ce30d215df85557f73321d3df8dd4ab293bdde06",
+      "public_nominal_regret": 2.8915796225881927,
+      "step": 3,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-7bdf67f47de6e5ca7ba7d91e",
+      "teacher_minus_chosen_logit": -0.011002957820892334,
+      "weighted_loss": {
+        "gate": 3.571510205802042e-06,
+        "ranking": 0.011465931311249733
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": -0.9815213491789174,
+        "dot": -0.1078256374155318,
+        "module_norms": {
+          "actor": 0.022499681354393165,
+          "encoder": 0.08386773100944117,
+          "stop": 8.512022688101815e-05
+        },
+        "norm": 0.08683339916860464
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-2531543a827f267dcb73cc48",
+      "chosen_overall": "nominal-cavity-2531543a827f267dcb73cc48",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5041890913762503,
+          "dot": 0.00010367382548321467,
+          "module_norms": {
+            "actor": 6.72112842494125e-05,
+            "encoder": 0.00010743578231450733,
+            "stop": 0.00010176938288140447
+          },
+          "norm": 0.00016253249319458398
+        },
+        "ranking": {
+          "cosine": -0.9576596171036492,
+          "dot": -0.10610792129744481,
+          "module_norms": {
+            "actor": 0.030443847728051945,
+            "encoder": 0.08211756607072046,
+            "stop": 0.0
+          },
+          "norm": 0.08757923567757335
+        }
+      },
+      "legal_motion_count": 21,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": -0.08690779951782861,
+        "full_corpus": 5.633997782357728,
+        "gate": 0.08328931483814878,
+        "ranking": 5.637616267037407,
+        "same_state_ranking": -0.1719124696754431,
+        "same_state_total": -0.17132838278145332
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 8.882887072587673,
+          "encoder": 5.286397791521137,
+          "stop": 0.0
+        },
+        "norm": 10.336908839423161
+      },
+      "observation_hash": "sha256:94d2f37bd176481f1ee7d2de0cb61b1c22eee8c93632deefc42fb05735a009ba",
+      "public_nominal_regret": 2.8915796225881927,
+      "step": 4,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-6c207425fb1c81db3aaf6bde",
+      "teacher_minus_chosen_logit": -0.13081371784210205,
+      "weighted_loss": {
+        "gate": 4.272460955689894e-06,
+        "ranking": 0.011897549033164978
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": -0.9574977656023141,
+        "dot": -0.1060042474719616,
+        "module_norms": {
+          "actor": 0.030450045175878324,
+          "encoder": 0.08203971050338393,
+          "stop": 0.00010176938288140447
+        },
+        "norm": 0.08750845506406449
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-316cfbc52dc441a0601aea68",
+      "chosen_overall": "nominal-cavity-316cfbc52dc441a0601aea68",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5152520427674305,
+          "dot": 0.00012073559462964521,
+          "module_norms": {
+            "actor": 7.658989103333526e-05,
+            "encoder": 0.00012338334307374722,
+            "stop": 0.00011495982756428939
+          },
+          "norm": 0.00018521669122993037
+        },
+        "ranking": {
+          "cosine": -0.9386790746740595,
+          "dot": -0.11242823304274653,
+          "module_norms": {
+            "actor": 0.03730470561030597,
+            "encoder": 0.08701262368100011,
+            "stop": 0.0
+          },
+          "norm": 0.09467226489591835
+        }
+      },
+      "legal_motion_count": 18,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": -0.08237341591432354,
+        "full_corpus": 5.290089314970704,
+        "gate": 0.08365461774551061,
+        "ranking": 5.288808113139516,
+        "same_state_ranking": -0.07546830717443248,
+        "same_state_total": -0.07475453658441637
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 9.586948739356766,
+          "encoder": 5.145236698661825,
+          "stop": 0.0
+        },
+        "norm": 10.880397364816721
+      },
+      "observation_hash": "sha256:3034f53857463c84b4b61e1f4e59f8a1bfd723b23548b6c806bd7e1f4818e6f1",
+      "public_nominal_regret": 7.658003991322924,
+      "step": 5,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-bca3719c38b5f61afd8f0b51",
+      "teacher_minus_chosen_logit": -0.024663269519805908,
+      "weighted_loss": {
+        "gate": 4.8208235057245474e-06,
+        "ranking": 0.011972077190876007
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": -0.9384350771893645,
+        "dot": -0.11230749744811688,
+        "module_norms": {
+          "actor": 0.03731679136874802,
+          "encoder": 0.08692348987339424,
+          "stop": 0.00011495982756428939
+        },
+        "norm": 0.09459518605928482
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-bdaa759a235e391109a3a3de",
+      "chosen_overall": "nominal-cavity-bdaa759a235e391109a3a3de",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.6111172474575137,
+          "dot": 0.0002797927555359182,
+          "module_norms": {
+            "actor": 0.00014043901141741092,
+            "encoder": 0.0002594545099915378,
+            "stop": 0.0002095817960568491
+          },
+          "norm": 0.0003618898836956675
+        },
+        "ranking": {
+          "cosine": 0.966195896646522,
+          "dot": 0.47741983563698365,
+          "module_norms": {
+            "actor": 0.12723664436907453,
+            "encoder": 0.36926467246279493,
+            "stop": 0.0
+          },
+          "norm": 0.3905708156011635
+        }
+      },
+      "legal_motion_count": 9,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": -0.9461615033357127,
+        "full_corpus": 66.67841474292256,
+        "gate": 0.9265130201441806,
+        "ranking": 66.69806322611409,
+        "same_state_ranking": 21.064388975655927,
+        "same_state_total": 21.076072919689288
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 17.701666077088078,
+          "encoder": 51.21103514385002,
+          "stop": 0.0
+        },
+        "norm": 54.184122235295
+      },
+      "observation_hash": "sha256:413493c93811d3c73f7267f7432201c94faa28bb501efb84e0a4d7e096e288b4",
+      "public_nominal_regret": 0.9842286247574622,
+      "step": 6,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-5adbe8af9ad1faf0cb454802",
+      "teacher_minus_chosen_logit": -0.20651066303253174,
+      "weighted_loss": {
+        "gate": 8.788108971202746e-06,
+        "ranking": 0.014840505085885525
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": 0.9662402859736361,
+        "dot": 0.4776996283925195,
+        "module_norms": {
+          "actor": 0.12728726398504583,
+          "encoder": 0.36947028300373497,
+          "stop": 0.0002095817960568491
+        },
+        "norm": 0.39078175689275585
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-24dd9df33220458e7df78da8",
+      "chosen_overall": "nominal-cavity-24dd9df33220458e7df78da8",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5446786096427241,
+          "dot": 0.00022925842579667692,
+          "module_norms": {
+            "actor": 0.0001326824073666579,
+            "encoder": 0.00022666318524059713,
+            "stop": 0.00020422240036029583
+          },
+          "norm": 0.0003326974745575117
+        },
+        "ranking": {
+          "cosine": -0.9589519007026354,
+          "dot": -0.223725567720243,
+          "module_norms": {
+            "actor": 0.07007776988127877,
+            "encoder": 0.1705754185257744,
+            "stop": 0.0
+          },
+          "norm": 0.18440950961589955
+        }
+      },
+      "legal_motion_count": 9,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": 0.0015598741113079723,
+        "full_corpus": -0.06452576215527353,
+        "gate": -0.0041799954549905614,
+        "ranking": -0.061905640811590945,
+        "same_state_ranking": 0.008274351419433862,
+        "same_state_total": 0.008224079196044268
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.4872585181150217,
+          "encoder": 0.160600598432846,
+          "stop": 0.0
+        },
+        "norm": 0.5130432883223744
+      },
+      "observation_hash": "sha256:0b74e0aee0eec6929a29f9342a0082cfe0ac0aeb0d1fcbfb007d2c6477f0d910",
+      "public_nominal_regret": 0.9842286247574625,
+      "step": 7,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-c521d0546ad10479e3c347e3",
+      "teacher_minus_chosen_logit": -0.013016223907470703,
+      "weighted_loss": {
+        "gate": 8.563994924770668e-06,
+        "ranking": 0.012623295187950134
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": -0.9588932600997072,
+        "dot": -0.22349630929444633,
+        "module_norms": {
+          "actor": 0.07003521361361782,
+          "encoder": 0.17040066106686586,
+          "stop": 0.00020422240036029583
+        },
+        "norm": 0.18423180546452575
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-5e26f3258ed5d0d7e6b8578d",
+      "chosen_overall": "nominal-cavity-5e26f3258ed5d0d7e6b8578d",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.6487642394031798,
+          "dot": 0.000574772403043017,
+          "module_norms": {
+            "actor": 0.00026660927614227973,
+            "encoder": 0.000518672028159548,
+            "stop": 0.0003876789456242595
+          },
+          "norm": 0.0007002829026904683
+        },
+        "ranking": {
+          "cosine": 0.9937097031229203,
+          "dot": 0.5377193632697976,
+          "module_norms": {
+            "actor": 0.12028405920838316,
+            "encoder": 0.410459589778697,
+            "stop": 0.0
+          },
+          "norm": 0.4277210887259852
+        }
+      },
+      "legal_motion_count": 5,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": -0.6139799977217049,
+        "full_corpus": 43.43688051421009,
+        "gate": 0.5962080757463389,
+        "ranking": 43.454652436185455,
+        "same_state_ranking": 15.1068203283606,
+        "same_state_total": 15.122903462835392
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 16.05551974904707,
+          "encoder": 32.99314872342537,
+          "stop": 0.0
+        },
+        "norm": 36.69233676257355
+      },
+      "observation_hash": "sha256:cbc4b2d5ea7451bab94b589fa28d8bfccf6a6489abae03f8f963d1b1322f6d5c",
+      "public_nominal_regret": 0.030553125842096795,
+      "step": 8,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-ca216ec681ac4651f10d5c61",
+      "teacher_minus_chosen_logit": -0.12941569089889526,
+      "weighted_loss": {
+        "gate": 1.625060940568801e-05,
+        "ranking": 0.015185820870101452
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": 0.9937166820820694,
+        "dot": 0.5382941356728406,
+        "module_norms": {
+          "actor": 0.1203991993544121,
+          "encoder": 0.4108989528646242,
+          "stop": 0.0003876789456242595
+        },
+        "norm": 0.4281752759856575
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-d57e3e6d61827150ad7f6c34",
+      "chosen_overall": "nominal-cavity-d57e3e6d61827150ad7f6c34",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.6947429940540696,
+          "dot": 0.0011694737520721395,
+          "module_norms": {
+            "actor": 0.0004962692102723825,
+            "encoder": 0.0010277089734143222,
+            "stop": 0.0006840258459768832
+          },
+          "norm": 0.0013305488420441757
+        },
+        "ranking": {
+          "cosine": 0.994685596254509,
+          "dot": 0.5611265677504925,
+          "module_norms": {
+            "actor": 0.11543546436767446,
+            "encoder": 0.43070098620121006,
+            "stop": 0.0
+          },
+          "norm": 0.4459021035479377
+        }
+      },
+      "legal_motion_count": 3,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": -0.0,
+        "full_corpus": -0.0,
+        "gate": -0.0,
+        "ranking": -0.0,
+        "same_state_ranking": -0.0,
+        "same_state_total": -0.0
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.0,
+          "encoder": 0.0,
+          "stop": 0.0
+        },
+        "norm": 0.0
+      },
+      "observation_hash": "sha256:335a8e0fec9206b52eee0969f625d6517fb344324cd4b6936369fd1f26eb2131",
+      "public_nominal_regret": 0.0,
+      "step": 9,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-d57e3e6d61827150ad7f6c34",
+      "teacher_minus_chosen_logit": 0.0,
+      "weighted_loss": {
+        "gate": 2.8672217013081536e-05,
+        "ranking": 0.014922156929969788
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": 0.9947313256958827,
+        "dot": 0.5622960415025646,
+        "module_norms": {
+          "actor": 0.11558381878651049,
+          "encoder": 0.43160153454016914,
+          "stop": 0.0006840258459768832
+        },
+        "norm": 0.44681089028140253
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-c594e6a311f0b08776c29a0f",
+      "chosen_overall": "nominal-cavity-c594e6a311f0b08776c29a0f",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.5786903636870193,
+          "dot": 0.0005851148169024646,
+          "module_norms": {
+            "actor": 0.0003037900173461405,
+            "encoder": 0.0005645107065831877,
+            "stop": 0.0004772539842611204
+          },
+          "norm": 0.0007992071558609407
+        },
+        "ranking": {
+          "cosine": -0.9754436832934357,
+          "dot": -0.2669949897400082,
+          "module_norms": {
+            "actor": 0.06818207267659344,
+            "encoder": 0.20532989597396561,
+            "stop": 0.0
+          },
+          "norm": 0.21635424935775105
+        }
+      },
+      "legal_motion_count": 4,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": 0.0016719224987947804,
+        "full_corpus": -0.07654334915192813,
+        "gate": -0.003869418030822141,
+        "ranking": -0.07434585361990077,
+        "same_state_ranking": 0.01547309460191298,
+        "same_state_total": 0.015362848788272734
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 0.43210024158845317,
+          "encoder": 0.19062241609285932,
+          "stop": 0.0
+        },
+        "norm": 0.47227907459242646
+      },
+      "observation_hash": "sha256:1da33c3a2a3891f7240d7cf45cbb480e8a2a1dd85de1d458acf8db5922edfbd4",
+      "public_nominal_regret": 0.9842286247574622,
+      "step": 10,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-88bc1008c2bd9995dae66f1b",
+      "teacher_minus_chosen_logit": -0.010384082794189453,
+      "weighted_loss": {
+        "gate": 1.9993782188976184e-05,
+        "ranking": 0.012214924208819866
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": -0.9753865464228914,
+        "dot": -0.26640987492310575,
+        "module_norms": {
+          "actor": 0.06808367519032428,
+          "encoder": 0.20487573967240036,
+          "stop": 0.0004772539842611204
+        },
+        "norm": 0.21589275880654346
+      }
+    },
+    {
+      "chosen_motion": "nominal-cavity-9b48bba2b6cea88ca1012ba0",
+      "chosen_overall": "nominal-cavity-9b48bba2b6cea88ca1012ba0",
+      "component_alignment_with_corpus_gradient": {
+        "gate": {
+          "cosine": 0.809803489335253,
+          "dot": 0.0027222674799204146,
+          "module_norms": {
+            "actor": 0.0008787960767575696,
+            "encoder": 0.0022444785471587235,
+            "stop": 0.0011182426228709848
+          },
+          "norm": 0.0026571475414033027
+        },
+        "ranking": {
+          "cosine": 0.994968460606794,
+          "dot": 1.2435607398315232,
+          "module_norms": {
+            "actor": 0.25504822830451185,
+            "encoder": 0.9544308545957358,
+            "stop": 0.0
+          },
+          "norm": 0.9879209760732967
+        }
+      },
+      "legal_motion_count": 2,
+      "margin_directional_derivative_under_negative_raw_gradient": {
+        "STOP": -1.5421379911191455,
+        "full_corpus": 107.0544794519725,
+        "gate": 1.519701197802328,
+        "ranking": 107.07691624528931,
+        "same_state_ranking": 84.01983790650509,
+        "same_state_total": 84.20086589015997
+      },
+      "margin_parameter_gradient": {
+        "module_norms": {
+          "actor": 21.95686042361273,
+          "encoder": 82.16392501185558,
+          "stop": 0.0
+        },
+        "norm": 85.04712983408577
+      },
+      "observation_hash": "sha256:6ce86b87593ddac604a0d0b1f6ee6329f91a8d8ca3d3138e81d8a9a7a50d802f",
+      "public_nominal_regret": 0.030553125842096684,
+      "step": 11,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-3532d3d0aba51e03e0899454",
+      "teacher_minus_chosen_logit": -0.3260335624217987,
+      "weighted_loss": {
+        "gate": 4.68730904685799e-05,
+        "ranking": 0.017387855798006058
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": 0.9950013707272604,
+        "dot": 1.2462830073114437,
+        "module_norms": {
+          "actor": 0.2554620520774545,
+          "encoder": 0.9565242439937259,
+          "stop": 0.0011182426228709848
+        },
+        "norm": 0.9900508774128538
+      }
+    },
+    {
+      "component_alignment_with_corpus_gradient": {
+        "STOP": {
+          "cosine": null,
+          "dot": 0.0,
+          "module_norms": {
+            "actor": 0.0,
+            "encoder": 0.0,
+            "stop": 0.0
+          },
+          "norm": 0.0
+        }
+      },
+      "legal_motion_count": 0,
+      "observation_hash": "sha256:bfb83876cf7daf568f636322ac416622af0f37422eefe333ad3e5c5af584e83d",
+      "step": 12,
+      "subject": "ReMIND-045",
+      "teacher_action": "STOP",
+      "weighted_loss": {
+        "STOP": -0.0
+      },
+      "whole_state_alignment_with_corpus_gradient": {
+        "cosine": null,
+        "dot": 0.0,
+        "module_norms": {
+          "actor": 0.0,
+          "encoder": 0.0,
+          "stop": 0.0
+        },
+        "norm": 0.0
+      }
+    }
+  ],
+  "source_arrays_written": false,
+  "status": "complete_frozen_gradient_readout",
+  "version": "frozen_public_motion_gradient_alignment_v1"
+}

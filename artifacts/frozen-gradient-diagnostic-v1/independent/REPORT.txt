@@ -1,0 +1,66 @@
+Frozen TRAIN ranking-gradient diagnostic: independent saved-only interpretation
+
+Result: PASS for saved bindings, counters and scalar arithmetic; this is not an
+independent recomputation of gradients. audit_saved.py uses the standard library
+only: 573 checks, 143 text inputs including 89 source files. No weights, source
+image arrays, model calls, native replay, optimizer or canonical edits occurred.
+
+The exact result eef9082a81dfb56137c6f072184e699c233a9059bd24630ee1e45c93d681038c
+and parent bind release e702334009d41838d1ad13daaaf079a434c2da4f4e5eaca06742e51dbb3f0c3e
+and HEAD 4d1d0ff193275696c53cc907c8eb8aa79f6f3094. Parent exited 0, reaped its
+worker, retained no owned PID and reported no cleanup error: 96.579904 s,
+1,377,370,112 sampled peak bytes. Counts agree: 29 forwards, 79 autograd.grad
+calls, 58 collector/replay transitions, 5,184 previews, four TRAIN visits, one
+checkpoint load; zero optimizer/backward/search/forbidden-IO calls. Worker
+attests identical parameters, empty gradient buffers and restored flags.
+
+All 29 states bind the original observation/action/mask/teacher identities and
+frozen ranking checkpoint metadata. Teacher trace/plan/context seals match.
+Fresh independent replay certificates differ from historical ones only in
+evaluation_seconds; their new hashes legitimately change the cache seal. The
+first audit assertion incorrectly required entire cache equality; it was
+replaced with explicit trace identity plus all-four fresh-certificate joins.
+No source/runtime repair was required. Gradient report hash:
+8d287f5067973c799ec5fe3293e146b8a9b98f8f112a3db87890f05814d0c6fd.
+
+The motion-ranking component dominates this instantaneous raw gradient:
+  ranking norm 1.265235491; full norm 1.265130953; cosine 0.999877591.
+  gate norm 0.029811355; STOP norm 0.019546553;
+  combined gate+STOP norm 0.019796158 (1.565% of ranking norm).
+The ranking norm decomposes into encoder 1.219763337 and actor 0.336152122,
+with zero direct STOP-head gradient. These are norms, not causal attribution.
+
+The derivative is for teacher logit minus the currently top motion logit,
+under one infinitesimal negative raw-gradient direction. Positive means that
+specific margin increases. Across 25 motion states, ranking-only and full
+directions each help 12, hurt 12, and give zero at the one already-selected
+teacher. Removing STOP and gate flips no signs. All 24 wrong motion choices
+have positive public nominal regret. Among 15 rows with regret >1 reward unit
+(descriptive threshold, not a new selection rule), both directions help 9 and
+hurt 6. Motion-only training therefore is not supported as a universal fix.
+
+State coupling is concrete: the same-state ranking direction helps 19 of the
+24 wrong rows, but corpus accumulation reverses 12 of those to harm (015 steps
+0,2,5,6,8,9,10,11,12; 045 steps 3,7,10). Conversely, at 045 steps 0,1,2,4,5 the
+same-state pairwise-ranking direction itself hurts the teacher margin while
+the corpus direction helps. Optimizing all reward-weighted pairs through
+shared parameters need not improve every teacher-versus-top pair. This is
+local objective/parameter interference, not evidence of incorrect loss math.
+
+STOP is not the dominant motion-ranking explanation here. The two discretionary
+teacher STOP states (002/018) already rank STOP first, probabilities 0.99999094
+and 0.99889827. The terminal 015/045 STOP states have no legal motion and p=1;
+their zero STOP gradients provide no evidence of learned stopping. STOP's
+aggregate dot with full gradient is -0.022836568, so a negative full raw-gradient
+direction locally increases STOP CE; gate and ranking CE locally decrease.
+That identifies a possible tradeoff, not observed forgetting from an update.
+
+Limits: one fixed TRAIN endpoint and teacher-produced states; no Adam moments,
+finite step, changed argmax, on-policy rollout, transfer or clinical outcome
+was evaluated. The already-correct margin is identically zero because its two
+logits are the same variable; it is not a stationarity test. Saved norms/dots
+can be checked algebraically but the vectors cannot be independently recovered
+without new model work. No irreducible representation failure is established.
+This evidence does not justify removing STOP supervision or another blind fit.
+Retain it as a learner diagnostic while the new steering's shared runtime,
+information boundary and independently useful hybrid task take priority.

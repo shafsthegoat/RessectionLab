@@ -32,7 +32,11 @@ def write(root, name, value):
 
 @pytest.fixture
 def declaration():
-    return json.loads((ROOT / r.MANIFEST).read_bytes())
+    # Temporary controls bind the interpreter running this test. The archived
+    # patient experiment retains its original runtime unchanged on disk.
+    value = json.loads((ROOT / r.MANIFEST).read_bytes())
+    value["runtime"] = r.runtime_identity()
+    return value
 
 
 @pytest.mark.parametrize("change", [
@@ -106,6 +110,10 @@ def test_authentication_precedes_any_patient_read(tmp_path, monkeypatch, declara
     monkeypatch.setattr(r.subprocess, "run", lambda command, **kwargs:
                         SimpleNamespace(stdout=(tmp_path / command[2].split(":", 1)[1]).read_bytes()))
     assert r.authenticate(name, "header-qc")[1] == release
+    with monkeypatch.context() as altered:
+        altered.setattr(r, "runtime_identity", lambda: {**declaration["runtime"], "numpy": "changed"})
+        with pytest.raises(ValueError, match="RUNTIME_BINDING_CHANGED"):
+            r.authenticate(name, "header-qc")
     actual_runtime = r.runtime_identity()
     with monkeypatch.context() as changed:
         changed.setattr(r, "runtime_identity", lambda: {**actual_runtime, "numpy": "different"})

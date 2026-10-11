@@ -237,7 +237,12 @@ def test_historical_source_default_record_fingerprint_inventory_observation_and_
         old=prior.NominalCavityProposalConfig(**kwargs);new=NominalCavityProposalConfig(**kwargs)
         assert new.to_record()==asdict(old) and new.fingerprint==old.fingerprint
     previous=load('native_spatial_task');case=source(enabled=False)
-    old_case=previous.NativeSpatialCase(**{f.name:getattr(case,f.name) for f in fields(case) if f.init})
+    # Compare the old API with the unchanged default, not opt-in fields added
+    # after this archived constructor was frozen.
+    prior_fields={f.name for f in fields(previous.NativeSpatialCase) if f.init}
+    newer_fields={f.name for f in fields(case) if f.init}-prior_fields
+    assert newer_fields == {'post_exposure'} and case.post_exposure is None
+    old_case=previous.NativeSpatialCase(**{name:getattr(case,name) for name in prior_fields})
     old=previous.NativeSpatialTask(old_case);new=NativeSpatialTask(case)
     assert old_case.source_hash==case.source_hash and old.decision_model_hash==new.decision_model_hash
     assert old.candidate_inventory()==new.candidate_inventory()

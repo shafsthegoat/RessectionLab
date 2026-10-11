@@ -1,0 +1,217 @@
+{
+  "caps": {
+    "autograd_grad_calls": 79,
+    "checkpoint_loads": 1,
+    "collector_replay_steps": 58,
+    "log_bytes": 2097152,
+    "native_previews": 35040,
+    "output_bytes": 16777216,
+    "parent_seconds": 210,
+    "policy_forwards": 29,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 4,
+    "supervision_bytes": 4194304,
+    "threads": 1,
+    "worker_seconds": 180
+  },
+  "checkpoint": {
+    "bytes": 137636,
+    "parameter_hash": "sha256:ec843adeb3ce854c2d516848b5f26a4f855a25d3f4369b28543e1ae6be7c1ed6",
+    "path": "build/public-motion-ranking-il64-v1/IL64/attempt-01/IL-final.psckpt",
+    "sha256": "2825ad738591f786f1fa5b3383cd74c4126e1ab57f0494b04b2c8c52e44bfa0e"
+  },
+  "cohort_limits": {
+    "checkpoint_bytes": 8388608,
+    "max_native_previews": 7297920,
+    "max_optimizer_updates": 128,
+    "max_policy_forwards": 18624,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "output_bytes": 134217728,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 900
+  },
+  "execution_released": true,
+  "expected_head": "4d1d0ff193275696c53cc907c8eb8aa79f6f3094",
+  "helper": {
+    "path": "build/public-motion-ranking-v1/frozen-gradient-diagnostic-v1/gradient_diagnostic.py",
+    "sha256": "cc183fcd3e76667ab81a2b117ee3d058269a6831f0fd33318504c81e4d7140dd"
+  },
+  "input_pins_sha256": "dbf171f3a3876abd153c91ba36c0efbd83639339fec3ed16c3dc02ede17f9d2b",
+  "learning_protocol": {
+    "architecture": {
+      "critic_candidate_context": true,
+      "encoder_channels": [
+        8,
+        16
+      ],
+      "hidden_features": 32,
+      "physical_reference_mm": 10.0,
+      "ray_samples": 5
+    },
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "clinical_claim": false,
+    "cohort_execution": {
+      "accumulation": "complete-trace-actionwise-shared-gradient-v1",
+      "heldout_execution": false,
+      "il_motion_supervision": {
+        "STOP_states": 4,
+        "corpus_hash": "sha256:5147c784a1e4aee38ffd2cf95881c40914f9807727d54eeaa4dce618100da0be",
+        "motion_states": 25,
+        "state_count": 29,
+        "version": "public_nominal_motion_gap_ranking_v1"
+      },
+      "il_teacher_weighting": "balanced_STOP_motion_CE_v1",
+      "live_source_patients": 1,
+      "max_steps": 24,
+      "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+      "patient_order": [
+        "ReMIND-002",
+        "ReMIND-015",
+        "ReMIND-018",
+        "ReMIND-045"
+      ],
+      "post_exposure_condition": "public-union-post-exposure-axis0-v1",
+      "proposal_config": {
+        "intermediate_opening_mm": 1.0,
+        "max_candidates": 120,
+        "nominal_min_membership": 0.0,
+        "offsets_source_voxels": [
+          [
+            0,
+            0
+          ],
+          [
+            -2,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            -2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            -2,
+            -2
+          ],
+          [
+            -2,
+            2
+          ],
+          [
+            2,
+            -2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            -3,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            0,
+            -3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "tool_footprint_opening": true
+      },
+      "proposal_rule_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+      "retained_prefix_diagnostics": true,
+      "retention_mode": "return_plus_opening_depth_volume_v1",
+      "search": {
+        "beam_width": 2,
+        "max_calls": 5640,
+        "seconds": 300
+      },
+      "task_condition": "PARTIAL_TARGET_PROGRESS",
+      "teacher_cache_payload_bytes": 268435456,
+      "teacher_decisions": 29,
+      "teacher_observations": "cache_complete_replayed_TRAIN_teacher_traces_v1",
+      "teacher_source": "fixed_saved_greedy_complete_histories_v1",
+      "teacher_steps": [
+        1,
+        14,
+        1,
+        13
+      ]
+    },
+    "entropy_weight": 0.01,
+    "eps": 1e-08,
+    "gamma": 1.0,
+    "initialization": "same_fresh_spatial_parameters_no_checkpoint_load",
+    "learning_rate": 0.001,
+    "max_gradient_norm": 5.0,
+    "methods": [
+      "IL",
+      "RL"
+    ],
+    "patient_adaptation": false,
+    "population_training": true,
+    "private_training_reward": false,
+    "public_target_context_variant": "full-supplied-public-target-context-v1",
+    "rl_episodes": 4,
+    "scope": "fixed_four_TRAIN_shared_population_pilot",
+    "seed": 20261010,
+    "updates_per_method": 64,
+    "value_weight": 0.5,
+    "version": "fixed-four-TRAIN-post-exposure-learning-v1"
+  },
+  "learning_protocol_hash": "sha256:65fd88ba268e5c79ea8b0d4204ab6efe5b313d11c4b82b0820c6e6ef2010473e",
+  "limits": {
+    "max_native_previews": 7297920,
+    "max_optimizer_updates": 128,
+    "max_policy_forwards": 18624,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 900
+  },
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "public_index": {
+    "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json",
+    "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8"
+  },
+  "scope": "fixed TRAIN raw-gradient diagnostic; no new policy rollouts or SELECT/EVAL access",
+  "source_index": {
+    "path": "build/frozen-gradient-diagnostic-owned-v1/source-index.json",
+    "sha256": "f5e312312f7f5faf90c9549a89f60e94f8151622f188a04bf0e5eef8053e7cbf"
+  },
+  "subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "training_updates_authorized": 0,
+  "version": "frozen-ranking-gradient-diagnostic-v1"
+}
