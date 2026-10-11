@@ -407,36 +407,48 @@ head calls, backward and optimizer steps are reported separately.
         raise ValueError('Bounded score declaration required')
     corpus.require(policy)
     guard = corpus._guard
-    head = copy.deepcopy(policy.actor)
-    head.train()
-    for p in head.parameters():
-        p.requires_grad_(True)
-    initial = parameter_hash(head)
-    x = torch.tensor(np.array(corpus.features, copy=True))
-    y = torch.tensor(np.array(corpus.targets, copy=True))
-    w = torch.tensor(np.array(corpus.weights, copy=True))
-    stops = torch.tensor(np.array(corpus.stop_rows, copy=True))
-    optimizer = torch.optim.Adam(head.parameters(), lr=config.learning_rate,
-        betas=(.9, .999), eps=1e-8, weight_decay=0., amsgrad=False, foreach=False, fused=False)
-    rows = []; started = time.perf_counter()
+    started = time.perf_counter()
+    rows = []
+    work = {name + suffix: 0 for name in ('head_training_forwards',
+        'head_readout_forwards', 'head_backward_calls', 'head_optimizer_steps')
+        for suffix in ('_attempted', '_completed')}
     try:
+        head = copy.deepcopy(policy.actor)
+        head.train()
+        for p in head.parameters():
+            p.requires_grad_(True)
+        initial = parameter_hash(head)
+        x = torch.tensor(np.array(corpus.features, copy=True))
+        y = torch.tensor(np.array(corpus.targets, copy=True))
+        w = torch.tensor(np.array(corpus.weights, copy=True))
+        stops = torch.tensor(np.array(corpus.stop_rows, copy=True))
+        optimizer = torch.optim.Adam(head.parameters(), lr=config.learning_rate,
+            betas=(.9, .999), eps=1e-8, weight_decay=0., amsgrad=False, foreach=False, fused=False)
         for update in range(config.updates):
             if time.perf_counter() - started > config.seconds or (cancelled and cancelled()):
                 raise RuntimeError('Continuation fit time/cancellation cap')
             guard.require()
             optimizer.zero_grad(set_to_none=True)
+            work['head_training_forwards_attempted'] += 1
             prediction = head(x).squeeze(-1).masked_fill(stops, 0.)
+            work['head_training_forwards_completed'] += 1
             loss = ((prediction - y).square() * w).sum()
             if not torch.isfinite(loss):
                 raise FloatingPointError('Nonfinite continuation objective')
+            work['head_backward_calls_attempted'] += 1
             loss.backward()
+            work['head_backward_calls_completed'] += 1
             norm = float(nn.utils.clip_grad_norm_(head.parameters(), config.max_gradient_norm,
                 error_if_nonfinite=True))
+            work['head_optimizer_steps_attempted'] += 1
             optimizer.step()
+            work['head_optimizer_steps_completed'] += 1
             rows.append({'update': update + 1, 'weighted_mse_before_update': float(loss.detach()),
                          'gradient_norm_before_clip': norm})
+        work['head_readout_forwards_attempted'] += 1
         with torch.no_grad():
             final_loss = float(((head(x).squeeze(-1).masked_fill(stops, 0.) - y).square() * w).sum())
+        work['head_readout_forwards_completed'] += 1
         if not math.isfinite(final_loss):
             raise FloatingPointError('Nonfinite fitted continuation objective')
         head.eval()
@@ -456,5 +468,28 @@ head calls, backward and optimizer steps are reported separately.
                 'freeze_checks': guard.checks, 'freeze_check_seconds': guard.seconds}}
         return FittedContinuationValue(guard, head, corpus.metadata['worlds'], report,
             max_scores=max_scores, seconds=score_seconds, cancelled=cancelled)
-    finally:
-        guard.require()
+    except BaseException as error:
+        # Never replace the original failure with a secondary integrity error.
+        # A step which raised after mutating its head is attempted, not known to
+        # have completed; the separate counters preserve that uncertainty.
+        base_unchanged = None
+        integrity_error = None
+        try:
+            guard.require()
+            base_unchanged = True
+        except BaseException as check_error:
+            base_unchanged = False
+            integrity_error = type(check_error).__name__ + ': ' + str(check_error)[:200]
+        accounting = {**work, 'completed_updates': work['head_optimizer_steps_completed'],
+            'optimizer_step_completion_unknown': work['head_optimizer_steps_attempted']
+                != work['head_optimizer_steps_completed'],
+            'update_rows': [dict(row) for row in rows],
+            'elapsed_seconds': time.perf_counter() - started,
+            'base_parameters_unchanged': base_unchanged,
+            'base_integrity_error': integrity_error,
+            'base_policy_forwards': 0, 'base_optimizer_steps': 0}
+        try:
+            error.continuation_fit_accounting = accounting
+        except BaseException:
+            pass  # Unusual immutable exception objects must still propagate.
+        raise

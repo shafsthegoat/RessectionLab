@@ -277,3 +277,41 @@ def test_unequal_length_forced_STOP_trace_keeps_declared_subject_and_trace_mass(
     assert np.sum(corpus.weights[1:4]) == pytest.approx(.125)
     assert np.sum(corpus.weights[:4]) == pytest.approx(.25)
     assert np.sum(corpus.weights) == pytest.approx(1.)
+
+
+@pytest.mark.parametrize('also_break_base_integrity', [False, True])
+def test_partial_fit_costs_survive_original_error_and_secondary_integrity_failure(
+        monkeypatch, also_break_base_integrity):
+    policy, traces, manifest = generated_fixture()
+    corpus = corpus_for(policy, traces, manifest)
+    before = parameter_hash(policy)
+    original_step = torch.optim.Adam.step
+    original_error = RuntimeError('generated second optimizer call failure')
+    attempts = 0
+    def fail_second(optimizer, *args, **kwargs):
+        nonlocal attempts
+        attempts += 1
+        if attempts == 2:
+            if also_break_base_integrity:
+                with torch.no_grad():
+                    next(policy.encoder.parameters()).add_(.001)
+            raise original_error
+        return original_step(optimizer, *args, **kwargs)
+    monkeypatch.setattr(torch.optim.Adam, 'step', fail_second)
+    with pytest.raises(RuntimeError, match='second optimizer') as caught:
+        fit_continuation_value(policy, corpus, config=ContinuationFitConfig(updates=3))
+    assert caught.value is original_error
+    costs = caught.value.continuation_fit_accounting
+    assert costs['head_training_forwards_attempted'] == costs['head_training_forwards_completed'] == 2
+    assert costs['head_backward_calls_attempted'] == costs['head_backward_calls_completed'] == 2
+    assert costs['head_optimizer_steps_attempted'] == 2
+    assert costs['head_optimizer_steps_completed'] == costs['completed_updates'] == 1
+    assert costs['optimizer_step_completion_unknown'] is True
+    assert costs['head_readout_forwards_attempted'] == costs['head_readout_forwards_completed'] == 0
+    assert len(costs['update_rows']) == 1 and costs['update_rows'][0]['update'] == 1
+    assert costs['elapsed_seconds'] >= 0.
+    assert costs['base_policy_forwards'] == costs['base_optimizer_steps'] == 0
+    assert costs['base_parameters_unchanged'] is (not also_break_base_integrity)
+    assert (costs['base_integrity_error'] is not None) is also_break_base_integrity
+    assert (parameter_hash(policy) == before) is (not also_break_base_integrity)
+    assert all(p.grad is None for p in policy.parameters())

@@ -1,0 +1,32 @@
+{
+  "files": {
+    "combined-controls-03.json": "6f604d790062d9b8d8ef046276675ac365840c1e464d0ac8972c2b650a8c542f",
+    "bootstrap-receipt-00.json": "4c77b7f68a7530c7b6af01fa7a7aa8cfad957936cbe61d733531dbd259acdabe",
+    "combined-controls-03.log": "d00a723781c6c019edd42910cda26d3db3aaeea3272af2186646a7ec1639be45",
+    "independent-source-review.txt": "c6434a7208bb409ea536466904023e89758828d75cf6f0e18133f6e4bc8a3f83",
+    "runner/worker.py": "b5de1872b89e5ce78ceb6e3eaa057bf66b08e943f789f55daea62f8e72892b86",
+    "runner/config.json": "479c2d456401fb0ada2a47a5c4e41ed27b566610cad6cb676535f6c1d9ab0b25",
+    "runner/freeze_sources.py": "7459d9feac30ff0f48fb221e1960d3d78fabb7d2db8770a94c60bfc6ef68d25c",
+    "runner/README.md": "7967091615d28cdc3e5373eaa057c18327f6f64164ccccb95db42bea262f99fc",
+    "runner/inputs.py": "b5b67029cb20ea0df23dd05820a7ec0c6b1a13537c36b970b070f0e6540d4169",
+    "runner/common.py": "f535f9b183b53bccf25f47b9090569875caba3b9384dd6b9f598e481711960fa",
+    "runner/test_runner.py": "feb14ac92c264875a86c2442f0d2d1817db1011c88d0b0e6b8c32091d24e678f",
+    "runner/run_owned.py": "c1ab571397e60ef3d81b9cfbf5fe1f4bdf3066dde0faab5dd742bbd72070a6a3",
+    "runner/bootstrap_smoke.py": "0cd0db0e915a9652da535e1bd6184f8fde591d24cdf6a8ba40dd0b75bc22cbc2"
+  },
+  "canonical_source_pins": {
+    "src/resectionlab/spatial_continuation_value.py": "fbe26f0f178d903b3ef032dceb38c6aadab34ce4c2aef7d9e816d90d98243588",
+    "src/resectionlab/spatial_continuation_planner.py": "89930ed79d8ef41f4ec8e8e7968c997eb93df927de3084d99e3a48cca1c7c604",
+    "tests/test_spatial_continuation_value.py": "383ae72c44d96ccb2c16fb826c7261eb1a5235d2c1a122d7cfce5ea3c07e1808",
+    "tests/test_spatial_continuation_planner.py": "10ae636da8bbf4ea2bb3e23ef6de33d9e1536f714ddb8fdd9d86ca6a491deee4",
+    "build/train-continuation-value-v1/runner/worker.py": "b5de1872b89e5ce78ceb6e3eaa057bf66b08e943f789f55daea62f8e72892b86",
+    "build/train-continuation-value-v1/runner/freeze_sources.py": "7459d9feac30ff0f48fb221e1960d3d78fabb7d2db8770a94c60bfc6ef68d25c",
+    "build/train-continuation-value-v1/runner/inputs.py": "b5b67029cb20ea0df23dd05820a7ec0c6b1a13537c36b970b070f0e6540d4169",
+    "build/train-continuation-value-v1/runner/common.py": "f535f9b183b53bccf25f47b9090569875caba3b9384dd6b9f598e481711960fa",
+    "build/train-continuation-value-v1/runner/test_runner.py": "feb14ac92c264875a86c2442f0d2d1817db1011c88d0b0e6b8c32091d24e678f",
+    "build/train-continuation-value-v1/runner/run_owned.py": "c1ab571397e60ef3d81b9cfbf5fe1f4bdf3066dde0faab5dd742bbd72070a6a3",
+    "build/train-continuation-value-v1/runner/bootstrap_smoke.py": "0cd0db0e915a9652da535e1bd6184f8fde591d24cdf6a8ba40dd0b75bc22cbc2",
+    "build/train-continuation-value-v1/runner/config.json": "479c2d456401fb0ada2a47a5c4e41ed27b566610cad6cb676535f6c1d9ab0b25"
+  },
+  "runtime_source_location": "build/train-continuation-value-v1/runner"
+}
