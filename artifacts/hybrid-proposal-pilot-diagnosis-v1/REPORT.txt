@@ -1,0 +1,82 @@
+The fixed TRAIN ridge proposal pilot remains a NO-GO under its original gates.
+All twelve episodes are accepted. Ridge preserves target cell counts 0/58/0/51,
+outside-target removal and contact measures, but loses 0.030553125842 return on
+045. This projection reads saved JSON and source text only. No arrays, feature
+reconstruction, coefficients, refit, native queries or model execution occurred.
+
+045 cause
+The first divergence is decision 12 (zero-based step 11), after eleven identical
+motions. Native state and public-input hashes match exhaustive and the recorded
+TRAIN teacher state. Only 2 of 91 raw proposals have positive priority labels.
+Ridge ranks a suction ray first; its other seven shortlisted rays are blocked.
+The legal, higher-reward teacher aspirator footprint ray is NOT_QUERIED. Its
+exact predicted score and rank were not saved: only rank 9–91 is established.
+
+Both actions remove the same last target cell [124,70,78]. The selected suction
+ray is column 8, offset [2,2], endpoint [124,70,78], path 8.8359404673 mm, reward
+0.8848395584. The omitted aspirator ray uses the same column, endpoint
+[125,70,78], path 8.2828146252 mm, reward 0.9153926843. The prior tool is the
+aspirator. One tool switch costs 0.03; the extra 0.5531258421 mm costs
+0.0005531258421. These explain the entire return difference. Native greedy
+correctly chose the best certified option; shortlist exclusion caused the loss.
+
+Twenty-four positive teacher states share exactly the saved ridge rollout input.
+Twenty-three retain the best native reward within 1e-7. Several 015 states omit
+the literal teacher ID but retain an equal-reward alternative. One 015 state and
+the final 045 STOP state have different input bindings; the all-29-state table
+keeps them visible and excludes them from matched-state recall.
+
+Heuristic cause and evidence limits
+All 32 queried root candidates are shaft-blocked: 28 distal nominal, 2 proximal
+nominal and 2 intermediate openings; 31 aspirator rays and 1 suction ray.
+Exhaustive nevertheless has 39 positive legal root motions on 015 and 41 on 045.
+The proxy rewards sampled remaining target times nominal tip-cylinder volume;
+it does not assess prior-cavity shaft clearance or exact contained removal.
+Thus the observed failure is unreachable shortlist selection, not missing-target
+input evidence. Numeric proxy scores, sample values and coverage bits were not
+saved. We cannot identify zero samples, coverage gaps or feature aliasing.
+
+Measured costs and baseline repair
+Ridge uses 232 versus 2,592 online previews and 9.859446 versus 44.740926 seconds
+from source preparation through plan. Replay/audit is separately 25.009537
+versus 71.624767 seconds. Whole worker/owned-parent times are 228.6060/231.0074
+seconds, including the 29 teacher decisions, one fit and all twelve plans and
+replays. This is one ordered instrumented TRAIN run, not matched historical
+neural latency, sustained speed or minimum-cost native greedy.
+
+Exhaustive unnecessarily computes the 681 features and proxy. Its saved online
+feature time is 0.195009 seconds (0.436% of online wall); ranking is 0.0000639
+seconds. Replay feature time adds 0.194484 seconds. The 4.793028-second inventory
+residual combines ledger assembly, logging, guards and other work. Logging was
+not timed separately and cannot be subtracted as a measured saving.
+
+Before a future comparison, let exhaustive bypass unused features/proxy work
+and give every arm equivalent lightweight logging. Verify exact catalogs,
+certificate/order/score and full-episode parity on generated controls. This is
+benchmark hygiene, separate from any learning change; preserve the first result.
+
+Literal gates
+Only 045 return fails against exhaustive. Against the all-STOP heuristic, 015
+and 045 fail the raw-contact no-worse condition: contact upper bounds are
+205.993652 and 202.179206 mm3 versus zero. Contact includes target tissue and is
+not a clinical injury label. Any productive route with positive contact fails
+that particular comparison to STOP. Do not change this run's gate or reinterpret
+it as a pass. A different future objective needs an explicit prospective rule.
+
+One proposed learning contrast; no implementation or release
+Keep the ridge architecture, 681 features, lambda 0.001, top eight, world,
+proposals and exact native verification. Change only regression weighting:
+within each mixed teacher state give positive-priority and zero-priority rows
+half the mass each, retaining equal state totals and all-zero states. Keep the
+original feature normalization fixed. At the failed state, positive rows now
+receive only 2/91 = 2.20% of state weight; this contrast gives them 50%.
+
+This tests sparse-positive recall under global regression; it is a hypothesis,
+not an identified cause. Save full scores/ranks on all 29 states. Falsifiers:
+the higher-reward 045 motion still falls outside eight, or complete outcomes
+worsen elsewhere. Do not target arbitrary teacher IDs, expand the shortlist,
+change reward/features, or sweep class weights. The original contact gate stays
+false even if this local loss is repaired; report that separately and candidly.
+
+Reproduce: python3 -B build/hybrid-proposal-pilot-diagnosis-v1/derive_saved.py
+Evidence: diagnosis.json (scalar joins), inputs.json (exact saved inputs).

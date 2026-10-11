@@ -1652,3 +1652,17 @@ active-workflow saving, paired admission, complete source-binding and an
 uncommitted-hook dependency. Negative evidence and screenshot are retained.
 This is fixed generated v1 continuity; v2 observation-dependent movement is not
 yet exposed in the desktop and physical validation remains unresolved.
+
+## October 11 — Learned shortlist pilot complete, original gate false
+
+[The fixed four-TRAIN comparison](../artifacts/hybrid-proposal-pilot-v1/RESULT.md)
+completes all twelve routes in 231.007419 owned seconds at 715.46 MB sampled peak.
+Ridge retains 0/58/0/51 target cells and uses 232 versus 2,592 online previews;
+045 loses exactly 0.030553126 return through one switch and extra travel.
+The heuristic's32 root queries are all blocked. The declared quality and
+heuristic contact gates stay false; no criteria are retroactively changed.
+Independent saved audit passes3,582 checks, retaining its first reader-only
+historical identity mismatch. Full costs and the instrumented exhaustive timing
+limitation are recorded. SELECT/EVAL remain closed. One prospective balanced
+positive/zero loss contrast retains original normalization/features/top8 and
+requires fresh original-ridge plus lean exhaustive controls; it is not a result.

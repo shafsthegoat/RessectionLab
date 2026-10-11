@@ -1,0 +1,143 @@
+{
+  "K": 8,
+  "SELECT_EVAL_closed": true,
+  "arms": [
+    "ridge_top8",
+    "sampled_target_top8",
+    "exhaustive"
+  ],
+  "cache_limits": {
+    "max_entries": 16384,
+    "max_payload_bytes": 33554432
+  },
+  "cache_scope": "fresh cache before every planning constructor; restored before authoritative replay",
+  "caps": {
+    "feature_count": 681,
+    "fit_rows": 3480,
+    "fits": 1,
+    "log_bytes": 2097152,
+    "native_previews": 40000,
+    "native_transitions": 634,
+    "output_bytes": 67108864,
+    "parent_seconds": 660,
+    "ridge_calls": 192,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 28,
+    "supervision_bytes": 8388608,
+    "threads": 1,
+    "worker_seconds": 600
+  },
+  "cohort": {
+    "path": "manifests/experiments/remind-component-cohort-v1.json",
+    "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+  },
+  "execution_released": true,
+  "expected_head": "5fe581e965d7204dd8cb9952fe03725446783b94",
+  "fit": {
+    "label": "max(0, nominal immediate native reward) if legal, else zero; not safety",
+    "ridge_lambda": 0.001,
+    "state_weights": "equal_then_uniform_within_state",
+    "states": 29,
+    "teacher_steps": [
+      1,
+      14,
+      1,
+      13
+    ]
+  },
+  "gates": {
+    "all_four_complete": true,
+    "heuristic_comparison": "quality improvement, or equal quality and wall ratio <=0.9",
+    "meaning": "TRAIN go/no-go only; one ordered measurement, no transfer/clinical/sustained-speed claim",
+    "no_quality_loss_vs_exhaustive": true,
+    "numeric_tolerance": 1e-07,
+    "online_preview_ratio_max": 0.5,
+    "source_through_plan_wall_ratio_max": 0.8
+  },
+  "horizon": 24,
+  "no_optimizer_or_neural_model": true,
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "post_exposure_condition": "public-union-post-exposure-axis0-v1",
+  "proposal_config": {
+    "intermediate_opening_mm": 1.0,
+    "max_candidates": 120,
+    "nominal_min_membership": 0.0,
+    "offsets_source_voxels": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "tool_footprint_opening": true
+  },
+  "public_index": {
+    "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json",
+    "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8"
+  },
+  "search_seconds": 60,
+  "source_index": {
+    "path": "build/hybrid-proposal-pilot-v1/source-index.json",
+    "sha256": "7ecb61085f8306a1b495190dd5ca5b07ef362c0c5df50f68b25e4aeb48b60c1f"
+  },
+  "source_world_hashes": {
+    "ReMIND-002": "sha256:27f4414796f49256181161f3f770f4ea75c242059bcc583c01817f65949b0f5b",
+    "ReMIND-015": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524",
+    "ReMIND-018": "sha256:0db487c202c1fef5ce408c6dc593f6a42ce12f6f2b630807174ba9f37727edd6",
+    "ReMIND-045": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938"
+  },
+  "subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "version": "fixed-four-TRAIN-public-ridge-proposal-v1"
+}

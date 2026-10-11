@@ -1,0 +1,1643 @@
+{
+  "all_teacher_states": [
+    {
+      "best_priority_label": 0.0,
+      "best_queried_native_reward": 0.0,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 0,
+      "raw_count": 117,
+      "same_public_input_binding": true,
+      "step": 0,
+      "subject": "ReMIND-002",
+      "teacher_action": "STOP",
+      "teacher_label": null,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": null
+    },
+    {
+      "best_priority_label": 5.687669335607047,
+      "best_queried_native_reward": 5.687669335607047,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 39,
+      "raw_count": 78,
+      "same_public_input_binding": true,
+      "step": 0,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-81c114a0600538d67baf4414",
+      "teacher_label": 5.687669335607047,
+      "teacher_priority_rank_if_top8": 1,
+      "teacher_shortlisted": true
+    },
+    {
+      "best_priority_label": 5.687669335607047,
+      "best_queried_native_reward": 5.687669335607047,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 36,
+      "raw_count": 79,
+      "same_public_input_binding": true,
+      "step": 1,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-f4acd820cbfb0ed0423e8ce1",
+      "teacher_label": 5.687669335607047,
+      "teacher_priority_rank_if_top8": 8,
+      "teacher_shortlisted": true
+    },
+    {
+      "best_priority_label": 5.687669335607047,
+      "best_queried_native_reward": 5.687669335607047,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 33,
+      "raw_count": 80,
+      "same_public_input_binding": true,
+      "step": 2,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-a5152cdc336beea2377717f9",
+      "teacher_label": 5.687669335607047,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": false
+    },
+    {
+      "best_priority_label": 5.687669335607047,
+      "best_queried_native_reward": 5.687669335607047,
+      "best_reward_retained_when_same_input": null,
+      "positive_label_count": 30,
+      "raw_count": 81,
+      "same_public_input_binding": false,
+      "step": 3,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-1cbd3c4a581f4b88810331ab",
+      "teacher_label": 5.687669335607047,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": false
+    },
+    {
+      "best_priority_label": 5.687669335607047,
+      "best_queried_native_reward": 5.687669335607047,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 27,
+      "raw_count": 82,
+      "same_public_input_binding": true,
+      "step": 4,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-fde756f16b8890d097dfa2b2",
+      "teacher_label": 5.687669335607047,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": false
+    },
+    {
+      "best_priority_label": 5.687669335607047,
+      "best_queried_native_reward": 5.687669335607047,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 24,
+      "raw_count": 85,
+      "same_public_input_binding": true,
+      "step": 5,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-0bff70bcda7abbbf6f4ba2b5",
+      "teacher_label": 5.687669335607047,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": false
+    },
+    {
+      "best_priority_label": 5.687669335607047,
+      "best_queried_native_reward": 5.687669335607047,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 20,
+      "raw_count": 87,
+      "same_public_input_binding": true,
+      "step": 6,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-9191b5ecb52d9653e6653b46",
+      "teacher_label": 5.687669335607047,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": false
+    },
+    {
+      "best_priority_label": 5.687669335607047,
+      "best_queried_native_reward": 5.687669335607047,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 16,
+      "raw_count": 89,
+      "same_public_input_binding": true,
+      "step": 7,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-18a27c9bdaedc0c78c8b1eb5",
+      "teacher_label": 5.687669335607047,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": false
+    },
+    {
+      "best_priority_label": 5.687669335607047,
+      "best_queried_native_reward": 5.687669335607047,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 12,
+      "raw_count": 91,
+      "same_public_input_binding": true,
+      "step": 8,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-6b6ca940447e253f73e6a608",
+      "teacher_label": 5.687669335607047,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": false
+    },
+    {
+      "best_priority_label": 0.9192977538345078,
+      "best_queried_native_reward": 0.9192977538345078,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 8,
+      "raw_count": 93,
+      "same_public_input_binding": true,
+      "step": 9,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-75d906bf1966eab441bd14fb",
+      "teacher_label": 0.9192977538345078,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": false
+    },
+    {
+      "best_priority_label": 0.9192977538345078,
+      "best_queried_native_reward": 0.9192977538345078,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 6,
+      "raw_count": 93,
+      "same_public_input_binding": true,
+      "step": 10,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-3e0208b4da8b3619067435cd",
+      "teacher_label": 0.9192977538345078,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": false
+    },
+    {
+      "best_priority_label": 0.9192977538345078,
+      "best_queried_native_reward": 0.9192977538345078,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 4,
+      "raw_count": 93,
+      "same_public_input_binding": true,
+      "step": 11,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-db13ac7f68ddec6654723169",
+      "teacher_label": 0.9192977538345078,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": false
+    },
+    {
+      "best_priority_label": 0.9192977538345078,
+      "best_queried_native_reward": 0.9192977538345078,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 2,
+      "raw_count": 93,
+      "same_public_input_binding": true,
+      "step": 12,
+      "subject": "ReMIND-015",
+      "teacher_action": "nominal-cavity-07f21f9720487f7217110137",
+      "teacher_label": 0.9192977538345078,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": false
+    },
+    {
+      "best_priority_label": 0.0,
+      "best_queried_native_reward": 0.0,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 0,
+      "raw_count": 93,
+      "same_public_input_binding": true,
+      "step": 13,
+      "subject": "ReMIND-015",
+      "teacher_action": "STOP",
+      "teacher_label": null,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": null
+    },
+    {
+      "best_priority_label": 0.0,
+      "best_queried_native_reward": 0.0,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 0,
+      "raw_count": 75,
+      "same_public_input_binding": true,
+      "step": 0,
+      "subject": "ReMIND-018",
+      "teacher_action": "STOP",
+      "teacher_label": null,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": null
+    },
+    {
+      "best_priority_label": 5.6837701788669515,
+      "best_queried_native_reward": 5.6837701788669515,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 41,
+      "raw_count": 91,
+      "same_public_input_binding": true,
+      "step": 0,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-2e7122d692aec111fb6a1628",
+      "teacher_label": 5.6837701788669515,
+      "teacher_priority_rank_if_top8": 6,
+      "teacher_shortlisted": true
+    },
+    {
+      "best_priority_label": 5.683770178866951,
+      "best_queried_native_reward": 5.683770178866951,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 37,
+      "raw_count": 91,
+      "same_public_input_binding": true,
+      "step": 1,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-7a69f4a8cd7e8ea71e4af5c2",
+      "teacher_label": 5.683770178866951,
+      "teacher_priority_rank_if_top8": 5,
+      "teacher_shortlisted": true
+    },
+    {
+      "best_priority_label": 8.542843549770952,
+      "best_queried_native_reward": 8.542843549770952,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 34,
+      "raw_count": 91,
+      "same_public_input_binding": true,
+      "step": 2,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-08ddba04f5981a8ffabfe1ee",
+      "teacher_label": 8.542843549770952,
+      "teacher_priority_rank_if_top8": 7,
+      "teacher_shortlisted": true
+    },
+    {
+      "best_priority_label": 4.732047805793682,
+      "best_queried_native_reward": 4.732047805793682,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 25,
+      "raw_count": 91,
+      "same_public_input_binding": true,
+      "step": 3,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-7bdf67f47de6e5ca7ba7d91e",
+      "teacher_label": 4.732047805793682,
+      "teacher_priority_rank_if_top8": 4,
+      "teacher_shortlisted": true
+    },
+    {
+      "best_priority_label": 4.730094679951585,
+      "best_queried_native_reward": 4.730094679951585,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 21,
+      "raw_count": 91,
+      "same_public_input_binding": true,
+      "step": 4,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-6c207425fb1c81db3aaf6bde",
+      "teacher_label": 4.730094679951585,
+      "teacher_priority_rank_if_top8": 2,
+      "teacher_shortlisted": true
+    },
+    {
+      "best_priority_label": 9.496519048686316,
+      "best_queried_native_reward": 9.496519048686316,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 18,
+      "raw_count": 91,
+      "same_public_input_binding": true,
+      "step": 5,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-bca3719c38b5f61afd8f0b51",
+      "teacher_label": 9.496519048686316,
+      "teacher_priority_rank_if_top8": 6,
+      "teacher_shortlisted": true
+    },
+    {
+      "best_priority_label": 1.8710213090475858,
+      "best_queried_native_reward": 1.8710213090475858,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 9,
+      "raw_count": 91,
+      "same_public_input_binding": true,
+      "step": 6,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-5adbe8af9ad1faf0cb454802",
+      "teacher_label": 1.8710213090475858,
+      "teacher_priority_rank_if_top8": 1,
+      "teacher_shortlisted": true
+    },
+    {
+      "best_priority_label": 2.822743682120855,
+      "best_queried_native_reward": 2.822743682120855,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 9,
+      "raw_count": 91,
+      "same_public_input_binding": true,
+      "step": 7,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-c521d0546ad10479e3c347e3",
+      "teacher_label": 2.822743682120855,
+      "teacher_priority_rank_if_top8": 8,
+      "teacher_shortlisted": true
+    },
+    {
+      "best_priority_label": 0.9173458101322204,
+      "best_queried_native_reward": 0.9173458101322204,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 5,
+      "raw_count": 91,
+      "same_public_input_binding": true,
+      "step": 8,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-ca216ec681ac4651f10d5c61",
+      "teacher_label": 0.9173458101322204,
+      "teacher_priority_rank_if_top8": 2,
+      "teacher_shortlisted": true
+    },
+    {
+      "best_priority_label": 0.9173458101322204,
+      "best_queried_native_reward": 0.9173458101322204,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 3,
+      "raw_count": 91,
+      "same_public_input_binding": true,
+      "step": 9,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-d57e3e6d61827150ad7f6c34",
+      "teacher_label": 0.9173458101322204,
+      "teacher_priority_rank_if_top8": 1,
+      "teacher_shortlisted": true
+    },
+    {
+      "best_priority_label": 1.8690681832054892,
+      "best_queried_native_reward": 1.8690681832054892,
+      "best_reward_retained_when_same_input": true,
+      "positive_label_count": 4,
+      "raw_count": 91,
+      "same_public_input_binding": true,
+      "step": 10,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-88bc1008c2bd9995dae66f1b",
+      "teacher_label": 1.8690681832054892,
+      "teacher_priority_rank_if_top8": 3,
+      "teacher_shortlisted": true
+    },
+    {
+      "best_priority_label": 0.9153926842901237,
+      "best_queried_native_reward": 0.884839558448027,
+      "best_reward_retained_when_same_input": false,
+      "positive_label_count": 2,
+      "raw_count": 91,
+      "same_public_input_binding": true,
+      "step": 11,
+      "subject": "ReMIND-045",
+      "teacher_action": "nominal-cavity-3532d3d0aba51e03e0899454",
+      "teacher_label": 0.9153926842901237,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": false
+    },
+    {
+      "best_priority_label": 0.0,
+      "best_queried_native_reward": 0.0,
+      "best_reward_retained_when_same_input": null,
+      "positive_label_count": 0,
+      "raw_count": 91,
+      "same_public_input_binding": false,
+      "step": 12,
+      "subject": "ReMIND-045",
+      "teacher_action": "STOP",
+      "teacher_label": null,
+      "teacher_priority_rank_if_top8": null,
+      "teacher_shortlisted": null
+    }
+  ],
+  "complete_arms": 12,
+  "complete_cases": 4,
+  "first_045_divergence": {
+    "entire_return_gap": 0.030553125842096684,
+    "extra_path_cost": 0.0005531258420967138,
+    "identical_prior_actions": 11,
+    "incremental_path_mm": 0.5531258420967138,
+    "one_based_decision": 12,
+    "positive_labels": 2,
+    "public_input_binding": "sha256:c897949c5c378728fcaa8086fbcf838ed9d3ec8a0ec70cd8eb63fca0c94fb1f3",
+    "raw_count": 91,
+    "same_actual_removed_cells": [
+      [
+        124,
+        70,
+        78
+      ]
+    ],
+    "selected_label": 0.884839558448027,
+    "selected_native_score": {
+      "action_id": "nominal-cavity-9b48bba2b6cea88ca1012ba0",
+      "complete_tool_path_length_mm": 8.83594046733854,
+      "insertion_distance_mm": 4.41797023366927,
+      "normal_removed_mm3": 0.0,
+      "reward": 0.884839558448027,
+      "target_removed_mm3": 0.9536754989153655
+    },
+    "selected_priority_rank": 1,
+    "selected_row": {
+      "action_id": "nominal-cavity-9b48bba2b6cea88ca1012ba0",
+      "column_index": 8,
+      "family": "exposed_opening",
+      "feasible": true,
+      "native_reason": "NATIVE_CONNECTED_STROKE",
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "proposal_id": "nominal-cavity-9b48bba2b6cea88ca1012ba0",
+      "query_disposition": "CERTIFIED_LEGAL",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_suction",
+      "voxel": [
+        124,
+        70,
+        78
+      ]
+    },
+    "selected_top8": {
+      "family_counts": {
+        "distal_nominal": 1,
+        "exposed_opening": 2,
+        "intermediate_opening": 4,
+        "tool_footprint_opening": 1
+      },
+      "legal_count": 1,
+      "native_reasons": {
+        "NATIVE_CONNECTED_STROKE": 1,
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 7
+      },
+      "raw_count": 91,
+      "selected_rows_in_priority_order": [
+        {
+          "action_id": "nominal-cavity-9b48bba2b6cea88ca1012ba0",
+          "column_index": 8,
+          "family": "exposed_opening",
+          "feasible": true,
+          "native_reason": "NATIVE_CONNECTED_STROKE",
+          "offset_source_voxels": [
+            2,
+            2
+          ],
+          "proposal_id": "nominal-cavity-9b48bba2b6cea88ca1012ba0",
+          "query_disposition": "CERTIFIED_LEGAL",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_suction",
+          "voxel": [
+            124,
+            70,
+            78
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-8d934e4244c5a8fc5f3c0515",
+          "actual_opening_advance_mm": 0.9765629210483622,
+          "advance_source_axis_voxels": 1,
+          "column_index": 10,
+          "family": "intermediate_opening",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            3,
+            0
+          ],
+          "opening_anchor_voxel": [
+            124,
+            71,
+            76
+          ],
+          "proposal_id": "nominal-cavity-8d934e4244c5a8fc5f3c0515",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "requested_opening_advance_mm": 1.0,
+          "tool_id": "generic_suction",
+          "voxel": [
+            123,
+            71,
+            76
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-faf51d3b3d4978736ff880ab",
+          "actual_opening_advance_mm": 0.9765629210483622,
+          "advance_source_axis_voxels": 1,
+          "column_index": 2,
+          "family": "intermediate_opening",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            2,
+            0
+          ],
+          "opening_anchor_voxel": [
+            123,
+            70,
+            76
+          ],
+          "proposal_id": "nominal-cavity-faf51d3b3d4978736ff880ab",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "requested_opening_advance_mm": 1.0,
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            122,
+            70,
+            76
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-16247a972551d0cdc1efc7c7",
+          "column_index": 7,
+          "family": "exposed_opening",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            2,
+            -2
+          ],
+          "proposal_id": "nominal-cavity-16247a972551d0cdc1efc7c7",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            124,
+            70,
+            74
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-817ac25b6d9676c784511810",
+          "column_index": 11,
+          "family": "tool_footprint_opening",
+          "feasible": false,
+          "footprint_anchor_voxel": [
+            124,
+            68,
+            73
+          ],
+          "footprint_endpoint_tests": 3,
+          "footprint_exposed_cells": 498,
+          "footprint_radially_eligible_cells": 36,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            0,
+            -3
+          ],
+          "proposal_id": "nominal-cavity-817ac25b6d9676c784511810",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            125,
+            68,
+            73
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-cde9759ef00a10a0aba0826e",
+          "actual_opening_advance_mm": 0.9765629210483622,
+          "advance_source_axis_voxels": 1,
+          "column_index": 5,
+          "family": "intermediate_opening",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            -2,
+            -2
+          ],
+          "opening_anchor_voxel": [
+            123,
+            66,
+            74
+          ],
+          "proposal_id": "nominal-cavity-cde9759ef00a10a0aba0826e",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "requested_opening_advance_mm": 1.0,
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            122,
+            66,
+            74
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-1c9d065c1881970a115f5b28",
+          "column_index": 3,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            0,
+            -2
+          ],
+          "proposal_id": "nominal-cavity-1c9d065c1881970a115f5b28",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            89,
+            68,
+            74
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-f8ea2c232ab60398cc1964e8",
+          "actual_opening_advance_mm": 0.9765629210483622,
+          "advance_source_axis_voxels": 1,
+          "column_index": 4,
+          "family": "intermediate_opening",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            0,
+            2
+          ],
+          "opening_anchor_voxel": [
+            123,
+            68,
+            78
+          ],
+          "proposal_id": "nominal-cavity-f8ea2c232ab60398cc1964e8",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "requested_opening_advance_mm": 1.0,
+          "tool_id": "generic_suction",
+          "voxel": [
+            122,
+            68,
+            78
+          ]
+        }
+      ],
+      "tool_counts": {
+        "generic_aspirator": 5,
+        "generic_suction": 3
+      }
+    },
+    "source_state_hash": "sha256:db51e635126f1096344b966dc64d92ae02e2c4c1185f1e67f5d8b2b59f90afae",
+    "teacher_label": 0.9153926842901237,
+    "teacher_native_score": {
+      "action_id": "nominal-cavity-3532d3d0aba51e03e0899454",
+      "complete_tool_path_length_mm": 8.282814625241826,
+      "insertion_distance_mm": 4.141407312620913,
+      "normal_removed_mm3": 0.0,
+      "reward": 0.9153926842901237,
+      "target_removed_mm3": 0.9536754989153655
+    },
+    "teacher_priority_rank": null,
+    "teacher_priority_rank_bound": "9..91; exact rank and predicted scores were not persisted",
+    "teacher_row": {
+      "action_id": "nominal-cavity-3532d3d0aba51e03e0899454",
+      "column_index": 8,
+      "family": "tool_footprint_opening",
+      "feasible": true,
+      "footprint_anchor_voxel": [
+        124,
+        70,
+        78
+      ],
+      "footprint_endpoint_tests": 3,
+      "footprint_exposed_cells": 569,
+      "footprint_radially_eligible_cells": 47,
+      "native_reason": "NATIVE_CONNECTED_STROKE",
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "proposal_id": "nominal-cavity-3532d3d0aba51e03e0899454",
+      "query_disposition": "CERTIFIED_LEGAL",
+      "reason": "PROPOSED_UNCERTIFIED",
+      "tool_id": "generic_aspirator",
+      "voxel": [
+        125,
+        70,
+        78
+      ]
+    },
+    "tool_switch_cost": 0.03,
+    "uniform_state_positive_weight_fraction": 0.02197802197802198,
+    "zero_based_step": 11,
+    "zero_labels": 89
+  },
+  "fit_rows": 2592,
+  "heuristic_roots": [
+    {
+      "all_selected_training_labels_zero": true,
+      "exhaustive_root_legal_count": 21,
+      "exhaustive_root_positive_count": 0,
+      "family_counts": {
+        "distal_nominal": 8
+      },
+      "legal_count": 0,
+      "native_reasons": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 8
+      },
+      "raw_count": 117,
+      "sample_values_coverage_bits_and_proxy_scores_persisted": false,
+      "selected_rows_in_priority_order": [
+        {
+          "action_id": "nominal-cavity-75459967510467a660afebf7",
+          "column_index": 0,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            0,
+            0
+          ],
+          "proposal_id": "nominal-cavity-75459967510467a660afebf7",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            70,
+            62,
+            22
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-16f4c75382f86ef13a53a800",
+          "column_index": 1,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            -2,
+            0
+          ],
+          "proposal_id": "nominal-cavity-16f4c75382f86ef13a53a800",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            70,
+            60,
+            22
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-478106c0f65c868f4af6509a",
+          "column_index": 2,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            2,
+            0
+          ],
+          "proposal_id": "nominal-cavity-478106c0f65c868f4af6509a",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            70,
+            64,
+            22
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-56d7128d6f1d8819426e7646",
+          "column_index": 3,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            0,
+            -2
+          ],
+          "proposal_id": "nominal-cavity-56d7128d6f1d8819426e7646",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            70,
+            62,
+            20
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-5f2234b4401c416c4058f578",
+          "column_index": 7,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            2,
+            -2
+          ],
+          "proposal_id": "nominal-cavity-5f2234b4401c416c4058f578",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            70,
+            64,
+            20
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-b9c6696310a534f7a3dacb57",
+          "column_index": 8,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            2,
+            2
+          ],
+          "proposal_id": "nominal-cavity-b9c6696310a534f7a3dacb57",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            70,
+            64,
+            24
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-e5425b6210222d7143f6e5da",
+          "column_index": 11,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            0,
+            -3
+          ],
+          "proposal_id": "nominal-cavity-e5425b6210222d7143f6e5da",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            70,
+            62,
+            19
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-4775f4d444b28b45396173b1",
+          "column_index": 10,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            3,
+            0
+          ],
+          "proposal_id": "nominal-cavity-4775f4d444b28b45396173b1",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            70,
+            65,
+            22
+          ]
+        }
+      ],
+      "subject": "ReMIND-002",
+      "tool_counts": {
+        "generic_aspirator": 8
+      }
+    },
+    {
+      "all_selected_training_labels_zero": true,
+      "exhaustive_root_legal_count": 39,
+      "exhaustive_root_positive_count": 39,
+      "family_counts": {
+        "distal_nominal": 8
+      },
+      "legal_count": 0,
+      "native_reasons": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 8
+      },
+      "raw_count": 78,
+      "sample_values_coverage_bits_and_proxy_scores_persisted": false,
+      "selected_rows_in_priority_order": [
+        {
+          "action_id": "nominal-cavity-26af2d29b115456f872d8683",
+          "column_index": 9,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            -3,
+            0
+          ],
+          "proposal_id": "nominal-cavity-26af2d29b115456f872d8683",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            28,
+            113,
+            64
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-2700881d589bb206bae88f75",
+          "column_index": 1,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            -2,
+            0
+          ],
+          "proposal_id": "nominal-cavity-2700881d589bb206bae88f75",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            28,
+            114,
+            64
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-764239f073eaef6d87ac39d2",
+          "column_index": 0,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            0,
+            0
+          ],
+          "proposal_id": "nominal-cavity-764239f073eaef6d87ac39d2",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            28,
+            116,
+            64
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-c7028199e6ad1e353a9e2dd1",
+          "column_index": 5,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            -2,
+            -2
+          ],
+          "proposal_id": "nominal-cavity-c7028199e6ad1e353a9e2dd1",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            28,
+            114,
+            62
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-83d263f57ebe8b8eea233eca",
+          "column_index": 3,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            0,
+            -2
+          ],
+          "proposal_id": "nominal-cavity-83d263f57ebe8b8eea233eca",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            28,
+            116,
+            62
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-9624fab44922d4bba5e97534",
+          "column_index": 6,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            -2,
+            2
+          ],
+          "proposal_id": "nominal-cavity-9624fab44922d4bba5e97534",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            28,
+            114,
+            66
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-4d19574e93fa5c8906af67c8",
+          "column_index": 7,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            2,
+            -2
+          ],
+          "proposal_id": "nominal-cavity-4d19574e93fa5c8906af67c8",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            28,
+            118,
+            62
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-974bc43f56dfb5a7af42ab8f",
+          "column_index": 11,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            0,
+            -3
+          ],
+          "proposal_id": "nominal-cavity-974bc43f56dfb5a7af42ab8f",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            28,
+            116,
+            61
+          ]
+        }
+      ],
+      "subject": "ReMIND-015",
+      "tool_counts": {
+        "generic_aspirator": 8
+      }
+    },
+    {
+      "all_selected_training_labels_zero": true,
+      "exhaustive_root_legal_count": 17,
+      "exhaustive_root_positive_count": 0,
+      "family_counts": {
+        "distal_nominal": 4,
+        "intermediate_opening": 2,
+        "proximal_nominal": 2
+      },
+      "legal_count": 0,
+      "native_reasons": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 8
+      },
+      "raw_count": 75,
+      "sample_values_coverage_bits_and_proxy_scores_persisted": false,
+      "selected_rows_in_priority_order": [
+        {
+          "action_id": "nominal-cavity-ad1a6c0ae0c0b09106b2593c",
+          "column_index": 10,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            3,
+            0
+          ],
+          "proposal_id": "nominal-cavity-ad1a6c0ae0c0b09106b2593c",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            30,
+            75,
+            42
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-650be14eb40f33825cd7b065",
+          "column_index": 2,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            2,
+            0
+          ],
+          "proposal_id": "nominal-cavity-650be14eb40f33825cd7b065",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            28,
+            74,
+            42
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-08a842a25ecee60896b52b2f",
+          "column_index": 10,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            3,
+            0
+          ],
+          "proposal_id": "nominal-cavity-08a842a25ecee60896b52b2f",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_suction",
+          "voxel": [
+            30,
+            75,
+            42
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-bb19f64d5ed2f2cd8a5e14db",
+          "column_index": 7,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            2,
+            -2
+          ],
+          "proposal_id": "nominal-cavity-bb19f64d5ed2f2cd8a5e14db",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            27,
+            74,
+            40
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-4edd381cbdc89e98b71245bc",
+          "column_index": 2,
+          "family": "proximal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            2,
+            0
+          ],
+          "proposal_id": "nominal-cavity-4edd381cbdc89e98b71245bc",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            24,
+            74,
+            42
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-f722b44b52fe11bf13871758",
+          "column_index": 10,
+          "family": "proximal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            3,
+            0
+          ],
+          "proposal_id": "nominal-cavity-f722b44b52fe11bf13871758",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            23,
+            75,
+            42
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-0f98e01b01fe297d9dd1c90a",
+          "actual_opening_advance_mm": 0.9765627220593562,
+          "advance_source_axis_voxels": 1,
+          "column_index": 7,
+          "family": "intermediate_opening",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            2,
+            -2
+          ],
+          "opening_anchor_voxel": [
+            23,
+            74,
+            40
+          ],
+          "proposal_id": "nominal-cavity-0f98e01b01fe297d9dd1c90a",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "requested_opening_advance_mm": 1.0,
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            24,
+            74,
+            40
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-af289409464741fa27419950",
+          "actual_opening_advance_mm": 0.9765627220593562,
+          "advance_source_axis_voxels": 1,
+          "column_index": 0,
+          "family": "intermediate_opening",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            0,
+            0
+          ],
+          "opening_anchor_voxel": [
+            27,
+            72,
+            42
+          ],
+          "proposal_id": "nominal-cavity-af289409464741fa27419950",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "requested_opening_advance_mm": 1.0,
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            28,
+            72,
+            42
+          ]
+        }
+      ],
+      "subject": "ReMIND-018",
+      "tool_counts": {
+        "generic_aspirator": 7,
+        "generic_suction": 1
+      }
+    },
+    {
+      "all_selected_training_labels_zero": true,
+      "exhaustive_root_legal_count": 41,
+      "exhaustive_root_positive_count": 41,
+      "family_counts": {
+        "distal_nominal": 8
+      },
+      "legal_count": 0,
+      "native_reasons": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 8
+      },
+      "raw_count": 91,
+      "sample_values_coverage_bits_and_proxy_scores_persisted": false,
+      "selected_rows_in_priority_order": [
+        {
+          "action_id": "nominal-cavity-211fbde70be95e19b58e8774",
+          "column_index": 0,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            0,
+            0
+          ],
+          "proposal_id": "nominal-cavity-211fbde70be95e19b58e8774",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            87,
+            68,
+            76
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-0255eb6e60e49ed5105ad3a2",
+          "column_index": 1,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            -2,
+            0
+          ],
+          "proposal_id": "nominal-cavity-0255eb6e60e49ed5105ad3a2",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            88,
+            66,
+            76
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-d7f726434f309df8f3e69cf5",
+          "column_index": 6,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            -2,
+            2
+          ],
+          "proposal_id": "nominal-cavity-d7f726434f309df8f3e69cf5",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            88,
+            66,
+            78
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-e5116aa0804b495896365826",
+          "column_index": 8,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            2,
+            2
+          ],
+          "proposal_id": "nominal-cavity-e5116aa0804b495896365826",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            85,
+            70,
+            78
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-f30a905ad00dcc4847753036",
+          "column_index": 2,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            2,
+            0
+          ],
+          "proposal_id": "nominal-cavity-f30a905ad00dcc4847753036",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            87,
+            70,
+            76
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-eb53f4a2a3b9cc5a08152bb8",
+          "column_index": 4,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            0,
+            2
+          ],
+          "proposal_id": "nominal-cavity-eb53f4a2a3b9cc5a08152bb8",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            87,
+            68,
+            78
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-a75495f1a8e9b713a86f7554",
+          "column_index": 3,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            0,
+            -2
+          ],
+          "proposal_id": "nominal-cavity-a75495f1a8e9b713a86f7554",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            89,
+            68,
+            74
+          ]
+        },
+        {
+          "action_id": "nominal-cavity-6e3333fe3473cca2fa53c17d",
+          "column_index": 10,
+          "family": "distal_nominal",
+          "feasible": false,
+          "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "offset_source_voxels": [
+            3,
+            0
+          ],
+          "proposal_id": "nominal-cavity-6e3333fe3473cca2fa53c17d",
+          "query_disposition": "CERTIFIED_REJECTED",
+          "reason": "PROPOSED_UNCERTIFIED",
+          "tool_id": "generic_aspirator",
+          "voxel": [
+            87,
+            71,
+            76
+          ]
+        }
+      ],
+      "subject": "ReMIND-045",
+      "tool_counts": {
+        "generic_aspirator": 8
+      }
+    }
+  ],
+  "limitations": [
+    "No predicted scores or ranks outside top8 saved.",
+    "Feature arrays and sample coverage bits are not saved; no diagnosis of feature aliasing or missing target samples is identified.",
+    "Single fixed ordered TRAIN run; instrumented exhaustive is not minimum-cost native greedy.",
+    "Raw contact is an upper-bound exposure measure including target tissue, not clinical harm. The original gate remains false."
+  ],
+  "literal_gate_failures": {
+    "ReMIND-002": {
+      "versus_exhaustive": [],
+      "versus_heuristic": []
+    },
+    "ReMIND-015": {
+      "versus_exhaustive": [],
+      "versus_heuristic": [
+        "contact"
+      ]
+    },
+    "ReMIND-018": {
+      "versus_exhaustive": [],
+      "versus_heuristic": []
+    },
+    "ReMIND-045": {
+      "versus_exhaustive": [
+        "return"
+      ],
+      "versus_heuristic": [
+        "contact"
+      ]
+    }
+  },
+  "literal_teacher_ID_membership_not_quality_recall": 13,
+  "matched_input_positive_states": 24,
+  "matched_input_positive_states_retaining_best_reward": 23,
+  "original_comparison": {
+    "TRAIN_go": false,
+    "all_costs_include_rejected_queries": true,
+    "heuristic_no_quality_loss": false,
+    "heuristic_quality_improvement": false,
+    "heuristic_wall_ratio": 2.200352421221636,
+    "historical_IL64_outcomes": [
+      {
+        "certificate_origin": "original_run",
+        "independent_accepted": true,
+        "motion_count": 0,
+        "outside_target_removed_mm3": 0.0,
+        "public_return": 0.0,
+        "removed_cells": 0,
+        "same_removed_cell_union_as_teacher": true,
+        "steps": 1,
+        "subject": "ReMIND-002",
+        "target_removed_mm3": 0.0,
+        "teacher_motion_count": 0,
+        "teacher_public_return": 0.0,
+        "teacher_target_removed_mm3": 0.0,
+        "terminal_reason": "STOP"
+      },
+      {
+        "certificate_origin": "original_run",
+        "independent_accepted": true,
+        "motion_count": 13,
+        "outside_target_removed_mm3": 0.0,
+        "public_return": 54.86621503580145,
+        "removed_cells": 58,
+        "same_removed_cell_union_as_teacher": true,
+        "steps": 14,
+        "subject": "ReMIND-015",
+        "target_removed_mm3": 55.31311034856145,
+        "teacher_motion_count": 13,
+        "teacher_public_return": 54.866215035801446,
+        "teacher_target_removed_mm3": 55.31311034856145,
+        "terminal_reason": "STOP"
+      },
+      {
+        "certificate_origin": "original_run",
+        "independent_accepted": true,
+        "motion_count": 0,
+        "outside_target_removed_mm3": 0.0,
+        "public_return": 0.0,
+        "removed_cells": 0,
+        "same_removed_cell_union_as_teacher": true,
+        "steps": 1,
+        "subject": "ReMIND-018",
+        "target_removed_mm3": 0.0,
+        "teacher_motion_count": 0,
+        "teacher_public_return": 0.0,
+        "teacher_target_removed_mm3": 0.0,
+        "terminal_reason": "STOP"
+      },
+      {
+        "certificate_origin": "corrected_evaluation_recovery",
+        "independent_accepted": true,
+        "motion_count": 24,
+        "outside_target_removed_mm3": 0.0,
+        "public_return": 47.508437886941074,
+        "removed_cells": 51,
+        "same_removed_cell_union_as_teacher": true,
+        "steps": 24,
+        "subject": "ReMIND-045",
+        "target_removed_mm3": 48.637450444683644,
+        "teacher_motion_count": 12,
+        "teacher_public_return": 48.181962920864926,
+        "teacher_target_removed_mm3": 48.637450444683644,
+        "terminal_reason": "HORIZON"
+      }
+    ],
+    "historical_latency_matched": false,
+    "no_quality_loss_vs_exhaustive": false,
+    "online_wall_ratio": 0.22036749626597343,
+    "preview_ratio": 0.08950617283950617,
+    "totals": {
+      "exhaustive": {
+        "online_previews": 2592,
+        "replay_and_audit_seconds": 71.62476737424731,
+        "replay_previews": 2592,
+        "source_through_plan_seconds": 44.740925583289936
+      },
+      "ridge_top8": {
+        "online_previews": 232,
+        "replay_and_audit_seconds": 25.00953729171306,
+        "replay_previews": 232,
+        "source_through_plan_seconds": 9.85944575141184
+      },
+      "sampled_target_top8": {
+        "online_previews": 32,
+        "replay_and_audit_seconds": 6.022098916815594,
+        "replay_previews": 32,
+        "source_through_plan_seconds": 4.480848456965759
+      }
+    }
+  },
+  "scope": "Saved JSON/scalar/source-only; no data arrays, feature reconstruction, coefficients, refit, native queries or model execution",
+  "teacher_motion_states": 25,
+  "teacher_states": 29,
+  "timing": {
+    "exhaustive": {
+      "inventory_unpartitioned_seconds": 4.793028102722019,
+      "online_seconds": {
+        "constructor_inclusive": 14.670874207979068,
+        "exact_verification": 27.660162196028978,
+        "inventory_inclusive": 41.120968169067055,
+        "proposal_enumeration": 8.472704664804041,
+        "public_features": 0.19500933424569666,
+        "ranking": 6.387126632034779e-05
+      },
+      "replay_features_seconds": 0.19448437518440187,
+      "source_through_plan_seconds": 44.740925583289936,
+      "unpartitioned_includes": "ledger assembly, callback/file serialization, guards and other inventory overhead; not a logging-only measurement"
+    },
+    "exhaustive_unused_feature_fraction_of_online_wall": 0.004358634330947541,
+    "ridge_top8": {
+      "inventory_unpartitioned_seconds": 0.35519040236249566,
+      "online_seconds": {
+        "constructor_inclusive": 2.1214998341165483,
+        "exact_verification": 2.0439419308677316,
+        "inventory_inclusive": 7.312327208230272,
+        "proposal_enumeration": 4.717174204764888,
+        "public_features": 0.19410737860016525,
+        "ranking": 0.001913291634991765
+      },
+      "replay_features_seconds": 0.19351203786209226,
+      "source_through_plan_seconds": 9.85944575141184,
+      "unpartitioned_includes": "ledger assembly, callback/file serialization, guards and other inventory overhead; not a logging-only measurement"
+    },
+    "sampled_target_top8": {
+      "inventory_unpartitioned_seconds": 0.07151316595263779,
+      "online_seconds": {
+        "constructor_inclusive": 3.289427583804354,
+        "exact_verification": 1.5081383753567934,
+        "inventory_inclusive": 2.9476490423548967,
+        "proposal_enumeration": 1.340038042049855,
+        "public_features": 0.027896292274817824,
+        "ranking": 6.316672079265118e-05
+      },
+      "replay_features_seconds": 0.02722129225730896,
+      "source_through_plan_seconds": 4.480848456965759,
+      "unpartitioned_includes": "ledger assembly, callback/file serialization, guards and other inventory overhead; not a logging-only measurement"
+    }
+  }
+}

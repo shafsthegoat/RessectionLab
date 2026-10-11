@@ -1,0 +1,48 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "feature_count": 681,
+    "fit_rows": 3480,
+    "fits": 1,
+    "log_bytes": 2097152,
+    "native_previews": 40000,
+    "native_transitions": 634,
+    "output_bytes": 67108864,
+    "parent_seconds": 660,
+    "ridge_calls": 192,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 28,
+    "supervision_bytes": 8388608,
+    "threads": 1,
+    "worker_seconds": 600
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 231.0074186248239,
+  "exit_code": 0,
+  "memory_scope": "whole owned process peak only; no independent per-arm peak attribution",
+  "output_bytes": 14755088,
+  "planned_subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "release_sha256": "5a093996a88d9cddce08431280fb95fda351242d670d571255377eb054a798f3",
+  "remaining_owned_pids": [],
+  "result_sha256": "77deca8508e6a69d78243870ef1dc362f4403e2e4480197052da10af196bad7c",
+  "result_status": "complete_fixed_TRAIN_ridge_proposals",
+  "sampled_peak_rss_bytes": 715456512,
+  "samples": 1101,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/hybrid-proposal-pilot-v1/source-index.json",
+    "sha256": "7ecb61085f8306a1b495190dd5ca5b07ef362c0c5df50f68b25e4aeb48b60c1f"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 2246,
+  "training_admitted": "one_fixed_ridge_solve_only",
+  "worker_pid": 8638,
+  "worker_termination_confirmed": true
+}

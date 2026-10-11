@@ -1,0 +1,22 @@
+{
+  "files": {
+    "REPORT.txt": {
+      "bytes": 5293,
+      "sha256": "71f58295ff7dfde57b08ba6145b926c182314bc7a8b718e9c99ef0107aa45430"
+    },
+    "derive_saved.py": {
+      "bytes": 10729,
+      "sha256": "27a73a44716ce26eedf52e792817a6301e8d4871eaefc395e121d56515cd66ed"
+    },
+    "diagnosis.json": {
+      "bytes": 53353,
+      "sha256": "f9ffdfaef6639d7b225f056fe11f66cc0c519b90aac2d42c4a74f1ccc69792be"
+    },
+    "inputs.json": {
+      "bytes": 8726,
+      "sha256": "b42eed5f6c8b682c9908bcd8ebc3ac1558378dd10b8ede6e9a8de263b2e575e6"
+    }
+  },
+  "preserved_result_sha256": "77deca8508e6a69d78243870ef1dc362f4403e2e4480197052da10af196bad7c",
+  "scope": "saved scalar/source diagnosis; no numerical model or native execution"
+}

@@ -1,0 +1,442 @@
+{
+  "TRAIN_go": false,
+  "arms": [
+    {
+      "actions": 1,
+      "contact_upper_mm3": 0.0,
+      "full_target_mm3": 23149.488478878036,
+      "method": "ridge_top8",
+      "motions": 0,
+      "online_previews": 8,
+      "online_seconds": 1.0652870419435203,
+      "outside_mm3": 0.0,
+      "path_mm": 0.0,
+      "replay_seconds": 1.5025695420335978,
+      "retained_contact_upper_mm3": 0.0,
+      "return": 0.0,
+      "subject": "ReMIND-002",
+      "target_cells": 0,
+      "target_mm3": 0.0,
+      "tool_changes": 0,
+      "unknown_support_cells": 414046
+    },
+    {
+      "actions": 14,
+      "contact_upper_mm3": 205.9936523325737,
+      "full_target_mm3": 7386.207580165663,
+      "method": "ridge_top8",
+      "motions": 13,
+      "online_previews": 112,
+      "online_seconds": 3.2588222501799464,
+      "outside_mm3": 0.0,
+      "path_mm": 56.895312759999854,
+      "replay_seconds": 8.599370582960546,
+      "retained_contact_upper_mm3": 150.68054198401225,
+      "return": 54.866215035801446,
+      "subject": "ReMIND-015",
+      "target_cells": 58,
+      "target_mm3": 55.313110348561466,
+      "tool_changes": 0,
+      "unknown_support_cells": 174084
+    },
+    {
+      "actions": 1,
+      "contact_upper_mm3": 0.0,
+      "full_target_mm3": 1189.2323111979806,
+      "method": "ridge_top8",
+      "motions": 0,
+      "online_previews": 8,
+      "online_seconds": 0.9923105421476066,
+      "outside_mm3": 0.0,
+      "path_mm": 0.0,
+      "replay_seconds": 1.715925166849047,
+      "retained_contact_upper_mm3": 0.0,
+      "return": 0.0,
+      "subject": "ReMIND-018",
+      "target_cells": 0,
+      "target_mm3": 0.0,
+      "tool_changes": 0,
+      "unknown_support_cells": 146736
+    },
+    {
+      "actions": 13,
+      "contact_upper_mm3": 202.17920577005748,
+      "full_target_mm3": 24128.943798057662,
+      "method": "ridge_top8",
+      "motions": 12,
+      "online_previews": 104,
+      "online_seconds": 4.543025917140767,
+      "outside_mm3": 0.0,
+      "path_mm": 96.04064966080533,
+      "replay_seconds": 13.191671999869868,
+      "retained_contact_upper_mm3": 153.54175532537386,
+      "return": 48.15140979502283,
+      "subject": "ReMIND-045",
+      "target_cells": 51,
+      "target_mm3": 48.63745044468365,
+      "tool_changes": 1,
+      "unknown_support_cells": 601021
+    },
+    {
+      "actions": 1,
+      "contact_upper_mm3": 0.0,
+      "full_target_mm3": 23149.488478878036,
+      "method": "sampled_target_top8",
+      "motions": 0,
+      "online_previews": 8,
+      "online_seconds": 1.7172669579740614,
+      "outside_mm3": 0.0,
+      "path_mm": 0.0,
+      "replay_seconds": 2.1331519579980522,
+      "retained_contact_upper_mm3": 0.0,
+      "return": 0.0,
+      "subject": "ReMIND-002",
+      "target_cells": 0,
+      "target_mm3": 0.0,
+      "tool_changes": 0,
+      "unknown_support_cells": 414046
+    },
+    {
+      "actions": 1,
+      "contact_upper_mm3": 0.0,
+      "full_target_mm3": 7386.207580165663,
+      "method": "sampled_target_top8",
+      "motions": 0,
+      "online_previews": 8,
+      "online_seconds": 0.6315585828851908,
+      "outside_mm3": 0.0,
+      "path_mm": 0.0,
+      "replay_seconds": 0.8166814169380814,
+      "retained_contact_upper_mm3": 0.0,
+      "return": 0.0,
+      "subject": "ReMIND-015",
+      "target_cells": 0,
+      "target_mm3": 0.0,
+      "tool_changes": 0,
+      "unknown_support_cells": 174084
+    },
+    {
+      "actions": 1,
+      "contact_upper_mm3": 0.0,
+      "full_target_mm3": 1189.2323111979806,
+      "method": "sampled_target_top8",
+      "motions": 0,
+      "online_previews": 8,
+      "online_seconds": 1.1683946661651134,
+      "outside_mm3": 0.0,
+      "path_mm": 0.0,
+      "replay_seconds": 1.8573394168633968,
+      "retained_contact_upper_mm3": 0.0,
+      "return": 0.0,
+      "subject": "ReMIND-018",
+      "target_cells": 0,
+      "target_mm3": 0.0,
+      "tool_changes": 0,
+      "unknown_support_cells": 146736
+    },
+    {
+      "actions": 1,
+      "contact_upper_mm3": 0.0,
+      "full_target_mm3": 24128.943798057662,
+      "method": "sampled_target_top8",
+      "motions": 0,
+      "online_previews": 8,
+      "online_seconds": 0.9636282499413937,
+      "outside_mm3": 0.0,
+      "path_mm": 0.0,
+      "replay_seconds": 1.2149261250160635,
+      "retained_contact_upper_mm3": 0.0,
+      "return": 0.0,
+      "subject": "ReMIND-045",
+      "target_cells": 0,
+      "target_mm3": 0.0,
+      "tool_changes": 0,
+      "unknown_support_cells": 601021
+    },
+    {
+      "actions": 1,
+      "contact_upper_mm3": 0.0,
+      "full_target_mm3": 23149.488478878036,
+      "method": "exhaustive",
+      "motions": 0,
+      "online_previews": 117,
+      "online_seconds": 8.540810417151079,
+      "outside_mm3": 0.0,
+      "path_mm": 0.0,
+      "replay_seconds": 8.48371791606769,
+      "retained_contact_upper_mm3": 0.0,
+      "return": 0.0,
+      "subject": "ReMIND-002",
+      "target_cells": 0,
+      "target_mm3": 0.0,
+      "tool_changes": 0,
+      "unknown_support_cells": 414046
+    },
+    {
+      "actions": 14,
+      "contact_upper_mm3": 205.9936523325737,
+      "full_target_mm3": 7386.207580165663,
+      "method": "exhaustive",
+      "motions": 13,
+      "online_previews": 1217,
+      "online_seconds": 12.200530582806095,
+      "outside_mm3": 0.0,
+      "path_mm": 56.895312759999854,
+      "replay_seconds": 21.495133165968582,
+      "retained_contact_upper_mm3": 150.68054198401225,
+      "return": 54.866215035801446,
+      "subject": "ReMIND-015",
+      "target_cells": 58,
+      "target_mm3": 55.313110348561466,
+      "tool_changes": 0,
+      "unknown_support_cells": 174084
+    },
+    {
+      "actions": 1,
+      "contact_upper_mm3": 0.0,
+      "full_target_mm3": 1189.2323111979806,
+      "method": "exhaustive",
+      "motions": 0,
+      "online_previews": 75,
+      "online_seconds": 3.4633309161290526,
+      "outside_mm3": 0.0,
+      "path_mm": 0.0,
+      "replay_seconds": 3.8809900421183556,
+      "retained_contact_upper_mm3": 0.0,
+      "return": 0.0,
+      "subject": "ReMIND-018",
+      "target_cells": 0,
+      "target_mm3": 0.0,
+      "tool_changes": 0,
+      "unknown_support_cells": 146736
+    },
+    {
+      "actions": 13,
+      "contact_upper_mm3": 202.17920577005748,
+      "full_target_mm3": 24128.943798057662,
+      "method": "exhaustive",
+      "motions": 12,
+      "online_previews": 1183,
+      "online_seconds": 20.53625366720371,
+      "outside_mm3": 0.0,
+      "path_mm": 95.48752381870861,
+      "replay_seconds": 37.764926250092685,
+      "retained_contact_upper_mm3": 153.54175532537386,
+      "return": 48.181962920864926,
+      "subject": "ReMIND-045",
+      "target_cells": 51,
+      "target_mm3": 48.63745044468365,
+      "tool_changes": 0,
+      "unknown_support_cells": 601021
+    }
+  ],
+  "audit_peak_rss_bytes": 22380544,
+  "catalog_dispositions": {
+    "exhaustive:ReMIND-002": {
+      "CERTIFIED_LEGAL:DUPLICATE_GEOMETRY": 8,
+      "CERTIFIED_LEGAL:PROPOSED_UNCERTIFIED": 21,
+      "CERTIFIED_REJECTED:DUPLICATE_GEOMETRY": 5,
+      "CERTIFIED_REJECTED:PROPOSED_UNCERTIFIED": 96
+    },
+    "exhaustive:ReMIND-015": {
+      "CERTIFIED_LEGAL:DUPLICATE_GEOMETRY": 332,
+      "CERTIFIED_LEGAL:PROPOSED_UNCERTIFIED": 257,
+      "CERTIFIED_REJECTED:DUPLICATE_GEOMETRY": 271,
+      "CERTIFIED_REJECTED:PROPOSED_UNCERTIFIED": 960
+    },
+    "exhaustive:ReMIND-018": {
+      "CERTIFIED_LEGAL:DUPLICATE_GEOMETRY": 7,
+      "CERTIFIED_LEGAL:PROPOSED_UNCERTIFIED": 17,
+      "CERTIFIED_REJECTED:DUPLICATE_GEOMETRY": 8,
+      "CERTIFIED_REJECTED:PROPOSED_UNCERTIFIED": 58,
+      "NOT_QUERIED:NO_REMAINING_NOMINAL_TARGET": 40
+    },
+    "exhaustive:ReMIND-045": {
+      "CERTIFIED_LEGAL:DUPLICATE_GEOMETRY": 165,
+      "CERTIFIED_LEGAL:PROPOSED_UNCERTIFIED": 208,
+      "CERTIFIED_REJECTED:DUPLICATE_GEOMETRY": 342,
+      "CERTIFIED_REJECTED:PROPOSED_UNCERTIFIED": 975
+    },
+    "ridge_top8:ReMIND-002": {
+      "CERTIFIED_LEGAL:PROPOSED_UNCERTIFIED": 2,
+      "CERTIFIED_REJECTED:PROPOSED_UNCERTIFIED": 6,
+      "NOT_QUERIED:DUPLICATE_GEOMETRY": 13,
+      "NOT_QUERIED:PROPOSED_UNCERTIFIED": 109
+    },
+    "ridge_top8:ReMIND-015": {
+      "CERTIFIED_LEGAL:DUPLICATE_GEOMETRY": 136,
+      "CERTIFIED_LEGAL:PROPOSED_UNCERTIFIED": 86,
+      "CERTIFIED_REJECTED:DUPLICATE_GEOMETRY": 21,
+      "CERTIFIED_REJECTED:PROPOSED_UNCERTIFIED": 26,
+      "NOT_QUERIED:DUPLICATE_GEOMETRY": 446,
+      "NOT_QUERIED:PROPOSED_UNCERTIFIED": 1105
+    },
+    "ridge_top8:ReMIND-018": {
+      "CERTIFIED_LEGAL:PROPOSED_UNCERTIFIED": 2,
+      "CERTIFIED_REJECTED:PROPOSED_UNCERTIFIED": 6,
+      "NOT_QUERIED:DUPLICATE_GEOMETRY": 15,
+      "NOT_QUERIED:NO_REMAINING_NOMINAL_TARGET": 40,
+      "NOT_QUERIED:PROPOSED_UNCERTIFIED": 67
+    },
+    "ridge_top8:ReMIND-045": {
+      "CERTIFIED_LEGAL:DUPLICATE_GEOMETRY": 63,
+      "CERTIFIED_LEGAL:PROPOSED_UNCERTIFIED": 75,
+      "CERTIFIED_REJECTED:DUPLICATE_GEOMETRY": 6,
+      "CERTIFIED_REJECTED:PROPOSED_UNCERTIFIED": 29,
+      "NOT_QUERIED:DUPLICATE_GEOMETRY": 438,
+      "NOT_QUERIED:PROPOSED_UNCERTIFIED": 1079
+    },
+    "sampled_target_top8:ReMIND-002": {
+      "CERTIFIED_REJECTED:PROPOSED_UNCERTIFIED": 8,
+      "NOT_QUERIED:DUPLICATE_GEOMETRY": 13,
+      "NOT_QUERIED:PROPOSED_UNCERTIFIED": 109
+    },
+    "sampled_target_top8:ReMIND-015": {
+      "CERTIFIED_REJECTED:PROPOSED_UNCERTIFIED": 8,
+      "NOT_QUERIED:DUPLICATE_GEOMETRY": 52,
+      "NOT_QUERIED:PROPOSED_UNCERTIFIED": 70
+    },
+    "sampled_target_top8:ReMIND-018": {
+      "CERTIFIED_REJECTED:PROPOSED_UNCERTIFIED": 8,
+      "NOT_QUERIED:DUPLICATE_GEOMETRY": 15,
+      "NOT_QUERIED:NO_REMAINING_NOMINAL_TARGET": 40,
+      "NOT_QUERIED:PROPOSED_UNCERTIFIED": 67
+    },
+    "sampled_target_top8:ReMIND-045": {
+      "CERTIFIED_REJECTED:PROPOSED_UNCERTIFIED": 8,
+      "NOT_QUERIED:DUPLICATE_GEOMETRY": 39,
+      "NOT_QUERIED:PROPOSED_UNCERTIFIED": 83
+    }
+  },
+  "checks": 3582,
+  "first_action_divergence_zero_based": {
+    "ReMIND-002": null,
+    "ReMIND-015": 2,
+    "ReMIND-018": null,
+    "ReMIND-045": 11
+  },
+  "fit_rows": 2592,
+  "fit_seconds": 0.014672333840280771,
+  "limitations": [
+    "Saved certificate consistency; no new geometry replay.",
+    "All12-before-evaluation follows reviewed control flow plus saved attestation, not independent execution tracing.",
+    "All targets are disclosed TRAIN annotations; no private evaluator or transfer outcome.",
+    "Single fixed order; exhaustive computes unused features and writes instrumentation; no clean-baseline latency claim.",
+    "Nested timing fields must not be summed as independent costs.",
+    "Full target/unknown-domain assumptions and clinical nulls persist."
+  ],
+  "loss_fields_vs_exhaustive": {
+    "ReMIND-002": [],
+    "ReMIND-015": [],
+    "ReMIND-018": [],
+    "ReMIND-045": [
+      "total_reward"
+    ]
+  },
+  "loss_fields_vs_heuristic": {
+    "ReMIND-002": [],
+    "ReMIND-015": [
+      "cumulative_contacted_tissue_upper_bound_mm3"
+    ],
+    "ReMIND-018": [],
+    "ReMIND-045": [
+      "cumulative_contacted_tissue_upper_bound_mm3"
+    ]
+  },
+  "native_previews": 10896,
+  "native_transitions": 182,
+  "online_nested_costs": {
+    "exhaustive": {
+      "exact_verification": 27.660162196028978,
+      "inventory_inclusive": 41.120968169067055,
+      "proposal_enumeration": 8.472704664804041,
+      "public_features": 0.19500933424569666,
+      "ranking": 6.387126632034779e-05
+    },
+    "ridge_top8": {
+      "exact_verification": 2.0439419308677316,
+      "inventory_inclusive": 7.312327208230272,
+      "proposal_enumeration": 4.717174204764888,
+      "public_features": 0.19410737860016525,
+      "ranking": 0.001913291634991765
+    },
+    "sampled_target_top8": {
+      "exact_verification": 1.5081383753567934,
+      "inventory_inclusive": 2.9476490423548967,
+      "proposal_enumeration": 1.340038042049855,
+      "public_features": 0.027896292274817824,
+      "ranking": 6.316672079265118e-05
+    }
+  },
+  "parent": {
+    "cleanup_errors": [],
+    "elapsed_seconds": 231.0074186248239,
+    "output_bytes": 14755088,
+    "remaining_owned_pids": [],
+    "sampled_peak_rss_bytes": 715456512
+  },
+  "ratios": {
+    "heuristic_wall_ratio": 2.200352421221636,
+    "online_wall_ratio": 0.22036749626597343,
+    "preview_ratio": 0.08950617283950617
+  },
+  "ridge_calls": 58,
+  "runtime_seconds": 0.104731375,
+  "scope": "stdlib saved source/JSON only; no weights/arrays/native/model/refit",
+  "source_and_input_files_unchanged": 236,
+  "source_index_entries": 121,
+  "source_visits": 28,
+  "status": "PASS_saved_evidence_consistency",
+  "teacher_state_count": 29,
+  "totals": {
+    "exhaustive": {
+      "online_previews": 2592,
+      "replay_and_audit_seconds": 71.62476737424731,
+      "replay_previews": 2592,
+      "source_through_plan_seconds": 44.740925583289936
+    },
+    "ridge_top8": {
+      "online_previews": 232,
+      "replay_and_audit_seconds": 25.00953729171306,
+      "replay_previews": 232,
+      "source_through_plan_seconds": 9.85944575141184
+    },
+    "sampled_target_top8": {
+      "online_previews": 32,
+      "replay_and_audit_seconds": 6.022098916815594,
+      "replay_previews": 32,
+      "source_through_plan_seconds": 4.480848456965759
+    }
+  },
+  "training_costs": [
+    {
+      "label_collection_seconds": 5.835277542006224,
+      "replay_audit_seconds": 5.736039916984737,
+      "source_preparation_seconds": 0.2851827081758529,
+      "subject": "ReMIND-002"
+    },
+    {
+      "label_collection_seconds": 7.07887545786798,
+      "replay_audit_seconds": 8.966952707851306,
+      "source_preparation_seconds": 0.23819116689264774,
+      "subject": "ReMIND-015"
+    },
+    {
+      "label_collection_seconds": 1.9951134999282658,
+      "replay_audit_seconds": 1.6262042080052197,
+      "source_preparation_seconds": 0.23380912491120398,
+      "subject": "ReMIND-018"
+    },
+    {
+      "label_collection_seconds": 13.367496582912281,
+      "replay_audit_seconds": 20.61310987500474,
+      "source_preparation_seconds": 0.26151287485845387,
+      "subject": "ReMIND-045"
+    }
+  ],
+  "weights_not_opened": {
+    "parent_recorded_sha256": "28999bb377a36f52ebf1e51679e53348c8abe9595aab20d824be7451ed02e22f",
+    "path": "build/hybrid-proposal-pilot-v1/attempt-01/ridge.json"
+  },
+  "worker_seconds": 228.60604091687128
+}

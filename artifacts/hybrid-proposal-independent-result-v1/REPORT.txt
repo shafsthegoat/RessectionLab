@@ -1,0 +1,71 @@
+Independent saved-result audit — fixed-four TRAIN sparse proposal pilot
+
+PASS for saved-evidence consistency. The experiment completed; its predeclared
+TRAIN_go is FALSE. No criterion was changed after seeing the outcomes.
+
+The corrected stdlib audit completed in 0.105 s, peak process RSS 22,380,544 B:
+3,582 checks; 121 source-index entries and 236 consumed source/JSON files unchanged.
+No acquired arrays, learned weights, scientific imports, fitting, or native replay
+were opened or executed. All 12 plans join their complete committed histories and
+accepted independent full-tool certificates. Four teacher histories are exact;
+29 states/2,592 raw training rows, one fit, 28 source visits, 182 transitions,
+10,896 previews and 58 linear score calls join the saved counters. Neural calls,
+optimizer calls, checkpoint loads and SELECT/EVAL access remain zero.
+
+                  002       015           018       045
+Ridge target mm3   0         55.313110349  0         48.637450445
+Full target cells removed:   0 / 58 / 0 / 51 (same as exhaustive)
+Ridge return      0         54.866215036  0         48.151409795
+Exhaustive return 0         54.866215036  0         48.181962921
+Heuristic return  0          0            0          0
+
+Ridge and exhaustive use 0/13/0/12 motions, followed by STOP. All outside-target
+removal is zero. Ridge 045 first differs at decision 12 (zero-based 11), adds one
+tool change and 0.553125842 mm path, and loses 0.030553126 return:
+0.03 switch cost + 0.001 times extra path. The 1e-7 no-return-loss criterion
+therefore fails. The independent scalar reward reconstruction agrees throughout.
+015 first differs at decision 3 but retains the same complete outcome totals.
+
+The heuristic queries eight proposals on each initial state; all 32 are rejected,
+so every route stops. This is a poor shortlist, not proof that the full catalog
+lacks legal or useful actions. The frozen Pareto comparison also requires no
+extra cumulative contact relative to the heuristic's zero-contact STOP. Ridge
+therefore fails that clause on 015/045 despite gaining target removal. These
+consequences are reported as declared, without retroactive threshold changes.
+
+Across four cases, ridge/exhaustive online previews are 232/2,592 (ratio 0.089506),
+source-through-plan times 9.859446/44.740926 s (ratio 0.220367). Heuristic takes
+32 previews and 4.480848 s. The exhaustive prototype also computes unused public
+features (0.195009334 s) and ranking setup (0.000063871 s), and all arms write full
+inventory ledgers. Logging time is not isolated. Thus the measured wall reduction
+is against this instrumented matched control, not minimal original greedy;
+subtracting components would not establish a measured clean-baseline speed.
+The preview difference is directly counted. Nested timing scopes must not be
+added as disjoint costs. Fitting took 0.014672 s; label collection, source setup,
+teacher verification and final replay remain separately charged in audit-result.
+
+Whole owned attempt: 231.007419 s, sampled peak 715,456,512 B, 14,755,088 output
+bytes, clean exit/reap, no surviving PIDs or cleanup errors. Limits were
+600/660 s worker/parent, 3 GiB, 40,000 previews, 634 transitions and 64 MiB output.
+No repeated-run, cross-patient transfer, historical IL matched-latency, or clinical
+claim follows. Nonzero contacted/retained tissue, unknown source coverage,
+assumed post-exposure workspace and full unchanged target denominators persist;
+zero outside-target removal is not zero tissue contact or demonstrated safety.
+
+Information-boundary evidence is scoped: all-12 sealing before evaluation is
+supported by reviewed source order, the 28-visit order and saved attestation,
+not an independent execution trace. All labels are disclosed TRAIN annotations;
+there is no private-reference evaluator in this pilot. Sparse STOP only compares
+queried candidates. Exhaustive histories match original source evidence exactly;
+the explicit selector contract changes only the top-level decision-model hash.
+
+Reviewer correction: initial audit attempt01 stopped at an overstrict assertion
+requiring that historical decision-model hash to remain identical. Its source
+and failure are preserved. The corrected audit permits only that deliberate
+top-level identity difference, still requiring exact current plan/metrics/audit
+identities and every other historical metric/history field. This was a reader
+expectation error, not an experiment failure or repeated experiment.
+
+audit_saved.py is reproducible with stdlib Python and a 30 s internal deadline.
+audit-result.json contains compact scalar outcomes, costs, gates and limitations;
+input-index.json binds the saved evidence without copying arrays or weights.

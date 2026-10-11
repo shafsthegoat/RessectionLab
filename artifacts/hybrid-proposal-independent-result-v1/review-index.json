@@ -1,0 +1,29 @@
+{
+  "files": {
+    "REPORT.txt": {
+      "bytes": 4719,
+      "sha256": "1a4f4d4375d18855f1a3cb0273349a5779dfbfbff6e8869b69db6df6361b6c3d"
+    },
+    "audit-failure-attempt01.json": {
+      "bytes": 110,
+      "sha256": "4f2626c9cec7a39f21de203b8865247a093da94efe4c60286933fab7ad0b02e3"
+    },
+    "audit-result.json": {
+      "bytes": 14179,
+      "sha256": "9bb12de476d98c372daaf045e4189b233a103056f2afb7f926d9720700667c64"
+    },
+    "audit_saved.py": {
+      "bytes": 16535,
+      "sha256": "8055ffece3ecb18dce513f9029b7c01a419d705abfc066180d8ec8330cc330b9"
+    },
+    "audit_saved_attempt01.py": {
+      "bytes": 16172,
+      "sha256": "6ad56331776d58b09ae4c7a447e9c22f02b467d608365703c67afac7b0bee5b6"
+    },
+    "input-index.json": {
+      "bytes": 42816,
+      "sha256": "db41206d5e8b4a12d6c2d261205f3fa01abbc3558923bf2f6d32f4410589741a"
+    }
+  },
+  "scope": "saved source and JSON only; no copied patient arrays or weights"
+}
