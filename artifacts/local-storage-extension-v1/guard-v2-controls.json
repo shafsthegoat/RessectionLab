@@ -1,0 +1,53 @@
+{
+  "status": "6_cleanup_schema_controls_passed",
+  "source_sha256": "be177e55afaefea03a63db49e5b0ac01984b45ff2f3ec5e0e0f34a78e9d00375",
+  "cases": [
+    [
+      {
+        "remaining_owned_pids": [],
+        "worker_termination_confirmed": true
+      },
+      true
+    ],
+    [
+      {
+        "final_owned_pids": [],
+        "worker_termination_confirmed": true
+      },
+      true
+    ],
+    [
+      {
+        "final_owned_pids": [],
+        "remaining_owned_pids": [
+          4
+        ],
+        "worker_termination_confirmed": true
+      },
+      false
+    ],
+    [
+      {
+        "final_owned_pids": [
+          4
+        ],
+        "worker_termination_confirmed": true
+      },
+      false
+    ],
+    [
+      {
+        "worker_termination_confirmed": true
+      },
+      false
+    ],
+    [
+      {
+        "final_owned_pids": [],
+        "worker_termination_confirmed": false
+      },
+      false
+    ]
+  ],
+  "actual_source_receipts_opened": false
+}

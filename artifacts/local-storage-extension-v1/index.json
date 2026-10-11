@@ -1,0 +1,67 @@
+{
+  "files": [
+    {
+      "bytes": 2099,
+      "path": "build/storage-extension-v1/baseline.json",
+      "sha256": "db2e3bad35aadd68f23111b9498270d019debf27486c696cc7ef48bd1fff67c8"
+    },
+    {
+      "bytes": 4695,
+      "path": "build/storage-extension-v1/reservation-snapshot-01.json",
+      "sha256": "0e379e790e5cbd4725510142f530206c471360be7975e85a94bbeb9cdabd0e57"
+    },
+    {
+      "bytes": 805,
+      "path": "build/storage-extension-v1/latest-measurement-01.json",
+      "sha256": "f434a075d6dd28fb38ca296c8ba75dafb2e92dfd40379424bec3aa42c49cca85"
+    },
+    {
+      "bytes": 384,
+      "path": "build/storage-extension-v1/snapshot-01.json",
+      "sha256": "9d3b60f64857bc82127e09919b60b35f7a95d0a8f6dfb2e27ab3e957d5696097"
+    },
+    {
+      "bytes": 1090,
+      "path": "build/storage-extension-v1/process-observation.json",
+      "sha256": "643490c41f7879e6c1ddca1656a54e95ff808994c125317c1b8a6f960ec43944"
+    },
+    {
+      "bytes": 9830,
+      "path": "build/storage-extension-v1/storage_guard.py",
+      "sha256": "5400b3600693186a2d01c6191d9677659b4454dd00da76e2a3f892a55e6632ba"
+    },
+    {
+      "bytes": 5099,
+      "path": "build/storage-extension-v1/test_storage_guard.py",
+      "sha256": "d89ea896427c0aa188ea2c4a83d5edf2adccea06a29e6a4afbe8138acba637a4"
+    },
+    {
+      "bytes": 1074,
+      "path": "build/storage-extension-v1/generated-controls.log",
+      "sha256": "fd6d96e3b5a070ceda0abbf82164b289b6c906a0180f35e3b696a3c5bd96b7c8"
+    },
+    {
+      "bytes": 1323,
+      "path": "build/storage-extension-v1/generated-controls-final.log",
+      "sha256": "9b0ae3bd39a7fe8a0fbff96dcc3d29051d671ffbf9b5fe5bf82b732fcb1c2265"
+    },
+    {
+      "bytes": 1323,
+      "path": "build/storage-extension-v1/generated-controls-final-v2.log",
+      "sha256": "9b0ae3bd39a7fe8a0fbff96dcc3d29051d671ffbf9b5fe5bf82b732fcb1c2265"
+    },
+    {
+      "bytes": 4279,
+      "path": "build/storage-extension-v1/REPORT.txt",
+      "sha256": "74c44b750c42e0a3c571151946baaac513114ec66ed0761a22e3a083df7e444e"
+    },
+    {
+      "bytes": 1453,
+      "path": "build/storage-extension-v1/COMMANDS.txt",
+      "sha256": "d8100c309b20d41758a701a2dc9fa766ff122d5fbcad1de04ea39c0a2581927c"
+    }
+  ],
+  "mutable_ledger": "build/storage-extension-v1/ledger.json",
+  "schema": "storage-extension-handoff-v1",
+  "status": "metadata_only_no_launch"
+}

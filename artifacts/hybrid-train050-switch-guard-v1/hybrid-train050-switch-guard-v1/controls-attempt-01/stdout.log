@@ -1,0 +1,92 @@
+....FFF                                                                  [100%]
+=================================== FAILURES ===================================
+_ test_actual_positive_switch_compares_current_tool_but_allows_worthwhile_switch[False-large] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ca504d0>
+worthwhile = False, current_tool = 'large'
+
+    @pytest.mark.parametrize('worthwhile,current_tool',[(False,'large'),(True,'small')])
+    def test_actual_positive_switch_compares_current_tool_but_allows_worthwhile_switch(monkeypatch,worthwhile,current_tool):
+>       case,prefix,other,best_current,tools=positive_switch_fixture(monkeypatch,current_tool,worthwhile)
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hybrid-train050-switch-guard-v1/tests/test_switch_guard.py:188: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ca504d0>
+current_tool = 'large', worthwhile = False
+
+    def positive_switch_fixture(monkeypatch,current_tool,worthwhile):
+        """An actual generated native prefix, followed by a deliberately adverse ranking."""
+        case=fixture();oracle=GeneratedSparseTask(case,mode='exhaustive',max_steps=3).planning_clone()
+        initial_scores={k:oracle._score_record({**v.to_history_record(),'action_id':k},None)['reward'] for k,v in oracle._inventory.items()}
+        prefix=next(k for k,v in oracle._inventory.items() if v.tool_id==current_tool and initial_scores[k]>0)
+        oracle.advance_planning(prefix);inventory=oracle._prepare_inventory()
+        scores={k:oracle._score_record({**v.to_history_record(),'action_id':k},current_tool)['reward'] for k,v in inventory.items()}
+        raw=oracle._shortlist_record['raw_ids']
+        tools={r.proposal_id:r.tool_id for r in oracle._proposal_batch.proposals}
+        current=[k for k in raw if tools[k]==current_tool and scores.get(k,0)>0]
+        other=[k for k in raw if tools[k]!=current_tool and scores.get(k,0)>0]
+>       assert current and other
+E       AssertionError: assert (['nominal-cavity-c0aa06b03bc5bdfa65518e9c', 'nominal-cavity-c92aae445552f64d956b2905', 'nominal-cavity-716bcdb339047d8...y-b089d579ab8e9bc1712628e7', 'nominal-cavity-e494fe1d5061429e3881c703', 'nominal-cavity-82157472689ca5ab44ab1740', ...] and [])
+
+build/hybrid-train050-switch-guard-v1/tests/test_switch_guard.py:174: AssertionError
+_ test_actual_positive_switch_compares_current_tool_but_allows_worthwhile_switch[True-small] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10f8d50a0>
+worthwhile = True, current_tool = 'small'
+
+    @pytest.mark.parametrize('worthwhile,current_tool',[(False,'large'),(True,'small')])
+    def test_actual_positive_switch_compares_current_tool_but_allows_worthwhile_switch(monkeypatch,worthwhile,current_tool):
+>       case,prefix,other,best_current,tools=positive_switch_fixture(monkeypatch,current_tool,worthwhile)
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hybrid-train050-switch-guard-v1/tests/test_switch_guard.py:188: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10f8d50a0>
+current_tool = 'small', worthwhile = True
+
+    def positive_switch_fixture(monkeypatch,current_tool,worthwhile):
+        """An actual generated native prefix, followed by a deliberately adverse ranking."""
+        case=fixture();oracle=GeneratedSparseTask(case,mode='exhaustive',max_steps=3).planning_clone()
+        initial_scores={k:oracle._score_record({**v.to_history_record(),'action_id':k},None)['reward'] for k,v in oracle._inventory.items()}
+>       prefix=next(k for k,v in oracle._inventory.items() if v.tool_id==current_tool and initial_scores[k]>0)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+build/hybrid-train050-switch-guard-v1/tests/test_switch_guard.py:167: StopIteration
+___________ test_switch_comparison_is_private_reference_independent ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x112310290>
+
+    def test_switch_comparison_is_private_reference_independent(monkeypatch):
+>       case,prefix,other,best_current,tools=positive_switch_fixture(monkeypatch,'large',False)
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hybrid-train050-switch-guard-v1/tests/test_switch_guard.py:214: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x112310290>
+current_tool = 'large', worthwhile = False
+
+    def positive_switch_fixture(monkeypatch,current_tool,worthwhile):
+        """An actual generated native prefix, followed by a deliberately adverse ranking."""
+        case=fixture();oracle=GeneratedSparseTask(case,mode='exhaustive',max_steps=3).planning_clone()
+        initial_scores={k:oracle._score_record({**v.to_history_record(),'action_id':k},None)['reward'] for k,v in oracle._inventory.items()}
+        prefix=next(k for k,v in oracle._inventory.items() if v.tool_id==current_tool and initial_scores[k]>0)
+        oracle.advance_planning(prefix);inventory=oracle._prepare_inventory()
+        scores={k:oracle._score_record({**v.to_history_record(),'action_id':k},current_tool)['reward'] for k,v in inventory.items()}
+        raw=oracle._shortlist_record['raw_ids']
+        tools={r.proposal_id:r.tool_id for r in oracle._proposal_batch.proposals}
+        current=[k for k in raw if tools[k]==current_tool and scores.get(k,0)>0]
+        other=[k for k in raw if tools[k]!=current_tool and scores.get(k,0)>0]
+>       assert current and other
+E       AssertionError: assert (['nominal-cavity-c0aa06b03bc5bdfa65518e9c', 'nominal-cavity-c92aae445552f64d956b2905', 'nominal-cavity-716bcdb339047d8...y-b089d579ab8e9bc1712628e7', 'nominal-cavity-e494fe1d5061429e3881c703', 'nominal-cavity-82157472689ca5ab44ab1740', ...] and [])
+
+build/hybrid-train050-switch-guard-v1/tests/test_switch_guard.py:174: AssertionError
+=========================== short test summary info ============================
+FAILED build/hybrid-train050-switch-guard-v1/tests/test_switch_guard.py::test_actual_positive_switch_compares_current_tool_but_allows_worthwhile_switch[False-large]
+FAILED build/hybrid-train050-switch-guard-v1/tests/test_switch_guard.py::test_actual_positive_switch_compares_current_tool_but_allows_worthwhile_switch[True-small]
+FAILED build/hybrid-train050-switch-guard-v1/tests/test_switch_guard.py::test_switch_comparison_is_private_reference_independent
+3 failed, 4 passed in 3.73s

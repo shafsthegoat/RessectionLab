@@ -1,0 +1,19 @@
+{
+  "additional_reservable_bytes": 10477608960,
+  "allocation_allowed": true,
+  "archive_reserved_bytes": 8388608,
+  "archive_scope_measured_growth_bytes": 4018176,
+  "at_utc": "2026-10-11T09:46:17.408636+00:00",
+  "conservative_growth_plus_reservations_bytes": 259809280,
+  "free_after_outstanding_reservations_bytes": 357242105856,
+  "free_bytes": 357485375488,
+  "free_check_at_utc": "2026-10-11T09:46:17.407674+00:00",
+  "growth_highwater_bytes": 16539648,
+  "measurement_ended_at_utc": "2026-10-11T09:45:42.731952+00:00",
+  "no_full_scan_in_this_followup": true,
+  "outstanding_reserved_bytes": 243269632,
+  "reservation_scope_overruns": [],
+  "schema": "storage-extension-allocation-followup-v1",
+  "select013_paged_route_status": "prepared",
+  "train050_switch_guard_status": "running"
+}

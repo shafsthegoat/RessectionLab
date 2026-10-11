@@ -1,0 +1,26 @@
+{
+  "observed_at_utc": "2026-10-11T09:35:17.682395+00:00",
+  "method": "ps command-pattern metadata only; exact receipt below, no signals or worker changes",
+  "matches": [],
+  "patterns": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "run-intake.py",
+    "run_intake.py",
+    "continuous_source_acquisition.py",
+    "tractoinferno",
+    "hybrid-train050-transfer-v1",
+    "hybrid-train050-fallback-v1",
+    "select013-obstruction-frontier-v1"
+  ],
+  "limitation": "Pattern filtering cannot rule out arbitrary differently named jobs. Parent also confirmed no live owned pilot. No acquisition restart or payload request authorized.",
+  "completed_TRAIN050": {
+    "receipt_path": "build/hybrid-train050-transfer-v1/attempt-01.supervision/receipt.json",
+    "receipt_sha256": "621bf2ab10ea952ac0518712463e14d7633b4bb229e7d20898c6af3fde5330ae",
+    "worker_pid": 13451,
+    "status": "complete",
+    "exit_code": 0,
+    "remaining_owned_pids": [],
+    "worker_termination_confirmed": true,
+    "output_logical_bytes": 2842222
+  }
+}

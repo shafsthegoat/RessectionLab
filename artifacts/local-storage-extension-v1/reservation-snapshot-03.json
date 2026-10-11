@@ -1,0 +1,176 @@
+{
+  "baseline_sha256": "db2e3bad35aadd68f23111b9498270d019debf27486c696cc7ef48bd1fff67c8",
+  "free_space_check": {
+    "at_utc": "2026-10-11T09:46:17.407674+00:00",
+    "free_bytes": 357485375488
+  },
+  "growth_highwater_bytes": 16539648,
+  "last_owner_action_at_utc": "2026-10-11T09:46:17.408111+00:00",
+  "latest_measurement": {
+    "allocated_bytes": {
+      ".git": 136691712,
+      ".pytest_cache": 1146880,
+      ".tools": 1643302912,
+      ".venv": 3054829568,
+      "@root-files-and-directory": 630784,
+      "artifacts": 1753657344,
+      "build": 17046130688,
+      "data": 356137631744,
+      "desktop": 18945323008,
+      "dist": 2575773696,
+      "docs": 2211840,
+      "launchers": 409600,
+      "manifests": 5275648,
+      "outputs": 14765998080,
+      "packaging": 544768,
+      "research": 53248,
+      "scripts": 9527296,
+      "src": 6561792,
+      "tests": 20094976
+    },
+    "ended_at_utc": "2026-10-11T09:45:42.731952+00:00",
+    "free_bytes": 357478354944,
+    "method": "du -k -d 1 .; allocated file blocks, no bodies or symlink traversal; statvfs f_bavail",
+    "started_at_utc": "2026-10-11T09:45:26.858718+00:00",
+    "total_allocated_bytes": 416105795584
+  },
+  "owner": "/root/acquisition_continuity_audit",
+  "policy": {
+    "max_additional_allocated_growth_bytes": 10737418240,
+    "min_free_bytes": 53687091200,
+    "no_download_install_delete_authorized": true,
+    "one_running_dataset_pilot": true,
+    "reservation_is_not_scientific_launch_authorization": true,
+    "scientific_compute_serialization": "Root-owned; no new dataset materialized by the two experiment reservations."
+  },
+  "reservations": {
+    "root-archive-bookkeeping": {
+      "created_at_utc": "2026-10-11T09:34:37.781715+00:00",
+      "launch_authorized_by_storage_reservation": false,
+      "observed_scope_growth_highwater_bytes": 4018176,
+      "owner": "/root",
+      "pilot": false,
+      "reserved_bytes": 8388608,
+      "scope_current_allocated_bytes": 1934123008,
+      "scope_initial_allocated_bytes": 1930104832,
+      "scopes": [
+        "artifacts",
+        ".git",
+        "docs",
+        "src",
+        "scripts",
+        "tests",
+        "manifests",
+        "build/storage-extension-v1"
+      ],
+      "status": "prepared"
+    },
+    "select013-obstruction": {
+      "allocation_kind": "existing-data experiment; not a new dataset pilot",
+      "began_at_utc": "2026-10-11T09:38:32.385156+00:00",
+      "closed_at_utc": "2026-10-11T09:45:43.073253+00:00",
+      "created_at_utc": "2026-10-11T09:34:37.779640+00:00",
+      "launch_authorized_by_storage_reservation": false,
+      "observed_scope_growth_highwater_bytes": 3264512,
+      "owner": "/root/goal_conditioned_policy",
+      "pilot": false,
+      "reserved_bytes": 100663296,
+      "scope_current_allocated_bytes": 3633152,
+      "scope_extension_record": {
+        "allocated_bytes_at_addition": 36864,
+        "at_utc": "2026-10-11T09:35:17.656376+00:00",
+        "path": "build/select013-blocker-intervention-diagnosis-v1"
+      },
+      "scope_initial_allocated_bytes": 368640,
+      "scope_note": "Includes 23,786 logical-byte saved scalar diagnosis created before storage steering; sibling added by source owner request. Its currently allocated blocks are baseline-resident; project highwater still captures any later growth.",
+      "scopes": [
+        "build/select013-obstruction-frontier-v1",
+        "build/select013-blocker-intervention-diagnosis-v1",
+        "build/select013-obstruction-frontier-v2",
+        "build/select013-obstruction-frontier-review-v1"
+      ],
+      "status": "closed",
+      "successor_note": "Root authorized same96MiB successor scope after v1 setup failure (reported4.46s,~54KiB results,0commits). Preserve v1; no new dataset or additional allocation.",
+      "terminal_note": "Storage release only; success/admission not inferred from exit status.",
+      "terminal_receipt": {
+        "path": "build/select013-obstruction-frontier-v2/attempt-01.supervision/receipt.json",
+        "sha256": "b18a1ea56afccd0651ee87482daaf66405c3cd32adf08e55a872a4e5eafa6d1c"
+      }
+    },
+    "select013-paged-route": {
+      "allocation_kind": "existing-data complete-route comparison; no data/model downloads or copied patient arrays",
+      "created_at_utc": "2026-10-11T09:46:17.408060+00:00",
+      "launch_authorized_by_storage_reservation": false,
+      "measurement_basis": "Reused fresh combined postmilestone scan; current free-space check. Root requested one final numeric snapshot rather than another whole-project scan.",
+      "observed_scope_growth_highwater_bytes": 0,
+      "owner": "/root/goal_conditioned_policy",
+      "pilot": false,
+      "reserved_bytes": 134217728,
+      "scope_initial_allocated_bytes": 0,
+      "scopes": [
+        "build/select013-paged-route-v1"
+      ],
+      "status": "prepared"
+    },
+    "train050-fallback": {
+      "allocation_kind": "existing-data experiment; not a new dataset pilot",
+      "began_at_utc": "2026-10-11T09:38:32.334081+00:00",
+      "closed_at_utc": "2026-10-11T09:45:43.072998+00:00",
+      "created_at_utc": "2026-10-11T09:34:37.776270+00:00",
+      "launch_authorized_by_storage_reservation": false,
+      "observed_scope_growth_highwater_bytes": 5976064,
+      "owner": "/root/n36_result_audit_fresh",
+      "pilot": false,
+      "reserved_bytes": 100663296,
+      "scope_current_allocated_bytes": 6070272,
+      "scope_initial_allocated_bytes": 94208,
+      "scopes": [
+        "build/hybrid-train050-fallback-v1"
+      ],
+      "status": "closed",
+      "terminal_note": "Storage release only; success/admission not inferred from exit status.",
+      "terminal_receipt": {
+        "path": "build/hybrid-train050-fallback-v1/attempt-01.supervision/receipt.json",
+        "sha256": "de944be8efa438901d5f81603fa7a5271b0d2f1bb961600399ee8e3fc1aabb7b"
+      }
+    },
+    "train050-switch-guard": {
+      "allocation_kind": "existing-data experiment; no dataset pilot, arrays, model copy or new dependencies",
+      "began_at_utc": "2026-10-11T09:46:17.407687+00:00",
+      "created_at_utc": "2026-10-11T09:45:43.074107+00:00",
+      "launch_authorized_by_storage_reservation": false,
+      "observed_scope_growth_highwater_bytes": 0,
+      "owner": "/root/n36_result_audit_fresh",
+      "pilot": false,
+      "requested_caps": "64MiB result +8MiB supervision, remainder source/controls/review; root serializes actual execution",
+      "reserved_bytes": 100663296,
+      "scope_initial_allocated_bytes": 102400,
+      "scopes": [
+        "build/hybrid-train050-switch-guard-v1"
+      ],
+      "status": "running"
+    }
+  },
+  "schema": "storage-extension-ledger-v1",
+  "scope_highwater_bytes": {
+    ".git": 136691712,
+    ".pytest_cache": 1146880,
+    ".tools": 1643302912,
+    ".venv": 3054829568,
+    "@root-files-and-directory": 630784,
+    "artifacts": 1753657344,
+    "build": 17046130688,
+    "data": 356137631744,
+    "desktop": 18945323008,
+    "dist": 2575773696,
+    "docs": 2211840,
+    "launchers": 409600,
+    "manifests": 5275648,
+    "outputs": 14765998080,
+    "packaging": 544768,
+    "research": 53248,
+    "scripts": 9527296,
+    "src": 6561792,
+    "tests": 20094976
+  }
+}

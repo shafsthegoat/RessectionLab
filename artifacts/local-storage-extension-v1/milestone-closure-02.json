@@ -1,0 +1,112 @@
+{
+  "baseline_sha256": "db2e3bad35aadd68f23111b9498270d019debf27486c696cc7ef48bd1fff67c8",
+  "baseline_total_allocated_bytes": 416089255936,
+  "capacity": {
+    "additional_reservable_bytes": 10560823296,
+    "allocation_allowed": true,
+    "conservative_growth_plus_reservations_bytes": 176594944,
+    "free_after_outstanding_reservations_bytes": 357316247552,
+    "free_bytes": 357467242496,
+    "growth_highwater_bytes": 25600000,
+    "outstanding_reserved_bytes": 150994944,
+    "reservation_scope_overruns": []
+  },
+  "closed_reservation": {
+    "allocation_kind": "existing-data experiment; no dataset pilot, arrays, model copy or new dependencies",
+    "began_at_utc": "2026-10-11T09:46:17.407687+00:00",
+    "closed_at_utc": "2026-10-11T09:52:27.207500+00:00",
+    "created_at_utc": "2026-10-11T09:45:43.074107+00:00",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 6283264,
+    "owner": "/root/n36_result_audit_fresh",
+    "pilot": false,
+    "requested_caps": "64MiB result +8MiB supervision, remainder source/controls/review; root serializes actual execution",
+    "reserved_bytes": 100663296,
+    "scope_current_allocated_bytes": 6385664,
+    "scope_initial_allocated_bytes": 102400,
+    "scopes": [
+      "build/hybrid-train050-switch-guard-v1"
+    ],
+    "status": "closed",
+    "terminal_note": "Storage release only; success/admission not inferred from exit status.",
+    "terminal_receipt": {
+      "path": "build/hybrid-train050-switch-guard-v1/attempt-01.supervision/receipt.json",
+      "sha256": "cc7a64c632c2027da861924ef6eb162e607ffe7714e8ae27f038486e8163f748"
+    }
+  },
+  "coordination": "goal_conditioned_policy confirmed no generated tests and held controls during this one scan.",
+  "current_net_allocated_growth_bytes": 25600000,
+  "limits": "Metadata-only scan is not an atomic filesystem snapshot. Concurrent root compact archives may enter a later measurement; outstanding root allowance retained. No baseline reset, new experiment/data allocation, downloads, deletion, arrays, model/science jobs or process signals.",
+  "measurement": {
+    "allocated_bytes": {
+      ".git": 137297920,
+      ".pytest_cache": 1146880,
+      ".tools": 1643302912,
+      ".venv": 3054829568,
+      "@root-files-and-directory": 630784,
+      "artifacts": 1755422720,
+      "build": 17052753920,
+      "data": 356137631744,
+      "desktop": 18945323008,
+      "dist": 2575773696,
+      "docs": 2277376,
+      "launchers": 409600,
+      "manifests": 5275648,
+      "outputs": 14765998080,
+      "packaging": 544768,
+      "research": 53248,
+      "scripts": 9527296,
+      "src": 6561792,
+      "tests": 20094976
+    },
+    "ended_at_utc": "2026-10-11T09:52:26.878315+00:00",
+    "free_bytes": 357467242496,
+    "method": "du -k -d 1 .; allocated file blocks, no bodies or symlink traversal; statvfs f_bavail",
+    "started_at_utc": "2026-10-11T09:52:10.767108+00:00",
+    "total_allocated_bytes": 416114855936
+  },
+  "preserved_paged_route": {
+    "allocation_kind": "existing-data complete-route comparison; no data/model downloads or copied patient arrays",
+    "created_at_utc": "2026-10-11T09:46:17.408060+00:00",
+    "launch_authorized_by_storage_reservation": false,
+    "measurement_basis": "Reused fresh combined postmilestone scan; current free-space check. Root requested one final numeric snapshot rather than another whole-project scan.",
+    "observed_scope_growth_highwater_bytes": 233472,
+    "owner": "/root/goal_conditioned_policy",
+    "pilot": false,
+    "reserved_bytes": 134217728,
+    "scope_current_allocated_bytes": 233472,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/select013-paged-route-v1"
+    ],
+    "status": "prepared"
+  },
+  "recorded_at_utc": "2026-10-11T09:52:27.207835+00:00",
+  "root_archive_current_reservation": {
+    "created_at_utc": "2026-10-11T09:34:37.781715+00:00",
+    "increase_note": "Root-authorized conservative increase: less than3MiB remains from8MiB after measured growth, with forthcoming~1.5MiB switch archive plus Git/accounting.",
+    "increased_at_utc": "2026-10-11T09:52:27.207519+00:00",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 6483968,
+    "owner": "/root",
+    "pilot": false,
+    "previous_reserved_bytes": 8388608,
+    "reserved_bytes": 16777216,
+    "scope_current_allocated_bytes": 1936588800,
+    "scope_initial_allocated_bytes": 1930104832,
+    "scopes": [
+      "artifacts",
+      ".git",
+      "docs",
+      "src",
+      "scripts",
+      "tests",
+      "manifests",
+      "build/storage-extension-v1"
+    ],
+    "status": "prepared"
+  },
+  "root_archive_previous_reserved_bytes": 8388608,
+  "schema": "storage-extension-milestone-closure-v1",
+  "source_guard_sha256": "be177e55afaefea03a63db49e5b0ac01984b45ff2f3ec5e0e0f34a78e9d00375"
+}

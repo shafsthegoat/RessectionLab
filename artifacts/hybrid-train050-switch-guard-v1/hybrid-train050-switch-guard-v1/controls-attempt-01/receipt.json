@@ -1,0 +1,33 @@
+{
+  "acquired_arrays_or_frozen_model_allowed": false,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-train050-switch-guard-v1/controls-attempt-01/fresh-pycache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-train050-switch-guard-v1/controls-attempt-01/generated_child.py",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-train050-switch-guard-v1/controls-attempt-01/generated-tmp"
+  ],
+  "elapsed_seconds": 4.3548515408765525,
+  "exit_code": 1,
+  "files": {
+    "build/hybrid-train050-switch-guard-v1/batch_contract.py": "58790c9b943156975df4a15897f0963489788a2486791d1deb25cc05c3bd0919",
+    "build/hybrid-train050-switch-guard-v1/fallback_policy.py": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+    "build/hybrid-train050-switch-guard-v1/freeze-runtime.py": "eb25129a03954fe7d61658b26439a60a237d2fc3db6afa4cc12ef0991d7270eb",
+    "build/hybrid-train050-switch-guard-v1/hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+    "build/hybrid-train050-switch-guard-v1/initial_inventory_worker.py": "abd08f8ad3604fa99557d60cc794873d7eb79f1cb510f6e669816c6be684b36f",
+    "build/hybrid-train050-switch-guard-v1/patient_transfer.py": "0ddeb95fb5fff7917c49e2edbd81e9a81a3d1e57c3fdfa9f3a46ec88977259b2",
+    "build/hybrid-train050-switch-guard-v1/run_generated_controls.py": "79ae1772186e383ecc5d63e5331913c1108159da2d31eeeea87ccc7e80c7ca2c",
+    "build/hybrid-train050-switch-guard-v1/run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+    "build/hybrid-train050-switch-guard-v1/tests/test_switch_guard.py": "79030d819805d6885fb68775ae62c520adf025596769e432b9f4e9d02b2e7f79"
+  },
+  "generated_only": true,
+  "hard_seconds": 30,
+  "log_sha256": "ace66afc75b29423df44644a3c58a64b22f3db26440d5e06edb7e8d141cb092b",
+  "observed_child_maxrss": 274644992,
+  "source_unchanged": true,
+  "threads": 1,
+  "timeout": false
+}

@@ -1,0 +1,131 @@
+{
+  "files": [
+    {
+      "archive_path": "baseline.json",
+      "bytes": 2099,
+      "path": "build/storage-extension-v1/baseline.json",
+      "sha256": "db2e3bad35aadd68f23111b9498270d019debf27486c696cc7ef48bd1fff67c8"
+    },
+    {
+      "archive_path": "reservation-snapshot-01.json",
+      "bytes": 4695,
+      "path": "build/storage-extension-v1/reservation-snapshot-01.json",
+      "sha256": "0e379e790e5cbd4725510142f530206c471360be7975e85a94bbeb9cdabd0e57"
+    },
+    {
+      "archive_path": "latest-measurement-01.json",
+      "bytes": 805,
+      "path": "build/storage-extension-v1/latest-measurement-01.json",
+      "sha256": "f434a075d6dd28fb38ca296c8ba75dafb2e92dfd40379424bec3aa42c49cca85"
+    },
+    {
+      "archive_path": "snapshot-01.json",
+      "bytes": 384,
+      "path": "build/storage-extension-v1/snapshot-01.json",
+      "sha256": "9d3b60f64857bc82127e09919b60b35f7a95d0a8f6dfb2e27ab3e957d5696097"
+    },
+    {
+      "archive_path": "process-observation.json",
+      "bytes": 1090,
+      "path": "build/storage-extension-v1/process-observation.json",
+      "sha256": "643490c41f7879e6c1ddca1656a54e95ff808994c125317c1b8a6f960ec43944"
+    },
+    {
+      "archive_path": "storage_guard.py",
+      "bytes": 9830,
+      "path": "build/storage-extension-v1/storage_guard.py",
+      "sha256": "5400b3600693186a2d01c6191d9677659b4454dd00da76e2a3f892a55e6632ba"
+    },
+    {
+      "archive_path": "test_storage_guard.py",
+      "bytes": 5099,
+      "path": "build/storage-extension-v1/test_storage_guard.py",
+      "sha256": "d89ea896427c0aa188ea2c4a83d5edf2adccea06a29e6a4afbe8138acba637a4"
+    },
+    {
+      "archive_path": "generated-controls.log",
+      "bytes": 1074,
+      "path": "build/storage-extension-v1/generated-controls.log",
+      "sha256": "fd6d96e3b5a070ceda0abbf82164b289b6c906a0180f35e3b696a3c5bd96b7c8"
+    },
+    {
+      "archive_path": "generated-controls-final.log",
+      "bytes": 1323,
+      "path": "build/storage-extension-v1/generated-controls-final.log",
+      "sha256": "9b0ae3bd39a7fe8a0fbff96dcc3d29051d671ffbf9b5fe5bf82b732fcb1c2265"
+    },
+    {
+      "archive_path": "generated-controls-final-v2.log",
+      "bytes": 1323,
+      "path": "build/storage-extension-v1/generated-controls-final-v2.log",
+      "sha256": "9b0ae3bd39a7fe8a0fbff96dcc3d29051d671ffbf9b5fe5bf82b732fcb1c2265"
+    },
+    {
+      "archive_path": "REPORT.txt",
+      "bytes": 4279,
+      "path": "build/storage-extension-v1/REPORT.txt",
+      "sha256": "74c44b750c42e0a3c571151946baaac513114ec66ed0761a22e3a083df7e444e"
+    },
+    {
+      "archive_path": "COMMANDS.txt",
+      "bytes": 1453,
+      "path": "build/storage-extension-v1/COMMANDS.txt",
+      "sha256": "d8100c309b20d41758a701a2dc9fa766ff122d5fbcad1de04ea39c0a2581927c"
+    },
+    {
+      "archive_path": "index.json",
+      "bytes": 2354,
+      "path": "build/storage-extension-v1/index.json",
+      "sha256": "6e233df3a9b8b2cbdba0463337b563041b4a6fa826e42ed519c038a3815e6298"
+    },
+    {
+      "archive_path": "storage_guard_v2.py",
+      "bytes": 9959,
+      "path": "build/storage-extension-v1/storage_guard_v2.py",
+      "sha256": "be177e55afaefea03a63db49e5b0ac01984b45ff2f3ec5e0e0f34a78e9d00375"
+    },
+    {
+      "archive_path": "guard-v2-controls.json",
+      "bytes": 960,
+      "path": "build/storage-extension-v1/guard-v2-controls.json",
+      "sha256": "b7ab994aefa940631c4b2b331f4c1b2b8a2374c8082147d6f07b8f04b4392b82"
+    },
+    {
+      "archive_path": "closure-attempt-01-refused.json",
+      "bytes": 910,
+      "path": "build/storage-extension-v1/closure-attempt-01-refused.json",
+      "sha256": "26c59969576419e3632e9eeec7e771077341ac4cad92af67f3ab989910b222fa"
+    },
+    {
+      "archive_path": "combined-closure-01.json",
+      "bytes": 4653,
+      "path": "build/storage-extension-v1/combined-closure-01.json",
+      "sha256": "2d439dea32a4851bae2e7a47407bcb3964e0fa9879bfcef204736d76c112f081"
+    },
+    {
+      "archive_path": "reservation-snapshot-02.json",
+      "bytes": 6368,
+      "path": "build/storage-extension-v1/reservation-snapshot-02.json",
+      "sha256": "75f809dbb01651b823b5372c02e701b49e02015bd4a11d1925988af6c89f70a4"
+    },
+    {
+      "archive_path": "reservation-snapshot-03.json",
+      "bytes": 7170,
+      "path": "build/storage-extension-v1/reservation-snapshot-03.json",
+      "sha256": "dab9bcceecd4abda9a28690815bf7043429204ea47128c34bd12c56bba276d2e"
+    },
+    {
+      "archive_path": "allocation-followup-01.json",
+      "bytes": 795,
+      "path": "build/storage-extension-v1/allocation-followup-01.json",
+      "sha256": "68d0b5a46b5e266752c56bb2fc2a2f32e999513089ad62b0ca0f658b1f6dd86c"
+    },
+    {
+      "archive_path": "milestone-closure-02.json",
+      "bytes": 4857,
+      "path": "build/storage-extension-v1/milestone-closure-02.json",
+      "sha256": "ff4ace2e79497e9022f1f9412587bbb83f32dc11f1e2a5772278c7cd746b5bbf"
+    }
+  ],
+  "scope": "immutable baseline and reservation snapshots; mutable live ledger excluded"
+}

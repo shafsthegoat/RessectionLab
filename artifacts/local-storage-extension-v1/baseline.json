@@ -1,0 +1,50 @@
+{
+  "allocated_bytes": {
+    ".git": 134144000,
+    ".pytest_cache": 1146880,
+    ".tools": 1643302912,
+    ".venv": 3054829568,
+    "@root-files-and-directory": 630784,
+    "artifacts": 1749630976,
+    "build": 17036169216,
+    "data": 356137631744,
+    "desktop": 18945323008,
+    "dist": 2575773696,
+    "docs": 2207744,
+    "launchers": 409600,
+    "manifests": 5275648,
+    "outputs": 14765998080,
+    "packaging": 544768,
+    "research": 53248,
+    "scripts": 9527296,
+    "src": 6561792,
+    "tests": 20094976
+  },
+  "cache_component_allocated_bytes": {
+    ".pytest_cache": 1146880,
+    "build/idc-acquisition-venv": 439169024,
+    "desktop/node_modules": 564674560
+  },
+  "exact_initial_scan_start_end_not_recorded": true,
+  "free_bytes": 357494190080,
+  "growth_cap_bytes": 10737418240,
+  "initial_observation_completed_before_utc": "2026-10-11T09:32:17Z",
+  "initial_process_observation": "No matching project/intake worker remained in ps filter; exact completed worker13451 corroborated by terminal receipt. A process-name snapshot is not proof against arbitrary differently named jobs.",
+  "method": "Read-only du -k -d 1 . and df -k . before creating storage-extension files. Metadata only, no bodies.",
+  "minimum_free_bytes": 53687091200,
+  "prebaseline_completed_TRAIN050": {
+    "original_80_MiB_request": "Superseded: run was terminal and resident before baseline. No retroactive growth charged.",
+    "output_allocated_bytes": 2961408,
+    "output_logical_bytes": 2842222,
+    "receipt_path": "build/hybrid-train050-transfer-v1/attempt-01.supervision/receipt.json",
+    "receipt_sha256": "621bf2ab10ea952ac0518712463e14d7633b4bb229e7d20898c6af3fde5330ae",
+    "remaining_owned_pids": [],
+    "supervision_allocated_bytes": 12288,
+    "worker_pid": 13451
+  },
+  "recorded_at_utc": "2026-10-11T09:34:21.717630+00:00",
+  "root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "schema": "storage-extension-baseline-v1",
+  "storage_acquisition_owner": "/root/acquisition_continuity_audit",
+  "total_allocated_bytes": 416089255936
+}

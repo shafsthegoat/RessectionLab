@@ -1830,3 +1830,37 @@ including16positive choices and the search winner. The next single generic
 change compares them before switching tools while retaining the original reward,
 no-positive fallback, full quality criterion and all paid checks. This is model-
 guided geometric planning development; physical and clinical claims remain closed.
+
+## October 11 — Current-tool comparison passes the unchanged quality gate
+
+[The fixed TRAIN050 successor](../artifacts/hybrid-train050-switch-guard-v1/RESULT.md)
+reproduces all eleven exhaustive-search physical actions and the same 37 removed
+target cells, with zero outside-target removal and identical return 34.830407.
+The generic guard checks remaining current-tool choices before accepting an
+under-compared switch; useful switches remain allowed. Model weights, world,
+reward and original information boundaries are unchanged. The earlier six-cell
+transfer failure and the fallback's extra-movement loss remain preserved.
+
+Online previews fall to 870 from 1,092 (20.3%); source-through-plan wall is
+8.781208 versus 10.248682 s (14.3% lower in one fixed-order pair). All conditional
+checks are included. Four current-tool comparisons add 193 previews; seven
+no-positive fallbacks run. Parent wall is 51.683 s at 521.36 MB sampled peak,
+with 3,924 total previews, 48 transitions, one model load and zero fits/updates.
+Both plans seal before uncached replay. Seven generated controls pass; the
+independent saved audit verifies source/plan/cell/action/count bindings and the
+unchanged quality gate. Initial generated fixture precondition failures remain
+recorded; there was no acquired rerun.
+
+050 is now development-exposed. This is supervised model-guided geometric
+planning, not a newly trained RL policy or held-out generalization. The 37 cells
+are only 0.1892% of the supplied whole-tumor annotation; no clinical resection or
+physical interaction claim follows. Next work tests complete enabling routes
+and regression on the original four TRAIN cases, with held037 and closed067
+unchanged. No new dataset is justified by these failures.
+
+[The shared storage snapshot](../artifacts/local-storage-extension-v1/README.md)
+at 09:52:26 UTC records 24.414 MiB additional project growth and 332.917 GiB free.
+The completed comparison's reservation is closed; 128 MiB for complete-route
+preparation and 16 MiB for root archives remain reserved. These are dated
+allocated-block estimates, not continuous disk accounting. No download,
+dependency installation, deletion or paid infrastructure is introduced.

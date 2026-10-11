@@ -1,0 +1,13 @@
+{
+  "schema": "storage-closure-refusal-v1",
+  "recorded_at_utc": "2026-10-11T09:44:43.205084+00:00",
+  "operation": "combined close",
+  "receipt_hashes_matched": true,
+  "ledger_mutated": false,
+  "baseline_changed": false,
+  "science_or_download": false,
+  "failure": "ValueError: receipt must affirm no remaining owned process and termination",
+  "cause": "Obstruction parent uses final_owned_pids=[], rather than remaining_owned_pids=[]; both use worker_termination_confirmed=true.",
+  "measurement_limit": "One project scan completed in this refused operation, but its in-memory result was not persisted before failure. It is not reported as a successful snapshot. One final combined scan will persist before closure.",
+  "repair": "storage_guard_v2.py accepts either explicitly empty cleanup field; if both exist both must be empty. Existing storage_guard.py and frozen handoff index remain unchanged."
+}

@@ -1,0 +1,36 @@
+{
+  "status": "GO_FOR_EXACT_CURRENT_TOOL_COMPARISON_DELTA",
+  "scope": "Source delta plus owner-generated terminal controls; no independent rerun or acquired/model input access.",
+  "bindings": {
+    "source_ready_sha256": "fd2dddf70c50bcfaf1614cd183407c4171178deb55fb84d61c42fc9de6216f63",
+    "policy_sha256": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+    "contract_sha256": "58790c9b943156975df4a15897f0963489788a2486791d1deb25cc05c3bd0919",
+    "worker_sha256": "abd08f8ad3604fa99557d60cc794873d7eb79f1cb510f6e669816c6be684b36f",
+    "freezer_sha256": "eb25129a03954fe7d61658b26439a60a237d2fc3db6afa4cc12ef0991d7270eb",
+    "controls_receipt_sha256": "1cc09786267d26ed1a69bfaf7f3eb8530f5d96c8bf1d4a78142a4dd50c047569",
+    "controls_log_sha256": "b99e0a157349c99ac9b95817d8d6115f6cf9ddec8956d00f2110a3d2e385be86",
+    "preserved_failed_receipt_sha256": "3a885fe6c0a854f5fb969aa5fe0d1c99dd5e474751d8fbb51c39aeb4564584c5"
+  },
+  "controls": {
+    "passed": 7,
+    "test_seconds": 4.23,
+    "owned_seconds": 4.807617832906544,
+    "sampled_child_peak_rss_bytes": 274857984,
+    "exit_code": 0,
+    "timeout": false,
+    "production_unchanged": true,
+    "prior_failure": "Four passed and three generated fixture preconditions failed. The corrected test changes only invented two-tool dimensions to provide positive actions for both tools; failed source/log/receipt preserved. No production change or patient geometry change."
+  },
+  "findings": [
+    "Original no-positive top8 full emitted-catalog expansion is preserved.",
+    "The only new behavioral branch requires a positive initial winner that changes a non-null current tool and at least one unqueried emitted current-tool proposal. It certifies those current-tool IDs once in original order and counts every additional preview.",
+    "Final selection retains canonical public nominal reward, STOP zero and raw-order ties. Switching remains allowed if it is still best; no tool ban, private reference, source changes or fit is introduced.",
+    "Focused generated native-prefix controls show a better current-tool option being selected and a worthwhile switch remaining selected, with unchanged native geometry validation. Repeat observation/clone does not requery; private-reference permutation leaves inventory and nominal decisions identical.",
+    "Immutable helper, model loader and owned parent remain byte-identical. Existing original TRAIN scope and exact model/public source guards are unchanged; predecessor negatives are bound. Both plans still seal before uncached replay."
+  ],
+  "limits": [
+    "No prospective quality or runtime improvement is asserted.",
+    "A positive same-tool shortlist can still omit a better same-tool or alternative-tool action. The extension is not full greedy equivalence or global planning."
+  ],
+  "unresolved_blockers": []
+}

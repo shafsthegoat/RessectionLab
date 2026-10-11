@@ -1,0 +1,207 @@
+{
+  "bytes": 1428985,
+  "external_evidence": "All other checked inventories/duplicate bindings are retained under ignored build with read hashes in audit.json. Previous negative archives and unchanged helper/canonical sources are not duplicated; no arrays/images/model weights.",
+  "file_count": 33,
+  "includes": [
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/root-release.json",
+      "bytes": 4506,
+      "path": "build/hybrid-train050-switch-guard-v1/root-release.json",
+      "sha256": "27f6a652c4f3f7fe660b5cf18b503457aaf66889116aa35a3a98b8f62420e52e"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/source-index.json",
+      "bytes": 16719,
+      "path": "build/hybrid-train050-switch-guard-v1/source-index.json",
+      "sha256": "7560323e7316607a1615a23f51500c5bb8af79a8beeb256c7d91f0e2a9c8412f"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/source-ready.json",
+      "bytes": 2228,
+      "path": "build/hybrid-train050-switch-guard-v1/source-ready.json",
+      "sha256": "fd2dddf70c50bcfaf1614cd183407c4171178deb55fb84d61c42fc9de6216f63"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/inputs.json",
+      "bytes": 400,
+      "path": "build/hybrid-train050-switch-guard-v1/inputs.json",
+      "sha256": "f5c691f73651f0a1c57b6c32e9dc35ee9a6ef136e6371323e6adcea9ae16560a"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/fallback_policy.py",
+      "bytes": 9455,
+      "path": "build/hybrid-train050-switch-guard-v1/fallback_policy.py",
+      "sha256": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/batch_contract.py",
+      "bytes": 12245,
+      "path": "build/hybrid-train050-switch-guard-v1/batch_contract.py",
+      "sha256": "58790c9b943156975df4a15897f0963489788a2486791d1deb25cc05c3bd0919"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/initial_inventory_worker.py",
+      "bytes": 18108,
+      "path": "build/hybrid-train050-switch-guard-v1/initial_inventory_worker.py",
+      "sha256": "abd08f8ad3604fa99557d60cc794873d7eb79f1cb510f6e669816c6be684b36f"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/freeze-runtime.py",
+      "bytes": 2977,
+      "path": "build/hybrid-train050-switch-guard-v1/freeze-runtime.py",
+      "sha256": "eb25129a03954fe7d61658b26439a60a237d2fc3db6afa4cc12ef0991d7270eb"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/driver.patch",
+      "bytes": 18408,
+      "path": "build/hybrid-train050-switch-guard-v1/driver.patch",
+      "sha256": "33925f38d8187aac2f867a5320d78768531812a79624626bd1a27897e26db861"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/tests/test_switch_guard.py",
+      "bytes": 14596,
+      "path": "build/hybrid-train050-switch-guard-v1/tests/test_switch_guard.py",
+      "sha256": "60c8bb44acc7fac4038d894197aaace21a9bf6f956f0321a69d3d7d3516a226e"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/controls-attempt-01/receipt.json",
+      "bytes": 2377,
+      "path": "build/hybrid-train050-switch-guard-v1/controls-attempt-01/receipt.json",
+      "sha256": "3a885fe6c0a854f5fb969aa5fe0d1c99dd5e474751d8fbb51c39aeb4564584c5"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/controls-attempt-01/stdout.log",
+      "bytes": 6800,
+      "path": "build/hybrid-train050-switch-guard-v1/controls-attempt-01/stdout.log",
+      "sha256": "ace66afc75b29423df44644a3c58a64b22f3db26440d5e06edb7e8d141cb092b"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/controls-attempt-01/failed-source/test_switch_guard.py",
+      "bytes": 14505,
+      "path": "build/hybrid-train050-switch-guard-v1/controls-attempt-01/failed-source/test_switch_guard.py",
+      "sha256": "79030d819805d6885fb68775ae62c520adf025596769e432b9f4e9d02b2e7f79"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/controls-attempt-02/receipt.json",
+      "bytes": 2376,
+      "path": "build/hybrid-train050-switch-guard-v1/controls-attempt-02/receipt.json",
+      "sha256": "1cc09786267d26ed1a69bfaf7f3eb8530f5d96c8bf1d4a78142a4dd50c047569"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/controls-attempt-02/stdout.log",
+      "bytes": 98,
+      "path": "build/hybrid-train050-switch-guard-v1/controls-attempt-02/stdout.log",
+      "sha256": "b99e0a157349c99ac9b95817d8d6115f6cf9ddec8956d00f2110a3d2e385be86"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/attempt-01/result.json",
+      "bytes": 22979,
+      "path": "build/hybrid-train050-switch-guard-v1/attempt-01/result.json",
+      "sha256": "83011a701cc36da2295c074ea5c2daf506191d281e5f8cd09dad8a4a9ea3efed"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/attempt-01/sealed-plans.json",
+      "bytes": 127418,
+      "path": "build/hybrid-train050-switch-guard-v1/attempt-01/sealed-plans.json",
+      "sha256": "3135cfd908f37ffd42b7981c4700ad9fab00f8bd15c353348515edac7561dac0"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/attempt-01.supervision/receipt.json",
+      "bytes": 1466,
+      "path": "build/hybrid-train050-switch-guard-v1/attempt-01.supervision/receipt.json",
+      "sha256": "cc7a64c632c2027da861924ef6eb162e607ffe7714e8ae27f038486e8163f748"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/attempt-01.supervision/declaration.json",
+      "bytes": 1859,
+      "path": "build/hybrid-train050-switch-guard-v1/attempt-01.supervision/declaration.json",
+      "sha256": "40c8a6e5a3a700ba949590ae3bdbffcda7ca8ea9ee24b077e3e80d9d298d5844"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/plan.json",
+      "bytes": 44717,
+      "path": "build/hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/plan.json",
+      "sha256": "76919214c23c2303ff8378b635e4a959f2e5b9cf09d6f408a0750e19924eac45"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/replay/episode-metrics.json",
+      "bytes": 399509,
+      "path": "build/hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/replay/episode-metrics.json",
+      "sha256": "bc37ba69b90884b1c5488822e8be403e6347102231a3759033929bf9b30e54be"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/replay/independent-episode.json",
+      "bytes": 2625,
+      "path": "build/hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/replay/independent-episode.json",
+      "sha256": "b126617212ac5890b121ece88a65ebd71b7c8d214e6153073420e646320b06ab"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/inventories/state-01.json",
+      "bytes": 70028,
+      "path": "build/hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/inventories/state-01.json",
+      "sha256": "a8dad4943ea1224c9d1add0d4df937b338ca034ceba2dbf8e2d92132bda882a4"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/attempt-01/exhaustive/plan.json",
+      "bytes": 71513,
+      "path": "build/hybrid-train050-switch-guard-v1/attempt-01/exhaustive/plan.json",
+      "sha256": "b6ac1ed6455efadd0bf19db60e47f9c0fa072a1923ab866ebaa8d72c5e4b9d5a"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/attempt-01/exhaustive/replay/episode-metrics.json",
+      "bytes": 399509,
+      "path": "build/hybrid-train050-switch-guard-v1/attempt-01/exhaustive/replay/episode-metrics.json",
+      "sha256": "3c0e33ed94ec84549bb17185964dbe21ca6a37c3922f2517f7fa557ab5b57f5c"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/attempt-01/exhaustive/replay/independent-episode.json",
+      "bytes": 2625,
+      "path": "build/hybrid-train050-switch-guard-v1/attempt-01/exhaustive/replay/independent-episode.json",
+      "sha256": "4e7cdb7c2d6a24120b8e102bbea94792c514bdcb8a554610fc4e4df90e6cb620"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/attempt-01/exhaustive/inventories/state-01.json",
+      "bytes": 70572,
+      "path": "build/hybrid-train050-switch-guard-v1/attempt-01/exhaustive/inventories/state-01.json",
+      "sha256": "84df656e8fddf202dbec615ffbee3c2bbacabb293cd62c958a3efdf3a18555b7"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/source/admitted-public-bindings.json",
+      "bytes": 16168,
+      "path": "build/hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/source/admitted-public-bindings.json",
+      "sha256": "30093eb98ceeb9412264c6745be368325414159f2a40e8ca432bf203921bf494"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-review-v1/source-review.json",
+      "bytes": 2855,
+      "path": "build/hybrid-train050-switch-guard-review-v1/source-review.json",
+      "sha256": "2c2f49f0bf9f6f1bb5e46c0bfd5c3a86d875b404f92013ed727c8752a32bea9f"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-review-v1/runtime-source-delta.json",
+      "bytes": 1650,
+      "path": "build/hybrid-train050-switch-guard-review-v1/runtime-source-delta.json",
+      "sha256": "14f94832d5ccd5588992d203f52a3465bf9872e1ef4c3ce9cabd3ed4e8e8c396"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-review-v1/audit_saved.py",
+      "bytes": 30226,
+      "path": "build/hybrid-train050-switch-guard-review-v1/audit_saved.py",
+      "sha256": "764ab7125a67660055210472a5188bb1b69f09749c6745cb25015af5bc0ce018"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-review-v1/audit.json",
+      "bytes": 33577,
+      "path": "build/hybrid-train050-switch-guard-review-v1/audit.json",
+      "sha256": "bd9a5b6b647c6a68f810e5f9eb291056cc2ac53d479c2adaa0828e5646a96d34"
+    },
+    {
+      "archive_path": "hybrid-train050-switch-guard-review-v1/REPORT.txt",
+      "bytes": 3891,
+      "path": "build/hybrid-train050-switch-guard-review-v1/REPORT.txt",
+      "sha256": "217e1cc9101b8f7498381920e7eb992f6e4a183c15ef8a18fba1e1efe398279b"
+    }
+  ],
+  "schema": "current-tool-guard-compact-archive-v1",
+  "target_max_bytes": 1572864
+}

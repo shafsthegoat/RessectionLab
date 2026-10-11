@@ -1,0 +1,35 @@
+Storage extension baseline and guard — 2026-10-11
+
+Owner: /root/acquisition_continuity_audit. Shared limits: 10 GiB additional allocated disk growth; at least 50 GiB free. One new DATASET pilot at a time. Existing-data scientific compute remains serialized by root. No downloads, dependency installs, dataset changes, deletions or process signals occurred.
+
+Baseline before09:32:17Z: 416,089,255,936 B (387.513 GiB) allocated in this project; 332.942 GiB free. Exact initial scan start/end was not logged; latest fully timed scan is preserved separately.
+
+Existing allocated usage (baseline; categories do not overlap):
+  data: 356,137,631,744 B / 331.679 GiB
+  build: 17,036,169,216 B / 15.866 GiB
+  outputs: 14,765,998,080 B / 13.752 GiB
+  desktop: 18,945,323,008 B / 17.644 GiB
+  artifacts: 1,749,630,976 B / 1.629 GiB
+  .venv: 3,054,829,568 B / 2.845 GiB
+  .tools: 1,643,302,912 B / 1.530 GiB
+  dist: 2,575,773,696 B / 2.399 GiB
+  .git: 134,144,000 B / 0.125 GiB
+
+Cache subcomponents, already included above: desktop/node_modules 538.516 MiB; build/idc-acquisition-venv 418.824 MiB; .pytest_cache 1.094 MiB. No home-directory scan.
+
+Latest timed scan ended 2026-10-11T09:35:52.479540+00:00: measured growth highwater 4,685,824 B (4.469 MiB); free 332.941 GiB. Forward reservations total200 MiB. Conservative growth+reservations: 204.469 MiB; additional reservable 9.800 GiB. Free after reservations: 332.745 GiB. No overrun.
+
+Reservations (prepared; no new launch authorization):
+  96 MiB train050-fallback: build/hybrid-train050-fallback-v1.
+  96 MiB select013-obstruction: frontier-v1, frontier-v2, frontier-review-v1 and prior blocker-intervention-diagnosis-v1. V1 setup failure is preserved; v2 shares this cap.
+  8 MiB root-archive-bookkeeping: artifacts/.git/docs/src/scripts/tests/manifests plus this storage record. Root reported1.45 MiB witness and1.10 MiB050 archive copies; these are included in project growth, not excluded data.
+
+Completed050 worker13451 was already reaped before baseline: 2,842,222 logical output bytes,2,961,408 allocated output bytes plus12 KiB supervision. Its initial80 MiB request was superseded, not falsely charged as subsequent growth. Receipt confirms exit0 and no owned processes. One command-pattern process snapshot matched no acquisition/scientific worker; it is not an exhaustive proof against differently named processes.
+
+Guard: storage_guard.py holds one flock while measuring/checking/mutating ledger.json, then fsyncs an atomic replacement. New reservations require a metadata-only project scan and both limits. Outstanding allowances are charged in full on top of measured growth (conservative double counting until closure). Top-level per-scope highwater prevents measured decreases from freeing budget. Existing-file growth, new agent copies, build, artifacts, .git, environments and project caches are all measured. Close requires a hash-bound clean termination receipt; a failed scientific outcome may release unused storage without being called successful.
+
+Use one preallocation check and one postmilestone snapshot, not a polling loop. Project scan is about16seconds of metadata; do not run it inside a timed scientific slot. begin uses only a fresh filesystem free-space check and existing reserved allowance. Workers still enforce their own output/supervision caps. Reservation is not scientific permission.
+
+Limits: du allocated blocks are a proxy for resident disk usage, not APFS unique extents or RAM. APFS clones/hard links/compression/snapshots and concurrent atomic rewrites can differ from physical unique usage; transient growth or delete-and-grow inside one scope between scans may be missed. No deletions are authorized. External OS/apps/home caches are not attributed to project growth; current volume free-space checks protect the50 GiB floor at checkpoints only. New extension output/temp/cache paths must remain in the project and be declared first. This is an advisory owner-operated guard, not a filesystem quota or background enforcer.
+
+Controls: 11 generated storage-only controls pass in0.002s; no arrays, models, native jobs or actual transfers. Baseline, snapshot, process evidence, source/test and logs are hash-indexed. Mutable runtime ledger is deliberately not a frozen evidence claim.

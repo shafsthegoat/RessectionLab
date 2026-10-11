@@ -1,0 +1,16 @@
+test_close_requires_explicit_clean_reap (__main__.GuardControls.test_close_requires_explicit_clean_reap) ... ok
+test_free_floor_includes_outstanding (__main__.GuardControls.test_free_floor_includes_outstanding) ... ok
+test_full_pending_reservation_is_conservative (__main__.GuardControls.test_full_pending_reservation_is_conservative) ... ok
+test_negative_scientific_result_can_release_storage (__main__.GuardControls.test_negative_scientific_result_can_release_storage) ... ok
+test_no_duplicate_or_overlapping_allocation (__main__.GuardControls.test_no_duplicate_or_overlapping_allocation) ... ok
+test_only_one_running_pilot (__main__.GuardControls.test_only_one_running_pilot) ... ok
+test_per_scope_highwater_no_shrink_credit (__main__.GuardControls.test_per_scope_highwater_no_shrink_credit) ... ok
+test_scope_escape_refused (__main__.GuardControls.test_scope_escape_refused) ... ok
+test_scope_overrun_blocks_next_allocation (__main__.GuardControls.test_scope_overrun_blocks_next_allocation) ... ok
+test_shared_growth_and_reservations_cap (__main__.GuardControls.test_shared_growth_and_reservations_cap) ... ok
+test_unregistered_new_top_scope_counts (__main__.GuardControls.test_unregistered_new_top_scope_counts) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.002s
+
+OK

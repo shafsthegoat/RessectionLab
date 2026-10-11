@@ -1,0 +1,16 @@
+Run from the project root; only the designated storage owner changes the ledger.
+
+# Fresh metadata snapshot at a milestone (not during timed science):
+.venv/bin/python -I -B build/storage-extension-v1/storage_guard.py snapshot
+
+# Mark an already reserved experiment before root's separately authorized launch.
+# This performs only a fresh free-space check; root serializes compute.
+.venv/bin/python -I -B build/storage-extension-v1/storage_guard.py begin --id select013-obstruction
+
+# Close after exact terminal receipt; this performs the postmilestone scan:
+.venv/bin/python -I -B build/storage-extension-v1/storage_guard.py close --id select013-obstruction --terminal-receipt build/select013-obstruction-frontier-v2/attempt-01.supervision/receipt.json
+
+# Future allocation pattern (ID/path/amount must be an actually agreed request):
+.venv/bin/python -I -B build/storage-extension-v1/storage_guard.py reserve --id REQUEST-ID --mib INTEGER --owner AGENT --scope build/EXACT-PATH
+
+Use --pilot only for an expressly authorized NEW DATASET pilot. It enforces one running dataset pilot. No such intake is currently authorized or reserved. Reserve/begin never starts a process, downloads, installs, or changes patient roles. Do not execute placeholder allocation or absent terminal receipt commands. The mutable ledger stays under build/storage-extension-v1; never reset baseline to reclaim budget. Whole-project scans are only preallocation/postmilestone.

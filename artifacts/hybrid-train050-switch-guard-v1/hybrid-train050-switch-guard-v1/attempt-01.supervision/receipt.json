@@ -1,0 +1,44 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "feature_count": 681,
+    "fits": 0,
+    "log_bytes": 2097152,
+    "native_previews": 40000,
+    "native_transitions": 96,
+    "output_bytes": 67108864,
+    "parent_seconds": 330,
+    "ridge_calls": 48,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 4,
+    "supervision_bytes": 8388608,
+    "threads": 1,
+    "worker_seconds": 300
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 51.68299995781854,
+  "exit_code": 0,
+  "memory_scope": "whole owned process peak only; no independent per-arm peak attribution",
+  "output_bytes": 4700747,
+  "planned_subjects": [
+    "ReMIND-050"
+  ],
+  "release_sha256": "27f6a652c4f3f7fe660b5cf18b503457aaf66889116aa35a3a98b8f62420e52e",
+  "remaining_owned_pids": [],
+  "result_sha256": "83011a701cc36da2295c074ea5c2daf506191d281e5f8cd09dad8a4a9ea3efed",
+  "result_status": "complete_TRAIN050_switch_guard_comparison",
+  "sampled_peak_rss_bytes": 521355264,
+  "samples": 247,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/hybrid-train050-switch-guard-v1/source-index.json",
+    "sha256": "7560323e7316607a1615a23f51500c5bb8af79a8beeb256c7d91f0e2a9c8412f"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 2260,
+  "training_admitted": "none_frozen_ridge_inference_only",
+  "worker_pid": 15494,
+  "worker_termination_confirmed": true
+}

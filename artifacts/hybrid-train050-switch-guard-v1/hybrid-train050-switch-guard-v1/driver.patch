@@ -1,0 +1,233 @@
+--- prior-fallback/fallback_policy.py
++++ switch-guard/fallback_policy.py
+@@ -1,9 +1,9 @@
+-"""Versioned no-positive-shortlist expansion; frozen ranker/helper stay unchanged.
++"""Current-tool comparison before a positive switch; frozen helper unchanged.
+ 
+ The first eight certificates and their ordering are exactly the frozen policy.
+-Only when none has strictly positive permitted nominal immediate reward do we
+-certify the remaining emitted catalog. This is not a global reachability claim,
+-and does not repair a missed better action when a shortlist action is positive.
++No-positive shortlist still expands the full emitted catalog. A positive winner
++that would switch tools additionally compares unqueried current-tool proposals.
++This is not a tool-switch ban or a global optimality/reachability claim.
+ """
+ import copy
+ import math
+@@ -11,11 +11,14 @@
+ from hybrid_proposal import GeneratedSparseTask
+ from resectionlab.native_spatial_task import NativeSpatialTask
+ 
+-VERSION = "nominal-no-positive-top8-exhaustive-fallback-v1"
++VERSION = "nominal-top8-current-tool-comparison-v1"
+ POLICY = {
+     "version": VERSION,
+     "trigger": "no_strictly_positive_feasible_nominal_reward_in_initial_top8",
+     "expansion": "all_remaining_emitted_raw_ids_once_in_original_order",
++    "positive_switch_trigger": "best_positive_top8_action_changes_current_tool_and_current_tool_unqueried",
++    "positive_switch_expansion": "remaining_current_tool_emitted_ids_once_in_original_order",
++    "tool_switches": "allowed_if_still_best_after_unchanged_reward_comparison",
+     "selection": "unchanged_nominal_reward_STOP_zero_original_raw_order_ties",
+     "fit_updates": 0,
+     "omitted_catalog_slots": "not_a_global_exhaustion_claim",
+@@ -78,19 +81,27 @@
+                     raise ValueError("Unique emitted proposal IDs required")
+                 with self.costs.measure("fallback_nominal_gate"):
+                     rewards = nominal_scores(self, inventory)
+-                triggered = not any(row["nominal_reward"] > 0. for row in rewards)
++                best = max(rewards, key=lambda row: row["nominal_reward"], default=None)
++                triggered = best is None or best["nominal_reward"] <= 0.
++                queried = set(initial_ids)
++                remaining_current = [ray.proposal_id for ray in self._proposal_batch.proposals
++                    if ray.tool_id == self._current_tool and ray.proposal_id not in queried]
++                switch_triggered = bool(not triggered and self._current_tool is not None
++                    and inventory[best["action_id"]].tool_id != self._current_tool and remaining_current)
+                 self.costs.count("fallback_gate_states")
+                 self.costs.count("fallback_triggered_states", int(triggered))
++                self.costs.count("current_tool_comparison_states", int(switch_triggered))
+                 additional, outcomes = [], {}
+-                if triggered:
+-                    queried = set(initial_ids)
++                if triggered or switch_triggered:
+                     for ray in self._proposal_batch.proposals:
+-                        if ray.proposal_id in queried:
++                        if ray.proposal_id in queried or (not triggered and ray.tool_id != self._current_tool):
+                             continue
+                         self._check_cancelled()
+                         with self.costs.measure("exact_verification"):
+                             self.costs.count("native_previews")
+                             self.costs.count("fallback_additional_previews")
++                            if switch_triggered:
++                                self.costs.count("current_tool_additional_previews")
+                             result = self._engine.preview_stroke(ray.tool_id, ray.tip_mm, entry_mm=ray.entry_mm)
+                         queried.add(ray.proposal_id)
+                         additional.append(ray.proposal_id)
+@@ -111,6 +122,10 @@
+                     "legal_count": len(inventory), "exhaustive_over_emitted_catalog": len(selected)==len(raw_ids),
+                     "fallback_policy": copy.deepcopy(POLICY), "initial_selected_ids": initial_ids,
+                     "initial_nominal_scores": rewards, "fallback_triggered": triggered,
++                    "current_tool": self._current_tool,
++                    "initial_best_positive_action": None if triggered else best["action_id"],
++                    "unqueried_current_tool_count_before_expansion": len(remaining_current),
++                    "current_tool_comparison_triggered": switch_triggered,
+                     "additional_selected_ids": additional, "fallback_completed": True}
+                 self._check_cancelled()
+                 self._inventory, self._ledger = inventory, ledger
+@@ -133,7 +148,7 @@
+ 
+     def _qualify_accounting(self, accounting):
+         value = super()._qualify_accounting(accounting)
+-        value.update(method=VERSION, verification_scope="top8_then_conditional_full_emitted_catalog",
++        value.update(method=VERSION, verification_scope="top8_then_no_positive_full_or_positive_switch_current_tool_comparison",
+             fallback_policy=copy.deepcopy(POLICY),
+             STOP_meaning="no_positive_verified_action_after_conditional_expansion; no_global_reachability_claim")
+         return value
+--- prior-fallback/batch_contract.py
++++ switch-guard/batch_contract.py
+@@ -2,12 +2,15 @@
+ import hashlib,json,os,stat,subprocess
+ from pathlib import Path
+ HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1];OUTPUT=HERE/'attempt-01'
+-SUBJECTS=['ReMIND-050'];SUBJECT=SUBJECTS[0];ARMS=('balanced_ridge_stop_fallback','exhaustive')
++SUBJECTS=['ReMIND-050'];SUBJECT=SUBJECTS[0];ARMS=('balanced_ridge_switch_guard','exhaustive')
+ VERSION='frozen-ridge-TRAIN-development-transfer-v1'
+-EXPERIMENT_VERSION='TRAIN050-no-positive-shortlist-fallback-comparison-v1'
+-POLICY_VERSION='nominal-no-positive-top8-exhaustive-fallback-v1'
++EXPERIMENT_VERSION='TRAIN050-current-tool-comparison-v1'
++POLICY_VERSION='nominal-top8-current-tool-comparison-v1'
+ BASELINE={'path':'build/hybrid-train050-transfer-v1/attempt-01/result.json',
+           'sha256':'01ace7a4e5efc8b59fb1fe6d8e2996a595923c179e9d9c0af593210c2549b629'}
++PREVIOUS_FALLBACK={'path':'build/hybrid-train050-fallback-v1/attempt-01/result.json','sha256':'dbabca44c7c31db7c1d610b6a69184e3b3826091ad61fa9f644cd3a2c8efe3c7'}
++PREVIOUS_PARENT={'path':'build/hybrid-train050-fallback-v1/attempt-01.supervision/receipt.json','sha256':'de944be8efa438901d5f81603fa7a5271b0d2f1bb961600399ee8e3fc1aabb7b'}
++PREVIOUS_RELEASE={'path':'build/hybrid-train050-fallback-v1/root-release.json','sha256':'6c22d2577e4175a530459bb0952a6e802938ae341324a88303d70339c9049280'}
+ CAPS={'worker_seconds':300,'parent_seconds':330,'sampled_rss_bytes':3*1024**3,
+       'output_bytes':64*1024**2,'supervision_bytes':8*1024**2,'log_bytes':2*1024**2,
+       'native_previews':40000,'native_transitions':96,'source_visits':4,'threads':1,
+@@ -61,6 +64,20 @@
+     need(len(result['arms'])==12 and all(r['complete'] and r['independent_accepted'] for r in result['arms']),'accepted_training_routes')
+     return result
+ 
++def previous_evidence():
++    prior=small(PREVIOUS_FALLBACK['path'],PREVIOUS_FALLBACK['sha256'])
++    parent=small(PREVIOUS_PARENT['path'],PREVIOUS_PARENT['sha256'])
++    previous_release=small(PREVIOUS_RELEASE['path'],PREVIOUS_RELEASE['sha256'])
++    need(parent['status']=='complete' and parent['exit_code']==0 and parent['worker_termination_confirmed']
++         and not parent['remaining_owned_pids'] and not parent['cleanup_errors']
++         and parent['result_sha256']==PREVIOUS_FALLBACK['sha256'] and parent['release_sha256']==PREVIOUS_RELEASE['sha256'], 'clean_prior_fallback')
++    need(prior['status']=='complete_TRAIN050_fallback_comparison' and prior['comparison']['no_quality_loss'] is False
++         and prior['original_negative_result']==BASELINE and prior['ridge_fingerprint']==RIDGE['fingerprint']
++         and prior['fits']==prior['optimizer_calls']==prior['model_calls']==0
++         and prior['all_plans_sealed_before_evaluation'] and all(row['complete'] and row['independent_accepted'] for row in prior['arms']), 'prior_fallback_quality_negative_retained')
++    need(previous_release['original_negative_result']==BASELINE and previous_release['ridge']==RIDGE,'prior_frozen_model_lineage')
++    return prior
++
+ def transfer_record(inputs):
+     manifest,review=inputs['public_manifest'],inputs['intended_use_review']
+     need(isinstance(manifest,dict) and isinstance(review,dict),'pending_TRAIN050_QC_and_manifest')
+@@ -73,7 +90,7 @@
+         'training_result_sha256':TRAIN_RESULT['sha256']}
+ 
+ def template(head,index,inputs):
+-    return {'version':EXPERIMENT_VERSION,'policy_version':POLICY_VERSION,'original_negative_result':BASELINE,'execution_released':False,'expected_head':head,'source_index':index,'inputs':inputs,
++    return {'version':EXPERIMENT_VERSION,'policy_version':POLICY_VERSION,'original_negative_result':BASELINE,'previous_fallback_result':PREVIOUS_FALLBACK,'previous_fallback_parent':PREVIOUS_PARENT,'previous_fallback_release':PREVIOUS_RELEASE,'execution_released':False,'expected_head':head,'source_index':index,'inputs':inputs,
+         'caps':CAPS,'subjects':SUBJECTS,'arms':list(ARMS),'public_index':inputs['public_manifest'],
+         'cohort':{'path':COHORT,'sha256':COHORT_SHA},'occupancy_condition':OCCUPANCY,'post_exposure_condition':EXPOSURE,
+         'proposal_config':PROPOSALS,'K':8,'horizon':24,'search_seconds':60,'cache_limits':CACHE_LIMITS,
+@@ -94,7 +111,7 @@
+          and set(manifest['input_files'])=={'image','supplied_support','supplied_whole_tumor','whole_tumor_domain','supplied_support_domain'},'qualified_public_050_manifest')
+     cohort=small(COHORT,COHORT_SHA);member=[m for m in cohort['members'] if m['subject']==SUBJECT]
+     need(len(member)==1 and member[0]['role']=='TRAIN' and member[0]['patient_group']==manifest['patient_group'],'original_050_TRAIN_role')
+-    metadata()
++    metadata();previous_evidence()
+     baseline=small(BASELINE['path'],BASELINE['sha256'])
+     need(baseline['status']=='complete_TRAIN050_development_transfer' and baseline['comparison']['no_quality_loss'] is False
+          and baseline['ridge_fingerprint']==RIDGE['fingerprint'] and baseline['all_plans_sealed_before_evaluation'], 'original_negative_preserved')
+@@ -109,8 +126,8 @@
+     return release,index,True
+ 
+ def complete_result(result,release,release_sha):
+-    need(result['status']=='complete_TRAIN050_fallback_comparison' and result['release_sha256']==release_sha,'complete_transfer')
+-    need(result['policy_version']==POLICY_VERSION and result['original_negative_result']==BASELINE,'explicit_policy_and_negative')
++    need(result['status']=='complete_TRAIN050_switch_guard_comparison' and result['release_sha256']==release_sha,'complete_transfer')
++    need(result['policy_version']==POLICY_VERSION and result['original_negative_result']==BASELINE and result['previous_fallback_result']==PREVIOUS_FALLBACK,'explicit_policy_and_negative')
+     need(result['source_visits']==4 and result['ridge_loads']==1 and result['fits']==result['optimizer_calls']==result['model_calls']==result['checkpoint_loads']==0,'no_training_or_neural_load')
+     need(result['native_transitions']<=96 and result['native_previews']<=40000 and result['ridge_calls']<=48,'work_caps')
+     need(result['blocked_external_calls']==0 and result['all_plans_sealed_before_evaluation'] and result['cache_restored'] and result['ridge_unchanged'],'information_boundary')
+--- prior-fallback/initial_inventory_worker.py
++++ switch-guard/initial_inventory_worker.py
+@@ -6,7 +6,7 @@
+     raise ValueError('Fresh nonexistent -X pycache_prefix required before local imports')
+ sys.path.insert(0,str(ROOT/'src'));sys.path.insert(0,str(HERE))
+ from batch_contract import (ARMS,CAPS,CACHE_LIMITS,OUTPUT,RIDGE,COHORT,COHORT_SHA,PROPOSALS,
+-    OCCUPANCY,EXPOSURE,SUBJECT,POLICY_VERSION,BASELINE,guard,transfer_record,need,sha,small,read_bytes)
++    OCCUPANCY,EXPOSURE,SUBJECT,POLICY_VERSION,BASELINE,PREVIOUS_FALLBACK,guard,transfer_record,need,sha,small,read_bytes)
+ 
+ 
+ def execute(release,release_sha,external_io):
+@@ -36,13 +36,13 @@
+         'worker_seconds':CAPS['worker_seconds'],'memory_bytes':CAPS['sampled_rss_bytes'],'threads':1,
+         'search':{'max_calls':1,'beam_width':1,'seconds':60}}
+     OUTPUT.mkdir(exist_ok=False);sink=OutputBudget(OUTPUT,CAPS['output_bytes'])
+-    result={'status':'started','policy_version':POLICY_VERSION,'original_negative_result':BASELINE,'release_sha256':release_sha,'subject':SUBJECT,'role':'TRAIN',
++    result={'status':'started','policy_version':POLICY_VERSION,'original_negative_result':BASELINE,'previous_fallback_result':PREVIOUS_FALLBACK,'release_sha256':release_sha,'subject':SUBJECT,'role':'TRAIN',
+         'scope':'development_transfer_not_heldout_SELECT','source_visits':0,'ridge_loads':0,'fits':0,
+         'native_transitions':0,'model_calls':0,'optimizer_calls':0,'checkpoint_loads':0,'blocked_external_calls':0,
+         'arms':[{'subject':SUBJECT,'method':m,'complete':False,'independent_accepted':False,'status':'not_started','files':{}} for m in ARMS],
+         'source_visits_detail':[],'all_plans_sealed_before_evaluation':False,'ridge_unchanged':False,
+         'cache_restored':False,'SELECT_EVAL_opened':False,
+-        'order_caveat':'one fixed fallback-first pair; no matched historical learning latency or causal speed generalization',
++        'order_caveat':'one fixed switch-guard-first pair; no matched historical learning latency or causal speed generalization',
+         'clinical_validation':None,'private_reference_loaded':False}
+     started=time.perf_counter();budget=PlanningBudget(NativeResectionEngine,max_native_previews=CAPS['native_previews'],seconds=CAPS['worker_seconds'])
+     original_transition=NativeSpatialTask._transition;original_cover=native_resection.capsule_voxel_indices
+@@ -87,9 +87,9 @@
+                 else:need(current==initial,'same_initial_public_world_and_raw_catalog')
+             events.append(event['source_state_hash'])
+         costs.inventory_callback=emit
+-        cls=FallbackTask if mode=='balanced_ridge_stop_fallback' else AdmittedTransferTask
+-        return cls(case,admission=admission,mode='ridge_top8' if mode=='balanced_ridge_stop_fallback' else 'exhaustive',
+-            ranker=ranker if mode=='balanced_ridge_stop_fallback' else None,max_steps=24,cancelled=lambda:(check() or False),costs=costs)
++        cls=FallbackTask if mode=='balanced_ridge_switch_guard' else AdmittedTransferTask
++        return cls(case,admission=admission,mode='ridge_top8' if mode=='balanced_ridge_switch_guard' else 'exhaustive',
++            ranker=ranker if mode=='balanced_ridge_switch_guard' else None,max_steps=24,cancelled=lambda:(check() or False),costs=costs)
+     def access(event,args):
+         if event=='open' and args and isinstance(args[0],(str,bytes)):
+             path=Path(os.fsdecode(args[0])).resolve();suffix=path.suffix.lower()
+@@ -174,7 +174,7 @@
+             result['ridge_calls']=sum(r['online_costs']['counts'].get('ridge_calls',0)+r['replay_costs']['counts'].get('ridge_calls',0) for r in result['arms'])
+             need(result['ridge_calls']<=48,'ridge_call_cap');result['ridge_unchanged']=ranker.fingerprint==RIDGE['fingerprint']
+             result['cache_restored']=native_resection.capsule_voxel_indices is original_cover
+-            budget.complete(history_complete=True);check();result['status']='complete_TRAIN050_fallback_comparison'
++            budget.complete(history_complete=True);check();result['status']='complete_TRAIN050_switch_guard_comparison'
+     except BaseException as error:
+         result.update(status='failed_or_unresolved',failure={'type':type(error).__name__,'message':str(error)})
+         if hasattr(error,'accounting') and hasattr(error,'best_sequence'):
+--- prior-fallback/freeze-runtime.py
++++ switch-guard/freeze-runtime.py
+@@ -5,14 +5,14 @@
+ if __name__=='__main__' and (not sys.pycache_prefix or Path(sys.pycache_prefix).exists()):
+     raise ValueError('Fresh nonexistent -X pycache_prefix required before local imports')
+ sys.path.insert(0,str(HERE));sys.dont_write_bytecode=True
+-from batch_contract import (need,sha,small,metadata,template,transfer_record,read_bytes,TRAIN_RESULT,TRAIN_PARENT,TRAIN_RELEASE,COHORT,COHORT_SHA,BASELINE)
++from batch_contract import (need,sha,small,metadata,template,transfer_record,read_bytes,TRAIN_RESULT,TRAIN_PARENT,TRAIN_RELEASE,COHORT,COHORT_SHA,BASELINE,PREVIOUS_FALLBACK,PREVIOUS_PARENT,PREVIOUS_RELEASE,previous_evidence)
+ 
+ def main():
+     p=argparse.ArgumentParser();p.add_argument('--head',required=True);p.add_argument('--inputs',type=Path,required=True);p.add_argument('--inputs-sha256',required=True);a=p.parse_args()
+     head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip();need(head==a.head,'root_HEAD')
+     for name in ('attempt-01','attempt-01.supervision','source-index.json','release-template.json'):need(not (HERE/name).exists(),'one_fresh_freeze')
+-    inputs=small(a.inputs,a.inputs_sha256);transfer_record(inputs);metadata()
+-    refs=[BASELINE,inputs['public_manifest'],inputs['intended_use_review'],TRAIN_RESULT,TRAIN_PARENT,TRAIN_RELEASE,{'path':COHORT,'sha256':COHORT_SHA}]
++    inputs=small(a.inputs,a.inputs_sha256);transfer_record(inputs);metadata();previous_evidence()
++    refs=[PREVIOUS_FALLBACK,PREVIOUS_PARENT,PREVIOUS_RELEASE,BASELINE,inputs['public_manifest'],inputs['intended_use_review'],TRAIN_RESULT,TRAIN_PARENT,TRAIN_RELEASE,{'path':COHORT,'sha256':COHORT_SHA}]
+     for ref in refs:read_bytes(ref['path'],ref['sha256'])
+     files={}
+     paths=list((ROOT/'src/resectionlab').glob('*.py'))
+@@ -23,7 +23,7 @@
+         if relative.startswith('src/'):
+             need(subprocess.check_output(['git','show',head+':'+relative],cwd=ROOT)==read_bytes(path),'uncommitted_runtime_source:'+relative)
+     files.update({ref['path']:ref['sha256'] for ref in refs})
+-    index={'version':'frozen-ridge-fallback-runtime-v1','head':head,'files':files,'payloads_opened':False}
++    index={'version':'frozen-ridge-switch-guard-runtime-v1','head':head,'files':files,'payloads_opened':False}
+     encode=lambda v:(json.dumps(v,indent=2,sort_keys=True,allow_nan=False)+'\n').encode()
+     raw=encode(index)
+     import hashlib

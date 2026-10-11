@@ -1,0 +1,37 @@
+{
+  "acquired_payloads_opened": false,
+  "controls": {
+    "attempt01": "4pass_3_generated_fixture_precondition_failures",
+    "attempt02": "7passed_4.23s",
+    "production_bytes_unchanged": true
+  },
+  "execution_released": false,
+  "files": {
+    "HANDOFF.txt": "7972e4b3caf7d8014a044647c806f1f1b7dbbc71c18e31068ed77f86c8af737f",
+    "batch_contract.py": "58790c9b943156975df4a15897f0963489788a2486791d1deb25cc05c3bd0919",
+    "controls-attempt-01/failed-source/test_switch_guard.py": "79030d819805d6885fb68775ae62c520adf025596769e432b9f4e9d02b2e7f79",
+    "controls-attempt-01/receipt.json": "3a885fe6c0a854f5fb969aa5fe0d1c99dd5e474751d8fbb51c39aeb4564584c5",
+    "controls-attempt-01/stdout.log": "ace66afc75b29423df44644a3c58a64b22f3db26440d5e06edb7e8d141cb092b",
+    "controls-attempt-02/receipt.json": "1cc09786267d26ed1a69bfaf7f3eb8530f5d96c8bf1d4a78142a4dd50c047569",
+    "controls-attempt-02/stdout.log": "b99e0a157349c99ac9b95817d8d6115f6cf9ddec8956d00f2110a3d2e385be86",
+    "driver.patch": "33925f38d8187aac2f867a5320d78768531812a79624626bd1a27897e26db861",
+    "fallback_policy.py": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+    "freeze-runtime.py": "eb25129a03954fe7d61658b26439a60a237d2fc3db6afa4cc12ef0991d7270eb",
+    "hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+    "initial_inventory_worker.py": "abd08f8ad3604fa99557d60cc794873d7eb79f1cb510f6e669816c6be684b36f",
+    "inputs.json": "f5c691f73651f0a1c57b6c32e9dc35ee9a6ef136e6371323e6adcea9ae16560a",
+    "patient_transfer.py": "0ddeb95fb5fff7917c49e2edbd81e9a81a3d1e57c3fdfa9f3a46ec88977259b2",
+    "run_generated_controls.py": "79ae1772186e383ecc5d63e5331913c1108159da2d31eeeea87ccc7e80c7ca2c",
+    "run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+    "tests/test_switch_guard.py": "60c8bb44acc7fac4038d894197aaace21a9bf6f956f0321a69d3d7d3516a226e"
+  },
+  "old_negative_preserved": true,
+  "previous_fallback_negative_preserved": true,
+  "quality_target_unchanged": true,
+  "schema": "TRAIN050-switch-guard-source-ready-v1",
+  "unchanged_prior_files": {
+    "hybrid_proposal.py": true,
+    "patient_transfer.py": true,
+    "run_owned.py": true
+  }
+}

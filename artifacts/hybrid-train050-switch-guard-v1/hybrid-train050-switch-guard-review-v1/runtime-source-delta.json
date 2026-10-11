@@ -1,0 +1,19 @@
+{
+  "source_index_sha256": "7560323e7316607a1615a23f51500c5bb8af79a8beeb256c7d91f0e2a9c8412f",
+  "head": "19f273bd5bc2176770ea5e1ccd863dc8d5c846c3",
+  "current_head": "19f273bd5bc2176770ea5e1ccd863dc8d5c846c3",
+  "changed_or_new_pins": {
+    "build/hybrid-train050-fallback-v1/attempt-01.supervision/receipt.json": "de944be8efa438901d5f81603fa7a5271b0d2f1bb961600399ee8e3fc1aabb7b",
+    "build/hybrid-train050-fallback-v1/attempt-01/result.json": "dbabca44c7c31db7c1d610b6a69184e3b3826091ad61fa9f644cd3a2c8efe3c7",
+    "build/hybrid-train050-fallback-v1/root-release.json": "6c22d2577e4175a530459bb0952a6e802938ae341324a88303d70339c9049280",
+    "build/hybrid-train050-switch-guard-v1/batch_contract.py": "58790c9b943156975df4a15897f0963489788a2486791d1deb25cc05c3bd0919",
+    "build/hybrid-train050-switch-guard-v1/fallback_policy.py": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+    "build/hybrid-train050-switch-guard-v1/freeze-runtime.py": "eb25129a03954fe7d61658b26439a60a237d2fc3db6afa4cc12ef0991d7270eb",
+    "build/hybrid-train050-switch-guard-v1/hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+    "build/hybrid-train050-switch-guard-v1/initial_inventory_worker.py": "abd08f8ad3604fa99557d60cc794873d7eb79f1cb510f6e669816c6be684b36f",
+    "build/hybrid-train050-switch-guard-v1/patient_transfer.py": "0ddeb95fb5fff7917c49e2edbd81e9a81a3d1e57c3fdfa9f3a46ec88977259b2",
+    "build/hybrid-train050-switch-guard-v1/run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3"
+  },
+  "unchanged_mapping_count": 130,
+  "canonical_diff_from_executed_head": []
+}
