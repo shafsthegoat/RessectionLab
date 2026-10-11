@@ -1,0 +1,48 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "feature_count": 681,
+    "fits": 0,
+    "log_bytes": 2097152,
+    "native_previews": 40000,
+    "native_transitions": 480,
+    "output_bytes": 113246208,
+    "parent_seconds": 660,
+    "ridge_calls": 500,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 20,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_seconds": 600
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 183.21660087490454,
+  "exit_code": 0,
+  "memory_scope": "whole owned process peak only; no independent per-arm peak attribution",
+  "output_bytes": 15467273,
+  "planned_subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045",
+    "ReMIND-050"
+  ],
+  "release_sha256": "90dfb0a567f3e950c8fcf5d4d1b0917133ac976f9b7f40fc719672d463264a89",
+  "remaining_owned_pids": [],
+  "result_sha256": "2f07741f2605ca2033b3d78547447bb5cf345ea038db7a130d51caa356091707",
+  "result_status": "complete_five_TRAIN_public_bound_comparison",
+  "sampled_peak_rss_bytes": 743079936,
+  "samples": 872,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/hybrid-public-bound-v1/source-index.json",
+    "sha256": "a0f1bcf643887a61d174d2f2459bd9736fc4d7d06ba3ce2bcdfb57c04ffae6da"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 2227,
+  "training_admitted": "none_frozen_ridge_inference_only",
+  "worker_pid": 18718,
+  "worker_termination_confirmed": true
+}

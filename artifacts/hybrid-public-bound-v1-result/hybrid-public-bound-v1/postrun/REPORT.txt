@@ -1,0 +1,46 @@
+PUBLIC REWARD BOUND v1 — COMPLETE, NO PRUNING
+
+All five fresh baseline/bound pairs have identical actions, complete histories,
+outcomes, and metrics after excluding only the outer policy identity. All ten
+independent geometry certificates are accepted. All ten plans were sealed before
+evaluation; no fit, neural call, optimizer call or checkpoint load occurred.
+This is a fixed-order TRAIN development comparison, not physical validation.
+
+The bound performed 1,118 planning queries and 1,118 replay queries. Every one
+returned public_index_workspace_limit. Zero proposals were pruned; both arms
+used 1,446 online native previews (5,784 including both arms' fresh replays).
+There were 20 source visits, 164 ridge calls and 164 native transitions.
+
+Subject   baseline/bound previews  bound queries  baseline/bound source-through-plan s
+002       117 / 117                109            6.469159 / 6.504802
+015       197 / 197                 85            3.539283 / 3.832455
+018        75 / 75                  67            2.749103 / 2.840967
+045       187 / 187                 83            6.396530 / 6.443531
+050       870 / 870                774           11.221863 / 12.759732
+
+The recorded bound setup-plus-query planning seconds were respectively
+0.036182, 0.051758, 0.053423, 0.089465 and 1.046916. These are components
+inside the inclusive planning times, not additional independent durations.
+This run demonstrates overhead without query savings. It does not measure
+the speed of a successful local-window implementation.
+
+Source diagnosis: public_patient_factory supplies the validated explicit
+whole_tumor_domain as case.public_target_domain. This is not an adapter missing
+field. PublicTargetBoundIndex.prepare first sums remaining known-positive target
+cells and ALL unknown-domain cells; above 1,000,000 it returns an unavailable
+index before creating either set of cell boxes. Thus recorded zero target-index
+cells means early refusal, not zero target. Global unknown-domain enumeration
+made all five cases unavailable before any local trajectory envelope was tested.
+No unknown cell may be replaced by assumed known-zero or full coverage.
+
+Parent completed in 183.21660087490454 s, sampled peak RSS 743,079,936 B,
+15,467,273 output bytes, no owned survivors or cleanup errors. The sampler may
+miss transient peaks. Complete negative first result and all frozen files remain
+unchanged. A separately versioned local-window representation can address the
+workspace failure while retaining exact fallback and unchanged reward/tie rules.
+
+Evidence: postrun/extract-attempt-01/summary.json, input-pins.json and
+compact-archive-list.json; exact result SHA
+2f07741f2605ca2033b3d78547447bb5cf345ea038db7a130d51caa356091707.
+This is the author's saved-only projection; independent review is recorded
+separately. No patient array, model payload, native replay or fit was reopened.

@@ -1,0 +1,168 @@
+{
+  "K": 8,
+  "SELECT_EVAL_closed": true,
+  "all_plans_before_evaluation": true,
+  "arms": [
+    "switch_guard",
+    "public_bound"
+  ],
+  "cache_limits": {
+    "max_entries": 16384,
+    "max_payload_bytes": 33554432
+  },
+  "caps": {
+    "feature_count": 681,
+    "fits": 0,
+    "log_bytes": 2097152,
+    "native_previews": 40000,
+    "native_transitions": 480,
+    "output_bytes": 113246208,
+    "parent_seconds": 660,
+    "ridge_calls": 500,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 20,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_seconds": 600
+  },
+  "cohort": {
+    "path": "manifests/experiments/remind-component-cohort-v1.json",
+    "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+  },
+  "comparison": {
+    "exact_actions_history_and_outcomes_required_for_quality": true,
+    "favorable_outcome_required_for_completion": false,
+    "fresh_reference": "switch_guard",
+    "historical_timing_is_not_a_matched_control": true,
+    "numeric_tolerance": 1e-07
+  },
+  "execution_released": true,
+  "expected_head": "f8c7e18120475e895453c9964bbd65fe40792292",
+  "fits": 0,
+  "horizon": 24,
+  "neural_forwards": 0,
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "optimizer_updates": 0,
+  "policy_version": "nominal-top8-current-tool-public-bound-v1",
+  "post_exposure_condition": "public-union-post-exposure-axis0-v1",
+  "prior_transfer_result": {
+    "path": "build/hybrid-train050-switch-guard-v1/attempt-01/result.json",
+    "sha256": "83011a701cc36da2295c074ea5c2daf506191d281e5f8cd09dad8a4a9ea3efed"
+  },
+  "proposal_config": {
+    "intermediate_opening_mm": 1.0,
+    "max_candidates": 120,
+    "nominal_min_membership": 0.0,
+    "offsets_source_voxels": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "tool_footprint_opening": true
+  },
+  "public_index": {
+    "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json",
+    "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8"
+  },
+  "ridge": {
+    "data_hash": "sha256:75adaa10137e33a2bd0ef193916f952b59f1d25cc6075cd16f58afbd5fc539a9",
+    "fingerprint": "sha256:4578737059c005c411668ea70b148f1214b483f2d89c677605bbe5e3c67aa57a",
+    "path": "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8.json",
+    "sha256": "6a07215506ac68fa42afce40ad12a9efe9b042d83ee5d5bc1383b249a5ffe824"
+  },
+  "scope": "four fitted TRAIN plus already exposed TRAIN050 development comparison; no SELECT or new training",
+  "search_seconds": 60,
+  "source_index": {
+    "path": "build/hybrid-public-bound-v1/source-index.json",
+    "sha256": "a0f1bcf643887a61d174d2f2459bd9736fc4d7d06ba3ce2bcdfb57c04ffae6da"
+  },
+  "source_qualification_release": {
+    "path": "build/remind-post-exposure-feasibility-v1/root-release.json",
+    "sha256": "8315099d95b16a9dacac54a65c4d84d6385e458534b6dab26b73a37555d4af1a"
+  },
+  "source_world_hashes": {
+    "ReMIND-002": "sha256:27f4414796f49256181161f3f770f4ea75c242059bcc583c01817f65949b0f5b",
+    "ReMIND-015": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524",
+    "ReMIND-018": "sha256:0db487c202c1fef5ce408c6dc593f6a42ce12f6f2b630807174ba9f37727edd6",
+    "ReMIND-045": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938"
+  },
+  "subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045",
+    "ReMIND-050"
+  ],
+  "training_parent": {
+    "path": "artifacts/hybrid-proposal-balanced-v2/parent-receipt.json",
+    "sha256": "4b275debe63c4dd75bcec7fb2485265a1b9637c808f4a1e741885bfe00e246bf"
+  },
+  "training_release": {
+    "path": "artifacts/hybrid-proposal-balanced-v2/root-release.json",
+    "sha256": "e81ab753baecc359fe6c067278308836d8cbd18804c8fbe2c6a955a6d2e0cb8c"
+  },
+  "training_result": {
+    "path": "artifacts/hybrid-proposal-balanced-v2/result.json",
+    "sha256": "360253e27ce3992facec4938e018bc02707248c1efad1b6cd318ed7ecd5ed4ca"
+  },
+  "transfer_inputs": {
+    "intended_use_review": {
+      "path": "build/hybrid-train050-preparation-v1/root-visual-review.json",
+      "sha256": "bbc15185fa35157a8cd5da6e97d19b6024f0a1f4e659f795c7979670e96b7ec4"
+    },
+    "public_manifest": {
+      "path": "build/hybrid-train050-preparation-v1/public-inputs-v1/ReMIND-050-public-inputs.json",
+      "sha256": "588757e8df0e420b3fcae2ac24a75a5276fd33e1722a49c681836938d16dda1d"
+    }
+  },
+  "version": "five-TRAIN-public-reward-bound-comparison-v1"
+}

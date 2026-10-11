@@ -1,0 +1,32 @@
+{
+  "executed_head": "f8c7e18120475e895453c9964bbd65fe40792292",
+  "captured_head": "f8c7e18120475e895453c9964bbd65fe40792292",
+  "canonical_diff": [],
+  "changed_new_pins": {
+    "build/hybrid-public-bound-v1/batch_contract.py": "76b56ebd05d7be4a715cc12756e1c2f9048f453ef919de511e1b5c14fc03d432",
+    "build/hybrid-public-bound-v1/bound_policy.py": "1d8638947a69608d145fa93c6735bd86ac82b56fe1497e9d104ad534ec2ba56f",
+    "build/hybrid-public-bound-v1/fallback_policy.py": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+    "build/hybrid-public-bound-v1/freeze-runtime.py": "2b53a7dbc10302b834dadf4a8692c5d23cffbbe154d8fd322480f785ad08163c",
+    "build/hybrid-public-bound-v1/hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+    "build/hybrid-public-bound-v1/initial_inventory_worker.py": "a50eb73489aa41cdc7ccf60081f3eef7255fb5aee6c688db74ce7b60c6254653",
+    "build/hybrid-public-bound-v1/patient_regression.py": "c8ce28c15339206157a5652afdb77a199619c98321d39aea5f1a9f62ce0c491f",
+    "build/hybrid-public-bound-v1/patient_transfer.py": "358b223842b464e9b929a20f5a2cb0bffec7805aba114e08d0acfb30e3ea2d3a",
+    "build/hybrid-public-bound-v1/policy_tasks.py": "353f48301bca23f38acc25a5816e4d67b24e7bc4c3a24cb52c8a17ab9684c863",
+    "build/hybrid-public-bound-v1/run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+    "build/hybrid-public-bound-v1/stage/resectionlab/public_reward_bound.py": "3ee4bce8f75100e849c3a094b2e3ac3bad9e1813b9db6f523f027eecbe580778",
+    "build/hybrid-train050-preparation-v1/public-inputs-v1/ReMIND-050-public-inputs.json": "588757e8df0e420b3fcae2ac24a75a5276fd33e1722a49c681836938d16dda1d",
+    "build/hybrid-train050-preparation-v1/root-visual-review.json": "bbc15185fa35157a8cd5da6e97d19b6024f0a1f4e659f795c7979670e96b7ec4",
+    "build/hybrid-train050-switch-guard-v1/attempt-01.supervision/receipt.json": "cc7a64c632c2027da861924ef6eb162e607ffe7714e8ae27f038486e8163f748",
+    "build/hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/plan.json": "76919214c23c2303ff8378b635e4a959f2e5b9cf09d6f408a0750e19924eac45",
+    "build/hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/replay/episode-metrics.json": "bc37ba69b90884b1c5488822e8be403e6347102231a3759033929bf9b30e54be",
+    "build/hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/replay/independent-episode.json": "b126617212ac5890b121ece88a65ebd71b7c8d214e6153073420e646320b06ab",
+    "build/hybrid-train050-switch-guard-v1/attempt-01/exhaustive/plan.json": "b6ac1ed6455efadd0bf19db60e47f9c0fa072a1923ab866ebaa8d72c5e4b9d5a",
+    "build/hybrid-train050-switch-guard-v1/attempt-01/exhaustive/replay/episode-metrics.json": "3c0e33ed94ec84549bb17185964dbe21ca6a37c3922f2517f7fa557ab5b57f5c",
+    "build/hybrid-train050-switch-guard-v1/attempt-01/exhaustive/replay/independent-episode.json": "4e7cdb7c2d6a24120b8e102bbea94792c514bdcb8a554610fc4e4df90e6cb620",
+    "build/hybrid-train050-switch-guard-v1/attempt-01/result.json": "83011a701cc36da2295c074ea5c2daf506191d281e5f8cd09dad8a4a9ea3efed",
+    "build/hybrid-train050-switch-guard-v1/root-release.json": "27f6a652c4f3f7fe660b5cf18b503457aaf66889116aa35a3a98b8f62420e52e",
+    "src/resectionlab/native_spatial_task.py": "df6ee55e36b273ccc0fa726716ede724a3a892d6db24839e9e31d159070c7f03",
+    "src/resectionlab/public_reward_bound.py": "3ee4bce8f75100e849c3a094b2e3ac3bad9e1813b9db6f523f027eecbe580778"
+  },
+  "inherited_unchanged_mappings": 157
+}

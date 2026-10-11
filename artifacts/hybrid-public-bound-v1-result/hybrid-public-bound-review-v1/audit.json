@@ -1,0 +1,1870 @@
+{
+  "status": "PASS_SAVED_EXACT_PAIRS_NEGATIVE_BOUND_ACTIVATION",
+  "result_sha256": "2f07741f2605ca2033b3d78547447bb5cf345ea038db7a130d51caa356091707",
+  "parent_sha256": "1b1c603c7c9a2c06e59ee0733055b0f23e84a9f4a583dfbd59892e3ffd0d574b",
+  "release_sha256": "90dfb0a567f3e950c8fcf5d4d1b0917133ac976f9b7f40fc719672d463264a89",
+  "source_index_sha256": "a0f1bcf643887a61d174d2f2459bd9736fc4d7d06ba3ce2bcdfb57c04ffae6da",
+  "source_capture": {
+    "executed_head": "f8c7e18120475e895453c9964bbd65fe40792292",
+    "captured_head": "f8c7e18120475e895453c9964bbd65fe40792292",
+    "canonical_diff": [],
+    "changed_new_pins": {
+      "build/hybrid-public-bound-v1/batch_contract.py": "76b56ebd05d7be4a715cc12756e1c2f9048f453ef919de511e1b5c14fc03d432",
+      "build/hybrid-public-bound-v1/bound_policy.py": "1d8638947a69608d145fa93c6735bd86ac82b56fe1497e9d104ad534ec2ba56f",
+      "build/hybrid-public-bound-v1/fallback_policy.py": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+      "build/hybrid-public-bound-v1/freeze-runtime.py": "2b53a7dbc10302b834dadf4a8692c5d23cffbbe154d8fd322480f785ad08163c",
+      "build/hybrid-public-bound-v1/hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+      "build/hybrid-public-bound-v1/initial_inventory_worker.py": "a50eb73489aa41cdc7ccf60081f3eef7255fb5aee6c688db74ce7b60c6254653",
+      "build/hybrid-public-bound-v1/patient_regression.py": "c8ce28c15339206157a5652afdb77a199619c98321d39aea5f1a9f62ce0c491f",
+      "build/hybrid-public-bound-v1/patient_transfer.py": "358b223842b464e9b929a20f5a2cb0bffec7805aba114e08d0acfb30e3ea2d3a",
+      "build/hybrid-public-bound-v1/policy_tasks.py": "353f48301bca23f38acc25a5816e4d67b24e7bc4c3a24cb52c8a17ab9684c863",
+      "build/hybrid-public-bound-v1/run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+      "build/hybrid-public-bound-v1/stage/resectionlab/public_reward_bound.py": "3ee4bce8f75100e849c3a094b2e3ac3bad9e1813b9db6f523f027eecbe580778",
+      "build/hybrid-train050-preparation-v1/public-inputs-v1/ReMIND-050-public-inputs.json": "588757e8df0e420b3fcae2ac24a75a5276fd33e1722a49c681836938d16dda1d",
+      "build/hybrid-train050-preparation-v1/root-visual-review.json": "bbc15185fa35157a8cd5da6e97d19b6024f0a1f4e659f795c7979670e96b7ec4",
+      "build/hybrid-train050-switch-guard-v1/attempt-01.supervision/receipt.json": "cc7a64c632c2027da861924ef6eb162e607ffe7714e8ae27f038486e8163f748",
+      "build/hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/plan.json": "76919214c23c2303ff8378b635e4a959f2e5b9cf09d6f408a0750e19924eac45",
+      "build/hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/replay/episode-metrics.json": "bc37ba69b90884b1c5488822e8be403e6347102231a3759033929bf9b30e54be",
+      "build/hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/replay/independent-episode.json": "b126617212ac5890b121ece88a65ebd71b7c8d214e6153073420e646320b06ab",
+      "build/hybrid-train050-switch-guard-v1/attempt-01/exhaustive/plan.json": "b6ac1ed6455efadd0bf19db60e47f9c0fa072a1923ab866ebaa8d72c5e4b9d5a",
+      "build/hybrid-train050-switch-guard-v1/attempt-01/exhaustive/replay/episode-metrics.json": "3c0e33ed94ec84549bb17185964dbe21ca6a37c3922f2517f7fa557ab5b57f5c",
+      "build/hybrid-train050-switch-guard-v1/attempt-01/exhaustive/replay/independent-episode.json": "4e7cdb7c2d6a24120b8e102bbea94792c514bdcb8a554610fc4e4df90e6cb620",
+      "build/hybrid-train050-switch-guard-v1/attempt-01/result.json": "83011a701cc36da2295c074ea5c2daf506191d281e5f8cd09dad8a4a9ea3efed",
+      "build/hybrid-train050-switch-guard-v1/root-release.json": "27f6a652c4f3f7fe660b5cf18b503457aaf66889116aa35a3a98b8f62420e52e",
+      "src/resectionlab/native_spatial_task.py": "df6ee55e36b273ccc0fa726716ede724a3a892d6db24839e9e31d159070c7f03",
+      "src/resectionlab/public_reward_bound.py": "3ee4bce8f75100e849c3a094b2e3ac3bad9e1813b9db6f523f027eecbe580778"
+    },
+    "inherited_unchanged_mappings": 157
+  },
+  "pairs": [
+    {
+      "subject": "ReMIND-002",
+      "exact_actions": true,
+      "exact_metrics_except_outer_policy_identity": true,
+      "exact_history": true,
+      "exact_outcomes": true,
+      "same_public_source_inputs": true
+    },
+    {
+      "subject": "ReMIND-015",
+      "exact_actions": true,
+      "exact_metrics_except_outer_policy_identity": true,
+      "exact_history": true,
+      "exact_outcomes": true,
+      "same_public_source_inputs": true
+    },
+    {
+      "subject": "ReMIND-018",
+      "exact_actions": true,
+      "exact_metrics_except_outer_policy_identity": true,
+      "exact_history": true,
+      "exact_outcomes": true,
+      "same_public_source_inputs": true
+    },
+    {
+      "subject": "ReMIND-045",
+      "exact_actions": true,
+      "exact_metrics_except_outer_policy_identity": true,
+      "exact_history": true,
+      "exact_outcomes": true,
+      "same_public_source_inputs": true
+    },
+    {
+      "subject": "ReMIND-050",
+      "exact_actions": true,
+      "exact_metrics_except_outer_policy_identity": true,
+      "exact_history": true,
+      "exact_outcomes": true,
+      "same_public_source_inputs": true
+    }
+  ],
+  "rows": [
+    {
+      "subject": "ReMIND-002",
+      "method": "switch_guard",
+      "action_count": 1,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 23149.488478878036,
+        "total_reward": 0.0
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 117,
+      "replay_previews": 117,
+      "source_through_plan_seconds": 6.469158833147958,
+      "replay_and_audit_seconds": 6.675759250065312,
+      "source_preparation_seconds": 0.36114787496626377,
+      "replay_source_preparation_seconds": 0.272817166056484,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 109,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 1,
+          "fallback_triggered_states": 1,
+          "feature_rows": 117,
+          "native_previews": 117,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 6.075730874901637,
+          "exact_verification": 5.835787706077099,
+          "fallback_nominal_gate": 0.0002650830429047346,
+          "inventory_inclusive": 5.981518874177709,
+          "inventory_logging": 0.001956791151314974,
+          "proposal_enumeration": 0.10337675013579428,
+          "public_features": 0.00784799992106855,
+          "ranking": 7.800012826919556e-05
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 109,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 1,
+          "fallback_triggered_states": 1,
+          "feature_rows": 117,
+          "native_previews": 117,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 6.3112689580302685,
+          "exact_verification": 5.569052463397384,
+          "fallback_nominal_gate": 0.0014391248114407063,
+          "inventory_inclusive": 6.211501500336453,
+          "inventory_logging": 0.004367582965642214,
+          "proposal_enumeration": 0.4341727909632027,
+          "public_features": 0.008043082896620035,
+          "ranking": 7.770908996462822e-05
+        }
+      },
+      "bound_diagnosis": null
+    },
+    {
+      "subject": "ReMIND-002",
+      "method": "public_bound",
+      "action_count": 1,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 23149.488478878036,
+        "total_reward": 0.0
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 117,
+      "replay_previews": 117,
+      "source_through_plan_seconds": 6.504802000010386,
+      "replay_and_audit_seconds": 6.829359875060618,
+      "source_preparation_seconds": 0.2541655828244984,
+      "replay_source_preparation_seconds": 0.26612483290955424,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 109,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 21,
+          "fallback_triggered_states": 1,
+          "feature_rows": 117,
+          "native_previews": 117,
+          "proposal_calls": 1,
+          "public_bound_index_target_cells": 0,
+          "public_bound_index_unknown_cells": 0,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 109,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 109,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 6.211145333945751,
+          "exact_verification": 5.878678623819724,
+          "fallback_nominal_gate": 0.009304872481152415,
+          "inventory_inclusive": 6.111521375132725,
+          "inventory_logging": 0.0032576669473201036,
+          "proposal_enumeration": 0.13026029197499156,
+          "public_bound_queries": 0.0335217930842191,
+          "public_bound_setup": 0.0026601669378578663,
+          "public_features": 0.008234167005866766,
+          "ranking": 7.691700011491776e-05
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 109,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 21,
+          "fallback_triggered_states": 1,
+          "feature_rows": 117,
+          "native_previews": 117,
+          "proposal_calls": 1,
+          "public_bound_index_target_cells": 0,
+          "public_bound_index_unknown_cells": 0,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 109,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 109,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 6.473807791946456,
+          "exact_verification": 5.499489211244509,
+          "fallback_nominal_gate": 0.0366607466712594,
+          "inventory_inclusive": 6.378702957648784,
+          "inventory_logging": 0.005407249787822366,
+          "proposal_enumeration": 0.45881670783273876,
+          "public_bound_queries": 0.16406529350206256,
+          "public_bound_setup": 0.005089874844998121,
+          "public_features": 0.008343999972566962,
+          "ranking": 7.633399218320847e-05
+        }
+      },
+      "bound_diagnosis": {
+        "reason_counts_online": {
+          "public_index_workspace_limit": 109
+        },
+        "reason_counts_replay": {
+          "public_index_workspace_limit": 109
+        },
+        "indexed_target_cells": 0,
+        "indexed_unknown_cells": 0,
+        "pruned": 0,
+        "setup_states_each_phase": 1,
+        "grid_cells": 2975946,
+        "source_target_domain_known_cells": 56453,
+        "source_target_domain_unknown_cells": 2919493,
+        "global_index_cap": 1000000,
+        "source_support_domain_unknown_cells": 414046
+      }
+    },
+    {
+      "subject": "ReMIND-015",
+      "method": "switch_guard",
+      "action_count": 14,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 56.895312759999854,
+        "cumulative_contacted_tissue_upper_bound_mm3": 205.9936523325737,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 150.68054198401225,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 13,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 58,
+        "reference_target_fraction_removed": 0.007488702388637833,
+        "simulated_removed_volume_mm3": 55.31311034856145,
+        "target_removed_mm3": 55.313110348561466,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 7386.207580165663,
+        "total_reward": 54.866215035801446
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 197,
+      "replay_previews": 197,
+      "source_through_plan_seconds": 3.539283167105168,
+      "replay_and_audit_seconds": 8.23449608287774,
+      "source_preparation_seconds": 0.25436379201710224,
+      "replay_source_preparation_seconds": 0.24966545798815787,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 85,
+          "fallback_gate_states": 14,
+          "fallback_nominal_reward_checks": 82,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1217,
+          "native_previews": 197,
+          "proposal_calls": 14,
+          "ridge_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.2386142499744892,
+          "exact_verification": 1.092810994014144,
+          "fallback_nominal_gate": 0.033269042149186134,
+          "inventory_inclusive": 2.7552203733939677,
+          "inventory_logging": 0.030575790209695697,
+          "proposal_enumeration": 1.3945965010207146,
+          "public_features": 0.08799787564203143,
+          "ranking": 0.0008393328171223402
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 85,
+          "fallback_gate_states": 14,
+          "fallback_nominal_reward_checks": 82,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1217,
+          "native_previews": 197,
+          "proposal_calls": 14,
+          "ridge_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.3273732499219477,
+          "exact_verification": 1.0285941746551543,
+          "fallback_nominal_gate": 0.13154474995099008,
+          "inventory_inclusive": 4.803977832896635,
+          "inventory_logging": 0.06395504204556346,
+          "proposal_enumeration": 3.103144083637744,
+          "public_features": 0.08991775126196444,
+          "ranking": 0.0008408734574913979
+        }
+      },
+      "bound_diagnosis": null
+    },
+    {
+      "subject": "ReMIND-015",
+      "method": "public_bound",
+      "action_count": 14,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 56.895312759999854,
+        "cumulative_contacted_tissue_upper_bound_mm3": 205.9936523325737,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 150.68054198401225,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 13,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 58,
+        "reference_target_fraction_removed": 0.007488702388637833,
+        "simulated_removed_volume_mm3": 55.31311034856145,
+        "target_removed_mm3": 55.313110348561466,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 7386.207580165663,
+        "total_reward": 54.866215035801446
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 197,
+      "replay_previews": 197,
+      "source_through_plan_seconds": 3.8324551249388605,
+      "replay_and_audit_seconds": 8.809174957918003,
+      "source_preparation_seconds": 0.24834520905278623,
+      "replay_source_preparation_seconds": 0.24825341603718698,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 85,
+          "fallback_gate_states": 14,
+          "fallback_nominal_reward_checks": 82,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1217,
+          "native_previews": 197,
+          "proposal_calls": 14,
+          "public_bound_index_target_cells": 0,
+          "public_bound_index_unknown_cells": 0,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 85,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 85,
+          "ridge_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.23499999986961484,
+          "exact_verification": 1.0740944168064743,
+          "fallback_nominal_gate": 0.04373783292248845,
+          "inventory_inclusive": 3.0299113746732473,
+          "inventory_logging": 0.034559959545731544,
+          "proposal_enumeration": 1.5943315420299768,
+          "public_bound_queries": 0.04873045231215656,
+          "public_bound_setup": 0.0030277918558567762,
+          "public_features": 0.08768633403815329,
+          "ranking": 0.0008290838450193405
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 85,
+          "fallback_gate_states": 14,
+          "fallback_nominal_reward_checks": 82,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1217,
+          "native_previews": 197,
+          "proposal_calls": 14,
+          "public_bound_index_target_cells": 0,
+          "public_bound_index_unknown_cells": 0,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 85,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 85,
+          "ridge_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.3424468329176307,
+          "exact_verification": 1.033513376256451,
+          "fallback_nominal_gate": 0.14352908288128674,
+          "inventory_inclusive": 5.205596753861755,
+          "inventory_logging": 0.07476108404807746,
+          "proposal_enumeration": 3.285765581065789,
+          "public_bound_queries": 0.1516194159630686,
+          "public_bound_setup": 0.00568345794454217,
+          "public_features": 0.08945562341250479,
+          "ranking": 0.0008265413343906403
+        }
+      },
+      "bound_diagnosis": {
+        "reason_counts_online": {
+          "public_index_workspace_limit": 85
+        },
+        "reason_counts_replay": {
+          "public_index_workspace_limit": 85
+        },
+        "indexed_target_cells": 0,
+        "indexed_unknown_cells": 0,
+        "pruned": 0,
+        "setup_states_each_phase": 1,
+        "grid_cells": 2720200,
+        "source_target_domain_known_cells": 20956,
+        "source_target_domain_unknown_cells": 2699244,
+        "global_index_cap": 1000000,
+        "source_support_domain_unknown_cells": 174084
+      }
+    },
+    {
+      "subject": "ReMIND-018",
+      "method": "switch_guard",
+      "action_count": 1,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 1189.2323111979806,
+        "total_reward": 0.0
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 75,
+      "replay_previews": 75,
+      "source_through_plan_seconds": 2.749102707952261,
+      "replay_and_audit_seconds": 3.4825668749399483,
+      "source_preparation_seconds": 0.23601854196749628,
+      "replay_source_preparation_seconds": 0.4579823750536889,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 67,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 2,
+          "fallback_triggered_states": 1,
+          "feature_rows": 75,
+          "native_previews": 75,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 2.4684340828098357,
+          "exact_verification": 1.9863992054015398,
+          "fallback_nominal_gate": 0.0013082500081509352,
+          "inventory_inclusive": 2.4120776259806007,
+          "inventory_logging": 0.002681958954781294,
+          "proposal_enumeration": 0.3582336250692606,
+          "public_features": 0.005706082796677947,
+          "ranking": 5.350005812942982e-05
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 67,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 2,
+          "fallback_triggered_states": 1,
+          "feature_rows": 75,
+          "native_previews": 75,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 2.935465458082035,
+          "exact_verification": 1.6232751233037561,
+          "fallback_nominal_gate": 0.003766082925722003,
+          "inventory_inclusive": 2.829551874892786,
+          "inventory_logging": 0.005125541938468814,
+          "proposal_enumeration": 1.038785541895777,
+          "public_features": 0.005897166905924678,
+          "ranking": 7.033394649624825e-05
+        }
+      },
+      "bound_diagnosis": null
+    },
+    {
+      "subject": "ReMIND-018",
+      "method": "public_bound",
+      "action_count": 1,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 1189.2323111979806,
+        "total_reward": 0.0
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 75,
+      "replay_previews": 75,
+      "source_through_plan_seconds": 2.840967332944274,
+      "replay_and_audit_seconds": 3.3413433749228716,
+      "source_preparation_seconds": 0.2279562500771135,
+      "replay_source_preparation_seconds": 0.24212891701608896,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 67,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 17,
+          "fallback_triggered_states": 1,
+          "feature_rows": 75,
+          "native_previews": 75,
+          "proposal_calls": 1,
+          "public_bound_index_target_cells": 0,
+          "public_bound_index_unknown_cells": 0,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 67,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 67,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 2.5668378330301493,
+          "exact_verification": 1.974395171040669,
+          "fallback_nominal_gate": 0.015164747601374984,
+          "inventory_inclusive": 2.5119889590423554,
+          "inventory_logging": 0.00577250006608665,
+          "proposal_enumeration": 0.39367062505334616,
+          "public_bound_queries": 0.05019145947881043,
+          "public_bound_setup": 0.003231041831895709,
+          "public_features": 0.00548420799896121,
+          "ranking": 5.183299072086811e-05
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 67,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 17,
+          "fallback_triggered_states": 1,
+          "feature_rows": 75,
+          "native_previews": 75,
+          "proposal_calls": 1,
+          "public_bound_index_target_cells": 0,
+          "public_bound_index_unknown_cells": 0,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 67,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 67,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 3.0088707918766886,
+          "exact_verification": 1.6362410897854716,
+          "fallback_nominal_gate": 0.03677341598086059,
+          "inventory_inclusive": 2.9507090840488672,
+          "inventory_logging": 0.00578987505286932,
+          "proposal_enumeration": 0.9616660829633474,
+          "public_bound_queries": 0.13529746024869382,
+          "public_bound_setup": 0.006000666879117489,
+          "public_features": 0.005733917001634836,
+          "ranking": 5.208305083215237e-05
+        }
+      },
+      "bound_diagnosis": {
+        "reason_counts_online": {
+          "public_index_workspace_limit": 67
+        },
+        "reason_counts_replay": {
+          "public_index_workspace_limit": 67
+        },
+        "indexed_target_cells": 0,
+        "indexed_unknown_cells": 0,
+        "pruned": 0,
+        "setup_states_each_phase": 1,
+        "grid_cells": 2599560,
+        "source_target_domain_known_cells": 7920,
+        "source_target_domain_unknown_cells": 2591640,
+        "global_index_cap": 1000000,
+        "source_support_domain_unknown_cells": 146736
+      }
+    },
+    {
+      "subject": "ReMIND-045",
+      "method": "switch_guard",
+      "action_count": 13,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 95.48752381870861,
+        "cumulative_contacted_tissue_upper_bound_mm3": 202.17920577005748,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 153.54175532537386,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 12,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 51,
+        "reference_target_fraction_removed": 0.0020157306035334575,
+        "simulated_removed_volume_mm3": 48.637450444683644,
+        "target_removed_mm3": 48.63745044468365,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 24128.943798057662,
+        "total_reward": 48.181962920864926
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 187,
+      "replay_previews": 187,
+      "source_through_plan_seconds": 6.3965302088763565,
+      "replay_and_audit_seconds": 14.543540000217035,
+      "source_preparation_seconds": 0.4460091250948608,
+      "replay_source_preparation_seconds": 0.2686856670770794,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 83,
+          "fallback_gate_states": 13,
+          "fallback_nominal_reward_checks": 68,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1183,
+          "native_previews": 187,
+          "proposal_calls": 13,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.5893830000422895,
+          "exact_verification": 2.2848377891350538,
+          "fallback_nominal_gate": 0.05884679313749075,
+          "inventory_inclusive": 5.182193872286007,
+          "inventory_logging": 0.04052166687324643,
+          "proposal_enumeration": 2.496713708154857,
+          "public_features": 0.08898058417253196,
+          "ranking": 0.0008399577345699072
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 83,
+          "fallback_gate_states": 13,
+          "fallback_nominal_reward_checks": 68,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1183,
+          "native_previews": 187,
+          "proposal_calls": 13,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.5838352499995381,
+          "exact_verification": 2.4490294114220887,
+          "fallback_nominal_gate": 0.14498483296483755,
+          "inventory_inclusive": 8.032515707891434,
+          "inventory_logging": 0.0788686266168952,
+          "proposal_enumeration": 4.781994209624827,
+          "public_features": 0.08882787404581904,
+          "ranking": 0.0008326233364641666
+        }
+      },
+      "bound_diagnosis": null
+    },
+    {
+      "subject": "ReMIND-045",
+      "method": "public_bound",
+      "action_count": 13,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 95.48752381870861,
+        "cumulative_contacted_tissue_upper_bound_mm3": 202.17920577005748,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 153.54175532537386,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 12,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 51,
+        "reference_target_fraction_removed": 0.0020157306035334575,
+        "simulated_removed_volume_mm3": 48.637450444683644,
+        "target_removed_mm3": 48.63745044468365,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 24128.943798057662,
+        "total_reward": 48.181962920864926
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 187,
+      "replay_previews": 187,
+      "source_through_plan_seconds": 6.443530875025317,
+      "replay_and_audit_seconds": 15.077522792154923,
+      "source_preparation_seconds": 0.2590174169745296,
+      "replay_source_preparation_seconds": 0.28427479206584394,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 83,
+          "fallback_gate_states": 13,
+          "fallback_nominal_reward_checks": 68,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1183,
+          "native_previews": 187,
+          "proposal_calls": 13,
+          "public_bound_index_target_cells": 0,
+          "public_bound_index_unknown_cells": 0,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 83,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 83,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.44932216708548367,
+          "exact_verification": 2.2918027120176703,
+          "fallback_nominal_gate": 0.06724858400411904,
+          "inventory_inclusive": 5.4814980821684,
+          "inventory_logging": 0.04385116626508534,
+          "proposal_enumeration": 2.6599192922003567,
+          "public_bound_queries": 0.08511666650883853,
+          "public_bound_setup": 0.004348624963313341,
+          "public_features": 0.08665654296055436,
+          "ranking": 0.0008203343022614717
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 83,
+          "fallback_gate_states": 13,
+          "fallback_nominal_reward_checks": 68,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1183,
+          "native_previews": 187,
+          "proposal_calls": 13,
+          "public_bound_index_target_cells": 0,
+          "public_bound_index_unknown_cells": 0,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 83,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 83,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.6059726248495281,
+          "exact_verification": 2.449111793655902,
+          "fallback_nominal_gate": 0.15257270564325154,
+          "inventory_inclusive": 8.541608667233959,
+          "inventory_logging": 0.07894795737229288,
+          "proposal_enumeration": 5.0581249156966805,
+          "public_bound_queries": 0.18884820817038417,
+          "public_bound_setup": 0.007666500052437186,
+          "public_features": 0.0877694992814213,
+          "ranking": 0.000822708010673523
+        }
+      },
+      "bound_diagnosis": {
+        "reason_counts_online": {
+          "public_index_workspace_limit": 83
+        },
+        "reason_counts_replay": {
+          "public_index_workspace_limit": 83
+        },
+        "indexed_target_cells": 0,
+        "indexed_unknown_cells": 0,
+        "pruned": 0,
+        "setup_states_each_phase": 1,
+        "grid_cells": 2905452,
+        "source_target_domain_known_cells": 96406,
+        "source_target_domain_unknown_cells": 2809046,
+        "global_index_cap": 1000000,
+        "source_support_domain_unknown_cells": 601021
+      }
+    },
+    {
+      "subject": "ReMIND-050",
+      "method": "switch_guard",
+      "action_count": 12,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 95.57034251322483,
+        "cumulative_contacted_tissue_upper_bound_mm3": 178.3372363511995,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 143.05125910524023,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 11,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 37,
+        "reference_target_fraction_removed": 0.001891905711509945,
+        "simulated_removed_volume_mm3": 35.28597724595926,
+        "target_removed_mm3": 35.28597724595925,
+        "tool_changes": 1,
+        "total_reference_target_mm3": 18651.02316214122,
+        "total_reward": 34.830406903446026
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 870,
+      "replay_previews": 870,
+      "source_through_plan_seconds": 11.221862709149718,
+      "replay_and_audit_seconds": 23.874854916939512,
+      "source_preparation_seconds": 0.290726208826527,
+      "replay_source_preparation_seconds": 0.2924056251067668,
+      "online_costs": {
+        "counts": {
+          "current_tool_additional_previews": 193,
+          "current_tool_comparison_states": 4,
+          "fallback_additional_previews": 774,
+          "fallback_gate_states": 12,
+          "fallback_nominal_reward_checks": 6,
+          "fallback_triggered_states": 7,
+          "feature_rows": 1092,
+          "native_previews": 870,
+          "proposal_calls": 12,
+          "ridge_calls": 12
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.3949895410332829,
+          "exact_verification": 6.177008171100169,
+          "fallback_nominal_gate": 0.007035831920802593,
+          "inventory_inclusive": 10.246722125913948,
+          "inventory_logging": 0.04486970813013613,
+          "proposal_enumeration": 2.8638977082446218,
+          "public_features": 0.08086662483401597,
+          "ranking": 0.0007469572592526674
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_additional_previews": 193,
+          "current_tool_comparison_states": 4,
+          "fallback_additional_previews": 774,
+          "fallback_gate_states": 12,
+          "fallback_nominal_reward_checks": 6,
+          "fallback_triggered_states": 7,
+          "feature_rows": 1092,
+          "native_previews": 870,
+          "proposal_calls": 12,
+          "ridge_calls": 12
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.579086208017543,
+          "exact_verification": 9.498209844110534,
+          "fallback_nominal_gate": 0.01517987227998674,
+          "inventory_inclusive": 17.593306959373876,
+          "inventory_logging": 0.08085554139688611,
+          "proposal_enumeration": 5.627345958957449,
+          "public_features": 0.0843777481932193,
+          "ranking": 0.0008236647117882967
+        }
+      },
+      "bound_diagnosis": null
+    },
+    {
+      "subject": "ReMIND-050",
+      "method": "public_bound",
+      "action_count": 12,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 95.57034251322483,
+        "cumulative_contacted_tissue_upper_bound_mm3": 178.3372363511995,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 143.05125910524023,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 11,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 37,
+        "reference_target_fraction_removed": 0.001891905711509945,
+        "simulated_removed_volume_mm3": 35.28597724595926,
+        "target_removed_mm3": 35.28597724595925,
+        "tool_changes": 1,
+        "total_reference_target_mm3": 18651.02316214122,
+        "total_reward": 34.830406903446026
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 870,
+      "replay_previews": 870,
+      "source_through_plan_seconds": 12.759731790982187,
+      "replay_and_audit_seconds": 26.739447999978438,
+      "source_preparation_seconds": 0.2707144170999527,
+      "replay_source_preparation_seconds": 0.30192941590212286,
+      "online_costs": {
+        "counts": {
+          "current_tool_additional_previews": 193,
+          "current_tool_comparison_states": 4,
+          "fallback_additional_previews": 774,
+          "fallback_gate_states": 12,
+          "fallback_nominal_reward_checks": 100,
+          "fallback_triggered_states": 7,
+          "feature_rows": 1092,
+          "native_previews": 870,
+          "proposal_calls": 12,
+          "public_bound_index_target_cells": 0,
+          "public_bound_index_unknown_cells": 0,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 774,
+          "public_bound_states": 11,
+          "public_bound_unavailable": 774,
+          "ridge_calls": 12
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.41604208294302225,
+          "exact_verification": 6.18935441900976,
+          "fallback_nominal_gate": 0.1335843347478658,
+          "inventory_inclusive": 11.782487333985046,
+          "inventory_logging": 0.05391145870089531,
+          "proposal_enumeration": 3.0872101257555187,
+          "public_bound_queries": 0.993656043894589,
+          "public_bound_setup": 0.05325966561213136,
+          "public_features": 0.08140341634862125,
+          "ranking": 0.0007885410450398922
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_additional_previews": 193,
+          "current_tool_comparison_states": 4,
+          "fallback_additional_previews": 774,
+          "fallback_gate_states": 12,
+          "fallback_nominal_reward_checks": 100,
+          "fallback_triggered_states": 7,
+          "feature_rows": 1092,
+          "native_previews": 870,
+          "proposal_calls": 12,
+          "public_bound_index_target_cells": 0,
+          "public_bound_index_unknown_cells": 0,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 774,
+          "public_bound_states": 11,
+          "public_bound_unavailable": 774,
+          "ridge_calls": 12
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.5895951250568032,
+          "exact_verification": 9.542905043810606,
+          "fallback_nominal_gate": 0.26637995848432183,
+          "inventory_inclusive": 20.118356209946796,
+          "inventory_logging": 0.102302708895877,
+          "proposal_enumeration": 5.64035929297097,
+          "public_bound_queries": 2.006637365790084,
+          "public_bound_setup": 0.08148841862566769,
+          "public_features": 0.08334341668523848,
+          "ranking": 0.0007947070989757776
+        }
+      },
+      "bound_diagnosis": {
+        "reason_counts_online": {
+          "public_index_workspace_limit": 774
+        },
+        "reason_counts_replay": {
+          "public_index_workspace_limit": 774
+        },
+        "indexed_target_cells": 0,
+        "indexed_unknown_cells": 0,
+        "pruned": 0,
+        "setup_states_each_phase": 11,
+        "grid_cells": 3084144,
+        "source_target_domain_known_cells": 125195,
+        "source_target_domain_unknown_cells": 2958949,
+        "global_index_cap": 1000000,
+        "source_support_domain_unknown_cells": 183804
+      }
+    }
+  ],
+  "totals": {
+    "ridge_calls": 164,
+    "previews": 5784,
+    "transitions": 164
+  },
+  "bound_refusals_both_phases": {
+    "public_index_workspace_limit": 2236
+  },
+  "costs": {
+    "worker_seconds": 180.79969000001438,
+    "parent_seconds": 183.21660087490454,
+    "sampled_owned_peak_rss_bytes": 743079936,
+    "output_bytes": 15467273,
+    "supervision_bytes": 3765
+  },
+  "cleanup": {
+    "reaped": true,
+    "remaining": [],
+    "errors": []
+  },
+  "diagnosis": "Every conditional bound query fails open at the global one-million-cell index cap before per-envelope target-coverage testing. All five saved whole-tumor source domains leave more than one million unknown grid cells. Factory and wrapper use explicit source Dt correctly; no missing-field adapter bug. This does not prove every local tool envelope intersects unknown target coverage. Do not relabel unknown source coverage as known zero or inflate cap automatically.",
+  "limitations": [
+    "No acquired arrays, model parameters, runtime imports, tests or native replay in this independent audit. Geometry acceptance is checked from saved worker evaluation.",
+    "Exact observed policy equality is established here through full fallback: zero pruning means this run does not validate activated pruning on these acquired cases.",
+    "One baseline-first pair per already-exposed TRAIN case; no held-out or causal speed claim, sampled memory may miss peaks.",
+    "Full supplied target denominator and explicit S union T/post-exposure material and coverage assumptions remain unchanged."
+  ],
+  "read_pins": {
+    "build/hybrid-public-bound-v1/root-release.json": {
+      "sha256": "90dfb0a567f3e950c8fcf5d4d1b0917133ac976f9b7f40fc719672d463264a89",
+      "bytes": 4949
+    },
+    "build/hybrid-public-bound-v1/source-index.json": {
+      "sha256": "a0f1bcf643887a61d174d2f2459bd9736fc4d7d06ba3ce2bcdfb57c04ffae6da",
+      "bytes": 23690
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/source-index.json": {
+      "sha256": "bd9783ac5f0bc9dd94a889cb99c1bcfae9f6008a3190056d2bef424c0028cb32",
+      "bytes": 21477
+    },
+    "build/hybrid-public-bound-v1/batch_contract.py": {
+      "sha256": "76b56ebd05d7be4a715cc12756e1c2f9048f453ef919de511e1b5c14fc03d432",
+      "bytes": 13233
+    },
+    "build/hybrid-public-bound-v1/bound_policy.py": {
+      "sha256": "1d8638947a69608d145fa93c6735bd86ac82b56fe1497e9d104ad534ec2ba56f",
+      "bytes": 13553
+    },
+    "build/hybrid-public-bound-v1/fallback_policy.py": {
+      "sha256": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+      "bytes": 9455
+    },
+    "build/hybrid-public-bound-v1/freeze-runtime.py": {
+      "sha256": "2b53a7dbc10302b834dadf4a8692c5d23cffbbe154d8fd322480f785ad08163c",
+      "bytes": 2299
+    },
+    "build/hybrid-public-bound-v1/hybrid_proposal.py": {
+      "sha256": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+      "bytes": 20840
+    },
+    "build/hybrid-public-bound-v1/initial_inventory_worker.py": {
+      "sha256": "a50eb73489aa41cdc7ccf60081f3eef7255fb5aee6c688db74ce7b60c6254653",
+      "bytes": 24051
+    },
+    "build/hybrid-public-bound-v1/patient_regression.py": {
+      "sha256": "c8ce28c15339206157a5652afdb77a199619c98321d39aea5f1a9f62ce0c491f",
+      "bytes": 6059
+    },
+    "build/hybrid-public-bound-v1/patient_transfer.py": {
+      "sha256": "358b223842b464e9b929a20f5a2cb0bffec7805aba114e08d0acfb30e3ea2d3a",
+      "bytes": 4707
+    },
+    "build/hybrid-public-bound-v1/policy_tasks.py": {
+      "sha256": "353f48301bca23f38acc25a5816e4d67b24e7bc4c3a24cb52c8a17ab9684c863",
+      "bytes": 1456
+    },
+    "build/hybrid-public-bound-v1/run_owned.py": {
+      "sha256": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+      "bytes": 9625
+    },
+    "build/hybrid-public-bound-v1/stage/resectionlab/public_reward_bound.py": {
+      "sha256": "3ee4bce8f75100e849c3a094b2e3ac3bad9e1813b9db6f523f027eecbe580778",
+      "bytes": 9741
+    },
+    "build/hybrid-train050-preparation-v1/public-inputs-v1/ReMIND-050-public-inputs.json": {
+      "sha256": "588757e8df0e420b3fcae2ac24a75a5276fd33e1722a49c681836938d16dda1d",
+      "bytes": 19178
+    },
+    "build/hybrid-train050-preparation-v1/root-visual-review.json": {
+      "sha256": "bbc15185fa35157a8cd5da6e97d19b6024f0a1f4e659f795c7979670e96b7ec4",
+      "bytes": 2252
+    },
+    "build/hybrid-train050-switch-guard-v1/attempt-01.supervision/receipt.json": {
+      "sha256": "cc7a64c632c2027da861924ef6eb162e607ffe7714e8ae27f038486e8163f748",
+      "bytes": 1466
+    },
+    "build/hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/plan.json": {
+      "sha256": "76919214c23c2303ff8378b635e4a959f2e5b9cf09d6f408a0750e19924eac45",
+      "bytes": 44717
+    },
+    "build/hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/replay/episode-metrics.json": {
+      "sha256": "bc37ba69b90884b1c5488822e8be403e6347102231a3759033929bf9b30e54be",
+      "bytes": 399509
+    },
+    "build/hybrid-train050-switch-guard-v1/attempt-01/balanced_ridge_switch_guard/replay/independent-episode.json": {
+      "sha256": "b126617212ac5890b121ece88a65ebd71b7c8d214e6153073420e646320b06ab",
+      "bytes": 2625
+    },
+    "build/hybrid-train050-switch-guard-v1/attempt-01/exhaustive/plan.json": {
+      "sha256": "b6ac1ed6455efadd0bf19db60e47f9c0fa072a1923ab866ebaa8d72c5e4b9d5a",
+      "bytes": 71513
+    },
+    "build/hybrid-train050-switch-guard-v1/attempt-01/exhaustive/replay/episode-metrics.json": {
+      "sha256": "3c0e33ed94ec84549bb17185964dbe21ca6a37c3922f2517f7fa557ab5b57f5c",
+      "bytes": 399509
+    },
+    "build/hybrid-train050-switch-guard-v1/attempt-01/exhaustive/replay/independent-episode.json": {
+      "sha256": "4e7cdb7c2d6a24120b8e102bbea94792c514bdcb8a554610fc4e4df90e6cb620",
+      "bytes": 2625
+    },
+    "build/hybrid-train050-switch-guard-v1/attempt-01/result.json": {
+      "sha256": "83011a701cc36da2295c074ea5c2daf506191d281e5f8cd09dad8a4a9ea3efed",
+      "bytes": 22979
+    },
+    "build/hybrid-train050-switch-guard-v1/root-release.json": {
+      "sha256": "27f6a652c4f3f7fe660b5cf18b503457aaf66889116aa35a3a98b8f62420e52e",
+      "bytes": 4506
+    },
+    "src/resectionlab/native_spatial_task.py": {
+      "sha256": "df6ee55e36b273ccc0fa726716ede724a3a892d6db24839e9e31d159070c7f03",
+      "bytes": 86379
+    },
+    "src/resectionlab/public_reward_bound.py": {
+      "sha256": "3ee4bce8f75100e849c3a094b2e3ac3bad9e1813b9db6f523f027eecbe580778",
+      "bytes": 9741
+    },
+    "build/hybrid-public-bound-v1/attempt-01.supervision/receipt.json": {
+      "sha256": "1b1c603c7c9a2c06e59ee0733055b0f23e84a9f4a583dfbd59892e3ffd0d574b",
+      "bytes": 1538
+    },
+    "build/hybrid-public-bound-v1/attempt-01/result.json": {
+      "sha256": "2f07741f2605ca2033b3d78547447bb5cf345ea038db7a130d51caa356091707",
+      "bytes": 129124
+    },
+    "build/hybrid-public-bound-v1/attempt-01.supervision/declaration.json": {
+      "sha256": "c64e0bea17f4db1f71621545ddd2e624feff730b895e781cd9d4b25bcbd9bba0",
+      "bytes": 1825
+    },
+    "artifacts/hybrid-proposal-balanced-v2/result.json": {
+      "sha256": "360253e27ce3992facec4938e018bc02707248c1efad1b6cd318ed7ecd5ed4ca",
+      "bytes": 83257
+    },
+    "artifacts/hybrid-proposal-balanced-v2/root-release.json": {
+      "sha256": "e81ab753baecc359fe6c067278308836d8cbd18804c8fbe2c6a955a6d2e0cb8c",
+      "bytes": 8532
+    },
+    "artifacts/hybrid-proposal-balanced-v2/parent-receipt.json": {
+      "sha256": "4b275debe63c4dd75bcec7fb2485265a1b9637c808f4a1e741885bfe00e246bf",
+      "bytes": 1540
+    },
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json": {
+      "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8",
+      "bytes": 1803
+    },
+    "build/hybrid-public-bound-v1/attempt-01/sealed-plans.json": {
+      "sha256": "558717069b6c4f679d26631f8299e2c2c5565fc44e6a0550ce1e50e153578708",
+      "bytes": 302716
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-002/plan.json": {
+      "sha256": "79d92b6859b404f46478ef068583c2762ac088211ad0fcf7bb978bc75efa2ac1",
+      "bytes": 10108
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-002/replay/episode-metrics.json": {
+      "sha256": "605d328367c4fdc5cb643b937204914f80a1c114a47ffa7d01276517219e69fc",
+      "bytes": 21966
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-002/replay/independent-episode.json": {
+      "sha256": "258a7b024c85bde61a18fe137dc38393b074a17c0d4607637d1b710a67a5579e",
+      "bytes": 2493
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-002/source/admitted-public-bindings.json": {
+      "sha256": "fe3eec94a1e64b5cc154858f3f2c534c1290771b07bbe04c8d1880f775384fc6",
+      "bytes": 15151
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-002/replay/source/admitted-public-bindings.json": {
+      "sha256": "fe3eec94a1e64b5cc154858f3f2c534c1290771b07bbe04c8d1880f775384fc6",
+      "bytes": 15151
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-002/plan.json": {
+      "sha256": "68a3b2f30e3c98e7bd6d866e6aeace794229df90fe60c691bdc95ddfe15decf7",
+      "bytes": 10279
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-002/replay/episode-metrics.json": {
+      "sha256": "ec40bf72049d130a07db4bc9524929a6996875119890f09477549330e01b81a8",
+      "bytes": 21966
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-002/replay/independent-episode.json": {
+      "sha256": "cff89c24b34f7abddf6b5512246ba474708da636cae8e27465254033ff6679ab",
+      "bytes": 2494
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-002/source/admitted-public-bindings.json": {
+      "sha256": "fe3eec94a1e64b5cc154858f3f2c534c1290771b07bbe04c8d1880f775384fc6",
+      "bytes": 15151
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-002/replay/source/admitted-public-bindings.json": {
+      "sha256": "fe3eec94a1e64b5cc154858f3f2c534c1290771b07bbe04c8d1880f775384fc6",
+      "bytes": 15151
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-002/inventories/state-00.json": {
+      "sha256": "ba67a8683187fa6e28dcfa8383372ae5ad7dc4b68053e99d33d39cd0caeeb080",
+      "bytes": 112451
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-002/replay/inventories/state-00.json": {
+      "sha256": "ba67a8683187fa6e28dcfa8383372ae5ad7dc4b68053e99d33d39cd0caeeb080",
+      "bytes": 112451
+    },
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-002-public-inputs.json": {
+      "sha256": "f4b7145ed04362955586b7cc31962e5b408c675f07283e046225d2b4dba47753",
+      "bytes": 14487
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-015/plan.json": {
+      "sha256": "02a7b58e41416033337ac67335375cf9cb3c43718ead9de3a852b68b24c1c456",
+      "bytes": 39807
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-015/replay/episode-metrics.json": {
+      "sha256": "6f34e0a618d79b1fa1cb0ca2f0691385202b16e8e250f75c80c59a4443db3857",
+      "bytes": 423851
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-015/replay/independent-episode.json": {
+      "sha256": "dbe98ec5189f0799f4c44e0891dcbacde8ceed530baf8b146be8c7d14a40f0c0",
+      "bytes": 2626
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-015/source/admitted-public-bindings.json": {
+      "sha256": "ab589ed825deb970a35a9ad61933f34ccfc3a305935f6e13f6ba7c7209b6a025",
+      "bytes": 14998
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-015/replay/source/admitted-public-bindings.json": {
+      "sha256": "ab589ed825deb970a35a9ad61933f34ccfc3a305935f6e13f6ba7c7209b6a025",
+      "bytes": 14998
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/plan.json": {
+      "sha256": "9486c3d49381dbfd5d47893a16567d23d6f27d5b320dcd02c9235515aec57505",
+      "bytes": 39978
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/episode-metrics.json": {
+      "sha256": "7225e59bb77e8ffeddf0fdf3743e009962f1c9d38c1b7303d1db26abc25cb0f0",
+      "bytes": 423851
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/independent-episode.json": {
+      "sha256": "464e98c892d37ee5ceb4a45f8116c4f4b737ba0a31aef083d5c583b944c3c37f",
+      "bytes": 2627
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/source/admitted-public-bindings.json": {
+      "sha256": "ab589ed825deb970a35a9ad61933f34ccfc3a305935f6e13f6ba7c7209b6a025",
+      "bytes": 14998
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/source/admitted-public-bindings.json": {
+      "sha256": "ab589ed825deb970a35a9ad61933f34ccfc3a305935f6e13f6ba7c7209b6a025",
+      "bytes": 14998
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/inventories/state-00.json": {
+      "sha256": "30183cf4441b9422202b0dcffac230c6574cb5b1a8214bd6cd033c721a09db93",
+      "bytes": 60793
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/inventories/state-00.json": {
+      "sha256": "30183cf4441b9422202b0dcffac230c6574cb5b1a8214bd6cd033c721a09db93",
+      "bytes": 60793
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/inventories/state-01.json": {
+      "sha256": "f8072e2e1c5e67de80b4783abc0852b199f1a8df5bf8e6cd841d24c26840434e",
+      "bytes": 60884
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/inventories/state-01.json": {
+      "sha256": "f8072e2e1c5e67de80b4783abc0852b199f1a8df5bf8e6cd841d24c26840434e",
+      "bytes": 60884
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/inventories/state-02.json": {
+      "sha256": "0e4902b3346a50bb645d74a32d0b7dde6c6275bf3b0d5f0a8cdcb2b61b89d4fc",
+      "bytes": 60979
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/inventories/state-02.json": {
+      "sha256": "0e4902b3346a50bb645d74a32d0b7dde6c6275bf3b0d5f0a8cdcb2b61b89d4fc",
+      "bytes": 60979
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/inventories/state-03.json": {
+      "sha256": "ff1766d78162204f6db5b32beb03a0467346aaf9c2731b7580904af107f56189",
+      "bytes": 61063
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/inventories/state-03.json": {
+      "sha256": "ff1766d78162204f6db5b32beb03a0467346aaf9c2731b7580904af107f56189",
+      "bytes": 61063
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/inventories/state-04.json": {
+      "sha256": "2787dc4f1db244933acc27bafc3b74e7fc4c173cd2064944c13447a8d0c65b24",
+      "bytes": 61148
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/inventories/state-04.json": {
+      "sha256": "2787dc4f1db244933acc27bafc3b74e7fc4c173cd2064944c13447a8d0c65b24",
+      "bytes": 61148
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/inventories/state-05.json": {
+      "sha256": "22cc3448e4383a81bf2ac09314eec815e3f45f6be7523973fb0230069926a4b7",
+      "bytes": 61397
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/inventories/state-05.json": {
+      "sha256": "22cc3448e4383a81bf2ac09314eec815e3f45f6be7523973fb0230069926a4b7",
+      "bytes": 61397
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/inventories/state-06.json": {
+      "sha256": "a169d657470ca6e77c900b75c7841a82acb6629931f0a27570e47ff1ae18f9bc",
+      "bytes": 61153
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/inventories/state-06.json": {
+      "sha256": "a169d657470ca6e77c900b75c7841a82acb6629931f0a27570e47ff1ae18f9bc",
+      "bytes": 61153
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/inventories/state-07.json": {
+      "sha256": "529d2270a68a170ee6423a91a44ab07df29b9221c1dc90ce2a2517c4cbae8633",
+      "bytes": 60996
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/inventories/state-07.json": {
+      "sha256": "529d2270a68a170ee6423a91a44ab07df29b9221c1dc90ce2a2517c4cbae8633",
+      "bytes": 60996
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/inventories/state-08.json": {
+      "sha256": "6ce1c07400f6dd29ab49a3c985d12d40e82c67a6034d9a20161a3661e0cbb0a5",
+      "bytes": 60999
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/inventories/state-08.json": {
+      "sha256": "6ce1c07400f6dd29ab49a3c985d12d40e82c67a6034d9a20161a3661e0cbb0a5",
+      "bytes": 60999
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/inventories/state-09.json": {
+      "sha256": "bdfabf7fff8c5b45a31781f377ea7ec31c203d89b7aaff42e17dcf7cd0617315",
+      "bytes": 60883
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/inventories/state-09.json": {
+      "sha256": "bdfabf7fff8c5b45a31781f377ea7ec31c203d89b7aaff42e17dcf7cd0617315",
+      "bytes": 60883
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/inventories/state-10.json": {
+      "sha256": "de904f12b6a6409b82dea1287d34e6fd75e0209ca57d29f52da5c4c469c1e65f",
+      "bytes": 60940
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/inventories/state-10.json": {
+      "sha256": "de904f12b6a6409b82dea1287d34e6fd75e0209ca57d29f52da5c4c469c1e65f",
+      "bytes": 60940
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/inventories/state-11.json": {
+      "sha256": "3e5c0539a941e2e3248ae02f418961868c27a8a7f92dd388db8a75e2b59e92a2",
+      "bytes": 60994
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/inventories/state-11.json": {
+      "sha256": "3e5c0539a941e2e3248ae02f418961868c27a8a7f92dd388db8a75e2b59e92a2",
+      "bytes": 60994
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/inventories/state-12.json": {
+      "sha256": "99cdf3021ba4ee9a6ec53e28c1da767ca84fcd3fe878a9e3a50ea288390909c7",
+      "bytes": 60619
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/inventories/state-12.json": {
+      "sha256": "99cdf3021ba4ee9a6ec53e28c1da767ca84fcd3fe878a9e3a50ea288390909c7",
+      "bytes": 60619
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/inventories/state-13.json": {
+      "sha256": "ad485fd829c0bcfab3db22b9de1442c922d474ac24f37e49191288be4cbfe96e",
+      "bytes": 102427
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-015/replay/inventories/state-13.json": {
+      "sha256": "ad485fd829c0bcfab3db22b9de1442c922d474ac24f37e49191288be4cbfe96e",
+      "bytes": 102427
+    },
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-015-public-inputs.json": {
+      "sha256": "89bcdf6511bd1b91d7ba84f85f8b10f4c65d076d04a71c7bec4f81df75683b81",
+      "bytes": 14334
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-018/plan.json": {
+      "sha256": "b13f85ee708cd7258308c7a42d2a34441324423019f7c387576f1dad348dc4fa",
+      "bytes": 8706
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-018/replay/episode-metrics.json": {
+      "sha256": "8cb236e017335c4984571063aa27028174e4b707a76927df2b753d4ce429ab18",
+      "bytes": 21987
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-018/replay/independent-episode.json": {
+      "sha256": "5d47fd3987460d17443bc86ac4a4607208becb703e890a22293005634be7fca0",
+      "bytes": 2494
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-018/source/admitted-public-bindings.json": {
+      "sha256": "5f94a376e6ef93e556f1d0d844f691bd09e68111b45552655894c600c346fd8a",
+      "bytes": 15160
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-018/replay/source/admitted-public-bindings.json": {
+      "sha256": "5f94a376e6ef93e556f1d0d844f691bd09e68111b45552655894c600c346fd8a",
+      "bytes": 15160
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-018/plan.json": {
+      "sha256": "560aca1e17880f4123a042de17a2f64e3fb6fb15c1865bde6e790cd9136b41a9",
+      "bytes": 8878
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-018/replay/episode-metrics.json": {
+      "sha256": "e6a178d2dac812562da966287bccebff686fc1485e6716d96451181d39e7a9df",
+      "bytes": 21987
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-018/replay/independent-episode.json": {
+      "sha256": "8e7ada422f1bead5fb6bc103709514ce245af3ef37b9b69c74b6c94467abd17a",
+      "bytes": 2494
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-018/source/admitted-public-bindings.json": {
+      "sha256": "5f94a376e6ef93e556f1d0d844f691bd09e68111b45552655894c600c346fd8a",
+      "bytes": 15160
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-018/replay/source/admitted-public-bindings.json": {
+      "sha256": "5f94a376e6ef93e556f1d0d844f691bd09e68111b45552655894c600c346fd8a",
+      "bytes": 15160
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-018/inventories/state-00.json": {
+      "sha256": "3f5ea6d7cd05b38d3579a45ceb8f56a8e5ae43ba4fd54df0a256c4f99944a247",
+      "bytes": 86106
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-018/replay/inventories/state-00.json": {
+      "sha256": "3f5ea6d7cd05b38d3579a45ceb8f56a8e5ae43ba4fd54df0a256c4f99944a247",
+      "bytes": 86106
+    },
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-018-public-inputs.json": {
+      "sha256": "bd123ffaba376977f672c16a215dee339757fe7514f54c6f9f4e2e7ca8176fed",
+      "bytes": 14443
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-045/plan.json": {
+      "sha256": "c4ac649bb9ae5289a732505657ef3e0c310548b2ae41f945f3628b0fadd43a9e",
+      "bytes": 34226
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-045/replay/episode-metrics.json": {
+      "sha256": "f3e9a833941226f4a18739691536521bfe826c474137977fb1272cdd10fc7c25",
+      "bytes": 429352
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-045/replay/independent-episode.json": {
+      "sha256": "c9d448f741cc32d42cb9787f4152a7758d817aef0fc3c388e9fe8d8f97b130a2",
+      "bytes": 2629
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-045/source/admitted-public-bindings.json": {
+      "sha256": "6337b479feb3c04f42481d13812c41670b6b9b3043068809b8ced7a7a200dc8b",
+      "bytes": 15131
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-045/replay/source/admitted-public-bindings.json": {
+      "sha256": "6337b479feb3c04f42481d13812c41670b6b9b3043068809b8ced7a7a200dc8b",
+      "bytes": 15131
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/plan.json": {
+      "sha256": "8bf3c2fc26b6fc9bb22f0cbfae9305b10bb5d2cd5d65752405b8c7045e49fc53",
+      "bytes": 34396
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/episode-metrics.json": {
+      "sha256": "c22f296db3c2d96387ad0956ae0bbff1937b97b23001fc3959a8f70dc8154ac3",
+      "bytes": 429352
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/independent-episode.json": {
+      "sha256": "508742b095b9daaa9e5a072d85306448c07d7161be07cea79508eddcaa5f2412",
+      "bytes": 2630
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/source/admitted-public-bindings.json": {
+      "sha256": "6337b479feb3c04f42481d13812c41670b6b9b3043068809b8ced7a7a200dc8b",
+      "bytes": 15131
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/source/admitted-public-bindings.json": {
+      "sha256": "6337b479feb3c04f42481d13812c41670b6b9b3043068809b8ced7a7a200dc8b",
+      "bytes": 15131
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/inventories/state-00.json": {
+      "sha256": "056c4acdd10a43a14ce563efacd282f95603cca595cf244873e534f230b901ab",
+      "bytes": 61273
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/inventories/state-00.json": {
+      "sha256": "056c4acdd10a43a14ce563efacd282f95603cca595cf244873e534f230b901ab",
+      "bytes": 61273
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/inventories/state-01.json": {
+      "sha256": "d3151dfd7e2bae9678060ad53f117d7baf60cd369e4a0402727e100d247c28a9",
+      "bytes": 61113
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/inventories/state-01.json": {
+      "sha256": "d3151dfd7e2bae9678060ad53f117d7baf60cd369e4a0402727e100d247c28a9",
+      "bytes": 61113
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/inventories/state-02.json": {
+      "sha256": "255f7e9b37d743436b9821c0c7f73268e8adfa0cd620cd34cb7fdee12784353a",
+      "bytes": 61041
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/inventories/state-02.json": {
+      "sha256": "255f7e9b37d743436b9821c0c7f73268e8adfa0cd620cd34cb7fdee12784353a",
+      "bytes": 61041
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/inventories/state-03.json": {
+      "sha256": "efcba6861685cfa2ff933c1a5457a993132c71a5f38100d303556179b701f7cf",
+      "bytes": 61065
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/inventories/state-03.json": {
+      "sha256": "efcba6861685cfa2ff933c1a5457a993132c71a5f38100d303556179b701f7cf",
+      "bytes": 61065
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/inventories/state-04.json": {
+      "sha256": "043adf18593624b35601128877fccffb4bcbe6064adefb61aad2bbad317aa173",
+      "bytes": 60829
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/inventories/state-04.json": {
+      "sha256": "043adf18593624b35601128877fccffb4bcbe6064adefb61aad2bbad317aa173",
+      "bytes": 60829
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/inventories/state-05.json": {
+      "sha256": "7908f50f4b33593ea018a1430ce5b7264a02ecc130e8fec2737526c16cb08904",
+      "bytes": 60854
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/inventories/state-05.json": {
+      "sha256": "7908f50f4b33593ea018a1430ce5b7264a02ecc130e8fec2737526c16cb08904",
+      "bytes": 60854
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/inventories/state-06.json": {
+      "sha256": "4f6066ae605285d65bc2b891ef51c28d9168f3fc1959ca0e2425734cc915c477",
+      "bytes": 61020
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/inventories/state-06.json": {
+      "sha256": "4f6066ae605285d65bc2b891ef51c28d9168f3fc1959ca0e2425734cc915c477",
+      "bytes": 61020
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/inventories/state-07.json": {
+      "sha256": "ce048e9c3176473c0c6d21f875978efd0a9825c24ea42c6ae0669dc1c367a669",
+      "bytes": 60840
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/inventories/state-07.json": {
+      "sha256": "ce048e9c3176473c0c6d21f875978efd0a9825c24ea42c6ae0669dc1c367a669",
+      "bytes": 60840
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/inventories/state-08.json": {
+      "sha256": "fd13db872b943d9f74997b20c2b663a5aa6a9a0b4a5dcb612e6b62f16977e7bf",
+      "bytes": 60821
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/inventories/state-08.json": {
+      "sha256": "fd13db872b943d9f74997b20c2b663a5aa6a9a0b4a5dcb612e6b62f16977e7bf",
+      "bytes": 60821
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/inventories/state-09.json": {
+      "sha256": "c8eeb2ddc389e30522913f8cc56e93d4640df135a2c8ece4a9365d035dba00be",
+      "bytes": 60452
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/inventories/state-09.json": {
+      "sha256": "c8eeb2ddc389e30522913f8cc56e93d4640df135a2c8ece4a9365d035dba00be",
+      "bytes": 60452
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/inventories/state-10.json": {
+      "sha256": "f6bfd0c05c70f03233005ecebeae3057eab325242f9d9b4c1ba51513f60c135e",
+      "bytes": 60708
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/inventories/state-10.json": {
+      "sha256": "f6bfd0c05c70f03233005ecebeae3057eab325242f9d9b4c1ba51513f60c135e",
+      "bytes": 60708
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/inventories/state-11.json": {
+      "sha256": "465015a6719fb0655ba44af67be649f24f91cc89ad082c11374e5c35167478ef",
+      "bytes": 60447
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/inventories/state-11.json": {
+      "sha256": "465015a6719fb0655ba44af67be649f24f91cc89ad082c11374e5c35167478ef",
+      "bytes": 60447
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/inventories/state-12.json": {
+      "sha256": "2dc91de0164f9b5a38415574f2f90c6fafcbdf51da509d2769e353d40fd0ee36",
+      "bytes": 101627
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-045/replay/inventories/state-12.json": {
+      "sha256": "2dc91de0164f9b5a38415574f2f90c6fafcbdf51da509d2769e353d40fd0ee36",
+      "bytes": 101627
+    },
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-045-public-inputs.json": {
+      "sha256": "a324800fa92b0e168e4c65bc6e09f5235991cf8c4a3541148a52ea3da3aaf6df",
+      "bytes": 14417
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-050/plan.json": {
+      "sha256": "eeb06417125f9cd4d71a4e98c46e7f9e9581ee6803ff6efd2da6871081f4b327",
+      "bytes": 44703
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-050/replay/episode-metrics.json": {
+      "sha256": "a37abc7676bd090964a778023c3bdadb9118b235ee6f2802f8c51a4082b0b13f",
+      "bytes": 399509
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-050/replay/independent-episode.json": {
+      "sha256": "0c3318b7827b2bc306d0cfeffc21c9dd675533875f7ec6539b2913e976f6a247",
+      "bytes": 2624
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-050/source/admitted-public-bindings.json": {
+      "sha256": "edbbd6b7249a733b79ba77a8b05ddb28e1bef139983bc36f351020bc14c4caf7",
+      "bytes": 16168
+    },
+    "build/hybrid-public-bound-v1/attempt-01/switch_guard/ReMIND-050/replay/source/admitted-public-bindings.json": {
+      "sha256": "edbbd6b7249a733b79ba77a8b05ddb28e1bef139983bc36f351020bc14c4caf7",
+      "bytes": 16168
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/plan.json": {
+      "sha256": "132259ff502292b471741bda138b42fa2c78a96882ae9736e80bece67f552264",
+      "bytes": 44874
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/replay/episode-metrics.json": {
+      "sha256": "87e7dda6d06bf9a69efb75ff3f88d667bb0f6cae5e76f566ed9dcaa4774793bf",
+      "bytes": 399509
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/replay/independent-episode.json": {
+      "sha256": "a1ec2be49bf8929eb3a5ca5b5bf86d45ac196f08fcc26a79af484b44b791c779",
+      "bytes": 2625
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/source/admitted-public-bindings.json": {
+      "sha256": "edbbd6b7249a733b79ba77a8b05ddb28e1bef139983bc36f351020bc14c4caf7",
+      "bytes": 16168
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/replay/source/admitted-public-bindings.json": {
+      "sha256": "edbbd6b7249a733b79ba77a8b05ddb28e1bef139983bc36f351020bc14c4caf7",
+      "bytes": 16168
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/inventories/state-00.json": {
+      "sha256": "2cfb153df42f1690081596f84da38b7d7f4daf718c5d55c8422f2d2d24a96c7c",
+      "bytes": 60388
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/replay/inventories/state-00.json": {
+      "sha256": "2cfb153df42f1690081596f84da38b7d7f4daf718c5d55c8422f2d2d24a96c7c",
+      "bytes": 60388
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/inventories/state-01.json": {
+      "sha256": "89f2a75358f7f3d771b91115c1d68ad29d987d47ca911c630830c58a18fa8d96",
+      "bytes": 83432
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/replay/inventories/state-01.json": {
+      "sha256": "89f2a75358f7f3d771b91115c1d68ad29d987d47ca911c630830c58a18fa8d96",
+      "bytes": 83432
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/inventories/state-02.json": {
+      "sha256": "e2bf6e334a6c7f12a25cde3b1bcfe2e6eb72d3b1d30c2beec811243bde097dc1",
+      "bytes": 84155
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/replay/inventories/state-02.json": {
+      "sha256": "e2bf6e334a6c7f12a25cde3b1bcfe2e6eb72d3b1d30c2beec811243bde097dc1",
+      "bytes": 84155
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/inventories/state-03.json": {
+      "sha256": "ac0e93a9af459744c985ae375c8f85021e934ea6be084f7c15a72bc89127fd75",
+      "bytes": 83530
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/replay/inventories/state-03.json": {
+      "sha256": "ac0e93a9af459744c985ae375c8f85021e934ea6be084f7c15a72bc89127fd75",
+      "bytes": 83530
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/inventories/state-04.json": {
+      "sha256": "975067c8e0d0006495a68a0ef020a2f854fd56cd1885646429b16834dd30d806",
+      "bytes": 83659
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/replay/inventories/state-04.json": {
+      "sha256": "975067c8e0d0006495a68a0ef020a2f854fd56cd1885646429b16834dd30d806",
+      "bytes": 83659
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/inventories/state-05.json": {
+      "sha256": "6744873881de27906eaf6b85a6bcadad8eb0dfab5726304463a3227d7e1753e3",
+      "bytes": 102018
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/replay/inventories/state-05.json": {
+      "sha256": "6744873881de27906eaf6b85a6bcadad8eb0dfab5726304463a3227d7e1753e3",
+      "bytes": 102018
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/inventories/state-06.json": {
+      "sha256": "a1264a82a1052ddb364e98216d24fce49eacd124ff04c84de37adec59dfa79db",
+      "bytes": 102178
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/replay/inventories/state-06.json": {
+      "sha256": "a1264a82a1052ddb364e98216d24fce49eacd124ff04c84de37adec59dfa79db",
+      "bytes": 102178
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/inventories/state-07.json": {
+      "sha256": "fafa1ae6e3da82d084e961111102bf719a0a1a415937027e8d45831cb2d75482",
+      "bytes": 102253
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/replay/inventories/state-07.json": {
+      "sha256": "fafa1ae6e3da82d084e961111102bf719a0a1a415937027e8d45831cb2d75482",
+      "bytes": 102253
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/inventories/state-08.json": {
+      "sha256": "9f46bdffe326f7a8bb6b63e0ae96b1d3a2edad21fdd7f3f8834eb2b511b8b3aa",
+      "bytes": 102341
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/replay/inventories/state-08.json": {
+      "sha256": "9f46bdffe326f7a8bb6b63e0ae96b1d3a2edad21fdd7f3f8834eb2b511b8b3aa",
+      "bytes": 102341
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/inventories/state-09.json": {
+      "sha256": "3d4d64548ae98b13fbd66efd98d901e1ff857090683bb8c58276678d41af68be",
+      "bytes": 102360
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/replay/inventories/state-09.json": {
+      "sha256": "3d4d64548ae98b13fbd66efd98d901e1ff857090683bb8c58276678d41af68be",
+      "bytes": 102360
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/inventories/state-10.json": {
+      "sha256": "03f03c58bb628f2538badd85fd609d51b13ac5aab0bd6b332b42a6bccd5ae604",
+      "bytes": 102155
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/replay/inventories/state-10.json": {
+      "sha256": "03f03c58bb628f2538badd85fd609d51b13ac5aab0bd6b332b42a6bccd5ae604",
+      "bytes": 102155
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/inventories/state-11.json": {
+      "sha256": "7a6dc7370acb66ebdab94d0b8f079c78625b0d2f04debd8a896f8010ff8c0311",
+      "bytes": 101516
+    },
+    "build/hybrid-public-bound-v1/attempt-01/public_bound/ReMIND-050/replay/inventories/state-11.json": {
+      "sha256": "7a6dc7370acb66ebdab94d0b8f079c78625b0d2f04debd8a896f8010ff8c0311",
+      "bytes": 101516
+    }
+  }
+}

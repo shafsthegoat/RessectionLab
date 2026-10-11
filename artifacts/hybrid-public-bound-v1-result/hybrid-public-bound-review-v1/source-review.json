@@ -1,0 +1,28 @@
+{
+  "status": "GO_FOR_EXACT_CONSERVATIVE_PUBLIC_REWARD_BOUND",
+  "scope": "One independent source and saved generated-control review. No tests, arrays, weights, native calls or production imports executed by reviewer.",
+  "bindings": {
+    "module_sha256": "3ee4bce8f75100e849c3a094b2e3ac3bad9e1813b9db6f523f027eecbe580778",
+    "policy_sha256": "1d8638947a69608d145fa93c6735bd86ac82b56fe1497e9d104ad534ec2ba56f",
+    "module_tests_sha256": "1a2b1f9e1a82747e47fb5bbcedb4032d7e1dc6c40a12390322bb1b4b43dbf7e9",
+    "policy_tests_sha256": "9b726eee9fd38cec34ec8146d2b06a9f042f58d934cf0e38af320831c9cf078f",
+    "controls_receipt_sha256": "0b883cd453310bf92ad021633a15a73ca1ba4e5f7bcde0fa66bd2bbde5395e2a",
+    "controls_log_sha256": "2079b8b4add6f0c8a47082f2332714219d4945de15164e03497de6f5ec5abdb8"
+  },
+  "findings": [
+    "Native removal is restricted to full cells inside active microcapsules from previous-tip minus tip_length times axis through current-tip. The proposed physical-start-to-final-tip interval, backward length extension and radius expansion enclose the union including both spherical caps and post-exposure preentry. It does not substitute a clearance test.",
+    "The module uses the same native affine as the engine, computes full-cell world AABBs with sign-aware affine intervals, outward nextafter operations and a finite-range arithmetic allowance, and counts every intersecting positive public-target cell. This overcounts full-cell removable target potential. Fractional memberships in [0,1] are counted as one; observed free/removed cells cannot be removed again.",
+    "Unknown in-grid target coverage intersecting the envelope makes the bound unavailable even if cavity is true. Missing/unsupported inputs, excessive workspace and nonfinite reward bounds retain exact preview. Outside-grid space earns no native cell reward but is not asserted physically clear.",
+    "The canonical scorer uses nonnegative target reward and nonnegative normal/action/motion/switch penalties. Dropping normal and motion penalties raises potential reward; action and known switch costs remain, with upward rounding matching the multiplication/subtraction order. Unsupported reward signs are refused.",
+    "For positive incumbents only a strict upper-bound loss can skip a candidate; equality retains exact preview and original raw-order ties. STOP wins zero ties, so nonpositive upper bounds may skip. Newly verified feasible rewards only raise the incumbent. Final legal order remains raw catalog order.",
+    "The policy consumes explicit public target, target domain and current observed cavity. It does not use private reference membership, fit parameters for bounding, hidden tissue membership or unknown-as-empty inference. Pruned records are marked BOUND_NOT_COMPETITIVE, not geometric rejection; queried and skipped counts remain separate.",
+    "Setup, query, unavailable and pruning costs/counts are recorded. Cancellation or bound failure propagates, preserves paid work, clears partial inventory and prevents retry/publication as STOP. Existing source and immutable state checks remain in the inherited inventory path.",
+    "Saved first-attempt controls pass 20 in 0.87 seconds; owned elapsed 1.295923375 seconds, sampled child peak 90439680 bytes, exit zero and unchanged source. Controls cover caps/back extent, rotated/reflected anisotropic grids with native full-cell containment as oracle, fractional target, unknown coverage, snapshot immutability, unsupported signs/geometry, positive ties, exact generated STOP/winner/private-reference parity and interrupted bound accounting."
+  ],
+  "limitations": [
+    "This establishes source/control readiness only, not measured speed or quality parity on acquired cases.",
+    "Unknown target coverage and the one-million-cell index workspace limit can prevent pruning; that is conservative fallback, not missing-coverage repair. Index construction and query overhead must be included in the actual comparison.",
+    "The bound preserves the current conditional greedy winner. It proves neither legality of skipped rays, exhaustive emitted-catalog certification, global route optimality nor clinical validity."
+  ],
+  "unresolved_blockers": []
+}

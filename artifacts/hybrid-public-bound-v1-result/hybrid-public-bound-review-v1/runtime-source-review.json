@@ -1,0 +1,40 @@
+{
+  "decision": "GO_FOR_EXACT_FIVE_TRAIN_PAIRED_RUNTIME",
+  "scope": "Source and saved generated receipt only. No acquired arrays, model parameters, native replay or tests opened/executed by this review.",
+  "review_head": "f8c7e18120475e895453c9964bbd65fe40792292",
+  "files": {
+    "build/hybrid-public-bound-v1/batch_contract.py": "76b56ebd05d7be4a715cc12756e1c2f9048f453ef919de511e1b5c14fc03d432",
+    "build/hybrid-public-bound-v1/policy_tasks.py": "353f48301bca23f38acc25a5816e4d67b24e7bc4c3a24cb52c8a17ab9684c863",
+    "build/hybrid-public-bound-v1/initial_inventory_worker.py": "a50eb73489aa41cdc7ccf60081f3eef7255fb5aee6c688db74ce7b60c6254653",
+    "build/hybrid-public-bound-v1/freeze-runtime.py": "2b53a7dbc10302b834dadf4a8692c5d23cffbbe154d8fd322480f785ad08163c",
+    "build/hybrid-public-bound-v1/run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+    "build/hybrid-public-bound-v1/patient_regression.py": "c8ce28c15339206157a5652afdb77a199619c98321d39aea5f1a9f62ce0c491f",
+    "build/hybrid-public-bound-v1/patient_transfer.py": "358b223842b464e9b929a20f5a2cb0bffec7805aba114e08d0acfb30e3ea2d3a",
+    "build/hybrid-public-bound-v1/bound_policy.py": "1d8638947a69608d145fa93c6735bd86ac82b56fe1497e9d104ad534ec2ba56f",
+    "build/hybrid-public-bound-v1/stage/resectionlab/public_reward_bound.py": "3ee4bce8f75100e849c3a094b2e3ac3bad9e1813b9db6f523f027eecbe580778",
+    "src/resectionlab/public_reward_bound.py": "3ee4bce8f75100e849c3a094b2e3ac3bad9e1813b9db6f523f027eecbe580778",
+    "build/hybrid-public-bound-v1/tests/test_runtime_glue.py": "45d9b4128ca2387d04bbaef03869b049025532aec6846afcc007b1f9df663d1a"
+  },
+  "checks": [
+    "Fixed TRAIN002/015/018/045 retain original PilotAdmission; exposed TRAIN050 retains TransferAdmission. Adapter diffs are alias-only, never widening to SELECT/EVAL.",
+    "Five subject-first baseline/bound pairs use one frozen ranker, unchanged public worlds, tools, reward, h24 and candidate catalogs. The canonical maximum48 does not change explicit h24.",
+    "All ten complete plans are sealed before any fresh uncached replay. Each pair compares actions, full history and metrics; only explicit outer policy identity is normalized.",
+    "Complete unfavorable historical-quality or pair-equivalence outcomes remain complete measured results. Incomplete plans or geometry failure remain failures.",
+    "Counters reconcile all planning and replay previews/transitions; all source/setup/bound and replay costs are retained. Caps are 600/660 seconds, sampled3GiB,40000 previews,480 transitions,500 ridge scores,20 source visits.",
+    "Owned parent/helper is unchanged; final extents, cleanup fallback, source guards and immutable model checks remain. Fresh pycache refusal precedes local helper imports.",
+    "Metadata freezer binds both staged and committed canonical utility bytes, which are identical; no model parameters or arrays are opened by freeze.",
+    "No historical timing-win or held-out claim. One baseline-first pair per source allows descriptive matched timing only. Sampled RSS is not a kernel hard limit."
+  ],
+  "generated_receipts": {
+    "preserved_initial_fixture_failure": {"path": "build/hybrid-public-bound-v1/runtime-controls-attempt-01/receipt.json", "sha256": "173ad7234c73a339f933fca1064df3a22fd5ed38c1f7823472cec7a50577d480"},
+    "corrected_pass": {"path": "build/hybrid-public-bound-v1/runtime-controls-attempt-02/receipt.json", "sha256": "bcfa8ef1a92c6fb14ed6cb479f957b1ff929d6af658cf7f27d2e90dd924b869d"},
+    "corrected_log": {"path": "build/hybrid-public-bound-v1/runtime-controls-attempt-02/stdout.log", "sha256": "dc42026d5a55f669b669478f43e1f6e0b875ef30f4d64dc3358fad100b39ed48"},
+    "tests_passed": 1,
+    "test_seconds": 11.04,
+    "owned_seconds": 11.621552166063339,
+    "observed_child_maxrss_bytes": 272580608,
+    "production_pins_unchanged_between_attempts": true,
+    "verified_fixture_coverage": "Ten native plans, twenty source visits, ten uncached native replays, exact pair outcomes, deliberately unfavorable historical comparison retained; fixture JSON-key-order assertion alone was corrected."
+  },
+  "unresolved_blockers": []
+}
