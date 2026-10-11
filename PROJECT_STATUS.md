@@ -1,5 +1,9 @@
 # Project status
 
+**Latest steering, October 10:** the user supplied [the hybrid world-model addendum](docs/HYBRID_WORLD_MODEL_STEERING.md). It is now the next-cycle specification; the full surgical-planning and rehearsal destination remains. Preserve the exact geometric baseline and negative learned results. The next integrated deliverables are a matched information boundary, persistent multi-instrument episode, independent real-observation prediction, and one small hybrid comparison with full checking costs. These are pending capabilities, not completed experiments. No new clinical probabilities or tissue parameters are admitted by the literature review.
+
+The actual checkout still matches the attachment's reviewed `4d1d0ff`; no newer committed result resolves the capped search. Existing actions automatically withdraw between strokes, so they do not establish persistent two-tool execution. The existing detached generated planning boundary protects a private target only; it does not establish independence from private support or hazards. Current patient comparisons are annotation-assisted. Reuse existing RESECT observation work, preserving exposed Case4 as development. No additional training sweep is underway.
+
 **Current priority, October 10:** address measured action-selection failure and
 search cost before further model training. The repaired SELECT013 transfer
 attempt now constructs and independently replays three complete routes, but

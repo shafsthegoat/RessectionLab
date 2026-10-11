@@ -1,5 +1,14 @@
 # Real-observation execution ledger
 
+## Hybrid world-model steering, October 10
+
+The latest human attachment is preserved byte-for-byte in [HYBRID_WORLD_MODEL_STEERING.md](HYBRID_WORLD_MODEL_STEERING.md), SHA256 `ac1e704d81a79d4f5c4501ba2696910174062f49d952d26ca22c44ec42ebeec9`. Its review cites main `4d1d0ff`, which remains the fetched checkout baseline. This addendum supersedes the earlier next-step ordering while retaining all historical failures, patient roles, full-supergoal requirements and the October 8 permission for separately labeled generated experience. Bibliographic access claims remain attributed to the supplied review until independently checked for an implemented mechanism.
+
+Root coordinates three focused read-only reviews of the actual information boundary, persistent native/desktop state, and an existing-data real-observation validation. The Mac reports 16 GiB RAM, 10 CPU cores and 333 GiB available; one scientific worker at a time remains the local policy for this cycle. No new dependency, data purchase, agreement, remote compute or surgical-video extraction is initiated.
+
+The prepared frozen TRAIN gradient diagnostic has passed its ten generated helper/runner controls (1.32 s pytest; 1.65 s owned wrapper). One bounded, zero-update diagnostic is dispatched on the original 29 TRAIN decisions, with the unchanged ranking checkpoint, 180 s worker/210 s parent and 3 GiB limits. The run completes in 96.580 s at 1.377 GB sampled peak with all 29 forwards, 79 gradient reads, 58 replay/collection steps and no updates; independent interpretation is pending. This closes a specific prior failure diagnosis; it does not replace the four new integrated deliverables or authorize more training sweeps.
+
+
 Updated October 9, 2026. The [October 6 supergoal](SUPERGOAL_REAL_OBSERVATIONS.md)
 defines the full surgical planning/rehearsal objective, subject to the later
 human instructions below. Its [source receipt](../manifests/real_observation_supergoal_source.json)

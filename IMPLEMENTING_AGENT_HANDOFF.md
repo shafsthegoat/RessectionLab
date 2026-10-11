@@ -1,3 +1,5 @@
+> Active update, October 10: follow the [hybrid world-model steering](docs/HYBRID_WORLD_MODEL_STEERING.md) supplied by the user after main `4d1d0ff`. It changes the next implementation sequence, not the historical results or patient roles. Prioritize the matched information contract, persistent operative episode, independent real-observation prediction, then a bounded hybrid comparison. Preserve separately labeled generated training permission. The source review and proposed mechanisms in the attachment are not new experimental results.
+>
 > Active update, October 9: read the [integration-first multimodal steering](docs/INTEGRATION_FIRST_MULTIMODAL_STEERING.md) first. Deliver shared state/actions, typed desktop integration and executable replay together. Keep acquired evidence, estimated planning state and private evaluation separate. Coherent integration milestones supersede micro-commits and routine review campaigns; scientific claims and patient admission still require appropriate independent checks.
 >
 > October 8: read [the October 6 supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md)
