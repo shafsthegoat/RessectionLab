@@ -1,0 +1,32 @@
+{
+  "archive_reads": 0,
+  "baseline_reproductions_passed": true,
+  "checkpoint_reads": 0,
+  "elapsed_seconds": 0.0014402500819414854,
+  "fit_after_sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a",
+  "fit_before_sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a",
+  "input": {
+    "path": "artifacts/hbe-v5-axial-calibration-result-v1/execution/fit.json",
+    "sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a"
+  },
+  "metrics_bytes": 18809,
+  "metrics_sha256": "a9092af3e4a02e940c1becf970dce88328e5e97025b14cfbdf734c8a0526f084",
+  "other_donor_reads": 0,
+  "parameter_sweeps": 0,
+  "schema": "hbe-development-two-scale-diagnostic-receipt-v1",
+  "self_peak_rss_bytes": 21135360,
+  "solver_calls": 0,
+  "source_bytes": 10325,
+  "source_metrics_receipt_cap_bytes": 65536,
+  "source_sha256": "b4a888b1d1ffc6615ba3c4b3ce9fc74d542e2dc5bbcfeb4c4f79608d3e0845e4",
+  "status": "completed_saved_development_diagnostic",
+  "thread_environment": {
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "torsion_reads": 0,
+  "wall_cap_seconds": 10
+}

@@ -1,0 +1,25 @@
+{
+  "files": [
+    {
+      "path": "diagnostic.py",
+      "sha256": "b4a888b1d1ffc6615ba3c4b3ce9fc74d542e2dc5bbcfeb4c4f79608d3e0845e4",
+      "bytes": 10325
+    },
+    {
+      "path": "metrics.json",
+      "sha256": "a9092af3e4a02e940c1becf970dce88328e5e97025b14cfbdf734c8a0526f084",
+      "bytes": 18809
+    },
+    {
+      "path": "receipt.json",
+      "sha256": "3d262db41a9ef15766c0cfd9a0747327061a332ea83a1b5607a6a470f7198c85",
+      "bytes": 1223
+    },
+    {
+      "path": "root-recomputation.json",
+      "sha256": "bcde928bf9df807e1d44f4f11750a90ca5e3c0951d43e648715214c365f48b38",
+      "bytes": 1160
+    }
+  ],
+  "original_input": "artifacts/hbe-v5-axial-calibration-result-v1/execution/fit.json"
+}

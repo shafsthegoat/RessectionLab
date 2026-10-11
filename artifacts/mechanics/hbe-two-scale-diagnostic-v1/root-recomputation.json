@@ -1,0 +1,33 @@
+{
+  "status": "pass",
+  "method": "independently recomputed from original saved fit with 50-digit Decimal arithmetic; no diagnostic helper import",
+  "input_sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a",
+  "metrics_sha256": "a9092af3e4a02e940c1becf970dce88328e5e97025b14cfbdf734c8a0526f084",
+  "source_unchanged": true,
+  "common_scale": 0.7153615711390823,
+  "branches": {
+    "compression": {
+      "scale": 1.0484368449964125,
+      "baseline": {
+        "RMSE_N": 0.008129197501465502,
+        "normalized_RMSE": 0.3721675208819034
+      },
+      "separate_scale_diagnostic": {
+        "RMSE_N": 0.004465899004241599,
+        "normalized_RMSE": 0.2044559208480205
+      }
+    },
+    "tension": {
+      "scale": 0.18137609974071497,
+      "baseline": {
+        "RMSE_N": 0.008641906582590212,
+        "normalized_RMSE": 2.842080027679559
+      },
+      "separate_scale_diagnostic": {
+        "RMSE_N": 0.000843598000240319,
+        "normalized_RMSE": 0.27743565669912734
+      }
+    }
+  },
+  "measurement_validation_scope": "same exposed DEVELOPMENT calibration data, not independent physical validation or new material law"
+}
