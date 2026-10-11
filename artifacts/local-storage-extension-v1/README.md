@@ -57,3 +57,5 @@ source-only preparation reservation are not included in this dated scan.
 See `milestone-closure-08.json`; no new dataset or dependency was acquired.
 
 At 11:26:06 UTC, complete-corridor closure measures **204.852 MiB** additional growth and **332.677 GiB** free. Its 37 MiB reservation is closed; root archives have 16.848 MiB headroom within a 48 MiB allowance before the new compact result archive. The 8.17 MB generated selection trace remains local and ignored; compact independent projections are committed. See `milestone-closure-09.json`. No download or dependency was added.
+
+At 11:39:12 UTC, recursive-corridor closure measures **214.773 MiB** additional growth and **332.653 GiB** free (332.605 GiB after remaining reservations). The 37 MiB runtime reservation is closed. Root archive headroom is 15.688 MiB within 48 MiB before the compact 489 KB result archive; the 8.53 MB full generated trace stays local. See `milestone-closure-10.json`. No acquisition, dependency or deletion occurred.

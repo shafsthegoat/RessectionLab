@@ -1,0 +1,20 @@
+# Recursive preparation restores local motions but no useful route
+
+This complete SELECT013 development experiment rejects the added prerequisite selector as a performance improvement. Both it and the fresh baseline select STOP with zero return and zero target removal. The 48-move planning exploration removes 77 non-target cells (76.999993 mm³), versus 74 previously, and returns −17.568599 versus −16.893799. Every exploration increment is negative. These exploratory removals are absent from the selected STOP episode.
+
+The change preserves the v3 candidate catalog, world, rewards, tools and 48-step horizon. When an established public goal has no direct legal progress, it diagnoses at most 32 already emitted blocker-centered rays and chooses a legal move removing their sampled prerequisites. The 14 selected prerequisite moves remove 26 non-target cells and cost −5.853 reward. The selector stays on one transverse goal column with one tool-goal switch, versus two columns and seven switches previously. Better persistence does not produce a useful route.
+
+Independent saved evidence identifies what worked and what remains wrong:
+
+- Six exact tool/entry/tip geometries previously rejected as blocked subsequently execute at steps 11, 19, 23, 32, 40 and 48. The full exploratory history passes an independently implemented complete-tool geometry check. Intervening actions prevent attributing each unlock to a single cut.
+- Removing a complete first-failure set does not establish whole-corridor clearance: after step 8 removes its one sampled prerequisite, the same ray encounters another layer at step 9 before eventually executing at step 11.
+- At 14 of 15 stalled states, the global cell allocation omits aperture-eligible blockers of the active goal. Before step 26, only one of eight eligible active blockers receives centered candidates. Its two rays fail and no legal prerequisite remover is available, so the policy switches. The other seven rays were not tried; their feasibility remains unknown.
+- The maximum executed tool-tip advance is 4.5 mm; removed-cell centers reach 5.5 mm, unchanged from the retained comparison. The target endpoint is 18.5 mm away. No post-action-48 inventory was taken, so this does not prove exhaustion, global unreachability or an insufficient horizon.
+
+The bounded run uses 9,856 previews, 52 native transitions and 192 complete pages. Parent time is 146.870 s, sampled peak memory 661,667,840 B, and output 8,715,357 B. Cleanup completes with no owned survivors. Both selected plans seal before evaluation, replay exactly and pass independent episode checks. Eight generated controls also pass in 1.30 s, including an actual native prerequisite→blocker→target route, replay, stale evidence rejection and unchanged no-trigger behavior. Timing against the historical predecessor is not a matched speed estimate.
+
+The next isolated change makes the existing bounded candidate allocation follow the active public goal. It retains all world/reward limits and records that focus explicitly for replay. This is a testable response to demonstrated omission, not a guarantee of target access. More training or a new dataset would not resolve the measured omission by itself.
+
+All outcomes remain annotation-assisted geometric simulation on already exposed SELECT013. Geometry checks do not validate tissue force, living-brain deformation, cutting or neurological safety. This experiment performs no model forwards, fitting, RL updates, checkpoint loads, held-patient reads or acquisition. SELECT037 remains held and EVAL067 closed. Existing specimen diagnostics separately concern measured compression/tension and do not validate this planner.
+
+At 11:39:12 UTC the extension occupies an additional 214.773 MiB, with 332.653 GiB free, before this compact archive. The raw 8.53 MB trace stays local and ignored; the evidence index records its hash and the compact audited projections. Runtime HEAD is `9286a6b094a7d23e46835d26a73bb409522322de`; result SHA256 `fa418501772054f61f26cc5ab410cf1f05c90a7126be429e09787916816fc411`; terminal receipt SHA256 `013a525881729be2fdf7d1713ebe3aa3bb2b5c03aafd29b39930597d48fa368b`.

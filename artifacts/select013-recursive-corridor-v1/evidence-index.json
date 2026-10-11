@@ -1,0 +1,270 @@
+{
+  "files": [
+    {
+      "path": "comparison_contract.py",
+      "sha256": "d85d7ae95f9c64429b8c0ba426efe6c518a4fd75e99324e203051e978e1a921e",
+      "bytes": 6495,
+      "original_path": "build/select013-recursive-corridor-v1/comparison_contract.py"
+    },
+    {
+      "path": "select_worker.py",
+      "sha256": "0a5e7acfdbd71aff361e53428ddf5ab17a20c5070671a81f8d027e02e2853761",
+      "bytes": 19779,
+      "original_path": "build/select013-recursive-corridor-v1/select_worker.py"
+    },
+    {
+      "path": "run_owned.py",
+      "sha256": "7d19fb4cd7e2a1a5cc4a601f5958edbe2a7a1bae67ae19d8b5ef3fdacb7162cd",
+      "bytes": 12157,
+      "original_path": "build/select013-recursive-corridor-v1/run_owned.py"
+    },
+    {
+      "path": "freeze-runtime.py",
+      "sha256": "d3c747e4862e0c2792082895daa021574612e40547a7f4fd24663b6c8872e422",
+      "bytes": 4205,
+      "original_path": "build/select013-recursive-corridor-v1/freeze-runtime.py"
+    },
+    {
+      "path": "recursive_corridor_selector.py",
+      "sha256": "dc670b56f57e82786de4057277c691219b1de36d7c35f6a1102b59f63b888e93",
+      "bytes": 17797,
+      "original_path": "build/select013-recursive-corridor-v1/recursive_corridor_selector.py"
+    },
+    {
+      "path": "tests/test_recursive_corridor_selector.py",
+      "sha256": "d35e2d3f4a77c17f0730b7cb4650c4f67096c93d491db2a6eec3f7d9207c8668",
+      "bytes": 9317,
+      "original_path": "build/select013-recursive-corridor-v1/tests/test_recursive_corridor_selector.py"
+    },
+    {
+      "path": "HANDOFF.txt",
+      "sha256": "238da41f30fc7aaac490ff69dfb35ae8662ee0a9d0afa515bc3e6695fbad0bb1",
+      "bytes": 4147,
+      "original_path": "build/select013-recursive-corridor-v1/HANDOFF.txt"
+    },
+    {
+      "path": "runtime-source-ready.json",
+      "sha256": "103af78b0867aae05cb00b559a43c764a132e0b7e41a997564bfe3979d31bda1",
+      "bytes": 679,
+      "original_path": "build/select013-recursive-corridor-v1/runtime-source-ready.json"
+    },
+    {
+      "path": "controls-01.json",
+      "sha256": "5318e0b80abd9d179d9d565ae1be273859f8644c53c6d7d5809bdc60f83ec8f3",
+      "bytes": 976,
+      "original_path": "build/select013-recursive-corridor-v1/controls-01.json"
+    },
+    {
+      "path": "controls-01.log",
+      "sha256": "37fd7c4962bf5f7c3b89a13b30155780b3bc6c08401f56d13f64d377908806a3",
+      "bytes": 98,
+      "original_path": "build/select013-recursive-corridor-v1/controls-01.log"
+    },
+    {
+      "path": "source-index.json",
+      "sha256": "e56fc0ba54821f678291439d1718ca0eeeed66d0f022d70cc556600cf46011e1",
+      "bytes": 30795,
+      "original_path": "build/select013-recursive-corridor-v1/source-index.json"
+    },
+    {
+      "path": "root-release.json",
+      "sha256": "f86d2faa22a247e320bcc2d46cd9a0737c5e7d4bb0fec6719bc51a2fd138d225",
+      "bytes": 8918,
+      "original_path": "build/select013-recursive-corridor-v1/root-release.json"
+    },
+    {
+      "path": "attempt-01/result.json",
+      "sha256": "fa418501772054f61f26cc5ab410cf1f05c90a7126be429e09787916816fc411",
+      "bytes": 13293,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/result.json"
+    },
+    {
+      "path": "attempt-01/costs.json",
+      "sha256": "9026dbaad41d37d5272e5810f1d3e90a2efd73e13c5f80de8a1566cd39748491",
+      "bytes": 5056,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/costs.json"
+    },
+    {
+      "path": "attempt-01.supervision/receipt.json",
+      "sha256": "013a525881729be2fdf7d1713ebe3aa3bb2b5c03aafd29b39930597d48fa368b",
+      "bytes": 8008,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01.supervision/receipt.json"
+    },
+    {
+      "path": "attempt-01.supervision/declaration.json",
+      "sha256": "1c421fb10a39b2108bb52685a9642c52688411f1c126f2fb73cabcbb81a102af",
+      "bytes": 21273,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01.supervision/declaration.json"
+    },
+    {
+      "path": "attempt-01.supervision/worker-final.json",
+      "sha256": "ead4b7cc4d986f24808b659e2a6cd57242e0060aa3f25b8031745093c4e730bf",
+      "bytes": 284,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01.supervision/worker-final.json"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/selected-action-plan.json",
+      "sha256": "73aa270766e873dfe89ea2b067d75c61fb4a7fb316a4ae331433133e3b9e3f79",
+      "bytes": 548,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/fresh_STOP/selected-action-plan.json"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/rollout-metrics.json",
+      "sha256": "3e681f5d5201cf4cbbc79b61b4fd61e076f2fca37d20fd268a79a6b5989ffa8a",
+      "bytes": 21463,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/fresh_STOP/rollout-metrics.json"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/independent-episode.json",
+      "sha256": "78472c5d6575f1c867aee90eded468a780ff1591473b8e45969a1cd18a81b3af",
+      "bytes": 2494,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/fresh_STOP/independent-episode.json"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/replay-binding.json",
+      "sha256": "d493a2fe63139a0cbb7ecac458c60ff2aaee3558523206e504af471acc423f91",
+      "bytes": 215,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/fresh_STOP/replay-binding.json"
+    },
+    {
+      "path": "attempt-01/fresh_STOP/horizon-change.json",
+      "sha256": "33909cef28f82e1e37616635c150697b9632526c1804aa5b0b809cd2c4deca5a",
+      "bytes": 370,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/fresh_STOP/horizon-change.json"
+    },
+    {
+      "path": "attempt-01/recursive_corridor/selected-action-plan.json",
+      "sha256": "9daff8cbb5df0764e7229e0469dae0e5596188b3b9c55ceeb3ed1b2e90eb80e6",
+      "bytes": 548,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/recursive_corridor/selected-action-plan.json"
+    },
+    {
+      "path": "attempt-01/recursive_corridor/rollout-metrics.json",
+      "sha256": "8e18eafc0861628e812b2bfb451bd8db299c50f3c57717afe53b1c97e4abbd0d",
+      "bytes": 21463,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/recursive_corridor/rollout-metrics.json"
+    },
+    {
+      "path": "attempt-01/recursive_corridor/independent-episode.json",
+      "sha256": "0a2fe1049db12b8fe235e0d8c1346b86159f94db9bb81e387a710288ef9f726c",
+      "bytes": 2493,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/recursive_corridor/independent-episode.json"
+    },
+    {
+      "path": "attempt-01/recursive_corridor/replay-binding.json",
+      "sha256": "723ca17e1ef03205facba0dac5d518a06f2842a7d1b3516262016b453231472a",
+      "bytes": 215,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/recursive_corridor/replay-binding.json"
+    },
+    {
+      "path": "attempt-01/recursive_corridor/horizon-change.json",
+      "sha256": "2f136bec95fdc101bdfd2f165eb0d226261814ed1d3ec504812206e7f6dd061a",
+      "bytes": 370,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/recursive_corridor/horizon-change.json"
+    },
+    {
+      "path": "attempt-01/recursive_corridor/exploration-geometry.json",
+      "sha256": "60e653224b4015d1011d6654b4c3cd6fc14a553636f2db5dbcfb119d416627d7",
+      "bytes": 1395,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/recursive_corridor/exploration-geometry.json"
+    },
+    {
+      "path": "attempt-01/recursive_corridor/original-world-control.json",
+      "sha256": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e",
+      "bytes": 19337,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/recursive_corridor/original-world-control.json"
+    },
+    {
+      "path": "attempt-01/recursive_corridor/declared-rule-change.json",
+      "sha256": "8830e8b32930e19b11453e9c02f7d4c97e2e560199902a3ad0511b458781c2d7",
+      "bytes": 1505,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/recursive_corridor/declared-rule-change.json"
+    },
+    {
+      "path": "attempt-01/recursive_corridor/source/admitted-public-bindings.json",
+      "sha256": "905df5ad7194060ccff5406a0a612131e1e86b921797c8209a20724fc16c40be",
+      "bytes": 19556,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/recursive_corridor/source/admitted-public-bindings.json"
+    },
+    {
+      "path": "attempt-01/recursive_corridor/source/derived-occupancy-assumption.json",
+      "sha256": "2a131c0388579393ce3015b277e9c50031501f3f4cb53125717408a08d4deae8",
+      "bytes": 11344,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/recursive_corridor/source/derived-occupancy-assumption.json"
+    },
+    {
+      "path": "attempt-01/recursive_corridor/source/public-task-derivation.json",
+      "sha256": "037f8f1e1970eb87e9cfbeacce97a6da0b9184e98073fed0aad69c9c245446d1",
+      "bytes": 4077,
+      "original_path": "build/select013-recursive-corridor-v1/attempt-01/recursive_corridor/source/public-task-derivation.json"
+    },
+    {
+      "path": "independent/audit_saved_recursive_corridor.py",
+      "sha256": "89d664f02b2cb5af873cbee42c7cbd49977db5d7c8aa3ee29dfb14940a7cbdee",
+      "bytes": 21118,
+      "original_path": "build/select013-paged-route-review-v1/audit_saved_recursive_corridor.py"
+    },
+    {
+      "path": "independent/recursive-corridor-saved-audit.json",
+      "sha256": "79ac849584057034722632930c0338a82a4030a3650fe327bfd3872a56a6d6c4",
+      "bytes": 93963,
+      "original_path": "build/select013-paged-route-review-v1/recursive-corridor-saved-audit.json"
+    },
+    {
+      "path": "independent/recursive-corridor-result-review.txt",
+      "sha256": "33d1026a426dbd8fd068743bf7d339687679e76020ae5e8821e8750f4e9fea40",
+      "bytes": 7733,
+      "original_path": "build/select013-paged-route-review-v1/recursive-corridor-result-review.txt"
+    },
+    {
+      "path": "independent/recursive-corridor-source-review.txt",
+      "sha256": "0e0357ac452a3a4bef75b1e9dc5a225a5991c6ef2d34a5e80d724f9a161f06a5",
+      "bytes": 6904,
+      "original_path": "build/select013-paged-route-review-v1/recursive-corridor-source-review.txt"
+    },
+    {
+      "path": "postrun/REPORT.txt",
+      "sha256": "c2c657e42894c1fe48b196231c7cdb473e54dd408ad81ab211211bc81a4403fe",
+      "bytes": 4389,
+      "original_path": "build/select013-recursive-corridor-v1/postrun/REPORT.txt"
+    },
+    {
+      "path": "postrun/diagnose_saved.py",
+      "sha256": "2c1b3b0cd586ea35a9d5ec280c45b715165cab08d762f5043941440cfcee40db",
+      "bytes": 12407,
+      "original_path": "build/select013-recursive-corridor-v1/postrun/diagnose_saved.py"
+    },
+    {
+      "path": "postrun/diagnosis.json",
+      "sha256": "d6595218ce3859c9303d12a441ebd6dc42e0c77f59ddba0cdbc8da91946006ce",
+      "bytes": 59919,
+      "original_path": "build/select013-recursive-corridor-v1/postrun/diagnosis.json"
+    },
+    {
+      "path": "postrun/reader-attempt-01.py",
+      "sha256": "3b387179b65d671379187d66d0d4a74f37aec74b3b6a7b8217fd6cbe64f6694c",
+      "bytes": 10594,
+      "original_path": "build/select013-recursive-corridor-v1/postrun/reader-attempt-01.py"
+    },
+    {
+      "path": "postrun/reader-attempt-01.txt",
+      "sha256": "35353cc890c629c93f2353536ed0e92d3bd675988a8ffd925c1ba0875634a511",
+      "bytes": 435,
+      "original_path": "build/select013-recursive-corridor-v1/postrun/reader-attempt-01.txt"
+    },
+    {
+      "path": "postrun/raw-trace-pointer.json",
+      "sha256": "df3600ea4069729aa54d9aef97204c07a371221a414ddd89bfea52d4590c74ef",
+      "bytes": 419,
+      "original_path": "build/select013-recursive-corridor-v1/postrun/raw-trace-pointer.json"
+    }
+  ],
+  "evidence_bytes": 488551,
+  "excluded_bulk_trace": {
+    "path": "build/select013-recursive-corridor-v1/attempt-01/recursive_corridor/selection.json",
+    "sha256": "fe2b03c4d600a797451e7c9e3e380e9123fd96741e508083fb8d84a41c112ffd",
+    "bytes": 8534975
+  },
+  "runtime_head": "9286a6b094a7d23e46835d26a73bb409522322de",
+  "reproduction": "Restore ignored runtime helpers to their recorded build paths with original source closures and locally retained hash-pinned trace. Compact saved audits are projections, not a substitute for full trace reproduction. No raw patient arrays or weights included."
+}

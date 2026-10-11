@@ -1,0 +1,8 @@
+{
+  "excluded_bulk_trace": {
+    "path": "build/select013-recursive-corridor-v1/attempt-01/recursive_corridor/selection.json",
+    "sha256": "fe2b03c4d600a797451e7c9e3e380e9123fd96741e508083fb8d84a41c112ffd",
+    "bytes": 8534975
+  },
+  "reason": "Preserved local full trace; compact archive retains scalar/effect audit and source/result bindings. Reproduction needs this file and other historical input references."
+}

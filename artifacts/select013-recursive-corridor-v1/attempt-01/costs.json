@@ -1,0 +1,128 @@
+{
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 144.32616720814258,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": null,
+    "history_complete_caller_attestation": true,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 30000,
+      "planning_execution_seconds": 600.0
+    },
+    "native_preview_entries": 9856,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 1945,
+          "raised": 0,
+          "rejected": 7911,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 7911
+          },
+          "returned": 9856,
+          "returned_microsteps": 190441,
+          "seconds": 107.94458755804226,
+          "started": 9856
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 9856,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "complete_history_awaiting_independent_audit",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "native_previews_by_arm": {
+    "fresh_STOP": 351,
+    "recursive_corridor": 9505
+  },
+  "phases": {
+    "fresh_STOP.independent_audit": {
+      "complete_wall_seconds": 0.045381625182926655,
+      "native_preview_entries": 0
+    },
+    "fresh_STOP.replay": {
+      "complete_wall_seconds": 1.295983166899532,
+      "inventory_build_or_terminal_empty_calls": 2,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.2100802920758724,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 117,
+      "native_transition_calls": 1,
+      "native_transition_inclusive_seconds": 0.017284832894802094,
+      "native_transition_returned": 1
+    },
+    "fresh_STOP.rollout": {
+      "complete_wall_seconds": 0.026574874995276332,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 2,
+      "inventory_request_inclusive_seconds": 0.001479750033468008,
+      "inventory_request_returned": 2,
+      "native_preview_entries": 0,
+      "native_transition_calls": 1,
+      "native_transition_inclusive_seconds": 0.019838167121633887,
+      "native_transition_returned": 1
+    },
+    "fresh_STOP.search": {
+      "complete_wall_seconds": 0.0008436248172074556,
+      "native_preview_entries": 0
+    },
+    "fresh_STOP.source_and_construction": {
+      "complete_wall_seconds": 2.6940850410610437,
+      "inventory_build_or_terminal_empty_calls": 2,
+      "inventory_request_calls": 4,
+      "inventory_request_inclusive_seconds": 2.2737825396470726,
+      "inventory_request_returned": 4,
+      "native_preview_entries": 234
+    },
+    "recursive_corridor.independent_audit": {
+      "complete_wall_seconds": 0.043296166928485036,
+      "native_preview_entries": 0
+    },
+    "recursive_corridor.independent_exploration_geometry": {
+      "complete_wall_seconds": 2.3012503751087934,
+      "native_preview_entries": 0
+    },
+    "recursive_corridor.replay": {
+      "complete_wall_seconds": 1.2881369590759277,
+      "native_preview_entries": 117,
+      "native_transition_calls": 1,
+      "native_transition_inclusive_seconds": 0.0007656249217689037,
+      "native_transition_returned": 1
+    },
+    "recursive_corridor.rollout": {
+      "complete_wall_seconds": 1.2440417080651969,
+      "native_preview_entries": 117,
+      "native_transition_calls": 1,
+      "native_transition_inclusive_seconds": 0.0007563750259578228,
+      "native_transition_returned": 1
+    },
+    "recursive_corridor.search": {
+      "complete_wall_seconds": 133.6789495421108,
+      "native_preview_entries": 9154,
+      "native_transition_calls": 48,
+      "native_transition_inclusive_seconds": 2.9395483776461333,
+      "native_transition_returned": 48,
+      "task_clone_calls": 193,
+      "task_clone_inclusive_seconds": 8.111115215579048,
+      "task_clone_returned": 193
+    },
+    "recursive_corridor.source_and_construction": {
+      "complete_wall_seconds": 1.6568383749108762,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.1555337922181934,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 117
+    }
+  },
+  "timing_scope": "inclusive phase timers; construction/search/rollout/replay/audit are separate; do not sum nested native timers"
+}

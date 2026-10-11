@@ -1,0 +1,12 @@
+{
+  "version": "recursive-corridor-runtime-source-v1",
+  "source_only": true,
+  "files": {
+    "comparison_contract.py": "d85d7ae95f9c64429b8c0ba426efe6c518a4fd75e99324e203051e978e1a921e",
+    "select_worker.py": "0a5e7acfdbd71aff361e53428ddf5ab17a20c5070671a81f8d027e02e2853761",
+    "run_owned.py": "7d19fb4cd7e2a1a5cc4a601f5958edbe2a7a1bae67ae19d8b5ef3fdacb7162cd",
+    "freeze-runtime.py": "d3c747e4862e0c2792082895daa021574612e40547a7f4fd24663b6c8872e422"
+  },
+  "expected_head": "9286a6b094a7d23e46835d26a73bb409522322de",
+  "scope": "Reused ownership/budget/admission/evaluation monitor; new selector import and exact prior negative joins; no runtime tests duplicated."
+}

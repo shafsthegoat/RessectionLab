@@ -1,0 +1,319 @@
+{
+  "EVAL_opened": false,
+  "all_action_plans_sealed_before_evaluation": true,
+  "arms": {
+    "fresh_STOP": {
+      "actions": [
+        "STOP"
+      ],
+      "complete_history_seal": "sha256:da2fc7601f5f710f7e1a970605cfec43de9d2760ba9e08967ab7d2fcd2d13c1f",
+      "endpoint": "STOP",
+      "full_history_equal": true,
+      "independent_accepted": true,
+      "independent_certificate_sha256": "78472c5d6575f1c867aee90eded468a780ff1591473b8e45969a1cd18a81b3af",
+      "native_transitions": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 0
+      },
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 35259.99659456868,
+        "total_reward": 0.0
+      },
+      "plan_seal": "sha256:9b0fddd95a99b027561e7ab863c5580b46486d8b50274066e6233d39d3bb7bba",
+      "selector_accounting": {
+        "complete": true,
+        "model_transition_calls": 0,
+        "scope": "fresh explicit STOP0 baseline"
+      },
+      "status": "complete_replayed"
+    },
+    "recursive_corridor": {
+      "actions": [
+        "STOP"
+      ],
+      "complete_history_seal": "sha256:8de1321a830766098688c26ff83d5737d09625bc3820e5f090be2b1c3a85f2be",
+      "endpoint": "STOP",
+      "full_history_equal": true,
+      "independent_accepted": true,
+      "independent_certificate_sha256": "0a2fe1049db12b8fe235e0d8c1346b86159f94db9bb81e387a710288ef9f726c",
+      "native_transitions": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 48
+      },
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 35259.99659456868,
+        "total_reward": 0.0
+      },
+      "plan_seal": "sha256:9feb104dc3248e9e3a51cf23f3ed07135d58aa2293de19df4436ae7df040399b",
+      "selector_accounting": {
+        "all_preparation_costs_charged": true,
+        "call_cap_reached": false,
+        "complete": true,
+        "dependency_pair_limit_per_state": 32,
+        "dependency_preview_calls": 36,
+        "diagnostic_preview_calls": 2532,
+        "estimated_incremental_return": 0.0,
+        "explored_actions": [
+          "nominal-cavity-ca085e35455d8fb8a4f6222a",
+          "nominal-cavity-d5e68713973c5ec775a89181",
+          "nominal-cavity-1fda187de3a5ec9879ea2f48",
+          "nominal-cavity-c0c1430c698aaa5ef80b5f92",
+          "nominal-cavity-50ff68b2c3af3583af3a4dd8",
+          "nominal-cavity-fe6811d53003d0184ca6db57",
+          "nominal-cavity-a7ff25125cecd398b9c25a5b",
+          "nominal-cavity-624628ee29221c4e2cc1ee45",
+          "nominal-cavity-167e853db1322723265366ad",
+          "nominal-cavity-5f837935bbdd9d68d4d8a084",
+          "nominal-cavity-7da3fe0212da6a931843e357",
+          "nominal-cavity-5bf75e528f1d109901453939",
+          "nominal-cavity-28db0ced93af52f5cf49a8d8",
+          "nominal-cavity-1f496399ad0741f51e5d3fba",
+          "nominal-cavity-8fa0bc0ab581f0ab8206d754",
+          "nominal-cavity-f563427bf422a081b448fcb6",
+          "nominal-cavity-9ee48dddfcf9b73981127b14",
+          "nominal-cavity-000122fdc98811c3903cc6ec",
+          "nominal-cavity-daba26a6abae0e44ae59618b",
+          "nominal-cavity-5754f48270e72d79b0b3a0eb",
+          "nominal-cavity-07c5556ece89d72669f734a4",
+          "nominal-cavity-00cdb2fa92c12c56e8d67466",
+          "nominal-cavity-e1f1a008f46de247331c42a1",
+          "nominal-cavity-0427b3424e685ef30849ee1a",
+          "nominal-cavity-39fb5a1433dbfad0386e3070",
+          "nominal-cavity-248204a43d1bbb8b46cf8569",
+          "nominal-cavity-b6f8eeb07ae432ac3bda92a9",
+          "nominal-cavity-de88edba1b1ad97716e7cfea",
+          "nominal-cavity-deccf6966d7b8b3aed072189",
+          "nominal-cavity-383f4e65df2f841967319e64",
+          "nominal-cavity-68d5ad8cce55ff596a87ce64",
+          "nominal-cavity-503ed2f2b25a506507d8dd19",
+          "nominal-cavity-519e145df999050c6e75c2f2",
+          "nominal-cavity-baa717a15ca4253838e18149",
+          "nominal-cavity-a7515b62f8d383678c223d4a",
+          "nominal-cavity-24f92a45d2aa55809398e35b",
+          "nominal-cavity-54ffe15dc822a53aec2a547d",
+          "nominal-cavity-ed82d5714a64dac41d375799",
+          "nominal-cavity-74eab462d53dfc1e5f9b05f9",
+          "nominal-cavity-c84c62ddf913b35959181b71",
+          "nominal-cavity-8c1383e2b00635c2bc3b0e39",
+          "nominal-cavity-655499ffd1b22ab74a407a5b",
+          "nominal-cavity-36ac094d27f1c9599598163a",
+          "nominal-cavity-2b9851f3a75338250d1c6b0d",
+          "nominal-cavity-0138dd07b4d7658ffe55925e",
+          "nominal-cavity-0a2d7e56b1654884eaaac7de",
+          "nominal-cavity-86028526cd4534519f7225a5",
+          "nominal-cavity-c5e4c492e0b80b6ddd8ec3b7"
+        ],
+        "explored_total_return": -17.568598513619033,
+        "goal_diagnostic_preview_calls": 2496,
+        "goal_scope": "public nominal-positive endpoint; current bounded first-shaft-failure cells only",
+        "model_transition_calls": 48,
+        "objective": "highest cumulative unchanged nominal reward complete prefix or STOP0",
+        "private_reference_used": false,
+        "selected_prefix_length": 0,
+        "terminal": "HORIZON",
+        "time_cap_reached": false,
+        "version": "public_current_recursive_corridor_v1",
+        "wall_seconds": 133.4793402501382
+      },
+      "status": "complete_replayed"
+    }
+  },
+  "cache_condition": "canonical native engine only; no external geometry cache",
+  "checkpoint_loads": 0,
+  "comparison": {
+    "contact_delta": 0.0,
+    "criterion": "complete accepted route with return above both STOP0 and original baseline; no clinical safety claim",
+    "nominal_return_improvement": 0.0,
+    "outside_target_delta": 0.0,
+    "positive_complete_return": false,
+    "target_improvement": 0.0,
+    "target_progress": false
+  },
+  "exploration_geometry_feasible": true,
+  "exploration_geometry_sha256": "60e653224b4015d1011d6654b4c3cd6fc14a553636f2db5dbcfb119d416627d7",
+  "gradient_attempts": 0,
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "held_inputs_opened": false,
+  "historical_corridor_comparison": {
+    "exploration_return": -16.893798571567377,
+    "result": {
+      "path": "build/select013-complete-corridor-v1/attempt-01/result.json",
+      "sha256": "6aecbed77aa0235abaa03147d2cd2769cdab712dba1b1bcbe69449b4a725cd84"
+    },
+    "scope": "exact retained v1 negative; quality comparison only, no matched wall-time claim",
+    "selected_outcomes": {
+      "fresh_STOP": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 35259.99659456868,
+        "total_reward": 0.0
+      },
+      "persistent_corridor": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 35259.99659456868,
+        "total_reward": 0.0
+      }
+    }
+  },
+  "historical_h48_comparison": {
+    "outcomes": {
+      "original_lazy_beam": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 35259.99659456868,
+        "total_reward": 0.0
+      },
+      "paged_obstruction_lazy_beam": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 35259.99659456868,
+        "total_reward": 0.0
+      }
+    },
+    "result": {
+      "path": "build/select013-paged-route-h48-v1/attempt-01/result.json",
+      "sha256": "8dcbf51e12fc4a1175f52422bd5e4b745ce6d35300fd589b8b4b23404d7bdcf2"
+    },
+    "scope": "retained baseline quality only; no matched runtime claim"
+  },
+  "lineage_scope": "saved lineage authenticates original source admission only; paged rule is an explicitly changed planning model",
+  "model_forwards": 0,
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 144.32616720814258,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": null,
+    "history_complete_caller_attestation": true,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 30000,
+      "planning_execution_seconds": 600.0
+    },
+    "native_preview_entries": 9856,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 1945,
+          "raised": 0,
+          "rejected": 7911,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 7911
+          },
+          "returned": 9856,
+          "returned_microsteps": 190441,
+          "seconds": 107.94458755804226,
+          "started": 9856
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 9856,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "complete_history_awaiting_independent_audit",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "native_previews_by_arm": {
+    "fresh_STOP": 351,
+    "recursive_corridor": 9505
+  },
+  "optimizer_attempts": 0,
+  "planned_SELECT_denominator": 2,
+  "private_reference_reads": 0,
+  "role": "SELECT",
+  "source_physics_equal": true,
+  "status": "complete_SELECT013_recursive_corridor_comparison",
+  "subject": "ReMIND-013",
+  "success_scope": "complete geometric return and target progress; no clinical safety or transfer-learning claim",
+  "tie_caveat": "changed source-bound action IDs can change exact-return/path ties; no physical path identity claim across arms",
+  "updates": 0,
+  "wall_seconds": 144.36046679201536,
+  "world_equal": true
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "bounded-generated-controls-v1",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-recursive-corridor-v1/tests/test_recursive_corridor_selector.py"
+  ],
+  "one_thread": true,
+  "hard_seconds": 30,
+  "elapsed_seconds": 1.464207125,
+  "exit_code": 0,
+  "timed_out": false,
+  "child_reaped": true,
+  "no_acquired_inputs": true,
+  "source_sha256": {
+    "recursive_corridor_selector.py": "dc670b56f57e82786de4057277c691219b1de36d7c35f6a1102b59f63b888e93",
+    "tests/test_recursive_corridor_selector.py": "d35e2d3f4a77c17f0730b7cb4650c4f67096c93d491db2a6eec3f7d9207c8668"
+  },
+  "source_unchanged": true,
+  "log_sha256": "37fd7c4962bf5f7c3b89a13b30155780b3bc6c08401f56d13f64d377908806a3"
+}
