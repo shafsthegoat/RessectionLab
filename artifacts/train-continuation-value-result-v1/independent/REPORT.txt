@@ -1,0 +1,79 @@
+Independent saved-result audit: completed experiment, negative useful-gain result
+
+First audit attempt passed: 4,072 explicit checks in 0.348602 seconds, exit0.
+No model calls, native replay, array reads or checkpoint payload reads. Evidence
+is saved JSON plus the worker's existing independent geometry certificates.
+The original report, launcher and scientific outputs were not modified.
+
+Exact terminal bindings (SHA256):
+report 9c8c9534151e4287883f33dd530a9b64e02a1e70929a3d12e2bff4ae731e53ee
+launcher 7713f9fe9364a723a807dee7ebb09555fa1c3c67b6dde5989f907748d705e0dd
+index dcd25d2aa8b76222fda2134c5f7103b2788f6c2b171ba386eb3af6f104122ca9
+audit-01.json 40a69aecc0d25e3b454bf87074c7fff058d338b99d4652813e4952cf02758fe9
+audit_saved.py ed744949bffe8f64607242b5e87255397445d0344211349e0501a1b5209cab31
+
+All 36 historical complete episodes were retained and reconstructed: four
+teachers/29 decisions plus32 RL episodes/468 decisions, total497. Independent
+direct prefix enumeration agrees with stored float32 mandatory-action targets;
+equal subject/trace/state weights and STOP denominator agree. There are147
+negative mandatory-action labels, and no negative-immediate action with a
+positive recovered recorded-prefix target. All64 head updates are present;
+base optimizer updates are zero. This is supervised recorded-action continuation
+ranking on the same four TRAIN worlds, not a test of costly preparation credit.
+
+All16 fresh endpoints (GREEDY, IL64, RL8, Q_GUIDED on each subject) are complete,
+with accepted independent full-tool/exposure certificates. Saved planning
+actions, candidate rewards, state/observation identities and replay histories
+join; Q's full nominal history hashes agree after authoritative replay. The
+new histories are compact, so this audit authenticates their full-history hash
+and certificate joins rather than claiming to re-execute their geometry.
+
+Primary fresh comparison, GREEDY -> Q_GUIDED:
+subject    target mm3                total return               nonSTOP moves
+002        0 -> 0                    0 -> 0                      0 -> 0
+015        55.313110 -> 50.544739     54.866215 -> 49.562511       13 -> 24
+018        0 -> 0                    0 -> 0                      0 -> 0
+045        48.637450 -> 41.961722     48.181963 -> 40.744956       12 -> 24
+
+Both productive Q routes terminate at horizon24. All48 Q selections used
+positive predicted Q among actually positive nominal-reward candidates; there
+was no greedy fallback. The actual-reward guard is working as declared. It
+does not prevent inefficient sequences of individually positive cuts. The002
+and018 STOP outcomes are supplied by the same guard, not evidence that the new
+head learned negative-action avoidance.
+
+Both methods remove zero outside-target volume in these four endpoints, and Q
+contact upper bounds do not increase. Nevertheless, both productive subjects
+lose target volume and return; none of the four strict work/route improvements
+holds. The independently recomputed predeclared useful_gain is FALSE, exactly
+matching the original report. This is a valid negative experiment, not a failed
+execution or an incomplete route substituted with STOP.
+
+Planning costs: GREEDY2231 native previews versus Q4104, with29 versus50 native
+transitions including STOP. Q uses48 full-policy forwards/head batches for its
+48 productive states (899 candidate rows scored). Complete-path lengths worsen
+from56.895313 to112.228125mm for015 and95.487524 to196.765684mm for045.
+
+Entire owned experiment, including source visits, historical reconstruction,
+feature extraction, fitting, all four methods and fresh independent readouts:
+80,659 native previews,666 full-policy forwards,64 head training/backward/Adam
+steps, one fit readout and two extra case-loss readouts. There are eight source
+visits: four reconstruction plus four evaluation visits. Parent wall1831.976129s,
+sampled peak RSS1,510,948,864B. All declared preview/forward/time/RSS limits hold;
+supervision is completed, child reaped, no remaining owned processes/errors.
+Initial shared inventories/setup and fitting costs are not amortized away.
+Inclusive phase timings overlap and must not be summed as disjoint totals.
+
+The worker reports weighted training MSE325.660767 ->131.800980, while route
+quality worsens. That loss reduction is not a policy-quality result. This audit
+does not recompute tensor predictions or attribute the failure to a specific
+representation/optimization mechanism. The separate frozen state/rank and label
+ambiguity diagnostics can describe those hypotheses without counterfactual
+claims. No SELECT/EVAL, new dataset, physical/clinical validation or held-out
+generalization claim follows from this same-TRAIN result.
+
+Compact review files to retain: this REPORT.txt, audit-01.json, audit_saved.py,
+recorded_target_checks.py and guarded_choice_checks.py. Existing source-review.txt
+records the earlier source pass. audit-01.json provides hashes/sizes for the
+exact historical JSON prerequisites; they should be referenced, not duplicated.
+Reproducing this audit requires those locally retained hash-bound JSON inputs.

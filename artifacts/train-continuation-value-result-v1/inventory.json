@@ -1,0 +1,77 @@
+[
+  {
+    "path": "run-01/report.json",
+    "bytes": 985684,
+    "sha256": "9c8c9534151e4287883f33dd530a9b64e02a1e70929a3d12e2bff4ae731e53ee"
+  },
+  {
+    "path": "run-01/launcher.json",
+    "bytes": 4764,
+    "sha256": "7713f9fe9364a723a807dee7ebb09555fa1c3c67b6dde5989f907748d705e0dd"
+  },
+  {
+    "path": "run-01/trace-manifest.json",
+    "bytes": 148236,
+    "sha256": "c53bde6cfece252006d6a3f39789a9b897abf938a104287cb3c7ebb485720476"
+  },
+  {
+    "path": "run-01/logged-targets.json",
+    "bytes": 30427,
+    "sha256": "a346840c7dcc360229f3a75643bff57f6d411de835e073a9b62f236adeec35f6"
+  },
+  {
+    "path": "runner/source-index.json",
+    "bytes": 42786,
+    "sha256": "dcd25d2aa8b76222fda2134c5f7103b2788f6c2b171ba386eb3af6f104122ca9"
+  },
+  {
+    "path": "independent/REPORT.txt",
+    "bytes": 5118,
+    "sha256": "de096625d32d4157e47ced0b88245738732c70a8057e2acf1d80a22498c928a2"
+  },
+  {
+    "path": "independent/audit-01.json",
+    "bytes": 44944,
+    "sha256": "40a69aecc0d25e3b454bf87074c7fff058d338b99d4652813e4952cf02758fe9"
+  },
+  {
+    "path": "independent/audit_saved.py",
+    "bytes": 20609,
+    "sha256": "ed744949bffe8f64607242b5e87255397445d0344211349e0501a1b5209cab31"
+  },
+  {
+    "path": "independent/recorded_target_checks.py",
+    "bytes": 9188,
+    "sha256": "7a7e9b39c0fc9f03b7e92b250e67dbcd3e2d47d44beac4dc20b2eeeba082d977"
+  },
+  {
+    "path": "independent/guarded_choice_checks.py",
+    "bytes": 2979,
+    "sha256": "41908c2088893c48b5978e42ad1699a95f9685aa8f5e062361edfe92fbd0a59a"
+  },
+  {
+    "path": "diagnostics/diagnose_terminal.py",
+    "bytes": 15620,
+    "sha256": "d50fdf8740423810e962e6d0f50f2d1fd8b7fbf2877b2cef88cbc9a4ed89067f"
+  },
+  {
+    "path": "diagnostics/label_ambiguity.py",
+    "bytes": 14539,
+    "sha256": "dc4f2417cd902b8a52e370a3fdedb53d1f350789b2eefad7e46ee4370404cf9c"
+  },
+  {
+    "path": "diagnostics/terminal-diagnosis-01.json",
+    "bytes": 45438,
+    "sha256": "d6ceb2407bc1a8a209d2694e0f32b6d6c0e9b1bb4d6707300f754b707288c32e"
+  },
+  {
+    "path": "diagnostics/terminal-label-ambiguity-01.json",
+    "bytes": 14345,
+    "sha256": "858a42386fecc43c763a0e478d83675bba4a838b42e098a782866d84b03030e5"
+  },
+  {
+    "path": "terminal-storage.json",
+    "bytes": 293,
+    "sha256": "f94de14fd3ec00077b9d6af201d5a2e51d530e1d79f9cf7c826bec399e791582"
+  }
+]
