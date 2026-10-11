@@ -1,0 +1,41 @@
+{
+  "acquired_run": false,
+  "canonical_edits": false,
+  "final_test_only_delta": "Repository-root/environment baseline path; same resolved local archive used by saved controls; optional historical comparison skip when absent. No behavior change.",
+  "pins": {
+    "before/native_proposals.py": {
+      "bytes": 63300,
+      "sha256": "ec35077fc63e19dff422d2072c7fbe705f798ae46696ae5978f040db4b0e73a8"
+    },
+    "controls-01.json": {
+      "bytes": 1047,
+      "sha256": "c29ff2c533c7c3f082043802dd3c465c6644fb7c267b6d61c427086cbebad1b6"
+    },
+    "controls-01.log": {
+      "bytes": 5946,
+      "sha256": "2179766d89c6c6d61e8ae9aedf1d9356ecd7d79b95bc4324b44d8933ded3c20c"
+    },
+    "controls-02.json": {
+      "bytes": 1290,
+      "sha256": "836d5c73aaf766f396292771cbf02eed39c62a362793dbc176bb30a8bbf706bd"
+    },
+    "controls-02.log": {
+      "bytes": 112,
+      "sha256": "b15d1304016424bca7181856146d46c45e70ce7134258381aa54d024244ce588"
+    },
+    "source.patch": {
+      "bytes": 9394,
+      "sha256": "cfc1faaf07bd62ce03238eea0263dbef6cf75bd20b51ac5180118630bde23915"
+    },
+    "stage/resectionlab/native_proposals.py": {
+      "bytes": 68002,
+      "sha256": "8d92d6f4c68f394f17d6c2357d8748e7abab8bfac0b555dbf3bb5d81df325a31"
+    },
+    "tests/test_residual_blocker.py": {
+      "bytes": 10619,
+      "sha256": "aa3c77258830f517bd7820ce1da142e48ead4ef5b086f9ce4e40f2c0bd5d9907"
+    }
+  },
+  "production_before": "ec35077fc63e19dff422d2072c7fbe705f798ae46696ae5978f040db4b0e73a8",
+  "status": "source_review_GO_generated7_covered_5plus2"
+}

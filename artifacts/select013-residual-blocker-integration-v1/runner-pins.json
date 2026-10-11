@@ -1,0 +1,50 @@
+{
+  "files": {
+    "canonical-controls-01.json": {
+      "bytes": 907,
+      "sha256": "439d658db35a53873f27242d9ddf0698102662c1d4302c66ee198b5414b31be1"
+    },
+    "canonical-controls-01.log": {
+      "bytes": 180,
+      "sha256": "313e0da381049950fd745b6a36aef35a5c196c5374ba0f0e394aac4b7e15554a"
+    },
+    "comparison_contract.py": {
+      "bytes": 6981,
+      "sha256": "346479547c451cce1ca0964fc49a0059bab901ab15d8c28675cbea581b7a0ba7"
+    },
+    "freeze-runtime.py": {
+      "bytes": 4262,
+      "sha256": "106800f66c0344bd7f744125a70a3dcc2ffb8798ddef4fa41be68a7cd70fd65e"
+    },
+    "helper-controls-01.json": {
+      "bytes": 725,
+      "sha256": "66372602b407cb7560ea94f8204db0f57332e8d28d04e6a09e4a28ca767307a1"
+    },
+    "helper-controls-01.log": {
+      "bytes": 98,
+      "sha256": "3a6504404ab639ac8fe2940ac1654603c072a999c0ae65ca7ef9701ab97a0954"
+    },
+    "residual_frontier.py": {
+      "bytes": 10476,
+      "sha256": "6d0c69ba61136d7dc1a995b7086d4522b98d9ac4e074ce5f0ec810a5e6bbc9bf"
+    },
+    "run_owned.py": {
+      "bytes": 12139,
+      "sha256": "12a062306882d23e7eede007f8d14ef4c5e6124d7227635fa4d24f1f13858b23"
+    },
+    "select_worker.py": {
+      "bytes": 16724,
+      "sha256": "c8fb543d160e855959c2fa4b33ac87ca4fa8e67d98aa45f82bf14c8c2dbdd286"
+    },
+    "tests/test_prospective_runner.py": {
+      "bytes": 3289,
+      "sha256": "e4adbafc0f357d1f7bafe7cdd237538521e8f4950c916f0703a6995ba66babe1"
+    }
+  },
+  "preserved_prior_controls": [
+    "controls-01.json",
+    "controls-02.json"
+  ],
+  "source_test_relationship": "Core production8d92 unchanged; final portable testaa3c canonical119 controls pass. One actual helper control passes against frozen6d0c source.",
+  "status": "source_ready_generated_controls_passed_no_acquired_execution"
+}

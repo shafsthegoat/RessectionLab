@@ -1,0 +1,143 @@
+{
+  "files": [
+    {
+      "bytes": 5217,
+      "retained": "DESIGN.txt",
+      "sha256": "b40351a1f0781c13204e9e4480bec87b519b9a571286218f29f236ad26ef39e5",
+      "source": "build/select013-residual-blocker-v1/DESIGN.txt"
+    },
+    {
+      "bytes": 2739,
+      "retained": "HANDOFF.txt",
+      "sha256": "a8c58033c3e9be3ba4e2e5191a9e0332e458b3521f894f4527bd107cbb57005d",
+      "source": "build/select013-residual-blocker-v1/HANDOFF.txt"
+    },
+    {
+      "bytes": 1553,
+      "retained": "promotion-index.json",
+      "sha256": "14692ac9f5e0d4ac29bf6dba79f7f018b72b5d0b54ee6996d824140234ddf8e5",
+      "source": "build/select013-residual-blocker-v1/promotion-index.json"
+    },
+    {
+      "bytes": 1779,
+      "retained": "runner-pins.json",
+      "sha256": "62d9185d92b83bb1309508ffff4f0c5d8c1c4e4c5c955b4353686aa0c8c11051",
+      "source": "build/select013-residual-blocker-v1/runner-pins.json"
+    },
+    {
+      "bytes": 9394,
+      "retained": "source.patch",
+      "sha256": "cfc1faaf07bd62ce03238eea0263dbef6cf75bd20b51ac5180118630bde23915",
+      "source": "build/select013-residual-blocker-v1/source.patch"
+    },
+    {
+      "bytes": 63300,
+      "retained": "before/native_proposals.py",
+      "sha256": "ec35077fc63e19dff422d2072c7fbe705f798ae46696ae5978f040db4b0e73a8",
+      "source": "build/select013-residual-blocker-v1/before/native_proposals.py"
+    },
+    {
+      "bytes": 1047,
+      "retained": "controls-01.json",
+      "sha256": "c29ff2c533c7c3f082043802dd3c465c6644fb7c267b6d61c427086cbebad1b6",
+      "source": "build/select013-residual-blocker-v1/controls-01.json"
+    },
+    {
+      "bytes": 5946,
+      "retained": "controls-01.log",
+      "sha256": "2179766d89c6c6d61e8ae9aedf1d9356ecd7d79b95bc4324b44d8933ded3c20c",
+      "source": "build/select013-residual-blocker-v1/controls-01.log"
+    },
+    {
+      "bytes": 1290,
+      "retained": "controls-02.json",
+      "sha256": "836d5c73aaf766f396292771cbf02eed39c62a362793dbc176bb30a8bbf706bd",
+      "source": "build/select013-residual-blocker-v1/controls-02.json"
+    },
+    {
+      "bytes": 112,
+      "retained": "controls-02.log",
+      "sha256": "b15d1304016424bca7181856146d46c45e70ce7134258381aa54d024244ce588",
+      "source": "build/select013-residual-blocker-v1/controls-02.log"
+    },
+    {
+      "bytes": 907,
+      "retained": "canonical-controls-01.json",
+      "sha256": "439d658db35a53873f27242d9ddf0698102662c1d4302c66ee198b5414b31be1",
+      "source": "build/select013-residual-blocker-v1/canonical-controls-01.json"
+    },
+    {
+      "bytes": 180,
+      "retained": "canonical-controls-01.log",
+      "sha256": "313e0da381049950fd745b6a36aef35a5c196c5374ba0f0e394aac4b7e15554a",
+      "source": "build/select013-residual-blocker-v1/canonical-controls-01.log"
+    },
+    {
+      "bytes": 725,
+      "retained": "helper-controls-01.json",
+      "sha256": "66372602b407cb7560ea94f8204db0f57332e8d28d04e6a09e4a28ca767307a1",
+      "source": "build/select013-residual-blocker-v1/helper-controls-01.json"
+    },
+    {
+      "bytes": 98,
+      "retained": "helper-controls-01.log",
+      "sha256": "3a6504404ab639ac8fe2940ac1654603c072a999c0ae65ca7ef9701ab97a0954",
+      "source": "build/select013-residual-blocker-v1/helper-controls-01.log"
+    },
+    {
+      "bytes": 6981,
+      "retained": "comparison_contract.py",
+      "sha256": "346479547c451cce1ca0964fc49a0059bab901ab15d8c28675cbea581b7a0ba7",
+      "source": "build/select013-residual-blocker-v1/comparison_contract.py"
+    },
+    {
+      "bytes": 10476,
+      "retained": "residual_frontier.py",
+      "sha256": "6d0c69ba61136d7dc1a995b7086d4522b98d9ac4e074ce5f0ec810a5e6bbc9bf",
+      "source": "build/select013-residual-blocker-v1/residual_frontier.py"
+    },
+    {
+      "bytes": 16724,
+      "retained": "select_worker.py",
+      "sha256": "c8fb543d160e855959c2fa4b33ac87ca4fa8e67d98aa45f82bf14c8c2dbdd286",
+      "source": "build/select013-residual-blocker-v1/select_worker.py"
+    },
+    {
+      "bytes": 12139,
+      "retained": "run_owned.py",
+      "sha256": "12a062306882d23e7eede007f8d14ef4c5e6124d7227635fa4d24f1f13858b23",
+      "source": "build/select013-residual-blocker-v1/run_owned.py"
+    },
+    {
+      "bytes": 4262,
+      "retained": "freeze-runtime.py",
+      "sha256": "106800f66c0344bd7f744125a70a3dcc2ffb8798ddef4fa41be68a7cd70fd65e",
+      "source": "build/select013-residual-blocker-v1/freeze-runtime.py"
+    },
+    {
+      "bytes": 3289,
+      "retained": "tests/test_prospective_runner.py",
+      "sha256": "e4adbafc0f357d1f7bafe7cdd237538521e8f4950c916f0703a6995ba66babe1",
+      "source": "build/select013-residual-blocker-v1/tests/test_prospective_runner.py"
+    },
+    {
+      "bytes": 318,
+      "retained": "tests/conftest.py",
+      "sha256": "12f786c978032b622eecc8b62704b453b91beeca97d191b45cb396d801436ecd",
+      "source": "build/select013-residual-blocker-v1/tests/conftest.py"
+    },
+    {
+      "bytes": 2723,
+      "retained": "residual-source-review.txt",
+      "sha256": "7423b651071bee9256abf057867cca6871c747eda8944169e9632ce4806b7374",
+      "source": "build/select013-paged-route-review-v1/residual-source-review.txt"
+    },
+    {
+      "bytes": 3728,
+      "retained": "residual-runner-review.txt",
+      "sha256": "97a8fd088054ddf3248a6b3be4bf1b9c4e7fb43f6adbb2011f7ca6eb398c2611",
+      "source": "build/select013-paged-route-review-v1/residual-runner-review.txt"
+    }
+  ],
+  "schema": "compact-integration-evidence-v1"
+}

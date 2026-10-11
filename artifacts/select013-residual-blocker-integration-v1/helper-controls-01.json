@@ -1,0 +1,23 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "build/select013-residual-blocker-v1/tests/test_prospective_runner.py"
+  ],
+  "exit_code": 0,
+  "timeout": false,
+  "hard_seconds": 30,
+  "threads": 1,
+  "wall_seconds": 0.4917499159928411,
+  "log_sha256": "3a6504404ab639ac8fe2940ac1654603c072a999c0ae65ca7ef9701ab97a0954",
+  "source_pins": {
+    "build/select013-residual-blocker-v1/residual_frontier.py": "6d0c69ba61136d7dc1a995b7086d4522b98d9ac4e074ce5f0ec810a5e6bbc9bf",
+    "build/select013-residual-blocker-v1/tests/test_prospective_runner.py": "e4adbafc0f357d1f7bafe7cdd237538521e8f4950c916f0703a6995ba66babe1"
+  },
+  "source_unchanged": true
+}

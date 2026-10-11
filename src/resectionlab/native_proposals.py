@@ -371,6 +371,49 @@ OBSTRUCTION_OPENING_FAMILY = "obstruction_opening"
 OBSTRUCTION_CELLS_PER_PREVIEW = 16
 OBSTRUCTION_SELECTED_CELLS = 16
 PAGED_OBSTRUCTION_VERSION = "permitted-first-obstruction-paged-v1"
+RESIDUAL_OBSTRUCTION_VERSION = "permitted-residual-obstruction-paged-v2"
+RESIDUAL_OBSTRUCTION_RULE = "residual_aperture_v2"
+_STATIC_APERTURE_MARGIN_MM = 1e-6
+
+
+def _residual_aperture_test(access, tool, entry, tip):
+    """Necessary public aperture test, never a native feasibility certificate.
+
+    Reuse the aperture-plane expression of geometry._check_envelope for the
+    actual represented ray. A straight source-normal sweep has a constant
+    plane intersection. Only clearly negative clearance is excluded; uncertain
+    boundaries and numerical scopes outside this small-mm calculation proceed
+    to native verification. The guard is reporting/selection tolerance only.
+    It does not relax the native aperture or any shaft/domain/removal rule.
+    """
+    entry, tip = np.asarray(entry, float), np.asarray(tip, float)
+    center, normal = np.asarray(access.center_mm), np.asarray(access.normal_inward)
+    values = np.concatenate((entry, tip, center, normal,
+        np.asarray((access.radius_mm, tool.envelope_radius_mm))))
+    record = {"excluded": False, "clearance_mm": None,
+        "numerical_margin_mm": _STATIC_APERTURE_MARGIN_MM,
+        "scope": "uncertain_defer_to_native"}
+    if not np.isfinite(values).all() or np.max(np.abs(values)) > 1e4:
+        return record
+    delta = tip-entry
+    length = float(np.linalg.norm(delta))
+    if not np.isfinite(length) or length < 1e-6:
+        return record
+    axis = delta/length
+    # ToolPose normalizes again; preserve the same represented axis convention.
+    axis = axis/float(np.linalg.norm(axis))
+    alignment = float(axis @ normal)
+    if not np.isfinite(alignment) or abs(1.-alignment) > 1e-10:
+        return record
+    depth = float((tip-center) @ normal)
+    plane_entry = tip-(depth/alignment)*axis
+    clearance = float(access.radius_mm-np.linalg.norm(plane_entry-center)
+                      -tool.envelope_radius_mm/alignment)
+    if not np.isfinite(clearance):
+        return record
+    record.update(excluded=clearance < -_STATIC_APERTURE_MARGIN_MM,
+        clearance_mm=clearance, scope="bounded_source_normal_aperture_necessary_only")
+    return record
 
 
 @dataclass(frozen=True)
@@ -390,6 +433,7 @@ class NominalCavityProposalConfig:
     tool_footprint_opening: bool = False
     obstruction_opening: bool = False
     obstruction_page_size: int | None = None
+    obstruction_selection_rule: str | None = None
 
     def __post_init__(self):
         offsets = AxisColumnProposalConfig(self.offsets_source_voxels).offsets_source_voxels
@@ -401,6 +445,11 @@ class NominalCavityProposalConfig:
                 or self.obstruction_page_size != 8 or not self.obstruction_opening
                 or not self.tool_footprint_opening):
             raise ValueError("Paged obstruction requires enabled footprint/obstruction and exactly eight per page")
+        if self.obstruction_selection_rule is not None and (
+                type(self.obstruction_selection_rule) is not str
+                or self.obstruction_selection_rule != RESIDUAL_OBSTRUCTION_RULE
+                or self.obstruction_page_size != 8):
+            raise ValueError("Residual blocker selection requires its explicit rule and eight-pair obstruction pages")
         limit = 120 if self.tool_footprint_opening else 96
         if type(self.max_candidates) is not int or not 1 <= self.max_candidates <= limit:
             raise ValueError(f"Nominal/cavity candidate cap must be between one and{limit}")
@@ -424,6 +473,8 @@ class NominalCavityProposalConfig:
 
     @property
     def version(self):
+        if self.obstruction_selection_rule == RESIDUAL_OBSTRUCTION_RULE:
+            return RESIDUAL_OBSTRUCTION_VERSION
         if self.obstruction_page_size is not None:
             return PAGED_OBSTRUCTION_VERSION
         if self.obstruction_opening:
@@ -439,6 +490,7 @@ class NominalCavityProposalConfig:
         record.pop("tool_footprint_opening")
         record.pop("obstruction_opening")
         record.pop("obstruction_page_size")
+        record.pop("obstruction_selection_rule")
         legacy = {"version": NOMINAL_CAVITY_PROPOSAL_VERSION, **record,
             "families": NOMINAL_CAVITY_FAMILIES, "order": "column_tool_family",
             "deduplication": "identical_tool_entry_tip", "crop_clipping": False,
@@ -470,6 +522,12 @@ class NominalCavityProposalConfig:
             legacy.update(obstruction_page_size=self.obstruction_page_size,
                 obstruction_budget="original_base_cap_preserved; up_to_16_selected_cells_times_two_tools; all_pairs_paged_before_layer_retention",
                 page_certificate_limit=128, page_order="original_base_then_contiguous_eight_pair_pages")
+        if self.obstruction_selection_rule == RESIDUAL_OBSTRUCTION_RULE:
+            legacy.update(obstruction_selection_rule=RESIDUAL_OBSTRUCTION_RULE,
+                obstruction_rule="all_retained_actual_first_blockers; radial_capacity_is_diagnostic_only; cell_center_endpoint",
+                obstruction_aperture="per_tool_public_static_necessary_filter_before_cell_budget; uncertain_pairs_verified",
+                obstruction_aperture_margin_mm=_STATIC_APERTURE_MARGIN_MM,
+                obstruction_selection="first_16_public_nominal_then_native_index_cells_with_at_least_one_not_excluded_tool")
         return semantic_digest(legacy)
 
     def to_record(self):
@@ -479,6 +537,8 @@ class NominalCavityProposalConfig:
             record.pop("obstruction_opening")
         if self.obstruction_page_size is None:
             record.pop("obstruction_page_size")
+        if self.obstruction_selection_rule is None:
+            record.pop("obstruction_selection_rule")
         return record
 
 
@@ -963,6 +1023,8 @@ class PreparedNominalCavityProposer:
         seen = {(r.tool_id, r.entry_mm, r.tip_mm): r.proposal_id for r in rays}
         ordered = sorted(cells, key=lambda c: (not bool(self._nominal[c] > self._config.nominal_min_membership), c))
         selected = selection_omitted = 0
+        residual_rule = self._config.obstruction_selection_rule == RESIDUAL_OBSTRUCTION_RULE
+        static_aperture = []
         candidate_cap = self._config.max_candidates
         if self._config.obstruction_page_size is not None:
             if len(self._native.tools) > 2:
@@ -978,8 +1040,16 @@ class PreparedNominalCavityProposer:
             projected = corners - (((corners-access.center_mm) @ normal)[:, None] * normal)
             bound = min((float(point_segment_distances(projected, pair[0], pair[1]).max())
                          for pair in entries), default=None)
+            pair_filters = {}
+            if residual_rule and depth > 0:
+                for tool in self._native.tools:
+                    check = _residual_aperture_test(access, tool, entry, tip)
+                    pair_filters[tool.tool_id] = check["excluded"]
+                    static_aperture.append({"voxel": cell, "tool_id": tool.tool_id, **check})
+            no_aperture_pair = bool(pair_filters) and all(pair_filters.values())
             reason = ("BLOCKER_NOT_INWARD" if depth <= 0 else
-                      "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED" if bound is not None and bound <= max_radius else
+                      "FULL_TOOL_APERTURE_PREFILTER" if no_aperture_pair else
+                      "ORIGINAL_AXIS_RADIAL_NONCONTAINMENT_NOT_ESTABLISHED" if not residual_rule and bound is not None and bound <= max_radius else
                       "OBSTRUCTION_SELECTION_CAP" if selected >= OBSTRUCTION_SELECTED_CELLS else None)
             if reason is None:
                 selected += 1
@@ -988,7 +1058,9 @@ class PreparedNominalCavityProposer:
             offset = tuple(cell[d]-int(np.rint(origin[d])) for d in self._transverse)
             priority = bool(self._nominal[cell] > self._config.nominal_min_membership)
             for tool in self._native.tools:
-                identifier, disposition = None, reason
+                identifier = None
+                disposition = ("FULL_TOOL_APERTURE_PREFILTER" if pair_filters.get(tool.tool_id, False)
+                               else reason)
                 key = (tool.tool_id, _point(entry), _point(tip))
                 if disposition is None:
                     if key in seen:
@@ -1018,6 +1090,12 @@ class PreparedNominalCavityProposer:
             accounting.update(added_preview_calls=0, added_candidates_to_verify=len(rays)-len(batch.proposals),
                 base_candidate_cap=self._config.max_candidates, added_candidate_cap=32,
                 page_size=self._config.obstruction_page_size, certification="deferred_explicit_pages")
+        if residual_rule:
+            accounting.update(selection_rule=RESIDUAL_OBSTRUCTION_RULE,
+                original_axis_bound_role="diagnostic_only_not_an_eligibility_gate",
+                static_aperture_pairs=static_aperture,
+                static_aperture_excluded_pairs=sum(row["excluded"] for row in static_aperture),
+                aperture_scope="public necessary condition only; every emitted pair still requires fresh native verification")
         result = NominalCavityBatch(batch.model_hash, cavity, batch.nominal_target_hash,
             batch.nominal_provenance_hash, tuple(rays), tuple(ledger))
         object.__setattr__(result, "_obstruction_accounting", freeze_json(accounting))

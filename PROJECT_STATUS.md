@@ -39,6 +39,8 @@ See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cr
 
 Current integrated results, October 11:
 
+- **The omitted blocker action has a tested generic correction:** [119 canonical checks and a causal helper pass](artifacts/select013-residual-blocker-integration-v1/INTEGRATION.md). The opt-in rule offers actual residual blockers and filters clearly impossible tool/aperture pairs before bounded selection, preserving the baseline. Next is one acquired-state diagnostic with at most three preparations and separate independent geometry checks. Generated success does not establish a useful patient route or physical fidelity.
+
 - **The local-window bound is also rejected for performance:** [the complete second five-case comparison](artifacts/hybrid-public-bound-v2-result/RESULT.md) retains exact routes and ten accepted independent geometry checks, but saves zero of 1,446 online previews. All 1,118 planning queries now encounter unknown coverage in their conservative local windows; planning costs 34.798 s versus 30.338 s baseline. This does not prove actual tool overlap with unknown tissue. Keep the faster baseline and move to the measured residual-action omission; no third bound variation or model sweep.
 
 - **The global-cap failure now has a tested local-window successor:** [22 canonical controls and independent source review pass](artifacts/hybrid-public-bound-v2-integration/INTEGRATION.md). Conservative local target/coverage queries replace global unknown-cell boxes while preserving exact checks wherever local coverage is unknown. The same five-case comparison is next; reward, weights, patient roles and the complete v1 negative remain fixed. No acquired improvement is claimed before that run.
