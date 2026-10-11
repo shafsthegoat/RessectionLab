@@ -1,0 +1,30 @@
+{
+  "canonical_before_sha256": "2b431550499d2165ff868236bd46e65eb0a6a28410355576db528d4509c4d5c4",
+  "clinical_validation": false,
+  "desktop_v2_admission": false,
+  "frozen_v1_episode_id": "sha256:33cbb8bdea5873acece2461fbf1c992791ff7cae18ba2099c4bc1724cd76717a",
+  "independent_state_receipts": [
+    "build/hybrid-registration-independent-v1/state-receipt-b25d1754460e.json",
+    "build/hybrid-registration-independent-v1/state-receipt-ae6ce9ad09c6.json"
+  ],
+  "patient_access": false,
+  "promotion": {
+    "src/resectionlab/persistent_passive.py": {
+      "bytes": 41937,
+      "sha256": "ae6ce9ad09c6f95a419defaf6bb97d8ee17fdb072d2e6109fac1352ea490128c",
+      "source": "build/hybrid-observation-decision-v1/stage/resectionlab/persistent_passive.py"
+    },
+    "tests/test_passive_decision.py": {
+      "bytes": 6240,
+      "sha256": "2acb0504730e285448e5c767dcea328381ebf993ce6ae3d076e259b935b25c73",
+      "source": "build/hybrid-observation-decision-v1/tests/test_passive_decision.py"
+    }
+  },
+  "schema": "generated-passive-registration-decision-source-index-v2",
+  "test_receipt": {
+    "cases": 10,
+    "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -B -m pytest -q build/hybrid-observation-decision-v1/tests/test_passive_decision.py",
+    "seconds": 3.02,
+    "status": "pass"
+  }
+}

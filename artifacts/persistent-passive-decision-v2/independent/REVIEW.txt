@@ -1,0 +1,75 @@
+Independent generated registration decision review, 2026-10-11
+
+Disposition: no remaining integration blocker in the reviewed v2 scope after
+the owner's state-integrity corrections. Root remains the canonical writer.
+
+Reviewed source identity:
+  Initial: b25d1754460ea37ac14a6b5977e9edf2b7c438ae3a7eb3315629ed93c9e41ab1
+  Successor: ae6ce9ad09c6f95a419defaf6bb97d8ee17fdb072d2e6109fac1352ea490128c
+  Local snapshots: persistent_passive_before_b25d1754.py and
+                   persistent_passive_after_ae6ce9ad.py
+  The initial snapshot was reconstructed by reversing the owner's small state
+  repair hunks and accepted only after matching the exact initial SHA-256.
+
+Initial independent executable evidence:
+  review_controls.py: 6/6 groups passed in 2.122 seconds, receipt.json.
+  Four private registration alternatives had identical public observations,
+  native proposals, masks, histories and warm-cache/clone states before reveal.
+  After reveal the safe case offered ADVANCE and reach/high-error/unavailable
+  cases withheld it. Sufficient bounds 0.1 and 0.2 mm preserved the same offered
+  endpoint; observed translation changed it from z=6.2 to z=6.4 mm. Declining an
+  eligible advance retained a truthful decline reason. Refused attempts did
+  not mutate committed state, and both retained tools required withdrawal.
+  Nominal full-tool geometry passed constructed controls that the uncertain
+  endpoint's image domain, working reach, oblique lower access depth or
+  second-tool collision correctly rejected. Physical masks were unchanged;
+  physiological and deficit fields remained null. Legacy paired v1 episode ID
+  stayed sha256:33cbb8bdea5873acece2461fbf1c992791ff7cae18ba2099c4bc1724cd76717a.
+
+Actionable issues found and corrected:
+  1. After withdrawal, the advance-pose cache was omitted from the state seal
+     but still selected completed-versus-declined STOP. Erasing it produced a
+     false decline. Successor explicitly seals the committed advance pose and
+     derives completed advance from committed history.
+  2. Inherited clone shared the mutable revealed registration dict/list.
+     Mutating a clone corrupted the original task's integrity seal. Successor
+     copies revealed registration and retained advance pose into its branch.
+  state_controls.py reproduced both failures on the exact initial source and
+  passed both on the successor. Stable before/after source hashes and timings
+  are in state-receipt-b25d1754460e.json and state-receipt-ae6ce9ad09c6.json.
+
+Numerical review:
+  The accepted scope is an exactly known held source pose and a nominal axial
+  command with fixed orientation, plus an intended endpoint within a generated
+  Euclidean translation ball. Lateral deviation may occur along the interpolated
+  segment; rotation/deformation error is unsupported. Adding the error radius
+  encloses the translated capsule path. Separate endpoint constraints are
+  required because capsule inflation alone does not enforce tip-domain bounds
+  or centerline access depth/reach. Endpoint and exact-start constraints extend
+  across the straight segment by convexity. Image-domain support-function bounds
+  must use the same native scene affine as world_to_voxel; the owner corrected
+  the initial source-affine mismatch. Forward distance must exceed the error
+  radius; the owner added this condition and explicit uncertainty wording.
+
+Limits:
+  Only small generated geometry was executed, in serialized single-thread
+  processes with a 28-second internal cap. No acquired source/model reads,
+  fitting, downloads, canonical edits, commits or scientific outcome claims.
+  The primary checker still owns the uncertainty/tool-pair certificate; the
+  independent tissue checker verifies nominal tissue/access geometry and
+  explicitly does not independently certify the stationary tool pair.
+  Unknown/external tool coverage remains unassessed. This is information-driven
+  software behavior, not calibrated patient registration or surgical validity.
+  The six initial groups were not unnecessarily repeated after the two isolated
+  state repairs; only the two changed-concern controls were rerun independently.
+
+Reproduce from repository root:
+  OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=src \
+    .venv/bin/python build/hybrid-registration-independent-v1/review_controls.py \
+    build/hybrid-registration-independent-v1/persistent_passive_before_b25d1754.py
+  OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=src \
+    .venv/bin/python build/hybrid-registration-independent-v1/state_controls.py \
+    build/hybrid-registration-independent-v1/persistent_passive_before_b25d1754.py
+  OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=src \
+    .venv/bin/python build/hybrid-registration-independent-v1/state_controls.py \
+    build/hybrid-registration-independent-v1/persistent_passive_after_ae6ce9ad.py

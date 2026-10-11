@@ -1,0 +1,91 @@
+{
+  "review": "independent-generated-registration-decision-controls-v1",
+  "source": "build/hybrid-observation-decision-v1/stage/resectionlab/persistent_passive.py",
+  "source_sha256": "b25d1754460ea37ac14a6b5977e9edf2b7c438ae3a7eb3315629ed93c9e41ab1",
+  "elapsed_seconds": 2.1224878751672804,
+  "bounded_process_seconds": 28,
+  "acquired_data_reads": false,
+  "model_reads_or_fitting": false,
+  "results": [
+    {
+      "name": "pre_reveal_cache_and_clone_invariance",
+      "passed": true,
+      "seconds": 0.8539847498759627,
+      "detail": {
+        "private_variants": 4,
+        "public_ready_held_and_cached_clone_states_identical": true,
+        "observed_eligibility": [
+          true,
+          false,
+          false,
+          false
+        ],
+        "stop_reasons": [
+          "declared_advance_completed_without_injury_claim",
+          "registration_measurement_unavailable_or_unqualified",
+          "registration_measurement_unavailable_or_unqualified",
+          "registration_measurement_unavailable_or_unqualified"
+        ]
+      }
+    },
+    {
+      "name": "changed_unchanged_and_voluntarily_declined_decisions",
+      "passed": true,
+      "seconds": 0.5816317088901997,
+      "detail": {
+        "same_action_and_endpoint_despite_different_sufficient_bounds": [
+          [
+            6.5,
+            6.0,
+            6.2
+          ],
+          [
+            6.5,
+            6.0,
+            6.2
+          ]
+        ],
+        "changed_offered_endpoint": [
+          6.5,
+          6.0,
+          6.4
+        ],
+        "voluntary_refusal_truthful": true
+      }
+    },
+    {
+      "name": "uncertain_tip_domain_and_axial_reach",
+      "passed": true,
+      "seconds": 0.1199938750360161,
+      "detail": {
+        "nominal_geometry_passes_but_uncertain_tip_domain_and_reach_refused": true
+      }
+    },
+    {
+      "name": "oblique_uncertain_access_depth",
+      "passed": true,
+      "seconds": 0.009530415991321206,
+      "detail": {
+        "nominal_forward_step_exceeds_bound_but_uncertain_access_depth_is_negative": true
+      }
+    },
+    {
+      "name": "uncertain_stationary_pair_collision",
+      "passed": true,
+      "seconds": 0.13852395792491734,
+      "detail": {
+        "nominal_pair_clear_but_uncertain_envelope_refused": true,
+        "failed_attempt_keeps_state": true
+      }
+    },
+    {
+      "name": "legacy_v1_exact_episode_identity",
+      "passed": true,
+      "seconds": 0.4185468750074506,
+      "detail": {
+        "canonical_v1_paired_episode_id": "sha256:33cbb8bdea5873acece2461fbf1c992791ff7cae18ba2099c4bc1724cd76717a"
+      }
+    }
+  ],
+  "passed": true
+}

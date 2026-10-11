@@ -1,0 +1,29 @@
+{
+  "review": "independent-generated-registration-state-integrity-v1",
+  "source_sha256_before": "ae6ce9ad09c6f95a419defaf6bb97d8ee17fdb072d2e6109fac1352ea490128c",
+  "source_sha256_after": "ae6ce9ad09c6f95a419defaf6bb97d8ee17fdb072d2e6109fac1352ea490128c",
+  "source_stable_during_run": true,
+  "elapsed_seconds": 0.3196667500305921,
+  "bounded_process_seconds": 28,
+  "acquired_data_reads": false,
+  "model_reads_or_fitting": false,
+  "results": [
+    {
+      "name": "stop_is_history_truthful_or_mutation_is_refused",
+      "passed": true,
+      "detail": {
+        "tampered_postwithdraw_advance_cache_refused": true
+      },
+      "seconds": 0.2015395420603454
+    },
+    {
+      "name": "clone_registration_mutation_does_not_corrupt_parent",
+      "passed": true,
+      "detail": {
+        "clone_registration_mutation_cannot_corrupt_original": true
+      },
+      "seconds": 0.1179311671294272
+    }
+  ],
+  "passed": true
+}

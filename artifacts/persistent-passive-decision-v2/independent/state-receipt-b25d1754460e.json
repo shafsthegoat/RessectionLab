@@ -1,0 +1,25 @@
+{
+  "review": "independent-generated-registration-state-integrity-v1",
+  "source_sha256_before": "b25d1754460ea37ac14a6b5977e9edf2b7c438ae3a7eb3315629ed93c9e41ab1",
+  "source_sha256_after": "b25d1754460ea37ac14a6b5977e9edf2b7c438ae3a7eb3315629ed93c9e41ab1",
+  "source_stable_during_run": true,
+  "elapsed_seconds": 0.3352702090051025,
+  "bounded_process_seconds": 28,
+  "acquired_data_reads": false,
+  "model_reads_or_fitting": false,
+  "results": [
+    {
+      "name": "stop_is_history_truthful_or_mutation_is_refused",
+      "passed": false,
+      "error": "AssertionError: declined_eligible_generated_advance",
+      "seconds": 0.2194182078819722
+    },
+    {
+      "name": "clone_registration_mutation_does_not_corrupt_parent",
+      "passed": false,
+      "error": "RuntimeError: Native source, objective or committed procedure state changed outside a transition",
+      "seconds": 0.1156710828654468
+    }
+  ],
+  "passed": false
+}

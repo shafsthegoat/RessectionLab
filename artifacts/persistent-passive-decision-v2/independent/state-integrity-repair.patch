@@ -1,0 +1,41 @@
+--- persistent_passive.py
++++ persistent_passive.py
+@@ -298,6 +298,7 @@
+                 "private_generated_inspection_binding": self._inspection_input.fingerprint}
+         if self._decision_protocol is not None:
+             body["private_generated_registration_binding"] = self._registration_input.fingerprint
++            body["committed_advance_pose"] = _pose_record(self._advance_pose)
+         return body
+ 
+     def reset(self, seed=0):
+@@ -489,6 +490,7 @@
+                                    for row in self._history if row["action_id"] == INSPECT
+                                    and row["information_event"] is not None
+                                    and row["information_event"].get("candidate_decision") is not None), None)
++        committed_advance = any(row["action_id"] == ADVANCE for row in self._history)
+         self._elapsed += duration
+         record = {"action_id": action, "interaction_mode": "passive_motion" if geometry is not None else
+                   "generated_information" if action == INSPECT else "stop",
+@@ -521,7 +523,7 @@
+                 "version": "generated-registration-status-v1", "status": self._visible_status,
+                 "input_fingerprint": self._inspection_input.fingerprint,
+                 "meaning": "generated protocol status; no anatomy, sensor or clinical inference"}),
+-            "stop_reason": (("declared_advance_completed_without_injury_claim" if self._advance_pose is not None
++            "stop_reason": (("declared_advance_completed_without_injury_claim" if committed_advance
+                               else "declined_eligible_generated_advance" if observed_candidate is not None
+                               and observed_candidate["eligible"] else
+                               "registration_measurement_unavailable_or_unqualified")
+@@ -547,6 +549,13 @@
+ 
+     def planning_clone(self):
+         raise ValueError("No search admission until hidden generated information has a belief contract")
++
++    def clone(self):
++        """Isolate revealed measurement state across native branch copies."""
++        result = super().clone()
++        result._visible_registration = copy.deepcopy(self._visible_registration)
++        result._advance_pose = copy.deepcopy(self._advance_pose)
++        return result
+ 
+     def fresh(self):
+         self._assert_frozen()

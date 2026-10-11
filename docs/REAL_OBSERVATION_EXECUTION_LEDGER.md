@@ -1627,3 +1627,7 @@ The previous entry's pending Case2 and passive software increments have since co
 ## October 11 — Persistent passive backend replay survives reopening
 
 [The fixed paired generated bridge and workspace path](../artifacts/persistent-passive-desktop-backend-v1/RESULT.md) passes 50 canonical tests in 31.45 seconds, including source-bound tool geometry, fresh-engine reopen, retained access poses, altered-record refusal and unchanged legacy episode replay. The original v1 episode identity is preserved. Renderer integration remains pending. The broad historical suite's 27 failures/eight setup errors are recorded with identical pre-change/current legacy admission refusals; no general-suite pass or relaxed admission is claimed.
+
+## October 11 — Generated registration changes a passive decision
+
+[The v2 increment](../artifacts/persistent-passive-decision-v2/INTEGRATION.md) maps a revealed generated registration to a public waypoint and conditionally offers a further passive advance. Unknown or unqualified estimates retain withdrawal; before acquisition they cannot alter public state or motion. Conservative endpoint uncertainty explicitly checks source-image bounds and axial reach in addition to capsule collision. All 113 canonical controls pass. Two independently reproduced state defects are corrected and retained in before/after evidence. V1 remains exact; no patient, force, learned-policy or desktop v2 admission is inferred.
