@@ -1,0 +1,25 @@
+{
+  "canonical_sha256": {
+    "src/resectionlab/native_spatial_task.py": "df6ee55e36b273ccc0fa726716ede724a3a892d6db24839e9e31d159070c7f03",
+    "tests/test_native_spatial_horizon.py": "db4a0affb35b6efd63e77d928fcb01363eb7ea9f6edfdda7bb645ae0a544d908",
+    "tests/test_public_target_context.py": "81032a0934fa47c3d738f0ef6ffee2de89ce159d4972dad006dff619094abc6c"
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_native_spatial_horizon.py",
+    "tests/test_public_target_context.py",
+    "tests/test_paged_obstruction.py"
+  ],
+  "exit_code": 0,
+  "hard_seconds": 30,
+  "log_sha256": "105b29939d7825b97987cfd670cd3ee1a8f60bf9084c704aac92255f31f9184f",
+  "single_thread": true,
+  "timeout": false,
+  "wall_seconds": 7.850916208000854
+}

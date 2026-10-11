@@ -1,0 +1,9 @@
+# Explicit 48-step research episodes
+
+The complete 24-step SELECT013 comparison retained 43 legal continuations at the old terminal boundary, while both selected routes remained STOP. This change raises only the admitted maximum horizon from 24 to 48; the constructor default remains three and existing declared 24-step protocols retain their identities. Geometry, rewards, tools, observation fields, proposal expansion and search retention are unchanged.
+
+Canonical checks: **41 passed in 7.48 s**, parent 7.851 s. Staged combined checks: **44 passed in 8.87 s**. Controls cover actual 48 native removals, termination, invalid horizons, clone/admission propagation, old default/six-step identities, physical parity before the old terminal boundary and an explicit generated 48-layer search chain. Independent source/budget review passed. The earlier generated finite-scene expectation failure is retained; that fixture exhausted its two cells before either horizon and was corrected without changing production or runner code.
+
+One prospective matched comparison uses existing SELECT013 anatomy: both original and paged search get 48 steps, beam two, 450 s each and identical rewards/retention. Historical admission is authenticated; the first 23 complete layers must equal each respective saved 24-step arm. All plans must seal before fresh independent replay. Useful improvement requires complete accepted return above STOP and the baseline. The source extension itself establishes no useful patient route or learning gain.
+
+Limits: one thread, 3 GiB, worker 1,020 s / parent 1,080 s, 60,000 previews total, 29,262 native transitions total, 96 MiB output plus 16 MiB supervision within one 128 MiB storage reservation. Capped or incomplete runs remain unresolved. No acquired run, model fit, RL update or new dataset is included in this integration result. SELECT037 remains held and EVAL067 closed.

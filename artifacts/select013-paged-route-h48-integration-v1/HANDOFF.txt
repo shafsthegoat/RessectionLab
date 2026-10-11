@@ -1,0 +1,34 @@
+Source ready; one h48 comparison, no acquired execution by this owner.
+
+Promote only stage/resectionlab/native_spatial_task.py (MAX24→48) and the two
+portable tests at tests/test_native_spatial_horizon.py and test_public_target_context.py.
+Exact pins: source-ready.json. Default3, all old explicit24 task/protocol identities,
+world, tools, reward, observation representation, paging and retention unchanged.
+Controls02:44pass8.87s; controls01 finite-fixture expectation failure preserved.
+Independent reviewer has issued final delta GO. No further generated run requested.
+
+After root integration commit, root freezes (metadata only):
+.venv/bin/python -B build/select013-paged-route-h48-v1/freeze-runtime.py --head NEW_CANONICAL_HEAD
+Copy fresh release-template.json to fresh root-release.json changing only status
+pending_root_release→released_one_attempt. Preserve actual source/index/limits/
+public metadata/pins; compute SHA of actual release bytes.
+Root launch:
+.venv/bin/python -B build/select013-paged-route-h48-v1/run_owned.py --release build/select013-paged-route-h48-v1/root-release.json --release-sha256 ACTUAL_RELEASE_SHA256
+
+Both original and paged arms now use48 steps,450s search,beam2,14535call ceiling,
+same lazy transitions/depth-volume retention. Fresh h24 admitted source is
+matched exactly first; each fresh h48 model is authenticated by replacing only
+its model-contract horizon back to24 and matching the prior h24 plan model hash.
+Same first23 complete search layers are required in BOTH arms; old forced-terminal
+layer24 is intentionally excluded. Neither old task nor history is mutated.
+All plans are sealed before rollout/evaluation. Caps/unresolved records and costs
+are saved; incomplete searches cannot become accepted STOP or partial routes.
+
+95node bound;30000previews/arm60000total;29262total native transitions including
+selected rollout and replay;1020worker1080parent,3GiB,one thread. Two setup
+inventories are charged. Full algebra/output forecast in BOUNDS.txt.
+128MiB existing-data storage reservation covers≤96MiB output+16MiB supervision
+and small preparation. Root notifies storage owner immediately before launch.
+No arrays/checkpoints copied, no fits/new data,013SELECT only,037held067closed.
+A longer horizon is a single predeclared experiment, not a promise of a useful
+route; unchanged total reward competes againstSTOP0 and the matched original arm.

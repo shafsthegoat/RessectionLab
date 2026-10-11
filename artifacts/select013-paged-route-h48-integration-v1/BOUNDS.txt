@@ -1,0 +1,31 @@
+H48 matched original-vs-paged comparison; no acquired release yet.
+Per arm95 expanded states=1+2*(48-1). Original base<=120 preserved; paged<=32
+additional pairs in8-pair pages. All pages feed same beam2 layer retention.
+Actual non-STOP search<=95*152=14440; declare14535=95*(152+STOP), even though
+current STOP evaluation is implicit and consumes0 native transition calls.
+Selected authoritative rollout<=48 and fresh replay<=48. Total declared native
+transition ceiling botharms2*(14535+96)=29262. STOP commits included in rollout.
+
+Preview forecast charges BOTH historical h24 admission constructor and fresh
+h48 constructor:95*152 search+2*152 setup+2*48*152 rollout/replay=29336 perarm.
+Declare30000/arm60000total. Extra 664/arm is headroom, not uncharged work.
+Both searches450s, worker1020s,parent1080s,3GiB,one thread; caps remain possible,
+and capped/incomplete searches preserve costs/partial plans without acceptance.
+Actual h24 paged search130.91s: longer450s limit anticipates growing history
+bookkeeping, not a speed or reachability prediction. No retry or alternate rule.
+
+Both fresh h48 tasks authenticate the old h24 admission/source first. They keep
+source physics/occupancy/reward/tool/proposal identities exact. Decision model
+and horizon observation legitimately change. Match all complete layer fields
+for old layers1..23; exclude old layer24's forced terminal behavior. No claim
+whole h24 history or remaining-horizon observation identity persists at48.
+
+Output hard cap96MiB +supervision16MiB +small controls/source within128MiB.
+No array/checkpoint copies/newdata/fits. H24 results immutable; role013SELECT,
+037held and067closed. Complete accepted return must beatSTOP0 and baseline to
+claim useful route; target/outside/contact/path/toolchange costs also reported.
+
+Saved h24 output was26,277,873 bytes with47expanded-state cap; linear95/47
+scaling gives~53.1MB before longer-history effects.96MiB output is a forecast
+ceiling, not a guarantee; parent and sink stop rather than exceed it. Supervision
+was15,562 bytes;16MiB reserved remains unchanged. Costs of cap failures retained.

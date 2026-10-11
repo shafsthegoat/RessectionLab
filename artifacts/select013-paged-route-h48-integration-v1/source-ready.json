@@ -1,0 +1,21 @@
+{
+  "acquired_execution": false,
+  "controls": "44pass8.87s; test-only finite-fixture failure retained",
+  "next_head": "root supplies after minimal core promotion",
+  "pins": {
+    "comparison_contract.py": "22ffd92bb134d1a7548f38a8e833427ed3b9aa0af7d9ff2fef90e922dc673c7a",
+    "controls-01.json": "712f4ea469d67368a7dbb2878702364b80abcb08c080c7824980e16fb1546c3c",
+    "controls-01.log": "42aa0dd82832cab87048bab8241248c2be5f35f5805b7d044265536787f439d9",
+    "controls-02.json": "ac94395a7615a2ac8c881a8ff287a13b7e2b11b946cbd4f438a9d09d02ff79b8",
+    "controls-02.log": "1e893a5d508c6ca8d5408c6968dbffcd18d0ed623b27d4c209302468931f7673",
+    "freeze-runtime.py": "7b53a8aa811376be80022c177ab9e7fc4fe14fa987adddca0d2c63451b1569fc",
+    "run_owned.py": "dc0ca78c7ae97cba373ec08a4fce5941522dd503b3df9516903df45abf97fc2c",
+    "select_worker.py": "00e7f7ffe05af00162978f7abfab18e3e33587c0b7dd94a0ff0c197ed9865ebd",
+    "stage/resectionlab/native_spatial_task.py": "df6ee55e36b273ccc0fa726716ede724a3a892d6db24839e9e31d159070c7f03",
+    "test_owned_generated.py": "4b91ced0d705d9b9f454c9197d22f3b72d67adc21b7fcd1c91f92d3941302cf3",
+    "tests/test_native_spatial_horizon.py": "db4a0affb35b6efd63e77d928fcb01363eb7ea9f6edfdda7bb645ae0a544d908",
+    "tests/test_public_target_context.py": "81032a0934fa47c3d738f0ef6ffee2de89ce159d4972dad006dff619094abc6c"
+  },
+  "storage_reservation_bytes": 134217728,
+  "version": "paged-route-h48-source-ready-v1"
+}

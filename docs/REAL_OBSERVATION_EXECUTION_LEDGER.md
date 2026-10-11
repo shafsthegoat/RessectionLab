@@ -24,6 +24,8 @@ independent evaluation can proceed in parallel. Compact numerical storage
 baseline/reservations live under `build/storage-extension-v1` until the next
 coherent result archive. Do not substitute additional review loops for execution.
 
+The [48-step extension](../artifacts/select013-paged-route-h48-integration-v1/INTEGRATION.md) passes 41 canonical controls after independent source review. One matched original/paged SELECT013 comparison tests the 43 legal continuations censored by the old 24-step horizon. Both arms keep beam two and unchanged rewards with 450 seconds each; all complete plans seal before independent replay. No model update, acquisition or final-evaluation access is authorized by this result.
+
 ## Hybrid world-model steering, October 10
 
 The latest human attachment is preserved byte-for-byte in [HYBRID_WORLD_MODEL_STEERING.md](HYBRID_WORLD_MODEL_STEERING.md), SHA256 `ac1e704d81a79d4f5c4501ba2696910174062f49d952d26ca22c44ec42ebeec9`. Its review cites main `4d1d0ff`, the starting baseline for this cycle. This addendum supersedes the earlier next-step ordering while retaining all historical failures, patient roles, full-supergoal requirements and the October 8 permission for separately labeled generated experience. Bibliographic access claims remain attributed to the supplied review until independently checked for an implemented mechanism.

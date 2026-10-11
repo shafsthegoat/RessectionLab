@@ -34,7 +34,7 @@ from .spatial_observations import (ObservedChannel, ObservedProcedureState,
 NATIVE_SPATIAL_VERSION = "native-spatial-observed-openings-v1"
 ACCESS_CENTERLINE_PROPOSAL_VERSION = "fixed_lattice_access_centerline_v1"
 MAX_PRIMITIVES = 96  # Below the unchanged engine's 128-certificate capacity.
-MAX_NATIVE_SPATIAL_STEPS = 24  # Explicit run budgets still bound work at any horizon.
+MAX_NATIVE_SPATIAL_STEPS = 48  # Explicit run budgets still bound work at any horizon.
 GRID_ROUNDOFF_MAX_DISPLACEMENT_MM = 1e-6
 GRID_ROUNDOFF_MAX_GRAM_ERROR = 1e-8
 SYNTHETIC_TARGET_THRESHOLD = .5

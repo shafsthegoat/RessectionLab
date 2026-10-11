@@ -1,0 +1,24 @@
+H48 independent delta review: GO
+
+Reviewed only the MAX_NATIVE_SPATIAL_STEPS 24-to-48 production line, staged expectation/control changes, and h24-to-h48 runner diff. Default horizon3 and existing explicitly24 source protocols remain unchanged. No source execution, generated test, acquired array read or native replay by reviewer.
+
+Both arms first obtain exact historical h24 source admission, then construct explicitly declared fresh h48 tasks. Source/proposal identity is checked against each prior plan; replacing max_steps with24 in the new contract must reproduce that arm's old decision-model digest. Both first23 complete search-layer records must equal the h24 records exactly. The old forced-terminal layer24 is intentionally excluded. Changed remaining-horizon observations and decision-model identities are legitimate.
+
+Same beam2, pages8, base120 plus at most32 extras, unchanged physical world/tools/reward/retention. Both search budgets450s; worker1020s,parent1080s. At most95=1+2*(48-1) expanded nodes. Selector cap14535=95*153 conservatively includes a spare STOP slot per node although STOP remains implicit. Both selected rollout and replay at most48 transitions each; total cap2*(14535+48+48)=29262. Conservative full-preview bound152*(95+2+48+48)=29336 per arm includes both setup inventories, below30000/arm and60000 total.3GiB,one thread, output96MiB+supervision16MiB within the128MiB storage reservation. Failures/caps remain unresolved, not accepted partial routes. Both complete plans must be sealed before either evaluation; independent complete histories and positive return aboveSTOP0/baseline remain the success criterion.
+
+Terminal saved controls-02:44 passed in8.87s, parent9.2813885s, exit0,reaped,no timeout, no acquired inputs. Exact current pins and log digest match receipt. controls-01 failed only a finite generated fixture that incorrectly expected full horizon exhaustion; correction now uses23 real native physical transition parity plus an explicitly generated48-chain search-horizon control. Core/runner bytes unchanged through correction. No additional test needed.
+
+Receipt SHA256 ac94395a7615a2ac8c881a8ff287a13b7e2b11b946cbd4f438a9d09d02ff79b8
+Log SHA256 1e893a5d508c6ca8d5408c6968dbffcd18d0ed623b27d4c209302468931f7673
+
+Reviewed final pins:
+comparison_contract.py 22ffd92bb134d1a7548f38a8e833427ed3b9aa0af7d9ff2fef90e922dc673c7a
+conftest.py a617cdef27e65864519a03b41a73f92a9ff2e1adb531f9b2ca443953e8bb4ffb
+freeze-runtime.py 7b53a8aa811376be80022c177ab9e7fc4fe14fa987adddca0d2c63451b1569fc
+run_owned.py dc0ca78c7ae97cba373ec08a4fce5941522dd503b3df9516903df45abf97fc2c
+select_worker.py 00e7f7ffe05af00162978f7abfab18e3e33587c0b7dd94a0ff0c197ed9865ebd
+stage/resectionlab/native_spatial_task.py df6ee55e36b273ccc0fa726716ede724a3a892d6db24839e9e31d159070c7f03
+test_owned_generated.py 4b91ced0d705d9b9f454c9197d22f3b72d67adc21b7fcd1c91f92d3941302cf3
+tests/conftest.py 60d32b8a69741ca3f4ab49813a6c4cd30063a02d80b3c2355de4baad278292e5
+tests/test_native_spatial_horizon.py db4a0affb35b6efd63e77d928fcb01363eb7ea9f6edfdda7bb645ae0a544d908
+tests/test_public_target_context.py 81032a0934fa47c3d738f0ef6ffee2de89ce159d4972dad006dff619094abc6c

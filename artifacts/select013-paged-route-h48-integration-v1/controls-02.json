@@ -1,0 +1,38 @@
+{
+  "acquired_inputs": false,
+  "child_reaped": true,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-paged-route-h48-v1/tests/test_native_spatial_horizon.py",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-paged-route-h48-v1/tests/test_public_target_context.py",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-paged-route-h48-v1/test_owned_generated.py",
+    "tests/test_paged_obstruction.py"
+  ],
+  "correction": "Test-only finite two-cell fixture replaced by real23 native physical transition parity and explicit generated48-chain beam horizon control; runtime/core unchanged.",
+  "exit_code": 0,
+  "hard_seconds": 30,
+  "log_sha256": "1e893a5d508c6ca8d5408c6968dbffcd18d0ed623b27d4c209302468931f7673",
+  "prior_control_preserved": "controls-01.json",
+  "single_thread": true,
+  "source_pins": {
+    "comparison_contract.py": "22ffd92bb134d1a7548f38a8e833427ed3b9aa0af7d9ff2fef90e922dc673c7a",
+    "conftest.py": "a617cdef27e65864519a03b41a73f92a9ff2e1adb531f9b2ca443953e8bb4ffb",
+    "freeze-runtime.py": "7b53a8aa811376be80022c177ab9e7fc4fe14fa987adddca0d2c63451b1569fc",
+    "run_owned.py": "dc0ca78c7ae97cba373ec08a4fce5941522dd503b3df9516903df45abf97fc2c",
+    "select_worker.py": "00e7f7ffe05af00162978f7abfab18e3e33587c0b7dd94a0ff0c197ed9865ebd",
+    "stage/resectionlab/native_spatial_task.py": "df6ee55e36b273ccc0fa726716ede724a3a892d6db24839e9e31d159070c7f03",
+    "test_owned_generated.py": "4b91ced0d705d9b9f454c9197d22f3b72d67adc21b7fcd1c91f92d3941302cf3",
+    "tests/conftest.py": "60d32b8a69741ca3f4ab49813a6c4cd30063a02d80b3c2355de4baad278292e5",
+    "tests/test_native_spatial_horizon.py": "db4a0affb35b6efd63e77d928fcb01363eb7ea9f6edfdda7bb645ae0a544d908",
+    "tests/test_public_target_context.py": "81032a0934fa47c3d738f0ef6ffee2de89ce159d4972dad006dff619094abc6c"
+  },
+  "source_unchanged": true,
+  "status": "pass",
+  "timeout": false,
+  "wall_seconds": 9.2813885
+}

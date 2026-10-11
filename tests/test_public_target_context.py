@@ -208,7 +208,7 @@ def test_native_case_hook_is_observation_only_with_no_preview_or_step(monkeypatc
     assert plain._crop_origin==enhanced._crop_origin and plain._candidate_voxels==enhanced._candidate_voxels
     for name in ('structural_intensity','nominal_target','observed_support','reference_target'):
         np.testing.assert_array_equal(getattr(plain,name),getattr(enhanced,name))
-    assert native.MAX_NATIVE_SPATIAL_STEPS==24
+    assert native.MAX_NATIVE_SPATIAL_STEPS==48
     owner=SimpleNamespace(case=enhanced,_engine=SimpleNamespace(removed_mask=np.zeros(target.shape,bool)),
         _steps=0,max_steps=6,_current_tool=None,tool_modes=None,_prepare_inventory=lambda:{})
     result=native.NativeSpatialTask.observation(owner)

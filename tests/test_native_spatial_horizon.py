@@ -37,7 +37,7 @@ def remove_first_remaining_cell(task):
     return result
 
 
-@pytest.mark.parametrize("horizon", [1, 6, 24])
+@pytest.mark.parametrize("horizon", [1, 6, 24, 48])
 def test_declared_horizon_bound_and_context_propagate(horizon):
     case, args = fixture_contract()
     args["protocol"]["max_steps"] = horizon
@@ -55,7 +55,7 @@ def test_declared_horizon_bound_and_context_propagate(horizon):
         context.require_observations([copy.observation()])
 
 
-@pytest.mark.parametrize("horizon", [0, 25, True, False, 24.])
+@pytest.mark.parametrize("horizon", [0, 49, True, False, 24., 48.])
 def test_invalid_or_nontyped_horizon_refuses_in_native_and_admission(horizon):
     case, args = fixture_contract()
     with pytest.raises(ValueError, match="horizon"):
@@ -148,7 +148,7 @@ def test_six_real_commits_keep_exact_pre_extension_outputs():
 def test_unchanged_default_and_six_step_contracts(horizon, model, observation, inventory,
                                                 stop_metrics, stop_observation):
     # Exact baseline fingerprints captured from canonical code before this patch.
-    assert MAX_NATIVE_SPATIAL_STEPS == 24
+    assert MAX_NATIVE_SPATIAL_STEPS == 48
     assert inspect.signature(NativeSpatialTask).parameters["max_steps"].default == 3
     case = make_native_opening_task().case
     task = NativeSpatialTask(case) if horizon == 3 else NativeSpatialTask(case, max_steps=horizon)
@@ -174,3 +174,67 @@ def test_twenty_four_does_not_relax_select_gradient_or_runtime_limits():
     args["protocol"]["max_native_previews"] = 0
     with pytest.raises(ValueError, match="runtime_budgets"):
         make_patient_planning_task(case, **args)
+
+
+def test_forty_eight_actual_commits_and_history_stop_boundary():
+    support = np.zeros((20, 26, 3), bool)
+    for x in (2, 5, 8, 11, 14, 17):
+        for y in (2, 5, 8, 11, 14, 17, 20, 23): support[x, y, 1] = True
+    case = NativeSpatialCase(support.astype(np.float32), support, support, np.eye(4),
+        AccessWindow((9.5,12.5,.5),(0.,0.,1.),20.,"generated-h48"),
+        (ToolGeometry("generated-cell-remover",.9,.2,5.,30.,2.),),track="synthetic_scan",
+        support_source_kind="derived_from_scan",support_derivation="generated48 isolated cells",
+        nominal_target=support,target_source_kind="derived_from_scan",target_derivation="generated goal",
+        crop_shape=(20,26,3))
+    task=NativeSpatialTask(case,max_steps=48)
+    for count in range(1,49):
+        outcome=remove_first_remaining_cell(task)
+        assert outcome.terminated == (count==48)
+        if count==24:
+            assert not task.terminated and task.clone().max_steps==task.planning_clone().max_steps==48
+    assert task.metrics()["simulated_removed_volume_mm3"]==48 and task.independent_geometry_check().feasible
+    with pytest.raises(InvalidActionError):task.step("STOP")
+
+
+def test_h24_exact_pre_extension_identity_and_first23_real_layers():
+    from dataclasses import fields,replace
+    import hashlib,importlib.util,os,sys
+    from pathlib import Path
+    from resectionlab.observed_search import observed_beam_search
+    root=next(p for p in Path(__file__).resolve().parents if (p/'src/resectionlab').is_dir())
+    case=independent_cells_case()
+    a=NativeSpatialTask(case,max_steps=24);b=NativeSpatialTask(case,max_steps=48)
+    # Native physical transitions, rewards and available actions agree before
+    # the old terminal boundary; only declared model/state seals differ.
+    for _ in range(23):
+        ia,ib=a.candidate_inventory(),b.candidate_inventory()
+        assert ia['ledger']==ib['ledger']
+        x,y=remove_first_remaining_cell(a),remove_first_remaining_cell(b)
+        physical=lambda row:{k:v for k,v in row.items() if k not in ('decision_model_hash','source_state_hash')}
+        assert physical(x.info)==physical(y.info)
+    assert not a.terminated and not b.terminated
+    assert a.case.source_hash==b.case.source_hash and a.decision_model_hash!=b.decision_model_hash
+    # Explicit generated chain isolates exact beam horizon semantics cheaply;
+    # it is not represented as a native reachability or patient-world test.
+    from test_observed_search_opening_lane import Tree
+    tree={('move',)*i:{'move':(-.1,((i//7,i%7,1),),False)} for i in range(48)}
+    options=dict(max_calls=1000,beam_width=2,seconds=20,transition_mode='lazy_planning',
+                 retention_mode='return_plus_opening_depth_volume_v1',retained_prefix_diagnostics=True)
+    _,ra=observed_beam_search(Tree(tree,max_steps=24),**options)
+    _,rb=observed_beam_search(Tree(tree,max_steps=48),**options)
+    assert len(ra['layers'])==24 and len(rb['layers'])==48
+    assert ra['layers'][:23]==rb['layers'][:23]
+    assert ra['layers'][23]['retained_prefix_diagnostics']['retained_nonterminal_prefixes']==[]
+    assert rb['layers'][23]['retained_prefix_diagnostics']['retained_nonterminal_prefixes']
+    a=a.fresh()
+    path=Path(os.environ.get('H48_BASELINE_NATIVE',str(root/'build/select013-paged-route-h48-v1/before/native_spatial_task.py')))
+    if not path.is_file():pytest.skip('Optional exact pre-h48 module unavailable; real first23 parity above completed')
+    assert hashlib.sha256(path.read_bytes()).hexdigest()=='f30a536aa2960f854765eca54504dbd3d43a9698ccfd9f9c8b12712d32b5afbf'
+    spec=importlib.util.spec_from_file_location('resectionlab._pre_h48_native',path)
+    old=importlib.util.module_from_spec(spec);sys.modules[spec.name]=old;spec.loader.exec_module(old)
+    oldcase=old.NativeSpatialCase(**{f.name:getattr(case,f.name) for f in fields(case) if f.init})
+    previous=old.NativeSpatialTask(oldcase,max_steps=24)
+    assert previous.decision_model_hash==a.decision_model_hash
+    assert previous.observation().fingerprint==a.observation().fingerprint
+    assert previous.candidate_inventory()==a.candidate_inventory()
+    previous.step('STOP');a.step('STOP');assert previous.metrics()==a.metrics()
