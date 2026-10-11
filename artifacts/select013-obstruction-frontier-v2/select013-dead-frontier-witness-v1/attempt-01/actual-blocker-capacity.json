@@ -1,0 +1,5661 @@
+{
+  "additional_native_previews": 0,
+  "axis_or_tool_changes_allowed": false,
+  "axis_set_state_independent": true,
+  "classification_truncated": false,
+  "classified_unique_cells": 19,
+  "complete_corridor_claim": false,
+  "global_unreachability_claim": false,
+  "inside_at_least_one_optimistic_envelope": [
+    [
+      4,
+      88,
+      84
+    ],
+    [
+      4,
+      88,
+      86
+    ],
+    [
+      5,
+      90,
+      87
+    ],
+    [
+      5,
+      92,
+      87
+    ],
+    [
+      5,
+      93,
+      84
+    ],
+    [
+      5,
+      93,
+      86
+    ]
+  ],
+  "native_containment_kernel_calls": 6708,
+  "numerical_applicability": {
+    "applicable": true,
+    "coordinate_span_plus_max_tool_dimension_bound_mm": 254.00000000064153,
+    "enlargement_mm": 1e-06,
+    "maximum_allowed_mm": 10000.0,
+    "minimum_active_tip_length_mm": 1.0
+  },
+  "offsets_source_voxels": [
+    [
+      0,
+      0
+    ],
+    [
+      -2,
+      0
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      0,
+      -2
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      -2,
+      -2
+    ],
+    [
+      -2,
+      2
+    ],
+    [
+      2,
+      -2
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      -3,
+      0
+    ],
+    [
+      3,
+      0
+    ],
+    [
+      0,
+      -3
+    ],
+    [
+      0,
+      3
+    ]
+  ],
+  "outside_every_fixed_axis_tip_envelope": [
+    [
+      2,
+      87,
+      82
+    ],
+    [
+      3,
+      87,
+      84
+    ],
+    [
+      3,
+      87,
+      86
+    ],
+    [
+      3,
+      88,
+      82
+    ],
+    [
+      3,
+      92,
+      81
+    ],
+    [
+      3,
+      94,
+      82
+    ],
+    [
+      4,
+      90,
+      84
+    ],
+    [
+      4,
+      90,
+      86
+    ],
+    [
+      4,
+      92,
+      84
+    ],
+    [
+      4,
+      94,
+      88
+    ],
+    [
+      5,
+      90,
+      89
+    ],
+    [
+      5,
+      92,
+      89
+    ],
+    [
+      5,
+      95,
+      84
+    ]
+  ],
+  "pairs": [
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 0,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_suction"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 0,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        0,
+        0
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 1,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_suction"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 1,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        -2,
+        0
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 2,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_suction"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": {
+            "endpoint_native": [
+              5,
+              93,
+              85
+            ],
+            "entry_mm": [
+              -59.87899999920143,
+              -16.888999999694036,
+              -18.27829563649273
+            ],
+            "full_active_start_mm": [
+              -65.57900000920142,
+              -16.888999999721946,
+              -18.27829563649273
+            ],
+            "tip_mm": [
+              -56.378999999201426,
+              -16.888999999676898,
+              -18.27829563649273
+            ]
+          },
+          "inside_enlarged_roundoff_envelope": true,
+          "inside_some_full_active_sweep": true
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": {
+            "endpoint_native": [
+              5,
+              93,
+              85
+            ],
+            "entry_mm": [
+              -59.87899999920143,
+              -16.888999999694036,
+              -18.27829563649273
+            ],
+            "full_active_start_mm": [
+              -65.57900000920142,
+              -16.888999999721946,
+              -18.27829563649273
+            ],
+            "tip_mm": [
+              -56.378999999201426,
+              -16.888999999676898,
+              -18.27829563649273
+            ]
+          },
+          "inside_enlarged_roundoff_envelope": true,
+          "inside_some_full_active_sweep": true
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 2,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        2,
+        0
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 3,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_suction"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 3,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        0,
+        -2
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 4,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_suction"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": {
+            "endpoint_native": [
+              5,
+              91,
+              87
+            ],
+            "entry_mm": [
+              -59.878999999211224,
+              -14.888999999694038,
+              -20.278295443331558
+            ],
+            "full_active_start_mm": [
+              -65.57900000921123,
+              -14.888999999721952,
+              -20.278295443331558
+            ],
+            "tip_mm": [
+              -56.378999999211224,
+              -14.888999999676898,
+              -20.278295443331558
+            ]
+          },
+          "inside_enlarged_roundoff_envelope": true,
+          "inside_some_full_active_sweep": true
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": {
+            "endpoint_native": [
+              5,
+              91,
+              87
+            ],
+            "entry_mm": [
+              -59.878999999211224,
+              -14.888999999694038,
+              -20.278295443331558
+            ],
+            "full_active_start_mm": [
+              -65.57900000921123,
+              -14.888999999721952,
+              -20.278295443331558
+            ],
+            "tip_mm": [
+              -56.378999999211224,
+              -14.888999999676898,
+              -20.278295443331558
+            ]
+          },
+          "inside_enlarged_roundoff_envelope": true,
+          "inside_some_full_active_sweep": true
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 4,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        0,
+        2
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 5,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_suction"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 5,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        -2,
+        -2
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 6,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_suction"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": {
+            "endpoint_native": [
+              5,
+              89,
+              87
+            ],
+            "entry_mm": [
+              -59.878999999221016,
+              -12.888999999694038,
+              -20.278295443331558
+            ],
+            "full_active_start_mm": [
+              -65.579000009221,
+              -12.888999999721952,
+              -20.278295443331558
+            ],
+            "tip_mm": [
+              -56.378999999221016,
+              -12.888999999676898,
+              -20.278295443331558
+            ]
+          },
+          "inside_enlarged_roundoff_envelope": true,
+          "inside_some_full_active_sweep": true
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 6,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        -2,
+        2
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 7,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_suction"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": {
+            "endpoint_native": [
+              5,
+              93,
+              83
+            ],
+            "entry_mm": [
+              -59.87899999920143,
+              -16.888999999694036,
+              -16.278295829653885
+            ],
+            "full_active_start_mm": [
+              -65.57900000920142,
+              -16.888999999721946,
+              -16.278295829653885
+            ],
+            "tip_mm": [
+              -56.378999999201426,
+              -16.888999999676898,
+              -16.278295829653885
+            ]
+          },
+          "inside_enlarged_roundoff_envelope": true,
+          "inside_some_full_active_sweep": true
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 7,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        2,
+        -2
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 8,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_suction"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": {
+            "endpoint_native": [
+              5,
+              93,
+              87
+            ],
+            "entry_mm": [
+              -59.87899999920143,
+              -16.888999999694036,
+              -20.278295443331558
+            ],
+            "full_active_start_mm": [
+              -65.57900000920142,
+              -16.888999999721946,
+              -20.278295443331558
+            ],
+            "tip_mm": [
+              -56.378999999201426,
+              -16.888999999676898,
+              -20.278295443331558
+            ]
+          },
+          "inside_enlarged_roundoff_envelope": true,
+          "inside_some_full_active_sweep": true
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": {
+            "endpoint_native": [
+              5,
+              93,
+              87
+            ],
+            "entry_mm": [
+              -59.87899999920143,
+              -16.888999999694036,
+              -20.278295443331558
+            ],
+            "full_active_start_mm": [
+              -65.57900000920142,
+              -16.888999999721946,
+              -20.278295443331558
+            ],
+            "tip_mm": [
+              -56.378999999201426,
+              -16.888999999676898,
+              -20.278295443331558
+            ]
+          },
+          "inside_enlarged_roundoff_envelope": true,
+          "inside_some_full_active_sweep": true
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 8,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        2,
+        2
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 9,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_suction"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": {
+            "endpoint_native": [
+              4,
+              88,
+              85
+            ],
+            "entry_mm": [
+              -59.87899999922592,
+              -11.888999999694043,
+              -18.27829563649273
+            ],
+            "full_active_start_mm": [
+              -65.57900000922592,
+              -11.888999999721957,
+              -18.27829563649273
+            ],
+            "tip_mm": [
+              -57.37899999922591,
+              -11.8889999996818,
+              -18.27829563649273
+            ]
+          },
+          "inside_enlarged_roundoff_envelope": true,
+          "inside_some_full_active_sweep": true
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": {
+            "endpoint_native": [
+              4,
+              88,
+              85
+            ],
+            "entry_mm": [
+              -59.87899999922592,
+              -11.888999999694043,
+              -18.27829563649273
+            ],
+            "full_active_start_mm": [
+              -65.57900000922592,
+              -11.888999999721957,
+              -18.27829563649273
+            ],
+            "tip_mm": [
+              -57.37899999922591,
+              -11.8889999996818,
+              -18.27829563649273
+            ]
+          },
+          "inside_enlarged_roundoff_envelope": true,
+          "inside_some_full_active_sweep": true
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 9,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        -3,
+        0
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 10,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_suction"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 10,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        3,
+        0
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 11,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_suction"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 11,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        0,
+        -3
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 12,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_suction"
+    },
+    {
+      "cell_capacity": [
+        {
+          "cell": [
+            2,
+            87,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            87,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            88,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            92,
+            81
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            3,
+            94,
+            82
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            88,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            90,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            92,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            4,
+            94,
+            88
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            90,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            87
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            92,
+            89
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            93,
+            86
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        },
+        {
+          "cell": [
+            5,
+            95,
+            84
+          ],
+          "first_envelope": null,
+          "inside_enlarged_roundoff_envelope": false,
+          "inside_some_full_active_sweep": false
+        }
+      ],
+      "column_index": 12,
+      "native_zero_length_endpoints_refused": 0,
+      "offset_source_voxels": [
+        0,
+        3
+      ],
+      "positive_source_endpoints_checked": 129,
+      "tool_id": "generic_aspirator"
+    }
+  ],
+  "reporting_roundoff_cushion_mm": 1e-06,
+  "retained_unique_first_blocker_cells": 19,
+  "roundoff_ambiguous_cells": [],
+  "scope": "optimistic full-sweep containment; no native feasibility or future sequence certificate",
+  "sidecar_evidence_truncated": false,
+  "tools": [
+    {
+      "max_access_angle_deg": 45.0,
+      "parameter_source": "generic research geometry; not a verified commercial device",
+      "shaft_radius_mm": 1.4,
+      "tip_length_mm": 3.0,
+      "tip_radius_mm": 1.0,
+      "tool_id": "generic_suction",
+      "working_length_mm": 100.0
+    },
+    {
+      "max_access_angle_deg": 45.0,
+      "parameter_source": "generic research geometry; not a verified commercial device",
+      "shaft_radius_mm": 2.7,
+      "tip_length_mm": 4.0,
+      "tip_radius_mm": 1.7,
+      "tool_id": "generic_aspirator",
+      "working_length_mm": 90.0
+    }
+  ],
+  "unclassified_retained_cells": [],
+  "whole_cell_inward_tolerance_mm": 1e-10
+}

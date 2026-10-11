@@ -1,0 +1,47 @@
+{
+  "baseline": {
+    "connected_free_mask": "sha256:a88ef684ff569808e18247db01c15e8587fa80ad49b0566290370c06f3a46487",
+    "contact_mask": "sha256:7fd1339ba1c497163aebab9e773697ea0a4a5f26c2e4c9fe26a2283dc5b0ec23",
+    "probe_contact_mask": "sha256:646c730fc998dd583dce0743b7067a8c05a286e43c2a148a92940421f57c3c50",
+    "remaining_mask": "sha256:bfe2428a191539c4e176642abb70046b92fea886dad2e2b76078847f156faa12",
+    "removed_mask": "sha256:9565f261f66766108b2f55009722f3da9d073d5eedb109670d8f3b5ca09a5790"
+  },
+  "baseline_actions": [
+    "nominal-cavity-7f1a5747d69d0235913a18ca",
+    "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+    "nominal-cavity-41e1f0b77645464d7846b3c2",
+    "nominal-cavity-f15644d605ad3b57b70b9792",
+    "nominal-cavity-4db63ac16ece6cad42f2944c",
+    "nominal-cavity-26001e5457d45da5305dbf73",
+    "nominal-cavity-d68d7b1baf18495211225bb8",
+    "nominal-cavity-ae98c3369539ab867329cf7f",
+    "nominal-cavity-230f569a555e45c3494d9bcb",
+    "nominal-cavity-cf24087a663742ad65b47ece",
+    "nominal-cavity-361f04eae61fbcbdc17f9701"
+  ],
+  "baseline_state_hash": "sha256:5f127a07d9fc66d85fa7c758dc2fc1d8f7c26aa99c0a3ac991df00adedc66d16",
+  "baseline_total_return": -9.220399150310877,
+  "enabled": {
+    "connected_free_mask": "sha256:a88ef684ff569808e18247db01c15e8587fa80ad49b0566290370c06f3a46487",
+    "contact_mask": "sha256:7fd1339ba1c497163aebab9e773697ea0a4a5f26c2e4c9fe26a2283dc5b0ec23",
+    "probe_contact_mask": "sha256:646c730fc998dd583dce0743b7067a8c05a286e43c2a148a92940421f57c3c50",
+    "remaining_mask": "sha256:bfe2428a191539c4e176642abb70046b92fea886dad2e2b76078847f156faa12",
+    "removed_mask": "sha256:9565f261f66766108b2f55009722f3da9d073d5eedb109670d8f3b5ca09a5790"
+  },
+  "enabled_actions": [
+    "nominal-cavity-d14fa791a1a31afd53198dd7",
+    "nominal-cavity-8efeba316fe2e944124976ee",
+    "nominal-cavity-72d42d32bd2ac495453becc4",
+    "nominal-cavity-2348b08401347653246f3447",
+    "nominal-cavity-c5bb12c909670e154aff980a",
+    "nominal-cavity-066b3fbbbf491df65233f12a",
+    "nominal-cavity-191bea1a9949d37e90290447",
+    "nominal-cavity-ed17030dc32342b2beb45c6b",
+    "nominal-cavity-f280033fed548bb31df9021b",
+    "nominal-cavity-e77b2f354ac0f3de72d2b38f",
+    "nominal-cavity-201d710f431c6494975e9f0d"
+  ],
+  "enabled_state_hash": "sha256:dda9bbd75a71587c7cd478d80652bca71e532b26ad86da370b0907735ac3876c",
+  "enabled_total_return": -9.220399150310877,
+  "equal": true
+}

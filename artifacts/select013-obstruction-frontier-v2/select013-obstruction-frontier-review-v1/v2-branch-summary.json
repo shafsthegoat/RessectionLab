@@ -1,0 +1,85 @@
+{
+  "accepted_plan_claim": false,
+  "any_excluded_cell_removed": true,
+  "any_original_ray_feasible": false,
+  "branch": 0,
+  "closed_episode": true,
+  "complete_negative_prefix_plus_preparation_STOP_return": -9.485399131014761,
+  "complete_target_route_claim": false,
+  "diagnostic_preview_count": 117,
+  "excluded_cells_actually_removed": [
+    [
+      3,
+      87,
+      84
+    ]
+  ],
+  "frontier_STOP_increment": 0.0,
+  "prefix_return": -9.220399150310877,
+  "preparation": {
+    "action_id": "nominal-cavity-e83649e53ec961e63258be8e",
+    "blocker_voxel": [
+      3,
+      87,
+      84
+    ],
+    "column_index": 14,
+    "endpoint_center_in_actor_crop": true,
+    "entry_mm": [
+      -59.878999999230814,
+      -10.888999999694034,
+      -17.278295733073307
+    ],
+    "evidence_hashes": [
+      "sha256:30cc6d96091d733a3e18c34ffb56fdc5a585b7da48c3143dd23dd9081d9c6b19",
+      "sha256:34e5dd16427f6f4541c32dc41e03a96c5016176d6077749df3a1ea836e768453",
+      "sha256:4fe62811deffe77294f4a59e1b3d7956a03ca44f56f157963f820d6dc302bced",
+      "sha256:51dde6386e3d2b5e36de0de623bd935624dc49b2d0fdd9642ff6046c24d7a57e",
+      "sha256:63400d63395e85ca99ff5a095fb6438012c2df038c252b7b2e34fae1c788dc53",
+      "sha256:86014e19a56fc0ddbfb5dcda7f37a3f51905cd2e3e2f4c707a59084d5f23e382",
+      "sha256:999788fb2ca25b1efa0de4aa811d504d25c91df78de93e606e80a6aabd03fa64",
+      "sha256:b2c0e7e175dc4480ac8faa5d2d42dbaacea54be22c7c00de3ff03b4cb4bf007c",
+      "sha256:b69e614ffae4aabc61de7143d0d3de8b9fd873d7bf851a1462e10d1c677c7a40",
+      "sha256:b8418eb83c9c612c3a375782117ae12eb591a8f769764b55aca3f58df3eaa3f1",
+      "sha256:da016efee8d708916f3c038b6beca866183ab021990fd67e9452019255ff0e9b",
+      "sha256:de6f121d5d8e9221f1b56b6d93cb3610bdabe6c27c2cf370ce917617c7ef5686",
+      "sha256:dffa3b25ba536f7607db5991fc0bc58c5a6992dd5aeb4173441f0fcd3b570b22",
+      "sha256:fc1ac420704a3e8cd91392fd21a673ebec5e28d4abd30ffa616400308659f8fb"
+    ],
+    "family": "obstruction_opening",
+    "feasible": true,
+    "offset_source_voxels": [
+      -4,
+      -1
+    ],
+    "original_axis_min_corner_bound_mm": 2.1213202411204723,
+    "proposal_id": "nominal-cavity-e83649e53ec961e63258be8e",
+    "proposal_reason": "PROPOSED_UNCERTIFIED",
+    "public_nominal_priority": false,
+    "reason": "NATIVE_CONNECTED_STROKE",
+    "tip_mm": [
+      -58.37899999923081,
+      -10.888999999686689,
+      -17.278295733073307
+    ],
+    "tool_id": "generic_suction",
+    "voxel": [
+      3,
+      87,
+      84
+    ]
+  },
+  "preparation_outside_target_mm3": 0.9999999034194179,
+  "preparation_return": -0.2649999807038836,
+  "preparation_target_mm3": 0.0,
+  "preview_scope": "first rejected interval only; direct feasible rays are not executed or injected into inventory",
+  "remaining_mask_hashes": {
+    "connected_free_mask": "sha256:c07eb423187dbdacd24a6fcced6547cb1e070accc5655b4b27bde047a90eb329",
+    "contact_mask": "sha256:edda4d55fa5e647ebe6e8df25db83c0501736b77fea5c3f36bdb69bc89e53901",
+    "probe_contact_mask": "sha256:646c730fc998dd583dce0743b7067a8c05a286e43c2a148a92940421f57c3c50",
+    "remaining_mask": "sha256:9693e8739248b8067ce56c9e162b3dc395b2d9e765b3cca12777f11c133ed6fb",
+    "removed_mask": "sha256:385dd104b46243f291fad891ec34200662eba97677112b05cf5ad7b869ade987"
+  },
+  "restored_original_rays": [],
+  "root_STOP_return": 0.0
+}

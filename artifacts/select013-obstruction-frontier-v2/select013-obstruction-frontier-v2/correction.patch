@@ -1,0 +1,146 @@
+--- v1/comparison_contract.py
++++ v2/comparison_contract.py
+@@ -13,7 +13,7 @@
+ spec=importlib.util.spec_from_file_location('dead_frontier_historical_contract',OLD/'comparison_contract.py')
+ prior_contract=importlib.util.module_from_spec(spec);spec.loader.exec_module(prior_contract)
+ read_pinned=prior_contract.read_pinned
+-OUTPUT='build/select013-obstruction-frontier-v1/attempt-01'
++OUTPUT='build/select013-obstruction-frontier-v2/attempt-01'
+ ARMS=('original_fixed_frontier','obstruction_opening_fixed_frontier')
+ WORKER_SECONDS,PARENT_SECONDS=180,210
+ MEMORY_BYTES,OUTPUT_BYTES,SUPERVISION_BYTES=3*1024**3,32*1024**2,16*1024**2
+@@ -61,6 +61,8 @@
+  'witness_history':{'path': 'build/select013-dead-frontier-witness-v1/attempt-01/diagnostic-prefix-history.json', 'sha256': '0eb2e6f46d135bb63e3d703931dc51bdd7b2f4d131e249b3ec833b0178261efa'},
+ }
+ PINS.update(WITNESS_PINS)
++PRIOR_FAILURE_PINS={'failed_v1_result': {'path': 'build/select013-obstruction-frontier-v1/attempt-01/result.json', 'sha256': 'd940367188ad8a57c103f04f2e22556cb51592eb5adca3322cc23a156931ddcf'}, 'failed_v1_receipt': {'path': 'build/select013-obstruction-frontier-v1/attempt-01.supervision/receipt.json', 'sha256': '34827539399176277bc56177623657863ca1dd54899f4f564d09d42e03d8c9f8'}, 'failed_v1_release': {'path': 'build/select013-obstruction-frontier-v1/root-release.json', 'sha256': 'e7e3e38c58e76549983155c3d9d5d78ffc732254e1f1eee6d825d0141a4cb8c8'}, 'failed_v1_source_index': {'path': 'build/select013-obstruction-frontier-v1/source-index.json', 'sha256': '1fedb6edbf23742894c681a348398c08e927602c9c68603b5dfa18e9a73e1741'}}
++PINS.update(PRIOR_FAILURE_PINS)
+ 
+ def historical():
+     saved=baseline_historical();w={k:read_pinned(ref) for k,ref in WITNESS_PINS.items()}
+@@ -75,6 +77,14 @@
+         or len(cov['outside_every_fixed_axis_tip_envelope'])!=13 or cov['classification_truncated']
+         or cov['sidecar_evidence_truncated'] or cov['roundoff_ambiguous_cells']):raise ValueError('Fixed complete frontier evidence differs')
+     if [r['action_id'] for r in w['witness_history']]!=list(saved['prefix']):raise ValueError('Witness prefix binding differs')
++    failed={k:read_pinned(v) for k,v in PRIOR_FAILURE_PINS.items()}
++    f,p=failed['failed_v1_result'],failed['failed_v1_receipt']
++    if (f['status']!='failed_or_unresolved' or f['failure']['type']!='TypeError'
++        or f['failure']['message']!='Unaccounted source value object' or f['committed_actions']!=0
++        or f['native_budget']['native_preview_entries']!=117 or f['checkpoint_loads'] or f['model_forwards'] or f['updates']
++        or p['status']!='failed_or_unresolved' or p['exit_code']!=1 or p['cleanup_errors'] or p['final_owned_pids']
++        or not p['worker_termination_confirmed'] or p['result_sha256']!=PRIOR_FAILURE_PINS['failed_v1_result']['sha256']
++        or p['release_sha256']!=PRIOR_FAILURE_PINS['failed_v1_release']['sha256']):raise ValueError('Preserved exact failedv1 required')
+     saved.update(w);return saved
+ 
+ def complete_result(r):
+--- v1/frontier_compare.py
++++ v2/frontier_compare.py
+@@ -5,11 +5,17 @@
+ from resectionlab.core import array_digest,semantic_digest,thaw_json
+ from resectionlab.native_proposals import OBSTRUCTION_OPENING_FAMILY
+ from resectionlab.native_spatial_task import NativeSpatialTask
++from resectionlab.post_exposure import PostExposureStart, _PREPARED
+ 
+ BINDING_KEYS={'action_id','source_hash','source_state_hash','decision_model_hash'}
+ 
+ def plain(value):
+     if isinstance(value,np.ndarray):return {'array_sha256':array_digest(value),'shape':list(value.shape),'dtype':str(value.dtype)}
++    if type(value) is PostExposureStart:
++        if value._capability is not _PREPARED:raise ValueError('Unrecognized post-exposure authority')
++        # This one canonical authority token is not a physical field or a
++        # serializable feature. Its identity is checked separately below.
++        return {name:plain(getattr(value,name)) for name in ('record','external_workspace','seed','initial_free')}
+     if is_dataclass(value):return {f.name:plain(getattr(value,f.name)) for f in fields(value) if f.init}
+     if isinstance(value,Mapping):return {k:plain(v) for k,v in value.items()}
+     if isinstance(value,(list,tuple)):return [plain(v) for v in value]
+@@ -23,17 +29,28 @@
+     return {f.name:plain(getattr(case,f.name)) for f in fields(case) if f.init and f.name!='proposal_config'}
+ 
+ 
++def post_exposure_authority(before,after):
++    if before is None and after is None:return {'both_absent':True}
++    if (type(before) is not PostExposureStart or type(after) is not PostExposureStart
++        or before is not after or before._capability is not _PREPARED
++        or after._capability is not _PREPARED):raise ValueError('Original prepared post-exposure authority must be preserved')
++    return {'same_prepared_object':True,'same_canonical_capability':True,
++            'capability_serialized':False}
++
++
+ def enabled_fresh(base):
+     """Rebuild; never mutate a live task or manufacture an admission capability."""
+     if base.case.proposal_config.obstruction_opening:raise ValueError('Original disabled rule required')
+     config=replace(base.case.proposal_config,obstruction_opening=True)
+     case=replace(base.case,proposal_config=config)
++    authority=post_exposure_authority(base.case.post_exposure,case.post_exposure)
+     before,after=source_physics(base.case),source_physics(case)
+     if before!=after:raise ValueError('Changing the proposal rule changed physical source')
+     other=NativeSpatialTask(case,max_steps=base.max_steps,reward=base.reward_spec,cancelled=base._cancelled).planning_clone()
+     if (case.source_hash==base.case.source_hash or other.decision_model_hash==base.decision_model_hash
+         or config.max_candidates!=base.case.proposal_config.max_candidates):raise ValueError('Declared model change/cap binding failed')
+     return other,{'all_other_source_fields_equal':True,'public_source_physics':before,
++        'post_exposure_authority':authority,
+         'baseline_source_hash':base.case.source_hash,'enabled_source_hash':case.source_hash,
+         'baseline_decision_model_hash':base.decision_model_hash,'enabled_decision_model_hash':other.decision_model_hash,
+         'baseline_proposal_config':base.case.proposal_config.to_record(),'enabled_proposal_config':config.to_record(),
+--- v1/run_owned.py
++++ v2/run_owned.py
+@@ -61,7 +61,7 @@
+         'supervision_bytes': SUPERVISION_BYTES, 'worker_log_bytes': 8*1024**2,
+         'threads': 1, 'sample_interval_seconds': .2, 'output_sample_interval_seconds': 1.,
+         'attempts': 1, 'automatic_retry': False}
+-    _receipt(supervision/'declaration.json', {'version': 'owned-SELECT013-obstruction-frontier-v1',
++    _receipt(supervision/'declaration.json', {'version': 'owned-SELECT013-obstruction-frontier-v2',
+         'head': release['expected_head'], 'release_path': str(release_path),
+         'release_sha256': args.release_sha256, 'source_index': release['source_index'],
+         'source_files': index['source_files'], 'caps': caps, 'limits': release['limits'],
+--- v1/freeze-runtime.py
++++ v2/freeze-runtime.py
+@@ -44,7 +44,7 @@
+         if sha(ROOT/path)!=digest:raise ValueError('Prior metadata changed: '+path)
+     for path in bindings:
+         if path.startswith('src/') and subprocess.check_output(['git','show',head+':'+path],cwd=ROOT,timeout=5)!=(ROOT/path).read_bytes():raise ValueError('Uncommitted source in closure: '+path)
+-    index={'version':'fixed-obstruction-frontier-runtime-v1','head':head,'source_files':bindings,'metadata_files':metadata,
++    index={'version':'fixed-obstruction-frontier-runtime-v2','head':head,'source_files':bindings,'metadata_files':metadata,
+         'exact_source_successors':SOURCE_SUCCESSORS,
+         'scope':'retained conservative prior closure plus fixed diagnostic helper; metadata only, no arrays/weights opened'}
+     release={'status':'pending_root_release','expected_head':head,'output':OUTPUT,'arms':list(ARMS),
+--- v1/test_frontier.py
++++ v2/test_frontier.py
+@@ -18,6 +18,37 @@
+ from resectionlab.core import freeze_json,semantic_digest
+ from resectionlab.native_proposals import NominalCavityProposalConfig,DEFAULT_COLUMN_OFFSETS,OBSTRUCTION_OPENING_FAMILY
+ from resectionlab.native_spatial_task import NativeSpatialTask
++
++
++def test_real_admitted_dataclass_shape_keeps_authority_out_of_physical_serialization(monkeypatch):
++    """No arrays or canonical capability construction: explicit generated double.
++
++    Copy the actual canonical constructor field names, including the opaque
++    authority field that the first acquired attempt reached. The double is
++    admitted only by this test's local type/token injection, never by production.
++    """
++    from dataclasses import fields,make_dataclass
++    from resectionlab.post_exposure import PostExposureStart
++    names=[f.name for f in fields(PostExposureStart) if f.init]
++    assert names==['record','external_workspace','seed','initial_free','_capability']
++    Generated=make_dataclass('GeneratedPostExposure',[(name,object) for name in names],frozen=True)
++    token=object();values=({'scope':'generated metadata'},'external','seed','free',token)
++    generated=Generated(*values)
++    old_spec=importlib.util.spec_from_file_location('preserved_v1_frontier',ROOT/'build/select013-obstruction-frontier-v1/frontier_compare.py')
++    old=importlib.util.module_from_spec(old_spec);old_spec.loader.exec_module(old)
++    with pytest.raises(TypeError,match='Unaccounted source value object'):old.plain(generated)
++    monkeypatch.setattr(helper,'PostExposureStart',Generated);monkeypatch.setattr(helper,'_PREPARED',token)
++    physical=helper.plain(generated)
++    assert physical==dict(zip(names[:-1],values[:-1]))
++    assert helper.post_exposure_authority(generated,generated)=={
++        'same_prepared_object':True,'same_canonical_capability':True,'capability_serialized':False}
++    assert helper.post_exposure_authority(None,None)=={'both_absent':True}
++    with pytest.raises(ValueError):helper.post_exposure_authority(generated,Generated(*values))
++    wrong=Generated(*values[:-1],object())
++    with pytest.raises(ValueError):helper.plain(wrong)
++    with pytest.raises(ValueError):helper.post_exposure_authority(generated,wrong)
++    with pytest.raises(TypeError,match='Unaccounted source value object'):helper.plain(object())
++    assert helper.plain(Generated(values[0],values[1],values[2],'changed free',token))!=physical
+ 
+ 
+ def generated(*,rotated=False):

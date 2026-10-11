@@ -1,0 +1,1137 @@
+{
+  "entries": [
+    {
+      "archive_path": "select013-obstruction-frontier-review-v1/source-review.txt",
+      "bytes": 5341,
+      "path": "build/select013-obstruction-frontier-review-v1/source-review.txt",
+      "role": "independent review / compact actual evidence",
+      "sha256": "a18d13b117b1e10a0e0ada993f238cdc8113aa555254664b36135d1bf5c0a2c8"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-review-v1/v2-delta-review.txt",
+      "bytes": 2570,
+      "path": "build/select013-obstruction-frontier-review-v1/v2-delta-review.txt",
+      "role": "independent review / compact actual evidence",
+      "sha256": "12b408fc01f175ba76d84ef2b71bd6622b8ef6c7902f1e6e1e7cef33b60879ac"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-review-v1/v2-result-review.txt",
+      "bytes": 2715,
+      "path": "build/select013-obstruction-frontier-review-v1/v2-result-review.txt",
+      "role": "independent review / compact actual evidence",
+      "sha256": "efd6f31dc08e054540699c4fdd66e5b45e1e71f47791068d8451ea85fc81c01a"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-review-v1/v2-saved-result-audit.json",
+      "bytes": 24475,
+      "path": "build/select013-obstruction-frontier-review-v1/v2-saved-result-audit.json",
+      "role": "independent review / compact actual evidence",
+      "sha256": "5a557d5d2d2e79237f8056d37269dea8e21847cc895660b0ecc72a40e9246330"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-review-v1/v2-preparation-history.json",
+      "bytes": 15472,
+      "path": "build/select013-obstruction-frontier-review-v1/v2-preparation-history.json",
+      "role": "independent review / compact actual evidence",
+      "sha256": "5bbd4c2c537fec5e89377ea8c588d84cd4f1d52b84efbd7ce4f6943175c23b09"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-review-v1/v2-branch-summary.json",
+      "bytes": 3323,
+      "path": "build/select013-obstruction-frontier-review-v1/v2-branch-summary.json",
+      "role": "independent review / compact actual evidence",
+      "sha256": "9e09ecce12bb0e2f2ad98593ff3bd6fa9e68e33ef1c7696598029bf579e0fb88"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/frontier_compare.py",
+      "bytes": 11647,
+      "path": "build/select013-obstruction-frontier-v2/frontier_compare.py",
+      "role": "exact v2 source, correction, controls or release binding",
+      "sha256": "e02d7b02ba8d4c8188f1a3643b44333fa08ab4db413355324704c58d72abd20b"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/comparison_contract.py",
+      "bytes": 10315,
+      "path": "build/select013-obstruction-frontier-v2/comparison_contract.py",
+      "role": "exact v2 source, correction, controls or release binding",
+      "sha256": "15279484cd695d643f251566c075e0e0e541e6dece6940c26014bd28e393f5e4"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/select_worker.py",
+      "bytes": 11587,
+      "path": "build/select013-obstruction-frontier-v2/select_worker.py",
+      "role": "exact v2 source, correction, controls or release binding",
+      "sha256": "7e41aaa98ae0f1bef2f0e0d962b528c601efc749ccdb26f347178814c657a512"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/run_owned.py",
+      "bytes": 12122,
+      "path": "build/select013-obstruction-frontier-v2/run_owned.py",
+      "role": "exact v2 source, correction, controls or release binding",
+      "sha256": "90be845456928856767e9f4e7421c20f69397625c7cc81f7abd9eabd2868ebef"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/freeze-runtime.py",
+      "bytes": 4660,
+      "path": "build/select013-obstruction-frontier-v2/freeze-runtime.py",
+      "role": "exact v2 source, correction, controls or release binding",
+      "sha256": "1141930c4527ab8daf4443b0b4c5fcc2e1f2d28b8440722992ed06cafa982522"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/test_frontier.py",
+      "bytes": 13640,
+      "path": "build/select013-obstruction-frontier-v2/test_frontier.py",
+      "role": "exact v2 source, correction, controls or release binding",
+      "sha256": "24f8a831ebd25fb21db70db301058215786f00ddf50cfd73537635620fbea81f"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/correction.patch",
+      "bytes": 10518,
+      "path": "build/select013-obstruction-frontier-v2/correction.patch",
+      "role": "exact v2 source, correction, controls or release binding",
+      "sha256": "c6eaaf96b581313fe218a81a73d515d9ad4caf3b7312ec24d15e2a25c281d385"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/controls-01.json",
+      "bytes": 899,
+      "path": "build/select013-obstruction-frontier-v2/controls-01.json",
+      "role": "exact v2 source, correction, controls or release binding",
+      "sha256": "c6a775401a2b64584959ff7cc0594829d82f332e0159ae91b9b8f858d9add2c8"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/controls-01.log",
+      "bytes": 98,
+      "path": "build/select013-obstruction-frontier-v2/controls-01.log",
+      "role": "exact v2 source, correction, controls or release binding",
+      "sha256": "f44bd3a4e13eb429968a99da11a7024f7e03f5a1874a3c4a97bf50f690322bbf"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/root-release.json",
+      "bytes": 5047,
+      "path": "build/select013-obstruction-frontier-v2/root-release.json",
+      "role": "exact v2 source, correction, controls or release binding",
+      "sha256": "65d7d22bc4c944d01991352abb1ebfe80b7fbdbfa475e863e5e71281310a8a99"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/source-index.json",
+      "bytes": 21686,
+      "path": "build/select013-obstruction-frontier-v2/source-index.json",
+      "role": "exact v2 source, correction, controls or release binding",
+      "sha256": "44e25177b0efd74241a23f4019b0994ff6a1815d15c1d5a50e1d96071703f7e9"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/result.json",
+      "bytes": 3344,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/result.json",
+      "role": "exact compact run evidence",
+      "sha256": "6a59fbfcdf32abd8df46e5808f8cd175d5309f1b352ba07ab6d53f2baf050251"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/costs.json",
+      "bytes": 4329,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/costs.json",
+      "role": "exact compact run evidence",
+      "sha256": "3931127759e631042eeac6e3522f4d26230e85b43d36716f73b5f92468d293fc"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/declared-proposal-change.json",
+      "bytes": 20068,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/declared-proposal-change.json",
+      "role": "exact compact run evidence",
+      "sha256": "fae4f8d3ca2b030a7f0fb5f5c64c23c6cc4603f768e9ac0468ba5d9cbde2670a"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/paired-frontier-physical-state.json",
+      "bytes": 2420,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/paired-frontier-physical-state.json",
+      "role": "exact compact run evidence",
+      "sha256": "e8b738a65a9a01de58dc3c196ee36f3ca81d144db98bb4a5572fe69788b3683a"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/added-dispositions.json",
+      "bytes": 135004,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/added-dispositions.json",
+      "role": "exact compact run evidence",
+      "sha256": "e32a8ffad58a4d692dd0a0703beede7057df31e4b44402423dd9c2282fe8fe8a"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/world-control.json",
+      "bytes": 14251,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/world-control.json",
+      "role": "exact compact run evidence",
+      "sha256": "2e6e639e28a3bde19bc79c465843022e4a2740b8ffe7dbae4fd39113978603cd"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01.supervision/receipt.json",
+      "bytes": 1690,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01.supervision/receipt.json",
+      "role": "exact owned execution receipt",
+      "sha256": "b18a1ea56afccd0651ee87482daaf66405c3cd32adf08e55a872a4e5eafa6d1c"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01.supervision/worker-final.json",
+      "bytes": 286,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01.supervision/worker-final.json",
+      "role": "exact owned execution receipt",
+      "sha256": "d4d31f7b5003d7654965f8a487afd14c65851e51d6f648a34f56cb731d5deeb0"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01.supervision/declaration.json",
+      "bytes": 13815,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01.supervision/declaration.json",
+      "role": "exact owned execution receipt",
+      "sha256": "756f799c66553dc2c9d5956239cb9f1d7914e83d6ddf0d25b738c627e99a6de5"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-000.json",
+      "bytes": 3490,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-000.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "17a6e85e35cbe52a4113c3a171fddff20810d82dc91b3f99c6b8d0d36e2a25e0"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-001.json",
+      "bytes": 3487,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-001.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "5b35204ef092541d4c9d35b1673750a60fd6d9d32fb9c073e9872b2e7dea6987"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-002.json",
+      "bytes": 3490,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-002.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "eefc3e099ae2761c9f62cc969017b0e46d330cf587e2617130f5480ca770234b"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-003.json",
+      "bytes": 3489,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-003.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "2790648d9115b953ed6791173b3bc772586a4d576af5d640045cb2e3e3b2b635"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-004.json",
+      "bytes": 3489,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-004.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "cb14bd81e16c7c6eac00273bf561b000d222728a43005e2359c7d880654b02e1"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-005.json",
+      "bytes": 3490,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-005.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "136c827f045f62e5fe284d0e3aa0a29489b0f12edd93a170422e6d8ede8c4bdc"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-006.json",
+      "bytes": 3541,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-006.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "3b646418320b660d0c9c38d7f0ddf3e056f0bf99a926b3a2cd09411540b764cb"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-007.json",
+      "bytes": 3537,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-007.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "39d2731dea98ceebaa34bc472f64b17a6c6b70bc42e46e20ac34c52d4e3dd478"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-008.json",
+      "bytes": 3536,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-008.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "e122d150f8fa1cb03b47c57c157c00160ff3182515162e3e0acfb56209b06a33"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-009.json",
+      "bytes": 3389,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-009.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "e4c5239e6a2bac3a41bc16bc456e02da5913ec4b4f976a8d38f0c2c952415fcf"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-010.json",
+      "bytes": 3387,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-010.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "61ef5d879da99607307885474afce85e6ad9377c2a7a3a4889d27e2b7df4b44a"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-011.json",
+      "bytes": 3385,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-011.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "680da2425da46d549707add022d912e09f7a0ed84f037f58672d63569904b004"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-012.json",
+      "bytes": 3381,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-012.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "bfecd5d0e092f3ae3216025973b09ba69d5bb89152b7266165d3550b88b9099f"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-013.json",
+      "bytes": 3387,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-013.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "5c5ccec3fe474525e8dcce7611c2f7c05a026e4a203fa63d38457e5211585d67"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-014.json",
+      "bytes": 3379,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-014.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "00a88a78ccc0d38234a8843faf75e0f09d5efd72d93d459650ce5b875ce9bef1"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-015.json",
+      "bytes": 3384,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-015.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "f57f13b1ef554839b5bac6b9db4b8261329e7052def13e3ff5ce75a63e2e0efb"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-016.json",
+      "bytes": 3392,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-016.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "6cd5741152e4fca7007b1e4719e60d08b8d27149f506b99ff51761ccaa18227c"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-017.json",
+      "bytes": 3381,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-017.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "863102243d23c402ab5d7d265a0706f3601511a021534fd2e3030c8077228930"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-018.json",
+      "bytes": 3448,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-018.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "15a8f4d5a1b3dc8169be13f76aae6c1902db7bf3433a341ebd9bbaf4fe58249d"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-019.json",
+      "bytes": 3445,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-019.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "b5be6d005f1da46fbd28e2f0b73116967d42e8c5943498563791cc081169a125"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-020.json",
+      "bytes": 3448,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-020.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "c294b3ef54f62a6e6bac7f47f447d6fc313335326131357f841567b3bb5143d8"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-021.json",
+      "bytes": 3398,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-021.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "e082cc0b85caf0c95d94d7d641886f5f831b931bcb3d7beeabb47f57a24a841a"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-022.json",
+      "bytes": 3395,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-022.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "017825aad10df9e5320b0ab66bda6fd9385a739a674fa260919114460e9e58b7"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-023.json",
+      "bytes": 3394,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-023.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "685389fcbdddc9b29e606752ae8b060b0754a3bbb6ec0514cb7280cdf55046f9"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-024.json",
+      "bytes": 3397,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-024.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "0ff1c33a7639af70d3b89b6f931e4d48dea1e4a6cd9ef0a42bb7c24affa77af7"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-025.json",
+      "bytes": 3387,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-025.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "97584cf715de213fb92f2528a412165b854b2571cc68e47bc65b608309f3b2dd"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-026.json",
+      "bytes": 3397,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-026.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "122915653f9b59c9597334da1dca95be5208c9e86e97fb37b9d8dedff75ddd69"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-027.json",
+      "bytes": 3396,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-027.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "39b1c5c01cd6847a889c539a36813d9f48300d970463acafc425d271f6bc8f3b"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-028.json",
+      "bytes": 3391,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-028.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "9d6666e7c801ac65a3d7b641fe1537871d97b7d611d2aab98c1d9a86b1ed9dd2"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-029.json",
+      "bytes": 3397,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-029.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "ba877ec44d2dc3c8b473252f5d11a739ccc6d557e3d54324757663777fdcd579"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-030.json",
+      "bytes": 3398,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-030.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "df56df7c69b05a86d234b9353f2c30786cf603fe4de70d978a1d0ae49247a02c"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-031.json",
+      "bytes": 3392,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-031.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "9f454c8b0e634105957aba786caf97e691115bc27b0ef7eb59d7a997110748a0"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-032.json",
+      "bytes": 3395,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-032.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "0d207f5d1522901590c94678a84f11c380df7abcd8b5ec165f161e54c1b62d4c"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-033.json",
+      "bytes": 3400,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-033.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "8b6cb365bf9069a299a668caa89535dd84a2ba4beb3ea69affd79df4c9130c98"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-034.json",
+      "bytes": 3392,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-034.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "bbb6d32b5e2878fe8b580b2b064e32d678d5d53017847b4781351ec9e6b9dc91"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-035.json",
+      "bytes": 3399,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-035.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "ff3a156be140fe34e680965695c3266a22cd3fc0629b224ceae1e9d8fecdde12"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-036.json",
+      "bytes": 3448,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-036.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "19aae39b853d2c70f72d92e62c205b722a9c61ba65da2a19786f9c74c75944cb"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-037.json",
+      "bytes": 3444,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-037.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "5a3b31c43e89b786e1700cb1fdfd094df9e4975123580db113162e1af6056c14"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-038.json",
+      "bytes": 3443,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-038.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "4416043f7f177fd1e0a0870589ba16bc0535e9d5e74f7bc0c5ee9ab205ff0a67"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-039.json",
+      "bytes": 3398,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-039.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "c7fe881444b498bb4b32d440d94c9bfe0800847d8003193b0f8758a1cd4ffc60"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-040.json",
+      "bytes": 3396,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-040.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "15458aca12bd762bcd89575c9d9c2d2e0a37170dff53500733e21b5b61c9fe2b"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-041.json",
+      "bytes": 3394,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-041.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "939bc055b4863fb86bab48fd01dc29591277c1214a3e2ec557a3373154ea6569"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-042.json",
+      "bytes": 3396,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-042.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "e02fcc13e91d3b586cd1c2f159f1974ea36883791023b8e2f665a69d8c24a22f"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-043.json",
+      "bytes": 3393,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-043.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "12cfaf03bc6ecd2337a1846949f6b1b32afdacd1379e4d5c52737cc1ec625e61"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-044.json",
+      "bytes": 3392,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-044.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "d12b68e4c591366780bf62edf35c60ae2499c163a7de0f79632b113aa196857a"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-045.json",
+      "bytes": 3392,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-045.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "51336cab04522dec1ae19b6098e2951049aeaab6cbcdd0daae68c708c63c320a"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-046.json",
+      "bytes": 3394,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-046.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "ae9c588aea2af34a10917e57cab0e447ee7166b9d3cd4de089356f95eac5cbb0"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-047.json",
+      "bytes": 3392,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-047.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "02d3441488d5cb45df5cf2b36abe2e07f66979c0cf1caa1d63c90ea47c703424"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-048.json",
+      "bytes": 3390,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-048.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "b23b90e30f8e0121c1a1d696c1273797abdbda47f31cd05b871bb6fdfac037b9"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-049.json",
+      "bytes": 3396,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-049.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "ebd1e8aadd50f818842ce56b0d619ffb4df81cef58a9beb4fc5e9f63a21154ff"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-050.json",
+      "bytes": 3389,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-050.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "5e81683cd09c12b8c0a287d4b7f492e0e9006a27ca9fd524f7b3a1562c5441e2"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-051.json",
+      "bytes": 3393,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-051.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "7676ec9dd6d87b35227dd5317847096927f8280441a315d1d52c48231c1cd6d4"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-052.json",
+      "bytes": 3401,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-052.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "54bd350199a9caaa670e2627b6228f8d6d1c0ffb69efd9890ddf8ea010bdd62b"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-053.json",
+      "bytes": 3394,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-053.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "2f3da7985856115894c097b74b806578ca6a8d2448df649ff163395d2420bb24"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-054.json",
+      "bytes": 3381,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-054.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "118984efb598b97c0ba64e5c09ff139a9a70d6afc123dbe36f7a8980148f70fd"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-055.json",
+      "bytes": 3379,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-055.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "771984873bc66909c61dde08263a5fe52dc4cd3c0a0f9116f12e7133db85a1bc"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-056.json",
+      "bytes": 3386,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-056.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "e57a4e0f69ed988dbb7780865ab94f2b7bc4e1286f9a196d143babcee5e0b5da"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-057.json",
+      "bytes": 3385,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-057.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "bcda2fe613c70a7dbe1157db3fa04b25e54db874c11c619944d3df22b611258e"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-058.json",
+      "bytes": 3383,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-058.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "0fe292b5d5e1e492a7e58417286c584fdd0ac68131843919ce69e6254ecac499"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-059.json",
+      "bytes": 3389,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-059.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "954eae7caba31619130b661275cf67c98bec374e77b05f68d86522749a0a3836"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-060.json",
+      "bytes": 3481,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-060.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "187cbb720d385738c677034f89cae00c1f3ece24a78d415e820fd00932ae9422"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-061.json",
+      "bytes": 3484,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-061.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "049aaa0374513e7980a92747894fa381bb136a86fe7eb8b983403ea0c527bc02"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-062.json",
+      "bytes": 3479,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-062.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "9add686f914bfd0428a0cda13d55540a5f43090ef92f8ec39fd47ae17293635c"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-063.json",
+      "bytes": 3430,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-063.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "2563d7571b19f9771078d836bfe2f12d3ef2c7f27a4bd66ff333f6098ad8bbb2"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-064.json",
+      "bytes": 3438,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-064.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "dec98359fe18f3957b617af1eb2b822c8cc94c4078d55a90031174e07e104b0e"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-065.json",
+      "bytes": 3435,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-065.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "dfb8b55b41de8afc701d311d56ca1c40f2f93778d2cc98d8b95ebd6b508dc187"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-066.json",
+      "bytes": 3397,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-066.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "100a7d9fafc67202050a9058fd5a088add5bb3a7a40012b82a04450ffc18aa71"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-067.json",
+      "bytes": 3398,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-067.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "b276b45a90fd69087f23b8030b3696a07dfe7fbda0cac59e89de9ed9e8230760"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-068.json",
+      "bytes": 3396,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-068.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "d2d8ef4630fb41b306491ef782ea0c71e3469fc54f7fa3836caad76ba79f42e0"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-069.json",
+      "bytes": 3398,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-069.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "28cd31f447713fb7d52f768c2e4b9f29ec5d7cc25a1e70c949b0d88962b3d8b4"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-070.json",
+      "bytes": 3394,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-070.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "2b0dd1a076b984f9bdcbb39c1a9af11e51709a3acc918b34f82c83f7246abc80"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-071.json",
+      "bytes": 3395,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-071.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "b60dc712f577cc1834e5b8b4d7220630d17387c0deb668648918d72924f640a7"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-072.json",
+      "bytes": 3540,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-072.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "4d37a37640d6785070ea9ae59db65bc99a02b43eb39c123932ac86e2fe0b32ec"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-073.json",
+      "bytes": 3534,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-073.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "47dec7d98a0e69f316f626eb6cb81b8518fce6e37161382ec1f2de3c887b85e1"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-074.json",
+      "bytes": 3540,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-074.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "ccc86439d0aafa3604a569e87eda3e26231c88a65017437a0057be88a3ad1c96"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-075.json",
+      "bytes": 3384,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-075.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "1b41a759448c509968e2624292aadf2b0f235d35a7eb9556395f720e599132f1"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-076.json",
+      "bytes": 3386,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-076.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "854134410aed215f45641fa136031cf7030eaf6fdb8728d5ae19ffcd802cee95"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-077.json",
+      "bytes": 3390,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-077.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "53353e3ad271ec8542b9428ed9e883eb795c305f74f639161e16d82d49a444b4"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-078.json",
+      "bytes": 3484,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-078.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "caa7dd53df2cb74ae838739a0161886d60530ecf782015da87079fb75053a587"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-079.json",
+      "bytes": 3492,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-079.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "804955789eb140dbc4f50a2f7aab64b1c52523ea15f2b5304ff5703861f84800"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-080.json",
+      "bytes": 3537,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-080.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "7d9298674b71f7b9f0a9db00b180ee4e9f6ee6101986615adaa56bd4d083e62e"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-081.json",
+      "bytes": 3393,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-081.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "da7773ed603000fb40f0c820fa09d75bfffd12c0594f39f1392c3d26a50e12a9"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-082.json",
+      "bytes": 3382,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-082.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "52bc973306f34acb04c600827483197b5cd5fe3d4d8b7510e1085fb6b85295a5"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-083.json",
+      "bytes": 3390,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-083.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "4a5feb6de23fb64c1e69922a739ef70a440516637aad6ff922324f8c6e39afc6"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-084.json",
+      "bytes": 3442,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-084.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "da69bddaea5b250a5940a12ef8e50a98dd8ac1758ee39870a71c91f459ff8226"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-085.json",
+      "bytes": 3402,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-085.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "55668db535a3bd47f859f741395303df0a3f0e7b0371e9cfaf823b6273e8bf3e"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-086.json",
+      "bytes": 3391,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-086.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "5166d68334fbade28b4e627125e7e30e020da9fb4a0f0f144af29725d6685a39"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-087.json",
+      "bytes": 3399,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-087.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "1c15a67a53d4a6629c1a4948e55e5fe96371ea64ab51e34a6a200ddf8dd582e5"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-088.json",
+      "bytes": 3403,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-088.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "f142edc0c39fab0745903dce24f8001715d1f479047c91a009558b1305e30537"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-089.json",
+      "bytes": 3400,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-089.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "559b5b9ddab8ac4300e3ab2e2b997d38d8e87617c4c2250db6417b1e455eb257"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-090.json",
+      "bytes": 3444,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-090.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "6ea9ccf9aa979a3894f23646337f3d776f03da766d96f98db73fa07a3e5851f1"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-091.json",
+      "bytes": 3402,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-091.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "90b3e35e9e215719d8d4d5f9ac4c3b09f8135b38685910f678c8099d796e1828"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-092.json",
+      "bytes": 3400,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-092.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "a9ce9118423882d09a746d495655b2484252e735c8692f28737016c15e28b4ad"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-093.json",
+      "bytes": 3399,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-093.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "da9f35db0256ba7e7001d29128b7199878dc48b6e86c0737f226a0a61b9202ae"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-094.json",
+      "bytes": 3391,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-094.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "839d70ef90f95ec05c32cf18f8b4c322aef4c39f750feaa57dde974c0eb27ad3"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-095.json",
+      "bytes": 3399,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-095.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "18f4be3f45064154fbb818bf2d3880c102d37546a8ed5055e1688c917e506a97"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-096.json",
+      "bytes": 3385,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-096.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "976156755e83d87f69f9404338e493e4558c5d0727105bb1469aaccb7f68f0ca"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-097.json",
+      "bytes": 3387,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-097.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "d6e96d9313a6c531f1640c7b66fbf8e01cfefaa4f61a5fde82500f934a6847c8"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-098.json",
+      "bytes": 3491,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-098.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "16dab63e7cb2037c67d9f7c01df53c856b51ce4a4c7b3c580ccee71e4a69c8ef"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-099.json",
+      "bytes": 3443,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-099.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "2b59dbfa6685b994cbbc10640ebd72cac5f7647a9ef662828182c1ec70e27a0d"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-100.json",
+      "bytes": 3397,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-100.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "267676dca786ebd6c68d46ab5f65cf070f1c8a44465f798a39a83409f9a588fc"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-101.json",
+      "bytes": 3400,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-101.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "fa719053489b62be1b458aaf87d82a2732b07a0ce28f58d0a147cba22c68b7de"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-102.json",
+      "bytes": 3545,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-102.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "0ae6b8a9369d3a67ef5a82520703e7d90f051b96638fd468ec1372edf1d2d132"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-103.json",
+      "bytes": 3386,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-103.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "fa17cd3157c574aa5fddefedf7186f8be473250e94d8487d2e101509d0a5a740"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-104.json",
+      "bytes": 3500,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-104.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "79181717f2af883c4a4dc66534476d0e5e58d5636ec37b562f7024c95c8aa410"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-105.json",
+      "bytes": 3394,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-105.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "47a16da54f7a90ebd9757a76a9063e3f897805530be9681142b15c697c9d7b91"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-106.json",
+      "bytes": 3394,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-106.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "efd85ec658d00ec8854c396067b3c15099d89fd1dc8e6e3af9ee6d70d91a2910"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-107.json",
+      "bytes": 3401,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-107.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "070ae5ce0ddd4b705f01ab5d19410d8c399c387970e998e3cb051fdd013981b1"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-108.json",
+      "bytes": 3407,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-108.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "1420090aa79cfd6348d1bf316f79d8b476668a7e55755accace0a63ddd622658"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-109.json",
+      "bytes": 3400,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-109.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "4177787c100fefc6c2af8142b8841ff5e54faa989432a250ec101b36d56f5682"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-110.json",
+      "bytes": 3403,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-110.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "e61d1030f07f8146a8f85e865749c05cd387ca7cbceb79e41c8a20ec1274e04a"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-111.json",
+      "bytes": 3398,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-111.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "f8959b0920b34afea1e0ad39fa3b9ea568c7624dbf1738e8ffc6149f83a6093f"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-112.json",
+      "bytes": 3403,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-112.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "2cf28a37a95fd08353badc72b4897d7b913d2a162396401f850b5e75d8be6b48"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-113.json",
+      "bytes": 3387,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-113.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "31e86454b187a287540b8617a5a12a0ed90da31bec3595334c21271768e71135"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-114.json",
+      "bytes": 3443,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-114.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "47bc69b9ea3d1691dfb22c1ff5f703782d435d9bb671cf9db6f90ae910d2518a"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-115.json",
+      "bytes": 3407,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-115.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "94cb71b2af8c5358080d0d995a5250e07afe57c0da35bf9e359eb6f0a0b4b53f"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-116.json",
+      "bytes": 3397,
+      "path": "build/select013-obstruction-frontier-v2/attempt-01/branch-00/rejection-116.json",
+      "role": "exact one-time original-ray recheck",
+      "sha256": "57bb92ede569335dafb1ef8b853f1a0d8d02d56ee3f3bb99b29b952ace036c7c"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/frontier_compare.py",
+      "bytes": 10532,
+      "path": "build/select013-obstruction-frontier-v1/frontier_compare.py",
+      "role": "preserved v1 source/control/failure identity",
+      "sha256": "1675cca9940e4bc33755aa34ff6db63091c31fb91855e42bb4b67a656a677b1a"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/comparison_contract.py",
+      "bytes": 8746,
+      "path": "build/select013-obstruction-frontier-v1/comparison_contract.py",
+      "role": "preserved v1 source/control/failure identity",
+      "sha256": "5e24da28b33d136f304c008ac243e8035df94b32352d2d2efbc57997f70df0c2"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/select_worker.py",
+      "bytes": 11587,
+      "path": "build/select013-obstruction-frontier-v1/select_worker.py",
+      "role": "preserved v1 source/control/failure identity",
+      "sha256": "7e41aaa98ae0f1bef2f0e0d962b528c601efc749ccdb26f347178814c657a512"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/run_owned.py",
+      "bytes": 12122,
+      "path": "build/select013-obstruction-frontier-v1/run_owned.py",
+      "role": "preserved v1 source/control/failure identity",
+      "sha256": "5840fd9f1e7e3470bdc8bced689291de40b07a1069e016578a9caceb09a1aef8"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/freeze-runtime.py",
+      "bytes": 4660,
+      "path": "build/select013-obstruction-frontier-v1/freeze-runtime.py",
+      "role": "preserved v1 source/control/failure identity",
+      "sha256": "1c7a5443021d620636529aa97ce1d9ff46c2bd0a8148e9371e7a825a4662bff0"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/test_frontier.py",
+      "bytes": 11497,
+      "path": "build/select013-obstruction-frontier-v1/test_frontier.py",
+      "role": "preserved v1 source/control/failure identity",
+      "sha256": "7de9331d4b48ae74d7cef95b20be1b0ce5afe19c28c3fbcedda5d67a063d4135"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/controls-01.json",
+      "bytes": 862,
+      "path": "build/select013-obstruction-frontier-v1/controls-01.json",
+      "role": "preserved v1 source/control/failure identity",
+      "sha256": "050390c12d0718215f891a9d37c94d1f6eb5c10742a74e907de570b60da70868"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/controls-01.log",
+      "bytes": 1216,
+      "path": "build/select013-obstruction-frontier-v1/controls-01.log",
+      "role": "preserved v1 source/control/failure identity",
+      "sha256": "ebedbc4ad1445d36c34c6bca5450cfb5438533c99461d26d91d41fcf665ab9c7"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/controls-02.json",
+      "bytes": 909,
+      "path": "build/select013-obstruction-frontier-v1/controls-02.json",
+      "role": "preserved v1 source/control/failure identity",
+      "sha256": "c527a936853c98f1b78c013dec318ec21239d558cebdb86c238485acd1c0321f"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/controls-02.log",
+      "bytes": 98,
+      "path": "build/select013-obstruction-frontier-v1/controls-02.log",
+      "role": "preserved v1 source/control/failure identity",
+      "sha256": "8181a366a896982b8b1e6cd81c4bc045771cf6053f5b9239c4642e15fc459e3e"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/root-release.json",
+      "bytes": 4252,
+      "path": "build/select013-obstruction-frontier-v1/root-release.json",
+      "role": "preserved v1 source/control/failure identity",
+      "sha256": "e7e3e38c58e76549983155c3d9d5d78ffc732254e1f1eee6d825d0141a4cb8c8"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/source-index.json",
+      "bytes": 21131,
+      "path": "build/select013-obstruction-frontier-v1/source-index.json",
+      "role": "preserved v1 source/control/failure identity",
+      "sha256": "1fedb6edbf23742894c681a348398c08e927602c9c68603b5dfa18e9a73e1741"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/attempt-01/result.json",
+      "bytes": 2812,
+      "path": "build/select013-obstruction-frontier-v1/attempt-01/result.json",
+      "role": "exact preserved failed-v1 terminal evidence",
+      "sha256": "d940367188ad8a57c103f04f2e22556cb51592eb5adca3322cc23a156931ddcf"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/attempt-01/costs.json",
+      "bytes": 2380,
+      "path": "build/select013-obstruction-frontier-v1/attempt-01/costs.json",
+      "role": "exact preserved failed-v1 terminal evidence",
+      "sha256": "b3573e3dba507c71207879682941654ea9e466685c90c39bcadfae0cba0b13a0"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/attempt-01.supervision/receipt.json",
+      "bytes": 1729,
+      "path": "build/select013-obstruction-frontier-v1/attempt-01.supervision/receipt.json",
+      "role": "exact preserved failed-v1 terminal evidence",
+      "sha256": "34827539399176277bc56177623657863ca1dd54899f4f564d09d42e03d8c9f8"
+    },
+    {
+      "archive_path": "select013-obstruction-frontier-v1/attempt-01.supervision/worker-final.json",
+      "bytes": 268,
+      "path": "build/select013-obstruction-frontier-v1/attempt-01.supervision/worker-final.json",
+      "role": "exact preserved failed-v1 terminal evidence",
+      "sha256": "9da2f4bba8b15d8fae090a1362c4204430ed240a7c75d7bbb754d43d50f52c55"
+    },
+    {
+      "archive_path": "select013-dead-frontier-witness-v1/attempt-01/actual-blocker-capacity.json",
+      "bytes": 132308,
+      "path": "build/select013-dead-frontier-witness-v1/attempt-01/actual-blocker-capacity.json",
+      "role": "prior robust excluded-cell witness",
+      "sha256": "e6fe994f45834be83740743dc9c9f198bcba55b55cc47083b0e183f7966b7961"
+    },
+    {
+      "archive_path": "select013-dead-frontier-witness-v1/attempt-01/result.json",
+      "bytes": 3943,
+      "path": "build/select013-dead-frontier-witness-v1/attempt-01/result.json",
+      "role": "prior fixed-frontier witness result",
+      "sha256": "e23d75b1171936af24ff0834e37a46e8426bd8b28a0a5f5017848cd78e65c0a2"
+    }
+  ],
+  "excluded_bulk": "v1/v2 acquired source directories, full paired prefix records, full episode histories, full branch/result duplicated history, baseline/enabled inventory duplicates, copied canonical source snapshots; exact hashes of inspected originals retained in independent audit. Canonical source is recoverable at Git d70d814b54929061c299a52507a29fd3910f379c and bound by source-index.",
+  "file_count": 161,
+  "maximum_including_manifest_bytes": 1572864,
+  "payload_bytes": 982422,
+  "scope": "explicit archive include list only; no copy, deletion, replay or new execution",
+  "storage_owner": "acquisition_continuity_audit"
+}

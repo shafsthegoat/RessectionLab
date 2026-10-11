@@ -1794,3 +1794,21 @@ at a divergent state; missing useful choices there remains an untested hypothesi
 One explicit fallback before a nonpositive shortlist STOP is the next controlled
 change, with all additional checks charged and the same full quality requirement.
 No new dataset can correct missing action checks by itself.
+
+## October 11 — Obstruction-directed movement changes one interaction
+
+[The fixed-frontier contrast](../artifacts/select013-obstruction-frontier-v2/RESULT.md)
+exactly matches the original eleven-motion physical prefix in both worlds. One
+of three added movements clears one previously excluded cell, shrinking14 first
+blocker sets. Every original ray remains blocked, with0 target progress; the
+closed negative-prefix branch return is−9.485399 versus rootSTOP0. Twenty-three
+pairs are omitted by the shared120 cap, including candidates centered on the
+surviving co-blocker. This supports an action-family effect, not route recovery.
+
+The initial source-serialization failure(117previews,0commits) is preserved. Its
+narrow authority-preserving repair passes8 generated controls and delta review.
+The corrected run completes41.061887s/593.95MB sampled,3081previews/26transitions,
+with clean cleanup and no model/private/held inputs. Independent saved checks
+confirm all prefix and117-ray joins. The next useful comparison must plan a full
+sequence under declared candidate/checking budgets; more one-cell diagnostics
+or broader training do not resolve the remaining route question.

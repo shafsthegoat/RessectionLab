@@ -1,0 +1,81 @@
+Single-pass source review: fixed-frontier obstruction contrast
+
+Decision: GO for one root-owned, frozen attempt within the declared caps. This
+review covers source semantics and saved generated-control receipts; no acquired
+arrays, checkpoints, native previews, test rerun, or canonical edits were made.
+
+Comparability and admission
+The baseline is reconstructed through its original source/admission path and
+must reproduce exact saved world/context, all 11 native history records, and the
+saved dead-frontier inventory. The enabled task is freshly constructed after
+changing only obstruction_opening. All other public case constructor fields are
+compared, with unchanged reward and horizon. Its different source/model hashes
+are declared; no historical admission or frozen-policy capability is copied to
+the changed model. The native planning clone uses the public nominal target.
+
+Action IDs necessarily change with model bindings. Prefix matching instead uses
+family/tool/entry/tip, requiring a unique feasible emitted action. Original ledger
+prefixes, complete physical histories (excluding only four binding/identity keys),
+and committed mask digests must agree at every step. This retains geometry,
+removal, microsteps, reward, and temporal semantics while accommodating the
+declared model identity change. A mismatch fails rather than permitting a new
+prefix or substituting another action.
+
+Branches and independent outcome interpretation
+At the identical frontier, each feasible emitted obstruction addition is tried
+once in provider order in a fresh clone. There is no reward-based branch filter.
+Only one preparation is committed per branch. The 117 retained original ray
+geometries are then directly re-previewed under that branch's actual state; these
+previews are evidence only and cannot be injected into the task or executed as
+route continuations. Committed state must remain unchanged by re-preview, and
+the common frontier must remain unchanged across branches. Every branch and both
+controls close with STOP. Negative 11-motion prefix costs remain in branch returns;
+the root STOP value is separately zero. No accepted-plan/complete-route claim is
+made, and the zero-including best return is not a successful preparation claim.
+
+Interpret outcomes in stages: (1) a legal new preparation exists; (2) it actually
+removes one of the 13 previously robustly excluded cells; (3) an original ray
+becomes feasible; (4) any public-target progress. Each needs its own saved evidence.
+A preparation can satisfy an earlier stage without a later one. An old-ray pass
+is a local feasibility result, not target-route success. A negative result does
+not exclude untested preparations or multi-preparation sequences.
+
+Caps and censoring
+The 13 base columns remain first, with the same total candidate cap 120. Since
+the fixed frontier has 117 original emissions, no more than three additions can
+be emitted. All emitted feasible additions are branched; omitted cell/tool pairs
+from candidate or cell-selection caps remain in the saved ledger and explicitly
+censor conclusions. Discovery remains first-failure-only and nonrecursive even
+if no cap omission occurs. The original family is never displaced.
+The worker enforces <=30 transitions, <=360 direct diagnostic previews, and
+<=4,000 total native previews. Owned parent limits are 180/210 seconds worker/
+parent, 3 GiB sampled owned-tree RSS, 32 MiB output, and one attempt without retry.
+Completion checks bind branch count, 22 prefix motions, STOP counts, and exactly
+117 direct re-previews per branch. Partial/error results cannot pass completion.
+
+Controls and final source closure
+Saved controls-02.json reports seven generated controls passed (2.519512125 s
+parent wall time), unchanged scientific/helper/worker sources, no acquired inputs.
+The initial fixture sequencing failure remains saved; its correction changed the
+test only. No control rerun was needed or performed by this reviewer.
+
+The sole post-control production delta is the metadata freezer. It accepts only
+two exact committed successors from the prior 94-file closure: admission and
+public factory additions gated by the optional development_transfer parameter.
+The actual diff was inspected: this SELECT013 worker does not supply that option,
+so the old SELECT branch remains default; exact world/context/prefix guards remain.
+All other prior source bytes stay exact, and canonical files must match HEAD.
+The saved stdlib successor-source-control.json reports PASS for this closure.
+
+HEAD: f626b507808bfa55a98df7ec27797be936166a67
+Final SHA256 pins:
+frontier_compare.py 1675cca9940e4bc33755aa34ff6db63091c31fb91855e42bb4b67a656a677b1a
+select_worker.py 7e41aaa98ae0f1bef2f0e0d962b528c601efc749ccdb26f347178814c657a512
+comparison_contract.py 5e24da28b33d136f304c008ac243e8035df94b32352d2d2efbc57997f70df0c2
+run_owned.py 5840fd9f1e7e3470bdc8bced689291de40b07a1069e016578a9caceb09a1aef8
+freeze-runtime.py 1c7a5443021d620636529aa97ce1d9ff46c2bd0a8148e9371e7a825a4662bff0
+test_frontier.py 7de9331d4b48ae74d7cef95b20be1b0ce5afe19c28c3fbcedda5d67a063d4135
+patient_planning_admission.py ff599ea5ba3d026f8342b54ea18a395c24719c57e6d860b41dfb177721247f95
+public_patient_factory.py da5ec355048effd160b3f7211544cf7ace4912aac4cd21e768ce424e22f9a2aa
+
+Root owns release, launch, and subsequent interpretation of saved results.

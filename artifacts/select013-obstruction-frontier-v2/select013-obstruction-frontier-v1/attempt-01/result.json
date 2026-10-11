@@ -1,0 +1,76 @@
+{
+  "EVAL_opened": false,
+  "accepted_plan_claim": false,
+  "checkpoint_loads": 0,
+  "committed_actions": 0,
+  "committed_prefix_actions": 0,
+  "complete_episode": false,
+  "context_equal": true,
+  "diagnostic_STOP_calls": 0,
+  "diagnostic_previews": 0,
+  "failure": {
+    "committed": false,
+    "message": "Unaccounted source value object",
+    "type": "TypeError"
+  },
+  "failure_semantics": "first rejected shaft interval only; newly feasible original rays are previewed but never injected or executed",
+  "gradient_attempts": 0,
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "held_inputs_opened": false,
+  "independent_replay_certificate": false,
+  "lineage_scope": "historical metadata authenticates baseline source only; changed proposal model has no frozen-policy capability",
+  "model_forwards": 0,
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 1.727880333084613,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": "arm_raised_TypeError",
+    "history_complete_caller_attestation": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 4000,
+      "planning_execution_seconds": 180.0
+    },
+    "native_preview_entries": 117,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 37,
+          "raised": 0,
+          "rejected": 80,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 80
+          },
+          "returned": 117,
+          "returned_microsteps": 2060,
+          "seconds": 1.1584805781021714,
+          "started": 117
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 117,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "failed",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "optimizer_attempts": 0,
+  "planned_SELECT_denominator": 2,
+  "private_reference_reads": 0,
+  "role": "SELECT",
+  "status": "failed_or_unresolved",
+  "subject": "ReMIND-013",
+  "unselected_negative_prefix": true,
+  "updates": 0,
+  "wall_seconds": 1.756532666971907,
+  "world_equal": true
+}

@@ -1,0 +1,61 @@
+{
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 1.727880333084613,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": "arm_raised_TypeError",
+    "history_complete_caller_attestation": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 4000,
+      "planning_execution_seconds": 180.0
+    },
+    "native_preview_entries": 117,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 37,
+          "raised": 0,
+          "rejected": 80,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 80
+          },
+          "returned": 117,
+          "returned_microsteps": 2060,
+          "seconds": 1.1584805781021714,
+          "started": 117
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 117,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "failed",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "phases": {
+    "enabled_fresh_source_and_construction": {
+      "complete_wall_seconds": 0.13062133407220244,
+      "native_preview_entries": 0
+    },
+    "original_public_construction": {
+      "complete_wall_seconds": 1.5955492500215769,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.2195518740918487,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 117,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0014247498475015163,
+      "task_clone_returned": 1
+    }
+  },
+  "timing_scope": "inclusive; do not sum nested scopes"
+}

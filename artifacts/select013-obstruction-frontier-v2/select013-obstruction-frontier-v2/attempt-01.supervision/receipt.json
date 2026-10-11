@@ -1,0 +1,47 @@
+{
+  "EVAL_execution": false,
+  "SELECT_subject": "ReMIND-013",
+  "arms": {},
+  "automatic_retry": false,
+  "canonical_result_status": "complete_fixed_obstruction_frontier_diagnostic",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 210,
+    "output_bytes": 33554432,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 180,
+    "worker_log_bytes": 8388608
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 41.06188674992882,
+  "exit_code": 0,
+  "final_owned_pids": [],
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "optimizer_updates_on_SELECT": 0,
+  "output_bytes": 2947006,
+  "planned_SELECT_denominator": 2,
+  "private_reference_execution": false,
+  "release_sha256": "65d7d22bc4c944d01991352abb1ebfe80b7fbdbfa475e863e5e71281310a8a99",
+  "result_sha256": "6a59fbfcdf32abd8df46e5808f8cd175d5309f1b352ba07ab6d53f2baf050251",
+  "sampled_peak_rss_bytes": 593952768,
+  "samples": 196,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/select013-obstruction-frontier-v2/source-index.json",
+    "sha256": "44e25177b0efd74241a23f4019b0994ff6a1815d15c1d5a50e1d96071703f7e9"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 14733,
+  "worker_final_sha256": "d4d31f7b5003d7654965f8a487afd14c65851e51d6f648a34f56cb731d5deeb0",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

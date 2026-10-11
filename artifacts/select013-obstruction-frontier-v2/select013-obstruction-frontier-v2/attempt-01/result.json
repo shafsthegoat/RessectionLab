@@ -1,0 +1,92 @@
+{
+  "EVAL_opened": false,
+  "accepted_plan_claim": false,
+  "added_emitted": 3,
+  "added_legal": 1,
+  "any_excluded_cell_removed": true,
+  "any_original_ray_feasible": false,
+  "any_preparation_target_progress": false,
+  "baseline_frontier_exact": true,
+  "best_closed_branch_return": 0.0,
+  "branch_count": 1,
+  "branches": [
+    {
+      "branch": 0,
+      "return": -9.485399131014761
+    }
+  ],
+  "branches_complete": true,
+  "censored_by_omitted_pairs": true,
+  "checkpoint_loads": 0,
+  "committed_actions": 26,
+  "committed_prefix_actions": 22,
+  "complete_episode": true,
+  "complete_target_route_claim": false,
+  "configuration_change_declared": true,
+  "context_equal": true,
+  "diagnostic_STOP_calls": 3,
+  "diagnostic_previews": 117,
+  "failure_semantics": "first rejected shaft interval only; newly feasible original rays are previewed but never injected or executed",
+  "gradient_attempts": 0,
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "held_inputs_opened": false,
+  "independent_replay_certificate": false,
+  "lineage_scope": "historical metadata authenticates baseline source only; changed proposal model has no frozen-policy capability",
+  "model_forwards": 0,
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 38.51921045803465,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": null,
+    "history_complete_caller_attestation": true,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 4000,
+      "planning_execution_seconds": 180.0
+    },
+    "native_preview_entries": 3081,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 425,
+          "raised": 0,
+          "rejected": 2656,
+          "rejection_reasons": {
+            "HARD_GEOMETRY:ACCESS_APERTURE": 26,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 2630
+          },
+          "returned": 3081,
+          "returned_microsteps": 57232,
+          "seconds": 30.58115053572692,
+          "started": 3081
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 3081,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "complete_history_awaiting_independent_audit",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "omitted_cell_tool_pairs": 23,
+  "optimizer_attempts": 0,
+  "planned_SELECT_denominator": 2,
+  "prefix_exact": true,
+  "private_reference_reads": 0,
+  "role": "SELECT",
+  "status": "complete_fixed_obstruction_frontier_diagnostic",
+  "subject": "ReMIND-013",
+  "unselected_negative_prefix": true,
+  "updates": 0,
+  "wall_seconds": 38.54597087507136,
+  "world_equal": true
+}

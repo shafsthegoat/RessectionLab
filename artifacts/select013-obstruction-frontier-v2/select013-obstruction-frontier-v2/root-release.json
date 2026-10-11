@@ -1,0 +1,111 @@
+{
+  "arms": [
+    "original_fixed_frontier",
+    "obstruction_opening_fixed_frontier"
+  ],
+  "attempts": 1,
+  "automatic_retry": false,
+  "coverage": "bounded existing public obstruction-opening rule at120; omission-censored discovery; direct original-ray clearance not a complete route",
+  "expected_head": "d70d814b54929061c299a52507a29fd3910f379c",
+  "limits": {
+    "cells_per_sidecar": 32,
+    "closure_STOP_calls": 5,
+    "diagnostic_previews": 360,
+    "fixed_prefix_commits": 22,
+    "max_added_branches": 3,
+    "model_forwards": 0,
+    "native_previews": 4000,
+    "threads": 1,
+    "total_commits": 30,
+    "updates": 0
+  },
+  "models_or_weights_loaded": false,
+  "output": "build/select013-obstruction-frontier-v2/attempt-01",
+  "parent_seconds": 210,
+  "prior_pins": {
+    "context": {
+      "path": "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/context.json",
+      "sha256": "178b81f87c8363a3f0c55be411b2085739e349415bbacc73a0fe3e90ad124887"
+    },
+    "coverage": {
+      "path": "build/select013-dead-frontier-witness-v1/attempt-01/actual-blocker-capacity.json",
+      "sha256": "e6fe994f45834be83740743dc9c9f198bcba55b55cc47083b0e183f7966b7961"
+    },
+    "failed_v1_receipt": {
+      "path": "build/select013-obstruction-frontier-v1/attempt-01.supervision/receipt.json",
+      "sha256": "34827539399176277bc56177623657863ca1dd54899f4f564d09d42e03d8c9f8"
+    },
+    "failed_v1_release": {
+      "path": "build/select013-obstruction-frontier-v1/root-release.json",
+      "sha256": "e7e3e38c58e76549983155c3d9d5d78ffc732254e1f1eee6d825d0141a4cb8c8"
+    },
+    "failed_v1_result": {
+      "path": "build/select013-obstruction-frontier-v1/attempt-01/result.json",
+      "sha256": "d940367188ad8a57c103f04f2e22556cb51592eb5adca3322cc23a156931ddcf"
+    },
+    "failed_v1_source_index": {
+      "path": "build/select013-obstruction-frontier-v1/source-index.json",
+      "sha256": "1fedb6edbf23742894c681a348398c08e927602c9c68603b5dfa18e9a73e1741"
+    },
+    "lineage": {
+      "path": "build/select013-lazy-beam-recovery-v1/attempt-01/IL64-lineage.json",
+      "sha256": "e1fe8425d052af596f3a830645e306c47b85f135264e39f81a45f632c3ae3172"
+    },
+    "receipt": {
+      "path": "build/select013-lazy-beam-recovery-v1/attempt-01.supervision/receipt.json",
+      "sha256": "83031cb5bdeb9c9ee6bd47dcf53f28e3c7ea7f83207bc94b174d8501b994f232"
+    },
+    "release": {
+      "path": "build/select013-lazy-beam-recovery-v1/root-release.json",
+      "sha256": "43e7cdf0e43a014154cc15236bbb4df1818ed1577b3cee5b8d75ac368e9aa3d9"
+    },
+    "result": {
+      "path": "build/select013-lazy-beam-recovery-v1/attempt-01/result.json",
+      "sha256": "96e0b98069689a7ad6f1b986423f527ce931e04034b33605d3ebaf48e9e9d761"
+    },
+    "selection": {
+      "path": "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/selection.json",
+      "sha256": "8f62656d1081ea247499cb1ff7ed8b803bf2249d3e700703d3806506a151c8f4"
+    },
+    "witness_history": {
+      "path": "build/select013-dead-frontier-witness-v1/attempt-01/diagnostic-prefix-history.json",
+      "sha256": "0eb2e6f46d135bb63e3d703931dc51bdd7b2f4d131e249b3ec833b0178261efa"
+    },
+    "witness_index": {
+      "path": "build/select013-dead-frontier-witness-v1/source-index.json",
+      "sha256": "71879696c1194859f8280b3865804c18a545d09011929fb0a8c39a7a4274a008"
+    },
+    "witness_inventory": {
+      "path": "build/select013-dead-frontier-witness-v1/attempt-01/dead-frontier-inventory.json",
+      "sha256": "3957c5c7af6d239e9f939b9cf1d007e97136bdc8d44eff013fd98ef9dc25bd88"
+    },
+    "witness_receipt": {
+      "path": "build/select013-dead-frontier-witness-v1/attempt-01.supervision/receipt.json",
+      "sha256": "085f40abf2ccad5133e8ddd283c97a80ec6a57d1d2acf240e52b3cec7da96cb0"
+    },
+    "witness_release": {
+      "path": "build/select013-dead-frontier-witness-v1/root-release.json",
+      "sha256": "8866a10e14574b79c46f93be9f5f4f4f8f3e827e9f82c94a5742a18d988a1477"
+    },
+    "witness_result": {
+      "path": "build/select013-dead-frontier-witness-v1/attempt-01/result.json",
+      "sha256": "e23d75b1171936af24ff0834e37a46e8426bd8b28a0a5f5017848cd78e65c0a2"
+    },
+    "world": {
+      "path": "build/select013-lazy-beam-recovery-v1/attempt-01/observed_beam/comparison-world.json",
+      "sha256": "2dc67df3216033c72540cf2d83e3c614f3a5e62a2fb31ad3cf8c653925213995"
+    }
+  },
+  "public_index": {
+    "path": "build/select013-expanded-public-preparation-v1/public-inputs-v1/public-select-index.json",
+    "sha256": "a5a7ed8b504b3f768666cdec4c77908d680ff242eb157afb0f377b95105dc389"
+  },
+  "selection": "exact physical saved11 prefix in both proposal conditions; provider-order feasible added single-preparation branches; original-ray previews; STOP costs retained",
+  "source_index": {
+    "path": "build/select013-obstruction-frontier-v2/source-index.json",
+    "sha256": "44e25177b0efd74241a23f4019b0994ff6a1815d15c1d5a50e1d96071703f7e9"
+  },
+  "status": "released_one_attempt",
+  "training_or_private_reference_execution": false,
+  "worker_seconds": 180
+}

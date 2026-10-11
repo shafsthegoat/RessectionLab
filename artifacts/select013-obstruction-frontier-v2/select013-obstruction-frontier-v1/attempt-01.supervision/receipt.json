@@ -1,0 +1,47 @@
+{
+  "EVAL_execution": false,
+  "SELECT_subject": "ReMIND-013",
+  "arms": {},
+  "automatic_retry": false,
+  "canonical_result_status": "failed_or_unresolved",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 210,
+    "output_bytes": 33554432,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 180,
+    "worker_log_bytes": 8388608
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 4.460432749940082,
+  "exit_code": 1,
+  "final_owned_pids": [],
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "optimizer_updates_on_SELECT": 0,
+  "output_bytes": 54420,
+  "planned_SELECT_denominator": 2,
+  "private_reference_execution": false,
+  "release_sha256": "e7e3e38c58e76549983155c3d9d5d78ffc732254e1f1eee6d825d0141a4cb8c8",
+  "result_sha256": "d940367188ad8a57c103f04f2e22556cb51592eb5adca3322cc23a156931ddcf",
+  "sampled_peak_rss_bytes": 535183360,
+  "samples": 21,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/select013-obstruction-frontier-v1/source-index.json",
+    "sha256": "1fedb6edbf23742894c681a348398c08e927602c9c68603b5dfa18e9a73e1741"
+  },
+  "status": "failed_or_unresolved",
+  "stop_reason": "final_guard:ValueError:Incomplete public SELECT comparison",
+  "supervision_bytes_before_receipt": 16919,
+  "worker_final_sha256": "9da2f4bba8b15d8fae090a1362c4204430ed240a7c75d7bbb754d43d50f52c55",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

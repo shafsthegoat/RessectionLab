@@ -1,0 +1,20 @@
+{
+  "acquired_inputs": false,
+  "exit_code": 0,
+  "hard_seconds": 30,
+  "log_sha256": "f44bd3a4e13eb429968a99da11a7024f7e03f5a1874a3c4a97bf50f690322bbf",
+  "single_thread": true,
+  "source_pins": {
+    "comparison_contract.py": "15279484cd695d643f251566c075e0e0e541e6dece6940c26014bd28e393f5e4",
+    "freeze-runtime.py": "1141930c4527ab8daf4443b0b4c5fcc2e1f2d28b8440722992ed06cafa982522",
+    "frontier_compare.py": "e02d7b02ba8d4c8188f1a3643b44333fa08ab4db413355324704c58d72abd20b",
+    "run_owned.py": "90be845456928856767e9f4e7421c20f69397625c7cc81f7abd9eabd2868ebef",
+    "select_worker.py": "7e41aaa98ae0f1bef2f0e0d962b528c601efc749ccdb26f347178814c657a512",
+    "test_frontier.py": "24f8a831ebd25fb21db70db301058215786f00ddf50cfd73537635620fbea81f"
+  },
+  "source_unchanged": true,
+  "status": "pass",
+  "timeout": false,
+  "wall_seconds": 2.805212833,
+  "worker_byte_identical_to_v1": true
+}

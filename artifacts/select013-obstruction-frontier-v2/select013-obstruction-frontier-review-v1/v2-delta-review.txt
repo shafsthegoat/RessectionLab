@@ -1,0 +1,38 @@
+V2 delta-only review: GO for one root-owned frozen successor attempt.
+
+Reviewed correction.patch and the new constructor-shape control, then read the
+terminal controls-01.json receipt. No whole-source repeat audit, tests, native
+previews, acquired arrays, weights, or canonical edits were performed.
+
+The correction is limited to physical-source comparison. Only the exact canonical
+PostExposureStart class gets explicit serialization of record, external_workspace,
+seed, and initial_free. The opaque _capability is not a physical feature and is
+not serialized. It remains checked against canonical _PREPARED, and replacement
+of the source case must retain the same prepared PostExposureStart object. Exact
+type/token/identity failures are rejected, and arbitrary unknown objects still
+raise. No authority is manufactured, no admission capability is transplanted, and
+no geometry, target, tool, reward, action selection, or branch semantics changes.
+
+The generated control copies the actual dataclass constructor field names into a
+local scalar double. It reproduces the v1 serializer exception and verifies the
+new physical record, same-instance requirement, wrong-token and distinct-instance
+rejection, changed physical-field visibility, and unknown-object rejection. Local
+test type/token injection is scoped by monkeypatch and never constructs a real
+canonical capability. Saved receipt: eight controls PASS, exit 0, no timeout,
+2.805212833 seconds parent wall time, stable source, acquired_inputs=false.
+
+The v1 attempt is preserved and explicitly pinned as failed setup: exact TypeError
+message, zero committed actions, 117 initial previews, zero learned operations,
+and clean process termination. V2 has a new output path and release identity;
+this is not a silent overwrite or automatic retry. The scientific worker is
+byte-identical to v1. Existing comparison/censoring/interpretation conditions in
+source-review.txt still apply. Root owns release and acquired execution.
+
+SHA256:
+correction.patch c6eaaf96b581313fe218a81a73d515d9ad4caf3b7312ec24d15e2a25c281d385
+frontier_compare.py e02d7b02ba8d4c8188f1a3643b44333fa08ab4db413355324704c58d72abd20b
+test_frontier.py 24f8a831ebd25fb21db70db301058215786f00ddf50cfd73537635620fbea81f
+comparison_contract.py 15279484cd695d643f251566c075e0e0e541e6dece6940c26014bd28e393f5e4
+freeze-runtime.py 1141930c4527ab8daf4443b0b4c5fcc2e1f2d28b8440722992ed06cafa982522
+run_owned.py 90be845456928856767e9f4e7421c20f69397625c7cc81f7abd9eabd2868ebef
+select_worker.py 7e41aaa98ae0f1bef2f0e0d962b528c601efc749ccdb26f347178814c657a512

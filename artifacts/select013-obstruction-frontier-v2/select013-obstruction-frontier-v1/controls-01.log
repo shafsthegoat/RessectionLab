@@ -1,0 +1,17 @@
+....F..                                                                  [100%]
+=================================== FAILURES ===================================
+_______ test_changed_reference_cannot_change_nominal_preparation_results _______
+
+    def test_changed_reference_cannot_change_nominal_preparation_results():
+        case=generated();a=NativeSpatialTask(case).planning_clone()
+        b=NativeSpatialTask(replace(case,reference_target=np.zeros_like(case.reference_target))).planning_clone()
+        x,_=helper.enabled_fresh(a);y,_=helper.enabled_fresh(b)
+        assert x.candidate_inventory()==y.candidate_inventory()
+>       row=next(r for r in x.candidate_inventory()['emitted'] if r['family']==OBSTRUCTION_OPENING_FAMILY and r['feasible'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+build/select013-obstruction-frontier-v1/test_frontier.py:87: StopIteration
+=========================== short test summary info ============================
+FAILED build/select013-obstruction-frontier-v1/test_frontier.py::test_changed_reference_cannot_change_nominal_preparation_results
+1 failed, 6 passed in 2.22s
