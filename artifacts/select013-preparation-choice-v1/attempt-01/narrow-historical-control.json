@@ -1,0 +1,19 @@
+{
+  "current_history_sha256": "sha256:56cd4b489d6827c1108be542e6a007edd894848ec3c4819b3029882c96610ffe",
+  "current_packets_sha256": "sha256:3301bd23856bf562a8ed64dd9b7c0829c9af7fe99f001f974a30acfea659d06b",
+  "exact_action_records": true,
+  "exact_history": true,
+  "exact_selected_records": true,
+  "historical_history_sha256": "sha256:56cd4b489d6827c1108be542e6a007edd894848ec3c4819b3029882c96610ffe",
+  "historical_packets_sha256": "sha256:3301bd23856bf562a8ed64dd9b7c0829c9af7fe99f001f974a30acfea659d06b",
+  "historical_selection": {
+    "path": "build/select013-focused-corridor-v1/attempt-01/focused_corridor/selection.json",
+    "sha256": "a84461e39394a7d94e267e77981ce9a68565bb0d0c253061afd89bd089bce892"
+  },
+  "history_scope": "exact complete native exploration; no fields normalized",
+  "packet_scope": "exact full focus/catalog/state/physical-action packets; no fields normalized",
+  "plans_already_sealed": {
+    "narrow": "sha256:694e9eb28fa57bd30c7de2beeefcfc8d7c985c59adf5cb46e7a47a9574bd2afe",
+    "wide": "sha256:ea5f9dfda3903c4f8f417c2832f7758084024e7a0dcfc5bff00908248fdbb823"
+  }
+}

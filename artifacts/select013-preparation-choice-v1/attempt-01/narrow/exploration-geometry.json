@@ -1,0 +1,25 @@
+{
+  "decision_model_hash": "sha256:5fc041113fa1e2b1fb44796709e48dcc96ac7f85db08e0c4a7cf437efa490519",
+  "feasible": true,
+  "geometry": {
+    "action_count": 48,
+    "checker_version": "independent-native-sequence-v2",
+    "claimed_source_tissue_volume_mm3": 82.99999198381168,
+    "complete_tool_checked": true,
+    "contained_source_tissue_volume_mm3": 82.99999198381168,
+    "failures": [],
+    "feasible": true,
+    "first_failed_action": null,
+    "first_unsupported_position_mm": null,
+    "first_unsupported_source_voxel": null,
+    "frontier_checked": true,
+    "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+    "source_case_hash": "sha256:a649ef37f08282cc86b814a4a01dc3ea3cf5ce8bd7b1190d716ab47bf770c5a4",
+    "source_voxel_volume_mm3": 0.9999999034194179,
+    "unsupported_source_tissue_volume_mm3": 0.0
+  },
+  "history_sha256": "sha256:56cd4b489d6827c1108be542e6a007edd894848ec3c4819b3029882c96610ffe",
+  "schema": "independent-planning-exploration-geometry-v1",
+  "scope": "geometry of saved nominal exploration, not an accepted authoritative episode or policy outcome",
+  "source_hash": "sha256:a649ef37f08282cc86b814a4a01dc3ea3cf5ce8bd7b1190d716ab47bf770c5a4"
+}

@@ -1,0 +1,313 @@
+{
+  "runtime_head": "a19b72993ef3ded6d147b364f45b7afc671975a1",
+  "files": [
+    {
+      "path": "HANDOFF.txt",
+      "original_path": "build/select013-preparation-choice-v1/HANDOFF.txt",
+      "bytes": 4230,
+      "sha256": "a1491fe8c9026ff9c49469df9d13f1d5bdee301f0c0a4b8eb22164ff30f8fcf7"
+    },
+    {
+      "path": "attempt-01/costs.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/costs.json",
+      "bytes": 5105,
+      "sha256": "d2e8795e6ce86d089bdde9461f0c3d45d30b9af87820d5d08d659a4abfc1b1d5"
+    },
+    {
+      "path": "attempt-01/narrow/declared-rule-change.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/narrow/declared-rule-change.json",
+      "bytes": 1505,
+      "sha256": "8830e8b32930e19b11453e9c02f7d4c97e2e560199902a3ad0511b458781c2d7"
+    },
+    {
+      "path": "attempt-01/narrow/exploration-geometry.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/narrow/exploration-geometry.json",
+      "bytes": 1395,
+      "sha256": "22ce89abb12828b1e03cb2086d78c2928c99715a7aba187db36177d10fe6b63a"
+    },
+    {
+      "path": "attempt-01/narrow/horizon-change.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/narrow/horizon-change.json",
+      "bytes": 370,
+      "sha256": "2f136bec95fdc101bdfd2f165eb0d226261814ed1d3ec504812206e7f6dd061a"
+    },
+    {
+      "path": "attempt-01/narrow/independent-episode.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/narrow/independent-episode.json",
+      "bytes": 2493,
+      "sha256": "a12ccb5b9683b7e96d220c4ba40c03b5b0f035f0d01716c19374363f08d7a0b0"
+    },
+    {
+      "path": "attempt-01/narrow/original-world-control.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/narrow/original-world-control.json",
+      "bytes": 19337,
+      "sha256": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e"
+    },
+    {
+      "path": "attempt-01/narrow/replay-binding.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/narrow/replay-binding.json",
+      "bytes": 215,
+      "sha256": "723ca17e1ef03205facba0dac5d518a06f2842a7d1b3516262016b453231472a"
+    },
+    {
+      "path": "attempt-01/narrow/rollout-metrics.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/narrow/rollout-metrics.json",
+      "bytes": 21463,
+      "sha256": "8e18eafc0861628e812b2bfb451bd8db299c50f3c57717afe53b1c97e4abbd0d"
+    },
+    {
+      "path": "attempt-01/narrow/selected-action-plan.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/narrow/selected-action-plan.json",
+      "bytes": 5174,
+      "sha256": "3afed0f13b91f05d5b78ea3ccb4505eeadd6b6b7b3b75bf687d90dc7765b6af3"
+    },
+    {
+      "path": "attempt-01/narrow-historical-control.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/narrow-historical-control.json",
+      "bytes": 1104,
+      "sha256": "7095a562bcff5806a1e59846503e83e7de1a4a190627bfa047b5045ecfc0ff1b"
+    },
+    {
+      "path": "attempt-01/result.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/result.json",
+      "bytes": 222521,
+      "sha256": "ef64519bd1762ab0867eeb09010e26c28cf8ef01430047ca76b82261e1cd0f1b"
+    },
+    {
+      "path": "attempt-01/wide/declared-rule-change.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/wide/declared-rule-change.json",
+      "bytes": 1505,
+      "sha256": "8830e8b32930e19b11453e9c02f7d4c97e2e560199902a3ad0511b458781c2d7"
+    },
+    {
+      "path": "attempt-01/wide/exploration-geometry.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/wide/exploration-geometry.json",
+      "bytes": 1395,
+      "sha256": "cc3d9c69fcaf24dcf5175e1543859739b7517ee3476e79ad0a6561e2c49f5948"
+    },
+    {
+      "path": "attempt-01/wide/horizon-change.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/wide/horizon-change.json",
+      "bytes": 370,
+      "sha256": "2f136bec95fdc101bdfd2f165eb0d226261814ed1d3ec504812206e7f6dd061a"
+    },
+    {
+      "path": "attempt-01/wide/independent-episode.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/wide/independent-episode.json",
+      "bytes": 2493,
+      "sha256": "08d3050e1ba0a0eb9f6677e7680a708302045ad0912e0ed46df16f3cc650f1d5"
+    },
+    {
+      "path": "attempt-01/wide/original-world-control.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/wide/original-world-control.json",
+      "bytes": 19337,
+      "sha256": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e"
+    },
+    {
+      "path": "attempt-01/wide/replay-binding.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/wide/replay-binding.json",
+      "bytes": 215,
+      "sha256": "723ca17e1ef03205facba0dac5d518a06f2842a7d1b3516262016b453231472a"
+    },
+    {
+      "path": "attempt-01/wide/rollout-metrics.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/wide/rollout-metrics.json",
+      "bytes": 21463,
+      "sha256": "8e18eafc0861628e812b2bfb451bd8db299c50f3c57717afe53b1c97e4abbd0d"
+    },
+    {
+      "path": "attempt-01/wide/selected-action-plan.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01/wide/selected-action-plan.json",
+      "bytes": 5173,
+      "sha256": "4441154050b41986baf32634de9aac3312cefae293789525d673c354d1a7a39f"
+    },
+    {
+      "path": "attempt-01.supervision/receipt.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01.supervision/receipt.json",
+      "bytes": 217191,
+      "sha256": "e61277083304852b3dea127332fdfebfc4744d11f509fd0c381b971a09443b70"
+    },
+    {
+      "path": "attempt-01.supervision/worker-final.json",
+      "original_path": "build/select013-preparation-choice-v1/attempt-01.supervision/worker-final.json",
+      "bytes": 284,
+      "sha256": "69570ffb243d33efe0238e9399d4df25d3d2fa2e397fe59f05668f09314918df"
+    },
+    {
+      "path": "comparison_contract.py",
+      "original_path": "build/select013-preparation-choice-v1/comparison_contract.py",
+      "bytes": 6069,
+      "sha256": "fe5fd8c9cee640f7ed4e3f4da5fa9c84c134d970512b50c9d2401f99103d4cc3"
+    },
+    {
+      "path": "controls-01.json",
+      "original_path": "build/select013-preparation-choice-v1/controls-01.json",
+      "bytes": 1634,
+      "sha256": "9da254e61bec53afd70ebd812860aab83a6b5a1d41bcc03180ad24abebd26fdf"
+    },
+    {
+      "path": "controls-01.log",
+      "original_path": "build/select013-preparation-choice-v1/controls-01.log",
+      "bytes": 12812,
+      "sha256": "9fc8ad4a04a5a035664c305748791f35ce4cea9d9cf7a7210f369cbd79ab10ee"
+    },
+    {
+      "path": "controls-02.json",
+      "original_path": "build/select013-preparation-choice-v1/controls-02.json",
+      "bytes": 1634,
+      "sha256": "fd7532147c6274373a7ddcc24b9ea5d3f159c2c139d61950a94a9aace83d749d"
+    },
+    {
+      "path": "controls-02.log",
+      "original_path": "build/select013-preparation-choice-v1/controls-02.log",
+      "bytes": 98,
+      "sha256": "f6edf6b8821b3ce2239860364808a92968eef0b3bd75178d6cca6494a135e10b"
+    },
+    {
+      "path": "controls-03.json",
+      "original_path": "build/select013-preparation-choice-v1/controls-03.json",
+      "bytes": 1632,
+      "sha256": "5919e2eff2529b7dfbc355d4918cec8ca1fa81c6ad3bc246b2fc56c49b16e016"
+    },
+    {
+      "path": "controls-03.log",
+      "original_path": "build/select013-preparation-choice-v1/controls-03.log",
+      "bytes": 98,
+      "sha256": "922aca14df68b67376d6252b5735557052f86fafb1aa47848aa74cde373bd942"
+    },
+    {
+      "path": "decision5-witness.json",
+      "original_path": "build/select013-preparation-choice-v1/decision5-witness.json",
+      "bytes": 8814,
+      "sha256": "bd655fc084b1a2273110cf2ea89b01e48520efc35007e8d5c97f0f71de6b894a"
+    },
+    {
+      "path": "freeze-runtime.py",
+      "original_path": "build/select013-preparation-choice-v1/freeze-runtime.py",
+      "bytes": 4567,
+      "sha256": "0f4c0b633c1bf3d7a0afac56e2f612c643e1f9e46c87d1740ff929782e035af4"
+    },
+    {
+      "path": "helper-source-ready.json",
+      "original_path": "build/select013-preparation-choice-v1/helper-source-ready.json",
+      "bytes": 1982,
+      "sha256": "b2a25827526634d6305dd66d727a75b12e5b87492f5456a022165ad33ca355cb"
+    },
+    {
+      "path": "postrun/REPORT.txt",
+      "original_path": "build/select013-preparation-choice-v1/postrun/REPORT.txt",
+      "bytes": 5910,
+      "sha256": "67becc2702625ecc4d37f369fa8ec0d50bf33b7b24cb07cc7167cb52be151c06"
+    },
+    {
+      "path": "postrun/diagnose.py",
+      "original_path": "build/select013-preparation-choice-v1/postrun/diagnose.py",
+      "bytes": 11402,
+      "sha256": "f452a0b4d841f151c9803b026d31c1d0387d5e0f09c020396fb1cd2096daf798"
+    },
+    {
+      "path": "postrun/diagnosis.json",
+      "original_path": "build/select013-preparation-choice-v1/postrun/diagnosis.json",
+      "bytes": 64979,
+      "sha256": "421fa57ce2fd34f7a9076897237507815c62c258d1b6b2aadf78570fa65ecef6"
+    },
+    {
+      "path": "preparation_choice_selector.py",
+      "original_path": "build/select013-preparation-choice-v1/preparation_choice_selector.py",
+      "bytes": 27980,
+      "sha256": "cd069306a527a83b5d15d944f8ea417f49f1d38ccb55c926c53f7b92fef84358"
+    },
+    {
+      "path": "root-release.json",
+      "original_path": "build/select013-preparation-choice-v1/root-release.json",
+      "bytes": 11429,
+      "sha256": "ad17e551827cbecf90ff35809e7663c5d15a2ec3d2c56d8c48fb1e245b4434a0"
+    },
+    {
+      "path": "run_owned.py",
+      "original_path": "build/select013-preparation-choice-v1/run_owned.py",
+      "bytes": 12255,
+      "sha256": "01b9128389bf218bc8cbb192c6177a6ee8d6e879b7dbb3638b70a578f0dd18ed"
+    },
+    {
+      "path": "runtime-controls-01.json",
+      "original_path": "build/select013-preparation-choice-v1/runtime-controls-01.json",
+      "bytes": 863,
+      "sha256": "478f82d009b340d59912da0815091360b0f641cad5b2071be8c6eba416606a79"
+    },
+    {
+      "path": "runtime-source-ready.json",
+      "original_path": "build/select013-preparation-choice-v1/runtime-source-ready.json",
+      "bytes": 1400,
+      "sha256": "5848afa83d4eac75a78798a0f8d9792e9cd1098970ebd45d66e97386834aa2a9"
+    },
+    {
+      "path": "select_worker.py",
+      "original_path": "build/select013-preparation-choice-v1/select_worker.py",
+      "bytes": 25161,
+      "sha256": "1a01f2ae9793ac195adfab45885ebc40b15592595b3538b28ce0ce9b0c9f9f24"
+    },
+    {
+      "path": "source-index.json",
+      "original_path": "build/select013-preparation-choice-v1/source-index.json",
+      "bytes": 33588,
+      "sha256": "7c8c2e03bc10356999582143000ac8076919051270d585ab4da65c9173106ce8"
+    },
+    {
+      "path": "tests/check_runtime_contract.py",
+      "original_path": "build/select013-preparation-choice-v1/tests/check_runtime_contract.py",
+      "bytes": 3199,
+      "sha256": "4cb6881c1efa020b76ed3bd728467e970a7f30d33c71dab54c978adeec9ad910"
+    },
+    {
+      "path": "tests/test_preparation_choice.py",
+      "original_path": "build/select013-preparation-choice-v1/tests/test_preparation_choice.py",
+      "bytes": 9711,
+      "sha256": "e02367d5984c54c0642badf88c77d845855fcbd7a6cadd682139c4aab01d8b70"
+    },
+    {
+      "path": "postrun/archive-list.json",
+      "original_path": "build/select013-preparation-choice-v1/postrun/archive-list.json",
+      "bytes": 9845,
+      "sha256": "6a1a64b61c71fda8b7c4c4e3c1a845f7f3a8e40a615d9b18426d877f5bd562eb"
+    },
+    {
+      "path": "independent/audit_saved_result.py",
+      "original_path": "build/select013-preparation-choice-v1/independent/audit_saved_result.py",
+      "bytes": 21929,
+      "sha256": "5333efc63c4254d0e138a2477b342e5bbb48a33034fcbb8f214eaa7ea1245fa2"
+    },
+    {
+      "path": "independent/result-review.txt",
+      "original_path": "build/select013-preparation-choice-v1/independent/result-review.txt",
+      "bytes": 9928,
+      "sha256": "84cffe4bf9fb66f9e95b161376104c134a11591e92d93edd05ecacc85b385655"
+    },
+    {
+      "path": "independent/saved-result-audit.json",
+      "original_path": "build/select013-preparation-choice-v1/independent/saved-result-audit.json",
+      "bytes": 54177,
+      "sha256": "42752e0b734e6d4321ebf1fc3310659290ac6891a41cdb01101a7aafa2e8402f"
+    },
+    {
+      "path": "independent/source-review.txt",
+      "original_path": "build/select013-preparation-choice-v1/independent/source-review.txt",
+      "bytes": 9159,
+      "sha256": "1b2446332e93566e0f8051feefc427537ac2cf0ad79fd2990f5c06bc69015bda"
+    }
+  ],
+  "bulk_local_only": [
+    {
+      "bytes": 9618607,
+      "path": "build/select013-preparation-choice-v1/attempt-01/narrow/selection.json",
+      "sha256": "265df9e798f523033d70b71f1377f4a970fbe24da004ef56017f11396d3e2a5b"
+    },
+    {
+      "bytes": 9675490,
+      "path": "build/select013-preparation-choice-v1/attempt-01/wide/selection.json",
+      "sha256": "28e877c29df5bd73e452b8daec825ce0f879076d9eebb19793e879e97a8b832c"
+    }
+  ],
+  "reproduction_limit": "Full saved audit needs hash-pinned local generated traces and historical public-source dependencies; patient arrays and weights are not copied. Canonical source matches the runtime commit.",
+  "bytes": 906593
+}

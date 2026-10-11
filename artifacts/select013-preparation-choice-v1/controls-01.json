@@ -1,0 +1,33 @@
+{
+  "schema": "bounded-generated-preparation-choice-controls-v1",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-preparation-choice-v1/tests/test_preparation_choice.py"
+  ],
+  "returncode": 1,
+  "timed_out": false,
+  "wall_seconds": 1.595174791,
+  "hard_seconds": 45,
+  "threads": 1,
+  "child_reaped": true,
+  "source_before": {
+    "build/select013-preparation-choice-v1/preparation_choice_selector.py": "f3eddd5db254284e3022c67ebf165df56ad9cf10ce4868d2c5e1272d048de611",
+    "build/select013-preparation-choice-v1/tests/test_preparation_choice.py": "8e34f2d00a0308fa702b986e3e345404f33306519ccc4f17cd2974f9a3cdf1ec",
+    "src/resectionlab/focused_corridor_selector.py": "e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448"
+  },
+  "source_after": {
+    "build/select013-preparation-choice-v1/preparation_choice_selector.py": "f3eddd5db254284e3022c67ebf165df56ad9cf10ce4868d2c5e1272d048de611",
+    "build/select013-preparation-choice-v1/tests/test_preparation_choice.py": "8e34f2d00a0308fa702b986e3e345404f33306519ccc4f17cd2974f9a3cdf1ec",
+    "src/resectionlab/focused_corridor_selector.py": "e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448"
+  },
+  "source_unchanged": true,
+  "generated_only": true,
+  "acquired_or_model_inputs": false,
+  "log_sha256": "9fc8ad4a04a5a035664c305748791f35ce4cea9d9cf7a7210f369cbd79ab10ee"
+}

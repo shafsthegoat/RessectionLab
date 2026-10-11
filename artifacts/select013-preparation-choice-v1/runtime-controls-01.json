@@ -1,0 +1,25 @@
+{
+  "checks": [
+    "sorted_JSON_complete_negative_passes",
+    "refuse_exact_history",
+    "refuse_exact_action_records",
+    "refuse_exact_selected_records",
+    "refuse_complete",
+    "refuse_prefix_verified_count",
+    "refuse_intervention_applied",
+    "refuse_exploration_geometry_feasible",
+    "refuse_focus_context_replayed",
+    "refuse_independent_accepted",
+    "refuse_full_history_equal",
+    "refuse_missing_arm",
+    "refuse_extra_arm",
+    "refuse_unresolved_arm",
+    "refuse_unsealed"
+  ],
+  "checks_count": 15,
+  "contract_sha256": "fe5fd8c9cee640f7ed4e3f4da5fa9c84c134d970512b50c9d2401f99103d4cc3",
+  "scope": "stdlib AST-isolated real terminal guard; no task/native/model/patient execution",
+  "status": "passed",
+  "test_sha256": "4cb6881c1efa020b76ed3bd728467e970a7f30d33c71dab54c978adeec9ad910",
+  "wall_seconds": 0.0012282920000000058
+}

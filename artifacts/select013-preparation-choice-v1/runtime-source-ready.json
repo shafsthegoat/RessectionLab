@@ -1,0 +1,19 @@
+{
+  "runtime_controls": "15 stdlib isolated real terminal predicate checks",
+  "runtime_files": {
+    "HANDOFF.txt": "a1491fe8c9026ff9c49469df9d13f1d5bdee301f0c0a4b8eb22164ff30f8fcf7",
+    "comparison_contract.py": "fe5fd8c9cee640f7ed4e3f4da5fa9c84c134d970512b50c9d2401f99103d4cc3",
+    "decision5-witness.json": "bd655fc084b1a2273110cf2ea89b01e48520efc35007e8d5c97f0f71de6b894a",
+    "freeze-runtime.py": "0f4c0b633c1bf3d7a0afac56e2f612c643e1f9e46c87d1740ff929782e035af4",
+    "helper-source-ready.json": "b2a25827526634d6305dd66d727a75b12e5b87492f5456a022165ad33ca355cb",
+    "preparation_choice_selector.py": "cd069306a527a83b5d15d944f8ea417f49f1d38ccb55c926c53f7b92fef84358",
+    "run_owned.py": "01b9128389bf218bc8cbb192c6177a6ee8d6e879b7dbb3638b70a578f0dd18ed",
+    "runtime-controls-01.json": "478f82d009b340d59912da0815091360b0f641cad5b2071be8c6eba416606a79",
+    "select_worker.py": "1a01f2ae9793ac195adfab45885ebc40b15592595b3538b28ce0ce9b0c9f9f24",
+    "tests/check_runtime_contract.py": "4cb6881c1efa020b76ed3bd728467e970a7f30d33c71dab54c978adeec9ad910"
+  },
+  "scientific_controls": "helper owner controls-03, final wording-only successor recorded in helper-source-ready",
+  "scope": "source-only runtime assembly; no acquired execution or metadata freeze",
+  "status": "source_ready_root_freeze_pending",
+  "storage": "1MiB prepared; later37MiB root/storage amendment+begin required"
+}

@@ -1,0 +1,243 @@
+{
+  "excluded_bulk_required_for_full_reproduction": [
+    {
+      "bytes": 9618607,
+      "path": "build/select013-preparation-choice-v1/attempt-01/narrow/selection.json",
+      "sha256": "265df9e798f523033d70b71f1377f4a970fbe24da004ef56017f11396d3e2a5b"
+    },
+    {
+      "bytes": 9675490,
+      "path": "build/select013-preparation-choice-v1/attempt-01/wide/selection.json",
+      "sha256": "28e877c29df5bd73e452b8daec825ce0f879076d9eebb19793e879e97a8b832c"
+    }
+  ],
+  "excluded_redundant_template": "Pending release-template remains hash-bound/local; exact actual root-release is included.",
+  "file_count": 44,
+  "files": [
+    {
+      "bytes": 4230,
+      "path": "build/select013-preparation-choice-v1/HANDOFF.txt",
+      "sha256": "a1491fe8c9026ff9c49469df9d13f1d5bdee301f0c0a4b8eb22164ff30f8fcf7"
+    },
+    {
+      "bytes": 5105,
+      "path": "build/select013-preparation-choice-v1/attempt-01/costs.json",
+      "sha256": "d2e8795e6ce86d089bdde9461f0c3d45d30b9af87820d5d08d659a4abfc1b1d5"
+    },
+    {
+      "bytes": 1505,
+      "path": "build/select013-preparation-choice-v1/attempt-01/narrow/declared-rule-change.json",
+      "sha256": "8830e8b32930e19b11453e9c02f7d4c97e2e560199902a3ad0511b458781c2d7"
+    },
+    {
+      "bytes": 1395,
+      "path": "build/select013-preparation-choice-v1/attempt-01/narrow/exploration-geometry.json",
+      "sha256": "22ce89abb12828b1e03cb2086d78c2928c99715a7aba187db36177d10fe6b63a"
+    },
+    {
+      "bytes": 370,
+      "path": "build/select013-preparation-choice-v1/attempt-01/narrow/horizon-change.json",
+      "sha256": "2f136bec95fdc101bdfd2f165eb0d226261814ed1d3ec504812206e7f6dd061a"
+    },
+    {
+      "bytes": 2493,
+      "path": "build/select013-preparation-choice-v1/attempt-01/narrow/independent-episode.json",
+      "sha256": "a12ccb5b9683b7e96d220c4ba40c03b5b0f035f0d01716c19374363f08d7a0b0"
+    },
+    {
+      "bytes": 19337,
+      "path": "build/select013-preparation-choice-v1/attempt-01/narrow/original-world-control.json",
+      "sha256": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e"
+    },
+    {
+      "bytes": 215,
+      "path": "build/select013-preparation-choice-v1/attempt-01/narrow/replay-binding.json",
+      "sha256": "723ca17e1ef03205facba0dac5d518a06f2842a7d1b3516262016b453231472a"
+    },
+    {
+      "bytes": 21463,
+      "path": "build/select013-preparation-choice-v1/attempt-01/narrow/rollout-metrics.json",
+      "sha256": "8e18eafc0861628e812b2bfb451bd8db299c50f3c57717afe53b1c97e4abbd0d"
+    },
+    {
+      "bytes": 5174,
+      "path": "build/select013-preparation-choice-v1/attempt-01/narrow/selected-action-plan.json",
+      "sha256": "3afed0f13b91f05d5b78ea3ccb4505eeadd6b6b7b3b75bf687d90dc7765b6af3"
+    },
+    {
+      "bytes": 1104,
+      "path": "build/select013-preparation-choice-v1/attempt-01/narrow-historical-control.json",
+      "sha256": "7095a562bcff5806a1e59846503e83e7de1a4a190627bfa047b5045ecfc0ff1b"
+    },
+    {
+      "bytes": 222521,
+      "path": "build/select013-preparation-choice-v1/attempt-01/result.json",
+      "sha256": "ef64519bd1762ab0867eeb09010e26c28cf8ef01430047ca76b82261e1cd0f1b"
+    },
+    {
+      "bytes": 1505,
+      "path": "build/select013-preparation-choice-v1/attempt-01/wide/declared-rule-change.json",
+      "sha256": "8830e8b32930e19b11453e9c02f7d4c97e2e560199902a3ad0511b458781c2d7"
+    },
+    {
+      "bytes": 1395,
+      "path": "build/select013-preparation-choice-v1/attempt-01/wide/exploration-geometry.json",
+      "sha256": "cc3d9c69fcaf24dcf5175e1543859739b7517ee3476e79ad0a6561e2c49f5948"
+    },
+    {
+      "bytes": 370,
+      "path": "build/select013-preparation-choice-v1/attempt-01/wide/horizon-change.json",
+      "sha256": "2f136bec95fdc101bdfd2f165eb0d226261814ed1d3ec504812206e7f6dd061a"
+    },
+    {
+      "bytes": 2493,
+      "path": "build/select013-preparation-choice-v1/attempt-01/wide/independent-episode.json",
+      "sha256": "08d3050e1ba0a0eb9f6677e7680a708302045ad0912e0ed46df16f3cc650f1d5"
+    },
+    {
+      "bytes": 19337,
+      "path": "build/select013-preparation-choice-v1/attempt-01/wide/original-world-control.json",
+      "sha256": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e"
+    },
+    {
+      "bytes": 215,
+      "path": "build/select013-preparation-choice-v1/attempt-01/wide/replay-binding.json",
+      "sha256": "723ca17e1ef03205facba0dac5d518a06f2842a7d1b3516262016b453231472a"
+    },
+    {
+      "bytes": 21463,
+      "path": "build/select013-preparation-choice-v1/attempt-01/wide/rollout-metrics.json",
+      "sha256": "8e18eafc0861628e812b2bfb451bd8db299c50f3c57717afe53b1c97e4abbd0d"
+    },
+    {
+      "bytes": 5173,
+      "path": "build/select013-preparation-choice-v1/attempt-01/wide/selected-action-plan.json",
+      "sha256": "4441154050b41986baf32634de9aac3312cefae293789525d673c354d1a7a39f"
+    },
+    {
+      "bytes": 217191,
+      "path": "build/select013-preparation-choice-v1/attempt-01.supervision/receipt.json",
+      "sha256": "e61277083304852b3dea127332fdfebfc4744d11f509fd0c381b971a09443b70"
+    },
+    {
+      "bytes": 284,
+      "path": "build/select013-preparation-choice-v1/attempt-01.supervision/worker-final.json",
+      "sha256": "69570ffb243d33efe0238e9399d4df25d3d2fa2e397fe59f05668f09314918df"
+    },
+    {
+      "bytes": 6069,
+      "path": "build/select013-preparation-choice-v1/comparison_contract.py",
+      "sha256": "fe5fd8c9cee640f7ed4e3f4da5fa9c84c134d970512b50c9d2401f99103d4cc3"
+    },
+    {
+      "bytes": 1634,
+      "path": "build/select013-preparation-choice-v1/controls-01.json",
+      "sha256": "9da254e61bec53afd70ebd812860aab83a6b5a1d41bcc03180ad24abebd26fdf"
+    },
+    {
+      "bytes": 12812,
+      "path": "build/select013-preparation-choice-v1/controls-01.log",
+      "sha256": "9fc8ad4a04a5a035664c305748791f35ce4cea9d9cf7a7210f369cbd79ab10ee"
+    },
+    {
+      "bytes": 1634,
+      "path": "build/select013-preparation-choice-v1/controls-02.json",
+      "sha256": "fd7532147c6274373a7ddcc24b9ea5d3f159c2c139d61950a94a9aace83d749d"
+    },
+    {
+      "bytes": 98,
+      "path": "build/select013-preparation-choice-v1/controls-02.log",
+      "sha256": "f6edf6b8821b3ce2239860364808a92968eef0b3bd75178d6cca6494a135e10b"
+    },
+    {
+      "bytes": 1632,
+      "path": "build/select013-preparation-choice-v1/controls-03.json",
+      "sha256": "5919e2eff2529b7dfbc355d4918cec8ca1fa81c6ad3bc246b2fc56c49b16e016"
+    },
+    {
+      "bytes": 98,
+      "path": "build/select013-preparation-choice-v1/controls-03.log",
+      "sha256": "922aca14df68b67376d6252b5735557052f86fafb1aa47848aa74cde373bd942"
+    },
+    {
+      "bytes": 8814,
+      "path": "build/select013-preparation-choice-v1/decision5-witness.json",
+      "sha256": "bd655fc084b1a2273110cf2ea89b01e48520efc35007e8d5c97f0f71de6b894a"
+    },
+    {
+      "bytes": 4567,
+      "path": "build/select013-preparation-choice-v1/freeze-runtime.py",
+      "sha256": "0f4c0b633c1bf3d7a0afac56e2f612c643e1f9e46c87d1740ff929782e035af4"
+    },
+    {
+      "bytes": 1982,
+      "path": "build/select013-preparation-choice-v1/helper-source-ready.json",
+      "sha256": "b2a25827526634d6305dd66d727a75b12e5b87492f5456a022165ad33ca355cb"
+    },
+    {
+      "bytes": 5910,
+      "path": "build/select013-preparation-choice-v1/postrun/REPORT.txt",
+      "sha256": "67becc2702625ecc4d37f369fa8ec0d50bf33b7b24cb07cc7167cb52be151c06"
+    },
+    {
+      "bytes": 11402,
+      "path": "build/select013-preparation-choice-v1/postrun/diagnose.py",
+      "sha256": "f452a0b4d841f151c9803b026d31c1d0387d5e0f09c020396fb1cd2096daf798"
+    },
+    {
+      "bytes": 64979,
+      "path": "build/select013-preparation-choice-v1/postrun/diagnosis.json",
+      "sha256": "421fa57ce2fd34f7a9076897237507815c62c258d1b6b2aadf78570fa65ecef6"
+    },
+    {
+      "bytes": 27980,
+      "path": "build/select013-preparation-choice-v1/preparation_choice_selector.py",
+      "sha256": "cd069306a527a83b5d15d944f8ea417f49f1d38ccb55c926c53f7b92fef84358"
+    },
+    {
+      "bytes": 11429,
+      "path": "build/select013-preparation-choice-v1/root-release.json",
+      "sha256": "ad17e551827cbecf90ff35809e7663c5d15a2ec3d2c56d8c48fb1e245b4434a0"
+    },
+    {
+      "bytes": 12255,
+      "path": "build/select013-preparation-choice-v1/run_owned.py",
+      "sha256": "01b9128389bf218bc8cbb192c6177a6ee8d6e879b7dbb3638b70a578f0dd18ed"
+    },
+    {
+      "bytes": 863,
+      "path": "build/select013-preparation-choice-v1/runtime-controls-01.json",
+      "sha256": "478f82d009b340d59912da0815091360b0f641cad5b2071be8c6eba416606a79"
+    },
+    {
+      "bytes": 1400,
+      "path": "build/select013-preparation-choice-v1/runtime-source-ready.json",
+      "sha256": "5848afa83d4eac75a78798a0f8d9792e9cd1098970ebd45d66e97386834aa2a9"
+    },
+    {
+      "bytes": 25161,
+      "path": "build/select013-preparation-choice-v1/select_worker.py",
+      "sha256": "1a01f2ae9793ac195adfab45885ebc40b15592595b3538b28ce0ce9b0c9f9f24"
+    },
+    {
+      "bytes": 33588,
+      "path": "build/select013-preparation-choice-v1/source-index.json",
+      "sha256": "7c8c2e03bc10356999582143000ac8076919051270d585ab4da65c9173106ce8"
+    },
+    {
+      "bytes": 3199,
+      "path": "build/select013-preparation-choice-v1/tests/check_runtime_contract.py",
+      "sha256": "4cb6881c1efa020b76ed3bd728467e970a7f30d33c71dab54c978adeec9ad910"
+    },
+    {
+      "bytes": 9711,
+      "path": "build/select013-preparation-choice-v1/tests/test_preparation_choice.py",
+      "sha256": "e02367d5984c54c0642badf88c77d845855fcbd7a6cadd682139c4aab01d8b70"
+    }
+  ],
+  "historical_dependencies": "Pinned prior focused/recursive/h48/public-source references remain in runtime contract/source-index; old full trace and local public files are not recopied.",
+  "raw_inputs_or_weights_included": false,
+  "run_immutable": true,
+  "schema": "preparation-choice-minimal-archive-v1",
+  "total_file_bytes": 801555
+}

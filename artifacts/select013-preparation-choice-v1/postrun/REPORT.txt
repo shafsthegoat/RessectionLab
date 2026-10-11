@@ -1,0 +1,33 @@
+Decision-five preparation choice: useful local effect, no useful complete route
+
+The paired experiment completed cleanly. Both accepted selected plans are STOP0, with no target removal. All48 simulated exploratory actions in each arm had negative reward. Narrow exactly reproduces the previous focused48 native history, focus/catalog/action packets and selected packets. The first four native histories, decision-five native state and current catalog digest match between arms; both declared fifth actions were freshly certified. Both full exploratory histories pass independent geometry, and both sealed STOP plans pass authoritative fresh replay and independent episode checks. This is simulated action experience on annotation-assisted anatomy, not observed surgery or an operative demonstration.
+
+Measured continuation:
+                            narrow                 wide
+Exploratory motions         48                     48
+Normal cells removed        83                     86
+Target removed              0                      0
+Exploratory return          -19.025398398           -19.658198340
+Maximum removed layer       7                      7
+Removed-cell center depth   5.5mm                  5.5mm
+First reaching layer7       decision33             decision29
+Direct-blocker motions      25 /30 cells           25 /36 cells
+Prerequisite motions        23 /53 cells           23 /50 cells
+Tool changes                19                     20
+Complete tool travel        415.400000960mm        418.200000960mm
+Transverse columns cut      44                     44
+Dependency preview calls    226                    218
+All-phase native previews   9894                   9876
+Search phase wall           164.499647s            170.551284s
+
+The treatment had a real delayed benefit. Wide decision5 removes seven cells: exactly the union later removed by narrow decisions8(one),29(two) and35(four). The wide5 physical aspirator ray is exactly narrow35's deferred ray. Both treatments remove one current goal blocker, but the additional side cells become useful later. At decision15 both arms report the identical eight root blockers and all are allocated; wide has two certified legal blocker preparations while narrow has none. Wide executes two physical rays at decisions15/16 that narrow executes only at30/31. The earlier preparation therefore changes available progress under the unchanged continuation; it is not merely cosmetic added removal.
+
+Most of the advantage is then lost in the same myopic continuation. Wide first reaches layer7 at29 rather than33, but takes six consecutive prerequisites at30–35 without removing another root blocker. Its narrow32 four-cell cut is split into wide32(one cell) and35(three cells). After wide37, its cumulative removed set equals narrow38's; that one-action lead persists through wide47 versus narrow48. These are equal removed-cell sets, not equal complete state hashes, contact histories or trajectories. Both are still at layer7. Wide47 is only0.037600000 better in cumulative return at the same83-cell removed set. Wide48 spends the remaining action on three additional normal cells, two of which are sampled prerequisites; it removes no current root blocker and yields-0.670399942. The resulting final gap is exactly-0.632799942: extra normal-removal penalty-0.599999942, one extra switch-.03 and2.8mm extra travel-.0028. Action counts are equal.
+
+The residual failure is not missing active first-blocker allocation or abandonment. Both arms keep one physical suction goal, clear focus zero times, and allocate all retained active first blockers in all47 focused states. All dependency probes report complete first-failure shaft blockers, not aperture or unknown-domain refusal. Narrow's longest prerequisite run is38–46(nine actions); wide's is38–45(eight), following its earlier six-action run. Both end with known unremoved root cells[7,90,84],[7,90,85],[7,90,86]. Wide's final preparation cuts side prerequisites[5,88,86],[5,89,86],[6,89,86], none of those root cells. There is no post-horizon diagnostic, so the full final obstruction set or next-step feasibility is unmeasured. No >48 lower bound or claim that more horizon would succeed follows.
+
+Interpretation: the earlier wide preparation has measurable downstream value, but one changed decision does not fix the cost of repeated shallow prerequisite clearing under the unchanged greedy continuation. The experiment rejects a simple claim that taking this wide cut earlier produces a useful complete route. It supports considering multi-step preparation value, while supplying no evidence for a generally superior wider-tool preference or another blind ordering sweep. No new experiment is proposed as already justified by a positive outcome.
+
+Costs and physical limits: one fixed-order narrow→wide pair,351.643350s parent,550,289,408B peak owned RSS,19,697,184B output,19,770 previews,100 native transitions(96 exploration+two STOP rollouts+two STOP replays),zero model/optimizer/checkpoint work. Search timers include nested native work; independent geometry costs2.4140s and2.4365s, with source/setup/replay also paid. Wide uses18 fewer previews but6.0516s more search wall; this single pair gives no speedup claim. Removed normal tissue is not a surrogate for clinical injury; contact unions are248/254 cells and unassessed external workspace/transfer/normal-tissue exposure limitations remain.
+
+Reproduction: postrun/diagnose.py reads only exact saved JSON and derives the scalar/removed-set comparisons in diagnosis.json. Full selection traces remain ignored locally, pinned by SHA/size in the archive manifest; they are required to reproduce this diagnosis. The archive includes compact outcomes, both geometry certificates, source/release/runtime references and this analysis, without duplicate full traces or factory inventories. Original run files are unchanged.

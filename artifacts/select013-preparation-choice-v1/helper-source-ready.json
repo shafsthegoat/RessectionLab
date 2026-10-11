@@ -1,0 +1,34 @@
+{
+  "schema": "preparation-choice-helper-ready-v1",
+  "helper": {
+    "path": "build/select013-preparation-choice-v1/preparation_choice_selector.py",
+    "sha256": "cd069306a527a83b5d15d944f8ea417f49f1d38ccb55c926c53f7b92fef84358"
+  },
+  "baseline": {
+    "path": "src/resectionlab/focused_corridor_selector.py",
+    "sha256": "e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448"
+  },
+  "tests": {
+    "path": "build/select013-preparation-choice-v1/tests/test_preparation_choice.py",
+    "sha256": "e02367d5984c54c0642badf88c77d845855fcbd7a6cadd682139c4aab01d8b70"
+  },
+  "controls": {
+    "receipt": "build/select013-preparation-choice-v1/controls-03.json",
+    "receipt_sha256": "5919e2eff2529b7dfbc355d4918cec8ca1fa81c6ad3bc246b2fc56c49b16e016",
+    "log_sha256": "922aca14df68b67376d6252b5735557052f86fafb1aa47848aa74cde373bd942",
+    "passed": 7,
+    "pytest_seconds": 4.07,
+    "parent_seconds": 4.2392325,
+    "one_thread": true,
+    "hard_seconds": 45,
+    "child_reaped": true,
+    "production_unchanged": true,
+    "tested_helper_sha256": "f3eddd5db254284e3022c67ebf165df56ad9cf10ce4868d2c5e1272d048de611",
+    "post_control_semantic_delta": "Root-directed interpretation literal/docstrings now simulator-trace-derived; physical/selection/validation logic unchanged. No extra numerical pass solely for wording, per root."
+  },
+  "preserved_attempts": {
+    "controls-01": "Generated in-memory NumPy geometry refused by JSON-scalar protocol; fixture now converts exact physical coordinates to JSON float/list as actual saved witness does. No helper change.",
+    "controls-02": "Six controls passed before adding the successful alternate legal fifth action/full exploration packet replay control."
+  },
+  "scope": "One sealed simulator-trace-derived decision5 substitution, exact ordinary4-step prefix, current catalog/certificate/current blocker overlap, then unchanged policy. Not a deployable policy or teacher. No canonical changes or acquired inputs."
+}

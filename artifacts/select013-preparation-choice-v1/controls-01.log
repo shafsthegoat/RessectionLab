@@ -1,0 +1,202 @@
+EEEEEF                                                                   [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_same_choice_native_baseline_full_history_packets_counts_and_stop_replay _
+
+    @pytest.fixture(scope='module')
+    def negative():
+        task=make_task();packets,report=baseline(task,seconds=20)
+>       return task,packets,report,protocol_from(task,report)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-preparation-choice-v1/tests/test_preparation_choice.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/select013-preparation-choice-v1/tests/test_preparation_choice.py:36: in protocol_from
+    return seal_protocol({'schema':PROTOCOL_SCHEMA,'baseline_selector_sha256':BASELINE_SELECTOR_SHA256,
+build/select013-preparation-choice-v1/preparation_choice_selector.py:126: in seal_protocol
+    _geometry_key(row['physical_action'])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+record = {'tool_id': 'generic_aspirator', 'entry_mm': (np.float64(13.5), np.float64(1.0999999999999996), np.float64(17.9)), 'tip_mm': (np.float64(14.0), np.float64(1.0999999999999996), np.float64(17.9))}
+
+    def _geometry_key(record):
+        if not isinstance(record,dict) or set(record)!={'tool_id','entry_mm','tip_mm'}:
+            raise ValueError('Explicit physical tool/entry/tip required')
+        if not isinstance(record['tool_id'],str) or not record['tool_id']:
+            raise ValueError('Explicit registered tool identity required')
+        points=[]
+        for field in ('entry_mm','tip_mm'):
+            point=record[field]
+            if (not isinstance(point,(tuple,list)) or len(point)!=3
+                    or any(type(v) not in (int,float) or not math.isfinite(v) for v in point)):
+>               raise ValueError('Finite physical point required')
+E               ValueError: Finite physical point required
+
+build/select013-preparation-choice-v1/preparation_choice_selector.py:104: ValueError
+_ ERROR at setup of test_prefix_mismatch_refuses_without_forcing_action_and_charges_paid_prefix _
+
+    @pytest.fixture(scope='module')
+    def negative():
+        task=make_task();packets,report=baseline(task,seconds=20)
+>       return task,packets,report,protocol_from(task,report)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-preparation-choice-v1/tests/test_preparation_choice.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/select013-preparation-choice-v1/tests/test_preparation_choice.py:36: in protocol_from
+    return seal_protocol({'schema':PROTOCOL_SCHEMA,'baseline_selector_sha256':BASELINE_SELECTOR_SHA256,
+build/select013-preparation-choice-v1/preparation_choice_selector.py:126: in seal_protocol
+    _geometry_key(row['physical_action'])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+record = {'tool_id': 'generic_aspirator', 'entry_mm': (np.float64(13.5), np.float64(1.0999999999999996), np.float64(17.9)), 'tip_mm': (np.float64(14.0), np.float64(1.0999999999999996), np.float64(17.9))}
+
+    def _geometry_key(record):
+        if not isinstance(record,dict) or set(record)!={'tool_id','entry_mm','tip_mm'}:
+            raise ValueError('Explicit physical tool/entry/tip required')
+        if not isinstance(record['tool_id'],str) or not record['tool_id']:
+            raise ValueError('Explicit registered tool identity required')
+        points=[]
+        for field in ('entry_mm','tip_mm'):
+            point=record[field]
+            if (not isinstance(point,(tuple,list)) or len(point)!=3
+                    or any(type(v) not in (int,float) or not math.isfinite(v) for v in point)):
+>               raise ValueError('Finite physical point required')
+E               ValueError: Finite physical point required
+
+build/select013-preparation-choice-v1/preparation_choice_selector.py:104: ValueError
+_ ERROR at setup of test_unavailable_choice_refuses_after_exact_four_paid_decisions _
+
+    @pytest.fixture(scope='module')
+    def negative():
+        task=make_task();packets,report=baseline(task,seconds=20)
+>       return task,packets,report,protocol_from(task,report)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-preparation-choice-v1/tests/test_preparation_choice.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/select013-preparation-choice-v1/tests/test_preparation_choice.py:36: in protocol_from
+    return seal_protocol({'schema':PROTOCOL_SCHEMA,'baseline_selector_sha256':BASELINE_SELECTOR_SHA256,
+build/select013-preparation-choice-v1/preparation_choice_selector.py:126: in seal_protocol
+    _geometry_key(row['physical_action'])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+record = {'tool_id': 'generic_aspirator', 'entry_mm': (np.float64(13.5), np.float64(1.0999999999999996), np.float64(17.9)), 'tip_mm': (np.float64(14.0), np.float64(1.0999999999999996), np.float64(17.9))}
+
+    def _geometry_key(record):
+        if not isinstance(record,dict) or set(record)!={'tool_id','entry_mm','tip_mm'}:
+            raise ValueError('Explicit physical tool/entry/tip required')
+        if not isinstance(record['tool_id'],str) or not record['tool_id']:
+            raise ValueError('Explicit registered tool identity required')
+        points=[]
+        for field in ('entry_mm','tip_mm'):
+            point=record[field]
+            if (not isinstance(point,(tuple,list)) or len(point)!=3
+                    or any(type(v) not in (int,float) or not math.isfinite(v) for v in point)):
+>               raise ValueError('Finite physical point required')
+E               ValueError: Finite physical point required
+
+build/select013-preparation-choice-v1/preparation_choice_selector.py:104: ValueError
+_ ERROR at setup of test_current_blocked_goal_cannot_be_injected_as_certified_preparation _
+
+    @pytest.fixture(scope='module')
+    def negative():
+        task=make_task();packets,report=baseline(task,seconds=20)
+>       return task,packets,report,protocol_from(task,report)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-preparation-choice-v1/tests/test_preparation_choice.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/select013-preparation-choice-v1/tests/test_preparation_choice.py:36: in protocol_from
+    return seal_protocol({'schema':PROTOCOL_SCHEMA,'baseline_selector_sha256':BASELINE_SELECTOR_SHA256,
+build/select013-preparation-choice-v1/preparation_choice_selector.py:126: in seal_protocol
+    _geometry_key(row['physical_action'])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+record = {'tool_id': 'generic_aspirator', 'entry_mm': (np.float64(13.5), np.float64(1.0999999999999996), np.float64(17.9)), 'tip_mm': (np.float64(14.0), np.float64(1.0999999999999996), np.float64(17.9))}
+
+    def _geometry_key(record):
+        if not isinstance(record,dict) or set(record)!={'tool_id','entry_mm','tip_mm'}:
+            raise ValueError('Explicit physical tool/entry/tip required')
+        if not isinstance(record['tool_id'],str) or not record['tool_id']:
+            raise ValueError('Explicit registered tool identity required')
+        points=[]
+        for field in ('entry_mm','tip_mm'):
+            point=record[field]
+            if (not isinstance(point,(tuple,list)) or len(point)!=3
+                    or any(type(v) not in (int,float) or not math.isfinite(v) for v in point)):
+>               raise ValueError('Finite physical point required')
+E               ValueError: Finite physical point required
+
+build/select013-preparation-choice-v1/preparation_choice_selector.py:104: ValueError
+_ ERROR at setup of test_protocol_seal_context_and_continuity_reject_before_any_transition _
+
+    @pytest.fixture(scope='module')
+    def negative():
+        task=make_task();packets,report=baseline(task,seconds=20)
+>       return task,packets,report,protocol_from(task,report)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-preparation-choice-v1/tests/test_preparation_choice.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/select013-preparation-choice-v1/tests/test_preparation_choice.py:36: in protocol_from
+    return seal_protocol({'schema':PROTOCOL_SCHEMA,'baseline_selector_sha256':BASELINE_SELECTOR_SHA256,
+build/select013-preparation-choice-v1/preparation_choice_selector.py:126: in seal_protocol
+    _geometry_key(row['physical_action'])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+record = {'tool_id': 'generic_aspirator', 'entry_mm': (np.float64(13.5), np.float64(1.0999999999999996), np.float64(17.9)), 'tip_mm': (np.float64(14.0), np.float64(1.0999999999999996), np.float64(17.9))}
+
+    def _geometry_key(record):
+        if not isinstance(record,dict) or set(record)!={'tool_id','entry_mm','tip_mm'}:
+            raise ValueError('Explicit physical tool/entry/tip required')
+        if not isinstance(record['tool_id'],str) or not record['tool_id']:
+            raise ValueError('Explicit registered tool identity required')
+        points=[]
+        for field in ('entry_mm','tip_mm'):
+            point=record[field]
+            if (not isinstance(point,(tuple,list)) or len(point)!=3
+                    or any(type(v) not in (int,float) or not math.isfinite(v) for v in point)):
+>               raise ValueError('Finite physical point required')
+E               ValueError: Finite physical point required
+
+build/select013-preparation-choice-v1/preparation_choice_selector.py:104: ValueError
+=================================== FAILURES ===================================
+_ test_positive_best_prefix_survives_negative_continuation_with_packet_replay __
+
+    def test_positive_best_prefix_survives_negative_continuation_with_packet_replay():
+        task=make_task(positive=True);expected,prior=baseline(task,seconds=20)
+>       protocol=protocol_from(task,prior)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-preparation-choice-v1/tests/test_preparation_choice.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/select013-preparation-choice-v1/tests/test_preparation_choice.py:36: in protocol_from
+    return seal_protocol({'schema':PROTOCOL_SCHEMA,'baseline_selector_sha256':BASELINE_SELECTOR_SHA256,
+build/select013-preparation-choice-v1/preparation_choice_selector.py:126: in seal_protocol
+    _geometry_key(row['physical_action'])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+record = {'tool_id': 'generic_suction', 'entry_mm': (np.float64(13.5), np.float64(1.0999999999999996), np.float64(17.9)), 'tip_mm': (np.float64(14.0), np.float64(1.0999999999999996), np.float64(17.9))}
+
+    def _geometry_key(record):
+        if not isinstance(record,dict) or set(record)!={'tool_id','entry_mm','tip_mm'}:
+            raise ValueError('Explicit physical tool/entry/tip required')
+        if not isinstance(record['tool_id'],str) or not record['tool_id']:
+            raise ValueError('Explicit registered tool identity required')
+        points=[]
+        for field in ('entry_mm','tip_mm'):
+            point=record[field]
+            if (not isinstance(point,(tuple,list)) or len(point)!=3
+                    or any(type(v) not in (int,float) or not math.isfinite(v) for v in point)):
+>               raise ValueError('Finite physical point required')
+E               ValueError: Finite physical point required
+
+build/select013-preparation-choice-v1/preparation_choice_selector.py:104: ValueError
+=========================== short test summary info ============================
+FAILED build/select013-preparation-choice-v1/tests/test_preparation_choice.py::test_positive_best_prefix_survives_negative_continuation_with_packet_replay
+ERROR build/select013-preparation-choice-v1/tests/test_preparation_choice.py::test_same_choice_native_baseline_full_history_packets_counts_and_stop_replay
+ERROR build/select013-preparation-choice-v1/tests/test_preparation_choice.py::test_prefix_mismatch_refuses_without_forcing_action_and_charges_paid_prefix
+ERROR build/select013-preparation-choice-v1/tests/test_preparation_choice.py::test_unavailable_choice_refuses_after_exact_four_paid_decisions
+ERROR build/select013-preparation-choice-v1/tests/test_preparation_choice.py::test_current_blocked_goal_cannot_be_injected_as_certified_preparation
+ERROR build/select013-preparation-choice-v1/tests/test_preparation_choice.py::test_protocol_seal_context_and_continuity_reject_before_any_transition
+1 failed, 5 errors in 1.39s

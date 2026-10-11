@@ -1,0 +1,183 @@
+{
+  "baseline_sha256": "db2e3bad35aadd68f23111b9498270d019debf27486c696cc7ef48bd1fff67c8",
+  "capacity": {
+    "additional_reservable_bytes": 10425507840,
+    "allocation_allowed": true,
+    "conservative_growth_plus_reservations_bytes": 311910400,
+    "free_after_outstanding_reservations_bytes": 357108527104,
+    "free_bytes": 357160955904,
+    "growth_highwater_bytes": 259481600,
+    "outstanding_reserved_bytes": 52428800,
+    "reservation_scope_overruns": []
+  },
+  "closed_reservation": {
+    "allocation_kind": "one existing-data two-arm decision5 preparation-choice comparison; same enclosing shared scope; prepared only",
+    "amended_at_utc": "2026-10-11T12:09:29.566702+00:00",
+    "authority": "Root authorized one NEW shared\u22641MiB source/preparation scope; acquired37MiB runtime may be requested separately.",
+    "began_at_utc": "2026-10-11T12:12:03.221225+00:00",
+    "closed_at_utc": "2026-10-11T12:19:35.371347+00:00",
+    "collaborating_runner_owner": "/root/n36_result_audit_fresh",
+    "created_at_utc": "2026-10-11T12:03:47.554594+00:00",
+    "generated_control_limits": {
+      "all_source_and_outputs_shared_total_bytes": 1048576,
+      "defect_repair_retries_authorized_by_root": true,
+      "max_seconds_per_attempt": 45,
+      "preserve_attempt_receipts": true,
+      "threads": 1
+    },
+    "initial_scope_measurement": "No directory scan requested; zero is a conservative accounting origin, not a measured empty-directory claim. Growth measured at next safe milestone.",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 20295680,
+    "owner": "/root/goal_conditioned_policy",
+    "pilot": false,
+    "reservation_amendment_history": [
+      {
+        "at_utc": "2026-10-11T12:09:29.566700+00:00",
+        "authority": "Root authorized37MiB total after generated7PASS terminal:28output+8supervision+1preparation; remain prepared until final source review/metadatafreeze and explicit begin.",
+        "new_bytes": 38797312,
+        "previous_bytes": 1048576
+      }
+    ],
+    "reserved_bytes": 38797312,
+    "runtime_caps": {
+      "native_previews": 30000,
+      "native_transitions": 288,
+      "output_bytes": 29360128,
+      "parent_seconds": 660,
+      "preparation_controls_freezes_bytes": 1048576,
+      "rss_bytes": 3221225472,
+      "supervision_bytes": 8388608,
+      "threads": 1,
+      "total_bytes": 38797312,
+      "worker_seconds": 600
+    },
+    "scope_current_allocated_bytes": 20295680,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/select013-preparation-choice-v1"
+    ],
+    "status": "closed",
+    "terminal_note": "Storage release only; success/admission not inferred from exit status.",
+    "terminal_receipt": {
+      "path": "build/select013-preparation-choice-v1/attempt-01.supervision/receipt.json",
+      "sha256": "e61277083304852b3dea127332fdfebfc4744d11f509fd0c381b971a09443b70"
+    }
+  },
+  "ledger_sha256": "e7ca559b8c5c2b90dfe27d44086cb582ad00241993648fc479fc2ca6c423f272",
+  "limits": "One safe post-terminal project metadata scan plus new source-scope metadata origin. No payload bodies, scientific execution, acquired output generation, acquisition, deletion or baseline reset. New1MiB scope remains prepared. Up to256KiB saved-only reports and forthcoming compact result archive may be written after snapshot.",
+  "measurement": {
+    "allocated_bytes": {
+      ".git": 145977344,
+      ".pytest_cache": 1146880,
+      ".tools": 1643302912,
+      ".venv": 3054829568,
+      "@root-files-and-directory": 643072,
+      "artifacts": 1776631808,
+      "build": 17256579072,
+      "data": 356137631744,
+      "desktop": 18945323008,
+      "dist": 2575773696,
+      "docs": 2220032,
+      "launchers": 409600,
+      "manifests": 5275648,
+      "outputs": 14765998080,
+      "packaging": 544768,
+      "research": 53248,
+      "scripts": 9527296,
+      "src": 6643712,
+      "tests": 20168704
+    },
+    "ended_at_utc": "2026-10-11T12:19:35.021094+00:00",
+    "free_bytes": 357160955904,
+    "method": "du -k -d 1 .; allocated file blocks, no bodies or symlink traversal; statvfs f_bavail",
+    "started_at_utc": "2026-10-11T12:19:18.779253+00:00",
+    "total_allocated_bytes": 416348680192
+  },
+  "new_source_reservation": {
+    "allocation_kind": "source/helper/test preparation only; eventual generated controls require root dispatch; no acquired run, acquired arrays/output generation, downloads, dependencies or model/data copies",
+    "authority": "Root explicitly requested one1MiB source-only goal-burden scope after clean paired terminal and milestone.",
+    "created_at_utc": "2026-10-11T12:19:35.372278+00:00",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 0,
+    "owner": "/root/goal_conditioned_policy",
+    "pilot": false,
+    "reserved_bytes": 1048576,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/select013-goal-burden-v1"
+    ],
+    "status": "prepared"
+  },
+  "new_source_reservation_id": "select013-goal-burden-prep",
+  "output_logical_bytes": 19697184,
+  "pending_result_archive_bytes": null,
+  "pending_saved_only_metadata_max_bytes": 262144,
+  "recorded_at_utc": "2026-10-11T12:19:35.372977+00:00",
+  "recorded_result_sha256": "ef64519bd1762ab0867eeb09010e26c28cf8ef01430047ca76b82261e1cd0f1b",
+  "root_archive_remaining_allowance_bytes": 13635584,
+  "root_archive_reservation": {
+    "amended_at_utc": "2026-10-11T11:12:03.387222+00:00",
+    "created_at_utc": "2026-10-11T09:34:37.781715+00:00",
+    "increase_note": "Root-authorized conservative increase: less than3MiB remains from8MiB after measured growth, with forthcoming~1.5MiB switch archive plus Git/accounting.",
+    "increased_at_utc": "2026-10-11T09:52:27.207519+00:00",
+    "latest_h48_archive_owner_estimate": "39files3,460,976 bytes plus audit; remains within existing24MiB total allowance including Git/accounting. Earlier3MiB artifact forecast was approximate.",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 36696064,
+    "owner": "/root",
+    "pending_archive_forecast": {
+      "basis_last_measured_root_growth_bytes": 18513920,
+      "git_growth_since_scan": "not separately measured during timing; included within remaining32MiB allowance subject to postmilestone verification",
+      "known_measured_plus_package_forecast_bytes": 26765993,
+      "later_v2_result_max_bytes": 4194304,
+      "remaining32MiB_for_unmeasured_git_and_metadata_bytes": 6788439,
+      "source": "Root supplied current package forecast; no directory scan or claim of freshly measured archive size.",
+      "v1_archive_added_after_scan_bytes": 3533481,
+      "v2_integration_max_bytes": 524288
+    },
+    "pilot": false,
+    "previous_reserved_bytes": 8388608,
+    "reservation_increase_history": [
+      {
+        "at_utc": "2026-10-11T10:30:14.180921+00:00",
+        "observed_scope_growth_bytes": 13856768,
+        "pending_forecast_bytes": 7340032,
+        "previous_bytes": 16777216,
+        "reason": "Root requested space forecast/reservation for completed h48 compact archive before copying."
+      },
+      {
+        "at_utc": "2026-10-11T10:50:37.808119+00:00",
+        "new_bytes": 33554432,
+        "previous_bytes": 25165824,
+        "reason": "Root explicitly authorized32MiB for compact v1/v2 integration/result archive forecast plus Git."
+      },
+      {
+        "at_utc": "2026-10-11T11:12:03.387219+00:00",
+        "new_bytes": 50331648,
+        "observed_scope_growth_bytes": 32063488,
+        "previous_bytes": 33554432,
+        "reason": "Root explicitly authorized +16MiB because last measured32MiB allowance has only1.422MiB remaining for future compact archives/Git."
+      }
+    ],
+    "reserved_bytes": 50331648,
+    "scope_current_allocated_bytes": 1966800896,
+    "scope_initial_allocated_bytes": 1930104832,
+    "scopes": [
+      "artifacts",
+      ".git",
+      "docs",
+      "src",
+      "scripts",
+      "tests",
+      "manifests",
+      "build/storage-extension-v1"
+    ],
+    "status": "prepared"
+  },
+  "runtime_cost_metadata": {
+    "elapsed_seconds": 351.64334954111837,
+    "output_bytes": 19697184,
+    "sampled_peak_rss_bytes": 550289408,
+    "supervision_bytes_before_receipt": 23618
+  },
+  "schema": "storage-extension-milestone-closure-v1"
+}

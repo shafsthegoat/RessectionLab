@@ -1,0 +1,1781 @@
+{
+  "arms": {
+    "narrow": {
+      "STOP_replay_accepted": true,
+      "additional_previews": 1205,
+      "all_rewards_negative": true,
+      "base_previews": 5616,
+      "decision5": {
+        "active_goal": {
+          "entry_mm": [
+            -59.878999999211224,
+            -14.888999999694036,
+            -18.27829563649273
+          ],
+          "tip_mm": [
+            -41.37899999921122,
+            -14.888999999603442,
+            -18.27829563649273
+          ],
+          "tool_id": "generic_suction"
+        },
+        "active_retained_first_blockers": [
+          [
+            5,
+            90,
+            84
+          ],
+          [
+            5,
+            90,
+            85
+          ],
+          [
+            5,
+            90,
+            86
+          ],
+          [
+            5,
+            91,
+            84
+          ],
+          [
+            5,
+            91,
+            86
+          ],
+          [
+            5,
+            92,
+            84
+          ],
+          [
+            5,
+            92,
+            85
+          ],
+          [
+            5,
+            92,
+            86
+          ]
+        ],
+        "actual_removed_current_blockers": [
+          [
+            5,
+            91,
+            84
+          ]
+        ],
+        "all_removed_cells": [
+          [
+            5,
+            91,
+            84
+          ]
+        ],
+        "current_catalog_action_id": "nominal-cavity-bcd56713ece2ef53d513b0b2",
+        "current_tool": "generic_suction",
+        "decision": 5,
+        "fixed_physical_choice": {
+          "entry_mm": [
+            -59.878999999211224,
+            -14.888999999694038,
+            -17.278295733073307
+          ],
+          "tip_mm": [
+            -56.378999999211224,
+            -14.888999999676898,
+            -17.278295733073307
+          ],
+          "tool_id": "generic_suction"
+        },
+        "fresh_current_certificate": true,
+        "interpretation": "simulator_trace_causal_intervention_not_deployable_policy",
+        "nominal_reward": -0.2389999807038836,
+        "ordinary_policy_choice": {
+          "entry_mm": [
+            -59.878999999211224,
+            -14.888999999694038,
+            -17.278295733073307
+          ],
+          "tip_mm": [
+            -56.378999999211224,
+            -14.888999999676898,
+            -17.278295733073307
+          ],
+          "tool_id": "generic_suction"
+        },
+        "path_length_mm": 9.000000020000002,
+        "protocol_seal": "sha256:f52c1fa4f536654dd0b4bdb1570075ce3e02abf0fd8670a35468e90ebe6a8096",
+        "query_catalog_digest": "sha256:d885d0bcd5762bee12c7188cd994ed3047c384631599cfe51feac398b9377b38",
+        "removed_volume_mm3": 0.9999999034194179,
+        "scope": "one explicit simulator-trace-derived action substitution; future outcomes unknown",
+        "source_state_hash": "sha256:1b84c0307302a8d44fb389f983467fffdfae39ddb6ae011f9d8524ca799d9182"
+      },
+      "dependency_previews": 226,
+      "dependency_sidecars_checked": 226,
+      "exploration": {
+        "complete_tool_path_length_mm": 415.4000009600004,
+        "normal_removed_mm3": 82.9999919838117,
+        "removed_volume_mm3": 82.9999919838117,
+        "reward": -19.02539839772233,
+        "target_removed_mm3": 0.0
+      },
+      "focus_omissions": 0,
+      "full_geometry_accepted": true,
+      "global_omitted_cell_mentions": 500,
+      "goal_diagnostic_previews": 2496,
+      "history_semantic_hash": "sha256:56cd4b489d6827c1108be542e6a007edd894848ec3c4819b3029882c96610ffe",
+      "known_preterminal_blockers_still_unremoved": [
+        [
+          7,
+          90,
+          84
+        ],
+        [
+          7,
+          90,
+          85
+        ],
+        [
+          7,
+          90,
+          86
+        ]
+      ],
+      "layer_changes": [
+        {
+          "decision": 1,
+          "first_blocker_layers": [
+            4
+          ]
+        },
+        {
+          "decision": 5,
+          "first_blocker_layers": [
+            5
+          ]
+        },
+        {
+          "decision": 15,
+          "first_blocker_layers": [
+            6
+          ]
+        },
+        {
+          "decision": 32,
+          "first_blocker_layers": [
+            7
+          ]
+        }
+      ],
+      "legal_candidate_mentions": 1861,
+      "max_removed_cell_center_depth_mm": 5.500000000000005,
+      "max_removed_native_layer": 7,
+      "max_tip_depth_mm": 5.500000000000007,
+      "native_transitions": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 48
+      },
+      "packets_semantic_hash": "sha256:3301bd23856bf562a8ed64dd9b7c0829c9af7fe99f001f974a30acfea659d06b",
+      "pages": 223,
+      "plan_seal": "sha256:694e9eb28fa57bd30c7de2beeefcfc8d7c985c59adf5cb46e7a47a9574bd2afe",
+      "progress_kinds": {
+        "direct_blocker": 25,
+        "prerequisite": 23
+      },
+      "removed_cells": 83,
+      "search_previews": 9543,
+      "selection_complete": true,
+      "selection_wall_seconds": 164.27910737507045,
+      "single_persistent_goal": {
+        "entry_mm": [
+          -59.878999999211224,
+          -14.888999999694036,
+          -18.27829563649273
+        ],
+        "tip_mm": [
+          -41.37899999921122,
+          -14.888999999603442,
+          -18.27829563649273
+        ],
+        "tool_id": "generic_suction"
+      },
+      "tool_changes": 19,
+      "tools": {
+        "generic_aspirator": 11,
+        "generic_suction": 37
+      },
+      "total_previews": 9894,
+      "trace": [
+        {
+          "active_first_count": 7,
+          "cumulative_return": -1.2383998841233015,
+          "decision": 1,
+          "first_blocker_layers": [
+            4
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 6,
+          "reward": -1.2383998841233015,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 3,
+          "cumulative_return": -1.5053998648271851,
+          "decision": 2,
+          "first_blocker_layers": [
+            4
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2669999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 2,
+          "cumulative_return": -1.7423998455310687,
+          "decision": 3,
+          "first_blocker_layers": [
+            4
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2369999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 1,
+          "cumulative_return": -1.9793998262349524,
+          "decision": 4,
+          "first_blocker_layers": [
+            4
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2369999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 8,
+          "cumulative_return": -2.218399806938836,
+          "decision": 5,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2389999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 7,
+          "cumulative_return": -2.4573997876427196,
+          "decision": 6,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2389999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 6,
+          "cumulative_return": -2.696399768346603,
+          "decision": 7,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2389999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -2.935399749050487,
+          "decision": 8,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2389999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 4,
+          "cumulative_return": -3.1743997297543705,
+          "decision": 9,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2389999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 3,
+          "cumulative_return": -4.040799652509905,
+          "decision": 10,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 4,
+          "reward": -0.8663999227555343,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 3,
+          "cumulative_return": -4.309799633213788,
+          "decision": 11,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2689999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 2,
+          "cumulative_return": -4.548799613917671,
+          "decision": 12,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2389999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 1,
+          "cumulative_return": -4.783799594621555,
+          "decision": 13,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 1,
+          "cumulative_return": -5.022799575325438,
+          "decision": 14,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2389999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 8,
+          "cumulative_return": -6.091199478764856,
+          "decision": 15,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 5,
+          "reward": -1.0683999034394178,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 8,
+          "cumulative_return": -6.362199459468739,
+          "decision": 16,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2709999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 7,
+          "cumulative_return": -6.603199440172623,
+          "decision": 17,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2409999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 6,
+          "cumulative_return": -6.8381994208765065,
+          "decision": 18,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 6,
+          "cumulative_return": -7.706599343632041,
+          "decision": 19,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 4,
+          "reward": -0.8683999227555343,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 6,
+          "cumulative_return": -7.977599324335924,
+          "decision": 20,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2709999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -8.218599305039808,
+          "decision": 21,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2409999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 4,
+          "cumulative_return": -8.45359928574369,
+          "decision": 22,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 4,
+          "cumulative_return": -8.688599266447573,
+          "decision": 23,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 4,
+          "cumulative_return": -8.923599247151456,
+          "decision": 24,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 4,
+          "cumulative_return": -9.158599227855339,
+          "decision": 25,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 4,
+          "cumulative_return": -9.826999169926989,
+          "decision": 26,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 3,
+          "reward": -0.6683999420716508,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 4,
+          "cumulative_return": -10.097999150630873,
+          "decision": 27,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2709999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 3,
+          "cumulative_return": -10.338999131334756,
+          "decision": 28,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2409999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 2,
+          "cumulative_return": -10.807399092722523,
+          "decision": 29,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 2,
+          "reward": -0.4683999613877672,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 2,
+          "cumulative_return": -11.078399073426407,
+          "decision": 30,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2709999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 1,
+          "cumulative_return": -11.31939905413029,
+          "decision": 31,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2409999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 8,
+          "cumulative_return": -12.189798976885825,
+          "decision": 32,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 4,
+          "reward": -0.8703999227555343,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 8,
+          "cumulative_return": -12.462798957589708,
+          "decision": 33,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2729999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 7,
+          "cumulative_return": -14.133198803080777,
+          "decision": 34,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 8,
+          "reward": -1.6703998454910687,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 7,
+          "cumulative_return": -14.973598725836311,
+          "decision": 35,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 4,
+          "reward": -0.8403999227555343,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 7,
+          "cumulative_return": -15.246598706540194,
+          "decision": 36,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2729999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 6,
+          "cumulative_return": -15.489598687244078,
+          "decision": 37,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2429999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -15.72459866794796,
+          "decision": 38,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -15.959598648651843,
+          "decision": 39,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -16.196598629355726,
+          "decision": 40,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2369999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -16.43159861005961,
+          "decision": 41,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -16.668598590763494,
+          "decision": 42,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2369999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -17.336998532835146,
+          "decision": 43,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 3,
+          "reward": -0.6683999420716508,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -17.60199851353903,
+          "decision": 44,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2649999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -17.838998494242915,
+          "decision": 45,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2369999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -18.509398436314566,
+          "decision": 46,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 3,
+          "reward": -0.6703999420716508,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -18.78239841701845,
+          "decision": 47,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2729999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 4,
+          "cumulative_return": -19.02539839772233,
+          "decision": 48,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2429999807038836,
+          "tool": "generic_suction"
+        }
+      ]
+    },
+    "wide": {
+      "STOP_replay_accepted": true,
+      "additional_previews": 1195,
+      "all_rewards_negative": true,
+      "base_previews": 5616,
+      "decision5": {
+        "active_goal": {
+          "entry_mm": [
+            -59.878999999211224,
+            -14.888999999694036,
+            -18.27829563649273
+          ],
+          "tip_mm": [
+            -41.37899999921122,
+            -14.888999999603442,
+            -18.27829563649273
+          ],
+          "tool_id": "generic_suction"
+        },
+        "active_retained_first_blockers": [
+          [
+            5,
+            90,
+            84
+          ],
+          [
+            5,
+            90,
+            85
+          ],
+          [
+            5,
+            90,
+            86
+          ],
+          [
+            5,
+            91,
+            84
+          ],
+          [
+            5,
+            91,
+            86
+          ],
+          [
+            5,
+            92,
+            84
+          ],
+          [
+            5,
+            92,
+            85
+          ],
+          [
+            5,
+            92,
+            86
+          ]
+        ],
+        "actual_removed_current_blockers": [
+          [
+            5,
+            92,
+            85
+          ]
+        ],
+        "all_removed_cells": [
+          [
+            4,
+            93,
+            84
+          ],
+          [
+            5,
+            92,
+            85
+          ],
+          [
+            5,
+            93,
+            84
+          ],
+          [
+            5,
+            93,
+            85
+          ],
+          [
+            5,
+            93,
+            86
+          ],
+          [
+            5,
+            94,
+            85
+          ],
+          [
+            6,
+            93,
+            85
+          ]
+        ],
+        "current_catalog_action_id": "nominal-cavity-50ff68b2c3af3583af3a4dd8",
+        "current_tool": "generic_suction",
+        "decision": 5,
+        "fixed_physical_choice": {
+          "entry_mm": [
+            -59.87899999920143,
+            -16.888999999694036,
+            -18.27829563649273
+          ],
+          "tip_mm": [
+            -56.378999999201426,
+            -16.888999999676898,
+            -18.27829563649273
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "fresh_current_certificate": true,
+        "interpretation": "simulator_trace_causal_intervention_not_deployable_policy",
+        "nominal_reward": -1.4703998648071852,
+        "ordinary_policy_choice": {
+          "entry_mm": [
+            -59.878999999211224,
+            -14.888999999694038,
+            -17.278295733073307
+          ],
+          "tip_mm": [
+            -56.378999999211224,
+            -14.888999999676898,
+            -17.278295733073307
+          ],
+          "tool_id": "generic_suction"
+        },
+        "path_length_mm": 10.400000020000007,
+        "protocol_seal": "sha256:1895338908f7bdd5ef1bf22c09fe70876058529e9d00d7300e39901912d434c9",
+        "query_catalog_digest": "sha256:d885d0bcd5762bee12c7188cd994ed3047c384631599cfe51feac398b9377b38",
+        "removed_volume_mm3": 6.999999323935925,
+        "scope": "one explicit simulator-trace-derived action substitution; future outcomes unknown",
+        "source_state_hash": "sha256:1b84c0307302a8d44fb389f983467fffdfae39ddb6ae011f9d8524ca799d9182"
+      },
+      "dependency_previews": 218,
+      "dependency_sidecars_checked": 218,
+      "exploration": {
+        "complete_tool_path_length_mm": 418.20000096000035,
+        "normal_removed_mm3": 85.99999169406993,
+        "removed_volume_mm3": 85.99999169406993,
+        "reward": -19.658198339773982,
+        "target_removed_mm3": 0.0
+      },
+      "focus_omissions": 0,
+      "full_geometry_accepted": true,
+      "global_omitted_cell_mentions": 507,
+      "goal_diagnostic_previews": 2496,
+      "history_semantic_hash": "sha256:83fb96fd5883a6225a831d568d60fc61a7fbf89cbb5d81ca03dea815b16314e5",
+      "known_preterminal_blockers_still_unremoved": [
+        [
+          7,
+          90,
+          84
+        ],
+        [
+          7,
+          90,
+          85
+        ],
+        [
+          7,
+          90,
+          86
+        ]
+      ],
+      "layer_changes": [
+        {
+          "decision": 1,
+          "first_blocker_layers": [
+            4
+          ]
+        },
+        {
+          "decision": 5,
+          "first_blocker_layers": [
+            5
+          ]
+        },
+        {
+          "decision": 15,
+          "first_blocker_layers": [
+            6
+          ]
+        },
+        {
+          "decision": 29,
+          "first_blocker_layers": [
+            7
+          ]
+        }
+      ],
+      "legal_candidate_mentions": 1708,
+      "max_removed_cell_center_depth_mm": 5.500000000000005,
+      "max_removed_native_layer": 7,
+      "max_tip_depth_mm": 5.500000000000007,
+      "native_transitions": {
+        "replay": 1,
+        "rollout": 1,
+        "search": 48
+      },
+      "packets_semantic_hash": "sha256:10a6227b564a951cd381c9fa841a13c4d8d41dc0b80c842eb614a2e9cd1050a7",
+      "pages": 221,
+      "plan_seal": "sha256:ea5f9dfda3903c4f8f417c2832f7758084024e7a0dcfc5bff00908248fdbb823",
+      "progress_kinds": {
+        "direct_blocker": 25,
+        "prerequisite": 23
+      },
+      "removed_cells": 86,
+      "search_previews": 9525,
+      "selection_complete": true,
+      "selection_wall_seconds": 170.3151165000163,
+      "single_persistent_goal": {
+        "entry_mm": [
+          -59.878999999211224,
+          -14.888999999694036,
+          -18.27829563649273
+        ],
+        "tip_mm": [
+          -41.37899999921122,
+          -14.888999999603442,
+          -18.27829563649273
+        ],
+        "tool_id": "generic_suction"
+      },
+      "tool_changes": 20,
+      "tools": {
+        "generic_aspirator": 13,
+        "generic_suction": 35
+      },
+      "total_previews": 9876,
+      "trace": [
+        {
+          "active_first_count": 7,
+          "cumulative_return": -1.2383998841233015,
+          "decision": 1,
+          "first_blocker_layers": [
+            4
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 6,
+          "reward": -1.2383998841233015,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 3,
+          "cumulative_return": -1.5053998648271851,
+          "decision": 2,
+          "first_blocker_layers": [
+            4
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2669999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 2,
+          "cumulative_return": -1.7423998455310687,
+          "decision": 3,
+          "first_blocker_layers": [
+            4
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2369999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 1,
+          "cumulative_return": -1.9793998262349524,
+          "decision": 4,
+          "first_blocker_layers": [
+            4
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2369999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 8,
+          "cumulative_return": -3.449799691042138,
+          "decision": 5,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 7,
+          "reward": -1.4703998648071852,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 7,
+          "cumulative_return": -3.718799671746021,
+          "decision": 6,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2689999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 6,
+          "cumulative_return": -3.957799652449905,
+          "decision": 7,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2389999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -4.1967996331537885,
+          "decision": 8,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2389999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 4,
+          "cumulative_return": -4.435799613857672,
+          "decision": 9,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2389999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 3,
+          "cumulative_return": -5.302199536613206,
+          "decision": 10,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 4,
+          "reward": -0.8663999227555343,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 3,
+          "cumulative_return": -5.57119951731709,
+          "decision": 11,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2689999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 2,
+          "cumulative_return": -5.810199498020973,
+          "decision": 12,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2389999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 1,
+          "cumulative_return": -6.045199478724856,
+          "decision": 13,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 1,
+          "cumulative_return": -6.28419945942874,
+          "decision": 14,
+          "first_blocker_layers": [
+            5
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2389999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 8,
+          "cumulative_return": -6.525199440132623,
+          "decision": 15,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2409999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 7,
+          "cumulative_return": -6.766199420836507,
+          "decision": 16,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2409999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 6,
+          "cumulative_return": -7.834599324275925,
+          "decision": 17,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 5,
+          "reward": -1.0683999034394178,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 6,
+          "cumulative_return": -8.105599304979808,
+          "decision": 18,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2709999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -8.346599285683691,
+          "decision": 19,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2409999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 4,
+          "cumulative_return": -8.581599266387574,
+          "decision": 20,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 4,
+          "cumulative_return": -9.449999189143108,
+          "decision": 21,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 4,
+          "reward": -0.8683999227555343,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 4,
+          "cumulative_return": -9.720999169846992,
+          "decision": 22,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2709999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 3,
+          "cumulative_return": -9.961999150550875,
+          "decision": 23,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2409999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 2,
+          "cumulative_return": -10.196999131254758,
+          "decision": 24,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 2,
+          "cumulative_return": -10.43199911195864,
+          "decision": 25,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 2,
+          "cumulative_return": -11.10039905403029,
+          "decision": 26,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 3,
+          "reward": -0.6683999420716508,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 2,
+          "cumulative_return": -11.371399034734175,
+          "decision": 27,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2709999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 1,
+          "cumulative_return": -11.612399015438058,
+          "decision": 28,
+          "first_blocker_layers": [
+            6
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2409999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 8,
+          "cumulative_return": -11.855398996141941,
+          "decision": 29,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2429999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 7,
+          "cumulative_return": -13.52579884163301,
+          "decision": 30,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 8,
+          "reward": -1.6703998454910687,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 7,
+          "cumulative_return": -13.762198822336893,
+          "decision": 31,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2363999807038836,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 7,
+          "cumulative_return": -14.000598803040777,
+          "decision": 32,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.23839998070388357,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 7,
+          "cumulative_return": -14.265598783744661,
+          "decision": 33,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2649999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 7,
+          "cumulative_return": -14.500598764448544,
+          "decision": 34,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 7,
+          "cumulative_return": -15.170998706520194,
+          "decision": 35,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 3,
+          "reward": -0.6703999420716508,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 7,
+          "cumulative_return": -15.443998687224077,
+          "decision": 36,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2729999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 6,
+          "cumulative_return": -15.686998667927961,
+          "decision": 37,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2429999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -15.921998648631844,
+          "decision": 38,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -16.158998629335727,
+          "decision": 39,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2369999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -16.39399861003961,
+          "decision": 40,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2349999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -16.630998590743495,
+          "decision": 41,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2369999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -17.299398532815147,
+          "decision": 42,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 3,
+          "reward": -0.6683999420716508,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -17.56439851351903,
+          "decision": 43,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2649999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -17.801398494222916,
+          "decision": 44,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 1,
+          "reward": -0.2369999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -18.471798436294566,
+          "decision": 45,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 3,
+          "reward": -0.6703999420716508,
+          "tool": "generic_aspirator"
+        },
+        {
+          "active_first_count": 5,
+          "cumulative_return": -18.74479841699845,
+          "decision": 46,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2729999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 4,
+          "cumulative_return": -18.98779839770233,
+          "decision": 47,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "direct_blocker",
+          "removed_count": 1,
+          "reward": -0.2429999807038836,
+          "tool": "generic_suction"
+        },
+        {
+          "active_first_count": 3,
+          "cumulative_return": -19.658198339773982,
+          "decision": 48,
+          "first_blocker_layers": [
+            7
+          ],
+          "progress_kind": "prerequisite",
+          "removed_count": 3,
+          "reward": -0.6703999420716508,
+          "tool": "generic_aspirator"
+        }
+      ]
+    }
+  },
+  "common_protocol_fields_equal_except_treatment": true,
+  "costs": {
+    "all_declared_caps_respected": true,
+    "clean_exit_0": true,
+    "native_previews": 19770,
+    "native_transitions": 100,
+    "output_bytes": 19697184,
+    "parent_seconds": 351.64334954111837,
+    "phase_counts_and_inclusive_times": {
+      "narrow.historical_control_after_plans_sealed": {
+        "complete_wall_seconds": 0.2713751250412315,
+        "native_preview_entries": 0
+      },
+      "narrow.independent_audit": {
+        "complete_wall_seconds": 0.043855792144313455,
+        "native_preview_entries": 0
+      },
+      "narrow.independent_exploration_geometry": {
+        "complete_wall_seconds": 2.414022499928251,
+        "native_preview_entries": 0
+      },
+      "narrow.replay": {
+        "complete_wall_seconds": 1.2923146670218557,
+        "native_preview_entries": 117,
+        "native_transition_calls": 1,
+        "native_transition_inclusive_seconds": 0.0007249999325722456,
+        "native_transition_returned": 1
+      },
+      "narrow.rollout": {
+        "complete_wall_seconds": 1.2777466250117868,
+        "native_preview_entries": 117,
+        "native_transition_calls": 1,
+        "native_transition_inclusive_seconds": 0.0007144170813262463,
+        "native_transition_returned": 1
+      },
+      "narrow.search": {
+        "complete_wall_seconds": 164.49964729114436,
+        "native_preview_entries": 9543,
+        "native_transition_calls": 48,
+        "native_transition_inclusive_seconds": 2.8790812911465764,
+        "native_transition_returned": 48,
+        "task_clone_calls": 224,
+        "task_clone_inclusive_seconds": 9.456580285448581,
+        "task_clone_returned": 224
+      },
+      "narrow.source_and_construction": {
+        "complete_wall_seconds": 1.6813278330955654,
+        "inventory_build_or_terminal_empty_calls": 1,
+        "inventory_request_calls": 3,
+        "inventory_request_inclusive_seconds": 1.1402928328607231,
+        "inventory_request_returned": 3,
+        "native_preview_entries": 117
+      },
+      "wide.independent_audit": {
+        "complete_wall_seconds": 0.0445597090292722,
+        "native_preview_entries": 0
+      },
+      "wide.independent_exploration_geometry": {
+        "complete_wall_seconds": 2.4364909168798476,
+        "native_preview_entries": 0
+      },
+      "wide.replay": {
+        "complete_wall_seconds": 1.3202752079814672,
+        "native_preview_entries": 117,
+        "native_transition_calls": 1,
+        "native_transition_inclusive_seconds": 0.0007285000756382942,
+        "native_transition_returned": 1
+      },
+      "wide.rollout": {
+        "complete_wall_seconds": 1.299902540864423,
+        "native_preview_entries": 117,
+        "native_transition_calls": 1,
+        "native_transition_inclusive_seconds": 0.0007267501205205917,
+        "native_transition_returned": 1
+      },
+      "wide.search": {
+        "complete_wall_seconds": 170.5512839590665,
+        "native_preview_entries": 9525,
+        "native_transition_calls": 48,
+        "native_transition_inclusive_seconds": 2.9692087518051267,
+        "native_transition_returned": 48,
+        "task_clone_calls": 222,
+        "task_clone_inclusive_seconds": 10.179270459339023,
+        "task_clone_returned": 222
+      },
+      "wide.source_and_construction": {
+        "complete_wall_seconds": 1.7109563329722732,
+        "inventory_build_or_terminal_empty_calls": 1,
+        "inventory_request_calls": 3,
+        "inventory_request_inclusive_seconds": 1.1816669162362814,
+        "inventory_request_returned": 3,
+        "native_preview_entries": 117
+      }
+    },
+    "preview_profile": {
+      "feasible": 3791,
+      "raised": 0,
+      "rejected": 15979,
+      "rejection_reasons": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 15979
+      },
+      "returned": 19770,
+      "returned_microsteps": 387784,
+      "seconds": 218.80144575983286,
+      "started": 19770
+    },
+    "sampled_peak_rss_bytes": 550289408,
+    "timing_note": "Do not add nested native/clone timings to enclosing phases. Historical timing is not a matched speed comparator.",
+    "worker_seconds": 348.92391041712835
+  },
+  "head": "a19b72993ef3ded6d147b364f45b7afc671975a1",
+  "limitations": [
+    "Current query digests are joined across saved packet/state records, not recomputed from absent full raw catalogs.",
+    "Seal-before-evaluation ordering is supported by reviewed worker control flow and saved paired plan bindings, not an independent event timestamp system.",
+    "Full negative exploration has independent geometry; only the selected STOP plans have fresh authoritative replay.",
+    "Terminal known remaining blockers are retained pre-action cells not removed by the final action; no new post-horizon preview is inferred."
+  ],
+  "pair": {
+    "both_selected_identical_STOP_packet": true,
+    "causal_scope": "Two predeclared physical preparations at one common simulator state; tool and lateral aim both differ. No isolated tool-width, clinical or learned-policy claim.",
+    "common_prefix_exact_full_history_packets_states": true,
+    "current_decision5_state_catalog_goal_previews_exact": true,
+    "narrow_historical_full_history_packets_selected_packets_exact": true,
+    "wide_minus_narrow_exploration_cells": 3,
+    "wide_minus_narrow_exploration_return": -0.6327999420516512,
+    "wide_minus_narrow_selected_return": 0,
+    "wide_minus_narrow_selected_target": 0
+  },
+  "pins": {
+    "attempt-01.supervision/receipt.json": "e61277083304852b3dea127332fdfebfc4744d11f509fd0c381b971a09443b70",
+    "attempt-01/result.json": "ef64519bd1762ab0867eeb09010e26c28cf8ef01430047ca76b82261e1cd0f1b",
+    "costs.json": "d2e8795e6ce86d089bdde9461f0c3d45d30b9af87820d5d08d659a4abfc1b1d5",
+    "decision5-witness.json": "bd655fc084b1a2273110cf2ea89b01e48520efc35007e8d5c97f0f71de6b894a",
+    "narrow-historical-control.json": "7095a562bcff5806a1e59846503e83e7de1a4a190627bfa047b5045ecfc0ff1b",
+    "narrow/declared-rule-change.json": "8830e8b32930e19b11453e9c02f7d4c97e2e560199902a3ad0511b458781c2d7",
+    "narrow/exploration-geometry.json": "22ce89abb12828b1e03cb2086d78c2928c99715a7aba187db36177d10fe6b63a",
+    "narrow/independent-episode.json": "a12ccb5b9683b7e96d220c4ba40c03b5b0f035f0d01716c19374363f08d7a0b0",
+    "narrow/original-world-control.json": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e",
+    "narrow/replay-binding.json": "723ca17e1ef03205facba0dac5d518a06f2842a7d1b3516262016b453231472a",
+    "narrow/rollout-metrics.json": "8e18eafc0861628e812b2bfb451bd8db299c50f3c57717afe53b1c97e4abbd0d",
+    "narrow/selected-action-plan.json": "3afed0f13b91f05d5b78ea3ccb4505eeadd6b6b7b3b75bf687d90dc7765b6af3",
+    "narrow/selection.json": "265df9e798f523033d70b71f1377f4a970fbe24da004ef56017f11396d3e2a5b",
+    "root-release.json": "ad17e551827cbecf90ff35809e7663c5d15a2ec3d2c56d8c48fb1e245b4434a0",
+    "source-index.json": "7c8c2e03bc10356999582143000ac8076919051270d585ab4da65c9173106ce8",
+    "wide/declared-rule-change.json": "8830e8b32930e19b11453e9c02f7d4c97e2e560199902a3ad0511b458781c2d7",
+    "wide/exploration-geometry.json": "cc3d9c69fcaf24dcf5175e1543859739b7517ee3476e79ad0a6561e2c49f5948",
+    "wide/independent-episode.json": "08d3050e1ba0a0eb9f6677e7680a708302045ad0912e0ed46df16f3cc650f1d5",
+    "wide/original-world-control.json": "d874a4834127618711243a821a5382d5091d89a4f3cc398be068341bedf60a8e",
+    "wide/replay-binding.json": "723ca17e1ef03205facba0dac5d518a06f2842a7d1b3516262016b453231472a",
+    "wide/rollout-metrics.json": "8e18eafc0861628e812b2bfb451bd8db299c50f3c57717afe53b1c97e4abbd0d",
+    "wide/selected-action-plan.json": "4441154050b41986baf32634de9aac3312cefae293789525d673c354d1a7a39f",
+    "wide/selection.json": "28e877c29df5bd73e452b8daec825ce0f879076d9eebb19793e879e97a8b832c"
+  },
+  "reviewed_source_pins": {
+    "build/select013-preparation-choice-v1/comparison_contract.py": "fe5fd8c9cee640f7ed4e3f4da5fa9c84c134d970512b50c9d2401f99103d4cc3",
+    "build/select013-preparation-choice-v1/freeze-runtime.py": "0f4c0b633c1bf3d7a0afac56e2f612c643e1f9e46c87d1740ff929782e035af4",
+    "build/select013-preparation-choice-v1/preparation_choice_selector.py": "cd069306a527a83b5d15d944f8ea417f49f1d38ccb55c926c53f7b92fef84358",
+    "build/select013-preparation-choice-v1/run_owned.py": "01b9128389bf218bc8cbb192c6177a6ee8d6e879b7dbb3638b70a578f0dd18ed",
+    "build/select013-preparation-choice-v1/select_worker.py": "1a01f2ae9793ac195adfab45885ebc40b15592595b3538b28ce0ce9b0c9f9f24",
+    "src/resectionlab/focused_corridor_selector.py": "e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448",
+    "src/resectionlab/focused_paged_task.py": "be8d524057859a4cd80476077d5fc1fa538964f77616111654086a3b622cafb3",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/native_proposals.py": "aa1be3d50845d2c75c3cd0df382f6fdfee6f5d1059303c90e898baaeeebacde7",
+    "src/resectionlab/native_resection.py": "79363aa6156917514d4aa57e328adcd16babff51518c0c4587e6dcaf94a5723d",
+    "src/resectionlab/native_spatial_task.py": "b8b05798015e4e93ab833598cc4b70b1e3f08a8837568ba701d0e3e272bdf57a",
+    "src/resectionlab/paged_obstruction.py": "aa6b522ea762d00685ecacc603491e694dcf91a3d806c452f32f4e894ba4fb7c"
+  },
+  "scope": "Saved JSON/source fixity only; no arrays, model, native execution or replay.",
+  "status": "PASS_COMPLETE_NEGATIVE"
+}

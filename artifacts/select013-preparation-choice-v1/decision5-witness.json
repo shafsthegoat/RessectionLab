@@ -1,0 +1,240 @@
+{
+  "protocols": {
+    "narrow": {
+      "baseline_selector_sha256": "e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448",
+      "decision": {
+        "active_goal": {
+          "entry_mm": [
+            -59.878999999211224,
+            -14.888999999694036,
+            -18.27829563649273
+          ],
+          "tip_mm": [
+            -41.37899999921122,
+            -14.888999999603442,
+            -18.27829563649273
+          ],
+          "tool_id": "generic_suction"
+        },
+        "current_tool": "generic_suction",
+        "index": 5,
+        "physical_action": {
+          "entry_mm": [
+            -59.878999999211224,
+            -14.888999999694038,
+            -17.278295733073307
+          ],
+          "tip_mm": [
+            -56.378999999211224,
+            -14.888999999676898,
+            -17.278295733073307
+          ],
+          "tool_id": "generic_suction"
+        },
+        "source_state_hash": "sha256:1b84c0307302a8d44fb389f983467fffdfae39ddb6ae011f9d8524ca799d9182"
+      },
+      "decision_model_hash": "sha256:5fc041113fa1e2b1fb44796709e48dcc96ac7f85db08e0c4a7cf437efa490519",
+      "interpretation": "simulator_trace_causal_intervention_not_deployable_policy",
+      "max_steps": 48,
+      "native_decision_model_hash": "sha256:83b9f5f307bf99fcd92449b26bfdc61ba156117b08b8b1e55ebdbcefc3f35888",
+      "prefix": [
+        {
+          "physical_action": {
+            "entry_mm": [
+              -59.878999999211224,
+              -14.888999999694043,
+              -18.27829563649273
+            ],
+            "tip_mm": [
+              -57.378999999211224,
+              -14.8889999996818,
+              -18.27829563649273
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "result_state_hash": "sha256:1e0bec1f68c8f6d33f6ec396521196ccc789ef4f85f04780b6030b148fc578d2",
+          "source_state_hash": "sha256:8e42982139ee66ad8c2157585c450c3f856f38ed1f139dcbd1b79c1968e471d5"
+        },
+        {
+          "physical_action": {
+            "entry_mm": [
+              -59.87899999921612,
+              -13.888999999694043,
+              -17.278295733073307
+            ],
+            "tip_mm": [
+              -57.37899999921612,
+              -13.8889999996818,
+              -17.278295733073307
+            ],
+            "tool_id": "generic_suction"
+          },
+          "result_state_hash": "sha256:10843333adae3675db81b926cff369366faeb1447296cab38933d2e376e0f465",
+          "source_state_hash": "sha256:1e0bec1f68c8f6d33f6ec396521196ccc789ef4f85f04780b6030b148fc578d2"
+        },
+        {
+          "physical_action": {
+            "entry_mm": [
+              -59.87899999921612,
+              -13.888999999694043,
+              -19.278295539912136
+            ],
+            "tip_mm": [
+              -57.37899999921612,
+              -13.8889999996818,
+              -19.278295539912136
+            ],
+            "tool_id": "generic_suction"
+          },
+          "result_state_hash": "sha256:3e031e8db87b3b707c8bd672e326eab85692f8ccf78ad760b89d2e007f89807d",
+          "source_state_hash": "sha256:10843333adae3675db81b926cff369366faeb1447296cab38933d2e376e0f465"
+        },
+        {
+          "physical_action": {
+            "entry_mm": [
+              -59.87899999920633,
+              -15.888999999694043,
+              -17.278295733073307
+            ],
+            "tip_mm": [
+              -57.37899999920632,
+              -15.8889999996818,
+              -17.278295733073307
+            ],
+            "tool_id": "generic_suction"
+          },
+          "result_state_hash": "sha256:1b84c0307302a8d44fb389f983467fffdfae39ddb6ae011f9d8524ca799d9182",
+          "source_state_hash": "sha256:3e031e8db87b3b707c8bd672e326eab85692f8ccf78ad760b89d2e007f89807d"
+        }
+      ],
+      "schema": "sealed-preparation-choice-v1",
+      "seal": "sha256:f52c1fa4f536654dd0b4bdb1570075ce3e02abf0fd8670a35468e90ebe6a8096",
+      "source_hash": "sha256:a649ef37f08282cc86b814a4a01dc3ea3cf5ce8bd7b1190d716ab47bf770c5a4"
+    },
+    "wide": {
+      "baseline_selector_sha256": "e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448",
+      "decision": {
+        "active_goal": {
+          "entry_mm": [
+            -59.878999999211224,
+            -14.888999999694036,
+            -18.27829563649273
+          ],
+          "tip_mm": [
+            -41.37899999921122,
+            -14.888999999603442,
+            -18.27829563649273
+          ],
+          "tool_id": "generic_suction"
+        },
+        "current_tool": "generic_suction",
+        "index": 5,
+        "physical_action": {
+          "entry_mm": [
+            -59.87899999920143,
+            -16.888999999694036,
+            -18.27829563649273
+          ],
+          "tip_mm": [
+            -56.378999999201426,
+            -16.888999999676898,
+            -18.27829563649273
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "source_state_hash": "sha256:1b84c0307302a8d44fb389f983467fffdfae39ddb6ae011f9d8524ca799d9182"
+      },
+      "decision_model_hash": "sha256:5fc041113fa1e2b1fb44796709e48dcc96ac7f85db08e0c4a7cf437efa490519",
+      "interpretation": "simulator_trace_causal_intervention_not_deployable_policy",
+      "max_steps": 48,
+      "native_decision_model_hash": "sha256:83b9f5f307bf99fcd92449b26bfdc61ba156117b08b8b1e55ebdbcefc3f35888",
+      "prefix": [
+        {
+          "physical_action": {
+            "entry_mm": [
+              -59.878999999211224,
+              -14.888999999694043,
+              -18.27829563649273
+            ],
+            "tip_mm": [
+              -57.378999999211224,
+              -14.8889999996818,
+              -18.27829563649273
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "result_state_hash": "sha256:1e0bec1f68c8f6d33f6ec396521196ccc789ef4f85f04780b6030b148fc578d2",
+          "source_state_hash": "sha256:8e42982139ee66ad8c2157585c450c3f856f38ed1f139dcbd1b79c1968e471d5"
+        },
+        {
+          "physical_action": {
+            "entry_mm": [
+              -59.87899999921612,
+              -13.888999999694043,
+              -17.278295733073307
+            ],
+            "tip_mm": [
+              -57.37899999921612,
+              -13.8889999996818,
+              -17.278295733073307
+            ],
+            "tool_id": "generic_suction"
+          },
+          "result_state_hash": "sha256:10843333adae3675db81b926cff369366faeb1447296cab38933d2e376e0f465",
+          "source_state_hash": "sha256:1e0bec1f68c8f6d33f6ec396521196ccc789ef4f85f04780b6030b148fc578d2"
+        },
+        {
+          "physical_action": {
+            "entry_mm": [
+              -59.87899999921612,
+              -13.888999999694043,
+              -19.278295539912136
+            ],
+            "tip_mm": [
+              -57.37899999921612,
+              -13.8889999996818,
+              -19.278295539912136
+            ],
+            "tool_id": "generic_suction"
+          },
+          "result_state_hash": "sha256:3e031e8db87b3b707c8bd672e326eab85692f8ccf78ad760b89d2e007f89807d",
+          "source_state_hash": "sha256:10843333adae3675db81b926cff369366faeb1447296cab38933d2e376e0f465"
+        },
+        {
+          "physical_action": {
+            "entry_mm": [
+              -59.87899999920633,
+              -15.888999999694043,
+              -17.278295733073307
+            ],
+            "tip_mm": [
+              -57.37899999920632,
+              -15.8889999996818,
+              -17.278295733073307
+            ],
+            "tool_id": "generic_suction"
+          },
+          "result_state_hash": "sha256:1b84c0307302a8d44fb389f983467fffdfae39ddb6ae011f9d8524ca799d9182",
+          "source_state_hash": "sha256:3e031e8db87b3b707c8bd672e326eab85692f8ccf78ad760b89d2e007f89807d"
+        }
+      ],
+      "schema": "sealed-preparation-choice-v1",
+      "seal": "sha256:1895338908f7bdd5ef1bf22c09fe70876058529e9d00d7300e39901912d434c9",
+      "source_hash": "sha256:a649ef37f08282cc86b814a4a01dc3ea3cf5ce8bd7b1190d716ab47bf770c5a4"
+    }
+  },
+  "scope": "Only protocols are passed to policy; four generated simulator decisions and fixed treatment geometry, not measured surgery. Historical full48 history is withheld from selector and decoded only after both plans seal for narrow parity.",
+  "source_evidence": {
+    "focused_selection": {
+      "bytes": 9611764,
+      "path": "build/select013-focused-corridor-v1/attempt-01/focused_corridor/selection.json",
+      "sha256": "a84461e39394a7d94e267e77981ce9a68565bb0d0c253061afd89bd089bce892"
+    },
+    "recursive_selection": {
+      "bytes": 8534975,
+      "path": "build/select013-recursive-corridor-v1/attempt-01/recursive_corridor/selection.json",
+      "sha256": "fe2b03c4d600a797451e7c9e3e380e9123fd96741e508083fb8d84a41c112ffd"
+    }
+  },
+  "version": "saved-decision5-causal-witness-v1"
+}
