@@ -1,0 +1,29 @@
+One beam-only SELECT013 recovery, ready for root final freeze; no acquired run by author.
+Runtime source pins and seven passed generated controls: source-ready.json.
+Preserved controls01/02 fixture failures: evaluator correctly refused planning
+clones; final fixture explicitly reconstructs authoritative tasks before replay.
+
+One IL64 reference checkpoint reload remains necessary for existing admission /
+collect_select_search / seal_and_replay_select. It authors no action. No RL load,
+IL/RL/greedy rerun, fit, optimizer, gradient or policy forward. Actual forward cap0.
+Original four-arm incomplete result and all source/result/receipt bytes remain intact.
+
+Existing envelope900s worker/960s parent,3GiB,one thread,750000 previews retained.
+Search300s/5640calls/h24/beam2/cap120/depth-volume/raw order/cache unchanged.
+New accounting separates reference reload, source construction, beam search,
+collection and independent replay. Strict prior world and four complete-layer
+controls exclude only successor availability fields populated after the old cap.
+
+Root metadata-only freeze (replace full HEAD with verified current commit):
+python3 build/select013-lazy-beam-recovery-v1/freeze-runtime.py --head FULL_HEAD
+
+Root copies release-template.json to fresh root-release.json with only status
+set to released_one_attempt; compute its ACTUAL SHA after writing. Keep original
+limits/admission envelope; transition_mode is a separate explicit runtime option.
+
+Root owns the single actual launch:
+.venv/bin/python build/select013-lazy-beam-recovery-v1/run_owned.py --release build/select013-lazy-beam-recovery-v1/root-release.json --release-sha256 ACTUAL_RELEASE_SHA
+
+Normal finite-frontier exhaustion may complete before24layers. Any call/time cap
+remains unresolved with its partial accounting and no accepted STOP claim.
+No private labels are opened. ReMIND-037 stays held in SELECT denominator2;067closed.

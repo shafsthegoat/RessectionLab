@@ -1,0 +1,82 @@
+......F                                                                  [100%]
+=================================== FAILURES ===================================
+__________ test_partial_domain_post_exposure_native_transition_parity __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1092c1a30>
+
+    def test_partial_domain_post_exposure_native_transition_parity(monkeypatch):
+        import numpy as np
+        from dataclasses import replace
+        from resectionlab.native_proposals import NominalCavityProposalConfig
+        from resectionlab.native_spatial_task import NativeSpatialTask
+        from resectionlab.native_spatial_evaluation import evaluate_native_spatial_episode
+        spec=importlib.util.spec_from_file_location('generated_post_exposure_fixture',ROOT/'tests/test_post_exposure.py')
+        fixture=importlib.util.module_from_spec(spec);spec.loader.exec_module(fixture)
+        S,T,Ds=fixture.arrays();assert (~Ds).any()
+        case=replace(fixture.source(S,T,Ds,proposal=True), proposal_config=NominalCavityProposalConfig(
+            max_candidates=120,intermediate_opening_mm=1.,tool_footprint_opening=True))
+        eager=NativeSpatialTask(case,max_steps=24).planning_clone();lazy=eager.clone()
+        action=next(row['action_id'] for row in eager.candidate_inventory()['ledger']
+            if row.get('feasible') and row.get('voxel')==[8,8,8])
+        calls=[];preview=lazy._engine.preview_stroke
+        def counted(*args,**kwargs):calls.append(1);return preview(*args,**kwargs)
+        monkeypatch.setattr(lazy._engine,'preview_stroke',counted)
+        for identifier in (action,'STOP'):
+            before=len(calls);a=eager.step(identifier);b=lazy.advance_planning(identifier)
+            assert len(calls)==before and b.observation is None
+            assert (a.reward,a.terminated,a.info)==(b.reward,b.terminated,b.info)
+            assert eager.metrics()==lazy.metrics() and eager._state_seal==lazy._state_seal
+            for name in ('remaining_mask','removed_mask','contact_mask','connected_free_mask'):
+                np.testing.assert_array_equal(getattr(eager._engine,name),getattr(lazy._engine,name))
+            aobs=eager.observation();bobs=lazy.observation()
+            assert aobs.fingerprint==bobs.fingerprint and eager.candidate_inventory()==lazy.candidate_inventory()
+            np.testing.assert_array_equal(bobs.coverage[1],Ds)
+        assert eager.metrics()['target_removed_mm3']>0 and eager.terminated
+>       left=evaluate_native_spatial_episode(eager);right=evaluate_native_spatial_episode(lazy)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/select013-lazy-beam-recovery-v1/test_lazy_recovery.py:176: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+task = <resectionlab.native_spatial_task.NativeSpatialTask object at 0x10f5eb650>
+minimum_target_cells = 1, metrics = None, cancelled = None
+distance_backend = 'batch', distance_batch_size = 256
+
+    def evaluate_native_spatial_episode(task, *, minimum_target_cells=1, metrics=None,
+                                        cancelled=None, distance_backend='batch', distance_batch_size=256):
+        """Audit a complete committed episode, returning success separately from reward.
+    
+        ``minimum_target_cells`` counts fully removed source cells with positive
+        supplied/reference target membership. Target-weighted volume and fraction
+        remain separate metrics. A passing STOP-only episode is never target access.
+        Invalid action attempts are recorded by the caller, not inferred from a
+        history containing only accepted transitions. Batch/scalar geometry choice
+        is explicit in the returned receipt; neither is a tissue mechanics model.
+        """
+        started = time.perf_counter()
+        if not isinstance(task, NativeSpatialTask) or type(minimum_target_cells) is not int or minimum_target_cells < 1:
+            raise ValueError('Typed native task and positive source-cell success threshold required')
+        current = task.metrics()
+        recorded = deepcopy(current if metrics is None else metrics)
+        history = recorded.get('history')
+        if (not isinstance(history, list) or not 1 <= len(history) <= task.max_steps
+                or recorded.get('terminated') is not True or not task.terminated
+                or recorded.get('steps') != len(history)):
+            raise ValueError('Only a completed STOP-or-horizon episode can be accepted')
+        if semantic_digest(history) != semantic_digest(current['history']):
+            raise ValueError('Evaluation history differs from the actually committed episode')
+        stops = [i for i, row in enumerate(history) if row.get('action_id') == 'STOP']
+        if (stops and stops != [len(history) - 1]) or (not stops and len(history) != task.max_steps):
+            raise ValueError('STOP must terminate immediately; a non-STOP prefix is incomplete')
+        for name in ('source_hash', 'reference_hash', 'decision_model_hash'):
+            if recorded.get(name) != current[name]:
+                raise ValueError('Frozen episode source/objective binding changed: ' + name)
+        case = task.case
+        if recorded.get('planning_estimator_only') is not False:
+>           raise ValueError('A planning clone cannot substitute for committed evaluator execution')
+E           ValueError: A planning clone cannot substitute for committed evaluator execution
+
+src/resectionlab/native_spatial_evaluation.py:70: ValueError
+=========================== short test summary info ============================
+FAILED build/select013-lazy-beam-recovery-v1/test_lazy_recovery.py::test_partial_domain_post_exposure_native_transition_parity
+1 failed, 6 passed in 1.56s

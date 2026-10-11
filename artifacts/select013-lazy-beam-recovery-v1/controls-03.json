@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 2.117472208,
+  "hard_seconds": 30,
+  "threads": 1,
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "build/select013-lazy-beam-recovery-v1/test_lazy_recovery.py"
+  ],
+  "source_files": {
+    "build/select013-lazy-beam-recovery-v1/comparison_contract.py": "5f0e15aac211bce9e7817c11dcc2cf435de1d5c04d41e839a79a7e0b41cf2119",
+    "build/select013-lazy-beam-recovery-v1/select_worker.py": "703b1b53a21d00de197765a50a22454ea5d0bfc0c815ed9ff93e59237b205fc2",
+    "build/select013-lazy-beam-recovery-v1/run_owned.py": "d4c68ec70a11f83cd234657c4c61f1dd996e00534fe2d611274e03e76300a1bf",
+    "build/select013-lazy-beam-recovery-v1/freeze-runtime.py": "7522e783b641e410359ffba8bd92f41a0161102e303e5c0d863c5ab3751e1969",
+    "build/select013-lazy-beam-recovery-v1/test_lazy_recovery.py": "a97e490b1bd7ae7f633b4ca40760b70547e7d26c1836efb9d9fa9902c2d8e0ca"
+  },
+  "source_files_unchanged": true,
+  "log_sha256": "dd649d0efa23a673859bf56c78b35edefbf3378fa65b75a5c57808f7c08eea78",
+  "scope": "Seven generated cases only; no acquired inputs, checkpoint payload, optimizer or model forward",
+  "child_reaped": true
+}

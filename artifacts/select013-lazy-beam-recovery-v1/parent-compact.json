@@ -1,0 +1,66 @@
+{
+  "EVAL_execution": false,
+  "SELECT_subject": "ReMIND-013",
+  "archival_selector_record": "observed_beam/selection.json",
+  "arms": {
+    "observed_beam": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": null,
+      "comparison_reference_checkpoint": "IL64",
+      "context_hash": "sha256:dbad2c6f44b3c8d8c59a79efa4a5b1898c74d52235f28f2fb2edaa89f3648222",
+      "decision_model_hash": "sha256:d9a6b888898e58f2a41634e0d2ce6a0a408aa806692bb96c2bad957dbbedd2a3",
+      "outside_meaning": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "plan_seal": "sha256:cfa44d2dce43a59e82504f67195625c0f37f40b99b834ea043869784a313f2a0",
+      "public_return": 0.0,
+      "source_hash": "sha256:01b0bc9e3586b0f797f132d072b809a7570a9a0c6eae86392aa35417e4a06bda",
+      "status": "complete_replayed",
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    }
+  },
+  "automatic_retry": false,
+  "canonical_result_status": "complete_SELECT013_lazy_beam_recovery",
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "hard_total_wall_seconds": 960,
+    "output_bytes": 134217728,
+    "output_sample_interval_seconds": 1.0,
+    "sample_interval_seconds": 0.2,
+    "sampled_owned_tree_rss_bytes": 3221225472,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_deadline_seconds": 900,
+    "worker_log_bytes": 8388608
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 86.92939283302985,
+  "exit_code": 0,
+  "final_owned_pids": [],
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "optimizer_updates_on_SELECT": 0,
+  "output_bytes": 690036,
+  "planned_SELECT_denominator": 2,
+  "private_reference_execution": false,
+  "release_sha256": "43e7cdf0e43a014154cc15236bbb4df1818ed1577b3cee5b8d75ac368e9aa3d9",
+  "result_sha256": "96e0b98069689a7ad6f1b986423f527ce931e04034b33605d3ebaf48e9e9d761",
+  "sampled_peak_rss_bytes": 561709056,
+  "samples": 417,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/select013-lazy-beam-recovery-v1/source-index.json",
+    "sha256": "1a9793219207a94ff3c71f654d50b02c7c196ab4cf3f0198260d4ea45aa258e1"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 13803,
+  "worker_final_sha256": "34bbc799c816607ccf8015a6756bcfee463f6f0d495c6d2f374e1366f3d7ae5e",
+  "worker_process_scope": "owned process group plus discovered identity-matched descendants",
+  "worker_termination_confirmed": true
+}

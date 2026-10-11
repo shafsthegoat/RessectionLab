@@ -1,0 +1,30 @@
+GO: final staged source and saved generated controls support root's one-use
+freeze of the beam-only lazy contrast. No further control run requested.
+
+The four production pins in FINAL_SOURCE_REVIEW.txt remain unchanged.
+Final test SHA a97e490b1bd7ae7f633b4ca40760b70547e7d26c1836efb9d9fa9902c2d8e0ca.
+controls-03.json SHA cb1ac41645c1bd84755b1249494709d6bbd093cae0321d0fa192c3300aba98e2.
+controls-03.log SHA dd649d0efa23a673859bf56c78b35edefbf3378fa65b75a5c57808f7c08eea78.
+All are under build/select013-lazy-beam-recovery-v1.
+
+Saved terminal evidence:7 passed in1.89s; parent2.117472208s; one thread;
+30s bound; no timeout; exit0; retained child reaped; executing source stable.
+This reviewer inspected and hashed the saved evidence and revised test source,
+without executing tests, models, checkpoint loading or acquired geometry.
+
+controls-01 and controls-02 remain failed6pass/1fail attempts. Their final
+generated case first submitted nominal planning clones directly to evaluation,
+then used planned.fresh(), which intentionally retains planning capability.
+The evaluator refused both. Only the fixture was repaired: fresh authoritative
+NativeSpatialTask(case,max_steps=planned.max_steps) replays each exact planned
+action sequence before independent evaluation. History equality excludes only
+declared outcome_scope; accepted certificate equality excludes only timing.
+Production sources did not change between attempts.
+
+The seven current cases cover beam-only complete/call-cap/time-cap/world-drift/
+prior-layer routing, later successor-availability without semantic drift, and
+generated partial-Ds post-exposure h24/cap120/13-axis footprint/intermediate
+positive-motion-plus-STOP parity. They verify identical nominal rewards/history,
+state masks/seals, eventual observation/inventory and accepted authoritative
+full replay. They do not predict the acquired case's speedup, route or success.
+Original unresolved result and all bounded failure outcomes remain valid evidence.

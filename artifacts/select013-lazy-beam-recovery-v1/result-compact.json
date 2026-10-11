@@ -1,0 +1,1048 @@
+{
+  "EVAL_opened": false,
+  "actual_policy_forward_cap": 0,
+  "anatomical_accuracy_claim": false,
+  "archival_selector_record": "observed_beam/selection.json",
+  "arm_order": [
+    "observed_beam"
+  ],
+  "arms": {
+    "observed_beam": {
+      "actions": [
+        "STOP"
+      ],
+      "checkpoint_author": null,
+      "comparison_reference_checkpoint": "IL64",
+      "context_hash": "sha256:dbad2c6f44b3c8d8c59a79efa4a5b1898c74d52235f28f2fb2edaa89f3648222",
+      "decision_model_hash": "sha256:d9a6b888898e58f2a41634e0d2ce6a0a408aa806692bb96c2bad957dbbedd2a3",
+      "outside_meaning": "outside supplied target, not verified normal tissue",
+      "outside_supplied_target_removed_mm3": 0.0,
+      "plan_seal": "sha256:cfa44d2dce43a59e82504f67195625c0f37f40b99b834ea043869784a313f2a0",
+      "public_return": 0.0,
+      "source_hash": "sha256:01b0bc9e3586b0f797f132d072b809a7570a9a0c6eae86392aa35417e4a06bda",
+      "status": "complete_replayed",
+      "steps": 1,
+      "target_removed_mm3": 0.0
+    }
+  },
+  "checkpoint_loads": 1,
+  "comparison_condition": "same explicit public world and beam semantics as preserved capped four-arm attempt; only successor-inventory scheduling changes",
+  "derived_material_assumption": true,
+  "equal_training_or_planning_budget_claim": false,
+  "full_supplied_target_voxels": 35260,
+  "gradient_attempts": 0,
+  "held_cases": [
+    "ReMIND-037"
+  ],
+  "held_inputs_opened": false,
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 82.74303479096852,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": null,
+    "history_complete_caller_attestation": true,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 750000,
+      "planning_execution_seconds": 900.0
+    },
+    "native_preview_entries": 5616,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 762,
+          "raised": 0,
+          "rejected": 4854,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 4854
+          },
+          "returned": 5616,
+          "returned_microsteps": 104258,
+          "seconds": 56.03048053244129,
+          "started": 5616
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 5616,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "complete_history_awaiting_independent_audit",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "optimizer_attempts": 0,
+  "optimizer_updates_on_SELECT": 0,
+  "partial_domain_inputs": true,
+  "physical_surgery_claim": false,
+  "planned_SELECT_denominator": 2,
+  "planner_scope": "one observed beam generates simulated plans from the permitted source-derived estimated world; not observed surgical demonstrations",
+  "post_exposure_condition": "public-union-post-exposure-axis0-v1",
+  "prior_completed_layer_control": {
+    "actual": [
+      {
+        "calls": 37,
+        "depth": 1,
+        "negative": 37,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e"
+            ],
+            "estimated_incremental_return": -0.23439998070388357,
+            "opening_depth_mm": 1.5000000000000027,
+            "opening_removed_volume_mm3": 0.9999999034194179,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca"
+            ],
+            "estimated_incremental_return": -0.6383999420716507,
+            "opening_depth_mm": 3.5000000000000044,
+            "opening_removed_volume_mm3": 2.999999710258254,
+            "reason": "opening"
+          }
+        ],
+        "prefixes": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e"
+            ],
+            "estimated_incremental_return": -0.23439998070388357,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 2.2000000099999966,
+            "outside_supplied_target_removed_mm3": 0.9999999034194179,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca"
+            ],
+            "estimated_incremental_return": -0.6383999420716507,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 4.200000010000004,
+            "outside_supplied_target_removed_mm3": 2.999999710258254,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          }
+        ],
+        "pruned": 35,
+        "terminals": []
+      },
+      {
+        "calls": 72,
+        "depth": 2,
+        "negative": 72,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e",
+              "nominal-cavity-2fa62249fd608aab696354f4"
+            ],
+            "estimated_incremental_return": -0.46879996140776714,
+            "opening_depth_mm": 1.5000000000000027,
+            "opening_removed_volume_mm3": 1.9999998068388358,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca",
+              "nominal-cavity-fd1d4cb74d6925b8da2a39e9"
+            ],
+            "estimated_incremental_return": -1.2787998841433015,
+            "opening_depth_mm": 4.500000000000003,
+            "opening_removed_volume_mm3": 5.999999420516508,
+            "reason": "opening"
+          }
+        ],
+        "prefixes": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e",
+              "nominal-cavity-2fa62249fd608aab696354f4"
+            ],
+            "estimated_incremental_return": -0.46879996140776714,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 2.2000000099999966,
+            "outside_supplied_target_removed_mm3": 1.9999998068388358,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca",
+              "nominal-cavity-fd1d4cb74d6925b8da2a39e9"
+            ],
+            "estimated_incremental_return": -1.2787998841433015,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 5.200000009999997,
+            "outside_supplied_target_removed_mm3": 5.999999420516508,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          }
+        ],
+        "pruned": 70,
+        "terminals": []
+      },
+      {
+        "calls": 66,
+        "depth": 3,
+        "negative": 66,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e",
+              "nominal-cavity-2fa62249fd608aab696354f4",
+              "nominal-cavity-e5a4553976ed6574d3bef864"
+            ],
+            "estimated_incremental_return": -0.7031999421116507,
+            "opening_depth_mm": 1.500000000000004,
+            "opening_removed_volume_mm3": 2.999999710258254,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca",
+              "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+              "nominal-cavity-41e1f0b77645464d7846b3c2"
+            ],
+            "estimated_incremental_return": -2.517199768266603,
+            "opening_depth_mm": 4.500000000000003,
+            "opening_removed_volume_mm3": 11.999998841033015,
+            "reason": "opening"
+          }
+        ],
+        "prefixes": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e",
+              "nominal-cavity-2fa62249fd608aab696354f4",
+              "nominal-cavity-e5a4553976ed6574d3bef864"
+            ],
+            "estimated_incremental_return": -0.7031999421116507,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 2.2000000100000037,
+            "outside_supplied_target_removed_mm3": 2.999999710258254,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca",
+              "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+              "nominal-cavity-41e1f0b77645464d7846b3c2"
+            ],
+            "estimated_incremental_return": -2.517199768266603,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 5.200000009999997,
+            "outside_supplied_target_removed_mm3": 11.999998841033015,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          }
+        ],
+        "pruned": 64,
+        "terminals": []
+      },
+      {
+        "calls": 61,
+        "depth": 4,
+        "negative": 61,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e",
+              "nominal-cavity-2fa62249fd608aab696354f4",
+              "nominal-cavity-e5a4553976ed6574d3bef864",
+              "nominal-cavity-0537201b202e306930a3c3d3"
+            ],
+            "estimated_incremental_return": -0.9395999228155343,
+            "opening_depth_mm": 2.5,
+            "opening_removed_volume_mm3": 3.9999996136776717,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca",
+              "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+              "nominal-cavity-41e1f0b77645464d7846b3c2",
+              "nominal-cavity-f15644d605ad3b57b70b9792"
+            ],
+            "estimated_incremental_return": -4.557599575125439,
+            "opening_depth_mm": 4.500000000000003,
+            "opening_removed_volume_mm3": 21.999997875227194,
+            "reason": "opening"
+          }
+        ],
+        "prefixes": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e",
+              "nominal-cavity-2fa62249fd608aab696354f4",
+              "nominal-cavity-e5a4553976ed6574d3bef864",
+              "nominal-cavity-0537201b202e306930a3c3d3"
+            ],
+            "estimated_incremental_return": -0.9395999228155343,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 3.2000000099999966,
+            "outside_supplied_target_removed_mm3": 3.9999996136776717,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca",
+              "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+              "nominal-cavity-41e1f0b77645464d7846b3c2",
+              "nominal-cavity-f15644d605ad3b57b70b9792"
+            ],
+            "estimated_incremental_return": -4.557599575125439,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 5.200000009999997,
+            "outside_supplied_target_removed_mm3": 21.999997875227194,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          }
+        ],
+        "pruned": 59,
+        "terminals": []
+      }
+    ],
+    "completed_layers_checked": 4,
+    "exact": true,
+    "excluded_successor_fields": [
+      "legal_nonstop_actions",
+      "successor_inventory_status"
+    ],
+    "prior": [
+      {
+        "calls": 37,
+        "depth": 1,
+        "negative": 37,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e"
+            ],
+            "estimated_incremental_return": -0.23439998070388357,
+            "opening_depth_mm": 1.5000000000000027,
+            "opening_removed_volume_mm3": 0.9999999034194179,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca"
+            ],
+            "estimated_incremental_return": -0.6383999420716507,
+            "opening_depth_mm": 3.5000000000000044,
+            "opening_removed_volume_mm3": 2.999999710258254,
+            "reason": "opening"
+          }
+        ],
+        "prefixes": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e"
+            ],
+            "estimated_incremental_return": -0.23439998070388357,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 2.2000000099999966,
+            "outside_supplied_target_removed_mm3": 0.9999999034194179,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca"
+            ],
+            "estimated_incremental_return": -0.6383999420716507,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 4.200000010000004,
+            "outside_supplied_target_removed_mm3": 2.999999710258254,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          }
+        ],
+        "pruned": 35,
+        "terminals": []
+      },
+      {
+        "calls": 72,
+        "depth": 2,
+        "negative": 72,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e",
+              "nominal-cavity-2fa62249fd608aab696354f4"
+            ],
+            "estimated_incremental_return": -0.46879996140776714,
+            "opening_depth_mm": 1.5000000000000027,
+            "opening_removed_volume_mm3": 1.9999998068388358,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca",
+              "nominal-cavity-fd1d4cb74d6925b8da2a39e9"
+            ],
+            "estimated_incremental_return": -1.2787998841433015,
+            "opening_depth_mm": 4.500000000000003,
+            "opening_removed_volume_mm3": 5.999999420516508,
+            "reason": "opening"
+          }
+        ],
+        "prefixes": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e",
+              "nominal-cavity-2fa62249fd608aab696354f4"
+            ],
+            "estimated_incremental_return": -0.46879996140776714,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 2.2000000099999966,
+            "outside_supplied_target_removed_mm3": 1.9999998068388358,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca",
+              "nominal-cavity-fd1d4cb74d6925b8da2a39e9"
+            ],
+            "estimated_incremental_return": -1.2787998841433015,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 5.200000009999997,
+            "outside_supplied_target_removed_mm3": 5.999999420516508,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          }
+        ],
+        "pruned": 70,
+        "terminals": []
+      },
+      {
+        "calls": 66,
+        "depth": 3,
+        "negative": 66,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e",
+              "nominal-cavity-2fa62249fd608aab696354f4",
+              "nominal-cavity-e5a4553976ed6574d3bef864"
+            ],
+            "estimated_incremental_return": -0.7031999421116507,
+            "opening_depth_mm": 1.500000000000004,
+            "opening_removed_volume_mm3": 2.999999710258254,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca",
+              "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+              "nominal-cavity-41e1f0b77645464d7846b3c2"
+            ],
+            "estimated_incremental_return": -2.517199768266603,
+            "opening_depth_mm": 4.500000000000003,
+            "opening_removed_volume_mm3": 11.999998841033015,
+            "reason": "opening"
+          }
+        ],
+        "prefixes": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e",
+              "nominal-cavity-2fa62249fd608aab696354f4",
+              "nominal-cavity-e5a4553976ed6574d3bef864"
+            ],
+            "estimated_incremental_return": -0.7031999421116507,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 2.2000000100000037,
+            "outside_supplied_target_removed_mm3": 2.999999710258254,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca",
+              "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+              "nominal-cavity-41e1f0b77645464d7846b3c2"
+            ],
+            "estimated_incremental_return": -2.517199768266603,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 5.200000009999997,
+            "outside_supplied_target_removed_mm3": 11.999998841033015,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          }
+        ],
+        "pruned": 64,
+        "terminals": []
+      },
+      {
+        "calls": 61,
+        "depth": 4,
+        "negative": 61,
+        "opening_depth_retention": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e",
+              "nominal-cavity-2fa62249fd608aab696354f4",
+              "nominal-cavity-e5a4553976ed6574d3bef864",
+              "nominal-cavity-0537201b202e306930a3c3d3"
+            ],
+            "estimated_incremental_return": -0.9395999228155343,
+            "opening_depth_mm": 2.5,
+            "opening_removed_volume_mm3": 3.9999996136776717,
+            "reason": "best_return"
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca",
+              "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+              "nominal-cavity-41e1f0b77645464d7846b3c2",
+              "nominal-cavity-f15644d605ad3b57b70b9792"
+            ],
+            "estimated_incremental_return": -4.557599575125439,
+            "opening_depth_mm": 4.500000000000003,
+            "opening_removed_volume_mm3": 21.999997875227194,
+            "reason": "opening"
+          }
+        ],
+        "prefixes": [
+          {
+            "actions": [
+              "nominal-cavity-191b268ed79e50f4005a9b3e",
+              "nominal-cavity-2fa62249fd608aab696354f4",
+              "nominal-cavity-e5a4553976ed6574d3bef864",
+              "nominal-cavity-0537201b202e306930a3c3d3"
+            ],
+            "estimated_incremental_return": -0.9395999228155343,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 3.2000000099999966,
+            "outside_supplied_target_removed_mm3": 3.9999996136776717,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          },
+          {
+            "actions": [
+              "nominal-cavity-7f1a5747d69d0235913a18ca",
+              "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+              "nominal-cavity-41e1f0b77645464d7846b3c2",
+              "nominal-cavity-f15644d605ad3b57b70b9792"
+            ],
+            "estimated_incremental_return": -4.557599575125439,
+            "legal_target_family_actions": null,
+            "max_insertion_distance_mm": 5.200000009999997,
+            "outside_supplied_target_removed_mm3": 21.999997875227194,
+            "progress_status": "available",
+            "target_removed_mm3": 0.0
+          }
+        ],
+        "pruned": 59,
+        "terminals": []
+      }
+    ],
+    "prior_partial_fifth_layer_not_compared": true
+  },
+  "prior_world_control": {
+    "actual": {
+      "action_ids": [
+        "STOP",
+        "nominal-cavity-a7b4fcb4d661ba30d98b198c",
+        "nominal-cavity-d924a0e979f028e1d8cdb492",
+        "nominal-cavity-d97f71b2128dbbab68e63c82",
+        "nominal-cavity-73f02ba4b98f488ca471ff56",
+        "nominal-cavity-33528bc6ab84fb1b4e73c0e0",
+        "nominal-cavity-a35e9f9436f48dc270f29096",
+        "nominal-cavity-6407d23341d4d328cd0a40bd",
+        "nominal-cavity-b7485fa8968481acfc253170",
+        "nominal-cavity-bb72b9a7eaef78be85b98a6a",
+        "nominal-cavity-c2b70587c48afe664af03f71",
+        "nominal-cavity-e908afbb62bec99557c70416",
+        "nominal-cavity-1ca961126ce3b50e12a2aa89",
+        "nominal-cavity-a5f9a916e116a58584f7f5e1",
+        "nominal-cavity-eb5ca5ff960597e8f79aea4b",
+        "nominal-cavity-8611a142ec316e71608b2156",
+        "nominal-cavity-abfd2866e00710185517f48c",
+        "nominal-cavity-0c3c3bf3f1de72a0a3f8dab3",
+        "nominal-cavity-c129a3ecd349d71de1029093",
+        "nominal-cavity-7e08b0660e85725bc73b19b2",
+        "nominal-cavity-8b460459519740d054f2adb6",
+        "nominal-cavity-0a45f5b540657fdd004a38db",
+        "nominal-cavity-c5fff6067957e836beea363f",
+        "nominal-cavity-61f4d2c9500126645cfd73f0",
+        "nominal-cavity-3cdce3799db0e091faa0fbea",
+        "nominal-cavity-7514313d20798371b40b01c3",
+        "nominal-cavity-c4b9a8f97c92013189009389",
+        "nominal-cavity-de633cec78548264db4ffc18",
+        "nominal-cavity-7f1a5747d69d0235913a18ca",
+        "nominal-cavity-76043d12deb53ceb3b1027c6",
+        "nominal-cavity-c778105eadacc67bed978ec9",
+        "nominal-cavity-191b268ed79e50f4005a9b3e",
+        "nominal-cavity-f6fdaea9b1b91824cfeb2477",
+        "nominal-cavity-036c51898a2759c6cccc5544",
+        "nominal-cavity-2a8bf28bcefa07586c5a59df",
+        "nominal-cavity-70db7df57334e2be535ff82b",
+        "nominal-cavity-f0bea82dbe901ae8d51bb923",
+        "nominal-cavity-9359b3a25e801d1e8638e375"
+      ],
+      "action_mask": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "decision_model_hash": "sha256:d9a6b888898e58f2a41634e0d2ce6a0a408aa806692bb96c2bad957dbbedd2a3",
+      "initial_observation_hash": "sha256:28903dbdb6e1b364b04063cb40653b57928f6ede89edf70c227ca1f8bf45d047",
+      "max_steps": 24,
+      "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+      "post_exposure": {
+        "access": {
+          "center_mm": [
+            -59.878999999211224,
+            -14.888999999694036,
+            -18.27829563649273
+          ],
+          "normal_inward": [
+            1.0,
+            4.897e-12,
+            0.0
+          ],
+          "radius_mm": 6.0,
+          "window_id": "public-union-post-exposure-axis0-v1"
+        },
+        "cell_face_source_index": 1.5,
+        "classification_tolerance_mm": 1e-08,
+        "external_encounter_hash_rule": "semantic_digest(sorted_unique_native_index_lists)",
+        "external_unknown_cells": 18018,
+        "external_workspace_hash": "sha256:f10b3cbe4ffa151d022dfb4abd32592cd787deea4b891fd90c7f9dc15cf01c21",
+        "external_workspace_rule": "E=U intersect full_cell_hi_less_than_minus1e-8mm; collision_exception_only",
+        "fixed_disc_occupied_cells": 10896,
+        "full_T_hash": "sha256:9a30c1a04894309263cd2c99a3d00de182ba5b87f9485918461acae0cb24bc06",
+        "initial_free_cells": 1404481,
+        "initial_free_hash": "sha256:68516f2ce63141dcbeb78dc00a92606800cae0303ed046336dc350e2591e46f6",
+        "initial_free_rule": "six_connected_closure_of_K_in_Ds_and_not_O; zero_removal_or_reward",
+        "interaction_domain_hash": "sha256:be1670605a59a65f4cec472ccca7778b62ae57ad7fc58ff8e8ae0684af21b77d",
+        "native_affine_hash": "sha256:27003b4f2f6a3549c8a032e345c71a80286cb142cfc8b91612007f024717b987",
+        "occupancy_hash": "sha256:9a6cf41cbed6ee9744eb810fbfc9a6162725767bceb5447f9689db55e38e834b",
+        "original_access": {
+          "center_mm": [
+            -57.878999999211224,
+            -14.888999999684245,
+            -18.27829563649273
+          ],
+          "normal_inward": [
+            1.0,
+            4.897e-12,
+            0.0
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "outside_image_geometry": "existing_unassessed_extent; tip_outside_image_still_refused",
+        "physical_air_or_operative_opening_observed": false,
+        "preentry_rule": "per_insertion_p0=entry-((max(rtip,rshaft-tip_length*cos_angle)+1e-8)/cos_angle)*axis",
+        "scope": "public_simulated_post_exposure_search_qualification_only",
+        "seed_cells": 89,
+        "seed_hash": "sha256:06b58c052df170be4fb7d2cfebead8a06ff22e5c4dcd3ea64d00098a14cecc73",
+        "seed_rule": "Ds&~O; proximal distal_face_on_plane; entire footprint strictly_inside_disc",
+        "selection": "same_side_and_transverse_centroid; outer_full_O_cell_face_across_closed_disc; no fallback",
+        "source_Ds_hash": "sha256:be1670605a59a65f4cec472ccca7778b62ae57ad7fc58ff8e8ae0684af21b77d",
+        "source_S_hash": "sha256:6cbde71188d25276408819e370986b36079afb406aa4207a8c5aa3809ff6adb1",
+        "source_domains_extended": false,
+        "source_material_deleted": false,
+        "source_shape": [
+          131,
+          154,
+          117
+        ],
+        "source_target_deleted": false,
+        "trajectory": "checked_axial_insertion_and_reverse; transfer_between_withdrawn_poses_unassessed",
+        "version": "public-union-post-exposure-axis0-v1"
+      },
+      "proposal_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+      "source_domains": {
+        "anatomical_or_material_validation": false,
+        "assumed_material_beyond_source_domain_voxels": 0,
+        "external_tool_extent": "declared E and outside-image extent unassessed; observed Ds unchanged",
+        "interaction_domain_hash": "sha256:be1670605a59a65f4cec472ccca7778b62ae57ad7fc58ff8e8ae0684af21b77d",
+        "interaction_domain_rule": "Ds OR (T > 0)",
+        "post_exposure_condition_hash": "sha256:646c6a447e81a78fb116dc75504ad1e0c7fe03f5eb2c4982452055fbe8a48dd4",
+        "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+        "source_domain_extended": false,
+        "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+        "source_support_domain_hash": "sha256:be1670605a59a65f4cec472ccca7778b62ae57ad7fc58ff8e8ae0684af21b77d",
+        "source_support_known_voxels": 2184064,
+        "source_support_unknown_voxels": 176294,
+        "target_in_unknown_support_voxels": 0,
+        "unavailable_interaction_voxels": 176294,
+        "unknown_interaction_rule": "U except declared wholly-proximal E blocks full tool; no U seed, flood or removal",
+        "version": "separate-source-and-simulated-domain-v1"
+      },
+      "source_hash": "sha256:01b0bc9e3586b0f797f132d072b809a7570a9a0c6eae86392aa35417e4a06bda"
+    },
+    "exact": true,
+    "prior": {
+      "action_ids": [
+        "STOP",
+        "nominal-cavity-a7b4fcb4d661ba30d98b198c",
+        "nominal-cavity-d924a0e979f028e1d8cdb492",
+        "nominal-cavity-d97f71b2128dbbab68e63c82",
+        "nominal-cavity-73f02ba4b98f488ca471ff56",
+        "nominal-cavity-33528bc6ab84fb1b4e73c0e0",
+        "nominal-cavity-a35e9f9436f48dc270f29096",
+        "nominal-cavity-6407d23341d4d328cd0a40bd",
+        "nominal-cavity-b7485fa8968481acfc253170",
+        "nominal-cavity-bb72b9a7eaef78be85b98a6a",
+        "nominal-cavity-c2b70587c48afe664af03f71",
+        "nominal-cavity-e908afbb62bec99557c70416",
+        "nominal-cavity-1ca961126ce3b50e12a2aa89",
+        "nominal-cavity-a5f9a916e116a58584f7f5e1",
+        "nominal-cavity-eb5ca5ff960597e8f79aea4b",
+        "nominal-cavity-8611a142ec316e71608b2156",
+        "nominal-cavity-abfd2866e00710185517f48c",
+        "nominal-cavity-0c3c3bf3f1de72a0a3f8dab3",
+        "nominal-cavity-c129a3ecd349d71de1029093",
+        "nominal-cavity-7e08b0660e85725bc73b19b2",
+        "nominal-cavity-8b460459519740d054f2adb6",
+        "nominal-cavity-0a45f5b540657fdd004a38db",
+        "nominal-cavity-c5fff6067957e836beea363f",
+        "nominal-cavity-61f4d2c9500126645cfd73f0",
+        "nominal-cavity-3cdce3799db0e091faa0fbea",
+        "nominal-cavity-7514313d20798371b40b01c3",
+        "nominal-cavity-c4b9a8f97c92013189009389",
+        "nominal-cavity-de633cec78548264db4ffc18",
+        "nominal-cavity-7f1a5747d69d0235913a18ca",
+        "nominal-cavity-76043d12deb53ceb3b1027c6",
+        "nominal-cavity-c778105eadacc67bed978ec9",
+        "nominal-cavity-191b268ed79e50f4005a9b3e",
+        "nominal-cavity-f6fdaea9b1b91824cfeb2477",
+        "nominal-cavity-036c51898a2759c6cccc5544",
+        "nominal-cavity-2a8bf28bcefa07586c5a59df",
+        "nominal-cavity-70db7df57334e2be535ff82b",
+        "nominal-cavity-f0bea82dbe901ae8d51bb923",
+        "nominal-cavity-9359b3a25e801d1e8638e375"
+      ],
+      "action_mask": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "decision_model_hash": "sha256:d9a6b888898e58f2a41634e0d2ce6a0a408aa806692bb96c2bad957dbbedd2a3",
+      "initial_observation_hash": "sha256:28903dbdb6e1b364b04063cb40653b57928f6ede89edf70c227ca1f8bf45d047",
+      "max_steps": 24,
+      "occupancy_condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+      "post_exposure": {
+        "access": {
+          "center_mm": [
+            -59.878999999211224,
+            -14.888999999694036,
+            -18.27829563649273
+          ],
+          "normal_inward": [
+            1.0,
+            4.897e-12,
+            0.0
+          ],
+          "radius_mm": 6.0,
+          "window_id": "public-union-post-exposure-axis0-v1"
+        },
+        "cell_face_source_index": 1.5,
+        "classification_tolerance_mm": 1e-08,
+        "external_encounter_hash_rule": "semantic_digest(sorted_unique_native_index_lists)",
+        "external_unknown_cells": 18018,
+        "external_workspace_hash": "sha256:f10b3cbe4ffa151d022dfb4abd32592cd787deea4b891fd90c7f9dc15cf01c21",
+        "external_workspace_rule": "E=U intersect full_cell_hi_less_than_minus1e-8mm; collision_exception_only",
+        "fixed_disc_occupied_cells": 10896,
+        "full_T_hash": "sha256:9a30c1a04894309263cd2c99a3d00de182ba5b87f9485918461acae0cb24bc06",
+        "initial_free_cells": 1404481,
+        "initial_free_hash": "sha256:68516f2ce63141dcbeb78dc00a92606800cae0303ed046336dc350e2591e46f6",
+        "initial_free_rule": "six_connected_closure_of_K_in_Ds_and_not_O; zero_removal_or_reward",
+        "interaction_domain_hash": "sha256:be1670605a59a65f4cec472ccca7778b62ae57ad7fc58ff8e8ae0684af21b77d",
+        "native_affine_hash": "sha256:27003b4f2f6a3549c8a032e345c71a80286cb142cfc8b91612007f024717b987",
+        "occupancy_hash": "sha256:9a6cf41cbed6ee9744eb810fbfc9a6162725767bceb5447f9689db55e38e834b",
+        "original_access": {
+          "center_mm": [
+            -57.878999999211224,
+            -14.888999999684245,
+            -18.27829563649273
+          ],
+          "normal_inward": [
+            1.0,
+            4.897e-12,
+            0.0
+          ],
+          "radius_mm": 6.0,
+          "window_id": "fixed-public-target-side-axis0-v1"
+        },
+        "outside_image_geometry": "existing_unassessed_extent; tip_outside_image_still_refused",
+        "physical_air_or_operative_opening_observed": false,
+        "preentry_rule": "per_insertion_p0=entry-((max(rtip,rshaft-tip_length*cos_angle)+1e-8)/cos_angle)*axis",
+        "scope": "public_simulated_post_exposure_search_qualification_only",
+        "seed_cells": 89,
+        "seed_hash": "sha256:06b58c052df170be4fb7d2cfebead8a06ff22e5c4dcd3ea64d00098a14cecc73",
+        "seed_rule": "Ds&~O; proximal distal_face_on_plane; entire footprint strictly_inside_disc",
+        "selection": "same_side_and_transverse_centroid; outer_full_O_cell_face_across_closed_disc; no fallback",
+        "source_Ds_hash": "sha256:be1670605a59a65f4cec472ccca7778b62ae57ad7fc58ff8e8ae0684af21b77d",
+        "source_S_hash": "sha256:6cbde71188d25276408819e370986b36079afb406aa4207a8c5aa3809ff6adb1",
+        "source_domains_extended": false,
+        "source_material_deleted": false,
+        "source_shape": [
+          131,
+          154,
+          117
+        ],
+        "source_target_deleted": false,
+        "trajectory": "checked_axial_insertion_and_reverse; transfer_between_withdrawn_poses_unassessed",
+        "version": "public-union-post-exposure-axis0-v1"
+      },
+      "proposal_hash": "sha256:bb3dea24a33c0d890bc9c5725327fd1195f9c866e9a30805bf7eb166292474fd",
+      "source_domains": {
+        "anatomical_or_material_validation": false,
+        "assumed_material_beyond_source_domain_voxels": 0,
+        "external_tool_extent": "declared E and outside-image extent unassessed; observed Ds unchanged",
+        "interaction_domain_hash": "sha256:be1670605a59a65f4cec472ccca7778b62ae57ad7fc58ff8e8ae0684af21b77d",
+        "interaction_domain_rule": "Ds OR (T > 0)",
+        "post_exposure_condition_hash": "sha256:646c6a447e81a78fb116dc75504ad1e0c7fe03f5eb2c4982452055fbe8a48dd4",
+        "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+        "source_domain_extended": false,
+        "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+        "source_support_domain_hash": "sha256:be1670605a59a65f4cec472ccca7778b62ae57ad7fc58ff8e8ae0684af21b77d",
+        "source_support_known_voxels": 2184064,
+        "source_support_unknown_voxels": 176294,
+        "target_in_unknown_support_voxels": 0,
+        "unavailable_interaction_voxels": 176294,
+        "unknown_interaction_rule": "U except declared wholly-proximal E blocks full tool; no U seed, flood or removal",
+        "version": "separate-source-and-simulated-domain-v1"
+      },
+      "source_hash": "sha256:01b0bc9e3586b0f797f132d072b809a7570a9a0c6eae86392aa35417e4a06bda"
+    }
+  },
+  "private_reference_reads": 0,
+  "public_preparation": {
+    "expanded_preparation_provenance": {
+      "diagnostic_result_sha256": "531e60692158457077d1a11b951bb5b217b8333abd269968a651eca474828445",
+      "expanded_crop_start_MR": [
+        61,
+        70,
+        23
+      ],
+      "fixed_opening_from_bound_diagnostic": {
+        "known_zero_component_cells": null,
+        "known_zero_component_status": "not_measured; seed diagnostic only",
+        "old_outer_face_full_MR": 62.5,
+        "restored_outer_face_full_MR": 62.5,
+        "seed_cells": 89,
+        "seed_failure_remains": false,
+        "side": 1,
+        "transverse_full_MR": [
+          161,
+          108
+        ]
+      },
+      "native_MR_samples_retained": true,
+      "new_access_or_route_admitted": false,
+      "old_conversion_sha256": "9d126eaa926d7e6c4e11903d119a9446f1e38ea98993a652735cabd72ecd0fe9",
+      "old_crop_start_MR": [
+        63,
+        72,
+        25
+      ],
+      "old_manifest_sha256": "563963e7cf6ae7c1dff9f163db3208bf1af89b5611bc20e76a84c442a2b407a8",
+      "old_overlap_file_sha256": {
+        "image": "5415f0e09f5888565fd49bf20314234e681ee6d55991f6bdd80524e49c6c6632",
+        "supplied_support": "58a0d75dd775772c742c8cac29766058337b34d17b0cfb8b30645a188d963070",
+        "supplied_whole_tumor": "00025fc785fe79e5008b5a838d42672e6473eab9f7220cb8acca54ad9366888e",
+        "whole_tumor_domain": "0237ec55f72db66a345ffcef3c5b83778017a40283f50b3ad61f55cf14140242"
+      },
+      "old_sources_or_failed_attempt_modified": false,
+      "old_support_placed_voxels": 745523,
+      "original_full_target_voxels": 35260,
+      "preentry_point_bounds_from_bound_diagnostic": [
+        {
+          "all_allowed_cone_p0_transverse_bound_inside_crop": true,
+          "distal_point_full_MR_axis0": 61.49999999,
+          "distal_point_inside_acquired_MRI_axis0": true,
+          "distal_point_inside_outer_crop_axis0": true,
+          "p0_transverse_full_MR_bound": [
+            [
+              153.99999999,
+              100.99999931393586
+            ],
+            [
+              168.00000001,
+              115.00000068606414
+            ]
+          ],
+          "tool_id": "generic_suction",
+          "whole_tool_in_image_certified": false
+        },
+        {
+          "all_allowed_cone_p0_transverse_bound_inside_crop": true,
+          "distal_point_full_MR_axis0": 60.79999999,
+          "distal_point_inside_acquired_MRI_axis0": true,
+          "distal_point_inside_outer_crop_axis0": true,
+          "p0_transverse_full_MR_bound": [
+            [
+              153.29999999,
+              100.29999924632945
+            ],
+            [
+              168.70000001,
+              115.70000075367055
+            ]
+          ],
+          "tool_id": "generic_aspirator",
+          "whole_tool_in_image_certified": false
+        }
+      ],
+      "restored_support_placed_voxels": 69
+    },
+    "manifest": {
+      "path": "build/select013-expanded-public-preparation-v1/public-inputs-v1/ReMIND-013-public-inputs.json",
+      "sha256": "841261035a7d7be5c55984e717b8d65b712065a708e9260231ebcd49cc4d700e"
+    },
+    "original_failed_attempt": {
+      "bindings": {
+        "parent": {
+          "path": "build/post-exposure-select013-comparison-v1/attempt-01.supervision/receipt.json",
+          "sha256": "cb2320d9920faef28aae1e26337099ea2c1b2685dbdb8a57a494a93f46d9f5fc"
+        },
+        "release": {
+          "path": "build/post-exposure-select013-comparison-v1/root-release.json",
+          "sha256": "e257ccbd5a2d2119da3597d1e7c032925ce466b3c073ce27b5ee393dad9a3048"
+        },
+        "result": {
+          "path": "build/post-exposure-select013-comparison-v1/attempt-01/result.json",
+          "sha256": "c4cec9dc15611c4dce99f45ee5707574342527b1f9dbf838c616424edade9812"
+        }
+      },
+      "checkpoint_loads": 2,
+      "failure": {
+        "committed": false,
+        "message": "POST_EXPOSURE_EMPTY_FIXED_K",
+        "type": "ValueError"
+      },
+      "native_previews": 0,
+      "parent_seconds": 3.727428958984092,
+      "policy_forwards": 0,
+      "sampled_peak_rss_bytes": 371245056
+    },
+    "partial_domain_inputs": true,
+    "source_bindings": {
+      "case_sha256": "9d4448328e979c856e3c8e08599b9cc2b66fc7d324f1652d7970468099267c65",
+      "cohort_sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+      "conversion": {
+        "bytes": 19409,
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-expanded-public-preparation-v1/actual-domain-qc-v1/ReMIND-013-crop-mr-domains/conversion-result.json",
+        "sha256": "bf9174ee066f2ce744a4b3ace1ae048954733981c8126e461c15a75d7c89a057"
+      },
+      "headers_sha256": "fd3a5c5cfded6e4a60ef263c03f13df0adb07ae2f77b84f61aee9295e31b8948",
+      "root_visual_review": {
+        "bytes": 1539,
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-expanded-public-preparation-v1/root-visual-review.json",
+        "sha256": "1471e4e32b4fa09d7565664f279489d4b60a8eab149471e82475ee6539a58a86"
+      },
+      "saved_array_review_sha256": "6479dd6df8a9d81a05438e481533b2083a7d95cb5889f93b3c4dea038f6d6a7d",
+      "saved_review": {
+        "bytes": 8118,
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-expanded-public-preparation-v1/actual-domain-qc-v1/ReMIND-013-saved-domain-review/saved-domain-review.json",
+        "sha256": "6479dd6df8a9d81a05438e481533b2083a7d95cb5889f93b3c4dea038f6d6a7d"
+      }
+    },
+    "source_domain_counts": {
+      "support_domain": 2184064,
+      "target_in_known_support_positive": 1579,
+      "target_in_known_support_zero": 33681,
+      "target_in_unknown_support_domain": 0
+    },
+    "source_domain_fully_covered": false
+  },
+  "raw_support_unsupported_target_voxels": 33681,
+  "reference_checkpoint_scope": "admission_and_replay_only_not_action_author",
+  "role": "SELECT",
+  "status": "complete_SELECT013_lazy_beam_recovery",
+  "subject": "ReMIND-013",
+  "task_condition": "PARTIAL_TARGET_PROGRESS",
+  "total_policy_forward_calls": 0,
+  "transition_mode": "lazy_planning",
+  "wall_seconds": 82.76967291696928
+}

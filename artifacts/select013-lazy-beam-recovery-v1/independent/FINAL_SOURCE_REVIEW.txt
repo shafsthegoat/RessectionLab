@@ -1,0 +1,38 @@
+GO for the exact staged beam-only source reviewed below; execution remains root-owned.
+
+comparison_contract.py 5f0e15aac211bce9e7817c11dcc2cf435de1d5c04d41e839a79a7e0b41cf2119
+select_worker.py 703b1b53a21d00de197765a50a22454ea5d0bfc0c815ed9ff93e59237b205fc2
+run_owned.py d4c68ec70a11f83cd234657c4c61f1dd996e00534fe2d611274e03e76300a1bf
+freeze-runtime.py 7522e783b641e410359ffba8bd92f41a0161102e303e5c0d863c5ab3751e1969
+All under build/select013-lazy-beam-recovery-v1.
+
+The worker runs only the existing public beam, with one original IL64 reload
+required by the unchanged SELECT collector and no actor forward. Actual forward
+cap is0; historical admission budget remains48. H24/cap120/13 axes, proposals,
+partial Ds, post-exposure world, raw ordering, depth-volume retention, beam2,
+5640 calls/300s remain unchanged.900/960s outer caps retain full replay headroom.
+
+The exact prior world is checked before search. Four completed historical layers
+must retain their action paths, return, depth/volume, progress and call/pruning
+fields. Only later successor availability is excluded; the incomplete fifth
+layer is not an invariant. Caps retain unresolved accounting/partial actions,
+never an accepted STOP or complete-history attestation. A valid negative route
+may complete only through the normal SELECT collector/full independent replay.
+Original failed four-arm and EMPTY_FIXED_K evidence, costs, held037/denominator2
+and closed067 remain bound. Parent monitoring differs only in declaration and
+completion labels; cleanup/deadline/source/output supervision is unchanged.
+
+Independent hash checks confirmed every current file in the prior canonical
+closure is unchanged except the exact admission validation extraction plus two
+reviewed desktop modules. Those three deltas and the two added desktop imports
+match the prospective freezer and committed bytes. Native task, proposal,
+search, reward, checkpoint loader and accepted geometry-checker bytes remain
+unchanged. Metadata-only final freeze stays exclusive and non-executable.
+
+No remaining production source finding. Generated controls are separately owned
+by the writer/root. Their first6pass/1failure is preserved: the test incorrectly
+submitted planning clones to an evaluator that correctly refuses them. Repair
+must replay the exact actions into fresh authoritative tasks and preserve that
+refusal; no production correction is requested. Final saved controls evidence
+will be recorded separately. This reviewer ran no tests, imported no scientific
+modules and opened no patient arrays, checkpoint weights or geometry execution.

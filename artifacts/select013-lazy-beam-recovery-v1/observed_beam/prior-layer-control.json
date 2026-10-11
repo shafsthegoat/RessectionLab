@@ -1,0 +1,469 @@
+{
+  "actual": [
+    {
+      "calls": 37,
+      "depth": 1,
+      "negative": 37,
+      "opening_depth_retention": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e"
+          ],
+          "estimated_incremental_return": -0.23439998070388357,
+          "opening_depth_mm": 1.5000000000000027,
+          "opening_removed_volume_mm3": 0.9999999034194179,
+          "reason": "best_return"
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca"
+          ],
+          "estimated_incremental_return": -0.6383999420716507,
+          "opening_depth_mm": 3.5000000000000044,
+          "opening_removed_volume_mm3": 2.999999710258254,
+          "reason": "opening"
+        }
+      ],
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e"
+          ],
+          "estimated_incremental_return": -0.23439998070388357,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 2.2000000099999966,
+          "outside_supplied_target_removed_mm3": 0.9999999034194179,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca"
+          ],
+          "estimated_incremental_return": -0.6383999420716507,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 4.200000010000004,
+          "outside_supplied_target_removed_mm3": 2.999999710258254,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        }
+      ],
+      "pruned": 35,
+      "terminals": []
+    },
+    {
+      "calls": 72,
+      "depth": 2,
+      "negative": 72,
+      "opening_depth_retention": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e",
+            "nominal-cavity-2fa62249fd608aab696354f4"
+          ],
+          "estimated_incremental_return": -0.46879996140776714,
+          "opening_depth_mm": 1.5000000000000027,
+          "opening_removed_volume_mm3": 1.9999998068388358,
+          "reason": "best_return"
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca",
+            "nominal-cavity-fd1d4cb74d6925b8da2a39e9"
+          ],
+          "estimated_incremental_return": -1.2787998841433015,
+          "opening_depth_mm": 4.500000000000003,
+          "opening_removed_volume_mm3": 5.999999420516508,
+          "reason": "opening"
+        }
+      ],
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e",
+            "nominal-cavity-2fa62249fd608aab696354f4"
+          ],
+          "estimated_incremental_return": -0.46879996140776714,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 2.2000000099999966,
+          "outside_supplied_target_removed_mm3": 1.9999998068388358,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca",
+            "nominal-cavity-fd1d4cb74d6925b8da2a39e9"
+          ],
+          "estimated_incremental_return": -1.2787998841433015,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 5.200000009999997,
+          "outside_supplied_target_removed_mm3": 5.999999420516508,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        }
+      ],
+      "pruned": 70,
+      "terminals": []
+    },
+    {
+      "calls": 66,
+      "depth": 3,
+      "negative": 66,
+      "opening_depth_retention": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e",
+            "nominal-cavity-2fa62249fd608aab696354f4",
+            "nominal-cavity-e5a4553976ed6574d3bef864"
+          ],
+          "estimated_incremental_return": -0.7031999421116507,
+          "opening_depth_mm": 1.500000000000004,
+          "opening_removed_volume_mm3": 2.999999710258254,
+          "reason": "best_return"
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca",
+            "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+            "nominal-cavity-41e1f0b77645464d7846b3c2"
+          ],
+          "estimated_incremental_return": -2.517199768266603,
+          "opening_depth_mm": 4.500000000000003,
+          "opening_removed_volume_mm3": 11.999998841033015,
+          "reason": "opening"
+        }
+      ],
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e",
+            "nominal-cavity-2fa62249fd608aab696354f4",
+            "nominal-cavity-e5a4553976ed6574d3bef864"
+          ],
+          "estimated_incremental_return": -0.7031999421116507,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 2.2000000100000037,
+          "outside_supplied_target_removed_mm3": 2.999999710258254,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca",
+            "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+            "nominal-cavity-41e1f0b77645464d7846b3c2"
+          ],
+          "estimated_incremental_return": -2.517199768266603,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 5.200000009999997,
+          "outside_supplied_target_removed_mm3": 11.999998841033015,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        }
+      ],
+      "pruned": 64,
+      "terminals": []
+    },
+    {
+      "calls": 61,
+      "depth": 4,
+      "negative": 61,
+      "opening_depth_retention": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e",
+            "nominal-cavity-2fa62249fd608aab696354f4",
+            "nominal-cavity-e5a4553976ed6574d3bef864",
+            "nominal-cavity-0537201b202e306930a3c3d3"
+          ],
+          "estimated_incremental_return": -0.9395999228155343,
+          "opening_depth_mm": 2.5,
+          "opening_removed_volume_mm3": 3.9999996136776717,
+          "reason": "best_return"
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca",
+            "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+            "nominal-cavity-41e1f0b77645464d7846b3c2",
+            "nominal-cavity-f15644d605ad3b57b70b9792"
+          ],
+          "estimated_incremental_return": -4.557599575125439,
+          "opening_depth_mm": 4.500000000000003,
+          "opening_removed_volume_mm3": 21.999997875227194,
+          "reason": "opening"
+        }
+      ],
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e",
+            "nominal-cavity-2fa62249fd608aab696354f4",
+            "nominal-cavity-e5a4553976ed6574d3bef864",
+            "nominal-cavity-0537201b202e306930a3c3d3"
+          ],
+          "estimated_incremental_return": -0.9395999228155343,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 3.2000000099999966,
+          "outside_supplied_target_removed_mm3": 3.9999996136776717,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca",
+            "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+            "nominal-cavity-41e1f0b77645464d7846b3c2",
+            "nominal-cavity-f15644d605ad3b57b70b9792"
+          ],
+          "estimated_incremental_return": -4.557599575125439,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 5.200000009999997,
+          "outside_supplied_target_removed_mm3": 21.999997875227194,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        }
+      ],
+      "pruned": 59,
+      "terminals": []
+    }
+  ],
+  "completed_layers_checked": 4,
+  "exact": true,
+  "excluded_successor_fields": [
+    "legal_nonstop_actions",
+    "successor_inventory_status"
+  ],
+  "prior": [
+    {
+      "calls": 37,
+      "depth": 1,
+      "negative": 37,
+      "opening_depth_retention": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e"
+          ],
+          "estimated_incremental_return": -0.23439998070388357,
+          "opening_depth_mm": 1.5000000000000027,
+          "opening_removed_volume_mm3": 0.9999999034194179,
+          "reason": "best_return"
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca"
+          ],
+          "estimated_incremental_return": -0.6383999420716507,
+          "opening_depth_mm": 3.5000000000000044,
+          "opening_removed_volume_mm3": 2.999999710258254,
+          "reason": "opening"
+        }
+      ],
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e"
+          ],
+          "estimated_incremental_return": -0.23439998070388357,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 2.2000000099999966,
+          "outside_supplied_target_removed_mm3": 0.9999999034194179,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca"
+          ],
+          "estimated_incremental_return": -0.6383999420716507,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 4.200000010000004,
+          "outside_supplied_target_removed_mm3": 2.999999710258254,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        }
+      ],
+      "pruned": 35,
+      "terminals": []
+    },
+    {
+      "calls": 72,
+      "depth": 2,
+      "negative": 72,
+      "opening_depth_retention": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e",
+            "nominal-cavity-2fa62249fd608aab696354f4"
+          ],
+          "estimated_incremental_return": -0.46879996140776714,
+          "opening_depth_mm": 1.5000000000000027,
+          "opening_removed_volume_mm3": 1.9999998068388358,
+          "reason": "best_return"
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca",
+            "nominal-cavity-fd1d4cb74d6925b8da2a39e9"
+          ],
+          "estimated_incremental_return": -1.2787998841433015,
+          "opening_depth_mm": 4.500000000000003,
+          "opening_removed_volume_mm3": 5.999999420516508,
+          "reason": "opening"
+        }
+      ],
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e",
+            "nominal-cavity-2fa62249fd608aab696354f4"
+          ],
+          "estimated_incremental_return": -0.46879996140776714,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 2.2000000099999966,
+          "outside_supplied_target_removed_mm3": 1.9999998068388358,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca",
+            "nominal-cavity-fd1d4cb74d6925b8da2a39e9"
+          ],
+          "estimated_incremental_return": -1.2787998841433015,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 5.200000009999997,
+          "outside_supplied_target_removed_mm3": 5.999999420516508,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        }
+      ],
+      "pruned": 70,
+      "terminals": []
+    },
+    {
+      "calls": 66,
+      "depth": 3,
+      "negative": 66,
+      "opening_depth_retention": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e",
+            "nominal-cavity-2fa62249fd608aab696354f4",
+            "nominal-cavity-e5a4553976ed6574d3bef864"
+          ],
+          "estimated_incremental_return": -0.7031999421116507,
+          "opening_depth_mm": 1.500000000000004,
+          "opening_removed_volume_mm3": 2.999999710258254,
+          "reason": "best_return"
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca",
+            "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+            "nominal-cavity-41e1f0b77645464d7846b3c2"
+          ],
+          "estimated_incremental_return": -2.517199768266603,
+          "opening_depth_mm": 4.500000000000003,
+          "opening_removed_volume_mm3": 11.999998841033015,
+          "reason": "opening"
+        }
+      ],
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e",
+            "nominal-cavity-2fa62249fd608aab696354f4",
+            "nominal-cavity-e5a4553976ed6574d3bef864"
+          ],
+          "estimated_incremental_return": -0.7031999421116507,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 2.2000000100000037,
+          "outside_supplied_target_removed_mm3": 2.999999710258254,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca",
+            "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+            "nominal-cavity-41e1f0b77645464d7846b3c2"
+          ],
+          "estimated_incremental_return": -2.517199768266603,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 5.200000009999997,
+          "outside_supplied_target_removed_mm3": 11.999998841033015,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        }
+      ],
+      "pruned": 64,
+      "terminals": []
+    },
+    {
+      "calls": 61,
+      "depth": 4,
+      "negative": 61,
+      "opening_depth_retention": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e",
+            "nominal-cavity-2fa62249fd608aab696354f4",
+            "nominal-cavity-e5a4553976ed6574d3bef864",
+            "nominal-cavity-0537201b202e306930a3c3d3"
+          ],
+          "estimated_incremental_return": -0.9395999228155343,
+          "opening_depth_mm": 2.5,
+          "opening_removed_volume_mm3": 3.9999996136776717,
+          "reason": "best_return"
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca",
+            "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+            "nominal-cavity-41e1f0b77645464d7846b3c2",
+            "nominal-cavity-f15644d605ad3b57b70b9792"
+          ],
+          "estimated_incremental_return": -4.557599575125439,
+          "opening_depth_mm": 4.500000000000003,
+          "opening_removed_volume_mm3": 21.999997875227194,
+          "reason": "opening"
+        }
+      ],
+      "prefixes": [
+        {
+          "actions": [
+            "nominal-cavity-191b268ed79e50f4005a9b3e",
+            "nominal-cavity-2fa62249fd608aab696354f4",
+            "nominal-cavity-e5a4553976ed6574d3bef864",
+            "nominal-cavity-0537201b202e306930a3c3d3"
+          ],
+          "estimated_incremental_return": -0.9395999228155343,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 3.2000000099999966,
+          "outside_supplied_target_removed_mm3": 3.9999996136776717,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        },
+        {
+          "actions": [
+            "nominal-cavity-7f1a5747d69d0235913a18ca",
+            "nominal-cavity-fd1d4cb74d6925b8da2a39e9",
+            "nominal-cavity-41e1f0b77645464d7846b3c2",
+            "nominal-cavity-f15644d605ad3b57b70b9792"
+          ],
+          "estimated_incremental_return": -4.557599575125439,
+          "legal_target_family_actions": null,
+          "max_insertion_distance_mm": 5.200000009999997,
+          "outside_supplied_target_removed_mm3": 21.999997875227194,
+          "progress_status": "available",
+          "target_removed_mm3": 0.0
+        }
+      ],
+      "pruned": 59,
+      "terminals": []
+    }
+  ],
+  "prior_partial_fifth_layer_not_compared": true
+}

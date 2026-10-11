@@ -1,0 +1,66 @@
+PASS — saved SELECT013 lazy-beam recovery; completed negative scientific result.
+
+The recovered public beam completed all 24 layers and 725 model transitions in
+79.719992250 seconds (300-second local cap), selected exactly ["STOP"], and passed
+complete trace, sealed plan and independent native replay joins. Return, supplied
+target removal, outside-target removal and path length are all zero. There were
+zero actor forwards, optimizer attempts, gradient attempts or SELECT updates.
+The one original IL64 checkpoint was loaded solely as the existing admission/
+replay reference and did not author actions.
+
+This resolves the measured eager-successor-inventory execution bottleneck, but
+shows no useful target-progress outcome. All 725 evaluated cumulative prefixes
+had negative return. All recorded retained and terminal candidates had zero target
+removal. The opening lane reached approximately 4.5 mm by layer 2 and did not
+exceed that depth; it accumulated up to 43.999995750 mm3 outside the supplied target.
+The best saved 24-motion terminal candidate had return -5.984199518, zero target
+removal and 24.999997585 mm3 outside the supplied target; STOP remained preferable.
+The progress logs do not enumerate target removal in every discarded successor.
+Neither a globally optimal STOP decision nor physical impossibility is established.
+
+The exact source, decision model, proposal, initial observation, ordered action
+inventory/mask, post-exposure condition and partial source-domain records equal
+the prior expanded SELECT013 attempt. The original four completed layer projections
+match exactly (37,72,66,61 transitions), excluding only legal_nonstop_actions and
+successor_inventory_status, which reflect later inventory availability. The old
+partial fifth layer is not compared. Horizon24, cap120, original13 axes, footprint,
+world, reward, tools, depth-volume ranking, beam2 and max5640 calls are unchanged.
+The original EMPTY_FIXED_K failure and later capped four-arm result remain intact.
+This is a separate accepted beam result, not retroactive completion of that attempt.
+
+Measured recovery costs: public construction 1.520595792 s /117 previews;
+search phase 79.727862666 s /5382 previews (selector 79.719992250 s);
+collection 0.095118791 s /0 previews; independent replay 1.351520500 s /117 previews;
+reference checkpoint reload 0.013633958 s. Total 5616 previews. Parent elapsed
+86.929392833 s, sampled peak RSS 561709056 B, output 690036 B, exit 0, clean direct-child
+termination with no cleanup errors or survivors. Original outer 900/960 s, 3 GiB,
+128MiB output and 16 MiB supervision caps remain. Nested inventory/transition/clone
+timers are inclusive and must not be added to phase totals. Search inventory time
+was 62.859830746 s versus 293.554574491 s previously, while work increased from 246
+transitions/four complete layers to 725/24. This is not a replicated equal-work
+speedup estimate.
+
+SELECT denominator remains 2: 013 executed, 037 held unchanged; 067 EVAL stays closed.
+Full supplied target 35260 voxels remains unchanged. Source-domain unknown 176294
+voxels and raw support/target mismatch 33681 voxels remain explicit under simulated
+S-union-T material and deterministic public post-exposure assumptions. No clinical,
+anatomical accuracy, material truth or observed-surgical-demonstration claim follows.
+Legality and independent replay use only the admitted public estimated world.
+
+Independent audit: 2206 checks over 151 saved source/JSON files (5786248 bytes),
+0.056608542 s, 27475968 B high-water RSS, first execution PASS. Exact input hashes
+were checked again at termination. No arrays, weights, model forwards, native
+replay or geometric recomputation were performed by this review. Saved receipts
+and reviewed source establish these recorded calls; no independent syscall trace
+was collected. Full accepted plan/trace/replay certificates and all 24 compact layer
+progress rows accompany this report. Audit source preserves a separate unresolved
+branch; the actual result used the complete branch.
+
+Exact root bindings:
+HEAD fe857eed61ad2fc3cace011bcef523f7b43a1923
+release 43e7cdf0e43a014154cc15236bbb4df1818ed1577b3cee5b8d75ac368e9aa3d9
+source-index 1a9793219207a94ff3c71f654d50b02c7c196ab4cf3f0198260d4ea45aa258e1
+result 96e0b98069689a7ad6f1b986423f527ce931e04034b33605d3ebaf48e9e9d761
+parent 83031cb5bdeb9c9ee6bd47dcf53f28e3c7ea7f83207bc94b174d8501b994f232
+selection 8f62656d1081ea247499cb1ff7ed8b803bf2249d3e700703d3806506a151c8f4
+costs c7d0ea71d90c036cb66727f6cd96b6957ed03d5c299a7257ad06f7cb1ffcee17

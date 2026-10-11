@@ -1690,3 +1690,24 @@ same world, reward, retention and budgets before changing models or claiming
 that useful enabling sequences are absent. TRAIN050 is already acquired but
 requires public-source/header/domain qualification; held037 and closed067 stay
 protected. See the compact readiness/diagnosis reports once integrated.
+
+## October 11 — Lazy beam completes the exposed013 search
+
+[One recovered search](../artifacts/select013-lazy-beam-recovery-v1/RESULT.md)
+finishes 24 layers and 725 transitions in 79.719992 search seconds, with no
+time/call cap. The prior eager attempt completed four layers before its cap;
+its incomplete four-arm status remains unchanged. Full initial-world and first
+four completed-layer controls match exactly. The existing lazy transition
+defers successor inventory preparation while preserving current-action full-tool
+checks, reward, proposals, world, cache and search limits. No learned update,
+policy forward, held037 or closed067 access occurs.
+
+The selected and independently replayed route is STOP, zero target/outside
+removal. Every evaluated prefix has negative cumulative return; recorded
+retained/terminal progress remains zero target. This is not proof that all
+paths fail. The process takes86.929393s at561,709,056B sampled peak with clean
+reap and5,616 total previews. Independent saved audit passes2,206 checks.
+Seven focused generated controls and55 canonical lazy/search tests pass;
+two earlier evaluator-fixture failures and17 historical-stage skips are retained.
+The next substantive bottleneck is useful enabling-path discovery, including
+whether the current candidate/tool reach or retention rule causes the plateau.

@@ -1,0 +1,24 @@
+{
+  "schema": "SELECT013-lazy-beam-source-ready-v1",
+  "runtime_sources": {
+    "build/select013-lazy-beam-recovery-v1/comparison_contract.py": "5f0e15aac211bce9e7817c11dcc2cf435de1d5c04d41e839a79a7e0b41cf2119",
+    "build/select013-lazy-beam-recovery-v1/select_worker.py": "703b1b53a21d00de197765a50a22454ea5d0bfc0c815ed9ff93e59237b205fc2",
+    "build/select013-lazy-beam-recovery-v1/run_owned.py": "d4c68ec70a11f83cd234657c4c61f1dd996e00534fe2d611274e03e76300a1bf",
+    "build/select013-lazy-beam-recovery-v1/freeze-runtime.py": "7522e783b641e410359ffba8bd92f41a0161102e303e5c0d863c5ab3751e1969"
+  },
+  "test_and_preserved_controls": {
+    "build/select013-lazy-beam-recovery-v1/test_lazy_recovery.py": "a97e490b1bd7ae7f633b4ca40760b70547e7d26c1836efb9d9fa9902c2d8e0ca",
+    "build/select013-lazy-beam-recovery-v1/controls-01.json": "059b273d2c5516a3387f0c89dc2d3cc0c699c31eb3a77366860dcd9a6a19bea8",
+    "build/select013-lazy-beam-recovery-v1/controls-01.log": "ee1e748abf033941c914735b7330a36b47ab9bbdbbe8c2e3a5cb901c40e1a610",
+    "build/select013-lazy-beam-recovery-v1/controls-02.json": "2488e7eb6c59fb1a9e3824f2c71c2feb308eac5c9dd2aefe937941c3a723b55f",
+    "build/select013-lazy-beam-recovery-v1/controls-02.log": "cc7b5ed710c44886ca0f002505cf65c729b4a23e542ae6811be7b8a296553bd6",
+    "build/select013-lazy-beam-recovery-v1/controls-03.json": "cb1ac41645c1bd84755b1249494709d6bbd093cae0321d0fa192c3300aba98e2",
+    "build/select013-lazy-beam-recovery-v1/controls-03.log": "dd649d0efa23a673859bf56c78b35edefbf3378fa65b75a5c57808f7c08eea78"
+  },
+  "controls": "7 passed in1.89s; parent2.117472208s; prior two fixture failures retained; all runtime source bytes unchanged",
+  "actual_run": "not released or executed by author",
+  "owner_freeze_head": "fe857ee",
+  "change": "one beam arm with deferred successor inventories; same public world, raw order, h24/beam2/5640calls/300s/depth-volume and cache",
+  "outer_limits": "original900s worker/960s parent/3GiB/one thread/750000previews; actual learned forward cap0; one reference checkpoint load",
+  "canonical_edits": false
+}

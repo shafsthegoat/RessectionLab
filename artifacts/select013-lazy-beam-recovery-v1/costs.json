@@ -1,0 +1,98 @@
+{
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 82.74303479096852,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": null,
+    "history_complete_caller_attestation": true,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 750000,
+      "planning_execution_seconds": 900.0
+    },
+    "native_preview_entries": 5616,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 762,
+          "raised": 0,
+          "rejected": 4854,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 4854
+          },
+          "returned": 5616,
+          "returned_microsteps": 104258,
+          "seconds": 56.03048053244129,
+          "started": 5616
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 5616,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "complete_history_awaiting_independent_audit",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "phases": {
+    "checkpoint_reload.IL64": {
+      "complete_wall_seconds": 0.01363395806401968,
+      "native_preview_entries": 0
+    },
+    "observed_beam.collection": {
+      "complete_wall_seconds": 0.0951187910977751,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 4,
+      "inventory_request_inclusive_seconds": 0.0027494169771671295,
+      "inventory_request_returned": 4,
+      "native_preview_entries": 0,
+      "native_transition_calls": 1,
+      "native_transition_inclusive_seconds": 0.01697041606530547,
+      "native_transition_returned": 1,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0013915409799665213,
+      "task_clone_returned": 1
+    },
+    "observed_beam.independent_replay": {
+      "complete_wall_seconds": 1.351520499913022,
+      "inventory_build_or_terminal_empty_calls": 2,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.182875249767676,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 117,
+      "native_transition_calls": 1,
+      "native_transition_inclusive_seconds": 0.016830042004585266,
+      "native_transition_returned": 1
+    },
+    "observed_beam.planning": {
+      "complete_wall_seconds": 79.72786266589537,
+      "inventory_build_or_terminal_empty_calls": 46,
+      "inventory_request_calls": 772,
+      "inventory_request_inclusive_seconds": 62.85983074596152,
+      "inventory_request_returned": 772,
+      "native_preview_entries": 5382,
+      "native_transition_calls": 725,
+      "native_transition_inclusive_seconds": 14.202761910390109,
+      "native_transition_returned": 725,
+      "task_clone_calls": 726,
+      "task_clone_inclusive_seconds": 7.606294198427349,
+      "task_clone_returned": 726
+    },
+    "observed_beam.public_construction": {
+      "complete_wall_seconds": 1.5205957919824868,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.1660587089136243,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 117
+    }
+  },
+  "policy_forwards": 0,
+  "timing_scope": "inclusive phases; do not sum nested work"
+}
