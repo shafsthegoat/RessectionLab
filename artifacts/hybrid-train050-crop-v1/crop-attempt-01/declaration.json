@@ -1,0 +1,29 @@
+{
+  "caps": {
+    "automatic_retry": false,
+    "log_bytes_per_phase": 4194304,
+    "output_bytes_per_case": 268435456,
+    "sampled_rss_bytes": 3221225472,
+    "seconds_per_case": 300,
+    "threads": 1,
+    "total_seconds": 330
+  },
+  "internal_crop_cap": "existing110s/2GiB checkpoints retained",
+  "parent_sha256": "a9bd6ada937f04094482d384731f1797d39d5e9ce5dae228380acd931f96d247",
+  "policy_or_training": false,
+  "public_index": {
+    "bytes": 1479,
+    "path": "build/hybrid-train050-preparation-v1/crop-public-train-index.json",
+    "sha256": "ce3188779637176c91cce5839dca92122407516c21bfa2982c64b481568b967f"
+  },
+  "public_only": true,
+  "release_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-train050-preparation-v1/crop-root-release.json",
+  "release_sha256": "728676c207535198693edf549f723d8b2ff146f20fb3df79ca6e08b1a1af5706",
+  "runtime": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/bin/python",
+  "scope": "native domain-preserving crop plus saved domain/count audit only; no factory manifest; root visual/intended-use review separate",
+  "source_index": {
+    "bytes": 4272,
+    "path": "build/hybrid-train050-preparation-v1/crop-source-index.json",
+    "sha256": "1615cc9a7237f3bb0bbcbf537d14ab895fd60e7a69ecd79184988754caa6f789"
+  }
+}

@@ -1,0 +1,11 @@
+--- build/hybrid-train050-preparation-v1/stage/src/resectionlab/remind_planning_qc.py
++++ build/hybrid-train050-preparation-v1/crop-stage/src/resectionlab/remind_planning_qc.py
+@@ -551,7 +551,7 @@
+         report.update(patient_id=case["patient_id"], patient_group=case["patient_group"], role=case["role"])
+         domain_union_crop = args.phase == "crop-mr-domains"
+         if domain_union_crop:
+-            need(public_only and case["role"] == "TRAIN" and case["patient_id"] in ("ReMIND-002", "ReMIND-015", "ReMIND-018", "ReMIND-045"), "domain_union_exact_TRAIN_public_scope")
++            need(public_only and case["role"] == "TRAIN" and case["patient_id"] in ("ReMIND-002", "ReMIND-015", "ReMIND-018", "ReMIND-045", "ReMIND-050"), "domain_union_exact_TRAIN_public_scope")
+         if public_only: report.update(public_only=True, optimizer_updates_performed=0, private_reference_loaded=False)
+         raw = args.headers.read_bytes(); need(digest(raw) == args.headers_sha256, "exact_header_snapshot"); headers = json.loads(raw)
+         by_kind = validate_header_binding(headers, case, args.case_sha256, public_only=public_only)

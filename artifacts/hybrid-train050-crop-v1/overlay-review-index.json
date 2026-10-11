@@ -1,0 +1,136 @@
+{
+  "status": "existing_three_views_bound_for_root_visual_review_no_manifest",
+  "patient_id": "ReMIND-050",
+  "role": "TRAIN",
+  "views": [
+    {
+      "available_to_actor": false,
+      "axis": 0,
+      "file": "public-qc-axis0-index107.png",
+      "index": 107,
+      "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention",
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/public-qc-axis0-index107.png",
+      "bytes": 31052,
+      "sha256": "59883f432f1acb06bc54042c8c7d181a19bcb88fb89d7545d56f67fc1c95c648",
+      "width_px": 168,
+      "height_px": 137
+    },
+    {
+      "available_to_actor": false,
+      "axis": 1,
+      "file": "public-qc-axis1-index62.png",
+      "index": 62,
+      "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention",
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/public-qc-axis1-index62.png",
+      "bytes": 24805,
+      "sha256": "ea8b864c00ef77f52a68a15ae3d54d6109a9141d8f626fe7aa582721733eae9e",
+      "width_px": 134,
+      "height_px": 137
+    },
+    {
+      "available_to_actor": false,
+      "axis": 2,
+      "file": "public-qc-axis2-index83.png",
+      "index": 83,
+      "orientation": "array-plane transpose; use retained RAS affine, not a clinical radiological convention",
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/public-qc-axis2-index83.png",
+      "bytes": 30935,
+      "sha256": "cee96e7cb1a49ee2a1ef64986367dd8d68ef956d476c113f28457723736efae1",
+      "width_px": 134,
+      "height_px": 168
+    }
+  ],
+  "overlay_colors": {
+    "cerebrum_boundary": "green",
+    "whole_tumor": "red"
+  },
+  "slice_selection": "source whole-tumor grid centre for QC only",
+  "window": [
+    0.0,
+    1201.1050000000032
+  ],
+  "rendering_repeated": false,
+  "provenance": "These exact three PNGs were rendered from the public MR crop and source labels by the already completed converter. This staging read saved metadata and PNG bytes only; no original or saved arrays were reopened.",
+  "source_snapshots": {
+    "conversion": {
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/conversion-result.json",
+      "bytes": 19792,
+      "sha256": "d188d189c538883538194b690db49f0414e04dc9c1dbc3033fd9c56fa7634776"
+    },
+    "saved_domain_review": {
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-saved-domain-review/saved-domain-review.json",
+      "bytes": 5438,
+      "sha256": "e8f3f31bfc7420b2f80517e568c4f7c56923c5f07b5ba0f4544630e5f20e67de"
+    },
+    "owned_receipt": {
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/receipt.json",
+      "bytes": 4583,
+      "sha256": "d0715fe192ba2723b713f137309266325d6e6d281aa017c2ba1f6c1e29b77c78"
+    }
+  },
+  "grid_shape": [
+    134,
+    168,
+    137
+  ],
+  "grid_cells": 3084144,
+  "counts": {
+    "support": 963346,
+    "support_domain": 2900340,
+    "target": 19557,
+    "target_domain": 125195,
+    "target_in_known_support_positive": 9791,
+    "target_in_known_support_zero": 9766,
+    "target_in_unknown_support_domain": 0,
+    "target_outside_support": 9766
+  },
+  "support_unknown_cells": 183804,
+  "support_unknown_fraction": 0.05959643907677462,
+  "target_outside_support_fraction": 0.49936084266503045,
+  "native_and_placed_summary": {
+    "cerebrum": {
+      "resampling_can_omit_subvoxel_labels": true,
+      "saved_domain_voxels": 2900340,
+      "saved_positive_volume_mm3": 918719.0550266457,
+      "saved_positive_voxels": 963346,
+      "source_positive_centres_cropped_from_bound_execution": 0,
+      "source_positive_volume_mm3_from_bound_execution": 918579.6494363036,
+      "source_positive_voxels_from_bound_execution": 14367836,
+      "volume_change_percent": 0.015176211494294378
+    },
+    "whole_tumor": {
+      "resampling_can_omit_subvoxel_labels": true,
+      "saved_domain_voxels": 125195,
+      "saved_positive_volume_mm3": 18651.02316214123,
+      "saved_positive_voxels": 19557,
+      "source_positive_centres_cropped_from_bound_execution": 0,
+      "source_positive_volume_mm3_from_bound_execution": 18651.01057308364,
+      "source_positive_voxels_from_bound_execution": 19557,
+      "volume_change_percent": 6.749799181804406e-05
+    }
+  },
+  "source_modalities": {
+    "image": "Acquired source-described preoperative contrast-enhanced T1 MRI, native samples preserved without image interpolation.",
+    "whole_tumor": "MANUAL source Glioma/whole-tumor label, not prescribed resection target.",
+    "support": "AUTOMATIC BrainLab cerebrum label, supplied estimated support, not physical occupancy or independent manual truth.",
+    "knownness": "Ds is the actual source support grid domain. Unknown outside Ds remains explicit and unfilled; inside Ds label zero does not prove physical empty."
+  },
+  "alignment_limit": "Shared source frame and source-described MR pairing; neither SEG provides explicit MRI SOP references. Source sample/affine checks do not establish anatomical correctness.",
+  "visual_review": {
+    "status": "pending_root",
+    "expert_validation": false,
+    "all_volume_alignment_claim": false,
+    "clinical_validity_claim": false
+  },
+  "full_target_preserved_in_output": {
+    "native_positive_voxels": 19557,
+    "placed_positive_voxels": 19557,
+    "source_positive_centres_lost_to_crop": 0,
+    "nearest_neighbor_may_omit_subvoxel_labels": true
+  },
+  "public_input_manifest": null,
+  "planning_or_model_admission": false,
+  "new_original_source_opens": 0,
+  "new_saved_array_opens": 0,
+  "total_PNG_bytes_read_for_hashing": 86792
+}

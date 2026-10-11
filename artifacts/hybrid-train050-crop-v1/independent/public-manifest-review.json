@@ -1,0 +1,56 @@
+{
+  "status": "PASS_SAVED_PUBLIC_MANIFEST_METADATA_NO_RUNTIME_ADMISSION",
+  "inputs": {
+    "build/hybrid-train050-preparation-v1/public-inputs-v1/ReMIND-050-public-inputs.json": {
+      "sha256": "588757e8df0e420b3fcae2ac24a75a5276fd33e1722a49c681836938d16dda1d",
+      "bytes": 19178
+    },
+    "build/hybrid-train050-preparation-v1/public-inputs-v1/public-train050-index.json": {
+      "sha256": "7eec2ee858bc2e7989133cc41b80435ff59beddbf087cc46259dcbdded0bc536",
+      "bytes": 923
+    },
+    "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/conversion-result.json": {
+      "sha256": "d188d189c538883538194b690db49f0414e04dc9c1dbc3033fd9c56fa7634776",
+      "bytes": 19792
+    },
+    "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-saved-domain-review/saved-domain-review.json": {
+      "sha256": "e8f3f31bfc7420b2f80517e568c4f7c56923c5f07b5ba0f4544630e5f20e67de",
+      "bytes": 5438
+    },
+    "build/hybrid-train050-preparation-v1/root-visual-review.json": {
+      "sha256": "bbc15185fa35157a8cd5da6e97d19b6024f0a1f4e659f795c7979670e96b7ec4",
+      "bytes": 2252
+    },
+    "manifests/experiments/remind-component-cohort-v1.json": {
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+      "bytes": 70925
+    },
+    "build/hybrid-train050-preparation-v1/crop-attempt-01/receipt.json": {
+      "sha256": "d0715fe192ba2723b713f137309266325d6e6d281aa017c2ba1f6c1e29b77c78",
+      "bytes": 4583
+    },
+    "build/hybrid-train050-independent-v1/saved-crop-metadata-review.json": {
+      "sha256": "3750f5a08151cb322a32f5ebfeb570330b2ae7d62b1324b35dda351180b296f1",
+      "bytes": 5940
+    }
+  },
+  "checks": [
+    "original fixed TRAIN050 role",
+    "exact five public array descriptors joined without array opens",
+    "native and nominal affines retained",
+    "full T19557 and Ds unknown183804 preserved",
+    "known-label-zero target9766 distinct from unknown0",
+    "zero source-positive crop losses bound to completed saved audit",
+    "limited root visual record bound without image reinterpretation",
+    "default full-coverage incompatibility explicit",
+    "no planning/model/training admission"
+  ],
+  "review_boundary": {
+    "arrays_opened": false,
+    "originals_opened": false,
+    "images_opened": false,
+    "model_parameters_opened": false,
+    "source_functions_imported": false
+  },
+  "remaining_scope": "Separate fixed050 no-fit frozen-ridge capability and root runtime release; no clinical or held-out SELECT claim."
+}

@@ -1,0 +1,26 @@
+test_halo_clips_at_acquired_boundary_without_padding (test_crop_geometry.GeneratedControls.test_halo_clips_at_acquired_boundary_without_padding) ... ok
+test_native_voxel_cap_refused_before_array_allocation (test_crop_geometry.GeneratedControls.test_native_voxel_cap_refused_before_array_allocation) ... ok
+test_nonnegligible_MRI_shear_refused (test_crop_geometry.GeneratedControls.test_nonnegligible_MRI_shear_refused) ... ok
+test_oblique_support_avoids_uniform_inset_loss (test_crop_geometry.GeneratedControls.test_oblique_support_avoids_uniform_inset_loss) ... ok
+test_outside_MRI_is_refused_without_extrapolation (test_crop_geometry.GeneratedControls.test_outside_MRI_is_refused_without_extrapolation) ... ok
+test_target_outside_support_domain_is_preserved_with_unknown_mask (test_crop_geometry.GeneratedControls.test_target_outside_support_domain_is_preserved_with_unknown_mask) ... ok
+test_target_partition_distinguishes_label_zero_and_unknown_domain (test_crop_geometry.GeneratedControls.test_target_partition_distinguishes_label_zero_and_unknown_domain) ... ok
+test_cleanup_exception_keeps_phase_and_failure_receipts (test_crop_owner.Controls.test_cleanup_exception_keeps_phase_and_failure_receipts) ... ok
+test_fast_exit_log_failure_keeps_phase_receipt (test_crop_owner.Controls.test_fast_exit_log_failure_keeps_phase_receipt) ... ok
+test_fast_exit_log_overflow_is_detected (test_crop_owner.Controls.test_fast_exit_log_overflow_is_detected) ... ok
+test_phase_binding_and_boundary_rejections (test_crop_owner.Controls.test_phase_binding_and_boundary_rejections) ... ok
+test_retained_child_killed_when_group_and_sampler_fail (test_crop_owner.Controls.test_retained_child_killed_when_group_and_sampler_fail) ... ok
+test_two_bound_successes_complete_generated_batch (test_crop_owner.Controls.test_two_bound_successes_complete_generated_batch) ... ok
+test_unknown_final_json_cannot_pass_two_exit_zero (test_crop_owner.Controls.test_unknown_final_json_cannot_pass_two_exit_zero) ... ok
+test_unreaped_child_remains_explicit_when_fallback_refuses (test_crop_owner.Controls.test_unreaped_child_remains_explicit_when_fallback_refuses) ... ok
+test_affine_centre_coverage_has_half_open_boundary (test_crop_owner.DomainControls.test_affine_centre_coverage_has_half_open_boundary) ... ok
+test_nonbinary_or_wrong_dtype_refused (test_crop_owner.DomainControls.test_nonbinary_or_wrong_dtype_refused) ... ok
+test_positive_labels_outside_source_domains_refused (test_crop_owner.DomainControls.test_positive_labels_outside_source_domains_refused) ... ok
+test_unknown_and_known_zero_remain_separate (test_crop_owner.DomainControls.test_unknown_and_known_zero_remain_separate) ... ok
+test050_only_new_domain_subject_and_originals_preserved (test_crop_scope.ScopeControls.test050_only_new_domain_subject_and_originals_preserved) ... ok
+test_only_declared_scope_delta (test_crop_scope.ScopeControls.test_only_declared_scope_delta) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.049s
+
+OK

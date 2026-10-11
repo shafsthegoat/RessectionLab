@@ -1,0 +1,16 @@
+TRAIN050 prepared crop controls: PASS, 21/21 in 0.049 seconds.
+
+Owned parent completed in 0.381417 seconds, exit 0, one thread, 30-second wall limit. Existing real_intake_io.supervise always terminates the owned group and waits. Peak child RSS was observed at 52,674,560 bytes; no hard RSS cap is claimed for this generated suite.
+
+Command from repository root:
+.venv/bin/python -I -B build/hybrid-train050-preparation-v1/run_crop_controls.py
+
+The exact child command, source hashes before/after and helper hash are in receipt.json. It discovered only the three prepared test_crop*.py modules. All 20 bindings remained unchanged. Negative controls covered out-of-MRI refusal, excessive shear/voxel extent, private/other-person scope, label/domain inconsistency, cleanup refusal, malformed result and fast-exit output overflow.
+
+Source index: 1615cc9a7237f3bb0bbcbf537d14ab895fd60e7a69ecd79184988754caa6f789
+False patient-crop release: 8ebd22c2ffd63995bc4e7f2b690041a14c3209402812d968d458a03fb4f4d141
+Receipt: c10f1c03b17c90ff7773d2b99d85e2a144bbb8f99d745884cb7fba3fa389ac8a
+Log: c404df8c0ecaaab1c521ca9e9b67be02e8d3e0e728a5f7838fa2feac6a278201
+Runner: f282b6978823ff79315be47d109e8eb9b7e8d1fbb65a4b493b571e06ea359967
+
+No acquired arrays or DICOM opened, no patient crop, no model/planner execution, no role or canonical changes. Original header archive and all prepared sources remain unchanged. Root freeze/release and independent saved-control review remain separate from this passing source test.

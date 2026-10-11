@@ -1,0 +1,23 @@
+TRAIN050: three existing public QC overlays ready for root inspection.
+
+Crop: [134, 168, 137] = 3,084,144 cells; native MR start [42, 60, 28]. Both source-positive crop-loss counts are zero. No image interpolation or source mask repair.
+
+Placed whole tumor: 19,557 (native 19,557); 9,791 in automatic S, 9,766 in known source-label zero (49.9361%), and 0 in unknown Ds. Do not clip the mismatch.
+Placed S: 963,346; Ds: 2,900,340; unknown support: 183,804 (5.9596% of crop). Unknown cells remain explicit, not filled/free.
+
+MRI is acquired preoperative ceT1; whole tumor is a manual source annotation, not a prescribed resection target; automatic BrainLab cerebrum is an estimate, not physical occupancy. Shared frame and sample integrity are not anatomical validation. No explicit source SOP references were present.
+
+S source/placed volume: 918579.649436/918719.055027 mm3 (+0.015176%). NN label resampling and possible subvoxel omission remain declared.
+
+Green = automatic cerebrum boundary; red = supplied whole tumor. Slices use the source tumor-grid centre for QC only. Images are array-plane transposes; interpret using retained RAS affine, not a clinical radiological display convention.
+
+/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/public-qc-axis0-index107.png
+axis 0 / index 107; 168x137 px; SHA256 59883f432f1acb06bc54042c8c7d181a19bcb88fb89d7545d56f67fc1c95c648
+
+/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/public-qc-axis1-index62.png
+axis 1 / index 62; 134x137 px; SHA256 ea8b864c00ef77f52a68a15ae3d54d6109a9141d8f626fe7aa582721733eae9e
+
+/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/public-qc-axis2-index83.png
+axis 2 / index 83; 134x168 px; SHA256 cee96e7cb1a49ee2a1ef64986367dd8d68ef956d476c113f28457723736efae1
+
+The three exact PNGs already existed in the authenticated conversion. They were reused, not regenerated. No original images/SEG or saved arrays were opened for this staging. Root visual review is pending; no public manifest or planning/model admission has been created.

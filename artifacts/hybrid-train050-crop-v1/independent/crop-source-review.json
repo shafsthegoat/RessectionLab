@@ -1,0 +1,66 @@
+{
+  "status": "GO_SOURCE_ONLY_EXACT_TRAIN050_DOMAIN_CROP_PREPARATION",
+  "source_index": {
+    "path": "build/hybrid-train050-preparation-v1/crop-source-index.json",
+    "bytes": 4272,
+    "sha256": "557f8d2e9e42cf2d20c25b8cb6a07e8a3726239692f68b5402d618db53e10f0b"
+  },
+  "false_release": {
+    "path": "build/hybrid-train050-preparation-v1/crop-prepared-release.json",
+    "bytes": 910,
+    "sha256": "2f64afe6504b626a89c2352ce663056241116a2871e494ef56cb97c024965b91"
+  },
+  "reader": {
+    "path": "build/hybrid-train050-preparation-v1/crop-stage/src/resectionlab/remind_planning_qc.py",
+    "bytes": 48119,
+    "sha256": "598ba6defda123db0e04591022033bec52f1c701aaa4f4e16c9c96ef9abd879e"
+  },
+  "parent": {
+    "path": "build/hybrid-train050-preparation-v1/run_crop_owned.py",
+    "bytes": 16915,
+    "sha256": "97198ed1938bd57f8bfe8db92635166036fcf9a6c86a345045782e853db78d8d"
+  },
+  "saved_reviewer": {
+    "path": "build/hybrid-train050-preparation-v1/audit_saved_domains.py",
+    "bytes": 14365,
+    "sha256": "8a9842fb020e2c320878b02f5fc52892774aa6b7f546707f8bf12583b20c32d4"
+  },
+  "source_files_verified": 20,
+  "reader_changes_from_executed_header": "only append ReMIND-050 to explicit TRAIN public domain-crop tuple",
+  "geometry_decoder_and_other_AST_unchanged": true,
+  "unchanged_parent_functions": [
+    "sha",
+    "need",
+    "cleanup_phase",
+    "terminal_result",
+    "final_log_size"
+  ],
+  "saved_reviewer_functions_equal_after_one_index_filename_update": [
+    "sha",
+    "save",
+    "fit_saved_geometry",
+    "domain_plane_counts",
+    "source_centres_inside_crop",
+    "main"
+  ],
+  "caps": {
+    "seconds_per_case": 300,
+    "total_seconds": 330,
+    "sampled_rss_bytes": 3221225472,
+    "output_bytes_per_case": 268435456,
+    "log_bytes_per_phase": 4194304,
+    "threads": 1,
+    "automatic_retry": false
+  },
+  "findings": [
+    "Case/header/role/object bindings unchanged; public MRI, whole tumor and cerebrum only. Private labels remain excluded.",
+    "Domain-union crop preserves native MRI samples and original affines; support and target source domains remain distinct. No geometry or tolerance alteration is proposed.",
+    "Saved reviewer retains known-positive/known-zero/unknown target partition, original positive counts, nearest-neighbor volume changes and explicit zero crop-loss check.",
+    "Parent preserves fresh output, cleanup, failure receipts, fixed denominator and no replacement. Root visual/source-artifact review remains pending; no public factory manifest is generated.",
+    "Source-only scope does not establish positive-mask coverage, absence of artifacts, meaningful actions or anatomical/training admission."
+  ],
+  "generated_controls": "21 staged by owner, not executed by reviewer and recorded unrun at source freeze; execution awaits root compute slot",
+  "parent_launch_condition": "Use -I -B and checked-fresh absolute pycache_prefix, as for header parent.",
+  "actual_pixel_or_crop_release": false,
+  "reviewer_payload_array_geometry_or_model_calls": 0
+}

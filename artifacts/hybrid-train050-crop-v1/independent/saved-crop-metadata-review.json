@@ -1,0 +1,128 @@
+{
+  "status": "PASS_SAVED_TRAIN050_CROP_METADATA_AND_ACCOUNTING_ANATOMY_UNREVIEWED",
+  "bindings": [
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/receipt.json",
+      "bytes": 4583,
+      "sha256": "d0715fe192ba2723b713f137309266325d6e6d281aa017c2ba1f6c1e29b77c78"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/conversion-result.json",
+      "bytes": 19792,
+      "sha256": "d188d189c538883538194b690db49f0414e04dc9c1dbc3033fd9c56fa7634776"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-saved-domain-review/saved-domain-review.json",
+      "bytes": 5438,
+      "sha256": "e8f3f31bfc7420b2f80517e568c4f7c56923c5f07b5ba0f4544630e5f20e67de"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-root-release.json",
+      "bytes": 909,
+      "sha256": "728676c207535198693edf549f723d8b2ff146f20fb3df79ca6e08b1a1af5706"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-source-index.json",
+      "bytes": 4272,
+      "sha256": "1615cc9a7237f3bb0bbcbf537d14ab895fd60e7a69ecd79184988754caa6f789"
+    }
+  ],
+  "public_case": {
+    "path": "build/hybrid-train050-preparation-v1/bindings/ReMIND-050-case.json",
+    "bytes": 92472,
+    "sha256": "2434d015999724e7692b3dedcacf2fc0b231a1e0ebe1b1a4c50c7ad6eed0e670"
+  },
+  "header": {
+    "path": "build/hybrid-train050-preparation-v1/header-attempt-01/ReMIND-050-headers/result.json",
+    "bytes": 264784,
+    "sha256": "9a9f91bc38173df42e765b8bb886290d22b1aaea48970449a4f0f914a9c1b9ba"
+  },
+  "source_files_unchanged": 20,
+  "source_objects_reread_for_conversion": 139,
+  "source_bytes_returned": 20937654,
+  "MR_planes_selected": 137,
+  "MR_planes_not_reread": 55,
+  "shape_xyz": [
+    134,
+    168,
+    137
+  ],
+  "crop_voxels": 3084144,
+  "counts": {
+    "support": 963346,
+    "support_domain": 2900340,
+    "target": 19557,
+    "target_domain": 125195,
+    "target_in_known_support_positive": 9791,
+    "target_in_known_support_zero": 9766,
+    "target_in_unknown_support_domain": 0,
+    "target_outside_support": 9766
+  },
+  "unknown_support_voxels": 183804,
+  "unknown_support_fraction": 0.05959643907677462,
+  "target_outside_support_fraction": 0.49936084266503045,
+  "full_source_and_placed_target_voxels": 19557,
+  "source_positive_centres_cropped": {
+    "cerebrum": 0,
+    "whole_tumor": 0
+  },
+  "volume_change_percent": {
+    "cerebrum": 0.015176211494294378,
+    "whole_tumor": 6.749799181804406e-05
+  },
+  "declared_MRI_sample_equality": "bound conversion worker raw-byte audit; not independently reread here",
+  "declared_domain_and_artifact_checks": "bound saved-domain worker hash/slab/world checks; this independent lane reconciles their receipts/count arithmetic only",
+  "max_reported_MRI_reindex_world_difference_mm": 4.836264906170529e-05,
+  "supervised_seconds": 1.9791923339944333,
+  "max_sampled_worker_RSS_bytes": 850821120,
+  "conversion_self_peak_RSS_bytes": 868499456,
+  "all_workers_reaped_without_cleanup_errors": true,
+  "output_artifact_declared_pins": {
+    "MR_native_crop.npy": {
+      "bytes": 12336704,
+      "sha256": "0a13c5152e84dc6a1645b41b52bdbb16288b49ebe44d0dbfef6ac177d8acd6d6"
+    },
+    "cerebrum_source_grid_domain.npy": {
+      "bytes": 3084272,
+      "sha256": "f698d1958a2e5a08f80394765dafa8cfb628483ff58edb964d2b57042eff211c"
+    },
+    "cerebrum_source_label.npy": {
+      "bytes": 3084272,
+      "sha256": "62d8c37cfeee2a625f10129ed4afed6af836a7537c95c92bf5242863c8d48ac4"
+    },
+    "public-qc-axis0-index107.png": {
+      "bytes": 31052,
+      "sha256": "59883f432f1acb06bc54042c8c7d181a19bcb88fb89d7545d56f67fc1c95c648"
+    },
+    "public-qc-axis1-index62.png": {
+      "bytes": 24805,
+      "sha256": "ea8b864c00ef77f52a68a15ae3d54d6109a9141d8f626fe7aa582721733eae9e"
+    },
+    "public-qc-axis2-index83.png": {
+      "bytes": 30935,
+      "sha256": "cee96e7cb1a49ee2a1ef64986367dd8d68ef956d476c113f28457723736efae1"
+    },
+    "whole_tumor_source_grid_domain.npy": {
+      "bytes": 3084272,
+      "sha256": "4fa1e9a2b5dbcc37eb1b85c46f0d7d81e0180cac199a8c2b6a1a38dbf4c0914d"
+    },
+    "whole_tumor_source_label.npy": {
+      "bytes": 3084272,
+      "sha256": "5dd0779577d7ca7259b463e5e39ca2c87775be5aedd4a6c3759df6e3d984e50c"
+    }
+  },
+  "public_overlay_paths": [
+    "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/public-qc-axis0-index107.png",
+    "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/public-qc-axis1-index62.png",
+    "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/public-qc-axis2-index83.png"
+  ],
+  "intended_use_prerequisites": [
+    "Root reviews three saved overlays/source-artifact appearance; this lane made no visual or expert-anatomy claim.",
+    "Prepare exact five-array public manifest MRI/S/T/Ds/Dt with original/derived affines and full19557 target denominator,963346 support positives,2900340 support-domain and183804 unknown cells; no full-domain factory declaration.",
+    "Any planning use must explicitly state supplied cerebrum is not physical occupancy. Raw support permits at most9791 of19557 target cells to be support-contained; a modeled S OR T world adds9766 known-label-zero target cells as a declared assumption, not acquisition repair.",
+    "Canonical partial-domain admission currently permits only002/015/018/045; a separate exact050 source capability is needed. Existing fixed-four sparse-ranker fitting capability cannot simply be broadened; bind frozen TRAIN fit lineage and zero fit/update transfer behavior.",
+    "Keep fixed geometry/tools/reward/access protocol and declare any modeled exposure, unknown exterior and missing anatomy. Retain050 and failures without outcome-based replacement."
+  ],
+  "training_or_planning_admission": false,
+  "reviewer_original_payload_array_image_geometry_or_model_reads": 0
+}

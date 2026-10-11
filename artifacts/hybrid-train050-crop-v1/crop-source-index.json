@@ -1,0 +1,109 @@
+{
+  "status": "source_preparation_only_tests_unrun_no_pixel_execution",
+  "files": [
+    {
+      "path": "build/hybrid-train050-preparation-v1/run_crop_owned.py",
+      "bytes": 16927,
+      "sha256": "a9bd6ada937f04094482d384731f1797d39d5e9ce5dae228380acd931f96d247"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/audit_saved_domains.py",
+      "bytes": 14365,
+      "sha256": "8a9842fb020e2c320878b02f5fc52892774aa6b7f546707f8bf12583b20c32d4"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-public-train-index.json",
+      "bytes": 1479,
+      "sha256": "ce3188779637176c91cce5839dca92122407516c21bfa2982c64b481568b967f"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-stage/src/resectionlab/remind_planning_qc.py",
+      "bytes": 48119,
+      "sha256": "598ba6defda123db0e04591022033bec52f1c701aaa4f4e16c9c96ef9abd879e"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-stage/src/resectionlab/__init__.py",
+      "bytes": 99,
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-stage/scripts/prepare_remind_planning.py",
+      "bytes": 1292,
+      "sha256": "befa1a98b4ddc26868597dab9c62f5fcde95d3af7070807df4e88a4fb8e9fe5e"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/test_crop_owner.py",
+      "bytes": 10802,
+      "sha256": "53959ccc424edb2ec25fb9f8d7935b02081369e5da558071ea17224095a5d02b"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/test_crop_geometry.py",
+      "bytes": 4743,
+      "sha256": "260a63d86786afa0f5159339472884a2bcb52f16a982cc6a91519c497f194c44"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/test_crop_scope.py",
+      "bytes": 1892,
+      "sha256": "12aab73da59c0a7124a39e2b001573d5cf675b5cc75d4c4cf8881f3299edf835"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/bindings/ReMIND-050-case.json",
+      "bytes": 92472,
+      "sha256": "2434d015999724e7692b3dedcacf2fc0b231a1e0ebe1b1a4c50c7ad6eed0e670"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/bindings/ReMIND-050-source-binding.json",
+      "bytes": 99596,
+      "sha256": "7badecaa5e0ed17dab18120c38f83ca084cd8730af9a6893bd8e55ea44e1f94f"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/header-attempt-01/ReMIND-050-headers/result.json",
+      "bytes": 264784,
+      "sha256": "9a9f91bc38173df42e765b8bb886290d22b1aaea48970449a4f0f914a9c1b9ba"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/header-attempt-01/receipt.json",
+      "bytes": 2532,
+      "sha256": "8a80c471666b60487ef63c16c5a5ae7ca65cac6ecd0aec759beabead38cf0b43"
+    },
+    {
+      "path": "scripts/convert_remind_development.py",
+      "bytes": 11404,
+      "sha256": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6"
+    },
+    {
+      "path": "build/goal-conditioned-policy-v1/run_contact_owned.py",
+      "bytes": 8730,
+      "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7"
+    },
+    {
+      "path": "build/goal-conditioned-policy-v1/darwin_fast_sampler.py",
+      "bytes": 9482,
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c"
+    },
+    {
+      "path": "src/resectionlab/legacy_transfer_supervisor.py",
+      "bytes": 10427,
+      "sha256": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
+    },
+    {
+      "path": "src/resectionlab/__init__.py",
+      "bytes": 99,
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    {
+      "path": "manifests/experiments/remind-component-cohort-v1.json",
+      "bytes": 70925,
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+    },
+    {
+      "path": "build/idc-acquisition-venv/bin/python",
+      "bytes": 18058560,
+      "sha256": "2498a31965647f1507a53e391842b23c29d96f0ef4550475f34a1d2b30c23ddb"
+    }
+  ],
+  "generated_control_scope": "two explicit scope checks, seven existing generated geometry/domain cases and twelve reused owner/saved-review controls",
+  "old_header_attempt_immutable": true,
+  "crop_only_pending_review": true,
+  "source_artifact_or_planning_admission": false
+}

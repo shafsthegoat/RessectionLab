@@ -1,0 +1,60 @@
+{
+  "status": "metadata_only_evidence_no_patient_arrays_images_or_payloads",
+  "files": [
+    {
+      "path": "build/hybrid-train050-independent-v1/CROP-REVIEW.txt",
+      "bytes": 4182,
+      "sha256": "d714a3623c468a797b748e85b80d4fc2dd265a992525dab858f76e9937e0fca0"
+    },
+    {
+      "path": "build/hybrid-train050-independent-v1/saved-crop-metadata-review.json",
+      "bytes": 5940,
+      "sha256": "3750f5a08151cb322a32f5ebfeb570330b2ae7d62b1324b35dda351180b296f1"
+    },
+    {
+      "path": "build/hybrid-train050-independent-v1/audit_saved_crop_metadata.py",
+      "bytes": 11692,
+      "sha256": "9ec9d6bc4d29adeee3dda714927376d8a8a39792783588a0e4ac02324bd1af27"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/receipt.json",
+      "bytes": 4583,
+      "sha256": "d0715fe192ba2723b713f137309266325d6e6d281aa017c2ba1f6c1e29b77c78"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/declaration.json",
+      "bytes": 1400,
+      "sha256": "e676c534881b5575c4f3f707918fac19b29a512996c764270ca92943488b2d90"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/pending-qualification-index.json",
+      "bytes": 487,
+      "sha256": "7bf467abb69166db7fad0fcfd1fa0c104ae867908a744ebbb6c060cb0db2a7df"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/conversion-result.json",
+      "bytes": 19792,
+      "sha256": "d188d189c538883538194b690db49f0414e04dc9c1dbc3033fd9c56fa7634776"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-saved-domain-review/saved-domain-review.json",
+      "bytes": 5438,
+      "sha256": "e8f3f31bfc7420b2f80517e568c4f7c56923c5f07b5ba0f4544630e5f20e67de"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-saved-domain-review/saved-review-index.json",
+      "bytes": 698,
+      "sha256": "fe81b86395a93d5b727936a014a78dfaa0fdd5901ca56da185dfddcc8e0f1bf8"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-root-release.json",
+      "bytes": 909,
+      "sha256": "728676c207535198693edf549f723d8b2ff146f20fb3df79ca6e08b1a1af5706"
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-source-index.json",
+      "bytes": 4272,
+      "sha256": "1615cc9a7237f3bb0bbcbf537d14ab895fd60e7a69ecd79184988754caa6f789"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "scope": "one fixed050 source-derived public domain crop and saved-array qualification, no factory/admission/model changes",
+  "header_reader_preserved": {
+    "path": "build/hybrid-train050-preparation-v1/stage/src/resectionlab/remind_planning_qc.py",
+    "bytes": 48105,
+    "sha256": "b479a25ac5db212441d9838102c8e5e9d41004bd518dc943b10ad9d76143a38a"
+  },
+  "crop_reader": {
+    "path": "build/hybrid-train050-preparation-v1/crop-stage/src/resectionlab/remind_planning_qc.py",
+    "bytes": 48119,
+    "sha256": "598ba6defda123db0e04591022033bec52f1c701aaa4f4e16c9c96ef9abd879e"
+  },
+  "only_reader_delta_from_header_snapshot": "append050 to domain_union_exact_TRAIN_public_scope",
+  "original_parent": {
+    "path": "build/remind-train-domain-crop-preparation-v1/run_public_qc_owned.py",
+    "bytes": 16933,
+    "sha256": "1b064117d57dd02ff2fcb94a1113039b3c01143a5d6943f6609c1ebfd430844f"
+  },
+  "staged_parent": {
+    "path": "build/hybrid-train050-preparation-v1/run_crop_owned.py",
+    "bytes": 16927,
+    "sha256": "a9bd6ada937f04094482d384731f1797d39d5e9ce5dae228380acd931f96d247"
+  },
+  "original_reviewer": {
+    "path": "build/remind-train-domain-crop-preparation-v1/audit_saved_domains.py",
+    "bytes": 14413,
+    "sha256": "4caac4a2b42dd2319d8cb6af1ab30bc0c827199fbea957c9ae87c25a79c64ba2"
+  },
+  "staged_reviewer": {
+    "path": "build/hybrid-train050-preparation-v1/audit_saved_domains.py",
+    "bytes": 14365,
+    "sha256": "8a9842fb020e2c320878b02f5fc52892774aa6b7f546707f8bf12583b20c32d4"
+  },
+  "parent_cleanup_terminal_and_log_guard_AST_equal": true,
+  "generated_tests_staged_not_run": true,
+  "pending_root_compute_slot": true,
+  "original_MRI_S_T_domains_not_modified": true
+}

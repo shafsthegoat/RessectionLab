@@ -1,0 +1,81 @@
+{
+  "status": "GO_FOR_ROOT_RELEASE_EXACT_TRAIN050_DOMAIN_CROP_AFTER_21_CONTROLS",
+  "source_index": {
+    "path": "build/hybrid-train050-preparation-v1/crop-source-index.json",
+    "bytes": 4272,
+    "sha256": "1615cc9a7237f3bb0bbcbf537d14ab895fd60e7a69ecd79184988754caa6f789"
+  },
+  "still_false_release": {
+    "path": "build/hybrid-train050-preparation-v1/crop-prepared-release.json",
+    "bytes": 910,
+    "sha256": "8ebd22c2ffd63995bc4e7f2b690041a14c3209402812d968d458a03fb4f4d141"
+  },
+  "controls_receipt": {
+    "path": "build/hybrid-train050-preparation-v1/crop-controls-attempt-01/receipt.json",
+    "bytes": 7188,
+    "sha256": "c10f1c03b17c90ff7773d2b99d85e2a144bbb8f99d745884cb7fba3fa389ac8a"
+  },
+  "controls_log": {
+    "path": "build/hybrid-train050-preparation-v1/crop-controls-attempt-01/tests.log",
+    "bytes": 3021,
+    "sha256": "c404df8c0ecaaab1c521ca9e9b67be02e8d3e0e728a5f7838fa2feac6a278201"
+  },
+  "runner": {
+    "path": "build/hybrid-train050-preparation-v1/run_crop_controls.py",
+    "bytes": 3786,
+    "sha256": "f282b6978823ff79315be47d109e8eb9b7e8d1fbb65a4b493b571e06ea359967"
+  },
+  "source_review": {
+    "path": "build/hybrid-train050-independent-v1/crop-source-review.json",
+    "bytes": 3022,
+    "sha256": "a7513e19e115eedb5c0037f3f998a89f72c985f404d8c06750d1a38d59be772c"
+  },
+  "successor_pin_note": {
+    "path": "build/hybrid-train050-independent-v1/crop-successor-pin-note.txt",
+    "bytes": 1054,
+    "sha256": "c15fa9546c854371a45fe158f3fd10098a0b5b93d439c2aed35605204385b0a1"
+  },
+  "tests": 21,
+  "tests_failed": 0,
+  "test_seconds": 0.049,
+  "supervised_seconds": 0.3814173750579357,
+  "observed_child_peak_rss_bytes": 52674560,
+  "current_source_files_matching_before_after": 20,
+  "exact_test_inventory_matched": true,
+  "release_scope": {
+    "subject": "ReMIND-050",
+    "role": "TRAIN",
+    "phases": [
+      "crop-mr-domains",
+      "saved-domain-review"
+    ],
+    "parent": {
+      "path": "build/hybrid-train050-preparation-v1/run_crop_owned.py",
+      "bytes": 16927,
+      "sha256": "a9bd6ada937f04094482d384731f1797d39d5e9ce5dae228380acd931f96d247"
+    },
+    "source_objects_bound": 194,
+    "caps": {
+      "seconds_per_case": 300,
+      "total_seconds": 330,
+      "sampled_rss_bytes": 3221225472,
+      "output_bytes_per_case": 268435456,
+      "log_bytes_per_phase": 4194304,
+      "threads": 1,
+      "automatic_retry": false
+    },
+    "automatic_retry": false
+  },
+  "finding": "No blocking source/control finding for one root-serialized attempt under the existing two-phase parent. Source samples, domains and losses remain checked by the unchanged converter/reviewer; failures remain terminal without patient replacement.",
+  "launch_conditions": [
+    "Root changes only execution_released in a new exact release; current prepared release remains false.",
+    "Parent uses -I -B and a checked-absent absolute pycache_prefix, fresh crop-attempt-01, unchanged source/index/case/header pins.",
+    "No simultaneous conflicting heavy job; root owns dispatch."
+  ],
+  "limits": [
+    "Generated tests establish engineering behavior only; actual patient crop/coverage/artifacts remain unmeasured until that attempt.",
+    "Automatic cerebrum is not physical occupancy; no anatomical, clinical, planning or training admission follows.",
+    "Test RSS was observed, not capped. Actual crop retains existing3GiB sampled parent and internal2GiB checkpoint guards."
+  ],
+  "reviewer_pixel_array_geometry_model_or_crop_execution": false
+}

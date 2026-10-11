@@ -1,0 +1,45 @@
+{
+  "reviewer": "root assistant, actual visual inspection reported in task message",
+  "patient_id": "ReMIND-050",
+  "role": "TRAIN",
+  "image_files": [
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/public-qc-axis0-index107.png",
+      "sha256": "59883f432f1acb06bc54042c8c7d181a19bcb88fb89d7545d56f67fc1c95c648",
+      "bytes": 31052,
+      "axis": 0,
+      "crop_index": 107,
+      "viewed": true
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/public-qc-axis1-index62.png",
+      "sha256": "ea8b864c00ef77f52a68a15ae3d54d6109a9141d8f626fe7aa582721733eae9e",
+      "bytes": 24805,
+      "axis": 1,
+      "crop_index": 62,
+      "viewed": true
+    },
+    {
+      "path": "build/hybrid-train050-preparation-v1/crop-attempt-01/ReMIND-050-crop-mr-domains/public-qc-axis2-index83.png",
+      "sha256": "cee96e7cb1a49ee2a1ef64986367dd8d68ef956d476c113f28457723736efae1",
+      "bytes": 30935,
+      "axis": 2,
+      "crop_index": 83,
+      "viewed": true
+    }
+  ],
+  "observation": "Automatic green outline roughly follows brain contours; red supplied whole-tumor overlaps the visible lesion; no gross displacement, reversal or clipping apparent in the selected planes.",
+  "scope": "Limited gross-alignment review of these three low-resolution views only; not expert truth, full-volume alignment, functional or physical occupancy, registration validation or clinical validity.",
+  "establishes_segmentation_accuracy": false,
+  "establishes_all_volume_alignment": false,
+  "establishes_physical_occupancy": false,
+  "establishes_functional_anatomy": false,
+  "establishes_registration_accuracy": false,
+  "establishes_clinical_validity": false,
+  "planning_admission": false,
+  "model_admission": false,
+  "training_admission": false,
+  "private_data_viewed": false,
+  "record_provenance": "Transcription of root task instruction; prepared for root acceptance, no images reinterpreted by metadata writer.",
+  "coordinates": "Crop-array planes 107/62/83 correspond to original MR axis indices 149/122/111 through crop start 42/60/28. Oblique physical orientation is defined by retained RAS affine, not a clinical radiological convention."
+}

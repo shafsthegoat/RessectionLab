@@ -1705,9 +1705,27 @@ policy forward, held037 or closed067 access occurs.
 The selected and independently replayed route is STOP, zero target/outside
 removal. Every evaluated prefix has negative cumulative return; recorded
 retained/terminal progress remains zero target. This is not proof that all
-paths fail. The process takes86.929393s at561,709,056B sampled peak with clean
-reap and5,616 total previews. Independent saved audit passes2,206 checks.
-Seven focused generated controls and55 canonical lazy/search tests pass;
-two earlier evaluator-fixture failures and17 historical-stage skips are retained.
+paths fail. The process takes 86.929393 s at 561,709,056 B sampled peak with clean
+reap and 5,616 total previews. Independent saved audit passes 2,206 checks.
+Seven focused generated controls and 55 canonical lazy/search tests pass;
+two earlier evaluator-fixture failures and 17 historical-stage skips are retained.
 The next substantive bottleneck is useful enabling-path discovery, including
 whether the current candidate/tool reach or retention rule causes the plateau.
+
+## October 11 — Fixed TRAIN050 source preparation completed
+
+[The bounded conversion](../artifacts/hybrid-train050-crop-v1/RESULT.md)
+preserves 19,557 full target cells, 963,346 automatic-support positives and 183,804
+unknown-support-domain cells. Both phases finish in 1.979192 s with clean reap;
+21 generated controls and independent saved metadata/manifest checks pass.
+The source labels are estimates/annotations, not physical occupancy or a
+prescribed clinical resection target. Root reviews the three existing oblique
+previews for gross overlay problems only; expert/full-volume/registration
+accuracy remains unestablished. A five-array MRI/S/T/Ds/Dt manifest now binds
+the exact outputs and this limited review without granting runtime admission.
+
+050 was fixed by metadata order before image access and remains TRAIN, outside
+the existing four-patient fitted cohort. The next comparison will use the
+existing frozen proposal scorer with zero new fitting, a matched exhaustive
+baseline and unchanged task assumptions. That capability is still in preparation;
+no new patient planning/model result exists. Held037 and closed067 stay closed.

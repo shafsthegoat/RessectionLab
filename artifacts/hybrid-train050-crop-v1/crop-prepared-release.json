@@ -1,0 +1,23 @@
+{
+  "execution_released": false,
+  "source_index": {
+    "path": "build/hybrid-train050-preparation-v1/crop-source-index.json",
+    "bytes": 4272,
+    "sha256": "1615cc9a7237f3bb0bbcbf537d14ab895fd60e7a69ecd79184988754caa6f789"
+  },
+  "public_index": {
+    "path": "build/hybrid-train050-preparation-v1/crop-public-train-index.json",
+    "bytes": 1479,
+    "sha256": "ce3188779637176c91cce5839dca92122407516c21bfa2982c64b481568b967f"
+  },
+  "caps": {
+    "seconds_per_case": 300,
+    "total_seconds": 330,
+    "sampled_rss_bytes": 3221225472,
+    "output_bytes_per_case": 268435456,
+    "log_bytes_per_phase": 4194304,
+    "threads": 1,
+    "automatic_retry": false
+  },
+  "scope": "exact050 public MRI/S/T domain-union crop then saved-only domain/sample/count audit. No planning, inference, fitting, private series or patient replacement. Root dispatch required after source review and generated controls."
+}

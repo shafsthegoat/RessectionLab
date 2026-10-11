@@ -1,0 +1,25 @@
+{
+  "schema": "remind-public-TRAIN050-preparation-index-v1",
+  "status": "source_metadata_not_execution_release",
+  "role": "TRAIN",
+  "planned_case_denominator": 1,
+  "max_optimizer_updates": 0,
+  "cases": [
+    {
+      "patient_id": "ReMIND-050",
+      "patient_group": "ReMIND:050",
+      "role": "TRAIN",
+      "status": "SOURCE_PREPARED_PENDING_SEPARATE_ZERO_UPDATE_CAPABILITY",
+      "path": "build/hybrid-train050-preparation-v1/public-inputs-v1/ReMIND-050-public-inputs.json",
+      "sha256": "588757e8df0e420b3fcae2ac24a75a5276fd33e1722a49c681836938d16dda1d",
+      "full_target_denominator_voxels": 19557,
+      "unknown_support_voxels": 183804,
+      "anatomical_accuracy_pass": false
+    }
+  ],
+  "cohort_sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+  "original_cohorts_modified": false,
+  "split_changes": false,
+  "actual_policy_runs": 0,
+  "private_reference_loaded": false
+}

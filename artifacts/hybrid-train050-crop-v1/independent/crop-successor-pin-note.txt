@@ -1,0 +1,9 @@
+Source-only GO carries forward from crop-source-review.json (SHA a7513e19e115eedb5c0037f3f998a89f72c985f404d8c06750d1a38d59be772c) to the docstring-only successor.
+
+Verified exact source diff: run_crop_owned.py line1 now says one fixed TRAIN050 native-domain crop and saved-domain review, instead of four. No executable code changes. Prior parent/index/false release remain preserved as *.initial.*. Source-index changes only the parent byte length/hash; false-release changes only its source-index hash.
+
+Final parent SHA a9bd6ada937f04094482d384731f1797d39d5e9ce5dae228380acd931f96d247
+Final crop-source-index SHA 1615cc9a7237f3bb0bbcbf537d14ab895fd60e7a69ecd79184988754caa6f789
+Final false release SHA 8ebd22c2ffd63995bc4e7f2b690041a14c3209402812d968d458a03fb4f4d141
+
+All prior scope and launch conditions remain: generated controls unrun by reviewer, no patient crop/pixels/geometry execution, explicit root dispatch after tests/serialization, fresh parent cache prefix, no training or planning admission. Executed header evidence remains unchanged.
