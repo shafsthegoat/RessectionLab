@@ -30,6 +30,25 @@ The [completed 48-step comparison](../artifacts/select013-paged-route-h48-result
 
 The [first public-bound five-case comparison](../artifacts/hybrid-public-bound-v1-result/RESULT.md) completes with exact paired histories and ten accepted replays but zero pruning: all 1,118 planning calls exceed the global unknown-cell index limit. The source domain is present and valid. A separately versioned local-window representation is next; retain coverage uncertainty, source roles, rewards, frozen scorer and exact fallback. The complete negative is preserved; no new acquisition or model sweep is justified.
 
+## October 11: Close opening attribution and target the learning failure
+
+[The generated opening comparison](../artifacts/native-opening-coverage-result-v1/RESULT.md)
+reduces search transitions 16→10 and actions 3→2 with unchanged final removal,
+but the old depth-and-whole-volume heuristic exactly ties the new partial-volume
+lane. Preparation outside volume and travel both increase. Both owned pairs and
+independent audits complete. Reject an incremental partial-representation decision
+claim; retain the independent volume-representation evidence separately.
+
+Next is one fixed continuation-value experiment using the existing four TRAIN
+cases and authenticated complete simulated traces. Freeze the IL64 encoder,
+action policy and STOP head; fit only a small continuation head. Labels can use
+best remaining recorded nominal prefix return including STOP, without claiming
+optimal value or observed surgical outcomes. Reconstruct observations through the
+admitted replay path, charge every preview/feature forward, preserve all patient
+roles, and compare complete routes with retained search/IL/RL. Existing saved
+compute must determine a realistic runtime cap before execution; the small head
+alone does not make trace reconstruction cheap. No new dataset or general sweep.
+
 ## Hybrid world-model steering, October 10
 
 The latest human attachment is preserved byte-for-byte in [HYBRID_WORLD_MODEL_STEERING.md](HYBRID_WORLD_MODEL_STEERING.md), SHA256 `ac1e704d81a79d4f5c4501ba2696910174062f49d952d26ca22c44ec42ebeec9`. Its review cites main `4d1d0ff`, the starting baseline for this cycle. This addendum supersedes the earlier next-step ordering while retaining all historical failures, patient roles, full-supergoal requirements and the October 8 permission for separately labeled generated experience. Bibliographic access claims remain attributed to the supplied review until independently checked for an implemented mechanism.

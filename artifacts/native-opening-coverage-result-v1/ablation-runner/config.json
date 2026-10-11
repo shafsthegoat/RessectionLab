@@ -1,0 +1,13 @@
+{
+  "schema": "generated-opening-coverage-pair-v1",
+  "output_directory": "build/native-opening-coverage-v1/ablation-run-01",
+  "arms": ["return_plus_opening_depth_volume_v1", "return_plus_certified_evacuation_v1"],
+  "search": {"max_steps": 8, "beam_width": 2, "max_calls": 200, "seconds": 120.0, "transition_mode": "lazy_planning"},
+  "cut_union": {"exposure_mode": "same_step_parent_closure", "closure_schedule": "terminal_microstep_only"},
+  "caps": {"parent_wall_seconds": 300, "work_seconds": 290, "worker_peak_rss_bytes": 2147483648, "output_bytes": 2097152, "whole_build_bytes": 4194304, "log_bytes": 65536},
+  "positive_control": [{"tool_id": "short-wide-opener", "voxel": [4,4,1]}, {"tool_id": "long-narrow-cutter", "voxel": [4,4,5]}, "STOP"],
+  "scope": "One six-cell generated public-nominal fixture; idealized geometric evacuation, not tissue force, biological observation, clinical harm or acquired patient validation",
+  "preparation_cost": "Certified outside-supplied-target volume strictly before first positive whole-cell target removal; if none, final outside volume. Final outside certified volume must also not increase.",
+  "cost_gate": "Fewer search model transitions OR lower preparation outside volume, with no whole-cell target/outside/reward or certified target/final-outside regression; ties negative",
+  "no_retry": true
+}

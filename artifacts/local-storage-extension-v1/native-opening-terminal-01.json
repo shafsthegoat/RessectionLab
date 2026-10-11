@@ -1,0 +1,21 @@
+{
+  "at_utc": "2026-10-11T15:01:57.911429+00:00",
+  "bindings": [
+    {
+      "audit": "build/native-opening-coverage-v1/independent-audit/audit-result-01.json",
+      "audit_sha256": "e7611c857f816ccb7a90188019aeb5302bedfec765db1eee2ab9080635854125",
+      "launcher": "build/native-opening-coverage-v1/run-01/launcher.json",
+      "launcher_sha256": "c0961098c82ebf146343f7a5ee29378dbcbae35b4b1f7921193fd493e3cce647"
+    },
+    {
+      "audit": "build/native-opening-coverage-v1/ablation-audit/audit-result-01.json",
+      "audit_sha256": "ffbdb225d512674a46c0951fafbfddf434c9a3867f695458ff6bd22d09fffc7b",
+      "launcher": "build/native-opening-coverage-v1/ablation-run-01/launcher.json",
+      "launcher_sha256": "ccc37ff479c52bf9038c90df165b3595240a67f2b06819e5bef8042ee29a3e48"
+    }
+  ],
+  "remaining_owned_pids": [],
+  "result": "Initialpair useful; oldheuristic ablation ties, incrementalpartialplanningclaim rejected.",
+  "schema": "opening-pair-terminal-v1",
+  "worker_termination_confirmed": true
+}

@@ -1,0 +1,24 @@
+{
+  "allocated_stage_bytes": 360448,
+  "at_utc": "2026-10-11T14:58:23.169689+00:00",
+  "code_exactly_equal_to_tested_runner": true,
+  "config_diff": {
+    "arms": [
+      [
+        "return_only",
+        "return_plus_certified_evacuation_v1"
+      ],
+      [
+        "return_plus_opening_depth_volume_v1",
+        "return_plus_certified_evacuation_v1"
+      ]
+    ],
+    "output_directory": [
+      "build/native-opening-coverage-v1/run-01",
+      "build/native-opening-coverage-v1/ablation-run-01"
+    ]
+  },
+  "free_bytes": 355567734784,
+  "schema": "opening-ablation-release-v1",
+  "scope": "One matched old-depth/whole-volume versus certified-partial-volume pair, same tested source and 300s/2GiB/2MiB caps; no retry. Both audit scopes\u226448KiB each share4MiB."
+}

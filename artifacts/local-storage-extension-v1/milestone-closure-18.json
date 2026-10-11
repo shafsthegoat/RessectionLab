@@ -1,0 +1,96 @@
+{
+  "at_utc": "2026-10-11T15:02:14.021133+00:00",
+  "before_close_capacity": {
+    "additional_reservable_bytes": 8899416064,
+    "allocation_allowed": true,
+    "conservative_growth_plus_reservations_bytes": 1838002176,
+    "free_after_outstanding_reservations_bytes": 355482734592,
+    "free_bytes": 355550892032,
+    "growth_highwater_bytes": 1769844736,
+    "outstanding_reserved_bytes": 68157440,
+    "reservation_scope_overruns": []
+  },
+  "capacity": {
+    "additional_reservable_bytes": 8895221760,
+    "allocation_allowed": true,
+    "conservative_growth_plus_reservations_bytes": 1842196480,
+    "free_after_outstanding_reservations_bytes": 355478540288,
+    "free_bytes": 355550892032,
+    "growth_highwater_bytes": 1769844736,
+    "outstanding_reserved_bytes": 72351744,
+    "reservation_scope_overruns": []
+  },
+  "closed_opening": {
+    "ablation_execution_release": "One matched old-depth/whole-volume versus certified-partial-volume pair, same tested source and 300s/2GiB/2MiB caps; no retry. Both audit scopes\u226448KiB each share4MiB.",
+    "accounting_origin": "Zero origin retains every existing/new byte in exact stage against4MiB total; allocated size of only this exact subtree checked before reserve. No project scan.",
+    "began_at_utc": "2026-10-11T14:47:59.694432+00:00",
+    "closed_at_utc": "2026-10-11T15:02:14.020783+00:00",
+    "constraints": "No data/dependency/model-weight acquisition, no deletion or canonical writes; source agents share enclosing scope without duplicate reservations.",
+    "created_at_utc": "2026-10-11T14:37:44.215042+00:00",
+    "execution_release": "Eight runner controls passed. Root releases one fixed two-arm generated comparison:300s parent,120s/arm,one thread,2GiB sampled RSS,2MiB output,4MiB whole stage; no retry, patient reads, downloads, or training.",
+    "launch_authorized_by_storage_reservation": true,
+    "observed_scope_growth_highwater_bytes": 565248,
+    "owner": "/root",
+    "pilot": false,
+    "purpose": "One new generated-opening decision experiment; source preparation initially<=128KiB, future runtime release root-owned.",
+    "reserved_bytes": 4194304,
+    "runtime_begin_authorized": true,
+    "scope_current_allocated_bytes": 565248,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/native-opening-coverage-v1"
+    ],
+    "source_phase_authorized_ceiling_bytes": 131072,
+    "status": "closed",
+    "terminal_note": "Storage release only; success/admission not inferred from exit status.",
+    "terminal_receipt": {
+      "path": "build/storage-extension-v1/native-opening-terminal-01.json",
+      "sha256": "fa86ed1ed4328b2c905613a90b8ad3a086dabc851c8ea1d0bc873e334bf92472"
+    }
+  },
+  "limits": "Originalbaseline retained; newphase source-only, no training/data/dependency allocation or runtime release yet. Root archives/bookkeeping share52MiB root allowance.",
+  "measurement": {
+    "allocated_bytes": {
+      ".git": 152195072,
+      ".pytest_cache": 1146880,
+      ".tools": 1643302912,
+      ".venv": 3054829568,
+      "@root-files-and-directory": 651264,
+      "artifacts": 1784954880,
+      "build": 17275895808,
+      "data": 356137070592,
+      "desktop": 18945323008,
+      "dist": 2575773696,
+      "docs": 2220032,
+      "launchers": 409600,
+      "manifests": 5283840,
+      "outputs": 16143257600,
+      "packaging": 544768,
+      "research": 53248,
+      "scripts": 9601024,
+      "src": 6713344,
+      "tests": 20307968
+    },
+    "ended_at_utc": "2026-10-11T15:02:13.640665+00:00",
+    "free_bytes": 355550892032,
+    "method": "du -k -d 1 .; allocated file blocks, no bodies or symlink traversal; statvfs f_bavail",
+    "started_at_utc": "2026-10-11T15:01:57.912109+00:00",
+    "total_allocated_bytes": 417759535104
+  },
+  "new_source_reservation": {
+    "created_at_utc": "2026-10-11T15:02:14.021090+00:00",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 0,
+    "owner": "/root",
+    "pilot": false,
+    "purpose": "One frozen-representation continuation-value experiment; source preparation only until fixed complete cost forecast and root runtime release.",
+    "reserved_bytes": 8388608,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/train-continuation-value-v1"
+    ],
+    "source_phase_ceiling_bytes": 393216,
+    "status": "prepared"
+  },
+  "schema": "storage-milestone-closure-v1"
+}

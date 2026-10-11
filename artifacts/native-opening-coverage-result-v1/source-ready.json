@@ -1,0 +1,25 @@
+{
+  "comparison": {
+    "arms": [
+      "return_only",
+      "return_plus_certified_evacuation_v1"
+    ],
+    "beam_width": 2,
+    "max_calls": 200,
+    "max_steps": 8,
+    "same_model_information_reward_actions": true,
+    "seconds_per_arm": 120,
+    "tie_is_negative": true,
+    "transition_mode": "lazy_planning"
+  },
+  "files": {
+    "src/resectionlab/native_spatial_task.py": "d4bcbc88fa8506a07672ab798ba09769bcf135f7e5d5f2d19dbccf346b116ff6",
+    "src/resectionlab/observed_search.py": "210292df53472d8f2b6fa4b722a6d34fffe379025c0ee9b704d69ea85aae1526",
+    "tests/test_native_opening_coverage.py": "3a2185cd02b942e42f29cbc1a7654341cbce9e265ba9d072354ff5b60a2aa583"
+  },
+  "focused_tests": "tests/test_native_opening_coverage.py",
+  "generated_task": "make_native_opening_task(max_steps=8, generated_cut_union=CutUnionSpec(exposure_mode=\"same_step_parent_closure\", closure_schedule=\"terminal_microstep_only\"))",
+  "scope": "generated public nominal model-estimated evacuation; no biological observation, partial-clearance or clinical claim",
+  "status": "source_ready_not_executed",
+  "verification": "AST only; no imports, numerical tests, models or patients; root owns bounded tests and actual comparison"
+}

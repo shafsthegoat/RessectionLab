@@ -1,0 +1,20 @@
+{
+  "capacity": {
+    "additional_reservable_bytes": 8901124096,
+    "allocation_allowed": true,
+    "conservative_growth_plus_reservations_bytes": 1836294144,
+    "free_after_outstanding_reservations_bytes": 355539816448,
+    "free_bytes": 355607973888,
+    "growth_highwater_bytes": 1768136704,
+    "outstanding_reserved_bytes": 68157440,
+    "reservation_scope_overruns": []
+  },
+  "controls_sha256": "5be842d0936b20dcdaca50c9b20342168906abcbe931aabc27c1d434ab37393c",
+  "execution_release": "Eight runner controls passed. Root releases one fixed two-arm generated comparison:300s parent,120s/arm,one thread,2GiB sampled RSS,2MiB output,4MiB whole stage; no retry, patient reads, downloads, or training.",
+  "output_forecast_bytes": 2097152,
+  "prior_ledger_sha256": "38a403d65a9ef102ba58e7ea735533c0aba2941ca3e40898828c6be09da004d9",
+  "recorded_at_utc": "2026-10-11T14:56:05.412466+00:00",
+  "reservation": "native-opening-coverage-prep",
+  "schema": "opening-pair-execution-release-v1",
+  "stage_allocated_bytes": 135168
+}

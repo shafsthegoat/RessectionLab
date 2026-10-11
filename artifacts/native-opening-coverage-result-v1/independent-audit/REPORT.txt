@@ -1,0 +1,82 @@
+Independent saved opening-pair result: PASS; predeclared useful gain TRUE.
+
+One saved-only execution took 0.06194 s, with 762 recorded substantive checks
+plus the compact-output check. No native replay, geometry solver, model call,
+training, acquired input or new data was used. Canonical source was bound to
+83df385f5b21fd11281d52363871e4df0fcacff6, not an assumed future working tree.
+The immutable audit JSON binds exact report, launcher, declaration and source.
+
+                         Return only     Certified-evacuation retention
+Complete search layers         5                       4
+Search transitions            16                      10
+Selected motions               3                       2
+Selected tool switches         2                       1
+Whole target removed mm3       2                       2
+Whole outside removed mm3      4                       4
+Final certified target mm3     2                       2
+Final certified outside mm3    4                       4
+Pre-first-target outside mm3   3.625                   4.0 (WORSE)
+Full path length mm           11                      12 (WORSE)
+Return                         1.039                   1.098
+Search native previews        84                      60
+All arm native previews      144                     108
+Planning seconds               0.296115                0.190537
+Complete arm seconds           0.519734                0.356456
+
+Both routes are positive, terminated, independently full-tool/frontier accepted,
+and have the exact same final certified geometry digest. The reader independently
+rebuilt disjoint executed leaf-bit unions and whole-parent removals, source/target
+partial volume, motion and tool-switch costs, scalar histories and the useful
+gate. The worker's existing independent witness checker supplies geometric
+validity; this audit did not duplicate it. Same source/model/reward/mass bounds,
+initial complete 12-slot inventory, h8, beam2 and 200-call/120s limits join exactly.
+
+The OR cost gate passes through six fewer search transitions, not preparation
+volume: preparation evacuation rises 0.375 mm3 (10.34%). Final outside remains
+4 mm3. The return gain 0.059 is exactly one avoided action cost (+0.03), one
+avoided switch (+0.03), minus 1 mm extra motor path (-0.001). No harm reduction
+or shorter physical route is established. Ties would be negative.
+
+Mechanism and attribution limit
+At the first layer all four feasible choices have negative immediate return.
+The new lane retains the wide opener ending at [4,4,2] despite return -0.833,
+because its certified evacuated source is 4.625 mm3. Its actual whole removal
+is already four outside cells, with the deepest removed centre at z=3; another
+0.625 mm3 is certified target partial volume with zero whole-cell target reward.
+The return-favoured narrow action ends at [4,4,1], removes one whole cell, and
+has certified source 1.197265625 mm3 and return -0.231. The retained wide opener
+allows the long cutter to remove both target cells next, then STOP.
+
+This proves a gain over return-only beam retention in this generated task.
+It does not isolate fractional progress as the cause: the winning first action
+also has greater whole-cell volume and depth, which older opening heuristics can
+use. Full retained histories for all discarded root choices are not saved, so a
+counterfactual old-heuristic route cannot be established from these records.
+The next already-declared experiment is one matched pair using the existing
+return_plus_opening_depth_volume_v1 against certified-evacuation retention, with
+the same model, inputs, h8/beam2/budgets and useful gate. A tie would negate an
+incremental advantage over that baseline; this result alone is not partial-
+representation-specific evidence.
+
+Information and cost boundaries
+Both policies receive public generated scan-derived nominal anatomy. The progress
+record contains only source/model/state/action binding, step and certified source
+leaf count/volume; it has no target, reward, reference or future labels. The two
+target cells are explicitly encoded by the fixed synthetic scan, not discovered
+from private patient data. Both arms use the same partial-volume physical model;
+only retention changes. Whole-cell reward and occupied-parent shaft rules remain.
+
+All phases total 288 started/returned native previews and 36 transitions:
+26 search, 7 selected-route replay including STOP, 3 positive-control actions.
+The fixed positive control costs 36 previews and is reported separately. No
+preview exceptions or budget refusals occurred. Certified-state authentication
+cost 0.010175 s over 10 checks, included in search wall time. Setup, inventory,
+native preview, integrity and transition timings overlap; do not sum them.
+Parent completed in 1.838148 s, worker 1.620647 s, peak RSS 81,543,168 B;
+114,021 B saved output. Exit0, verified cleanup, no errors/remaining owned pids.
+Earlier preflight refusal was before any worker/native call: two unused pytest
+symlinks were removed; its record remains preserved. There was one numerical pair.
+
+Fixed-order N=1, six generated cells. No general latency, patient, tissue-force,
+biological evacuation, clinical, learned-policy or independent physical-validation
+claim follows. All evidence remains scoped to the declared idealized geometry.

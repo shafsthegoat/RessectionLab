@@ -1,0 +1,41 @@
+--- build/native-opening-coverage-v1/independent-audit/audit_saved.py
++++ build/native-opening-coverage-v1/ablation-audit/audit_saved.py
+@@ -17,12 +17,12 @@
+ ROOT = next(p for p in Path(__file__).resolve().parents if (p/'src/resectionlab').is_dir())
+ BASE = ROOT/'build/native-opening-coverage-v1'
+ OUT = Path(__file__).resolve().parent
+-MODES = ['return_only', 'return_plus_certified_evacuation_v1']
++MODES = ['return_plus_opening_depth_volume_v1', 'return_plus_certified_evacuation_v1']
+ TOL = 1e-10
+ SUPPORT = {(4, 4, z) for z in range(1, 6)} | {(5, 5, 1)}
+ TARGET = {(4, 4, 4), (4, 4, 5)}
+ AFFINE = [[1., 0., 0., 0.], [0., 1., 0., 0.], [0., 0., 1., 0.], [0., 0., 0., 1.]]
+-CONFIG_SHA = '19ed9907b82dce019212da33a3c5900c770637777410a8e237eba21c5ae85fb0'
++CONFIG_SHA = '08172c586ca986591c48597a362121e897007da311e983a32839a6ff5fcff137'
+ COUNT = 0
+ 
+ 
+@@ -197,10 +197,10 @@
+     signal.alarm(30)
+     output = {'schema': 'independent-generated-opening-pair-audit-v1', 'status': 'RUNNING', 'native_calls': 0, 'model_calls': 0, 'training_calls': 0}
+     try:
+-        report, rb = read(BASE/'run-01/report.json', args.report_sha)
+-        launcher, lb = read(BASE/'run-01/launcher.json', args.launcher_sha)
+-        index, ib = read(BASE/'runner/source-index.json', args.index_sha)
+-        config, cb = read(BASE/'runner/config.json', CONFIG_SHA)
++        report, rb = read(BASE/'ablation-run-01/report.json', args.report_sha)
++        launcher, lb = read(BASE/'ablation-run-01/launcher.json', args.launcher_sha)
++        index, ib = read(BASE/'ablation-runner/source-index.json', args.index_sha)
++        config, cb = read(BASE/'ablation-runner/config.json', CONFIG_SHA)
+         output['bindings'] = {'report': rb, 'launcher': lb, 'source_index': ib, 'config': cb, 'canonical_commit': args.commit}
+         need(index['execution_released'] is True, 'root released exact index')
+         paths = list(index['files'])
+@@ -273,7 +273,7 @@
+         need(launcher['caps'] == config['caps'] and launcher['automatic_retry'] is False, 'owned envelope/no retry')
+         need(launcher['rss_samples'] > 0 and launcher['sampled_peak_group_rss_bytes'] <= config['caps']['worker_peak_rss_bytes'], 'sampled RSS cap')
+         need(report['self_peak_rss_bytes'] <= config['caps']['worker_peak_rss_bytes'] and report['worker_seconds'] < 290 and launcher['elapsed_seconds'] < 300, 'reported RSS/wall caps')
+-        result_bytes = sum(p.stat().st_size for p in (BASE/'run-01').rglob('*') if p.is_file())
++        result_bytes = sum(p.stat().st_size for p in (BASE/'ablation-run-01').rglob('*') if p.is_file())
+         need(result_bytes <= config['caps']['output_bytes'], 'saved output byte cap')
+         output['supervision'] = {'accepted': accepted, 'status': launcher['status'], 'stop_reason': launcher['stop_reason'],
+             'owned_lifecycle': clean, 'parent_seconds': launcher['elapsed_seconds'], 'worker_seconds': report['worker_seconds'],

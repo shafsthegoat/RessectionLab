@@ -97,3 +97,14 @@ growth high-water mark. Root took over the single storage-owner role and began
 the already reserved 4 MiB opening-task source controls; full comparison release
 remained separate. Fresh free space after reservations is above 331 GiB.
 Copies, this note and later Git/source writes are outside the dated scan.
+
+October 11, 15:02:13 UTC — [opening comparison closure](milestone-closure-18.json)
+records **1,769,844,736 bytes (1.648 GiB)** cumulative additional allocated growth
+and **331.133 GiB free**. Both paired workers and saved audits are terminal; the
+source/results stage retains **0.539/4 MiB**. Global and reservation limits pass.
+The existing 52 MiB root source/archive/Git allowance has 2.621 MiB measured
+headroom. A separate 8 MiB continuation-value stage reserves source preparation
+only (384 KiB shared initial ceiling); no learning execution follows from that
+reservation. No dataset or dependency acquisition occurred. Two unused pytest
+temporary convenience links were removed after tests; their targets/results remain.
+Later copies, source edits and Git writes are outside this dated scan.

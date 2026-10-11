@@ -1,0 +1,18 @@
+{
+  "status": "preflight_refused_before_child",
+  "cause": "two pytest temporary convenience symlinks rejected by no-symlink output policy",
+  "native_calls": 0,
+  "worker_launched": false,
+  "removed_only_unused_test_symlinks": [
+    {
+      "path": "build/native-opening-coverage-v1/runner-controls-01-tmp/test_fake_preview_includes_refcurrent",
+      "target": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-opening-coverage-v1/runner-controls-01-tmp/test_fake_preview_includes_ref0"
+    },
+    {
+      "path": "build/native-opening-coverage-v1/runner-controls-01-tmp/test_actual_instrumented_invencurrent",
+      "target": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-opening-coverage-v1/runner-controls-01-tmp/test_actual_instrumented_inven0"
+    }
+  ],
+  "preserved": "original test files, receipt and log; frozen sources unchanged",
+  "root_decision": "Retry launch after removing only these two reproducible unused temporary symlinks; single numerical attempt remains unused."
+}

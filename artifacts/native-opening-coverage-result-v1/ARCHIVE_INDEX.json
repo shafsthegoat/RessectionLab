@@ -1,0 +1,241 @@
+{
+  "schema": "opening-pair-compact-archive-v1",
+  "canonical_commit": "83df385f5b21fd11281d52363871e4df0fcacff6",
+  "files": [
+    {
+      "source": "build/native-opening-coverage-v1/ablation-audit/REPORT.txt",
+      "archive": "ablation-audit/REPORT.txt",
+      "bytes": 3121,
+      "sha256": "3f1d4f5833a270a9e1b6c0fcc086bb9f4e87e4b9b9151fa1dd0896e79c77b071"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-audit/audit-only-delta.diff",
+      "archive": "ablation-audit/audit-only-delta.diff",
+      "bytes": 2939,
+      "sha256": "84b37655bff9c8a313b96aae746bebe0056143a219058b381b9beca4b670ff2f"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-audit/audit-result-01.json",
+      "archive": "ablation-audit/audit-result-01.json",
+      "bytes": 16448,
+      "sha256": "ffbdb225d512674a46c0951fafbfddf434c9a3867f695458ff6bd22d09fffc7b"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-audit/audit_saved.py",
+      "archive": "ablation-audit/audit_saved.py",
+      "bytes": 23370,
+      "sha256": "f45ddd14539e14b5bd56db13c2271fe9c1be4f8cc25ca774c23282d52c7495c6"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-release-01.json",
+      "archive": "ablation-release-01.json",
+      "bytes": 770,
+      "sha256": "cffe1df4dbd92c5d5854123188eb2e08ef45b3e8865adcb055ca895d5e1c82ac"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-run-01/intent.json",
+      "archive": "ablation-run-01/intent.json",
+      "bytes": 556,
+      "sha256": "c18a906e8a858ea610c369c9f845fbfdaa41848e4af84bb2811592ffb77b1e13"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-run-01/launcher.json",
+      "archive": "ablation-run-01/launcher.json",
+      "bytes": 10124,
+      "sha256": "ccc37ff479c52bf9038c90df165b3595240a67f2b06819e5bef8042ee29a3e48"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-run-01/progress.json",
+      "archive": "ablation-run-01/progress.json",
+      "bytes": 7529,
+      "sha256": "c3338493773c849dbc6275f80cb36fb324abf3ecb6f9ed62d2d0cccc4e7bf25b"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-run-01/report.json",
+      "archive": "ablation-run-01/report.json",
+      "bytes": 93527,
+      "sha256": "68f95fa5a22c7792f0fc498ede7c2bb8a4718d4521c64fa4a3b4b1bc6247830c"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-run-01/worker.log",
+      "archive": "ablation-run-01/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-runner/README.md",
+      "archive": "ablation-runner/README.md",
+      "bytes": 1894,
+      "sha256": "dd540b283f169b94df08a710346c6ebf185a9a9a1f019206783ded01ccca008f"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-runner/common.py",
+      "archive": "ablation-runner/common.py",
+      "bytes": 4745,
+      "sha256": "af29e68dc49f3658db00d55b29ca2f6e5ffbda56907ca790872f8b312a23c587"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-runner/config.json",
+      "archive": "ablation-runner/config.json",
+      "bytes": 1352,
+      "sha256": "08172c586ca986591c48597a362121e897007da311e983a32839a6ff5fcff137"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-runner/freeze_sources.py",
+      "archive": "ablation-runner/freeze_sources.py",
+      "bytes": 1494,
+      "sha256": "2adf1f6a195e268283d7ba09cc24950ae972507a56407f353c0ec051efc45cad"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-runner/run_owned.py",
+      "archive": "ablation-runner/run_owned.py",
+      "bytes": 9201,
+      "sha256": "d783e6479ea5fc6972741a0788881ab16fd17574ea75fcc3ca19304b553dc0b9"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-runner/source-index.json",
+      "archive": "ablation-runner/source-index.json",
+      "bytes": 16184,
+      "sha256": "bb5efc84ae27c4e5b26d3273998e7d4e3530105a28633f646fc53429fca75066"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-runner/test_runner.py",
+      "archive": "ablation-runner/test_runner.py",
+      "bytes": 6710,
+      "sha256": "695d763b6e327c0cf17ca439660586635964a65fd5707d6a99068c864d234d92"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/ablation-runner/worker.py",
+      "archive": "ablation-runner/worker.py",
+      "bytes": 16222,
+      "sha256": "c0ca0a215924626fcbb1f67180efa2459d0949398384e01684dfb8ee3d33dce4"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/execution-release-01.json",
+      "archive": "execution-release-01.json",
+      "bytes": 1029,
+      "sha256": "e3b658dec12bc51cb697997443e10e1e100b92d7e26e01c6016416ceab7fa180"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/independent-audit/REPORT.txt",
+      "archive": "independent-audit/REPORT.txt",
+      "bytes": 5317,
+      "sha256": "c52721f69def5bcb1d8b0db420251b16eac13cf9ff85cb3eba3fd73801621ba5"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/independent-audit/audit-result-01.json",
+      "archive": "independent-audit/audit-result-01.json",
+      "bytes": 16585,
+      "sha256": "e7611c857f816ccb7a90188019aeb5302bedfec765db1eee2ab9080635854125"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/independent-audit/audit_saved.py",
+      "archive": "independent-audit/audit_saved.py",
+      "bytes": 23301,
+      "sha256": "c40e1ceec759609400e35cedefef33f27318873372b58a110f60678a5c1d0b56"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/preflight-refusal-01.json",
+      "archive": "preflight-refusal-01.json",
+      "bytes": 1111,
+      "sha256": "1910ee989fa20cc70e8eca6062296a86db6ad62d94facea83f730e731c397395"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/run-01/intent.json",
+      "archive": "run-01/intent.json",
+      "bytes": 556,
+      "sha256": "4fc1a76c81dcf53dd0e730a27965babd316b74c0ceb09625b8e061db43590917"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/run-01/launcher.json",
+      "archive": "run-01/launcher.json",
+      "bytes": 9973,
+      "sha256": "c0961098c82ebf146343f7a5ee29378dbcbae35b4b1f7921193fd493e3cce647"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/run-01/progress.json",
+      "archive": "run-01/progress.json",
+      "bytes": 7406,
+      "sha256": "76f67663512f5cdd04a25d9b6274220fbf680d34ad593bda6117ed8b39e7f5c4"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/run-01/report.json",
+      "archive": "run-01/report.json",
+      "bytes": 96086,
+      "sha256": "0a97d52cbd4e295d22ed1a477c575fc2ec7499eec65bc722bd7f2d8b20764c7a"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/run-01/worker.log",
+      "archive": "run-01/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/runner/README.md",
+      "archive": "runner/README.md",
+      "bytes": 5162,
+      "sha256": "4db2edf3d7a4b4c057e81e34edb40af28bd6a917b35bbb4774bfe2fe6bada127"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/runner/common.py",
+      "archive": "runner/common.py",
+      "bytes": 4745,
+      "sha256": "af29e68dc49f3658db00d55b29ca2f6e5ffbda56907ca790872f8b312a23c587"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/runner/config.json",
+      "archive": "runner/config.json",
+      "bytes": 1319,
+      "sha256": "19ed9907b82dce019212da33a3c5900c770637777410a8e237eba21c5ae85fb0"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/runner/freeze_sources.py",
+      "archive": "runner/freeze_sources.py",
+      "bytes": 1494,
+      "sha256": "2adf1f6a195e268283d7ba09cc24950ae972507a56407f353c0ec051efc45cad"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/runner/run_owned.py",
+      "archive": "runner/run_owned.py",
+      "bytes": 9201,
+      "sha256": "d783e6479ea5fc6972741a0788881ab16fd17574ea75fcc3ca19304b553dc0b9"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/runner/source-index.json",
+      "archive": "runner/source-index.json",
+      "bytes": 16130,
+      "sha256": "05eafcbe8ccdc99ccd0d938f8b3cde721ecd3a5403e48e343cba3dcc8962b771"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/runner/test_runner.py",
+      "archive": "runner/test_runner.py",
+      "bytes": 6710,
+      "sha256": "695d763b6e327c0cf17ca439660586635964a65fd5707d6a99068c864d234d92"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/runner/worker.py",
+      "archive": "runner/worker.py",
+      "bytes": 16222,
+      "sha256": "c0ca0a215924626fcbb1f67180efa2459d0949398384e01684dfb8ee3d33dce4"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/runner-controls-01.json",
+      "archive": "runner-controls-01.json",
+      "bytes": 16273,
+      "sha256": "5be842d0936b20dcdaca50c9b20342168906abcbe931aabc27c1d434ab37393c"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/runner-controls-01.log",
+      "archive": "runner-controls-01.log",
+      "bytes": 98,
+      "sha256": "7675afcbf0656da4d29291a330ffc7200eb716c466b0dd4338f6eecaa12bf6a4"
+    },
+    {
+      "source": "build/native-opening-coverage-v1/source-ready.json",
+      "archive": "source-ready.json",
+      "bytes": 1220,
+      "sha256": "e869ca909929b59130a659f705edf61a003175719064c86e96b282e7abdc03b7"
+    }
+  ],
+  "notes": "Generated public-nominal task only. Canonical source in Git; reviewed external lifecycle/sampler helper pins in runner source-index and prior archives. No patient records, weights or datasets."
+}
