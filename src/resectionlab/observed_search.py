@@ -10,6 +10,7 @@ actor sees a crop. Callers must report that limitation in comparisons.
 from __future__ import annotations
 
 from bisect import insort
+from collections.abc import Mapping
 import math
 import time
 
@@ -203,6 +204,30 @@ def _opening_frontier(children, opening, width):
     return selected[:width]
 
 
+def _public_certified_evacuation(observation, outcome, action, child):
+    """Authenticate already committed public-model progress, never a private outcome.
+
+    Native state checks cost time but request no extra geometry or observation.
+    An arbitrary task callback or a caller-supplied volume cannot certify progress.
+    """
+    from .native_spatial_task import NativeSpatialTask
+    from .core import thaw_json
+    if type(child) is not NativeSpatialTask or not child._planning:
+        raise ValueError("Certified evacuation retention requires the exact generated nominal native task")
+    info = outcome.info
+    if (not isinstance(info, Mapping) or info.get("outcome_scope") != "permitted_nominal_model"
+            or info.get("action_id") != action):
+        raise ValueError("Certified evacuation retention requires an exact public nominal transition")
+    current = thaw_json(NativeSpatialTask.public_evacuated_progress(child))
+    if (current["action_id"] != action or current["source_hash"] != observation.source_id
+            or info.get("model_estimated_evacuated_progress") != current):
+        raise ValueError("Certified evacuation transition/source/state binding differs")
+    volume = current["cumulative_evacuated_source_volume_mm3"]
+    if isinstance(volume, bool) or not math.isfinite(volume) or volume < 0:
+        raise ValueError("Invalid certified evacuation volume")
+    return volume
+
+
 def observed_beam_search(task, *, max_calls: int, beam_width: int, seconds: float = 2.,
                          policy=None, objective_source: str = "observed_scan_estimator_only",
                          transition_mode: str = "eager", retained_prefix_diagnostics: bool = False,
@@ -224,6 +249,10 @@ then return/path. This deliberately favors wider removal only for retention;
 final objective/STOP are unchanged. Opt-in return_plus_axial_layer_volume_v1
 uses signed integer native axial layers after validating public normal/frame
 alignment, then actual removed volume. Raw projected mm remain diagnostics.
+Opt-in return_plus_certified_evacuation_v1 reserves one lane for cumulative
+certified evacuation estimated from permitted anatomy and executed actions.
+This is a preparation heuristic, not biological observation or shaft clearance;
+whole-cell terminal reward and STOP selection remain unchanged.
 Old modes add no new output fields.
 """
     started = time.perf_counter()
@@ -291,7 +320,7 @@ planning clone. It defers successor observations, not current-action geometry.
         raise ValueError("Choose explicit eager or lazy_planning transition mode")
     if type(retained_prefix_diagnostics) is not bool:
         raise ValueError("retained_prefix_diagnostics must be an explicit bool")
-    if retention_mode not in {"return_only", "return_plus_opening_depth_v1", "return_plus_opening_depth_volume_v1", "return_plus_axial_layer_volume_v1"}:
+    if retention_mode not in {"return_only", "return_plus_opening_depth_v1", "return_plus_opening_depth_volume_v1", "return_plus_axial_layer_volume_v1", "return_plus_certified_evacuation_v1"}:
         raise ValueError("Unknown observed-search retention mode")
     if action_expansion not in {"single_inventory", "obstruction_pages_v1"}:
         raise ValueError("Unknown action expansion contract")
@@ -299,11 +328,17 @@ planning clone. It defers successor observations, not current-action geometry.
     if paged and (transition_mode != "lazy_planning" or policy is not None
                   or not callable(getattr(task, "planning_action_pages", None))):
         raise ValueError("Paged expansion requires the explicit nominal lazy task without actor ordering")
+    evacuation_lane = retention_mode == "return_plus_certified_evacuation_v1"
     axial_lane = retention_mode == "return_plus_axial_layer_volume_v1"
     volume_lane = retention_mode == "return_plus_opening_depth_volume_v1" or axial_lane
-    opening_lane = retention_mode == "return_plus_opening_depth_v1" or volume_lane
+    opening_lane = retention_mode == "return_plus_opening_depth_v1" or volume_lane or evacuation_lane
+    retention_key = "certified_evacuation_retention" if evacuation_lane else "opening_depth_retention"
     if opening_lane and beam_width < 2:
         raise ValueError("Opening retention requires beam_width >= 2")
+    if evacuation_lane:
+        from .native_spatial_task import NativeSpatialTask
+        if type(task) is not NativeSpatialTask or task.case.generated_cut_union is None:
+            raise ValueError("Certified evacuation retention requires the explicit generated native model")
     observed = task.planning_clone()
     metrics = observed.metrics()
     if not metrics["planning_estimator_only"]:
@@ -319,6 +354,7 @@ planning clone. It defers successor observations, not current-action geometry.
     eager_calls = lazy_calls = observation_requests = 0
     negative_evaluated = negative_retained = negative_pruned = beam_pruned = 0
     peak_next_layer_states = 0
+    evacuation_checks, evacuation_check_seconds = 0, 0.
     truncated, root_inventory = False, 0
     layers = []
     page_records = []
@@ -360,11 +396,13 @@ planning clone. It defers successor observations, not current-action geometry.
                 "all_pages_before_layer_completion": True,
                 "stop_transition_calls": 0, "stop_evaluation": "implicit_zero_at_every_prefix",
                 "page_ranking": "one_shared_existing_layer_accumulator; no_per_page_retention"} if paged else {}),
-            **({"opening_depth_retention": {
+            **({retention_key: {
                 "version": retention_mode, "terminal_objective_changed": False,
-                "scope": "newly_removed_actor_covered_cell_centres_from_public_aperture_plane",
+                "scope": ("model_estimated_cumulative_certified_evacuation_from_public_nominal_anatomy_and_executed_actions"
+                          if evacuation_lane else "newly_removed_actor_covered_cell_centres_from_public_aperture_plane"),
                 "missing_progress": "null; malformed_or_non_nominal_record_refused",
-                "ranking": ("best_return_then_distinct_max_signed_native_axial_layer_then_actual_removed_volume_then_return_and_path"
+                "ranking": ("best_return_then_distinct_max_cumulative_certified_evacuation_then_return_and_path"
+                            if evacuation_lane else "best_return_then_distinct_max_signed_native_axial_layer_then_actual_removed_volume_then_return_and_path"
                             if axial_lane else "best_return_then_distinct_max_depth_tied_by_actual_removed_volume_then_return_and_path"
                             if volume_lane else "best_return_then_distinct_max_depth_tied_by_return_and_path"),
                 **({"volume_scope": "cumulative_unique_newly_committed_positive_depth_actor_support_and_cavity_covered_native_cells_mm3",
@@ -375,6 +413,10 @@ planning clone. It defers successor observations, not current-action geometry.
                 **({"axial_alignment": "orthogonal native frame; unique axis absolute-dot misalignment<=1e-10; transverse normalized dot<=existing1e-8 Gram bound; full-native-extent projection drift<=existing1e-6mm and<half axial spacing",
                     "layer_scope": "maximum signed native axis index of eligible actual newly removed positive-depth cells; accumulated independently of raw projected depth",
                     "pairwise_tolerance_or_bucket": False} if axial_lane else {}),
+                **({"state_verification_calls": evacuation_checks,
+                    "state_verification_seconds": evacuation_check_seconds,
+                    "progress_warning": "retention_heuristic_not_target_utility_biological_observation_or_shaft_clearance"}
+                   if evacuation_lane else {}),
                 "extra_observations_or_previews": 0,
                 "memory": "at_most_beam_width_plus_one_retained_child_states_plus_current_child",
                 "costs": "progress_arithmetic_and_retention_included_in_wall_and_parent_RSS"}}
@@ -413,7 +455,7 @@ planning clone. It defers successor observations, not current-action geometry.
                      "negative_prefixes_pending_at_cap": 0}
             layers.append(layer)
             if opening_lane:
-                layer["opening_depth_retention"] = []
+                layer[retention_key] = []
             if retained_prefix_diagnostics:
                 layer["retained_prefix_diagnostics"] = {
                     "selection_status": "partial_layer_not_advanced",
@@ -519,7 +561,17 @@ planning clone. It defers successor observations, not current-action geometry.
                             incumbent, sequence = total, path
                             incumbent_terminated = child.terminated
                         if opening_lane:
-                            if volume_lane:
+                            if evacuation_lane:
+                                verification_started = time.perf_counter()
+                                evacuation_checks += 1
+                                try:
+                                    opening_depth = _public_certified_evacuation(observation, outcome, action, child)
+                                finally:
+                                    evacuation_check_seconds += time.perf_counter() - verification_started
+                                if (frontier_opening[prefix] is not None
+                                        and opening_depth < frontier_opening[prefix]):
+                                    raise ValueError("Certified evacuation progress decreased across a committed transition")
+                            elif volume_lane:
                                 if axial_lane:
                                     new_depth, new_volume, new_layer = _public_removed_opening_depth(
                                         observation, outcome, action, with_volume=True, with_axial_layer=True)
@@ -533,8 +585,9 @@ planning clone. It defers successor observations, not current-action geometry.
                                     raise FloatingPointError("Nonfinite accumulated opening removal volume")
                             else:
                                 new_depth = _public_removed_opening_depth(observation, outcome, action)
-                            depths = [value for value in (frontier_opening[prefix], new_depth) if value is not None]
-                            opening_depth = max(depths) if depths else None
+                            if not evacuation_lane:
+                                depths = [value for value in (frontier_opening[prefix], new_depth) if value is not None]
+                                opening_depth = max(depths) if depths else None
                         if retained_prefix_diagnostics:
                             progress = _prefix_progress(frontier_progress[prefix], path, total, outcome)
                             if child.terminated:
@@ -581,9 +634,10 @@ planning clone. It defers successor observations, not current-action geometry.
                                 if retained_prefix_diagnostics:
                                     child_progress = {key: value for key, value in child_progress.items() if key in live_paths}
                                 selected = _opening_frontier(children, opening_child, beam_width)
-                                layer["opening_depth_retention"] = [
+                                layer[retention_key] = [
                                     {"actions": list(row[1]), "estimated_incremental_return": row[0],
-                                     "opening_depth_mm": child_opening[row[1]],
+                                     ("cumulative_model_estimated_evacuated_volume_mm3" if evacuation_lane
+                                      else "opening_depth_mm"): child_opening[row[1]],
                                      **({"opening_removed_volume_mm3": child_volume[row[1]]} if volume_lane else {}),
                                      **({"opening_axial_layer": child_layer[row[1]]} if axial_lane else {}),
                                      "reason": "best_return_and_opening" if row is children[0] and opening_child is not None and row[1] == opening_child[1]

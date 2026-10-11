@@ -24,6 +24,7 @@ from .core import array_digest, immutable_array, semantic_digest, freeze_json, t
 from .geometry import AccessWindow, ToolGeometry
 from .post_exposure import PostExposureStart
 from .native_resection import NativeResectionConfig, NativeResectionEngine
+from .native_cut_union import CutUnionSpec, EvacuatedVolumeSpec
 from .native_proposals import (NominalCavityProposalConfig, PreparedNominalCavityProposer,
     NOMINAL_CAVITY_PROPOSAL_VERSION, NOMINAL_CAVITY_FAMILIES,
     TARGET_WITHIN_SUPPORT, SUPPLIED_GOAL_REGION)
@@ -38,6 +39,8 @@ MAX_NATIVE_SPATIAL_STEPS = 48  # Explicit run budgets still bound work at any ho
 GRID_ROUNDOFF_MAX_DISPLACEMENT_MM = 1e-6
 GRID_ROUNDOFF_MAX_GRAM_ERROR = 1e-8
 SYNTHETIC_TARGET_THRESHOLD = .5
+EVACUATED_PROGRESS_VERSION = "generated-nominal-certified-evacuation-progress-v1"
+EVACUATED_PROGRESS_SCOPE = "model_estimated_from_public_nominal_anatomy_and_executed_actions_not_biological_observation"
 RAW_CEREBRUM_OCCUPANCY = "raw_cerebrum_baseline"
 SUPPLIED_TUMOR_UNION_OCCUPANCY = "cerebrum_plus_supplied_tumor_assumption"
 DERIVED_OCCUPANCY_SOURCE_KIND = "derived_occupancy_assumption"
@@ -212,6 +215,9 @@ class NativeSpatialCase:
     # Observed source coverage Ds stays distinct from assumed occupancy S OR T.
     support_domain: np.ndarray | None = None
     post_exposure: PostExposureStart | None = None
+    # Experimental generated/full-crop model; no acquired-source admission.
+    generated_cut_union: CutUnionSpec | None = None
+    generated_evacuated_volume: EvacuatedVolumeSpec | None = None
     _interaction_domain: np.ndarray | None = field(init=False, repr=False, default=None)
     _domain_record: Mapping = field(init=False, repr=False, default_factory=dict)
     _occupancy_derivation: Mapping = field(init=False, repr=False, default_factory=dict)
@@ -243,6 +249,16 @@ class NativeSpatialCase:
         support = _binary(self.observed_support, image.shape, "observed_support")
         target = _fraction(self.reference_target, image.shape, "reference_target")
         nominal = None if self.nominal_target is None else _fraction(self.nominal_target, image.shape, "nominal_target")
+        if self.generated_cut_union is not None or self.generated_evacuated_volume is not None:
+            if (type(self.generated_cut_union) is not CutUnionSpec
+                    or type(self.generated_evacuated_volume) is not EvacuatedVolumeSpec
+                    or self.track != "synthetic_scan" or self.support_source_kind != "derived_from_scan"
+                    or self.target_source_kind != "derived_from_scan" or nominal is None
+                    or self.proposal_mode != "fixed_lattice" or self.support_domain is not None
+                    or self.post_exposure is not None or self.public_target_context_variant is not None
+                    or not np.array_equal(self.generated_evacuated_volume.target_fraction_lower, nominal)
+                    or not np.array_equal(self.generated_evacuated_volume.target_fraction_upper, nominal)):
+                raise ValueError("Generated evacuation requires typed paired specs and the exact public nominal mass on a full-crop synthetic fixed lattice")
         if not support.any():
             raise ValueError("Explicit tissue support is essential; full-head signal is not a brain envelope")
         if self.target_semantics not in {TARGET_WITHIN_SUPPORT, SUPPLIED_GOAL_REGION}:
@@ -423,6 +439,8 @@ class NativeSpatialCase:
         origin = np.clip(np.floor(center - actual_shape / 2).astype(int), 0, np.asarray(image.shape) - actual_shape)
         object.__setattr__(self, "_crop_origin", tuple(int(v) for v in origin))
         object.__setattr__(self, "_crop_shape", tuple(int(v) for v in actual_shape))
+        if self.generated_cut_union is not None and tuple(int(v) for v in actual_shape) != image.shape:
+            raise ValueError("Generated evacuation progress cannot disclose support outside the public crop")
         if self.proposal_mode == "nominal_cavity_v1":
             voxels, scope = (), "permitted_nominal_and_observed_cavity_columns_without_crop_clipping"
         elif int(support.sum()) * len(tools) <= MAX_PRIMITIVES:
@@ -456,6 +474,8 @@ class NativeSpatialCase:
         source_hash = semantic_digest({"version": NATIVE_SPATIAL_VERSION,
             "scan": array_digest(image), "support": array_digest(support), "affine": array_digest(self.affine_ras_mm),
             "nominal_target": None if nominal is None else array_digest(nominal),
+            **({"generated_evacuation_model": self._generated_evacuation_record()}
+               if self.generated_cut_union is not None else {}),
             **({"occupancy_derivation": self._occupancy_derivation}
                if self.occupancy_source_support is not None else {}),
             **({"source_and_simulated_domains": self._domain_record} if self.support_domain is not None else {}),
@@ -483,7 +503,9 @@ class NativeSpatialCase:
             self.access, tools, self.source_hash,
             self.support_derivation + "; hypothetical aperture; cortical access unverified",
             case_id="native-spatial", max_tip_step_mm=min(.25, float(np.linalg.norm(self._native_affine_ras_mm[:3, :3], axis=0).min()) / 2),
-            interaction_domain=self._interaction_domain, post_exposure=self.post_exposure)
+            interaction_domain=self._interaction_domain, post_exposure=self.post_exposure,
+            **({"cut_union": self.generated_cut_union, "evacuated_volume": self.generated_evacuated_volume}
+               if self.generated_cut_union is not None else {}))
         object.__setattr__(self, "_native_config", config)
         object.__setattr__(self, "_native_identity", _native_identity(config))
         if self.proposal_mode == "nominal_cavity_v1":
@@ -518,10 +540,19 @@ class NativeSpatialCase:
         self.assert_intact()
         return self._reference_hash
 
+    def _generated_evacuation_record(self):
+        return {"cut_union": self.generated_cut_union.to_record(),
+                "evacuated_volume": self.generated_evacuated_volume.to_record(),
+                "progress_version": EVACUATED_PROGRESS_VERSION}
+
     def _identity_record(self):
         arrays = tuple(_array_identity(getattr(self, name)) for name in
             ("structural_intensity", "observed_support", "reference_target", "affine_ras_mm", "_native_affine_ras_mm"))
         return (arrays, None if self.nominal_target is None else _array_identity(self.nominal_target),
+            *((semantic_digest(self._generated_evacuation_record()),
+               _array_identity(self.generated_evacuated_volume.target_fraction_lower),
+               _array_identity(self.generated_evacuated_volume.target_fraction_upper))
+              if self.generated_cut_union is not None else ()),
             semantic_digest({"access": _access_record(self.access), "tools": [asdict(t) for t in self.tools]}),
             self.track, self.support_source_kind, self.support_derivation, self.target_source_kind,
             *((_array_identity(self.occupancy_source_support), semantic_digest(self._occupancy_derivation))
@@ -816,7 +847,9 @@ class NativeSpatialTask:
     def _score_record(self, geometry, prior_tool):
         if geometry.get("action_id") == "STOP":
             return {"action_id": "STOP", "reward": 0., "target_removed_mm3": 0., "normal_removed_mm3": 0.,
-                    "insertion_distance_mm": 0., "complete_tool_path_length_mm": 0.}
+                    "insertion_distance_mm": 0., "complete_tool_path_length_mm": 0.,
+                    **({"model_estimated_evacuated_progress": copy.deepcopy(geometry["model_estimated_evacuated_progress"])}
+                       if "model_estimated_evacuated_progress" in geometry else {})}
         indices = np.asarray(geometry["removed_indices_native"], dtype=int).reshape(-1, 3)
         # Float32 source memberships stay unchanged; physical accounting uses
         # float64 before multiplication, including NumPy's scalar promotion.
@@ -881,6 +914,8 @@ class NativeSpatialTask:
             if action == "STOP":
                 record.update(removed_indices_native=[], contact_indices_native=[], microsteps=[])
         self._steps += 1
+        if self.case.generated_cut_union is not None:
+            record["model_estimated_evacuated_progress"] = self._evacuated_progress_record(action)
         self._total_reward += record["reward"]
         self._terminated = action == "STOP" or self._steps >= self.max_steps
         self._history.append(copy.deepcopy(record))
@@ -898,6 +933,38 @@ class NativeSpatialTask:
             from .native_axis_simulation import CommittedTransitionInterrupted
             raise CommittedTransitionInterrupted(record, record["reward"]) from error
         return NativeSpatialStep(observed, record["reward"], self._terminated, copy.deepcopy(record))
+
+    def _evacuated_progress_record(self, action):
+        """Only permitted model state: no target mass, reward or private labels."""
+        snapshot = self._engine.evacuated_volume
+        return {"version": EVACUATED_PROGRESS_VERSION, "scope": EVACUATED_PROGRESS_SCOPE,
+                "source_hash": self._source_hash, "native_model_hash": self._config.fingerprint,
+                "native_state_hash": self._engine.state_hash, "steps": self._steps,
+                "action_id": action, "certified_leaf_count": snapshot["certified_leaf_count"],
+                "cumulative_evacuated_source_volume_mm3": snapshot["evacuated_source_volume_mm3"]}
+
+    def public_evacuated_progress(self):
+        """Authenticate model progress without another observation or preview.
+
+        This is neither observed biological removal nor usable shaft clearance.
+        Every retention rule on the same generated model receives this record.
+        """
+        if type(self) is not NativeSpatialTask or self.case.generated_cut_union is None:
+            raise ValueError("Certified evacuation progress requires the explicit generated native model")
+        # Bind only the already committed public model/state; no evaluator query.
+        self.case.assert_intact()
+        if (self._config is not self.case._native_config
+                or self._source_hash != self.case._source_hash
+                or self._contract_record() != self._contract
+                or self._engine.config is not self._config
+                or self._engine.committed_snapshot_identity() != self._state_storage_identity
+                or semantic_digest(self._state_record()) != self._state_seal):
+            raise RuntimeError("Certified evacuation progress requires an intact committed model state")
+        action = None if not self._history else self._history[-1]["action_id"]
+        record = self._evacuated_progress_record(action)
+        if self._history and self._history[-1].get("model_estimated_evacuated_progress") != record:
+            raise RuntimeError("Certified evacuation progress differs from its committed transition")
+        return freeze_json(record)
 
     def clone(self):
         """Branch copies mutable engine/state only; immutable source and previews share safely."""
@@ -1141,10 +1208,16 @@ class NativeSpatialTask:
         return independent_check_native_history(source, self.case.tools, self._history,
             tissue_mask=self.case.observed_support, access=self.case.access, geometry_frame="RAS+",
             tool_modes=self.tool_modes, interaction_domain=self.case._interaction_domain,
-            post_exposure=self.case.post_exposure)
+            post_exposure=self.case.post_exposure,
+            **({"cut_union_spec": self.case.generated_cut_union.to_record(),
+                "evacuated_volume_spec": self.case.generated_evacuated_volume.to_record(),
+                "evacuated_target_fraction_lower": self.case.generated_evacuated_volume.target_fraction_lower,
+                "evacuated_target_fraction_upper": self.case.generated_evacuated_volume.target_fraction_upper}
+               if self.case.generated_cut_union is not None else {}))
 
 
-def make_native_opening_task(*, tools=OPENING_TOOLS, max_steps=2, cancelled=None):
+def make_native_opening_task(*, tools=OPENING_TOOLS, max_steps=2, cancelled=None,
+                             generated_cut_union: CutUnionSpec | None = None):
     """Six tissue cells inside a 9×9×7 workspace; exact tool-complementarity fixture.
 
     The offset short opener clears a shaft obstacle. The long narrow tool can
@@ -1155,12 +1228,16 @@ def make_native_opening_task(*, tools=OPENING_TOOLS, max_steps=2, cancelled=None
     target = np.zeros(support.shape, bool)
     target[4, 4, 4:6] = True
     scan = np.where(target, .8, np.where(support, .2, 0.)).astype(np.float32)
+    nominal = scan >= SYNTHETIC_TARGET_THRESHOLD
     case = NativeSpatialCase(scan, support, target, np.eye(4),
         AccessWindow((3.9, 4., .5), (0., 0., 1.), 2.4, "analytic-offset-opening"), tuple(tools),
         track="synthetic_scan", support_source_kind="derived_from_scan",
         support_derivation="unit-fixture forward model: nonzero structural signal identifies support",
-        nominal_target=scan >= SYNTHETIC_TARGET_THRESHOLD, target_source_kind="derived_from_scan",
-        target_derivation="unit-fixture .2/.8 signal midpoint .5; never an MRI estimator")
+        nominal_target=nominal, target_source_kind="derived_from_scan",
+        target_derivation="unit-fixture .2/.8 signal midpoint .5; never an MRI estimator",
+        generated_cut_union=generated_cut_union,
+        generated_evacuated_volume=(None if generated_cut_union is None else
+            EvacuatedVolumeSpec(nominal, nominal, "generated public scan threshold; unlocated nominal parent mass")))
     return NativeSpatialTask(case, max_steps=max_steps, cancelled=cancelled)
 
 
