@@ -1,0 +1,28 @@
+{
+  "acquired_inputs_or_frozen_weights_opened": false,
+  "canonical_files_modified": false,
+  "canonical_source_pins": "root freezer binds the current clean HEAD after integration; no stale prospective source index",
+  "driver_patch_sha256": "2a9d82edb3596936ea72d99459a31ac5664a7cbd6ea84de1222f4af2e748dc8e",
+  "files": {
+    "build/hybrid-fixed-four-switch-regression-v1/batch_contract.py": "1617b68896cccd9304066817864e41872ad7dfa8e44b21372d52234bcdf4e392",
+    "build/hybrid-fixed-four-switch-regression-v1/fallback_policy.py": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+    "build/hybrid-fixed-four-switch-regression-v1/freeze-runtime.py": "d17fbd0d2b348e14a6174d008f52ebafdbaf4d08b6bcb395b29f8650f3237c5a",
+    "build/hybrid-fixed-four-switch-regression-v1/hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+    "build/hybrid-fixed-four-switch-regression-v1/initial_inventory_worker.py": "94ab2685889be6c5394c7aca07ebf043ed98159c08638dde2c6d4b85fed3fa43",
+    "build/hybrid-fixed-four-switch-regression-v1/patient_regression.py": "3c854afd45a75a93fd143c9b8b5cf125e4cce2dace062dc61a84da9619e1b363",
+    "build/hybrid-fixed-four-switch-regression-v1/run_generated_controls.py": "9518ff11a9af1f179f4a04ed36c916f08a1cc81992ba239d935262cf0f896369",
+    "build/hybrid-fixed-four-switch-regression-v1/run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+    "build/hybrid-fixed-four-switch-regression-v1/tests/test_fixed_four_regression.py": "134cb4f2a389be42e91ff90c2b41d8e4d839b3f9bbab62ba2d087723ceab24db"
+  },
+  "generated_controls": "not run; root compute token pending",
+  "handoff_sha256": "d2286f803322ecc3552bb5a056e7e03ad3c9f0bcc39fda069dbbbe90e851f4dd",
+  "status": "source_prepared_tests_unrun_no_execution_release",
+  "storage_preparation_reservation_bytes": 33554432,
+  "syntax": "AST parse only; no staged imports or numerical calls",
+  "unchanged_copies": {
+    "fallback_policy.py": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+    "hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+    "run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3"
+  },
+  "version": "fixed-four-switch-regression-source-ready-v1"
+}

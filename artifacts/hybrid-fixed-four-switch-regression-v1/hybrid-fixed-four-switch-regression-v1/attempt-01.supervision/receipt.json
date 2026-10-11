@@ -1,0 +1,47 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "feature_count": 681,
+    "fits": 0,
+    "log_bytes": 2097152,
+    "native_previews": 40000,
+    "native_transitions": 192,
+    "output_bytes": 25165824,
+    "parent_seconds": 330,
+    "ridge_calls": 192,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 8,
+    "supervision_bytes": 4194304,
+    "threads": 1,
+    "worker_seconds": 300
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 49.22775583318435,
+  "exit_code": 0,
+  "memory_scope": "whole owned process peak only; no independent per-arm peak attribution",
+  "output_bytes": 5065107,
+  "planned_subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "release_sha256": "defcdf3802c153386756b181ebb79f6e89a9024b96222d3c313e41fb7d78d6e3",
+  "remaining_owned_pids": [],
+  "result_sha256": "1c705ecca57b92b3d92889b8bb72858435e15e4ccddad56ba5a7c7d63de54759",
+  "result_status": "complete_fixed_four_switch_regression",
+  "sampled_peak_rss_bytes": 737296384,
+  "samples": 235,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/hybrid-fixed-four-switch-regression-v1/source-index.json",
+    "sha256": "bd9783ac5f0bc9dd94a889cb99c1bcfae9f6008a3190056d2bef424c0028cb32"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 2288,
+  "training_admitted": "none_frozen_ridge_inference_only",
+  "worker_pid": 16806,
+  "worker_termination_confirmed": true
+}

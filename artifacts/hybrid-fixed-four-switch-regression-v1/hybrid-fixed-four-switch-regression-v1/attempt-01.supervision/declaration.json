@@ -1,0 +1,42 @@
+{
+  "caps": {
+    "feature_count": 681,
+    "fits": 0,
+    "log_bytes": 2097152,
+    "native_previews": 40000,
+    "native_transitions": 192,
+    "output_bytes": 25165824,
+    "parent_seconds": 330,
+    "ridge_calls": 192,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 8,
+    "supervision_bytes": 4194304,
+    "threads": 1,
+    "worker_seconds": 300
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-fixed-four-switch-regression-v1/attempt-01.supervision/fresh-pycache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-fixed-four-switch-regression-v1/initial_inventory_worker.py",
+    "--declaration",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-fixed-four-switch-regression-v1/root-release.json",
+    "--declaration-sha256",
+    "defcdf3802c153386756b181ebb79f6e89a9024b96222d3c313e41fb7d78d6e3"
+  ],
+  "condition": "cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain",
+  "head": "e8fe1bb2ee78017df1cab629dd7ad3eb87a70390",
+  "parent_pid": 16803,
+  "public_index": {
+    "path": "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json",
+    "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8"
+  },
+  "release_sha256": "defcdf3802c153386756b181ebb79f6e89a9024b96222d3c313e41fb7d78d6e3",
+  "source_index": {
+    "path": "build/hybrid-fixed-four-switch-regression-v1/source-index.json",
+    "sha256": "bd9783ac5f0bc9dd94a889cb99c1bcfae9f6008a3190056d2bef424c0028cb32"
+  },
+  "training_admitted": "none_frozen_ridge_inference_only"
+}

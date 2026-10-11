@@ -1,0 +1,25 @@
+{
+  "acquired_execution": false,
+  "exit_code": 0,
+  "generated_log": {
+    "path": "build/hybrid-fixed-four-switch-regression-v1/controls-attempt-01/stdout.log",
+    "sha256": "4f618af7719872174335c029642cfda03013f1fa3ff00607700ea54ee74b8ad8"
+  },
+  "generated_receipt": {
+    "path": "build/hybrid-fixed-four-switch-regression-v1/controls-attempt-01/receipt.json",
+    "sha256": "e83349c9eecc112c53f11595c99963a1aeca67db1939be4c9153f8a0900184e5"
+  },
+  "hard_seconds": 30,
+  "observed_peak_rss_bytes": 273203200,
+  "parent_seconds": 4.984251834219322,
+  "runtime_freeze": "pending root chosen canonical HEAD and release",
+  "source_ready": {
+    "path": "build/hybrid-fixed-four-switch-regression-v1/source-ready.json",
+    "sha256": "01fed5f3330ccb4251d493fb6f265c58bf2ea684ec0c66a48d64d0aee59b6c77"
+  },
+  "source_unchanged": true,
+  "supersedes_only_test_status": "Original source-ready.json and HANDOFF.txt retain pre-test chronology; all executing bytes unchanged.",
+  "test_summary": "4 passed in4.41s; first and only attempt",
+  "threads": 1,
+  "version": "fixed-four-switch-regression-tested-source-v1"
+}

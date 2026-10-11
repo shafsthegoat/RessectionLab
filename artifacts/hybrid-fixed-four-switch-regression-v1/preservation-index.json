@@ -1,0 +1,224 @@
+{
+  "bytes": 1452974,
+  "external_evidence": "Eight checked terminal inventory hashes plus historical references and duplicate reload bindings are retained in audit.json read_pins. Frozen policy/helper/parent/canonical sources are reused by existing hashes. No inventory duplicates, arrays, images or model weights included.",
+  "file_count": 36,
+  "includes": [
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/root-release.json",
+      "bytes": 4257,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/root-release.json",
+      "sha256": "defcdf3802c153386756b181ebb79f6e89a9024b96222d3c313e41fb7d78d6e3"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/source-index.json",
+      "bytes": 21477,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/source-index.json",
+      "sha256": "bd9783ac5f0bc9dd94a889cb99c1bcfae9f6008a3190056d2bef424c0028cb32"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/source-ready.json",
+      "bytes": 2308,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/source-ready.json",
+      "sha256": "01fed5f3330ccb4251d493fb6f265c58bf2ea684ec0c66a48d64d0aee59b6c77"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/tested-source.json",
+      "bytes": 1115,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/tested-source.json",
+      "sha256": "af1f92b7a1e0f8bcf0ab33e70d855f85fb3456a41a251309a843ab6c35cb7a67"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/batch_contract.py",
+      "bytes": 10206,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/batch_contract.py",
+      "sha256": "1617b68896cccd9304066817864e41872ad7dfa8e44b21372d52234bcdf4e392"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/patient_regression.py",
+      "bytes": 6043,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/patient_regression.py",
+      "sha256": "3c854afd45a75a93fd143c9b8b5cf125e4cce2dace062dc61a84da9619e1b363"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/initial_inventory_worker.py",
+      "bytes": 21225,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/initial_inventory_worker.py",
+      "sha256": "94ab2685889be6c5394c7aca07ebf043ed98159c08638dde2c6d4b85fed3fa43"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/freeze-runtime.py",
+      "bytes": 2436,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/freeze-runtime.py",
+      "sha256": "d17fbd0d2b348e14a6174d008f52ebafdbaf4d08b6bcb395b29f8650f3237c5a"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/driver.patch",
+      "bytes": 56717,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/driver.patch",
+      "sha256": "2a9d82edb3596936ea72d99459a31ac5664a7cbd6ea84de1222f4af2e748dc8e"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/tests/test_fixed_four_regression.py",
+      "bytes": 9599,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/tests/test_fixed_four_regression.py",
+      "sha256": "134cb4f2a389be42e91ff90c2b41d8e4d839b3f9bbab62ba2d087723ceab24db"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/controls-attempt-01/receipt.json",
+      "bytes": 2471,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/controls-attempt-01/receipt.json",
+      "sha256": "e83349c9eecc112c53f11595c99963a1aeca67db1939be4c9153f8a0900184e5"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/controls-attempt-01/stdout.log",
+      "bytes": 98,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/controls-attempt-01/stdout.log",
+      "sha256": "4f618af7719872174335c029642cfda03013f1fa3ff00607700ea54ee74b8ad8"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/result.json",
+      "bytes": 60074,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/result.json",
+      "sha256": "1c705ecca57b92b3d92889b8bb72858435e15e4ccddad56ba5a7c7d63de54759"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/sealed-plans.json",
+      "bytes": 101934,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/sealed-plans.json",
+      "sha256": "d2d1bfcddae9658d2ef14649f2988cc82a2dd2530241f216a21a324b4b630469"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01.supervision/receipt.json",
+      "bytes": 1525,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01.supervision/receipt.json",
+      "sha256": "cf650bca4a59689ae8f53422fdb4a5e40fafbaaae2b7a538e000e7c52353e1bb"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01.supervision/declaration.json",
+      "bytes": 1886,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01.supervision/declaration.json",
+      "sha256": "424af67f0221d63a47d3d87e80990caac80d3cdb6095639d83887470f480cbbb"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-002/plan.json",
+      "bytes": 10124,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-002/plan.json",
+      "sha256": "b89455acc8ab7e9a2b52c5ac01140f3b122401702940fdf6bbd798c2221d9157"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-002/replay/episode-metrics.json",
+      "bytes": 21966,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-002/replay/episode-metrics.json",
+      "sha256": "78694ffca2d72db77707d32c7749dbb4f200d096c9c4450ec9c1f6125ad4b42e"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-002/replay/independent-episode.json",
+      "bytes": 2494,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-002/replay/independent-episode.json",
+      "sha256": "7cb95956494b6ba9826687e3aa08ae503938b4111a1a89adf23ab24476bd5256"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-002/source/admitted-public-bindings.json",
+      "bytes": 15151,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-002/source/admitted-public-bindings.json",
+      "sha256": "baef5232a2be4df23bab006e10f10edb78e8dc141e41986a593a23a9005fd04f"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-015/plan.json",
+      "bytes": 39823,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-015/plan.json",
+      "sha256": "7ef730f8f7e8782f00747d3edd0a190e2874b891ff5cc7df13f1a83cf67f1e31"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-015/replay/episode-metrics.json",
+      "bytes": 423851,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-015/replay/episode-metrics.json",
+      "sha256": "b77a4a2f4eb7618435d5e4bd7500510eccf7490697dade37833fae04cdfaaee2"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-015/replay/independent-episode.json",
+      "bytes": 2627,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-015/replay/independent-episode.json",
+      "sha256": "4656d7849daf3ec6f2cd9b364826e3924db438bff1ea22eeeb87c15a6d8f5656"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-015/source/admitted-public-bindings.json",
+      "bytes": 14998,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-015/source/admitted-public-bindings.json",
+      "sha256": "8a65ac62f3ef57b725e5a956674681040925e8ac7e109e44dabd4d4c61233788"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-018/plan.json",
+      "bytes": 8721,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-018/plan.json",
+      "sha256": "d041b0ed22ef66cb98dcd0a736f6922e3d12c0ecb0790a3d193e3bb68916721f"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-018/replay/episode-metrics.json",
+      "bytes": 21987,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-018/replay/episode-metrics.json",
+      "sha256": "e002bddb083c81512c8024eca3f6066f61514c5a3db3daea591f90aeb04a1b54"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-018/replay/independent-episode.json",
+      "bytes": 2494,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-018/replay/independent-episode.json",
+      "sha256": "d568c8554855b43ba066e77c4d0b41c829a6f4c0bb9b6cc8fc4df0e66279d647"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-018/source/admitted-public-bindings.json",
+      "bytes": 15160,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-018/source/admitted-public-bindings.json",
+      "sha256": "da1e48c522ca8e1816983b6000c6d4e2fceb5c988ca060900b4169262eb96e0c"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-045/plan.json",
+      "bytes": 34241,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-045/plan.json",
+      "sha256": "48d706863f07a78c316d65036179e8dc1b273f9307273fc940f62420a3c15905"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-045/replay/episode-metrics.json",
+      "bytes": 429352,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-045/replay/episode-metrics.json",
+      "sha256": "3d984d0b0213fb95de390e3711ae43354ee16e36a9f708a76a27d59793167a7d"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-045/replay/independent-episode.json",
+      "bytes": 2631,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-045/replay/independent-episode.json",
+      "sha256": "9fb683d33340e3ef88520f50076214f2b92f78fff3d1a41da7312c7af895543d"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-045/source/admitted-public-bindings.json",
+      "bytes": 15131,
+      "path": "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-045/source/admitted-public-bindings.json",
+      "sha256": "7868a44fe7c1b8c97d19ce79dfe93c479096aad9e1e6120b48570bcb005a2800"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-review-v1/source-review.json",
+      "bytes": 3667,
+      "path": "build/hybrid-fixed-four-switch-regression-review-v1/source-review.json",
+      "sha256": "9d4dac5fd602176ff5f52f989b4ad5921822caadf61f7e36b027160d816781a5"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-review-v1/audit_saved.py",
+      "bytes": 20123,
+      "path": "build/hybrid-fixed-four-switch-regression-review-v1/audit_saved.py",
+      "sha256": "f4029ac70a5c95c11fe7c61b16e49ac9172440e8c4621b50b373bce115deec4b"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-review-v1/audit.json",
+      "bytes": 60979,
+      "path": "build/hybrid-fixed-four-switch-regression-review-v1/audit.json",
+      "sha256": "c3c5071d449f140ba1bf48ea01bd7642067c7b6d68f0f5179f95d00e26b0067e"
+    },
+    {
+      "archive_path": "hybrid-fixed-four-switch-regression-review-v1/REPORT.txt",
+      "bytes": 4083,
+      "path": "build/hybrid-fixed-four-switch-regression-review-v1/REPORT.txt",
+      "sha256": "db6a7367ea67eb462eab30bbf9c8a6af7dbc617af372c21d84076ef4ad2fc212"
+    }
+  ],
+  "schema": "fixed-four-switch-regression-compact-archive-v1"
+}

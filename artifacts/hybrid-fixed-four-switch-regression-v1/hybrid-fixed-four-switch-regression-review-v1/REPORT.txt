@@ -1,0 +1,22 @@
+Original fitted-four regression: saved audit PASS, regression_passed=true.
+
+TRAIN002/015/018/045 retain exactly the original balanced-ridge action sequences, full replay histories and outcomes. Episode metrics match after normalizing only the outer decision_model_hash for the explicit successor policy/admission identity. Because full histories match, their physical tools, positions, source states, native grids, removed cells and costs per action are unchanged. Independently recomputed quality gates pass against the saved exhaustive reference for all four cases. No favorable outcome was required for completion.
+
+Subject      Target cells  Outside-target  Old online previews  New online  Extra STOP checks
+ReMIND-002          0             0                  8               117          109
+ReMIND-015         58             0                112               197           85
+ReMIND-018          0             0                  8                75           67
+ReMIND-045         51             0                104               187           83
+Total                                            232               576          344
+
+There are no positive-switch comparison states. Every case has exactly one full no-positive fallback, at terminal STOP. Saved terminal raw catalogs contain 117/93/75/91 IDs; initial top-eight rankings are unchanged, each remaining ID is queried once, and online/uncached terminal inventories match. The additional 344 online previews are entirely STOP verification, a 148.28% increase over the prior sparse baseline. All additional work is also charged during replay. This is a quality-preserving integration result with extra certification cost, not a universal efficiency win.
+
+Current source-through-plan times are 9.220787875 / 3.242094125 / 2.473106208 / 5.165907625 seconds. Current replay/audit times are 8.890933667 / 5.504296292 / 2.520031666 / 9.459167250 seconds. Source preparation remains included and separately recorded in audit.json. Historical exhaustive is a quality reference only; no historical timing ratio or speed conclusion is calculated.
+
+All four plans were sealed before any replay. Exact source/model/cohort roles, eight source visits, one unchanged frozen JSON ridge load, 1,152 total previews, 58 transitions and 58 ridge calls reconcile. Fits, optimizer/neural/checkpoint calls and private/SELECT/EVAL access remain zero. Parent exit 0, 49.227755833 seconds, sampled whole-owned peak 737,296,384 bytes, output 5,065,107 bytes, no remaining child or cleanup error. The sampled ceiling is not a kernel memory bound or per-case attribution.
+
+Source/reference delta was captured at executed HEAD e8fe1bb2ee78017df1cab629dd7ad3eb87a70390 with no canonical source difference. Forty-one new stage/reference pins matched; 124 unchanged source-index mappings were inherited. The successor uses original fixed-four PilotAdmission provenance and a separate zero-fit inference declaration, with no outside-fit development_transfer substitution.
+
+The original full supplied-target denominators and source-domain uncertainties remain. Removed fractions are 0 / 0.7488702% / 0 / 0.2015731%; two cases still STOP without removing a target cell. STOP exhausts this finite emitted catalog at that state, not all possible routes or clinical surgery. S-union-T occupancy and post-exposure workspace remain declared simulated conditions. This is the already fitted TRAIN cohort, not held-out transfer or clinical validation.
+
+Reviewer used saved metadata/source only: no acquired arrays, model parameters, original DICOM, production imports, tests or native replay. Only the four terminal online inventories and their four saved replay counterparts were inspected; unchanged nonterminal work is reconciled by complete history parity, saved operation counters and exact residual STOP costs. Archive selection omits inventories and duplicates of frozen policy/helper/canonical source. Exact external inventory hashes remain in audit.json, while complete plans/seal/metrics/evaluation and changed driver/capability code are retained.

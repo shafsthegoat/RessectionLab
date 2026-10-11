@@ -1,0 +1,1122 @@
+{
+  "status": "PASS_SAVED_FIXED_FOUR_REGRESSION_ACCOUNTING",
+  "regression_passed": true,
+  "release_sha256": "defcdf3802c153386756b181ebb79f6e89a9024b96222d3c313e41fb7d78d6e3",
+  "source_index_sha256": "bd9783ac5f0bc9dd94a889cb99c1bcfae9f6008a3190056d2bef424c0028cb32",
+  "result_sha256": "1c705ecca57b92b3d92889b8bb72858435e15e4ccddad56ba5a7c7d63de54759",
+  "parent_sha256": "cf650bca4a59689ae8f53422fdb4a5e40fafbaaae2b7a538e000e7c52353e1bb",
+  "runtime_source_delta": {
+    "executed_head": "e8fe1bb2ee78017df1cab629dd7ad3eb87a70390",
+    "captured_head": "e8fe1bb2ee78017df1cab629dd7ad3eb87a70390",
+    "canonical_diff": [],
+    "changed_or_new_pins": {
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-002-public-inputs.json": "f4b7145ed04362955586b7cc31962e5b408c675f07283e046225d2b4dba47753",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-015-public-inputs.json": "89bcdf6511bd1b91d7ba84f85f8b10f4c65d076d04a71c7bec4f81df75683b81",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-018-public-inputs.json": "bd123ffaba376977f672c16a215dee339757fe7514f54c6f9f4e2e7ca8176fed",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-045-public-inputs.json": "a324800fa92b0e168e4c65bc6e09f5235991cf8c4a3541148a52ea3da3aaf6df",
+      "build/hybrid-fixed-four-switch-regression-v1/batch_contract.py": "1617b68896cccd9304066817864e41872ad7dfa8e44b21372d52234bcdf4e392",
+      "build/hybrid-fixed-four-switch-regression-v1/fallback_policy.py": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+      "build/hybrid-fixed-four-switch-regression-v1/freeze-runtime.py": "d17fbd0d2b348e14a6174d008f52ebafdbaf4d08b6bcb395b29f8650f3237c5a",
+      "build/hybrid-fixed-four-switch-regression-v1/hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+      "build/hybrid-fixed-four-switch-regression-v1/initial_inventory_worker.py": "94ab2685889be6c5394c7aca07ebf043ed98159c08638dde2c6d4b85fed3fa43",
+      "build/hybrid-fixed-four-switch-regression-v1/patient_regression.py": "3c854afd45a75a93fd143c9b8b5cf125e4cce2dace062dc61a84da9619e1b363",
+      "build/hybrid-fixed-four-switch-regression-v1/run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+      "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-002/plan.json": "94a668f894be6c250e478ff5a760879debf788e63492661e73a2d9d64eae5365",
+      "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-002/replay/episode-metrics.json": "7011bdce87383c246c1a65c3096b5a1b243a1bccde01c2310ccb91caf93cc9ef",
+      "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-002/replay/independent-episode.json": "eecf79f3e9777816ad0c16810c34f4b5fe516770fc87c4f083fe58252e5a9988",
+      "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-015/plan.json": "f84f1bb8ee1f79956e255825deddb828b00192f684a5b361c6be8a0a623cbd75",
+      "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-015/replay/episode-metrics.json": "2a7c03c61d994a238d6d43975530909373fcebc5a568fb6e5a547a0f69806cf7",
+      "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-015/replay/independent-episode.json": "c7032ab459f75bcd7f2a261002c0d1a13ec2fd0cc7544328bfbea11ac0607c37",
+      "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-018/plan.json": "922edfd752d3db5b4c467c51405022da5bfa7d76a9057ad7e51cbb9104035500",
+      "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-018/replay/episode-metrics.json": "de75d546460d5e5f0d4d16d567d09ec8d76c28366b7fc19050cc76e0b2ffb9a7",
+      "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-018/replay/independent-episode.json": "0e47c3c9c678fabc2441a2ddc8fdbf501cb06559f285012f35fd5ca3340f8774",
+      "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-045/plan.json": "6641d3ac6b8534a6955db3aa7e3d81fed6b2909054c8e48a0d4c72ac62ee2636",
+      "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-045/replay/episode-metrics.json": "f702c3dd9cd6a62ea47005aff6615eaf303e029c7d533dcb4b7c9cd400571d49",
+      "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-045/replay/independent-episode.json": "fcf6bc24c9990c8f3d92e8b287ff47e9c4c2176e22926d440c464b15abf55a70",
+      "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-002/plan.json": "9d55170ea111460c306eb61d4807878b8824eecbd9e6ec78c9180789342a0da4",
+      "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-002/replay/episode-metrics.json": "9cd7b99f1d31e12fb890e3777a133462a84431a331428d8ac1b25867add167c2",
+      "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-002/replay/independent-episode.json": "ac753a797fab1a4f9d4b132c284b2fdf0488d274facb68cb3ea73c8fe2e9ca68",
+      "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-015/plan.json": "6c281f3f3f837f180259a4fc3ba7d1b0c26fb7b3f2047832fe82da963b223d79",
+      "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-015/replay/episode-metrics.json": "e5c1a2190d262faa7d5ea7bcefcc3f3cffa5dab798fb179d8e6ca36934d46c3c",
+      "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-015/replay/independent-episode.json": "d5b66eee17db26d729d98608b5d24265686ddbeaf7153c4ef53f5129f1fd082f",
+      "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-018/plan.json": "82ee5de2139c1ad78f61e31d32531b52308cc619376e0feff4afd617c8ef1920",
+      "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-018/replay/episode-metrics.json": "b7cbcf114499af5f2ff8d31e2da938acee9ac74bb67a1c82c18e87a457fd849a",
+      "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-018/replay/independent-episode.json": "b3760b18efff08d10772b34c8120b8dadac2fea29600878f16212697f7bdb6bc",
+      "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-045/plan.json": "8fd11dbcbd48ca2d6c75e87d25fa5faa41700db6870aa1920f9509e5bbcf4def",
+      "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-045/replay/episode-metrics.json": "9faa6cdd29076f9e3f4d22d2477880416b7d4f0895100e74e7f401e9c7413b5c",
+      "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-045/replay/independent-episode.json": "907af81a03ea747661b41e84ff07d333d4127c2479bd5120f4d0629776eeb26d",
+      "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8",
+      "build/remind-post-exposure-feasibility-v1/root-release.json": "8315099d95b16a9dacac54a65c4d84d6385e458534b6dab26b73a37555d4af1a",
+      "src/resectionlab/native_proposals.py": "ec35077fc63e19dff422d2072c7fbe705f798ae46696ae5978f040db4b0e73a8",
+      "src/resectionlab/native_spatial_task.py": "f30a536aa2960f854765eca54504dbd3d43a9698ccfd9f9c8b12712d32b5afbf",
+      "src/resectionlab/observed_search.py": "cb970256f027ac1a278e844e35cfcf1d54b8f81828f8cd165652784b454a417b",
+      "src/resectionlab/paged_obstruction.py": "f0e3721bd438c858cf2bba8481d4917962d1416dcd9e19d726c91e36e2fb07a1"
+    },
+    "inherited_mapping_count": 124
+  },
+  "fixed_subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "role": "TRAIN",
+  "frozen_model_identity": {
+    "data_hash": "sha256:75adaa10137e33a2bd0ef193916f952b59f1d25cc6075cd16f58afbd5fc539a9",
+    "fingerprint": "sha256:4578737059c005c411668ea70b148f1214b483f2d89c677605bbe5e3c67aa57a",
+    "path": "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8.json",
+    "sha256": "6a07215506ac68fa42afce40ad12a9efe9b042d83ee5d5bc1383b249a5ffe824"
+  },
+  "plans_before_any_replay": true,
+  "rows": [
+    {
+      "subject": "ReMIND-002",
+      "actions": 1,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 23149.488478878036,
+        "total_reward": 0.0
+      },
+      "regression": {
+        "exact_actions_vs_balanced": true,
+        "exact_source_vs_balanced": true,
+        "exact_outcomes_vs_balanced": true,
+        "exact_history_vs_balanced": true,
+        "exact_metrics_except_policy_identity": true,
+        "quality_gates_vs_saved_exhaustive": {
+          "target_removed_mm3": true,
+          "total_reward": true,
+          "normal_removed_mm3": true,
+          "cumulative_contacted_tissue_upper_bound_mm3": true,
+          "currently_retained_contacted_tissue_upper_bound_mm3": true,
+          "complete_tool_path_length_mm": true,
+          "nonstop_actions": true,
+          "tool_changes": true,
+          "same_full_target_denominator": true,
+          "physical_probability_remains_null": true,
+          "unchanged_partial_contact_reward": true
+        },
+        "no_quality_loss_vs_saved_exhaustive": true
+      },
+      "terminal_inventory": {
+        "step": 0,
+        "raw_count": 117,
+        "initial_queries": 8,
+        "extra_queries": 109,
+        "all_reported_extra_work_at_terminal_STOP": true,
+        "STOP_scope": "Full emitted catalog at this state only; not globally exhausted routes."
+      },
+      "online_previews": 117,
+      "replay_previews": 117,
+      "historical_balanced_previews": 8,
+      "source_preparation_seconds": 0.2898373329080641,
+      "source_through_plan_seconds": 9.220787874888629,
+      "replay_source_preparation_seconds": 0.275698582874611,
+      "replay_and_audit_seconds": 8.890933666843921,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 109,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 1,
+          "fallback_triggered_states": 1,
+          "feature_rows": 117,
+          "native_previews": 117,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 8.899050291860476,
+          "exact_verification": 8.665514293592423,
+          "fallback_nominal_gate": 0.00021070893853902817,
+          "inventory_inclusive": 8.80367266596295,
+          "inventory_logging": 0.001998750027269125,
+          "proposal_enumeration": 0.09816608391702175,
+          "public_features": 0.008025540970265865,
+          "ranking": 9.133410640060902e-05
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 109,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 1,
+          "fallback_triggered_states": 1,
+          "feature_rows": 117,
+          "native_previews": 117,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 8.532612916780636,
+          "exact_verification": 8.112876801984385,
+          "fallback_nominal_gate": 0.0006312080658972263,
+          "inventory_inclusive": 8.43819270725362,
+          "inventory_logging": 0.0027695000171661377,
+          "proposal_enumeration": 0.2227040829602629,
+          "public_features": 0.008362541906535625,
+          "ranking": 7.620919495820999e-05
+        }
+      },
+      "source_domains": {
+        "version": "separate-source-and-simulated-domain-v1",
+        "source_support_domain_hash": "sha256:49a6782bf2e0d3de3a5677fff61f58186cf4b578cc593382669d73b7003cbd8b",
+        "interaction_domain_hash": "sha256:2640f044f223ca13c04aeb68e5f8e05511b2d7e12e9c491d040c15f05f4039e6",
+        "interaction_domain_rule": "Ds OR (T > 0)",
+        "source_support_known_voxels": 2561900,
+        "source_support_unknown_voxels": 414046,
+        "target_in_unknown_support_voxels": 1010,
+        "assumed_material_beyond_source_domain_voxels": 1010,
+        "unavailable_interaction_voxels": 413036,
+        "source_domain_extended": false,
+        "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+        "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+        "unknown_interaction_rule": "U except declared wholly-proximal E blocks full tool; no U seed, flood or removal",
+        "external_tool_extent": "declared E and outside-image extent unassessed; observed Ds unchanged",
+        "anatomical_or_material_validation": false,
+        "post_exposure_condition_hash": "sha256:bf09a9ca5145639c9852258fe6704760ecdb86933acb1c825e75b52663718acc"
+      },
+      "full_target_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "full_region_positive_voxels": 24274,
+        "unsupported_region_positive_voxels": 0,
+        "full_region_membership_mm3": 23149.488478878036,
+        "unsupported_region_membership_mm3": 0.0,
+        "supported_region_membership_mm3": 23149.488478878036,
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "occupancy_modified": true,
+        "derived_occupancy": true,
+        "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+        "occupancy_derivation": {
+          "version": "supplied-support-target-union-v1",
+          "condition": "cerebrum_plus_supplied_tumor_assumption",
+          "operation": "S OR (T > 0)",
+          "source_support_hash": "sha256:600cc9fdbf515556d021b4f37f881bb658e4f2722a8101b32981d075ac0876ef",
+          "supplied_target_hash": "sha256:80e3d3e2f5ba890ab8c56b7c994d54aeb860358059f78538a35f7f3bf59e88ff",
+          "derived_occupancy_hash": "sha256:e9fd36a3f7d18e9124b40987a1882508e46660d213277aa259eaf2682ee9483e",
+          "added_region_hash": "sha256:d446f2f22a1a37e7cb422556f32091ba9fc651378f0f0409a177116c9bfae7bd",
+          "source_support_positive_voxels": 988741,
+          "added_region_positive_voxels": 22569,
+          "source_support_unchanged": true,
+          "target_unchanged": true,
+          "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+          "anatomical_or_material_validation": false,
+          "outside_union": "unchanged simulation zeros; not certified empty anatomy"
+        },
+        "target_modified": false,
+        "unsupported_region_removable": false,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "source_and_simulated_domains": {
+          "version": "separate-source-and-simulated-domain-v1",
+          "source_support_domain_hash": "sha256:49a6782bf2e0d3de3a5677fff61f58186cf4b578cc593382669d73b7003cbd8b",
+          "interaction_domain_hash": "sha256:2640f044f223ca13c04aeb68e5f8e05511b2d7e12e9c491d040c15f05f4039e6",
+          "interaction_domain_rule": "Ds OR (T > 0)",
+          "source_support_known_voxels": 2561900,
+          "source_support_unknown_voxels": 414046,
+          "target_in_unknown_support_voxels": 1010,
+          "assumed_material_beyond_source_domain_voxels": 1010,
+          "unavailable_interaction_voxels": 413036,
+          "source_domain_extended": false,
+          "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+          "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+          "unknown_interaction_rule": "U except declared wholly-proximal E blocks full tool; no U seed, flood or removal",
+          "external_tool_extent": "declared E and outside-image extent unassessed; observed Ds unchanged",
+          "anatomical_or_material_validation": false,
+          "post_exposure_condition_hash": "sha256:bf09a9ca5145639c9852258fe6704760ecdb86933acb1c825e75b52663718acc"
+        }
+      }
+    },
+    {
+      "subject": "ReMIND-015",
+      "actions": 14,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 56.895312759999854,
+        "cumulative_contacted_tissue_upper_bound_mm3": 205.9936523325737,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 150.68054198401225,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 13,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 58,
+        "reference_target_fraction_removed": 0.007488702388637833,
+        "simulated_removed_volume_mm3": 55.31311034856145,
+        "target_removed_mm3": 55.313110348561466,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 7386.207580165663,
+        "total_reward": 54.866215035801446
+      },
+      "regression": {
+        "exact_actions_vs_balanced": true,
+        "exact_source_vs_balanced": true,
+        "exact_outcomes_vs_balanced": true,
+        "exact_history_vs_balanced": true,
+        "exact_metrics_except_policy_identity": true,
+        "quality_gates_vs_saved_exhaustive": {
+          "target_removed_mm3": true,
+          "total_reward": true,
+          "normal_removed_mm3": true,
+          "cumulative_contacted_tissue_upper_bound_mm3": true,
+          "currently_retained_contacted_tissue_upper_bound_mm3": true,
+          "complete_tool_path_length_mm": true,
+          "nonstop_actions": true,
+          "tool_changes": true,
+          "same_full_target_denominator": true,
+          "physical_probability_remains_null": true,
+          "unchanged_partial_contact_reward": true
+        },
+        "no_quality_loss_vs_saved_exhaustive": true
+      },
+      "terminal_inventory": {
+        "step": 13,
+        "raw_count": 93,
+        "initial_queries": 8,
+        "extra_queries": 85,
+        "all_reported_extra_work_at_terminal_STOP": true,
+        "STOP_scope": "Full emitted catalog at this state only; not globally exhausted routes."
+      },
+      "online_previews": 197,
+      "replay_previews": 197,
+      "historical_balanced_previews": 112,
+      "source_preparation_seconds": 0.23800337500870228,
+      "source_through_plan_seconds": 3.2420941251330078,
+      "replay_source_preparation_seconds": 0.2395244580693543,
+      "replay_and_audit_seconds": 5.50429629185237,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 85,
+          "fallback_gate_states": 14,
+          "fallback_nominal_reward_checks": 82,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1217,
+          "native_previews": 197,
+          "proposal_calls": 14,
+          "ridge_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.19654562510550022,
+          "exact_verification": 1.0795252048410475,
+          "fallback_nominal_gate": 0.02149970643222332,
+          "inventory_inclusive": 2.5143205411732197,
+          "inventory_logging": 0.02841620845720172,
+          "proposal_enumeration": 1.2128064576536417,
+          "public_features": 0.08849974977783859,
+          "ranking": 0.0008416648488491774
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 85,
+          "fallback_gate_states": 14,
+          "fallback_nominal_reward_checks": 82,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1217,
+          "native_previews": 197,
+          "proposal_calls": 14,
+          "ridge_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.23626133287325501,
+          "exact_verification": 1.0178135444875807,
+          "fallback_nominal_gate": 0.059750833781436086,
+          "inventory_inclusive": 3.261820539832115,
+          "inventory_logging": 0.0415752911940217,
+          "proposal_enumeration": 1.8655113351996988,
+          "public_features": 0.08902212465181947,
+          "ranking": 0.0008382487576454878
+        }
+      },
+      "source_domains": {
+        "version": "separate-source-and-simulated-domain-v1",
+        "source_support_domain_hash": "sha256:7813d77de397dc95f8ffe1b34b3ba4ea400be89656620d5e6149a3f309a93558",
+        "interaction_domain_hash": "sha256:7813d77de397dc95f8ffe1b34b3ba4ea400be89656620d5e6149a3f309a93558",
+        "interaction_domain_rule": "Ds OR (T > 0)",
+        "source_support_known_voxels": 2546116,
+        "source_support_unknown_voxels": 174084,
+        "target_in_unknown_support_voxels": 0,
+        "assumed_material_beyond_source_domain_voxels": 0,
+        "unavailable_interaction_voxels": 174084,
+        "source_domain_extended": false,
+        "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+        "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+        "unknown_interaction_rule": "U except declared wholly-proximal E blocks full tool; no U seed, flood or removal",
+        "external_tool_extent": "declared E and outside-image extent unassessed; observed Ds unchanged",
+        "anatomical_or_material_validation": false,
+        "post_exposure_condition_hash": "sha256:b8651e64f41db6838554f00637a7f93fee6c688e07317e57be0209314dc42b81"
+      },
+      "full_target_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "full_region_positive_voxels": 7745,
+        "unsupported_region_positive_voxels": 0,
+        "full_region_membership_mm3": 7386.207580165663,
+        "unsupported_region_membership_mm3": 0.0,
+        "supported_region_membership_mm3": 7386.207580165663,
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "occupancy_modified": true,
+        "derived_occupancy": true,
+        "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+        "occupancy_derivation": {
+          "version": "supplied-support-target-union-v1",
+          "condition": "cerebrum_plus_supplied_tumor_assumption",
+          "operation": "S OR (T > 0)",
+          "source_support_hash": "sha256:9ada4b66d74fffee3a0ff584e96c8e94733bb5f277d906c17e520a3e7c3718c8",
+          "supplied_target_hash": "sha256:accc5fc2bc6914f3be555178d91e2aef731b0df299c2807f019e04f07d0c850b",
+          "derived_occupancy_hash": "sha256:089b6f75f694bc2a8830aae0eb5d3bc1bc37d5457d233287b2a9836670b46340",
+          "added_region_hash": "sha256:4adf1864e33b9eae5c230cf50908d1202ac3e655b4ab9f16f0f6657cf5b85098",
+          "source_support_positive_voxels": 896879,
+          "added_region_positive_voxels": 1758,
+          "source_support_unchanged": true,
+          "target_unchanged": true,
+          "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+          "anatomical_or_material_validation": false,
+          "outside_union": "unchanged simulation zeros; not certified empty anatomy"
+        },
+        "target_modified": false,
+        "unsupported_region_removable": false,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "source_and_simulated_domains": {
+          "version": "separate-source-and-simulated-domain-v1",
+          "source_support_domain_hash": "sha256:7813d77de397dc95f8ffe1b34b3ba4ea400be89656620d5e6149a3f309a93558",
+          "interaction_domain_hash": "sha256:7813d77de397dc95f8ffe1b34b3ba4ea400be89656620d5e6149a3f309a93558",
+          "interaction_domain_rule": "Ds OR (T > 0)",
+          "source_support_known_voxels": 2546116,
+          "source_support_unknown_voxels": 174084,
+          "target_in_unknown_support_voxels": 0,
+          "assumed_material_beyond_source_domain_voxels": 0,
+          "unavailable_interaction_voxels": 174084,
+          "source_domain_extended": false,
+          "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+          "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+          "unknown_interaction_rule": "U except declared wholly-proximal E blocks full tool; no U seed, flood or removal",
+          "external_tool_extent": "declared E and outside-image extent unassessed; observed Ds unchanged",
+          "anatomical_or_material_validation": false,
+          "post_exposure_condition_hash": "sha256:b8651e64f41db6838554f00637a7f93fee6c688e07317e57be0209314dc42b81"
+        }
+      }
+    },
+    {
+      "subject": "ReMIND-018",
+      "actions": 1,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 1189.2323111979806,
+        "total_reward": 0.0
+      },
+      "regression": {
+        "exact_actions_vs_balanced": true,
+        "exact_source_vs_balanced": true,
+        "exact_outcomes_vs_balanced": true,
+        "exact_history_vs_balanced": true,
+        "exact_metrics_except_policy_identity": true,
+        "quality_gates_vs_saved_exhaustive": {
+          "target_removed_mm3": true,
+          "total_reward": true,
+          "normal_removed_mm3": true,
+          "cumulative_contacted_tissue_upper_bound_mm3": true,
+          "currently_retained_contacted_tissue_upper_bound_mm3": true,
+          "complete_tool_path_length_mm": true,
+          "nonstop_actions": true,
+          "tool_changes": true,
+          "same_full_target_denominator": true,
+          "physical_probability_remains_null": true,
+          "unchanged_partial_contact_reward": true
+        },
+        "no_quality_loss_vs_saved_exhaustive": true
+      },
+      "terminal_inventory": {
+        "step": 0,
+        "raw_count": 75,
+        "initial_queries": 8,
+        "extra_queries": 67,
+        "all_reported_extra_work_at_terminal_STOP": true,
+        "STOP_scope": "Full emitted catalog at this state only; not globally exhausted routes."
+      },
+      "online_previews": 75,
+      "replay_previews": 75,
+      "historical_balanced_previews": 8,
+      "source_preparation_seconds": 0.2327513750642538,
+      "source_through_plan_seconds": 2.4731062080245465,
+      "replay_source_preparation_seconds": 0.25902037508785725,
+      "replay_and_audit_seconds": 2.5200316661503166,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 67,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 2,
+          "fallback_triggered_states": 1,
+          "feature_rows": 75,
+          "native_previews": 75,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 2.2044737909454852,
+          "exact_verification": 1.8843357097357512,
+          "fallback_nominal_gate": 0.0008290410041809082,
+          "inventory_inclusive": 2.1498049579095095,
+          "inventory_logging": 0.0021588329691439867,
+          "proposal_enumeration": 0.2238777088932693,
+          "public_features": 0.00536670908331871,
+          "ranking": 5.133310332894325e-05
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 67,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 2,
+          "fallback_triggered_states": 1,
+          "feature_rows": 75,
+          "native_previews": 75,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 2.180744499899447,
+          "exact_verification": 1.5456006259191781,
+          "fallback_nominal_gate": 0.0017299579922109842,
+          "inventory_inclusive": 2.1201290420722216,
+          "inventory_logging": 0.0030692501459270716,
+          "proposal_enumeration": 0.48970770789310336,
+          "public_features": 0.0056004999205470085,
+          "ranking": 5.450006574392319e-05
+        }
+      },
+      "source_domains": {
+        "version": "separate-source-and-simulated-domain-v1",
+        "source_support_domain_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+        "interaction_domain_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+        "interaction_domain_rule": "Ds OR (T > 0)",
+        "source_support_known_voxels": 2452824,
+        "source_support_unknown_voxels": 146736,
+        "target_in_unknown_support_voxels": 0,
+        "assumed_material_beyond_source_domain_voxels": 0,
+        "unavailable_interaction_voxels": 146736,
+        "source_domain_extended": false,
+        "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+        "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+        "unknown_interaction_rule": "U except declared wholly-proximal E blocks full tool; no U seed, flood or removal",
+        "external_tool_extent": "declared E and outside-image extent unassessed; observed Ds unchanged",
+        "anatomical_or_material_validation": false,
+        "post_exposure_condition_hash": "sha256:61715a74873c65b6061e59604d38aa918f849ec8e570ef6dd0fb5435a9b9d5db"
+      },
+      "full_target_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "full_region_positive_voxels": 1247,
+        "unsupported_region_positive_voxels": 0,
+        "full_region_membership_mm3": 1189.2323111979806,
+        "unsupported_region_membership_mm3": 0.0,
+        "supported_region_membership_mm3": 1189.2323111979806,
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "occupancy_modified": true,
+        "derived_occupancy": true,
+        "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+        "occupancy_derivation": {
+          "version": "supplied-support-target-union-v1",
+          "condition": "cerebrum_plus_supplied_tumor_assumption",
+          "operation": "S OR (T > 0)",
+          "source_support_hash": "sha256:be8a66ee02cfedfd1f83d303ec8174aa705023fd2181635c98306c62add7dcab",
+          "supplied_target_hash": "sha256:4d2781b08afed89ea00e71a215f3be587726e500e8f98d271e62aea3f0e4f394",
+          "derived_occupancy_hash": "sha256:fa00381af0952750bc175fc7c41b9d4d4ae43a1ea27d5de82a6393968ffdc8dd",
+          "added_region_hash": "sha256:d52b614f3e79704f14dd5395a818048d97d0fe9f1cddcfa5945c9fb0a386f4ae",
+          "source_support_positive_voxels": 909356,
+          "added_region_positive_voxels": 250,
+          "source_support_unchanged": true,
+          "target_unchanged": true,
+          "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+          "anatomical_or_material_validation": false,
+          "outside_union": "unchanged simulation zeros; not certified empty anatomy"
+        },
+        "target_modified": false,
+        "unsupported_region_removable": false,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "source_and_simulated_domains": {
+          "version": "separate-source-and-simulated-domain-v1",
+          "source_support_domain_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+          "interaction_domain_hash": "sha256:76c8e037e720683f5bac2309fa3492bbb1a3a5a9e51ee3cbe634a3c4366caea4",
+          "interaction_domain_rule": "Ds OR (T > 0)",
+          "source_support_known_voxels": 2452824,
+          "source_support_unknown_voxels": 146736,
+          "target_in_unknown_support_voxels": 0,
+          "assumed_material_beyond_source_domain_voxels": 0,
+          "unavailable_interaction_voxels": 146736,
+          "source_domain_extended": false,
+          "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+          "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+          "unknown_interaction_rule": "U except declared wholly-proximal E blocks full tool; no U seed, flood or removal",
+          "external_tool_extent": "declared E and outside-image extent unassessed; observed Ds unchanged",
+          "anatomical_or_material_validation": false,
+          "post_exposure_condition_hash": "sha256:61715a74873c65b6061e59604d38aa918f849ec8e570ef6dd0fb5435a9b9d5db"
+        }
+      }
+    },
+    {
+      "subject": "ReMIND-045",
+      "actions": 13,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 95.48752381870861,
+        "cumulative_contacted_tissue_upper_bound_mm3": 202.17920577005748,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 153.54175532537386,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 12,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 51,
+        "reference_target_fraction_removed": 0.0020157306035334575,
+        "simulated_removed_volume_mm3": 48.637450444683644,
+        "target_removed_mm3": 48.63745044468365,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 24128.943798057662,
+        "total_reward": 48.181962920864926
+      },
+      "regression": {
+        "exact_actions_vs_balanced": true,
+        "exact_source_vs_balanced": true,
+        "exact_outcomes_vs_balanced": true,
+        "exact_history_vs_balanced": true,
+        "exact_metrics_except_policy_identity": true,
+        "quality_gates_vs_saved_exhaustive": {
+          "target_removed_mm3": true,
+          "total_reward": true,
+          "normal_removed_mm3": true,
+          "cumulative_contacted_tissue_upper_bound_mm3": true,
+          "currently_retained_contacted_tissue_upper_bound_mm3": true,
+          "complete_tool_path_length_mm": true,
+          "nonstop_actions": true,
+          "tool_changes": true,
+          "same_full_target_denominator": true,
+          "physical_probability_remains_null": true,
+          "unchanged_partial_contact_reward": true
+        },
+        "no_quality_loss_vs_saved_exhaustive": true
+      },
+      "terminal_inventory": {
+        "step": 12,
+        "raw_count": 91,
+        "initial_queries": 8,
+        "extra_queries": 83,
+        "all_reported_extra_work_at_terminal_STOP": true,
+        "STOP_scope": "Full emitted catalog at this state only; not globally exhausted routes."
+      },
+      "online_previews": 187,
+      "replay_previews": 187,
+      "historical_balanced_previews": 104,
+      "source_preparation_seconds": 0.25359687488526106,
+      "source_through_plan_seconds": 5.165907624876127,
+      "replay_source_preparation_seconds": 0.2515167919918895,
+      "replay_and_audit_seconds": 9.459167250199243,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 83,
+          "fallback_gate_states": 13,
+          "fallback_nominal_reward_checks": 68,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1183,
+          "native_previews": 187,
+          "proposal_calls": 13,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.3682231670245528,
+          "exact_verification": 2.295208238530904,
+          "fallback_nominal_gate": 0.033246665727347136,
+          "inventory_inclusive": 4.2993710830342025,
+          "inventory_logging": 0.03256500395946205,
+          "proposal_enumeration": 1.7166144598741084,
+          "public_features": 0.08676320686936378,
+          "ranking": 0.0008107079192996025
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 83,
+          "fallback_gate_states": 13,
+          "fallback_nominal_reward_checks": 68,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1183,
+          "native_previews": 187,
+          "proposal_calls": 13,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.4079149158205837,
+          "exact_verification": 2.7763366727158427,
+          "fallback_nominal_gate": 0.06602829229086637,
+          "inventory_inclusive": 5.874685709364712,
+          "inventory_logging": 0.04288920643739402,
+          "proposal_enumeration": 2.626993290381506,
+          "public_features": 0.08708933182060719,
+          "ranking": 0.0008205405902117491
+        }
+      },
+      "source_domains": {
+        "version": "separate-source-and-simulated-domain-v1",
+        "source_support_domain_hash": "sha256:86d5781d432cd275a851a63db4207ba572e704a46e09908c239f6070efbb2dca",
+        "interaction_domain_hash": "sha256:86d5781d432cd275a851a63db4207ba572e704a46e09908c239f6070efbb2dca",
+        "interaction_domain_rule": "Ds OR (T > 0)",
+        "source_support_known_voxels": 2304431,
+        "source_support_unknown_voxels": 601021,
+        "target_in_unknown_support_voxels": 0,
+        "assumed_material_beyond_source_domain_voxels": 0,
+        "unavailable_interaction_voxels": 601021,
+        "source_domain_extended": false,
+        "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+        "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+        "unknown_interaction_rule": "U except declared wholly-proximal E blocks full tool; no U seed, flood or removal",
+        "external_tool_extent": "declared E and outside-image extent unassessed; observed Ds unchanged",
+        "anatomical_or_material_validation": false,
+        "post_exposure_condition_hash": "sha256:980a8d8ccbfb6b3be7f2defa3c250ae8176bf9786d5bc2f707fec728f2219ff4"
+      },
+      "full_target_extent": {
+        "condition": "PARTIAL_TARGET_PROGRESS",
+        "target_semantics": "supplied_goal_region_may_exceed_estimated_support",
+        "full_region_positive_voxels": 25301,
+        "unsupported_region_positive_voxels": 0,
+        "full_region_membership_mm3": 24128.943798057662,
+        "unsupported_region_membership_mm3": 0.0,
+        "supported_region_membership_mm3": 24128.943798057662,
+        "fraction_denominator": "entire_unchanged_supplied_region",
+        "occupancy_modified": true,
+        "derived_occupancy": true,
+        "occupancy_condition": "cerebrum_plus_supplied_tumor_assumption",
+        "occupancy_derivation": {
+          "version": "supplied-support-target-union-v1",
+          "condition": "cerebrum_plus_supplied_tumor_assumption",
+          "operation": "S OR (T > 0)",
+          "source_support_hash": "sha256:45368fa95d7abb5d17121f0b73831560027eecbcd5a32b96a4c4960e1a49832a",
+          "supplied_target_hash": "sha256:38aa00203163f20e76114d08898a58d6833a8d2cb8077d2ba9a4cd4c1ec4078b",
+          "derived_occupancy_hash": "sha256:49e11d2b7ad2710a1ddf0e8809565d207f9e5da5c0e9dc79eeb8faa1ca9288d5",
+          "added_region_hash": "sha256:84694f3294a0fd5d8fcae4bef50973252561bbfd2686141fddf653b950680171",
+          "source_support_positive_voxels": 823052,
+          "added_region_positive_voxels": 19885,
+          "source_support_unchanged": true,
+          "target_unchanged": true,
+          "material_assumption": "supplied tumor positives are rigid removable cells including unseparated necrotic components",
+          "anatomical_or_material_validation": false,
+          "outside_union": "unchanged simulation zeros; not certified empty anatomy"
+        },
+        "target_modified": false,
+        "unsupported_region_removable": false,
+        "outside_goal_removal_interpretation": "outside_supplied_task_region_not_normal_anatomy_truth",
+        "source_and_simulated_domains": {
+          "version": "separate-source-and-simulated-domain-v1",
+          "source_support_domain_hash": "sha256:86d5781d432cd275a851a63db4207ba572e704a46e09908c239f6070efbb2dca",
+          "interaction_domain_hash": "sha256:86d5781d432cd275a851a63db4207ba572e704a46e09908c239f6070efbb2dca",
+          "interaction_domain_rule": "Ds OR (T > 0)",
+          "source_support_known_voxels": 2304431,
+          "source_support_unknown_voxels": 601021,
+          "target_in_unknown_support_voxels": 0,
+          "assumed_material_beyond_source_domain_voxels": 0,
+          "unavailable_interaction_voxels": 601021,
+          "source_domain_extended": false,
+          "source_label_zero_meaning": "known annotation zero, not physically empty anatomy",
+          "simulated_zero_meaning": "explicit occupancy-model assumption only within interaction domain",
+          "unknown_interaction_rule": "U except declared wholly-proximal E blocks full tool; no U seed, flood or removal",
+          "external_tool_extent": "declared E and outside-image extent unassessed; observed Ds unchanged",
+          "anatomical_or_material_validation": false,
+          "post_exposure_condition_hash": "sha256:980a8d8ccbfb6b3be7f2defa3c250ae8176bf9786d5bc2f707fec728f2219ff4"
+        }
+      }
+    }
+  ],
+  "totals": {
+    "previews": 1152,
+    "transitions": 58,
+    "ridge_calls": 58,
+    "extra_terminal_STOP_queries_online": 344
+  },
+  "costs": {
+    "worker_seconds": 46.64814112498425,
+    "parent_seconds": 49.22775583318435,
+    "sampled_owned_peak_rss_bytes": 737296384,
+    "output_bytes": 5065107,
+    "supervision_bytes": 3813
+  },
+  "cleanup": {
+    "exit_code": 0,
+    "reaped": true,
+    "remaining": [],
+    "errors": []
+  },
+  "limitations": [
+    "Original fitted TRAIN cohort integration regression, not held-out transfer.",
+    "No historical timing ratio is calculated; past exhaustive is a saved quality reference only.",
+    "Terminal STOP covers emitted actions at that state, not arbitrary routes or surgery.",
+    "Only saved metadata/source reviewed; geometry acceptance is the saved independent worker evaluation, not a reviewer replay.",
+    "Source uncertainty, full target denominator and S union T/post-exposure simulation assumptions are preserved.",
+    "Sampled memory can miss transient peaks; no per-case memory attribution."
+  ],
+  "read_boundary": {
+    "patient_arrays": false,
+    "model_parameters": false,
+    "original_DICOM": false,
+    "production_imports": false,
+    "native_replay": false,
+    "nonterminal_inventories_read": false
+  },
+  "read_pins": {
+    "build/hybrid-fixed-four-switch-regression-v1/root-release.json": {
+      "bytes": 4257,
+      "sha256": "defcdf3802c153386756b181ebb79f6e89a9024b96222d3c313e41fb7d78d6e3"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/source-index.json": {
+      "bytes": 21477,
+      "sha256": "bd9783ac5f0bc9dd94a889cb99c1bcfae9f6008a3190056d2bef424c0028cb32"
+    },
+    "build/hybrid-train050-switch-guard-v1/source-index.json": {
+      "bytes": 16719,
+      "sha256": "7560323e7316607a1615a23f51500c5bb8af79a8beeb256c7d91f0e2a9c8412f"
+    },
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-002-public-inputs.json": {
+      "bytes": 14487,
+      "sha256": "f4b7145ed04362955586b7cc31962e5b408c675f07283e046225d2b4dba47753"
+    },
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-015-public-inputs.json": {
+      "bytes": 14334,
+      "sha256": "89bcdf6511bd1b91d7ba84f85f8b10f4c65d076d04a71c7bec4f81df75683b81"
+    },
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-018-public-inputs.json": {
+      "bytes": 14443,
+      "sha256": "bd123ffaba376977f672c16a215dee339757fe7514f54c6f9f4e2e7ca8176fed"
+    },
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-045-public-inputs.json": {
+      "bytes": 14417,
+      "sha256": "a324800fa92b0e168e4c65bc6e09f5235991cf8c4a3541148a52ea3da3aaf6df"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/batch_contract.py": {
+      "bytes": 10206,
+      "sha256": "1617b68896cccd9304066817864e41872ad7dfa8e44b21372d52234bcdf4e392"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/fallback_policy.py": {
+      "bytes": 9455,
+      "sha256": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/freeze-runtime.py": {
+      "bytes": 2436,
+      "sha256": "d17fbd0d2b348e14a6174d008f52ebafdbaf4d08b6bcb395b29f8650f3237c5a"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/hybrid_proposal.py": {
+      "bytes": 20840,
+      "sha256": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/initial_inventory_worker.py": {
+      "bytes": 21225,
+      "sha256": "94ab2685889be6c5394c7aca07ebf043ed98159c08638dde2c6d4b85fed3fa43"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/patient_regression.py": {
+      "bytes": 6043,
+      "sha256": "3c854afd45a75a93fd143c9b8b5cf125e4cce2dace062dc61a84da9619e1b363"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/run_owned.py": {
+      "bytes": 9625,
+      "sha256": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-002/plan.json": {
+      "bytes": 2349,
+      "sha256": "94a668f894be6c250e478ff5a760879debf788e63492661e73a2d9d64eae5365"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-002/replay/episode-metrics.json": {
+      "bytes": 21966,
+      "sha256": "7011bdce87383c246c1a65c3096b5a1b243a1bccde01c2310ccb91caf93cc9ef"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-002/replay/independent-episode.json": {
+      "bytes": 2494,
+      "sha256": "eecf79f3e9777816ad0c16810c34f4b5fe516770fc87c4f083fe58252e5a9988"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-015/plan.json": {
+      "bytes": 39018,
+      "sha256": "f84f1bb8ee1f79956e255825deddb828b00192f684a5b361c6be8a0a623cbd75"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-015/replay/episode-metrics.json": {
+      "bytes": 423851,
+      "sha256": "2a7c03c61d994a238d6d43975530909373fcebc5a568fb6e5a547a0f69806cf7"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-015/replay/independent-episode.json": {
+      "bytes": 2627,
+      "sha256": "c7032ab459f75bcd7f2a261002c0d1a13ec2fd0cc7544328bfbea11ac0607c37"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-018/plan.json": {
+      "bytes": 2697,
+      "sha256": "922edfd752d3db5b4c467c51405022da5bfa7d76a9057ad7e51cbb9104035500"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-018/replay/episode-metrics.json": {
+      "bytes": 21987,
+      "sha256": "de75d546460d5e5f0d4d16d567d09ec8d76c28366b7fc19050cc76e0b2ffb9a7"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-018/replay/independent-episode.json": {
+      "bytes": 2494,
+      "sha256": "0e47c3c9c678fabc2441a2ddc8fdbf501cb06559f285012f35fd5ca3340f8774"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-045/plan.json": {
+      "bytes": 33437,
+      "sha256": "6641d3ac6b8534a6955db3aa7e3d81fed6b2909054c8e48a0d4c72ac62ee2636"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-045/replay/episode-metrics.json": {
+      "bytes": 429352,
+      "sha256": "f702c3dd9cd6a62ea47005aff6615eaf303e029c7d533dcb4b7c9cd400571d49"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8/ReMIND-045/replay/independent-episode.json": {
+      "bytes": 2630,
+      "sha256": "fcf6bc24c9990c8f3d92e8b287ff47e9c4c2176e22926d440c464b15abf55a70"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-002/plan.json": {
+      "bytes": 9237,
+      "sha256": "9d55170ea111460c306eb61d4807878b8824eecbd9e6ec78c9180789342a0da4"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-002/replay/episode-metrics.json": {
+      "bytes": 21966,
+      "sha256": "9cd7b99f1d31e12fb890e3777a133462a84431a331428d8ac1b25867add167c2"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-002/replay/independent-episode.json": {
+      "bytes": 2494,
+      "sha256": "ac753a797fab1a4f9d4b132c284b2fdf0488d274facb68cb3ea73c8fe2e9ca68"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-015/plan.json": {
+      "bytes": 99667,
+      "sha256": "6c281f3f3f837f180259a4fc3ba7d1b0c26fb7b3f2047832fe82da963b223d79"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-015/replay/episode-metrics.json": {
+      "bytes": 423851,
+      "sha256": "e5c1a2190d262faa7d5ea7bcefcc3f3cffa5dab798fb179d8e6ca36934d46c3c"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-015/replay/independent-episode.json": {
+      "bytes": 2627,
+      "sha256": "d5b66eee17db26d729d98608b5d24265686ddbeaf7153c4ef53f5129f1fd082f"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-018/plan.json": {
+      "bytes": 7835,
+      "sha256": "82ee5de2139c1ad78f61e31d32531b52308cc619376e0feff4afd617c8ef1920"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-018/replay/episode-metrics.json": {
+      "bytes": 21987,
+      "sha256": "b7cbcf114499af5f2ff8d31e2da938acee9ac74bb67a1c82c18e87a457fd849a"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-018/replay/independent-episode.json": {
+      "bytes": 2494,
+      "sha256": "b3760b18efff08d10772b34c8120b8dadac2fea29600878f16212697f7bdb6bc"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-045/plan.json": {
+      "bytes": 81792,
+      "sha256": "8fd11dbcbd48ca2d6c75e87d25fa5faa41700db6870aa1920f9509e5bbcf4def"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-045/replay/episode-metrics.json": {
+      "bytes": 429352,
+      "sha256": "9faa6cdd29076f9e3f4d22d2477880416b7d4f0895100e74e7f401e9c7413b5c"
+    },
+    "build/hybrid-proposal-balanced-v2/attempt-01/exhaustive/ReMIND-045/replay/independent-episode.json": {
+      "bytes": 2629,
+      "sha256": "907af81a03ea747661b41e84ff07d333d4127c2479bd5120f4d0629776eeb26d"
+    },
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json": {
+      "bytes": 1803,
+      "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8"
+    },
+    "build/remind-post-exposure-feasibility-v1/root-release.json": {
+      "bytes": 2534,
+      "sha256": "8315099d95b16a9dacac54a65c4d84d6385e458534b6dab26b73a37555d4af1a"
+    },
+    "src/resectionlab/native_proposals.py": {
+      "bytes": 63300,
+      "sha256": "ec35077fc63e19dff422d2072c7fbe705f798ae46696ae5978f040db4b0e73a8"
+    },
+    "src/resectionlab/native_spatial_task.py": {
+      "bytes": 86379,
+      "sha256": "f30a536aa2960f854765eca54504dbd3d43a9698ccfd9f9c8b12712d32b5afbf"
+    },
+    "src/resectionlab/observed_search.py": {
+      "bytes": 39024,
+      "sha256": "cb970256f027ac1a278e844e35cfcf1d54b8f81828f8cd165652784b454a417b"
+    },
+    "src/resectionlab/paged_obstruction.py": {
+      "bytes": 12004,
+      "sha256": "f0e3721bd438c858cf2bba8481d4917962d1416dcd9e19d726c91e36e2fb07a1"
+    },
+    "artifacts/hybrid-proposal-balanced-v2/result.json": {
+      "bytes": 83257,
+      "sha256": "360253e27ce3992facec4938e018bc02707248c1efad1b6cd318ed7ecd5ed4ca"
+    },
+    "artifacts/hybrid-proposal-balanced-v2/parent-receipt.json": {
+      "bytes": 1540,
+      "sha256": "4b275debe63c4dd75bcec7fb2485265a1b9637c808f4a1e741885bfe00e246bf"
+    },
+    "artifacts/hybrid-proposal-balanced-v2/root-release.json": {
+      "bytes": 8532,
+      "sha256": "e81ab753baecc359fe6c067278308836d8cbd18804c8fbe2c6a955a6d2e0cb8c"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01.supervision/receipt.json": {
+      "bytes": 1525,
+      "sha256": "cf650bca4a59689ae8f53422fdb4a5e40fafbaaae2b7a538e000e7c52353e1bb"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/result.json": {
+      "bytes": 60074,
+      "sha256": "1c705ecca57b92b3d92889b8bb72858435e15e4ccddad56ba5a7c7d63de54759"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01.supervision/declaration.json": {
+      "bytes": 1886,
+      "sha256": "424af67f0221d63a47d3d87e80990caac80d3cdb6095639d83887470f480cbbb"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/sealed-plans.json": {
+      "bytes": 101934,
+      "sha256": "d2d1bfcddae9658d2ef14649f2988cc82a2dd2530241f216a21a324b4b630469"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-002/plan.json": {
+      "bytes": 10124,
+      "sha256": "b89455acc8ab7e9a2b52c5ac01140f3b122401702940fdf6bbd798c2221d9157"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-002/replay/episode-metrics.json": {
+      "bytes": 21966,
+      "sha256": "78694ffca2d72db77707d32c7749dbb4f200d096c9c4450ec9c1f6125ad4b42e"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-002/replay/independent-episode.json": {
+      "bytes": 2494,
+      "sha256": "7cb95956494b6ba9826687e3aa08ae503938b4111a1a89adf23ab24476bd5256"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-002/source/admitted-public-bindings.json": {
+      "bytes": 15151,
+      "sha256": "baef5232a2be4df23bab006e10f10edb78e8dc141e41986a593a23a9005fd04f"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-002/replay/source/admitted-public-bindings.json": {
+      "bytes": 15151,
+      "sha256": "baef5232a2be4df23bab006e10f10edb78e8dc141e41986a593a23a9005fd04f"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-002/inventories/state-00.json": {
+      "bytes": 83845,
+      "sha256": "2f4f9a2b74135edbdbbde026b76fcad17bef461f75d3366bf36e3766a732bc99"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-002/replay/inventories/state-00.json": {
+      "bytes": 83845,
+      "sha256": "2f4f9a2b74135edbdbbde026b76fcad17bef461f75d3366bf36e3766a732bc99"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-015/plan.json": {
+      "bytes": 39823,
+      "sha256": "7ef730f8f7e8782f00747d3edd0a190e2874b891ff5cc7df13f1a83cf67f1e31"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-015/replay/episode-metrics.json": {
+      "bytes": 423851,
+      "sha256": "b77a4a2f4eb7618435d5e4bd7500510eccf7490697dade37833fae04cdfaaee2"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-015/replay/independent-episode.json": {
+      "bytes": 2627,
+      "sha256": "4656d7849daf3ec6f2cd9b364826e3924db438bff1ea22eeeb87c15a6d8f5656"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-015/source/admitted-public-bindings.json": {
+      "bytes": 14998,
+      "sha256": "8a65ac62f3ef57b725e5a956674681040925e8ac7e109e44dabd4d4c61233788"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-015/replay/source/admitted-public-bindings.json": {
+      "bytes": 14998,
+      "sha256": "8a65ac62f3ef57b725e5a956674681040925e8ac7e109e44dabd4d4c61233788"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-015/inventories/state-13.json": {
+      "bytes": 80061,
+      "sha256": "bef3186d2874d05d68f0f9c525c6b08b248acfe15518dc10abae1c46ec9e2f76"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-015/replay/inventories/state-13.json": {
+      "bytes": 80061,
+      "sha256": "bef3186d2874d05d68f0f9c525c6b08b248acfe15518dc10abae1c46ec9e2f76"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-018/plan.json": {
+      "bytes": 8721,
+      "sha256": "d041b0ed22ef66cb98dcd0a736f6922e3d12c0ecb0790a3d193e3bb68916721f"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-018/replay/episode-metrics.json": {
+      "bytes": 21987,
+      "sha256": "e002bddb083c81512c8024eca3f6066f61514c5a3db3daea591f90aeb04a1b54"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-018/replay/independent-episode.json": {
+      "bytes": 2494,
+      "sha256": "d568c8554855b43ba066e77c4d0b41c829a6f4c0bb9b6cc8fc4df0e66279d647"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-018/source/admitted-public-bindings.json": {
+      "bytes": 15160,
+      "sha256": "da1e48c522ca8e1816983b6000c6d4e2fceb5c988ca060900b4169262eb96e0c"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-018/replay/source/admitted-public-bindings.json": {
+      "bytes": 15160,
+      "sha256": "da1e48c522ca8e1816983b6000c6d4e2fceb5c988ca060900b4169262eb96e0c"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-018/inventories/state-00.json": {
+      "bytes": 68420,
+      "sha256": "306d283026d82712482fb798bdd93d0355c638f719edefb3e04d94b099569668"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-018/replay/inventories/state-00.json": {
+      "bytes": 68420,
+      "sha256": "306d283026d82712482fb798bdd93d0355c638f719edefb3e04d94b099569668"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-045/plan.json": {
+      "bytes": 34241,
+      "sha256": "48d706863f07a78c316d65036179e8dc1b273f9307273fc940f62420a3c15905"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-045/replay/episode-metrics.json": {
+      "bytes": 429352,
+      "sha256": "3d984d0b0213fb95de390e3711ae43354ee16e36a9f708a76a27d59793167a7d"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-045/replay/independent-episode.json": {
+      "bytes": 2631,
+      "sha256": "9fb683d33340e3ef88520f50076214f2b92f78fff3d1a41da7312c7af895543d"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-045/source/admitted-public-bindings.json": {
+      "bytes": 15131,
+      "sha256": "7868a44fe7c1b8c97d19ce79dfe93c479096aad9e1e6120b48570bcb005a2800"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-045/replay/source/admitted-public-bindings.json": {
+      "bytes": 15131,
+      "sha256": "7868a44fe7c1b8c97d19ce79dfe93c479096aad9e1e6120b48570bcb005a2800"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-045/inventories/state-12.json": {
+      "bytes": 79781,
+      "sha256": "816c31442e43047d0128296ed4e3714dfb5906abd2702d40a5952c7d2bd24306"
+    },
+    "build/hybrid-fixed-four-switch-regression-v1/attempt-01/ReMIND-045/replay/inventories/state-12.json": {
+      "bytes": 79781,
+      "sha256": "816c31442e43047d0128296ed4e3714dfb5906abd2702d40a5952c7d2bd24306"
+    }
+  }
+}

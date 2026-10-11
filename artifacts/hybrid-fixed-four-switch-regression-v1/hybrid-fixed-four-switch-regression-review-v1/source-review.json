@@ -1,0 +1,30 @@
+{
+  "status": "GO_FOR_EXACT_FIXED_FOUR_FROZEN_INFERENCE_REGRESSION",
+  "scope": "Independent source and saved generated-control review only. No production imports, tests, model weights, acquired arrays, native replay or runtime freeze executed by reviewer.",
+  "bindings": {
+    "tested_source_sha256": "af1f92b7a1e0f8bcf0ab33e70d855f85fb3456a41a251309a843ab6c35cb7a67",
+    "source_ready_sha256": "01fed5f3330ccb4251d493fb6f265c58bf2ea684ec0c66a48d64d0aee59b6c77",
+    "capability_sha256": "3c854afd45a75a93fd143c9b8b5cf125e4cce2dace062dc61a84da9619e1b363",
+    "contract_sha256": "1617b68896cccd9304066817864e41872ad7dfa8e44b21372d52234bcdf4e392",
+    "worker_sha256": "94ab2685889be6c5394c7aca07ebf043ed98159c08638dde2c6d4b85fed3fa43",
+    "freezer_sha256": "d17fbd0d2b348e14a6174d008f52ebafdbaf4d08b6bcb395b29f8650f3237c5a",
+    "generated_receipt_sha256": "e83349c9eecc112c53f11595c99963a1aeca67db1939be4c9153f8a0900184e5",
+    "generated_log_sha256": "4f618af7719872174335c029642cfda03013f1fa3ff00607700ea54ee74b8ad8"
+  },
+  "checks": [
+    "The capability is an explicit successor of the original fitted-four PilotAdmission, restricted to TRAIN002/015/018/045. It calls the canonical full source/QC/cohort-role validator and then requires exact source hashes, original proposals/post-exposure condition, zero fits/optimizer updates/neural forwards and the fixed model/training endpoint. development_transfer is explicitly refused.",
+    "Historical source qualification remains provenance. A separate root-release-bound declaration grants only this frozen inference regression; it does not relabel source qualification as new training or held-out transfer.",
+    "Exact-byte and fingerprint checked JSON ridge loading remains singular; fitting/neural/checkpoint operations are refused. Existing switch policy, feature helper and owned parent are unchanged.",
+    "All four complete plans are sealed before the replay loop begins. Every replay reloads the same public world and runs uncached authoritative geometry checks. Per-case objects are released before the next case.",
+    "The four-case denominator is fixed in result construction and acceptance. Complete negative comparisons remain complete; incomplete/capped work is retained as failed or unresolved with paid work. Counts and output hashes join at acceptance.",
+    "Regression compares exact historical actions, source, outcomes, histories and metrics, normalizing only outer episode-metrics.decision_model_hash. The quality predicate is separately explicit; historical references are not used to claim a matched timing win.",
+    "Four first-attempt generated controls passed in 4.41 seconds, parent 4.984251834 seconds and sampled child peak 273203200 bytes, exit zero, no timeout and unchanged sources. Controls cover inference capability boundaries, forbidden development-transfer/fit changes, narrow comparison normalization, false release refusal, and actual four-generated-source plan-before-replay glue with an intentionally retained negative result."
+  ],
+  "limitations": [
+    "This is prospective source/control evidence, not a measured original-four regression result.",
+    "The cohort is the model's original fitted TRAIN cohort; no transfer or SELECT conclusion follows.",
+    "Root must freeze the exact current committed runtime and separately serialize actual execution. No additional test or approval layer is required by this review.",
+    "The byte-identical reused parent's TRAIN050 docstring is stale descriptive text; actual subject scope comes from the fixed-four contract. This does not affect execution or require a source mutation."
+  ],
+  "unresolved_blockers": []
+}

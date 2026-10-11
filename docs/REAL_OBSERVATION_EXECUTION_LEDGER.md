@@ -1900,3 +1900,24 @@ pruned alternative is not established. Parent218.429 s/546.28 MB sampled,
 12,396 total previews/2,047 transitions, zero learned operations, clean cleanup.
 The compact causal witness avoids copying the 26.28 MB output into Git. This is
 simulator geometry on development-exposed013, not physical or clinical evidence.
+
+## October 11 — Original-four frozen-policy regression passes with added cost
+
+[The fixed-four acquired regression](../artifacts/hybrid-fixed-four-switch-regression-v1/RESULT.md)
+preserves exact balanced-policy actions/histories and 0/58/0/51 target-cell results,
+with zero outside-target removal. All four plans seal before uncached independent
+replay. Independent saved checks reproduce quality parity with retained search;
+only outer policy identity is normalized in the historical metric comparison.
+
+Four STOP expansions add 344 previews, increasing online checks from 232 to 576.
+No positive switch guard triggers. This is a robustness/efficiency tradeoff, not
+a universal timing win. Parent49.228 s/737.30 MB sampled, 1,152 total previews,
+58 transitions/58 ridge scores/eight source visits/one model load, no updates.
+Four generated controls and exact source review passed before execution. Original
+fixed-four admission remains intact; fitted TRAIN subjects do not use the
+outside-fit transfer capability. No SELECT/EVAL input or physical claim is added.
+
+The storage snapshot at 10:11:48 UTC closes both completed reservations and records
+60.340 MiB additional growth, 332.854 GiB free and 332.713 GiB after reservations.
+The new128 MiB h48 reservation is preparation only; root archive allowance remains
+16 MiB. No new dataset, dependency, container, weight copy or deletion occurs.

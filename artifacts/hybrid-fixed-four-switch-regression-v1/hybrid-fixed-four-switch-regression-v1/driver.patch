@@ -1,0 +1,643 @@
+--- build/hybrid-train050-switch-guard-v1/batch_contract.py
++++ build/hybrid-fixed-four-switch-regression-v1/batch_contract.py
+@@ -1,26 +1,23 @@
+-"""Metadata-only, fixed TRAIN050 frozen inference contract. No payload imports."""
++"""Fixed fitted-cohort inference regression. Metadata only; no payload imports."""
+ import hashlib,json,os,stat,subprocess
+ from pathlib import Path
+ HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1];OUTPUT=HERE/'attempt-01'
+-SUBJECTS=['ReMIND-050'];SUBJECT=SUBJECTS[0];ARMS=('balanced_ridge_switch_guard','exhaustive')
+-VERSION='frozen-ridge-TRAIN-development-transfer-v1'
+-EXPERIMENT_VERSION='TRAIN050-current-tool-comparison-v1'
++SUBJECTS=['ReMIND-002','ReMIND-015','ReMIND-018','ReMIND-045']
++ARMS=('balanced_ridge_switch_guard',)
++VERSION='fixed-four-TRAIN-frozen-switch-regression-v1'
+ POLICY_VERSION='nominal-top8-current-tool-comparison-v1'
+-BASELINE={'path':'build/hybrid-train050-transfer-v1/attempt-01/result.json',
+-          'sha256':'01ace7a4e5efc8b59fb1fe6d8e2996a595923c179e9d9c0af593210c2549b629'}
+-PREVIOUS_FALLBACK={'path':'build/hybrid-train050-fallback-v1/attempt-01/result.json','sha256':'dbabca44c7c31db7c1d610b6a69184e3b3826091ad61fa9f644cd3a2c8efe3c7'}
+-PREVIOUS_PARENT={'path':'build/hybrid-train050-fallback-v1/attempt-01.supervision/receipt.json','sha256':'de944be8efa438901d5f81603fa7a5271b0d2f1bb961600399ee8e3fc1aabb7b'}
+-PREVIOUS_RELEASE={'path':'build/hybrid-train050-fallback-v1/root-release.json','sha256':'6c22d2577e4175a530459bb0952a6e802938ae341324a88303d70339c9049280'}
+ CAPS={'worker_seconds':300,'parent_seconds':330,'sampled_rss_bytes':3*1024**3,
+-      'output_bytes':64*1024**2,'supervision_bytes':8*1024**2,'log_bytes':2*1024**2,
+-      'native_previews':40000,'native_transitions':96,'source_visits':4,'threads':1,
+-      'fits':0,'feature_count':681,'ridge_calls':48}
++      'output_bytes':24*1024**2,'supervision_bytes':4*1024**2,'log_bytes':2*1024**2,
++      'native_previews':40000,'native_transitions':192,'source_visits':8,'threads':1,
++      'fits':0,'feature_count':681,'ridge_calls':192}
+ CACHE_LIMITS={'max_payload_bytes':32*1024**2,'max_entries':16384}
+ COHORT='manifests/experiments/remind-component-cohort-v1.json'
+ COHORT_SHA='326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05'
+ TRAIN_RESULT={'path':'artifacts/hybrid-proposal-balanced-v2/result.json','sha256':'360253e27ce3992facec4938e018bc02707248c1efad1b6cd318ed7ecd5ed4ca'}
+ TRAIN_PARENT={'path':'artifacts/hybrid-proposal-balanced-v2/parent-receipt.json','sha256':'4b275debe63c4dd75bcec7fb2485265a1b9637c808f4a1e741885bfe00e246bf'}
+ TRAIN_RELEASE={'path':'artifacts/hybrid-proposal-balanced-v2/root-release.json','sha256':'e81ab753baecc359fe6c067278308836d8cbd18804c8fbe2c6a955a6d2e0cb8c'}
++TRAIN_OUTPUT=Path('build/hybrid-proposal-balanced-v2/attempt-01')
++SOURCE_RELEASE={'path':'build/remind-post-exposure-feasibility-v1/root-release.json','sha256':'8315099d95b16a9dacac54a65c4d84d6385e458534b6dab26b73a37555d4af1a'}
+ RIDGE={'path':'build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8.json',
+        'sha256':'6a07215506ac68fa42afce40ad12a9efe9b042d83ee5d5bc1383b249a5ffe824',
+        'fingerprint':'sha256:4578737059c005c411668ea70b148f1214b483f2d89c677605bbe5e3c67aa57a',
+@@ -31,6 +28,7 @@
+ OCCUPANCY='cerebrum_plus_supplied_tumor_with_preserved_partial_source_domain'
+ EXPOSURE='public-union-post-exposure-axis0-v1'
+ HELPER_SHA='457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8'
++POLICY_SHA='01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c'
+ 
+ def need(ok,why):
+     if not ok:raise ValueError(why)
+@@ -49,90 +47,76 @@
+ def sha(path):return hashlib.sha256(read_bytes(path)).hexdigest()
+ def small(path,expected=None):
+     return json.loads(read_bytes(path,expected),parse_constant=lambda x:(_ for _ in ()).throw(ValueError('nonfinite_json')))
++
+ def metadata():
+-    result=small(**{'path':TRAIN_RESULT['path'],'expected':TRAIN_RESULT['sha256']})
+-    parent=small(TRAIN_PARENT['path'],TRAIN_PARENT['sha256'])
+-    release=small(TRAIN_RELEASE['path'],TRAIN_RELEASE['sha256'])
++    result=small(TRAIN_RESULT['path'],TRAIN_RESULT['sha256'])
++    parent=small(TRAIN_PARENT['path'],TRAIN_PARENT['sha256']);release=small(TRAIN_RELEASE['path'],TRAIN_RELEASE['sha256'])
++    source=small(SOURCE_RELEASE['path'],SOURCE_RELEASE['sha256'])
+     need(parent['status']=='complete' and parent['exit_code']==0 and not parent['cleanup_errors'] and not parent['remaining_owned_pids'],'clean_frozen_training')
+     need(parent['result_sha256']==TRAIN_RESULT['sha256'] and parent['release_sha256']==TRAIN_RELEASE['sha256'],'training_receipt_joins')
+     need(result['status']=='complete_fixed_TRAIN_balanced_ridge_contrast' and result['ridge_unchanged']
+          and result['fits']==2 and result['teacher_decisions']==29 and result['source_visits']==28
+          and result['ridge_file_sha256']['balanced_ridge_top8']==RIDGE['sha256'],'exact_balanced_endpoint')
+-    need(release['subjects']==['ReMIND-002','ReMIND-015','ReMIND-018','ReMIND-045'] and release['K']==8
+-         and release['horizon']==24 and release['proposal_config']==PROPOSALS
+-         and release['occupancy_condition']==OCCUPANCY and release['post_exposure_condition']==EXPOSURE,'unchanged_fit_cohort_world_and_K')
+-    need(len(result['arms'])==12 and all(r['complete'] and r['independent_accepted'] for r in result['arms']),'accepted_training_routes')
+-    return result
++    need(release['subjects']==source['subjects']==SUBJECTS and release['K']==8 and release['horizon']==source['max_steps']==24
++         and release['proposal_config']==source['proposal_config']==PROPOSALS
++         and release['occupancy_condition']==source['occupancy_condition']==OCCUPANCY
++         and release['post_exposure_condition']==source['post_exposure_condition']==EXPOSURE
++         and release['public_index']==source['public_index'] and release['cohort']==source['cohort']=={'path':COHORT,'sha256':COHORT_SHA},'unchanged_fitted_cohort_world')
++    need([(r['method'],r['subject']) for r in result['arms']]==[(m,s) for m in ('old_ridge_top8','balanced_ridge_top8','exhaustive') for s in SUBJECTS]
++         and all(r['complete'] and r['independent_accepted'] for r in result['arms']),'accepted_training_denominator')
++    return result,release,source
+ 
+-def previous_evidence():
+-    prior=small(PREVIOUS_FALLBACK['path'],PREVIOUS_FALLBACK['sha256'])
+-    parent=small(PREVIOUS_PARENT['path'],PREVIOUS_PARENT['sha256'])
+-    previous_release=small(PREVIOUS_RELEASE['path'],PREVIOUS_RELEASE['sha256'])
+-    need(parent['status']=='complete' and parent['exit_code']==0 and parent['worker_termination_confirmed']
+-         and not parent['remaining_owned_pids'] and not parent['cleanup_errors']
+-         and parent['result_sha256']==PREVIOUS_FALLBACK['sha256'] and parent['release_sha256']==PREVIOUS_RELEASE['sha256'], 'clean_prior_fallback')
+-    need(prior['status']=='complete_TRAIN050_fallback_comparison' and prior['comparison']['no_quality_loss'] is False
+-         and prior['original_negative_result']==BASELINE and prior['ridge_fingerprint']==RIDGE['fingerprint']
+-         and prior['fits']==prior['optimizer_calls']==prior['model_calls']==0
+-         and prior['all_plans_sealed_before_evaluation'] and all(row['complete'] and row['independent_accepted'] for row in prior['arms']), 'prior_fallback_quality_negative_retained')
+-    need(previous_release['original_negative_result']==BASELINE and previous_release['ridge']==RIDGE,'prior_frozen_model_lineage')
+-    return prior
++def historical_rows(result):
++    return {(r['method'],r['subject']):r for r in result['arms'] if r['method'] in ('balanced_ridge_top8','exhaustive')}
+ 
+-def transfer_record(inputs):
+-    manifest,review=inputs['public_manifest'],inputs['intended_use_review']
+-    need(isinstance(manifest,dict) and isinstance(review,dict),'pending_TRAIN050_QC_and_manifest')
+-    digest(manifest['sha256']);digest(review['sha256'])
+-    return {'version':VERSION,'subject':SUBJECT,'role':'TRAIN','scope':'development_transfer_not_heldout_SELECT',
+-        'methods':['balanced_ridge_top8','exhaustive'],'K':8,'max_steps':24,'refits':0,'optimizer_updates':0,'neural_forwards':0,
+-        'training_subjects':['ReMIND-002','ReMIND-015','ReMIND-018','ReMIND-045'],
+-        'public_manifest_sha256':manifest['sha256'],'intended_use_review_sha256':review['sha256'],
+-        'frozen_ridge_sha256':RIDGE['sha256'],'frozen_ridge_fingerprint':RIDGE['fingerprint'],
+-        'training_result_sha256':TRAIN_RESULT['sha256']}
++def input_refs():
++    result,release,source=metadata();refs=[TRAIN_RESULT,TRAIN_PARENT,TRAIN_RELEASE,SOURCE_RELEASE,release['public_index'],release['cohort']]
++    index=small(**{'path':release['public_index']['path'],'expected':release['public_index']['sha256']})
++    need([r['patient_id'] for r in index['cases']]==SUBJECTS,'exact_public_four_order')
++    refs += [{'path':r['path'],'sha256':r['sha256']} for r in index['cases']]
++    for row in historical_rows(result).values():
++        for p,h in row['files'].items():refs.append({'path':str(TRAIN_OUTPUT/p),'sha256':h})
++    # The frozen parameter file is explicitly excluded from metadata preflight.
++    return refs
+ 
+-def template(head,index,inputs):
+-    return {'version':EXPERIMENT_VERSION,'policy_version':POLICY_VERSION,'original_negative_result':BASELINE,'previous_fallback_result':PREVIOUS_FALLBACK,'previous_fallback_parent':PREVIOUS_PARENT,'previous_fallback_release':PREVIOUS_RELEASE,'execution_released':False,'expected_head':head,'source_index':index,'inputs':inputs,
+-        'caps':CAPS,'subjects':SUBJECTS,'arms':list(ARMS),'public_index':inputs['public_manifest'],
+-        'cohort':{'path':COHORT,'sha256':COHORT_SHA},'occupancy_condition':OCCUPANCY,'post_exposure_condition':EXPOSURE,
+-        'proposal_config':PROPOSALS,'K':8,'horizon':24,'search_seconds':60,'cache_limits':CACHE_LIMITS,
+-        'ridge':RIDGE,'training_result':TRAIN_RESULT,'training_parent':TRAIN_PARENT,'training_release':TRAIN_RELEASE,
+-        'scope':'development transfer on one untrained TRAIN anatomy; no held-out SELECT claim',
+-        'zero_updates':True,'zero_refits':True,'SELECT_EVAL_closed':True}
++def template(head,index):
++    _,old,_=metadata()
++    return {'version':VERSION,'policy_version':POLICY_VERSION,'execution_released':False,'expected_head':head,'source_index':index,
++        'caps':CAPS,'subjects':SUBJECTS,'arms':list(ARMS),'public_index':old['public_index'],'cohort':old['cohort'],
++        'occupancy_condition':OCCUPANCY,'post_exposure_condition':EXPOSURE,'proposal_config':PROPOSALS,'K':8,'horizon':24,
++        'search_seconds':60,'cache_limits':CACHE_LIMITS,'ridge':RIDGE,'training_result':TRAIN_RESULT,'training_parent':TRAIN_PARENT,
++        'training_release':TRAIN_RELEASE,'source_qualification_release':SOURCE_RELEASE,'source_world_hashes':old['source_world_hashes'],
++        'scope':'fixed fitted TRAIN integration regression; not transfer or held-out SELECT','fits':0,'optimizer_updates':0,
++        'neural_forwards':0,'SELECT_EVAL_closed':True,'all_plans_before_evaluation':True,
++        'comparison':{'numeric_tolerance':1e-7,'reference_methods':['balanced_ridge_top8','exhaustive'],
++            'historical_timing_is_not_a_matched_control':True,'favorable_outcome_required_for_completion':False}}
+ 
+ def guard(path,expected,*,execute):
+     release=small(path,expected);need(type(release.get('execution_released')) is bool,'typed_root_release')
+     if execute:need(release['execution_released'],'root_dispatch_required')
+-    need({**release,'execution_released':False}==template(release['expected_head'],release['source_index'],release['inputs']),'exact_transfer_contract')
+-    record=transfer_record(release['inputs']) # Null dependencies fail before any payload.
+-    review=release['inputs']['intended_use_review'];read_bytes(review['path'],review['sha256'])
+-    m=release['inputs']['public_manifest'];manifest=small(m['path'],m['sha256'])
+-    need(manifest['patient_id']==SUBJECT and manifest['role']=='TRAIN' and manifest['public_only'] is True
+-         and manifest['training_admitted'] is False and manifest['private_evaluation_files_included'] is False
+-         and manifest['source_bindings']['intended_use_review_sha256']==record['intended_use_review_sha256']
+-         and set(manifest['input_files'])=={'image','supplied_support','supplied_whole_tumor','whole_tumor_domain','supplied_support_domain'},'qualified_public_050_manifest')
+-    cohort=small(COHORT,COHORT_SHA);member=[m for m in cohort['members'] if m['subject']==SUBJECT]
+-    need(len(member)==1 and member[0]['role']=='TRAIN' and member[0]['patient_group']==manifest['patient_group'],'original_050_TRAIN_role')
+-    metadata();previous_evidence()
+-    baseline=small(BASELINE['path'],BASELINE['sha256'])
+-    need(baseline['status']=='complete_TRAIN050_development_transfer' and baseline['comparison']['no_quality_loss'] is False
+-         and baseline['ridge_fingerprint']==RIDGE['fingerprint'] and baseline['all_plans_sealed_before_evaluation'], 'original_negative_preserved')
++    need({**release,'execution_released':False}==template(release['expected_head'],release['source_index']),'exact_regression_contract')
++    for ref in input_refs():read_bytes(ref['path'],ref['sha256'])
+     head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip();need(head==release['expected_head'],'HEAD_changed')
+     index=small(release['source_index']['path'],release['source_index']['sha256']);need(index['head']==head,'index_HEAD')
+-    required={str((HERE/n).relative_to(ROOT)) for n in ('batch_contract.py','hybrid_proposal.py','patient_transfer.py','fallback_policy.py','initial_inventory_worker.py','run_owned.py')}
++    required={str((HERE/n).relative_to(ROOT)) for n in ('batch_contract.py','hybrid_proposal.py','patient_regression.py','fallback_policy.py','initial_inventory_worker.py','run_owned.py','freeze-runtime.py')}
+     required|={str(p.relative_to(ROOT)) for p in (ROOT/'src/resectionlab').glob('*.py')}
+     required|={'build/goal-conditioned-policy-v1/run_contact_owned.py','build/goal-conditioned-policy-v1/darwin_fast_sampler.py'}
+-    need(required<=set(index['files']),'declared_runtime_sources')
++    required|={r['path'] for r in input_refs()}
++    need(required<=set(index['files']),'declared_runtime_sources_and_metadata')
+     for name,h in index['files'].items():need(sha(name)==h,'source_changed:'+name)
+-    need(sha(HERE/'hybrid_proposal.py')==HELPER_SHA,'unchanged_sparse_model_implementation')
++    need(sha(HERE/'hybrid_proposal.py')==HELPER_SHA and sha(HERE/'fallback_policy.py')==POLICY_SHA,'unchanged_model_and_switch_guard')
+     return release,index,True
+ 
+ def complete_result(result,release,release_sha):
+-    need(result['status']=='complete_TRAIN050_switch_guard_comparison' and result['release_sha256']==release_sha,'complete_transfer')
+-    need(result['policy_version']==POLICY_VERSION and result['original_negative_result']==BASELINE and result['previous_fallback_result']==PREVIOUS_FALLBACK,'explicit_policy_and_negative')
+-    need(result['source_visits']==4 and result['ridge_loads']==1 and result['fits']==result['optimizer_calls']==result['model_calls']==result['checkpoint_loads']==0,'no_training_or_neural_load')
+-    need(result['native_transitions']<=96 and result['native_previews']<=40000 and result['ridge_calls']<=48,'work_caps')
++    need(result['status']=='complete_fixed_four_switch_regression' and result['release_sha256']==release_sha,'complete_regression')
++    need(result['policy_version']==POLICY_VERSION and result['training_result']==TRAIN_RESULT,'frozen_endpoint_identity')
++    need(result['source_visits']==8 and result['ridge_loads']==1 and result['fits']==result['optimizer_calls']==result['model_calls']==result['checkpoint_loads']==0,'no_training_or_neural_load')
++    need(result['native_transitions']<=CAPS['native_transitions'] and result['native_previews']<=CAPS['native_previews'] and result['ridge_calls']<=CAPS['ridge_calls'],'work_caps')
+     need(result['blocked_external_calls']==0 and result['all_plans_sealed_before_evaluation'] and result['cache_restored'] and result['ridge_unchanged'],'information_boundary')
+-    need([(r['method'],r['subject']) for r in result['arms']]==[(m,SUBJECT) for m in ARMS]
+-         and all(r['complete'] and r['independent_accepted'] for r in result['arms']),'both_complete_geometry_results')
++    need([(r['method'],r['subject']) for r in result['arms']]==[(ARMS[0],s) for s in SUBJECTS]
++         and all(r['complete'] and r['independent_accepted'] for r in result['arms']),'all_four_complete_geometry_results')
++    need(result['native_transitions']==2*sum(r['action_count'] for r in result['arms'])
++         and result['native_previews']==sum(r['online_previews']+r['replay_previews'] for r in result['arms']),'exact_paid_counter_joins')
+     for row in result['arms']:
+         for path,h in row['files'].items():need(sha(OUTPUT/path)==h,'saved_output_changed:'+path)
+-    # Outcome quality is deliberately not an execution-completion criterion.
++    # A complete negative regression remains a complete measured result.
+--- build/hybrid-train050-switch-guard-v1/initial_inventory_worker.py
++++ build/hybrid-fixed-four-switch-regression-v1/initial_inventory_worker.py
+@@ -1,4 +1,4 @@
+-"""One frozen ridge vs lean exhaustive TRAIN050 comparison; no fit/optimizer."""
++"""Four frozen switch-guard plans, then uncached replay; no fitting or new search control."""
+ import argparse,gc,json,os,signal,sys,time,weakref
+ from pathlib import Path
+ HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
+@@ -6,7 +6,30 @@
+     raise ValueError('Fresh nonexistent -X pycache_prefix required before local imports')
+ sys.path.insert(0,str(ROOT/'src'));sys.path.insert(0,str(HERE))
+ from batch_contract import (ARMS,CAPS,CACHE_LIMITS,OUTPUT,RIDGE,COHORT,COHORT_SHA,PROPOSALS,
+-    OCCUPANCY,EXPOSURE,SUBJECT,POLICY_VERSION,BASELINE,PREVIOUS_FALLBACK,guard,transfer_record,need,sha,small,read_bytes)
++    OCCUPANCY,EXPOSURE,SUBJECTS,VERSION,POLICY_VERSION,TRAIN_RESULT,TRAIN_OUTPUT,SOURCE_RELEASE,
++    guard,metadata,historical_rows,need,sha,small,read_bytes)
++
++
++def compare_reference(plan,metrics,outcomes,reference,old_plan,old_metrics):
++    """No favorable completion gate; preserve every changed scalar and history."""
++    tol=1e-7;full=reference['exhaustive']['outcomes'];old=reference['balanced_ridge_top8']['outcomes']
++    signs={'target_removed_mm3':1,'total_reward':1,'normal_removed_mm3':-1,
++        'cumulative_contacted_tissue_upper_bound_mm3':-1,'currently_retained_contacted_tissue_upper_bound_mm3':-1,
++        'complete_tool_path_length_mm':-1,'nonstop_actions':-1,'tool_changes':-1}
++    gates={key:sign*(outcomes[key]-full[key])>=-tol for key,sign in signs.items()}
++    gates['same_full_target_denominator']=outcomes['total_reference_target_mm3']==full['total_reference_target_mm3']
++    gates['physical_probability_remains_null']=outcomes['clinical_deficit_probability'] is full['clinical_deficit_probability'] is None
++    gates['unchanged_partial_contact_reward']=outcomes['partial_contact_reward_weight']==full['partial_contact_reward_weight']==0.
++    normalized=dict(metrics);normalized['decision_model_hash']=old_metrics['decision_model_hash']
++    return {'numeric_tolerance':tol,'exact_actions_vs_balanced':plan['actions']==old_plan['actions'],
++        'exact_source_vs_balanced':plan['source_hash']==old_plan['source_hash'],
++        'exact_outcomes_vs_balanced':outcomes==old,'exact_history_vs_balanced':metrics['history']==old_metrics['history'],
++        'exact_metrics_except_policy_identity':normalized==old_metrics,
++        'sole_normalized_field':'episode-metrics.decision_model_hash (explicit new policy/admission contract)',
++        'quality_gates_vs_saved_exhaustive':gates,'no_quality_loss_vs_saved_exhaustive':all(gates.values()),
++        'outcome_differences_vs_saved_exhaustive':{k:outcomes[k]-full[k] for k in signs},
++        'timing_comparison':'none; retained exhaustive is a historical quality reference'}
++
+ 
+ 
+ def execute(release,release_sha,external_io):
+@@ -24,30 +47,45 @@
+     from resectionlab.planning_budget import PlanningBudget
+     from resectionlab.patient_planning_cohort_io import OutputBudget
+     from hybrid_proposal import Costs,RidgePriority
+-    from patient_transfer import admit_source,AdmittedTransferTask,load_frozen_ridge
+-    from fallback_policy import admitted_task_class,VERSION as FALLBACK_VERSION
++    from patient_regression import admit_source,AdmittedRegressionTask,load_frozen_ridge
++    from fallback_policy import VERSION as FALLBACK_VERSION
+     need(FALLBACK_VERSION==POLICY_VERSION,'exact_fallback_policy')
+-    FallbackTask=admitted_task_class()
+     plain=lambda x:thaw_json(freeze_json(x))
+-    cohort=read_bytes(COHORT,COHORT_SHA);record=transfer_record(release['inputs'])
+-    mr=release['inputs']['public_manifest'];manifest=small(mr['path'],mr['sha256'])
+-    allowed={str(Path(ref['path']).resolve()) for ref in manifest['input_files'].values()}
++    prior,training_release,source_release=metadata();references=historical_rows(prior)
++    cohort=read_bytes(COHORT,COHORT_SHA)
++    index=small(release['public_index']['path'],release['public_index']['sha256'])
++    entries={row['patient_id']:{'path':row['path'],'sha256':row['sha256']} for row in index['cases']}
++    need(list(entries)==SUBJECTS,'exact_public_four_order')
++    manifests={subject:small(ref['path'],ref['sha256']) for subject,ref in entries.items()}
++    need(all(m['patient_id']==subject and m['role']=='TRAIN' and m['public_only'] is True
++        and m['private_evaluation_files_included'] is False
++        and set(m['input_files'])=={'image','supplied_support','supplied_whole_tumor','whole_tumor_domain','supplied_support_domain'}
++        for subject,m in manifests.items()),'exact_public_fixed_four_manifests')
++    allowed={str(Path(ref['path']).resolve()) for m in manifests.values() for ref in m['input_files'].values()}
++    qualification={'scope':'post_exposure_initial_and_nominal_greedy','subjects':tuple(source_release['subjects']),
++        'occupancy_condition':OCCUPANCY,'proposal_config':PROPOSALS,'max_steps':24,'methods_executed':['observed_greedy'],
++        'post_exposure_condition':EXPOSURE,'greedy_seconds_per_case':60,
++        'retention_reference':source_release['retention_reference'],'retention_applied':False}
++    declaration={'version':VERSION,'released_sha256':release_sha,
++        'source_world_hashes':{s:release['source_world_hashes'][s] for s in SUBJECTS},
++        'proposal_config':PROPOSALS,'post_exposure_condition':EXPOSURE,'fits':0,'optimizer_updates':0,'neural_forwards':0,
++        'frozen_ridge':RIDGE,'training_result':TRAIN_RESULT}
+     source_limits={'max_steps':24,'max_optimizer_updates':0,'max_native_previews':CAPS['native_previews'],'max_policy_forwards':0,
+         'worker_seconds':CAPS['worker_seconds'],'memory_bytes':CAPS['sampled_rss_bytes'],'threads':1,
+         'search':{'max_calls':1,'beam_width':1,'seconds':60}}
+     OUTPUT.mkdir(exist_ok=False);sink=OutputBudget(OUTPUT,CAPS['output_bytes'])
+-    result={'status':'started','policy_version':POLICY_VERSION,'original_negative_result':BASELINE,'previous_fallback_result':PREVIOUS_FALLBACK,'release_sha256':release_sha,'subject':SUBJECT,'role':'TRAIN',
+-        'scope':'development_transfer_not_heldout_SELECT','source_visits':0,'ridge_loads':0,'fits':0,
++    result={'status':'started','policy_version':POLICY_VERSION,'training_result':TRAIN_RESULT,'release_sha256':release_sha,'subjects':SUBJECTS,'role':'TRAIN',
++        'scope':'fixed_fitted_TRAIN_inference_regression','source_visits':0,'ridge_loads':0,'fits':0,
+         'native_transitions':0,'model_calls':0,'optimizer_calls':0,'checkpoint_loads':0,'blocked_external_calls':0,
+-        'arms':[{'subject':SUBJECT,'method':m,'complete':False,'independent_accepted':False,'status':'not_started','files':{}} for m in ARMS],
++        'arms':[{'subject':subject,'method':ARMS[0],'complete':False,'independent_accepted':False,'status':'not_started','files':{}} for subject in SUBJECTS],
+         'source_visits_detail':[],'all_plans_sealed_before_evaluation':False,'ridge_unchanged':False,
+         'cache_restored':False,'SELECT_EVAL_opened':False,
+-        'order_caveat':'one fixed switch-guard-first pair; no matched historical learning latency or causal speed generalization',
++        'order_caveat':'one fixed subject order; historical references are quality controls, not matched latency controls',
+         'clinical_validation':None,'private_reference_loaded':False}
+     started=time.perf_counter();budget=PlanningBudget(NativeResectionEngine,max_native_previews=CAPS['native_previews'],seconds=CAPS['worker_seconds'])
+     original_transition=NativeSpatialTask._transition;original_cover=native_resection.capsule_voxel_indices
+     need(original_cover is geometry.capsule_voxel_indices,'no_preexisting_cache_overlay')
+-    originals=[];original_fit=RidgePriority.__dict__['fit'];ranker=None;operation=None;world=None;initial=None;plans={}
++    originals=[];original_fit=RidgePriority.__dict__['fit'];ranker=None;operation=None;world={};initial={};plans={}
+     def check():
+         budget.check();sink.check()
+         need(not external_io['blocked'],'prior_forbidden_access')
+@@ -56,46 +94,44 @@
+     def transition(self,*a,**k):
+         check();need(result['native_transitions']<CAPS['native_transitions'],'transition_cap')
+         result['native_transitions']+=1;return original_transition(self,*a,**k)
+-    def source(dest,phase):
+-        nonlocal world
+-        check();need(result['source_visits']<4,'source_visit_cap');result['source_visits']+=1
+-        dest.mkdir(parents=True,exist_ok=False);stamp=time.perf_counter();visit={'phase':phase,'status':'started'}
+-        result['source_visits_detail'].append(visit)
++    def source(subject,dest,phase):
++        check();need(result['source_visits']<CAPS['source_visits'],'source_visit_cap');result['source_visits']+=1
++        mr=entries[subject];dest.mkdir(parents=True,exist_ok=False);stamp=time.perf_counter()
++        visit={'subject':subject,'phase':phase,'status':'started'};result['source_visits_detail'].append(visit)
+         try:
+-            case,binding,qc,protocol=prepare_public_source(dest,{'limits':source_limits},release_sha,None,
++            # Exact original search-only qualification is preserved. It binds
++            # source provenance; the separate declaration grants only this new
++            # inference regression, never fitting or outside-fit transfer.
++            case,binding,qc,protocol=prepare_public_source(dest,{'limits':source_limits},SOURCE_RELEASE['sha256'],None,
+                 lambda *a,**k:check(),public_manifest_path=mr['path'],public_manifest_sha256=mr['sha256'],cohort_bytes=cohort,
+-                learning_protocol_hash=semantic_digest(record),proposal_config=NominalCavityProposalConfig(**PROPOSALS),
+-                public_target_context_variant=TARGET_CONTEXT,occupancy_condition=OCCUPANCY,post_exposure_condition=EXPOSURE,
+-                development_transfer=record)
+-            admission=admit_source(case,cohort_bytes=cohort,source_binding=binding,qc_receipt=qc,protocol=protocol,release_sha256=release_sha)
++                learning_protocol_hash=semantic_digest(qualification),proposal_config=NominalCavityProposalConfig(**PROPOSALS),
++                public_target_context_variant=TARGET_CONTEXT,occupancy_condition=OCCUPANCY,post_exposure_condition=EXPOSURE)
++            admission=admit_source(case,cohort_bytes=cohort,source_binding=binding,qc_receipt=qc,protocol=protocol,pilot_declaration=declaration)
+             actual={'source':case.source_hash,'reference':case.reference_hash,'native':case._native_config.fingerprint,
+                 'binding':semantic_digest(binding),'qc':semantic_digest(qc),'protocol':semantic_digest(protocol)}
+-            if world is None:world=actual;result['public_world']=world
+-            else:need(actual==world,'exact_world_every_arm_and_replay')
++            if subject not in world:world[subject]=actual;result['public_worlds']=world
++            else:need(actual==world[subject],'exact_world_planning_and_replay')
+             visit.update(status='complete',**actual)
+             return case,admission,time.perf_counter()-stamp
+         finally:visit['source_read_preparation_validation_seconds']=time.perf_counter()-stamp
+-    def record_task(case,admission,mode,folder,costs):
++    def record_task(subject,case,admission,folder,costs):
+         events=[];directory=folder/'inventories';directory.mkdir(parents=True,exist_ok=False)
+         def emit(event):
+-            nonlocal initial
+             check();need(len(events)<24,'inventory_count_cap');sink.write(directory/f'state-{len(events):02d}.json',event)
+             if not events:
+-                current={'state':event['source_state_hash'],'public_input':event['shortlist']['input_binding'],
+-                    'raw_ids':event['shortlist']['raw_ids']}
+-                if initial is None:initial=current;result['initial_public_proposals']=current
+-                else:need(current==initial,'same_initial_public_world_and_raw_catalog')
++                current={'state':event['source_state_hash'],'public_input':event['shortlist']['input_binding'],'raw_ids':event['shortlist']['raw_ids']}
++                if subject not in initial:initial[subject]=current;result['initial_public_proposals']=initial
++                else:need(current==initial[subject],'same_initial_public_world_and_raw_catalog')
+             events.append(event['source_state_hash'])
+         costs.inventory_callback=emit
+-        cls=FallbackTask if mode=='balanced_ridge_switch_guard' else AdmittedTransferTask
+-        return cls(case,admission=admission,mode='ridge_top8' if mode=='balanced_ridge_switch_guard' else 'exhaustive',
+-            ranker=ranker if mode=='balanced_ridge_switch_guard' else None,max_steps=24,cancelled=lambda:(check() or False),costs=costs)
++        return AdmittedRegressionTask(case,admission=admission,ranker=ranker,max_steps=24,
++            cancelled=lambda:(check() or False),costs=costs)
+     def access(event,args):
+         if event=='open' and args and isinstance(args[0],(str,bytes)):
+             path=Path(os.fsdecode(args[0])).resolve();suffix=path.suffix.lower()
+             denied=(suffix=='.npy' and str(path) not in allowed) or suffix in ('.dcm','.psckpt','.pt','.pth','.ckpt') or path.is_relative_to(ROOT/'data')
+             if suffix=='.npy':denied|=(isinstance(args[1],str) and any(c in args[1] for c in 'wax+')) or (isinstance(args[2],int) and bool(args[2]&(os.O_WRONLY|os.O_RDWR|os.O_CREAT|os.O_TRUNC)))
+-            if denied:external_io['blocked']+=1;raise PermissionError('Exact public050 arrays only')
++            if denied:external_io['blocked']+=1;raise PermissionError('Exact public fitted-four arrays only')
+         if event in ('subprocess.Popen','os.system','os.fork','socket.connect','socket.bind'):
+             external_io['blocked']+=1;raise PermissionError('No external work')
+     def forbid(owner,name,key):
+@@ -111,35 +147,35 @@
+             stamp=time.perf_counter();ranker=load_frozen_ridge();result['ridge_loads']=1
+             result['ridge_load_seconds']=time.perf_counter()-stamp;result['ridge_fingerprint']=ranker.fingerprint
+             for row in result['arms']:
+-                mode=row['method'];folder=OUTPUT/mode;before=budget.snapshot()['native_preview_entries'];stamp=time.perf_counter();costs=Costs()
+-                operation={'method':mode,'phase':'planning','started':stamp,'preview_before':before,'costs':costs};row['status']='source_preparation'
+-                case,admission,prep=source(folder/'source','planning.'+mode);ref=weakref.ref(case);row['source_preparation_seconds']=prep
+-                with budget.phase('planning'),budget.request('planning.'+mode):
++                mode=row['method'];subject=row['subject'];folder=OUTPUT/subject;before=budget.snapshot()['native_preview_entries'];stamp=time.perf_counter();costs=Costs()
++                operation={'method':mode,'subject':subject,'phase':'planning','started':stamp,'preview_before':before,'costs':costs};row['status']='source_preparation'
++                case,admission,prep=source(subject,folder/'source','planning.'+subject);ref=weakref.ref(case);row['source_preparation_seconds']=prep
++                with budget.phase('planning'),budget.request('planning.'+subject):
+                     cs=time.perf_counter();cache=ExactCapsuleCoverCache(case._native_config,**CACHE_LIMITS);row['cache_construction_seconds']=time.perf_counter()-cs
+                     with inject_native_capsule_cache(cache):
+-                        task=record_task(case,admission,mode,folder,costs)
++                        task=record_task(subject,case,admission,folder,costs)
+                         actions,accounting=task.observed_greedy_search(seconds=60)
+                         row['source_through_plan_seconds']=time.perf_counter()-stamp
+                         need(accounting['complete'],'complete_plan_not_partial_STOP')
+                     row['cache_stats']=cache.stats();cache=None
+                 row.update(online_previews=budget.snapshot()['native_preview_entries']-before,online_costs=costs.record())
+-                plan={'subject':SUBJECT,'method':mode,'source_hash':case.source_hash,'decision_model_hash':task.decision_model_hash,
+-                    'admission_hash':admission.fingerprint,'ridge_hash':None if mode=='exhaustive' else RIDGE['fingerprint'],
++                plan={'subject':subject,'method':mode,'source_hash':case.source_hash,'decision_model_hash':task.decision_model_hash,
++                    'admission_hash':admission.fingerprint,'ridge_hash':RIDGE['fingerprint'],
+                     'actions':list(actions),'accounting':plain(accounting),'max_steps':24}
+-                plan['seal']=semantic_digest(plan);plans[mode]=plan;sink.write(folder/'plan.json',plan)
+-                row['files'][str((folder/'plan.json').relative_to(OUTPUT))]=sha(folder/'plan.json');row['status']='plan_sealed'
++                plan['seal']=semantic_digest(plan);plans[subject]=plan;sink.write(folder/'plan.json',plan)
++                row['files'][str((folder/'plan.json').relative_to(OUTPUT))]=sha(folder/'plan.json');row['status']='plan_sealed';row['action_count']=len(actions)
+                 del case,admission,task;gc.collect();need(ref() is None,'planning_case_retained');operation=None
+-            need(len(plans)==2,'both_plans_required_before_any_evaluation');result['all_plans_sealed_before_evaluation']=True
++            need(list(plans)==SUBJECTS,'all_four_plans_required_before_any_evaluation');result['all_plans_sealed_before_evaluation']=True
+             sink.write(OUTPUT/'sealed-plans.json',{'plans':plans,'private_reference_loaded':False})
+             for row in result['arms']:
+-                mode=row['method'];folder=OUTPUT/mode/'replay';stamp=time.perf_counter();before=budget.snapshot()['native_preview_entries'];costs=Costs()
+-                operation={'method':mode,'phase':'replay','started':stamp,'preview_before':before,'costs':costs};row['status']='source_preparation_for_replay'
+-                plan=small(OUTPUT/mode/'plan.json',row['files'][mode+'/plan.json']);unsigned={k:v for k,v in plan.items() if k!='seal'}
+-                need(semantic_digest(unsigned)==plan['seal'] and plan==plans[mode],'sealed_complete_plan_unchanged')
+-                case,admission,prep=source(folder/'source','replay.'+mode);ref=weakref.ref(case)
++                mode=row['method'];subject=row['subject'];folder=OUTPUT/subject/'replay';stamp=time.perf_counter();before=budget.snapshot()['native_preview_entries'];costs=Costs()
++                operation={'method':mode,'subject':subject,'phase':'replay','started':stamp,'preview_before':before,'costs':costs};row['status']='source_preparation_for_replay'
++                plan=small(OUTPUT/subject/'plan.json',row['files'][subject+'/plan.json']);unsigned={k:v for k,v in plan.items() if k!='seal'}
++                need(semantic_digest(unsigned)==plan['seal'] and plan==plans[subject],'sealed_complete_plan_unchanged')
++                case,admission,prep=source(subject,folder/'source','replay.'+subject);ref=weakref.ref(case)
+                 need(native_resection.capsule_voxel_indices is original_cover,'uncached_authoritative_replay')
+-                with budget.phase('execution'),budget.request('replay.'+mode):
+-                    task=record_task(case,admission,mode,folder,costs)
++                with budget.phase('execution'),budget.request('replay.'+subject):
++                    task=record_task(subject,case,admission,folder,costs)
+                     need(task.decision_model_hash==plan['decision_model_hash'] and case.source_hash==plan['source_hash'],'exact_replay_identity')
+                     for action in plan['actions']:check();task.step(action)
+                     need(task.terminated,'complete_replay')
+@@ -154,27 +190,24 @@
+                     replay_previews=budget.snapshot()['native_preview_entries']-before,replay_costs=costs.record(),
+                     endpoint='STOP' if plan['actions'][-1]=='STOP' else 'HORIZON')
+                 del case,admission,task;gc.collect();need(ref() is None,'replay_case_retained');operation=None
+-            a,b=(r['outcomes'] for r in result['arms']);tol=1e-7
+-            result['comparison']={'numeric_tolerance':tol,'no_quality_loss':a['target_removed_mm3']>=b['target_removed_mm3']-tol
+-                and a['total_reward']>=b['total_reward']-tol and a['normal_removed_mm3']<=b['normal_removed_mm3']+tol
+-                and a['cumulative_contacted_tissue_upper_bound_mm3']<=b['cumulative_contacted_tissue_upper_bound_mm3']+tol,
+-                'target_difference_mm3':a['target_removed_mm3']-b['target_removed_mm3'],'reward_difference':a['total_reward']-b['total_reward'],
+-                'preview_ratio':result['arms'][0]['online_previews']/max(1,result['arms'][1]['online_previews']),
+-                'source_through_plan_wall_ratio':result['arms'][0]['source_through_plan_seconds']/result['arms'][1]['source_through_plan_seconds'],
+-                'favorable_outcome_required_for_completion':False,'TRAIN_only':True,'clinical_validation':None}
+-            prior=small(BASELINE['path'],BASELINE['sha256'])
+-            prior_exhaustive=next(r for r in prior['arms'] if r['method']=='exhaustive')
+-            prior_plan_path=Path(BASELINE['path']).parent/'exhaustive/plan.json'
+-            prior_plan=small(prior_plan_path,prior_exhaustive['files']['exhaustive/plan.json'])
+-            result['historical_exhaustive_control']={
+-                'exact_actions':plans['exhaustive']['actions']==prior_plan['actions'],
+-                'exact_outcomes':result['arms'][1]['outcomes']==prior_exhaustive['outcomes'],
+-                'exact_source':plans['exhaustive']['source_hash']==prior_plan['source_hash'],
+-                'scope':'historical scalar/action corroboration; timing comparison uses this fresh pair only'}
++                balanced=references['balanced_ridge_top8',subject]
++                old_plan_key='balanced_ridge_top8/'+subject+'/plan.json'
++                old_metrics_key='balanced_ridge_top8/'+subject+'/replay/episode-metrics.json'
++                old_plan=small(TRAIN_OUTPUT/old_plan_key,balanced['files'][old_plan_key])
++                old_metrics=small(TRAIN_OUTPUT/old_metrics_key,balanced['files'][old_metrics_key])
++                row['regression']=compare_reference(plan,metrics,row['outcomes'],
++                    {m:references[m,subject] for m in ('balanced_ridge_top8','exhaustive')},old_plan,old_metrics)
++            result['comparison']={'regression_passed':all(r['regression']['exact_actions_vs_balanced']
++                and r['regression']['exact_source_vs_balanced'] and r['regression']['exact_outcomes_vs_balanced']
++                and r['regression']['exact_metrics_except_policy_identity']
++                and r['regression']['no_quality_loss_vs_saved_exhaustive'] for r in result['arms']),
++                'favorable_outcome_required_for_completion':False,'fitted_TRAIN_only':True,
++                'timing_comparison':'none; all measured source/setup/planning/replay costs retained without historical wall ratio',
++                'reference':TRAIN_RESULT,'clinical_validation':None}
+             result['ridge_calls']=sum(r['online_costs']['counts'].get('ridge_calls',0)+r['replay_costs']['counts'].get('ridge_calls',0) for r in result['arms'])
+-            need(result['ridge_calls']<=48,'ridge_call_cap');result['ridge_unchanged']=ranker.fingerprint==RIDGE['fingerprint']
++            need(result['ridge_calls']<=CAPS['ridge_calls'],'ridge_call_cap');result['ridge_unchanged']=ranker.fingerprint==RIDGE['fingerprint']
+             result['cache_restored']=native_resection.capsule_voxel_indices is original_cover
+-            budget.complete(history_complete=True);check();result['status']='complete_TRAIN050_switch_guard_comparison'
++            budget.complete(history_complete=True);check();result['status']='complete_fixed_four_switch_regression'
+     except BaseException as error:
+         result.update(status='failed_or_unresolved',failure={'type':type(error).__name__,'message':str(error)})
+         if hasattr(error,'accounting') and hasattr(error,'best_sequence'):
+@@ -182,7 +215,7 @@
+                 'best_sequence':list(error.best_sequence),'accepted_plan':False})
+             result['partial_search_sha256']=sha(OUTPUT/'partial-search.json')
+         if operation is not None:
+-            row=next(r for r in result['arms'] if r['method']==operation['method']);row['status']='failed_or_unresolved'
++            row=next(r for r in result['arms'] if r['method']==operation['method'] and r['subject']==operation['subject']);row['status']='failed_or_unresolved'
+             result['failed_operation_costs']={k:v for k,v in operation.items() if k not in ('started','costs')}
+             result['failed_operation_costs'].update(seconds=time.perf_counter()-operation['started'],
+                 native_previews_paid=budget.snapshot()['native_preview_entries']-operation['preview_before'],local_costs=operation['costs'].record())
+--- build/hybrid-train050-switch-guard-v1/freeze-runtime.py
++++ build/hybrid-fixed-four-switch-regression-v1/freeze-runtime.py
+@@ -1,34 +1,31 @@
+-"""Root-only metadata freeze after promotion; opens no model or array payload."""
+-import argparse,json,subprocess,sys
++"""Root-only metadata freeze; opens no model or source-array payload."""
++import argparse,hashlib,json,subprocess,sys
+ from pathlib import Path
+ HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
+ if __name__=='__main__' and (not sys.pycache_prefix or Path(sys.pycache_prefix).exists()):
+     raise ValueError('Fresh nonexistent -X pycache_prefix required before local imports')
+ sys.path.insert(0,str(HERE));sys.dont_write_bytecode=True
+-from batch_contract import (need,sha,small,metadata,template,transfer_record,read_bytes,TRAIN_RESULT,TRAIN_PARENT,TRAIN_RELEASE,COHORT,COHORT_SHA,BASELINE,PREVIOUS_FALLBACK,PREVIOUS_PARENT,PREVIOUS_RELEASE,previous_evidence)
++from batch_contract import need,sha,input_refs,metadata,template,read_bytes
+ 
+ def main():
+-    p=argparse.ArgumentParser();p.add_argument('--head',required=True);p.add_argument('--inputs',type=Path,required=True);p.add_argument('--inputs-sha256',required=True);a=p.parse_args()
++    p=argparse.ArgumentParser();p.add_argument('--head',required=True);a=p.parse_args()
+     head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip();need(head==a.head,'root_HEAD')
+     for name in ('attempt-01','attempt-01.supervision','source-index.json','release-template.json'):need(not (HERE/name).exists(),'one_fresh_freeze')
+-    inputs=small(a.inputs,a.inputs_sha256);transfer_record(inputs);metadata();previous_evidence()
+-    refs=[PREVIOUS_FALLBACK,PREVIOUS_PARENT,PREVIOUS_RELEASE,BASELINE,inputs['public_manifest'],inputs['intended_use_review'],TRAIN_RESULT,TRAIN_PARENT,TRAIN_RELEASE,{'path':COHORT,'sha256':COHORT_SHA}]
++    metadata();refs=input_refs()
+     for ref in refs:read_bytes(ref['path'],ref['sha256'])
++    paths=list((ROOT/'src/resectionlab').glob('*.py'))
++    paths += [HERE/name for name in ('batch_contract.py','patient_regression.py','fallback_policy.py','hybrid_proposal.py','initial_inventory_worker.py','run_owned.py','freeze-runtime.py')]
++    paths += [ROOT/'build/goal-conditioned-policy-v1'/name for name in ('run_contact_owned.py','darwin_fast_sampler.py')]
+     files={}
+-    paths=list((ROOT/'src/resectionlab').glob('*.py'))
+-    paths += [HERE/name for name in ('batch_contract.py','patient_transfer.py','fallback_policy.py','hybrid_proposal.py','initial_inventory_worker.py','run_owned.py','freeze-runtime.py')]
+-    paths += [ROOT/'build/goal-conditioned-policy-v1'/name for name in ('run_contact_owned.py','darwin_fast_sampler.py')]
+     for path in paths:
+         relative=path.relative_to(ROOT).as_posix();files[relative]=sha(path)
+         if relative.startswith('src/'):
+             need(subprocess.check_output(['git','show',head+':'+relative],cwd=ROOT)==read_bytes(path),'uncommitted_runtime_source:'+relative)
+-    files.update({ref['path']:ref['sha256'] for ref in refs})
+-    index={'version':'frozen-ridge-switch-guard-runtime-v1','head':head,'files':files,'payloads_opened':False}
++    files.update({r['path']:r['sha256'] for r in refs})
++    index={'version':'fixed-four-frozen-switch-regression-runtime-v1','head':head,'files':files,'payloads_opened':False}
+     encode=lambda v:(json.dumps(v,indent=2,sort_keys=True,allow_nan=False)+'\n').encode()
+-    raw=encode(index)
+-    import hashlib
+-    ref={'path':(HERE/'source-index.json').relative_to(ROOT).as_posix(),'sha256':hashlib.sha256(raw).hexdigest()}
+-    release=template(head,ref,inputs)
++    raw=encode(index);ref={'path':(HERE/'source-index.json').relative_to(ROOT).as_posix(),'sha256':hashlib.sha256(raw).hexdigest()}
++    release=template(head,ref)
+     need(not any(x in sys.modules for x in ('numpy','torch','resectionlab')),'metadata_only_freeze')
+     (HERE/'source-index.json').write_bytes(raw);(HERE/'release-template.json').write_bytes(encode(release))
+     print(json.dumps({'source_index':ref,'false_release_sha256':sha(HERE/'release-template.json'),'execution_released':False}))
+--- build/hybrid-proposal-balanced-v2/patient_sparse.py
++++ build/hybrid-fixed-four-switch-regression-v1/patient_regression.py
+@@ -1,79 +1,83 @@
+-"""Explicit fixed-four TRAIN capability; not a PatientTrainSession/checkpoint path.
++"""Inference-only successor of the original fixed-four PilotAdmission.
+ 
+-The existing source/QC validation still runs in full before any inventory.
+-Its historical search-only receipt authenticates the public world only. The
+-separately root-released pilot authorizes two fixed ridge solves and top8
+-inference; it does not relabel that receipt as neural training admission.
++Historical qualification authenticates the same world. This capability is not
++an outside-fit development-transfer admission and cannot fit, train or evaluate
++SELECT/EVAL. The only new authority is the root-released frozen-policy regression.
+ """
+ from dataclasses import dataclass
++import json
++import numpy as np
+ from resectionlab.core import freeze_json,semantic_digest
+ from resectionlab.native_spatial_task import NativeSpatialCase
+-from hybrid_proposal import GeneratedSparseTask,VERSION
++from hybrid_proposal import GeneratedSparseTask,RidgePriority,VERSION as FEATURE_VERSION
++from fallback_policy import NoPositiveFallbackMixin
++from batch_contract import VERSION,RIDGE,PROPOSALS,EXPOSURE,SUBJECTS,TRAIN_RESULT,read_bytes,need,digest
+ 
+-SUBJECTS=('ReMIND-002','ReMIND-015','ReMIND-018','ReMIND-045')
+-PILOT_VERSION='fixed-four-TRAIN-balanced-ridge-contrast-v2'
++def load_frozen_ridge():
++    """Called once only inside the released owned worker; never fit or torch.load."""
++    raw=read_bytes(RIDGE['path'],RIDGE['sha256'],limit=256*1024)
++    obj=json.loads(raw,parse_constant=lambda x:(_ for _ in ()).throw(ValueError('nonfinite_ridge')))
++    need(set(obj)=={'feature_version','data_hash','mean','scale','weights','intercept'},'exact_ridge_JSON_schema')
++    need(obj['feature_version']==RIDGE['fingerprint'] and obj['data_hash']==RIDGE['data_hash'],'original_fit_lineage')
++    for key in ('mean','scale','weights'):
++        need(type(obj[key]) is list and len(obj[key])==681 and all(type(x) in (int,float) for x in obj[key]),'finite_numeric_ridge_vector')
++    need(type(obj['intercept']) in (int,float),'numeric_ridge_intercept')
++    ranker=RidgePriority(*(np.asarray(obj[k],np.float64) for k in ('mean','scale','weights')),float(obj['intercept']))
++    need(ranker.fingerprint==RIDGE['fingerprint'],'exact_frozen_ridge_parameters')
++    return ranker
++
+ 
+ @dataclass(frozen=True)
+ class PilotAdmission:
+     record: object
+     fingerprint: str
+-
+     def require_source(self,case):
+-        if (semantic_digest(self.record)!=self.fingerprint or type(case) is not NativeSpatialCase
+-            or self.record['version']!=PILOT_VERSION or self.record['subject'] not in SUBJECTS
+-            or self.record['role']!='TRAIN' or case.track!='annotation_assisted'
+-            or case.source_hash!=self.record['source_hash']
+-            or case.reference_hash!=self.record['reference_hash']
+-            or case._native_config.fingerprint!=self.record['native_config_hash']):
+-            raise ValueError('Fixed public TRAIN pilot source changed')
++        need(semantic_digest(self.record)==self.fingerprint and type(case) is NativeSpatialCase
++             and self.record['version']==VERSION and self.record['subject'] in SUBJECTS
++             and self.record['role']=='TRAIN' and case.track=='annotation_assisted'
++             and case.source_hash==self.record['source_hash'] and case.reference_hash==self.record['reference_hash']
++             and case._native_config.fingerprint==self.record['native_config_hash'],'exact_fixed_four_regression_world')
+         case.assert_intact()
+ 
+ 
+ def admit_source(case,*,cohort_bytes,source_binding,qc_receipt,protocol,pilot_declaration):
+-    # No task construction or observation is used by this canonical validator.
+     from resectionlab.patient_planning_admission import validate_patient_planning_source
+-    validate_patient_planning_source(case,cohort_bytes=cohort_bytes,source_binding=source_binding,
+-        qc_receipt=qc_receipt,protocol=protocol)
+-    if (set(pilot_declaration)!={'version','released_sha256','source_world_hashes','proposal_config','post_exposure_condition'}
+-        or pilot_declaration['version']!=PILOT_VERSION
+-        or type(pilot_declaration['released_sha256']) is not str
+-        or len(pilot_declaration['released_sha256'])!=64
+-        or any(c not in '0123456789abcdef' for c in pilot_declaration['released_sha256'])
+-        or tuple(pilot_declaration['source_world_hashes'])!=SUBJECTS
+-        or source_binding['subject'] not in SUBJECTS or protocol['role']!='TRAIN'
+-        or source_binding['evidence_domain']!='acquired_patient'
+-        or protocol['max_steps']!=24 or protocol['max_optimizer_updates']!=0
+-        or protocol['max_policy_forwards']!=0 or protocol['initialization']!='public_world_search_only'
+-        or case.post_exposure is None or case.post_exposure.record['version']!=pilot_declaration['post_exposure_condition']
+-        or case.proposal_mode!='nominal_cavity_v1' or case.proposal_config.obstruction_opening
+-        or case.proposal_config.max_candidates!=120 or len(case.proposal_config.offsets_source_voxels)!=13
+-        or not case.proposal_config.tool_footprint_opening or case.proposal_config.intermediate_opening_mm!=1.
+-        or semantic_digest(case.proposal_config.to_record())!=semantic_digest(pilot_declaration['proposal_config'])
+-        or case.source_hash!=pilot_declaration['source_world_hashes'][source_binding['subject']]):
+-        raise ValueError('Exact fixed-four TRAIN ridge pilot declaration required')
+-    record=freeze_json({'version':PILOT_VERSION,'subject':source_binding['subject'],'role':'TRAIN',
++    validate_patient_planning_source(case,cohort_bytes=cohort_bytes,source_binding=source_binding,qc_receipt=qc_receipt,protocol=protocol)
++    d=pilot_declaration
++    need(set(d)=={'version','released_sha256','source_world_hashes','proposal_config','post_exposure_condition',
++                 'fits','optimizer_updates','neural_forwards','frozen_ridge','training_result'}
++         and d['version']==VERSION and d['fits']==d['optimizer_updates']==d['neural_forwards']==0
++         and all(type(d[k]) is int for k in ('fits','optimizer_updates','neural_forwards'))
++         and d['frozen_ridge']==RIDGE and d['training_result']==TRAIN_RESULT
++         and tuple(d['source_world_hashes'])==tuple(SUBJECTS)
++         and source_binding['subject'] in SUBJECTS and protocol['role']=='TRAIN'
++         and source_binding['evidence_domain']=='acquired_patient'
++         and protocol['max_steps']==24 and protocol['max_optimizer_updates']==protocol['max_policy_forwards']==0
++         and protocol['initialization']=='public_world_search_only' and 'development_transfer' not in protocol
++         and case.post_exposure is not None and case.post_exposure.record['version']==d['post_exposure_condition']==EXPOSURE
++         and case.proposal_mode=='nominal_cavity_v1' and not case.proposal_config.obstruction_opening
++         and case.proposal_config.max_candidates==120 and len(case.proposal_config.offsets_source_voxels)==13
++         and case.proposal_config.tool_footprint_opening and case.proposal_config.intermediate_opening_mm==1.
++         and semantic_digest(case.proposal_config.to_record())==semantic_digest(d['proposal_config'])==semantic_digest(PROPOSALS)
++         and case.source_hash==d['source_world_hashes'][source_binding['subject']],'exact_fixed_four_zero_fit_declaration')
++    digest(d['released_sha256'])
++    record=freeze_json({'version':VERSION,'subject':source_binding['subject'],'role':'TRAIN',
+         'source_hash':case.source_hash,'reference_hash':case.reference_hash,'native_config_hash':case._native_config.fingerprint,
+         'source_validation_protocol_hash':semantic_digest(protocol),'source_binding_hash':semantic_digest(source_binding),
+-        'qc_hash':semantic_digest(qc_receipt),'pilot_declaration':pilot_declaration,
+-        'feature_version':VERSION,'private_reference_used':False,'max_steps':24,
+-        'scope':'two fixed TRAIN ridge priority solves; exact verified top8; no SELECT/EVAL or neural updates'})
++        'qc_hash':semantic_digest(qc_receipt),'pilot_declaration':d,'feature_version':FEATURE_VERSION,
++        'private_reference_used':False,'max_steps':24,'scope':'frozen fitted-cohort inference regression; zero fit/update/neural; SELECT/EVAL closed'})
+     return PilotAdmission(record,semantic_digest(record))
+ 
+ 
+-class AdmittedSparseTask(GeneratedSparseTask):
+-    def __init__(self,case,*,admission,mode,ranker=None,max_steps=24,cancelled=None,costs=None):
+-        if type(admission) is not PilotAdmission or max_steps!=24:
+-            raise ValueError('Explicit fixed TRAIN pilot admission required')
++class AdmittedRegressionTask(NoPositiveFallbackMixin,GeneratedSparseTask):
++    def __init__(self,case,*,admission,ranker,max_steps=24,cancelled=None,costs=None,mode='ridge_top8'):
++        need(type(admission) is PilotAdmission and type(max_steps) is int and max_steps==24,'explicit_fixed_four_capability')
++        need(mode=='ridge_top8' and type(ranker) is RidgePriority and ranker.fingerprint==RIDGE['fingerprint'],'frozen_ranker_only')
+         self.admission=admission
+         super().__init__(case,mode=mode,ranker=ranker,max_steps=max_steps,cancelled=cancelled,costs=costs)
+-
+-    def _require_source(self,case):
+-        self.admission.require_source(case)
+-
+-    def _contract_record(self):
+-        return {**super()._contract_record(),'fixed_TRAIN_pilot_admission':self.admission.fingerprint}
+-
++    def _require_source(self,case):self.admission.require_source(case)
++    def _contract_record(self):return {**super()._contract_record(),'fixed_TRAIN_regression_admission':self.admission.fingerprint}
+     def fresh(self):
+         self._assert_frozen()
+-        return type(self)(self.case,admission=self.admission,mode=self._selection,ranker=self._ranker,
++        return type(self)(self.case,admission=self.admission,ranker=self._ranker,
+             max_steps=self.max_steps,cancelled=self._cancelled,costs=self.costs)

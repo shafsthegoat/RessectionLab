@@ -1,0 +1,33 @@
+{
+  "acquired_arrays_or_frozen_model_allowed": false,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-fixed-four-switch-regression-v1/controls-attempt-01/fresh-pycache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-fixed-four-switch-regression-v1/controls-attempt-01/generated_child.py",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hybrid-fixed-four-switch-regression-v1/controls-attempt-01/generated-tmp"
+  ],
+  "elapsed_seconds": 4.984251834219322,
+  "exit_code": 0,
+  "files": {
+    "build/hybrid-fixed-four-switch-regression-v1/batch_contract.py": "1617b68896cccd9304066817864e41872ad7dfa8e44b21372d52234bcdf4e392",
+    "build/hybrid-fixed-four-switch-regression-v1/fallback_policy.py": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+    "build/hybrid-fixed-four-switch-regression-v1/freeze-runtime.py": "d17fbd0d2b348e14a6174d008f52ebafdbaf4d08b6bcb395b29f8650f3237c5a",
+    "build/hybrid-fixed-four-switch-regression-v1/hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+    "build/hybrid-fixed-four-switch-regression-v1/initial_inventory_worker.py": "94ab2685889be6c5394c7aca07ebf043ed98159c08638dde2c6d4b85fed3fa43",
+    "build/hybrid-fixed-four-switch-regression-v1/patient_regression.py": "3c854afd45a75a93fd143c9b8b5cf125e4cce2dace062dc61a84da9619e1b363",
+    "build/hybrid-fixed-four-switch-regression-v1/run_generated_controls.py": "9518ff11a9af1f179f4a04ed36c916f08a1cc81992ba239d935262cf0f896369",
+    "build/hybrid-fixed-four-switch-regression-v1/run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+    "build/hybrid-fixed-four-switch-regression-v1/tests/test_fixed_four_regression.py": "134cb4f2a389be42e91ff90c2b41d8e4d839b3f9bbab62ba2d087723ceab24db"
+  },
+  "generated_only": true,
+  "hard_seconds": 30,
+  "log_sha256": "4f618af7719872174335c029642cfda03013f1fa3ff00607700ea54ee74b8ad8",
+  "observed_child_maxrss": 273203200,
+  "source_unchanged": true,
+  "threads": 1,
+  "timeout": false
+}

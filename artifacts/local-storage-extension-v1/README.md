@@ -33,3 +33,9 @@ At the subsequent 09:52:26 UTC milestone, growth is 24.414 MiB and free space
 is 332.917 GiB. The completed switch-guard reservation is closed; 128 MiB for
 paged-route preparation and 16 MiB for archives remain reserved. See the exact
 `milestone-closure-02.json` snapshot; no new dataset was acquired.
+
+The 10:11:48 UTC snapshot closes the paged-route and fixed-four runs. Recorded
+growth is 60.340 MiB, free space 332.854 GiB, and free after reservations
+332.713 GiB. A single h48 continuation is reserved at 128 MiB for preparation;
+root archive allowance stays 16 MiB. Later archive copies are not included in
+that dated scan. See `milestone-handoff-03.json` and `milestone-handoff-04.json`.

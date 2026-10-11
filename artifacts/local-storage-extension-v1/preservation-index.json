@@ -125,6 +125,18 @@
       "bytes": 4857,
       "path": "build/storage-extension-v1/milestone-closure-02.json",
       "sha256": "ff4ace2e79497e9022f1f9412587bbb83f32dc11f1e2a5772278c7cd746b5bbf"
+    },
+    {
+      "archive_path": "milestone-handoff-03.json",
+      "bytes": 4982,
+      "path": "build/storage-extension-v1/milestone-handoff-03.json",
+      "sha256": "27995ed5ed90d60f44dd6ce134f616334d3fc6b065e74237eaeb512080759613"
+    },
+    {
+      "archive_path": "milestone-handoff-04.json",
+      "bytes": 4797,
+      "path": "build/storage-extension-v1/milestone-handoff-04.json",
+      "sha256": "7e395fc47cfdb6a04db521f4030c906dcc9b5a21eec6e91d02e6d11d29f92d25"
     }
   ],
   "scope": "immutable baseline and reservation snapshots; mutable live ledger excluded"
