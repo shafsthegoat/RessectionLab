@@ -1,0 +1,61 @@
+..........F.F                                                            [100%]
+=================================== FAILURES ===================================
+_ test_actual_native_focused_recursive_chain_packets_and_complete_independent_replay _
+
+    def test_actual_native_focused_recursive_chain_packets_and_complete_independent_replay():
+        task=make_task(recursive=True);packets,r=select_corridor(task,seconds=15)
+        assert r['complete'] and r['estimated_incremental_return']>0 and r['dependency_preview_calls']>0
+        assert any(p['focus'] is not None for p in packets)
+        assert r['selected_action_records']==[thaw_json(p) for p in packets]
+        assert r['diagnostic_preview_calls']==r['goal_diagnostic_preview_calls']+r['dependency_preview_calls']
+        for row in r['states']:
+            assert row['complete_page_enumeration']
+            acct=row['obstruction_accounting']
+            assert acct['selected_cells']<=16 and acct['added_candidates_to_verify']<=32
+            if row['goal_focus'] is not None:
+                focused=acct['goal_focus']
+                assert focused['record']==row['goal_focus']
+                assert set(map(tuple,focused['aperture_eligible_cells']))<=set(map(tuple,focused['selected_cells']))
+        assert check_exploration_geometry(task,r['explored_history'])['feasible']
+        a,b=task.fresh(),task.fresh()
+        for packet in packets:a.step_record(packet);b.step_record(packet)
+>       assert a.terminated and a.metrics()==b.metrics() and a.metrics()['history']==r['explored_history']
+E       AssertionError: assert (True and {'task_versio...b2050b0', ...} == {'task_versio...b2050b0', ...}
+E        +  where True = <resectionlab.focused_paged_task.FocusedPagedObstructionTask object at 0x1092e13a0>.terminated
+E         
+E         Omitting 31 identical items, use -vv to show
+E         Use -v to get more diff and [{'tool_id': ...3': 0.0, ...}] == [{'tool_id': ...3': 0.0, ...}]
+E         
+E         At index 0 diff: {'tool_id': 'generic_aspirator', 'tip_mm': (np.float64(14.0), np.float64(1.0999999999999996), np.float64(17.9)), 'axis_unit': (np.float64(1.0), np.float64(0.0), np.float64(0.0)), 'entry_mm': (np.float64(13.5), np.float64(1.0999999999999996), np.float64(17.9)), 'removed_indices_native': [[2, 10, 9]], 'contact_indices_native': [[2, 10, 9], [4, 10, 10]], 'microsteps': [{'tip_start_mm': (np.float64(13.5), np.float64(1.0999999999999996), np.float64(17.9)), 'tip_end_mm': (np.float64(13.5), np.float64(1.0999999999999996), np.float64(17.9)), 'active_stroke_star...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show)
+
+build/select013-focused-corridor-v1/tests/test_focused_corridor.py:149: AssertionError
+________ test_positive_best_prefix_stop_packet_survives_negative_suffix ________
+
+    def test_positive_best_prefix_stop_packet_survives_negative_suffix():
+        original=make_task(recursive=True,horizon=2)
+        nominal=np.array(original.case.nominal_target);nominal[2,10,9]=1
+        task=FocusedPagedObstructionTask(replace(original.case,nominal_target=nominal,reference_target=nominal),max_steps=2)
+        packets,r=select_corridor(task,seconds=15)
+        assert len(r['explored_history'])==2
+        assert r['explored_history'][0]['reward']>0 and r['explored_history'][1]['reward']<0
+        assert r['selected_prefix_length']==1 and len(packets)==2 and packets[-1]['action_id']=='STOP'
+        assert packets[-1]['steps_taken']==1 and packets[-1]['focus'] is not None
+        assert r['estimated_incremental_return']>r['explored_total_return']
+        a,b=task.fresh(),task.fresh()
+        for packet in packets:a.step_record(packet);b.step_record(packet)
+        assert a.metrics()==b.metrics() and evaluate_native_spatial_episode(b)['accepted']
+>       assert a.metrics()['history'][0]==r['explored_history'][0]
+E       AssertionError: assert {'tool_id': '...4(17.9)), ...} == {'tool_id': '...4(17.9)), ...}
+E         
+E         Omitting 30 identical items, use -vv to show
+E         Differing items:
+E         {'outcome_scope': 'separate_evaluator_reference'} != {'outcome_scope': 'permitted_nominal_model'}
+E         Use -v to get more diff
+
+build/select013-focused-corridor-v1/tests/test_focused_corridor.py:181: AssertionError
+=========================== short test summary info ============================
+FAILED build/select013-focused-corridor-v1/tests/test_focused_corridor.py::test_actual_native_focused_recursive_chain_packets_and_complete_independent_replay
+FAILED build/select013-focused-corridor-v1/tests/test_focused_corridor.py::test_positive_best_prefix_stop_packet_survives_negative_suffix
+2 failed, 11 passed in 1.23s

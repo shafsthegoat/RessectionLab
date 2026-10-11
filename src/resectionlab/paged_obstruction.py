@@ -93,7 +93,7 @@ class PagedObstructionTask(NativeSpatialTask):
             outcomes[ray.proposal_id] = self._outcome(ray, result, origin, end)
             if result.feasible:
                 inventory[ray.proposal_id] = result
-        full = proposer.append_obstruction_openings(base, self._engine, evidence, cancelled=self._cancelled)
+        full = self._extend_base_catalog(base, evidence)
         if len(full.proposals)-len(base.proposals) > 32:
             raise ValueError("Bounded obstruction pair ceiling exceeded")
         if len(self._engine._preview_records) != len(inventory):
@@ -102,6 +102,10 @@ class PagedObstructionTask(NativeSpatialTask):
         self._base_outcomes = freeze_json(outcomes)
         self._base_batch, self._page_catalog = base, full
         self._page_state_hash = self._engine.state_hash
+
+    def _extend_base_catalog(self, base, evidence):
+        return self.case._nominal_proposer.append_obstruction_openings(
+            base, self._engine, evidence, cancelled=self._cancelled)
 
     @staticmethod
     def _outcome(ray, result, origin, end):

@@ -1,0 +1,41 @@
+{
+  "schema": "bounded-generated-focused-controls-v1",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/select013-focused-corridor-v1/tests/test_focused_corridor.py"
+  ],
+  "returncode": 0,
+  "timed_out": false,
+  "wall_seconds": 1.3143104579999998,
+  "hard_seconds": 45,
+  "threads": 1,
+  "child_reaped": true,
+  "generated_only": true,
+  "acquired_or_model_inputs": false,
+  "source_before": {
+    "build/select013-focused-corridor-v1/stage/resectionlab/focused_paged_task.py": "be8d524057859a4cd80476077d5fc1fa538964f77616111654086a3b622cafb3",
+    "build/select013-focused-corridor-v1/stage/resectionlab/native_proposals.py": "aa1be3d50845d2c75c3cd0df382f6fdfee6f5d1059303c90e898baaeeebacde7",
+    "build/select013-focused-corridor-v1/stage/resectionlab/native_spatial_task.py": "b8b05798015e4e93ab833598cc4b70b1e3f08a8837568ba701d0e3e272bdf57a",
+    "build/select013-focused-corridor-v1/stage/resectionlab/paged_obstruction.py": "aa6b522ea762d00685ecacc603491e694dcf91a3d806c452f32f4e894ba4fb7c",
+    "build/select013-focused-corridor-v1/focused_corridor_selector.py": "e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448",
+    "build/select013-focused-corridor-v1/tests/test_focused_corridor.py": "bd22dc300aab37e751a4cba5408d5a102f81606334efe00775330cc9ef38d851",
+    "build/select013-focused-corridor-v1/tests/conftest.py": "6559cded59fb66942c7689624d84148b8a0ab86612a7198abb00355a02858e9a"
+  },
+  "source_after": {
+    "build/select013-focused-corridor-v1/stage/resectionlab/focused_paged_task.py": "be8d524057859a4cd80476077d5fc1fa538964f77616111654086a3b622cafb3",
+    "build/select013-focused-corridor-v1/stage/resectionlab/native_proposals.py": "aa1be3d50845d2c75c3cd0df382f6fdfee6f5d1059303c90e898baaeeebacde7",
+    "build/select013-focused-corridor-v1/stage/resectionlab/native_spatial_task.py": "b8b05798015e4e93ab833598cc4b70b1e3f08a8837568ba701d0e3e272bdf57a",
+    "build/select013-focused-corridor-v1/stage/resectionlab/paged_obstruction.py": "aa6b522ea762d00685ecacc603491e694dcf91a3d806c452f32f4e894ba4fb7c",
+    "build/select013-focused-corridor-v1/focused_corridor_selector.py": "e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448",
+    "build/select013-focused-corridor-v1/tests/test_focused_corridor.py": "bd22dc300aab37e751a4cba5408d5a102f81606334efe00775330cc9ef38d851",
+    "build/select013-focused-corridor-v1/tests/conftest.py": "6559cded59fb66942c7689624d84148b8a0ab86612a7198abb00355a02858e9a"
+  },
+  "source_unchanged": true,
+  "log_sha256": "b7819626b9e8c2283fdc2a47754064f012f265920c0c5bf7005751698bbc8186"
+}

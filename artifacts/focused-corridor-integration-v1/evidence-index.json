@@ -1,0 +1,85 @@
+{
+  "files": [
+    {
+      "path": "promotion-index.json",
+      "bytes": 3089,
+      "sha256": "7a3c201547afd6d6f0ce87080a98574871a6263efa02e71f052c6c91222ae511"
+    },
+    {
+      "path": "promotion.patch",
+      "bytes": 48492,
+      "sha256": "186469cb877d2a8e8edac68fceb5e4a46d027a104dd69c92907133a0be7f1748"
+    },
+    {
+      "path": "controls-01.json",
+      "bytes": 2831,
+      "sha256": "d215e13598ffcc2724c3e100057e559816bd802d77e395877d2653aaa461c0f3"
+    },
+    {
+      "path": "controls-01.log",
+      "bytes": 4684,
+      "sha256": "0a37474a507bbf5c7f3a5543ab191966a5af94b388dc196df26407b318856dc1"
+    },
+    {
+      "path": "controls-02.json",
+      "bytes": 2838,
+      "sha256": "109b96e74ee8fc6e93d5cf5a156a7abc511d3921531b119d61d8c04b69590396"
+    },
+    {
+      "path": "controls-02.log",
+      "bytes": 2905,
+      "sha256": "1e7f1be1597b14aca42802916e0e64d927a342fea33dc83cc5bc5cb80479e445"
+    },
+    {
+      "path": "controls-03.json",
+      "bytes": 2838,
+      "sha256": "8aea3aaadba2910be3eb95d198a16b522f3848f49f84595dcb77f549be0d8524"
+    },
+    {
+      "path": "controls-03.log",
+      "bytes": 99,
+      "sha256": "b7819626b9e8c2283fdc2a47754064f012f265920c0c5bf7005751698bbc8186"
+    },
+    {
+      "path": "canonical-controls-01.json",
+      "bytes": 1882,
+      "sha256": "d330f28e896bdf95ff7368168c81e12af049ddc857af19b41759349b4372a036"
+    },
+    {
+      "path": "canonical-controls-01.log",
+      "bytes": 121,
+      "sha256": "5e23fc37ff2372f8de4b8319d4c68d6bfe445cf5c051872f1e53f63a843fce54"
+    },
+    {
+      "path": "canonical-controls-02.json",
+      "bytes": 2094,
+      "sha256": "65945573f554edb25bb3be689e8dcc812677e82699d6ab9017caa78aa3970e54"
+    },
+    {
+      "path": "canonical-controls-02.log",
+      "bytes": 341,
+      "sha256": "174c58210d3fb6e5af53ab92089f70b140c66cc8d5d942a31ddd5dca52aa27ad"
+    },
+    {
+      "path": "runtime-controls-01/receipt.json",
+      "bytes": 791,
+      "sha256": "496a7fa85051f73799f55865e27cf72ea609bca621a40e480c0093af0ae40fd4"
+    },
+    {
+      "path": "runtime-controls-01/stdout.log",
+      "bytes": 373,
+      "sha256": "b844602ee8b827df5924fd45dd9b4083c6d5924f80008b4dd64069140b16285b"
+    },
+    {
+      "path": "test_serialized_completion.py",
+      "bytes": 2285,
+      "sha256": "7c2204a5083a5a6224afa574d064b0aca50d1cff6082fa82c174cb0c8a91ed16"
+    },
+    {
+      "path": "focused-corridor-source-review.txt",
+      "bytes": 10296,
+      "sha256": "affa9f47ed53bc7a149bdde61c6339135f7eb73d7e400ab24fd1bb25b170f3f5"
+    }
+  ],
+  "source": "Production files and portable tests are committed with this artifact; promotion-index pins exact bytes. Source/model comparison remains pending separate acquired execution."
+}

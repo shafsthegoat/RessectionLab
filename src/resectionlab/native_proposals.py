@@ -462,6 +462,23 @@ def _target_ray_group_order(cells, groups, eligible, nominal_cells, limit):
     return order, accounting
 
 
+def _focused_goal_order(order, focused_cells, eligible, groups, limit):
+    """Prioritize only exact-goal eligible cells, then preserve v3 fill order."""
+    focus, eligible = set(focused_cells), set(eligible)
+    if not focus <= set(order) or not eligible <= set(order):
+        raise ValueError("Focus cells require current retained base evidence")
+    first = sorted(focus & eligible)
+    result = first + [cell for cell in order if cell not in set(first)]
+    selected = set(result[:min(limit, len(eligible))])
+    rows = []
+    for group in groups:
+        co = {tuple(cell) for cell in group["retained_co_blockers"]}
+        rows.append({**group, "selected_co_blockers": sorted(co & selected),
+            "unselected_co_blockers": sorted(co-selected),
+            "all_retained_co_blockers_selected": co <= selected})
+    return result, rows, selected
+
+
 @dataclass(frozen=True)
 class NominalCavityProposalConfig:
     """A bounded family ledger, never all possible tool paths.
@@ -986,7 +1003,35 @@ class PreparedNominalCavityProposer:
         return NominalCavityBatch(self._model_hash, cavity_hash, self._nominal_hash,
             self._provenance_hash, tuple(rays), tuple(ledger))
 
-    def append_obstruction_openings(self, batch, engine, results, *, cancelled=None):
+    def goal_focus_record(self, batch, engine, key):
+        """State-bound public base-goal identity; no preview or private label."""
+        if (self._config.obstruction_selection_rule != TARGET_RAY_OBSTRUCTION_RULE
+                or batch != self.propose(engine)):
+            raise ValueError("Focus requires the exact current public v3 base catalog")
+        tool, entry, tip = key
+        entry, tip = _point(entry), _point(tip)
+        matches = [ray for ray in batch.proposals
+                   if (ray.tool_id, ray.entry_mm, ray.tip_mm) == (tool, entry, tip)
+                   and self._nominal[ray.voxel] > self._config.nominal_min_membership]
+        if len(matches) != 1:
+            raise ValueError("Focus is not a unique current public nominal-positive base goal")
+        return freeze_json({"schema": "public-base-goal-focus-v1",
+            "source_hash": self._native.source_hash, "native_decision_model_hash": self._native.fingerprint,
+            "proposal_model_hash": self._model_hash, "source_state_hash": engine.state_hash,
+            "tool_id": tool, "entry_mm": entry, "tip_mm": tip})
+
+    def validate_goal_focus(self, batch, engine, focus):
+        try:
+            row = thaw_json(focus)
+            expected = self.goal_focus_record(batch, engine,
+                (row["tool_id"], row["entry_mm"], row["tip_mm"]))
+        except (TypeError, KeyError, IndexError) as error:
+            raise ValueError("Malformed public goal focus") from error
+        if row != thaw_json(expected):
+            raise ValueError("Stale, altered or source-mismatched public goal focus")
+        return expected
+
+    def append_obstruction_openings(self, batch, engine, results, *, cancelled=None, focus=None):
         """Append public blocker-centered rays using the already paid base previews.
 
         No preview, reward or reference label is queried here. A blocker is an
@@ -1013,6 +1058,9 @@ class PreparedNominalCavityProposer:
                 or len(results) > self._config.max_candidates
                 or any(r.family == OBSTRUCTION_OPENING_FAMILY for r in batch.proposals)):
             raise ValueError("One exact base batch and its ordered preview results are required")
+        focus = None if focus is None else self.validate_goal_focus(batch, engine, focus)
+        focus_key = None if focus is None else (focus["tool_id"], tuple(focus["entry_mm"]), tuple(focus["tip_mm"]))
+        focused_cells, focused_evidence = set(), None
         affine, shape = self._native.affine, self._native.tissue_mask.shape
         access, normal = self._native.access, self._native.access.normal_inward
         frame_hash = array_digest(affine)
@@ -1056,6 +1104,10 @@ class PreparedNominalCavityProposer:
                 raise ValueError("Complete obstruction cell digest differs")
             evidence.append({"base_proposal_id": ray.proposal_id, "diagnostic_hash": fingerprint,
                 "blocked_cell_count": total, "retained_cell_count": count, "truncated": total > count})
+            if focus_key == (ray.tool_id, ray.entry_mm, ray.tip_mm):
+                focused_cells = {tuple(int(v) for v in cell) for cell in retained}
+                focused_evidence = {"diagnostic_hash": fingerprint, "blocked_cell_count": total,
+                    "retained_cell_count": count, "complete_first_failure_set": total == count}
             for cell in retained:
                 cells.setdefault(tuple(int(v) for v in cell), set()).add(fingerprint)
             if group_rule and self._nominal[ray.voxel] > self._config.nominal_min_membership:
@@ -1099,6 +1151,9 @@ class PreparedNominalCavityProposer:
             nominal_cells = {cell for cell in ordered if self._nominal[cell] > self._config.nominal_min_membership}
             ordered, group_accounting = _target_ray_group_order(ordered, goal_groups, eligible,
                 nominal_cells, OBSTRUCTION_SELECTED_CELLS)
+            if focus is not None:
+                ordered, group_accounting, selected_set = _focused_goal_order(
+                    ordered, focused_cells, eligible, group_accounting, OBSTRUCTION_SELECTED_CELLS)
         candidate_cap = self._config.max_candidates
         if self._config.obstruction_page_size is not None:
             if len(self._native.tools) > 2:
@@ -1176,12 +1231,19 @@ class PreparedNominalCavityProposer:
                 target_ray_groups=group_accounting,
                 target_ray_group_aliases="same_column_tool_union; public_goal_endpoint_membership_not_family_or_ID",
                 target_ray_group_scope="retained_first_failures_only; unselected_and_ineligible_co_blockers_explicit; no_clearance_or_return_guarantee")
+        if focus is not None:
+            accounting.update(priority="current_exact_public_goal_first_blockers_then_unchanged_v3_fill",
+                goal_focus={"record": thaw_json(focus), "first_failure": focused_evidence,
+                    "retained_cells": sorted(focused_cells), "aperture_eligible_cells": sorted(focused_cells & eligible),
+                    "selected_cells": sorted(focused_cells & selected_set),
+                    "unselected_cells": sorted(focused_cells-selected_set),
+                    "scope": "current exact base-goal retained first failure only; no prerequisite priority or reachability claim"})
         result = NominalCavityBatch(batch.model_hash, cavity, batch.nominal_target_hash,
             batch.nominal_provenance_hash, tuple(rays), tuple(ledger))
         object.__setattr__(result, "_obstruction_accounting", freeze_json(accounting))
         return result
 
-    def validate_batch(self, batch: NominalCavityBatch, engine: NativeResectionEngine, *, obstruction_results=None) -> None:
+    def validate_batch(self, batch: NominalCavityBatch, engine: NativeResectionEngine, *, obstruction_results=None, focus=None) -> None:
         """Validate current evidence/cavity dispositions, never certify geometry."""
         if not isinstance(batch, NominalCavityBatch) or batch.obstruction_accounting is None:
             if not isinstance(batch, NominalCavityBatch) or batch != self.propose(engine):
@@ -1189,6 +1251,6 @@ class PreparedNominalCavityProposer:
             return
         if obstruction_results is None:
             raise ValueError("Extended batch validation requires its bound original preview sidecars")
-        expected = self.append_obstruction_openings(self.propose(engine), engine, obstruction_results)
+        expected = self.append_obstruction_openings(self.propose(engine), engine, obstruction_results, focus=focus)
         if batch != expected or batch.obstruction_accounting != expected.obstruction_accounting:
             raise ValueError("Nominal/cavity proposal batch is stale, altered or source-mismatched")

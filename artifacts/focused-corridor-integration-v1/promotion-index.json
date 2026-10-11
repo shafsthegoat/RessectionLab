@@ -1,0 +1,59 @@
+{
+  "schema": "focused-public-corridor-promotion-v1",
+  "production_and_portable_tests": [
+    {
+      "staged": "build/select013-focused-corridor-v1/stage/resectionlab/focused_corridor_selector.py",
+      "canonical": "src/resectionlab/focused_corridor_selector.py",
+      "before_sha256": null,
+      "after_sha256": "e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448"
+    },
+    {
+      "staged": "build/select013-focused-corridor-v1/stage/resectionlab/focused_paged_task.py",
+      "canonical": "src/resectionlab/focused_paged_task.py",
+      "before_sha256": null,
+      "after_sha256": "be8d524057859a4cd80476077d5fc1fa538964f77616111654086a3b622cafb3"
+    },
+    {
+      "staged": "build/select013-focused-corridor-v1/stage/resectionlab/native_proposals.py",
+      "canonical": "src/resectionlab/native_proposals.py",
+      "before_sha256": "fc135cb1bf8a3cbacfeb097eeabee5cd9fafc5dee7a89eebd2b9b43ab63c8d12",
+      "after_sha256": "aa1be3d50845d2c75c3cd0df382f6fdfee6f5d1059303c90e898baaeeebacde7"
+    },
+    {
+      "staged": "build/select013-focused-corridor-v1/stage/resectionlab/native_spatial_task.py",
+      "canonical": "src/resectionlab/native_spatial_task.py",
+      "before_sha256": "df6ee55e36b273ccc0fa726716ede724a3a892d6db24839e9e31d159070c7f03",
+      "after_sha256": "b8b05798015e4e93ab833598cc4b70b1e3f08a8837568ba701d0e3e272bdf57a"
+    },
+    {
+      "staged": "build/select013-focused-corridor-v1/stage/resectionlab/paged_obstruction.py",
+      "canonical": "src/resectionlab/paged_obstruction.py",
+      "before_sha256": "f0e3721bd438c858cf2bba8481d4917962d1416dcd9e19d726c91e36e2fb07a1",
+      "after_sha256": "aa6b522ea762d00685ecacc603491e694dcf91a3d806c452f32f4e894ba4fb7c"
+    },
+    {
+      "staged": "build/select013-focused-corridor-v1/tests/test_focused_paged_task.py",
+      "canonical": "tests/test_focused_paged_task.py",
+      "before_sha256": null,
+      "after_sha256": "b654938aa26991dfdeee2f97c25c8203839e682b0081fba0d2893a3d2dd693df"
+    }
+  ],
+  "selector": {
+    "path": "build/select013-focused-corridor-v1/focused_corridor_selector.py",
+    "sha256": "e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448"
+  },
+  "controls": {
+    "receipt": "build/select013-focused-corridor-v1/controls-03.json",
+    "receipt_sha256": "8aea3aaadba2910be3eb95d198a16b522f3848f49f84595dcb77f549be0d8524",
+    "log_sha256": "b7819626b9e8c2283fdc2a47754064f012f265920c0c5bf7005751698bbc8186",
+    "passed": 13,
+    "wall_seconds": 1.3143104579999998,
+    "failures_preserved": [
+      "controls-01.json",
+      "controls-02.json"
+    ],
+    "production_unchanged_across_attempts": true
+  },
+  "portable_test_scope": "All13 passing generated assertions retained. Imports canonical resectionlab.focused_corridor_selector, whose bytes equal tested helper. Required exact pre-focus provider is committed artifacts/select013-target-ray-priority-v1/stage/resectionlab/native_proposals.py, fc135\u2026; no ignored helper dependency or archive skips.",
+  "patch_sha256": "186469cb877d2a8e8edac68fceb5e4a46d027a104dd69c92907133a0be7f1748"
+}

@@ -1,0 +1,43 @@
+{
+  "command": [
+    "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_focused_paged_task.py",
+    "tests/test_target_ray_priority.py",
+    "tests/test_residual_blocker.py",
+    "tests/test_paged_obstruction.py",
+    "tests/test_nominal_cavity_proposals.py",
+    "tests/test_nominal_cavity_proposals_review.py",
+    "tests/test_tool_footprint_candidate_cap.py",
+    "tests/test_obstruction_opening_proposals.py",
+    "tests/test_tool_footprint_opening_proposals.py",
+    "tests/test_native_proposals.py",
+    "tests/test_native_proposals_review.py",
+    "tests/test_native_spatial_task.py",
+    "tests/test_native_spatial_evaluation.py",
+    "tests/test_native_spatial_lazy_planning.py",
+    "tests/test_native_spatial_horizon.py"
+  ],
+  "hard_seconds": 60,
+  "one_thread": true,
+  "elapsed_seconds": 0.022606750018894672,
+  "exit_code": 1,
+  "timed_out": false,
+  "child_reaped": true,
+  "no_acquired_inputs": true,
+  "source_sha256": {
+    "src/resectionlab/focused_corridor_selector.py": "e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448",
+    "src/resectionlab/focused_paged_task.py": "be8d524057859a4cd80476077d5fc1fa538964f77616111654086a3b622cafb3",
+    "src/resectionlab/native_proposals.py": "aa1be3d50845d2c75c3cd0df382f6fdfee6f5d1059303c90e898baaeeebacde7",
+    "src/resectionlab/native_spatial_task.py": "b8b05798015e4e93ab833598cc4b70b1e3f08a8837568ba701d0e3e272bdf57a",
+    "src/resectionlab/paged_obstruction.py": "aa6b522ea762d00685ecacc603491e694dcf91a3d806c452f32f4e894ba4fb7c",
+    "tests/test_focused_paged_task.py": "b654938aa26991dfdeee2f97c25c8203839e682b0081fba0d2893a3d2dd693df"
+  },
+  "source_unchanged": true,
+  "log_sha256": "5e23fc37ff2372f8de4b8319d4c68d6bfe445cf5c051872f1e53f63a843fce54"
+}

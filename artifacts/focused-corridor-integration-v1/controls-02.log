@@ -1,0 +1,41 @@
+..........F..                                                            [100%]
+=================================== FAILURES ===================================
+_ test_actual_native_focused_recursive_chain_packets_and_complete_independent_replay _
+
+    def test_actual_native_focused_recursive_chain_packets_and_complete_independent_replay():
+        task=make_task(recursive=True);packets,r=select_corridor(task,seconds=15)
+        assert r['complete'] and r['estimated_incremental_return']>0 and r['dependency_preview_calls']>0
+        assert any(p['focus'] is not None for p in packets)
+        assert r['selected_action_records']==[thaw_json(p) for p in packets]
+        assert r['diagnostic_preview_calls']==r['goal_diagnostic_preview_calls']+r['dependency_preview_calls']
+        for row in r['states']:
+            assert row['complete_page_enumeration']
+            acct=row['obstruction_accounting']
+            assert acct['selected_cells']<=16 and acct['added_candidates_to_verify']<=32
+            if row['goal_focus'] is not None:
+                focused=acct['goal_focus']
+                assert focused['record']==row['goal_focus']
+                assert set(map(tuple,focused['aperture_eligible_cells']))<=set(map(tuple,focused['selected_cells']))
+        assert check_exploration_geometry(task,r['explored_history'])['feasible']
+        a,b=task.fresh(),task.fresh()
+        for packet in packets:a.step_record(packet);b.step_record(packet)
+        assert a.terminated and a.metrics()==b.metrics()
+>       same_physics_and_reward(a.metrics()['history'],r['explored_history'])
+
+build/select013-focused-corridor-v1/tests/test_focused_corridor.py:157: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+authoritative = [{'tool_id': 'generic_aspirator', 'tip_mm': (np.float64(14.0), np.float64(1.0999999999999996), np.float64(17.9)), 'axi....float64(17.9)), ...}, {'action_id': 'STOP', 'reward': 0.0, 'target_removed_mm3': 0.0, 'normal_removed_mm3': 0.0, ...}]
+nominal = [{'tool_id': 'generic_aspirator', 'tip_mm': (np.float64(14.0), np.float64(1.0999999999999996), np.float64(17.9)), 'axi....float64(17.9)), ...}, {'action_id': 'STOP', 'reward': 0.0, 'target_removed_mm3': 0.0, 'normal_removed_mm3': 0.0, ...}]
+
+    def same_physics_and_reward(authoritative, nominal):
+        assert len(authoritative)==len(nominal)
+        for a,b in zip(authoritative,nominal):
+>           assert a['outcome_scope']=='separate_evaluator_reference'
+                   ^^^^^^^^^^^^^^^^^^
+E           KeyError: 'outcome_scope'
+
+build/select013-focused-corridor-v1/tests/test_focused_corridor.py:44: KeyError
+=========================== short test summary info ============================
+FAILED build/select013-focused-corridor-v1/tests/test_focused_corridor.py::test_actual_native_focused_recursive_chain_packets_and_complete_independent_replay
+1 failed, 12 passed in 1.20s
