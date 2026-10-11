@@ -1,0 +1,30 @@
+{
+  "child_reaped": true,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_spatial_continuation_calibration.py",
+    "--basetemp=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-next-iteration-v1/model/controls-01-tmp"
+  ],
+  "log_bytes": 98,
+  "log_sha256": "7a61f8399ee727504c4a7c38a83adab2783e64d82eaa38d44a3492f2c92060f5",
+  "one_thread": true,
+  "returncode": 0,
+  "scope": "generated_only_no_saved_weights_or_acquired_inputs",
+  "source_after": {
+    "src/resectionlab/spatial_continuation_calibration.py": "22853df2126d2eb6efda545abb7d8108eb9f501f493fdf1e3d95a5948d5c0b11",
+    "tests/test_spatial_continuation_calibration.py": "54a50ec064434884a3384ce7b6951f1e6249716e3a9035cce847c2c8655dcfe1"
+  },
+  "source_before": {
+    "src/resectionlab/spatial_continuation_calibration.py": "22853df2126d2eb6efda545abb7d8108eb9f501f493fdf1e3d95a5948d5c0b11",
+    "tests/test_spatial_continuation_calibration.py": "54a50ec064434884a3384ce7b6951f1e6249716e3a9035cce847c2c8655dcfe1"
+  },
+  "source_unchanged": true,
+  "timeout": false,
+  "wall_seconds": 2.1517567089758813
+}

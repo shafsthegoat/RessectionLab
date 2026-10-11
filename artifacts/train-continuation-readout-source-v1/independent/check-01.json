@@ -1,0 +1,62 @@
+{
+  "check_count": 38,
+  "checks": {
+    "full_rank": {
+      "normal_equation_oracle": [
+        0.7942091271386473,
+        1.5832532917982671,
+        -0.03446785599253949
+      ],
+      "solution": [
+        0.7942091271386482,
+        1.5832532917982647,
+        -0.03446785599253843
+      ],
+      "weighted_residual": 0.2156675915910719
+    },
+    "limits": "Generated arithmetic/lifecycle only; no acquired fit, route, native geometry or clinical evidence.",
+    "rank_deficient": {
+      "nullspace_dimensions": 2,
+      "oracle": [
+        4.39489291598023,
+        -1.6051070840197699,
+        6.25,
+        -0.15074135090609286
+      ],
+      "rank": 2,
+      "solution": [
+        4.39489291598023,
+        -1.6051070840197688,
+        6.25,
+        -0.1507413509060962
+      ]
+    },
+    "wrapper": {
+      "base_unchanged": true,
+      "before_mse": 0.01498911120493495,
+      "calibration_costs": {
+        "base_optimizer_steps": 0,
+        "base_policy_forwards": 0,
+        "elapsed_seconds": 0.001994458958506584,
+        "head_backward_calls": 0,
+        "head_optimizer_steps": 0,
+        "head_readout_forwards_attempted": 2,
+        "head_readout_forwards_completed": 2,
+        "hidden_forwards_attempted": 1,
+        "hidden_forwards_completed": 1,
+        "svd_calls_attempted": 1,
+        "svd_calls_completed": 1
+      },
+      "deployed_mse": 0.014583334637184989,
+      "generated_initial_fit_updates": 64,
+      "generated_states": 24,
+      "hidden_unchanged": true,
+      "old64_unchanged": true
+    }
+  },
+  "schema": "independent-continuation-calibration-generated-check-v1",
+  "scope": "generated_only_no_acquired_inputs_or_weights",
+  "source_sha256": "22853df2126d2eb6efda545abb7d8108eb9f501f493fdf1e3d95a5948d5c0b11",
+  "status": "PASS",
+  "wall_seconds": 1.5229784168768674
+}
