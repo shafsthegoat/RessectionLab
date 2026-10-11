@@ -1,0 +1,87 @@
+{
+  "audit_files": [
+    {
+      "bytes": 15749,
+      "path": "build/native-generic-discretization-v1/independent-audit/audit_saved.py",
+      "sha256": "91e2190441565cf384c8831472d0152f186b2006046dda90e745320ef6b35649"
+    },
+    {
+      "bytes": 12172,
+      "path": "build/native-generic-discretization-v1/independent-audit/audit.json",
+      "sha256": "edc09d2229f51d785b472a82224fd16b22f71493b73ad629328a418be5e3f422"
+    },
+    {
+      "bytes": 6541,
+      "path": "build/native-generic-discretization-v1/independent-audit/REPORT.txt",
+      "sha256": "d55bea400dd8c5d3cafa357fd72c0753d105ee2ae816a2fd07cccce2457b91de"
+    }
+  ],
+  "inputs": [
+    {
+      "bytes": 4857,
+      "path": "build/native-generic-discretization-v1/README.txt",
+      "sha256": "b59412b75cccd3ff9bf87bc26ab54574101887c4fa884df003736d02b15106ea"
+    },
+    {
+      "bytes": 15804,
+      "path": "build/native-generic-discretization-v1/probe.py",
+      "sha256": "b4f07e29324a3dcc8fce2c861fc45b34fc1d2051176832f87e76ef3b3c235797"
+    },
+    {
+      "bytes": 6529,
+      "path": "build/native-generic-discretization-v1/test_probe.py",
+      "sha256": "7581f82892029ed4b126ebb1eb06c2792db0a908d41c7ecab00a3ee4e9841639"
+    },
+    {
+      "bytes": 4134,
+      "path": "build/native-generic-discretization-v1/declaration.json",
+      "sha256": "a815e89510b153778a82307c3ae142e939c422187a51dcb618ba643ed1164081"
+    },
+    {
+      "bytes": 1587,
+      "path": "build/native-generic-discretization-v1/source-ready.json",
+      "sha256": "488e4a03bb4cfa7b37b96380f00b1c00653b504109532b7823ae345981b7ecfd"
+    },
+    {
+      "bytes": 1872,
+      "path": "build/native-generic-discretization-v1/controls-01.json",
+      "sha256": "e7a08a4670f1bd75f0e9d9c68c5286cd2f172df50aecd93f046dad2b08786f13"
+    },
+    {
+      "bytes": 98,
+      "path": "build/native-generic-discretization-v1/controls-01.log",
+      "sha256": "5fba704ce67a9a77c05e6385d95f0f3ea27cbb3486b5c2b870755a32c83d8c4e"
+    },
+    {
+      "bytes": 744,
+      "path": "build/native-generic-discretization-v1/root-release.json",
+      "sha256": "bca00ef65d592a6cfc6cb23092371ce4037b40dc11781eb3c93e1c836aab8340"
+    },
+    {
+      "bytes": 290,
+      "path": "build/native-generic-discretization-v1/dispatch.json",
+      "sha256": "438fc8c9fc7231c64253c8b2ae26464a9ab9c026d4bfc5c08ea92e086dc530fc"
+    },
+    {
+      "bytes": 21275,
+      "path": "build/native-generic-discretization-v1/run-01/prospective-source.json",
+      "sha256": "cb379d2bdeca324e27b04eafbd64453314a2985e4e17b3bb18e31ef3eadfc8c3"
+    },
+    {
+      "bytes": 252072,
+      "path": "build/native-generic-discretization-v1/run-01/report.json",
+      "sha256": "8e40ef8f6c4504c8eedb020687250c59cb4e58f869fe02bf530a9a001761bc9f"
+    },
+    {
+      "bytes": 779,
+      "path": "build/native-generic-discretization-v1/run-01/launcher.json",
+      "sha256": "9df34b8d3ae5ddc4dda95d63bff83373427eb9e69c194c7ba7b7e235ee072628"
+    },
+    {
+      "bytes": 0,
+      "path": "build/native-generic-discretization-v1/run-01/worker.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "scope": "source and saved metadata only; original evidence unmodified"
+}

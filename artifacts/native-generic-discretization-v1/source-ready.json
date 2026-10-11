@@ -1,0 +1,32 @@
+{
+  "base_adapter_sha256": "6df8ade8e117667b77fef5285f99368b0d90ff8f04846caef77b213a53fa2eff",
+  "canonical_edits": false,
+  "execution_forecast": {
+    "fixed_action_slots": 180,
+    "fixed_denominator_rows": 18,
+    "independent_prefix_audits": 18,
+    "maximum_native_stroke_calls": 180,
+    "microstep_mm": 0.0625,
+    "note": "Prior16-row different-tool/scalar control spent18.204s on numerics and151.954s on audits, with one audit capped. This10-action/actual-tool control uses existing batch256 checking; no measured duration is claimed. Fixed cap preserves all missing rows and audit leftovers; no silent omission or automatic retry.",
+    "parent_seconds": 180,
+    "rss_bytes": 2147483648,
+    "runtime_completion_claim": false,
+    "threads": 1,
+    "worker_seconds": 170
+  },
+  "generated_tests": {
+    "file": "test_probe.py",
+    "pytest_cases": 7,
+    "request": "root serial generated-control slot; two coarse numerical rows, no full matrix",
+    "status": "unrun"
+  },
+  "scope": "Source/JSON/AST only; no numeric or acquired execution by author",
+  "source_files": {
+    "README.txt": "b59412b75cccd3ff9bf87bc26ab54574101887c4fa884df003736d02b15106ea",
+    "declaration.json": "a815e89510b153778a82307c3ae142e939c422187a51dcb618ba643ed1164081",
+    "probe.py": "b4f07e29324a3dcc8fce2c861fc45b34fc1d2051176832f87e76ef3b3c235797",
+    "test_probe.py": "7581f82892029ed4b126ebb1eb06c2792db0a908d41c7ecab00a3ee4e9841639"
+  },
+  "status": "source_ready_generated_controls_unrun",
+  "storage": "acknowledged1MiB source/tests; numerical output reservation still root-owned"
+}

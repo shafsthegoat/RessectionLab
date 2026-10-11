@@ -1,0 +1,213 @@
+{
+  "amended_hbe_source_reservation": {
+    "allocation_kind": "source/preparation plus preserved previously authorized generated-control evidence; additional same-exposed-specimen runner/tests source only; no acquired solve or newdata/copies",
+    "amended_at_utc": "2026-10-11T12:46:32.449429+00:00",
+    "authority": "Root explicitly authorized additional1MiB source-only reservation; distinct existing-data model work, not new acquisition.",
+    "created_at_utc": "2026-10-11T12:22:43.184056+00:00",
+    "initial_scope_measurement": "No full/directory scan requested; zero is a conservative accounting origin, not a measured empty-directory claim. Growth counted at next safe milestone.",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 1073152,
+    "owner": "/root/greiner_measurement_schema",
+    "pilot": false,
+    "reservation_amendment_history": [
+      {
+        "at_utc": "2026-10-11T12:46:32.449425+00:00",
+        "authority": "Root explicitly authorized2MiB allocated-block allowance using SAME completedscan, plus150\u2013250KB prospective source runner/tests; no numerical/data launch.",
+        "measured_allocated_bytes": 1073152,
+        "new_bytes": 2097152,
+        "previous_bytes": 1048576
+      }
+    ],
+    "reserved_bytes": 2097152,
+    "scope_current_allocated_bytes": 1073152,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/hbe-ogden-shape-v1"
+    ],
+    "status": "prepared"
+  },
+  "baseline_sha256": "db2e3bad35aadd68f23111b9498270d019debf27486c696cc7ef48bd1fff67c8",
+  "capacity": {
+    "additional_reservable_bytes": 10417311744,
+    "allocation_allowed": true,
+    "conservative_growth_plus_reservations_bytes": 320106496,
+    "free_after_outstanding_reservations_bytes": 357053722624,
+    "free_bytes": 357109297152,
+    "growth_highwater_bytes": 264531968,
+    "outstanding_reserved_bytes": 55574528,
+    "reservation_scope_overruns": []
+  },
+  "closed_reservation": {
+    "allocation_kind": "one18-row generated generic physical-grid test;2tools\u00d73spacings\u00d73samplings; no acquired data",
+    "amended_at_utc": "2026-10-11T12:40:03.439181+00:00",
+    "authority": "Root explicitly requested1MiB source-only scope for independent evaluator.",
+    "began_at_utc": "2026-10-11T12:40:03.439203+00:00",
+    "closed_at_utc": "2026-10-11T12:45:19.743922+00:00",
+    "created_at_utc": "2026-10-11T12:29:56.385243+00:00",
+    "initial_scope_measurement": "No scan; zero is a conservative accounting origin, not a measured empty-directory claim. Growth measured at next safe milestone.",
+    "intended_delegate_role": "independent evaluator, exact owner confirmed by delegate root assignment",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 344064,
+    "owner": "/root/blocker_geometry_bound_review",
+    "owner_confirmed_at_utc": "2026-10-11T12:30:16.638691+00:00",
+    "pilot": false,
+    "reservation_amendment_history": [
+      {
+        "at_utc": "2026-10-11T12:40:03.438721+00:00",
+        "authority": "Root authorized SAME reservation5MiB total1prep+4output and immediate begin after source review/7controls pass.",
+        "new_bytes": 5242880,
+        "previous_bytes": 1048576
+      }
+    ],
+    "reserved_bytes": 5242880,
+    "runtime_caps": {
+      "native_calls": 180,
+      "output_and_supervision_bytes": 4194304,
+      "parent_seconds": 180,
+      "prefix_audits": 18,
+      "preparation_bytes": 1048576,
+      "rows": 18,
+      "rss_bytes": 2147483648,
+      "threads": 1,
+      "total_bytes": 5242880,
+      "worker_seconds": 170
+    },
+    "scope_current_allocated_bytes": 344064,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/native-generic-discretization-v1"
+    ],
+    "status": "closed",
+    "terminal_note": "Storage release only; success/admission not inferred from exit status.",
+    "terminal_receipt": {
+      "path": "build/storage-extension-v1/generic-discretization-terminal-01.json",
+      "sha256": "c069537ccda083c1b3ef28bac91bd79bc95a63a499d57cbe08e604b5905e2da4"
+    }
+  },
+  "goal_terminal_receipt": {
+    "path": "build/select013-goal-burden-v1/attempt-01.supervision/receipt.json",
+    "sha256": "44ff4d89b80395700a9e56137989d5a6b504a63f59847d3e298a3a8d08e71b2b"
+  },
+  "ledger_sha256": "0c73e3fabd4ee3ac3f5310a920190cc35f7696c3368cbc45ef45264bc7c73e0a",
+  "limits": "One combined safe project scan only, completed12:45:19Z; no rescan after quota refusal. HBE allocated-block overrun preserved then amended by explicit root authorization. Original launcher lacks guard cleanup keys, so separate storage binding transparently cites root session91384 terminal/nojobs attestation and original exit0 launcher without rewriting it. No payload bodies, numerical launch, acquisition, deletion or baseline reset. Source reservations remain prepared; later compact archive/audit writes unmeasured.",
+  "measurement": {
+    "allocated_bytes": {
+      ".git": 147152896,
+      ".pytest_cache": 1146880,
+      ".tools": 1643302912,
+      ".venv": 3054829568,
+      "@root-files-and-directory": 647168,
+      "artifacts": 1778348032,
+      "build": 17258713088,
+      "data": 356137631744,
+      "desktop": 18945323008,
+      "dist": 2575773696,
+      "docs": 2220032,
+      "launchers": 409600,
+      "manifests": 5275648,
+      "outputs": 14765998080,
+      "packaging": 544768,
+      "research": 53248,
+      "scripts": 9535488,
+      "src": 6643712,
+      "tests": 20180992
+    },
+    "ended_at_utc": "2026-10-11T12:45:19.380097+00:00",
+    "free_bytes": 357109297152,
+    "method": "du -k -d 1 .; allocated file blocks, no bodies or symlink traversal; statvfs f_bavail",
+    "started_at_utc": "2026-10-11T12:45:02.994612+00:00",
+    "total_allocated_bytes": 416353730560
+  },
+  "new_union_source_reservation": {
+    "allocation_kind": "source-only staged cumulative-cutting helper/native_resection/tests; root owns separate checker; generated or acquired execution requires root dispatch; no arrays/model copies/acquisition/dependencies",
+    "authority": "Root authorized2MiB union source prep and completing allocation on SAME12:45:19 milestone after narrow HBE cap correction.",
+    "created_at_utc": "2026-10-11T12:46:32.449554+00:00",
+    "initial_scope_measurement": "No new scan; zero is conservative accounting origin, not measured empty-directory claim. Owner confirmed no materialization pending reservation.",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 0,
+    "owner": "/root/goal_conditioned_policy",
+    "pilot": false,
+    "reserved_bytes": 2097152,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/native-cut-union-v1"
+    ],
+    "status": "prepared"
+  },
+  "new_union_source_reservation_id": "native-cut-union-prep",
+  "original_launcher": {
+    "path": "build/native-generic-discretization-v1/run-01/launcher.json",
+    "sha256": "9df34b8d3ae5ddc4dda95d63bff83373427eb9e69c194c7ba7b7e235ee072628"
+  },
+  "pending_generic_archive_estimate_bytes": 512000,
+  "preserved_allocation_refusal": {
+    "path": "build/storage-extension-v1/allocation-refusal-02.json",
+    "sha256": "d20e86d01991df04127fe9b7938ede3873a9b83604feacbe632314f83dc0b55b"
+  },
+  "previous_lightweight_goal_close_included_in_measurement": true,
+  "recorded_at_utc": "2026-10-11T12:46:32.450418+00:00",
+  "root_archive_remaining_allowance_bytes": 10678272,
+  "root_archive_reservation": {
+    "amended_at_utc": "2026-10-11T11:12:03.387222+00:00",
+    "created_at_utc": "2026-10-11T09:34:37.781715+00:00",
+    "increase_note": "Root-authorized conservative increase: less than3MiB remains from8MiB after measured growth, with forthcoming~1.5MiB switch archive plus Git/accounting.",
+    "increased_at_utc": "2026-10-11T09:52:27.207519+00:00",
+    "latest_h48_archive_owner_estimate": "39files3,460,976 bytes plus audit; remains within existing24MiB total allowance including Git/accounting. Earlier3MiB artifact forecast was approximate.",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 39653376,
+    "owner": "/root",
+    "pending_archive_forecast": {
+      "basis_last_measured_root_growth_bytes": 18513920,
+      "git_growth_since_scan": "not separately measured during timing; included within remaining32MiB allowance subject to postmilestone verification",
+      "known_measured_plus_package_forecast_bytes": 26765993,
+      "later_v2_result_max_bytes": 4194304,
+      "remaining32MiB_for_unmeasured_git_and_metadata_bytes": 6788439,
+      "source": "Root supplied current package forecast; no directory scan or claim of freshly measured archive size.",
+      "v1_archive_added_after_scan_bytes": 3533481,
+      "v2_integration_max_bytes": 524288
+    },
+    "pilot": false,
+    "previous_reserved_bytes": 8388608,
+    "reservation_increase_history": [
+      {
+        "at_utc": "2026-10-11T10:30:14.180921+00:00",
+        "observed_scope_growth_bytes": 13856768,
+        "pending_forecast_bytes": 7340032,
+        "previous_bytes": 16777216,
+        "reason": "Root requested space forecast/reservation for completed h48 compact archive before copying."
+      },
+      {
+        "at_utc": "2026-10-11T10:50:37.808119+00:00",
+        "new_bytes": 33554432,
+        "previous_bytes": 25165824,
+        "reason": "Root explicitly authorized32MiB for compact v1/v2 integration/result archive forecast plus Git."
+      },
+      {
+        "at_utc": "2026-10-11T11:12:03.387219+00:00",
+        "new_bytes": 50331648,
+        "observed_scope_growth_bytes": 32063488,
+        "previous_bytes": 33554432,
+        "reason": "Root explicitly authorized +16MiB because last measured32MiB allowance has only1.422MiB remaining for future compact archives/Git."
+      }
+    ],
+    "reserved_bytes": 50331648,
+    "scope_current_allocated_bytes": 1969758208,
+    "scope_initial_allocated_bytes": 1930104832,
+    "scopes": [
+      "artifacts",
+      ".git",
+      "docs",
+      "src",
+      "scripts",
+      "tests",
+      "manifests",
+      "build/storage-extension-v1"
+    ],
+    "status": "prepared"
+  },
+  "schema": "storage-extension-combined-milestone-v1",
+  "terminal_binding": {
+    "path": "build/storage-extension-v1/generic-discretization-terminal-01.json",
+    "sha256": "c069537ccda083c1b3ef28bac91bd79bc95a63a499d57cbe08e604b5905e2da4"
+  }
+}

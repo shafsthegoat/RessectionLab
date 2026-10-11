@@ -1,0 +1,37 @@
+{
+  "schema": "bounded-generated-actual-generic-resolution-controls-v1",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-generic-discretization-v1/test_probe.py"
+  ],
+  "head": "958e587f73ccfb8db3df843b99695475894d52ab",
+  "returncode": 0,
+  "timed_out": false,
+  "hard_seconds": 45,
+  "wall_seconds": 1.006959292,
+  "threads": 1,
+  "child_reaped": true,
+  "cleanup_actions": [],
+  "source_before": {
+    "build/native-generic-discretization-v1/probe.py": "b4f07e29324a3dcc8fce2c861fc45b34fc1d2051176832f87e76ef3b3c235797",
+    "build/native-generic-discretization-v1/test_probe.py": "7581f82892029ed4b126ebb1eb06c2792db0a908d41c7ecab00a3ee4e9841639",
+    "build/native-generic-discretization-v1/declaration.json": "a815e89510b153778a82307c3ae142e939c422187a51dcb618ba643ed1164081",
+    "scripts/probe_native_discretization.py": "6df8ade8e117667b77fef5285f99368b0d90ff8f04846caef77b213a53fa2eff"
+  },
+  "source_after": {
+    "build/native-generic-discretization-v1/probe.py": "b4f07e29324a3dcc8fce2c861fc45b34fc1d2051176832f87e76ef3b3c235797",
+    "build/native-generic-discretization-v1/test_probe.py": "7581f82892029ed4b126ebb1eb06c2792db0a908d41c7ecab00a3ee4e9841639",
+    "build/native-generic-discretization-v1/declaration.json": "a815e89510b153778a82307c3ae142e939c422187a51dcb618ba643ed1164081",
+    "scripts/probe_native_discretization.py": "6df8ade8e117667b77fef5285f99368b0d90ff8f04846caef77b213a53fa2eff"
+  },
+  "source_unchanged": true,
+  "generated_only": true,
+  "acquired_or_model_inputs": false,
+  "log_sha256": "5fba704ce67a9a77c05e6385d95f0f3ea27cbb3486b5c2b870755a32c83d8c4e"
+}

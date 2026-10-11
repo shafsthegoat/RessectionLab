@@ -1,0 +1,13 @@
+{
+  "status": "released_one_generated_attempt_pending_storage_begin",
+  "head": "958e587f73ccfb8db3df843b99695475894d52ab",
+  "files": {
+    "probe.py": "b4f07e29324a3dcc8fce2c861fc45b34fc1d2051176832f87e76ef3b3c235797",
+    "declaration.json": "a815e89510b153778a82307c3ae142e939c422187a51dcb618ba643ed1164081",
+    "test_probe.py": "7581f82892029ed4b126ebb1eb06c2792db0a908d41c7ecab00a3ee4e9841639",
+    "controls-01.json": "e7a08a4670f1bd75f0e9d9c68c5286cd2f172df50aecd93f046dad2b08786f13"
+  },
+  "output": "build/native-generic-discretization-v1/run-01",
+  "scope": "18 fixed physical geometry rows, generated numerical resolution check; no patients, fitting or policy updates. No automatic retry.",
+  "max_reserved_total_bytes": 5242880
+}

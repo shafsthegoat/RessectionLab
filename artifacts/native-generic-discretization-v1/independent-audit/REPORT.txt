@@ -1,0 +1,38 @@
+Independent saved-data audit — native generic discretization v1
+
+PASS, no material blocker found. 1,895 checks verified the exact source/declaration/test/dispatch joins, all 18 rows and 180 action slots, fixed physical action sequences within each tool, affine spacing/phase/orientation scalars, reward and volume arithmetic, first refusals, certificate joins and cost nesting. This was a stdlib saved-JSON/source review; no native replay, patient data, generated geometry or timed tests. The independent reviewer did not recompute cell intersections or plane-clipped cell memberships.
+
+Denominator and outcome: 130 accepted actions, 7 first refusals, 43 unexecuted suffix actions = 180 slots; 137 native calls. Complete accepted sequences: 2/6 at 1 mm, 3/6 at 0.5 mm, 6/6 at 0.25 mm. Positive target-removal sequences: 1/6, 2/6, 6/6 respectively. All missing-row and audit-cap counts are zero. Eleven complete sequences are therefore not eleven useful target cuts. Coarse aligned suction and 0.5-mm half-phase suction complete with zero target removal.
+
+All 14 nonempty histories have successful independent full-tool/frontier prefix certificates: 11 complete ten-action sequences, two nine-action prefixes whose final target stroke rejected, and one two-action prefix whose third preparation rejected. Four first-action rejections have no committed history and correctly have no certificate. Certificate counts/source hashes/source-cell volumes join the report. The checker does not certify rejected actions, unexecuted suffixes, continuous physical volume, deformation, forces or a real device. The adapter invokes the existing separate checker with batch256; no physics rule was replaced.
+
+Fixed experiment: two canonical GENERIC_TOOLS and DEFAULT_NATIVE_SPATIAL_REWARD match their source AST definitions. Each tool has its own predeclared nine-point physical lattice plus the same central target stroke; that complete sequence is identical across all nine grids for that tool. The continuous support plane z=0, target plane z=2.8, aperture z=-2/radius6, microstep0.0625 mm and all reward weights remain fixed. Only grid spacing, phase and relative 20-degree orientation change. Different discrete source masks/target fractions are the intended sampling contrast, not identical discrete worlds. Root release and prospective source receipt match the actual report. The historical README/source-ready unrun labels are superseded by the saved seven-pass control receipt and terminal run.
+
+Acceptance is not individually monotone: aligned suction accepts at 1 mm, rejects its final stroke at 0.5 mm, then accepts at 0.25 mm. Six successes on the finest sampled grid family do not establish a converged limit or patient-resolution validity. At 0.25 mm, suction physical target removal still ranges 0.114063–0.150000 mm3 across phase/orientation; aspirator ranges 3.037500–3.204688 mm3. Total physical removal ranges 21.562500–22.789063 mm3 for suction and 93.687500–95.492188 mm3 for aspirator. Native whole-cell credit, clipped support volume and clipped target volume remain distinct. The ancillary frozen rewards use float32 target memberships and exact complete out-and-back tool travel; all nonempty prefix totals are negative. Those are prescribed numerical-control readouts, not selected-policy scores.
+
+First failures: aligned aspirator1mm action1 shaft-blocked at z0.9375; half-phase suction1mm action1 NO_NEW_FULLY_CONTAINED_SURFACE_CELLS at z1; tilted suction1mm action1 shaft-blocked at z0.8125; tilted aspirator1mm action1 shaft-blocked at z0.25; aligned suction0.5mm action10 shaft-blocked at z1.397058824; tilted suction0.5mm action10 shaft-blocked at z1.15; tilted aspirator0.5mm action3 shaft-blocked at z0.9375. Failed actions preserve state and remove zero cells. Static contained/contact unions include all prescribed sweeps and are explicitly non-executable bounds; they are not clearance certificates for unfinished sequences.
+
+Cost: native calls18.099388 s are nested within numerical-row total19.080372 s; independent prefix audits8.483284 s. Worker27.710535 s; owned parent28.055755 s. Worker peak RSS351,191,040 B; parent-polled RSS349,569,024 B. Bounds170/180 s and2 GiB were respected. Launcher exit0 and source unchanged; retained one-child wait completed. This receipt samples the worker and is not a broader process-tree survivor census. No automatic retry, patient input, training update, tool retuning or grid-specific action adjustment occurred.
+
+Interpretation: useful evidence of strong native discretization sensitivity under this fixed analytic preparation scene, with improved aggregate acceptance at the finest tested spacing. It neither validates patient anatomy nor calibrates contact, force, deformation, injury or surgical efficacy. Further patient-policy conclusions cannot be inferred from the 0.25-mm success count.
+
+Compact row outcomes (physical volumes in mm3; full detail and exact failure tips retained in audit.json and original report.json):
+row | accepted actions | complete | physical support removed | physical target removed | frozen prefix reward
+aligned-suction-1mm | 10 | True | 14.500000000 | 0.000000000 | -4.162400000
+aligned-aspirator-1mm | 0 | False | 0.000000000 | 0.000000000 | 0.000000000
+half-phase-suction-1mm | 0 | False | 0.000000000 | 0.000000000 | 0.000000000
+half-phase-aspirator-1mm | 10 | True | 56.000000000 | 0.800000000 | -10.602399986
+tilted-suction-1mm | 0 | False | 0.000000000 | 0.000000000 | 0.000000000
+tilted-aspirator-1mm | 0 | False | 0.000000000 | 0.000000000 | 0.000000000
+aligned-suction-0.5mm | 9 | False | 11.437500000 | 0.000000000 | -3.024000000
+aligned-aspirator-0.5mm | 10 | True | 78.687500000 | 1.587500000 | -16.057400046
+half-phase-suction-0.5mm | 10 | True | 14.500000000 | 0.000000000 | -3.262400000
+half-phase-aspirator-0.5mm | 10 | True | 76.000000000 | 1.300000000 | -14.002399986
+tilted-suction-0.5mm | 9 | False | 12.562500000 | 0.000000000 | -3.324000000
+tilted-aspirator-0.5mm | 2 | False | 18.918200919 | 0.000000000 | -4.472000000
+aligned-suction-0.25mm | 10 | True | 22.789062500 | 0.114062500 | -5.103649995
+aligned-aspirator-0.25mm | 10 | True | 95.492187500 | 3.204687500 | -16.654274978
+half-phase-suction-0.25mm | 10 | True | 21.562500000 | 0.150000000 | -4.494899997
+half-phase-aspirator-0.25mm | 10 | True | 93.687500000 | 3.037500000 | -15.454899980
+tilted-suction-0.25mm | 10 | True | 21.820312500 | 0.115517488 | -4.976904012
+tilted-aspirator-0.25mm | 10 | True | 94.773437500 | 3.161777751 | -16.849516696

@@ -1,0 +1,500 @@
+{
+  "status": "saved_only_checks_passed",
+  "scope": "Stdlib scalar/metadata joins, no geometry rerun or arrays",
+  "head": "958e587f73ccfb8db3df843b99695475894d52ab",
+  "sources": [
+    {
+      "path": "run-01/report.json",
+      "bytes": 252072,
+      "sha256": "8e40ef8f6c4504c8eedb020687250c59cb4e58f869fe02bf530a9a001761bc9f"
+    },
+    {
+      "path": "run-01/launcher.json",
+      "bytes": 779,
+      "sha256": "9df34b8d3ae5ddc4dda95d63bff83373427eb9e69c194c7ba7b7e235ee072628"
+    },
+    {
+      "path": "run-01/prospective-source.json",
+      "bytes": 21275,
+      "sha256": "cb379d2bdeca324e27b04eafbd64453314a2985e4e17b3bb18e31ef3eadfc8c3"
+    },
+    {
+      "path": "root-release.json",
+      "bytes": 744,
+      "sha256": "bca00ef65d592a6cfc6cb23092371ce4037b40dc11781eb3c93e1c836aab8340"
+    },
+    {
+      "path": "dispatch.json",
+      "bytes": 290,
+      "sha256": "438fc8c9fc7231c64253c8b2ae26464a9ab9c026d4bfc5c08ea92e086dc530fc"
+    },
+    {
+      "path": "controls-01.json",
+      "bytes": 1872,
+      "sha256": "e7a08a4670f1bd75f0e9d9c68c5286cd2f172df50aecd93f046dad2b08786f13"
+    }
+  ],
+  "counts": {
+    "accepted_actions": 130,
+    "rejected_actions": 7,
+    "unexecuted_actions": 43,
+    "native_calls": 137,
+    "complete_sequences": 11,
+    "audited_prefixes": 14,
+    "empty_prefixes": 4
+  },
+  "by_spacing": [
+    {
+      "spacing_mm": 1.0,
+      "complete": 2,
+      "denominator": 6
+    },
+    {
+      "spacing_mm": 0.5,
+      "complete": 3,
+      "denominator": 6
+    },
+    {
+      "spacing_mm": 0.25,
+      "complete": 6,
+      "denominator": 6
+    }
+  ],
+  "action_hashes_by_tool": {
+    "generic_suction": "sha256:17fdb2250ff7d76aab12ab73ce611cb09a9ca2960546ac7f9b41a84e6abd12eb",
+    "generic_aspirator": "sha256:2da88abdbe13cd8984e10616b52622c823e7d88c3c6c731e9fb1731ccee7c519"
+  },
+  "invariants": [
+    "exact declared action sequence per tool across all grids",
+    "matched anatomy within tool pair",
+    "declared source/release/control identity",
+    "state chains and refused-action immutability",
+    "action sums equal native volume and reward totals",
+    "zero preparation target removal",
+    "all nonempty prefixes have accepted full-tool/frontier independent certificates",
+    "all complete removals equal static contained-cell union",
+    "all rows and action slots accounted"
+  ],
+  "costs": {
+    "parent_seconds": 28.055754625005648,
+    "worker_seconds": 27.710534957936034,
+    "peak_worker_rss_bytes": 351191040,
+    "native_seconds": 18.099388119764626,
+    "independent_audit_seconds": 8.483283874578774
+  },
+  "posthoc_analytic_reference": {
+    "formula": "pi*h^2*(r-h/3), h=target_tip_z+tip_radius-target_start_z",
+    "basis": "Only final distal spherical cap reaches the frozen target plane; all preparation caps end below it",
+    "tools": [
+      {
+        "tool": "generic_suction",
+        "spherical_cap_height_mm": 0.40000000000000036,
+        "exact_fixed_continuous_target_mm3": 0.4356341812977854,
+        "fine_grid_target_shortfall_percent": {
+          "aligned": 73.8169076493952,
+          "half_voxel_phase": 65.56744019646497,
+          "tilted_20_degrees": 73.48291448785757
+        }
+      },
+      {
+        "tool": "generic_aspirator",
+        "spherical_cap_height_mm": 1.1000000000000005,
+        "exact_fixed_continuous_target_mm3": 5.0684361477915365,
+        "fine_grid_target_shortfall_percent": {
+          "aligned": 36.771670658288215,
+          "half_voxel_phase": 40.07027194525221,
+          "tilted_20_degrees": 37.61827793255773
+        }
+      }
+    ]
+  },
+  "rows": [
+    {
+      "row_id": "aligned-suction-1mm",
+      "spacing_mm": 1.0,
+      "sampling": "aligned",
+      "tool": "generic_suction",
+      "complete_sequence": true,
+      "accepted_actions": 10,
+      "first_failure": null,
+      "source_credit_mm3": 19.0,
+      "physical_removed_mm3": 14.5,
+      "physical_target_mm3": 0.0,
+      "outer_excess_mm3": 4.5,
+      "frozen_reward": -4.1624,
+      "planned_static_lower_mm3": 14.5,
+      "planned_static_upper_mm3": 71.5,
+      "audit_status": "completed",
+      "audit_seconds": 0.32534899981692433
+    },
+    {
+      "row_id": "aligned-aspirator-1mm",
+      "spacing_mm": 1.0,
+      "sampling": "aligned",
+      "tool": "generic_aspirator",
+      "complete_sequence": false,
+      "accepted_actions": 0,
+      "first_failure": {
+        "index": 1,
+        "kind": "side_preparation",
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          0.9375
+        ]
+      },
+      "source_credit_mm3": 0.0,
+      "physical_removed_mm3": 0.0,
+      "physical_target_mm3": 0.0,
+      "outer_excess_mm3": 0.0,
+      "frozen_reward": 0.0,
+      "planned_static_lower_mm3": 37.5,
+      "planned_static_upper_mm3": 194.5,
+      "audit_status": "not_applicable_rejected_no_committed_history",
+      "audit_seconds": 0
+    },
+    {
+      "row_id": "half-phase-suction-1mm",
+      "spacing_mm": 1.0,
+      "sampling": "half_voxel_phase",
+      "tool": "generic_suction",
+      "complete_sequence": false,
+      "accepted_actions": 0,
+      "first_failure": {
+        "index": 1,
+        "kind": "side_preparation",
+        "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "source_credit_mm3": 0.0,
+      "physical_removed_mm3": 0.0,
+      "physical_target_mm3": 0.0,
+      "outer_excess_mm3": 0.0,
+      "frozen_reward": 0.0,
+      "planned_static_lower_mm3": 0.0,
+      "planned_static_upper_mm3": 84.0,
+      "audit_status": "not_applicable_rejected_no_committed_history",
+      "audit_seconds": 0
+    },
+    {
+      "row_id": "half-phase-aspirator-1mm",
+      "spacing_mm": 1.0,
+      "sampling": "half_voxel_phase",
+      "tool": "generic_aspirator",
+      "complete_sequence": true,
+      "accepted_actions": 10,
+      "first_failure": null,
+      "source_credit_mm3": 56.0,
+      "physical_removed_mm3": 56.0,
+      "physical_target_mm3": 0.8000000000000007,
+      "outer_excess_mm3": 0.0,
+      "frozen_reward": -10.602399985694884,
+      "planned_static_lower_mm3": 56.0,
+      "planned_static_upper_mm3": 204.0,
+      "audit_status": "completed",
+      "audit_seconds": 0.32566170883364975
+    },
+    {
+      "row_id": "tilted-suction-1mm",
+      "spacing_mm": 1.0,
+      "sampling": "tilted_20_degrees",
+      "tool": "generic_suction",
+      "complete_sequence": false,
+      "accepted_actions": 0,
+      "first_failure": {
+        "index": 1,
+        "kind": "side_preparation",
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          0.8125
+        ]
+      },
+      "source_credit_mm3": 0.0,
+      "physical_removed_mm3": 0.0,
+      "physical_target_mm3": 0.0,
+      "outer_excess_mm3": 0.0,
+      "frozen_reward": 0.0,
+      "planned_static_lower_mm3": 4.499999999999996,
+      "planned_static_upper_mm3": 67.49999999999997,
+      "audit_status": "not_applicable_rejected_no_committed_history",
+      "audit_seconds": 0
+    },
+    {
+      "row_id": "tilted-aspirator-1mm",
+      "spacing_mm": 1.0,
+      "sampling": "tilted_20_degrees",
+      "tool": "generic_aspirator",
+      "complete_sequence": false,
+      "accepted_actions": 0,
+      "first_failure": {
+        "index": 1,
+        "kind": "side_preparation",
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          0.25
+        ]
+      },
+      "source_credit_mm3": 0.0,
+      "physical_removed_mm3": 0.0,
+      "physical_target_mm3": 0.0,
+      "outer_excess_mm3": 0.0,
+      "frozen_reward": 0.0,
+      "planned_static_lower_mm3": 38.49999999999999,
+      "planned_static_upper_mm3": 197.49999999999994,
+      "audit_status": "not_applicable_rejected_no_committed_history",
+      "audit_seconds": 0
+    },
+    {
+      "row_id": "aligned-suction-0.5mm",
+      "spacing_mm": 0.5,
+      "sampling": "aligned",
+      "tool": "generic_suction",
+      "complete_sequence": false,
+      "accepted_actions": 9,
+      "first_failure": {
+        "index": 10,
+        "kind": "target_stroke",
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          1.3970588235294121
+        ]
+      },
+      "source_credit_mm3": 13.500000000000004,
+      "physical_removed_mm3": 11.437500000000002,
+      "physical_target_mm3": 0.0,
+      "outer_excess_mm3": 2.0625000000000018,
+      "frozen_reward": -3.024000000000001,
+      "planned_static_lower_mm3": 13.187500000000004,
+      "planned_static_upper_mm3": 45.06250000000001,
+      "audit_status": "completed",
+      "audit_seconds": 0.28244400001131
+    },
+    {
+      "row_id": "aligned-aspirator-0.5mm",
+      "spacing_mm": 0.5,
+      "sampling": "aligned",
+      "tool": "generic_aspirator",
+      "complete_sequence": true,
+      "accepted_actions": 10,
+      "first_failure": null,
+      "source_credit_mm3": 88.00000000000001,
+      "physical_removed_mm3": 78.68750000000001,
+      "physical_target_mm3": 1.587500000000001,
+      "outer_excess_mm3": 9.3125,
+      "frozen_reward": -16.057400046491626,
+      "planned_static_lower_mm3": 78.68750000000001,
+      "planned_static_upper_mm3": 150.81250000000003,
+      "audit_status": "completed",
+      "audit_seconds": 0.4682839158922434
+    },
+    {
+      "row_id": "half-phase-suction-0.5mm",
+      "spacing_mm": 0.5,
+      "sampling": "half_voxel_phase",
+      "tool": "generic_suction",
+      "complete_sequence": true,
+      "accepted_actions": 10,
+      "first_failure": null,
+      "source_credit_mm3": 14.500000000000004,
+      "physical_removed_mm3": 14.500000000000004,
+      "physical_target_mm3": 0.0,
+      "outer_excess_mm3": 0.0,
+      "frozen_reward": -3.262400000000001,
+      "planned_static_lower_mm3": 14.500000000000004,
+      "planned_static_upper_mm3": 49.000000000000014,
+      "audit_status": "completed",
+      "audit_seconds": 0.5084042500238866
+    },
+    {
+      "row_id": "half-phase-aspirator-0.5mm",
+      "spacing_mm": 0.5,
+      "sampling": "half_voxel_phase",
+      "tool": "generic_aspirator",
+      "complete_sequence": true,
+      "accepted_actions": 10,
+      "first_failure": null,
+      "source_credit_mm3": 76.00000000000001,
+      "physical_removed_mm3": 76.00000000000001,
+      "physical_target_mm3": 1.300000000000001,
+      "outer_excess_mm3": 0.0,
+      "frozen_reward": -14.002399985694886,
+      "planned_static_lower_mm3": 76.00000000000001,
+      "planned_static_upper_mm3": 151.50000000000003,
+      "audit_status": "completed",
+      "audit_seconds": 0.7594412500038743
+    },
+    {
+      "row_id": "tilted-suction-0.5mm",
+      "spacing_mm": 0.5,
+      "sampling": "tilted_20_degrees",
+      "tool": "generic_suction",
+      "complete_sequence": false,
+      "accepted_actions": 9,
+      "first_failure": {
+        "index": 10,
+        "kind": "target_stroke",
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          1.1500000000000004
+        ]
+      },
+      "source_credit_mm3": 14.999999999999996,
+      "physical_removed_mm3": 12.562499999999995,
+      "physical_target_mm3": 0.0,
+      "outer_excess_mm3": 2.4375000000000018,
+      "frozen_reward": -3.324,
+      "planned_static_lower_mm3": 14.062499999999996,
+      "planned_static_upper_mm3": 45.81249999999999,
+      "audit_status": "completed",
+      "audit_seconds": 0.36503612506203353
+    },
+    {
+      "row_id": "tilted-aspirator-0.5mm",
+      "spacing_mm": 0.5,
+      "sampling": "tilted_20_degrees",
+      "tool": "generic_aspirator",
+      "complete_sequence": false,
+      "accepted_actions": 2,
+      "first_failure": {
+        "index": 3,
+        "kind": "side_preparation",
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "failure_tip_mm": [
+          0.0,
+          1.8,
+          0.9375
+        ]
+      },
+      "source_credit_mm3": 21.999999999999996,
+      "physical_removed_mm3": 18.91820091870313,
+      "physical_target_mm3": 0.0,
+      "outer_excess_mm3": 3.081799081296868,
+      "frozen_reward": -4.471999999999999,
+      "planned_static_lower_mm3": 76.93749999999997,
+      "planned_static_upper_mm3": 151.18749999999997,
+      "audit_status": "completed",
+      "audit_seconds": 0.1256373340729624
+    },
+    {
+      "row_id": "aligned-suction-0.25mm",
+      "spacing_mm": 0.25,
+      "sampling": "aligned",
+      "tool": "generic_suction",
+      "complete_sequence": true,
+      "accepted_actions": 10,
+      "first_failure": null,
+      "source_credit_mm3": 24.39062500000001,
+      "physical_removed_mm3": 22.78906250000001,
+      "physical_target_mm3": 0.11406250000000029,
+      "outer_excess_mm3": 1.6015625,
+      "frozen_reward": -5.103649995306138,
+      "planned_static_lower_mm3": 22.78906250000001,
+      "planned_static_upper_mm3": 37.804687500000014,
+      "audit_status": "completed",
+      "audit_seconds": 0.504794750129804
+    },
+    {
+      "row_id": "aligned-aspirator-0.25mm",
+      "spacing_mm": 0.25,
+      "sampling": "aligned",
+      "tool": "generic_aspirator",
+      "complete_sequence": true,
+      "accepted_actions": 10,
+      "first_failure": null,
+      "source_credit_mm3": 100.68750000000004,
+      "physical_removed_mm3": 95.49218750000004,
+      "physical_target_mm3": 3.2046875000000026,
+      "outer_excess_mm3": 5.1953125,
+      "frozen_reward": -16.654274978318817,
+      "planned_static_lower_mm3": 95.49218750000004,
+      "planned_static_upper_mm3": 131.88281250000006,
+      "audit_status": "completed",
+      "audit_seconds": 1.2084598748479038
+    },
+    {
+      "row_id": "half-phase-suction-0.25mm",
+      "spacing_mm": 0.25,
+      "sampling": "half_voxel_phase",
+      "tool": "generic_suction",
+      "complete_sequence": true,
+      "accepted_actions": 10,
+      "first_failure": null,
+      "source_credit_mm3": 21.56250000000001,
+      "physical_removed_mm3": 21.56250000000001,
+      "physical_target_mm3": 0.1500000000000002,
+      "outer_excess_mm3": 0.0,
+      "frozen_reward": -4.494899997317792,
+      "planned_static_lower_mm3": 21.56250000000001,
+      "planned_static_upper_mm3": 36.812500000000014,
+      "audit_status": "completed",
+      "audit_seconds": 0.4453165829181671
+    },
+    {
+      "row_id": "half-phase-aspirator-0.25mm",
+      "spacing_mm": 0.25,
+      "sampling": "half_voxel_phase",
+      "tool": "generic_aspirator",
+      "complete_sequence": true,
+      "accepted_actions": 10,
+      "first_failure": null,
+      "source_credit_mm3": 93.68750000000004,
+      "physical_removed_mm3": 93.68750000000004,
+      "physical_target_mm3": 3.0375000000000023,
+      "outer_excess_mm3": 0.0,
+      "frozen_reward": -15.454899980330476,
+      "planned_static_lower_mm3": 93.68750000000004,
+      "planned_static_upper_mm3": 129.75000000000006,
+      "audit_status": "completed",
+      "audit_seconds": 1.0307500420603901
+    },
+    {
+      "row_id": "tilted-suction-0.25mm",
+      "spacing_mm": 0.25,
+      "sampling": "tilted_20_degrees",
+      "tool": "generic_suction",
+      "complete_sequence": true,
+      "accepted_actions": 10,
+      "first_failure": null,
+      "source_credit_mm3": 23.765624999999986,
+      "physical_removed_mm3": 21.820312499999986,
+      "physical_target_mm3": 0.11551748837485533,
+      "outer_excess_mm3": 1.9453125,
+      "frozen_reward": -4.976904012465475,
+      "planned_static_lower_mm3": 21.820312499999986,
+      "planned_static_upper_mm3": 37.492187499999964,
+      "audit_status": "completed",
+      "audit_seconds": 0.6689391660038382
+    },
+    {
+      "row_id": "tilted-aspirator-0.25mm",
+      "spacing_mm": 0.25,
+      "sampling": "tilted_20_degrees",
+      "tool": "generic_aspirator",
+      "complete_sequence": true,
+      "accepted_actions": 10,
+      "first_failure": null,
+      "source_credit_mm3": 101.40624999999994,
+      "physical_removed_mm3": 94.77343749999993,
+      "physical_target_mm3": 3.161777750881094,
+      "outer_excess_mm3": 6.632812500000014,
+      "frozen_reward": -16.84951669592302,
+      "planned_static_lower_mm3": 94.77343749999993,
+      "planned_static_upper_mm3": 132.2109374999999,
+      "audit_status": "completed",
+      "audit_seconds": 1.4647658749017864
+    }
+  ]
+}
