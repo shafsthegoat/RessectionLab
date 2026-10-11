@@ -1,0 +1,922 @@
+{
+  "status": "PASS_SAVED_TRAIN050_FROZEN_RIDGE_TWO_ARM_RESULTS",
+  "release_sha256": "343e123476425814a67a75a3014f11f1ae5177fc7de7d3d880b1495bd975461e",
+  "source_index_sha256": "7926ad651b20e35d760cf3b0de3af0c547305204b3a3bc7503702d0986dfe2f6",
+  "runtime_source_files": 135,
+  "parent_sha256": "621bf2ab10ea952ac0518712463e14d7633b4bb229e7d20898c6af3fde5330ae",
+  "result_sha256": "01ace7a4e5efc8b59fb1fe6d8e2996a595923c179e9d9c0af593210c2549b629",
+  "fixed_subject": "ReMIND-050",
+  "role": "TRAIN",
+  "planned_arms": 2,
+  "complete_arms": 2,
+  "model_identity": {
+    "data_hash": "sha256:75adaa10137e33a2bd0ef193916f952b59f1d25cc6075cd16f58afbd5fc539a9",
+    "fingerprint": "sha256:4578737059c005c411668ea70b148f1214b483f2d89c677605bbe5e3c67aa57a",
+    "path": "build/hybrid-proposal-balanced-v2/attempt-01/balanced_ridge_top8.json",
+    "sha256": "6a07215506ac68fa42afce40ad12a9efe9b042d83ee5d5bc1383b249a5ffe824"
+  },
+  "model_parameters_reopened": false,
+  "fit_subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "arms": [
+    {
+      "method": "balanced_ridge_top8",
+      "endpoint": "STOP",
+      "actions": 3,
+      "nonstop_actions": 2,
+      "target_removed_mm3": 5.722050364209609,
+      "total_target_mm3": 18651.02316214122,
+      "fraction_removed": 0.0003067955207853966,
+      "normal_removed_mm3": 0.0,
+      "reward": 5.6188378602623015,
+      "contact_upper_bound_mm3": 53.40580339928969,
+      "online_previews": 24,
+      "replay_previews": 24,
+      "inventory_previews": [
+        24,
+        24
+      ],
+      "source_preparation_seconds": 0.31008833297528327,
+      "source_through_plan_seconds": 0.9404937080107629,
+      "replay_source_preparation_seconds": 0.2983140000142157,
+      "replay_and_audit_seconds": 1.334374082973227,
+      "online_costs": {
+        "counts": {
+          "feature_rows": 273,
+          "native_previews": 24,
+          "proposal_calls": 3,
+          "ridge_calls": 3
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.26690974994562566,
+          "exact_verification": 0.22073983447626233,
+          "inventory_inclusive": 0.5073856248054653,
+          "inventory_logging": 0.004821251146495342,
+          "proposal_enumeration": 0.2549529168754816,
+          "public_features": 0.020600000163540244,
+          "ranking": 0.00019670906476676464
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "feature_rows": 273,
+          "native_previews": 24,
+          "proposal_calls": 3,
+          "ridge_calls": 3
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.28157816594466567,
+          "exact_verification": 0.26807949878275394,
+          "inventory_inclusive": 0.6733967079780996,
+          "inventory_logging": 0.011015082942321897,
+          "proposal_enumeration": 0.35574604105204344,
+          "public_features": 0.020950166042894125,
+          "ranking": 0.00019391695968806744
+        }
+      },
+      "STOP_scope": "chosen_against_queried_actions_only; no_global_unreachability_claim",
+      "plan_sha256": "d1b1e040ac819f385472a357b70b4997caa7eac9f5e8755a1712339819e09a16"
+    },
+    {
+      "method": "exhaustive",
+      "endpoint": "STOP",
+      "actions": 12,
+      "nonstop_actions": 11,
+      "target_removed_mm3": 35.28597724595925,
+      "total_target_mm3": 18651.02316214122,
+      "fraction_removed": 0.001891905711509945,
+      "normal_removed_mm3": 0.0,
+      "reward": 34.830406903446026,
+      "contact_upper_bound_mm3": 178.3372363511995,
+      "online_previews": 1092,
+      "replay_previews": 1092,
+      "inventory_previews": [
+        1092,
+        1092
+      ],
+      "source_preparation_seconds": 0.2642341668251902,
+      "source_through_plan_seconds": 10.518893541069701,
+      "replay_source_preparation_seconds": 0.27411137497983873,
+      "replay_and_audit_seconds": 17.23268283298239,
+      "online_costs": {
+        "counts": {
+          "native_previews": 1092,
+          "proposal_calls": 12
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 1.4576598331332207,
+          "exact_verification": 7.917606516741216,
+          "input_binding": 0.021145001985132694,
+          "inventory_inclusive": 9.676714457105845,
+          "inventory_logging": 0.03004291537217796,
+          "proposal_enumeration": 1.298382916022092
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "native_previews": 1092,
+          "proposal_calls": 12
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 1.3621300840750337,
+          "exact_verification": 12.376116967061535,
+          "input_binding": 0.020676747662946582,
+          "inventory_inclusive": 14.856446708319709,
+          "inventory_logging": 0.03738566557876766,
+          "proposal_enumeration": 1.7126607082318515
+        }
+      },
+      "STOP_scope": "chosen_against_queried_actions_only; no_global_unreachability_claim",
+      "plan_sha256": "1f62427a35ca6993188697aa2b436e58ca099d1cb078e8362d20d2701c4ce1da"
+    }
+  ],
+  "comparison": {
+    "TRAIN_only": true,
+    "clinical_validation": null,
+    "favorable_outcome_required_for_completion": false,
+    "no_quality_loss": false,
+    "numeric_tolerance": 1e-07,
+    "preview_ratio": 0.02197802197802198,
+    "reward_difference": -29.211569043183722,
+    "source_through_plan_wall_ratio": 0.08940994643008061,
+    "target_difference_mm3": -29.563926881749644
+  },
+  "counts": {
+    "native_previews": 2232,
+    "native_transitions": 30,
+    "ridge_calls": 6,
+    "source_visits": 4,
+    "model_loads": 1,
+    "refits": 0
+  },
+  "costs": {
+    "worker_seconds": 30.118194915819913,
+    "parent_seconds": 32.40083529194817,
+    "sampled_owned_peak_rss_bytes": 539295744,
+    "output_bytes": 2842222,
+    "supervision_bytes": 3704
+  },
+  "cleanup": {
+    "exit_code": 0,
+    "reaped": true,
+    "remaining": [],
+    "errors": []
+  },
+  "source_scope": {
+    "full_target_voxels": 19557,
+    "source_support_unknown_voxels": 183804,
+    "known_support_zero_target_voxels": 9766,
+    "target_in_unknown_support": 0
+  },
+  "limitations": [
+    "One original TRAIN person outside this fixed ridge fit cohort; no independently held-out SELECT claim.",
+    "Both methods greedily choose current verified reward; negative preparation and globally beneficial routes are not exhausted.",
+    "Ridge STOP concerns at most8 queried proposals; exhaustive STOP concerns the emitted finite catalog, not all possible tool paths.",
+    "Saved worker performed independent full-tool geometry checks; this reviewer verified saved metadata/history/accounting, not native geometry or patient arrays.",
+    "One fixed-order pair; timings include cache/source components and are not a repeated causal speed estimate.",
+    "RSS ceiling is sampled; dependency binaries/import origins are not independently reconstructed from these source pins.",
+    "S union T rigid material and post-exposure external workspace are declared simulation assumptions, not physical/anatomical validation."
+  ],
+  "read_boundary": {
+    "patient_arrays": false,
+    "model_parameters": false,
+    "original_DICOM": false,
+    "images": false,
+    "production_imports": false,
+    "native_replay": false
+  },
+  "read_pins": {
+    "build/hybrid-train050-transfer-v1/root-release.json": {
+      "sha256": "343e123476425814a67a75a3014f11f1ae5177fc7de7d3d880b1495bd975461e",
+      "bytes": 3669
+    },
+    "build/hybrid-train050-transfer-v1/source-index.json": {
+      "sha256": "7926ad651b20e35d760cf3b0de3af0c547305204b3a3bc7503702d0986dfe2f6",
+      "bytes": 16035
+    },
+    "artifacts/hybrid-proposal-balanced-v2/parent-receipt.json": {
+      "sha256": "4b275debe63c4dd75bcec7fb2485265a1b9637c808f4a1e741885bfe00e246bf",
+      "bytes": 1540
+    },
+    "artifacts/hybrid-proposal-balanced-v2/result.json": {
+      "sha256": "360253e27ce3992facec4938e018bc02707248c1efad1b6cd318ed7ecd5ed4ca",
+      "bytes": 83257
+    },
+    "artifacts/hybrid-proposal-balanced-v2/root-release.json": {
+      "sha256": "e81ab753baecc359fe6c067278308836d8cbd18804c8fbe2c6a955a6d2e0cb8c",
+      "bytes": 8532
+    },
+    "build/goal-conditioned-policy-v1/darwin_fast_sampler.py": {
+      "sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+      "bytes": 9482
+    },
+    "build/goal-conditioned-policy-v1/run_contact_owned.py": {
+      "sha256": "de8c1c5a97b4d6adcd7746f080c2b54bd3b1c7f4cb0be3cd447039c5a951b0c7",
+      "bytes": 8730
+    },
+    "build/hybrid-train050-preparation-v1/public-inputs-v1/ReMIND-050-public-inputs.json": {
+      "sha256": "588757e8df0e420b3fcae2ac24a75a5276fd33e1722a49c681836938d16dda1d",
+      "bytes": 19178
+    },
+    "build/hybrid-train050-preparation-v1/root-visual-review.json": {
+      "sha256": "bbc15185fa35157a8cd5da6e97d19b6024f0a1f4e659f795c7979670e96b7ec4",
+      "bytes": 2252
+    },
+    "build/hybrid-train050-transfer-v1/batch_contract.py": {
+      "sha256": "dabe52b2cbd3362aa65b403214321bd81020e8e88145f2c3d2b812245a98097a",
+      "bytes": 9448
+    },
+    "build/hybrid-train050-transfer-v1/freeze-runtime.py": {
+      "sha256": "2eb4e00a6e22c213d5e2448169865a51e087f12fc420ee669f894d0e142abf05",
+      "bytes": 3010
+    },
+    "build/hybrid-train050-transfer-v1/hybrid_proposal.py": {
+      "sha256": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+      "bytes": 20840
+    },
+    "build/hybrid-train050-transfer-v1/initial_inventory_worker.py": {
+      "sha256": "685d4e948bd0f22fe851caedd2c0ed810de459a65c6994998987df27abf61449",
+      "bytes": 16904
+    },
+    "build/hybrid-train050-transfer-v1/patient_transfer.py": {
+      "sha256": "0ddeb95fb5fff7917c49e2edbd81e9a81a3d1e57c3fdfa9f3a46ec88977259b2",
+      "bytes": 4687
+    },
+    "build/hybrid-train050-transfer-v1/run_owned.py": {
+      "sha256": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+      "bytes": 9625
+    },
+    "manifests/experiments/remind-component-cohort-v1.json": {
+      "sha256": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05",
+      "bytes": 70925
+    },
+    "src/resectionlab/__init__.py": {
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+      "bytes": 99
+    },
+    "src/resectionlab/anatomy.py": {
+      "sha256": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+      "bytes": 13915
+    },
+    "src/resectionlab/brain_extraction.py": {
+      "sha256": "ef7d3b8d2d4161e9d544298b7986b6438ca41fd1b058cfebe16833eaa2900900",
+      "bytes": 23276
+    },
+    "src/resectionlab/cohort.py": {
+      "sha256": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+      "bytes": 14491
+    },
+    "src/resectionlab/contact_checkpoint.py": {
+      "sha256": "5cb06e8d03d88abca1f0fbc4892a3f09866cb696d4cc20daf860afd9fe136f40",
+      "bytes": 15134
+    },
+    "src/resectionlab/contact_costs.py": {
+      "sha256": "def9a4eee4bcb289823e306385d83b94d0e1d3efb6c1f9675ba5b8bbbfa90a14",
+      "bytes": 3753
+    },
+    "src/resectionlab/contact_family_desktop_bridge.py": {
+      "sha256": "49fc166d4fdb8a227e597586167201c1e2b130878c2a8c5593764c8b50673c22",
+      "bytes": 15882
+    },
+    "src/resectionlab/contact_family_desktop_release.py": {
+      "sha256": "df739d8a0c855e37aa7d7bce036af402f5dfc054a1fa2d7fcd3e24852a1cd08b",
+      "bytes": 10805
+    },
+    "src/resectionlab/contact_family_episode.py": {
+      "sha256": "b8f5a0cecf622cd6c341d91ad3009fff9ed455d9960550b026bc82a8639960a6",
+      "bytes": 14476
+    },
+    "src/resectionlab/contact_family_supervisor.py": {
+      "sha256": "73cf5c68f8c2bf51ef790e13d3bc24f9070e2ef2540d992585a54218d431a606",
+      "bytes": 14486
+    },
+    "src/resectionlab/contact_family_worker.py": {
+      "sha256": "2b42a3509bdf9a612a3d3a00e3d554b5355bf575df4073a6019c81f8c4f38ee4",
+      "bytes": 12309
+    },
+    "src/resectionlab/contact_learning.py": {
+      "sha256": "b4812a076b588594e95979ab8d7c078f2d7e317293438e73a96e86c5bd24a08b",
+      "bytes": 12709
+    },
+    "src/resectionlab/contact_learning_contract.py": {
+      "sha256": "8234a4dc0740469a18cb472ce8a5873c7ee12fe9dfa89c362b7ce7263afdeb19",
+      "bytes": 15537
+    },
+    "src/resectionlab/contact_learning_pilot.py": {
+      "sha256": "996f90f3b57a72c464a047b573272af07cdf60a043e68816b83e184568d56b2e",
+      "bytes": 19731
+    },
+    "src/resectionlab/contact_train_refit_release.py": {
+      "sha256": "005961a81b96e22d78882038e20b792209025d4df69fbc175a751e04985413ee",
+      "bytes": 8494
+    },
+    "src/resectionlab/core.py": {
+      "sha256": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+      "bytes": 30914
+    },
+    "src/resectionlab/critical_evidence.py": {
+      "sha256": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99",
+      "bytes": 29592
+    },
+    "src/resectionlab/data_policy.py": {
+      "sha256": "a06a3ca0712bec146990808157e2214a28185dbf4677d2aa34b0a09ec8255208",
+      "bytes": 7928
+    },
+    "src/resectionlab/desktop_bridge.py": {
+      "sha256": "3dec64d57bd075260ec88c701a5e85dafadca017f75cabafb39e4407d46b396f",
+      "bytes": 123929
+    },
+    "src/resectionlab/development_episode.py": {
+      "sha256": "8c7510cea44b43907c04bb739651edab1fc73d01720490305dfcde0b0f95002e",
+      "bytes": 14114
+    },
+    "src/resectionlab/diffusion.py": {
+      "sha256": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+      "bytes": 22180
+    },
+    "src/resectionlab/evaluation.py": {
+      "sha256": "dbfac0b3d8acd3f8461581c96a5ae9421ed341a03559d3ab8ba0589e8a0d028a",
+      "bytes": 69899
+    },
+    "src/resectionlab/experimental_capsule_cache.py": {
+      "sha256": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869",
+      "bytes": 11590
+    },
+    "src/resectionlab/fixed_rl256_loader.py": {
+      "sha256": "3907d44928512b897f4a960b5e56f1fa7c00c17e756110b4070b8fb24c553638",
+      "bytes": 5154
+    },
+    "src/resectionlab/functional_events.py": {
+      "sha256": "5a7ba030a4e4a0a4e35a48aa950a7bcc133b890dd02eee0b4301ed3a385f8faa",
+      "bytes": 23198
+    },
+    "src/resectionlab/functional_evidence.py": {
+      "sha256": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426",
+      "bytes": 11698
+    },
+    "src/resectionlab/geometry.py": {
+      "sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+      "bytes": 31204
+    },
+    "src/resectionlab/goal_mode_episode_adapter.py": {
+      "sha256": "e101e2a8929687816b738aee0411a0d3cdaeb55c77ce9747aed28c0495c9b865",
+      "bytes": 3872
+    },
+    "src/resectionlab/goal_mode_spatial_policy.py": {
+      "sha256": "cc1b1384fd719d50e33d1c00c40e54a1bcce9a73069ef56f5a197cde1a85d01a",
+      "bytes": 8789
+    },
+    "src/resectionlab/goal_relation_spatial_policy.py": {
+      "sha256": "8cf23e155fd1fd4d1994b4a032ded7c67a23cb8cec50496cd21f3ce2029c02dd",
+      "bytes": 8601
+    },
+    "src/resectionlab/healthy_corridor.py": {
+      "sha256": "2deee9a16364f49f2b33c4e2f64cd92eaca15abfd392888e3777741979b81277",
+      "bytes": 31046
+    },
+    "src/resectionlab/imaging.py": {
+      "sha256": "45df035c47f9c509fef91ebc02f1c3bef40266c052dbd1de6d133815a5af6afa",
+      "bytes": 42272
+    },
+    "src/resectionlab/independent_geometry_batch.py": {
+      "sha256": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+      "bytes": 9799
+    },
+    "src/resectionlab/ixi_vascular_admission.py": {
+      "sha256": "7c93cf8faf48ac55b0add1558d47f691ab63dc69672df8cd6fab83fc439ca28d",
+      "bytes": 14414
+    },
+    "src/resectionlab/lausanne_sub476_component.py": {
+      "sha256": "c885c0d45f21c3bb56b0aeeb20cf1a5fcf26cc3df320cfae2fcd48cf6a061867",
+      "bytes": 10954
+    },
+    "src/resectionlab/learning.py": {
+      "sha256": "7ef1da1bc5d6695db661f2f9a7a889b835cc70772ea1955892ea8e00c209af12",
+      "bytes": 51360
+    },
+    "src/resectionlab/learning_ppo.py": {
+      "sha256": "327dfb09884f0a125cbbab790b66a67dad98b5e180a820ab29f2c0c358b6a1d4",
+      "bytes": 25323
+    },
+    "src/resectionlab/legacy_aspiration_projection.py": {
+      "sha256": "69d0003350f30fa03996a272137521ae19a0f511667872ffb45cc386d7b1132c",
+      "bytes": 17510
+    },
+    "src/resectionlab/legacy_checkpoint_rollout_v3.py": {
+      "sha256": "b48831841b27742d123d1338ef2ff05005f39f1d6b755617c2c7bc959ea749e4",
+      "bytes": 14707
+    },
+    "src/resectionlab/legacy_transfer_episode.py": {
+      "sha256": "a14e04ab2d948f283a4585b8834693a953cea71eefbf6525b673d7e1993f5bcd",
+      "bytes": 19495
+    },
+    "src/resectionlab/legacy_transfer_supervisor.py": {
+      "sha256": "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd",
+      "bytes": 10427
+    },
+    "src/resectionlab/legacy_transfer_worker.py": {
+      "sha256": "88c4646eaf51b8c96f6962e166f1d2594271807e27a517fcdcd576dd436b2d01",
+      "bytes": 4685
+    },
+    "src/resectionlab/limited_observation_boundary.py": {
+      "sha256": "d7f6b92ead6b2af33b79d013e1eab0ba78f5615bd1fa2a9127da1fa333b19b1c",
+      "bytes": 19777
+    },
+    "src/resectionlab/low_memory_conv3d.py": {
+      "sha256": "e355495f60ee70e579da72522af93620da2bcf940c65dd748cbb54b8bee79f76",
+      "bytes": 7119
+    },
+    "src/resectionlab/matched_private_vascular.py": {
+      "sha256": "148c30d147c4f88f0e725575debb8b50b774e224e80d4b5bf9b18d90465945db",
+      "bytes": 11696
+    },
+    "src/resectionlab/mechanics_landmarks.py": {
+      "sha256": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+      "bytes": 22280
+    },
+    "src/resectionlab/native_access_preparation.py": {
+      "sha256": "898f8ea389a251faeab9efe296f523560b7fe61fe459c07ef7b269345e4b5ecd",
+      "bytes": 12234
+    },
+    "src/resectionlab/native_axis_accounting.py": {
+      "sha256": "c75eea141a636072465d6c88fc113c4bf53d8901428f1a1511623539ee541ce8",
+      "bytes": 32191
+    },
+    "src/resectionlab/native_axis_policy_schema.py": {
+      "sha256": "672a5dfd8ba7981bf6bc7a81746b15b094001145c0db942f16599f24a72dcafe",
+      "bytes": 4443
+    },
+    "src/resectionlab/native_axis_refinement.py": {
+      "sha256": "51e62d4475e1ba2a5292499581e2a697efcc3419cb5bf0ab4d476e336c917e0e",
+      "bytes": 17552
+    },
+    "src/resectionlab/native_axis_simulation.py": {
+      "sha256": "5ca0147885e2a8c918d10246f4889e4bbfb9c06724f62d8abc9e8cc605a540bf",
+      "bytes": 24485
+    },
+    "src/resectionlab/native_functional_evaluation.py": {
+      "sha256": "2c2284e32bc0bd87b4e6dbee82e2713777bb4d509b9e22837702a9ec3ab7da13",
+      "bytes": 12986
+    },
+    "src/resectionlab/native_ingress.py": {
+      "sha256": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f",
+      "bytes": 12447
+    },
+    "src/resectionlab/native_proposals.py": {
+      "sha256": "9b7a62526aa6abf4933c253f4bd72ab2a4eae2ea0c9df6846227455cc8e16b59",
+      "bytes": 61525
+    },
+    "src/resectionlab/native_refinement.py": {
+      "sha256": "eec54a623eeff6a6efae64823c93746083602018cf2f3b187b7763487bc0f3c4",
+      "bytes": 34315
+    },
+    "src/resectionlab/native_resection.py": {
+      "sha256": "79363aa6156917514d4aa57e328adcd16babff51518c0c4587e6dcaf94a5723d",
+      "bytes": 47035
+    },
+    "src/resectionlab/native_routes.py": {
+      "sha256": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea",
+      "bytes": 8680
+    },
+    "src/resectionlab/native_simulation.py": {
+      "sha256": "64552e5e5b5c245d4e815d0943ef4e9e5837b38d251ea891479c2a86ce026749",
+      "bytes": 34916
+    },
+    "src/resectionlab/native_spatial_evaluation.py": {
+      "sha256": "bed5957cecc2a18127eb3bbaa7854c4a26406cb222d2debf23244fbbe003084b",
+      "bytes": 9953
+    },
+    "src/resectionlab/native_spatial_task.py": {
+      "sha256": "8237f90b3b512d03452be027e6e7e337f69da3e8127f169fe870a56c47418c32",
+      "bytes": 86060
+    },
+    "src/resectionlab/nifti_header_records.py": {
+      "sha256": "37e164fe73e5ce5031e512bfab9697156860d4fe0459aca0c11328723a9abdb1",
+      "bytes": 2533
+    },
+    "src/resectionlab/observed_landmark_replay.py": {
+      "sha256": "e1e82f6f909d534c53c36ebc480bf13089d3033d822ae966b7f37ae2872397dd",
+      "bytes": 11508
+    },
+    "src/resectionlab/observed_search.py": {
+      "sha256": "52ed888c43a5b8405b4dd2407b583dcff59e21cf3c08b68a6c6571107b0268fd",
+      "bytes": 34378
+    },
+    "src/resectionlab/passive_desktop_transport.py": {
+      "sha256": "aec43e5d1a6181b2d42fc30fd11b01a9a9f7a6adef68ffdc9114319a2569b963",
+      "bytes": 4390
+    },
+    "src/resectionlab/pat05_forward_diagnostic.py": {
+      "sha256": "aa8da0fe33a17eea63f40d5c5a8a1a2dd20747d3b6ffc7828120144736442f45",
+      "bytes": 19560
+    },
+    "src/resectionlab/patient_planning_accumulation.py": {
+      "sha256": "2fc5d6a14f9de3176d4ef75d5a58f5b075b15f861d6282ed2e97705da1f17307",
+      "bytes": 15342
+    },
+    "src/resectionlab/patient_planning_admission.py": {
+      "sha256": "ff599ea5ba3d026f8342b54ea18a395c24719c57e6d860b41dfb177721247f95",
+      "bytes": 40081
+    },
+    "src/resectionlab/patient_planning_cohort_io.py": {
+      "sha256": "98c0f52c2f108125692a70761f31b645cd6a41c86715786ab0913d4f7f9f59e3",
+      "bytes": 12519
+    },
+    "src/resectionlab/patient_planning_cohort_sequential.py": {
+      "sha256": "ab14952445f5203f5b3695f86664a7d46a15cf8779a6ac188fce484a49bc185c",
+      "bytes": 18901
+    },
+    "src/resectionlab/patient_planning_cohort_spec.py": {
+      "sha256": "9ae21d7bb7e437464e46e5e805ef7ea84e9675e5dd90e7b8149821c06f92a3a4",
+      "bytes": 14997
+    },
+    "src/resectionlab/patient_planning_cohort_visits.py": {
+      "sha256": "a7cc335711734e86a13a5abed91b56bed750255c233950a30dddc660e13141ba",
+      "bytes": 4240
+    },
+    "src/resectionlab/patient_planning_evaluation.py": {
+      "sha256": "7df507ffce9ac6a1200dd8014a654a962720a7d5aa93d9f8d5288a2e96d97db4",
+      "bytes": 7192
+    },
+    "src/resectionlab/patient_planning_learning.py": {
+      "sha256": "e4d73d3286799cfb78bf415f85b2275ab7dbb60c051fbf683c2e96ca4967e90f",
+      "bytes": 19661
+    },
+    "src/resectionlab/patient_planning_preflight.py": {
+      "sha256": "733bc569a696715fcd143d8d235a0480dea9b26684664afc94c75d0473498d36",
+      "bytes": 17496
+    },
+    "src/resectionlab/patient_select_inference.py": {
+      "sha256": "e3ae1f495edcd7e5cd36d42f6548f7a091bfe2a76b042329af5d4c8adc0af406",
+      "bytes": 22988
+    },
+    "src/resectionlab/patient_teacher_trace_cache.py": {
+      "sha256": "0f37645a2af82f8f5122b701855b59ab3af832fc4ea3cc34cfcebcab0883ad45",
+      "bytes": 8426
+    },
+    "src/resectionlab/persistent_passive.py": {
+      "sha256": "ae6ce9ad09c6f95a419defaf6bb97d8ee17fdb072d2e6109fac1352ea490128c",
+      "bytes": 41937
+    },
+    "src/resectionlab/planning.py": {
+      "sha256": "e1c1e377a8bdf4416c7b0f7e3f0c3c6d12d63ad46f174d0b0700b86f598a2b24",
+      "bytes": 31212
+    },
+    "src/resectionlab/planning_budget.py": {
+      "sha256": "c0b00319c0240ec57d6ef9e466ac0bfc8b1a781743f2bec92a8cc8ac517d0e8c",
+      "bytes": 11579
+    },
+    "src/resectionlab/policy_inputs.py": {
+      "sha256": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47",
+      "bytes": 3294
+    },
+    "src/resectionlab/population_learning.py": {
+      "sha256": "c2ad09dbe4a20ef9ea2c912e95cc05dec3c1cfb0fe38123627de4a8c9904772c",
+      "bytes": 25672
+    },
+    "src/resectionlab/post_exposure.py": {
+      "sha256": "ce95ca492aef3bb0149d9fb62c22766caad76701f894abaa37327a21acb7970e",
+      "bytes": 9110
+    },
+    "src/resectionlab/preprocessing.py": {
+      "sha256": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+      "bytes": 17223
+    },
+    "src/resectionlab/prior_proposals.py": {
+      "sha256": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f",
+      "bytes": 27458
+    },
+    "src/resectionlab/prior_registration.py": {
+      "sha256": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+      "bytes": 21175
+    },
+    "src/resectionlab/private_vascular_evaluation.py": {
+      "sha256": "df588f2237a2a52b9bdc8e3accbae38a08b54bdc0c6d68abbea980279179d2e8",
+      "bytes": 20473
+    },
+    "src/resectionlab/procedural_learning.py": {
+      "sha256": "15eaa5f6e805357b0c11d788a403bcf7fbd5956963e93a746b29736fbe8c3ee6",
+      "bytes": 40198
+    },
+    "src/resectionlab/public_contact_family.py": {
+      "sha256": "f39039f2e52b2fb4d4eaa7781b9a1a8d8e01bf806293f9872241f16b203d7800",
+      "bytes": 11219
+    },
+    "src/resectionlab/public_motion_ranking.py": {
+      "sha256": "46ff5677029683c9cc52aebabebc9ab49c594afe5bf3aa0550ecaf0a98f53085",
+      "bytes": 8922
+    },
+    "src/resectionlab/public_patient_factory.py": {
+      "sha256": "da5ec355048effd160b3f7211544cf7ace4912aac4cd21e768ce424e22f9a2aa",
+      "bytes": 30495
+    },
+    "src/resectionlab/public_surface_contact.py": {
+      "sha256": "def4c741df95d6c6b4e208189a0ac46db4ac90d9d1d911b5dc266901f09c23a0",
+      "bytes": 16277
+    },
+    "src/resectionlab/public_target_context.py": {
+      "sha256": "1b21898e8c89c130586936c5f49beea7c7bdefd0e0aa750a797cc3ae0a6b5e15",
+      "bytes": 16294
+    },
+    "src/resectionlab/real_patient_learning.py": {
+      "sha256": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512",
+      "bytes": 7420
+    },
+    "src/resectionlab/remind_header_inventory.py": {
+      "sha256": "cee078ff4e0822a6c613aaa0ec51aa62bc5b4c3c5095169682c44d9cb5b58271",
+      "bytes": 15666
+    },
+    "src/resectionlab/remind_planning_qc.py": {
+      "sha256": "f35a28f2cdedd777e15031b5cba370c4106c0436eefe9590ca17466d8944b3ca",
+      "bytes": 48091
+    },
+    "src/resectionlab/research_estimate_planning.py": {
+      "sha256": "bd687f2118d89f308d35f34a2cd2fa4beb21173adb4c9c356f178cdd776a04f6",
+      "bytes": 30612
+    },
+    "src/resectionlab/rhuh_outcomes.py": {
+      "sha256": "82981de054aca89789b9065620844cd8a8842120df71cdb89bdd147c0bc57d36",
+      "bytes": 13611
+    },
+    "src/resectionlab/route_native_diagnostics.py": {
+      "sha256": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf",
+      "bytes": 3685
+    },
+    "src/resectionlab/scan_diagnostic_runner.py": {
+      "sha256": "bd4edab15b0fed8aaa68f21ffc64f0f0c2113f18747d84bfe4fb78487bb9db72",
+      "bytes": 28533
+    },
+    "src/resectionlab/scan_preprocess_bridge.py": {
+      "sha256": "54642e83a421f46626395d609109cbb052820dc56011b3f7d744689534ea6fce",
+      "bytes": 17653
+    },
+    "src/resectionlab/scan_support_contract.py": {
+      "sha256": "3c7a9bbce5042cc9ca0ab5c51086045ddebc4590ccbc508160681bc4111f335a",
+      "bytes": 2923
+    },
+    "src/resectionlab/scan_target_adapter.py": {
+      "sha256": "c550bcd22b1a65cbd1b742c5d417ba16cb7bb46e11a98e84d89ef0b1234d5fa2",
+      "bytes": 32454
+    },
+    "src/resectionlab/selection_contract.py": {
+      "sha256": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72",
+      "bytes": 1927
+    },
+    "src/resectionlab/sequential_spatial_observation.py": {
+      "sha256": "c8791eccbc45c96449ba7dd9578881a486654d2cd65e092157a79cde3b8673a3",
+      "bytes": 3742
+    },
+    "src/resectionlab/shared_episode.py": {
+      "sha256": "81d6b1faac3433f1a2eb09ff4ef70e773b69922c056495caf1a879fbbc381a4d",
+      "bytes": 12206
+    },
+    "src/resectionlab/shared_transfer_comparison.py": {
+      "sha256": "fe7713f60ec46de583d80f74bd59cc567a5a73b31998f9938e3aaa8ebbfb4835",
+      "bytes": 4840
+    },
+    "src/resectionlab/shared_vascular_evaluation.py": {
+      "sha256": "300f42604a69b207185417045bb88e392cdeea3e2c00713b7dcee9071c1861c0",
+      "bytes": 21512
+    },
+    "src/resectionlab/simulation.py": {
+      "sha256": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253",
+      "bytes": 47076
+    },
+    "src/resectionlab/spatial_multiscale_views.py": {
+      "sha256": "743531e800f9f2913b6ec8101b2d5632dbb9ec2482d196fe9400d1459b29c0fe",
+      "bytes": 30061
+    },
+    "src/resectionlab/spatial_observations.py": {
+      "sha256": "fd80342c0b512574da0d0580ce55fdb1de231d654e6615e72ef4ffe75977619f",
+      "bytes": 25806
+    },
+    "src/resectionlab/spatial_policy.py": {
+      "sha256": "30a666b114e9649744db527a78e11da0ce79b549117f863a4da84103e115c6f4",
+      "bytes": 25459
+    },
+    "src/resectionlab/spatial_policy_diagnostics.py": {
+      "sha256": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493",
+      "bytes": 20387
+    },
+    "src/resectionlab/spatial_task.py": {
+      "sha256": "79ae36adbc29a5eaa40c1c38c9080f6cde8c52f2c5babf6acd4664eb6842a225",
+      "bytes": 25313
+    },
+    "src/resectionlab/structural_evidence.py": {
+      "sha256": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019",
+      "bytes": 13719
+    },
+    "src/resectionlab/surface_contact_episode.py": {
+      "sha256": "718321ef213ecdf7d7c1eeeba06bb607e7357c791dd58c0b645cefb0053f672e",
+      "bytes": 6579
+    },
+    "src/resectionlab/vascular_contact_streaming.py": {
+      "sha256": "fa2c09788f002c871575333018d6a11e309b48878045625e16d79fc39d75ebed",
+      "bytes": 14041
+    },
+    "src/resectionlab/vitaldb_observed.py": {
+      "sha256": "ccd92d0e36126f4b4c2b53325337b21e03c3e7861bdc43263b7acffd4b3da1be",
+      "bytes": 28501
+    },
+    "src/resectionlab/workspace_bundle.py": {
+      "sha256": "8399022bb81d65440199055a20d9bee9775fecb6384d9b6eb9b98b3d6ee98c40",
+      "bytes": 21379
+    },
+    "src/resectionlab/workspace_diagnostic.py": {
+      "sha256": "f8a799f47027ebf49cd88b295de240f4cbc5e1126f18135b9cd5538a56a85be8",
+      "bytes": 7547
+    },
+    "src/resectionlab/workspace_imaging.py": {
+      "sha256": "932718dcc287366121b7d583384691a6274908a3af444239e70e2ff580b94501",
+      "bytes": 9842
+    },
+    "src/resectionlab/worlds.py": {
+      "sha256": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91",
+      "bytes": 20428
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01.supervision/receipt.json": {
+      "sha256": "621bf2ab10ea952ac0518712463e14d7633b4bb229e7d20898c6af3fde5330ae",
+      "bytes": 1459
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/result.json": {
+      "sha256": "01ace7a4e5efc8b59fb1fe6d8e2996a595923c179e9d9c0af593210c2549b629",
+      "bytes": 21612
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01.supervision/declaration.json": {
+      "sha256": "3822ebe8a8a3c0e77ef4b99b66f8af4388b70f189a5ded88756f3ab1b85acd2e",
+      "bytes": 1843
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/sealed-plans.json": {
+      "sha256": "9725125f54ce16a2eafc8f3bdae5f9b343ca70e612756a2edda08a3ea75dcfe6",
+      "bytes": 83242
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/plan.json": {
+      "sha256": "d1b1e040ac819f385472a357b70b4997caa7eac9f5e8755a1712339819e09a16",
+      "bytes": 4381
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/replay/episode-metrics.json": {
+      "sha256": "c166f6b081e6613b778b1aec3acdde896cf444656b934f4876affa50b9d4e216",
+      "bytes": 70952
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/replay/independent-episode.json": {
+      "sha256": "bcacf7a9e76a1451b44b678c904a2716d9fa2902a9ac842120548f0574441cc7",
+      "bytes": 2624
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/source/admitted-public-bindings.json": {
+      "sha256": "273a09c7df05b7dc8591cb3b4452a4b31b936a84519048ea7229d90499a3becf",
+      "bytes": 16168
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/replay/source/admitted-public-bindings.json": {
+      "sha256": "273a09c7df05b7dc8591cb3b4452a4b31b936a84519048ea7229d90499a3becf",
+      "bytes": 16168
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/inventories/state-00.json": {
+      "sha256": "4493b32c1a69db0a5b383c797bd155afc7d12cf2d55099521fd9257f8b9562ef",
+      "bytes": 58397
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/inventories/state-01.json": {
+      "sha256": "0a70658da0382d948c2c911621408ddff2fb1df6d3e1ec1ef36b2bedf574ff54",
+      "bytes": 58242
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/inventories/state-02.json": {
+      "sha256": "6a525689c3514ec5fbee83320bca06be370b9a04d948ef5bb784f64057b9371a",
+      "bytes": 58216
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/replay/inventories/state-00.json": {
+      "sha256": "4493b32c1a69db0a5b383c797bd155afc7d12cf2d55099521fd9257f8b9562ef",
+      "bytes": 58397
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/replay/inventories/state-01.json": {
+      "sha256": "0a70658da0382d948c2c911621408ddff2fb1df6d3e1ec1ef36b2bedf574ff54",
+      "bytes": 58242
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/replay/inventories/state-02.json": {
+      "sha256": "6a525689c3514ec5fbee83320bca06be370b9a04d948ef5bb784f64057b9371a",
+      "bytes": 58216
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/plan.json": {
+      "sha256": "1f62427a35ca6993188697aa2b436e58ca099d1cb078e8362d20d2701c4ce1da",
+      "bytes": 71513
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/replay/episode-metrics.json": {
+      "sha256": "0f3d73c518b88b88f17ea4712ed83c8eaf69f2f0149bfd1ff40b548a93740baf",
+      "bytes": 399509
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/replay/independent-episode.json": {
+      "sha256": "b9aef8f5056fa7bcd20cb63e276cdaae3da0bedddd9b5ddd1f1b1dac1fdfbd58",
+      "bytes": 2625
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/source/admitted-public-bindings.json": {
+      "sha256": "273a09c7df05b7dc8591cb3b4452a4b31b936a84519048ea7229d90499a3becf",
+      "bytes": 16168
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/replay/source/admitted-public-bindings.json": {
+      "sha256": "273a09c7df05b7dc8591cb3b4452a4b31b936a84519048ea7229d90499a3becf",
+      "bytes": 16168
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/inventories/state-00.json": {
+      "sha256": "e3f8dd1e2c2e8ae3d420391f9b87ff042b352d5eecd65bec1368adf4378b704d",
+      "bytes": 70593
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/inventories/state-01.json": {
+      "sha256": "84df656e8fddf202dbec615ffbee3c2bbacabb293cd62c958a3efdf3a18555b7",
+      "bytes": 70572
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/inventories/state-02.json": {
+      "sha256": "42134815fa6fbd6501e9ed81fc2ace47e5f19532a8b417fee07783276a9250c5",
+      "bytes": 70698
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/inventories/state-03.json": {
+      "sha256": "7ab7f5436d414927fc774def134d7373074993e9b7897d9583683a9781727771",
+      "bytes": 70845
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/inventories/state-04.json": {
+      "sha256": "51c5e6e9ea450cd1ec7fc725303fec42ac225e2326f1406b368c82fe25ec1b5d",
+      "bytes": 70992
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/inventories/state-05.json": {
+      "sha256": "66aaeb87bfc9816bd3dbf5fe04617db46e69a71ad5ce91892d06900c961db25c",
+      "bytes": 71202
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/inventories/state-06.json": {
+      "sha256": "e9db2054e485a261cc8bba338780d3cb2e2f040126e6b25200ad11a2cca4fc59",
+      "bytes": 71349
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/inventories/state-07.json": {
+      "sha256": "722c35575070b147b1ef53c07abee541b8ba5a81a770b8876b0f4093812e4960",
+      "bytes": 71495
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/inventories/state-08.json": {
+      "sha256": "ae9d0cbfaa63053284f7e409b835b16aa94c71dd4eabc1bc5564af4f8f64ea81",
+      "bytes": 71579
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/inventories/state-09.json": {
+      "sha256": "2b12841d12d1535142f37831b06e0b1f9ca4725afbeb34bb600fb7199fd4bc60",
+      "bytes": 71663
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/inventories/state-10.json": {
+      "sha256": "16613c8cebe7f69d6f9038c5249ec59e7d4caa5b5a637d3caecfa088b6e4241f",
+      "bytes": 71748
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/inventories/state-11.json": {
+      "sha256": "4a22303e010d66d3d9bd5c4bcbedc00c35180a6720a8e9f2ffde6585b30419fd",
+      "bytes": 71811
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/replay/inventories/state-00.json": {
+      "sha256": "e3f8dd1e2c2e8ae3d420391f9b87ff042b352d5eecd65bec1368adf4378b704d",
+      "bytes": 70593
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/replay/inventories/state-01.json": {
+      "sha256": "84df656e8fddf202dbec615ffbee3c2bbacabb293cd62c958a3efdf3a18555b7",
+      "bytes": 70572
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/replay/inventories/state-02.json": {
+      "sha256": "42134815fa6fbd6501e9ed81fc2ace47e5f19532a8b417fee07783276a9250c5",
+      "bytes": 70698
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/replay/inventories/state-03.json": {
+      "sha256": "7ab7f5436d414927fc774def134d7373074993e9b7897d9583683a9781727771",
+      "bytes": 70845
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/replay/inventories/state-04.json": {
+      "sha256": "51c5e6e9ea450cd1ec7fc725303fec42ac225e2326f1406b368c82fe25ec1b5d",
+      "bytes": 70992
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/replay/inventories/state-05.json": {
+      "sha256": "66aaeb87bfc9816bd3dbf5fe04617db46e69a71ad5ce91892d06900c961db25c",
+      "bytes": 71202
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/replay/inventories/state-06.json": {
+      "sha256": "e9db2054e485a261cc8bba338780d3cb2e2f040126e6b25200ad11a2cca4fc59",
+      "bytes": 71349
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/replay/inventories/state-07.json": {
+      "sha256": "722c35575070b147b1ef53c07abee541b8ba5a81a770b8876b0f4093812e4960",
+      "bytes": 71495
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/replay/inventories/state-08.json": {
+      "sha256": "ae9d0cbfaa63053284f7e409b835b16aa94c71dd4eabc1bc5564af4f8f64ea81",
+      "bytes": 71579
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/replay/inventories/state-09.json": {
+      "sha256": "2b12841d12d1535142f37831b06e0b1f9ca4725afbeb34bb600fb7199fd4bc60",
+      "bytes": 71663
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/replay/inventories/state-10.json": {
+      "sha256": "16613c8cebe7f69d6f9038c5249ec59e7d4caa5b5a637d3caecfa088b6e4241f",
+      "bytes": 71748
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/replay/inventories/state-11.json": {
+      "sha256": "4a22303e010d66d3d9bd5c4bcbedc00c35180a6720a8e9f2ffde6585b30419fd",
+      "bytes": 71811
+    }
+  }
+}

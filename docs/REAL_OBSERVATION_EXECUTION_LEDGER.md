@@ -1777,3 +1777,20 @@ Independent saved and mathematical checks support the bounded claim. Parent wall
 is 24.376 s at 447.61 MB sampled peak; the source/current-state distinction and
 failed audit-only parsing attempt remain recorded. This motivates a same-cap
 existing obstruction-opening contrast, not new tissue parameters or more RL.
+
+## October 11 — New-anatomy frozen proposal comparison is negative
+
+[The fixed TRAIN050 pair](../artifacts/hybrid-train050-transfer-result-v1/RESULT.md)
+completes both sealed plans and uncached independent replays. Frozen top8 versus
+lean exhaustive removes6/37 target cells, with outside-target removal0/0 and
+return5.618838/34.830407. Source-through-plan time is0.940494/10.518894s and
+online previews24/1092. This fails the original quality gate; lower cost alone
+is not promotion. Parent32.400835s/539.30MB sampled peak, no refit/update,
+SELECT/EVAL untouched, clean termination. Independent saved review passes.
+
+At the shared second decision the shortlist contains only1 of32 positive legal
+actions; search's best action is learned rank46. Later STOP inspects8/91 choices
+at a divergent state; missing useful choices there remains an untested hypothesis.
+One explicit fallback before a nonpositive shortlist STOP is the next controlled
+change, with all additional checks charged and the same full quality requirement.
+No new dataset can correct missing action checks by itself.

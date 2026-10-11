@@ -1,0 +1,120 @@
+{
+  "status": "SAVED_COMMON_STATE_SHORTLIST_RECALL_DIAGNOSIS",
+  "rows": [
+    {
+      "ridge_step": 0,
+      "state_hash": "sha256:62d43b1a284fdfa8c38aace5c305c84e0de5fa92ff5dfc20d31b93302d010e58",
+      "ridge_action": "nominal-cavity-8a1c31805104fc20272351a7",
+      "ridge_best_verified": {
+        "action_id": "nominal-cavity-8a1c31805104fc20272351a7",
+        "complete_tool_path_length_mm": 6.329688985240577,
+        "insertion_distance_mm": 3.1648444926202886,
+        "normal_removed_mm3": 0.0,
+        "reward": 4.732045614522767,
+        "target_removed_mm3": 4.768375303508008
+      },
+      "queried": 8,
+      "raw": 91,
+      "legal_queried": 2,
+      "same_state_exhaustive": [
+        {
+          "step": 0,
+          "best_verified": {
+            "action_id": "nominal-cavity-8a1c31805104fc20272351a7",
+            "complete_tool_path_length_mm": 6.329688985240577,
+            "insertion_distance_mm": 3.1648444926202886,
+            "normal_removed_mm3": 0.0,
+            "reward": 4.732045614522767,
+            "target_removed_mm3": 4.768375303508008
+          },
+          "positive_legal_actions": 31,
+          "positive_legal_actions_not_queried_by_ridge": 29,
+          "ridge_priority_rank_of_exhaustive_choice": 3,
+          "exhaustive_choice_in_ridge_shortlist": true
+        }
+      ]
+    },
+    {
+      "ridge_step": 1,
+      "state_hash": "sha256:3548f932c3e0166477acf552f54f27d44dec7a9e411c1fd416680ffd01384230",
+      "ridge_action": "nominal-cavity-59cd4c3274fd1b00e4971d2c",
+      "ridge_best_verified": {
+        "action_id": "nominal-cavity-59cd4c3274fd1b00e4971d2c",
+        "complete_tool_path_length_mm": 6.882814962067589,
+        "insertion_distance_mm": 3.4414074810337945,
+        "normal_removed_mm3": 0.0,
+        "reward": 0.886792245739534,
+        "target_removed_mm3": 0.9536750607016016
+      },
+      "queried": 8,
+      "raw": 91,
+      "legal_queried": 1,
+      "same_state_exhaustive": [
+        {
+          "step": 1,
+          "best_verified": {
+            "action_id": "nominal-cavity-a7ff08ed87439fb98ecb907b",
+            "complete_tool_path_length_mm": 8.28281496206763,
+            "insertion_distance_mm": 4.141407481033815,
+            "normal_removed_mm3": 0.0,
+            "reward": 6.637442609949143,
+            "target_removed_mm3": 6.675725424911211
+          },
+          "positive_legal_actions": 32,
+          "positive_legal_actions_not_queried_by_ridge": 31,
+          "ridge_priority_rank_of_exhaustive_choice": 46,
+          "exhaustive_choice_in_ridge_shortlist": false
+        }
+      ]
+    },
+    {
+      "ridge_step": 2,
+      "state_hash": "sha256:c90a6c87a1ddbe5d70b26834f58da24b5e6cbd16307b012c93aa984b619b2926",
+      "ridge_action": "STOP",
+      "ridge_best_verified": {
+        "action_id": "STOP",
+        "complete_tool_path_length_mm": 0.0,
+        "insertion_distance_mm": 0.0,
+        "normal_removed_mm3": 0.0,
+        "reward": 0.0,
+        "target_removed_mm3": 0.0
+      },
+      "queried": 8,
+      "raw": 91,
+      "legal_queried": 0,
+      "same_state_exhaustive": []
+    }
+  ],
+  "finding": "Both first actions match. At next identical state ridge misses31 of32 positive legal actions, ranking the exhaustive seven-cell choice46th. It takes one target cell then STOPs after zero legal among8 queried.",
+  "limit": "No exhaustive counterpart at the final ridge state. No assertion of remaining full-catalog feasibility there; no action replay, score/model recomputation or patient array read.",
+  "read_pins": {
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/plan.json": {
+      "bytes": 4381,
+      "sha256": "d1b1e040ac819f385472a357b70b4997caa7eac9f5e8755a1712339819e09a16"
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/plan.json": {
+      "bytes": 71513,
+      "sha256": "1f62427a35ca6993188697aa2b436e58ca099d1cb078e8362d20d2701c4ce1da"
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/inventories/state-00.json": {
+      "bytes": 58397,
+      "sha256": "4493b32c1a69db0a5b383c797bd155afc7d12cf2d55099521fd9257f8b9562ef"
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/inventories/state-00.json": {
+      "bytes": 70593,
+      "sha256": "e3f8dd1e2c2e8ae3d420391f9b87ff042b352d5eecd65bec1368adf4378b704d"
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/inventories/state-01.json": {
+      "bytes": 58242,
+      "sha256": "0a70658da0382d948c2c911621408ddff2fb1df6d3e1ec1ef36b2bedf574ff54"
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/exhaustive/inventories/state-01.json": {
+      "bytes": 70572,
+      "sha256": "84df656e8fddf202dbec615ffbee3c2bbacabb293cd62c958a3efdf3a18555b7"
+    },
+    "build/hybrid-train050-transfer-v1/attempt-01/balanced_ridge_top8/inventories/state-02.json": {
+      "bytes": 58216,
+      "sha256": "6a525689c3514ec5fbee83320bca06be370b9a04d948ef5bb784f64057b9371a"
+    }
+  }
+}

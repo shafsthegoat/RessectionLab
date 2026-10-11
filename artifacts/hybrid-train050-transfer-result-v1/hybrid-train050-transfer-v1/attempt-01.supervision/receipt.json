@@ -1,0 +1,44 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "feature_count": 681,
+    "fits": 0,
+    "log_bytes": 2097152,
+    "native_previews": 40000,
+    "native_transitions": 96,
+    "output_bytes": 67108864,
+    "parent_seconds": 330,
+    "ridge_calls": 48,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 4,
+    "supervision_bytes": 8388608,
+    "threads": 1,
+    "worker_seconds": 300
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 32.40083529194817,
+  "exit_code": 0,
+  "memory_scope": "whole owned process peak only; no independent per-arm peak attribution",
+  "output_bytes": 2842222,
+  "planned_subjects": [
+    "ReMIND-050"
+  ],
+  "release_sha256": "343e123476425814a67a75a3014f11f1ae5177fc7de7d3d880b1495bd975461e",
+  "remaining_owned_pids": [],
+  "result_sha256": "01ace7a4e5efc8b59fb1fe6d8e2996a595923c179e9d9c0af593210c2549b629",
+  "result_status": "complete_TRAIN050_development_transfer",
+  "sampled_peak_rss_bytes": 539295744,
+  "samples": 157,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/hybrid-train050-transfer-v1/source-index.json",
+    "sha256": "7926ad651b20e35d760cf3b0de3af0c547305204b3a3bc7503702d0986dfe2f6"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 2245,
+  "training_admitted": "none_frozen_ridge_inference_only",
+  "worker_pid": 13451,
+  "worker_termination_confirmed": true
+}
