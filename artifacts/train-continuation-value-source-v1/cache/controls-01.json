@@ -1,0 +1,21 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_spatial_continuation_cache.py",
+    "tests/test_spatial_continuation_value.py",
+    "tests/test_spatial_continuation_planner.py",
+    "--basetemp",
+    "build/continuation-next-iteration-v1/controls-01-tmp"
+  ],
+  "returncode": 0,
+  "seconds": 3.856929542031139,
+  "remaining_owned_pids": [],
+  "worker_termination_confirmed": true,
+  "scope": "generated cache/continuation regression; no patient input"
+}
