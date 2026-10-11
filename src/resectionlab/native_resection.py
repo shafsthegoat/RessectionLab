@@ -27,7 +27,9 @@ from scipy.ndimage import binary_fill_holes
 from .core import array_digest, freeze_json, semantic_digest, thaw_json
 from .post_exposure import PostExposureStart, preentry_tip
 from .native_cut_union import (CutUnionSpec, CutUnionLimit, PreviewCutCoverage,
-                               ledger_digest, MODE as CUT_UNION_MODE, ASSUMPTION as CUT_UNION_ASSUMPTION)
+                               ledger_digest, MODE as CUT_UNION_MODE, ASSUMPTION as CUT_UNION_ASSUMPTION,
+                               EvacuatedVolumeSpec, evacuated_volume_snapshot,
+                               EVACUATED_FOOTPRINT, EVACUATED_VOLUME_SCOPE)
 
 from .geometry import (
     AccessWindow, GeometryScene, ToolGeometry, ToolPose, capsule_voxel_indices,
@@ -112,12 +114,21 @@ class NativeResectionConfig:
     post_exposure: PostExposureStart | None = None
     # Explicit alternative model; absent preserves historical fingerprints.
     cut_union: CutUnionSpec | None = None
+    # Separate readout/uncertainty model; whole-parent occupancy/reward stay fixed.
+    evacuated_volume: EvacuatedVolumeSpec | None = None
     _fingerprint: str = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
         if self.cut_union is not None and type(self.cut_union) is not CutUnionSpec:
             raise TypeError("Cumulative cutting requires its explicit typed bounded specification")
+        if self.evacuated_volume is not None and (type(self.evacuated_volume) is not EvacuatedVolumeSpec
+                                                 or self.cut_union is None):
+            raise TypeError("Evacuated volume requires explicit typed target mass bounds and cut-union declaration")
         tissue = _binary_mask(self.tissue_mask, "tissue_mask")
+        if self.evacuated_volume is not None:
+            for fractions in (self.evacuated_volume.target_fraction_lower, self.evacuated_volume.target_fraction_upper):
+                if fractions.shape != tissue.shape or np.any(fractions[~tissue] != 0):
+                    raise ValueError("Target mass bounds must match represented tissue and be zero outside it")
         labels = np.asarray(self.target_labels)
         if (labels.dtype.kind not in "biuf" or not np.isfinite(labels).all()
                 or np.any(labels < 0) or np.any(labels > np.iinfo(np.int16).max)
@@ -179,6 +190,8 @@ class NativeResectionConfig:
             "temporal_rule": "shaft_sweep_must_clear_prior_cavity_before_endpoint_cut_credit",
             **({"cut_union": self.cut_union.to_record(), "cut_union_assumption": CUT_UNION_ASSUMPTION}
                if self.cut_union is not None else {}),
+            **({"evacuated_volume": self.evacuated_volume.to_record(),
+                "evacuated_volume_scope": EVACUATED_VOLUME_SCOPE} if self.evacuated_volume is not None else {}),
         }
         digest = sha256(json.dumps(record, sort_keys=True, default=lambda x: np.asarray(x).tolist()).encode()).hexdigest()
         object.__setattr__(self, "_fingerprint", "sha256:" + digest)
@@ -258,6 +271,11 @@ class NativeStrokeResult:
         return getattr(self, "_cut_union_attempt", None)
 
     @property
+    def evacuated_volume(self):
+        """Certified source-subset volume; None for v1 or rejected previews."""
+        return getattr(self, "_evacuated_volume_record", None)
+
+    @property
     def removed_volume_mm3(self) -> float:
         return len(self.removed_indices_native) * self.voxel_volume_mm3
 
@@ -285,6 +303,9 @@ class NativeStrokeResult:
                 "partial_contact_policy": "certified_exposed_active_subcells_accumulate_whole_cell_occupancy_until_union_complete",
                 "cut_union_assumption": CUT_UNION_ASSUMPTION}
                if hasattr(self, "_cut_union_record") else {}),
+            **({"evacuated_volume": thaw_json(self._evacuated_volume_record),
+                "partial_contact_policy": "certified_evacuated_subcells_reported_separately;whole_parent_occupancy_envelope_retained"}
+               if hasattr(self, "_evacuated_volume_record") else {}),
         }
 
 
@@ -364,7 +385,7 @@ class NativeResectionEngine:
 
     def __setattr__(self, name, value):
         if name in {"_immutable_state", "_committed_snapshots", "_cut_union_ledger",
-                    "_cut_union_digest", "_cut_union_spec_hash"} and hasattr(self, name):
+                    "_cut_union_digest", "_cut_union_spec_hash", "_evacuated_volume_spec_hash"} and hasattr(self, name):
             raise AttributeError("Native state storage mode and snapshot binding are internally owned")
         object.__setattr__(self, name, value)
 
@@ -394,6 +415,13 @@ class NativeResectionEngine:
         return self._state_hash
 
     def _assert_cut_union(self):
+        volume_spec = self.config.evacuated_volume
+        if volume_spec is None:
+            if hasattr(self, "_evacuated_volume_spec_hash"):
+                raise RuntimeError("Evacuated volume declaration changed")
+        elif (type(volume_spec) is not EvacuatedVolumeSpec or self.config.cut_union is None
+              or semantic_digest(volume_spec.to_record()) != getattr(self, "_evacuated_volume_spec_hash", None)):
+            raise RuntimeError("Evacuated target mass declaration changed")
         if self.config.cut_union is None:
             if hasattr(self, "_cut_union_ledger"):
                 raise RuntimeError("Cumulative cutting declaration changed")
@@ -409,6 +437,19 @@ class NativeResectionEngine:
         object.__setattr__(self, "_cut_union_ledger", MappingProxyType(dict(ledger)))
         object.__setattr__(self, "_cut_union_digest", digest)
         object.__setattr__(self, "_cut_union_spec_hash", semantic_digest(self.config.cut_union.to_record()))
+        if self.config.evacuated_volume is not None:
+            object.__setattr__(self, "_evacuated_volume_spec_hash", semantic_digest(self.config.evacuated_volume.to_record()))
+
+    def _evacuated_snapshot(self, ledger=None, removed_mask=None):
+        return evacuated_volume_snapshot(self.config.evacuated_volume, self.config.cut_union,
+            self._cut_union_ledger if ledger is None else ledger,
+            self.removed_mask if removed_mask is None else removed_mask, self.config.affine)
+
+    @property
+    def evacuated_volume(self):
+        """Current cumulative idealized evacuation, separate from shaft/reward."""
+        self._assert_cut_union()
+        return None if self.config.evacuated_volume is None else freeze_json(self._evacuated_snapshot())
 
     @property
     def decision_model_hash(self) -> str:
@@ -544,6 +585,7 @@ class NativeResectionEngine:
         coverage = (None if self.config.cut_union is None else
                     PreviewCutCoverage(self.config.cut_union, self._cut_union_ledger, self.config.affine))
         coverage_before = None if coverage is None else coverage.digest
+        evacuation_before = None if self.config.evacuated_volume is None else self._evacuated_snapshot()
 
         def finish(feasible: bool, reason: str, failure_tip: np.ndarray | None = None,
                    *, obstruction=None) -> NativeStrokeResult:
@@ -554,7 +596,8 @@ class NativeResectionEngine:
                 self.config.affine, self.config.tissue_mask.shape, self.config.tissue_support_provenance,
                 self.config.voxel_volume_mm3, None if failure_tip is None else tuple(failure_tip), unknowns,
                 interaction_mode=interaction_mode,
-                native_footprint=("fully_contained_connected_cells_v1" if coverage is None else CUT_UNION_MODE),
+                native_footprint=(EVACUATED_FOOTPRINT if evacuation_before is not None else
+                    "fully_contained_connected_cells_v1" if coverage is None else CUT_UNION_MODE),
             )
             if post_record is not None:
                 object.__setattr__(result, "_post_exposure_record", freeze_json(post_record))
@@ -575,6 +618,18 @@ class NativeResectionEngine:
                     "leaf_tests": coverage.leaf_tests,
                     "coverage_only_progress": not any(len(v) for v in removed) and coverage.new_leaf_count > 0}))
                 object.__setattr__(result, "_cut_union_after", coverage.freeze())
+                if evacuation_before is not None:
+                    after_removed = self.removed_mask.copy()
+                    after_removed[tuple(result.removed_indices_native.T)] = True
+                    after = self._evacuated_snapshot(coverage.cells, after_removed)
+                    delta = after["certified_leaf_count"]-evacuation_before["certified_leaf_count"]
+                    if delta != coverage.new_leaf_count:
+                        raise ValueError("Evacuation proof double-counted or lost a certified leaf")
+                    object.__setattr__(result, "_evacuated_volume_record", freeze_json({
+                        "spec": self.config.evacuated_volume.to_record(), "before": evacuation_before,
+                        "after": after, "delta_certified_leaf_count": delta,
+                        "delta_evacuated_source_volume_mm3": delta*(self.config.voxel_volume_mm3/self.config.cut_union.leaf_count),
+                        "scope": EVACUATED_VOLUME_SCOPE}))
             if feasible:
                 # Bound retained proposal certificates; committed histories are
                 # ordinary JSON and must be independently replayed when loaded.
@@ -753,6 +808,11 @@ class NativeResectionEngine:
                     or proof["spec"] != freeze_json(self.config.cut_union.to_record())
                     or ledger_digest(self.config.cut_union, after) != proof["after_digest"]):
                 raise ValueError("Stale or altered cumulative cutting ledger certificate")
+        if self.config.evacuated_volume is not None:
+            proof = result.evacuated_volume
+            if (proof is None or proof["spec"] != freeze_json(self.config.evacuated_volume.to_record())
+                    or proof["before"] != freeze_json(self._evacuated_snapshot())):
+                raise ValueError("Stale or altered evacuation volume certificate")
         if self._immutable_state:
             return self._commit_immutable_preview(result, indices)
         self.remaining_mask[tuple(indices.T)] = False
@@ -848,6 +908,11 @@ class NativeResectionEngine:
                 "partially_certified_occupied_cells": len(self._cut_union_ledger),
                 "removal_definition": "fully_union_certified_connected_native_cells; all uncertified cells remain occupied"}
                if self.config.cut_union is not None else {}),
+            **({"evacuated_volume": {"spec": self.config.evacuated_volume.to_record(),
+                "cumulative": thaw_json(self.evacuated_volume), "scope": EVACUATED_VOLUME_SCOPE},
+                "removal_definition": "whole_parent_clearance_reward_unchanged;certified_evacuated_source_subset_reported_separately",
+                "shaft_occupancy_definition": "conservative_whole_parent_envelope_until_all_leaves_certified_and_connected"}
+               if self.config.evacuated_volume is not None else {}),
         }
 
 

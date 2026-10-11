@@ -8,21 +8,187 @@ response. Entire native cells remain occupied until every subcell is certified.
 from __future__ import annotations
 
 from itertools import product
+import math
 import re
 
 import numpy as np
 
-from .core import semantic_digest
+from .core import array_digest, semantic_digest
 
 
 MODE = "cumulative_affine_subcell_cut_union_v1"
+EVACUATION_VERSION = "certified_evacuated_subcell_volume_v1"
+EVACUATION_FOOTPRINT = "cumulative_affine_subcell_evacuation_v2"
+EVACUATION_SCOPE = ("certified_subset_of_represented_source_support_under_idealized_evacuation;"
+                    "whole_parent_shaft_envelope_and_reward_unchanged")
 _HEX = re.compile(r"[1-9a-f][0-9a-f]*\Z")
+
+
+class IndependentEvacuatedVolume:
+    """Reconstruct volume from audited bits, never from producer totals.
+
+    Target mass is unlocated within each source parent. Intersections therefore
+    yield cumulative allocation bounds, not a target label for each leaf. The
+    arrays are an explicit caller declaration; no evaluator anatomy is consulted.
+    """
+
+    def __init__(self, coverage, spec, lower, upper, tissue):
+        fields = {"version", "shape", "target_fraction_lower_hash",
+                  "target_fraction_upper_hash", "provenance", "target_semantics"}
+        if (not isinstance(spec, dict) or set(spec) != fields
+                or spec["version"] != EVACUATION_VERSION
+                or spec["target_semantics"] != "unlocated_parent_target_mass_bounds"
+                or not isinstance(spec["provenance"], str) or not spec["provenance"].strip()
+                or not isinstance(spec["shape"], list)
+                or any(type(x) is not int for x in spec["shape"])
+                or tuple(spec["shape"]) != coverage.shape):
+            raise ValueError("Explicit source-bound evacuation specification required")
+        tissue = np.asarray(tissue)
+        if tissue.dtype != np.dtype(bool) or tissue.shape != coverage.shape:
+            raise ValueError("Evacuation needs the declared original tissue support")
+        arrays = []
+        for value, name in ((lower, "lower"), (upper, "upper")):
+            raw = np.asarray(value)
+            if (raw.shape != coverage.shape or raw.dtype.kind not in "biuf"
+                    or not np.isfinite(raw).all() or np.any(raw < 0) or np.any(raw > 1)):
+                raise ValueError("Explicit finite source target fraction bounds required")
+            array = np.array(raw, dtype=np.float64, copy=True)
+            if (np.any(array[~tissue] != 0)
+                    or array_digest(array) != spec[f"target_fraction_{name}_hash"]):
+                raise ValueError("Target bound hashes or original support mismatch")
+            array.flags.writeable = False
+            arrays.append(array)
+        if np.any(arrays[0] > arrays[1]):
+            raise ValueError("Target fraction bounds are not ordered")
+        matrix = coverage.matrix
+        if matrix.shape != (4, 4) or not np.isfinite(matrix).all():
+            raise ValueError("Evacuation needs a finite source affine")
+        # Independent signed determinant expansion; rotations/reflections do not
+        # change physical volume. This does not import the producing metric.
+        a, b, c = matrix[:3, :3]
+        self.parent_volume = abs(float(a[0]*(b[1]*c[2]-b[2]*c[1])
+            - a[1]*(b[0]*c[2]-b[2]*c[0]) + a[2]*(b[0]*c[1]-b[1]*c[0])))
+        if not math.isfinite(self.parent_volume) or self.parent_volume <= 0:
+            raise ValueError("Evacuation needs positive source-cell volume")
+        self.coverage = coverage
+        self.spec = {**spec, "shape": list(spec["shape"])}
+        self.lower, self.upper = arrays
+        self.original = np.array(tissue, dtype=bool, copy=True)
+        self.original.flags.writeable = False
+        self.removed = np.zeros(coverage.shape, dtype=bool)
+        self.certified_count = 0
+        self.maximum_count = int(np.count_nonzero(tissue))*coverage.leaf_count
+        self.before = None
+
+    def note_step(self, removed, added):
+        for key in removed:
+            if not self.original[key] or self.removed[key]:
+                raise ValueError("Evacuation repeats a cleared source parent")
+        for key in removed:
+            self.removed[key] = True
+        self.certified_count += added
+        if not 0 <= self.certified_count <= self.maximum_count:
+            raise ValueError("Evacuation exceeds represented tissue volume")
+
+    def snapshot(self):
+        c = self.coverage
+        whole = np.argwhere(self.removed)
+        lower, upper, partial = [], [], 0
+        for row in whole:
+            key = tuple(row)
+            lower.append(float(self.lower[key])*self.parent_volume)
+            upper.append(float(self.upper[key])*self.parent_volume)
+        for key, bits in sorted(c.ledger.items()):
+            if not self.original[key] or self.removed[key] or not 0 < bits < c.full:
+                raise ValueError("Partial evacuation overlaps cleared or absent tissue")
+            count = bits.bit_count()
+            partial += count
+            volume = count*(self.parent_volume/c.leaf_count)
+            # Sharp bounds on |evacuated subset intersect target| with only the
+            # parent target mass known. Recomputed cumulatively, never added as
+            # independent action intervals or assumed uniformly mixed target.
+            lower.append(max(0., volume-(self.parent_volume-float(self.lower[key])*self.parent_volume)))
+            upper.append(min(volume, float(self.upper[key])*self.parent_volume))
+        total = len(whole)*c.leaf_count+partial
+        if total != self.certified_count:
+            raise ValueError("Evacuated leaf union disagrees with executed additions")
+        state = {"version": EVACUATION_VERSION, "cut_union_spec": c.spec,
+                 "evacuated_volume_spec": self.spec, "affine_hash": array_digest(c.matrix),
+                 "whole_removed_mask_hash": array_digest(self.removed),
+                 "partial_coverage_digest": c.digest()}
+        return {"state_digest": semantic_digest(state),
+                "whole_parent_clearance_count": len(whole),
+                "partial_certified_leaf_count": partial, "certified_leaf_count": total,
+                "evacuated_source_volume_mm3": total*(self.parent_volume/c.leaf_count),
+                "evacuated_target_source_bounds_mm3": [math.fsum(lower), math.fsum(upper)]}
+
+    @staticmethod
+    def _number(actual, expected):
+        return (type(actual) in (int, float) and math.isfinite(actual)
+                and math.isclose(actual, expected, rel_tol=1e-10, abs_tol=1e-9))
+
+    def _check_snapshot(self, actual, expected):
+        if not isinstance(actual, dict) or set(actual) != set(expected):
+            raise ValueError("Malformed evacuated volume snapshot")
+        for key in ("whole_parent_clearance_count", "partial_certified_leaf_count", "certified_leaf_count"):
+            if type(actual[key]) is not int or actual[key] != expected[key]:
+                raise ValueError("Evacuated leaf count mismatch")
+        bounds = actual["evacuated_target_source_bounds_mm3"]
+        if (actual["state_digest"] != expected["state_digest"]
+                or not self._number(actual["evacuated_source_volume_mm3"], expected["evacuated_source_volume_mm3"])
+                or actual["evacuated_source_volume_mm3"] < 0
+                or not isinstance(bounds, (list, tuple)) or len(bounds) != 2
+                or any(not self._number(x, y) for x, y in zip(bounds, expected["evacuated_target_source_bounds_mm3"]))
+                or bounds[0] < 0 or bounds[1] < bounds[0]):
+            raise ValueError("Evacuated cumulative volume or target bounds mismatch")
+
+    def _record(self, record):
+        if (not isinstance(record, dict) or set(record) != {"spec", "before", "after",
+                "delta_certified_leaf_count", "delta_evacuated_source_volume_mm3", "scope"}
+                or record["spec"] != self.spec or record["scope"] != EVACUATION_SCOPE
+                or semantic_digest(record["spec"]) != semantic_digest(self.spec)):
+            raise ValueError("Missing or changed declared evacuation accounting")
+
+    def start(self, record):
+        self._record(record)
+        self.before = self.snapshot()
+        self._check_snapshot(record["before"], self.before)
+
+    def finish(self, record):
+        self._record(record)
+        if self.before is None:
+            raise ValueError("Evacuation action has no checked starting state")
+        self._check_snapshot(record["before"], self.before)
+        after = self.snapshot()
+        self._check_snapshot(record["after"], after)
+        delta = after["certified_leaf_count"]-self.before["certified_leaf_count"]
+        if (type(record["delta_certified_leaf_count"]) is not int
+                or record["delta_certified_leaf_count"] != delta
+                or delta != self.coverage.preview_new
+                or not self._number(record["delta_evacuated_source_volume_mm3"],
+                                    delta*(self.parent_volume/self.coverage.leaf_count))
+                or record["delta_evacuated_source_volume_mm3"] < 0):
+            raise ValueError("Evacuated action delta double counts or invents volume")
+        self.before = None
+
+    def geometry(self):
+        """Compact in-memory checked union for an external analytic evaluator."""
+        snapshot = self.snapshot()
+        value = {"version": EVACUATION_VERSION, "source_shape": list(self.coverage.shape),
+                 "native_affine": self.coverage.matrix.tolist(),
+                 "cut_union_spec": self.coverage.spec, "evacuated_volume_spec": self.spec,
+                 "state_digest": snapshot["state_digest"],
+                 "whole_removed_indices": np.argwhere(self.removed).tolist(),
+                 "partial_cells": [{"index": list(key), "covered_bits_hex": format(bits, "x")}
+                     for key, bits in sorted(self.coverage.ledger.items())]}
+        return {**value, "geometry_digest": semantic_digest(value)}
 
 
 class IndependentCutCoverage:
     """Bounded witness checker; source connectivity is supplied by the auditor."""
 
-    def __init__(self, spec, matrix, shape):
+    def __init__(self, spec, matrix, shape, *, evacuated_volume_spec=None,
+                 target_fraction_lower=None, target_fraction_upper=None, tissue_mask=None):
         if not isinstance(spec, dict) or set(spec) != {
             "mode", "max_depth", "max_tracked_cells", "max_leaf_tests_per_preview"
         } or spec["mode"] != MODE:
@@ -42,18 +208,26 @@ class IndependentCutCoverage:
         self.preview_tests = 0
         self.preview_new = 0
         self.preview_rows = 0
+        self.evacuation = None
+        if evacuated_volume_spec is not None:
+            self.evacuation = IndependentEvacuatedVolume(self, evacuated_volume_spec,
+                target_fraction_lower, target_fraction_upper, tissue_mask)
+        elif target_fraction_lower is not None or target_fraction_upper is not None:
+            raise ValueError("Target fraction arrays require an explicit evacuation declaration")
 
     def digest(self):
         return semantic_digest({"mode": MODE, "spec": self.spec, "cells": [
             {"index": list(key), "covered_bits_hex": format(value, "x")}
             for key, value in sorted(self.ledger.items())]})
 
-    def start(self, record):
+    def start(self, record, evacuated_volume_record=None):
         if not isinstance(record, dict) or record.get("spec") != self.spec:
             raise ValueError("Cut-union history differs from declared specification")
         if record.get("before_digest") != self.digest():
             raise ValueError("Cut-union action starts from a different coverage state")
         self.preview_tests = self.preview_new = self.preview_rows = 0
+        if self.evacuation is not None:
+            self.evacuation.start(evacuated_volume_record)
 
     def _inside(self, vertices, start, end, radius):
         # Independent projection formula, with an inward tolerance identical in
@@ -113,6 +287,9 @@ class IndependentCutCoverage:
             key = tuple(index)
             if key in seen or not remaining[key]:
                 raise ValueError("Repeated or already removed coverage cell")
+            if self.evacuation is not None and (self.evacuation.removed[key]
+                    or not self.evacuation.original[key]):
+                raise ValueError("Evacuation witness repeats cleared or absent source tissue")
             seen.add(key)
             encoded = cell["added_bits_hex"]
             if (not isinstance(encoded, str) or len(encoded) > (self.leaf_count + 3) // 4
@@ -167,8 +344,13 @@ class IndependentCutCoverage:
         self.preview_new += count
         if record.get("after_digest") != self.digest():
             raise ValueError("Cut-union microstep coverage digest mismatch")
+        if self.evacuation is not None:
+            self.evacuation.note_step(removed, added_total)
 
-    def finish(self, record, removed_count, mode):
+    def finish(self, record, removed_count, mode, evacuated_volume_record=None):
+        if self.evacuation is not None and (type(record.get("new_leaf_count")) is not int
+                or type(record.get("leaf_tests")) is not int):
+            raise ValueError("Evacuation needs integer action coverage counters")
         expected_progress = removed_count == 0 and self.preview_new > 0 and mode == "aspirate"
         if (record.get("after_digest") != self.digest()
                 or record.get("new_leaf_count") != self.preview_new
@@ -178,3 +360,5 @@ class IndependentCutCoverage:
             raise ValueError("Cut-union action coverage accounting mismatch")
         if mode == "aspirate" and not removed_count and not self.preview_new:
             raise ValueError("Empty aspiration cannot be committed as cutting progress")
+        if self.evacuation is not None:
+            self.evacuation.finish(evacuated_volume_record)

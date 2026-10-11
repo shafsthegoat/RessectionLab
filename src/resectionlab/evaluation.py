@@ -702,8 +702,21 @@ class NativeRemovalAudit:
     complete_tool_checked: bool = False
     frontier_checked: bool = False
 
+    @property
+    def certified_evacuated_geometry(self):
+        """Immutable checked leaf union, present only on accepted v2 audits.
+
+        Kept out of JSON certificates so callers can evaluate a fixed analytic
+        reference in memory without serializing bulk source-cell histories.
+        """
+        return getattr(self, "_certified_evacuated_geometry", None)
+
     def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+        value = asdict(self)
+        if hasattr(self, "_evacuated_volume_audit"):
+            from .core import thaw_json
+            value["evacuated_volume"] = thaw_json(self._evacuated_volume_audit)
+        return value
 
 
 def independent_native_removal_check(case: Any, config: Any,
@@ -858,7 +871,10 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
                                      distance_backend: str = "scalar",
                                      distance_batch_size: int = 256,
                                      tool_modes: Mapping[str, str] | None = None,
-                                     cut_union_spec: Mapping[str, Any] | None = None) -> NativeRemovalAudit:
+                                     cut_union_spec: Mapping[str, Any] | None = None,
+                                     evacuated_volume_spec: Mapping[str, Any] | None = None,
+                                     evacuated_target_fraction_lower: np.ndarray | None = None,
+                                     evacuated_target_fraction_upper: np.ndarray | None = None) -> NativeRemovalAudit:
     """Independent source-cell audit of the native contained-cell cutting model.
 
     All tissue removed in a microstep must be fully inside its active capsule and
@@ -882,6 +898,12 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
     abstraction. Its witnesses are recomputed by a separate verifier; the default
     checker refuses such histories. This changes geometric removal assumptions,
     not physical validation or any tissue injury claim.
+
+    ``evacuated_volume_spec`` additionally declares certified partial evacuation
+    accounting. Both source-aligned parent target mass arrays must be supplied
+    explicitly; reference anatomy and reward labels never fill missing values.
+    Target intersections are cumulative intervals. Whole-cell obstacle and reward
+    semantics remain unchanged, including the original whole-cell audit totals.
     """
     from collections import deque
     from itertools import product
@@ -935,9 +957,18 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
     rotation = matrix[:3, :3] / spacing
     corners = np.array(list(product((-.5, .5), repeat=3))) @ matrix[:3, :3].T
     coverage = None
+    if evacuated_volume_spec is not None and cut_union_spec is None:
+        raise ValueError("Partial evacuation requires an explicit cut-union declaration")
+    if evacuated_volume_spec is None and (evacuated_target_fraction_lower is not None
+            or evacuated_target_fraction_upper is not None):
+        raise ValueError("Target fraction arrays require an explicit evacuation declaration")
     if cut_union_spec is not None:
         from .independent_cut_union import IndependentCutCoverage
-        coverage = IndependentCutCoverage(dict(cut_union_spec), matrix, remaining.shape)
+        coverage = IndependentCutCoverage(dict(cut_union_spec), matrix, remaining.shape,
+            evacuated_volume_spec=None if evacuated_volume_spec is None else dict(evacuated_volume_spec),
+            target_fraction_lower=evacuated_target_fraction_lower,
+            target_fraction_upper=evacuated_target_fraction_upper, tissue_mask=original)
+    evacuation = None if coverage is None else coverage.evacuation
     catalog = {tool.tool_id: tool for tool in tools}
     if len(catalog) != len(tools):
         raise ValueError("Native tool IDs must be unique")
@@ -966,11 +997,21 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
     def report(reason: str | None = None, action: str | None = None,
                voxel: tuple[int, int, int] | None = None) -> NativeRemovalAudit:
         physical = None if voxel is None else tuple(float(v) for v in matrix[:3, :3] @ voxel + matrix[:3, 3])
-        return NativeRemovalAudit(reason is None, () if reason is None else (reason,), action, voxel, physical,
+        audit = NativeRemovalAudit(reason is None, () if reason is None else (reason,), action, voxel, physical,
             len(declared) * volume, len(accepted) * volume, len(declared - accepted) * volume,
-            case.semantic_hash, volume, count, checker_version=("independent-native-sequence-v2" if coverage is None else "independent-native-cut-union-v1"),
+            case.semantic_hash, volume, count, checker_version=("independent-native-partial-evacuation-v1" if evacuation is not None else
+                "independent-native-sequence-v2" if coverage is None else "independent-native-cut-union-v1"),
             interpretation=f"Source-grid prefix audit in {geometry_frame}: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated" + ("; declared idealized cumulative subcell cutting/evacuation" if coverage is not None else ""),
             complete_tool_checked=reason is None, frontier_checked=reason is None)
+        if reason is None and evacuation is not None:
+            from .core import freeze_json
+            from .independent_cut_union import EVACUATION_SCOPE
+            geometry = evacuation.geometry()
+            object.__setattr__(audit, "_certified_evacuated_geometry", freeze_json(geometry))
+            object.__setattr__(audit, "_evacuated_volume_audit", freeze_json({
+                **evacuation.snapshot(), "geometry_digest": geometry["geometry_digest"],
+                "spec": evacuation.spec, "scope": EVACUATION_SCOPE}))
+        return audit
 
     def indices(value: Any) -> np.ndarray:
         array = np.asarray(value)
@@ -990,11 +1031,14 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         if record.get("source_hash") != case.semantic_hash or tuple(record.get("source_shape", ())) != remaining.shape or not np.allclose(record.get("native_affine"), matrix):
             raise ValueError("Native history source identity or affine mismatch")
         footprint = "fully_contained_connected_cells_v1" if coverage is None else "cumulative_affine_subcell_cut_union_v1"
+        if evacuation is not None:
+            from .independent_cut_union import EVACUATION_FOOTPRINT
+            footprint = EVACUATION_FOOTPRINT
         if record.get("native_footprint") != footprint:
             return report("unsupported_native_footprint_model", action_id)
         if coverage is not None:
             try:
-                coverage.start(record.get("cut_union"))
+                coverage.start(record.get("cut_union"), record.get("evacuated_volume"))
             except (ValueError, TypeError):
                 return report("native_cut_union_action_start_invalid", action_id)
         elif "cut_union" in record:
@@ -1213,7 +1257,8 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
             return report("native_macro_volume_accounting_mismatch", action_id)
         if coverage is not None:
             try:
-                coverage.finish(record["cut_union"], len(macro_removed), mode)
+                coverage.finish(record["cut_union"], len(macro_removed), mode,
+                                record.get("evacuated_volume"))
             except (ValueError, TypeError):
                 return report("native_cut_union_action_accounting_invalid", action_id)
     return report()

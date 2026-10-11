@@ -13,13 +13,53 @@ import math
 
 import numpy as np
 
-from .core import semantic_digest
+from .core import semantic_digest, array_digest, immutable_array
 from .geometry import point_segment_distances
 
 MODE = "cumulative_affine_subcell_cut_union_v1"
 MARGIN_MM = 1e-10
 MAX_WITNESS_ROWS_PER_PREVIEW = 8192
 ASSUMPTION = "idealized_exposed_active_subcell_cut_and_evacuation_not_validated_tissue_mechanics"
+EVACUATED_VOLUME_VERSION = "certified_evacuated_subcell_volume_v1"
+EVACUATED_FOOTPRINT = "cumulative_affine_subcell_evacuation_v2"
+EVACUATED_VOLUME_SCOPE = ("certified_subset_of_represented_source_support_under_idealized_evacuation;"
+                         "whole_parent_shaft_envelope_and_reward_unchanged")
+
+
+@dataclass(frozen=True)
+class EvacuatedVolumeSpec:
+    """Explicit unlocated parent target mass, independent of reward labels.
+
+    Equal endpoints declare exact represented parent mass; unequal endpoints
+    retain its uncertainty. Neither array identifies target inside a subcell.
+    There is deliberately no fallback to labels or evaluator anatomy.
+    """
+    target_fraction_lower: np.ndarray
+    target_fraction_upper: np.ndarray
+    provenance: str
+
+    def __post_init__(self):
+        values = []
+        for name in ("target_fraction_lower", "target_fraction_upper"):
+            value = np.asarray(getattr(self, name))
+            if (value.ndim != 3 or min(value.shape) < 1 or value.dtype.kind not in "biuf"
+                    or not np.isfinite(value).all() or np.any(value < 0) or np.any(value > 1)):
+                raise ValueError("Target mass bounds require finite source-shaped fractions in [0,1]")
+            values.append(immutable_array(value, np.float64))
+        if values[0].shape != values[1].shape or np.any(values[0] > values[1]):
+            raise ValueError("Target fraction lower/upper bounds must have equal shape and be ordered")
+        if not isinstance(self.provenance, str) or not self.provenance.strip():
+            raise ValueError("Explicit target mass provenance is required")
+        object.__setattr__(self, "target_fraction_lower", values[0])
+        object.__setattr__(self, "target_fraction_upper", values[1])
+
+    def to_record(self):
+        return {"version": EVACUATED_VOLUME_VERSION,
+                "shape": list(self.target_fraction_lower.shape),
+                "target_fraction_lower_hash": array_digest(self.target_fraction_lower),
+                "target_fraction_upper_hash": array_digest(self.target_fraction_upper),
+                "provenance": self.provenance,
+                "target_semantics": "unlocated_parent_target_mass_bounds"}
 
 
 @dataclass(frozen=True)
@@ -71,6 +111,56 @@ def _digest_ledger_items(spec, items):
 
 def ledger_digest(spec, ledger):
     return _digest_ledger_items(spec, _validated_ledger_items(spec, ledger))
+
+
+def evacuated_volume_snapshot(volume_spec, cut_spec, ledger, removed_mask, affine):
+    """Read the certified subset without changing the conservative obstacle.
+
+    Retired full-parent bitsets are represented by removed_mask. Partial bits
+    remain separate, so a parent that clears later never receives volume twice.
+    Target intervals are cumulative allocations of each parent's mass; interval
+    endpoints must not be differenced or summed as exact action target rewards.
+    """
+    if type(volume_spec) is not EvacuatedVolumeSpec:
+        raise TypeError("Explicit evacuated volume declaration required")
+    items = _validated_ledger_items(cut_spec, ledger)
+    removed = np.asarray(removed_mask)
+    matrix = np.asarray(affine, np.float64)
+    if (removed.dtype != np.dtype(bool) or removed.shape != volume_spec.target_fraction_lower.shape
+            or matrix.shape != (4,4) or not np.isfinite(matrix).all()):
+        raise ValueError("Evacuation requires a matching whole-parent mask and finite affine")
+    voxel = abs(float(np.linalg.det(matrix[:3, :3])))
+    if not math.isfinite(voxel) or voxel <= 0:
+        raise ValueError("Positive finite represented source-cell volume required")
+    full_indices = np.argwhere(removed)
+    lower, upper = [], []
+    for value in full_indices:
+        cell = tuple(value)
+        lower.append(float(volume_spec.target_fraction_lower[cell])*voxel)
+        upper.append(float(volume_spec.target_fraction_upper[cell])*voxel)
+    partial_leaves = 0
+    for cell, mask in items:
+        if any(i >= size for i, size in zip(cell, removed.shape)) or removed[cell]:
+            raise ValueError("Partial certificate overlaps a removed or out-of-grid parent")
+        count = mask.bit_count()
+        if count == cut_spec.leaf_count:
+            raise ValueError("A fully certified parent must clear in its current microstep")
+        partial_leaves += count
+        evacuated = count*(voxel/cut_spec.leaf_count)
+        target_lower = float(volume_spec.target_fraction_lower[cell])*voxel
+        target_upper = float(volume_spec.target_fraction_upper[cell])*voxel
+        lower.append(max(0., evacuated-(voxel-target_lower)))
+        upper.append(min(evacuated, target_upper))
+    total_leaves = len(full_indices)*cut_spec.leaf_count+partial_leaves
+    descriptor = {"version": EVACUATED_VOLUME_VERSION, "cut_union_spec": cut_spec.to_record(),
+                  "evacuated_volume_spec": volume_spec.to_record(), "affine_hash": array_digest(matrix),
+                  "whole_removed_mask_hash": array_digest(removed),
+                  "partial_coverage_digest": _digest_ledger_items(cut_spec, items)}
+    return {"state_digest": semantic_digest(descriptor),
+            "whole_parent_clearance_count": len(full_indices),
+            "partial_certified_leaf_count": partial_leaves, "certified_leaf_count": total_leaves,
+            "evacuated_source_volume_mm3": total_leaves*(voxel/cut_spec.leaf_count),
+            "evacuated_target_source_bounds_mm3": [math.fsum(lower), math.fsum(upper)]}
 
 
 def _exposed(cell, free):
