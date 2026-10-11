@@ -221,9 +221,15 @@
       "original_path": "build/select013-focused-corridor-v1/postrun/raw-trace-pointer.json",
       "bytes": 368,
       "sha256": "1eceafd186dd6b5ff354d8905fe662685afd7e446a9e97393767e1c500fee6c2"
+    },
+    {
+      "path": "independent/focused-corridor-result-review.txt",
+      "original_path": "build/select013-paged-route-review-v1/focused-corridor-result-review.txt",
+      "bytes": 9140,
+      "sha256": "21e7bcf29192c6952ced68f4d87969dcaf58baeaf919893cc1da87a6f51b8d13"
     }
   ],
-  "evidence_bytes": 621758,
+  "evidence_bytes": 630898,
   "excluded_bulk_trace": {
     "path": "build/select013-focused-corridor-v1/attempt-01/focused_corridor/selection.json",
     "sha256": "a84461e39394a7d94e267e77981ce9a68565bb0d0c253061afd89bd089bce892",
