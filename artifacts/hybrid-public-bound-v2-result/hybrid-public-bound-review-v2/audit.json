@@ -1,0 +1,2320 @@
+{
+  "status": "PASS_SAVED_LOCAL_WINDOW_PAIR_ACCOUNTING",
+  "exact_policy_equivalence": true,
+  "result_sha256": "f25b2d46aad3f969c9cbd4152988d4705d2472885f35124751356ff518dbb69f",
+  "parent_sha256": "7a16060cde1725186f3963175de375d9eb0d2d71577d66b61418f25dd53ec65e",
+  "release_sha256": "1af5b0892797ecb355cc7026e6553b91f95edcc4e740de48c3335ae69b44b938",
+  "source_index_sha256": "73faba042066839ced9464aba95bebd56b41a3701372d96eeade9d4200cdbeea",
+  "source_capture": {
+    "executed_head": "7778053311a8173409c1a123499f73fb087936b9",
+    "captured_head": "7778053311a8173409c1a123499f73fb087936b9",
+    "canonical_diff": [],
+    "changed_new_pins": {
+      "build/hybrid-public-bound-v2/batch_contract.py": "0b5951ad7da67caa664ca70e23f916eb0fd2200e8d0969cbd2f4d96b6ffb5457",
+      "build/hybrid-public-bound-v2/bound_policy.py": "3093f2f99385ce430c63d36257414878129cab10c7c7c2ff04f472061109b789",
+      "build/hybrid-public-bound-v2/fallback_policy.py": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+      "build/hybrid-public-bound-v2/freeze-runtime.py": "0f151c043d9b9acac1449a1d4e68908edf42f67aeb78fd1ebe71821905f541d3",
+      "build/hybrid-public-bound-v2/hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+      "build/hybrid-public-bound-v2/initial_inventory_worker.py": "a50eb73489aa41cdc7ccf60081f3eef7255fb5aee6c688db74ce7b60c6254653",
+      "build/hybrid-public-bound-v2/patient_regression.py": "c8ce28c15339206157a5652afdb77a199619c98321d39aea5f1a9f62ce0c491f",
+      "build/hybrid-public-bound-v2/patient_transfer.py": "358b223842b464e9b929a20f5a2cb0bffec7805aba114e08d0acfb30e3ea2d3a",
+      "build/hybrid-public-bound-v2/policy_tasks.py": "353f48301bca23f38acc25a5816e4d67b24e7bc4c3a24cb52c8a17ab9684c863",
+      "build/hybrid-public-bound-v2/run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+      "build/hybrid-public-bound-v2/stage/resectionlab/public_reward_window.py": "dacd890094aa0601b565ae70ef08e5be1e24f8f71bad1edecc2f7fe9079e7032",
+      "src/resectionlab/public_reward_window.py": "dacd890094aa0601b565ae70ef08e5be1e24f8f71bad1edecc2f7fe9079e7032"
+    },
+    "inherited_unchanged_mappings": 170
+  },
+  "pairs": [
+    {
+      "subject": "ReMIND-002",
+      "exact_actions": true,
+      "exact_metrics_except_outer_policy_identity": true,
+      "exact_history": true,
+      "exact_outcomes": true,
+      "same_public_source_inputs": true
+    },
+    {
+      "subject": "ReMIND-015",
+      "exact_actions": true,
+      "exact_metrics_except_outer_policy_identity": true,
+      "exact_history": true,
+      "exact_outcomes": true,
+      "same_public_source_inputs": true
+    },
+    {
+      "subject": "ReMIND-018",
+      "exact_actions": true,
+      "exact_metrics_except_outer_policy_identity": true,
+      "exact_history": true,
+      "exact_outcomes": true,
+      "same_public_source_inputs": true
+    },
+    {
+      "subject": "ReMIND-045",
+      "exact_actions": true,
+      "exact_metrics_except_outer_policy_identity": true,
+      "exact_history": true,
+      "exact_outcomes": true,
+      "same_public_source_inputs": true
+    },
+    {
+      "subject": "ReMIND-050",
+      "exact_actions": true,
+      "exact_metrics_except_outer_policy_identity": true,
+      "exact_history": true,
+      "exact_outcomes": true,
+      "same_public_source_inputs": true
+    }
+  ],
+  "rows": [
+    {
+      "subject": "ReMIND-002",
+      "method": "switch_guard",
+      "action_count": 1,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 23149.488478878036,
+        "total_reward": 0.0
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 117,
+      "replay_previews": 117,
+      "source_through_plan_seconds": 6.482006875099614,
+      "replay_and_audit_seconds": 7.127911874791607,
+      "source_preparation_seconds": 0.2891684169881046,
+      "replay_source_preparation_seconds": 0.2747263750061393,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 109,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 1,
+          "fallback_triggered_states": 1,
+          "feature_rows": 117,
+          "native_previews": 117,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 6.159415916074067,
+          "exact_verification": 5.917013164609671,
+          "fallback_nominal_gate": 0.00022195791825652122,
+          "inventory_inclusive": 6.063789000036195,
+          "inventory_logging": 0.0020694590639322996,
+          "proposal_enumeration": 0.10343245812691748,
+          "public_features": 0.007827583001926541,
+          "ranking": 8.212495595216751e-05
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 109,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 1,
+          "fallback_triggered_states": 1,
+          "feature_rows": 117,
+          "native_previews": 117,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 6.758843750227243,
+          "exact_verification": 5.998164833756164,
+          "fallback_nominal_gate": 0.0014162498991936445,
+          "inventory_inclusive": 6.658429249888286,
+          "inventory_logging": 0.004480959149077535,
+          "proposal_enumeration": 0.43006437504664063,
+          "public_features": 0.008068416966125369,
+          "ranking": 8.095894008874893e-05
+        }
+      },
+      "bound_diagnosis": null
+    },
+    {
+      "subject": "ReMIND-002",
+      "method": "public_bound",
+      "action_count": 1,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 23149.488478878036,
+        "total_reward": 0.0
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 117,
+      "replay_previews": 117,
+      "source_through_plan_seconds": 6.508386541856453,
+      "replay_and_audit_seconds": 7.166370542021468,
+      "source_preparation_seconds": 0.25908541586250067,
+      "replay_source_preparation_seconds": 0.27990987501107156,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 109,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 21,
+          "fallback_triggered_states": 1,
+          "feature_rows": 117,
+          "native_previews": 117,
+          "proposal_calls": 1,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 109,
+          "public_bound_snapshot_bytes": 5952060,
+          "public_bound_snapshot_target_cells": 24274,
+          "public_bound_snapshot_unknown_cells": 2919493,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 109,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 6.212516749976203,
+          "exact_verification": 5.815337670966983,
+          "fallback_nominal_gate": 0.008634999161586165,
+          "inventory_inclusive": 6.119679542025551,
+          "inventory_logging": 0.0030644170474261045,
+          "proposal_enumeration": 0.13356275018304586,
+          "public_bound_queries": 0.07071749563328922,
+          "public_bound_setup": 0.03416266618296504,
+          "public_features": 0.00848058401606977,
+          "ranking": 8.387514390051365e-05
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 109,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 21,
+          "fallback_triggered_states": 1,
+          "feature_rows": 117,
+          "native_previews": 117,
+          "proposal_calls": 1,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 109,
+          "public_bound_snapshot_bytes": 5952060,
+          "public_bound_snapshot_target_cells": 24274,
+          "public_bound_snapshot_unknown_cells": 2919493,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 109,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 6.7946842920500785,
+          "exact_verification": 5.558997872984037,
+          "fallback_nominal_gate": 0.03554353886283934,
+          "inventory_inclusive": 6.692787709180266,
+          "inventory_logging": 0.00544141698628664,
+          "proposal_enumeration": 0.45938987494446337,
+          "public_bound_queries": 0.3323992525693029,
+          "public_bound_setup": 0.09252345794811845,
+          "public_features": 0.00839062500745058,
+          "ranking": 7.791700772941113e-05
+        }
+      },
+      "bound_diagnosis": {
+        "reason_counts_online": {
+          "unknown_target_coverage_in_window": 109
+        },
+        "reason_counts_replay": {
+          "unknown_target_coverage_in_window": 109
+        },
+        "pruned_each_phase": 0,
+        "unavailable_each_phase": 109,
+        "setup_states_each_phase": 1,
+        "snapshot_payload_bytes_sum_each_phase": 5952060,
+        "grid_cells": 2975946,
+        "source_target_domain_known_cells": 56453,
+        "source_target_domain_unknown_cells": 2919493,
+        "matched_baseline_states": 1,
+        "checked_legal_pruned_bounds": 0,
+        "state_evidence": [
+          {
+            "step": 0,
+            "source_state_hash": "sha256:c8307aee919b45c33630282dafc4a40551b32f94dc3aa7b7245289253ca76c9b",
+            "queries": 109,
+            "pruned": 0,
+            "reasons": {
+              "unknown_target_coverage_in_window": 109
+            }
+          }
+        ]
+      }
+    },
+    {
+      "subject": "ReMIND-015",
+      "method": "switch_guard",
+      "action_count": 14,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 56.895312759999854,
+        "cumulative_contacted_tissue_upper_bound_mm3": 205.9936523325737,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 150.68054198401225,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 13,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 58,
+        "reference_target_fraction_removed": 0.007488702388637833,
+        "simulated_removed_volume_mm3": 55.31311034856145,
+        "target_removed_mm3": 55.313110348561466,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 7386.207580165663,
+        "total_reward": 54.866215035801446
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 197,
+      "replay_previews": 197,
+      "source_through_plan_seconds": 3.900250791804865,
+      "replay_and_audit_seconds": 8.247442292049527,
+      "source_preparation_seconds": 0.23656641598790884,
+      "replay_source_preparation_seconds": 0.2524717089254409,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 85,
+          "fallback_gate_states": 14,
+          "fallback_nominal_reward_checks": 82,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1217,
+          "native_previews": 197,
+          "proposal_calls": 14,
+          "ridge_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.2113006671424955,
+          "exact_verification": 1.131039631087333,
+          "fallback_nominal_gate": 0.03906329278834164,
+          "inventory_inclusive": 3.0694524596910924,
+          "inventory_logging": 0.03348162700422108,
+          "proposal_enumeration": 1.6323057080153376,
+          "public_features": 0.1018296661786735,
+          "ranking": 0.00119591667316854
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 85,
+          "fallback_gate_states": 14,
+          "fallback_nominal_reward_checks": 82,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1217,
+          "native_previews": 197,
+          "proposal_calls": 14,
+          "ridge_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.32843395904637873,
+          "exact_verification": 1.0249681216664612,
+          "fallback_nominal_gate": 0.13281970820389688,
+          "inventory_inclusive": 4.798806335078552,
+          "inventory_logging": 0.06504504196345806,
+          "proposal_enumeration": 3.0988464595284313,
+          "public_features": 0.08969200146384537,
+          "ranking": 0.000865500420331955
+        }
+      },
+      "bound_diagnosis": null
+    },
+    {
+      "subject": "ReMIND-015",
+      "method": "public_bound",
+      "action_count": 14,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 56.895312759999854,
+        "cumulative_contacted_tissue_upper_bound_mm3": 205.9936523325737,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 150.68054198401225,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 13,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 58,
+        "reference_target_fraction_removed": 0.007488702388637833,
+        "simulated_removed_volume_mm3": 55.31311034856145,
+        "target_removed_mm3": 55.313110348561466,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 7386.207580165663,
+        "total_reward": 54.866215035801446
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 197,
+      "replay_previews": 197,
+      "source_through_plan_seconds": 3.911592666991055,
+      "replay_and_audit_seconds": 9.21950687514618,
+      "source_preparation_seconds": 0.24241299997083843,
+      "replay_source_preparation_seconds": 0.2480080001987517,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 85,
+          "fallback_gate_states": 14,
+          "fallback_nominal_reward_checks": 82,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1217,
+          "native_previews": 197,
+          "proposal_calls": 14,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 85,
+          "public_bound_snapshot_bytes": 5440568,
+          "public_bound_snapshot_target_cells": 7687,
+          "public_bound_snapshot_unknown_cells": 2699244,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 85,
+          "ridge_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.2283514579758048,
+          "exact_verification": 1.0827637477777898,
+          "fallback_nominal_gate": 0.04336812696419656,
+          "inventory_inclusive": 3.1193699538707733,
+          "inventory_logging": 0.03778837574645877,
+          "proposal_enumeration": 1.5764076674822718,
+          "public_bound_queries": 0.10136304213665426,
+          "public_bound_setup": 0.044360082829371095,
+          "public_features": 0.08712841710075736,
+          "ranking": 0.0008301229681819677
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 85,
+          "fallback_gate_states": 14,
+          "fallback_nominal_reward_checks": 82,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1217,
+          "native_previews": 197,
+          "proposal_calls": 14,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 85,
+          "public_bound_snapshot_bytes": 5440568,
+          "public_bound_snapshot_target_cells": 7687,
+          "public_bound_snapshot_unknown_cells": 2699244,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 85,
+          "ridge_calls": 14
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.34338116692379117,
+          "exact_verification": 1.0475696625653654,
+          "fallback_nominal_gate": 0.14567354042083025,
+          "inventory_inclusive": 5.587903164792806,
+          "inventory_logging": 0.07014974975027144,
+          "proposal_enumeration": 3.3994349190033972,
+          "public_bound_queries": 0.3058442522305995,
+          "public_bound_setup": 0.09716320806182921,
+          "public_features": 0.0903944163583219,
+          "ranking": 0.0008525834418833256
+        }
+      },
+      "bound_diagnosis": {
+        "reason_counts_online": {
+          "unknown_target_coverage_in_window": 85
+        },
+        "reason_counts_replay": {
+          "unknown_target_coverage_in_window": 85
+        },
+        "pruned_each_phase": 0,
+        "unavailable_each_phase": 85,
+        "setup_states_each_phase": 1,
+        "snapshot_payload_bytes_sum_each_phase": 5440568,
+        "grid_cells": 2720200,
+        "source_target_domain_known_cells": 20956,
+        "source_target_domain_unknown_cells": 2699244,
+        "matched_baseline_states": 14,
+        "checked_legal_pruned_bounds": 0,
+        "state_evidence": [
+          {
+            "step": 0,
+            "source_state_hash": "sha256:2f9b04b9f0b7cf1092e4ade7b49382bf34f5a629a2abb62ac8835a31a6dd4618",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 1,
+            "source_state_hash": "sha256:004d883fc9aea8a431d01f7b583fdae98721beb19f5315e6ca747d1d85e372ba",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 2,
+            "source_state_hash": "sha256:5a0d0661d38c1c131757875f8dc378d9082170179f00f7cefbe819ae0a289e19",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 3,
+            "source_state_hash": "sha256:03f5da0bad4e784ec3fc7f1c823afc67290fe7d84cac92c75cdca73c7c0007dd",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 4,
+            "source_state_hash": "sha256:2d07d5adede26ab84df12cb06507eba57634ac189a0bf30a6c41dbbe43bdde17",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 5,
+            "source_state_hash": "sha256:e1888c5043c4bd301c0ca99b8a3ecd70c51289f566cbda73012382fa34c0fdce",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 6,
+            "source_state_hash": "sha256:f22cff7ffb32c2ef412319147cbed6176e3e568ea40e0aceb06916d49ad9f336",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 7,
+            "source_state_hash": "sha256:21db60331c26dceaa1d115e96c267d9feb6bc927145b5c16ef4d37a43104bd6d",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 8,
+            "source_state_hash": "sha256:45b18a3ef41c4a48b3eb5562428ce85638e8ce2ed2e0fc4a840adb39548ed0be",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 9,
+            "source_state_hash": "sha256:da6578897fa2343ee0fff8288706ddf37325dae713d81e7e3d00a23242d5d650",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 10,
+            "source_state_hash": "sha256:1847909e06ecb78d43f24e88239d524969afa0a54afcec9aad165d53d914f78d",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 11,
+            "source_state_hash": "sha256:1e3ab6ad732f20dad350de8d8f88906eeb9f5f50fb605fbffb7ed9b436234215",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 12,
+            "source_state_hash": "sha256:88cc1d8345364c46ad8e7f1b51c0a22bb0a8c11d0a2951ecdf9ee255de1333d8",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 13,
+            "source_state_hash": "sha256:0a6fc75def6c461fe25ec304b6eec1809b7e714e6e8eb601b40e997faade6ea0",
+            "queries": 85,
+            "pruned": 0,
+            "reasons": {
+              "unknown_target_coverage_in_window": 85
+            }
+          }
+        ]
+      }
+    },
+    {
+      "subject": "ReMIND-018",
+      "method": "switch_guard",
+      "action_count": 1,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 1189.2323111979806,
+        "total_reward": 0.0
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 75,
+      "replay_previews": 75,
+      "source_through_plan_seconds": 2.6893439169507474,
+      "replay_and_audit_seconds": 3.111858458025381,
+      "source_preparation_seconds": 0.23266420792788267,
+      "replay_source_preparation_seconds": 0.2511162501759827,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 67,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 2,
+          "fallback_triggered_states": 1,
+          "feature_rows": 75,
+          "native_previews": 75,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 2.412578708026558,
+          "exact_verification": 1.9450267415959388,
+          "fallback_nominal_gate": 0.0012876251712441444,
+          "inventory_inclusive": 2.357883292250335,
+          "inventory_logging": 0.0027594580315053463,
+          "proposal_enumeration": 0.3480878749396652,
+          "public_features": 0.005511125084012747,
+          "ranking": 5.137501284480095e-05
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 67,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 2,
+          "fallback_triggered_states": 1,
+          "feature_rows": 75,
+          "native_previews": 75,
+          "proposal_calls": 1,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 2.7710255831480026,
+          "exact_verification": 1.622595207998529,
+          "fallback_nominal_gate": 0.0037891659885644913,
+          "inventory_inclusive": 2.712173042120412,
+          "inventory_logging": 0.00509516685269773,
+          "proposal_enumeration": 0.9236108749173582,
+          "public_features": 0.005680625094100833,
+          "ranking": 5.38751482963562e-05
+        }
+      },
+      "bound_diagnosis": null
+    },
+    {
+      "subject": "ReMIND-018",
+      "method": "public_bound",
+      "action_count": 1,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 1189.2323111979806,
+        "total_reward": 0.0
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 75,
+      "replay_previews": 75,
+      "source_through_plan_seconds": 2.9259549588896334,
+      "replay_and_audit_seconds": 3.5825156669598073,
+      "source_preparation_seconds": 0.23067033314146101,
+      "replay_source_preparation_seconds": 0.24274112493731081,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 67,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 17,
+          "fallback_triggered_states": 1,
+          "feature_rows": 75,
+          "native_previews": 75,
+          "proposal_calls": 1,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 67,
+          "public_bound_snapshot_bytes": 5199288,
+          "public_bound_snapshot_target_cells": 1247,
+          "public_bound_snapshot_unknown_cells": 2591640,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 67,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 2.649281458929181,
+          "exact_verification": 1.9616267133969814,
+          "fallback_nominal_gate": 0.014378416119143367,
+          "inventory_inclusive": 2.594279124867171,
+          "inventory_logging": 0.003238749923184514,
+          "proposal_enumeration": 0.39750287495553493,
+          "public_bound_queries": 0.10131449927575886,
+          "public_bound_setup": 0.0492268749512732,
+          "public_features": 0.005583499791100621,
+          "ranking": 5.7541998103260994e-05
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 67,
+          "fallback_gate_states": 1,
+          "fallback_nominal_reward_checks": 17,
+          "fallback_triggered_states": 1,
+          "feature_rows": 75,
+          "native_previews": 75,
+          "proposal_calls": 1,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 67,
+          "public_bound_snapshot_bytes": 5199288,
+          "public_bound_snapshot_target_cells": 1247,
+          "public_bound_snapshot_unknown_cells": 2591640,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 67,
+          "ridge_calls": 1
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 3.249684125185013,
+          "exact_verification": 1.6239064107649028,
+          "fallback_nominal_gate": 0.035526043036952615,
+          "inventory_inclusive": 3.1889132920186967,
+          "inventory_logging": 0.005755499936640263,
+          "proposal_enumeration": 0.9904904582072049,
+          "public_bound_queries": 0.26746537280268967,
+          "public_bound_setup": 0.10294041712768376,
+          "public_features": 0.005699333967640996,
+          "ranking": 5.2042072638869286e-05
+        }
+      },
+      "bound_diagnosis": {
+        "reason_counts_online": {
+          "unknown_target_coverage_in_window": 67
+        },
+        "reason_counts_replay": {
+          "unknown_target_coverage_in_window": 67
+        },
+        "pruned_each_phase": 0,
+        "unavailable_each_phase": 67,
+        "setup_states_each_phase": 1,
+        "snapshot_payload_bytes_sum_each_phase": 5199288,
+        "grid_cells": 2599560,
+        "source_target_domain_known_cells": 7920,
+        "source_target_domain_unknown_cells": 2591640,
+        "matched_baseline_states": 1,
+        "checked_legal_pruned_bounds": 0,
+        "state_evidence": [
+          {
+            "step": 0,
+            "source_state_hash": "sha256:0876e2bac2171985fe478cdd78cbba092207e39aee77b22975a4552698e16a4a",
+            "queries": 67,
+            "pruned": 0,
+            "reasons": {
+              "unknown_target_coverage_in_window": 67
+            }
+          }
+        ]
+      }
+    },
+    {
+      "subject": "ReMIND-045",
+      "method": "switch_guard",
+      "action_count": 13,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 95.48752381870861,
+        "cumulative_contacted_tissue_upper_bound_mm3": 202.17920577005748,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 153.54175532537386,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 12,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 51,
+        "reference_target_fraction_removed": 0.0020157306035334575,
+        "simulated_removed_volume_mm3": 48.637450444683644,
+        "target_removed_mm3": 48.63745044468365,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 24128.943798057662,
+        "total_reward": 48.181962920864926
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 187,
+      "replay_previews": 187,
+      "source_through_plan_seconds": 6.061857708031312,
+      "replay_and_audit_seconds": 14.847357084043324,
+      "source_preparation_seconds": 0.26085737510584295,
+      "replay_source_preparation_seconds": 0.2777708328794688,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 83,
+          "fallback_gate_states": 13,
+          "fallback_nominal_reward_checks": 68,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1183,
+          "native_previews": 187,
+          "proposal_calls": 13,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.4253723749425262,
+          "exact_verification": 2.2712658774107695,
+          "fallback_nominal_gate": 0.058292708825320005,
+          "inventory_inclusive": 5.109877748182043,
+          "inventory_logging": 0.04349867068231106,
+          "proposal_enumeration": 2.435778043465689,
+          "public_features": 0.08595962612889707,
+          "ranking": 0.000826043076813221
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 83,
+          "fallback_gate_states": 13,
+          "fallback_nominal_reward_checks": 68,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1183,
+          "native_previews": 187,
+          "proposal_calls": 13,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.5977432080544531,
+          "exact_verification": 2.4734142841771245,
+          "fallback_nominal_gate": 0.14898100099526346,
+          "inventory_inclusive": 8.55483941687271,
+          "inventory_logging": 0.07343062362633646,
+          "proposal_enumeration": 5.255044250981882,
+          "public_features": 0.0979319172911346,
+          "ranking": 0.0009797473903745413
+        }
+      },
+      "bound_diagnosis": null
+    },
+    {
+      "subject": "ReMIND-045",
+      "method": "public_bound",
+      "action_count": 13,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 95.48752381870861,
+        "cumulative_contacted_tissue_upper_bound_mm3": 202.17920577005748,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 153.54175532537386,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 12,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 51,
+        "reference_target_fraction_removed": 0.0020157306035334575,
+        "simulated_removed_volume_mm3": 48.637450444683644,
+        "target_removed_mm3": 48.63745044468365,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 24128.943798057662,
+        "total_reward": 48.181962920864926
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 187,
+      "replay_previews": 187,
+      "source_through_plan_seconds": 6.60894462489523,
+      "replay_and_audit_seconds": 15.70344354212284,
+      "source_preparation_seconds": 0.24983637500554323,
+      "replay_source_preparation_seconds": 0.2908435829449445,
+      "online_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 83,
+          "fallback_gate_states": 13,
+          "fallback_nominal_reward_checks": 68,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1183,
+          "native_previews": 187,
+          "proposal_calls": 13,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 83,
+          "public_bound_snapshot_bytes": 5811072,
+          "public_bound_snapshot_target_cells": 25250,
+          "public_bound_snapshot_unknown_cells": 2809046,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 83,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.4372199170757085,
+          "exact_verification": 2.2918896705377847,
+          "fallback_nominal_gate": 0.06904812320135534,
+          "inventory_inclusive": 5.653771751793101,
+          "inventory_logging": 0.04401253955438733,
+          "proposal_enumeration": 2.67220545723103,
+          "public_bound_queries": 0.17503584059886634,
+          "public_bound_setup": 0.06742458301596344,
+          "public_features": 0.08665804378688335,
+          "ranking": 0.0008136664982885122
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_comparison_states": 0,
+          "fallback_additional_previews": 83,
+          "fallback_gate_states": 13,
+          "fallback_nominal_reward_checks": 68,
+          "fallback_triggered_states": 1,
+          "feature_rows": 1183,
+          "native_previews": 187,
+          "proposal_calls": 13,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 83,
+          "public_bound_snapshot_bytes": 5811072,
+          "public_bound_snapshot_target_cells": 25250,
+          "public_bound_snapshot_unknown_cells": 2809046,
+          "public_bound_states": 1,
+          "public_bound_unavailable": 83,
+          "ridge_calls": 13
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.621151041937992,
+          "exact_verification": 2.491875749779865,
+          "fallback_nominal_gate": 0.15259891655296087,
+          "inventory_inclusive": 8.95981920673512,
+          "inventory_logging": 0.07632783311419189,
+          "proposal_enumeration": 5.10433291667141,
+          "public_bound_queries": 0.3935612023342401,
+          "public_bound_setup": 0.12783912499435246,
+          "public_features": 0.0880491235293448,
+          "ranking": 0.0008477510418742895
+        }
+      },
+      "bound_diagnosis": {
+        "reason_counts_online": {
+          "unknown_target_coverage_in_window": 83
+        },
+        "reason_counts_replay": {
+          "unknown_target_coverage_in_window": 83
+        },
+        "pruned_each_phase": 0,
+        "unavailable_each_phase": 83,
+        "setup_states_each_phase": 1,
+        "snapshot_payload_bytes_sum_each_phase": 5811072,
+        "grid_cells": 2905452,
+        "source_target_domain_known_cells": 96406,
+        "source_target_domain_unknown_cells": 2809046,
+        "matched_baseline_states": 13,
+        "checked_legal_pruned_bounds": 0,
+        "state_evidence": [
+          {
+            "step": 0,
+            "source_state_hash": "sha256:80f3c83cb32ca46e07df66c5cd2bbb4647ff438286fec0214291da4df6c131d1",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 1,
+            "source_state_hash": "sha256:77ce18843aec048291c86f74c866a04f7a0d5e9095ca4c9f7ff22a3ec8c42114",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 2,
+            "source_state_hash": "sha256:aa04cd3d2db5c5dca7619f65e502baf17efcb937818b4ea55a4604408027f8ec",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 3,
+            "source_state_hash": "sha256:ade76e49830318e80129872ee0e4287d40f59131b2e4d99bac029d9758255814",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 4,
+            "source_state_hash": "sha256:783db4eb73fefd5cbc902e6a86bbcb52a12c619ebb4b9e729202dc8a07330b78",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 5,
+            "source_state_hash": "sha256:a5c315aabf0f628d460af4dc03eba8de85c5107f1f16044e205ff544853eb075",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 6,
+            "source_state_hash": "sha256:1c51e01e60b707b7618f5337d4ec87e9d9e8ceda51c5244235eff575b246a1cf",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 7,
+            "source_state_hash": "sha256:890325d9645ba66109e6763dda23633e8fea18e6514c01fd2fa6cc797967227e",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 8,
+            "source_state_hash": "sha256:d2230366db8b1969cbcff0670db6f9dbdc7496e520af3cf90a474321dbf7d8c0",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 9,
+            "source_state_hash": "sha256:dd160b78ac5230ff2f6d3d046295acfe50b06ad76029d9f9b1936fcfb2855336",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 10,
+            "source_state_hash": "sha256:825b8a2c6a98d342a14897ae52785cac21b894d942b6b92e66ed85569c1c6dec",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 11,
+            "source_state_hash": "sha256:db51e635126f1096344b966dc64d92ae02e2c4c1185f1e67f5d8b2b59f90afae",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 12,
+            "source_state_hash": "sha256:a79d8a0ed5dec3e728a0693ef78b615ae0f40120653144afc70263946a75ae9a",
+            "queries": 83,
+            "pruned": 0,
+            "reasons": {
+              "unknown_target_coverage_in_window": 83
+            }
+          }
+        ]
+      }
+    },
+    {
+      "subject": "ReMIND-050",
+      "method": "switch_guard",
+      "action_count": 12,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 95.57034251322483,
+        "cumulative_contacted_tissue_upper_bound_mm3": 178.3372363511995,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 143.05125910524023,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 11,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 37,
+        "reference_target_fraction_removed": 0.001891905711509945,
+        "simulated_removed_volume_mm3": 35.28597724595926,
+        "target_removed_mm3": 35.28597724595925,
+        "tool_changes": 1,
+        "total_reference_target_mm3": 18651.02316214122,
+        "total_reward": 34.830406903446026
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 870,
+      "replay_previews": 870,
+      "source_through_plan_seconds": 11.204790208023041,
+      "replay_and_audit_seconds": 23.30878520803526,
+      "source_preparation_seconds": 0.2824261251371354,
+      "replay_source_preparation_seconds": 0.3205609580036253,
+      "online_costs": {
+        "counts": {
+          "current_tool_additional_previews": 193,
+          "current_tool_comparison_states": 4,
+          "fallback_additional_previews": 774,
+          "fallback_gate_states": 12,
+          "fallback_nominal_reward_checks": 6,
+          "fallback_triggered_states": 7,
+          "feature_rows": 1092,
+          "native_previews": 870,
+          "proposal_calls": 12,
+          "ridge_calls": 12
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.39331879187375307,
+          "exact_verification": 6.159114003414288,
+          "fallback_nominal_gate": 0.006869291886687279,
+          "inventory_inclusive": 10.244822623440996,
+          "inventory_logging": 0.0474870428442955,
+          "proposal_enumeration": 2.8640522086061537,
+          "public_features": 0.08169866795651615,
+          "ranking": 0.0007454550359398127
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_additional_previews": 193,
+          "current_tool_comparison_states": 4,
+          "fallback_additional_previews": 774,
+          "fallback_gate_states": 12,
+          "fallback_nominal_reward_checks": 6,
+          "fallback_triggered_states": 7,
+          "feature_rows": 1092,
+          "native_previews": 870,
+          "proposal_calls": 12,
+          "ridge_calls": 12
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.5862337499856949,
+          "exact_verification": 9.37629579170607,
+          "fallback_nominal_gate": 0.014403917593881488,
+          "inventory_inclusive": 17.004373122006655,
+          "inventory_logging": 0.07597174914553761,
+          "proposal_enumeration": 5.21679962403141,
+          "public_features": 0.08241416770033538,
+          "ranking": 0.0007904171943664551
+        }
+      },
+      "bound_diagnosis": null
+    },
+    {
+      "subject": "ReMIND-050",
+      "method": "public_bound",
+      "action_count": 12,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 95.57034251322483,
+        "cumulative_contacted_tissue_upper_bound_mm3": 178.3372363511995,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 143.05125910524023,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 11,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 37,
+        "reference_target_fraction_removed": 0.001891905711509945,
+        "simulated_removed_volume_mm3": 35.28597724595926,
+        "target_removed_mm3": 35.28597724595925,
+        "tool_changes": 1,
+        "total_reference_target_mm3": 18651.02316214122,
+        "total_reward": 34.830406903446026
+      },
+      "historical_quality_recomputed": {
+        "target_removed_mm3": true,
+        "total_reward": true,
+        "normal_removed_mm3": true,
+        "cumulative_contacted_tissue_upper_bound_mm3": true,
+        "currently_retained_contacted_tissue_upper_bound_mm3": true,
+        "complete_tool_path_length_mm": true,
+        "nonstop_actions": true,
+        "tool_changes": true,
+        "same_full_target_denominator": true,
+        "physical_probability_remains_null": true,
+        "unchanged_partial_contact_reward": true
+      },
+      "online_previews": 870,
+      "replay_previews": 870,
+      "source_through_plan_seconds": 14.842892958084121,
+      "replay_and_audit_seconds": 30.026800916995853,
+      "source_preparation_seconds": 0.2730060419999063,
+      "replay_source_preparation_seconds": 0.28602845896966755,
+      "online_costs": {
+        "counts": {
+          "current_tool_additional_previews": 193,
+          "current_tool_comparison_states": 4,
+          "fallback_additional_previews": 774,
+          "fallback_gate_states": 12,
+          "fallback_nominal_reward_checks": 100,
+          "fallback_triggered_states": 7,
+          "feature_rows": 1092,
+          "native_previews": 870,
+          "proposal_calls": 12,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 774,
+          "public_bound_snapshot_bytes": 67853016,
+          "public_bound_snapshot_target_cells": 214838,
+          "public_bound_snapshot_unknown_cells": 32548439,
+          "public_bound_states": 11,
+          "public_bound_unavailable": 774,
+          "ridge_calls": 12
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.48109954106621444,
+          "exact_verification": 6.252236413070932,
+          "fallback_nominal_gate": 0.13569279783405364,
+          "inventory_inclusive": 13.864029246848077,
+          "inventory_logging": 0.053211291087791324,
+          "proposal_enumeration": 3.1773623328190297,
+          "public_bound_queries": 2.0271572119090706,
+          "public_bound_setup": 0.9338877929840237,
+          "public_features": 0.08263583341613412,
+          "ranking": 0.0008432078175246716
+        }
+      },
+      "replay_costs": {
+        "counts": {
+          "current_tool_additional_previews": 193,
+          "current_tool_comparison_states": 4,
+          "fallback_additional_previews": 774,
+          "fallback_gate_states": 12,
+          "fallback_nominal_reward_checks": 100,
+          "fallback_triggered_states": 7,
+          "feature_rows": 1092,
+          "native_previews": 870,
+          "proposal_calls": 12,
+          "public_bound_pruned": 0,
+          "public_bound_queries": 774,
+          "public_bound_snapshot_bytes": 67853016,
+          "public_bound_snapshot_target_cells": 214838,
+          "public_bound_snapshot_unknown_cells": 32548439,
+          "public_bound_states": 11,
+          "public_bound_unavailable": 774,
+          "ridge_calls": 12
+        },
+        "nesting": "constructor and inventory are inclusive; proposal/features/ranking/verification are disjoint within inventory",
+        "seconds": {
+          "constructor_inclusive": 0.5996325409505516,
+          "exact_verification": 9.478499449091032,
+          "fallback_nominal_gate": 0.2668770404998213,
+          "inventory_inclusive": 23.45673695881851,
+          "inventory_logging": 0.08457804168574512,
+          "proposal_enumeration": 5.498859332175925,
+          "public_bound_queries": 3.9961112146265805,
+          "public_bound_setup": 1.6522331682499498,
+          "public_features": 0.08295541605912149,
+          "ranking": 0.0007680431008338928
+        }
+      },
+      "bound_diagnosis": {
+        "reason_counts_online": {
+          "unknown_target_coverage_in_window": 774
+        },
+        "reason_counts_replay": {
+          "unknown_target_coverage_in_window": 774
+        },
+        "pruned_each_phase": 0,
+        "unavailable_each_phase": 774,
+        "setup_states_each_phase": 11,
+        "snapshot_payload_bytes_sum_each_phase": 67853016,
+        "grid_cells": 3084144,
+        "source_target_domain_known_cells": 125195,
+        "source_target_domain_unknown_cells": 2958949,
+        "matched_baseline_states": 12,
+        "checked_legal_pruned_bounds": 0,
+        "state_evidence": [
+          {
+            "step": 0,
+            "source_state_hash": "sha256:62d43b1a284fdfa8c38aace5c305c84e0de5fa92ff5dfc20d31b93302d010e58",
+            "queries": 0,
+            "pruned": 0,
+            "reasons": {}
+          },
+          {
+            "step": 1,
+            "source_state_hash": "sha256:3548f932c3e0166477acf552f54f27d44dec7a9e411c1fd416680ffd01384230",
+            "queries": 48,
+            "pruned": 0,
+            "reasons": {
+              "unknown_target_coverage_in_window": 48
+            }
+          },
+          {
+            "step": 2,
+            "source_state_hash": "sha256:b18ec1eb4290b851cd04dc2c1dc7fc3477d6532541eab0f913b91c8472ff7b78",
+            "queries": 49,
+            "pruned": 0,
+            "reasons": {
+              "unknown_target_coverage_in_window": 49
+            }
+          },
+          {
+            "step": 3,
+            "source_state_hash": "sha256:b574feee04cbee992bfa7d0742503bb141f43806f758e588a2354e246d648e03",
+            "queries": 48,
+            "pruned": 0,
+            "reasons": {
+              "unknown_target_coverage_in_window": 48
+            }
+          },
+          {
+            "step": 4,
+            "source_state_hash": "sha256:236912a5d83a041b79f84930400fd528eb9f0069cfc672c14d844609a2290d5a",
+            "queries": 48,
+            "pruned": 0,
+            "reasons": {
+              "unknown_target_coverage_in_window": 48
+            }
+          },
+          {
+            "step": 5,
+            "source_state_hash": "sha256:c9f825d4424484d4fcb9e667f220d300e1f14973046c31ef984368935a94211c",
+            "queries": 83,
+            "pruned": 0,
+            "reasons": {
+              "unknown_target_coverage_in_window": 83
+            }
+          },
+          {
+            "step": 6,
+            "source_state_hash": "sha256:dcf1ddc4fddc79ad0fb03eeea96e44142f950d388c34b511c704fdb1f4142a11",
+            "queries": 83,
+            "pruned": 0,
+            "reasons": {
+              "unknown_target_coverage_in_window": 83
+            }
+          },
+          {
+            "step": 7,
+            "source_state_hash": "sha256:3f4a346f566dfd63be7885aa6f82c7e93fb43375550358a7f8baaebafa8ce3fa",
+            "queries": 83,
+            "pruned": 0,
+            "reasons": {
+              "unknown_target_coverage_in_window": 83
+            }
+          },
+          {
+            "step": 8,
+            "source_state_hash": "sha256:204c5bb73847c033ccbf5ca9673e21894ba95f82774edc8f23234e196d614aac",
+            "queries": 83,
+            "pruned": 0,
+            "reasons": {
+              "unknown_target_coverage_in_window": 83
+            }
+          },
+          {
+            "step": 9,
+            "source_state_hash": "sha256:b473786855a244a615183484f6c336f9ffb8672f18d594b3dbcb6b6b9ec22f1e",
+            "queries": 83,
+            "pruned": 0,
+            "reasons": {
+              "unknown_target_coverage_in_window": 83
+            }
+          },
+          {
+            "step": 10,
+            "source_state_hash": "sha256:21188962058dfc9536177f8a733ad2d5fc870411c9dede003b152691c131424d",
+            "queries": 83,
+            "pruned": 0,
+            "reasons": {
+              "unknown_target_coverage_in_window": 83
+            }
+          },
+          {
+            "step": 11,
+            "source_state_hash": "sha256:da5df4b083ce63c9b2ef1030f74906ca632e644f61101e51e634244695541043",
+            "queries": 83,
+            "pruned": 0,
+            "reasons": {
+              "unknown_target_coverage_in_window": 83
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "totals": {
+    "ridge_calls": 164,
+    "previews": 5784,
+    "transitions": 164
+  },
+  "bound_refusals_both_phases": {
+    "unknown_target_coverage_in_window": 2236
+  },
+  "costs": {
+    "worker_seconds": 187.91280708299018,
+    "parent_seconds": 190.4029619579669,
+    "sampled_owned_peak_rss_bytes": 743030784,
+    "output_bytes": 15479548,
+    "supervision_bytes": 3765
+  },
+  "cleanup": {
+    "reaped": true,
+    "remaining": [],
+    "errors": []
+  },
+  "diagnosis": "Saved bound reasons, activated/pruned counts and immutable source-domain snapshot counts are reported per case. Where baseline and bound visit the same state, every finite bound for a baseline-certified legal candidate is checked against its saved actual nominal reward. Unknown or unsupported queries must receive ordinary exact preview. No patient coverage or correctness is inferred outside the recorded paths.",
+  "limitations": [
+    "No acquired arrays, model parameters, runtime imports, tests or native replay in this independent audit. Geometry acceptance is checked from saved worker evaluation.",
+    "Only recorded matched states/actions are compared; this is not proof of all possible action bounds or universal performance.",
+    "One baseline-first pair per already-exposed TRAIN case; no held-out or causal speed claim, sampled memory may miss peaks.",
+    "Full supplied target denominator and explicit S union T/post-exposure material and coverage assumptions remain unchanged."
+  ],
+  "read_pins": {
+    "build/hybrid-public-bound-v2/root-release.json": {
+      "sha256": "1af5b0892797ecb355cc7026e6553b91f95edcc4e740de48c3335ae69b44b938",
+      "bytes": 4951
+    },
+    "build/hybrid-public-bound-v2/source-index.json": {
+      "sha256": "73faba042066839ced9464aba95bebd56b41a3701372d96eeade9d4200cdbeea",
+      "bytes": 23808
+    },
+    "build/hybrid-public-bound-v1/source-index.json": {
+      "sha256": "a0f1bcf643887a61d174d2f2459bd9736fc4d7d06ba3ce2bcdfb57c04ffae6da",
+      "bytes": 23690
+    },
+    "build/hybrid-public-bound-v2/batch_contract.py": {
+      "sha256": "0b5951ad7da67caa664ca70e23f916eb0fd2200e8d0969cbd2f4d96b6ffb5457",
+      "bytes": 13236
+    },
+    "build/hybrid-public-bound-v2/bound_policy.py": {
+      "sha256": "3093f2f99385ce430c63d36257414878129cab10c7c7c2ff04f472061109b789",
+      "bytes": 13718
+    },
+    "build/hybrid-public-bound-v2/fallback_policy.py": {
+      "sha256": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+      "bytes": 9455
+    },
+    "build/hybrid-public-bound-v2/freeze-runtime.py": {
+      "sha256": "0f151c043d9b9acac1449a1d4e68908edf42f67aeb78fd1ebe71821905f541d3",
+      "bytes": 2300
+    },
+    "build/hybrid-public-bound-v2/hybrid_proposal.py": {
+      "sha256": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+      "bytes": 20840
+    },
+    "build/hybrid-public-bound-v2/initial_inventory_worker.py": {
+      "sha256": "a50eb73489aa41cdc7ccf60081f3eef7255fb5aee6c688db74ce7b60c6254653",
+      "bytes": 24051
+    },
+    "build/hybrid-public-bound-v2/patient_regression.py": {
+      "sha256": "c8ce28c15339206157a5652afdb77a199619c98321d39aea5f1a9f62ce0c491f",
+      "bytes": 6059
+    },
+    "build/hybrid-public-bound-v2/patient_transfer.py": {
+      "sha256": "358b223842b464e9b929a20f5a2cb0bffec7805aba114e08d0acfb30e3ea2d3a",
+      "bytes": 4707
+    },
+    "build/hybrid-public-bound-v2/policy_tasks.py": {
+      "sha256": "353f48301bca23f38acc25a5816e4d67b24e7bc4c3a24cb52c8a17ab9684c863",
+      "bytes": 1456
+    },
+    "build/hybrid-public-bound-v2/run_owned.py": {
+      "sha256": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+      "bytes": 9625
+    },
+    "build/hybrid-public-bound-v2/stage/resectionlab/public_reward_window.py": {
+      "sha256": "dacd890094aa0601b565ae70ef08e5be1e24f8f71bad1edecc2f7fe9079e7032",
+      "bytes": 12044
+    },
+    "src/resectionlab/public_reward_window.py": {
+      "sha256": "dacd890094aa0601b565ae70ef08e5be1e24f8f71bad1edecc2f7fe9079e7032",
+      "bytes": 12044
+    },
+    "build/hybrid-public-bound-v2/attempt-01.supervision/receipt.json": {
+      "sha256": "7a16060cde1725186f3963175de375d9eb0d2d71577d66b61418f25dd53ec65e",
+      "bytes": 1537
+    },
+    "build/hybrid-public-bound-v2/attempt-01/result.json": {
+      "sha256": "f25b2d46aad3f969c9cbd4152988d4705d2472885f35124751356ff518dbb69f",
+      "bytes": 130106
+    },
+    "build/hybrid-public-bound-v2/attempt-01.supervision/declaration.json": {
+      "sha256": "0632b314e8fad1894502d2a9464fa4f7714cee97bf9c5e0b2bd14725e6c0475f",
+      "bytes": 1825
+    },
+    "artifacts/hybrid-proposal-balanced-v2/result.json": {
+      "sha256": "360253e27ce3992facec4938e018bc02707248c1efad1b6cd318ed7ecd5ed4ca",
+      "bytes": 83257
+    },
+    "artifacts/hybrid-proposal-balanced-v2/root-release.json": {
+      "sha256": "e81ab753baecc359fe6c067278308836d8cbd18804c8fbe2c6a955a6d2e0cb8c",
+      "bytes": 8532
+    },
+    "artifacts/hybrid-proposal-balanced-v2/parent-receipt.json": {
+      "sha256": "4b275debe63c4dd75bcec7fb2485265a1b9637c808f4a1e741885bfe00e246bf",
+      "bytes": 1540
+    },
+    "build/hybrid-train050-switch-guard-v1/attempt-01/result.json": {
+      "sha256": "83011a701cc36da2295c074ea5c2daf506191d281e5f8cd09dad8a4a9ea3efed",
+      "bytes": 22979
+    },
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/public-index.json": {
+      "sha256": "c5138559e45fd67b44b047e8ea6d800b56b8e63ae3371a5ff5c9d83e60b25fe8",
+      "bytes": 1803
+    },
+    "build/hybrid-public-bound-v2/attempt-01/sealed-plans.json": {
+      "sha256": "939a7b8cb778fbdc975f99e2914d8ce49bbabce79b28684ebd28ad6e8d3de27f",
+      "bytes": 302730
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-002/plan.json": {
+      "sha256": "c27aa52e06df218ca6b011cf9eed18188bc64d64ad6607eb6a56ab094f665f05",
+      "bytes": 10109
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-002/replay/episode-metrics.json": {
+      "sha256": "dc8d97a225e1ed9a811401a9557b5b04036f4469a8903e89b08093255160683b",
+      "bytes": 21966
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-002/replay/independent-episode.json": {
+      "sha256": "2194b8f8fab5955e23ae0f37670b6374b8e517ad3c5f65692bd7844606fe8415",
+      "bytes": 2494
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-002/source/admitted-public-bindings.json": {
+      "sha256": "fe3eec94a1e64b5cc154858f3f2c534c1290771b07bbe04c8d1880f775384fc6",
+      "bytes": 15151
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-002/replay/source/admitted-public-bindings.json": {
+      "sha256": "fe3eec94a1e64b5cc154858f3f2c534c1290771b07bbe04c8d1880f775384fc6",
+      "bytes": 15151
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-002/plan.json": {
+      "sha256": "f74237cd97d51b7dfcb4898d41b4a24d1e10059e2f2041fc462bba4568c03e22",
+      "bytes": 10282
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-002/replay/episode-metrics.json": {
+      "sha256": "6645169ecde7003abce623122d47d2601e7c4421ec27c390c7bb6a469112b3f9",
+      "bytes": 21966
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-002/replay/independent-episode.json": {
+      "sha256": "700feb7522b815ae91372b5d4d077a6e0afaa331b26e0e33d3f8cd37c2bfdb57",
+      "bytes": 2494
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-002/source/admitted-public-bindings.json": {
+      "sha256": "fe3eec94a1e64b5cc154858f3f2c534c1290771b07bbe04c8d1880f775384fc6",
+      "bytes": 15151
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-002/replay/source/admitted-public-bindings.json": {
+      "sha256": "fe3eec94a1e64b5cc154858f3f2c534c1290771b07bbe04c8d1880f775384fc6",
+      "bytes": 15151
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-002/inventories/state-00.json": {
+      "sha256": "2f4f9a2b74135edbdbbde026b76fcad17bef461f75d3366bf36e3766a732bc99",
+      "bytes": 83845
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-002/inventories/state-00.json": {
+      "sha256": "4dc1637896ecb30fc8c91699a53c2922705b2d06539712770b323f49d7eda54e",
+      "bytes": 112997
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-002/replay/inventories/state-00.json": {
+      "sha256": "4dc1637896ecb30fc8c91699a53c2922705b2d06539712770b323f49d7eda54e",
+      "bytes": 112997
+    },
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-002-public-inputs.json": {
+      "sha256": "f4b7145ed04362955586b7cc31962e5b408c675f07283e046225d2b4dba47753",
+      "bytes": 14487
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/plan.json": {
+      "sha256": "9cebc241b250c6bc8874cb832789c0fb35f88d938a8b88120a8cd21c163d4f9c",
+      "bytes": 39807
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/replay/episode-metrics.json": {
+      "sha256": "46f714c6d4410c1dc0496782f165cfc4e6c8dde8f30448c2b8c27215be217701",
+      "bytes": 423851
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/replay/independent-episode.json": {
+      "sha256": "7c4db79f5f7b1dca2c3def5c7e539aa2e0fc6031a27185e1c9624da185cc192b",
+      "bytes": 2627
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/source/admitted-public-bindings.json": {
+      "sha256": "ab589ed825deb970a35a9ad61933f34ccfc3a305935f6e13f6ba7c7209b6a025",
+      "bytes": 14998
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/replay/source/admitted-public-bindings.json": {
+      "sha256": "ab589ed825deb970a35a9ad61933f34ccfc3a305935f6e13f6ba7c7209b6a025",
+      "bytes": 14998
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/plan.json": {
+      "sha256": "ba42e743c198a09f55ceaeee96a029d07a59c82903cb4e8d49e5e61e24e132a1",
+      "bytes": 39980
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/episode-metrics.json": {
+      "sha256": "d26884cf4d3770ce5f626cc2f5c7688b0b362babd4137e98372a2fc0c1096015",
+      "bytes": 423851
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/independent-episode.json": {
+      "sha256": "aa00ca3f9c26051bcd7c284f994c8aec752caaf6fcc770889d0fab6238b10672",
+      "bytes": 2626
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/source/admitted-public-bindings.json": {
+      "sha256": "ab589ed825deb970a35a9ad61933f34ccfc3a305935f6e13f6ba7c7209b6a025",
+      "bytes": 14998
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/source/admitted-public-bindings.json": {
+      "sha256": "ab589ed825deb970a35a9ad61933f34ccfc3a305935f6e13f6ba7c7209b6a025",
+      "bytes": 14998
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/inventories/state-00.json": {
+      "sha256": "fc642bb13305af87d629521997f1c45c9f5c55ba397a204907c9753498533f0e",
+      "bytes": 60531
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/inventories/state-01.json": {
+      "sha256": "e9f2f2cbd1aaa285b866bf498569e84ac24090506cfd6843fd767f420d58271b",
+      "bytes": 60622
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/inventories/state-02.json": {
+      "sha256": "13e87ef00f7a7bd952c674801a95484f85fa35a501249d1be9cecd43902f07d5",
+      "bytes": 60717
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/inventories/state-03.json": {
+      "sha256": "4012c32d925df89ce414a57d4752d111f1707dfa24ecc3ed02af129137e44a9c",
+      "bytes": 60801
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/inventories/state-04.json": {
+      "sha256": "b43c8944c5795264308836b45811d6f9e41f66a03b5002a1324384bec9c7fb09",
+      "bytes": 60886
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/inventories/state-05.json": {
+      "sha256": "45566f206bb7381562d7c6984939ffc7a3af1bbdee638fd5b5aef6f4faa50938",
+      "bytes": 61135
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/inventories/state-06.json": {
+      "sha256": "f2fc760635d38e52023ad32e935d2b82272001e76eacf84e6817053a7542555f",
+      "bytes": 60891
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/inventories/state-07.json": {
+      "sha256": "3d03d902759cec642b94b6a20669907b11e85d9f9b1b7a037af192518aa5399a",
+      "bytes": 60734
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/inventories/state-08.json": {
+      "sha256": "5ca502f2928fe567f6a65106519b49433759eb65abebbac19a6d9d515d0bd0d5",
+      "bytes": 60737
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/inventories/state-09.json": {
+      "sha256": "8f19066b90f4dd11e3b845d3a49d0ea96e0b012681457ce9e6b3ef0a271d0dbd",
+      "bytes": 60621
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/inventories/state-10.json": {
+      "sha256": "1af1bbc7850385118b3c9ac26288ebed9991d2d7922b4b7d1b7480a6a361683e",
+      "bytes": 60678
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/inventories/state-11.json": {
+      "sha256": "e1e40252c680a6e9e0c8b5fab4f573a26d83e351f556bcc672e882c629e4fe45",
+      "bytes": 60732
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/inventories/state-12.json": {
+      "sha256": "b31ed5df70fe4408e1747a970c75fdbeb3e041aff1970f28db255c38ed55fcf9",
+      "bytes": 60357
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/inventories/state-13.json": {
+      "sha256": "bef3186d2874d05d68f0f9c525c6b08b248acfe15518dc10abae1c46ec9e2f76",
+      "bytes": 80061
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/inventories/state-00.json": {
+      "sha256": "5fb81236ae0f61df83e6b2a3e5adc7da3c15c583769cc412158aa9bb4b534ba7",
+      "bytes": 60794
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/inventories/state-00.json": {
+      "sha256": "5fb81236ae0f61df83e6b2a3e5adc7da3c15c583769cc412158aa9bb4b534ba7",
+      "bytes": 60794
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/inventories/state-01.json": {
+      "sha256": "116344b9b136523aacb5b3309f2b0c9855b9a96459c8467e7cb6ab14f19ef72f",
+      "bytes": 60885
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/inventories/state-01.json": {
+      "sha256": "116344b9b136523aacb5b3309f2b0c9855b9a96459c8467e7cb6ab14f19ef72f",
+      "bytes": 60885
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/inventories/state-02.json": {
+      "sha256": "58fc519540cf855a0128c662151ed11ac12f35003dd30e5ca96e720517e62d1d",
+      "bytes": 60980
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/inventories/state-02.json": {
+      "sha256": "58fc519540cf855a0128c662151ed11ac12f35003dd30e5ca96e720517e62d1d",
+      "bytes": 60980
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/inventories/state-03.json": {
+      "sha256": "9fe76f6afc4680ece5a87a57bd956789d454e3f2cc3779449f770894358de5e6",
+      "bytes": 61064
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/inventories/state-03.json": {
+      "sha256": "9fe76f6afc4680ece5a87a57bd956789d454e3f2cc3779449f770894358de5e6",
+      "bytes": 61064
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/inventories/state-04.json": {
+      "sha256": "4b2f29b20b3a64a5d9ccd16ddb67825774f25708bb0b9ed1a8d3b3744a85a7a3",
+      "bytes": 61149
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/inventories/state-04.json": {
+      "sha256": "4b2f29b20b3a64a5d9ccd16ddb67825774f25708bb0b9ed1a8d3b3744a85a7a3",
+      "bytes": 61149
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/inventories/state-05.json": {
+      "sha256": "050e411c7a89ae5bbeac290bc35a56e02c2b243bb39d5738790183e275df32ce",
+      "bytes": 61398
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/inventories/state-05.json": {
+      "sha256": "050e411c7a89ae5bbeac290bc35a56e02c2b243bb39d5738790183e275df32ce",
+      "bytes": 61398
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/inventories/state-06.json": {
+      "sha256": "794f495b9bc7ab59bba08b1afe3d10d772a540e498cc8cc3a710352f1c0c939a",
+      "bytes": 61154
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/inventories/state-06.json": {
+      "sha256": "794f495b9bc7ab59bba08b1afe3d10d772a540e498cc8cc3a710352f1c0c939a",
+      "bytes": 61154
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/inventories/state-07.json": {
+      "sha256": "8235267165f2744ce774030fe0ff08f6fd2aca86a327998befcc0afd94d51650",
+      "bytes": 60997
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/inventories/state-07.json": {
+      "sha256": "8235267165f2744ce774030fe0ff08f6fd2aca86a327998befcc0afd94d51650",
+      "bytes": 60997
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/inventories/state-08.json": {
+      "sha256": "8b9561357a68e913abbdb71797ac9157b446bc81d36f006339cf0df9e19a6d70",
+      "bytes": 61000
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/inventories/state-08.json": {
+      "sha256": "8b9561357a68e913abbdb71797ac9157b446bc81d36f006339cf0df9e19a6d70",
+      "bytes": 61000
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/inventories/state-09.json": {
+      "sha256": "d16961d6aaa3375f4f28e23a5921d95b7222d0761e66b7b8014195ae4db5d451",
+      "bytes": 60884
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/inventories/state-09.json": {
+      "sha256": "d16961d6aaa3375f4f28e23a5921d95b7222d0761e66b7b8014195ae4db5d451",
+      "bytes": 60884
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/inventories/state-10.json": {
+      "sha256": "aefd1105e15494333bda06d2d2a9176ca903e2fa6f6b95f363d1f6a4bdd5ac6b",
+      "bytes": 60941
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/inventories/state-10.json": {
+      "sha256": "aefd1105e15494333bda06d2d2a9176ca903e2fa6f6b95f363d1f6a4bdd5ac6b",
+      "bytes": 60941
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/inventories/state-11.json": {
+      "sha256": "20393f3c5c0cc8241cb24f3a70db28db35407a5109e82b7ad75fb9cd30ff9b99",
+      "bytes": 60995
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/inventories/state-11.json": {
+      "sha256": "20393f3c5c0cc8241cb24f3a70db28db35407a5109e82b7ad75fb9cd30ff9b99",
+      "bytes": 60995
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/inventories/state-12.json": {
+      "sha256": "cfe35b1651c639f7d4b7f793acbbaddf9b44456b7f63419f8861cd07568d77f2",
+      "bytes": 60620
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/inventories/state-12.json": {
+      "sha256": "cfe35b1651c639f7d4b7f793acbbaddf9b44456b7f63419f8861cd07568d77f2",
+      "bytes": 60620
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/inventories/state-13.json": {
+      "sha256": "b97b9563e490450a730cacf6965d201f7056ba2eeebe4c1e08d02ea4f21969bf",
+      "bytes": 102853
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/inventories/state-13.json": {
+      "sha256": "b97b9563e490450a730cacf6965d201f7056ba2eeebe4c1e08d02ea4f21969bf",
+      "bytes": 102853
+    },
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-015-public-inputs.json": {
+      "sha256": "89bcdf6511bd1b91d7ba84f85f8b10f4c65d076d04a71c7bec4f81df75683b81",
+      "bytes": 14334
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-018/plan.json": {
+      "sha256": "a52607bf68209b17521cdb3b7290bb0aaf8bd9df0b4db6f40e8bd860b99edd19",
+      "bytes": 8706
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-018/replay/episode-metrics.json": {
+      "sha256": "521fcda96084abe73d73c20bde2b70b2839a28996793d80d9bff82a945f6f693",
+      "bytes": 21987
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-018/replay/independent-episode.json": {
+      "sha256": "c3574aab7eb893dce645b14fac971f8ce538c927166b0787c6f0d5171b8ae9c6",
+      "bytes": 2495
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-018/source/admitted-public-bindings.json": {
+      "sha256": "5f94a376e6ef93e556f1d0d844f691bd09e68111b45552655894c600c346fd8a",
+      "bytes": 15160
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-018/replay/source/admitted-public-bindings.json": {
+      "sha256": "5f94a376e6ef93e556f1d0d844f691bd09e68111b45552655894c600c346fd8a",
+      "bytes": 15160
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-018/plan.json": {
+      "sha256": "056f02fe96ecd230bf21a236ede249b625344b92b7538d41510ac121100645ad",
+      "bytes": 8880
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-018/replay/episode-metrics.json": {
+      "sha256": "2164a9763de95eca226e6531a23eba50aeaeed25931549210e01b839c0296a02",
+      "bytes": 21987
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-018/replay/independent-episode.json": {
+      "sha256": "06c9bcfd86c5ee217518851ef4c662ef205908149ec66d0a218044351ecaf54a",
+      "bytes": 2495
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-018/source/admitted-public-bindings.json": {
+      "sha256": "5f94a376e6ef93e556f1d0d844f691bd09e68111b45552655894c600c346fd8a",
+      "bytes": 15160
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-018/replay/source/admitted-public-bindings.json": {
+      "sha256": "5f94a376e6ef93e556f1d0d844f691bd09e68111b45552655894c600c346fd8a",
+      "bytes": 15160
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-018/inventories/state-00.json": {
+      "sha256": "306d283026d82712482fb798bdd93d0355c638f719edefb3e04d94b099569668",
+      "bytes": 68420
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-018/inventories/state-00.json": {
+      "sha256": "bec00d310ab183b79dd6ed37c5c804c62b7b2eba29e0f91673c0544de85cc95a",
+      "bytes": 86442
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-018/replay/inventories/state-00.json": {
+      "sha256": "bec00d310ab183b79dd6ed37c5c804c62b7b2eba29e0f91673c0544de85cc95a",
+      "bytes": 86442
+    },
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-018-public-inputs.json": {
+      "sha256": "bd123ffaba376977f672c16a215dee339757fe7514f54c6f9f4e2e7ca8176fed",
+      "bytes": 14443
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/plan.json": {
+      "sha256": "3fd2394772f0eccdbeb801d8a4525f9ae08f4ad7933fd8951b073a2d131482f2",
+      "bytes": 34227
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/replay/episode-metrics.json": {
+      "sha256": "db2ef01d22effde76ef34b7a0281cebb9be20ee04d5fd367469b8f1173d7756e",
+      "bytes": 429352
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/replay/independent-episode.json": {
+      "sha256": "a4be177dc8d1651491552c0c03c109e59f1e3a242d636d9b5ab91936c4b0e734",
+      "bytes": 2630
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/source/admitted-public-bindings.json": {
+      "sha256": "6337b479feb3c04f42481d13812c41670b6b9b3043068809b8ced7a7a200dc8b",
+      "bytes": 15131
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/replay/source/admitted-public-bindings.json": {
+      "sha256": "6337b479feb3c04f42481d13812c41670b6b9b3043068809b8ced7a7a200dc8b",
+      "bytes": 15131
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/plan.json": {
+      "sha256": "79e17b868949ace72899b792819f0253561e1bc7bb7193230131972c818362bf",
+      "bytes": 34399
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/episode-metrics.json": {
+      "sha256": "259eeec9ecacbda3b4127e08b515ec47853158bc5e53549932b20b73bf359713",
+      "bytes": 429352
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/independent-episode.json": {
+      "sha256": "74574be88f0b815d21d17f35da5875bba62bceb6b0e4a9d2cff90e8677e51ffb",
+      "bytes": 2630
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/source/admitted-public-bindings.json": {
+      "sha256": "6337b479feb3c04f42481d13812c41670b6b9b3043068809b8ced7a7a200dc8b",
+      "bytes": 15131
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/source/admitted-public-bindings.json": {
+      "sha256": "6337b479feb3c04f42481d13812c41670b6b9b3043068809b8ced7a7a200dc8b",
+      "bytes": 15131
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/inventories/state-00.json": {
+      "sha256": "ee9b1205d7559fe6239a6480059b531bc95aa0bfc833584df1edb1f7ebbd8f15",
+      "bytes": 61011
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/inventories/state-01.json": {
+      "sha256": "d58c1e41c96b7f0dd4bf213d01f6b2e02598ce61dc379bfd0786096806597004",
+      "bytes": 60851
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/inventories/state-02.json": {
+      "sha256": "2c0e88a97a4a50f6155659013778054bdb25d32bb68452014c113e232726d529",
+      "bytes": 60779
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/inventories/state-03.json": {
+      "sha256": "670496b1c0a329ab7e2cb566bee36006cfa5f844bb277bd033f2117571255c85",
+      "bytes": 60803
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/inventories/state-04.json": {
+      "sha256": "5ad4f358fa348dc856ac9b748f257004b0280b24aee3be0d69d4596372ca9da4",
+      "bytes": 60567
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/inventories/state-05.json": {
+      "sha256": "b00220fdca9b25a6fe8e7f805bf06f78dd9efd79f359ffd87bf3599d133a0325",
+      "bytes": 60592
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/inventories/state-06.json": {
+      "sha256": "9099082fa8f9a3fc9308619019d1e77a1957edb220f045fb25c80f9b9573d02f",
+      "bytes": 60758
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/inventories/state-07.json": {
+      "sha256": "cdf53597f5cf611f69b0146b606d236963d691f7b542517e284fe3911e482b40",
+      "bytes": 60578
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/inventories/state-08.json": {
+      "sha256": "c2b4e623cde9af847ba6008e20ec01bb6ca8ecb8174a5daca88f4e3fed191f72",
+      "bytes": 60559
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/inventories/state-09.json": {
+      "sha256": "c4771aa0d320e928e5789cef2fa63138dda988987090a19e22bd1644874cb03f",
+      "bytes": 60190
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/inventories/state-10.json": {
+      "sha256": "2df7893ad16de83e0aec161a4a229cdd6ab9d5eec56cc4a073cafca04d77879b",
+      "bytes": 60446
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/inventories/state-11.json": {
+      "sha256": "8d159bc49ae5db872e4fa304cdc78836feab5d646841f5f3b17f16a34a7dfa95",
+      "bytes": 60185
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/inventories/state-12.json": {
+      "sha256": "816c31442e43047d0128296ed4e3714dfb5906abd2702d40a5952c7d2bd24306",
+      "bytes": 79781
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/inventories/state-00.json": {
+      "sha256": "1998b2021cd6d193c61c9899bfd76c1364bee2f91c395016360d05458752b451",
+      "bytes": 61274
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/inventories/state-00.json": {
+      "sha256": "1998b2021cd6d193c61c9899bfd76c1364bee2f91c395016360d05458752b451",
+      "bytes": 61274
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/inventories/state-01.json": {
+      "sha256": "b0af27648e6215ee24f6021ab9860aaf55ff0531487bc5705defc1f0820fc70b",
+      "bytes": 61114
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/inventories/state-01.json": {
+      "sha256": "b0af27648e6215ee24f6021ab9860aaf55ff0531487bc5705defc1f0820fc70b",
+      "bytes": 61114
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/inventories/state-02.json": {
+      "sha256": "fe93e66dbafb7ceeec33000dbbebeabbc1461980084dea43e139f37aa01d1ae1",
+      "bytes": 61042
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/inventories/state-02.json": {
+      "sha256": "fe93e66dbafb7ceeec33000dbbebeabbc1461980084dea43e139f37aa01d1ae1",
+      "bytes": 61042
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/inventories/state-03.json": {
+      "sha256": "19773bd15613a8e6010857c1e983a2c3716696bb830073419c1b97077d51855a",
+      "bytes": 61066
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/inventories/state-03.json": {
+      "sha256": "19773bd15613a8e6010857c1e983a2c3716696bb830073419c1b97077d51855a",
+      "bytes": 61066
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/inventories/state-04.json": {
+      "sha256": "cd69ef633d5fa23525b68657da29c191529d974ba199e7267f6dd135ae54baa7",
+      "bytes": 60830
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/inventories/state-04.json": {
+      "sha256": "cd69ef633d5fa23525b68657da29c191529d974ba199e7267f6dd135ae54baa7",
+      "bytes": 60830
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/inventories/state-05.json": {
+      "sha256": "5659f679bcc0e84530998c85bc72a5be0dde7059244ed7773f5f95b26d211902",
+      "bytes": 60855
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/inventories/state-05.json": {
+      "sha256": "5659f679bcc0e84530998c85bc72a5be0dde7059244ed7773f5f95b26d211902",
+      "bytes": 60855
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/inventories/state-06.json": {
+      "sha256": "ac3d89b401072e3825ccfb54be5daf92f6c8709a99a84ea1975e87a11e7baa8b",
+      "bytes": 61021
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/inventories/state-06.json": {
+      "sha256": "ac3d89b401072e3825ccfb54be5daf92f6c8709a99a84ea1975e87a11e7baa8b",
+      "bytes": 61021
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/inventories/state-07.json": {
+      "sha256": "1737ed845ea13853b3a3363b2e61ee34501eb7d6feaa592947788d49766097f7",
+      "bytes": 60841
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/inventories/state-07.json": {
+      "sha256": "1737ed845ea13853b3a3363b2e61ee34501eb7d6feaa592947788d49766097f7",
+      "bytes": 60841
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/inventories/state-08.json": {
+      "sha256": "133d1ee6fde20bbe016b73355a7715ed8b0ee1cda1b79ff18e2005e5c30ced30",
+      "bytes": 60822
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/inventories/state-08.json": {
+      "sha256": "133d1ee6fde20bbe016b73355a7715ed8b0ee1cda1b79ff18e2005e5c30ced30",
+      "bytes": 60822
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/inventories/state-09.json": {
+      "sha256": "0eb66413a7591e61ce42077d959c874a40e6c03ac06df1112e81da3abf1b6586",
+      "bytes": 60453
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/inventories/state-09.json": {
+      "sha256": "0eb66413a7591e61ce42077d959c874a40e6c03ac06df1112e81da3abf1b6586",
+      "bytes": 60453
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/inventories/state-10.json": {
+      "sha256": "ad70a27682bb2697bbaba42026f4f8c114ad6f29a92f37f07a75db54c9811678",
+      "bytes": 60709
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/inventories/state-10.json": {
+      "sha256": "ad70a27682bb2697bbaba42026f4f8c114ad6f29a92f37f07a75db54c9811678",
+      "bytes": 60709
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/inventories/state-11.json": {
+      "sha256": "f2440fd48422ad7e61e0aea602ffafab27c3037ee0a9945c075fd98d60e13e70",
+      "bytes": 60448
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/inventories/state-11.json": {
+      "sha256": "f2440fd48422ad7e61e0aea602ffafab27c3037ee0a9945c075fd98d60e13e70",
+      "bytes": 60448
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/inventories/state-12.json": {
+      "sha256": "11f17433955d89a2a6f014eff427846d0ba0b441e8b20eaa578a1ad5d2f45136",
+      "bytes": 102043
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/inventories/state-12.json": {
+      "sha256": "11f17433955d89a2a6f014eff427846d0ba0b441e8b20eaa578a1ad5d2f45136",
+      "bytes": 102043
+    },
+    "build/remind-partial-domain-public-preparation-v1/manifests-v2/ReMIND-045-public-inputs.json": {
+      "sha256": "a324800fa92b0e168e4c65bc6e09f5235991cf8c4a3541148a52ea3da3aaf6df",
+      "bytes": 14417
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/plan.json": {
+      "sha256": "a501ab5faac8f6f3b5b4a34d99991d17ee16d5190c20b7641acacea42c497d38",
+      "bytes": 44703
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/replay/episode-metrics.json": {
+      "sha256": "23d9f29e2855efc9176e824893eb2006e37ea21ca939a434d83e3798a76a24a7",
+      "bytes": 399509
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/replay/independent-episode.json": {
+      "sha256": "1ea25c4aada088ee00bdabf8b487bd1d441135e3c812f585fc302ec81b13885e",
+      "bytes": 2624
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/source/admitted-public-bindings.json": {
+      "sha256": "3c4123031948dd0382a81ac7f1edf00d8ecc15cd6bec6f47350df5b074f3d091",
+      "bytes": 16168
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/replay/source/admitted-public-bindings.json": {
+      "sha256": "3c4123031948dd0382a81ac7f1edf00d8ecc15cd6bec6f47350df5b074f3d091",
+      "bytes": 16168
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/plan.json": {
+      "sha256": "691fad512c2b975f6e8d386c1d899e051478d3617d57e80df1cd00dfa9253f2b",
+      "bytes": 44876
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/episode-metrics.json": {
+      "sha256": "ae47f92323207a482e13e0003cbcba4b4d954a991b8ed0c117f67a99d22cff3e",
+      "bytes": 399509
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/independent-episode.json": {
+      "sha256": "27ef47048892da063408db262f39e11a3cb6811a162c124ca4260e2e89fae4da",
+      "bytes": 2624
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/source/admitted-public-bindings.json": {
+      "sha256": "3c4123031948dd0382a81ac7f1edf00d8ecc15cd6bec6f47350df5b074f3d091",
+      "bytes": 16168
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/source/admitted-public-bindings.json": {
+      "sha256": "3c4123031948dd0382a81ac7f1edf00d8ecc15cd6bec6f47350df5b074f3d091",
+      "bytes": 16168
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/inventories/state-00.json": {
+      "sha256": "61162da713012ba294745987873a30e84612cdb3ca4535fb0a2162c0a09ba090",
+      "bytes": 60126
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/inventories/state-01.json": {
+      "sha256": "a8dad4943ea1224c9d1add0d4df937b338ca034ceba2dbf8e2d92132bda882a4",
+      "bytes": 70028
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/inventories/state-02.json": {
+      "sha256": "719e3da48004ae99783a83c183dae10d6ed3389940b33b7b8c8dce5814f5ea09",
+      "bytes": 70478
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/inventories/state-03.json": {
+      "sha256": "b3f31f6c74a35a8c92ff50f3d4632e611560ae6051afa90c65ece32fcb026f99",
+      "bytes": 70159
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/inventories/state-04.json": {
+      "sha256": "77c9cc6a95a0f79b0cb6056f0f769dc951627c04110e1e9da251bee2d65f9e00",
+      "bytes": 70224
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/inventories/state-05.json": {
+      "sha256": "1da1616c4bd84a67cf4cd6c0888b7c4c172a91cac02e044a647372bc3a4da7e6",
+      "bytes": 79062
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/inventories/state-06.json": {
+      "sha256": "f091f8627ee1c26c7bb548bfb17534637388fad91203b76ac91e8d51fc1764e1",
+      "bytes": 79222
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/inventories/state-07.json": {
+      "sha256": "7123bc17c4daebf557bf94fc86633f5a9756b1e4e4e0afc4fed6810f444dec69",
+      "bytes": 79357
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/inventories/state-08.json": {
+      "sha256": "735fd8121181a6dbb5ff19de18a4621c9a8d2ffad5658b37b23ee9cfdb85b310",
+      "bytes": 79445
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/inventories/state-09.json": {
+      "sha256": "14196ab127831a39e99bce4166ce4548e0c7be845823e40f007cbaeac5adabb2",
+      "bytes": 79524
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/inventories/state-10.json": {
+      "sha256": "efee6b7ab8c2c71accf9d145d1d496ac6419a821c9697f37f39fcbc6658a2ef7",
+      "bytes": 79604
+    },
+    "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/inventories/state-11.json": {
+      "sha256": "1336983d976b9a79138a0eb4e347a1a4a9378b7893dd5c53e384f197a24a5e0d",
+      "bytes": 79670
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/inventories/state-00.json": {
+      "sha256": "290732039ad0d7b63b5caad76630eabf5b76d0b9a1117ff2b6f25db52740d959",
+      "bytes": 60389
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/inventories/state-00.json": {
+      "sha256": "290732039ad0d7b63b5caad76630eabf5b76d0b9a1117ff2b6f25db52740d959",
+      "bytes": 60389
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/inventories/state-01.json": {
+      "sha256": "3732ae1f8cb97f08b7832a795ee4d4ba66e858f77e3073e5333482aa9f5edc4b",
+      "bytes": 83673
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/inventories/state-01.json": {
+      "sha256": "3732ae1f8cb97f08b7832a795ee4d4ba66e858f77e3073e5333482aa9f5edc4b",
+      "bytes": 83673
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/inventories/state-02.json": {
+      "sha256": "85b6fee98c0a06a03a2527bf9692b484e7d54372390d61c7a505914e674472d0",
+      "bytes": 84401
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/inventories/state-02.json": {
+      "sha256": "85b6fee98c0a06a03a2527bf9692b484e7d54372390d61c7a505914e674472d0",
+      "bytes": 84401
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/inventories/state-03.json": {
+      "sha256": "0217daa246eb1f963d1962c33e3b76a3d60ae27fb1bdfe95867be41b0d9426cf",
+      "bytes": 83771
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/inventories/state-03.json": {
+      "sha256": "0217daa246eb1f963d1962c33e3b76a3d60ae27fb1bdfe95867be41b0d9426cf",
+      "bytes": 83771
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/inventories/state-04.json": {
+      "sha256": "abe8136db1290dc991826b996a5524a3759bccad79e261b3600740afef2c2ac4",
+      "bytes": 83900
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/inventories/state-04.json": {
+      "sha256": "abe8136db1290dc991826b996a5524a3759bccad79e261b3600740afef2c2ac4",
+      "bytes": 83900
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/inventories/state-05.json": {
+      "sha256": "761c1afc5a27a5388942202a749ddde1adf935b5eb87e20f967ed3471460c33b",
+      "bytes": 102434
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/inventories/state-05.json": {
+      "sha256": "761c1afc5a27a5388942202a749ddde1adf935b5eb87e20f967ed3471460c33b",
+      "bytes": 102434
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/inventories/state-06.json": {
+      "sha256": "f6e1eaf3346b3c55bbb5ed8e2ec1473b1355ec9678d6a3b6b8a3efba5e3d3d1f",
+      "bytes": 102594
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/inventories/state-06.json": {
+      "sha256": "f6e1eaf3346b3c55bbb5ed8e2ec1473b1355ec9678d6a3b6b8a3efba5e3d3d1f",
+      "bytes": 102594
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/inventories/state-07.json": {
+      "sha256": "01028329a79099e2827175c5d14c4e6e6b3c132a202e48013201c9c9d6584518",
+      "bytes": 102669
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/inventories/state-07.json": {
+      "sha256": "01028329a79099e2827175c5d14c4e6e6b3c132a202e48013201c9c9d6584518",
+      "bytes": 102669
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/inventories/state-08.json": {
+      "sha256": "371416dd48b0864f0d3e95e4d2c4d011240577781e9a3a2a43e73a136a2793c0",
+      "bytes": 102757
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/inventories/state-08.json": {
+      "sha256": "371416dd48b0864f0d3e95e4d2c4d011240577781e9a3a2a43e73a136a2793c0",
+      "bytes": 102757
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/inventories/state-09.json": {
+      "sha256": "c938da6cff08bd4d73095f0a0196873153f9b82d3bb63d48078df3ef93972b89",
+      "bytes": 102776
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/inventories/state-09.json": {
+      "sha256": "c938da6cff08bd4d73095f0a0196873153f9b82d3bb63d48078df3ef93972b89",
+      "bytes": 102776
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/inventories/state-10.json": {
+      "sha256": "2774986b0e5a42a7dc4fc91852f0f00356de14129147a9d505d6b5390422ac02",
+      "bytes": 102571
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/inventories/state-10.json": {
+      "sha256": "2774986b0e5a42a7dc4fc91852f0f00356de14129147a9d505d6b5390422ac02",
+      "bytes": 102571
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/inventories/state-11.json": {
+      "sha256": "87f1a4903b5d1c5da2e7c209b36b198bc8fd95c87a3482e3b5d20c4650e34347",
+      "bytes": 101932
+    },
+    "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/inventories/state-11.json": {
+      "sha256": "87f1a4903b5d1c5da2e7c209b36b198bc8fd95c87a3482e3b5d20c4650e34347",
+      "bytes": 101932
+    },
+    "build/hybrid-train050-preparation-v1/public-inputs-v1/ReMIND-050-public-inputs.json": {
+      "sha256": "588757e8df0e420b3fcae2ac24a75a5276fd33e1722a49c681836938d16dda1d",
+      "bytes": 19178
+    }
+  }
+}

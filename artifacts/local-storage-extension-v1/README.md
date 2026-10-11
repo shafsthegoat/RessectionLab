@@ -43,3 +43,9 @@ that dated scan. See `milestone-handoff-03.json` and `milestone-handoff-04.json`
 At 10:30:13 UTC, the h48 closure measures **118.352 MiB** additional project growth and **332.808 GiB** free. The root archive reservation increases to 24 MiB before copying the compact result; source preparation is separately reserved. See `milestone-closure-05.json`. This dated measurement precedes the new archive and further source preparation; no dataset download or deletion occurred.
 
 At 10:42:00 UTC, public-bound-v1 closure measures **143.953 MiB** additional growth and **332.791 GiB** free. Archives occupy 17.656 of 24 MiB before copying this result. See `milestone-closure-06.json`. No acquisition or deletion occurred; a separately reserved local-query successor reuses the same five cases.
+
+The 10:56:34 UTC snapshot closes the local-window comparison. Measured growth
+is 168.211 MiB with 332.760 GiB free (332.698 GiB after remaining reservations).
+Residual-blocker preparation is reserved at 32 MiB and compact root archives at
+32 MiB. The subsequent v2 compact archive is not included in this dated scan.
+See `milestone-closure-07.json`; no new data or dependencies were acquired.

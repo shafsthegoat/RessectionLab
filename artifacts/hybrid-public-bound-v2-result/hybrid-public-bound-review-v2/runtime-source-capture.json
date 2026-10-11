@@ -1,0 +1,20 @@
+{
+  "executed_head": "7778053311a8173409c1a123499f73fb087936b9",
+  "captured_head": "7778053311a8173409c1a123499f73fb087936b9",
+  "canonical_diff": [],
+  "changed_new_pins": {
+    "build/hybrid-public-bound-v2/batch_contract.py": "0b5951ad7da67caa664ca70e23f916eb0fd2200e8d0969cbd2f4d96b6ffb5457",
+    "build/hybrid-public-bound-v2/bound_policy.py": "3093f2f99385ce430c63d36257414878129cab10c7c7c2ff04f472061109b789",
+    "build/hybrid-public-bound-v2/fallback_policy.py": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+    "build/hybrid-public-bound-v2/freeze-runtime.py": "0f151c043d9b9acac1449a1d4e68908edf42f67aeb78fd1ebe71821905f541d3",
+    "build/hybrid-public-bound-v2/hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+    "build/hybrid-public-bound-v2/initial_inventory_worker.py": "a50eb73489aa41cdc7ccf60081f3eef7255fb5aee6c688db74ce7b60c6254653",
+    "build/hybrid-public-bound-v2/patient_regression.py": "c8ce28c15339206157a5652afdb77a199619c98321d39aea5f1a9f62ce0c491f",
+    "build/hybrid-public-bound-v2/patient_transfer.py": "358b223842b464e9b929a20f5a2cb0bffec7805aba114e08d0acfb30e3ea2d3a",
+    "build/hybrid-public-bound-v2/policy_tasks.py": "353f48301bca23f38acc25a5816e4d67b24e7bc4c3a24cb52c8a17ab9684c863",
+    "build/hybrid-public-bound-v2/run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+    "build/hybrid-public-bound-v2/stage/resectionlab/public_reward_window.py": "dacd890094aa0601b565ae70ef08e5be1e24f8f71bad1edecc2f7fe9079e7032",
+    "src/resectionlab/public_reward_window.py": "dacd890094aa0601b565ae70ef08e5be1e24f8f71bad1edecc2f7fe9079e7032"
+  },
+  "inherited_unchanged_mappings": 170
+}

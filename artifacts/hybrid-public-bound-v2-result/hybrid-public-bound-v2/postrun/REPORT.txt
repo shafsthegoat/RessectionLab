@@ -1,0 +1,58 @@
+PUBLIC LOCAL-WINDOW BOUND v2 — COMPLETE, NO PRUNING
+
+All five fresh pairs have exact actions, full histories, outcomes and metrics
+after excluding only the outer policy identity. All ten independent geometry
+certificates are accepted. Ten plans were sealed before evaluation. There were
+20 source visits, 164 ridge calls, 164 native transitions, one frozen ridge load,
+and zero fits, optimizer/neural calls or neural checkpoint loads.
+
+Every one of 1,118 planning queries and 1,118 replay queries returned
+unknown_target_coverage_in_window. Zero candidates were pruned and zero native
+previews were saved. Each arm used 1,446 online previews, with 5,784 previews
+including both arms and their fresh uncached replays.
+
+Subject  bound queries  both-arm previews  baseline / bound source-through-plan s
+002           109              117          6.482007 /  6.508387
+015            85              197          3.900251 /  3.911593
+018            67               75          2.689344 /  2.925955
+045            83              187          6.061858 /  6.608945
+050           774              870         11.204790 / 14.842893
+Total        1118             1446         30.338249 / 34.797772
+
+The bound's planning components were 1.129062 s snapshot setup and 2.475588 s
+queries. Replay components were 2.072699 s setup and 5.295381 s queries; complete
+replay-plus-audit totals were 56.643355 s baseline / 65.698638 s bound. These
+components are already inside inclusive arm times and must not be added twice.
+Snapshot bytes accumulated to 90,256,004 per phase across fifteen repeated
+snapshots; this is not simultaneous resident memory or a cap violation.
+
+The local-window representation successfully removed v1's global workspace
+refusal: snapshots contain actual positive target and unknown coverage counts,
+and no query refused for workspace. It still produced no useful pruning. All
+conservative index windows included at least one cell whose explicit target
+coverage is unknown. That is a refusal of this optimistic bound; it does not
+prove the true swept tool intersects an unknown cell, locate a collision or
+invalidate the existing independently checked native action. Unknown target
+coverage must not be relabeled known-zero or confused with support knownness.
+
+Both arms retained target removal in mm3 [0,55.313110348561466,0,
+48.63745044468365,35.28597724595925], zero outside-target removal, and returns
+[0,54.866215035801446,0,48.181962920864926,34.830406903446026]. Motion counts
+were [0,13,0,12,11]. Zero outside-target removal is not zero tool contact or
+physical safety; retained-contact and full target denominators remain recorded.
+
+Owned parent completed in 190.4029619579669 s (worker187.91280708299018 s),
+sampled peak RSS743,030,784 B and output15,479,548 B. No owned survivors or
+cleanup errors. Fixed-order N=1 pairs are development measurements, not a
+population or RL/beam speed claim. Physical/clinical validation remains null.
+
+This is the complete second negative result: exact policy equivalence with
+overhead and no query reduction. v1 remains preserved. No third guard variation,
+refit, private input, patient-array read or additional native run was performed
+by this saved-only extraction. Root is pivoting to the residual action issue.
+
+Result f25b2d46aad3f969c9cbd4152988d4705d2472885f35124751356ff518dbb69f
+Receipt7a16060cde1725186f3963175de375d9eb0d2d71577d66b61418f25dd53ec65e
+HEAD7778053311a8173409c1a123499f73fb087936b9
+The author projection is postrun/extract-attempt-01/summary.json; the separate
+independent saved audit is build/hybrid-public-bound-review-v2/audit.json.

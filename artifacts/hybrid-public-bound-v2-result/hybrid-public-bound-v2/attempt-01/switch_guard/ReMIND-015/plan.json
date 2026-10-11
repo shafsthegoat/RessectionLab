@@ -1,0 +1,965 @@
+{
+  "accounting": {
+    "STOP_meaning": "no_positive_verified_action_after_conditional_expansion; no_global_reachability_claim",
+    "complete": true,
+    "decisions": [
+      {
+        "all_queried_legal_actions_scored": true,
+        "legal_nonstop_actions": 8,
+        "scored_nonstop_actions": 8,
+        "scores": [
+          {
+            "action_id": "STOP",
+            "complete_tool_path_length_mm": 0.0,
+            "insertion_distance_mm": 0.0,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.0,
+            "target_removed_mm3": 0.0
+          },
+          {
+            "action_id": "nominal-cavity-81c114a0600538d67baf4414",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-717b9abedcf5f9ca0c081b2a",
+            "complete_tool_path_length_mm": 4.376562519999979,
+            "insertion_distance_mm": 2.1882812599999895,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-f04c8092ffc4d0dcaa91f782",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-4b8d660f54a216ba917e2816",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-655c4afa2663656417dbdd6b",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-1e0bb8d77b342d238f1c5619",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-30510ddef4ee3184fa5cd44a",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-1ff213f33fca10b3412e899f",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          }
+        ],
+        "selected_action_id": "nominal-cavity-81c114a0600538d67baf4414",
+        "source_state_hash": "sha256:2f9b04b9f0b7cf1092e4ade7b49382bf34f5a629a2abb62ac8835a31a6dd4618",
+        "step": 0
+      },
+      {
+        "all_queried_legal_actions_scored": true,
+        "legal_nonstop_actions": 8,
+        "scored_nonstop_actions": 8,
+        "scores": [
+          {
+            "action_id": "STOP",
+            "complete_tool_path_length_mm": 0.0,
+            "insertion_distance_mm": 0.0,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.0,
+            "target_removed_mm3": 0.0
+          },
+          {
+            "action_id": "nominal-cavity-cd144062451fad1b6fedad66",
+            "complete_tool_path_length_mm": 4.376562519999979,
+            "insertion_distance_mm": 2.1882812599999895,
+            "normal_removed_mm3": 0.0,
+            "reward": 4.733995019252539,
+            "target_removed_mm3": 4.76837158177254
+          },
+          {
+            "action_id": "nominal-cavity-d794aa301059e4147bfb553f",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 4.733995019252539,
+            "target_removed_mm3": 4.76837158177254
+          },
+          {
+            "action_id": "nominal-cavity-db892cd78409c87e2fef17d2",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 4.733995019252539,
+            "target_removed_mm3": 4.76837158177254
+          },
+          {
+            "action_id": "nominal-cavity-20bfcb65e95ba97fe9173e21",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 4.733995019252539,
+            "target_removed_mm3": 4.76837158177254
+          },
+          {
+            "action_id": "nominal-cavity-f4acd820cbfb0ed0423e8ce1",
+            "complete_tool_path_length_mm": 4.376562519999979,
+            "insertion_distance_mm": 2.1882812599999895,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-d755ed7eadba17994fa434dc",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-054df56d01b7a52614528655",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-fed8da36fa6bdfc869f0e6f2",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          }
+        ],
+        "selected_action_id": "nominal-cavity-f4acd820cbfb0ed0423e8ce1",
+        "source_state_hash": "sha256:004d883fc9aea8a431d01f7b583fdae98721beb19f5315e6ca747d1d85e372ba",
+        "step": 1
+      },
+      {
+        "all_queried_legal_actions_scored": true,
+        "legal_nonstop_actions": 8,
+        "scored_nonstop_actions": 8,
+        "scores": [
+          {
+            "action_id": "STOP",
+            "complete_tool_path_length_mm": 0.0,
+            "insertion_distance_mm": 0.0,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.0,
+            "target_removed_mm3": 0.0
+          },
+          {
+            "action_id": "nominal-cavity-0c0c25f5b24dc90f3edd84ed",
+            "complete_tool_path_length_mm": 4.376562519999979,
+            "insertion_distance_mm": 2.1882812599999895,
+            "normal_removed_mm3": 0.0,
+            "reward": 3.7803207028980315,
+            "target_removed_mm3": 3.8146972654180313
+          },
+          {
+            "action_id": "nominal-cavity-4c311d61e31786a1832de828",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 4.733995019252539,
+            "target_removed_mm3": 4.76837158177254
+          },
+          {
+            "action_id": "nominal-cavity-48169c6ec518fe10022ee148",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 3.7803207028980315,
+            "target_removed_mm3": 3.8146972654180313
+          },
+          {
+            "action_id": "nominal-cavity-fab0a6fc995be07b945efd52",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 4.733995019252539,
+            "target_removed_mm3": 4.76837158177254
+          },
+          {
+            "action_id": "nominal-cavity-70b2033ee2bb76de66bbd800",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-e1ff00009a184ff0c40040a3",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-99d3be4be8e3c1f98b6c3023",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-5821f694fc8d9f9f82e6b397",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          }
+        ],
+        "selected_action_id": "nominal-cavity-70b2033ee2bb76de66bbd800",
+        "source_state_hash": "sha256:5a0d0661d38c1c131757875f8dc378d9082170179f00f7cefbe819ae0a289e19",
+        "step": 2
+      },
+      {
+        "all_queried_legal_actions_scored": true,
+        "legal_nonstop_actions": 8,
+        "scored_nonstop_actions": 8,
+        "scores": [
+          {
+            "action_id": "STOP",
+            "complete_tool_path_length_mm": 0.0,
+            "insertion_distance_mm": 0.0,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.0,
+            "target_removed_mm3": 0.0
+          },
+          {
+            "action_id": "nominal-cavity-6222b63133026b841cca17e0",
+            "complete_tool_path_length_mm": 4.376562519999979,
+            "insertion_distance_mm": 2.1882812599999895,
+            "normal_removed_mm3": 0.0,
+            "reward": 3.7803207028980315,
+            "target_removed_mm3": 3.8146972654180313
+          },
+          {
+            "action_id": "nominal-cavity-286a7f040c9eb5d1e0fc960d",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 3.7803207028980315,
+            "target_removed_mm3": 3.8146972654180313
+          },
+          {
+            "action_id": "nominal-cavity-2de3e7ffcf500fa8284a4059",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 4.733995019252539,
+            "target_removed_mm3": 4.76837158177254
+          },
+          {
+            "action_id": "nominal-cavity-fa432de02257e22dbe28d2de",
+            "complete_tool_path_length_mm": 4.376562519999979,
+            "insertion_distance_mm": 2.1882812599999895,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-f284da5c1d477d02c8c73196",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-7d32e4330d2b77457e61a242",
+            "complete_tool_path_length_mm": 4.376562519999979,
+            "insertion_distance_mm": 2.1882812599999895,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-eff3744d2f781a7e8e9a1d88",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-1131cb1d6d0fcedcf8953154",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          }
+        ],
+        "selected_action_id": "nominal-cavity-fa432de02257e22dbe28d2de",
+        "source_state_hash": "sha256:03f5da0bad4e784ec3fc7f1c823afc67290fe7d84cac92c75cdca73c7c0007dd",
+        "step": 3
+      },
+      {
+        "all_queried_legal_actions_scored": true,
+        "legal_nonstop_actions": 8,
+        "scored_nonstop_actions": 8,
+        "scores": [
+          {
+            "action_id": "STOP",
+            "complete_tool_path_length_mm": 0.0,
+            "insertion_distance_mm": 0.0,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.0,
+            "target_removed_mm3": 0.0
+          },
+          {
+            "action_id": "nominal-cavity-2a7acfa1241f80bc9a984b97",
+            "complete_tool_path_length_mm": 4.376562519999979,
+            "insertion_distance_mm": 2.1882812599999895,
+            "normal_removed_mm3": 0.0,
+            "reward": 2.8266463865435236,
+            "target_removed_mm3": 2.8610229490635235
+          },
+          {
+            "action_id": "nominal-cavity-895957ffed29cd67f16573c8",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 3.7803207028980315,
+            "target_removed_mm3": 3.8146972654180313
+          },
+          {
+            "action_id": "nominal-cavity-d77471b1a61d292e954ed09d",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 3.7803207028980315,
+            "target_removed_mm3": 3.8146972654180313
+          },
+          {
+            "action_id": "nominal-cavity-a760584b85eb520d8c5f7526",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-93fa9ebd8b66bcf274db5866",
+            "complete_tool_path_length_mm": 4.376562519999979,
+            "insertion_distance_mm": 2.1882812599999895,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-e943d3a9ae6d6f841e337766",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-13024e9799f9ae7e73ebe485",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-375ef916cd70e891f859beb4",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          }
+        ],
+        "selected_action_id": "nominal-cavity-a760584b85eb520d8c5f7526",
+        "source_state_hash": "sha256:2d07d5adede26ab84df12cb06507eba57634ac189a0bf30a6c41dbbe43bdde17",
+        "step": 4
+      },
+      {
+        "all_queried_legal_actions_scored": true,
+        "legal_nonstop_actions": 8,
+        "scored_nonstop_actions": 8,
+        "scores": [
+          {
+            "action_id": "STOP",
+            "complete_tool_path_length_mm": 0.0,
+            "insertion_distance_mm": 0.0,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.0,
+            "target_removed_mm3": 0.0
+          },
+          {
+            "action_id": "nominal-cavity-f945548cc06007f5e7d15698",
+            "complete_tool_path_length_mm": 4.376562519999979,
+            "insertion_distance_mm": 2.1882812599999895,
+            "normal_removed_mm3": 0.0,
+            "reward": 2.8266463865435236,
+            "target_removed_mm3": 2.8610229490635235
+          },
+          {
+            "action_id": "nominal-cavity-fbd611b2f5f7291cc3d6ea55",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 2.8266463865435236,
+            "target_removed_mm3": 2.8610229490635235
+          },
+          {
+            "action_id": "nominal-cavity-1af9717bab7534b81a6445ab",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 2.8266463865435236,
+            "target_removed_mm3": 2.8610229490635235
+          },
+          {
+            "action_id": "nominal-cavity-e4cc28860ab5c6e66424ad60",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 2.8266463865435236,
+            "target_removed_mm3": 2.8610229490635235
+          },
+          {
+            "action_id": "nominal-cavity-9b26cdc32a712c1c0a992fc2",
+            "complete_tool_path_length_mm": 4.376562519999979,
+            "insertion_distance_mm": 2.1882812599999895,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-9361916c033bc94c284dbf9b",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-8fbcbfbdec17f20cf753f701",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-ae3f35ebed99ccf1d8c3d099",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          }
+        ],
+        "selected_action_id": "nominal-cavity-9b26cdc32a712c1c0a992fc2",
+        "source_state_hash": "sha256:e1888c5043c4bd301c0ca99b8a3ecd70c51289f566cbda73012382fa34c0fdce",
+        "step": 5
+      },
+      {
+        "all_queried_legal_actions_scored": true,
+        "legal_nonstop_actions": 7,
+        "scored_nonstop_actions": 7,
+        "scores": [
+          {
+            "action_id": "STOP",
+            "complete_tool_path_length_mm": 0.0,
+            "insertion_distance_mm": 0.0,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.0,
+            "target_removed_mm3": 0.0
+          },
+          {
+            "action_id": "nominal-cavity-35ae59bf411523b0cdf18656",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 2.8266463865435236,
+            "target_removed_mm3": 2.8610229490635235
+          },
+          {
+            "action_id": "nominal-cavity-12630fcf07f6dd584da059bb",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 2.8266463865435236,
+            "target_removed_mm3": 2.8610229490635235
+          },
+          {
+            "action_id": "nominal-cavity-749e5fc1a536f07de90e8f87",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 2.8266463865435236,
+            "target_removed_mm3": 2.8610229490635235
+          },
+          {
+            "action_id": "nominal-cavity-d9e77756f5933d1757436aa7",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-af73b546263572af66a13a2d",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-fcfa7e0a810c6ff7cb78b873",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-5f0b513a8f532c25da1bf367",
+            "complete_tool_path_length_mm": 4.929687520000002,
+            "insertion_distance_mm": 2.464843760000001,
+            "normal_removed_mm3": 0.0,
+            "reward": 1.8424189451890156,
+            "target_removed_mm3": 1.9073486327090157
+          }
+        ],
+        "selected_action_id": "nominal-cavity-d9e77756f5933d1757436aa7",
+        "source_state_hash": "sha256:f22cff7ffb32c2ef412319147cbed6176e3e568ea40e0aceb06916d49ad9f336",
+        "step": 6
+      },
+      {
+        "all_queried_legal_actions_scored": true,
+        "legal_nonstop_actions": 7,
+        "scored_nonstop_actions": 7,
+        "scores": [
+          {
+            "action_id": "STOP",
+            "complete_tool_path_length_mm": 0.0,
+            "insertion_distance_mm": 0.0,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.0,
+            "target_removed_mm3": 0.0
+          },
+          {
+            "action_id": "nominal-cavity-5e55e14de8d4d9f83bede11c",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 2.8266463865435236,
+            "target_removed_mm3": 2.8610229490635235
+          },
+          {
+            "action_id": "nominal-cavity-5c9fe70c6eaa7c873e38df80",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 2.8266463865435236,
+            "target_removed_mm3": 2.8610229490635235
+          },
+          {
+            "action_id": "nominal-cavity-6358359b07c1596f7e874a9a",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-58c15708f77a2dea4dd07f9e",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-5099853dc8adb6e423ae87ef",
+            "complete_tool_path_length_mm": 4.929687520000002,
+            "insertion_distance_mm": 2.464843760000001,
+            "normal_removed_mm3": 0.0,
+            "reward": 1.8424189451890156,
+            "target_removed_mm3": 1.9073486327090157
+          },
+          {
+            "action_id": "nominal-cavity-3176cbd4c651913c36ff2874",
+            "complete_tool_path_length_mm": 4.376562519999979,
+            "insertion_distance_mm": 2.1882812599999895,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.9192977538345078,
+            "target_removed_mm3": 0.9536743163545078
+          },
+          {
+            "action_id": "nominal-cavity-8a24c80315cedef83b3d2397",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.9192977538345078,
+            "target_removed_mm3": 0.9536743163545078
+          }
+        ],
+        "selected_action_id": "nominal-cavity-6358359b07c1596f7e874a9a",
+        "source_state_hash": "sha256:21db60331c26dceaa1d115e96c267d9feb6bc927145b5c16ef4d37a43104bd6d",
+        "step": 7
+      },
+      {
+        "all_queried_legal_actions_scored": true,
+        "legal_nonstop_actions": 6,
+        "scored_nonstop_actions": 6,
+        "scores": [
+          {
+            "action_id": "STOP",
+            "complete_tool_path_length_mm": 0.0,
+            "insertion_distance_mm": 0.0,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.0,
+            "target_removed_mm3": 0.0
+          },
+          {
+            "action_id": "nominal-cavity-d1aa7f8c836242611c10f62f",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 2.8266463865435236,
+            "target_removed_mm3": 2.8610229490635235
+          },
+          {
+            "action_id": "nominal-cavity-6e008545fb71a74fee112e26",
+            "complete_tool_path_length_mm": 2.9765625200000017,
+            "insertion_distance_mm": 1.4882812600000008,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.8906977538345078,
+            "target_removed_mm3": 0.9536743163545078
+          },
+          {
+            "action_id": "nominal-cavity-f2ea67d8cf39d3144d9da75f",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 5.687669335607047,
+            "target_removed_mm3": 5.722045898127047
+          },
+          {
+            "action_id": "nominal-cavity-bda112984901fe7dc1d05c9a",
+            "complete_tool_path_length_mm": 4.929687520000002,
+            "insertion_distance_mm": 2.464843760000001,
+            "normal_removed_mm3": 0.0,
+            "reward": 1.8424189451890156,
+            "target_removed_mm3": 1.9073486327090157
+          },
+          {
+            "action_id": "nominal-cavity-bfedf95792bde02ce4f235d0",
+            "complete_tool_path_length_mm": 4.929687520000002,
+            "insertion_distance_mm": 2.464843760000001,
+            "normal_removed_mm3": 0.0,
+            "reward": 1.8424189451890156,
+            "target_removed_mm3": 1.9073486327090157
+          },
+          {
+            "action_id": "nominal-cavity-1855ed61bef6b2a67a41cafa",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.9192977538345078,
+            "target_removed_mm3": 0.9536743163545078
+          }
+        ],
+        "selected_action_id": "nominal-cavity-f2ea67d8cf39d3144d9da75f",
+        "source_state_hash": "sha256:45b18a3ef41c4a48b3eb5562428ce85638e8ce2ed2e0fc4a840adb39548ed0be",
+        "step": 8
+      },
+      {
+        "all_queried_legal_actions_scored": true,
+        "legal_nonstop_actions": 4,
+        "scored_nonstop_actions": 4,
+        "scores": [
+          {
+            "action_id": "STOP",
+            "complete_tool_path_length_mm": 0.0,
+            "insertion_distance_mm": 0.0,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.0,
+            "target_removed_mm3": 0.0
+          },
+          {
+            "action_id": "nominal-cavity-cd7b4183b409510a29d06b5f",
+            "complete_tool_path_length_mm": 4.376562519999979,
+            "insertion_distance_mm": 2.1882812599999895,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.9192977538345078,
+            "target_removed_mm3": 0.9536743163545078
+          },
+          {
+            "action_id": "nominal-cavity-40b20f67ba7be279c81b635c",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.9192977538345078,
+            "target_removed_mm3": 0.9536743163545078
+          },
+          {
+            "action_id": "nominal-cavity-95a416bba4fb9ccb641bb6f8",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.9192977538345078,
+            "target_removed_mm3": 0.9536743163545078
+          },
+          {
+            "action_id": "nominal-cavity-d2cd7c7ac226cb2760ec37f7",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.9192977538345078,
+            "target_removed_mm3": 0.9536743163545078
+          }
+        ],
+        "selected_action_id": "nominal-cavity-cd7b4183b409510a29d06b5f",
+        "source_state_hash": "sha256:da6578897fa2343ee0fff8288706ddf37325dae713d81e7e3d00a23242d5d650",
+        "step": 9
+      },
+      {
+        "all_queried_legal_actions_scored": true,
+        "legal_nonstop_actions": 4,
+        "scored_nonstop_actions": 4,
+        "scores": [
+          {
+            "action_id": "STOP",
+            "complete_tool_path_length_mm": 0.0,
+            "insertion_distance_mm": 0.0,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.0,
+            "target_removed_mm3": 0.0
+          },
+          {
+            "action_id": "nominal-cavity-1156ea6833be92a1d92e0856",
+            "complete_tool_path_length_mm": 4.929687520000002,
+            "insertion_distance_mm": 2.464843760000001,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.8887446288345078,
+            "target_removed_mm3": 0.9536743163545078
+          },
+          {
+            "action_id": "nominal-cavity-4b410261848cc85cb47dfcd9",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.9192977538345078,
+            "target_removed_mm3": 0.9536743163545078
+          },
+          {
+            "action_id": "nominal-cavity-786ede798e438ea3689bed3c",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.9192977538345078,
+            "target_removed_mm3": 0.9536743163545078
+          },
+          {
+            "action_id": "nominal-cavity-6e98412afbcc4eb61beb458f",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.9192977538345078,
+            "target_removed_mm3": 0.9536743163545078
+          }
+        ],
+        "selected_action_id": "nominal-cavity-4b410261848cc85cb47dfcd9",
+        "source_state_hash": "sha256:1847909e06ecb78d43f24e88239d524969afa0a54afcec9aad165d53d914f78d",
+        "step": 10
+      },
+      {
+        "all_queried_legal_actions_scored": true,
+        "legal_nonstop_actions": 4,
+        "scored_nonstop_actions": 4,
+        "scores": [
+          {
+            "action_id": "STOP",
+            "complete_tool_path_length_mm": 0.0,
+            "insertion_distance_mm": 0.0,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.0,
+            "target_removed_mm3": 0.0
+          },
+          {
+            "action_id": "nominal-cavity-6d55a7a0708346fafd90ce9f",
+            "complete_tool_path_length_mm": 4.929687520000002,
+            "insertion_distance_mm": 2.464843760000001,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.8887446288345078,
+            "target_removed_mm3": 0.9536743163545078
+          },
+          {
+            "action_id": "nominal-cavity-a343bd1351f115ee88ad421d",
+            "complete_tool_path_length_mm": 4.929687520000002,
+            "insertion_distance_mm": 2.464843760000001,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.8887446288345078,
+            "target_removed_mm3": 0.9536743163545078
+          },
+          {
+            "action_id": "nominal-cavity-07831edabac921c03d23067a",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.9192977538345078,
+            "target_removed_mm3": 0.9536743163545078
+          },
+          {
+            "action_id": "nominal-cavity-4aa9b3fd854b3cb7838cba21",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.9192977538345078,
+            "target_removed_mm3": 0.9536743163545078
+          }
+        ],
+        "selected_action_id": "nominal-cavity-07831edabac921c03d23067a",
+        "source_state_hash": "sha256:1e3ab6ad732f20dad350de8d8f88906eeb9f5f50fb605fbffb7ed9b436234215",
+        "step": 11
+      },
+      {
+        "all_queried_legal_actions_scored": true,
+        "legal_nonstop_actions": 2,
+        "scored_nonstop_actions": 2,
+        "scores": [
+          {
+            "action_id": "STOP",
+            "complete_tool_path_length_mm": 0.0,
+            "insertion_distance_mm": 0.0,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.0,
+            "target_removed_mm3": 0.0
+          },
+          {
+            "action_id": "nominal-cavity-0be8395e461997a20134d0fc",
+            "complete_tool_path_length_mm": 4.929687520000002,
+            "insertion_distance_mm": 2.464843760000001,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.8887446288345078,
+            "target_removed_mm3": 0.9536743163545078
+          },
+          {
+            "action_id": "nominal-cavity-92fbddc3ac23e1e80b8597ef",
+            "complete_tool_path_length_mm": 4.376562519999993,
+            "insertion_distance_mm": 2.1882812599999966,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.9192977538345078,
+            "target_removed_mm3": 0.9536743163545078
+          }
+        ],
+        "selected_action_id": "nominal-cavity-92fbddc3ac23e1e80b8597ef",
+        "source_state_hash": "sha256:88cc1d8345364c46ad8e7f1b51c0a22bb0a8c11d0a2951ecdf9ee255de1333d8",
+        "step": 12
+      },
+      {
+        "all_queried_legal_actions_scored": true,
+        "legal_nonstop_actions": 0,
+        "scored_nonstop_actions": 0,
+        "scores": [
+          {
+            "action_id": "STOP",
+            "complete_tool_path_length_mm": 0.0,
+            "insertion_distance_mm": 0.0,
+            "normal_removed_mm3": 0.0,
+            "reward": 0.0,
+            "target_removed_mm3": 0.0
+          }
+        ],
+        "selected_action_id": "STOP",
+        "source_state_hash": "sha256:0a6fc75def6c461fe25ec304b6eec1809b7e714e6e8eb601b40e997faade6ea0",
+        "step": 13
+      }
+    ],
+    "estimated_incremental_return": 54.866215035801446,
+    "evaluated_nonstop_actions": 82,
+    "fallback_policy": {
+      "expansion": "all_remaining_emitted_raw_ids_once_in_original_order",
+      "fit_updates": 0,
+      "omitted_catalog_slots": "not_a_global_exhaustion_claim",
+      "positive_switch_expansion": "remaining_current_tool_emitted_ids_once_in_original_order",
+      "positive_switch_trigger": "best_positive_top8_action_changes_current_tool_and_current_tool_unqueried",
+      "selection": "unchanged_nominal_reward_STOP_zero_original_raw_order_ties",
+      "tool_switches": "allowed_if_still_best_after_unchanged_reward_comparison",
+      "trigger": "no_strictly_positive_feasible_nominal_reward_in_initial_top8",
+      "version": "nominal-top8-current-tool-comparison-v1"
+    },
+    "global_optimality_proven": false,
+    "initial_source_preparation": "outside_this_call; caller_must_report_and_charge",
+    "initial_steps": 0,
+    "max_steps": 24,
+    "method": "nominal-top8-current-tool-comparison-v1",
+    "model_transition_calls": 14,
+    "native_replay_required": true,
+    "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+    "planning_seconds": 3.439726916141808,
+    "time_budget_seconds": 60,
+    "verification_scope": "top8_then_no_positive_full_or_positive_switch_current_tool_comparison",
+    "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+  },
+  "actions": [
+    "nominal-cavity-81c114a0600538d67baf4414",
+    "nominal-cavity-f4acd820cbfb0ed0423e8ce1",
+    "nominal-cavity-70b2033ee2bb76de66bbd800",
+    "nominal-cavity-fa432de02257e22dbe28d2de",
+    "nominal-cavity-a760584b85eb520d8c5f7526",
+    "nominal-cavity-9b26cdc32a712c1c0a992fc2",
+    "nominal-cavity-d9e77756f5933d1757436aa7",
+    "nominal-cavity-6358359b07c1596f7e874a9a",
+    "nominal-cavity-f2ea67d8cf39d3144d9da75f",
+    "nominal-cavity-cd7b4183b409510a29d06b5f",
+    "nominal-cavity-4b410261848cc85cb47dfcd9",
+    "nominal-cavity-07831edabac921c03d23067a",
+    "nominal-cavity-92fbddc3ac23e1e80b8597ef",
+    "STOP"
+  ],
+  "admission_hash": "sha256:1095352b0acd3b6ef0ecdccf47f213efbf52bbd538d5691d8223af02a631daff",
+  "decision_model_hash": "sha256:f59179f847286c60f7feff7a5eabaae7f2b905c37e6d493c0c0d223aedfbaa36",
+  "max_steps": 24,
+  "method": "switch_guard",
+  "ridge_hash": "sha256:4578737059c005c411668ea70b148f1214b483f2d89c677605bbe5e3c67aa57a",
+  "seal": "sha256:97071283af6ff7916bb31f3a8f6031ce1122cf7318fca8f51c0da8c5c4149417",
+  "source_hash": "sha256:d4b899c47e03de0642ffa62e46ca6f17acae5ac2fe525a44e525cbba68dbd524",
+  "subject": "ReMIND-015"
+}

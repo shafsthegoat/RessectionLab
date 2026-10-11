@@ -1,0 +1,160 @@
+{
+  "baseline_sha256": "db2e3bad35aadd68f23111b9498270d019debf27486c696cc7ef48bd1fff67c8",
+  "capacity": {
+    "additional_reservable_bytes": 10493927424,
+    "allocation_allowed": true,
+    "conservative_growth_plus_reservations_bytes": 243490816,
+    "free_after_outstanding_reservations_bytes": 357231554560,
+    "free_bytes": 357298663424,
+    "growth_highwater_bytes": 176381952,
+    "outstanding_reserved_bytes": 67108864,
+    "reservation_scope_overruns": []
+  },
+  "closed_reservation": {
+    "allocation_kind": "same-five existing-data public-bound local-query successor; prepared only until separate root begin/actual launch",
+    "began_at_utc": "2026-10-11T10:50:37.808130+00:00",
+    "closed_at_utc": "2026-10-11T10:56:35.257793+00:00",
+    "created_at_utc": "2026-10-11T10:43:16.845354+00:00",
+    "initial_scope_measurement": "Not scanned while generated controls run; zero is a conservative accounting origin, not a measured empty-directory claim.",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 19812352,
+    "owner": "/root/n36_result_audit_fresh",
+    "pilot": false,
+    "reserved_bytes": 134217728,
+    "restrictions": "No acquisition, data/model copies or dependencies; original v1 closed evidence remains immutable.",
+    "runtime_caps": {
+      "output_bytes": 113246208,
+      "preparation_controls_bytes": 4194304,
+      "supervision_bytes": 16777216,
+      "total_bytes": 134217728
+    },
+    "scope_current_allocated_bytes": 19812352,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/hybrid-public-bound-v2"
+    ],
+    "status": "closed",
+    "terminal_note": "Storage release only; success/admission not inferred from exit status.",
+    "terminal_receipt": {
+      "path": "build/hybrid-public-bound-v2/attempt-01.supervision/receipt.json",
+      "sha256": "7a16060cde1725186f3963175de375d9eb0d2d71577d66b61418f25dd53ec65e"
+    }
+  },
+  "ledger_sha256": "daab8563a2c1ea92de04cd944810c443b23a21f1c95fddbfddad53cd8f62e831",
+  "limits": "One safe post-terminal project metadata scan including current archives; no payload bodies, science, acquisitions, deletions or baseline reset. Residual32MiB remains prepared, not begun. Allocated-block highwater is a checkpoint proxy, not a filesystem quota; concurrent archive writes and transient growth may enter later measurements.",
+  "measurement": {
+    "allocated_bytes": {
+      ".git": 142082048,
+      ".pytest_cache": 1146880,
+      ".tools": 1643302912,
+      ".venv": 3054829568,
+      "@root-files-and-directory": 638976,
+      "artifacts": 1767792640,
+      "build": 17186275328,
+      "data": 356137631744,
+      "desktop": 18945323008,
+      "dist": 2575773696,
+      "docs": 2220032,
+      "launchers": 409600,
+      "manifests": 5275648,
+      "outputs": 14765998080,
+      "packaging": 544768,
+      "research": 53248,
+      "scripts": 9527296,
+      "src": 6606848,
+      "tests": 20148224
+    },
+    "ended_at_utc": "2026-10-11T10:56:34.892643+00:00",
+    "free_bytes": 357298663424,
+    "method": "du -k -d 1 .; allocated file blocks, no bodies or symlink traversal; statvfs f_bavail",
+    "started_at_utc": "2026-10-11T10:56:18.677997+00:00",
+    "total_allocated_bytes": 416265580544
+  },
+  "output_logical_bytes": 15479548,
+  "recorded_at_utc": "2026-10-11T10:56:35.258457+00:00",
+  "recorded_result_sha256": "f25b2d46aad3f969c9cbd4152988d4705d2472885f35124751356ff518dbb69f",
+  "residual_source_reservation": {
+    "allocation_kind": "existing-data residual-blocker experiment; prepared only; no acquisition/model/array copies or dependencies",
+    "amended_at_utc": "2026-10-11T10:56:35.258158+00:00",
+    "created_at_utc": "2026-10-11T10:32:13.443230+00:00",
+    "initial_scope_measurement": "Not scanned per root instruction; zero is a conservative accounting origin, not a measured empty-directory claim.",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 266240,
+    "owner": "/root/goal_conditioned_policy",
+    "owner_confirmed_at_utc": "2026-10-11T10:33:03.025195+00:00",
+    "pilot": false,
+    "reservation_amendment_history": [
+      {
+        "at_utc": "2026-10-11T10:56:35.258155+00:00",
+        "authority": "Root explicitly authorized total32MiB:16output+8supervision+8preparation; prepared only until separate begin.",
+        "new_bytes": 33554432,
+        "previous_bytes": 2097152
+      }
+    ],
+    "reserved_bytes": 33554432,
+    "runtime_caps": {
+      "output_bytes": 16777216,
+      "preparation_controls_bytes": 8388608,
+      "supervision_bytes": 8388608,
+      "total_bytes": 33554432
+    },
+    "scope_current_allocated_bytes": 266240,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/select013-residual-blocker-v1"
+    ],
+    "status": "prepared"
+  },
+  "root_archive_remaining_allowance_bytes": 9777152,
+  "root_archive_reservation": {
+    "created_at_utc": "2026-10-11T09:34:37.781715+00:00",
+    "increase_note": "Root-authorized conservative increase: less than3MiB remains from8MiB after measured growth, with forthcoming~1.5MiB switch archive plus Git/accounting.",
+    "increased_at_utc": "2026-10-11T09:52:27.207519+00:00",
+    "latest_h48_archive_owner_estimate": "39files3,460,976 bytes plus audit; remains within existing24MiB total allowance including Git/accounting. Earlier3MiB artifact forecast was approximate.",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 23777280,
+    "owner": "/root",
+    "pending_archive_forecast": {
+      "basis_last_measured_root_growth_bytes": 18513920,
+      "git_growth_since_scan": "not separately measured during timing; included within remaining32MiB allowance subject to postmilestone verification",
+      "known_measured_plus_package_forecast_bytes": 26765993,
+      "later_v2_result_max_bytes": 4194304,
+      "remaining32MiB_for_unmeasured_git_and_metadata_bytes": 6788439,
+      "source": "Root supplied current package forecast; no directory scan or claim of freshly measured archive size.",
+      "v1_archive_added_after_scan_bytes": 3533481,
+      "v2_integration_max_bytes": 524288
+    },
+    "pilot": false,
+    "previous_reserved_bytes": 8388608,
+    "reservation_increase_history": [
+      {
+        "at_utc": "2026-10-11T10:30:14.180921+00:00",
+        "observed_scope_growth_bytes": 13856768,
+        "pending_forecast_bytes": 7340032,
+        "previous_bytes": 16777216,
+        "reason": "Root requested space forecast/reservation for completed h48 compact archive before copying."
+      },
+      {
+        "at_utc": "2026-10-11T10:50:37.808119+00:00",
+        "new_bytes": 33554432,
+        "previous_bytes": 25165824,
+        "reason": "Root explicitly authorized32MiB for compact v1/v2 integration/result archive forecast plus Git."
+      }
+    ],
+    "reserved_bytes": 33554432,
+    "scope_current_allocated_bytes": 1953882112,
+    "scope_initial_allocated_bytes": 1930104832,
+    "scopes": [
+      "artifacts",
+      ".git",
+      "docs",
+      "src",
+      "scripts",
+      "tests",
+      "manifests",
+      "build/storage-extension-v1"
+    ],
+    "status": "prepared"
+  },
+  "schema": "storage-extension-milestone-closure-v1"
+}

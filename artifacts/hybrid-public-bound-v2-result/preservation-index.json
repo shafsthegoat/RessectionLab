@@ -1,0 +1,360 @@
+{
+  "archive_list_sha256": "bbb7e1efd20f7d689440e96bd81f6fd5bf6b2cc934e3abd3f9745740e8a4de89",
+  "files": [
+    {
+      "bytes": 147886,
+      "path": "build/hybrid-public-bound-v2/postrun/extract-attempt-01/summary.json",
+      "retained": "hybrid-public-bound-v2/postrun/extract-attempt-01/summary.json",
+      "sha256": "c8b558e4cdbfd5e014b8e4b5f5fc4a046edf185e7dd65b31fa167658f41bd6a3"
+    },
+    {
+      "bytes": 43115,
+      "path": "build/hybrid-public-bound-v2/postrun/extract-attempt-01/input-pins.json",
+      "retained": "hybrid-public-bound-v2/postrun/extract-attempt-01/input-pins.json",
+      "sha256": "94dcdb585f4dcad56bd7171c24d4f01e1ea066c88d4547dbbf238efd4868afae"
+    },
+    {
+      "bytes": 130106,
+      "path": "build/hybrid-public-bound-v2/attempt-01/result.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/result.json",
+      "sha256": "f25b2d46aad3f969c9cbd4152988d4705d2472885f35124751356ff518dbb69f"
+    },
+    {
+      "bytes": 1537,
+      "path": "build/hybrid-public-bound-v2/attempt-01.supervision/receipt.json",
+      "retained": "hybrid-public-bound-v2/attempt-01.supervision/receipt.json",
+      "sha256": "7a16060cde1725186f3963175de375d9eb0d2d71577d66b61418f25dd53ec65e"
+    },
+    {
+      "bytes": 4951,
+      "path": "build/hybrid-public-bound-v2/root-release.json",
+      "retained": "hybrid-public-bound-v2/root-release.json",
+      "sha256": "1af5b0892797ecb355cc7026e6553b91f95edcc4e740de48c3335ae69b44b938"
+    },
+    {
+      "bytes": 23808,
+      "path": "build/hybrid-public-bound-v2/source-index.json",
+      "retained": "hybrid-public-bound-v2/source-index.json",
+      "sha256": "73faba042066839ced9464aba95bebd56b41a3701372d96eeade9d4200cdbeea"
+    },
+    {
+      "bytes": 10109,
+      "path": "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-002/plan.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-002/plan.json",
+      "sha256": "c27aa52e06df218ca6b011cf9eed18188bc64d64ad6607eb6a56ab094f665f05"
+    },
+    {
+      "bytes": 21966,
+      "path": "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-002/replay/episode-metrics.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-002/replay/episode-metrics.json",
+      "sha256": "dc8d97a225e1ed9a811401a9557b5b04036f4469a8903e89b08093255160683b"
+    },
+    {
+      "bytes": 2494,
+      "path": "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-002/replay/independent-episode.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-002/replay/independent-episode.json",
+      "sha256": "2194b8f8fab5955e23ae0f37670b6374b8e517ad3c5f65692bd7844606fe8415"
+    },
+    {
+      "bytes": 10282,
+      "path": "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-002/plan.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-002/plan.json",
+      "sha256": "f74237cd97d51b7dfcb4898d41b4a24d1e10059e2f2041fc462bba4568c03e22"
+    },
+    {
+      "bytes": 21966,
+      "path": "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-002/replay/episode-metrics.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-002/replay/episode-metrics.json",
+      "sha256": "6645169ecde7003abce623122d47d2601e7c4421ec27c390c7bb6a469112b3f9"
+    },
+    {
+      "bytes": 2494,
+      "path": "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-002/replay/independent-episode.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-002/replay/independent-episode.json",
+      "sha256": "700feb7522b815ae91372b5d4d077a6e0afaa331b26e0e33d3f8cd37c2bfdb57"
+    },
+    {
+      "bytes": 39807,
+      "path": "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/plan.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/plan.json",
+      "sha256": "9cebc241b250c6bc8874cb832789c0fb35f88d938a8b88120a8cd21c163d4f9c"
+    },
+    {
+      "bytes": 423851,
+      "path": "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/replay/episode-metrics.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/replay/episode-metrics.json",
+      "sha256": "46f714c6d4410c1dc0496782f165cfc4e6c8dde8f30448c2b8c27215be217701"
+    },
+    {
+      "bytes": 2627,
+      "path": "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/replay/independent-episode.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-015/replay/independent-episode.json",
+      "sha256": "7c4db79f5f7b1dca2c3def5c7e539aa2e0fc6031a27185e1c9624da185cc192b"
+    },
+    {
+      "bytes": 39980,
+      "path": "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/plan.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/plan.json",
+      "sha256": "ba42e743c198a09f55ceaeee96a029d07a59c82903cb4e8d49e5e61e24e132a1"
+    },
+    {
+      "bytes": 423851,
+      "path": "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/episode-metrics.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/episode-metrics.json",
+      "sha256": "d26884cf4d3770ce5f626cc2f5c7688b0b362babd4137e98372a2fc0c1096015"
+    },
+    {
+      "bytes": 2626,
+      "path": "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/independent-episode.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-015/replay/independent-episode.json",
+      "sha256": "aa00ca3f9c26051bcd7c284f994c8aec752caaf6fcc770889d0fab6238b10672"
+    },
+    {
+      "bytes": 8706,
+      "path": "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-018/plan.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-018/plan.json",
+      "sha256": "a52607bf68209b17521cdb3b7290bb0aaf8bd9df0b4db6f40e8bd860b99edd19"
+    },
+    {
+      "bytes": 21987,
+      "path": "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-018/replay/episode-metrics.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-018/replay/episode-metrics.json",
+      "sha256": "521fcda96084abe73d73c20bde2b70b2839a28996793d80d9bff82a945f6f693"
+    },
+    {
+      "bytes": 2495,
+      "path": "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-018/replay/independent-episode.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-018/replay/independent-episode.json",
+      "sha256": "c3574aab7eb893dce645b14fac971f8ce538c927166b0787c6f0d5171b8ae9c6"
+    },
+    {
+      "bytes": 8880,
+      "path": "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-018/plan.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-018/plan.json",
+      "sha256": "056f02fe96ecd230bf21a236ede249b625344b92b7538d41510ac121100645ad"
+    },
+    {
+      "bytes": 21987,
+      "path": "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-018/replay/episode-metrics.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-018/replay/episode-metrics.json",
+      "sha256": "2164a9763de95eca226e6531a23eba50aeaeed25931549210e01b839c0296a02"
+    },
+    {
+      "bytes": 2495,
+      "path": "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-018/replay/independent-episode.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-018/replay/independent-episode.json",
+      "sha256": "06c9bcfd86c5ee217518851ef4c662ef205908149ec66d0a218044351ecaf54a"
+    },
+    {
+      "bytes": 34227,
+      "path": "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/plan.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/plan.json",
+      "sha256": "3fd2394772f0eccdbeb801d8a4525f9ae08f4ad7933fd8951b073a2d131482f2"
+    },
+    {
+      "bytes": 429352,
+      "path": "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/replay/episode-metrics.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/replay/episode-metrics.json",
+      "sha256": "db2ef01d22effde76ef34b7a0281cebb9be20ee04d5fd367469b8f1173d7756e"
+    },
+    {
+      "bytes": 2630,
+      "path": "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/replay/independent-episode.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-045/replay/independent-episode.json",
+      "sha256": "a4be177dc8d1651491552c0c03c109e59f1e3a242d636d9b5ab91936c4b0e734"
+    },
+    {
+      "bytes": 34399,
+      "path": "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/plan.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/plan.json",
+      "sha256": "79e17b868949ace72899b792819f0253561e1bc7bb7193230131972c818362bf"
+    },
+    {
+      "bytes": 429352,
+      "path": "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/episode-metrics.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/episode-metrics.json",
+      "sha256": "259eeec9ecacbda3b4127e08b515ec47853158bc5e53549932b20b73bf359713"
+    },
+    {
+      "bytes": 2630,
+      "path": "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/independent-episode.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-045/replay/independent-episode.json",
+      "sha256": "74574be88f0b815d21d17f35da5875bba62bceb6b0e4a9d2cff90e8677e51ffb"
+    },
+    {
+      "bytes": 44703,
+      "path": "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/plan.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/plan.json",
+      "sha256": "a501ab5faac8f6f3b5b4a34d99991d17ee16d5190c20b7641acacea42c497d38"
+    },
+    {
+      "bytes": 399509,
+      "path": "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/replay/episode-metrics.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/replay/episode-metrics.json",
+      "sha256": "23d9f29e2855efc9176e824893eb2006e37ea21ca939a434d83e3798a76a24a7"
+    },
+    {
+      "bytes": 2624,
+      "path": "build/hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/replay/independent-episode.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/switch_guard/ReMIND-050/replay/independent-episode.json",
+      "sha256": "1ea25c4aada088ee00bdabf8b487bd1d441135e3c812f585fc302ec81b13885e"
+    },
+    {
+      "bytes": 44876,
+      "path": "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/plan.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/plan.json",
+      "sha256": "691fad512c2b975f6e8d386c1d899e051478d3617d57e80df1cd00dfa9253f2b"
+    },
+    {
+      "bytes": 399509,
+      "path": "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/episode-metrics.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/episode-metrics.json",
+      "sha256": "ae47f92323207a482e13e0003cbcba4b4d954a991b8ed0c117f67a99d22cff3e"
+    },
+    {
+      "bytes": 2624,
+      "path": "build/hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/independent-episode.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/public_bound/ReMIND-050/replay/independent-episode.json",
+      "sha256": "27ef47048892da063408db262f39e11a3cb6811a162c124ca4260e2e89fae4da"
+    },
+    {
+      "bytes": 302730,
+      "path": "build/hybrid-public-bound-v2/attempt-01/sealed-plans.json",
+      "retained": "hybrid-public-bound-v2/attempt-01/sealed-plans.json",
+      "sha256": "939a7b8cb778fbdc975f99e2914d8ce49bbabce79b28684ebd28ad6e8d3de27f"
+    },
+    {
+      "bytes": 15925,
+      "path": "build/hybrid-public-bound-v2/postrun/extract_terminal.py",
+      "retained": "hybrid-public-bound-v2/postrun/extract_terminal.py",
+      "sha256": "6f6637d88834fdf3b41131bafd68974969901e83e09e3e2b31071d0695663461"
+    },
+    {
+      "bytes": 3617,
+      "path": "build/hybrid-public-bound-v2/postrun/REPORT.txt",
+      "retained": "hybrid-public-bound-v2/postrun/REPORT.txt",
+      "sha256": "d4ec9075b6efef67aceb640e9745b6da6231c5cda30dcab80827f60fd29b0568"
+    },
+    {
+      "bytes": 2005,
+      "path": "build/hybrid-public-bound-v2/postrun/README.txt",
+      "retained": "hybrid-public-bound-v2/postrun/README.txt",
+      "sha256": "f48a0bb5ae923497e1afd721627a3c3a1dcadf1e7e17a5d680aed3282d41bf4c"
+    },
+    {
+      "bytes": 3760,
+      "path": "build/hybrid-public-bound-v2/source-ready.json",
+      "retained": "hybrid-public-bound-v2/source-ready.json",
+      "sha256": "3ead6d11d9f559a9c597e9fc021923213e00df4d66b584ba84ce1ef3819bf388"
+    },
+    {
+      "bytes": 4407,
+      "path": "build/hybrid-public-bound-v2/HANDOFF.txt",
+      "retained": "hybrid-public-bound-v2/HANDOFF.txt",
+      "sha256": "bc44298e925234790b473caab4c4e52814a2bbc7ed02324a9b142f1f637fd953"
+    },
+    {
+      "bytes": 3955,
+      "path": "build/hybrid-public-bound-v2/runtime.diff",
+      "retained": "hybrid-public-bound-v2/runtime.diff",
+      "sha256": "8b0403e36457f3f57d65b57278fac59be321908167e9235a19c5a814b76ae755"
+    },
+    {
+      "bytes": 13718,
+      "path": "build/hybrid-public-bound-v2/bound_policy.py",
+      "retained": "hybrid-public-bound-v2/bound_policy.py",
+      "sha256": "3093f2f99385ce430c63d36257414878129cab10c7c7c2ff04f472061109b789"
+    },
+    {
+      "bytes": 1456,
+      "path": "build/hybrid-public-bound-v2/policy_tasks.py",
+      "retained": "hybrid-public-bound-v2/policy_tasks.py",
+      "sha256": "353f48301bca23f38acc25a5816e4d67b24e7bc4c3a24cb52c8a17ab9684c863"
+    },
+    {
+      "bytes": 13236,
+      "path": "build/hybrid-public-bound-v2/batch_contract.py",
+      "retained": "hybrid-public-bound-v2/batch_contract.py",
+      "sha256": "0b5951ad7da67caa664ca70e23f916eb0fd2200e8d0969cbd2f4d96b6ffb5457"
+    },
+    {
+      "bytes": 24051,
+      "path": "build/hybrid-public-bound-v2/initial_inventory_worker.py",
+      "retained": "hybrid-public-bound-v2/initial_inventory_worker.py",
+      "sha256": "a50eb73489aa41cdc7ccf60081f3eef7255fb5aee6c688db74ce7b60c6254653"
+    },
+    {
+      "bytes": 9625,
+      "path": "build/hybrid-public-bound-v2/run_owned.py",
+      "retained": "hybrid-public-bound-v2/run_owned.py",
+      "sha256": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3"
+    },
+    {
+      "bytes": 2300,
+      "path": "build/hybrid-public-bound-v2/freeze-runtime.py",
+      "retained": "hybrid-public-bound-v2/freeze-runtime.py",
+      "sha256": "0f151c043d9b9acac1449a1d4e68908edf42f67aeb78fd1ebe71821905f541d3"
+    },
+    {
+      "bytes": 6059,
+      "path": "build/hybrid-public-bound-v2/patient_regression.py",
+      "retained": "hybrid-public-bound-v2/patient_regression.py",
+      "sha256": "c8ce28c15339206157a5652afdb77a199619c98321d39aea5f1a9f62ce0c491f"
+    },
+    {
+      "bytes": 4707,
+      "path": "build/hybrid-public-bound-v2/patient_transfer.py",
+      "retained": "hybrid-public-bound-v2/patient_transfer.py",
+      "sha256": "358b223842b464e9b929a20f5a2cb0bffec7805aba114e08d0acfb30e3ea2d3a"
+    },
+    {
+      "bytes": 20840,
+      "path": "build/hybrid-public-bound-v2/hybrid_proposal.py",
+      "retained": "hybrid-public-bound-v2/hybrid_proposal.py",
+      "sha256": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8"
+    },
+    {
+      "bytes": 9455,
+      "path": "build/hybrid-public-bound-v2/fallback_policy.py",
+      "retained": "hybrid-public-bound-v2/fallback_policy.py",
+      "sha256": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c"
+    },
+    {
+      "bytes": 12044,
+      "path": "build/hybrid-public-bound-v2/stage/resectionlab/public_reward_window.py",
+      "retained": "hybrid-public-bound-v2/stage/resectionlab/public_reward_window.py",
+      "sha256": "dacd890094aa0601b565ae70ef08e5be1e24f8f71bad1edecc2f7fe9079e7032"
+    },
+    {
+      "bytes": 21390,
+      "path": "build/hybrid-public-bound-review-v2/audit_saved.py",
+      "retained": "hybrid-public-bound-review-v2/audit_saved.py",
+      "sha256": "4bb9e4508d3f3bc88f1efba0f3870d0e8e490730eecb7b1da366039c700ab24e"
+    },
+    {
+      "bytes": 102426,
+      "path": "build/hybrid-public-bound-review-v2/audit.json",
+      "retained": "hybrid-public-bound-review-v2/audit.json",
+      "sha256": "a79450d5acf7f288303507633e242da1ab3279ce2194ffb1cea793f8909a316d"
+    },
+    {
+      "bytes": 1712,
+      "path": "build/hybrid-public-bound-review-v2/runtime-source-capture.json",
+      "retained": "hybrid-public-bound-review-v2/runtime-source-capture.json",
+      "sha256": "2b5a453488a58b71bb5645e89c7702c5bdcee1b15ccd2ffed0e7e6b029bd4284"
+    },
+    {
+      "bytes": 3913,
+      "path": "build/hybrid-public-bound-review-v2/source-review.json",
+      "retained": "hybrid-public-bound-review-v2/source-review.json",
+      "sha256": "5cb4d9e57c6392ade4b5bb59f7ae27581548753945523e45d5a0d804b8991add"
+    },
+    {
+      "bytes": 4243,
+      "path": "build/hybrid-public-bound-review-v2/REPORT.txt",
+      "retained": "hybrid-public-bound-review-v2/REPORT.txt",
+      "sha256": "0062d156a4ad68eb15f29651c7a064e4be0603a918cc438fbc7ea3bcaf2e53e2"
+    }
+  ],
+  "schema": "compact-result-evidence-v1"
+}

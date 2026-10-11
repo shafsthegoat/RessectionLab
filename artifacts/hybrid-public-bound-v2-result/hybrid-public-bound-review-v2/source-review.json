@@ -1,0 +1,26 @@
+{
+  "decision": "GO_SOURCE_LOCAL_WINDOW_SUCCESSOR",
+  "scope": "One source review; no tests, patient arrays, model parameters or native execution by reviewer. Saved generated failure receipt inspected; corrected fixture controls remain the owner's scheduled validation.",
+  "source_pins": {
+    "build/hybrid-public-bound-v2/stage/resectionlab/public_reward_window.py": "dacd890094aa0601b565ae70ef08e5be1e24f8f71bad1edecc2f7fe9079e7032",
+    "build/hybrid-public-bound-v2/bound_policy.py": "3093f2f99385ce430c63d36257414878129cab10c7c7c2ff04f472061109b789",
+    "build/hybrid-public-bound-v2/batch_contract.py": "0b5951ad7da67caa664ca70e23f916eb0fd2200e8d0969cbd2f4d96b6ffb5457",
+    "build/hybrid-public-bound-v2/initial_inventory_worker.py": "a50eb73489aa41cdc7ccf60081f3eef7255fb5aee6c688db74ce7b60c6254653",
+    "build/hybrid-public-bound-v2/policy_tasks.py": "353f48301bca23f38acc25a5816e4d67b24e7bc4c3a24cb52c8a17ab9684c863",
+    "build/hybrid-public-bound-v2/run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3"
+  },
+  "findings": [],
+  "reasoning": [
+    "For computed inverse B and E=I-B*A, the exact inverse satisfies A^-1=(I-E)^-1*B. The supplied residual norm rho<1 bounds each inverse coefficient error by rho*||B||inf/(1-rho). The conservative floating residual padding, upward norm/error rounding and outward coefficient endpoints enclose that bound; ill-conditioned/uncertified cases refuse.",
+    "The unchanged full active-sweep world AABB includes initial/preentry endpoints, backward active length and radius/endcaps with outward rounding. Inverse interval multiplication considers both coefficient and world endpoints with outward product/sum rounding. Half-cell expansion and ceil/floor index clipping conservatively include intersecting full affine cells under rotations/reflections; no center-only shrinkage.",
+    "Public snapshots contain known-positive target outside observed cavity and unchanged source target domain. Unknown coverage is not erased by cavity. Any unknown cell anywhere in the conservative local window returns unavailable and ordinary exact preview. Outside-image clipping cannot create reward-bearing native cells and makes no physical-clearance claim.",
+    "Two immutable boolean payloads plus21 doubles are capped at64MiB before allocation. Bounded validation chunks and simultaneous mutable/immutable copies fit the declared136MiB preparation-workspace allowance, excluding caller inputs and process/runtime overhead. Queries use local boolean views with at most1M cells and an8MiB pessimistic reduction-workspace bound. Sampled external RSS remains necessary.",
+    "RewardUpperBound, reward signs, positive-tie exact preview, STOP-zero tie rule, conditional expansion and failure accounting are reused. Wrapper changes only module/version and snapshot counters. Worker, policy task and owned parent bytes remain unchanged; contract changes only version/source-module declaration. Same prior admissions, ten-plan seal and twenty source visits remain.",
+    "The first generated24-pass/two-failure receipt retains unchanged production. The two face controls supplied a NumPy scalar where the deliberately strict unchanged public query contract accepts built-in float/int; the staged test repair explicitly casts the scalar. This review does not claim the repaired controls ran."
+  ],
+  "limits": [
+    "The local window may still overlap unknown target coverage on every acquired action; actual pruning or speed is not inferred from source correctness.",
+    "The v1 global-cap negative remains preserved. No source-domain relabeling, threshold increase, reward/physics change, new data admission or new fit is authorized by this review.",
+    "One same-five fixed-order actual comparison remains required to measure activation, complete quality and all setup/query/replay costs after the owner's terminal generated controls."
+  ]
+}

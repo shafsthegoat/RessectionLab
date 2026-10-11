@@ -1,0 +1,62 @@
+{
+  "canonical_promotions": [
+    {
+      "source": "build/hybrid-public-bound-v2/stage/resectionlab/public_reward_window.py",
+      "target": "src/resectionlab/public_reward_window.py"
+    },
+    {
+      "source": "build/hybrid-public-bound-v2/tests/test_public_reward_window.py",
+      "target": "tests/test_public_reward_window.py"
+    }
+  ],
+  "control_interpretation": "24 passed/2 fixture scalar refusals in attempt01; only those two corrected cases passed in attempt02. Production unchanged across both. Actual ten-plan generated worker glue passed in attempt01. No acquired execution.",
+  "controls": [
+    {
+      "exit_code": 1,
+      "log_sha256": "37afbf254928f681566fef49297aa7bff5992628de6e5606bedf1f2e5d6e9e2b",
+      "path": "build/hybrid-public-bound-v2/controls-attempt-01/receipt.json",
+      "seconds": 12.050912249833345,
+      "sha256": "a3a80dc15ae7f74330925a36274bdaca76000f7a80d861db8d0b3c4f113cf122",
+      "source_unchanged": true
+    },
+    {
+      "exit_code": 0,
+      "log_sha256": "b8151e58ad322cbf5d95fbb255dd6e48b9cf8bcd421c7e9c5890e6561e8f9732",
+      "path": "build/hybrid-public-bound-v2/controls-attempt-02/receipt.json",
+      "seconds": 0.9942190831061453,
+      "sha256": "760acb5a58ee9951075f7e5842aaf97ceac9cb55a757ac6bccc927db64695c55",
+      "source_unchanged": true
+    }
+  ],
+  "prior_complete_negative": {
+    "all1118planningqueries": "public_index_workspace_limit",
+    "pruned": 0,
+    "receipt_sha256": "1b1c603c7c9a2c06e59ee0733055b0f23e84a9f4a583dfbd59892e3ffd0d574b",
+    "result_sha256": "2f07741f2605ca2033b3d78547447bb5cf345ea038db7a130d51caa356091707"
+  },
+  "production_files": {
+    "HANDOFF.txt": "bc44298e925234790b473caab4c4e52814a2bbc7ed02324a9b142f1f637fd953",
+    "batch_contract.py": "0b5951ad7da67caa664ca70e23f916eb0fd2200e8d0969cbd2f4d96b6ffb5457",
+    "bound_policy.py": "3093f2f99385ce430c63d36257414878129cab10c7c7c2ff04f472061109b789",
+    "fallback_policy.py": "01d9da472c6f53fe318f8dde9cbd6594aba2fbe7948b022dfde514a9788d427c",
+    "freeze-runtime.py": "0f151c043d9b9acac1449a1d4e68908edf42f67aeb78fd1ebe71821905f541d3",
+    "hybrid_proposal.py": "457945c4c35bdf61ab8388e30ec4be81e5e1aba3003ff98e4573ecb995c021b8",
+    "initial_inventory_worker.py": "a50eb73489aa41cdc7ccf60081f3eef7255fb5aee6c688db74ce7b60c6254653",
+    "patient_regression.py": "c8ce28c15339206157a5652afdb77a199619c98321d39aea5f1a9f62ce0c491f",
+    "patient_transfer.py": "358b223842b464e9b929a20f5a2cb0bffec7805aba114e08d0acfb30e3ea2d3a",
+    "policy_tasks.py": "353f48301bca23f38acc25a5816e4d67b24e7bc4c3a24cb52c8a17ab9684c863",
+    "run_corrected_controls.py": "a66084d37a8dc469e993d992a36b9b74c863901a0bc4f538c45beb441971d87c",
+    "run_generated_controls.py": "2e46d85ca9dadf964eb91f172b8c93b54c84489fd1b0118fd45b8bb8eb1b21af",
+    "run_owned.py": "312704cf0043fa44fba972fa23e8e122a620b909da382c6760c1d15dbd55d3f3",
+    "stage/resectionlab/public_reward_window.py": "dacd890094aa0601b565ae70ef08e5be1e24f8f71bad1edecc2f7fe9079e7032",
+    "tests/conftest.py": "3704e928b8aec820021325cfdbb5c80d9fc97101c8631b250f529c0c147197f9",
+    "tests/test_bound_policy.py": "556656101407776f1327949d341b44d8ccabb247a5c045bda12fc257895b2590",
+    "tests/test_public_reward_window.py": "4632d483579dea3642a0bbdc5d7d782f6ed3a358a77703881788523e8e4ce69c",
+    "tests/test_runtime_glue.py": "45d9b4128ca2387d04bbaef03869b049025532aec6846afcc007b1f9df663d1a"
+  },
+  "runtime_diff_sha256": "8b0403e36457f3f57d65b57278fac59be321908167e9235a19c5a814b76ae755",
+  "runtime_freeze": "pending root fixed HEAD and integration; no true release authored",
+  "schema": "public-local-window-source-ready-v2",
+  "source_patch_sha256": "e0303f3d91e3fc98893f4f7ca595ea2487ab9b89cd28cd01d8f568605df0b057",
+  "storage_total_bytes": 134217728
+}

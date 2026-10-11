@@ -1,0 +1,48 @@
+{
+  "automatic_retry": false,
+  "caps": {
+    "feature_count": 681,
+    "fits": 0,
+    "log_bytes": 2097152,
+    "native_previews": 40000,
+    "native_transitions": 480,
+    "output_bytes": 113246208,
+    "parent_seconds": 660,
+    "ridge_calls": 500,
+    "sampled_rss_bytes": 3221225472,
+    "source_visits": 20,
+    "supervision_bytes": 16777216,
+    "threads": 1,
+    "worker_seconds": 600
+  },
+  "cleanup_actions": [],
+  "cleanup_errors": [],
+  "elapsed_seconds": 190.4029619579669,
+  "exit_code": 0,
+  "memory_scope": "whole owned process peak only; no independent per-arm peak attribution",
+  "output_bytes": 15479548,
+  "planned_subjects": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045",
+    "ReMIND-050"
+  ],
+  "release_sha256": "1af5b0892797ecb355cc7026e6553b91f95edcc4e740de48c3335ae69b44b938",
+  "remaining_owned_pids": [],
+  "result_sha256": "f25b2d46aad3f969c9cbd4152988d4705d2472885f35124751356ff518dbb69f",
+  "result_status": "complete_five_TRAIN_public_bound_comparison",
+  "sampled_peak_rss_bytes": 743030784,
+  "samples": 907,
+  "sampling_limit": "transient peaks or descendants between samples may be missed",
+  "source_index": {
+    "path": "build/hybrid-public-bound-v2/source-index.json",
+    "sha256": "73faba042066839ced9464aba95bebd56b41a3701372d96eeade9d4200cdbeea"
+  },
+  "status": "complete",
+  "stop_reason": null,
+  "supervision_bytes_before_receipt": 2228,
+  "training_admitted": "none_frozen_ridge_inference_only",
+  "worker_pid": 19651,
+  "worker_termination_confirmed": true
+}
