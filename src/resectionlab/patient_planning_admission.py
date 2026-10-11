@@ -274,9 +274,9 @@ class PatientPlanningContext:
                   "patient_observation_source_or_horizon_changed")
 
 
-def make_patient_planning_task(case: NativeSpatialCase, *, cohort_bytes: bytes,
+def validate_patient_planning_source(case: NativeSpatialCase, *, cohort_bytes: bytes,
         source_binding: Mapping, qc_receipt: Mapping, protocol: Mapping):
-    """Construct the declared public task, returning (task, exact context).
+    """Validate the declared public source without constructing an action inventory.
 
 The source annotation-assisted target and support are disclosed inputs. The
 reference_target slot must already equal the nominal target; it never carries
@@ -494,6 +494,15 @@ Runtime budgets are bound here and enforced by the separately supervised caller.
     _need(all(type(search[k]) is int and search[k] > 0 for k in search), "positive_integer_search_budgets_required")
     _digest(plan["runtime_release_sha256"])
     _digest(plan["learning_protocol_hash"])
+    return (source, qc, plan, domain, member, lineage, source_hash, derived_occupancy, explicit_domain, post_start, post_inference, partial_domain, occupancy_learning, occupancy_inference)
+
+
+def make_patient_planning_task(case: NativeSpatialCase, *, cohort_bytes: bytes,
+        source_binding: Mapping, qc_receipt: Mapping, protocol: Mapping):
+    """Preserved eager task construction after the same source-only validation."""
+    (source, qc, plan, domain, member, lineage, source_hash, derived_occupancy, explicit_domain, post_start, post_inference, partial_domain, occupancy_learning, occupancy_inference) = validate_patient_planning_source(
+        case, cohort_bytes=cohort_bytes, source_binding=source_binding,
+        qc_receipt=qc_receipt, protocol=protocol)
     task = NativeSpatialTask(case, max_steps=plan["max_steps"])
     record = freeze_json({"version": VERSION, "scope": plan["scope"], "subject": source["subject"],
         **({} if lineage is None else {"initialization": SELECT_INITIALIZATION, "checkpoint_lineage": lineage}),

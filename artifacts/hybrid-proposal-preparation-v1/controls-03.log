@@ -1,0 +1,76 @@
+.............................F                                           [100%]
+=================================== FAILURES ===================================
+_____ test_actual_execute_four_generated_sources_and_all_three_strategies ______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-1100/test_actual_execute_four_gener0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10e5df3b0>
+
+    def test_actual_execute_four_generated_sources_and_all_three_strategies(tmp_path,monkeypatch):
+        module=staged();monkeypatch.setattr(admission,'validate_patient_planning_source',module.validate_patient_planning_source,raising=False)
+        monkeypatch.setattr(admission,'make_patient_planning_task',module.make_patient_planning_task)
+        p=generated.protocol();config=thaw_json(p['cohort_execution']['proposal_config'])
+        entries=[];inputs={}
+        for subject in SUBJECTS:
+            folder=tmp_path/subject;folder.mkdir();inputs[subject]=generated.fixture(folder,subject)
+            entries.append({'patient_id':subject,'path':str(inputs[subject]['public_manifest_path']),'sha256':inputs[subject]['public_manifest_sha256']})
+        index=tmp_path/'index.json';index.write_text(json.dumps({'cases':entries}))
+        old={'subjects':SUBJECTS,'occupancy_condition':admission.PARTIAL_DOMAIN_UNION_OCCUPANCY,
+            'post_exposure_condition':generated.EXPOSURE,'proposal_config':config,
+            'retention_reference':'generated metadata control; unused by greedy',
+            'public_index':{'path':str(index),'sha256':sha(index)}}
+        qualification={'scope':'post_exposure_initial_and_nominal_greedy','subjects':tuple(SUBJECTS),
+            'occupancy_condition':old['occupancy_condition'],'proposal_config':config,'max_steps':24,
+            'methods_executed':['observed_greedy'],'post_exposure_condition':old['post_exposure_condition'],
+            'greedy_seconds_per_case':60,'retention_reference':old['retention_reference'],'retention_applied':False}
+        limits={'max_steps':24,'max_optimizer_updates':0,'max_native_previews':40000,'max_policy_forwards':0,
+            'worker_seconds':300,'memory_bytes':3*1024**3,'threads':1,'search':{'max_calls':1,'beam_width':1,'seconds':60}}
+        prior={'release':old,'result':{'cases':[]}};steps=[]
+        for subject in SUBJECTS:
+            folder=tmp_path/subject/'baseline';folder.mkdir()
+            case,binding,qc,protocol=prepare_public_source(folder,{'limits':limits},'b'*64,None,lambda *a,**k:None,
+                **inputs[subject],learning_protocol_hash=semantic_digest(qualification),proposal_config=NominalCavityProposalConfig(**config),
+                public_target_context_variant=TARGET_CONTEXT,occupancy_condition=old['occupancy_condition'],post_exposure_condition=old['post_exposure_condition'])
+            task,ctx=module.make_patient_planning_task(case,cohort_bytes=inputs[subject]['cohort_bytes'],source_binding=binding,qc_receipt=qc,protocol=protocol)
+            actions,accounting=task.observed_greedy_search(seconds=60)
+            for action in actions:task.step(action)
+            audit=evaluate_native_spatial_episode(task);assert audit['accepted']
+            prior['result']['cases'].append({'patient_id':subject,'source_hash':case.source_hash,'context_hash':ctx.fingerprint})
+            prior['plan_'+subject]={'actions':list(actions),'accounting':thaw_json(freeze_json(accounting))}
+            prior['metrics_'+subject]=thaw_json(freeze_json(task.metrics()));steps.append(len(actions))
+        owner=types.SimpleNamespace(COHORT='manifests/experiments/remind-component-cohort-v1.json',
+            COHORT_SHA=sha(ROOT/'manifests/experiments/remind-component-cohort-v1.json'),INPUTS={'release':{'sha256':'b'*64}})
+        release={**old,'caps':CAPS,'cache_limits':CACHE_LIMITS,'gates':GATES,
+            'source_world_hashes':{r['patient_id']:r['source_hash'] for r in prior['result']['cases']}}
+        monkeypatch.setattr(worker,'metadata',lambda:(owner,prior,{'outcomes':{'generated':True}}))
+        monkeypatch.setattr(worker,'OUTPUT',tmp_path/'execute')
+        monkeypatch.setattr(worker,'STEPS',steps)
+        monkeypatch.setattr(worker.sys,'addaudithook',lambda hook:None) # audit-hook behavior is a separate boundary; cannot unregister it in pytest.
+        # PyTorch limits belong to isolated worker initialization; pytest already imported it.
+        import torch
+        monkeypatch.setattr(torch,'set_num_interop_threads',lambda n:None)
+>       result=worker.execute(release,'a'*64,{'blocked':0})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+build/hybrid-proposal-pilot-v1/test_worker_generated.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+build/hybrid-proposal-pilot-v1/initial_inventory_worker.py:115: in execute
+    with budget.phase('training_labels.'+subject):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+src/resectionlab/planning_budget.py:197: in phase
+    self._raise_failure()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <resectionlab.planning_budget.PlanningBudget object at 0x10e642d50>
+
+    def _raise_failure(self):
+        if self._failure is not None:
+>           raise PlanningBudgetViolation(self._failure, self.snapshot())
+E           resectionlab.planning_budget.PlanningBudgetViolation: unsupported_online_phase
+
+src/resectionlab/planning_budget.py:98: PlanningBudgetViolation
+=========================== short test summary info ============================
+FAILED build/hybrid-proposal-pilot-v1/test_worker_generated.py::test_actual_execute_four_generated_sources_and_all_three_strategies
+1 failed, 29 passed in 5.18s

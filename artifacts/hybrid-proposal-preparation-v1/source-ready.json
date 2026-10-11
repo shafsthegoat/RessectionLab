@@ -1,0 +1,26 @@
+{
+  "files": {
+    "batch_contract.py": "3892e1f243d56c3e562edbe2dc73172d83ab4c18ae6f5cc5197d7911636e0be9",
+    "initial_inventory_worker.py": "52a97956c68ee6c83d7de46ca779ed4f94722ac7d1c2b9715a8d2cd3e587140e",
+    "run_owned.py": "7b5e2df96c1eec916fa652949dd3c44c4def0481e390cffbdbc9369168ccb7a3",
+    "freeze-runtime.py": "84f24ca4582bd4ebc56f6f10d0b762f1b8bf13e28bc0ab2a51d98d6b28758b46",
+    "hybrid_proposal.py": "6c49169cab159dd23b18c2ed501d336a14f82c0254332e40060360610879b790",
+    "patient_sparse.py": "e2acbaf57c166735e2b7c15808a1eedaf65e1d66cba84d6abfd35c2f9c3dae99",
+    "test_hybrid_proposal.py": "85592a41098949529f34d94e00d65365686db690235fcbffab2f2d1ef66c57bb",
+    "test_source_admission.py": "9c37498bf4f32e2247d1c3211867d3aa84649bac2cc6a98999ab442ac4c28189",
+    "test_patient_sparse.py": "f63f4179c173a1892f71a82f8b7b62ad16b3ca0d80f9ef3524c0f53416622aca",
+    "test_worker_generated.py": "2bdae010f52363a381926aa04fe37e0a36c6c8e5dc301b8039439f5cb3d9f26a",
+    "stage/resectionlab/patient_planning_admission.py": "ab063b5b5a67b825009dbc9052befb6270ff39d8d5ce87ed555a1ab79394aed9",
+    "stage/tests/test_patient_source_validation.py": "be35242f484d5323c119a59e88f6393a5f6e64b4e659427a964a317d5c5c5e2c"
+  },
+  "scope": "source readiness only; no acquired arrays, fitting or clinical/transfer evaluation executed",
+  "controls": {
+    "controls-01.json": "11 pass; generated sparse seam",
+    "controls-02.json": "20 pass; source-only validation and preserved default outputs",
+    "controls-03.json": "29 pass/1 real unsupported phase-label failure, preserved",
+    "controls-04.json": "30 pass; complete generated execute flow",
+    "controls-05.json": "1 expanded actual execute control pass; complete12 replay plus later-source refusal"
+  },
+  "final_source_delta_after_controls_05": "two current_operation=None assignments after successful arm teardown; independent source-reviewed, no scientific or count change",
+  "portable_canonical_test_status": "root canonical execution pending"
+}

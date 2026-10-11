@@ -12,9 +12,10 @@ from dataclasses import replace
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = next(parent for parent in Path(__file__).resolve().parents
+            if (parent / "src/resectionlab/persistent_passive.py").is_file())
 SOURCE = (Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else
-          ROOT / "build/hybrid-observation-decision-v1/stage/resectionlab/persistent_passive.py")
+          ROOT / "src/resectionlab/persistent_passive.py")
 spec = importlib.util.spec_from_file_location("resectionlab.independent_passive_review", SOURCE)
 p = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = p

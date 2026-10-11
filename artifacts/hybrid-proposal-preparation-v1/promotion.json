@@ -1,0 +1,17 @@
+{
+  "production": [
+    {
+      "destination": "src/resectionlab/patient_planning_admission.py",
+      "before_sha256": "ab063b5b5a67b825009dbc9052befb6270ff39d8d5ce87ed555a1ab79394aed9",
+      "staged_source": "build/hybrid-proposal-pilot-v1/stage/resectionlab/patient_planning_admission.py",
+      "sha256": "ab063b5b5a67b825009dbc9052befb6270ff39d8d5ce87ed555a1ab79394aed9"
+    }
+  ],
+  "tests": [
+    {
+      "destination": "tests/test_patient_source_validation.py",
+      "staged_source": "build/hybrid-proposal-pilot-v1/stage/tests/test_patient_source_validation.py",
+      "sha256": "be35242f484d5323c119a59e88f6393a5f6e64b4e659427a964a317d5c5c5e2c"
+    }
+  ]
+}

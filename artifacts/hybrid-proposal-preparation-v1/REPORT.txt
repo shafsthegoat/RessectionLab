@@ -1,0 +1,72 @@
+One fixed public ridge proposal pilot — ready for root freeze, not executed
+
+Choice: one ridge priority fit (681 public features, lambda0.001), equal nonempty
+teacher-state weights, using the preserved29 TRAIN teacher decisions on
+002/015/018/045. No actor/critic architecture, RL objective or patient split
+changes. Labels are max(0, nominal immediate native reward) for certified legal
+raw proposals and0 for rejected proposals; zero is not a safety/empty label.
+
+Rationale from completed evidence: in the new-four greedy experiment, online
+construction/selection paid2592 previews/30.187s before replay; selection
+previews alone used22.169s of24.550s. Existing actor inference already paid full
+legality enumeration. Frozen gradients found motion-state interference, with
+gate/STOP norm only1.565% of ranking norm; removing gate terms changed no margin
+sign. This supports testing proposal priority before expensive verification,
+not another gate threshold or claim that representation failure is proved.
+Evidence: build/learned-deployment-cost-audit-v1/REPORT.txt and
+build/frozen-gradient-diagnostic-independent-v1/REPORT.txt.
+
+Three prospective methods: learned top8, same-feature deterministic sampled
+remaining-target proxy top8, exhaustive native greedy. All use identical raw
+catalog, permitted MRI/S/T/cavity plus separate coverage samples, physical
+entry/tip/tool/current-state geometry and fixed native tools/reward/h24. Raw
+ordering breaks ties. IDs/hashes are integrity metadata, never features. The
+81-point entry-to-tip stencil is lossy, not full shaft geometry; it reads full
+public native source samples and has broader bandwidth than the old CNN crop.
+Obstruction discovery is disabled. Unqueried is explicit NOT_QUERIED, not
+infeasible. STOP competes with verified positive rewards only; sparse STOP does
+not prove no useful unqueried action. Native certification/commit stays exact.
+
+The source-only canonical extraction runs every old source/QC/protocol guard
+without constructing an eager inventory. Default eager construction/context is
+unchanged. A separate explicit fixed-four pilot capability authorizes this
+ridge experiment; historical search-only receipts are not relabeled as neural
+training authority. No SELECT/EVAL/ventricular input or checkpoint is opened.
+
+Runtime:4 sequential training sources;12 fresh planning sources;12 fresh replay
+sources. All12 strategies seal before evaluator replay. A fresh32MiB/16384-entry
+exact capsule-cover cache applies before each planning constructor, identically
+in all arms; restored before authoritative replay/audit. Original complete
+teacher histories and exhaustive greedy results must match saved evidence.
+Training labels and coefficients stay local. All query, source-read/validation,
+feature/ranking, construction, failed/capped work, training, replay and audit
+costs are retained. Whole-process sampled peak only; no per-arm allocator claim.
+
+Declared ceiling:1 ridge solve,29 states/3480 rows,40000 previews,634 native
+transitions,28 source visits,192 linear score calls,600s worker/660s parent,
+3GiB sampled owned memory, one thread, no optimizer/neural forward/checkpoint.
+Expected wall time is not asserted; these are conservative ceilings.
+
+Fixed go/no-go: all4 cases/all3 methods complete; learned top8 loses no target
+or return and adds no outside-target/contact vs exhaustive (1e-7 tolerance),
+uses at most50% online previews and80% source-through-plan wall. It must also
+improve quality over heuristic8, or preserve quality at <=90% its online wall.
+A negative result is accepted evidence; keep heuristic if it wins. This is
+TRAIN feasibility and a single ordered timing observation, not generalization,
+clinical benefit, sustained speed, or total-training-cost matching. Original
+IL64 recovered outcomes remain historical quality references without invented
+fresh matched latency. Full training/replay costs are reported separately.
+
+Controls: source-ready.json pins each exact source and retained attempt.
+11 initial sparse controls;20 with source extraction;30 full generated controls
+PASS19.77s after preserving one genuine phase-name glue failure; an expanded
+complete-execute + later-source-refusal control passed17.17s. The final two
+bookkeeping clears are source-reviewed only. Independent generated information
+controls also passed14/3.40s. No acquired execution has occurred in this pilot.
+
+After root promotes the source validator and portable tests, freeze:
+.venv/bin/python -B build/hybrid-proposal-pilot-v1/freeze-runtime.py --head ROOT_FINAL_HEAD
+Root writes root-release.json from release-template.json with execution_released
+true and computes its actual byte SHA. Launch exactly once:
+.venv/bin/python -B build/hybrid-proposal-pilot-v1/run_owned.py --release build/hybrid-proposal-pilot-v1/root-release.json --release-sha256 ACTUAL_RELEASE_SHA
+Fresh attempt-01 and supervision paths are required; no automatic retry.

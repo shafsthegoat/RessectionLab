@@ -1631,3 +1631,13 @@ The previous entry's pending Case2 and passive software increments have since co
 ## October 11 — Generated registration changes a passive decision
 
 [The v2 increment](../artifacts/persistent-passive-decision-v2/INTEGRATION.md) maps a revealed generated registration to a public waypoint and conditionally offers a further passive advance. Unknown or unqualified estimates retain withdrawal; before acquisition they cannot alter public state or motion. Conservative endpoint uncertainty explicitly checks source-image bounds and axial reach in addition to capsule collision. All 113 canonical controls pass. Two independently reproduced state defects are corrected and retained in before/after evidence. V1 remains exact; no patient, force, learned-policy or desktop v2 admission is inferred.
+
+## October 11 — Fixed sparse proposal experiment prepared
+
+[The source-only admission extraction](../artifacts/hybrid-proposal-preparation-v1/INTEGRATION.md)
+preserves existing guards/default construction and passes 27 canonical tests.
+The one-ridge/top8 versus heuristic8 versus exhaustive comparison holds all
+four TRAIN patients, world/rewards and exact verification fixed. Online source,
+feature, ranking, query, training and replay costs remain explicit. The generated
+complete runner passes, retaining the original invalid phase-label failure.
+Actual fitting, quality gates and measured timing are pending; SELECT/EVAL stay closed.

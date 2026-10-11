@@ -1,0 +1,20 @@
+{
+  "exit_code": 0,
+  "timeout": false,
+  "seconds": 20.122847458,
+  "threads": 1,
+  "scope": "generated only",
+  "pins": {
+    "build/hybrid-proposal-pilot-v1/batch_contract.py": "3892e1f243d56c3e562edbe2dc73172d83ab4c18ae6f5cc5197d7911636e0be9",
+    "build/hybrid-proposal-pilot-v1/freeze-runtime.py": "84f24ca4582bd4ebc56f6f10d0b762f1b8bf13e28bc0ab2a51d98d6b28758b46",
+    "build/hybrid-proposal-pilot-v1/hybrid_proposal.py": "6c49169cab159dd23b18c2ed501d336a14f82c0254332e40060360610879b790",
+    "build/hybrid-proposal-pilot-v1/initial_inventory_worker.py": "b39385f19c289f632870763df36a31033906b5dc2b3321931fa9bdc804d85b94",
+    "build/hybrid-proposal-pilot-v1/patient_sparse.py": "e2acbaf57c166735e2b7c15808a1eedaf65e1d66cba84d6abfd35c2f9c3dae99",
+    "build/hybrid-proposal-pilot-v1/run_owned.py": "7b5e2df96c1eec916fa652949dd3c44c4def0481e390cffbdbc9369168ccb7a3",
+    "build/hybrid-proposal-pilot-v1/stage/resectionlab/patient_planning_admission.py": "ab063b5b5a67b825009dbc9052befb6270ff39d8d5ce87ed555a1ab79394aed9",
+    "build/hybrid-proposal-pilot-v1/test_hybrid_proposal.py": "85592a41098949529f34d94e00d65365686db690235fcbffab2f2d1ef66c57bb",
+    "build/hybrid-proposal-pilot-v1/test_patient_sparse.py": "f63f4179c173a1892f71a82f8b7b62ad16b3ca0d80f9ef3524c0f53416622aca",
+    "build/hybrid-proposal-pilot-v1/test_source_admission.py": "9c37498bf4f32e2247d1c3211867d3aa84649bac2cc6a98999ab442ac4c28189",
+    "build/hybrid-proposal-pilot-v1/test_worker_generated.py": "ffb67a95e03b7873f7d0e29d8dee0947ba2dade9a89fc361641f82935f219f97"
+  }
+}
