@@ -904,6 +904,12 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
     explicitly; reference anatomy and reward labels never fill missing values.
     Target intersections are cumulative intervals. Whole-cell obstacle and reward
     semantics remain unchanged, including the original whole-cell audit totals.
+
+    The explicit same-step parent exposure closure mode permits partial cutting
+    beside a fully cleared parent in this same executed capsule. The ordinary
+    whole-parent connectivity walk still roots all removals in prior free space;
+    all added leaves are independently contained before any remaining/free mask
+    update. This does not open exposure through partial parents or relax shafts.
     """
     from collections import deque
     from itertools import product
@@ -999,9 +1005,10 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         physical = None if voxel is None else tuple(float(v) for v in matrix[:3, :3] @ voxel + matrix[:3, 3])
         audit = NativeRemovalAudit(reason is None, () if reason is None else (reason,), action, voxel, physical,
             len(declared) * volume, len(accepted) * volume, len(declared - accepted) * volume,
-            case.semantic_hash, volume, count, checker_version=("independent-native-partial-evacuation-v1" if evacuation is not None else
+            case.semantic_hash, volume, count, checker_version=("independent-native-parent-closure-v1" if coverage is not None and coverage.same_step_parent_closure else
+                "independent-native-partial-evacuation-v1" if evacuation is not None else
                 "independent-native-sequence-v2" if coverage is None else "independent-native-cut-union-v1"),
-            interpretation=f"Source-grid prefix audit in {geometry_frame}: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated" + ("; declared idealized cumulative subcell cutting/evacuation" if coverage is not None else ""),
+            interpretation=f"Source-grid prefix audit in {geometry_frame}: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated" + ("; declared idealized cumulative subcell cutting/evacuation" if coverage is not None else "") + ("; same-capsule parent exposure closure" if coverage is not None and coverage.same_step_parent_closure else ""),
             complete_tool_checked=reason is None, frontier_checked=reason is None)
         if reason is None and evacuation is not None:
             from .core import freeze_json
@@ -1030,10 +1037,10 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         action_id = str(record.get("action_id", f"native-action-{count}"))
         if record.get("source_hash") != case.semantic_hash or tuple(record.get("source_shape", ())) != remaining.shape or not np.allclose(record.get("native_affine"), matrix):
             raise ValueError("Native history source identity or affine mismatch")
-        footprint = "fully_contained_connected_cells_v1" if coverage is None else "cumulative_affine_subcell_cut_union_v1"
+        footprint = "fully_contained_connected_cells_v1" if coverage is None else coverage.spec["mode"]
         if evacuation is not None:
-            from .independent_cut_union import EVACUATION_FOOTPRINT
-            footprint = EVACUATION_FOOTPRINT
+            from .independent_cut_union import EVACUATION_FOOTPRINT, PARENT_CLOSURE_EVACUATION_FOOTPRINT
+            footprint = PARENT_CLOSURE_EVACUATION_FOOTPRINT if coverage.same_step_parent_closure else EVACUATION_FOOTPRINT
         if record.get("native_footprint") != footprint:
             return report("unsupported_native_footprint_model", action_id)
         if coverage is not None:

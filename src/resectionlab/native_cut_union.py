@@ -17,6 +17,9 @@ from .core import semantic_digest, array_digest, immutable_array
 from .geometry import point_segment_distances
 
 MODE = "cumulative_affine_subcell_cut_union_v1"
+PARENT_CLOSURE_EXPOSURE = "same_step_parent_closure"
+PARENT_CLOSURE_MODE = "cumulative_affine_parent_closure_cut_union_v3"
+PARENT_CLOSURE_EVACUATED_FOOTPRINT = "cumulative_affine_parent_closure_evacuation_v3"
 MARGIN_MM = 1e-10
 MAX_WITNESS_ROWS_PER_PREVIEW = 8192
 ASSUMPTION = "idealized_exposed_active_subcell_cut_and_evacuation_not_validated_tissue_mechanics"
@@ -67,8 +70,12 @@ class CutUnionSpec:
     max_depth: int = 3
     max_tracked_cells: int = 4096
     max_leaf_tests_per_preview: int = 4194304
+    exposure_mode: str | None = None
 
     def __post_init__(self):
+        if self.exposure_mode is not None and (type(self.exposure_mode) is not str
+                or self.exposure_mode != PARENT_CLOSURE_EXPOSURE):
+            raise ValueError("Unsupported cumulative cutting exposure mode")
         for name, upper in (("max_depth", 3), ("max_tracked_cells", 4096),
                             ("max_leaf_tests_per_preview", 4194304)):
             value = getattr(self, name)
@@ -76,9 +83,10 @@ class CutUnionSpec:
                 raise ValueError("Invalid bounded cumulative cutting field: " + name)
 
     def to_record(self):
-        return {"mode": MODE, "max_depth": self.max_depth,
+        return {"mode": MODE if self.exposure_mode is None else PARENT_CLOSURE_MODE, "max_depth": self.max_depth,
                 "max_tracked_cells": self.max_tracked_cells,
-                "max_leaf_tests_per_preview": self.max_leaf_tests_per_preview}
+                "max_leaf_tests_per_preview": self.max_leaf_tests_per_preview,
+                **({"exposure_mode": self.exposure_mode} if self.exposure_mode is not None else {})}
 
     @property
     def leaf_count(self):
@@ -106,7 +114,7 @@ def _validated_ledger_items(spec, ledger):
 
 def _digest_ledger_items(spec, items):
     rows = [{"index": list(cell), "covered_bits_hex": format(mask, "x")} for cell, mask in items]
-    return semantic_digest({"mode": MODE, "spec": spec.to_record(), "cells": rows})
+    return semantic_digest({"mode": spec.to_record()["mode"], "spec": spec.to_record(), "cells": rows})
 
 
 def ledger_digest(spec, ledger):
@@ -209,12 +217,16 @@ class PreviewCutCoverage:
 
         direct_whole_cells is the existing contained-and-connected whole-cell
         set, so the fast path preserves that same-step connected-component rule.
-        Partial cells must be face-exposed before this interval's removals.
+        Legacy partial cells must be face-exposed before this interval's removals.
+        The explicit parent-closure mode also admits face exposure through fully
+        cleared parents from this same capsule, never through partial channels.
         """
         start, end = np.asarray(start, float), np.asarray(end, float)
         if (start.shape != (3,) or end.shape != (3,) or not np.isfinite(start).all()
                 or not np.isfinite(end).all() or not math.isfinite(radius) or radius <= MARGIN_MM):
             raise ValueError("Finite positive executed active capsule required")
+        if self.spec.exposure_mode == PARENT_CLOSURE_EXPOSURE:
+            return self._cover_parent_closure(occupied, direct_whole_cells, connected_free, start, end, radius)
         before = self.digest; before_leaves = self.new_leaf_count; before_tests = self.leaf_tests
         direct = {tuple(int(v) for v in cell) for cell in direct_whole_cells}
         rows = []
@@ -247,6 +259,71 @@ class PreviewCutCoverage:
             rows.append({"index": list(cell), "added_bits_hex": format(added, "x"), "proof": proof})
         return {"before_digest": before, "new_leaf_count": self.new_leaf_count-before_leaves,
                 "leaf_tests": self.leaf_tests-before_tests, "cells": rows}
+
+    def _cover_parent_closure(self, occupied, direct_whole_cells, connected_free, start, end, radius):
+        """One capsule's whole-parent exposure fixed point, never a leaf channel.
+
+        Existing contained-and-connected full parents may expose adjacent partial
+        parents in this same executed interval. A partial parent can propagate
+        exposure only if all its leaves become certified. The native caller still
+        independently applies the original whole-parent removal BFS and checks
+        the shaft against the prior cavity. No newly opened empty pocket is
+        flooded here, and no second capsule or future endpoint enters the proof.
+        """
+        before, before_leaves, before_tests = self.digest, self.new_leaf_count, self.leaf_tests
+        parents = {tuple(int(v) for v in value) for value in occupied}
+        direct = {tuple(int(v) for v in value) for value in direct_whole_cells}
+        if not direct <= parents:
+            raise ValueError("Direct whole-cell proof outside occupied candidate set")
+        records, completed, processed = [], set(), set()
+
+        def add(cell, bits, proof):
+            if not bits: return
+            if cell not in self.cells and len(self.cells) >= self.spec.max_tracked_cells:
+                raise CutUnionLimit("Tracked cell ceiling")
+            if self.witness_rows >= MAX_WITNESS_ROWS_PER_PREVIEW:
+                raise CutUnionLimit("Sparse witness row ceiling")
+            self.cells[cell] = self.cells.get(cell, 0) | bits
+            self.new_leaf_count += bits.bit_count(); self.witness_rows += 1
+            self.peak_tracked_cells = max(self.peak_tracked_cells, len(self.cells))
+            records.append({"index": list(cell), "added_bits_hex": format(bits, "x"), "proof": proof})
+
+        # This set already has the canonical whole-parent connected-component
+        # certificate. Install its union before testing any adjacent partial cell.
+        for cell in sorted(direct):
+            add(cell, self.spec.full_mask ^ self.cells.get(cell, 0), "whole_cell_capsule")
+            completed.add(cell); processed.add(cell)
+
+        def neighbors(cell):
+            for d in range(3):
+                for sign in (-1, 1):
+                    value = list(cell); value[d] += sign
+                    yield tuple(value)
+
+        queue = sorted(cell for cell in parents-direct
+                       if _exposed(cell, connected_free) or any(n in completed for n in neighbors(cell)))
+        queued = set(queue); position = 0
+        while position < len(queue):
+            cell = queue[position]; position += 1
+            if cell in processed: continue
+            processed.add(cell)
+            old = self.cells.get(cell, 0)
+            pending = [i for i in range(self.spec.leaf_count) if not (old >> i) & 1]
+            if self.leaf_tests+len(pending) > self.spec.max_leaf_tests_per_preview:
+                raise CutUnionLimit("Leaf proof work ceiling")
+            self.leaf_tests += len(pending)
+            centers = (self._leaf_centers[pending]+np.asarray(cell)) @ self.affine[:3, :3].T+self.affine[:3, 3]
+            corners = centers[:, None, :]+self._corners
+            contained = np.all(point_segment_distances(corners, start, end) <= radius-MARGIN_MM, axis=1)
+            bits = sum(1 << pending[i] for i in np.flatnonzero(contained))
+            add(cell, bits, "leaf_corners")
+            if self.cells.get(cell, 0) == self.spec.full_mask:
+                completed.add(cell)
+                for near in neighbors(cell):
+                    if near in parents and near not in queued and near not in processed:
+                        queue.append(near); queued.add(near)
+        return {"before_digest": before, "new_leaf_count": self.new_leaf_count-before_leaves,
+                "leaf_tests": self.leaf_tests-before_tests, "cells": records}
 
     def complete(self, occupied):
         return np.asarray([cell for cell in occupied

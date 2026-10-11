@@ -27,9 +27,10 @@ from scipy.ndimage import binary_fill_holes
 from .core import array_digest, freeze_json, semantic_digest, thaw_json
 from .post_exposure import PostExposureStart, preentry_tip
 from .native_cut_union import (CutUnionSpec, CutUnionLimit, PreviewCutCoverage,
-                               ledger_digest, MODE as CUT_UNION_MODE, ASSUMPTION as CUT_UNION_ASSUMPTION,
+                               ledger_digest, ASSUMPTION as CUT_UNION_ASSUMPTION,
                                EvacuatedVolumeSpec, evacuated_volume_snapshot,
-                               EVACUATED_FOOTPRINT, EVACUATED_VOLUME_SCOPE)
+                               EVACUATED_FOOTPRINT, EVACUATED_VOLUME_SCOPE,
+                               PARENT_CLOSURE_EVACUATED_FOOTPRINT)
 
 from .geometry import (
     AccessWindow, GeometryScene, ToolGeometry, ToolPose, capsule_voxel_indices,
@@ -596,8 +597,9 @@ class NativeResectionEngine:
                 self.config.affine, self.config.tissue_mask.shape, self.config.tissue_support_provenance,
                 self.config.voxel_volume_mm3, None if failure_tip is None else tuple(failure_tip), unknowns,
                 interaction_mode=interaction_mode,
-                native_footprint=(EVACUATED_FOOTPRINT if evacuation_before is not None else
-                    "fully_contained_connected_cells_v1" if coverage is None else CUT_UNION_MODE),
+                native_footprint=((PARENT_CLOSURE_EVACUATED_FOOTPRINT if self.config.cut_union.exposure_mode is not None
+                    else EVACUATED_FOOTPRINT) if evacuation_before is not None else
+                    "fully_contained_connected_cells_v1" if coverage is None else self.config.cut_union.to_record()["mode"]),
             )
             if post_record is not None:
                 object.__setattr__(result, "_post_exposure_record", freeze_json(post_record))

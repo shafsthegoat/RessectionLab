@@ -17,6 +17,9 @@ from .core import array_digest, semantic_digest
 
 
 MODE = "cumulative_affine_subcell_cut_union_v1"
+PARENT_CLOSURE_MODE = "cumulative_affine_parent_closure_cut_union_v3"
+PARENT_CLOSURE_EXPOSURE = "same_step_parent_closure"
+PARENT_CLOSURE_EVACUATION_FOOTPRINT = "cumulative_affine_parent_closure_evacuation_v3"
 EVACUATION_VERSION = "certified_evacuated_subcell_volume_v1"
 EVACUATION_FOOTPRINT = "cumulative_affine_subcell_evacuation_v2"
 EVACUATION_SCOPE = ("certified_subset_of_represented_source_support_under_idealized_evacuation;"
@@ -189,15 +192,19 @@ class IndependentCutCoverage:
 
     def __init__(self, spec, matrix, shape, *, evacuated_volume_spec=None,
                  target_fraction_lower=None, target_fraction_upper=None, tissue_mask=None):
-        if not isinstance(spec, dict) or set(spec) != {
-            "mode", "max_depth", "max_tracked_cells", "max_leaf_tests_per_preview"
-        } or spec["mode"] != MODE:
+        fields = {"mode", "max_depth", "max_tracked_cells", "max_leaf_tests_per_preview"}
+        legacy = isinstance(spec, dict) and set(spec) == fields and spec.get("mode") == MODE
+        closure = (isinstance(spec, dict) and set(spec) == fields | {"exposure_mode"}
+            and spec.get("mode") == PARENT_CLOSURE_MODE
+            and spec.get("exposure_mode") == PARENT_CLOSURE_EXPOSURE)
+        if not legacy and not closure:
             raise ValueError("Unsupported independent cut-union specification")
         for name, cap in (("max_depth", 3), ("max_tracked_cells", 4096),
                           ("max_leaf_tests_per_preview", 4194304)):
             if type(spec[name]) is not int or not 1 <= spec[name] <= cap:
                 raise ValueError("Invalid independent cut-union resource bound")
         self.spec = dict(spec)
+        self.same_step_parent_closure = closure
         self.matrix = np.array(matrix, dtype=float, copy=True)
         self.shape = tuple(shape)
         self.n = 2 ** spec["max_depth"]
@@ -216,7 +223,7 @@ class IndependentCutCoverage:
             raise ValueError("Target fraction arrays require an explicit evacuation declaration")
 
     def digest(self):
-        return semantic_digest({"mode": MODE, "spec": self.spec, "cells": [
+        return semantic_digest({"mode": self.spec["mode"], "spec": self.spec, "cells": [
             {"index": list(key), "covered_bits_hex": format(value, "x")}
             for key, value in sorted(self.ledger.items())]})
 
@@ -242,14 +249,14 @@ class IndependentCutCoverage:
         return np.all(np.sum((vertices - nearest) ** 2, axis=-1)
                       <= max(0., radius - 1e-10) ** 2)
 
-    def _exposed(self, key, free):
+    def _exposed(self, key, free, removed):
         for axis in range(3):
             for sign in (-1, 1):
                 neighbor = list(key)
                 neighbor[axis] += sign
                 if any(x < 0 or x >= size for x, size in zip(neighbor, self.shape)):
                     return True
-                if free[tuple(neighbor)]:
+                if free[tuple(neighbor)] or (self.same_step_parent_closure and tuple(neighbor) in removed):
                     return True
         return False
 
@@ -258,6 +265,11 @@ class IndependentCutCoverage:
 
         This private replay state can be discarded on any failed audit. No producer
         masks, candidate previews, contact flags, or future capsules add coverage.
+        The optional closure rule also accepts a face adjacent to a same-step
+        removed whole parent. The caller first verifies that removed parents
+        form components rooted in PRIOR connected free space. All their claimed
+        leaf additions and full coverage are checked here before state mutation;
+        partial parents, empty pockets and later steps cannot seed exposure.
         """
         if not isinstance(record, dict) or record.get("before_digest") != self.digest():
             raise ValueError("Missing or discontinuous cut-union microstep")
@@ -308,7 +320,7 @@ class IndependentCutCoverage:
                 if not self._inside(vertices, start, end, radius) or bits != self.full ^ old:
                     raise ValueError("Whole-cell capsule witness is unsupported")
             elif proof == "leaf_corners":
-                if not self._exposed(key, free):
+                if not self._exposed(key, free, removed):
                     raise ValueError("Partial cutting coverage was banked in buried tissue")
                 leaf_ids = [i for i in range(self.leaf_count) if (bits >> i) & 1]
                 individually_checked += len(leaf_ids)
