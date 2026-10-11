@@ -910,6 +910,9 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
     whole-parent connectivity walk still roots all removals in prior free space;
     all added leaves are independently contained before any remaining/free mask
     update. This does not open exposure through partial parents or relax shafts.
+    An explicit terminal-only schedule permits that closure exclusively on the
+    last element of the executed macro's microsteps; earlier intervals retain
+    legacy exposure, regardless of any witness-supplied terminal annotation.
     """
     from collections import deque
     from itertools import product
@@ -1005,10 +1008,11 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         physical = None if voxel is None else tuple(float(v) for v in matrix[:3, :3] @ voxel + matrix[:3, 3])
         audit = NativeRemovalAudit(reason is None, () if reason is None else (reason,), action, voxel, physical,
             len(declared) * volume, len(accepted) * volume, len(declared - accepted) * volume,
-            case.semantic_hash, volume, count, checker_version=("independent-native-parent-closure-v1" if coverage is not None and coverage.same_step_parent_closure else
+            case.semantic_hash, volume, count, checker_version=("independent-native-terminal-parent-closure-v1" if coverage is not None and coverage.terminal_parent_closure else
+                "independent-native-parent-closure-v1" if coverage is not None and coverage.same_step_parent_closure else
                 "independent-native-partial-evacuation-v1" if evacuation is not None else
                 "independent-native-sequence-v2" if coverage is None else "independent-native-cut-union-v1"),
-            interpretation=f"Source-grid prefix audit in {geometry_frame}: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated" + ("; declared idealized cumulative subcell cutting/evacuation" if coverage is not None else "") + ("; same-capsule parent exposure closure" if coverage is not None and coverage.same_step_parent_closure else ""),
+            interpretation=f"Source-grid prefix audit in {geometry_frame}: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated" + ("; declared idealized cumulative subcell cutting/evacuation" if coverage is not None else "") + ("; same-capsule parent exposure closure" if coverage is not None and coverage.same_step_parent_closure else "") + ("; closure restricted to final executed macro microstep" if coverage is not None and coverage.terminal_parent_closure else ""),
             complete_tool_checked=reason is None, frontier_checked=reason is None)
         if reason is None and evacuation is not None:
             from .core import freeze_json
@@ -1039,8 +1043,10 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
             raise ValueError("Native history source identity or affine mismatch")
         footprint = "fully_contained_connected_cells_v1" if coverage is None else coverage.spec["mode"]
         if evacuation is not None:
-            from .independent_cut_union import EVACUATION_FOOTPRINT, PARENT_CLOSURE_EVACUATION_FOOTPRINT
-            footprint = PARENT_CLOSURE_EVACUATION_FOOTPRINT if coverage.same_step_parent_closure else EVACUATION_FOOTPRINT
+            from .independent_cut_union import (EVACUATION_FOOTPRINT, PARENT_CLOSURE_EVACUATION_FOOTPRINT,
+                                                TERMINAL_PARENT_CLOSURE_EVACUATION_FOOTPRINT)
+            footprint = (TERMINAL_PARENT_CLOSURE_EVACUATION_FOOTPRINT if coverage.terminal_parent_closure else
+                PARENT_CLOSURE_EVACUATION_FOOTPRINT if coverage.same_step_parent_closure else EVACUATION_FOOTPRINT)
         if record.get("native_footprint") != footprint:
             return report("unsupported_native_footprint_model", action_id)
         if coverage is not None:
@@ -1123,7 +1129,9 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         microsteps = record.get("microsteps", ())
         if not microsteps:
             return report("native_action_missing_microsteps", action_id)
-        for micro in microsteps:
+        if coverage is not None and coverage.terminal_parent_closure and not isinstance(microsteps, (list, tuple)):
+            return report("native_terminal_closure_needs_concrete_microsteps", action_id)
+        for micro_index, micro in enumerate(microsteps):
             if cancelled is not None and cancelled():
                 return report("independent_validation_cancelled", action_id)
             tip_start = np.asarray(micro.get("tip_start_mm"), float)
@@ -1234,7 +1242,9 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
             if coverage is not None:
                 try:
                     coverage.step(micro.get("cut_union"), start, end, tip_radius,
-                                  mode, remaining, free, keys)
+                                  mode, remaining, free, keys,
+                                  terminal_microstep=(coverage.terminal_parent_closure
+                                      and micro_index == len(microsteps)-1))
                 except (ValueError, TypeError):
                     return report("native_cut_union_microstep_witness_invalid", action_id)
             elif "cut_union" in micro:

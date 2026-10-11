@@ -12,7 +12,8 @@ import pytest
 from resectionlab.core import thaw_json
 from resectionlab.geometry import AccessWindow, ToolGeometry, point_segment_distances
 from resectionlab.native_cut_union import (CutUnionSpec, EvacuatedVolumeSpec, PreviewCutCoverage,
-    MODE, PARENT_CLOSURE_EXPOSURE, PARENT_CLOSURE_MODE, PARENT_CLOSURE_EVACUATED_FOOTPRINT)
+    MODE, PARENT_CLOSURE_EXPOSURE, PARENT_CLOSURE_MODE, PARENT_CLOSURE_EVACUATED_FOOTPRINT,
+    TERMINAL_CLOSURE_SCHEDULE, TERMINAL_CLOSURE_MODE, TERMINAL_CLOSURE_EVACUATED_FOOTPRINT)
 from resectionlab.native_resection import NativeResectionConfig, NativeResectionEngine
 
 
@@ -166,6 +167,88 @@ def test_disabled_mode_matches_committed_partial_volume_predecessor(immutable):
     assert cfg.fingerprint == previous.fingerprint
     a, b = NativeResectionEngine(cfg, immutable_state=immutable), old.NativeResectionEngine(previous, immutable_state=immutable)
     for z in (3.1, 3.35, 7.):
+        aa, bb = cut(a, z), cut(b, z)
+        assert aa.feasible == bb.feasible and aa.reason == bb.reason
+        assert aa.cut_union_attempt == bb.cut_union_attempt
+        assert a.history == b.history and a.metrics() == b.metrics() and a.state_hash == b.state_hash
+
+
+def test_terminal_schedule_keeps_every_intermediate_cut_legacy_and_replays(monkeypatch):
+    base = config(False)
+    terminal = replace(base, cut_union=CutUnionSpec(exposure_mode=PARENT_CLOSURE_EXPOSURE,
+        closure_schedule=TERMINAL_CLOSURE_SCHEDULE))
+    original = PreviewCutCoverage._cover_parent_closure; calls = []
+    def observed(self, occupied, direct, free, start, end, radius):
+        calls.append(tuple(end))
+        return original(self, occupied, direct, free, start, end, radius)
+    monkeypatch.setattr(PreviewCutCoverage, '_cover_parent_closure', observed)
+    old, new = NativeResectionEngine(base), NativeResectionEngine(terminal)
+    a, b = cut(old, 4.1), cut(new, 4.1)
+    assert a.feasible and b.feasible and calls == [(3., 3., 4.1)]
+    assert b.native_footprint == TERMINAL_CLOSURE_EVACUATED_FOOTPRINT
+    assert len(a.microsteps) == len(b.microsteps) > 2
+    for prior, current in zip(a.microsteps[:-1], b.microsteps[:-1]):
+        x, y = prior.to_dict(), current.to_dict()
+        # Model-bound digests legitimately differ; every geometric witness and
+        # recorded amount of actual work before the last interval is identical.
+        for record in (x, y):
+            record['cut_union'].pop('before_digest'); record['cut_union'].pop('after_digest')
+        assert x == y
+    assert b.evacuated_volume['after']['evacuated_source_volume_mm3'] > a.evacuated_volume['after']['evacuated_source_volume_mm3']
+    assert a.removed_indices_native.tolist() == b.removed_indices_native.tolist()
+    replay = NativeResectionEngine(terminal); cut(replay, 4.1)
+    assert replay.history == new.history and replay.state_hash == new.state_hash
+
+
+def test_terminal_flag_alone_controls_only_the_explicit_schedule():
+    cfg = config(); free = np.zeros(cfg.tissue_mask.shape, bool); free[:, :, :3] = True
+    cells = np.asarray([[3, 3, 3], [3, 3, 4]], dtype=np.int64)
+    start, end = np.array([3, 3, -1.5]), np.array([3, 3, 3.1])
+    late = replace(cfg.cut_union, closure_schedule=TERMINAL_CLOSURE_SCHEDULE)
+    records = []
+    for flag in (False, True):
+        coverage = PreviewCutCoverage(late, {}, cfg.affine)
+        record = coverage.cover(cells, cells[:1], free, start, end, 1., terminal_microstep=flag)
+        records.append(record)
+        assert ((3, 3, 4) in coverage.cells) == flag
+    assert records[0]['new_leaf_count'] == 512 < records[1]['new_leaf_count']
+    with pytest.raises(ValueError):
+        PreviewCutCoverage(late, {}, cfg.affine).cover(cells, cells[:1], free, start, end, 1., terminal_microstep=1)
+    # Explicit all-capsule mode remains all-capsule even at an intermediate step.
+    every = PreviewCutCoverage(cfg.cut_union, {}, cfg.affine)
+    every.cover(cells, cells[:1], free, start, end, 1., terminal_microstep=False)
+    assert (3, 3, 4) in every.cells
+
+
+def test_terminal_schedule_is_separately_declared_without_changing_caps():
+    original = CutUnionSpec(exposure_mode=PARENT_CLOSURE_EXPOSURE)
+    terminal = replace(original, closure_schedule=TERMINAL_CLOSURE_SCHEDULE)
+    record = terminal.to_record()
+    assert record['mode'] == TERMINAL_CLOSURE_MODE and record['closure_schedule'] == TERMINAL_CLOSURE_SCHEDULE
+    assert 'closure_schedule' not in original.to_record() and 'closure_schedule' not in CutUnionSpec().to_record()
+    for key in ('max_depth', 'max_tracked_cells', 'max_leaf_tests_per_preview'):
+        assert terminal.to_record()[key] == original.to_record()[key]
+    for kwargs in ({'closure_schedule': TERMINAL_CLOSURE_SCHEDULE},
+            {'exposure_mode': PARENT_CLOSURE_EXPOSURE, 'closure_schedule': True},
+            {'exposure_mode': PARENT_CLOSURE_EXPOSURE, 'closure_schedule': 'target_only'}):
+        with pytest.raises(ValueError): CutUnionSpec(**kwargs)
+
+
+def test_unscheduled_all_capsule_history_matches_exact_committed_v3():
+    root = Path(__file__).resolve().parents[1]
+    source = subprocess.run(['git', 'show', 'bc78bbb8819b3807def161ebc925c1ca99fc317a:src/resectionlab/native_resection.py'],
+        cwd=root, check=True, capture_output=True).stdout
+    assert hashlib.sha256(source).hexdigest() == 'ec627fbe2d28029a9ee6cb492044c1e0426f30cc3f96395fcc0ea2fe7e646b44'
+    old = ModuleType('resectionlab._before_terminal_closure'); old.__package__ = 'resectionlab'
+    sys.modules[old.__name__] = old
+    exec(compile(source, '<committed all-capsule engine>', 'exec'), old.__dict__)
+    cfg = config()
+    previous = old.NativeResectionConfig(cfg.tissue_mask, cfg.target_labels, cfg.affine,
+        cfg.access, cfg.tools, cfg.source_hash, cfg.tissue_support_provenance,
+        max_tip_step_mm=cfg.max_tip_step_mm, cut_union=cfg.cut_union, evacuated_volume=cfg.evacuated_volume)
+    assert cfg.fingerprint == previous.fingerprint
+    a, b = NativeResectionEngine(cfg), old.NativeResectionEngine(previous)
+    for z in (3.1, 4.1):
         aa, bb = cut(a, z), cut(b, z)
         assert aa.feasible == bb.feasible and aa.reason == bb.reason
         assert aa.cut_union_attempt == bb.cut_union_attempt

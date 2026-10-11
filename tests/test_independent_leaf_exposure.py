@@ -8,13 +8,16 @@ import pytest
 from resectionlab.core import semantic_digest
 from resectionlab.evaluation import independent_check_native_history
 from resectionlab.independent_cut_union import (
-    IndependentCutCoverage, MODE, PARENT_CLOSURE_MODE, PARENT_CLOSURE_EXPOSURE)
+    IndependentCutCoverage, MODE, PARENT_CLOSURE_MODE, PARENT_CLOSURE_EXPOSURE,
+    TERMINAL_PARENT_CLOSURE_MODE, TERMINAL_PARENT_CLOSURE_SCHEDULE)
 
 
 A, B = (2, 2, 2), (2, 2, 3)
 BASE = {"mode": MODE, "max_depth": 1, "max_tracked_cells": 8,
         "max_leaf_tests_per_preview": 1000}
 DECLARED = {**BASE, "mode": PARENT_CLOSURE_MODE, "exposure_mode": PARENT_CLOSURE_EXPOSURE}
+TERMINAL_DECLARED = {**DECLARED, "mode": TERMINAL_PARENT_CLOSURE_MODE,
+                     "closure_schedule": TERMINAL_PARENT_CLOSURE_SCHEDULE}
 
 
 def digest(spec, cells):
@@ -37,9 +40,9 @@ def low_level(spec=DECLARED):
     return c, material, free
 
 
-def apply(c, material, free, record, *, removed=(A,), radius=.8):
+def apply(c, material, free, record, *, removed=(A,), radius=.8, terminal_microstep=False):
     c.step(record, np.array([2., 2., 0.]), np.array([2., 2., 2.9]), radius,
-           'aspirate', material, free, set(removed))
+           'aspirate', material, free, set(removed), terminal_microstep=terminal_microstep)
 
 
 @pytest.mark.parametrize('reverse', [False, True])
@@ -158,4 +161,85 @@ def test_existing_parent_connectivity_gate_still_rejects_a_buried_removal_compon
     row['microsteps'] = [terminal]
     result = audit(cfg, case, history, tissue_mask=np.ones(cfg.tissue_mask.shape, bool))
     assert not result.feasible and result.failures == ('disconnected_native_removal',)
+    assert result.certified_evacuated_geometry is None
+
+
+@pytest.mark.parametrize('reverse', [False, True])
+def test_terminal_schedule_accepts_final_closure_and_refuses_early_claimed_terminal(reverse):
+    early, material, free = low_level(TERMINAL_DECLARED)
+    record = proof(TERMINAL_DECLARED, reverse=reverse)
+    record['terminal_microstep'] = True  # Untrusted annotation cannot enable it.
+    with pytest.raises(ValueError, match='buried'):
+        apply(early, material, free, record)
+    final, material, free = low_level(TERMINAL_DECLARED)
+    apply(final, material, free, record, terminal_microstep=True)
+    assert final.ledger == {B: 85}
+    for bad in (1, None, 'true'):
+        c, material, free = low_level(TERMINAL_DECLARED)
+        with pytest.raises(ValueError, match='auditor-owned'):
+            apply(c, material, free, record, terminal_microstep=bad)
+
+
+def test_terminal_schedule_keeps_ordinary_early_exposure_and_exact_witness_cap():
+    c, material, free = low_level(TERMINAL_DECLARED)
+    free[A] = True; material[A] = False
+    record = proof(TERMINAL_DECLARED)
+    record['cells'] = record['cells'][1:]; record['new_leaf_count'] = 4
+    apply(c, material, free, record, removed=())
+    assert c.ledger == {B: 85}
+    c, material, free = low_level(TERMINAL_DECLARED)
+    c.preview_rows = 8191  # Two additional real witness rows exceed 8192.
+    with pytest.raises(ValueError, match='witness row cap'):
+        apply(c, material, free, proof(TERMINAL_DECLARED), terminal_microstep=True)
+
+
+@pytest.mark.parametrize('change', [
+    {'mode': PARENT_CLOSURE_MODE}, {'exposure_mode': None},
+    {'closure_schedule': None}, {'closure_schedule': 'every_microstep'},
+    {'max_leaf_tests_per_preview': 4194305}])
+def test_terminal_schedule_requires_its_exact_bounded_declaration(change):
+    with pytest.raises(ValueError):
+        IndependentCutCoverage({**TERMINAL_DECLARED, **change}, np.eye(4), (5, 5, 6))
+
+
+@pytest.fixture(scope='module')
+def terminal_history(histories):
+    from dataclasses import replace
+    from resectionlab.native_cut_union import CutUnionSpec
+    from resectionlab.native_resection import NativeResectionEngine
+    old, case, _, _ = histories[1]
+    cfg = replace(old, cut_union=CutUnionSpec(exposure_mode=PARENT_CLOSURE_EXPOSURE,
+                                             closure_schedule=TERMINAL_PARENT_CLOSURE_SCHEDULE))
+    engine = NativeResectionEngine(cfg)
+    result = engine.execute_stroke('generated-closure', [2., 2., 2.25], entry_mm=[2., 2., .5])
+    assert result.feasible and engine._cut_union_ledger.get(B, 0)
+    return cfg, case, copy.deepcopy(engine.history)
+
+
+def test_actual_terminal_history_checks_all_geometry_and_uses_no_witness_flag(terminal_history):
+    cfg, case, history = terminal_history
+    result = audit(cfg, case, history)
+    assert result.feasible and result.complete_tool_checked and result.frontier_checked
+    assert result.checker_version == 'independent-native-terminal-parent-closure-v1'
+    assert result.contained_source_tissue_volume_mm3 == 1.
+    assert audit(cfg, case, []).feasible
+
+
+def test_appending_an_interval_makes_previous_closure_early_despite_forged_metadata(terminal_history):
+    cfg, case, saved = terminal_history
+    history = copy.deepcopy(saved)
+    row = history[0]
+    last = row['microsteps'][-1]
+    row['terminal_microstep_index'] = len(row['microsteps'])-1
+    last['terminal_microstep'] = True
+    trailing = copy.deepcopy(last)
+    trailing['tip_start_mm'] = trailing['tip_end_mm']
+    trailing['active_stroke_start_mm'] = [2., 2., .25]
+    trailing['removed_indices_native'] = []
+    stable = last['cut_union']['after_digest']
+    trailing['cut_union'] = {'before_digest': stable, 'after_digest': stable,
+                            'new_leaf_count': 0, 'leaf_tests': 0, 'cells': []}
+    row['microsteps'].append(trailing)
+    result = audit(cfg, case, history)
+    assert not result.feasible and result.failures == ('native_cut_union_microstep_witness_invalid',)
     assert result.certified_evacuated_geometry is None

@@ -20,6 +20,9 @@ MODE = "cumulative_affine_subcell_cut_union_v1"
 PARENT_CLOSURE_EXPOSURE = "same_step_parent_closure"
 PARENT_CLOSURE_MODE = "cumulative_affine_parent_closure_cut_union_v3"
 PARENT_CLOSURE_EVACUATED_FOOTPRINT = "cumulative_affine_parent_closure_evacuation_v3"
+TERMINAL_CLOSURE_SCHEDULE = "terminal_microstep_only"
+TERMINAL_CLOSURE_MODE = "cumulative_affine_terminal_parent_closure_cut_union_v4"
+TERMINAL_CLOSURE_EVACUATED_FOOTPRINT = "cumulative_affine_terminal_parent_closure_evacuation_v4"
 MARGIN_MM = 1e-10
 MAX_WITNESS_ROWS_PER_PREVIEW = 8192
 ASSUMPTION = "idealized_exposed_active_subcell_cut_and_evacuation_not_validated_tissue_mechanics"
@@ -71,11 +74,16 @@ class CutUnionSpec:
     max_tracked_cells: int = 4096
     max_leaf_tests_per_preview: int = 4194304
     exposure_mode: str | None = None
+    closure_schedule: str | None = None
 
     def __post_init__(self):
         if self.exposure_mode is not None and (type(self.exposure_mode) is not str
                 or self.exposure_mode != PARENT_CLOSURE_EXPOSURE):
             raise ValueError("Unsupported cumulative cutting exposure mode")
+        if self.closure_schedule is not None and (type(self.closure_schedule) is not str
+                or self.closure_schedule != TERMINAL_CLOSURE_SCHEDULE
+                or self.exposure_mode != PARENT_CLOSURE_EXPOSURE):
+            raise ValueError("Terminal closure schedule requires explicit parent-closure exposure")
         for name, upper in (("max_depth", 3), ("max_tracked_cells", 4096),
                             ("max_leaf_tests_per_preview", 4194304)):
             value = getattr(self, name)
@@ -83,10 +91,12 @@ class CutUnionSpec:
                 raise ValueError("Invalid bounded cumulative cutting field: " + name)
 
     def to_record(self):
-        return {"mode": MODE if self.exposure_mode is None else PARENT_CLOSURE_MODE, "max_depth": self.max_depth,
+        return {"mode": (TERMINAL_CLOSURE_MODE if self.closure_schedule is not None else
+                         MODE if self.exposure_mode is None else PARENT_CLOSURE_MODE), "max_depth": self.max_depth,
                 "max_tracked_cells": self.max_tracked_cells,
                 "max_leaf_tests_per_preview": self.max_leaf_tests_per_preview,
-                **({"exposure_mode": self.exposure_mode} if self.exposure_mode is not None else {})}
+                **({"exposure_mode": self.exposure_mode} if self.exposure_mode is not None else {}),
+                **({"closure_schedule": self.closure_schedule} if self.closure_schedule is not None else {})}
 
     @property
     def leaf_count(self):
@@ -212,7 +222,8 @@ class PreviewCutCoverage:
             self._cached_digest_key = key
         return self._cached_digest_value
 
-    def cover(self, occupied, direct_whole_cells, connected_free, start, end, radius):
+    def cover(self, occupied, direct_whole_cells, connected_free, start, end, radius,
+              *, terminal_microstep=False):
         """Certify only NEW leaves in this one capsule, after its shaft passed.
 
         direct_whole_cells is the existing contained-and-connected whole-cell
@@ -220,12 +231,17 @@ class PreviewCutCoverage:
         Legacy partial cells must be face-exposed before this interval's removals.
         The explicit parent-closure mode also admits face exposure through fully
         cleared parents from this same capsule, never through partial channels.
+        An optional terminal schedule uses that closure only when the native
+        caller identifies the actual final microstep of the prescribed stroke.
         """
         start, end = np.asarray(start, float), np.asarray(end, float)
         if (start.shape != (3,) or end.shape != (3,) or not np.isfinite(start).all()
                 or not np.isfinite(end).all() or not math.isfinite(radius) or radius <= MARGIN_MM):
             raise ValueError("Finite positive executed active capsule required")
-        if self.spec.exposure_mode == PARENT_CLOSURE_EXPOSURE:
+        if type(terminal_microstep) is not bool:
+            raise ValueError("Native terminal microstep context must be an explicit bool")
+        if (self.spec.exposure_mode == PARENT_CLOSURE_EXPOSURE
+                and (self.spec.closure_schedule is None or terminal_microstep)):
             return self._cover_parent_closure(occupied, direct_whole_cells, connected_free, start, end, radius)
         before = self.digest; before_leaves = self.new_leaf_count; before_tests = self.leaf_tests
         direct = {tuple(int(v) for v in cell) for cell in direct_whole_cells}

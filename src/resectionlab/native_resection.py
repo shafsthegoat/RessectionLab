@@ -30,7 +30,7 @@ from .native_cut_union import (CutUnionSpec, CutUnionLimit, PreviewCutCoverage,
                                ledger_digest, ASSUMPTION as CUT_UNION_ASSUMPTION,
                                EvacuatedVolumeSpec, evacuated_volume_snapshot,
                                EVACUATED_FOOTPRINT, EVACUATED_VOLUME_SCOPE,
-                               PARENT_CLOSURE_EVACUATED_FOOTPRINT)
+                               PARENT_CLOSURE_EVACUATED_FOOTPRINT, TERMINAL_CLOSURE_EVACUATED_FOOTPRINT)
 
 from .geometry import (
     AccessWindow, GeometryScene, ToolGeometry, ToolPose, capsule_voxel_indices,
@@ -597,7 +597,8 @@ class NativeResectionEngine:
                 self.config.affine, self.config.tissue_mask.shape, self.config.tissue_support_provenance,
                 self.config.voxel_volume_mm3, None if failure_tip is None else tuple(failure_tip), unknowns,
                 interaction_mode=interaction_mode,
-                native_footprint=((PARENT_CLOSURE_EVACUATED_FOOTPRINT if self.config.cut_union.exposure_mode is not None
+                native_footprint=((TERMINAL_CLOSURE_EVACUATED_FOOTPRINT if self.config.cut_union.closure_schedule is not None
+                    else PARENT_CLOSURE_EVACUATED_FOOTPRINT if self.config.cut_union.exposure_mode is not None
                     else EVACUATED_FOOTPRINT) if evacuation_before is not None else
                     "fully_contained_connected_cells_v1" if coverage is None else self.config.cut_union.to_record()["mode"]),
             )
@@ -754,7 +755,8 @@ class NativeResectionEngine:
                     try:
                         direct = _connected_surface_cells(fully_inside, connected_free)
                         coverage_step = coverage.cover(occupied, direct, connected_free,
-                                                       active_start, active_end, tool.tip_radius_mm)
+                            active_start, active_end, tool.tip_radius_mm,
+                            **({"terminal_microstep": step == number} if self.config.cut_union.closure_schedule is not None else {}))
                     except CutUnionLimit:
                         return finish(False, "CUMULATIVE_CUT_COVERAGE_BUDGET", current)
                     eligible = _connected_surface_cells(coverage.complete(occupied), connected_free)

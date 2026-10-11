@@ -20,6 +20,9 @@ MODE = "cumulative_affine_subcell_cut_union_v1"
 PARENT_CLOSURE_MODE = "cumulative_affine_parent_closure_cut_union_v3"
 PARENT_CLOSURE_EXPOSURE = "same_step_parent_closure"
 PARENT_CLOSURE_EVACUATION_FOOTPRINT = "cumulative_affine_parent_closure_evacuation_v3"
+TERMINAL_PARENT_CLOSURE_MODE = "cumulative_affine_terminal_parent_closure_cut_union_v4"
+TERMINAL_PARENT_CLOSURE_SCHEDULE = "terminal_microstep_only"
+TERMINAL_PARENT_CLOSURE_EVACUATION_FOOTPRINT = "cumulative_affine_terminal_parent_closure_evacuation_v4"
 EVACUATION_VERSION = "certified_evacuated_subcell_volume_v1"
 EVACUATION_FOOTPRINT = "cumulative_affine_subcell_evacuation_v2"
 EVACUATION_SCOPE = ("certified_subset_of_represented_source_support_under_idealized_evacuation;"
@@ -197,14 +200,19 @@ class IndependentCutCoverage:
         closure = (isinstance(spec, dict) and set(spec) == fields | {"exposure_mode"}
             and spec.get("mode") == PARENT_CLOSURE_MODE
             and spec.get("exposure_mode") == PARENT_CLOSURE_EXPOSURE)
-        if not legacy and not closure:
+        terminal = (isinstance(spec, dict) and set(spec) == fields | {"exposure_mode", "closure_schedule"}
+            and spec.get("mode") == TERMINAL_PARENT_CLOSURE_MODE
+            and spec.get("exposure_mode") == PARENT_CLOSURE_EXPOSURE
+            and spec.get("closure_schedule") == TERMINAL_PARENT_CLOSURE_SCHEDULE)
+        if not legacy and not closure and not terminal:
             raise ValueError("Unsupported independent cut-union specification")
         for name, cap in (("max_depth", 3), ("max_tracked_cells", 4096),
                           ("max_leaf_tests_per_preview", 4194304)):
             if type(spec[name]) is not int or not 1 <= spec[name] <= cap:
                 raise ValueError("Invalid independent cut-union resource bound")
         self.spec = dict(spec)
-        self.same_step_parent_closure = closure
+        self.same_step_parent_closure = closure or terminal
+        self.terminal_parent_closure = terminal
         self.matrix = np.array(matrix, dtype=float, copy=True)
         self.shape = tuple(shape)
         self.n = 2 ** spec["max_depth"]
@@ -249,18 +257,18 @@ class IndependentCutCoverage:
         return np.all(np.sum((vertices - nearest) ** 2, axis=-1)
                       <= max(0., radius - 1e-10) ** 2)
 
-    def _exposed(self, key, free, removed):
+    def _exposed(self, key, free, removed, allow_same_step_removal):
         for axis in range(3):
             for sign in (-1, 1):
                 neighbor = list(key)
                 neighbor[axis] += sign
                 if any(x < 0 or x >= size for x, size in zip(neighbor, self.shape)):
                     return True
-                if free[tuple(neighbor)] or (self.same_step_parent_closure and tuple(neighbor) in removed):
+                if free[tuple(neighbor)] or (allow_same_step_removal and tuple(neighbor) in removed):
                     return True
         return False
 
-    def step(self, record, start, end, radius, mode, remaining, free, removed):
+    def step(self, record, start, end, radius, mode, remaining, free, removed, *, terminal_microstep=False):
         """Verify additions, then removal completeness; caller checks shaft first.
 
         This private replay state can be discarded on any failed audit. No producer
@@ -270,7 +278,13 @@ class IndependentCutCoverage:
         form components rooted in PRIOR connected free space. All their claimed
         leaf additions and full coverage are checked here before state mutation;
         partial parents, empty pockets and later steps cannot seed exposure.
+        For the terminal-only declaration, the auditor supplies terminal status
+        from the concrete macro history index, never a claimed witness flag.
         """
+        if self.terminal_parent_closure and type(terminal_microstep) is not bool:
+            raise ValueError("Terminal closure needs auditor-owned microstep position")
+        allow_same_step_removal = (self.same_step_parent_closure
+            and (not self.terminal_parent_closure or terminal_microstep))
         if not isinstance(record, dict) or record.get("before_digest") != self.digest():
             raise ValueError("Missing or discontinuous cut-union microstep")
         cells = record.get("cells")
@@ -320,7 +334,7 @@ class IndependentCutCoverage:
                 if not self._inside(vertices, start, end, radius) or bits != self.full ^ old:
                     raise ValueError("Whole-cell capsule witness is unsupported")
             elif proof == "leaf_corners":
-                if not self._exposed(key, free, removed):
+                if not self._exposed(key, free, removed, allow_same_step_removal):
                     raise ValueError("Partial cutting coverage was banked in buried tissue")
                 leaf_ids = [i for i in range(self.leaf_count) if (bits >> i) & 1]
                 individually_checked += len(leaf_ids)
