@@ -37,7 +37,9 @@ not verified physical occupancy or neurological injury evidence. Existing patien
 roles remain fixed. No held-out patient or clinical benefit has been demonstrated.
 See the [active execution priority](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#cross-patient-experiment-priority-october-10).
 
-Current integrated results, October 10:
+Current integrated results, October 11:
+
+- **Independent information-boundary regression is executable:** [the integrated controls](artifacts/hybrid-information-boundary-v1/INTEGRATION.md) preserve public observations, ordered candidates, native preview/cache results and nominal rewards under private-target swaps. Negative controls detect private reward feedback and annotation-dependent proposals hidden only at the image plane. All-method plan sealing precedes private evaluation. All 47 adjacent controls pass. This qualifies existing generated APIs; the raw shortlisting and quantitative observation extensions remain pending. No new learned or clinical improvement is claimed.
 
 - **Generated tools can now retain their poses between actions:** the opt-in [persistent passive task](docs/persistent-passive-episode.md) runs on the shared native engine. Two full tools occupy a declared pre-existing generated cavity, preserve their poses through status acquisition, and separately return to recorded access poses before STOP. The paired proof exports five actions/six frames with unchanged tissue/contact state, and all 115 focused native/geometry/desktop/passive tests pass. This is a software continuity control: status does not yet change decisions, the second tool starts preset, pair clearance is checked only by the primary checker, and desktop/patient/search/learned-policy admission is pending. No physical-fidelity or model-performance gain is inferred.
 

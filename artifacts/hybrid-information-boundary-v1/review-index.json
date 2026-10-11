@@ -1,0 +1,31 @@
+{
+  "version": "hybrid-information-independent-index-v1",
+  "scope": "generated API controls only; no new patient or selector admission",
+  "files": [
+    {
+      "path": "build/hybrid-information-independent-v1/REPORT.txt",
+      "bytes": 3458,
+      "sha256": "f4a0dfeffd56299ecc667d5f8967255e684c2332d7e880161a74bcdd8531e901"
+    },
+    {
+      "path": "build/hybrid-information-independent-v1/run_controls.py",
+      "bytes": 2673,
+      "sha256": "9403253446f3735658ebd0cedc0cb084c17470559d506734fb2cfc208e97a3ae"
+    },
+    {
+      "path": "build/hybrid-information-independent-v1/test_information_boundary.py",
+      "bytes": 11956,
+      "sha256": "db98728c33f7c9cba6018cfd83149c0379655e7a9331d4148ea52a5b1a83560e"
+    },
+    {
+      "path": "build/hybrid-information-independent-v1/controls-01.json",
+      "bytes": 28789,
+      "sha256": "843c827ebec952867bd990c2c24b7795fe5683cb3a182be7f17890b71b744ea3"
+    },
+    {
+      "path": "build/hybrid-information-independent-v1/controls-01.log",
+      "bytes": 99,
+      "sha256": "1d18046a2f69548f86e4ccf702061d96cefdfdcc7e04e2bbdacb2692e47cf453"
+    }
+  ]
+}

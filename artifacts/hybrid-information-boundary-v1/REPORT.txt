@@ -1,0 +1,51 @@
+Independent hybrid information-boundary check — generated APIs only
+
+Result: 11 controls passed in 1.37 seconds. The single runner exited zero in
+1.493835916 seconds, with 80,297,984 bytes maximum process RSS on macOS.
+Canonical Python sources and the test/runner sources were unchanged. An audit
+hook refused acquired/output paths, array/checkpoint files, model/image imports
+and child process launches. No model, training, patient or private-reference file
+was read. All fields and references in the tests are small generated arrays.
+
+Verified on the actual APIs:
+- Swapping the evaluator reference with a zero reference, while holding public
+  inputs fixed, preserves observation bytes and fingerprints, ordered actions,
+  masks, inventory, native preview traces, exact capsule-cache namespace/results
+  and non-time counters, public planning reward and two-step committed progress.
+- A bounded search makes the same decision with the same non-time accounting.
+- The rich evaluator task returns different private reward after the same
+  physical action. This intentionally detected negative control demonstrates
+  why a planner must use planning_clone rather than receive rich step feedback.
+- Hiding only the target image does not hide annotation-dependent proposals.
+  The negative control truthfully labels those annotations public; it is not a
+  leak attributed to the closed LimitedPlanningSpec API or a patient admission.
+- A source-zero cell outside the declared known domain does not seed free space;
+  a complete shaft crossing it is refused without removal or state mutation.
+- An invalid last method seal, incomplete history, physical pose or independent
+  certificate prevents the only private callback. Once all three methods are
+  sealed, annotation changes affect contact scores only, with no planning call.
+- Existing passive v1 hides generated status until acquisition. Its internal
+  integrity seal differs before acquisition but does not enter the public DTO or
+  movement history. V1 changes status only; this is not evidence of a useful new
+  information-dependent motion decision.
+
+Review findings and scope:
+The proposed top-eight scorer must select raw proposals before _prepare_inventory
+certifies them. Calling observation or candidate_inventory to construct scorer
+features would already trigger eager native queries. Raw enumeration, native
+label generation, shortlist certification and final execution must retain their
+separate costs; NOT_QUERIED must remain distinct from INFEASIBLE. Public planning
+scores, not separate reference rewards, are the permitted feedback. No full-grid
+search versus cropped-actor equal-representation claim follows from this test.
+
+The proposed registration-measurement extension and new selector seam were not
+yet frozen during this run; they need focused controls against their actual APIs.
+This result does not broaden acquired-source eligibility, certify hidden anatomy,
+establish file/process isolation of deployment, or authenticate prior planner
+execution. Patient evaluator child/owned-parent completion authority remains the
+runner's responsibility. Existing independent geometry is reused, not re-proved.
+
+Reproduce from the repository with:
+  .venv/bin/python -B build/hybrid-information-independent-v1/run_controls.py
+The saved run is controls-01.json plus controls-01.log. Preserve these before any
+new invocation because the runner uses fixed evidence names. No rerun is needed.
