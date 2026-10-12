@@ -1,0 +1,610 @@
+{
+  "arms": {
+    "frozen_encoder-seed0": {
+      "checkpoint": {
+        "bytes": 248752,
+        "decisions": 256,
+        "decoded_member_bytes": 33313887,
+        "encoding": "standard_SB3_ZIP_losslessly_DEFLATED",
+        "includes_optimizer_state": true,
+        "last_image_observations_excluded": true,
+        "members": {
+          "_stable_baselines3_version": {
+            "bytes": 5,
+            "sha256": "6184643630b8a8075b0c62de6daf273239a389336ecdd5b7e41070668f0c81e0"
+          },
+          "data": {
+            "bytes": 32959347,
+            "sha256": "90dd5359b906179723b1bf794efc542074b5436c926836cc7ddbcaf5b1e5edc0"
+          },
+          "policy.optimizer.pth": {
+            "bytes": 215095,
+            "sha256": "23c52a73b7075b5d79fa524cac4a67c37a51db01cc5e2ff518deef053f018fb3"
+          },
+          "policy.pth": {
+            "bytes": 137907,
+            "sha256": "8e5ea0f779c8e958c0856ac9331e3c8a42bbdc4f8b9d79d8cd5a0fdec6b46866"
+          },
+          "pytorch_variables.pth": {
+            "bytes": 1261,
+            "sha256": "7b6bbfc035aeac78f3ee425960893ff8bb7927d3cf3425470ac4b6c6ce280c5d"
+          },
+          "system_info.txt": {
+            "bytes": 272,
+            "sha256": "296fa66f6e1245cf7220e947a93df5fef977c408cdc239990791c5676f039c26"
+          }
+        },
+        "path": "frozen_encoder-seed0/ppo-0256.zip",
+        "sha256": "ad3b318f857773ab462e4a5117a4748ae6e739397f2f7d5f5b9bf5005116a0b2"
+      },
+      "completed_episodes": [
+        {
+          "decisions": 5,
+          "end_training_decision": 5,
+          "episode": 1,
+          "return": 9.677714045979114,
+          "run": "pilot-01",
+          "start_absolute_step": 16,
+          "success": true
+        },
+        {
+          "decisions": 9,
+          "end_training_decision": 14,
+          "episode": 2,
+          "return": -0.4389703383639501,
+          "run": "pilot-01",
+          "start_absolute_step": 15,
+          "success": false
+        },
+        {
+          "decisions": 10,
+          "end_training_decision": 24,
+          "episode": 3,
+          "return": 9.426040595326615,
+          "run": "pilot-01",
+          "start_absolute_step": 14,
+          "success": true
+        },
+        {
+          "decisions": 11,
+          "end_training_decision": 35,
+          "episode": 4,
+          "return": -0.5763828417723371,
+          "run": "pilot-01",
+          "start_absolute_step": 13,
+          "success": false
+        },
+        {
+          "decisions": 11,
+          "end_training_decision": 46,
+          "episode": 5,
+          "return": -0.5802890934565307,
+          "run": "pilot-01",
+          "start_absolute_step": 13,
+          "success": false
+        },
+        {
+          "decisions": 12,
+          "end_training_decision": 58,
+          "episode": 6,
+          "return": -0.6295937755029019,
+          "run": "pilot-01",
+          "start_absolute_step": 12,
+          "success": false
+        },
+        {
+          "decisions": 5,
+          "end_training_decision": 69,
+          "episode": 1,
+          "return": 9.677714045979114,
+          "run": "campaign-256-01",
+          "start_absolute_step": 16,
+          "success": true
+        },
+        {
+          "decisions": 9,
+          "end_training_decision": 78,
+          "episode": 2,
+          "return": -0.4389703383639501,
+          "run": "campaign-256-01",
+          "start_absolute_step": 15,
+          "success": false
+        },
+        {
+          "decisions": 10,
+          "end_training_decision": 88,
+          "episode": 3,
+          "return": -0.5294406496208052,
+          "run": "campaign-256-01",
+          "start_absolute_step": 14,
+          "success": false
+        },
+        {
+          "decisions": 11,
+          "end_training_decision": 99,
+          "episode": 4,
+          "return": -0.5763828417723371,
+          "run": "campaign-256-01",
+          "start_absolute_step": 13,
+          "success": false
+        },
+        {
+          "decisions": 11,
+          "end_training_decision": 110,
+          "episode": 5,
+          "return": -0.5721828417723371,
+          "run": "campaign-256-01",
+          "start_absolute_step": 13,
+          "success": false
+        },
+        {
+          "decisions": 12,
+          "end_training_decision": 122,
+          "episode": 6,
+          "return": -0.6315469013449986,
+          "run": "campaign-256-01",
+          "start_absolute_step": 12,
+          "success": false
+        },
+        {
+          "decisions": 12,
+          "end_training_decision": 134,
+          "episode": 7,
+          "return": -0.5829719080817726,
+          "run": "campaign-256-01",
+          "start_absolute_step": 12,
+          "success": false
+        },
+        {
+          "decisions": 12,
+          "end_training_decision": 146,
+          "episode": 8,
+          "return": -0.6107594047133854,
+          "run": "campaign-256-01",
+          "start_absolute_step": 12,
+          "success": false
+        },
+        {
+          "decisions": 12,
+          "end_training_decision": 158,
+          "episode": 9,
+          "return": -0.620525033923869,
+          "run": "campaign-256-01",
+          "start_absolute_step": 12,
+          "success": false
+        },
+        {
+          "decisions": 8,
+          "end_training_decision": 166,
+          "episode": 10,
+          "return": -0.46879377542290185,
+          "run": "campaign-256-01",
+          "start_absolute_step": 16,
+          "success": false
+        },
+        {
+          "decisions": 9,
+          "end_training_decision": 175,
+          "episode": 11,
+          "return": -0.48378284173233693,
+          "run": "campaign-256-01",
+          "start_absolute_step": 15,
+          "success": false
+        },
+        {
+          "decisions": 8,
+          "end_training_decision": 183,
+          "episode": 12,
+          "return": -0.4715937754229018,
+          "run": "campaign-256-01",
+          "start_absolute_step": 16,
+          "success": false
+        },
+        {
+          "decisions": 10,
+          "end_training_decision": 193,
+          "episode": 13,
+          "return": -0.5484187821996755,
+          "run": "campaign-256-01",
+          "start_absolute_step": 14,
+          "success": false
+        },
+        {
+          "decisions": 9,
+          "end_training_decision": 202,
+          "episode": 14,
+          "return": -0.43897033836395016,
+          "run": "campaign-256-01",
+          "start_absolute_step": 15,
+          "success": false
+        },
+        {
+          "decisions": 8,
+          "end_training_decision": 210,
+          "episode": 15,
+          "return": -0.46684064958080507,
+          "run": "campaign-256-01",
+          "start_absolute_step": 16,
+          "success": false
+        },
+        {
+          "decisions": 9,
+          "end_training_decision": 219,
+          "episode": 16,
+          "return": -0.5081828417323371,
+          "run": "campaign-256-01",
+          "start_absolute_step": 15,
+          "success": false
+        },
+        {
+          "decisions": 9,
+          "end_training_decision": 228,
+          "episode": 17,
+          "return": -0.4684172125218535,
+          "run": "campaign-256-01",
+          "start_absolute_step": 15,
+          "success": false
+        },
+        {
+          "decisions": 10,
+          "end_training_decision": 238,
+          "episode": 18,
+          "return": -0.48115940467338547,
+          "run": "campaign-256-01",
+          "start_absolute_step": 14,
+          "success": false
+        },
+        {
+          "decisions": 10,
+          "end_training_decision": 248,
+          "episode": 19,
+          "return": -0.5700531529891921,
+          "run": "campaign-256-01",
+          "start_absolute_step": 14,
+          "success": false
+        },
+        {
+          "decisions": 2,
+          "end_training_decision": 250,
+          "episode": 20,
+          "return": 9.857021867381128,
+          "run": "campaign-256-01",
+          "start_absolute_step": 16,
+          "success": true
+        }
+      ],
+      "decisions": [
+        0,
+        64,
+        256
+      ],
+      "evaluation_return": [
+        -0.527581272134515,
+        -0.5079000271870954,
+        -0.4386875238187084
+      ],
+      "evaluation_success": [
+        false,
+        false,
+        false
+      ],
+      "optimizer_steps_after_rollout": [
+        12,
+        76,
+        94,
+        158
+      ]
+    },
+    "trainable_encoder-seed0": {
+      "checkpoint": {
+        "bytes": 292807,
+        "decisions": 256,
+        "decoded_member_bytes": 33376124,
+        "encoding": "standard_SB3_ZIP_losslessly_DEFLATED",
+        "includes_optimizer_state": true,
+        "last_image_observations_excluded": true,
+        "members": {
+          "_stable_baselines3_version": {
+            "bytes": 5,
+            "sha256": "6184643630b8a8075b0c62de6daf273239a389336ecdd5b7e41070668f0c81e0"
+          },
+          "data": {
+            "bytes": 32959348,
+            "sha256": "70e79d826e18c78cad64862fdb7a57531478e3f369dd4575211ddae14ec95fd7"
+          },
+          "policy.optimizer.pth": {
+            "bytes": 277331,
+            "sha256": "b2eddde60139f4a4772e52cb1efa18a0c2ef133e1ded6bb6fc54585ec3a2e5b1"
+          },
+          "policy.pth": {
+            "bytes": 137907,
+            "sha256": "64f17f9d145615c2efff45b3a5c85f4507498f6c756fe549ad0c8cb090c18080"
+          },
+          "pytorch_variables.pth": {
+            "bytes": 1261,
+            "sha256": "7b6bbfc035aeac78f3ee425960893ff8bb7927d3cf3425470ac4b6c6ce280c5d"
+          },
+          "system_info.txt": {
+            "bytes": 272,
+            "sha256": "296fa66f6e1245cf7220e947a93df5fef977c408cdc239990791c5676f039c26"
+          }
+        },
+        "path": "trainable_encoder-seed0/ppo-0256.zip",
+        "sha256": "c72530d0d6ef53d47575828b33a296f5b8ba330129840087e42236bacb9aaf71"
+      },
+      "completed_episodes": [
+        {
+          "decisions": 5,
+          "end_training_decision": 5,
+          "episode": 1,
+          "return": 9.677714045979114,
+          "run": "pilot-01",
+          "start_absolute_step": 16,
+          "success": true
+        },
+        {
+          "decisions": 9,
+          "end_training_decision": 14,
+          "episode": 2,
+          "return": -0.4389703383639501,
+          "run": "pilot-01",
+          "start_absolute_step": 15,
+          "success": false
+        },
+        {
+          "decisions": 10,
+          "end_training_decision": 24,
+          "episode": 3,
+          "return": 9.426040595326615,
+          "run": "pilot-01",
+          "start_absolute_step": 14,
+          "success": true
+        },
+        {
+          "decisions": 11,
+          "end_training_decision": 35,
+          "episode": 4,
+          "return": -0.5763828417723371,
+          "run": "pilot-01",
+          "start_absolute_step": 13,
+          "success": false
+        },
+        {
+          "decisions": 11,
+          "end_training_decision": 46,
+          "episode": 5,
+          "return": -0.5802890934565307,
+          "run": "pilot-01",
+          "start_absolute_step": 13,
+          "success": false
+        },
+        {
+          "decisions": 12,
+          "end_training_decision": 58,
+          "episode": 6,
+          "return": -0.6295937755029019,
+          "run": "pilot-01",
+          "start_absolute_step": 12,
+          "success": false
+        },
+        {
+          "decisions": 5,
+          "end_training_decision": 69,
+          "episode": 1,
+          "return": 9.677714045979114,
+          "run": "campaign-256-01",
+          "start_absolute_step": 16,
+          "success": true
+        },
+        {
+          "decisions": 9,
+          "end_training_decision": 78,
+          "episode": 2,
+          "return": -0.4389703383639501,
+          "run": "campaign-256-01",
+          "start_absolute_step": 15,
+          "success": false
+        },
+        {
+          "decisions": 10,
+          "end_training_decision": 88,
+          "episode": 3,
+          "return": -0.5294406496208052,
+          "run": "campaign-256-01",
+          "start_absolute_step": 14,
+          "success": false
+        },
+        {
+          "decisions": 11,
+          "end_training_decision": 99,
+          "episode": 4,
+          "return": -0.5160890934565305,
+          "run": "campaign-256-01",
+          "start_absolute_step": 13,
+          "success": false
+        },
+        {
+          "decisions": 11,
+          "end_training_decision": 110,
+          "episode": 5,
+          "return": -0.5088297159302404,
+          "run": "campaign-256-01",
+          "start_absolute_step": 13,
+          "success": false
+        },
+        {
+          "decisions": 12,
+          "end_training_decision": 122,
+          "episode": 6,
+          "return": -0.5963844114501593,
+          "run": "campaign-256-01",
+          "start_absolute_step": 12,
+          "success": false
+        },
+        {
+          "decisions": 12,
+          "end_training_decision": 134,
+          "episode": 7,
+          "return": -0.5829719080817726,
+          "run": "campaign-256-01",
+          "start_absolute_step": 12,
+          "success": false
+        },
+        {
+          "decisions": 12,
+          "end_training_decision": 146,
+          "episode": 8,
+          "return": -0.6443719080817722,
+          "run": "campaign-256-01",
+          "start_absolute_step": 12,
+          "success": false
+        },
+        {
+          "decisions": 12,
+          "end_training_decision": 158,
+          "episode": 9,
+          "return": 9.376121840234035,
+          "run": "campaign-256-01",
+          "start_absolute_step": 12,
+          "success": true
+        },
+        {
+          "decisions": 8,
+          "end_training_decision": 166,
+          "episode": 10,
+          "return": -0.46879377542290185,
+          "run": "campaign-256-01",
+          "start_absolute_step": 16,
+          "success": false
+        },
+        {
+          "decisions": 9,
+          "end_training_decision": 175,
+          "episode": 11,
+          "return": -0.48378284173233693,
+          "run": "campaign-256-01",
+          "start_absolute_step": 15,
+          "success": false
+        },
+        {
+          "decisions": 8,
+          "end_training_decision": 183,
+          "episode": 12,
+          "return": -0.4715937754229018,
+          "run": "campaign-256-01",
+          "start_absolute_step": 16,
+          "success": false
+        },
+        {
+          "decisions": 10,
+          "end_training_decision": 193,
+          "episode": 13,
+          "return": -0.5453594046733854,
+          "run": "campaign-256-01",
+          "start_absolute_step": 14,
+          "success": false
+        },
+        {
+          "decisions": 9,
+          "end_training_decision": 202,
+          "episode": 14,
+          "return": -0.43897033836395016,
+          "run": "campaign-256-01",
+          "start_absolute_step": 15,
+          "success": false
+        },
+        {
+          "decisions": 8,
+          "end_training_decision": 210,
+          "episode": 15,
+          "return": -0.46684064958080507,
+          "run": "campaign-256-01",
+          "start_absolute_step": 16,
+          "success": false
+        },
+        {
+          "decisions": 9,
+          "end_training_decision": 219,
+          "episode": 16,
+          "return": -0.5081828417323371,
+          "run": "campaign-256-01",
+          "start_absolute_step": 15,
+          "success": false
+        },
+        {
+          "decisions": 9,
+          "end_training_decision": 228,
+          "episode": 17,
+          "return": -0.4684172125218535,
+          "run": "campaign-256-01",
+          "start_absolute_step": 15,
+          "success": false
+        },
+        {
+          "decisions": 10,
+          "end_training_decision": 238,
+          "episode": 18,
+          "return": -0.48115940467338547,
+          "run": "campaign-256-01",
+          "start_absolute_step": 14,
+          "success": false
+        },
+        {
+          "decisions": 10,
+          "end_training_decision": 248,
+          "episode": 19,
+          "return": -0.5700531529891921,
+          "run": "campaign-256-01",
+          "start_absolute_step": 14,
+          "success": false
+        },
+        {
+          "decisions": 2,
+          "end_training_decision": 250,
+          "episode": 20,
+          "return": 9.857021867381128,
+          "run": "campaign-256-01",
+          "start_absolute_step": 16,
+          "success": true
+        }
+      ],
+      "decisions": [
+        0,
+        64,
+        256
+      ],
+      "evaluation_return": [
+        -0.527581272134515,
+        -0.5073469013449986,
+        -0.4367343979766117
+      ],
+      "evaluation_success": [
+        false,
+        false,
+        false
+      ],
+      "optimizer_steps_after_rollout": [
+        2,
+        7,
+        71,
+        135
+      ]
+    }
+  },
+  "scope": "One exposed TRAIN045 local simulated goal; no held-out or clinical claim",
+  "search_return": 9.811679675189598,
+  "source_reports": [
+    {
+      "path": "pilot-01/report.json",
+      "sha256": "6fdea3af96f2005d349d94c6b50d38ef35243b5c908c87ae208697a5974e1efa"
+    },
+    {
+      "path": "campaign-256-01/report.json",
+      "sha256": "f9dba4aa60cacbcce5f47ae58db16b389e595a5156c74659d8c8540ce5e4a4a5"
+    },
+    {
+      "path": "search-01/report.json",
+      "sha256": "c5e5a8f61892ec9efa1c0ba25627df3249be2a0b16f384821852f8f69621f0c1"
+    }
+  ]
+}

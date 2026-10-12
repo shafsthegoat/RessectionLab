@@ -1,0 +1,61 @@
+{
+  "excluded": "No checkpoint weights, patient arrays, bulk trajectory gzip or credentials copied",
+  "files": [
+    {
+      "bytes": 396893,
+      "path": "snapshot/campaign-256-01/report.json",
+      "sha256": "f9dba4aa60cacbcce5f47ae58db16b389e595a5156c74659d8c8540ce5e4a4a5"
+    },
+    {
+      "bytes": 3765,
+      "path": "snapshot/campaign-256-01/launcher.json",
+      "sha256": "1229d548012f8cb3a354cee7e730280359726bf9425cd62db8c1acc4fae88b2c"
+    },
+    {
+      "bytes": 1558,
+      "path": "snapshot/campaign-256-01/progress.json",
+      "sha256": "14247c422ba74af94fc0426af2c590e455a12aa3b4ef724a704874c68632937a"
+    },
+    {
+      "bytes": 668,
+      "path": "snapshot/campaign-256-01/intent.json",
+      "sha256": "af21ec9252ec749317ca9e7322fece769cfa93880126619d8dee77622012e6d7"
+    },
+    {
+      "bytes": 30864,
+      "path": "snapshot/campaign/source-index.json",
+      "sha256": "73375acd4a40b6d7eff2ad7f8105341b9683b9d74f3ca7bfae0d4313b839ce69"
+    },
+    {
+      "bytes": 2184,
+      "path": "snapshot/campaign/config.json",
+      "sha256": "833079a0705406d3e04b0dfa20bbc501cdc2054cd80a7a93a21a44c150705a20"
+    },
+    {
+      "bytes": 986,
+      "path": "snapshot/controls-campaign-01/RESULT.json",
+      "sha256": "ee3d36ee3c6109d4fcc58b8a8e74165611476a03d5512af3ca0fffca914ce95e"
+    },
+    {
+      "bytes": 4691,
+      "path": "snapshot/plots-campaign-01/render_curves.py",
+      "sha256": "3eb4fc0ae0ffea085e03a6c94c771fb905d8ab86d750a6539b5e5468d7bce698"
+    },
+    {
+      "bytes": 17330,
+      "path": "snapshot/plots-campaign-01/learning-curves.json",
+      "sha256": "aedefe9390b8fd783252de33e9aee6f5aba27eaf3a6ad478c765a8307c2d1aee"
+    },
+    {
+      "bytes": 200798,
+      "path": "snapshot/plots-campaign-01/learning-curves.png",
+      "sha256": "e01299295ba53d1e7c82df0c08fe1521ff2a56bce9d35e26833da9eb2919db56"
+    },
+    {
+      "bytes": 121983,
+      "path": "snapshot/plots-campaign-01/learning-curves.svg",
+      "sha256": "55f377f39639b612ed278c79afc1be54045a952dad776781f59f17cb863e61d9"
+    }
+  ],
+  "snapshot_bytes": 781720
+}

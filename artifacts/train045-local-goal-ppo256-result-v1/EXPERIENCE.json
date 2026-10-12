@@ -1,0 +1,312 @@
+{
+  "additional_extension_storage_snapshot": {
+    "free_bytes": 351218843648,
+    "growth_highwater_bytes": 1834979328,
+    "scope": "Owner snapshot before this archive and final Git writes; no dataset acquisition"
+  },
+  "arms": {
+    "frozen_encoder-seed0": {
+      "actual_optimizer_steps": 158,
+      "checkpoint": {
+        "bytes": 248752,
+        "includes_optimizer_state": true,
+        "path": "build/train045-local-goal-ppo-v1/campaign-256-01/frozen_encoder-seed0/ppo-0256.zip",
+        "sha256": "ad3b318f857773ab462e4a5117a4748ae6e739397f2f7d5f5b9bf5005116a0b2"
+      },
+      "cumulative_experience": {
+        "automatic_STOP_transitions": 3,
+        "completed_catalog_costs": {
+          "automatic_STOP_transitions": 3,
+          "catalog_calls": 244,
+          "catalog_seconds": 1268.7606701639015,
+          "pages": 1102,
+          "policy_native_transitions": 244,
+          "union_observations": 244
+        },
+        "completed_episode_decisions": 244,
+        "completed_episodes": 26,
+        "decision_partition_exact": true,
+        "decisions": 256,
+        "distinct_source_states": 202,
+        "distinct_state_physical_actions": 222,
+        "episode_returns": [
+          9.677714045979114,
+          -0.4389703383639501,
+          9.426040595326615,
+          -0.5763828417723371,
+          -0.5802890934565307,
+          -0.6295937755029019,
+          9.677714045979114,
+          -0.4389703383639501,
+          -0.5294406496208052,
+          -0.5763828417723371,
+          -0.5721828417723371,
+          -0.6315469013449986,
+          -0.5829719080817726,
+          -0.6107594047133854,
+          -0.620525033923869,
+          -0.46879377542290185,
+          -0.48378284173233693,
+          -0.4715937754229018,
+          -0.5484187821996755,
+          -0.43897033836395016,
+          -0.46684064958080507,
+          -0.5081828417323371,
+          -0.4684172125218535,
+          -0.48115940467338547,
+          -0.5700531529891921,
+          9.857021867381128
+        ],
+        "live_episode_costs": {
+          "catalog_calls": 7,
+          "catalog_seconds": 34.06334208417684,
+          "pages": 34,
+          "policy_native_transitions": 6,
+          "union_observations": 7
+        },
+        "patients": 1,
+        "resets": 28,
+        "restart_scope": "Fresh uniform genuine snapshot reset; no physical/RNG trajectory continuation claim",
+        "retired_live_episode_costs": {
+          "catalog_calls": 7,
+          "catalog_seconds": 27.010890999576077,
+          "pages": 30,
+          "policy_native_transitions": 6,
+          "union_observations": 7
+        },
+        "retired_open_resets_at_resume": 1,
+        "retired_unfinished_decisions_at_resume": 6,
+        "retired_unfinished_episodes_at_resume": 1,
+        "start_counts": {
+          "12": 6,
+          "13": 5,
+          "14": 5,
+          "15": 6,
+          "16": 6
+        },
+        "successful_episodes": 4,
+        "unfinished_episode_decisions": 6,
+        "unfinished_executed_episodes": 1
+      },
+      "encoder_changed": false,
+      "endpoint_return": -0.4386875238187084,
+      "endpoint_success": false,
+      "new_optimizer_steps": 146,
+      "segment_experience": {
+        "automatic_STOP_transitions": 2,
+        "completed_catalog_costs": {
+          "automatic_STOP_transitions": 2,
+          "catalog_calls": 186,
+          "catalog_seconds": 990.3068246261682,
+          "pages": 844,
+          "policy_native_transitions": 186,
+          "union_observations": 186
+        },
+        "completed_episodes": 20,
+        "decisions": 192,
+        "distinct_source_states": 175,
+        "distinct_state_physical_actions": 191,
+        "episode_returns": [
+          9.677714045979114,
+          -0.4389703383639501,
+          -0.5294406496208052,
+          -0.5763828417723371,
+          -0.5721828417723371,
+          -0.6315469013449986,
+          -0.5829719080817726,
+          -0.6107594047133854,
+          -0.620525033923869,
+          -0.46879377542290185,
+          -0.48378284173233693,
+          -0.4715937754229018,
+          -0.5484187821996755,
+          -0.43897033836395016,
+          -0.46684064958080507,
+          -0.5081828417323371,
+          -0.4684172125218535,
+          -0.48115940467338547,
+          -0.5700531529891921,
+          9.857021867381128
+        ],
+        "live_episode_costs": {
+          "catalog_calls": 7,
+          "catalog_seconds": 34.06334208417684,
+          "pages": 34,
+          "policy_native_transitions": 6,
+          "union_observations": 7
+        },
+        "patients": 1,
+        "resets": 21,
+        "start_counts": {
+          "12": 4,
+          "13": 3,
+          "14": 4,
+          "15": 5,
+          "16": 5
+        },
+        "successful_episodes": 2,
+        "unfinished_episode_decisions": 6,
+        "unfinished_executed_episodes": 1
+      }
+    },
+    "trainable_encoder-seed0": {
+      "actual_optimizer_steps": 135,
+      "checkpoint": {
+        "bytes": 292807,
+        "includes_optimizer_state": true,
+        "path": "build/train045-local-goal-ppo-v1/campaign-256-01/trainable_encoder-seed0/ppo-0256.zip",
+        "sha256": "c72530d0d6ef53d47575828b33a296f5b8ba330129840087e42236bacb9aaf71"
+      },
+      "cumulative_experience": {
+        "automatic_STOP_transitions": 3,
+        "completed_catalog_costs": {
+          "automatic_STOP_transitions": 3,
+          "catalog_calls": 244,
+          "catalog_seconds": 1287.7594890051987,
+          "pages": 1110,
+          "policy_native_transitions": 244,
+          "union_observations": 244
+        },
+        "completed_episode_decisions": 244,
+        "completed_episodes": 26,
+        "decision_partition_exact": true,
+        "decisions": 256,
+        "distinct_source_states": 208,
+        "distinct_state_physical_actions": 229,
+        "episode_returns": [
+          9.677714045979114,
+          -0.4389703383639501,
+          9.426040595326615,
+          -0.5763828417723371,
+          -0.5802890934565307,
+          -0.6295937755029019,
+          9.677714045979114,
+          -0.4389703383639501,
+          -0.5294406496208052,
+          -0.5160890934565305,
+          -0.5088297159302404,
+          -0.5963844114501593,
+          -0.5829719080817726,
+          -0.6443719080817722,
+          9.376121840234035,
+          -0.46879377542290185,
+          -0.48378284173233693,
+          -0.4715937754229018,
+          -0.5453594046733854,
+          -0.43897033836395016,
+          -0.46684064958080507,
+          -0.5081828417323371,
+          -0.4684172125218535,
+          -0.48115940467338547,
+          -0.5700531529891921,
+          9.857021867381128
+        ],
+        "live_episode_costs": {
+          "catalog_calls": 7,
+          "catalog_seconds": 35.066124624805525,
+          "pages": 34,
+          "policy_native_transitions": 6,
+          "union_observations": 7
+        },
+        "patients": 1,
+        "resets": 28,
+        "restart_scope": "Fresh uniform genuine snapshot reset; no physical/RNG trajectory continuation claim",
+        "retired_live_episode_costs": {
+          "catalog_calls": 7,
+          "catalog_seconds": 27.414777376921847,
+          "pages": 30,
+          "policy_native_transitions": 6,
+          "union_observations": 7
+        },
+        "retired_open_resets_at_resume": 1,
+        "retired_unfinished_decisions_at_resume": 6,
+        "retired_unfinished_episodes_at_resume": 1,
+        "start_counts": {
+          "12": 6,
+          "13": 5,
+          "14": 5,
+          "15": 6,
+          "16": 6
+        },
+        "successful_episodes": 5,
+        "unfinished_episode_decisions": 6,
+        "unfinished_executed_episodes": 1
+      },
+      "encoder_changed": true,
+      "endpoint_return": -0.4367343979766117,
+      "endpoint_success": false,
+      "new_optimizer_steps": 133,
+      "segment_experience": {
+        "automatic_STOP_transitions": 2,
+        "completed_catalog_costs": {
+          "automatic_STOP_transitions": 2,
+          "catalog_calls": 186,
+          "catalog_seconds": 1009.5442601682153,
+          "pages": 852,
+          "policy_native_transitions": 186,
+          "union_observations": 186
+        },
+        "completed_episodes": 20,
+        "decisions": 192,
+        "distinct_source_states": 175,
+        "distinct_state_physical_actions": 191,
+        "episode_returns": [
+          9.677714045979114,
+          -0.4389703383639501,
+          -0.5294406496208052,
+          -0.5160890934565305,
+          -0.5088297159302404,
+          -0.5963844114501593,
+          -0.5829719080817726,
+          -0.6443719080817722,
+          9.376121840234035,
+          -0.46879377542290185,
+          -0.48378284173233693,
+          -0.4715937754229018,
+          -0.5453594046733854,
+          -0.43897033836395016,
+          -0.46684064958080507,
+          -0.5081828417323371,
+          -0.4684172125218535,
+          -0.48115940467338547,
+          -0.5700531529891921,
+          9.857021867381128
+        ],
+        "live_episode_costs": {
+          "catalog_calls": 7,
+          "catalog_seconds": 35.066124624805525,
+          "pages": 34,
+          "policy_native_transitions": 6,
+          "union_observations": 7
+        },
+        "patients": 1,
+        "resets": 21,
+        "start_counts": {
+          "12": 4,
+          "13": 3,
+          "14": 4,
+          "15": 5,
+          "16": 5
+        },
+        "successful_episodes": 3,
+        "unfinished_episode_decisions": 6,
+        "unfinished_executed_episodes": 1
+      }
+    }
+  },
+  "cumulative_collected_decisions_across_arms": 512,
+  "current_task_adds_a_new_patient": false,
+  "new_collected_decisions_this_run": 384,
+  "new_previews": 55097,
+  "new_transitions": {
+    "attempted": 488,
+    "completed": 488,
+    "raised": 0
+  },
+  "original_IL64_pretraining_patient_union": 4,
+  "parent_seconds": 2752.2545711249113,
+  "patients_in_current_task": 1,
+  "scope": "TRAIN045 simulated development; mixed reset states12..16, full-task evaluation12; no held-out or clinical result",
+  "unique_native_states_across_cumulative_arms": 252,
+  "unique_state_physical_actions_across_cumulative_arms": 279
+}

@@ -1,0 +1,13 @@
+# Independent saved-result review
+
+A separate read-only evaluator inspected the completed PPO256 report, parent receipt, authoritative histories, plans, training episodes and retained search result. No fitting, model forward passes, native work or source changes occurred in this review.
+
+Report `f9dba4aa60cacbcce5f47ae58db16b389e595a5156c74659d8c8540ce5e4a4a5` and launcher `1229d548012f8cb3a354cee7e730280359726bf9425cd62db8c1acc4fae88b2c` match their files. Both endpoint gzip hashes, plan seals, full 24-row history hashes, packet/state joins and reconstructed local rewards agree. The child exited cleanly and was reaped; sources stayed unchanged.
+
+Both routes pass independent whole-tool geometry and both fail the declared local goal. Native `target_access_success=true` denotes some supplied-target removal, not completion of this local objective. Both full routes remove 63 target cells (60.081556 mm³), while leaving the specified goal cell unremoved. Their twelve suffix actions use suction, no switches and no outside-target removal. Returns -0.438687524 / -0.436734398 differ only by 1.953126 mm travel. Both retain the same initial zero-blocker-clearing choice, while successful search chooses available useful preparation.
+
+Actual optimizer totals are 158 / 135, with 146 / 133 new steps. Frozen encoder parameters stay exact; all 135 trainable updates have nonzero encoder gradients and the encoder hash changes. Each new 192-decision segment has 20 completed episodes and six unfinished decisions; cumulative episode counts are 26 per branch, plus separately retained earlier unfinished work. Full-start training success is 0/5 frozen versus 1/5 trainable. The latter is one observed simulated training sequence with eleven negative actions before its bonus, without independent training replay or a successful deterministic checkpoint claim.
+
+The current 384 collected decisions cover 225 unique native states and 248 unique state/physical-action pairs. Across the cumulative 512 decisions, the union is 252 states / 279 pairs, not 512 distinct examples or additional patients. The new run costs 55,097 previews, 488 transitions and 2,752.254571 parent seconds; combined pilot/continuation costs 87,672 previews, 790 transitions and 3,914.807843 seconds. Training-only new previews are 22,460 / 22,493. No quality-preserving planning-cost win is demonstrated against search.
+
+One patient and one seed limit interpretation. This does not prove encoder superiority, fixed-representation impossibility, generalization, tissue mechanics or clinical benefit. Final evaluation remains closed. Retain search and test the declared reset-distribution intervention using unchanged complete-task criteria.
