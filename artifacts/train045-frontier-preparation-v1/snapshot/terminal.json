@@ -1,0 +1,23 @@
+{
+  "all_three_attempts_retained": true,
+  "diagnosis": {
+    "additional_outside_mm3": 0.0,
+    "additional_target_mm3": 27.65658946854559,
+    "additional_target_source_cells": 29,
+    "comparison_admissible": true,
+    "net_incremental_return": 26.985133176200783,
+    "scope": "new action-family simulation capability, not model learning or clinical outcome",
+    "tie_is_negative": true,
+    "tolerance": 1e-08,
+    "useful_gain": true
+  },
+  "independent_audit_sha256": "6af6b63f20ca6d5b74241826f73ae55d4e8240eb9b66e73dfda008d50293a954",
+  "independent_checks": 5031,
+  "launcher_sha256": "946e2e08048798d8473b6113252a3ae676a279e1025c4c91557721d14130b145",
+  "remaining_owned_pids": [],
+  "report_sha256": "3d9898b3222edca89ec681ed1a6cba7dd62c54d779638e98285341ef3258d35d",
+  "source_index_sha256": "db913711734a2a0f820a8b433e144ef1a488ced3c935488cb6e22746d704c182",
+  "stage_logical_bytes": 5821337,
+  "status": "completed_and_independently_audited",
+  "worker_termination_confirmed": true
+}

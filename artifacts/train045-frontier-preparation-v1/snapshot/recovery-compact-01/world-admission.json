@@ -1,0 +1,33 @@
+{
+  "actual_caps": {
+    "frozen_policy_forwards": 0,
+    "log_bytes": 65536,
+    "native_previews": 12000,
+    "native_transitions": 75,
+    "output_bytes": 3145728,
+    "parent_wall_seconds": 330,
+    "unique_sidecars": 4096,
+    "whole_build_bytes": 8388608,
+    "work_seconds": 300,
+    "worker_peak_rss_bytes": 3221225472
+  },
+  "execution_released": true,
+  "learning_protocol_hash": "sha256:2f9499bc196340226a814f5944db6601b1f7556cf0b80f37faf1b52711e91156",
+  "limits": {
+    "max_native_previews": 7297920,
+    "max_optimizer_updates": 128,
+    "max_policy_forwards": 18624,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 900
+  },
+  "root_source_index_sha256": "db913711734a2a0f820a8b433e144ef1a488ced3c935488cb6e22746d704c182",
+  "schema": "train045-fixed-frontier-preparation-v1",
+  "scope": "same_original_world_source_admission_only_no_learning"
+}

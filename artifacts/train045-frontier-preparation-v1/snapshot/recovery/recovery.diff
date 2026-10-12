@@ -1,0 +1,96 @@
+--- frozen-original/inputs.py
++++ recovery/inputs.py
+@@ -23,6 +23,7 @@
+             arrays={str(Path(v['path']).relative_to(ROOT)):{k:v[k] for k in ('sha256','bytes','dtype')}
+                 for v in record['input_files'].values()}
+     if arrays!=old['public_arrays'] or len(arrays)!=5:raise ValueError('Exact original045 allowlist required')
++    pins.update({FAILED_REPORT:FAILED_REPORT_SHA,FAILED_PARENT:FAILED_PARENT_SHA,FAILED_INDEX:FAILED_INDEX_SHA})
+     return pins,arrays
+ 
+ 
+@@ -36,3 +37,36 @@
+         or arm['plan_seal']!=plan['plan_seal']):
+         raise ValueError('Exact completed fixed12 retained045 plan required')
+     return arm,plan
++
++
++FAILED_REPORT='build/train045-frontier-preparation-v1/run-01/report.json'
++FAILED_REPORT_SHA='0a2027b9a7cf8ca48cd3dcd8692dfee84b883e4bbe66e2a4d0d557ec3e215870'
++FAILED_PARENT='build/train045-frontier-preparation-v1/run-01/launcher.json'
++FAILED_PARENT_SHA='938ba71ecc04d60bf426dd91f7daf31ac02442323691021adc68b32ec08a71c4'
++FAILED_INDEX='build/train045-frontier-preparation-v1/source-index.json'
++FAILED_INDEX_SHA='07e36b83b13c9d30567e32913b47c6767efa78b5556472c356b37b91f929001f'
++
++
++def require_failed_attempt(report,parent):
++    budget=report['native_budget'];cleanup=parent['owned_lifecycle']
++    if (report['status']!='failed_or_incomplete' or not report['source_unchanged']
++        or report['failure']['phase']!='saved_metadata_admission'
++        or report['failure']['type']!='PlanningBudgetViolation'
++        or report['failure']['message']!='preview_wrapper_replaced'
++        or budget['native_preview_entries'] is not None or budget['counting_reliable'] is not False
++        or budget['observed_admissions_before_accounting_failure']!=0
++        or budget['native_preview_profile']['phases'] or report['native_transition_attempts']!=0
++        or report['total_frozen_policy_forwards']!=0 or report['branches']
++        or parent['status']!='incomplete_or_failed' or parent['worker_exit_code']!=1
++        or not cleanup['verified'] or not cleanup['child_reaped'] or cleanup['exit_code']!=1
++        or cleanup['errors'] or cleanup['remaining_owned_pids'] or cleanup['remaining_state_unknown']
++        or parent['report_sha256']!=FAILED_REPORT_SHA
++        or report['source_index_sha256']!=FAILED_INDEX_SHA or parent['source_index_sha256']!=FAILED_INDEX_SHA):
++        raise ValueError('Exact preserved pre-source instrumentation failure required')
++    return {'report_path':FAILED_REPORT,'report_sha256':FAILED_REPORT_SHA,'launcher_sha256':FAILED_PARENT_SHA,
++        'source_index_sha256':FAILED_INDEX_SHA,'failure':report['failure'],
++        'native_preview_entries':None,'counting_reliable':False,'observed_admissions_before_accounting_failure':0,
++        'native_transition_attempts':report['native_transition_attempts'],
++        'worker_seconds':report['worker_seconds'],'parent_seconds':parent['elapsed_seconds'],
++        'sampled_peak_group_rss_bytes':parent['sampled_peak_group_rss_bytes'],
++        'cost_scope':'Paid failed attempt preserved; unreliable preview counter is null, never a certified zero.'}
+--- frozen-original/run_owned.py
++++ recovery/run_owned.py
+@@ -39,7 +39,7 @@
+         raise ValueError('Parent requires -I -B and a fresh absent pycache prefix')
+     output = ROOT/config['output_directory']
+     if output.exists() or output.is_symlink(): raise FileExistsError('Fresh exact one-attempt output required')
+-    build = HERE
++    build = HERE.parent
+     if tree_bytes(build)+caps['output_bytes'] > caps['whole_build_bytes']: raise ValueError('Whole-build reservation cap')
+     if shutil.disk_usage(ROOT).free < 50*1024**3+caps['output_bytes']: raise ValueError('50GiB free floor plus output reserve')
+     OwnedChildExit = exact_module(ROOT/HELPER, HELPER_SHA)['OwnedChildExit']
+--- frozen-original/worker.py
++++ recovery/worker.py
+@@ -6,7 +6,7 @@
+ HERE=Path(__file__).resolve().parent
+ sys.path.insert(0,str(HERE))
+ from common import ROOT,IL,PUBLIC,PUBLIC_SHA,COHORT,COHORT_SHA,canonical,semantic,read_bytes,read_json,sha,guard,tree_bytes,write_json,runtime_roots,PAIR_SUBJECT
+-from inputs import REPORT,REPORT_SHA,PLANS,PLANS_SHA,WORLD_KEYS,retained_prefix
++from inputs import REPORT,REPORT_SHA,PLANS,PLANS_SHA,WORLD_KEYS,retained_prefix,FAILED_REPORT,FAILED_PARENT,require_failed_attempt
+ 
+ def install_boundary(index, output):
+     allowed={str((ROOT/name).absolute()) for name in
+@@ -70,7 +70,7 @@
+     def checkpoint():
+         if time.perf_counter()>=end:raise TimeoutError('End-to-end fixed frontier limit')
+         budget.check();sink.check()
+-        if tree_bytes(HERE)>caps['whole_build_bytes']-65536:raise InterruptedError('Whole stage cap')
++        if tree_bytes(HERE.parent)>caps['whole_build_bytes']-65536:raise InterruptedError('Whole stage cap')
+     def cancel():checkpoint();return False
+     def save_report():write_json(output/'report.json',thaw_json(report))
+     def progress(label,**details):
+@@ -118,10 +118,11 @@
+             'committed_masks':dict(task._engine.committed_mask_digests()),'history_hash':semantic(history),
+             'history':compact_history(history),'audit':audit}
+     try:
+-        with budget,costs,counters(),_bounded_writes(sink):
++        with counters(),budget,costs,_bounded_writes(sink):
+             with at('saved_metadata_admission'):
+                 for name,digest in index['input_metadata'].items():read_bytes(ROOT/name,digest)
+                 prior=pinned(REPORT);plans=pinned(PLANS);old,oldplan=retained_prefix(prior,plans)
++                report['preserved_failed_attempt']=require_failed_attempt(pinned(FAILED_REPORT),pinned(FAILED_PARENT))
+                 report['retained_result']={'path':REPORT,'sha256':REPORT_SHA,'plans_sha256':PLANS_SHA,
+                     'plan_seal':oldplan['plan_seal'],'prior_costs_not_erased':prior['pair_plus_recovery_costs']}
+                 original=pinned(IL+'/configuration.json');protocol=original['learning_protocol'];limits=original['admission_limits']
+--- frozen-original/config.json
++++ recovery/config.json
+@@ -1 +1 @@
+-{"base_candidate_cap":120,"baseline_canonical_head":"f64786ae34e386083dd5914bab091f355c8f89ad","caps":{"frozen_policy_forwards":0,"log_bytes":65536,"native_previews":12000,"native_transitions":75,"output_bytes":6291456,"parent_wall_seconds":330,"unique_sidecars":4096,"whole_build_bytes":8388608,"work_seconds":300,"worker_peak_rss_bytes":3221225472},"dependency_diagnostics_per_state":32,"extra_pairs":32,"goal_diagnostics_per_state":120,"max_steps":24,"methods":["ORIGINAL_STOP","FOCUSED_PREPARATION"],"obstruction_cells":16,"output_directory":"build/train045-frontier-preparation-v1/run-01","page_size":8,"prefix_nonstop_actions":12,"schema":"train045-fixed-frontier-preparation-v1","scope":"New declared action-family capability after fixed retained TRAIN045 prefix. No new model training, no matched-input learning claim. Whole-cell reward/full-shaft physics unchanged.","selector_baseline_sha256":"e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448","selector_seconds":180,"subject":"ReMIND-045","success":"Both complete independent audits; additional positive target-source-cell removal AND strictly positive incremental total nominal return vs fixed prefix STOP. All added preparation costs count; tied or censored attempts negative."}
++{"base_candidate_cap":120,"baseline_canonical_head":"f64786ae34e386083dd5914bab091f355c8f89ad","caps":{"frozen_policy_forwards":0,"log_bytes":65536,"native_previews":12000,"native_transitions":75,"output_bytes":6291456,"parent_wall_seconds":330,"unique_sidecars":4096,"whole_build_bytes":8388608,"work_seconds":300,"worker_peak_rss_bytes":3221225472},"dependency_diagnostics_per_state":32,"extra_pairs":32,"goal_diagnostics_per_state":120,"max_steps":24,"methods":["ORIGINAL_STOP","FOCUSED_PREPARATION"],"obstruction_cells":16,"output_directory":"build/train045-frontier-preparation-v1/recovery-01","page_size":8,"prefix_nonstop_actions":12,"recovery_scope":"Instrumentation ordering only: counters outside PlanningBudget, which remains exact preview owner. Original failed run remains immutable; same scientific protocol/caps.","schema":"train045-fixed-frontier-preparation-v1","scope":"New declared action-family capability after fixed retained TRAIN045 prefix. No new model training, no matched-input learning claim. Whole-cell reward/full-shaft physics unchanged.","selector_baseline_sha256":"e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448","selector_seconds":180,"subject":"ReMIND-045","success":"Both complete independent audits; additional positive target-source-cell removal AND strictly positive incremental total nominal return vs fixed prefix STOP. All added preparation costs count; tied or censored attempts negative."}

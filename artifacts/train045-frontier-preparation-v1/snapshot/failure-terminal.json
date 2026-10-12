@@ -1,0 +1,27 @@
+{
+  "counting_reliable": false,
+  "failure": {
+    "committed": false,
+    "message": "preview_wrapper_replaced",
+    "phase": "saved_metadata_admission",
+    "type": "PlanningBudgetViolation"
+  },
+  "native_preview_entries": null,
+  "native_transition_counts": {
+    "attempted": 0,
+    "completed": 0,
+    "raised": 0
+  },
+  "observed_admissions_before_accounting_failure": 0,
+  "parent_seconds": 4.027759624877945,
+  "pins": {
+    "launcher.json": "938ba71ecc04d60bf426dd91f7daf31ac02442323691021adc68b32ec08a71c4",
+    "report.json": "0a2027b9a7cf8ca48cd3dcd8692dfee84b883e4bbe66e2a4d0d557ec3e215870",
+    "worker.log": "561424cc573741816e3a535e865c41ab26191e2902b0d5c3f162759f733fc3db"
+  },
+  "remaining_owned_pids": [],
+  "scope": "Failure retained; shared8MiB stage remains reserved for explicit same-protocol instrumentation recovery. No scientific comparison result.",
+  "status": "failed_before_metadata_or_source_visit",
+  "worker_seconds": 3.6472692920360714,
+  "worker_termination_confirmed": true
+}

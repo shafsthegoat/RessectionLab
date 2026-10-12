@@ -1,0 +1,17 @@
+{
+  "ULPs": 1.0,
+  "absolute_difference": 7.105427357601002e-15,
+  "after_auditor_sha256": "9a26176b838e2b035d3e92f7864d84162416fc416a6064c668a0de65b43c9797",
+  "before_auditor_sha256": "e4e435b5a75e979e28f1e0a73c939bed75304d3fa3b2019e631b22f42bc2155e",
+  "changed_identity_refused": true,
+  "existing_arithmetic_tolerance": 1e-09,
+  "field": "selection.fixed_prefix_return versus fixed_frontier.total_reward",
+  "left": 48.09085666918074,
+  "material_1e_minus_5_refused": true,
+  "model_calls": 0,
+  "native_calls": 0,
+  "preserved_failed_receipt_sha256": "aa1836fe932acc54124b12f5728f6444e182920f69e554e3d42951e6de9e0a8f",
+  "right": 48.09085666918073,
+  "scope": "Only this accumulation scalar uses existing close(); all exact identities/history/geometry joins retained.",
+  "status": "PASS_3_STDLIB_CHECKS"
+}

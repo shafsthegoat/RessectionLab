@@ -1,0 +1,11 @@
+--- test_frontier.before.py
++++ test_frontier.py
+@@ -53,7 +53,7 @@
+     for key,value in [('native_state_hash','foreign'),('current_tool','wrong'),('total_reward',-999.)]:
+         bad={**frontier,key:value};bad['seal']=semantic_digest({k:v for k,v in bad.items() if k!='seal'})
+         with pytest.raises(ValueError):select_suffix(nominal,records,bad,seconds=1)
+-    malformed=thaw_json(records)
++    malformed=[thaw_json(packet) for packet in records]
+     tip=malformed[0]['physical_action']['tip_mm']
+     malformed[0]['physical_action']['tip_mm']=(tip[0]+1,*tip[1:])
+     fake=frontier_record(nominal,malformed)

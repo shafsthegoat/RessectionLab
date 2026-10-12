@@ -1,0 +1,128 @@
+"""Generated native continuation/replay and failure controls; no acquired payloads."""
+from dataclasses import replace
+import hashlib
+from pathlib import Path
+import sys
+HERE=Path(__file__).resolve().parent
+ROOT=next(p for p in HERE.parents if (p/'src/resectionlab').is_dir())
+sys.path.insert(0,str(HERE));sys.path.insert(0,str(ROOT/'tests'));sys.path.insert(0,str(ROOT/'src'))
+import numpy as np
+import pytest
+from resectionlab.core import thaw_json,semantic_digest
+from resectionlab.native_spatial_task import NativeSpatialTask
+from resectionlab.focused_paged_task import FocusedPagedObstructionTask
+from resectionlab.native_spatial_evaluation import evaluate_native_spatial_episode
+from resectionlab.observed_search import ObservedSearchLimit
+from resectionlab.focused_corridor_selector import select_corridor
+from test_obstruction_opening_proposals import source
+from test_focused_paged_task import make_task
+from frontier_protocol import (enabled_task,map_prefix,compact_history,frontier_record,
+    require_frontier,replay_focused_tree,physical,useful_gate)
+from frontier_selector import select_suffix
+
+
+def genuine_prefix():
+    case=source(enabled=False,cap=120,extra=((2,9,9),))
+    old=NativeSpatialTask(case,max_steps=24)
+    action=next(iter(old._prepare_inventory()))
+    expected=old.clone().step(action).info
+    changed,binding=enabled_task(old);nominal=changed.planning_clone()
+    records,frontier,joins=map_prefix(old,nominal,[action],compact_history([expected]))
+    return old,changed,nominal,records,frontier,binding,joins
+
+
+def test_reconstructed_current_base_prefix_has_exact_physics_new_binding_and_packet_replay():
+    old,changed,nominal,records,frontier,binding,joins=genuine_prefix()
+    assert binding['native_config_except_declared_source_hash_equal']
+    assert binding['old_source_hash']!=binding['new_source_hash']
+    assert binding['old_native_config']!=binding['new_native_config']
+    assert joins[0]['base_physical_catalog_equal'] and joins[0]['physical_history_equal']
+    assert old._engine.committed_mask_digests()==nominal._engine.committed_mask_digests()
+    assert require_frontier(nominal,records,frontier)
+    replay=changed.fresh();replay.step_record(records[0])
+    assert physical(replay.metrics()['history'][0])==physical(nominal.metrics()['history'][0])
+    assert replay._engine.state_hash==nominal._engine.state_hash
+    assert changed._steps==0
+
+
+def test_stale_or_forged_frontier_and_packet_fail_before_native_query(monkeypatch):
+    _,_,nominal,records,frontier,_,_=genuine_prefix()
+    from resectionlab.native_resection import NativeResectionEngine
+    def forbidden(*a,**k):raise AssertionError('No native work after failed immutable frontier join')
+    monkeypatch.setattr(NativeResectionEngine,'preview_stroke',forbidden)
+    for key,value in [('native_state_hash','foreign'),('current_tool','wrong'),('total_reward',-999.)]:
+        bad={**frontier,key:value};bad['seal']=semantic_digest({k:v for k,v in bad.items() if k!='seal'})
+        with pytest.raises(ValueError):select_suffix(nominal,records,bad,seconds=1)
+    malformed=[thaw_json(packet) for packet in records]
+    tip=malformed[0]['physical_action']['tip_mm']
+    malformed[0]['physical_action']['tip_mm']=(tip[0]+1,*tip[1:])
+    fake=frontier_record(nominal,malformed)
+    with pytest.raises(ValueError):require_frontier(nominal,malformed,fake)
+
+
+def test_capped_suffix_remains_incomplete_and_keeps_paid_fixed_prefix():
+    _,_,nominal,records,frontier,_,_=genuine_prefix()
+    with pytest.raises(ObservedSearchLimit) as caught:select_suffix(nominal,records,frontier,seconds=1e-12)
+    account=caught.value.accounting
+    assert not account['complete'] and caught.value.best_sequence==()
+    assert account['fixed_prefix_length']==1 and account['selected_prefix_length']==1
+    assert account['explored_actions']==[records[0]['action_id']]
+    assert account['estimated_incremental_return']==frontier['total_reward']
+
+
+def test_suffix_absolute_horizon_and_full_fresh_packet_replay():
+    _,changed,nominal,records,frontier,_,_=genuine_prefix()
+    chosen,account=select_suffix(nominal,records,frontier,seconds=15)
+    assert account['complete'] and len(account['explored_action_records'])<=24
+    assert account['model_transition_calls']==len(account['explored_action_records'])-len(records)
+    assert account['selected_prefix_length']>=len(records)
+    assert list(chosen[:len(records)])==records
+    assert account['selected_net_suffix_return']==account['selected_total_return']-frontier['total_reward']
+    selected,explored,cost=replay_focused_tree(changed.fresh(),chosen,
+        account['explored_action_records'],account['explored_history'])
+    assert evaluate_native_spatial_episode(selected)['accepted']
+    assert evaluate_native_spatial_episode(explored)['accepted']
+    assert selected._steps<=24 and explored._steps<=24
+    assert cost['exploration_transitions']==len(account['explored_action_records'])
+
+
+def test_negative_exploration_and_selected_positive_prefix_both_authentically_audited():
+    # Reuse established genuine two-step geometry: positive cut then negative preparation.
+    original=make_task(recursive=True,horizon=2)
+    nominal=np.array(original.case.nominal_target);nominal[2,10,9]=1
+    task=FocusedPagedObstructionTask(replace(original.case,nominal_target=nominal,reference_target=nominal),max_steps=2)
+    chosen,account=select_corridor(task,seconds=15)
+    assert account['selected_prefix_length']==1 and account['explored_history'][1]['reward']<0
+    selected,explored,cost=replay_focused_tree(task.fresh(),chosen,
+        account['explored_action_records'],account['explored_history'])
+    assert selected is not explored and cost['selected_additional_STOP_transitions']==1
+    assert selected.metrics()['history'][0]==explored.metrics()['history'][0]
+    assert selected.metrics()['history'][1]['action_id']=='STOP'
+    assert explored.metrics()['history'][1]['action_id']!='STOP'
+    assert evaluate_native_spatial_episode(selected)['accepted']
+    assert evaluate_native_spatial_episode(explored)['accepted']
+    assert selected.metrics()['total_reward']>explored.metrics()['total_reward']
+    bad=thaw_json(chosen);bad[-1]['query_catalog_digest']='different'
+    with pytest.raises(ValueError):replay_focused_tree(task.fresh(),bad,
+        account['explored_action_records'],account['explored_history'])
+
+
+def test_net_suffix_gate_cannot_count_retained_target_or_return():
+    def branch(target,reward):return {'complete':True,'audit':{'accepted':True,'outcomes':{
+        'positive_target_source_cells_removed':target,'target_removed_mm3':float(target),
+        'total_reward':reward,'normal_removed_mm3':0.}}}
+    baseline=branch(51,48.)
+    for candidate in (branch(51,49.),branch(52,48.),branch(52,47.9)):
+        assert not useful_gate({'ORIGINAL_STOP':baseline,'FOCUSED_PREPARATION':candidate})['useful_gain']
+    assert useful_gate({'ORIGINAL_STOP':baseline,'FOCUSED_PREPARATION':branch(52,48.1)})['useful_gain']
+
+
+def test_retained_selector_source_and_finite_bound_contract():
+    import json
+    cfg=json.loads((HERE/'config.json').read_text())
+    assert hashlib.sha256((ROOT/'src/resectionlab/focused_corridor_selector.py').read_bytes()).hexdigest()==cfg['selector_baseline_sha256']
+    assert cfg['prefix_nonstop_actions']==12 and cfg['max_steps']==24 and cfg['page_size']==8
+    # Includes original frontier diagnostic and one extra selected STOP catalog.
+    forecast=120+13*120+13*120+12*120+12*(120+32+120+32)+24*128+128+120
+    assert forecast==11648 and forecast<=cfg['caps']['native_previews']
+    assert 12+12+12+13+24+1<=cfg['caps']['native_transitions']

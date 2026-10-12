@@ -1,0 +1,65 @@
+{
+  "files": {
+    "build/train045-frontier-preparation-v1/HANDOFF.txt": {
+      "bytes": 4438,
+      "sha256": "31b564e77b16fd4435591822aac215cc8532485d4bdb99bd9716417b9dc67717"
+    },
+    "build/train045-frontier-preparation-v1/bootstrap_smoke.py": {
+      "bytes": 3546,
+      "sha256": "0c36150e02e97094ce86fd73ca8c5607bd465c120962fca959f1bdef290fcb92"
+    },
+    "build/train045-frontier-preparation-v1/common.py": {
+      "bytes": 4192,
+      "sha256": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1"
+    },
+    "build/train045-frontier-preparation-v1/config.json": {
+      "bytes": 1258,
+      "sha256": "cca5b7ffd849af4966cebfea94ae8b6a300eb50014ec624369b14a5067f1a12a"
+    },
+    "build/train045-frontier-preparation-v1/controls_entry.py": {
+      "bytes": 921,
+      "sha256": "7d90fc1235621aa63ab4cd6297d77297b887a5204bc6abde7bd0c688ecc8de96"
+    },
+    "build/train045-frontier-preparation-v1/freeze_sources.py": {
+      "bytes": 1905,
+      "sha256": "25802cee7554afe863f2b1bdfb9026d514f18561045c49c39a577758a24bda76"
+    },
+    "build/train045-frontier-preparation-v1/frontier_protocol.py": {
+      "bytes": 10939,
+      "sha256": "8c878476fa62e63ff721b98085fe78672162ffcbe75f76c8c615958ec2239df0"
+    },
+    "build/train045-frontier-preparation-v1/frontier_selector.py": {
+      "bytes": 20608,
+      "sha256": "2bd6633b953e7e208040e48a36ed6842873462df32b2eaeca868ba2cd90f8ac2"
+    },
+    "build/train045-frontier-preparation-v1/inputs.py": {
+      "bytes": 2527,
+      "sha256": "1a4ad0375e831033201d11260a9bc74fbe2ee889ae1770be20ff5e5997de902b"
+    },
+    "build/train045-frontier-preparation-v1/run_owned.py": {
+      "bytes": 9809,
+      "sha256": "b8f8bfda40478968ced8d9f8eaad2910c290267da1fe927c661f746112362dda"
+    },
+    "build/train045-frontier-preparation-v1/selector-adapter.diff": {
+      "bytes": 4162,
+      "sha256": "41b111ec77395328f859d3d9ade165db22665c6a6b6cc113e62d993fad6a3cd9"
+    },
+    "build/train045-frontier-preparation-v1/test_frontier.py": {
+      "bytes": 7623,
+      "sha256": "41fc296802360d85898ec9e4fe0adb9d158b5fc962ff20ef37acfd395b9f4393"
+    },
+    "build/train045-frontier-preparation-v1/worker.py": {
+      "bytes": 20875,
+      "sha256": "c279b57151202079f8c72e077618b053157c0bd4504fae6e0cc5505c0e73b6cc"
+    }
+  },
+  "previous_source_ready_sha256": "5f7a0697c840fbf43599f2efb8a81e189c214ad4e4822eafd1f8325ae31d2ba5",
+  "revision": {
+    "path": "build/train045-frontier-preparation-v1/revisions/test-fixture-01/revision.json",
+    "sha256": "51691f96331e7c3b9b960c765c9abb5ffe452d5a2ef1b431e9e00a7cd43fe490"
+  },
+  "root_runs_controls_and_freeze": true,
+  "schema": "fixed045-frontier-source-ready-v1",
+  "selector_baseline_sha256": "e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448",
+  "status": "root_controls_partial_pass_test_only_fixture_repaired_pending_targeted_retry"
+}

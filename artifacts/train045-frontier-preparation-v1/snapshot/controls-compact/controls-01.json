@@ -1,0 +1,91 @@
+{
+  "accepted": true,
+  "caps": {
+    "group_rss_bytes": 1073741824,
+    "output_bytes": 1048576,
+    "seconds": 60,
+    "threads": 1
+  },
+  "cleanup": {
+    "child_reaped": true,
+    "errors": [],
+    "events": [
+      {
+        "pgid": 55325,
+        "phase": "bind",
+        "pid": 55325,
+        "start_identity": [
+          1791777266,
+          351364
+        ]
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0,
+        "phase": "cleanup.pre_signal_exit",
+        "pid": 55325,
+        "start_identity": [
+          1791777266,
+          351364
+        ],
+        "wait_returncode": 0
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.5,
+        "phase": "cleanup.wait",
+        "pid": 55325,
+        "start_identity": [
+          1791777266,
+          351364
+        ],
+        "wait_returncode": 0
+      }
+    ],
+    "exit_code": 0,
+    "owned_root_pid": 55325,
+    "owned_root_start_identity": [
+      1791777266,
+      351364
+    ],
+    "remaining_owned_pids": [],
+    "remaining_state_unknown": false,
+    "verified": true
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/controls-compact/absent-controls-01-cache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/controls-compact/control_bootstrap.py"
+  ],
+  "failure": null,
+  "log_bytes": 189,
+  "log_sha256": "fc8e9b0ec8b59a4084ac93ef6731c9615b660a06fc8f99c7db10eb0aa4875a55",
+  "peak_group_rss_bytes": 357466112,
+  "returncode": 0,
+  "scope": "generated-only, no acquired payload or saved weights",
+  "source_after": {
+    "build/train045-frontier-preparation-v1/recovery-compact/bootstrap_smoke.py": "0c36150e02e97094ce86fd73ca8c5607bd465c120962fca959f1bdef290fcb92",
+    "build/train045-frontier-preparation-v1/recovery-compact/common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+    "build/train045-frontier-preparation-v1/recovery-compact/compact_output.py": "5005b61f346695e9c053e375cb84d4539f03b13b930bf7e3421f3bba4624ee70",
+    "build/train045-frontier-preparation-v1/recovery-compact/frontier_protocol.py": "8c878476fa62e63ff721b98085fe78672162ffcbe75f76c8c615958ec2239df0",
+    "build/train045-frontier-preparation-v1/recovery-compact/frontier_selector.py": "2bd6633b953e7e208040e48a36ed6842873462df32b2eaeca868ba2cd90f8ac2",
+    "build/train045-frontier-preparation-v1/recovery-compact/inputs.py": "13bd7b21183ea90d6a59e1bfd2fb7175533bb4e5b047349d2113d7ed28ba8ed0",
+    "build/train045-frontier-preparation-v1/recovery-compact/test_compact_output.py": "12b2b1557b87525479c96454b58ed1b5e3da85dcbf1b4e9bcbaca1c43a66b9e0",
+    "build/train045-frontier-preparation-v1/recovery-compact/worker.py": "528b8868188415fbc2417c53e8d955abf72772e32845865ebf1689b559abe07d"
+  },
+  "source_before": {
+    "build/train045-frontier-preparation-v1/recovery-compact/bootstrap_smoke.py": "0c36150e02e97094ce86fd73ca8c5607bd465c120962fca959f1bdef290fcb92",
+    "build/train045-frontier-preparation-v1/recovery-compact/common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+    "build/train045-frontier-preparation-v1/recovery-compact/compact_output.py": "5005b61f346695e9c053e375cb84d4539f03b13b930bf7e3421f3bba4624ee70",
+    "build/train045-frontier-preparation-v1/recovery-compact/frontier_protocol.py": "8c878476fa62e63ff721b98085fe78672162ffcbe75f76c8c615958ec2239df0",
+    "build/train045-frontier-preparation-v1/recovery-compact/frontier_selector.py": "2bd6633b953e7e208040e48a36ed6842873462df32b2eaeca868ba2cd90f8ac2",
+    "build/train045-frontier-preparation-v1/recovery-compact/inputs.py": "13bd7b21183ea90d6a59e1bfd2fb7175533bb4e5b047349d2113d7ed28ba8ed0",
+    "build/train045-frontier-preparation-v1/recovery-compact/test_compact_output.py": "12b2b1557b87525479c96454b58ed1b5e3da85dcbf1b4e9bcbaca1c43a66b9e0",
+    "build/train045-frontier-preparation-v1/recovery-compact/worker.py": "528b8868188415fbc2417c53e8d955abf72772e32845865ebf1689b559abe07d"
+  },
+  "source_unchanged": true,
+  "wall_seconds": 3.6441825409419835
+}

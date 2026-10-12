@@ -1,0 +1,89 @@
+{
+  "accepted": true,
+  "caps": {
+    "group_rss_bytes": 1073741824,
+    "output_bytes": 1048576,
+    "seconds": 60,
+    "threads": 1
+  },
+  "cleanup": {
+    "child_reaped": true,
+    "errors": [],
+    "events": [
+      {
+        "pgid": 54669,
+        "phase": "bind",
+        "pid": 54669,
+        "start_identity": [
+          1791775832,
+          12481
+        ]
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0,
+        "phase": "cleanup.pre_signal_exit",
+        "pid": 54669,
+        "start_identity": [
+          1791775832,
+          12481
+        ],
+        "wait_returncode": 0
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.5,
+        "phase": "cleanup.wait",
+        "pid": 54669,
+        "start_identity": [
+          1791775832,
+          12481
+        ],
+        "wait_returncode": 0
+      }
+    ],
+    "exit_code": 0,
+    "owned_root_pid": 54669,
+    "owned_root_start_identity": [
+      1791775832,
+      12481
+    ],
+    "remaining_owned_pids": [],
+    "remaining_state_unknown": false,
+    "verified": true
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/controls-repair-02/absent-controls-01-cache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/controls-repair-02/control_bootstrap.py"
+  ],
+  "failure": null,
+  "log_bytes": 145,
+  "log_sha256": "39ed072696345cdf2cdad5eccceca366a253cf3cf070d572b73bb43f4422d7cc",
+  "peak_group_rss_bytes": 91766784,
+  "returncode": 0,
+  "scope": "generated-only, no acquired payload or saved weights",
+  "source_after": {
+    "build/train045-frontier-preparation-v1/bootstrap_smoke.py": "0c36150e02e97094ce86fd73ca8c5607bd465c120962fca959f1bdef290fcb92",
+    "build/train045-frontier-preparation-v1/common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+    "build/train045-frontier-preparation-v1/frontier_protocol.py": "8c878476fa62e63ff721b98085fe78672162ffcbe75f76c8c615958ec2239df0",
+    "build/train045-frontier-preparation-v1/frontier_selector.py": "2bd6633b953e7e208040e48a36ed6842873462df32b2eaeca868ba2cd90f8ac2",
+    "build/train045-frontier-preparation-v1/inputs.py": "1a4ad0375e831033201d11260a9bc74fbe2ee889ae1770be20ff5e5997de902b",
+    "build/train045-frontier-preparation-v1/test_frontier.py": "14f9814ae1c88a6236fe36cc7b28086b2eef66c070c75e9673eef9d8f0775c33",
+    "build/train045-frontier-preparation-v1/worker.py": "c279b57151202079f8c72e077618b053157c0bd4504fae6e0cc5505c0e73b6cc"
+  },
+  "source_before": {
+    "build/train045-frontier-preparation-v1/bootstrap_smoke.py": "0c36150e02e97094ce86fd73ca8c5607bd465c120962fca959f1bdef290fcb92",
+    "build/train045-frontier-preparation-v1/common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+    "build/train045-frontier-preparation-v1/frontier_protocol.py": "8c878476fa62e63ff721b98085fe78672162ffcbe75f76c8c615958ec2239df0",
+    "build/train045-frontier-preparation-v1/frontier_selector.py": "2bd6633b953e7e208040e48a36ed6842873462df32b2eaeca868ba2cd90f8ac2",
+    "build/train045-frontier-preparation-v1/inputs.py": "1a4ad0375e831033201d11260a9bc74fbe2ee889ae1770be20ff5e5997de902b",
+    "build/train045-frontier-preparation-v1/test_frontier.py": "14f9814ae1c88a6236fe36cc7b28086b2eef66c070c75e9673eef9d8f0775c33",
+    "build/train045-frontier-preparation-v1/worker.py": "c279b57151202079f8c72e077618b053157c0bd4504fae6e0cc5505c0e73b6cc"
+  },
+  "source_unchanged": true,
+  "wall_seconds": 1.0501720840111375
+}

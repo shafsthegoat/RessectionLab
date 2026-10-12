@@ -1,0 +1,216 @@
+{
+  "audit_status": "PASS_SAVED_EVIDENCE",
+  "auditor_sha256": "de9054a94336bb1e659c83e0ca8c18cda1f59d232e6ef6c88df065686fd6733c",
+  "checks": 38,
+  "comparison_admissible": false,
+  "costs": {
+    "focused_suffix_planning": {
+      "complete_wall_seconds": 55.545936041045934,
+      "native_preview_entries": 2469,
+      "native_transition_calls": 12,
+      "native_transition_inclusive_seconds": 0.7914205428678542,
+      "native_transition_returned": 12,
+      "task_clone_calls": 54,
+      "task_clone_inclusive_seconds": 2.587411582004279,
+      "task_clone_returned": 54
+    },
+    "original_frontier_witness": {
+      "complete_wall_seconds": 1.5253226251807064,
+      "inventory_request_calls": 1,
+      "inventory_request_inclusive_seconds": 0.012174000032246113,
+      "inventory_request_returned": 1,
+      "native_preview_entries": 91
+    },
+    "paired_fixed_prefix": {
+      "complete_wall_seconds": 38.8637717908714,
+      "inventory_build_or_terminal_empty_calls": 13,
+      "inventory_request_calls": 37,
+      "inventory_request_inclusive_seconds": 19.93320437311195,
+      "inventory_request_returned": 37,
+      "native_preview_entries": 2275,
+      "native_transition_calls": 24,
+      "native_transition_inclusive_seconds": 19.194630039390177,
+      "native_transition_returned": 24,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.000716333044692874,
+      "task_clone_returned": 1
+    },
+    "same045_source": {
+      "complete_wall_seconds": 95.94352487497963,
+      "native_preview_entries": 4835
+    },
+    "same045_source.public_reconstruction": {
+      "complete_wall_seconds": 1.7898872080259025,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.3182837499771267,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 91
+    },
+    "saved_metadata_admission": {
+      "complete_wall_seconds": 0.0063711670227348804,
+      "native_preview_entries": 0
+    }
+  },
+  "failure": {
+    "committed": false,
+    "message": "Cohort output write would exceed bound",
+    "phase": "focused_suffix_planning",
+    "type": "InterruptedError"
+  },
+  "input_files": {
+    "build/train045-frontier-preparation-v1/recovery-01/launcher.json": {
+      "bytes": 3852,
+      "sha256": "a2a12688bc6a2aebdce696e1f01145299c2d398884cd7a9ff3a95a1fe246aeaa"
+    },
+    "build/train045-frontier-preparation-v1/recovery-01/report.json": {
+      "bytes": 10466,
+      "sha256": "61ab2279199f1548eb1b67558535ffcc1cd9793b012d0a7a70ce459f349f580b"
+    },
+    "build/train045-frontier-preparation-v1/recovery/config.json": {
+      "bytes": 1451,
+      "sha256": "df3861fc2ae376303c86ff3c4262ff23eafcea850a305bac3cca1efc12ad3785"
+    },
+    "build/train045-frontier-preparation-v1/recovery/source-index.json": {
+      "bytes": 19917,
+      "sha256": "748f9725b3be8523dae7768594bc529e4b590ba90f17eedb63af0e53e0ef0972"
+    },
+    "build/train045-frontier-preparation-v1/run-01/launcher.json": {
+      "bytes": 2193,
+      "sha256": "938ba71ecc04d60bf426dd91f7daf31ac02442323691021adc68b32ec08a71c4"
+    },
+    "build/train045-frontier-preparation-v1/run-01/report.json": {
+      "bytes": 3658,
+      "sha256": "0a2027b9a7cf8ca48cd3dcd8692dfee84b883e4bbe66e2a4d0d557ec3e215870"
+    },
+    "build/train045-frontier-preparation-v1/source-index.json": {
+      "bytes": 19558,
+      "sha256": "07e36b83b13c9d30567e32913b47c6767efa78b5556472c356b37b91f929001f"
+    }
+  },
+  "launcher_sha256": "a2a12688bc6a2aebdce696e1f01145299c2d398884cd7a9ff3a95a1fe246aeaa",
+  "model_calls": 0,
+  "native_budget": {
+    "blocked_preview_attempts": 0,
+    "cache_hits": null,
+    "counting_reliable": true,
+    "elapsed_seconds": 97.74504416598938,
+    "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+    "failure": "arm_raised_InterruptedError",
+    "history_complete_caller_attestation": null,
+    "independent_audit": "outside_this_guard_not_verified",
+    "limits": {
+      "native_preview_entries": 12000,
+      "planning_execution_seconds": 296.46512091718614
+    },
+    "native_preview_entries": 4926,
+    "native_preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 889,
+          "raised": 0,
+          "rejected": 4037,
+          "rejection_reasons": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 4037
+          },
+          "returned": 4926,
+          "returned_microsteps": 97941,
+          "seconds": 74.68045820435509,
+          "started": 4926
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "observed_admissions_before_accounting_failure": 4926,
+    "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+    "requests": {},
+    "score": null,
+    "status": "failed",
+    "time_overshoot_seconds": 0.0,
+    "version": "native-planning-budget-v1",
+    "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+  },
+  "native_calls": 0,
+  "owned_lifecycle": {
+    "child_reaped": true,
+    "errors": [],
+    "events": [
+      {
+        "pgid": 54955,
+        "phase": "bind",
+        "pid": 54955,
+        "start_identity": [
+          1791776612,
+          17641
+        ]
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0,
+        "phase": "cleanup.pre_signal_exit",
+        "pid": 54955,
+        "start_identity": [
+          1791776612,
+          17641
+        ],
+        "wait_returncode": 1
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.5,
+        "phase": "cleanup.wait",
+        "pid": 54955,
+        "start_identity": [
+          1791776612,
+          17641
+        ],
+        "wait_returncode": 1
+      }
+    ],
+    "exit_code": 1,
+    "owned_root_pid": 54955,
+    "owned_root_start_identity": [
+      1791776612,
+      17641
+    ],
+    "remaining_owned_pids": [],
+    "remaining_state_unknown": false,
+    "verified": true
+  },
+  "parent_seconds": 101.72626662510447,
+  "partial_selection": null,
+  "preserved_failed_attempt": {
+    "cost_scope": "Paid failed attempt preserved; unreliable preview counter is null, never a certified zero.",
+    "counting_reliable": false,
+    "failure": {
+      "committed": false,
+      "message": "preview_wrapper_replaced",
+      "phase": "saved_metadata_admission",
+      "type": "PlanningBudgetViolation"
+    },
+    "launcher_sha256": "938ba71ecc04d60bf426dd91f7daf31ac02442323691021adc68b32ec08a71c4",
+    "native_preview_entries": null,
+    "native_transition_attempts": 0,
+    "observed_admissions_before_accounting_failure": 0,
+    "parent_seconds": 4.027759624877945,
+    "report_path": "build/train045-frontier-preparation-v1/run-01/report.json",
+    "report_sha256": "0a2027b9a7cf8ca48cd3dcd8692dfee84b883e4bbe66e2a4d0d557ec3e215870",
+    "sampled_peak_group_rss_bytes": 337559552,
+    "source_index_sha256": "07e36b83b13c9d30567e32913b47c6767efa78b5556472c356b37b91f929001f",
+    "worker_seconds": 3.6472692920360714
+  },
+  "report_sha256": "61ab2279199f1548eb1b67558535ffcc1cd9793b012d0a7a70ce459f349f580b",
+  "report_status": "failed_or_incomplete",
+  "scope": "Failed/capped fixed frontier attempt retained",
+  "seconds": 0.0020426250994205475,
+  "source_index_sha256": "748f9725b3be8523dae7768594bc529e4b590ba90f17eedb63af0e53e0ef0972",
+  "supervision_status": "incomplete_or_failed",
+  "transition_counts": {
+    "attempted": 36,
+    "completed": 36,
+    "raised": 0
+  },
+  "useful_gain": false,
+  "worker_seconds": 101.28464849991724
+}

@@ -1,0 +1,36 @@
+Instrumentation recovery only; original frozen sources/index and run-01 untouched.
+
+Actual change: with counters(),budget,costs(),bounded_writes order (costs is the
+existing context object). PlanningBudget remains the final exact preview wrapper;
+CallCosts wraps the transition counter; reverse restoration preserves both originals.
+No integrity-check bypass, scientific protocol change, new policy or numerical run.
+
+Whole-stage cap checks use HERE.parent in worker and parent. Fresh output is sibling
+recovery-01 under shared8MiB stage. Config remains300/330s,3GiB,12kpreviews/75transitions,
+h24/fixed12prefix, same v3 catalogs/reward/focus/native semantics and6MiB output.
+
+Original failed report0a2027b9… and launcher938ba71e… plus source-index07e36b83…
+are strict metadata inputs. Failure remains preview_wrapper_replaced with null
+native_preview_entries/counting_reliable=false, observed admissions0, transition0,
+4.027759624877945s parent /3.6472692920360714s worker paid. Never label it verified0.
+
+Root focused regression: test_instrumentation_stack.py. It invokes actual execute,
+with only generated metadata/factory boundaries substituted. Real native previews
+and one committed transition occur before deliberate failure; their counts and
+restored wrappers must match. A second case replaces the active wrapper to prove
+PlanningBudget still refuses and retains null/unreliable counter semantics.
+Root isolated bootstrap: existing recovery/bootstrap_smoke.py, fresh output under
+controls or recovery-bootstrap-01. Source-only/AST inspected; not executed by author.
+
+Freeze/launch after root controls:
+.venv/bin/python -I -B build/train045-frontier-preparation-v1/recovery/freeze_sources.py --release
+.venv/bin/python -I -B -X pycache_prefix=build/train045-frontier-preparation-v1/recovery/absent-parent-cache-01 build/train045-frontier-preparation-v1/recovery/run_owned.py --execute --source-index-sha256 SHA
+One owned repair attempt only; no automatic launch/retry. recovery.diff shows all
+changed runtime bytes; selector/protocol/bootstrap/common are exact original copies.
+
+Test-output fixture revision01: actual guard correctly refused pytest-generated
+convenience symlinks before the generated factory. The test now creates a new
+parameter-keyed child under root-supplied TMPDIR, with no pytest tmp_path fixture.
+Worker/science/real tree_bytes guard unchanged. Previous test/source-ready bytes
+and failure receipt pin are in revisions/test-output-directory-01. Root retains
+controls-recovery-stack/controls-01 and owns symlink cleanup and focused retry.

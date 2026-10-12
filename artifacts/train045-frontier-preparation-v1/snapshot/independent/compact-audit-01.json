@@ -1,0 +1,88 @@
+{
+  "audit_status": "FAILED_REVIEWER_CHECK",
+  "auditor_sha256": "e4e435b5a75e979e28f1e0a73c939bed75304d3fa3b2019e631b22f42bc2155e",
+  "checks": 194,
+  "failure": {
+    "message": "Authenticated frontier initializes incumbent",
+    "type": "ValueError"
+  },
+  "input_files": {
+    "build/continuation-endgame-pair-v1/independent/recovery-audit-01.json": {
+      "bytes": 20710,
+      "sha256": "44ee7677f3e3a7028f0de34ec4f7ecdda4754047026eb2d55e634afdcbe52b80"
+    },
+    "build/continuation-endgame-pair-v1/recovery-01/report.json": {
+      "bytes": 53465,
+      "sha256": "e0ab3670571e64ddf5818c190a7d599f55f96dd5e59be24ca29b1038e7b29751"
+    },
+    "build/continuation-endgame-pair-v1/run-01/plans.json": {
+      "bytes": 307325,
+      "sha256": "6798288cbb05cce8692f61f64438b68fcad8aef15ebc5ec008b2f3e3a151521b"
+    },
+    "build/train045-frontier-preparation-v1/recovery-01/launcher.json": {
+      "bytes": 3852,
+      "sha256": "a2a12688bc6a2aebdce696e1f01145299c2d398884cd7a9ff3a95a1fe246aeaa"
+    },
+    "build/train045-frontier-preparation-v1/recovery-01/report.json": {
+      "bytes": 10466,
+      "sha256": "61ab2279199f1548eb1b67558535ffcc1cd9793b012d0a7a70ce459f349f580b"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/evaluation/exploration.json": {
+      "bytes": 30168,
+      "sha256": "49e8c44e243ecb605f74e9969dbdbc62cb8a4c216239305d0dc0eed1feed1982"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/evaluation/original.json": {
+      "bytes": 17906,
+      "sha256": "5eb0b2c750b09c113e9fb5588259267b38c6b9c3d36203cc25a1542241b254ce"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/evaluation/selected.json": {
+      "bytes": 30168,
+      "sha256": "4b072fedab1950ad6402466dccd130e0277adae612ee5e06f18b1242bcf9e72a"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/fixed-prefix.json": {
+      "bytes": 33419,
+      "sha256": "21ee95c75d4adf15d7ae4b7bbe7d975f6ff3503755b8ce486a255484c5c6d7e8"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/launcher.json": {
+      "bytes": 4147,
+      "sha256": "946e2e08048798d8473b6113252a3ae676a279e1025c4c91557721d14130b145"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/report.json": {
+      "bytes": 77838,
+      "sha256": "3d9898b3222edca89ec681ed1a6cba7dd62c54d779638e98285341ef3258d35d"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/selection.json.gz": {
+      "bytes": 427513,
+      "decompressed_bytes": 3227866,
+      "decompressed_sha256": "0c1adb6f9d9db731e5f81d921f2365411ce512126256d30e53391dee9627fab1",
+      "sha256": "c45224fd2f5bec6389b9c5d3a4a662c30c01a6d3f31829493c7fbb3bec928647"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact/config.json": {
+      "bytes": 1796,
+      "sha256": "a9e74fdc255b5a1e5513270f20e89bffee4fbe70c558240c91d9e633615dab46"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact/source-index.json": {
+      "bytes": 20534,
+      "sha256": "db913711734a2a0f820a8b433e144ef1a488ced3c935488cb6e22746d704c182"
+    },
+    "build/train045-frontier-preparation-v1/recovery/source-index.json": {
+      "bytes": 19917,
+      "sha256": "748f9725b3be8523dae7768594bc529e4b590ba90f17eedb63af0e53e0ef0972"
+    },
+    "build/train045-frontier-preparation-v1/run-01/launcher.json": {
+      "bytes": 2193,
+      "sha256": "938ba71ecc04d60bf426dd91f7daf31ac02442323691021adc68b32ec08a71c4"
+    },
+    "build/train045-frontier-preparation-v1/run-01/report.json": {
+      "bytes": 3658,
+      "sha256": "0a2027b9a7cf8ca48cd3dcd8692dfee84b883e4bbe66e2a4d0d557ec3e215870"
+    },
+    "build/train045-frontier-preparation-v1/source-index.json": {
+      "bytes": 19558,
+      "sha256": "07e36b83b13c9d30567e32913b47c6767efa78b5556472c356b37b91f929001f"
+    }
+  },
+  "model_calls": 0,
+  "native_calls": 0,
+  "seconds": 0.03399995784275234
+}

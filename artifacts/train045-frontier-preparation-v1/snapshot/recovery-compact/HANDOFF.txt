@@ -1,0 +1,14 @@
+Transport-only source successor; root tests/releases/executes. No author numerical execution.
+
+Full original selector/protocol/plans/selection/sidecar/endpoint schemas and every numeric scientific bound are unchanged. selection.json.gz (and partial-selection.json.gz if failed) and first-failure-sidecars.json.gz contain canonical JSON + newline, gzip level6/mtime0. Report refs bind encoding, compressed bytes/SHA256, decompressed bytes/SHA256, decompressed_limit33554432. Full microstep histories/packet copies/ledgers are retained losslessly. Original schema consumers need only a bounded gzip reader, no projection logic.
+
+New output cap3MiB, whole shared stage8MiB;300/330s,3GiB,12000previews,75transitions,24absolute actions and suffix180s unchanged. Repeated failed sources/outputs remain intact. The instrumentation failure retains null/unreliable previews; later output failure retains4926 reliable previews/36transitions and paid wall costs, with no sealed route accepted.
+
+Controls: root existing owned supervisor runs only test_compact_output.py (2 focused tests), then exact isolated bootstrap_smoke.py. Fixture includes full24actions with raw selection>6MiB, all packets/history/ledger/sidecar fields; exact roundtrip/hash/tamper/bounds and unchanged-science-byte checks. No native/patient/model execution. Use fresh TMPDIR and absent bytecode directories.
+
+After root controls:
+.venv/bin/python -I -B build/train045-frontier-preparation-v1/recovery-compact/freeze_sources.py --release
+.venv/bin/python -I -B -X pycache_prefix=build/train045-frontier-preparation-v1/recovery-compact/absent-parent-cache-01 build/train045-frontier-preparation-v1/recovery-compact/run_owned.py --execute --source-index-sha256 SHA_FROM_FREEZE
+Fresh output: build/train045-frontier-preparation-v1/recovery-compact-01.
+
+Saved-only forecast: complete prior sidecars3494568B ->2705977B canonical ->359124B gzip. Generated control checks representative selection+sidecars plus1MiB other-output allowance<3MiB; this is a forecast, not guaranteed real compressibility. All output/decompressed bounds remain hard failures, never accepted truncation.

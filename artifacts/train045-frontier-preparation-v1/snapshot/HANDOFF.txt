@@ -1,0 +1,64 @@
+Fixed TRAIN045 retained12-prefix action-family contrast; source only, no acquired/learned run.
+
+Reuse canonical focused v3 recursive corridor policy,16 selected blocker cells/32 extras,
+page size8 (at most4 extra pages plus base),120 base candidates/13 existing columns.
+frontier_selector.py is the byte-held canonical selector e73b7bca… with only authenticated
+prefix initialization, explicit net-return fields and nonduplicated page ledgers.
+selector-adapter.diff records the exact change. Prefix remains fixed, active focus starts
+unset at the new frontier; no claim that the new policy generated historical actions.
+
+Both old authoritative12 prefix and focused nominal12 prefix execute ordinary current
+certificates; every physical native field, reward and committed mask is checked. New
+source/native/task/query IDs are explicitly different because the catalog is declared.
+Original configuration apart from source binding, all physical source fields and the
+exact prepared post-exposure authority object remain unchanged. No authority is forged.
+
+Old13-action baseline and full selected/explored focused packets seal before final
+fresh replay. Replay full exploration from fresh and clone its genuinely executed best
+prefix for a sealed STOP if needed. Independently check BOTH complete endpoints. Paid
+negative preparations never disappear behind valid selected STOP. One original fresh
+full13 replay independently reproduces exact retained history/outcomes.
+
+Success requires additional target cells AND positive net incremental return>1e-8.
+Ties/negative/capped/incomplete outcomes are negative, not accepted useful preparations.
+Final target denominator, outside/contact/path/switch/return remain reported unchanged.
+No learning claim, clinical claim, new patient role or new physical cutting semantics.
+
+Bounds:300s worker/330s owned parent,180s suffix,3GiB,1 CPU thread,12k preview entries,
+75 attempted transitions,4096 unique logged sidecars,6MiB output/8MiB complete stage.
+Worst preview forecast11648 = source120 + original-prefix13*120 + original-replay13*120
++ focused-prefix12*120 + suffix12*(120+32+120+32) + focused-replay24*128
++ selected-stop128 + original-frontier120. All constructor/setup/query/replay/audit costs
+count. Sidecars are stored once for original frontier and suffix; immutable fixed-prefix
+and replay rediscovery are fully charged, not redundantly stored. Provider omissions,
+retained-set truncation, unqueried pairs and every later-page verification are explicit.
+Wall forecast is a ceiling, not guaranteed completion or a timing gain claim.
+
+Root controls (one owned <=45s generated batch, one thread):
+.venv/bin/python -I -B -X pycache_prefix=build/train045-frontier-preparation-v1/absent-controls-cache-01 build/train045-frontier-preparation-v1/controls_entry.py
+Separate isolated bootstrap in same owned batch (no geometry):
+.venv/bin/python -I -B -X pycache_prefix=build/train045-frontier-preparation-v1/absent-bootstrap-cache-01 build/train045-frontier-preparation-v1/bootstrap_smoke.py --output build/train045-frontier-preparation-v1/bootstrap-01
+
+After controls and root authorization only:
+.venv/bin/python -I -B build/train045-frontier-preparation-v1/freeze_sources.py --release
+Use returned exact SHA (freeze creates source-index.json once):
+.venv/bin/python -I -B -X pycache_prefix=build/train045-frontier-preparation-v1/absent-parent-cache-01 build/train045-frontier-preparation-v1/run_owned.py --execute --source-index-sha256 SHA
+
+Main output:run-01/report.json,selection.json,plans.json,fixed-prefix.json,
+original-frontier.json,first-failure-sidecars.json,evaluation/{original,selected,exploration}.json,
+launcher.json plus phase progress/costs. report.selection contains selected total and NET
+suffix return separately; original_admitted_world is never mislabeled as focused binding.
+No tests, model imports, arrays, weights or scientific execution were done by source owner.
+
+Fixture correction01: first root batch passed9 tests/2 subtests; one tamper fixture
+tried to mutate an immutable tuple before reaching the intended refusal. Only that
+test now constructs a changed tuple. Previous test/source-ready bytes, hashes and
+diff are preserved in revisions/test-fixture-01; controls/controls-01 remains intact.
+Root retry targets test_stale_or_forged_frontier_and_packet_fail_before_native_query
+plus the actual isolated bootstrap. Runtime/scientific source and caps unchanged.
+
+Fixture correction02: thaw_json intentionally does not recurse through a Python
+list. The tamper fixture now thaws each frozen packet individually, producing
+independent nested dict/list fields before replacement. Runtime/core unchanged.
+Both failed attempts and both prior test/source-ready versions remain preserved.
+Root owns the same single tamper-test retry; no repeated passing physics suite.

@@ -1,0 +1,29 @@
+{
+  "audit_status": "PASS_PRESERVED_INSTRUMENTATION_FAILURE",
+  "clean_reaped_failure": true,
+  "counting_reliable": false,
+  "diagnosis": "The counter wrapper replaced the active PlanningBudget preview wrapper before the first saved-metadata checkpoint. Its integrity refusal was correct. Null/unreliable previews must not be relabeled a certified zero. There is no scientific result to recover; the prospective retry fixes wrapper ordering only and retains failed cost.",
+  "failure": {
+    "committed": false,
+    "message": "preview_wrapper_replaced",
+    "phase": "saved_metadata_admission",
+    "type": "PlanningBudgetViolation"
+  },
+  "launcher_sha256": "938ba71ecc04d60bf426dd91f7daf31ac02442323691021adc68b32ec08a71c4",
+  "no_payloads_or_scientific_imports": true,
+  "observed_preview_admissions": 0,
+  "parent_seconds": 4.027759624877945,
+  "preview_count": null,
+  "report_sha256": "0a2027b9a7cf8ca48cd3dcd8692dfee84b883e4bbe66e2a4d0d557ec3e215870",
+  "sampled_peak_rss_bytes": 337559552,
+  "scientific_comparison_available": false,
+  "seconds": 0.0006486249999999999,
+  "source_index_sha256": "07e36b83b13c9d30567e32913b47c6767efa78b5556472c356b37b91f929001f",
+  "source_visits_recorded": [],
+  "transition_counts": {
+    "attempted": 0,
+    "completed": 0,
+    "raised": 0
+  },
+  "worker_seconds": 3.6472692920360714
+}

@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/recovery/worker.py", line 215, in execute
+    visits.run(PAIR_SUBJECT,dest,'same045_source',compare);report['source_visits']=visits.completed
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/patient_planning_cohort_sequential.py", line 91, in run
+    result = thaw_json(freeze_json(callback(base, context)))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/recovery/worker.py", line 176, in compare
+    sink.write(output/'selection.json',account)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/patient_planning_cohort_io.py", line 55, in write
+    self.write_bytes(path,raw,terminal=terminal)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/patient_planning_cohort_io.py", line 51, in write_bytes
+    raise InterruptedError('Cohort output write would exceed bound')
+InterruptedError: Cohort output write would exceed bound
+{"status": "failed_or_incomplete", "worker_seconds": 101.28464849991724, "diagnosis": null}

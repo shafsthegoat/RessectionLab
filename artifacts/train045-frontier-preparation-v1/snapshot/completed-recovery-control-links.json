@@ -1,0 +1,11 @@
+{
+  "scope": "Only completed pytest convenience links removed; target outputs preserved. Real stage symlink refusal remains unchanged.",
+  "controls_sha256": "f556e88c51ac59eadc693bf4cc91415ea4cac53f4873c13a86abfb2212986e2d",
+  "removed": [
+    {
+      "path": "build/train045-frontier-preparation-v1/controls-recovery-stack/pytest-temp/test_actual_execute_stack_councurrent",
+      "target": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/controls-recovery-stack/pytest-temp/test_actual_execute_stack_coun1",
+      "retained_target": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/controls-recovery-stack/pytest-temp/test_actual_execute_stack_coun1"
+    }
+  ]
+}

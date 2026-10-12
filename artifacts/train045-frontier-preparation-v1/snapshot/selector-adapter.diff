@@ -1,0 +1,54 @@
+--- canonical/focused_corridor_selector.py
++++ stage/frontier_selector.py
+@@ -87,18 +87,22 @@
+     record['retained_prerequisite_union']=[list(c) for c in sorted(prerequisite_cells)]
+     return prerequisite_cells,record
+ 
+-def select_corridor(task, *, seconds, cancelled=None, progress=None):
+-    if (type(task) is not FocusedPagedObstructionTask or task._steps!=0 or not 1<=task.max_steps<=48
++def select_suffix(task, prefix_records, frontier, *, seconds, cancelled=None, progress=None):
++    if (type(task) is not FocusedPagedObstructionTask or not 0 < task._steps < task.max_steps <= 24
+         or task.case.proposal_config.obstruction_selection_rule!='target_ray_coverage_v3'
+         or not math.isfinite(seconds) or seconds<=0):
+-        raise ValueError('Fresh bounded focused v3 paged task required')
+-    started=time.monotonic();work=task.planning_clone();actions=[];active=None
+-    best_length=0;best_return=0.;records=[];best_stop=None;report={'version':VERSION,'complete':False,'states':[],
++        raise ValueError('Live bounded focused v3 prefix task required')
++    from frontier_protocol import require_frontier
++    require_frontier(task, prefix_records, frontier)
++    started=time.monotonic();work=task.planning_clone();actions=[p["action_id"] for p in prefix_records];active=None
++    best_length=len(actions);best_return=work._total_reward;records=list(prefix_records);best_stop=None;report={'version':VERSION,'complete':False,'states':[],
+         'model_transition_calls':0,'diagnostic_preview_calls':0,'goal_diagnostic_preview_calls':0,
+         'dependency_preview_calls':0,'dependency_pair_limit_per_state':MAX_DEPENDENCY_PAIRS,'time_cap_reached':False,
+         'call_cap_reached':False,'estimated_incremental_return':0.,'selected_prefix_length':0,
+         'goal_scope':'public nominal-positive endpoint; current bounded first-shaft-failure cells only',
+-        'objective':'highest cumulative unchanged nominal reward complete prefix or STOP0',
++        'objective':'highest cumulative unchanged nominal reward complete continuation or fixed-prefix STOP',
++        'fixed_prefix_length':len(prefix_records),'fixed_prefix_return':work._total_reward,
++        'fixed_frontier_seal':frontier['seal'],'selector_baseline_sha256':'e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448',
+         'all_preparation_costs_charged':True,'private_reference_used':False}
+     def guard():
+         if time.monotonic()-started>seconds:
+@@ -162,7 +166,10 @@
+                 inventory=page.candidate_inventory()
+                 row['pages'].append({'page_index':page._active_page,'legal_actions':len(ids),
+                     'base_emitted_count':inventory['base_emitted_count'],
+-                    'additional_emitted_count':inventory['additional_emitted_count']})
++                    'additional_emitted_count':inventory['additional_emitted_count'],
++                    'ledger':inventory['ledger'] if page._active_page==0 else
++                        [r for r in inventory['ledger'] if r.get('action_id') not in {q.proposal_id for q in page._base_batch.proposals}
++                         and r.get('verification')=='NATIVE_VERIFIED']})
+                 if page._active_page==0:row['obstruction_accounting']=inventory['obstruction_accounting']
+                 for identifier in ids:
+                     guard();certificate=page._inventory[identifier]
+@@ -255,6 +262,10 @@
+                 raise RuntimeError('Complete best-prefix STOP packet was not captured')
+             chosen=(*chosen,best_stop)
+         report['selected_action_records']=[thaw_json(p) for p in chosen]
++        report['selected_total_return']=best_return
++        report['selected_net_suffix_return']=best_return-report['fixed_prefix_return']
++        report['explored_net_suffix_return']=work._total_reward-report['fixed_prefix_return']
++        report['legacy_estimated_incremental_return_scope']='complete prefix plus suffix total; use selected_net_suffix_return for the contrast'
+         return chosen,report
+     except BaseException as error:
+         report.update(wall_seconds=time.monotonic()-started,explored_actions=list(actions),

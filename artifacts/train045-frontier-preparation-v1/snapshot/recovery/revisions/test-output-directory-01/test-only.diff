@@ -1,0 +1,37 @@
+--- test_instrumentation_stack.before.py
++++ test_instrumentation_stack.py
+@@ -1,5 +1,5 @@
+ """Exercise the actual worker stack with native work, then deliberate failure."""
+-import importlib.util,json,sys,time
++import importlib.util,json,os,sys,time
+ from pathlib import Path
+ import pytest
+ HERE=Path(__file__).resolve().parent
+@@ -14,7 +14,11 @@
+ 
+ 
+ @pytest.mark.parametrize('corrupt_wrapper',[False,True])
+-def test_actual_execute_stack_counts_native_work_and_restores_after_failure(tmp_path,monkeypatch,corrupt_wrapper):
++def test_actual_execute_stack_counts_native_work_and_restores_after_failure(monkeypatch,corrupt_wrapper):
++    # The owned supervisor supplies a fresh real TMPDIR; pytest tmp_path adds
++    # convenience symlinks, which the actual whole-stage guard rightly refuses.
++    output=Path(os.environ['TMPDIR']).resolve()/('frontier-stack-'+('tamper' if corrupt_wrapper else 'failure'))
++    output.mkdir(exist_ok=False)
+     original_preview=NativeResectionEngine.preview_stroke
+     original_transition=NativeSpatialTask._transition
+     entered=[];calls=[]
+@@ -45,7 +49,7 @@
+             kwargs['progress']('deliberate_guard_violation')
+         raise RuntimeError('generated refusal after paid native transition')
+     monkeypatch.setattr(visits,'make_train_visit_factories',generated_factory)
+-    report=worker.execute(index,'generated-source',config,tmp_path,time.perf_counter())
++    report=worker.execute(index,'generated-source',config,output,time.perf_counter())
+     assert entered==[True], 'Stack failed before the source factory, as the original bug did'
+     assert report['status']=='failed_or_incomplete'
+     assert report['native_transition_counts']=={'attempted':1,'completed':1,'raised':0}
+@@ -62,4 +66,4 @@
+         assert budget['counting_reliable'] is True and budget['native_preview_entries']==len(calls)
+     assert NativeResectionEngine.preview_stroke is observed_preview
+     assert NativeSpatialTask._transition is original_transition
+-    assert (tmp_path/'report.json').is_file() and (tmp_path/'first-failure-sidecars.json').is_file()
++    assert (output/'report.json').is_file() and (output/'first-failure-sidecars.json').is_file()

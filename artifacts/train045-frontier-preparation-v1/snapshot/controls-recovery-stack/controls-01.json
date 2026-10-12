@@ -1,0 +1,106 @@
+{
+  "accepted": false,
+  "caps": {
+    "group_rss_bytes": 1073741824,
+    "output_bytes": 1048576,
+    "seconds": 60,
+    "threads": 1
+  },
+  "cleanup": {
+    "child_reaped": true,
+    "errors": [],
+    "events": [
+      {
+        "pgid": 54898,
+        "phase": "bind",
+        "pid": 54898,
+        "start_identity": [
+          1791776476,
+          462875
+        ]
+      },
+      {
+        "phase": "sample.missing_root",
+        "pid": 54898,
+        "reported_pids": [],
+        "rss_observed": false
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.05,
+        "phase": "sample.exit_race_confirmed",
+        "pid": 54898,
+        "start_identity": [
+          1791776476,
+          462875
+        ],
+        "wait_returncode": 1
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0,
+        "phase": "cleanup.pre_signal_exit",
+        "pid": 54898,
+        "start_identity": [
+          1791776476,
+          462875
+        ],
+        "wait_returncode": 1
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.5,
+        "phase": "cleanup.wait",
+        "pid": 54898,
+        "start_identity": [
+          1791776476,
+          462875
+        ],
+        "wait_returncode": 1
+      }
+    ],
+    "exit_code": 1,
+    "owned_root_pid": 54898,
+    "owned_root_start_identity": [
+      1791776476,
+      462875
+    ],
+    "remaining_owned_pids": [],
+    "remaining_state_unknown": false,
+    "verified": true
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/controls-recovery-stack/absent-controls-01-cache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/controls-recovery-stack/control_bootstrap.py"
+  ],
+  "failure": null,
+  "log_bytes": 10659,
+  "log_sha256": "538331ee84600b94e292900b173080794aa4bce6eecca768962d99ea8df05c0d",
+  "peak_group_rss_bytes": 260407296,
+  "returncode": 1,
+  "scope": "generated-only, no acquired payload or saved weights",
+  "source_after": {
+    "build/train045-frontier-preparation-v1/recovery/bootstrap_smoke.py": "0c36150e02e97094ce86fd73ca8c5607bd465c120962fca959f1bdef290fcb92",
+    "build/train045-frontier-preparation-v1/recovery/common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+    "build/train045-frontier-preparation-v1/recovery/frontier_protocol.py": "8c878476fa62e63ff721b98085fe78672162ffcbe75f76c8c615958ec2239df0",
+    "build/train045-frontier-preparation-v1/recovery/frontier_selector.py": "2bd6633b953e7e208040e48a36ed6842873462df32b2eaeca868ba2cd90f8ac2",
+    "build/train045-frontier-preparation-v1/recovery/inputs.py": "042461ad4ae4fd12eec19756395c9429223c80fb99d057044eb367c4baaecb15",
+    "build/train045-frontier-preparation-v1/recovery/test_instrumentation_stack.py": "e7e0ec5ee10775db7404129959412a395ee0bab6e68d309491126cd0d58a4160",
+    "build/train045-frontier-preparation-v1/recovery/worker.py": "dce14f33dd5b60ec2206b3f727fe324c6d43576d5d2ad5c3734d4599d7e2c0a0"
+  },
+  "source_before": {
+    "build/train045-frontier-preparation-v1/recovery/bootstrap_smoke.py": "0c36150e02e97094ce86fd73ca8c5607bd465c120962fca959f1bdef290fcb92",
+    "build/train045-frontier-preparation-v1/recovery/common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+    "build/train045-frontier-preparation-v1/recovery/frontier_protocol.py": "8c878476fa62e63ff721b98085fe78672162ffcbe75f76c8c615958ec2239df0",
+    "build/train045-frontier-preparation-v1/recovery/frontier_selector.py": "2bd6633b953e7e208040e48a36ed6842873462df32b2eaeca868ba2cd90f8ac2",
+    "build/train045-frontier-preparation-v1/recovery/inputs.py": "042461ad4ae4fd12eec19756395c9429223c80fb99d057044eb367c4baaecb15",
+    "build/train045-frontier-preparation-v1/recovery/test_instrumentation_stack.py": "e7e0ec5ee10775db7404129959412a395ee0bab6e68d309491126cd0d58a4160",
+    "build/train045-frontier-preparation-v1/recovery/worker.py": "dce14f33dd5b60ec2206b3f727fe324c6d43576d5d2ad5c3734d4599d7e2c0a0"
+  },
+  "source_unchanged": true,
+  "wall_seconds": 2.380490333074704
+}

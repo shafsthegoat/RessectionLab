@@ -1,0 +1,23 @@
+{
+  "at_utc": "2026-10-12T03:48:16.244750+00:00",
+  "failure": {
+    "committed": false,
+    "message": "Cohort output write would exceed bound",
+    "phase": "focused_suffix_planning",
+    "type": "InterruptedError"
+  },
+  "launcher_sha256": "a2a12688bc6a2aebdce696e1f01145299c2d398884cd7a9ff3a95a1fe246aeaa",
+  "native_previews": 4926,
+  "note": "Shared stage remains open for storage-bounded output-schema repair; every original file retained. Completed planning is not independently evaluated performance.",
+  "parent_seconds": 101.72626662510447,
+  "remaining_owned_pids": [],
+  "report_sha256": "61ab2279199f1548eb1b67558535ffcc1cd9793b012d0a7a70ce459f349f580b",
+  "status": "selection_output_cap_after_exploration_not_validated_result",
+  "transitions": {
+    "attempted": 36,
+    "completed": 36,
+    "raised": 0
+  },
+  "worker_seconds": 101.28464849991724,
+  "worker_termination_confirmed": true
+}

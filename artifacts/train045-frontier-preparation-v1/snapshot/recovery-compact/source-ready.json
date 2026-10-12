@@ -1,0 +1,45 @@
+{
+  "files": {
+    "bootstrap_smoke.py": "0c36150e02e97094ce86fd73ca8c5607bd465c120962fca959f1bdef290fcb92",
+    "common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+    "compact_output.py": "5005b61f346695e9c053e375cb84d4539f03b13b930bf7e3421f3bba4624ee70",
+    "config.json": "a9e74fdc255b5a1e5513270f20e89bffee4fbe70c558240c91d9e633615dab46",
+    "freeze_sources.py": "25802cee7554afe863f2b1bdfb9026d514f18561045c49c39a577758a24bda76",
+    "frontier_protocol.py": "8c878476fa62e63ff721b98085fe78672162ffcbe75f76c8c615958ec2239df0",
+    "frontier_selector.py": "2bd6633b953e7e208040e48a36ed6842873462df32b2eaeca868ba2cd90f8ac2",
+    "inputs.py": "13bd7b21183ea90d6a59e1bfd2fb7175533bb4e5b047349d2113d7ed28ba8ed0",
+    "run_owned.py": "79da6e852433f64f163097f95f4e2bfa05c442c684ced486c6036f4ceb4527a4",
+    "test_compact_output.py": "12b2b1557b87525479c96454b58ed1b5e3da85dcbf1b4e9bcbaca1c43a66b9e0",
+    "worker.py": "528b8868188415fbc2417c53e8d955abf72772e32845865ebf1689b559abe07d"
+  },
+  "forecast": {
+    "deterministic_gzip_bytes": 359124,
+    "existing_sidecar_pretty_bytes": 3494568,
+    "forecast_basis": "read-only stdlib encoding of settled failed-attempt sidecars; no geometry/model execution",
+    "minified_bytes": 2705977,
+    "output_cap": 3145728,
+    "stage_cap": 8388608
+  },
+  "preserved_output_failure": {
+    "accepted": false,
+    "launcher_sha256": "a2a12688bc6a2aebdce696e1f01145299c2d398884cd7a9ff3a95a1fe246aeaa",
+    "reliable_previews": 4926,
+    "report_sha256": "61ab2279199f1548eb1b67558535ffcc1cd9793b012d0a7a70ce459f349f580b",
+    "source_index_sha256": "748f9725b3be8523dae7768594bc529e4b590ba90f17eedb63af0e53e0ef0972",
+    "transition_attempts": 36
+  },
+  "scope": "Only lossless output transport and exact failed-attempt lineage; no science/source/canonical mutation",
+  "status": "source_ready_no_tests_by_author",
+  "tests": [
+    "test_compact_output.py"
+  ],
+  "tests_executed": false,
+  "unchanged_runtime_files": [
+    "frontier_selector.py",
+    "frontier_protocol.py",
+    "common.py",
+    "run_owned.py",
+    "bootstrap_smoke.py",
+    "freeze_sources.py"
+  ]
+}

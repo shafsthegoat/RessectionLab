@@ -1,0 +1,142 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_actual_execute_stack_counts_native_work_and_restores_after_failure[False] _
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/controls-recovery-stack/pytest-temp/test_actual_execute_stack_coun0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x106fa2d80>
+corrupt_wrapper = False
+
+    @pytest.mark.parametrize('corrupt_wrapper',[False,True])
+    def test_actual_execute_stack_counts_native_work_and_restores_after_failure(tmp_path,monkeypatch,corrupt_wrapper):
+        original_preview=NativeResectionEngine.preview_stroke
+        original_transition=NativeSpatialTask._transition
+        entered=[];calls=[]
+        def observed_preview(engine,*args,**kwargs):
+            calls.append(1);return original_preview(engine,*args,**kwargs)
+        monkeypatch.setattr(NativeResectionEngine,'preview_stroke',observed_preview)
+        config=json.loads((HERE/'config.json').read_text());config['caps']['work_seconds']=20
+        paths=(worker.REPORT,worker.PLANS,worker.IL+'/configuration.json',worker.FAILED_REPORT,worker.FAILED_PARENT)
+        index={'input_metadata':{name:'generated' for name in paths},'files':{}}
+        # These are explicit generated source-boundary replacements, not patient admission.
+        metadata={worker.REPORT:{'pair_plus_recovery_costs':{'generated':True}},worker.PLANS:{},
+            worker.IL+'/configuration.json':{'learning_protocol':{},'admission_limits':{}},
+            worker.FAILED_REPORT:{},worker.FAILED_PARENT:{}}
+        monkeypatch.setattr(worker,'read_bytes',lambda *a,**k:b'generated-only')
+        monkeypatch.setattr(worker,'read_json',lambda p,*a:metadata[str(Path(p).relative_to(ROOT))])
+        monkeypatch.setattr(worker,'retained_prefix',lambda *a:({}, {'plan_seal':'generated'}))
+        monkeypatch.setattr(worker,'require_failed_attempt',lambda *a:{'generated_fixture':True})
+        monkeypatch.setattr(worker,'guard',lambda *a:None)
+        def generated_factory(**kwargs):
+            entered.append(True)
+            task=make_native_opening_task(max_steps=3)
+            action=next(iter(task._prepare_inventory()))
+            task.step(action)
+            assert task._steps==1 and calls
+            if corrupt_wrapper:
+                # The real guard must still detect replacement, not silently accept it.
+                NativeResectionEngine.preview_stroke=lambda *a,**k:None
+                kwargs['progress']('deliberate_guard_violation')
+            raise RuntimeError('generated refusal after paid native transition')
+        monkeypatch.setattr(visits,'make_train_visit_factories',generated_factory)
+        report=worker.execute(index,'generated-source',config,tmp_path,time.perf_counter())
+>       assert entered==[True], 'Stack failed before the source factory, as the original bug did'
+E       AssertionError: Stack failed before the source factory, as the original bug did
+E       assert [] == [True]
+E         
+E         Right contains one more item: True
+E         Use -v to get more diff
+
+build/train045-frontier-preparation-v1/recovery/test_instrumentation_stack.py:49: AssertionError
+----------------------------- Captured stderr call -----------------------------
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/recovery/worker.py", line 122, in execute
+    with at('saved_metadata_admission'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/recovery/worker.py", line 81, in at
+    phase[0]=label;progress(label)
+                   ^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/recovery/worker.py", line 77, in progress
+    checkpoint();write_json(output/'progress.json',{'phase':label,'elapsed_seconds':time.perf_counter()-started,
+    ^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/recovery/worker.py", line 73, in checkpoint
+    if tree_bytes(HERE.parent)>caps['whole_build_bytes']-65536:raise InterruptedError('Whole stage cap')
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/recovery/common.py", line 84, in tree_bytes
+    if stat.S_ISLNK(value.st_mode): raise ValueError('Linked stage entry refused')
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Linked stage entry refused
+_ test_actual_execute_stack_counts_native_work_and_restores_after_failure[True] _
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/controls-recovery-stack/pytest-temp/test_actual_execute_stack_coun1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b888230>
+corrupt_wrapper = True
+
+    @pytest.mark.parametrize('corrupt_wrapper',[False,True])
+    def test_actual_execute_stack_counts_native_work_and_restores_after_failure(tmp_path,monkeypatch,corrupt_wrapper):
+        original_preview=NativeResectionEngine.preview_stroke
+        original_transition=NativeSpatialTask._transition
+        entered=[];calls=[]
+        def observed_preview(engine,*args,**kwargs):
+            calls.append(1);return original_preview(engine,*args,**kwargs)
+        monkeypatch.setattr(NativeResectionEngine,'preview_stroke',observed_preview)
+        config=json.loads((HERE/'config.json').read_text());config['caps']['work_seconds']=20
+        paths=(worker.REPORT,worker.PLANS,worker.IL+'/configuration.json',worker.FAILED_REPORT,worker.FAILED_PARENT)
+        index={'input_metadata':{name:'generated' for name in paths},'files':{}}
+        # These are explicit generated source-boundary replacements, not patient admission.
+        metadata={worker.REPORT:{'pair_plus_recovery_costs':{'generated':True}},worker.PLANS:{},
+            worker.IL+'/configuration.json':{'learning_protocol':{},'admission_limits':{}},
+            worker.FAILED_REPORT:{},worker.FAILED_PARENT:{}}
+        monkeypatch.setattr(worker,'read_bytes',lambda *a,**k:b'generated-only')
+        monkeypatch.setattr(worker,'read_json',lambda p,*a:metadata[str(Path(p).relative_to(ROOT))])
+        monkeypatch.setattr(worker,'retained_prefix',lambda *a:({}, {'plan_seal':'generated'}))
+        monkeypatch.setattr(worker,'require_failed_attempt',lambda *a:{'generated_fixture':True})
+        monkeypatch.setattr(worker,'guard',lambda *a:None)
+        def generated_factory(**kwargs):
+            entered.append(True)
+            task=make_native_opening_task(max_steps=3)
+            action=next(iter(task._prepare_inventory()))
+            task.step(action)
+            assert task._steps==1 and calls
+            if corrupt_wrapper:
+                # The real guard must still detect replacement, not silently accept it.
+                NativeResectionEngine.preview_stroke=lambda *a,**k:None
+                kwargs['progress']('deliberate_guard_violation')
+            raise RuntimeError('generated refusal after paid native transition')
+        monkeypatch.setattr(visits,'make_train_visit_factories',generated_factory)
+        report=worker.execute(index,'generated-source',config,tmp_path,time.perf_counter())
+>       assert entered==[True], 'Stack failed before the source factory, as the original bug did'
+E       AssertionError: Stack failed before the source factory, as the original bug did
+E       assert [] == [True]
+E         
+E         Right contains one more item: True
+E         Use -v to get more diff
+
+build/train045-frontier-preparation-v1/recovery/test_instrumentation_stack.py:49: AssertionError
+----------------------------- Captured stderr call -----------------------------
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/recovery/worker.py", line 122, in execute
+    with at('saved_metadata_admission'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/recovery/worker.py", line 81, in at
+    phase[0]=label;progress(label)
+                   ^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/recovery/worker.py", line 77, in progress
+    checkpoint();write_json(output/'progress.json',{'phase':label,'elapsed_seconds':time.perf_counter()-started,
+    ^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/recovery/worker.py", line 73, in checkpoint
+    if tree_bytes(HERE.parent)>caps['whole_build_bytes']-65536:raise InterruptedError('Whole stage cap')
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/recovery/common.py", line 84, in tree_bytes
+    if stat.S_ISLNK(value.st_mode): raise ValueError('Linked stage entry refused')
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Linked stage entry refused
+=========================== short test summary info ============================
+FAILED build/train045-frontier-preparation-v1/recovery/test_instrumentation_stack.py::test_actual_execute_stack_counts_native_work_and_restores_after_failure[False]
+FAILED build/train045-frontier-preparation-v1/recovery/test_instrumentation_stack.py::test_actual_execute_stack_counts_native_work_and_restores_after_failure[True]
+2 failed in 1.86s

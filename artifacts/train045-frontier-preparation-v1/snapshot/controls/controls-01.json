@@ -1,0 +1,105 @@
+{
+  "accepted": false,
+  "caps": {
+    "group_rss_bytes": 1073741824,
+    "output_bytes": 1048576,
+    "seconds": 60,
+    "threads": 1
+  },
+  "cleanup": {
+    "child_reaped": true,
+    "errors": [],
+    "events": [
+      {
+        "pgid": 54552,
+        "phase": "bind",
+        "pid": 54552,
+        "start_identity": [
+          1791775536,
+          302801
+        ]
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0,
+        "phase": "cleanup.pre_signal_exit",
+        "pid": 54552,
+        "start_identity": [
+          1791775536,
+          302801
+        ],
+        "wait_returncode": 1
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.5,
+        "phase": "cleanup.wait",
+        "pid": 54552,
+        "start_identity": [
+          1791775536,
+          302801
+        ],
+        "wait_returncode": 1
+      }
+    ],
+    "exit_code": 1,
+    "owned_root_pid": 54552,
+    "owned_root_start_identity": [
+      1791775536,
+      302801
+    ],
+    "remaining_owned_pids": [],
+    "remaining_state_unknown": false,
+    "verified": true
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/controls/absent-controls-01-cache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/controls/control_bootstrap.py"
+  ],
+  "failure": null,
+  "log_bytes": 1583,
+  "log_sha256": "dbccc08a588c6ec1b2215908747b8f7153c824c08cd6764733d9f81dbd09aef8",
+  "peak_group_rss_bytes": 92569600,
+  "returncode": 1,
+  "scope": "generated-only, no acquired payload or saved weights",
+  "source_after": {
+    "build/train045-frontier-preparation-v1/bootstrap_smoke.py": "0c36150e02e97094ce86fd73ca8c5607bd465c120962fca959f1bdef290fcb92",
+    "build/train045-frontier-preparation-v1/common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+    "build/train045-frontier-preparation-v1/controls_entry.py": "7d90fc1235621aa63ab4cd6297d77297b887a5204bc6abde7bd0c688ecc8de96",
+    "build/train045-frontier-preparation-v1/freeze_sources.py": "25802cee7554afe863f2b1bdfb9026d514f18561045c49c39a577758a24bda76",
+    "build/train045-frontier-preparation-v1/frontier_protocol.py": "8c878476fa62e63ff721b98085fe78672162ffcbe75f76c8c615958ec2239df0",
+    "build/train045-frontier-preparation-v1/frontier_selector.py": "2bd6633b953e7e208040e48a36ed6842873462df32b2eaeca868ba2cd90f8ac2",
+    "build/train045-frontier-preparation-v1/independent/scalar_checks.py": "81cab860588d4ee9a0db2e6663c12cd01b51829b173356dd7f925184f39e961f",
+    "build/train045-frontier-preparation-v1/independent/test_scalar_checks.py": "6c97c7cc3835cfad8ae6d1a9526f91b19d087b194b75925486a6c3e0daf8519e",
+    "build/train045-frontier-preparation-v1/inputs.py": "1a4ad0375e831033201d11260a9bc74fbe2ee889ae1770be20ff5e5997de902b",
+    "build/train045-frontier-preparation-v1/run_owned.py": "b8f8bfda40478968ced8d9f8eaad2910c290267da1fe927c661f746112362dda",
+    "build/train045-frontier-preparation-v1/test_frontier.py": "e541f0fab046acff51f6f555bd22acd94bd5a07f82e1ad60eb8b5d734a72302c",
+    "build/train045-frontier-preparation-v1/worker.py": "c279b57151202079f8c72e077618b053157c0bd4504fae6e0cc5505c0e73b6cc",
+    "src/resectionlab/focused_corridor_selector.py": "e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448",
+    "src/resectionlab/focused_paged_task.py": "be8d524057859a4cd80476077d5fc1fa538964f77616111654086a3b622cafb3",
+    "src/resectionlab/paged_obstruction.py": "aa6b522ea762d00685ecacc603491e694dcf91a3d806c452f32f4e894ba4fb7c"
+  },
+  "source_before": {
+    "build/train045-frontier-preparation-v1/bootstrap_smoke.py": "0c36150e02e97094ce86fd73ca8c5607bd465c120962fca959f1bdef290fcb92",
+    "build/train045-frontier-preparation-v1/common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+    "build/train045-frontier-preparation-v1/controls_entry.py": "7d90fc1235621aa63ab4cd6297d77297b887a5204bc6abde7bd0c688ecc8de96",
+    "build/train045-frontier-preparation-v1/freeze_sources.py": "25802cee7554afe863f2b1bdfb9026d514f18561045c49c39a577758a24bda76",
+    "build/train045-frontier-preparation-v1/frontier_protocol.py": "8c878476fa62e63ff721b98085fe78672162ffcbe75f76c8c615958ec2239df0",
+    "build/train045-frontier-preparation-v1/frontier_selector.py": "2bd6633b953e7e208040e48a36ed6842873462df32b2eaeca868ba2cd90f8ac2",
+    "build/train045-frontier-preparation-v1/independent/scalar_checks.py": "81cab860588d4ee9a0db2e6663c12cd01b51829b173356dd7f925184f39e961f",
+    "build/train045-frontier-preparation-v1/independent/test_scalar_checks.py": "6c97c7cc3835cfad8ae6d1a9526f91b19d087b194b75925486a6c3e0daf8519e",
+    "build/train045-frontier-preparation-v1/inputs.py": "1a4ad0375e831033201d11260a9bc74fbe2ee889ae1770be20ff5e5997de902b",
+    "build/train045-frontier-preparation-v1/run_owned.py": "b8f8bfda40478968ced8d9f8eaad2910c290267da1fe927c661f746112362dda",
+    "build/train045-frontier-preparation-v1/test_frontier.py": "e541f0fab046acff51f6f555bd22acd94bd5a07f82e1ad60eb8b5d734a72302c",
+    "build/train045-frontier-preparation-v1/worker.py": "c279b57151202079f8c72e077618b053157c0bd4504fae6e0cc5505c0e73b6cc",
+    "src/resectionlab/focused_corridor_selector.py": "e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448",
+    "src/resectionlab/focused_paged_task.py": "be8d524057859a4cd80476077d5fc1fa538964f77616111654086a3b622cafb3",
+    "src/resectionlab/paged_obstruction.py": "aa6b522ea762d00685ecacc603491e694dcf91a3d806c452f32f4e894ba4fb7c"
+  },
+  "source_unchanged": true,
+  "wall_seconds": 1.7018369168508798
+}

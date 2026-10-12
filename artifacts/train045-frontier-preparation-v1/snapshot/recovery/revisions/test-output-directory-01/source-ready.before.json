@@ -1,0 +1,61 @@
+{
+  "files": {
+    "build/train045-frontier-preparation-v1/recovery/HANDOFF.txt": {
+      "bytes": 2093,
+      "sha256": "55d2a52a30c4d63b45b91fc996ac733a7886c5cd62f3aa98a6982d409c393243"
+    },
+    "build/train045-frontier-preparation-v1/recovery/bootstrap_smoke.py": {
+      "bytes": 3546,
+      "sha256": "0c36150e02e97094ce86fd73ca8c5607bd465c120962fca959f1bdef290fcb92"
+    },
+    "build/train045-frontier-preparation-v1/recovery/common.py": {
+      "bytes": 4192,
+      "sha256": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1"
+    },
+    "build/train045-frontier-preparation-v1/recovery/config.json": {
+      "bytes": 1451,
+      "sha256": "df3861fc2ae376303c86ff3c4262ff23eafcea850a305bac3cca1efc12ad3785"
+    },
+    "build/train045-frontier-preparation-v1/recovery/freeze_sources.py": {
+      "bytes": 1905,
+      "sha256": "25802cee7554afe863f2b1bdfb9026d514f18561045c49c39a577758a24bda76"
+    },
+    "build/train045-frontier-preparation-v1/recovery/frontier_protocol.py": {
+      "bytes": 10939,
+      "sha256": "8c878476fa62e63ff721b98085fe78672162ffcbe75f76c8c615958ec2239df0"
+    },
+    "build/train045-frontier-preparation-v1/recovery/frontier_selector.py": {
+      "bytes": 20608,
+      "sha256": "2bd6633b953e7e208040e48a36ed6842873462df32b2eaeca868ba2cd90f8ac2"
+    },
+    "build/train045-frontier-preparation-v1/recovery/inputs.py": {
+      "bytes": 5054,
+      "sha256": "042461ad4ae4fd12eec19756395c9429223c80fb99d057044eb367c4baaecb15"
+    },
+    "build/train045-frontier-preparation-v1/recovery/recovery.diff": {
+      "bytes": 8766,
+      "sha256": "f204f68218c87cfaeca516223e0519a21708c2147cbf41d3133ba2f54afd36fe"
+    },
+    "build/train045-frontier-preparation-v1/recovery/run_owned.py": {
+      "bytes": 9816,
+      "sha256": "79da6e852433f64f163097f95f4e2bfa05c442c684ced486c6036f4ceb4527a4"
+    },
+    "build/train045-frontier-preparation-v1/recovery/test_instrumentation_stack.py": {
+      "bytes": 4223,
+      "sha256": "e7e0ec5ee10775db7404129959412a395ee0bab6e68d309491126cd0d58a4160"
+    },
+    "build/train045-frontier-preparation-v1/recovery/worker.py": {
+      "bytes": 21052,
+      "sha256": "dce14f33dd5b60ec2206b3f727fe324c6d43576d5d2ad5c3734d4599d7e2c0a0"
+    }
+  },
+  "preserved_failed_source_index_sha256": "07e36b83b13c9d30567e32913b47c6767efa78b5556472c356b37b91f929001f",
+  "schema": "frontier-instrumentation-recovery-ready-v1",
+  "status": "AST_only_no_execution",
+  "unchanged_science": {
+    "bootstrap_smoke.py": "0c36150e02e97094ce86fd73ca8c5607bd465c120962fca959f1bdef290fcb92",
+    "common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+    "frontier_protocol.py": "8c878476fa62e63ff721b98085fe78672162ffcbe75f76c8c615958ec2239df0",
+    "frontier_selector.py": "2bd6633b953e7e208040e48a36ed6842873462df32b2eaeca868ba2cd90f8ac2"
+  }
+}

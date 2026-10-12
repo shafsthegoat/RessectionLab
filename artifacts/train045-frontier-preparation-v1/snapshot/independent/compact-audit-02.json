@@ -1,0 +1,383 @@
+{
+  "audit_status": "PASS_SAVED_EVIDENCE",
+  "auditor_sha256": "9a26176b838e2b035d3e92f7864d84162416fc416a6064c668a0de65b43c9797",
+  "candidate_minus_original_STOP": {
+    "complete_tool_path_length_mm": 131.45629234483624,
+    "cumulative_contacted_tissue_upper_bound_mm3": 35.285993459868536,
+    "nonstop_actions": 12,
+    "normal_removed_mm3": 0.0,
+    "positive_target_source_cells_removed": 29,
+    "target_removed_mm3": 27.65658946854559,
+    "tool_changes": 6,
+    "total_reward": 26.985133176200783
+  },
+  "checks": 5031,
+  "clean_supervision": true,
+  "comparison_admissible": true,
+  "costs_inclusive": {
+    "focused_exploration_independent_audit": {
+      "complete_wall_seconds": 8.22516958299093,
+      "native_preview_entries": 0
+    },
+    "focused_selected_independent_audit": {
+      "complete_wall_seconds": 0.0016100839711725712,
+      "native_preview_entries": 0
+    },
+    "focused_shared_fresh_full_replay": {
+      "complete_wall_seconds": 44.3794037909247,
+      "native_preview_entries": 2248,
+      "native_transition_calls": 24,
+      "native_transition_inclusive_seconds": 1.115433294326067,
+      "native_transition_returned": 24
+    },
+    "focused_suffix_planning": {
+      "complete_wall_seconds": 62.25367108406499,
+      "native_preview_entries": 2469,
+      "native_transition_calls": 12,
+      "native_transition_inclusive_seconds": 0.8930930839851499,
+      "native_transition_returned": 12,
+      "task_clone_calls": 54,
+      "task_clone_inclusive_seconds": 2.8137014226522297,
+      "task_clone_returned": 54
+    },
+    "original_fresh_full_replay_and_audit": {
+      "complete_wall_seconds": 33.019388917135075,
+      "inventory_build_or_terminal_empty_calls": 14,
+      "inventory_request_calls": 27,
+      "inventory_request_inclusive_seconds": 28.740796541562304,
+      "inventory_request_returned": 27,
+      "native_preview_entries": 1183,
+      "native_transition_calls": 13,
+      "native_transition_inclusive_seconds": 27.721336791524664,
+      "native_transition_returned": 13
+    },
+    "original_frontier_witness": {
+      "complete_wall_seconds": 2.4328512919601053,
+      "inventory_request_calls": 1,
+      "inventory_request_inclusive_seconds": 0.02441245806403458,
+      "inventory_request_returned": 1,
+      "native_preview_entries": 91
+    },
+    "paired_fixed_prefix": {
+      "complete_wall_seconds": 47.471661125076935,
+      "inventory_build_or_terminal_empty_calls": 13,
+      "inventory_request_calls": 37,
+      "inventory_request_inclusive_seconds": 26.86532195424661,
+      "inventory_request_returned": 37,
+      "native_preview_entries": 2275,
+      "native_transition_calls": 24,
+      "native_transition_inclusive_seconds": 26.7228855418507,
+      "native_transition_returned": 24,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.0007249580230563879,
+      "task_clone_returned": 1
+    },
+    "same045_source": {
+      "complete_wall_seconds": 197.82337991707027,
+      "native_preview_entries": 8266
+    },
+    "same045_source.public_reconstruction": {
+      "complete_wall_seconds": 1.7821451670024544,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.312568417051807,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 91
+    },
+    "saved_metadata_admission": {
+      "complete_wall_seconds": 0.00880250008776784,
+      "native_preview_entries": 0
+    }
+  },
+  "dependency_previews": 0,
+  "diagnostic_goals_omitted": 0,
+  "explored_full_return": 75.07598984538151,
+  "explored_net_suffix_return": 26.985133176200776,
+  "explored_transitions": 24,
+  "fixed_prefix_length": 12,
+  "fixed_prefix_return": 48.09085666918073,
+  "focus_explicitly_cleared": [],
+  "frontier_iteration_known_preview_entries": 13283,
+  "frontier_iteration_paid_parent_seconds": 309.5439979999792,
+  "frontier_iteration_paid_worker_seconds": 308.18746291683055,
+  "frontier_iteration_preview_count_scope": "Successful attempt count exact; original attempt remains null/unreliable with zero observed admissions, not an independently certified total",
+  "frontier_iteration_total_transition_attempts": 109,
+  "full_target_mm3": 24128.943798057662,
+  "goal_diagnostic_previews": 1080,
+  "input_files": {
+    "build/continuation-endgame-pair-v1/independent/recovery-audit-01.json": {
+      "bytes": 20710,
+      "sha256": "44ee7677f3e3a7028f0de34ec4f7ecdda4754047026eb2d55e634afdcbe52b80"
+    },
+    "build/continuation-endgame-pair-v1/recovery-01/report.json": {
+      "bytes": 53465,
+      "sha256": "e0ab3670571e64ddf5818c190a7d599f55f96dd5e59be24ca29b1038e7b29751"
+    },
+    "build/continuation-endgame-pair-v1/run-01/plans.json": {
+      "bytes": 307325,
+      "sha256": "6798288cbb05cce8692f61f64438b68fcad8aef15ebc5ec008b2f3e3a151521b"
+    },
+    "build/train045-frontier-preparation-v1/recovery-01/launcher.json": {
+      "bytes": 3852,
+      "sha256": "a2a12688bc6a2aebdce696e1f01145299c2d398884cd7a9ff3a95a1fe246aeaa"
+    },
+    "build/train045-frontier-preparation-v1/recovery-01/report.json": {
+      "bytes": 10466,
+      "sha256": "61ab2279199f1548eb1b67558535ffcc1cd9793b012d0a7a70ce459f349f580b"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/evaluation/exploration.json": {
+      "bytes": 30168,
+      "sha256": "49e8c44e243ecb605f74e9969dbdbc62cb8a4c216239305d0dc0eed1feed1982"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/evaluation/original.json": {
+      "bytes": 17906,
+      "sha256": "5eb0b2c750b09c113e9fb5588259267b38c6b9c3d36203cc25a1542241b254ce"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/evaluation/selected.json": {
+      "bytes": 30168,
+      "sha256": "4b072fedab1950ad6402466dccd130e0277adae612ee5e06f18b1242bcf9e72a"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/first-failure-sidecars.json.gz": {
+      "bytes": 359124,
+      "decompressed_bytes": 2705977,
+      "decompressed_sha256": "6be6bea2484b3fa767d5d35843bf35146daa4ffe717f28310f281f367477f0f5",
+      "sha256": "4e0e0b6ee0c737b8357bc72ffd2bd681b16ff5390aa580c96289f189aae59cd1"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/fixed-prefix.json": {
+      "bytes": 33419,
+      "sha256": "21ee95c75d4adf15d7ae4b7bbe7d975f6ff3503755b8ce486a255484c5c6d7e8"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/launcher.json": {
+      "bytes": 4147,
+      "sha256": "946e2e08048798d8473b6113252a3ae676a279e1025c4c91557721d14130b145"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/original-frontier.json": {
+      "bytes": 238856,
+      "sha256": "039b09fbe7b87160738c9577645c24009b422b2daf463e249016c3bcf9640c76"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/plans.json": {
+      "bytes": 66695,
+      "sha256": "2c33637e7c9f6c6609910009a4e7d6f4b9a1a8b9764a905cbf156fbea2df24ec"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/report.json": {
+      "bytes": 77838,
+      "sha256": "3d9898b3222edca89ec681ed1a6cba7dd62c54d779638e98285341ef3258d35d"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact-01/selection.json.gz": {
+      "bytes": 427513,
+      "decompressed_bytes": 3227866,
+      "decompressed_sha256": "0c1adb6f9d9db731e5f81d921f2365411ce512126256d30e53391dee9627fab1",
+      "sha256": "c45224fd2f5bec6389b9c5d3a4a662c30c01a6d3f31829493c7fbb3bec928647"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact/config.json": {
+      "bytes": 1796,
+      "sha256": "a9e74fdc255b5a1e5513270f20e89bffee4fbe70c558240c91d9e633615dab46"
+    },
+    "build/train045-frontier-preparation-v1/recovery-compact/source-index.json": {
+      "bytes": 20534,
+      "sha256": "db913711734a2a0f820a8b433e144ef1a488ced3c935488cb6e22746d704c182"
+    },
+    "build/train045-frontier-preparation-v1/recovery/source-index.json": {
+      "bytes": 19917,
+      "sha256": "748f9725b3be8523dae7768594bc529e4b590ba90f17eedb63af0e53e0ef0972"
+    },
+    "build/train045-frontier-preparation-v1/run-01/launcher.json": {
+      "bytes": 2193,
+      "sha256": "938ba71ecc04d60bf426dd91f7daf31ac02442323691021adc68b32ec08a71c4"
+    },
+    "build/train045-frontier-preparation-v1/run-01/report.json": {
+      "bytes": 3658,
+      "sha256": "0a2027b9a7cf8ca48cd3dcd8692dfee84b883e4bbe66e2a4d0d557ec3e215870"
+    },
+    "build/train045-frontier-preparation-v1/source-index.json": {
+      "bytes": 19558,
+      "sha256": "07e36b83b13c9d30567e32913b47c6767efa78b5556472c356b37b91f929001f"
+    }
+  },
+  "launcher_sha256": "946e2e08048798d8473b6113252a3ae676a279e1025c4c91557721d14130b145",
+  "limitations": [
+    "Independent certificates and exact saved joins checked; no native/array/model rerun",
+    "New catalog/source/task identities are declared; this is not matched-observation model performance",
+    "Reference labels are evaluation only; selector consumes public nominal model and current first-failure evidence",
+    "Unknown coverage and full target denominator remain unchanged; no functional/clinical evidence",
+    "First-failure samples and bounded catalogs do not prove complete obstruction or global reachability",
+    "Exploration and original prefix costs remain paid even if selected endpoint is original STOP",
+    "Inclusive phases nest; shared replay prefix is charged once and both endpoints independently checked"
+  ],
+  "model_calls": 0,
+  "native_calls": 0,
+  "original_frontier": {
+    "emitted": 91,
+    "scope": "current emitted proposals only",
+    "shaft_blocked": 91
+  },
+  "outcomes": {
+    "FOCUSED_EXPLORATION": {
+      "clinical_deficit_probability": null,
+      "complete_tool_path_length_mm": 228.05006784773826,
+      "cumulative_contacted_tissue_upper_bound_mm3": 237.46519922992601,
+      "currently_retained_contacted_tissue_upper_bound_mm3": 161.17115931669676,
+      "language_surrogate": null,
+      "motor_surrogate": null,
+      "nonstop_actions": 24,
+      "normal_removed_mm3": 0.0,
+      "partial_contact_reward_weight": 0.0,
+      "positive_target_source_cells_removed": 80,
+      "reference_target_fraction_removed": 0.0031619303584838544,
+      "simulated_removed_volume_mm3": 76.29403991322924,
+      "target_removed_mm3": 76.29403991322924,
+      "tool_changes": 9,
+      "total_reference_target_mm3": 24128.943798057662,
+      "total_reward": 75.07598984538151
+    },
+    "FOCUSED_PREPARATION": {
+      "clinical_deficit_probability": null,
+      "complete_tool_path_length_mm": 228.05006784773826,
+      "cumulative_contacted_tissue_upper_bound_mm3": 237.46519922992601,
+      "currently_retained_contacted_tissue_upper_bound_mm3": 161.17115931669676,
+      "language_surrogate": null,
+      "motor_surrogate": null,
+      "nonstop_actions": 24,
+      "normal_removed_mm3": 0.0,
+      "partial_contact_reward_weight": 0.0,
+      "positive_target_source_cells_removed": 80,
+      "reference_target_fraction_removed": 0.0031619303584838544,
+      "simulated_removed_volume_mm3": 76.29403991322924,
+      "target_removed_mm3": 76.29403991322924,
+      "tool_changes": 9,
+      "total_reference_target_mm3": 24128.943798057662,
+      "total_reward": 75.07598984538151
+    },
+    "ORIGINAL_STOP": {
+      "clinical_deficit_probability": null,
+      "complete_tool_path_length_mm": 96.593775502902,
+      "cumulative_contacted_tissue_upper_bound_mm3": 202.17920577005748,
+      "currently_retained_contacted_tissue_upper_bound_mm3": 153.54175532537386,
+      "language_surrogate": null,
+      "motor_surrogate": null,
+      "nonstop_actions": 12,
+      "normal_removed_mm3": 0.0,
+      "partial_contact_reward_weight": 0.0,
+      "positive_target_source_cells_removed": 51,
+      "reference_target_fraction_removed": 0.0020157306035334575,
+      "simulated_removed_volume_mm3": 48.637450444683644,
+      "target_removed_mm3": 48.63745044468365,
+      "tool_changes": 3,
+      "total_reference_target_mm3": 24128.943798057662,
+      "total_reward": 48.09085666918073
+    }
+  },
+  "parent_seconds": 203.78997174999677,
+  "plans_sealed_before_replay": {
+    "seals": {
+      "FOCUSED_PREPARATION": "sha256:5fed4e2cfc6f8788e57f158a92b3a592de106a660546659713e23b27e6574616",
+      "ORIGINAL_STOP": "sha256:03b725108ed4aecdf9b453f7315bce69b51df51c6cf1e39521cce3bdaa3afaf5"
+    },
+    "sha256": "2c33637e7c9f6c6609910009a4e7d6f4b9a1a8b9764a905cbf156fbea2df24ec"
+  },
+  "prerequisite_preparations": 0,
+  "preserved_failed_attempt": {
+    "cost_scope": "Paid failed attempt preserved; unreliable preview counter is null, never a certified zero.",
+    "counting_reliable": false,
+    "failure": {
+      "committed": false,
+      "message": "preview_wrapper_replaced",
+      "phase": "saved_metadata_admission",
+      "type": "PlanningBudgetViolation"
+    },
+    "launcher_sha256": "938ba71ecc04d60bf426dd91f7daf31ac02442323691021adc68b32ec08a71c4",
+    "native_preview_entries": null,
+    "native_transition_attempts": 0,
+    "observed_admissions_before_accounting_failure": 0,
+    "parent_seconds": 4.027759624877945,
+    "report_path": "build/train045-frontier-preparation-v1/run-01/report.json",
+    "report_sha256": "0a2027b9a7cf8ca48cd3dcd8692dfee84b883e4bbe66e2a4d0d557ec3e215870",
+    "sampled_peak_group_rss_bytes": 337559552,
+    "source_index_sha256": "07e36b83b13c9d30567e32913b47c6767efa78b5556472c356b37b91f929001f",
+    "worker_seconds": 3.6472692920360714
+  },
+  "preserved_output_failed_attempt": {
+    "cost_scope": "All failed source/prefix/suffix work retained; no sealed plans or independent endpoints, no accepted route.",
+    "counting_reliable": true,
+    "failure": {
+      "committed": false,
+      "message": "Cohort output write would exceed bound",
+      "phase": "focused_suffix_planning",
+      "type": "InterruptedError"
+    },
+    "launcher_sha256": "a2a12688bc6a2aebdce696e1f01145299c2d398884cd7a9ff3a95a1fe246aeaa",
+    "native_preview_entries": 4926,
+    "native_transition_counts": {
+      "attempted": 36,
+      "completed": 36,
+      "raised": 0
+    },
+    "original_instrumentation_failure": {
+      "cost_scope": "Paid failed attempt preserved; unreliable preview counter is null, never a certified zero.",
+      "counting_reliable": false,
+      "failure": {
+        "committed": false,
+        "message": "preview_wrapper_replaced",
+        "phase": "saved_metadata_admission",
+        "type": "PlanningBudgetViolation"
+      },
+      "launcher_sha256": "938ba71ecc04d60bf426dd91f7daf31ac02442323691021adc68b32ec08a71c4",
+      "native_preview_entries": null,
+      "native_transition_attempts": 0,
+      "observed_admissions_before_accounting_failure": 0,
+      "parent_seconds": 4.027759624877945,
+      "report_path": "build/train045-frontier-preparation-v1/run-01/report.json",
+      "report_sha256": "0a2027b9a7cf8ca48cd3dcd8692dfee84b883e4bbe66e2a4d0d557ec3e215870",
+      "sampled_peak_group_rss_bytes": 337559552,
+      "source_index_sha256": "07e36b83b13c9d30567e32913b47c6767efa78b5556472c356b37b91f929001f",
+      "worker_seconds": 3.6472692920360714
+    },
+    "parent_seconds": 101.72626662510447,
+    "report_path": "build/train045-frontier-preparation-v1/recovery-01/report.json",
+    "report_sha256": "61ab2279199f1548eb1b67558535ffcc1cd9793b012d0a7a70ce459f349f580b",
+    "sampled_peak_group_rss_bytes": 811253760,
+    "source_index_sha256": "748f9725b3be8523dae7768594bc529e4b590ba90f17eedb63af0e53e0ef0972",
+    "worker_seconds": 101.28464849991724
+  },
+  "prior_costs_not_erased": {
+    "earlier_iterations": {
+      "current_head_optimizer_updates": 64,
+      "endgame_pair_worker_seconds": 66.72280920809135,
+      "failed_cache_attempt_worker_seconds": 1284.6671255419496,
+      "frozen_policy_forwards": 678,
+      "native_preview_entries": 88448,
+      "prior_direct_head_optimizer_updates": 64,
+      "prior_direct_worker_seconds": 384.7155832911376,
+      "prior_failed_attempt_not_amortized": true,
+      "prior_tail_worker_seconds": 269.88731187512167,
+      "scope": "cache-fill failure plus direct recovery plus tail contrast plus endgame pair; older original64 experiment separate"
+    },
+    "frozen_policy_forwards": 24,
+    "native_previews": 5915,
+    "original_fitting_and_replay_failure_cost_not_erased": true,
+    "worker_seconds": 119.18852454121225
+  },
+  "report_sha256": "3d9898b3222edca89ec681ed1a6cba7dd62c54d779638e98285341ef3258d35d",
+  "sampled_peak_rss_bytes": 810942464,
+  "scope": "One fixed TRAIN045 simulator frontier; new action-family capability, no learning/clinical claim",
+  "seconds": 0.07147745904512703,
+  "selected_absolute_prefix_length": 24,
+  "selected_full_return": 75.07598984538151,
+  "selected_net_suffix_return": 26.985133176200776,
+  "shared_fresh_replay": {
+    "distinct_complete_endpoints": 1,
+    "exploration_transitions": 24,
+    "selected_additional_STOP_transitions": 0,
+    "shared_fresh_prefix_transitions": 24
+  },
+  "sidecars_unique": 1080,
+  "source_index_sha256": "db913711734a2a0f820a8b433e144ef1a488ced3c935488cb6e22746d704c182",
+  "total_previews": 8357,
+  "total_transition_counts": {
+    "attempted": 73,
+    "completed": 73,
+    "raised": 0
+  },
+  "useful_gain": true,
+  "worker_seconds": 203.25554512487724
+}

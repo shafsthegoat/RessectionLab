@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/worker.py", line 122, in execute
+    with at('saved_metadata_admission'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/worker.py", line 81, in at
+    phase[0]=label;progress(label)
+                   ^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/worker.py", line 77, in progress
+    checkpoint();write_json(output/'progress.json',{'phase':label,'elapsed_seconds':time.perf_counter()-started,
+    ^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-frontier-preparation-v1/worker.py", line 72, in checkpoint
+    budget.check();sink.check()
+    ^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/planning_budget.py", line 106, in check
+    self._raise_failure()
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/planning_budget.py", line 98, in _raise_failure
+    raise PlanningBudgetViolation(self._failure, self.snapshot())
+resectionlab.planning_budget.PlanningBudgetViolation: preview_wrapper_replaced
+{"status": "failed_or_incomplete", "worker_seconds": 3.6472692920360714, "diagnosis": null}

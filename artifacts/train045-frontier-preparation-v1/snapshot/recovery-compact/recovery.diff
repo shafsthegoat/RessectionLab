@@ -1,0 +1,126 @@
+--- recovery/worker.py
++++ recovery-compact/worker.py
+@@ -6,7 +6,8 @@
+ HERE=Path(__file__).resolve().parent
+ sys.path.insert(0,str(HERE))
+ from common import ROOT,IL,PUBLIC,PUBLIC_SHA,COHORT,COHORT_SHA,canonical,semantic,read_bytes,read_json,sha,guard,tree_bytes,write_json,runtime_roots,PAIR_SUBJECT
+-from inputs import REPORT,REPORT_SHA,PLANS,PLANS_SHA,WORLD_KEYS,retained_prefix,FAILED_REPORT,FAILED_PARENT,require_failed_attempt
++from inputs import REPORT,REPORT_SHA,PLANS,PLANS_SHA,WORLD_KEYS,retained_prefix,FAILED_REPORT,FAILED_PARENT,require_failed_attempt,OUTPUT_FAILED_REPORT,OUTPUT_FAILED_PARENT,require_output_failed_attempt
++from compact_output import encode_gzip
+ 
+ def install_boundary(index, output):
+     allowed={str((ROOT/name).absolute()) for name in
+@@ -47,7 +48,7 @@
+ 
+ 
+ def execute(index,index_sha,config,output,started):
+-    from resectionlab.core import thaw_json,semantic_digest
++    from resectionlab.core import freeze_json,thaw_json,semantic_digest
+     from resectionlab.native_resection import NativeResectionEngine
+     from resectionlab.native_spatial_task import NativeSpatialTask
+     from resectionlab.native_proposals import OBSTRUCTION_CELLS_PER_PREVIEW
+@@ -73,6 +74,11 @@
+         if tree_bytes(HERE.parent)>caps['whole_build_bytes']-65536:raise InterruptedError('Whole stage cap')
+     def cancel():checkpoint();return False
+     def save_report():write_json(output/'report.json',thaw_json(report))
++    def save_gzip(path,value):
++        # Exact original JSON schema; compression cannot change model/replay inputs.
++        raw,binding=encode_gzip(thaw_json(freeze_json(value)))
++        sink.write_bytes(output/path,raw)
++        return {'path':path,**binding}
+     def progress(label,**details):
+         checkpoint();write_json(output/'progress.json',{'phase':label,'elapsed_seconds':time.perf_counter()-started,
+             'native_budget':budget.snapshot(),'transition_counts':transitions,'unique_sidecars':len(sidecars),**details},65536)
+@@ -123,6 +129,8 @@
+                 for name,digest in index['input_metadata'].items():read_bytes(ROOT/name,digest)
+                 prior=pinned(REPORT);plans=pinned(PLANS);old,oldplan=retained_prefix(prior,plans)
+                 report['preserved_failed_attempt']=require_failed_attempt(pinned(FAILED_REPORT),pinned(FAILED_PARENT))
++                report['preserved_output_failed_attempt']=require_output_failed_attempt(
++                    pinned(OUTPUT_FAILED_REPORT),pinned(OUTPUT_FAILED_PARENT))
+                 report['retained_result']={'path':REPORT,'sha256':REPORT_SHA,'plans_sha256':PLANS_SHA,
+                     'plan_seal':oldplan['plan_seal'],'prior_costs_not_erased':prior['pair_plus_recovery_costs']}
+                 original=pinned(IL+'/configuration.json');protocol=original['learning_protocol'];limits=original['admission_limits']
+@@ -166,15 +174,13 @@
+                     try:chosen,account=select_suffix(nominal,records,frontier,seconds=config['selector_seconds'],cancelled=cancel,progress=progress)
+                     except ObservedSearchLimit as error:
+                         partial=thaw_json(error.accounting)
+-                        sink.write(output/'partial-selection.json',partial)
+-                        report['incomplete_selection']={'path':'partial-selection.json','sha256':sha(output/'partial-selection.json')}
++                        report['incomplete_selection']=save_gzip('partial-selection.json.gz',partial)
+                         raise
+                     if (not account['complete'] or account['call_cap_reached'] or account['time_cap_reached']
+                         or account['model_transition_calls']>12 or len(account['explored_action_records'])>24
+                         or account['selected_prefix_length']<12):raise ValueError('Complete bounded suffix required')
+                     account=thaw_json(account);chosen=thaw_json(chosen)
+-                    sink.write(output/'selection.json',account)
+-                    report['selection']={'path':'selection.json','sha256':sha(output/'selection.json'),
++                    report['selection']={**save_gzip('selection.json.gz',account),
+                         **{k:account[k] for k in ('model_transition_calls','goal_diagnostic_preview_calls','dependency_preview_calls',
+                         'selected_prefix_length','selected_total_return','selected_net_suffix_return','explored_total_return','explored_net_suffix_return')}}
+                 sealed={'ORIGINAL_STOP':{'actions':old['actions'],'original_plan_seal':oldplan['plan_seal']},
+@@ -228,9 +234,9 @@
+         report['cost_scope']='All source construction, both fixed prefix executions, original witness, full suffix exploration, shared fresh replay and independent checks paid. No models/cache/weights. No omitted failed/capped arm.'
+         try:
+             # Persist each exact first-failure set once; pages/goals link its fingerprint.
+-            sink.write(output/'first-failure-sidecars.json',{'records':sidecars,'phase_counts':sidecar_calls,
++            report['sidecars']={**save_gzip('first-failure-sidecars.json.gz',{'records':sidecars,'phase_counts':sidecar_calls,
+                 'scope':'original frontier and every explored suffix query only; immutable fixed-prefix/replay rediscovery excluded from sidecar storage but fully charged. First rejected shaft intervals with explicit truncation, not full corridors'})
+-            report['sidecars']={'path':'first-failure-sidecars.json','sha256':sha(output/'first-failure-sidecars.json'),'unique_count':len(sidecars)}
++                ,'unique_count':len(sidecars)}
+         except BaseException as error:
+             report['status']='failed_or_incomplete';report['sidecar_output_failure']=str(error)
+         try:
+--- recovery/inputs.py
++++ recovery-compact/inputs.py
+@@ -24,6 +24,8 @@
+                 for v in record['input_files'].values()}
+     if arrays!=old['public_arrays'] or len(arrays)!=5:raise ValueError('Exact original045 allowlist required')
+     pins.update({FAILED_REPORT:FAILED_REPORT_SHA,FAILED_PARENT:FAILED_PARENT_SHA,FAILED_INDEX:FAILED_INDEX_SHA})
++    pins.update({OUTPUT_FAILED_REPORT:OUTPUT_FAILED_REPORT_SHA,OUTPUT_FAILED_PARENT:OUTPUT_FAILED_PARENT_SHA,
++                 OUTPUT_FAILED_INDEX:OUTPUT_FAILED_INDEX_SHA})
+     return pins,arrays
+ 
+ 
+@@ -70,3 +72,37 @@
+         'worker_seconds':report['worker_seconds'],'parent_seconds':parent['elapsed_seconds'],
+         'sampled_peak_group_rss_bytes':parent['sampled_peak_group_rss_bytes'],
+         'cost_scope':'Paid failed attempt preserved; unreliable preview counter is null, never a certified zero.'}
++
++
++OUTPUT_FAILED_REPORT='build/train045-frontier-preparation-v1/recovery-01/report.json'
++OUTPUT_FAILED_REPORT_SHA='61ab2279199f1548eb1b67558535ffcc1cd9793b012d0a7a70ce459f349f580b'
++OUTPUT_FAILED_PARENT='build/train045-frontier-preparation-v1/recovery-01/launcher.json'
++OUTPUT_FAILED_PARENT_SHA='a2a12688bc6a2aebdce696e1f01145299c2d398884cd7a9ff3a95a1fe246aeaa'
++OUTPUT_FAILED_INDEX='build/train045-frontier-preparation-v1/recovery/source-index.json'
++OUTPUT_FAILED_INDEX_SHA='748f9725b3be8523dae7768594bc529e4b590ba90f17eedb63af0e53e0ef0972'
++
++
++def require_output_failed_attempt(report,parent):
++    budget=report['native_budget'];cleanup=parent['owned_lifecycle']
++    if (report['status']!='failed_or_incomplete' or not report['source_unchanged']
++        or report['failure']['phase']!='focused_suffix_planning'
++        or report['failure']['type']!='InterruptedError'
++        or report['failure']['message']!='Cohort output write would exceed bound'
++        or budget['counting_reliable'] is not True or budget['native_preview_entries']!=4926
++        or report['native_transition_counts']!={'attempted':36,'completed':36,'raised':0}
++        or report['total_frozen_policy_forwards']!=0 or report['branches']
++        or report['plans_sealed_before_replay'] is not False
++        or parent['status']!='incomplete_or_failed' or parent['worker_exit_code']!=1
++        or not cleanup['verified'] or not cleanup['child_reaped'] or cleanup['exit_code']!=1
++        or cleanup['errors'] or cleanup['remaining_owned_pids'] or cleanup['remaining_state_unknown']
++        or parent['report_sha256']!=OUTPUT_FAILED_REPORT_SHA
++        or report['source_index_sha256']!=OUTPUT_FAILED_INDEX_SHA or parent['source_index_sha256']!=OUTPUT_FAILED_INDEX_SHA):
++        raise ValueError('Exact preserved post-exploration output-cap failure required')
++    return {'report_path':OUTPUT_FAILED_REPORT,'report_sha256':OUTPUT_FAILED_REPORT_SHA,
++        'launcher_sha256':OUTPUT_FAILED_PARENT_SHA,'source_index_sha256':OUTPUT_FAILED_INDEX_SHA,
++        'failure':report['failure'],'native_preview_entries':4926,'counting_reliable':True,
++        'native_transition_counts':report['native_transition_counts'],
++        'worker_seconds':report['worker_seconds'],'parent_seconds':parent['elapsed_seconds'],
++        'sampled_peak_group_rss_bytes':parent['sampled_peak_group_rss_bytes'],
++        'original_instrumentation_failure':report['preserved_failed_attempt'],
++        'cost_scope':'All failed source/prefix/suffix work retained; no sealed plans or independent endpoints, no accepted route.'}
+--- recovery/config.json
++++ recovery-compact/config.json
+@@ -1 +1 @@
+-{"base_candidate_cap":120,"baseline_canonical_head":"f64786ae34e386083dd5914bab091f355c8f89ad","caps":{"frozen_policy_forwards":0,"log_bytes":65536,"native_previews":12000,"native_transitions":75,"output_bytes":6291456,"parent_wall_seconds":330,"unique_sidecars":4096,"whole_build_bytes":8388608,"work_seconds":300,"worker_peak_rss_bytes":3221225472},"dependency_diagnostics_per_state":32,"extra_pairs":32,"goal_diagnostics_per_state":120,"max_steps":24,"methods":["ORIGINAL_STOP","FOCUSED_PREPARATION"],"obstruction_cells":16,"output_directory":"build/train045-frontier-preparation-v1/recovery-01","page_size":8,"prefix_nonstop_actions":12,"recovery_scope":"Instrumentation ordering only: counters outside PlanningBudget, which remains exact preview owner. Original failed run remains immutable; same scientific protocol/caps.","schema":"train045-fixed-frontier-preparation-v1","scope":"New declared action-family capability after fixed retained TRAIN045 prefix. No new model training, no matched-input learning claim. Whole-cell reward/full-shaft physics unchanged.","selector_baseline_sha256":"e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448","selector_seconds":180,"subject":"ReMIND-045","success":"Both complete independent audits; additional positive target-source-cell removal AND strictly positive incremental total nominal return vs fixed prefix STOP. All added preparation costs count; tied or censored attempts negative."}
++{"base_candidate_cap":120,"baseline_canonical_head":"f64786ae34e386083dd5914bab091f355c8f89ad","caps":{"frozen_policy_forwards":0,"log_bytes":65536,"native_previews":12000,"native_transitions":75,"output_bytes":3145728,"parent_wall_seconds":330,"unique_sidecars":4096,"whole_build_bytes":8388608,"work_seconds":300,"worker_peak_rss_bytes":3221225472},"dependency_diagnostics_per_state":32,"extra_pairs":32,"goal_diagnostics_per_state":120,"max_steps":24,"methods":["ORIGINAL_STOP","FOCUSED_PREPARATION"],"obstruction_cells":16,"output_directory":"build/train045-frontier-preparation-v1/recovery-compact-01","page_size":8,"prefix_nonstop_actions":12,"recovery_scope":"Serialization-only successor: lossless deterministic bounded gzip JSON for full selection and sidecars. Original schemas, all numeric science and both failed attempts retained.","schema":"train045-fixed-frontier-preparation-v1","scope":"New declared action-family capability after fixed retained TRAIN045 prefix. No new model training, no matched-input learning claim. Whole-cell reward/full-shaft physics unchanged.","selector_baseline_sha256":"e73b7bca632ed37b4afe3b513b494465910b3f90160cad22851b1a9f2bac1448","selector_seconds":180,"serialization":{"gzip_compresslevel":6,"gzip_mtime":0,"max_compressed_json_bytes":3145728,"max_decompressed_json_bytes":33554432,"selection":"full original schema including native history, packets, all ledgers and sidecars","sidecars":"complete exact first-failure records, no projection","version":"fixed045-lossless-gzip-v1"},"subject":"ReMIND-045","success":"Both complete independent audits; additional positive target-source-cell removal AND strictly positive incremental total nominal return vs fixed prefix STOP. All added preparation costs count; tied or censored attempts negative."}

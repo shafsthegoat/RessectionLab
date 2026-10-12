@@ -1,0 +1,69 @@
+"""Exercise the actual worker stack with native work, then deliberate failure."""
+import importlib.util,json,os,sys,time
+from pathlib import Path
+import pytest
+HERE=Path(__file__).resolve().parent
+ROOT=next(p for p in HERE.parents if (p/'src/resectionlab').is_dir())
+sys.path[:0]=[str(HERE),str(ROOT/'src')]
+spec=importlib.util.spec_from_file_location('frontier_recovery_worker',HERE/'worker.py')
+worker=importlib.util.module_from_spec(spec);spec.loader.exec_module(worker)
+from resectionlab.native_resection import NativeResectionEngine
+from resectionlab.native_spatial_task import NativeSpatialTask,make_native_opening_task
+from resectionlab.patient_planning_cohort_visits import make_train_visit_factories
+import resectionlab.patient_planning_cohort_visits as visits
+
+
+@pytest.mark.parametrize('corrupt_wrapper',[False,True])
+def test_actual_execute_stack_counts_native_work_and_restores_after_failure(monkeypatch,corrupt_wrapper):
+    # The owned supervisor supplies a fresh real TMPDIR; pytest tmp_path adds
+    # convenience symlinks, which the actual whole-stage guard rightly refuses.
+    output=Path(os.environ['TMPDIR']).resolve()/('frontier-stack-'+('tamper' if corrupt_wrapper else 'failure'))
+    output.mkdir(exist_ok=False)
+    original_preview=NativeResectionEngine.preview_stroke
+    original_transition=NativeSpatialTask._transition
+    entered=[];calls=[]
+    def observed_preview(engine,*args,**kwargs):
+        calls.append(1);return original_preview(engine,*args,**kwargs)
+    monkeypatch.setattr(NativeResectionEngine,'preview_stroke',observed_preview)
+    config=json.loads((HERE/'config.json').read_text());config['caps']['work_seconds']=20
+    paths=(worker.REPORT,worker.PLANS,worker.IL+'/configuration.json',worker.FAILED_REPORT,worker.FAILED_PARENT)
+    index={'input_metadata':{name:'generated' for name in paths},'files':{}}
+    # These are explicit generated source-boundary replacements, not patient admission.
+    metadata={worker.REPORT:{'pair_plus_recovery_costs':{'generated':True}},worker.PLANS:{},
+        worker.IL+'/configuration.json':{'learning_protocol':{},'admission_limits':{}},
+        worker.FAILED_REPORT:{},worker.FAILED_PARENT:{}}
+    monkeypatch.setattr(worker,'read_bytes',lambda *a,**k:b'generated-only')
+    monkeypatch.setattr(worker,'read_json',lambda p,*a:metadata[str(Path(p).relative_to(ROOT))])
+    monkeypatch.setattr(worker,'retained_prefix',lambda *a:({}, {'plan_seal':'generated'}))
+    monkeypatch.setattr(worker,'require_failed_attempt',lambda *a:{'generated_fixture':True})
+    monkeypatch.setattr(worker,'guard',lambda *a:None)
+    def generated_factory(**kwargs):
+        entered.append(True)
+        task=make_native_opening_task(max_steps=3)
+        action=next(iter(task._prepare_inventory()))
+        task.step(action)
+        assert task._steps==1 and calls
+        if corrupt_wrapper:
+            # The real guard must still detect replacement, not silently accept it.
+            NativeResectionEngine.preview_stroke=lambda *a,**k:None
+            kwargs['progress']('deliberate_guard_violation')
+        raise RuntimeError('generated refusal after paid native transition')
+    monkeypatch.setattr(visits,'make_train_visit_factories',generated_factory)
+    report=worker.execute(index,'generated-source',config,output,time.perf_counter())
+    assert entered==[True], 'Stack failed before the source factory, as the original bug did'
+    assert report['status']=='failed_or_incomplete'
+    assert report['native_transition_counts']=={'attempted':1,'completed':1,'raised':0}
+    assert report['total_frozen_policy_forwards']==0
+    budget=report['native_budget']
+    assert budget['observed_admissions_before_accounting_failure']==len(calls)>0
+    assert sum(p['started'] for p in budget['native_preview_profile']['phases'].values())==len(calls)
+    if corrupt_wrapper:
+        assert report['failure']['type']=='PlanningBudgetViolation'
+        assert report['failure']['message']=='preview_wrapper_replaced'
+        assert budget['counting_reliable'] is False and budget['native_preview_entries'] is None
+    else:
+        assert report['failure']['message']=='generated refusal after paid native transition'
+        assert budget['counting_reliable'] is True and budget['native_preview_entries']==len(calls)
+    assert NativeResectionEngine.preview_stroke is observed_preview
+    assert NativeSpatialTask._transition is original_transition
+    assert (output/'report.json').is_file() and (output/'first-failure-sidecars.json').is_file()

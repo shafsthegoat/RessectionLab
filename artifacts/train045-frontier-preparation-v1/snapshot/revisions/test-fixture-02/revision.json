@@ -1,0 +1,27 @@
+{
+  "previous_source_ready_sha256": "4b9b86b5c63809bb4d240a530f0d7425524684bf04dbbc278abd969baaa7a519",
+  "prior_failure": {
+    "path": "build/train045-frontier-preparation-v1/controls-repair/controls-01.json",
+    "sha256": "d7fdc37a5d1f1082d32c3592209cfdb7811b10735449dddf82a685c2f7246788"
+  },
+  "reason": "thaw_json transforms Mapping and tuple, not outer Python list; individually thaw every frozen packet before assigning nested fields",
+  "runtime_changed": false,
+  "schema": "fixed045-test-fixture-revision-v2",
+  "source_inspection": "core.py thaw_json Mapping branch recursively detaches nested physical_action; tuple tip becomes list; mutation cannot reach original packet",
+  "test_after_sha256": "14f9814ae1c88a6236fe36cc7b28086b2eef66c070c75e9673eef9d8f0775c33",
+  "test_before_sha256": "41fc296802360d85898ec9e4fe0adb9d158b5fc962ff20ef37acfd395b9f4393",
+  "unchanged_runtime_pins": {
+    "build/train045-frontier-preparation-v1/bootstrap_smoke.py": "0c36150e02e97094ce86fd73ca8c5607bd465c120962fca959f1bdef290fcb92",
+    "build/train045-frontier-preparation-v1/common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+    "build/train045-frontier-preparation-v1/config.json": "cca5b7ffd849af4966cebfea94ae8b6a300eb50014ec624369b14a5067f1a12a",
+    "build/train045-frontier-preparation-v1/controls_entry.py": "7d90fc1235621aa63ab4cd6297d77297b887a5204bc6abde7bd0c688ecc8de96",
+    "build/train045-frontier-preparation-v1/freeze_sources.py": "25802cee7554afe863f2b1bdfb9026d514f18561045c49c39a577758a24bda76",
+    "build/train045-frontier-preparation-v1/frontier_protocol.py": "8c878476fa62e63ff721b98085fe78672162ffcbe75f76c8c615958ec2239df0",
+    "build/train045-frontier-preparation-v1/frontier_selector.py": "2bd6633b953e7e208040e48a36ed6842873462df32b2eaeca868ba2cd90f8ac2",
+    "build/train045-frontier-preparation-v1/inputs.py": "1a4ad0375e831033201d11260a9bc74fbe2ee889ae1770be20ff5e5997de902b",
+    "build/train045-frontier-preparation-v1/run_owned.py": "b8f8bfda40478968ced8d9f8eaad2910c290267da1fe927c661f746112362dda",
+    "build/train045-frontier-preparation-v1/selector-adapter.diff": "41b111ec77395328f859d3d9ade165db22665c6a6b6cc113e62d993fad6a3cd9",
+    "build/train045-frontier-preparation-v1/worker.py": "c279b57151202079f8c72e077618b053157c0bd4504fae6e0cc5505c0e73b6cc"
+  },
+  "validation": "AST/source inspection only; no test or numerical execution"
+}
