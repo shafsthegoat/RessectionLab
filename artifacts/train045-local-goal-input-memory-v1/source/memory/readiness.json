@@ -1,0 +1,70 @@
+{
+  "PPO_batch_size": 4,
+  "all_test_children_reaped": true,
+  "assembly_measured_peak_difference_MiB": 66.234375,
+  "assembly_measured_peak_self_rss_bytes": {
+    "difference": 69451776,
+    "new": 324534272,
+    "old": 393986048
+  },
+  "assembly_scope": "Two fresh processes, B=4/18x64x64x64 assembly only, exact output hash; no CNN or PPO full-training RSS benchmark",
+  "automatic_retry": false,
+  "files": {
+    "artifacts/train045-local-goal-curriculum-interruption-v1/original-policy.py": {
+      "bytes": 11618,
+      "sha256": "fce66f1de108591e57aadd55b37082930fafa4c2311bc4dfed3235f0b36d8ec8"
+    },
+    "build/train045-local-goal-ppo-v1/memory/assembly_memory.py": {
+      "bytes": 2305,
+      "sha256": "3b07f902b05e87cd5ef7ee3e9645cd547bba4ef12591cbdf12ba2eca8fd01adb"
+    },
+    "build/train045-local-goal-ppo-v1/memory/attempt-01/assembly-new.log": {
+      "bytes": 441,
+      "sha256": "8d9a68b98d6b03dab3b41e99976063bff159128c0f4173e7bc9f116daadd067b"
+    },
+    "build/train045-local-goal-ppo-v1/memory/attempt-01/assembly-old.log": {
+      "bytes": 439,
+      "sha256": "6db0a6600dec6b0723bc41a8e701d5b21c92e1daf569068acf96b956b85ba1a8"
+    },
+    "build/train045-local-goal-ppo-v1/memory/attempt-01/parity.log": {
+      "bytes": 1889,
+      "sha256": "83a278eaa853f45ff38eb8b589b5c043e175a5177b9ad7de51cd961ce03feb01"
+    },
+    "build/train045-local-goal-ppo-v1/memory/attempt-01/receipt.json": {
+      "bytes": 5432,
+      "sha256": "e5c699ff5bac1c9ffa3a92c40ac7db07382798d87aa702b2089a9379f81cf98c"
+    },
+    "build/train045-local-goal-ppo-v1/memory/policy.patch": {
+      "bytes": 1971,
+      "sha256": "5a4558d9341d84dbced9d2e9c26a47a8cf984525ae5cda43541d9d1bdd5d1d69"
+    },
+    "build/train045-local-goal-ppo-v1/memory/run_controls.py": {
+      "bytes": 3703,
+      "sha256": "14e502ce68b058017e0da18c288aadc28b9f08e05b72819113aa0bc4272c4240"
+    },
+    "build/train045-local-goal-ppo-v1/memory/test_input_memory.py": {
+      "bytes": 8647,
+      "sha256": "8477faedd78a2dcca1817e3049e822425190a44fc4ae1a313bda52e9ef039843"
+    },
+    "build/train045-local-goal-ppo-v1/model/policy.py": {
+      "bytes": 11906,
+      "sha256": "029b97b545f4bec300ae5a8f9b038e9efe6f89dcb81334db6aa91c4233a5cc8a"
+    }
+  },
+  "full_training_RSS_reduction_measured": false,
+  "native_calls": 0,
+  "one_Adam_update_per_generated_policy_only": true,
+  "other_policy_AST_unchanged": true,
+  "parameter_architecture_and_checkpoint_schema_unchanged": true,
+  "patient_data_or_checkpoint_reads": false,
+  "production_scope": "Only LocalGoalPolicy.logits_values input allocation and dense local-reference lifetimes; no additional runtime imports",
+  "runtime_execution_authorized_by_this_receipt": false,
+  "schema": "local-goal-ppo-cnn-input-memory-readiness-v1",
+  "status": "generated_parity_pass",
+  "test_scope": "Generated 7x8x6 heterogeneous B=4 exact-byte volume/logit/value/loss/gradient/model/Adam parity; frozen and trainable encoders; masks/refusals/input integrity; weak-reference lifetime checks",
+  "tests": 4,
+  "threads": 2,
+  "whole_job_seconds": 2.719526916043833,
+  "whole_stage_bytes_before_receipt": 9582315,
+  "whole_stage_cap_bytes": 201326592
+}

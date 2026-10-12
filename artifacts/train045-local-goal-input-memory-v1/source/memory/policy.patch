@@ -1,0 +1,30 @@
+--- artifacts/train045-local-goal-curriculum-interruption-v1/original-policy.py
++++ build/train045-local-goal-ppo-v1/model/policy.py
+@@ -147,11 +147,17 @@
+                 external = torch.as_tensor(action_masks, device=mask.device, dtype=torch.bool).reshape_as(mask)
+                 if not torch.equal(external, mask): raise ValueError('Stored observation/mask mismatch')
+             visible = coverage & available[:, :, None, None, None]
+-            volume = torch.cat((torch.where(visible, image, 0.), visible.float(),
+-                available[:, :, None, None, None].expand_as(image).float()), dim=1)
++            # Preserve the exact 18-channel input without three dense float
++            # operands coexisting with a concatenated copy.
++            volume = image.new_empty((batch, 18, *image.shape[2:]))
++            volume[:, :6].copy_(image)
++            volume[:, :6].masked_fill_(~visible, 0.)
++            volume[:, 6:12].copy_(visible)
++            volume[:, 12:].copy_(available[:, :, None, None, None])
+             if self.freeze_encoder:
+                 with torch.no_grad(): encoded = self.spatial.encoder(volume)
+             else: encoded = self.spatial.encoder(volume)
++            del volume
+             context = torch.cat((F.adaptive_avg_pool3d(encoded, (2, 2, 2)).flatten(1),
+                                  obs['state'].float(), obs['spacing'].float()), dim=1)
+             grid = obs['grid'].float(); inside = obs['inside'].float()
+@@ -160,6 +166,7 @@
+             rays = sampled[..., 0].permute(0, 2, 3, 1)
+             rays = rays * (grid.abs() <= 1).all(-1, keepdim=True) * inside[..., None]
+             rays = torch.cat((rays, inside[..., None]), dim=-1).flatten(2)
++            del encoded
+             geometry = obs['geometry'].float(); target = obs['public_target'].float()
+             goal = obs['goal_global'].float()
+             action_input = torch.cat((context[:, None, :].expand(-1, MAX_ACTIONS, -1), geometry, rays,

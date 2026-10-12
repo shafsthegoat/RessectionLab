@@ -1,0 +1,65 @@
+{
+  "schema": "exact-input-memory-result-v1",
+  "files": [
+    {
+      "source": "build/train045-local-goal-ppo-v1/model/policy.py",
+      "snapshot": "source/model/policy.py",
+      "bytes": 11906,
+      "sha256": "029b97b545f4bec300ae5a8f9b038e9efe6f89dcb81334db6aa91c4233a5cc8a"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/memory/run_controls.py",
+      "snapshot": "source/memory/run_controls.py",
+      "bytes": 3703,
+      "sha256": "14e502ce68b058017e0da18c288aadc28b9f08e05b72819113aa0bc4272c4240"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/memory/policy.patch",
+      "snapshot": "source/memory/policy.patch",
+      "bytes": 1971,
+      "sha256": "5a4558d9341d84dbced9d2e9c26a47a8cf984525ae5cda43541d9d1bdd5d1d69"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/memory/assembly_memory.py",
+      "snapshot": "source/memory/assembly_memory.py",
+      "bytes": 2305,
+      "sha256": "3b07f902b05e87cd5ef7ee3e9645cd547bba4ef12591cbdf12ba2eca8fd01adb"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/memory/readiness.json",
+      "snapshot": "source/memory/readiness.json",
+      "bytes": 3171,
+      "sha256": "e9e16809ff4a8b3097d1288f4762d01fc56af1846ba4bb9839a8ec92a8158722"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/memory/test_input_memory.py",
+      "snapshot": "source/memory/test_input_memory.py",
+      "bytes": 8647,
+      "sha256": "8477faedd78a2dcca1817e3049e822425190a44fc4ae1a313bda52e9ef039843"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/memory/attempt-01/assembly-old.log",
+      "snapshot": "source/memory/attempt-01/assembly-old.log",
+      "bytes": 439,
+      "sha256": "6db0a6600dec6b0723bc41a8e701d5b21c92e1daf569068acf96b956b85ba1a8"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/memory/attempt-01/assembly-new.log",
+      "snapshot": "source/memory/attempt-01/assembly-new.log",
+      "bytes": 441,
+      "sha256": "8d9a68b98d6b03dab3b41e99976063bff159128c0f4173e7bc9f116daadd067b"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/memory/attempt-01/parity.log",
+      "snapshot": "source/memory/attempt-01/parity.log",
+      "bytes": 1889,
+      "sha256": "83a278eaa853f45ff38eb8b589b5c043e175a5177b9ad7de51cd961ce03feb01"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/memory/attempt-01/receipt.json",
+      "snapshot": "source/memory/attempt-01/receipt.json",
+      "bytes": 5432,
+      "sha256": "e5c699ff5bac1c9ffa3a92c40ac7db07382798d87aa702b2089a9379f81cf98c"
+    }
+  ]
+}

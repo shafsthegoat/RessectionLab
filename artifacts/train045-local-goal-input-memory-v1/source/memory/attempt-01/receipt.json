@@ -1,0 +1,152 @@
+{
+  "all_children_reaped": true,
+  "assembly_comparison": {
+    "exact_volume": true,
+    "new_peak_self_rss_bytes": 324534272,
+    "old_peak_self_rss_bytes": 393986048,
+    "scope": "One fresh process per arm, assembly only; not full PPO RSS or CNN-workspace evidence"
+  },
+  "automatic_retry": false,
+  "deadline_seconds": 60,
+  "elapsed_seconds": 2.719526916043833,
+  "per_process_rss_cap_bytes": 1073741824,
+  "runs": [
+    {
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "-I",
+        "-B",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/memory/test_input_memory.py"
+      ],
+      "elapsed_seconds": 1.763327790889889,
+      "exit_code": 0,
+      "log_sha256": "83a278eaa853f45ff38eb8b589b5c043e175a5177b9ad7de51cd961ce03feb01",
+      "name": "parity",
+      "result": {
+        "acquired_checkpoint_loads": 0,
+        "acquired_inputs": false,
+        "checks": [
+          {
+            "case": "frozen_reference_lifetimes",
+            "new": {
+              "encoded": false,
+              "volume": false
+            },
+            "old": {
+              "encoded": true,
+              "volume": true
+            }
+          },
+          {
+            "batch": 4,
+            "case": "frozen",
+            "inputs_unchanged": true,
+            "logits_values_equal": true,
+            "loss_equal": true,
+            "one_Adam_state_equal": true,
+            "parameter_gradients_equal": 12,
+            "volume_bytes_equal": true
+          },
+          {
+            "batch": 4,
+            "case": "trainable",
+            "inputs_unchanged": true,
+            "logits_values_equal": true,
+            "loss_equal": true,
+            "one_Adam_state_equal": true,
+            "parameter_gradients_equal": 16,
+            "volume_bytes_equal": true
+          },
+          {
+            "case": "validation_and_unobserved_payload",
+            "equal": true
+          }
+        ],
+        "elapsed_seconds": 0.682460542069748,
+        "errors": 0,
+        "failures": 0,
+        "interop_threads": 2,
+        "native_calls": 0,
+        "peak_self_rss_bytes": 335347712,
+        "source_sha256": {
+          "artifacts/train045-local-goal-curriculum-interruption-v1/original-policy.py": "fce66f1de108591e57aadd55b37082930fafa4c2311bc4dfed3235f0b36d8ec8",
+          "build/train045-local-goal-ppo-v1/memory/test_input_memory.py": "8477faedd78a2dcca1817e3049e822425190a44fc4ae1a313bda52e9ef039843",
+          "build/train045-local-goal-ppo-v1/model/policy.py": "029b97b545f4bec300ae5a8f9b038e9efe6f89dcb81334db6aa91c4233a5cc8a"
+        },
+        "status": "pass",
+        "tests": 4,
+        "threads": 2
+      },
+      "rss_samples": 42,
+      "sampled_peak_rss_bytes": 340180992,
+      "stop_reason": null
+    },
+    {
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "-I",
+        "-B",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/memory/assembly_memory.py",
+        "old"
+      ],
+      "elapsed_seconds": 0.49889058410190046,
+      "exit_code": 0,
+      "log_sha256": "6db0a6600dec6b0723bc41a8e701d5b21c92e1daf569068acf96b956b85ba1a8",
+      "name": "assembly-old",
+      "result": {
+        "after_peak_self_rss_bytes": 393986048,
+        "assembly_seconds": 0.0129036670550704,
+        "before_peak_self_rss_bytes": 235765760,
+        "mode": "old",
+        "scope": "generated assembly only; no encoder, policy, native task or acquired inputs",
+        "shape": [
+          4,
+          18,
+          64,
+          64,
+          64
+        ],
+        "source_sha256": "fce66f1de108591e57aadd55b37082930fafa4c2311bc4dfed3235f0b36d8ec8",
+        "threads": 2,
+        "volume_sha256": "34903623778402c40d52932464d6bcaaf2da1ef389ed77c13c100815bad26de2"
+      },
+      "rss_samples": 12,
+      "sampled_peak_rss_bytes": 394149888,
+      "stop_reason": null
+    },
+    {
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "-I",
+        "-B",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/memory/assembly_memory.py",
+        "new"
+      ],
+      "elapsed_seconds": 0.4565858331043273,
+      "exit_code": 0,
+      "log_sha256": "8d9a68b98d6b03dab3b41e99976063bff159128c0f4173e7bc9f116daadd067b",
+      "name": "assembly-new",
+      "result": {
+        "after_peak_self_rss_bytes": 324534272,
+        "assembly_seconds": 0.006296625128015876,
+        "before_peak_self_rss_bytes": 235798528,
+        "mode": "new",
+        "scope": "generated assembly only; no encoder, policy, native task or acquired inputs",
+        "shape": [
+          4,
+          18,
+          64,
+          64,
+          64
+        ],
+        "source_sha256": "029b97b545f4bec300ae5a8f9b038e9efe6f89dcb81334db6aa91c4233a5cc8a",
+        "threads": 2,
+        "volume_sha256": "34903623778402c40d52932464d6bcaaf2da1ef389ed77c13c100815bad26de2"
+      },
+      "rss_samples": 11,
+      "sampled_peak_rss_bytes": 324714496,
+      "stop_reason": null
+    }
+  ],
+  "status": "pass"
+}

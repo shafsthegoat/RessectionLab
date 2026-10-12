@@ -1,0 +1,10 @@
+test_frozen_dense_references_released_before_heads (__main__.InputMemoryParity.test_frozen_dense_references_released_before_heads) ... ok
+test_frozen_exact_volume_forward_gradient_adam (__main__.InputMemoryParity.test_frozen_exact_volume_forward_gradient_adam) ... ok
+test_trainable_exact_volume_forward_gradient_adam (__main__.InputMemoryParity.test_trainable_exact_volume_forward_gradient_adam) ... ok
+test_validation_and_hidden_payload_unchanged (__main__.InputMemoryParity.test_validation_and_hidden_payload_unchanged) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.682s
+
+OK
+{"acquired_checkpoint_loads": 0, "acquired_inputs": false, "checks": [{"case": "frozen_reference_lifetimes", "new": {"encoded": false, "volume": false}, "old": {"encoded": true, "volume": true}}, {"batch": 4, "case": "frozen", "inputs_unchanged": true, "logits_values_equal": true, "loss_equal": true, "one_Adam_state_equal": true, "parameter_gradients_equal": 12, "volume_bytes_equal": true}, {"batch": 4, "case": "trainable", "inputs_unchanged": true, "logits_values_equal": true, "loss_equal": true, "one_Adam_state_equal": true, "parameter_gradients_equal": 16, "volume_bytes_equal": true}, {"case": "validation_and_unobserved_payload", "equal": true}], "elapsed_seconds": 0.682460542069748, "errors": 0, "failures": 0, "interop_threads": 2, "native_calls": 0, "peak_self_rss_bytes": 335347712, "source_sha256": {"artifacts/train045-local-goal-curriculum-interruption-v1/original-policy.py": "fce66f1de108591e57aadd55b37082930fafa4c2311bc4dfed3235f0b36d8ec8", "build/train045-local-goal-ppo-v1/memory/test_input_memory.py": "8477faedd78a2dcca1817e3049e822425190a44fc4ae1a313bda52e9ef039843", "build/train045-local-goal-ppo-v1/model/policy.py": "029b97b545f4bec300ae5a8f9b038e9efe6f89dcb81334db6aa91c4233a5cc8a"}, "status": "pass", "tests": 4, "threads": 2}
