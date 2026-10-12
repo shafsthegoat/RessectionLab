@@ -258,7 +258,9 @@ def render(r, prior):
             a.scatter([p['decisions']], [p['return']], marker='*' if p['success'] else 'x',
                       s=65, color=color if p['success'] else '#b22222', zorder=5)
             a.annotate('success' if p['success'] else ('FAIL: immediate STOP' if p['immediate_STOP'] else 'FAIL: no goal'), (p['decisions'], p['return']),
-                       xytext=(4, 9 + i * 11), textcoords='offset points', fontsize=8, color=color)
+                       xytext=(-4 if p['decisions'] >= 1000 else 4, 9 + i * 11),
+                       ha='right' if p['decisions'] >= 1000 else 'left',
+                       textcoords='offset points', fontsize=8, color=color)
         if arm['pending_endpoints']:
             a.text(.02, .84 - i * .065, method.capitalize() + ' pending: ' +
                    ', '.join(map(str, arm['pending_endpoints'])), transform=a.transAxes, va='top', color=color)

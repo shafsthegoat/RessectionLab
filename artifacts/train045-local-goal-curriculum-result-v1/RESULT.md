@@ -1,11 +1,11 @@
-# Reset-curriculum PPO comparison: actual uniform512 midpoint
+# Reset-curriculum PPO comparison: uniform1024 completed
 
-**Interim result, October 12: the uniform policy stops immediately and fails the
-full task.** Its return improves from -0.438688 at 256 decisions to zero at 512
-because it avoids acting. This is not useful planning improvement. The retained
-search still succeeds in five preparation/goal actions, with return 9.811680 and
-zero outside-target removal. The campaign remains in progress; both scheduled
-1,024-decision endpoints and the reverse-reset midpoint are pending.
+**Completed uniform branch, October 12: more training did not improve full-task
+performance.** Both the 512 and 1024 checkpoints stop immediately, returning zero
+and failing the goal. Retained search succeeds in five preparation/goal actions,
+with return 9.811680 and zero outside-target removal. The reverse-reset branch
+is training from the same original 256 checkpoint; its 512/1024 evaluations and
+the whole-campaign decision remain pending.
 
 ![Actual interim learning curves](snapshot/plots-curriculum-01/learning-curves.png)
 
@@ -16,7 +16,53 @@ anatomy, not observed surgery, physical validation or evidence of generalization
 Search uses charged model queries under the retained protocol; it does not share
 PPO's exact feature representation. Final patient evaluation remains closed.
 
-## What actually trained
+## Uniform1024 result
+
+The completed branch adds 768 decisions and 180 actual Adam updates over 71.755
+minutes. It produces 368 completed episodes, with nine sampled successes:
+eight from start 16, one from start 14, and none from starts 12/13/15. Of those
+368 episodes, 237 immediately STOP; their mean length is only 2.08 decisions.
+A higher episode count does not establish broader or more successful experience.
+
+| Quantity | New uniform segment | Shared-parent lineage |
+| --- | ---: | ---: |
+| Policy decisions | 768 | 1,024 |
+| Actual completed Adam updates | 180 | 338 |
+| Completed episodes | 368 | 394 |
+| Successful sampled episodes | 9 | 13 |
+| Distinct native source states | 356 | 541 |
+| Distinct state/action pairs | 480 | 690 |
+| Unique patients | 1 reused | 1 |
+
+The lineage partition is exact: 1,010 completed-episode decisions + 12 retired
+unfinished decisions + 2 live unfinished decisions = 1,024. The full-start
+evaluation again consists of the exact twelve-action reference prefix plus STOP;
+its sealed plan and history are byte-identical to the 512 artifacts. The fresh
+replay, full-tool geometry and reconstructed zero local reward agree. The
+independent evaluator checked these bindings, checkpoint bytes, unchanged
+encoder, episode counts and actual optimizer hooks without loading a model or
+rerunning the simulation. No goal, movement or removal was added by the policy.
+
+The local checkpoint is
+`build/train045-local-goal-ppo-v1/curriculum-1024-01/uniform-seed0/ppo-1024.zip`:
+248,905 bytes, SHA256
+`4da71a4fd678e88cfc1c5e8929fcff397b976f1045abf80b05f6629e856c8e07`.
+New-branch wall time is 4,305.319 seconds; shared-lineage wall is 6,159.952 seconds.
+The final evaluation/replay/audit/isolation costs 28.277 seconds, including 3.916
+seconds constructing its single catalogue. Pure nominal inference timing awaits
+the final campaign report and is not replaced by either partial cost.
+
+Saved optimizer traces narrow, but do not settle, the learning diagnosis.
+The 256→512 segment performs 11/13/14/8 Adam steps per 64-decision rollout, each
+short of its first 16-minibatch pass because PPO stops on excessive minibatch KL.
+The 512→1024 segment performs 4/4/6/13/7/11/27/62 steps. Its last update therefore
+spans almost all four planned epochs. Greater update coverage does not produce
+goal completion here; insufficient update count alone is not an explanation.
+Near-zero logged behavior-value explained variance does not establish the final
+critic's quality or a representation-capacity limit. Rewards, masks, world and
+evaluation remained fixed; the pending reverse branch tests the reset schedule.
+
+## Earlier 512 checkpoint
 
 The uniform branch resumes the exact frozen-encoder PPO256 weights and Adam
 state. At its saved midpoint:
@@ -78,7 +124,7 @@ The compact renderer reads only saved scalar reports and training-episode
 records; it neither executes policies nor decodes checkpoints. The figure was
 rendered and visually inspected. Endpoint points, sampled training returns,
 actual optimizer steps and paid costs are separated. Its latest training rows
-may extend past the immutable512 endpoint; inputs are sequential snapshots with
+include the active reverse branch beyond saved endpoints; inputs are sequential snapshots with
 their hashes retained in the JSON. Pending endpoints are not plotted as failures.
 Rerun from the original runtime location:
 
@@ -87,20 +133,22 @@ Rerun from the original runtime location:
 ```
 
 The archived renderer preserves that script; it expects the original stage
-layout. `INVENTORY.json` binds the exact interim report, curve, renderer and plots.
+layout. `INVENTORY.json` binds the preserved 512 snapshots, completed uniform1024
+report/curve, and updated renderer and plots.
 Weights, anatomy arrays and bulk trajectories are not archived in Git.
 
 ## Decision still pending
 
-Keep search as the working baseline. The demonstrated failure is immediate
-abstention at the full-task start despite sampled successes near the goal; this
+Keep search as the working baseline. The failure persists through 1,024 decisions:
+immediate abstention at the full-task start despite sampled successes near the goal. This
 does not yet isolate representation capacity, optimization or sparse-credit
 learning. Finish the frozen uniform/reverse comparison without changing rewards
 or legal actions mid-run, then decide whether the curriculum improves complete
 outcomes. No additional model sweep is launched alongside it.
 
-Before this compact archive, measured extension growth is 1,839,554,560 bytes
-(1.713 GiB), with 351,302,254,592 bytes free (327.176 GiB), no reservation
+After this compact snapshot, before final documentation/Git writes, measured
+extension growth is 1,846,046,720 bytes (1.719 GiB), with 350,226,804,736 bytes
+free (326.174 GiB), no reservation
 overruns and no new dataset. Runtime artifacts remain within the existing
 192 MiB stage reservation; compact archival writes use the existing root
 bookkeeping reservation. Physical measurements continue as a separate evidence

@@ -1,6 +1,6 @@
 {
   "schema": "local-goal-curriculum-interim-snapshot-v1",
-  "scope": "Actual uniform512 endpoint; running campaign, reverse and1024 pending",
+  "scope": "Completed uniform1024 branch and preserved512 midpoint; overallcampaignrunning, reversepending",
   "files": [
     {
       "source": "build/train045-local-goal-ppo-v1/curriculum-1024-01/report.json",
@@ -17,26 +17,38 @@
     {
       "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/render_curves.py",
       "snapshot": "snapshot/plots-curriculum-01/render_curves.py",
-      "bytes": 22958,
-      "sha256": "4fba0f49bb3c92d35598a0b04857c9734a6ce35a15f87d31cfb291705ace00ff"
+      "bytes": 23088,
+      "sha256": "5a2ac732d37785c76fbe60203ceddc227ae5f25ece91347c79c6a81cba8b9c1e"
     },
     {
       "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/learning-curves.png",
       "snapshot": "snapshot/plots-curriculum-01/learning-curves.png",
-      "bytes": 284590,
-      "sha256": "4ea132085953cacf61aabfd64068c5a089913da032f3cbfab3c9fcf2e9a224fd"
+      "bytes": 296874,
+      "sha256": "6d390503e447fbef78b20ccec1be27e5e6d6a62aa533f6e52198220ea7cd0e43"
     },
     {
       "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/learning-curves.svg",
       "snapshot": "snapshot/plots-curriculum-01/learning-curves.svg",
-      "bytes": 110126,
-      "sha256": "5e5542304f23804be944e19f67d981d5f5be408c9457ad56c13bc7b2cf777ca7"
+      "bytes": 156049,
+      "sha256": "6a33c4dff5e2ef3284606e26c8208d0a17d5c83092a556e50f5c06ddf4678272"
     },
     {
       "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/learning-curves.json",
       "snapshot": "snapshot/plots-curriculum-01/learning-curves.json",
-      "bytes": 64316,
-      "sha256": "4da88a06b5a37680d05c32938dbb02750faccf74e7aab734f35b01dab0abce75"
+      "bytes": 340346,
+      "sha256": "5c444275aa4f3c3d5a85a4e78a94084734141a804454226da021263df2a48d45"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/curriculum-1024-01/report.json",
+      "snapshot": "snapshot/uniform1024-report.json",
+      "bytes": 725334,
+      "sha256": "7a8a6cbe630008b3602957a9e8f464bf029f7d45552b374f6507e3c361899187"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/curriculum-1024-01/uniform-seed0/curve.json",
+      "snapshot": "snapshot/uniform1024-curve.json",
+      "bytes": 687861,
+      "sha256": "1a9efbf1090ef813de2aadff7bf881aa27ffa00aa10510e5aeae502463cfecda"
     }
   ]
 }
