@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-next-iteration-v1/runner/worker.py", line 281, in execute
+    sink.write(output/'logged-targets.json',{'target_formula':config['target'],
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/patient_planning_cohort_io.py", line 55, in write
+    self.write_bytes(path,raw,terminal=terminal)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/patient_planning_cohort_io.py", line 52, in write_bytes
+    with path.open('xb') as stream: stream.write(raw)
+         ^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileExistsError: [Errno 17] File exists: '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-next-iteration-v1/run-01/logged-targets.json'
+{"status": "failed_or_incomplete", "worker_seconds": 1284.6671255419496, "useful_criterion": null}

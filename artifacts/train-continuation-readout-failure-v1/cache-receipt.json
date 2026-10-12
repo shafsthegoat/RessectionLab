@@ -1,0 +1,37 @@
+{
+  "binding": {
+    "architecture_hash": "sha256:713c904fd34acf597e409c74725cc25253309ea927befb0db5ceb65d9cd3e79a",
+    "base_parameter_hash": "sha256:59506939917827f7555a61c930c33285dcb62feda52ec98576194a82e39587f3",
+    "corpus_seal": "sha256:7fecbacd3e8a133884415c711eb522dcd1f672cbb77d4a789b17849714323303",
+    "metadata_hash": "sha256:cf93441a37ec5756c4e93d8aaf03afc8e20cd52a611da5581ed26dc7723124da",
+    "origin": {
+      "encoder_checkpoint_sha256": "c174b92b09ed8eccd034a7bc8bc7cb9a4d64e09aa40d6f7a3d596ae88ea57c5c",
+      "feature_source_sha256": {
+        "resectionlab.public_target_context": "1b21898e8c89c130586936c5f49beea7c7bdefd0e0aa750a797cc3ae0a6b5e15",
+        "resectionlab.spatial_continuation_value": "fbe26f0f178d903b3ef032dceb38c6aadab34ce4c2aef7d9e816d90d98243588",
+        "resectionlab.spatial_observations": "fd80342c0b512574da0d0580ce55fdb1de231d654e6615e72ef4ffe75977619f",
+        "resectionlab.spatial_policy": "30a666b114e9649744db527a78e11da0ce79b549117f863a4da84103e115c6f4"
+      },
+      "original_reconstruction_costs": {
+        "complete_wall_seconds": 1279.0186790409498,
+        "frozen_policy_forwards": 497,
+        "native_preview_entries": 45560,
+        "native_transition_calls": 497
+      },
+      "reconstruction_evidence_sha256": "f6ce724fb9b98c54c3f3121d843d8ee1cff885a271f74f14a53b4d286fbfb475",
+      "source_index_sha256": "37c03f09c3754429ecb2b8fa24e5093a7efd11424ef33c1c093a43ce1b15a3b5"
+    },
+    "trace_manifest_hash": "sha256:adb807438800a2a20cd23a2983f6421b11315db8824a22eabf7faaf600a7349c"
+  },
+  "bytes": 670261,
+  "cache_native_previews": 0,
+  "cache_policy_forwards": 0,
+  "cache_write_seconds": 0.013796458020806313,
+  "original_reconstruction_costs": {
+    "complete_wall_seconds": 1279.0186790409498,
+    "frozen_policy_forwards": 497,
+    "native_preview_entries": 45560,
+    "native_transition_calls": 497
+  },
+  "sha256": "2ebd7bd2ad777492bec95fa910ee2fb1c4405da04a30f69219b448ae20d236f7"
+}
