@@ -1,0 +1,42 @@
+{
+  "schema": "local-goal-curriculum-interim-snapshot-v1",
+  "scope": "Actual uniform512 endpoint; running campaign, reverse and1024 pending",
+  "files": [
+    {
+      "source": "build/train045-local-goal-ppo-v1/curriculum-1024-01/report.json",
+      "snapshot": "snapshot/midpoint-report.json",
+      "bytes": 33933,
+      "sha256": "8d9cfc4ff27402cfa7563978f83fb81c85a4f214022382885a72499b8cd7ec5f"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/curriculum-1024-01/uniform-seed0/curve.json",
+      "snapshot": "snapshot/uniform512-curve.json",
+      "bytes": 245856,
+      "sha256": "7e9117072a25bfd237e1b7bbe09b920a4f39e3bd2b769176a15886f9326a288e"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/render_curves.py",
+      "snapshot": "snapshot/plots-curriculum-01/render_curves.py",
+      "bytes": 22958,
+      "sha256": "4fba0f49bb3c92d35598a0b04857c9734a6ce35a15f87d31cfb291705ace00ff"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/learning-curves.png",
+      "snapshot": "snapshot/plots-curriculum-01/learning-curves.png",
+      "bytes": 284590,
+      "sha256": "4ea132085953cacf61aabfd64068c5a089913da032f3cbfab3c9fcf2e9a224fd"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/learning-curves.svg",
+      "snapshot": "snapshot/plots-curriculum-01/learning-curves.svg",
+      "bytes": 110126,
+      "sha256": "5e5542304f23804be944e19f67d981d5f5be408c9457ad56c13bc7b2cf777ca7"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/learning-curves.json",
+      "snapshot": "snapshot/plots-curriculum-01/learning-curves.json",
+      "bytes": 64316,
+      "sha256": "4da88a06b5a37680d05c32938dbb02750faccf74e7aab734f35b01dab0abce75"
+    }
+  ]
+}
