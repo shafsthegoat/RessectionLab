@@ -1,0 +1,32 @@
+{
+  "actual_caps": {
+    "frozen_policy_forwards": 0,
+    "log_bytes": 65536,
+    "native_previews": 12000,
+    "native_transitions": 80,
+    "output_bytes": 16777216,
+    "parent_wall_seconds": 630,
+    "whole_build_bytes": 201326592,
+    "work_seconds": 600,
+    "worker_peak_rss_bytes": 4294967296
+  },
+  "execution_released": true,
+  "learning_protocol_hash": "sha256:2f9499bc196340226a814f5944db6601b1f7556cf0b80f37faf1b52711e91156",
+  "limits": {
+    "max_native_previews": 7297920,
+    "max_optimizer_updates": 128,
+    "max_policy_forwards": 18624,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 900
+  },
+  "root_source_index_sha256": "e2cb0eed586887e775a0253525e1a728acf2d2de6b5e7594004ad13226ceb865",
+  "schema": "train045-local-goal-qualification-v1",
+  "scope": "Existing annotation-assisted TRAIN045 simulated local-access task qualification only; no RL updates, held EVAL or clinical claim"
+}

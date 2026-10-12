@@ -1,0 +1,15 @@
+{
+  "schema": "local-goal-qualification-failure-v1",
+  "error": "Report serialization did not normalize immutable mappings nested inside lists",
+  "source_snapshot": "qualification-01/source",
+  "parent_seconds": 51.82816999987699,
+  "native_previews_known_lower_bound": 2366,
+  "native_previews_complete_count": null,
+  "native_transitions_known_lower_bound": 24,
+  "complete_native_transition_count": null,
+  "first_reference_action_passed_before_serialization": true,
+  "no_qualification_or_learning_claim": true,
+  "worker_termination_confirmed": true,
+  "remaining_owned_pids": [],
+  "repair": "Normalize report using thaw_json(freeze_json(report)); task/reward/geometry/caps unchanged"
+}

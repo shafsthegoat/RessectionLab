@@ -1,0 +1,91 @@
+{
+  "actions": 18,
+  "history_hash": "sha256:6381f165d1560c12285ddb2de59b13ba0b863ab041c75872bc85ed018d8d30ca",
+  "local_return": 9.73826717182121,
+  "local_rows": [
+    {
+      "absolute_step": 13,
+      "action_id": "nominal-cavity-ae0009b1c02d5c71e80ea810",
+      "native_reward": 3.744466055194124,
+      "new_goal_removal": false,
+      "result_state_hash": "sha256:59770287ff4cfc1eedc8597e0bd296635c0d22398f5bc6725ce677d05a82ea86",
+      "reward": -0.07023594046733854,
+      "source_state_hash": "sha256:1310923ff4b5b1384ae97f63f653b435595b32dec120fda6451b1095d63f17cf",
+      "terms": {
+        "action_cost": 0.03,
+        "goal_bonus": 0.0,
+        "outside_cost": 0.0,
+        "tool_change_cost": 0.03,
+        "travel_cost": 0.010235940467338544
+      }
+    },
+    {
+      "absolute_step": 14,
+      "action_id": "nominal-cavity-74cdb1e19d94c9fe5a23900e",
+      "native_reward": 3.774466055194124,
+      "new_goal_removal": false,
+      "result_state_hash": "sha256:f24d4a741e55e950110edf412d8dee90c479ecac7fd07843cf3e808826356fce",
+      "reward": -0.040235940467338506,
+      "source_state_hash": "sha256:59770287ff4cfc1eedc8597e0bd296635c0d22398f5bc6725ce677d05a82ea86",
+      "terms": {
+        "action_cost": 0.03,
+        "goal_bonus": 0.0,
+        "outside_cost": 0.0,
+        "tool_change_cost": 0.0,
+        "travel_cost": 0.010235940467338505
+      }
+    },
+    {
+      "absolute_step": 15,
+      "action_id": "nominal-cavity-19eb755c5a5ae3aff4c886cb",
+      "native_reward": 3.774466055194124,
+      "new_goal_removal": false,
+      "result_state_hash": "sha256:339cc3a65d95aeebb3f453eaf742753c904a9d00db1b47cddbe686ff06e1ad11",
+      "reward": -0.04023594046733857,
+      "source_state_hash": "sha256:f24d4a741e55e950110edf412d8dee90c479ecac7fd07843cf3e808826356fce",
+      "terms": {
+        "action_cost": 0.03,
+        "goal_bonus": 0.0,
+        "outside_cost": 0.0,
+        "tool_change_cost": 0.0,
+        "travel_cost": 0.01023594046733857
+      }
+    },
+    {
+      "absolute_step": 16,
+      "action_id": "nominal-cavity-c6cf26fde66cf07194bc4c94",
+      "native_reward": 3.774466055194124,
+      "new_goal_removal": false,
+      "result_state_hash": "sha256:ca820a537520c815dd7b87a9e19cf82d7d1d4726035638902bcb07dec657c34c",
+      "reward": -0.040235940467338506,
+      "source_state_hash": "sha256:339cc3a65d95aeebb3f453eaf742753c904a9d00db1b47cddbe686ff06e1ad11",
+      "terms": {
+        "action_cost": 0.03,
+        "goal_bonus": 0.0,
+        "outside_cost": 0.0,
+        "tool_change_cost": 0.0,
+        "travel_cost": 0.010235940467338505
+      }
+    },
+    {
+      "absolute_step": 17,
+      "action_id": "nominal-cavity-963284dbe4dd9fab33dc70d8",
+      "native_reward": 0.8828864326059302,
+      "new_goal_removal": true,
+      "result_state_hash": "sha256:13076772e77aa86bcf03409d0d86380e25d2eabc993bea3540cc162b74f32fda",
+      "reward": 9.929210933690564,
+      "source_state_hash": "sha256:ca820a537520c815dd7b87a9e19cf82d7d1d4726035638902bcb07dec657c34c",
+      "terms": {
+        "action_cost": 0.03,
+        "goal_bonus": 10.0,
+        "outside_cost": 0.0,
+        "tool_change_cost": 0.03,
+        "travel_cost": 0.010789066309435259
+      }
+    }
+  ],
+  "packets_hash": "sha256:72cf511e4264e885e5c4c09bbb60589eff836fdee846893e75d916b96905d78c",
+  "seal": "sha256:01e71ecdf8e23df0423caf55b2471190c3d6553a118513a05cb79f1d35281643",
+  "success": true,
+  "task_context_seal": "sha256:eb25159a29d75dcd88bb74c37399fb1ad46c4858ae77a4b4dfc15d1a715b4234"
+}

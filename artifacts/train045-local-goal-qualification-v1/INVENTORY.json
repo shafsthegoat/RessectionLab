@@ -1,0 +1,294 @@
+{
+  "controls": "Root actual imports + 3 generated controls passed in0.91s; nested immutable report transport regression passed after failure. No rerun of unchanged geometry tests.",
+  "current_source_head": "355cfd4dda16b113be6b3d044720b7a7f2e3123a",
+  "files": [
+    {
+      "bytes": 1577,
+      "sha256": "7ff6b940d5771977257e00390810f96ef82c47c6436196af5352a9c817cb35c0",
+      "snapshot": "snapshot/config.json",
+      "source": "build/train045-local-goal-ppo-v1/config.json"
+    },
+    {
+      "bytes": 1868,
+      "sha256": "48a5b85d074aff635808ba1757c18516794a4bb9bb169382960126a53e0531cd",
+      "snapshot": "snapshot/freeze_sources.py",
+      "source": "build/train045-local-goal-ppo-v1/freeze_sources.py"
+    },
+    {
+      "bytes": 7507,
+      "sha256": "12204f73ac89e50059c18062706588ee917fb4151a876cfbc4d01fb2ccb608e7",
+      "snapshot": "snapshot/gym_adapter.py",
+      "source": "build/train045-local-goal-ppo-v1/gym_adapter.py"
+    },
+    {
+      "bytes": 15476,
+      "sha256": "be6bab436cba2f4e48767b337ae5cc19da5649061275c167bc42ec70f3e0dab1",
+      "snapshot": "snapshot/local_goal.py",
+      "source": "build/train045-local-goal-ppo-v1/local_goal.py"
+    },
+    {
+      "bytes": 509,
+      "sha256": "669412e7481234e2ca4d1c3fa8a95a0d38efc7a0192b475c26fbbb409ceabae5",
+      "snapshot": "snapshot/paths.py",
+      "source": "build/train045-local-goal-ppo-v1/paths.py"
+    },
+    {
+      "bytes": 694,
+      "sha256": "f967539b728cc8db16afb3b58127056bbafa0d67027a29a08cd4010628557f2d",
+      "snapshot": "snapshot/qualification-01/FAILURE.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/FAILURE.json"
+    },
+    {
+      "bytes": 7168,
+      "sha256": "638c3c45ad257b63ffbcbc539d586eea1ebab5c1a49ccc8d1fc98409363560e9",
+      "snapshot": "snapshot/qualification-01/ReMIND-045-context.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/ReMIND-045-context.json"
+    },
+    {
+      "bytes": 18540,
+      "sha256": "18a2a363e3df8564f4ed6326ee12f0ceb118c382d59f4ba4c0440b956ac3019b",
+      "snapshot": "snapshot/qualification-01/evaluation/source/admitted-public-bindings.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/evaluation/source/admitted-public-bindings.json"
+    },
+    {
+      "bytes": 11491,
+      "sha256": "58357c31f4c39b50181ed7ea05f9306777bfe10286a0fc6b802f5f5caca3bf1b",
+      "snapshot": "snapshot/qualification-01/evaluation/source/derived-occupancy-assumption.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/evaluation/source/derived-occupancy-assumption.json"
+    },
+    {
+      "bytes": 4158,
+      "sha256": "971ca4258c11fc49e9e85cf6f8fccd1cc1ae5890319e7cb8c18e1654f222c55d",
+      "snapshot": "snapshot/qualification-01/evaluation/source/public-task-derivation.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/evaluation/source/public-task-derivation.json"
+    },
+    {
+      "bytes": 655,
+      "sha256": "2da726cc5f071bc155c5a1f4023ddd365ecad5ac45f546a7e4be71311c2df273",
+      "snapshot": "snapshot/qualification-01/intent.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/intent.json"
+    },
+    {
+      "bytes": 2303,
+      "sha256": "5c68a127737f78526dc3f63abbbbbb9cd49cfb142bbccab149b2e3b79f315b2c",
+      "snapshot": "snapshot/qualification-01/launcher.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/launcher.json"
+    },
+    {
+      "bytes": 1531,
+      "sha256": "4b66a5c1e54423e06c3014a94577b7178462ddb71324c00d8f3d2f0370c71dc1",
+      "snapshot": "snapshot/qualification-01/progress.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/progress.json"
+    },
+    {
+      "bytes": 1471,
+      "sha256": "b78250f95694f9297be0e33e1d806f562c5731e1aefd2d4b48fcacee42a97ff5",
+      "snapshot": "snapshot/qualification-01/source/config.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/source/config.json"
+    },
+    {
+      "bytes": 1868,
+      "sha256": "48a5b85d074aff635808ba1757c18516794a4bb9bb169382960126a53e0531cd",
+      "snapshot": "snapshot/qualification-01/source/freeze_sources.py",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/source/freeze_sources.py"
+    },
+    {
+      "bytes": 7507,
+      "sha256": "12204f73ac89e50059c18062706588ee917fb4151a876cfbc4d01fb2ccb608e7",
+      "snapshot": "snapshot/qualification-01/source/gym_adapter.py",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/source/gym_adapter.py"
+    },
+    {
+      "bytes": 15476,
+      "sha256": "be6bab436cba2f4e48767b337ae5cc19da5649061275c167bc42ec70f3e0dab1",
+      "snapshot": "snapshot/qualification-01/source/local_goal.py",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/source/local_goal.py"
+    },
+    {
+      "bytes": 509,
+      "sha256": "669412e7481234e2ca4d1c3fa8a95a0d38efc7a0192b475c26fbbb409ceabae5",
+      "snapshot": "snapshot/qualification-01/source/paths.py",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/source/paths.py"
+    },
+    {
+      "bytes": 9862,
+      "sha256": "e2bbc8b2144e98097398a17be4f8e962a0b24e25607b33a49561326ed878be97",
+      "snapshot": "snapshot/qualification-01/source/run_owned.py",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/source/run_owned.py"
+    },
+    {
+      "bytes": 22777,
+      "sha256": "3b8a1921e4655b663623036d8cb15a907f15c1e178e7e6b36ae8b626fef68b70",
+      "snapshot": "snapshot/qualification-01/source/source-index.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/source/source-index.json"
+    },
+    {
+      "bytes": 1804,
+      "sha256": "7c771bfa33ec7c0410f665c534fc28f50e45554313b755977ae3879df477888b",
+      "snapshot": "snapshot/qualification-01/source/source_inputs.py",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/source/source_inputs.py"
+    },
+    {
+      "bytes": 4682,
+      "sha256": "7563eaeadb4937145946b99bb1550cce2c38482134f94efe0aa74c6dec1eefe8",
+      "snapshot": "snapshot/qualification-01/source/test_local_goal.py",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/source/test_local_goal.py"
+    },
+    {
+      "bytes": 19430,
+      "sha256": "90920741ef6df634ec7ddd40ba9da77f059d2b1ce53acb50e14a181439e1bce5",
+      "snapshot": "snapshot/qualification-01/source/worker.py",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/source/worker.py"
+    },
+    {
+      "bytes": 5401,
+      "sha256": "559cfec7b1b3d95fe1531132a9e5f7e541889a9ea8577400004b41358c1638d6",
+      "snapshot": "snapshot/qualification-01/worker.log",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/worker.log"
+    },
+    {
+      "bytes": 1045,
+      "sha256": "0c567720a13f199cb74d9294cc660e132e03c4a1593f73baf7f543478f79c570",
+      "snapshot": "snapshot/qualification-01/world-admission.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-01/world-admission.json"
+    },
+    {
+      "bytes": 7168,
+      "sha256": "6abd6a5e52bac9398d5bad8dcaf5f767d5c38541e5bc7b7da30e1e7783c31566",
+      "snapshot": "snapshot/qualification-02/ReMIND-045-context.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-02/ReMIND-045-context.json"
+    },
+    {
+      "bytes": 18540,
+      "sha256": "4cf09a6a18a1d3750d249b8a347c6317ed88ce326c852d7db3fa09b05aab0d0c",
+      "snapshot": "snapshot/qualification-02/evaluation/source/admitted-public-bindings.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-02/evaluation/source/admitted-public-bindings.json"
+    },
+    {
+      "bytes": 11491,
+      "sha256": "58357c31f4c39b50181ed7ea05f9306777bfe10286a0fc6b802f5f5caca3bf1b",
+      "snapshot": "snapshot/qualification-02/evaluation/source/derived-occupancy-assumption.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-02/evaluation/source/derived-occupancy-assumption.json"
+    },
+    {
+      "bytes": 4158,
+      "sha256": "971ca4258c11fc49e9e85cf6f8fccd1cc1ae5890319e7cb8c18e1654f222c55d",
+      "snapshot": "snapshot/qualification-02/evaluation/source/public-task-derivation.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-02/evaluation/source/public-task-derivation.json"
+    },
+    {
+      "bytes": 655,
+      "sha256": "1b4183ac3d7e48f6918199791f3547a770d1a9639e66bf4b386f6868d0076205",
+      "snapshot": "snapshot/qualification-02/intent.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-02/intent.json"
+    },
+    {
+      "bytes": 3740,
+      "sha256": "52d1eb8f0cd5ad45b8321592ddabbe8297c6cc9bf18632a21c6b6662f91b8f4f",
+      "snapshot": "snapshot/qualification-02/launcher.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-02/launcher.json"
+    },
+    {
+      "bytes": 1564,
+      "sha256": "7951ca3cef3d074790a41677fa2c3f9cdcbf1ef304cbdc56504afb42d020e54e",
+      "snapshot": "snapshot/qualification-02/progress.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-02/progress.json"
+    },
+    {
+      "bytes": 37600,
+      "sha256": "3ea0c726e744acee73a59380da36746cf3eefd8ca948ed28cdc2693d8fb29a05",
+      "snapshot": "snapshot/qualification-02/report.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-02/report.json"
+    },
+    {
+      "bytes": 3497,
+      "sha256": "ef3f3dc38a39cb748dc7a172e68239162ef908eca222c5ce274594dd1aa15c05",
+      "snapshot": "snapshot/qualification-02/sealed-reference-plan.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-02/sealed-reference-plan.json"
+    },
+    {
+      "bytes": 81,
+      "sha256": "4e825982de0e0356831fabb898d5166c154b392b28574ff85672bf1c29bd9fec",
+      "snapshot": "snapshot/qualification-02/worker.log",
+      "source": "build/train045-local-goal-ppo-v1/qualification-02/worker.log"
+    },
+    {
+      "bytes": 1045,
+      "sha256": "de5c88e8cedfc2b8aeebca147ef4ec38867b1691cf9329f0569c872bcae6cbac",
+      "snapshot": "snapshot/qualification-02/world-admission.json",
+      "source": "build/train045-local-goal-ppo-v1/qualification-02/world-admission.json"
+    },
+    {
+      "bytes": 9862,
+      "sha256": "e2bbc8b2144e98097398a17be4f8e962a0b24e25607b33a49561326ed878be97",
+      "snapshot": "snapshot/run_owned.py",
+      "source": "build/train045-local-goal-ppo-v1/run_owned.py"
+    },
+    {
+      "bytes": 22777,
+      "sha256": "e2cb0eed586887e775a0253525e1a728acf2d2de6b5e7594004ad13226ceb865",
+      "snapshot": "snapshot/source-index.json",
+      "source": "build/train045-local-goal-ppo-v1/source-index.json"
+    },
+    {
+      "bytes": 1804,
+      "sha256": "7c771bfa33ec7c0410f665c534fc28f50e45554313b755977ae3879df477888b",
+      "snapshot": "snapshot/source_inputs.py",
+      "source": "build/train045-local-goal-ppo-v1/source_inputs.py"
+    },
+    {
+      "bytes": 4682,
+      "sha256": "7563eaeadb4937145946b99bb1550cce2c38482134f94efe0aa74c6dec1eefe8",
+      "snapshot": "snapshot/test_local_goal.py",
+      "source": "build/train045-local-goal-ppo-v1/test_local_goal.py"
+    },
+    {
+      "bytes": 19443,
+      "sha256": "b28c883d02735c1375935aa90c734f89aeaa47184e3f01f209e6606e00cc87d4",
+      "snapshot": "snapshot/worker.py",
+      "source": "build/train045-local-goal-ppo-v1/worker.py"
+    },
+    {
+      "bytes": 11570,
+      "sha256": "211a4a647c8d4b02056108dd231fa798950c3bc7ea416c43cdd379ab928603b1",
+      "snapshot": "dependencies/INSTALL.json",
+      "source": "build/local-goal-ppo-deps-v1/INSTALL.json"
+    },
+    {
+      "bytes": 139,
+      "sha256": "902cc9e380b819b408f1c8ff76caafc74bfda398c7a00a69d629c0d58c2f0a62",
+      "snapshot": "dependencies/IMPORT.json",
+      "source": "build/local-goal-ppo-deps-v1/IMPORT.json"
+    },
+    {
+      "bytes": 386,
+      "sha256": "c04a666eabd4b6cc961253765dbec4c523b73b875dc4c70f32fadf78d400761e",
+      "snapshot": "dependencies/TERMINAL.json",
+      "source": "build/local-goal-ppo-deps-v1/TERMINAL.json"
+    },
+    {
+      "bytes": 667,
+      "sha256": "9bb61ea744c9f1abf09d66dbd4aedfa08ad13a5b9d0635184c2090a6e5a01ced",
+      "snapshot": "dependencies/install.log",
+      "source": "build/local-goal-ppo-deps-v1/install.log"
+    }
+  ],
+  "omitted_local_bulk": [
+    {
+      "bytes": 31888,
+      "sha256": "725f67f49923cc77d457d228ecc664961003a0534fd32ecb3d3975e87892b69f",
+      "source": "build/train045-local-goal-ppo-v1/qualification-02/authoritative-history.json.gz"
+    },
+    {
+      "bytes": 31868,
+      "sha256": "9cf610a21ff4232ad624faa48f5ad9d7802e9bb802aa22b2a8d23f1b8d9d813a",
+      "source": "build/train045-local-goal-ppo-v1/qualification-02/nominal-history.json.gz"
+    },
+    {
+      "bytes": 4170,
+      "sha256": "bae7760fc4d7069dd76fa6981f070d2a8fba277c6145588bf1af829b9df5ddf9",
+      "source": "build/train045-local-goal-ppo-v1/qualification-02/reference-packets.json.gz"
+    }
+  ],
+  "shared_reservation": "train045-local-goal-ppo 192MiB remains open for actual training"
+}
