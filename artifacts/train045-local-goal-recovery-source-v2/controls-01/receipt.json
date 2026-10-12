@@ -1,0 +1,47 @@
+{
+  "all_children_reaped": true,
+  "automatic_retry": false,
+  "deadline_seconds": 60,
+  "elapsed_seconds": 2.104472457896918,
+  "per_process_rss_cap_bytes": 1073741824,
+  "runs": [
+    {
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "-I",
+        "-B",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/recovery-v2/control_bootstrap.py"
+      ],
+      "elapsed_seconds": 2.1042520001064986,
+      "exit_code": 0,
+      "log_sha256": "3dad83854525951a7c9b2f8057a681c287534af97852041252b89766436ea691",
+      "name": "recovery",
+      "result": {
+        "acquired_payloads": false,
+        "elapsed_seconds": 0.9913777920883149,
+        "exit_code": 0,
+        "native_calls": 0,
+        "peak_self_rss_bytes": 347947008,
+        "status": "pass",
+        "threads": 2
+      },
+      "rss_samples": 51,
+      "sampled_peak_rss_bytes": 353402880,
+      "stop_reason": null
+    }
+  ],
+  "source_sha256": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/model/policy.py": "029b97b545f4bec300ae5a8f9b038e9efe6f89dcb81334db6aa91c4233a5cc8a",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/recovery-v2/config.json": "69b9cb199670074c6b24db91c99b6ea1c3af87ee5de099e2d9edc5966122668d",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/recovery-v2/control_bootstrap.py": "0a937a8def80f2655f5aaa130a2898b43db1254d432188e9a1c3656788a8ecbc",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/recovery-v2/freeze_sources.py": "21583c9e744d505f7e63746232882abbf2fb7e32ad69f7a34f3571e0629e97f3",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/recovery-v2/recovery_contract.py": "7fddae87b477d7afa1dd14408ea4994d7e5ffb9b21c4fb9d75868491d8690814",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/recovery-v2/recovery_learning.py": "bb490ef0655c2710249975c792ba5c5cfd313468e82733ba9ecbe1b780285158",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/recovery-v2/run_controls.py": "818fda21e817cc67dce7c56da838310c9dd63aa3551a62eb011e36697a58da45",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/recovery-v2/run_owned.py": "02c7e847f0f81f0a3be3b80da47386a842f3f3f9bc309a7e1b793ec4bc6502a2",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/recovery-v2/test_recovery.py": "c433e6a13906174d6a2f24cbeed00185b8fd86d9cb0ba652ecad3527e50cd5b9",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/recovery-v2/train_worker.py": "004e902269dcaa0e6a5170790f98d6f57b4757cab4e4a963aa5ee68df6a2fda2"
+  },
+  "source_unchanged": true,
+  "status": "pass"
+}
