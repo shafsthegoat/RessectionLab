@@ -1,0 +1,89 @@
+{
+  "schema": "reverse512-recovery-source-v1",
+  "files": [
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery/config.json",
+      "snapshot": "source/config.json",
+      "bytes": 3248,
+      "sha256": "49c081f8956033b4911f009d9a96d70dcb26aaaab4999b0c48bf3af65da8b887"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery/control_bootstrap.py",
+      "snapshot": "source/control_bootstrap.py",
+      "bytes": 1600,
+      "sha256": "0a937a8def80f2655f5aaa130a2898b43db1254d432188e9a1c3656788a8ecbc"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery/freeze_sources.py",
+      "snapshot": "source/freeze_sources.py",
+      "bytes": 5806,
+      "sha256": "b9059e48f4cd5d8cdf21357d984c6f9f8a0c9367f0dde5c0da61185e218fe318"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery/recovery_contract.py",
+      "snapshot": "source/recovery_contract.py",
+      "bytes": 6031,
+      "sha256": "d7a26f47419c9deffc6b106da5faffce4f5e5d5326ec2192b21fe377482cea88"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery/recovery_learning.py",
+      "snapshot": "source/recovery_learning.py",
+      "bytes": 6689,
+      "sha256": "bb490ef0655c2710249975c792ba5c5cfd313468e82733ba9ecbe1b780285158"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery/run_controls.py",
+      "snapshot": "source/run_controls.py",
+      "bytes": 3425,
+      "sha256": "818fda21e817cc67dce7c56da838310c9dd63aa3551a62eb011e36697a58da45"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery/run_owned.py",
+      "snapshot": "source/run_owned.py",
+      "bytes": 9630,
+      "sha256": "02c7e847f0f81f0a3be3b80da47386a842f3f3f9bc309a7e1b793ec4bc6502a2"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery/test_recovery.py",
+      "snapshot": "source/test_recovery.py",
+      "bytes": 7877,
+      "sha256": "ec1411cddcb0713e22acea7952d5f4df74e64bbf3a6e5e75b05d15b46427e90a"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery/train_worker.py",
+      "snapshot": "source/train_worker.py",
+      "bytes": 26915,
+      "sha256": "1e719a97fe1e229960f4a2a8276b13d3cb70c1f5ab0689bdeb3891d6789cada3"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery/source-ready.json",
+      "snapshot": "source-ready.json",
+      "bytes": 4193,
+      "sha256": "faa221c608810c42cd28c0fab7f4e7e1b83afc2095005b522c0b965a57e1d637"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery/source-index.json",
+      "snapshot": "source-index.json",
+      "bytes": 40429,
+      "sha256": "54543f2b71a8262c4340dbb3aa71c54ca4d5f7d3df0b63d16392d64443298d28"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery/controls-01/receipt.json",
+      "snapshot": "controls-01/receipt.json",
+      "bytes": 3415,
+      "sha256": "672fdd2bbea7db25993fbcf50b3c852036ba18d5b2ba0c7368c40a74e8686fb6"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery/controls-01/recovery.log",
+      "snapshot": "controls-01/recovery.log",
+      "bytes": 266,
+      "sha256": "3c247a49ae124b013bc5265ba78c31747e2f3ab9529de6e655a9e5eedac0adc7"
+    },
+    {
+      "source": "build/storage-extension-v1/root-bookkeeping-amendment-02.json",
+      "snapshot": "storage-amendment.json",
+      "bytes": 953,
+      "sha256": "003d7da4c60f83150c5407d4eeab172c3d29f0913eef6bc705e3e36ac2585d1d"
+    }
+  ]
+}

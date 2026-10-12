@@ -1,0 +1,105 @@
+{
+  "schema": "train045-reverse512-memory-recovery-v1",
+  "scope": "Reverse-only checkpoint recovery: completed uniform1024 retained,353-step Adam at reverse512 restored,512 new decisions; arithmetic-preserving policy input assembly and explicit fresh trajectory",
+  "output_directory": "build/train045-local-goal-ppo-v1/recovery-reverse1024-01",
+  "prefix_actions": 12,
+  "absolute_horizon": 24,
+  "goal": {
+    "cell": [
+      123,
+      68,
+      76
+    ],
+    "tool_id": "generic_suction",
+    "entry_mm": [
+      93.33639535949453,
+      -106.6111967809245,
+      12.705561127434477
+    ],
+    "tip_mm": [
+      91.062598896777,
+      -102.85541872816052,
+      12.89504047863528
+    ],
+    "bonus": 10.0,
+    "action_cost": 0.03,
+    "motion_per_mm": 0.001,
+    "tool_change_cost": 0.03,
+    "normal_per_mm3": 0.2
+  },
+  "success": "Newly committed removal of declared public goal cell; no physical-stroke-only fallback",
+  "query": "Fixed physical goal focus from step12 if present in current nominal-positive base catalog; otherwise explicit none; no automatic goal switching or duplicate all-goal diagnostic previews",
+  "curriculum_starts": [
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "evaluation_start": 12,
+  "reward_policy": "Separate local-task reward; native reward/history unchanged; bonus once, STOP0, all feasible actions allowed",
+  "caps": {
+    "work_seconds": 4470,
+    "parent_wall_seconds": 4500,
+    "worker_peak_rss_bytes": 4294967296,
+    "native_previews": 180000,
+    "native_transitions": 1400,
+    "output_bytes": 16777216,
+    "whole_build_bytes": 201326592,
+    "log_bytes": 262144,
+    "checkpoint_bytes": 2097152
+  },
+  "arms": [
+    "reverse"
+  ],
+  "seeds": [
+    0
+  ],
+  "milestones": [
+    1024
+  ],
+  "qualification_report": "build/train045-local-goal-ppo-v1/qualification-02/report.json",
+  "qualification_launcher": "build/train045-local-goal-ppo-v1/qualification-02/launcher.json",
+  "torch_threads": 2,
+  "pilot_report": "build/train045-local-goal-ppo-v1/pilot-01/report.json",
+  "pilot_launcher": "build/train045-local-goal-ppo-v1/pilot-01/launcher.json",
+  "pilot_source_index": "build/train045-local-goal-ppo-v1/training/source-index.json",
+  "campaign_report": "build/train045-local-goal-ppo-v1/campaign-256-01/report.json",
+  "campaign_launcher": "build/train045-local-goal-ppo-v1/campaign-256-01/launcher.json",
+  "campaign_source_index": "build/train045-local-goal-ppo-v1/campaign/source-index.json",
+  "reverse_windows": [
+    [
+      0,
+      128,
+      16
+    ],
+    [
+      128,
+      256,
+      15
+    ],
+    [
+      256,
+      384,
+      14
+    ],
+    [
+      384,
+      512,
+      13
+    ],
+    [
+      512,
+      768,
+      12
+    ]
+  ],
+  "shared_starting_arm": "frozen_encoder-seed0",
+  "conditional_release": "Cleanly reaped RSS failure with independently accepted reverse512 and completed uniform1024; original campaign remains incomplete",
+  "resume_decisions": 512,
+  "additional_decisions": 512,
+  "schedule_offset": 256,
+  "failed_archive": "artifacts/train045-local-goal-curriculum-interruption-v1",
+  "failed_source_index": "build/train045-local-goal-ppo-v1/curriculum/source-index.json",
+  "failed_output_directory": "build/train045-local-goal-ppo-v1/curriculum-1024-01"
+}

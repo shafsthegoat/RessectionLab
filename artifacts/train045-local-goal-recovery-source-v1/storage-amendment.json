@@ -1,0 +1,22 @@
+{
+  "capacity": {
+    "additional_reservable_bytes": 8572702720,
+    "allocation_allowed": true,
+    "conservative_growth_plus_reservations_bytes": 2164715520,
+    "free_after_outstanding_reservations_bytes": 351919382528,
+    "free_bytes": 352230809600,
+    "growth_highwater_bytes": 1853288448,
+    "outstanding_reserved_bytes": 311427072,
+    "reservation_scope_overruns": []
+  },
+  "change": {
+    "at_utc": "2026-10-12T20:28:02.509773+00:00",
+    "historical_overrun_bytes": 20480,
+    "new_bytes": 100663296,
+    "observed_scope_growth_highwater_bytes": 83906560,
+    "old_bytes": 83886080,
+    "reason": "Root-owned compact recovery source/evidence and Git allowance. Preserve measured 20480-byte prior allowance overrun; no scope origin/highwater reset. Overall user 10GiB/50GiB limits unchanged."
+  },
+  "previous_ledger_sha256": "98a3eba530e1e8e4186e6f30c33fb4ce5b5955098ec2f9ebc73f14ebe606e910",
+  "schema": "root-bookkeeping-amendment-v1"
+}

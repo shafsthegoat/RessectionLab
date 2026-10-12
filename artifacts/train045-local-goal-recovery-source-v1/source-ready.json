@@ -1,0 +1,98 @@
+{
+  "files": {
+    "build/train045-local-goal-ppo-v1/recovery/config.json": {
+      "bytes": 3248,
+      "lines": 105,
+      "sha256": "49c081f8956033b4911f009d9a96d70dcb26aaaab4999b0c48bf3af65da8b887"
+    },
+    "build/train045-local-goal-ppo-v1/recovery/control_bootstrap.py": {
+      "bytes": 1600,
+      "lines": 27,
+      "sha256": "0a937a8def80f2655f5aaa130a2898b43db1254d432188e9a1c3656788a8ecbc"
+    },
+    "build/train045-local-goal-ppo-v1/recovery/freeze_sources.py": {
+      "bytes": 5806,
+      "lines": 81,
+      "sha256": "b9059e48f4cd5d8cdf21357d984c6f9f8a0c9367f0dde5c0da61185e218fe318"
+    },
+    "build/train045-local-goal-ppo-v1/recovery/recovery_contract.py": {
+      "bytes": 6031,
+      "lines": 82,
+      "sha256": "d7a26f47419c9deffc6b106da5faffce4f5e5d5326ec2192b21fe377482cea88"
+    },
+    "build/train045-local-goal-ppo-v1/recovery/recovery_learning.py": {
+      "bytes": 6689,
+      "lines": 98,
+      "sha256": "bb490ef0655c2710249975c792ba5c5cfd313468e82733ba9ecbe1b780285158"
+    },
+    "build/train045-local-goal-ppo-v1/recovery/run_controls.py": {
+      "bytes": 3425,
+      "lines": 64,
+      "sha256": "818fda21e817cc67dce7c56da838310c9dd63aa3551a62eb011e36697a58da45"
+    },
+    "build/train045-local-goal-ppo-v1/recovery/run_owned.py": {
+      "bytes": 9630,
+      "lines": 151,
+      "sha256": "02c7e847f0f81f0a3be3b80da47386a842f3f3f9bc309a7e1b793ec4bc6502a2"
+    },
+    "build/train045-local-goal-ppo-v1/recovery/test_recovery.py": {
+      "bytes": 7877,
+      "lines": 120,
+      "sha256": "ec1411cddcb0713e22acea7952d5f4df74e64bbf3a6e5e75b05d15b46427e90a"
+    },
+    "build/train045-local-goal-ppo-v1/recovery/train_worker.py": {
+      "bytes": 26915,
+      "lines": 332,
+      "sha256": "1e719a97fe1e229960f4a2a8276b13d3cb70c1f5ab0689bdeb3891d6789cada3"
+    }
+  },
+  "forecast": "4470s work/4500s parent,4GiB,2threads,180000 previews,1400 transitions,16MiB output within192MiB stage. One fresh1024 evaluation+replay+independent audit; no uniform rerun.",
+  "generated_controls": {
+    "acquired_payloads": false,
+    "child_reaped": true,
+    "native_calls": 0,
+    "receipt": "build/train045-local-goal-ppo-v1/recovery/controls-01/receipt.json",
+    "sampled_peak_rss_bytes": 351535104,
+    "sha256": "672fdd2bbea7db25993fbcf50b3c852036ba18d5b2ba0c7368c40a74e8686fb6",
+    "source_unchanged": true,
+    "supervised_seconds": 2.2446887919213623,
+    "tests_passed": 6,
+    "threads": 2
+  },
+  "limitations": "Memory equivalence/assembly controls are not proof of full PPO RSS below4GiB. Original imitation release remains closed; recovery has a distinct explicit failed-parent admission.",
+  "memory_receipt_sha256": "e5c699ff5bac1c9ffa3a92c40ac7db07382798d87aa702b2089a9379f81cf98c",
+  "root_execute_command": [
+    ".venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=<fresh-absent-path>",
+    "build/train045-local-goal-ppo-v1/recovery/run_owned.py",
+    "--source-index-sha256",
+    "<future-frozen-index>",
+    "--execute"
+  ],
+  "root_freeze_command": [
+    ".venv/bin/python",
+    "-I",
+    "-B",
+    "build/train045-local-goal-ppo-v1/recovery/freeze_sources.py",
+    "--failed-index-sha256",
+    "8ebe175708ed6bfa4fdc5ad6aff059af52883eef57b54d238218341c923a5559",
+    "--archive-inventory-sha256",
+    "dd3c9526d826934e4e96fe0ab191881d317e5bc75dea9df7b84117980c2ef55a",
+    "--postmortem-sha256",
+    "c24bb60f91eeb4d59da545cbe901dc94f7c1f35aa6e4f1ef786a8a10740f6955",
+    "--memory-policy-sha256",
+    "029b97b545f4bec300ae5a8f9b038e9efe6f89dcb81334db6aa91c4233a5cc8a",
+    "--memory-receipt",
+    "build/train045-local-goal-ppo-v1/memory/attempt-01/receipt.json",
+    "--memory-receipt-sha256",
+    "e5c699ff5bac1c9ffa3a92c40ac7db07382798d87aa702b2089a9379f81cf98c",
+    "--release"
+  ],
+  "scope": "Only new recovery files. Failed campaign remains failed; complete uniform retained. Reverse512+353Adam restored exactly,512 new decisions with reset offset256. Fresh RNG/physical episode; six old live decisions retired. At least320 discarded decisions/40 updates remain paid outside checkpoint lineage.",
+  "source_bytes": 71221,
+  "source_index_created": false,
+  "status": "ready_for_root_review_no_scientific_release"
+}
