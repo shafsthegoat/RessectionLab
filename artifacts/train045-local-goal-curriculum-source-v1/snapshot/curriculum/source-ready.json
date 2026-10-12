@@ -1,0 +1,84 @@
+{
+  "accounting": "All64 and256 retired decisions/costs kept; unique identity unions, new start/decision/success exposures and bonus-bearing rollout records",
+  "caps": {
+    "checkpoint_bytes": 2097152,
+    "log_bytes": 262144,
+    "native_previews": 400000,
+    "native_transitions": 3200,
+    "output_bytes": 33554432,
+    "parent_wall_seconds": 12630,
+    "whole_build_bytes": 201326592,
+    "work_seconds": 12600,
+    "worker_peak_rss_bytes": 4294967296
+  },
+  "comparison": "Same frozen256 tensors+Adam, same seed0/PPO/task/reward; uniform versus fixed reverse natural-reset windows,768 new decisions each",
+  "control_receipt": {
+    "controls": 8,
+    "log_sha256": "fd615ad0d948f15c5ef386e15a027fb0cbf90a6a68799d09ecb628b90c2e4176",
+    "path": "build/train045-local-goal-ppo-v1/controls-curriculum-01/RESULT.json",
+    "sha256": "f4f5ff5447b5ae2513cb04e835c4db6c30487ac4cfa5d8fa0de3ca9056e8045b",
+    "source_unchanged_during_controls": true,
+    "status": "passed",
+    "tested_config_sha256": "b49766aed0d67ac462aa0f59c973614c5c24bceddc3805815ef7d0397c03250c"
+  },
+  "endpoints": [
+    512,
+    1024
+  ],
+  "file_count": 7,
+  "files": {
+    "config.json": {
+      "bytes": 2834,
+      "lines": 101,
+      "sha256": "68438a33bea65dfb4f0f63d7c3ce336f43f8de36fae847c995a63417d9b9e17b"
+    },
+    "curriculum_contract.py": {
+      "bytes": 9892,
+      "lines": 139,
+      "sha256": "6e8f7a13e82a2934edc9567c015153dcce206b437543172ef361fb1829bf5408"
+    },
+    "curriculum_learning.py": {
+      "bytes": 10220,
+      "lines": 159,
+      "sha256": "1fccfa75240f6f2889e00e4d7cd16502b6d3ea9aff69f54fdada9a6a58d63c2f"
+    },
+    "freeze_sources.py": {
+      "bytes": 3602,
+      "lines": 54,
+      "sha256": "f0938ce3d889615470f3ea8d48aa62cd7a538600e3b43a0b504aee336f51f0aa"
+    },
+    "run_owned.py": {
+      "bytes": 10838,
+      "lines": 162,
+      "sha256": "f57753ad1b2fd15228bbed676eda4ca788079bcb3ed4fb36ce3c72222ac6d92f"
+    },
+    "test_curriculum.py": {
+      "bytes": 9621,
+      "lines": 151,
+      "sha256": "4dc11ac6b90aeda373cc4c62781a8933a1b9b1e29b0295103d770e5260abe1ab"
+    },
+    "train_worker.py": {
+      "bytes": 25011,
+      "lines": 308,
+      "sha256": "be939d006a58ac83c6c1de18b55957ae6a3feb0156be01844a32a4d3d92b1783"
+    }
+  },
+  "freeze_command": ".venv/bin/python -I -B build/train045-local-goal-ppo-v1/curriculum/freeze_sources.py --campaign-report-sha256 ACTUAL_TERMINAL_REPORT_SHA --campaign-launcher-sha256 ACTUAL_TERMINAL_LAUNCHER_SHA --campaign-source-index-sha256 ACTUAL_256_INDEX_SHA --release",
+  "gate": "Root must supply actual terminal paired256 report, launcher and source-index SHA arguments. Both accepted full-start endpoints must fail. No hash placeholders are treated as authority.",
+  "intermediate_eval": "Paid fresh full-start12 replay+audit; training observations/env/parameters/optimizer protected and Python/NumPy/Torch RNG restored",
+  "launch": "Existing owned lifecycle pattern: -I -B -X pycache_prefix=<fresh absent path> curriculum/run_owned.py --source-index-sha256 <new frozen SHA> --execute; root alone dispatches",
+  "prospective_cap_correction": {
+    "native_transitions_after": 3200,
+    "native_transitions_before": 2200,
+    "prior_config": "revisions/transition-cap-2200/config.json",
+    "prior_source_ready": "revisions/transition-cap-2200/source-ready.json",
+    "scope": "Only config.json scientific-work ceiling changed; worker guard and parent expected-cap acceptance already read the same caps.native_transitions key. Decision budgets, algorithm, rewards, weights, tests and all other caps unchanged.",
+    "tests_rerun": false
+  },
+  "source_bytes": 72018,
+  "source_lines": 1074,
+  "status": "READY_SOURCE_ONLY_CONDITIONAL",
+  "test_command": ".venv/bin/python -I -B -m pytest -q build/train045-local-goal-ppo-v1/curriculum/test_curriculum.py",
+  "unchanged": "All existing campaign/model/training/task/search files untouched; changes only new curriculum/ files",
+  "validation": "Root generated controls passed8 before the prospective transition-cap-only correction; no tests or native/model jobs rerun for the cap change."
+}

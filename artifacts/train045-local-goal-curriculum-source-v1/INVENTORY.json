@@ -1,0 +1,71 @@
+{
+  "files": [
+    {
+      "bytes": 2834,
+      "path": "snapshot/curriculum/config.json",
+      "sha256": "68438a33bea65dfb4f0f63d7c3ce336f43f8de36fae847c995a63417d9b9e17b"
+    },
+    {
+      "bytes": 25011,
+      "path": "snapshot/curriculum/train_worker.py",
+      "sha256": "be939d006a58ac83c6c1de18b55957ae6a3feb0156be01844a32a4d3d92b1783"
+    },
+    {
+      "bytes": 3602,
+      "path": "snapshot/curriculum/freeze_sources.py",
+      "sha256": "f0938ce3d889615470f3ea8d48aa62cd7a538600e3b43a0b504aee336f51f0aa"
+    },
+    {
+      "bytes": 9892,
+      "path": "snapshot/curriculum/curriculum_contract.py",
+      "sha256": "6e8f7a13e82a2934edc9567c015153dcce206b437543172ef361fb1829bf5408"
+    },
+    {
+      "bytes": 10220,
+      "path": "snapshot/curriculum/curriculum_learning.py",
+      "sha256": "1fccfa75240f6f2889e00e4d7cd16502b6d3ea9aff69f54fdada9a6a58d63c2f"
+    },
+    {
+      "bytes": 10838,
+      "path": "snapshot/curriculum/run_owned.py",
+      "sha256": "f57753ad1b2fd15228bbed676eda4ca788079bcb3ed4fb36ce3c72222ac6d92f"
+    },
+    {
+      "bytes": 34780,
+      "path": "snapshot/curriculum/source-index.json",
+      "sha256": "8ebe175708ed6bfa4fdc5ad6aff059af52883eef57b54d238218341c923a5559"
+    },
+    {
+      "bytes": 4108,
+      "path": "snapshot/curriculum/source-ready.json",
+      "sha256": "11bf64fa5095522e884c47d9b3192786988fe040533fb3dd6d9c85c475342a7c"
+    },
+    {
+      "bytes": 9621,
+      "path": "snapshot/curriculum/test_curriculum.py",
+      "sha256": "4dc11ac6b90aeda373cc4c62781a8933a1b9b1e29b0295103d770e5260abe1ab"
+    },
+    {
+      "bytes": 2834,
+      "path": "snapshot/curriculum/revisions/transition-cap-2200/config.json",
+      "sha256": "b49766aed0d67ac462aa0f59c973614c5c24bceddc3805815ef7d0397c03250c"
+    },
+    {
+      "bytes": 3025,
+      "path": "snapshot/curriculum/revisions/transition-cap-2200/source-ready.json",
+      "sha256": "1c0a83dc7f645eea356c37e468efbb3e4367d8aaa50f399b0d4e7040f0316fb6"
+    },
+    {
+      "bytes": 1329,
+      "path": "snapshot/controls-curriculum-01/RESULT.json",
+      "sha256": "f4f5ff5447b5ae2513cb04e835c4db6c30487ac4cfa5d8fa0de3ca9056e8045b"
+    },
+    {
+      "bytes": 98,
+      "path": "snapshot/controls-curriculum-01/pytest.log",
+      "sha256": "fd615ad0d948f15c5ef386e15a027fb0cbf90a6a68799d09ecb628b90c2e4176"
+    }
+  ],
+  "scope": "Conditional reset-only follow-up; no weights or patient data",
+  "snapshot_bytes": 118192
+}

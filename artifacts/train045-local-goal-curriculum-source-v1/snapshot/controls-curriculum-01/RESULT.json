@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "exit_code": 0,
+  "seconds": 1.5285007080528885,
+  "source_unchanged": true,
+  "source_sha256": {
+    "build/train045-local-goal-ppo-v1/curriculum/config.json": "b49766aed0d67ac462aa0f59c973614c5c24bceddc3805815ef7d0397c03250c",
+    "build/train045-local-goal-ppo-v1/curriculum/train_worker.py": "be939d006a58ac83c6c1de18b55957ae6a3feb0156be01844a32a4d3d92b1783",
+    "build/train045-local-goal-ppo-v1/curriculum/freeze_sources.py": "f0938ce3d889615470f3ea8d48aa62cd7a538600e3b43a0b504aee336f51f0aa",
+    "build/train045-local-goal-ppo-v1/curriculum/curriculum_contract.py": "6e8f7a13e82a2934edc9567c015153dcce206b437543172ef361fb1829bf5408",
+    "build/train045-local-goal-ppo-v1/curriculum/curriculum_learning.py": "1fccfa75240f6f2889e00e4d7cd16502b6d3ea9aff69f54fdada9a6a58d63c2f",
+    "build/train045-local-goal-ppo-v1/curriculum/run_owned.py": "f57753ad1b2fd15228bbed676eda4ca788079bcb3ed4fb36ce3c72222ac6d92f",
+    "build/train045-local-goal-ppo-v1/curriculum/source-ready.json": "1c0a83dc7f645eea356c37e468efbb3e4367d8aaa50f399b0d4e7040f0316fb6",
+    "build/train045-local-goal-ppo-v1/curriculum/test_curriculum.py": "4dc11ac6b90aeda373cc4c62781a8933a1b9b1e29b0295103d770e5260abe1ab"
+  },
+  "scope": "Generated non-native controls only; no real patient performance claim",
+  "torch_threads": 2
+}
