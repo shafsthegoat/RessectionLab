@@ -1,0 +1,33 @@
+--- build/continuation-endgame-pair-v1/runner/freeze_sources.py
++++ build/continuation-endgame-pair-v1/replay-recovery/freeze_sources.py
+@@ -7,7 +7,7 @@
+ HERE = Path(__file__).resolve().parent
+ sys.path.insert(0, str(HERE))
+ from common import ROOT, HELPER, HELPER_SHA, SAMPLER, SAMPLER_SHA, CHECKPOINTS, read_json, sha, canonical, runtime_roots, CACHE_SOURCE_INDEX,CACHE_SOURCE_SHA, PLANNER_SOURCE_SHA
+-from inputs import metadata_pins
++from recovery_inputs import metadata_pins,OLD_INDEX,OLD_INDEX_SHA
+ 
+ 
+ def main():
+@@ -16,14 +16,14 @@
+     paths += [ROOT/HELPER, ROOT/SAMPLER]
+     files={str(p.relative_to(ROOT)):sha(p) for p in sorted(set(paths))}
+     if files[HELPER]!=HELPER_SHA or files[SAMPLER]!=SAMPLER_SHA: raise ValueError('Owned helper pin changed')
+-    # The original source index is authenticated provenance, not a demand that
+-    # unrelated old planner modules remain executable-identical forever. The
+-    # cache loader separately requires exact original feature-producer hashes.
+-    if files['src/resectionlab/spatial_continuation_planner.py']!=PLANNER_SOURCE_SHA:raise ValueError('Adapter canonical planner source changed')
++    old=read_json(ROOT/OLD_INDEX,OLD_INDEX_SHA)
++    for path in files:
++        if path.startswith('src/resectionlab/') and files[path]!=old['files'].get(path):
++            raise ValueError('Original replay source changed: '+path)
+     metadata, arrays = metadata_pins()
+-    value={'schema':'single-common-state-endgame-source-v1','execution_released':args.release,'files':files,
+-        'input_metadata':metadata,'public_arrays':arrays,'checkpoints':{'IL64':CHECKPOINTS['IL64']},'runtime_roots':runtime_roots(),
+-        'scope':'same four TRAIN, no new training trajectories or held-out roles; source/world admission and new head objective separate'}
++    value={'schema':'sealed-endgame-replay-source-v1','execution_released':args.release,'files':files,
++        'input_metadata':metadata,'public_arrays':arrays,'checkpoints':{},'runtime_roots':runtime_roots(),
++        'scope':'same045 TRAIN source and both sealed plans only; no policy/cache/checkpoint payload, fitting, scoring or replanning'}
+     raw=canonical(value)+b'\n'
+     with (HERE/'source-index.json').open('xb') as f:f.write(raw)
+     print(hashlib.sha256(raw).hexdigest())

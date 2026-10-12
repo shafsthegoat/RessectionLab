@@ -1,0 +1,29 @@
+--- build/continuation-endgame-pair-v1/runner/run_owned.py
++++ build/continuation-endgame-pair-v1/replay-recovery/run_owned.py
+@@ -45,7 +45,7 @@
+     OwnedChildExit = exact_module(ROOT/HELPER, HELPER_SHA)['OwnedChildExit']
+     Sampler = exact_module(ROOT/SAMPLER, SAMPLER_SHA)['FastDarwinSampler']
+     sampler = Sampler(); output.mkdir(); started = time.monotonic()
+-    receipt = {'schema': 'owned-single-common-state-endgame-pair-v1', 'status': 'running', 'source_index_sha256': args.source_index_sha256,
++    receipt = {'schema': 'owned-sealed-endgame-replay-recovery-v1', 'status': 'running', 'source_index_sha256': args.source_index_sha256,
+                'caps': caps, 'automatic_retry': False, 'sampled_peak_group_rss_bytes': 0, 'rss_samples': 0,
+                'helper_sha256': HELPER_SHA, 'sampler_sha256': SAMPLER_SHA, 'command': None}
+     write_json(output/'intent.json', receipt, 65536)
+@@ -126,13 +126,10 @@
+                     and cleanup['child_reaped'] and cleanup['exit_code'] == 0 and not cleanup['remaining_owned_pids']
+                     and not cleanup['errors'] and report['status'] == 'completed' and report['source_unchanged']
+                     and report['diagnosis']['comparison_admissible'] and len(report['branches']) == 2
+-                    and report['plans_sealed_before_replay'] and len(report['source_visits']) == 1
+-                    and len(report['reconstructed_traces']) == 36 and report['head_optimizer_updates'] == 64
+-                    and report['baseline_reproduced'] is True and report['calibration_calls_completed'] == 1
+-                    and report['calibration_calls_attempted'] == 1 and report['cache']['bytes'] <= 2*1024**2
+-                    and report['reconstruction_executed_this_attempt'] is False and report['cache_copied'] is False
+-                    and report['tail_calls_attempted'] == report['tail_calls_completed'] == 1
+-                    and report['total_frozen_policy_forwards'] <= caps['frozen_policy_forwards']
++                    and report['sealed_plans_admitted'] and len(report['source_visits']) == 1
++                    and report['baseline_reproduced'] is True and report['checkpoint_loads'] == 0
++                    and report['cache_loads'] == report['head_optimizer_updates'] == report['new_planning_calls'] == 0
++                    and report['total_frozen_policy_forwards'] == 0
+                     and report['native_budget']['native_preview_entries'] <= caps['native_previews']
+                     and report['self_peak_rss_bytes'] <= caps['worker_peak_rss_bytes']
+                     and receipt['rss_samples'] > 0 and time.monotonic()-started < caps['parent_wall_seconds']

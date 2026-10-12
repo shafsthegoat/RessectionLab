@@ -1,0 +1,29 @@
+Independent saved-result audit: fixed ReMIND-045 decision-nine pair
+
+PASS_SAVED_EVIDENCE, 1,366 checks, 0.0112621 seconds. One authorized saved-only invocation; no native, model, checkpoint, cache, or array operations. Both full independent geometry certificates are accepted, and root supervision is clean, verified, reaped, and has no survivors. Original failed attempt and its failure audit remain unchanged.
+
+Both exact full plans were sealed in the failed attempt before its first replay. Recovery replays those plans without replanning, fitting, policy forwards, or model/cache loads. Its new admission context is separately authenticated against the saved context record; both branches have the same public source/world/observation bindings. The original planning context remains bound to the old plans. No world/state/observation comparison was relaxed. Entire retained decision and compact-history records equal the original retained TAIL records after JSON representation normalization, including all coordinate values and history hashes. Recovery saves each full replay certificate/projection before any parity assertion.
+
+Measured result (RETAINED_TAIL / IMMEDIATE_BEST):
+- Full return: 48.09085666918073 / 48.15140979502283.
+- Shared first-eight return: 43.56281043310488.
+- Remaining return including forced decision nine: 4.52804623607586 / 4.588599361917957.
+- Subsequent return after forced action: 3.6412535517857365 / 3.6712535517857363.
+- Both: 12 motions plus STOP, 51 target source cells, target 48.63745044468365 mm3, outside-target removal 0.
+- Tool changes: 3 / 1. Full-tool path: 96.593775502902 / 96.04064966080531 mm.
+- Both cumulative contacted-tissue upper bounds: 202.17920577005748 mm3; retained contacted-tissue upper bounds: 153.54175532537386 mm3. Zero outside-target removal does not imply zero contact.
+
+At the identical declared state, the learned combined score favored RETAINED_TAIL by +1.270777440564153. Actual remaining-return difference was -0.060553125842097266. The immediate difference was -0.030553125842096795 and subsequent difference -0.03; predicted tail advantage +1.30133056640625 did not materialize. Total loss agrees with two extra tool changes (0.06) plus 0.5531258420967 mm extra path at 0.001/mm. Both complete endpoint geometries pass. This is a direct fixed-state counterfactual diagnostic of this switching decision, not a general policy improvement or an observed surgical outcome.
+
+Both final catalogs were captured after choosing STOP but before committing it, without additional queries: 130 ledger slots, 39 duplicate-geometry slots, 91 emitted proposals, all 91 rejected for SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE, zero certified motions. The captures refer to each branch's own terminal state. They establish exhaustion of the emitted candidates, not impossibility of other geometry or a complete route to the remaining target. Full target denominator remains 24,128.943798057662 mm3, with fraction removed 0.0020157306035334575. Functional/clinical outputs remain unassessed/null.
+
+Costs are fully retained. Recovery: 2,457 previews, 26 replay transitions, zero forwards/updates/fits/planning calls; worker 52.4657153331209 s, parent 52.85406891722232 s, sampled peak RSS 656,637,952 B. Original failed pair: 3,458 previews, 24 forwards, 64 reproduced updates and two final-readout solves. Pair plus recovery: 5,915 previews, 24 forwards, 119.18852454121225 worker seconds. Referenced cumulative cache-fill failure + direct recovery + tail + failed pair + replay recovery: 90,905 previews, 678 forwards; older original64 experiment remains separate. Inclusive phase times/counts nest and must not be added twice.
+
+Exact terminal bindings:
+report e0ab3670571e64ddf5818c190a7d599f55f96dd5e59be24ca29b1038e7b29751
+launcher 97ed2b508c4a743062c3ac30b9446c48766e63a65ebd95a159e3ed08804dd94e
+source index c42734c76c4b90d3eb8d28a3f2980491e630a400700a5c214fe72dc85ad099f4
+original plans 6798288cbb05cce8692f61f64438b68fcad8aef15ebc5ec008b2f3e3a151521b
+original failure audit 258ab0dd042bdbde8bbbf42915d0bc6a6e4b970d8cb0fde86f8ca9396b4b1854
+recovery auditor b96164eea1820aeb7a26e7cbcaa9482e001bc693896ed333d7ec3bae68f951d8
+recovery audit 44ee7677f3e3a7028f0de34ec4f7ecdda4754047026eb2d55e634afdcbe52b80

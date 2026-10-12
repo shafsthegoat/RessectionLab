@@ -1,0 +1,30 @@
+.......F                                                                 [100%]
+=================================== FAILURES ===================================
+________ test_actual_isolated_bootstrap_no_checkpoint_cache_or_patient _________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-endgame-pair-v1/controls-recovery-02/pytest-temp/test_actual_isolated_bootstrap0')
+
+    def test_actual_isolated_bootstrap_no_checkpoint_cache_or_patient(tmp_path):
+        output=tmp_path/'bootstrap';cache=tmp_path/'absent-cache'
+        env={k:v for k,v in os.environ.items() if not k.startswith(('PYTHON','DYLD_','LD_'))}
+        env.update({k:'1' for k in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','VECLIB_MAXIMUM_THREADS','NUMEXPR_NUM_THREADS')})
+        env['TMPDIR']=str(tmp_path)
+        result=subprocess.run([sys.executable,'-I','-B','-X','pycache_prefix='+str(cache),str(HERE/'bootstrap_smoke.py'),
+            '--output',str(output)],capture_output=True,text=True,timeout=28,env=env)
+>       assert result.returncode==0,result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-endgame-pair-v1/replay-recovery/bootstrap_smoke.py", line 53, in <module>
+E             if __name__=='__main__':main()
+E                                     ^^^^^^
+E           File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-endgame-pair-v1/replay-recovery/bootstrap_smoke.py", line 41, in main
+E             if payload_attempts:raise AssertionError('Payload access attempted')
+E                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E         AssertionError: Payload access attempted
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/...n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Payload access attempted\n').returncode
+
+build/continuation-endgame-pair-v1/replay-recovery/test_recovery.py:114: AssertionError
+=========================== short test summary info ============================
+FAILED build/continuation-endgame-pair-v1/replay-recovery/test_recovery.py::test_actual_isolated_bootstrap_no_checkpoint_cache_or_patient
+1 failed, 7 passed in 2.47s

@@ -1,0 +1,93 @@
+{
+  "accepted": false,
+  "caps": {
+    "group_rss_bytes": 1073741824,
+    "output_bytes": 1048576,
+    "seconds": 60,
+    "threads": 1
+  },
+  "cleanup": {
+    "child_reaped": true,
+    "errors": [],
+    "events": [
+      {
+        "pgid": 53248,
+        "phase": "bind",
+        "pid": 53248,
+        "start_identity": [
+          1791773862,
+          832488
+        ]
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0,
+        "phase": "cleanup.pre_signal_exit",
+        "pid": 53248,
+        "start_identity": [
+          1791773862,
+          832488
+        ],
+        "wait_returncode": 2
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.5,
+        "phase": "cleanup.wait",
+        "pid": 53248,
+        "start_identity": [
+          1791773862,
+          832488
+        ],
+        "wait_returncode": 2
+      }
+    ],
+    "exit_code": 2,
+    "owned_root_pid": 53248,
+    "owned_root_start_identity": [
+      1791773862,
+      832488
+    ],
+    "remaining_owned_pids": [],
+    "remaining_state_unknown": false,
+    "verified": true
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-endgame-pair-v1/controls-recovery/absent-controls-01-cache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-endgame-pair-v1/controls-recovery/control_bootstrap.py"
+  ],
+  "failure": null,
+  "log_bytes": 335,
+  "log_sha256": "17283583d717433dd3259538551b36929b6f08d47ad5363e23b6670ddd4484a9",
+  "peak_group_rss_bytes": 131072,
+  "returncode": 2,
+  "scope": "generated-only, no acquired payload or saved weights",
+  "source_after": {
+    "build/continuation-endgame-pair-v1/replay-recovery/bootstrap_smoke.py": "2b3c7044fd72ba7c479af3c94b981375e45a39a87181c40f8ae58906fadc1f58",
+    "build/continuation-endgame-pair-v1/replay-recovery/common.py": "2bba1a759e24edceb74f955cc5c38454a2ac1ee37226a00446e88576ab401376",
+    "build/continuation-endgame-pair-v1/replay-recovery/freeze_sources.py": "24e8a1c91ab84ef6e84837b58ab25111c52ed979ea22f00f7c67a77cae5a61af",
+    "build/continuation-endgame-pair-v1/replay-recovery/recovery_inputs.py": "726e07d18ee62668fec96305070372dfaabe89b4c8f73fd3b9c9834943de084c",
+    "build/continuation-endgame-pair-v1/replay-recovery/run_owned.py": "e7884ed0fa9e1461058ad20c791784295fb1edb569643f010c7b97207a6b9e9c",
+    "build/continuation-endgame-pair-v1/replay-recovery/test_recovery.py": "4c75d6d3040aaca14ea6ad4603a828a8ba32b713666c742156f43b4300646270",
+    "build/continuation-endgame-pair-v1/replay-recovery/worker.py": "9061ab5d3b50b30327eb94f774888fca748d913323a7d5d2595d38249b6097fa",
+    "src/resectionlab/spatial_continuation_planner.py": "fe43285ae70d3ff9944e2f4b2e532f7205d0148e5fd30aae99216a8d1243ff37",
+    "src/resectionlab/spatial_continuation_tail.py": "424729b964d505a3f4ac47317599e317c1d2abd0065dc0824eaa2fc6d65b15c5"
+  },
+  "source_before": {
+    "build/continuation-endgame-pair-v1/replay-recovery/bootstrap_smoke.py": "2b3c7044fd72ba7c479af3c94b981375e45a39a87181c40f8ae58906fadc1f58",
+    "build/continuation-endgame-pair-v1/replay-recovery/common.py": "2bba1a759e24edceb74f955cc5c38454a2ac1ee37226a00446e88576ab401376",
+    "build/continuation-endgame-pair-v1/replay-recovery/freeze_sources.py": "24e8a1c91ab84ef6e84837b58ab25111c52ed979ea22f00f7c67a77cae5a61af",
+    "build/continuation-endgame-pair-v1/replay-recovery/recovery_inputs.py": "726e07d18ee62668fec96305070372dfaabe89b4c8f73fd3b9c9834943de084c",
+    "build/continuation-endgame-pair-v1/replay-recovery/run_owned.py": "e7884ed0fa9e1461058ad20c791784295fb1edb569643f010c7b97207a6b9e9c",
+    "build/continuation-endgame-pair-v1/replay-recovery/test_recovery.py": "4c75d6d3040aaca14ea6ad4603a828a8ba32b713666c742156f43b4300646270",
+    "build/continuation-endgame-pair-v1/replay-recovery/worker.py": "9061ab5d3b50b30327eb94f774888fca748d913323a7d5d2595d38249b6097fa",
+    "src/resectionlab/spatial_continuation_planner.py": "fe43285ae70d3ff9944e2f4b2e532f7205d0148e5fd30aae99216a8d1243ff37",
+    "src/resectionlab/spatial_continuation_tail.py": "424729b964d505a3f4ac47317599e317c1d2abd0065dc0824eaa2fc6d65b15c5"
+  },
+  "source_unchanged": true,
+  "wall_seconds": 0.06278141611255705
+}

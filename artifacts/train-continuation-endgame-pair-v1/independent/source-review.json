@@ -1,0 +1,12 @@
+{
+  "auditor_bytes": 29691,
+  "auditor_sha256": "c57ba3391c4e73fad15c851bbff0d51477fc5a5b2bd0282bf0eb5307b880b99b",
+  "review_sha256": "2e34fe5ffeb751cf13c872e5b27bf2f07cfaf994a6692522301d76c58bd887a7",
+  "reviewed_runner_pins": {
+    "common.py": "2bba1a759e24edceb74f955cc5c38454a2ac1ee37226a00446e88576ab401376",
+    "endgame_planner.py": "7fd477d8282a7da4f56820bb8cb97a3fa254032957a1c26568c42144e36f17c3",
+    "handoff-index.json": "9c44a5eed029504c2c1b91f95a2f729efbdd600a4f17385ff95260d1807bdb44",
+    "worker.py": "fc9e1b13b123fbef6c33cea68ba7feb55747ad3f71316cc6e975b67a7fa784e9"
+  },
+  "status": "source_read_GO_auditor_unrun"
+}

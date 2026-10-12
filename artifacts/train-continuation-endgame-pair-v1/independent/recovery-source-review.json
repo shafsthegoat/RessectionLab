@@ -1,0 +1,38 @@
+{
+  "checks": [
+    "Exact old sealed-plan/model/world lineage before source load",
+    "No actor/model/cache/checkpoint/replanning path",
+    "Both fresh complete independent endpoints with evidence persisted before assertions",
+    "All retained history/decision fields compared through exact canonical JSON",
+    "Original failed costs retained and replay costs added with nested scopes explicit"
+  ],
+  "final_delta": "Only generated bootstrap guard distinguishes the interpreter-declared read-only stdlib python312.zip probe from scientific ZIP payloads; substantive runtime unchanged.",
+  "handoff_index_sha256": "2823be81aa307b3f07a0de1b3d7e7306c06e3133c6fc3373a20cd1a97e45ed43",
+  "independent_files": {
+    "build/continuation-endgame-pair-v1/independent/RECOVERY-RESULT.txt": {
+      "bytes": 4266,
+      "sha256": "b0b29cbaf478e50ace441c0365dbd1d1b57347834e5f3f125c6bd2a5e580460a"
+    },
+    "build/continuation-endgame-pair-v1/independent/audit_recovery.py": {
+      "bytes": 30027,
+      "sha256": "b96164eea1820aeb7a26e7cbcaa9482e001bc693896ed333d7ec3bae68f951d8"
+    },
+    "build/continuation-endgame-pair-v1/independent/recovery-audit-01.json": {
+      "bytes": 20710,
+      "sha256": "44ee7677f3e3a7028f0de34ec4f7ecdda4754047026eb2d55e634afdcbe52b80"
+    }
+  },
+  "initial_handoff_sha256": "960b76ced6f8f7eeb2f7d0052bbd0d5ffb9a0bf5f4c1ee1657cbfabbfd3448d3",
+  "original_auditor_unchanged": true,
+  "scope": "One substantive replay-only source review; no new execution gate",
+  "source_pins": {
+    "bootstrap_smoke.py": "813a40a7ae08dd7e749a37e701053bdde119a95899d844a717ad65c22d385187",
+    "common.py": "2bba1a759e24edceb74f955cc5c38454a2ac1ee37226a00446e88576ab401376",
+    "config.json": "dd6eee4ba744ad27a6e9911f7053935aec96dc573c648b7398d9dbfd0a748baf",
+    "freeze_sources.py": "24e8a1c91ab84ef6e84837b58ab25111c52ed979ea22f00f7c67a77cae5a61af",
+    "recovery_inputs.py": "726e07d18ee62668fec96305070372dfaabe89b4c8f73fd3b9c9834943de084c",
+    "run_owned.py": "e7884ed0fa9e1461058ad20c791784295fb1edb569643f010c7b97207a6b9e9c",
+    "worker.py": "9061ab5d3b50b30327eb94f774888fca748d913323a7d5d2595d38249b6097fa"
+  },
+  "verdict": "GO_NO_MATERIAL_SOURCE_FINDING"
+}

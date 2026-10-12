@@ -1,0 +1,31 @@
+{
+  "actual_caps": {
+    "frozen_policy_forwards": 128,
+    "log_bytes": 65536,
+    "native_previews": 30000,
+    "output_bytes": 4194304,
+    "parent_wall_seconds": 630,
+    "whole_build_bytes": 8388608,
+    "work_seconds": 600,
+    "worker_peak_rss_bytes": 3221225472
+  },
+  "execution_released": true,
+  "learning_protocol_hash": "sha256:2f9499bc196340226a814f5944db6601b1f7556cf0b80f37faf1b52711e91156",
+  "limits": {
+    "max_native_previews": 7297920,
+    "max_optimizer_updates": 128,
+    "max_policy_forwards": 18624,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 900
+  },
+  "new_objective": "Q_i=r_i+max(0,Q_(i+1)); STOP=0; current negative action cost preserved",
+  "root_source_index_sha256": "c2a0b2f70fbc8692db425c85132082b26216aa62f0470c641077bb94a5458a16",
+  "schema": "single-common-state-tail-endgame-pair-v1"
+}

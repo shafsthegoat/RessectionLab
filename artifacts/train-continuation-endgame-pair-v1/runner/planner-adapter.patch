@@ -1,0 +1,173 @@
+--- src/resectionlab/spatial_continuation_planner.py
++++ build/continuation-endgame-pair-v1/runner/endgame_planner.py
+@@ -1,3 +1,4 @@
++# Derived from canonical planner SHA256 fe43285ae70d3ff9944e2f4b2e532f7205d0148e5fd30aae99216a8d1243ff37; only fixed index8 treatment/prefix joins are added.
+ """Bounded actual-positive nominal rollout with one direct-Q batch per state.
+ 
+ The guard is the existing full-inventory immediate nominal objective. Learned Q
+@@ -14,12 +15,12 @@
+ 
+ import numpy as np
+ 
+-from .core import semantic_digest
+-from .native_spatial_task import NativeSpatialTask
+-from .observed_search import ObservedSearchLimit
+-from .patient_planning_admission import PatientPlanningContext
+-from .spatial_continuation_value import FittedContinuationValue
+-from .spatial_continuation_tail import FittedContinuationTail
++from resectionlab.core import semantic_digest
++from resectionlab.native_spatial_task import NativeSpatialTask
++from resectionlab.observed_search import ObservedSearchLimit
++from resectionlab.patient_planning_admission import PatientPlanningContext
++from resectionlab.spatial_continuation_value import FittedContinuationValue
++from resectionlab.spatial_continuation_tail import FittedContinuationTail
+ 
+ 
+ VERSION = "actual-positive-guarded-direct-q-nominal-rollout-v1"
+@@ -52,36 +53,46 @@
+     return combined
+ 
+ 
+-def q_guided_nominal_search(task, context, scorer, *, seconds=300., cancelled=None, max_calls=24):
+-    """Return a completed nominal route and charged accounting, or raise.
+-
+-    Both this method and the baseline authenticate and score every currently
+-    certified action with the same immediate nominal reward. This method ranks
+-    the positive-reward subset by positive direct Q, falling back to the exact
+-    immediate greedy rule if that subset has no positive Q. It never adds reward
+-    to Q, commits negative preparation, or runs a successor CNN per candidate.
+-
+-    Only an exact admitted fresh task and fitted frozen head are accepted. Native
+-    preview instrumentation is attached solely to the private planning clone and
+-    restored on every exit. Initial source/task preparation lies outside this
+-    call and must also be charged by the caller. A cap or interrupted operation
+-    produces incomplete accounting, never a successful STOP substitution.
+-    """
+-    return _guarded_nominal_search(task, context, scorer, seconds=seconds,
+-        cancelled=cancelled, max_calls=max_calls, tail_mode=False)
+-
+-
+-def tail_guided_nominal_search(task, context, scorer, *, seconds=300., cancelled=None, max_calls=24):
+-    """Same certified productive inventory; rank exact r + max(0, raw tail).
+-
+-STOP and final realized reward are unchanged. This consumes an exact tail
+-scorer, never a direct-Q scorer, and incurs no additional observation/preview.
+-"""
+-    return _guarded_nominal_search(task, context, scorer, seconds=seconds,
+-        cancelled=cancelled, max_calls=max_calls, tail_mode=True)
+-
+-
+-def _guarded_nominal_search(task, context, scorer, *, seconds, cancelled, max_calls, tail_mode):
++def endgame_tail_search(task,context,scorer,*,forced_action,expected_prefix,expected_common,
++        seconds=300.,cancelled=None,max_calls=24):
++    """One predeclared index8 intervention; no suffix actions/outcomes admitted."""
++    validate_treatment(forced_action,expected_prefix,expected_common)
++    return _guarded_nominal_search(task,context,scorer,seconds=seconds,cancelled=cancelled,
++        max_calls=max_calls,tail_mode=True,forced_action=forced_action,
++        expected_prefix=expected_prefix,expected_common=expected_common)
++
++
++def validate_treatment(forced_action,prefix,common):
++    if (not isinstance(forced_action,str) or len(prefix)!=8
++            or set(common)!={'step','source_state_hash','observation_hash','scores','current_tool'}
++            or common['step']!=8 or forced_action not in [r['action_id'] for r in common['scores']]
++            or forced_action=='STOP'):
++        raise ValueError('Exact8-prefix/index8 nonSTOP common-state treatment required')
++    fields={'selected_action_id','observation_hash','source_state_hash','result_state_hash',
++            'actual_reward','terminated','current_tool_before'}
++    if any(set(row)!=fields or row['terminated'] is not False for row in prefix):
++        raise ValueError('Only exact completed prefix fields accepted; no future suffix')
++
++
++def aggregate_catalog(ledger,certified_count,*,state_hash,step,selected_action):
++    """Output-only scalar snapshot; never issues an inventory/native query."""
++    groups={};proposed=0;certified=0
++    for row in ledger:
++        emitted=row.get('proposal_reason')=='PROPOSED_UNCERTIFIED'
++        feasible=row.get('feasible') is True
++        proposed+=int(emitted);certified+=int(feasible)
++        key=tuple(str(row.get(k,'UNKNOWN')) for k in ('tool_id','family','proposal_reason','reason'))
++        group=groups.setdefault(key,{'slots':0,'proposed':0,'certified':0})
++        group['slots']+=1;group['proposed']+=int(emitted);group['certified']+=int(feasible)
++    if certified!=certified_count:raise ValueError('Catalog certified count differs from existing inventory')
++    return {'captured':'after_final_choice_before_terminal_transition','state_hash':state_hash,
++        'step':step,'selected_action':selected_action,'ledger_slots':len(ledger),
++        'proposed_count':proposed,'certified_count':certified,'additional_queries':0,
++        'groups':[dict(zip(('tool_id','proposal_kind','proposal_disposition','native_reason'),key),**value)
++                  for key,value in sorted(groups.items())]}
++
++
++def _guarded_nominal_search(task, context, scorer, *, seconds, cancelled, max_calls, tail_mode, forced_action, expected_prefix, expected_common):
+     expected_type = FittedContinuationTail if tail_mode else FittedContinuationValue
+     if (type(task) is not NativeSpatialTask or type(context) is not PatientPlanningContext
+             or type(scorer) is not expected_type):
+@@ -91,7 +102,7 @@
+             or not math.isfinite(seconds) or not 0 < seconds <= 3600
+             or (cancelled is not None and not callable(cancelled))):
+         raise ValueError("Explicit bounded rollout budgets are required")
+-    if not 1 <= task.max_steps <= 24 or task._steps or task._history or task.terminated:
++    if task.max_steps != 24 or task._steps or task._history or task.terminated:
+         raise ValueError("Guarded Q rollout requires a fresh task with horizon at most 24")
+ 
+     started = time.perf_counter()
+@@ -105,6 +116,7 @@
+               "native_previews_feasible": 0, "native_preview_seconds": 0.}
+     flags = {"time_cap_reached": False, "call_cap_reached": False, "cancelled": False}
+     sequence, decisions = [], []
++    terminal_catalog=None
+     model = None
+     error = None
+     complete = False
+@@ -227,8 +239,28 @@
+                         combined_nominal_q=0. if i == 0 else None if combined is None else combined[i])
+                     if i == 0:
+                         row['predicted_q'] = 0.
++            if model._steps < 8:
++                expected=expected_prefix[model._steps]
++                if (ids[chosen]!=expected['selected_action_id']
++                        or observation_hash!=expected['observation_hash']
++                        or model._engine.state_hash!=expected['source_state_hash']
++                        or model._current_tool!=expected['current_tool_before']):
++                    raise ValueError('Frozen prefix action/observation/state/current tool changed')
++            elif model._steps == 8:
++                if ({'step':model._steps,'source_state_hash':model._engine.state_hash,
++                        'observation_hash':observation_hash,'scores':scores,
++                        'current_tool':model._current_tool} != expected_common):
++                    raise ValueError('Common-state complete ordered inventory or score changed')
++                decision['unforced_selected_action_id']=ids[chosen]
++                chosen=ids.index(forced_action)
++                if scores[chosen]['reward']<=0:raise ValueError('Forced action violates unchanged productive guard')
++                reason='predeclared_single_index8_intervention'
++                decision['intervention']=True
+             decision.update(selected_action_id=ids[chosen], selection_reason=reason,
+                             selected_q=0. if tail_mode and chosen == 0 else None if combined is None else combined[chosen])
++            if ids[chosen]=='STOP' or model._steps+1==model.max_steps:
++                terminal_catalog=aggregate_catalog(model._ledger,len(inventory),state_hash=model._engine.state_hash,
++                    step=model._steps,selected_action=ids[chosen])
+             check()
+             counts["model_transition_calls"] += 1
+             decision["transition_status"] = "attempted"
+@@ -248,6 +280,11 @@
+             if (outcome.info.get("action_id") != ids[chosen] or outcome.reward != scores[chosen]["reward"]
+                     or (chosen and outcome.info.get("outcome_scope") != "permitted_nominal_model")):
+                 raise ValueError("Committed nominal transition differs from its authenticated immediate score")
++            if prior_steps < 8:
++                expected=expected_prefix[prior_steps]
++                if (outcome.reward!=expected['actual_reward'] or model.terminated!=expected['terminated']
++                        or model._engine.state_hash!=expected['result_state_hash']):
++                    raise ValueError('Frozen prefix realized reward/state changed')
+             check()
+         complete = True
+     except BaseException as exc:
+@@ -291,9 +328,11 @@
+         "immediate_reward_added_to_Q": False, "negative_preparation_allowed": False,
+         "learned_negative_avoidance_claim": False, "successor_CNN_calls": 0,
+         "initial_source_preparation": "outside_this_call; caller_must_charge",
++        "intervention_index":8,"forced_action_id":forced_action,"diagnostic_only":True,
+         "within_call_costs": "clone, full native inventories, immediate scoring, public observations, one Q batch per productive state, commits, integrity checks",
+         "native_replay_required": True, "global_optimality_proven": False,
+         "failure": None if error is None else {"type": type(error).__name__, "message": str(error)}}
++    accounting['terminal_decision_catalog']=terminal_catalog if complete and error is None else None
+     if tail_mode:
+         accounting.update(
+             prediction_semantics='raw_tail_clipped_at_zero_then_exact_current_nominal_reward_added_once',

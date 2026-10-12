@@ -1,0 +1,299 @@
+{
+  "attempt_costs": {
+    "direct_svd": 1,
+    "frozen_forwards": 24,
+    "head_updates": 64,
+    "native_previews": 3458,
+    "parent_seconds": 67.31687491596676,
+    "phase_costs": {
+      "authenticated_existing_cache_load": {
+        "complete_wall_seconds": 0.01235216693021357,
+        "native_preview_entries": 0
+      },
+      "common_subject": {
+        "complete_wall_seconds": 60.63495499989949,
+        "native_preview_entries": 3367
+      },
+      "common_subject.public_reconstruction": {
+        "complete_wall_seconds": 1.8078694159630686,
+        "inventory_build_or_terminal_empty_calls": 1,
+        "inventory_request_calls": 3,
+        "inventory_request_inclusive_seconds": 1.3313385418150574,
+        "inventory_request_returned": 3,
+        "native_preview_entries": 91
+      },
+      "fixed_64_head_updates": {
+        "complete_wall_seconds": 0.08678179210983217,
+        "native_preview_entries": 0
+      },
+      "load_fixed_IL64_parameter_only_checkpoint": {
+        "complete_wall_seconds": 0.013778333086520433,
+        "native_preview_entries": 0
+      },
+      "metadata_authentication": {
+        "complete_wall_seconds": 0.45602158294059336,
+        "native_preview_entries": 0
+      },
+      "planning.IMMEDIATE_BEST": {
+        "complete_wall_seconds": 19.27061845897697,
+        "inventory_build_or_terminal_empty_calls": 12,
+        "inventory_request_calls": 39,
+        "inventory_request_inclusive_seconds": 17.334265921497717,
+        "inventory_request_returned": 39,
+        "native_preview_entries": 1092,
+        "native_transition_calls": 13,
+        "native_transition_inclusive_seconds": 0.27608470991253853,
+        "native_transition_returned": 13,
+        "policy_forward_calls": 12,
+        "policy_forward_inclusive_seconds": 1.260291081853211,
+        "policy_forward_returned": 12,
+        "task_clone_calls": 1,
+        "task_clone_inclusive_seconds": 0.002116832882165909,
+        "task_clone_returned": 1
+      },
+      "planning.RETAINED_TAIL": {
+        "complete_wall_seconds": 19.22090004198253,
+        "inventory_build_or_terminal_empty_calls": 12,
+        "inventory_request_calls": 39,
+        "inventory_request_inclusive_seconds": 17.083348083077,
+        "inventory_request_returned": 39,
+        "native_preview_entries": 1092,
+        "native_transition_calls": 13,
+        "native_transition_inclusive_seconds": 0.27749850088730454,
+        "native_transition_returned": 13,
+        "policy_forward_calls": 12,
+        "policy_forward_inclusive_seconds": 1.4685513337608427,
+        "policy_forward_returned": 12,
+        "task_clone_calls": 1,
+        "task_clone_inclusive_seconds": 0.0020663749892264605,
+        "task_clone_returned": 1
+      },
+      "replay.RETAINED_TAIL": {
+        "complete_wall_seconds": 22.116879416862503,
+        "inventory_build_or_terminal_empty_calls": 14,
+        "inventory_request_calls": 40,
+        "inventory_request_inclusive_seconds": 19.514308125711977,
+        "inventory_request_returned": 40,
+        "native_preview_entries": 1183,
+        "native_transition_calls": 13,
+        "native_transition_inclusive_seconds": 18.43962266505696,
+        "native_transition_returned": 13,
+        "task_clone_calls": 1,
+        "task_clone_inclusive_seconds": 0.023999541997909546,
+        "task_clone_returned": 1
+      },
+      "single_fixed_continuation_tail_solve": {
+        "complete_wall_seconds": 0.011583375046029687,
+        "native_preview_entries": 0
+      },
+      "single_fixed_final_readout_calibration": {
+        "complete_wall_seconds": 0.013297915924340487,
+        "native_preview_entries": 0
+      }
+    },
+    "tail_svd": 1,
+    "worker_seconds": 66.72280920809135
+  },
+  "audit_status": "PASS_SAVED_RECOVERY_POINT",
+  "auditor_sha256": "909f07767ab3d31cee70bb80b7d35286419feb940a48b803ab1887f0ef1b75dd",
+  "checks": 715,
+  "cumulative_iteration_costs": {
+    "current_head_optimizer_updates": 64,
+    "endgame_pair_worker_seconds": 66.72280920809135,
+    "failed_cache_attempt_worker_seconds": 1284.6671255419496,
+    "frozen_policy_forwards": 678,
+    "native_preview_entries": 88448,
+    "prior_direct_head_optimizer_updates": 64,
+    "prior_direct_worker_seconds": 384.7155832911376,
+    "prior_failed_attempt_not_amortized": true,
+    "prior_tail_worker_seconds": 269.88731187512167,
+    "scope": "cache-fill failure plus direct recovery plus tail contrast plus endgame pair; older original64 experiment separate"
+  },
+  "diagnosis": "Native typed tuple entry/tip survive compact_history; JSON original lists make strict Python history comparison fail. Error occurs after readout, independent audit and action/world/nominal-history/outcome parity checks by authenticated source control flow.",
+  "input_files": {
+    "build/continuation-endgame-pair-v1/run-01/launcher.json": {
+      "bytes": 3714,
+      "sha256": "beedf54160707e8f2571a4e9a6d4add7f99ebf4cdbd5f320e7af4f89dece1808"
+    },
+    "build/continuation-endgame-pair-v1/run-01/plans.json": {
+      "bytes": 307325,
+      "sha256": "6798288cbb05cce8692f61f64438b68fcad8aef15ebc5ec008b2f3e3a151521b"
+    },
+    "build/continuation-endgame-pair-v1/run-01/report.json": {
+      "bytes": 394250,
+      "sha256": "2a50f3a22b9c298681a863785b489c8e09b398974bce82d733464f015ff8337e"
+    },
+    "build/continuation-endgame-pair-v1/runner/source-index.json": {
+      "bytes": 42097,
+      "sha256": "c2a0b2f70fbc8692db425c85132082b26216aa62f0470c641077bb94a5458a16"
+    },
+    "build/continuation-next-iteration-v1/run-01/cache-binding.json": {
+      "bytes": 1499,
+      "sha256": "fd7dafde7547e73229cb4cb833e6be899a6fc5514837fa383a34bc5718f494ba"
+    },
+    "build/continuation-tail-v1/independent/audit-01.json": {
+      "bytes": 50376,
+      "sha256": "22d6461208c18a6751e9681530cdb8fc6c572c36eedc79a262f9103976e5cd18"
+    },
+    "build/continuation-tail-v1/run-01/launcher.json": {
+      "bytes": 4720,
+      "sha256": "c9cf8269ceffda7ccfed0060f04164fa88e9cf59a597c5d20c851a5bb7e4d3f0"
+    },
+    "build/continuation-tail-v1/run-01/report.json": {
+      "bytes": 1054470,
+      "sha256": "1bee2b1d4c40a55b666ce3269a39c4a5052e1911297b22c6c8702fb21000af66"
+    }
+  },
+  "launcher_sha256": "beedf54160707e8f2571a4e9a6d4add7f99ebf4cdbd5f320e7af4f89dece1808",
+  "model_calls": 0,
+  "native_calls": 0,
+  "observed_clean_failure_lifecycle": {
+    "child_reaped": true,
+    "errors": [],
+    "events": [
+      {
+        "pgid": 52880,
+        "phase": "bind",
+        "pid": 52880,
+        "start_identity": [
+          1791773034,
+          918042
+        ]
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0,
+        "phase": "cleanup.pre_signal_exit",
+        "pid": 52880,
+        "start_identity": [
+          1791773034,
+          918042
+        ],
+        "wait_returncode": 1
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.5,
+        "phase": "cleanup.wait",
+        "pid": 52880,
+        "start_identity": [
+          1791773034,
+          918042
+        ],
+        "wait_returncode": 1
+      }
+    ],
+    "exit_code": 1,
+    "owned_root_pid": 52880,
+    "owned_root_start_identity": [
+      1791773034,
+      918042
+    ],
+    "remaining_owned_pids": [],
+    "remaining_state_unknown": false,
+    "verified": true
+  },
+  "original_attempt_status": "failed_or_incomplete",
+  "original_failure": {
+    "accounting": null,
+    "committed": false,
+    "message": "Retained full native history/state projection changed",
+    "phase": "replay.RETAINED_TAIL",
+    "type": "ValueError"
+  },
+  "plans": {
+    "IMMEDIATE_BEST": {
+      "action_ids": [
+        "nominal-cavity-8ecc581f61b868dec43b5f26",
+        "nominal-cavity-7b4d91f546a0f38c06a3686d",
+        "nominal-cavity-4190e33719f54da5f5ac9d3a",
+        "nominal-cavity-d0a585a64d6e39b9ecd6b253",
+        "nominal-cavity-91800cbcada816c1df319c8d",
+        "nominal-cavity-5bb5732e12de51edf1046255",
+        "nominal-cavity-089d0d7d813b7b7e3487b141",
+        "nominal-cavity-3536ed9f0ef3e6592a2fc158",
+        "nominal-cavity-22839a32a529e5e57ad1d0b7",
+        "nominal-cavity-e8b471bdeb5c13f6f8c60eb4",
+        "nominal-cavity-2f55b4dd7523af98400e0578",
+        "nominal-cavity-abe8d821339df5bbceef819a",
+        "STOP"
+      ],
+      "actions": 13,
+      "authoritative_replay_accepted": false,
+      "forwards": 12,
+      "history_hash": "sha256:3782936ad279ea8f1794e7b3fd765b48462fd8f12d61a05ace1145039664bad0",
+      "plan_seal": "sha256:9cc7f0a3ed4077e272d39048d1ff308083d1f3ee87765e24abf7b52fd04a118d",
+      "planned_return": 48.15140979502283,
+      "planning_costs": {
+        "complete_wall_seconds": 19.27061845897697,
+        "inventory_build_or_terminal_empty_calls": 12,
+        "inventory_request_calls": 39,
+        "inventory_request_inclusive_seconds": 17.334265921497717,
+        "inventory_request_returned": 39,
+        "native_preview_entries": 1092,
+        "native_transition_calls": 13,
+        "native_transition_inclusive_seconds": 0.27608470991253853,
+        "native_transition_returned": 13,
+        "policy_forward_calls": 12,
+        "policy_forward_inclusive_seconds": 1.260291081853211,
+        "policy_forward_returned": 12,
+        "task_clone_calls": 1,
+        "task_clone_inclusive_seconds": 0.002116832882165909,
+        "task_clone_returned": 1
+      }
+    },
+    "RETAINED_TAIL": {
+      "action_ids": [
+        "nominal-cavity-8ecc581f61b868dec43b5f26",
+        "nominal-cavity-7b4d91f546a0f38c06a3686d",
+        "nominal-cavity-4190e33719f54da5f5ac9d3a",
+        "nominal-cavity-d0a585a64d6e39b9ecd6b253",
+        "nominal-cavity-91800cbcada816c1df319c8d",
+        "nominal-cavity-5bb5732e12de51edf1046255",
+        "nominal-cavity-089d0d7d813b7b7e3487b141",
+        "nominal-cavity-3536ed9f0ef3e6592a2fc158",
+        "nominal-cavity-796668398d38557bae703113",
+        "nominal-cavity-2226a735f7bd1bf6c0b55c24",
+        "nominal-cavity-3abc157632b6577eec9ee5c7",
+        "nominal-cavity-496df3a8fd6d637e83ef8e78",
+        "STOP"
+      ],
+      "actions": 13,
+      "authoritative_replay_accepted": false,
+      "forwards": 12,
+      "history_hash": "sha256:cc0174127adbce6deb0051c9599a9bdf3b8ada339aafa06c88d6782a924fcdf3",
+      "plan_seal": "sha256:f647d8f782409b76491c6e6d211b963c9a076aadd2c2da0f45bd2998e32fd8f1",
+      "planned_return": 48.09085666918073,
+      "planning_costs": {
+        "complete_wall_seconds": 19.22090004198253,
+        "inventory_build_or_terminal_empty_calls": 12,
+        "inventory_request_calls": 39,
+        "inventory_request_inclusive_seconds": 17.083348083077,
+        "inventory_request_returned": 39,
+        "native_preview_entries": 1092,
+        "native_transition_calls": 13,
+        "native_transition_inclusive_seconds": 0.27749850088730454,
+        "native_transition_returned": 13,
+        "policy_forward_calls": 12,
+        "policy_forward_inclusive_seconds": 1.4685513337608427,
+        "policy_forward_returned": 12,
+        "task_clone_calls": 1,
+        "task_clone_inclusive_seconds": 0.0020663749892264605,
+        "task_clone_returned": 1
+      }
+    }
+  },
+  "plans_file": "build/continuation-endgame-pair-v1/run-01/plans.json",
+  "plans_sha256": "6798288cbb05cce8692f61f64438b68fcad8aef15ebc5ec008b2f3e3a151521b",
+  "recovery_point": "PASS_SEALED_PLANS_FOR_REPLAY_ONLY_NOT_ACCEPTED_EXPERIMENT",
+  "recovery_scope": "Use only these exact two complete sealed action plans for new authoritative replay; no model/head/cache decode, fitting, replanning or treatment change. Original failure remains negative.",
+  "remaining_uncertainty": "The first replay live result was not saved before assertion, so additional decision/projection mismatch cannot be independently excluded from saved output. New replay must save certificate/projection and require full JSON-normalized equality; exclude no values and use no fitted tolerance.",
+  "report_sha256": "2a50f3a22b9c298681a863785b489c8e09b398974bce82d733464f015ff8337e",
+  "seconds": 0.009608041029423475,
+  "source_diagnosis_pins": {
+    "build/continuation-endgame-pair-v1/runner/common.py": "2bba1a759e24edceb74f955cc5c38454a2ac1ee37226a00446e88576ab401376",
+    "build/continuation-endgame-pair-v1/runner/worker.py": "fc9e1b13b123fbef6c33cea68ba7feb55747ad3f71316cc6e975b67a7fa784e9",
+    "src/resectionlab/native_resection.py": "193bf4bfd5f8c0dad35cabc855153ffff7b5bcefe8b67efb15586515a1ae49ff"
+  },
+  "source_index_sha256": "c2a0b2f70fbc8692db425c85132082b26216aa62f0470c641077bb94a5458a16"
+}

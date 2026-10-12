@@ -1,0 +1,494 @@
+{
+  "bytes": 1559616,
+  "excluded": "Patient arrays, weights and feature cache remain outside Git. No acquisition.",
+  "files": {
+    "RESULT.md": {
+      "bytes": 7199,
+      "origin": "root-written synthesis of exact archived evidence",
+      "sha256": "7d590f73ac6ef9e4bfed2bbc68fb82b474626a8bd00b27f20e0ff252cde5dace"
+    },
+    "completed-control-links.json": {
+      "bytes": 814,
+      "origin": "build/continuation-endgame-pair-v1/completed-control-links.json",
+      "sha256": "fa58439c5513b94b9cea892e9db9013e7b4f0f8dae81e82cc1c6e4efd322bf22"
+    },
+    "completed-recovery-control-links.json": {
+      "bytes": 1571,
+      "origin": "build/continuation-endgame-pair-v1/completed-recovery-control-links.json",
+      "sha256": "6721049cfce18cb15d38f4e7b3120da6abfed68363abb5ee5e36c576b4446b64"
+    },
+    "controls-recovery-02/control_bootstrap.py": {
+      "bytes": 300,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery-02/control_bootstrap.py",
+      "sha256": "6d76cd5fd4f1f601f8ca813230c1f95c4fc9d145eb2553951f610731e8a9a025"
+    },
+    "controls-recovery-02/controls-01.json": {
+      "bytes": 4477,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery-02/controls-01.json",
+      "sha256": "8a0df44bb2ae8f69795cc3e694a9c1c4f8f5d3dab77b9128869ce1336f0277ec"
+    },
+    "controls-recovery-02/controls-01.log": {
+      "bytes": 2557,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery-02/controls-01.log",
+      "sha256": "6f8640fac480a6b0d7946d0d97b176f5a1809b2935fb0ce0063a1f69eca7c301"
+    },
+    "controls-recovery-02/pytest-temp/test_actual_isolated_bootstrap0/bootstrap/receipt.json": {
+      "bytes": 616,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery-02/pytest-temp/test_actual_isolated_bootstrap0/bootstrap/receipt.json",
+      "sha256": "3c2ac58d3088046753e813ee9f7147497e3d2d9678144f7d77c9eeec9b7be841"
+    },
+    "controls-recovery-02/pytest-temp/test_false_release_never_runs0/runner/config.json": {
+      "bytes": 648,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery-02/pytest-temp/test_false_release_never_runs0/runner/config.json",
+      "sha256": "dd6eee4ba744ad27a6e9911f7053935aec96dc573c648b7398d9dbfd0a748baf"
+    },
+    "controls-recovery-02/pytest-temp/test_false_release_never_runs0/runner/source-index.json": {
+      "bytes": 42,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery-02/pytest-temp/test_false_release_never_runs0/runner/source-index.json",
+      "sha256": "08b1837a355342d7f5f0cc1261a1ef715498c88210e9de6e44841ab3239f19b5"
+    },
+    "controls-recovery-02/run_controls.py": {
+      "bytes": 832,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery-02/run_controls.py",
+      "sha256": "00cb0c62a397138c92fd6e560b5e0b2b52bd93cbf9792fd907e99f52f264ebd8"
+    },
+    "controls-recovery-03/control_bootstrap.py": {
+      "bytes": 300,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery-03/control_bootstrap.py",
+      "sha256": "6d76cd5fd4f1f601f8ca813230c1f95c4fc9d145eb2553951f610731e8a9a025"
+    },
+    "controls-recovery-03/controls-01.json": {
+      "bytes": 4474,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery-03/controls-01.json",
+      "sha256": "31ef82223b01233ad9f1855793fce6dced9a143cfb53a44b70c5d5abca552789"
+    },
+    "controls-recovery-03/controls-01.log": {
+      "bytes": 98,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery-03/controls-01.log",
+      "sha256": "ec919cdd57d0eda259bcf0faf7707999c631cacdc0c5441d0fd3fac274c04639"
+    },
+    "controls-recovery-03/pytest-temp/test_actual_isolated_bootstrap0/bootstrap/receipt.json": {
+      "bytes": 838,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery-03/pytest-temp/test_actual_isolated_bootstrap0/bootstrap/receipt.json",
+      "sha256": "79e2a0c40eec54577e93c0e6b58e087fda00984a138ead5d883bc164947de249"
+    },
+    "controls-recovery-03/pytest-temp/test_false_release_never_runs0/runner/config.json": {
+      "bytes": 648,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery-03/pytest-temp/test_false_release_never_runs0/runner/config.json",
+      "sha256": "dd6eee4ba744ad27a6e9911f7053935aec96dc573c648b7398d9dbfd0a748baf"
+    },
+    "controls-recovery-03/pytest-temp/test_false_release_never_runs0/runner/source-index.json": {
+      "bytes": 42,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery-03/pytest-temp/test_false_release_never_runs0/runner/source-index.json",
+      "sha256": "08b1837a355342d7f5f0cc1261a1ef715498c88210e9de6e44841ab3239f19b5"
+    },
+    "controls-recovery-03/run_controls.py": {
+      "bytes": 832,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery-03/run_controls.py",
+      "sha256": "00cb0c62a397138c92fd6e560b5e0b2b52bd93cbf9792fd907e99f52f264ebd8"
+    },
+    "controls-recovery/controls-01.json": {
+      "bytes": 4468,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery/controls-01.json",
+      "sha256": "2588551d3b91420cf512d8d7f53c2773bf41b121140fb2cdaf986a9f1ef1a80d"
+    },
+    "controls-recovery/controls-01.log": {
+      "bytes": 335,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery/controls-01.log",
+      "sha256": "17283583d717433dd3259538551b36929b6f08d47ad5363e23b6670ddd4484a9"
+    },
+    "controls-recovery/run_controls.py": {
+      "bytes": 832,
+      "origin": "build/continuation-endgame-pair-v1/controls-recovery/run_controls.py",
+      "sha256": "00cb0c62a397138c92fd6e560b5e0b2b52bd93cbf9792fd907e99f52f264ebd8"
+    },
+    "controls/control_bootstrap.py": {
+      "bytes": 289,
+      "origin": "build/continuation-endgame-pair-v1/controls/control_bootstrap.py",
+      "sha256": "d9be72e5af4d67b7b1a35f4df5f9df834093f8ec1c8b94739537a315a3e3f918"
+    },
+    "controls/controls-01.json": {
+      "bytes": 4573,
+      "origin": "build/continuation-endgame-pair-v1/controls/controls-01.json",
+      "sha256": "fdd46af930dfbc899ed17253121fdadec256034d120c2c980e3108a9d881086e"
+    },
+    "controls/controls-01.log": {
+      "bytes": 99,
+      "origin": "build/continuation-endgame-pair-v1/controls/controls-01.log",
+      "sha256": "86e3b86fa6746888e4777b602439fd6b9e18133d9895d9e18fb53e65d6539d5e"
+    },
+    "controls/pytest-temp/test_actual_isolated_bootstrap0/bootstrap/receipt.json": {
+      "bytes": 261,
+      "origin": "build/continuation-endgame-pair-v1/controls/pytest-temp/test_actual_isolated_bootstrap0/bootstrap/receipt.json",
+      "sha256": "b3a506546a5200c2e84cc7c9793bd86b1c6135d02e83a3468fe2411f8474ea68"
+    },
+    "controls/pytest-temp/test_false_release_parent_and_0/runner/config.json": {
+      "bytes": 2384,
+      "origin": "build/continuation-endgame-pair-v1/controls/pytest-temp/test_false_release_parent_and_0/runner/config.json",
+      "sha256": "6c4668fa9e8a91f0e4edd2f7d56e303d3b5fe8188d29c0e5180ea51041e1ec9f"
+    },
+    "controls/pytest-temp/test_false_release_parent_and_0/runner/source-index.json": {
+      "bytes": 42,
+      "origin": "build/continuation-endgame-pair-v1/controls/pytest-temp/test_false_release_parent_and_0/runner/source-index.json",
+      "sha256": "08b1837a355342d7f5f0cc1261a1ef715498c88210e9de6e44841ab3239f19b5"
+    },
+    "controls/run_controls.py": {
+      "bytes": 823,
+      "origin": "build/continuation-endgame-pair-v1/controls/run_controls.py",
+      "sha256": "96cac6b62663e46bc7681bafae3ebaba2c4418f9b8b82141225b91b7d9034c9b"
+    },
+    "failure-terminal.json": {
+      "bytes": 904,
+      "origin": "build/continuation-endgame-pair-v1/failure-terminal.json",
+      "sha256": "0ac3e028542e04cf8580360e4fdab89817941aa34bd18a554ddfba63751fb098"
+    },
+    "independent/RECOVERY-RESULT.txt": {
+      "bytes": 4266,
+      "origin": "build/continuation-endgame-pair-v1/independent/RECOVERY-RESULT.txt",
+      "sha256": "b0b29cbaf478e50ace441c0365dbd1d1b57347834e5f3f125c6bd2a5e580460a"
+    },
+    "independent/audit_failure.py": {
+      "bytes": 12384,
+      "origin": "build/continuation-endgame-pair-v1/independent/audit_failure.py",
+      "sha256": "909f07767ab3d31cee70bb80b7d35286419feb940a48b803ab1887f0ef1b75dd"
+    },
+    "independent/audit_recovery.py": {
+      "bytes": 30027,
+      "origin": "build/continuation-endgame-pair-v1/independent/audit_recovery.py",
+      "sha256": "b96164eea1820aeb7a26e7cbcaa9482e001bc693896ed333d7ec3bae68f951d8"
+    },
+    "independent/audit_saved.py": {
+      "bytes": 29691,
+      "origin": "build/continuation-endgame-pair-v1/independent/audit_saved.py",
+      "sha256": "c57ba3391c4e73fad15c851bbff0d51477fc5a5b2bd0282bf0eb5307b880b99b"
+    },
+    "independent/failure-audit-01.json": {
+      "bytes": 12449,
+      "origin": "build/continuation-endgame-pair-v1/independent/failure-audit-01.json",
+      "sha256": "258ab0dd042bdbde8bbbf42915d0bc6a6e4b970d8cb0fde86f8ca9396b4b1854"
+    },
+    "independent/recovery-audit-01.json": {
+      "bytes": 20710,
+      "origin": "build/continuation-endgame-pair-v1/independent/recovery-audit-01.json",
+      "sha256": "44ee7677f3e3a7028f0de34ec4f7ecdda4754047026eb2d55e634afdcbe52b80"
+    },
+    "independent/recovery-source-review.json": {
+      "bytes": 2189,
+      "origin": "build/continuation-endgame-pair-v1/independent/recovery-source-review.json",
+      "sha256": "62b86174d77fe48585d9db7c2377d5ba3201386a3d611bb292b299cad7e3684a"
+    },
+    "independent/source-review.json": {
+      "bytes": 638,
+      "origin": "build/continuation-endgame-pair-v1/independent/source-review.json",
+      "sha256": "07b264a794387a7a449ff5bbcf2fc5c0b0cf7e3feaeedea4329ad14a9cd5e953"
+    },
+    "independent/source-review.txt": {
+      "bytes": 1549,
+      "origin": "build/continuation-endgame-pair-v1/independent/source-review.txt",
+      "sha256": "2e34fe5ffeb751cf13c872e5b27bf2f07cfaf994a6692522301d76c58bd887a7"
+    },
+    "recovery-01/ReMIND-045-context.json": {
+      "bytes": 7168,
+      "origin": "build/continuation-endgame-pair-v1/recovery-01/ReMIND-045-context.json",
+      "sha256": "3d2f3a062bf20aa0c8e8e2112afe4623c260a5b9152a67e7c819142c9f886f04"
+    },
+    "recovery-01/evaluation/IMMEDIATE_BEST-evidence.json": {
+      "bytes": 22633,
+      "origin": "build/continuation-endgame-pair-v1/recovery-01/evaluation/IMMEDIATE_BEST-evidence.json",
+      "sha256": "5d889fd03382e65945f53c9e85813de58e697cf8ae7c0005bef263187551fe05"
+    },
+    "recovery-01/evaluation/RETAINED_TAIL-evidence.json": {
+      "bytes": 22629,
+      "origin": "build/continuation-endgame-pair-v1/recovery-01/evaluation/RETAINED_TAIL-evidence.json",
+      "sha256": "3b36b723aa5e319e35e9410c9daad747b28bd0d0227b762a0986ded149bf3a35"
+    },
+    "recovery-01/evaluation/source/admitted-public-bindings.json": {
+      "bytes": 18540,
+      "origin": "build/continuation-endgame-pair-v1/recovery-01/evaluation/source/admitted-public-bindings.json",
+      "sha256": "bfc6704164b2cc58c37bd55eaa3e7783360e20f9dedc79af0cad27c675be191e"
+    },
+    "recovery-01/evaluation/source/derived-occupancy-assumption.json": {
+      "bytes": 11491,
+      "origin": "build/continuation-endgame-pair-v1/recovery-01/evaluation/source/derived-occupancy-assumption.json",
+      "sha256": "58357c31f4c39b50181ed7ea05f9306777bfe10286a0fc6b802f5f5caca3bf1b"
+    },
+    "recovery-01/evaluation/source/public-task-derivation.json": {
+      "bytes": 4158,
+      "origin": "build/continuation-endgame-pair-v1/recovery-01/evaluation/source/public-task-derivation.json",
+      "sha256": "971ca4258c11fc49e9e85cf6f8fccd1cc1ae5890319e7cb8c18e1654f222c55d"
+    },
+    "recovery-01/intent.json": {
+      "bytes": 625,
+      "origin": "build/continuation-endgame-pair-v1/recovery-01/intent.json",
+      "sha256": "bd382195269cd01de41be800fe498c4c27c6bf85eeab77131c57f669f1ad2e6e"
+    },
+    "recovery-01/launcher.json": {
+      "bytes": 5127,
+      "origin": "build/continuation-endgame-pair-v1/recovery-01/launcher.json",
+      "sha256": "97ed2b508c4a743062c3ac30b9446c48766e63a65ebd95a159e3ed08804dd94e"
+    },
+    "recovery-01/plan-admission.json": {
+      "bytes": 850,
+      "origin": "build/continuation-endgame-pair-v1/recovery-01/plan-admission.json",
+      "sha256": "0fabc7ddbcf6039ea782d24d89967e077af20356a182b7399bb703c2dac8fe32"
+    },
+    "recovery-01/progress.json": {
+      "bytes": 1504,
+      "origin": "build/continuation-endgame-pair-v1/recovery-01/progress.json",
+      "sha256": "28c7ca10c49f6f2d901cbc44db47860c03499ac30232cc57aff2163138eb6e69"
+    },
+    "recovery-01/report.json": {
+      "bytes": 53465,
+      "origin": "build/continuation-endgame-pair-v1/recovery-01/report.json",
+      "sha256": "e0ab3670571e64ddf5818c190a7d599f55f96dd5e59be24ca29b1038e7b29751"
+    },
+    "recovery-01/worker.log": {
+      "bytes": 1615,
+      "origin": "build/continuation-endgame-pair-v1/recovery-01/worker.log",
+      "sha256": "acdd3e031f496e39e4900ecce168137b286d619104c7c1152d378c35f2e3c24e"
+    },
+    "recovery-01/world-admission.json": {
+      "bytes": 915,
+      "origin": "build/continuation-endgame-pair-v1/recovery-01/world-admission.json",
+      "sha256": "16ce15781bc63a7004ee996f72f6c2d1a73b99c41341051886177c57c66ad2f7"
+    },
+    "replay-recovery/README.md": {
+      "bytes": 3627,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/README.md",
+      "sha256": "9afc5298d1bd82644c7e16f66667361bcb125632c2bb605055e8b324aabb0e98"
+    },
+    "replay-recovery/bootstrap-revision-01/bootstrap.diff": {
+      "bytes": 1968,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/bootstrap-revision-01/bootstrap.diff",
+      "sha256": "4c0753a467b31bd88823f1a3021353e1d62d1a216eb39ac10f97e9acd230cf73"
+    },
+    "replay-recovery/bootstrap-revision-01/bootstrap_smoke.before.py.txt": {
+      "bytes": 2623,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/bootstrap-revision-01/bootstrap_smoke.before.py.txt",
+      "sha256": "2b3c7044fd72ba7c479af3c94b981375e45a39a87181c40f8ae58906fadc1f58"
+    },
+    "replay-recovery/bootstrap-revision-01/handoff-index.before.json": {
+      "bytes": 2578,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/bootstrap-revision-01/handoff-index.before.json",
+      "sha256": "960b76ced6f8f7eeb2f7d0052bbd0d5ffb9a0bf5f4c1ee1657cbfabbfd3448d3"
+    },
+    "replay-recovery/bootstrap-revision-01/revision.json": {
+      "bytes": 789,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/bootstrap-revision-01/revision.json",
+      "sha256": "c3427f3fc24078e207b14b2ea4d8d13896fa565f5a532ec062fa3ea4991edff1"
+    },
+    "replay-recovery/bootstrap_smoke.py": {
+      "bytes": 3426,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/bootstrap_smoke.py",
+      "sha256": "813a40a7ae08dd7e749a37e701053bdde119a95899d844a717ad65c22d385187"
+    },
+    "replay-recovery/bootstrap_smoke.py.patch": {
+      "bytes": 2605,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/bootstrap_smoke.py.patch",
+      "sha256": "d3ae159e30c01bf1ff0d3aaf18583f21c22742bba563868e76e353063c92cd5f"
+    },
+    "replay-recovery/common.py": {
+      "bytes": 18568,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/common.py",
+      "sha256": "2bba1a759e24edceb74f955cc5c38454a2ac1ee37226a00446e88576ab401376"
+    },
+    "replay-recovery/config.json": {
+      "bytes": 648,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/config.json",
+      "sha256": "dd6eee4ba744ad27a6e9911f7053935aec96dc573c648b7398d9dbfd0a748baf"
+    },
+    "replay-recovery/freeze_sources.py": {
+      "bytes": 1715,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/freeze_sources.py",
+      "sha256": "24e8a1c91ab84ef6e84837b58ab25111c52ed979ea22f00f7c67a77cae5a61af"
+    },
+    "replay-recovery/freeze_sources.py.patch": {
+      "bytes": 2300,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/freeze_sources.py.patch",
+      "sha256": "c6173787a2acfa28c4bac22203f877cb36731b753523d49f3be8bb8e379940b3"
+    },
+    "replay-recovery/handoff-index.json": {
+      "bytes": 3456,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/handoff-index.json",
+      "sha256": "2823be81aa307b3f07a0de1b3d7e7306c06e3133c6fc3373a20cd1a97e45ed43"
+    },
+    "replay-recovery/recovery_inputs.py": {
+      "bytes": 9353,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/recovery_inputs.py",
+      "sha256": "726e07d18ee62668fec96305070372dfaabe89b4c8f73fd3b9c9834943de084c"
+    },
+    "replay-recovery/run_owned.py": {
+      "bytes": 9753,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/run_owned.py",
+      "sha256": "e7884ed0fa9e1461058ad20c791784295fb1edb569643f010c7b97207a6b9e9c"
+    },
+    "replay-recovery/run_owned.py.patch": {
+      "bytes": 2686,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/run_owned.py.patch",
+      "sha256": "61a97009d41c6725bb64dcbf792bf0fe63c9c3c28c4c506484f2db74a2a0ad2e"
+    },
+    "replay-recovery/source-index.json": {
+      "bytes": 19521,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/source-index.json",
+      "sha256": "c42734c76c4b90d3eb8d28a3f2980491e630a400700a5c214fe72dc85ad099f4"
+    },
+    "replay-recovery/test_recovery.py": {
+      "bytes": 6850,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/test_recovery.py",
+      "sha256": "4c75d6d3040aaca14ea6ad4603a828a8ba32b713666c742156f43b4300646270"
+    },
+    "replay-recovery/worker.py": {
+      "bytes": 15719,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/worker.py",
+      "sha256": "9061ab5d3b50b30327eb94f774888fca748d913323a7d5d2595d38249b6097fa"
+    },
+    "replay-recovery/worker.py.patch": {
+      "bytes": 39437,
+      "origin": "build/continuation-endgame-pair-v1/replay-recovery/worker.py.patch",
+      "sha256": "f6887d967e9e871ef3384fc15c33fdc321e12788c914d69e7eabba1810ce7379"
+    },
+    "run-01/ReMIND-045-context.json": {
+      "bytes": 7168,
+      "origin": "build/continuation-endgame-pair-v1/run-01/ReMIND-045-context.json",
+      "sha256": "d9651e08fa40eb44e304637d7b7ede32f2ff8e11ca539e0c78ed2fde91e8842d"
+    },
+    "run-01/evaluation/ReMIND-045/source/admitted-public-bindings.json": {
+      "bytes": 18540,
+      "origin": "build/continuation-endgame-pair-v1/run-01/evaluation/ReMIND-045/source/admitted-public-bindings.json",
+      "sha256": "b05f44ef43334562e873a95bf4706a98bbd587ad043f5c72b99d91e6ed13e483"
+    },
+    "run-01/evaluation/ReMIND-045/source/derived-occupancy-assumption.json": {
+      "bytes": 11491,
+      "origin": "build/continuation-endgame-pair-v1/run-01/evaluation/ReMIND-045/source/derived-occupancy-assumption.json",
+      "sha256": "58357c31f4c39b50181ed7ea05f9306777bfe10286a0fc6b802f5f5caca3bf1b"
+    },
+    "run-01/evaluation/ReMIND-045/source/public-task-derivation.json": {
+      "bytes": 4158,
+      "origin": "build/continuation-endgame-pair-v1/run-01/evaluation/ReMIND-045/source/public-task-derivation.json",
+      "sha256": "971ca4258c11fc49e9e85cf6f8fccd1cc1ae5890319e7cb8c18e1654f222c55d"
+    },
+    "run-01/intent.json": {
+      "bytes": 629,
+      "origin": "build/continuation-endgame-pair-v1/run-01/intent.json",
+      "sha256": "d76505ca97544c4cb9ddc2c19102bad346c0cdb325bad2f93abb7d59b72be517"
+    },
+    "run-01/launcher.json": {
+      "bytes": 3714,
+      "origin": "build/continuation-endgame-pair-v1/run-01/launcher.json",
+      "sha256": "beedf54160707e8f2571a4e9a6d4add7f99ebf4cdbd5f320e7af4f89dece1808"
+    },
+    "run-01/logged-targets.json": {
+      "bytes": 30615,
+      "origin": "build/continuation-endgame-pair-v1/run-01/logged-targets.json",
+      "sha256": "6eaad3c010ad2c862bddfbc8327ea1c16c1f4b9f5302d78f1999c9a51a89386f"
+    },
+    "run-01/plans.json": {
+      "bytes": 307325,
+      "origin": "build/continuation-endgame-pair-v1/run-01/plans.json",
+      "sha256": "6798288cbb05cce8692f61f64438b68fcad8aef15ebc5ec008b2f3e3a151521b"
+    },
+    "run-01/progress.json": {
+      "bytes": 1547,
+      "origin": "build/continuation-endgame-pair-v1/run-01/progress.json",
+      "sha256": "d57dd119fdfd41761ea9f30f6840b253b1ac0d0c3bc4e6e877aae91a4479b12c"
+    },
+    "run-01/report.json": {
+      "bytes": 394250,
+      "origin": "build/continuation-endgame-pair-v1/run-01/report.json",
+      "sha256": "2a50f3a22b9c298681a863785b489c8e09b398974bce82d733464f015ff8337e"
+    },
+    "run-01/trace-manifest.json": {
+      "bytes": 148236,
+      "origin": "build/continuation-endgame-pair-v1/run-01/trace-manifest.json",
+      "sha256": "c53bde6cfece252006d6a3f39789a9b897abf938a104287cb3c7ebb485720476"
+    },
+    "run-01/worker.log": {
+      "bytes": 975,
+      "origin": "build/continuation-endgame-pair-v1/run-01/worker.log",
+      "sha256": "0694aabde3e69f46a1f313d745fcd2eba33914001a77e85fed9af641938bdcc5"
+    },
+    "run-01/world-admission.json": {
+      "bytes": 968,
+      "origin": "build/continuation-endgame-pair-v1/run-01/world-admission.json",
+      "sha256": "7f5f57135b4635dc61b825e5f9a42d2118c5ff684dc6c6899cf388f0c6066195"
+    },
+    "runner/README.md": {
+      "bytes": 4705,
+      "origin": "build/continuation-endgame-pair-v1/runner/README.md",
+      "sha256": "d7a7011e76e78fe70c81bf7882550b3abf6070b5ae2ebc824d36847593ea0694"
+    },
+    "runner/bootstrap_smoke.py": {
+      "bytes": 2897,
+      "origin": "build/continuation-endgame-pair-v1/runner/bootstrap_smoke.py",
+      "sha256": "0cd0db0e915a9652da535e1bd6184f8fde591d24cdf6a8ba40dd0b75bc22cbc2"
+    },
+    "runner/common.py": {
+      "bytes": 18568,
+      "origin": "build/continuation-endgame-pair-v1/runner/common.py",
+      "sha256": "2bba1a759e24edceb74f955cc5c38454a2ac1ee37226a00446e88576ab401376"
+    },
+    "runner/config.json": {
+      "bytes": 2384,
+      "origin": "build/continuation-endgame-pair-v1/runner/config.json",
+      "sha256": "6c4668fa9e8a91f0e4edd2f7d56e303d3b5fe8188d29c0e5180ea51041e1ec9f"
+    },
+    "runner/endgame_planner.py": {
+      "bytes": 20790,
+      "origin": "build/continuation-endgame-pair-v1/runner/endgame_planner.py",
+      "sha256": "7fd477d8282a7da4f56820bb8cb97a3fa254032957a1c26568c42144e36f17c3"
+    },
+    "runner/freeze_sources.py": {
+      "bytes": 1869,
+      "origin": "build/continuation-endgame-pair-v1/runner/freeze_sources.py",
+      "sha256": "29c5f0901f8ea6d65d59a599ad19e1ddd5279fc8e423f52af9cd5c762fd290bf"
+    },
+    "runner/handoff-index.json": {
+      "bytes": 2215,
+      "origin": "build/continuation-endgame-pair-v1/runner/handoff-index.json",
+      "sha256": "9c44a5eed029504c2c1b91f95a2f729efbdd600a4f17385ff95260d1807bdb44"
+    },
+    "runner/inputs.py": {
+      "bytes": 7039,
+      "origin": "build/continuation-endgame-pair-v1/runner/inputs.py",
+      "sha256": "e4a0e3792000e05a87030f7665e0c825a53eaf18d65b75d04b39a2bfeaec2872"
+    },
+    "runner/planner-adapter.patch": {
+      "bytes": 10609,
+      "origin": "build/continuation-endgame-pair-v1/runner/planner-adapter.patch",
+      "sha256": "f86c35b44fd1073d326c3f8f2e3001ee4ed5d17da7db61669702482fa46c5c8a"
+    },
+    "runner/run_owned.py": {
+      "bytes": 10109,
+      "origin": "build/continuation-endgame-pair-v1/runner/run_owned.py",
+      "sha256": "ca7aa27732c6e4a12bad6997b23138770de099fa6e835ff691744c9f830d9b5d"
+    },
+    "runner/source-index.json": {
+      "bytes": 42097,
+      "origin": "build/continuation-endgame-pair-v1/runner/source-index.json",
+      "sha256": "c2a0b2f70fbc8692db425c85132082b26216aa62f0470c641077bb94a5458a16"
+    },
+    "runner/test_runner.py": {
+      "bytes": 13541,
+      "origin": "build/continuation-endgame-pair-v1/runner/test_runner.py",
+      "sha256": "bce9a72ed06057df89e616894280e76c01b0c1433af539cf8eeca56316860813"
+    },
+    "runner/worker.py": {
+      "bytes": 34078,
+      "origin": "build/continuation-endgame-pair-v1/runner/worker.py",
+      "sha256": "fc9e1b13b123fbef6c33cea68ba7feb55747ad3f71316cc6e975b67a7fa784e9"
+    },
+    "storage.json": {
+      "bytes": 4168,
+      "origin": "root compact projection of dated storage ledger",
+      "sha256": "0fe904e24e4becec2894a7da6656697c732c6e88754bc5f0279f2697529148ac"
+    },
+    "terminal-storage.json": {
+      "bytes": 1388,
+      "origin": "build/continuation-endgame-pair-v1/terminal-storage.json",
+      "sha256": "5ae9d60d9f85ae46da5d2a6926dbf97141d50e98bd405d9c15efff9b45db4f6c"
+    }
+  },
+  "schema": "compact-endgame-pair-archive-v1",
+  "scientific_status": "One complete independently checked TRAIN simulator intervention; not a policy promotion or physical validation.",
+  "source_base_commit": "9fc4b49927bd105b08f5647dac1fa992409e08f4"
+}

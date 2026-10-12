@@ -1,0 +1,17 @@
+{
+  "accepted": true,
+  "head_hashes": {
+    "calibration": "sha256:30f0ad7bec1c6456158eb42f16297496dc7abea2a780bd6759c3aaaf6a816472",
+    "head_fit": "sha256:5a6c416ab9e9f415a36e48e0c967fc2b857e38ec7c663eb712172d8fc5152570",
+    "tail_fit": "sha256:171cae6bc2c23740f0e09cef094408491af937995b0af6d1d8416eedef3e42fb"
+  },
+  "new_model_cache_checkpoint_loads": 0,
+  "new_planning_calls": 0,
+  "original_context_hash": "sha256:af846a42d8ec63b964ea4ba88fc65b9e670fbffa0cf37837722c3a18bf83c4cf",
+  "plan_seals": {
+    "IMMEDIATE_BEST": "sha256:9cc7f0a3ed4077e272d39048d1ff308083d1f3ee87765e24abf7b52fd04a118d",
+    "RETAINED_TAIL": "sha256:f647d8f782409b76491c6e6d211b963c9a076aadd2c2da0f45bd2998e32fd8f1"
+  },
+  "plans_sha256": "6798288cbb05cce8692f61f64438b68fcad8aef15ebc5ec008b2f3e3a151521b",
+  "source": "exact_failed_pair_plans_before_any_replay"
+}

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-endgame-pair-v1/runner/worker.py", line 351, in execute
+    visits.run(subject,dest,'common_subject',evaluate)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/patient_planning_cohort_sequential.py", line 91, in run
+    result = thaw_json(freeze_json(callback(base, context)))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-endgame-pair-v1/runner/worker.py", line 346, in evaluate
+    raise ValueError('Retained full native history/state projection changed')
+ValueError: Retained full native history/state projection changed
+{"status": "failed_or_incomplete", "worker_seconds": 66.72280920809135, "diagnosis": null}

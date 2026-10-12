@@ -1,0 +1,31 @@
+{
+  "actual_caps": {
+    "frozen_policy_forwards": 0,
+    "log_bytes": 65536,
+    "native_previews": 12000,
+    "output_bytes": 2097152,
+    "parent_wall_seconds": 330,
+    "whole_build_bytes": 8388608,
+    "work_seconds": 300,
+    "worker_peak_rss_bytes": 3221225472
+  },
+  "execution_released": true,
+  "learning_protocol_hash": "sha256:2f9499bc196340226a814f5944db6601b1f7556cf0b80f37faf1b52711e91156",
+  "limits": {
+    "max_native_previews": 7297920,
+    "max_optimizer_updates": 128,
+    "max_policy_forwards": 18624,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 900
+  },
+  "root_source_index_sha256": "c42734c76c4b90d3eb8d28a3f2980491e630a400700a5c214fe72dc85ad099f4",
+  "schema": "sealed-endgame-replay-recovery-v1",
+  "scope": "same_world_replay_only_no_learning"
+}

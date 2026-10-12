@@ -1,0 +1,498 @@
+{
+  "audit_status": "PASS_SAVED_EVIDENCE",
+  "auditor_sha256": "b96164eea1820aeb7a26e7cbcaa9482e001bc693896ed333d7ec3bae68f951d8",
+  "both_original_plan_seals": {
+    "IMMEDIATE_BEST": "sha256:9cc7f0a3ed4077e272d39048d1ff308083d1f3ee87765e24abf7b52fd04a118d",
+    "RETAINED_TAIL": "sha256:f647d8f782409b76491c6e6d211b963c9a076aadd2c2da0f45bd2998e32fd8f1"
+  },
+  "checks": 1366,
+  "clean_supervision": true,
+  "common_current_tool": "generic_aspirator",
+  "common_observation_hash": "sha256:e1a050cb14afea32b7fda087f4341c18cce0c0a5bdf9aac88c7c104bc63502cd",
+  "common_state_hash": "sha256:f6e201c1a3dcbd8bd7443bbec001dc5cd52301a950da9a4312f64d84e737997c",
+  "comparison_admissible": true,
+  "costs_inclusive": {
+    "replay.IMMEDIATE_BEST": {
+      "complete_wall_seconds": 23.76014450006187,
+      "inventory_build_or_terminal_empty_calls": 14,
+      "inventory_request_calls": 40,
+      "inventory_request_inclusive_seconds": 20.030631416710094,
+      "inventory_request_returned": 40,
+      "native_preview_entries": 1183,
+      "native_transition_calls": 13,
+      "native_transition_inclusive_seconds": 19.04772337223403,
+      "native_transition_returned": 13,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.024114166852086782,
+      "task_clone_returned": 1
+    },
+    "replay.RETAINED_TAIL": {
+      "complete_wall_seconds": 23.24201241717674,
+      "inventory_build_or_terminal_empty_calls": 14,
+      "inventory_request_calls": 40,
+      "inventory_request_inclusive_seconds": 19.687713202321902,
+      "inventory_request_returned": 40,
+      "native_preview_entries": 1183,
+      "native_transition_calls": 13,
+      "native_transition_inclusive_seconds": 18.674068541498855,
+      "native_transition_returned": 13,
+      "task_clone_calls": 1,
+      "task_clone_inclusive_seconds": 0.023686583153903484,
+      "task_clone_returned": 1
+    },
+    "same045_source": {
+      "complete_wall_seconds": 47.01052549993619,
+      "native_preview_entries": 2366
+    },
+    "same045_source.public_reconstruction": {
+      "complete_wall_seconds": 1.8075675829313695,
+      "inventory_build_or_terminal_empty_calls": 1,
+      "inventory_request_calls": 3,
+      "inventory_request_inclusive_seconds": 1.329441542038694,
+      "inventory_request_returned": 3,
+      "native_preview_entries": 91
+    },
+    "saved_plan_metadata_admission": {
+      "complete_wall_seconds": 0.014382834080606699,
+      "native_preview_entries": 0
+    }
+  },
+  "current_fits": 0,
+  "current_frozen_forwards": 0,
+  "current_head_updates": 0,
+  "current_native_previews": 2457,
+  "current_policy_plans": 0,
+  "current_replay_transitions": 26,
+  "independent_all_iterations_costs": {
+    "frozen_policy_forwards": 678,
+    "native_previews": 90905,
+    "scope": "cache-fill failure + direct recovery + tail + failed pair + fresh replay recovery; older original64 separate"
+  },
+  "independent_effect": {
+    "difference_orientation": "RETAINED_TAIL_minus_IMMEDIATE_BEST",
+    "full_return_difference": -0.060553125842098154,
+    "immediate_reward_difference": -0.030553125842096795,
+    "predicted_Q_difference": 1.270777440564153,
+    "predicted_tail_difference": 1.30133056640625,
+    "prediction_difference_error": 1.3313305664062502,
+    "remaining_return_difference": -0.060553125842097266
+  },
+  "input_files": {
+    "build/continuation-endgame-pair-v1/independent/failure-audit-01.json": {
+      "bytes": 12449,
+      "sha256": "258ab0dd042bdbde8bbbf42915d0bc6a6e4b970d8cb0fde86f8ca9396b4b1854"
+    },
+    "build/continuation-endgame-pair-v1/recovery-01/ReMIND-045-context.json": {
+      "bytes": 7168,
+      "sha256": "3d2f3a062bf20aa0c8e8e2112afe4623c260a5b9152a67e7c819142c9f886f04"
+    },
+    "build/continuation-endgame-pair-v1/recovery-01/evaluation/IMMEDIATE_BEST-evidence.json": {
+      "bytes": 22633,
+      "sha256": "5d889fd03382e65945f53c9e85813de58e697cf8ae7c0005bef263187551fe05"
+    },
+    "build/continuation-endgame-pair-v1/recovery-01/evaluation/RETAINED_TAIL-evidence.json": {
+      "bytes": 22629,
+      "sha256": "3b36b723aa5e319e35e9410c9daad747b28bd0d0227b762a0986ded149bf3a35"
+    },
+    "build/continuation-endgame-pair-v1/recovery-01/launcher.json": {
+      "bytes": 5127,
+      "sha256": "97ed2b508c4a743062c3ac30b9446c48766e63a65ebd95a159e3ed08804dd94e"
+    },
+    "build/continuation-endgame-pair-v1/recovery-01/plan-admission.json": {
+      "bytes": 850,
+      "sha256": "0fabc7ddbcf6039ea782d24d89967e077af20356a182b7399bb703c2dac8fe32"
+    },
+    "build/continuation-endgame-pair-v1/recovery-01/report.json": {
+      "bytes": 53465,
+      "sha256": "e0ab3670571e64ddf5818c190a7d599f55f96dd5e59be24ca29b1038e7b29751"
+    },
+    "build/continuation-endgame-pair-v1/replay-recovery/config.json": {
+      "bytes": 648,
+      "sha256": "dd6eee4ba744ad27a6e9911f7053935aec96dc573c648b7398d9dbfd0a748baf"
+    },
+    "build/continuation-endgame-pair-v1/replay-recovery/source-index.json": {
+      "bytes": 19521,
+      "sha256": "c42734c76c4b90d3eb8d28a3f2980491e630a400700a5c214fe72dc85ad099f4"
+    },
+    "build/continuation-endgame-pair-v1/run-01/launcher.json": {
+      "bytes": 3714,
+      "sha256": "beedf54160707e8f2571a4e9a6d4add7f99ebf4cdbd5f320e7af4f89dece1808"
+    },
+    "build/continuation-endgame-pair-v1/run-01/plans.json": {
+      "bytes": 307325,
+      "sha256": "6798288cbb05cce8692f61f64438b68fcad8aef15ebc5ec008b2f3e3a151521b"
+    },
+    "build/continuation-endgame-pair-v1/run-01/report.json": {
+      "bytes": 394250,
+      "sha256": "2a50f3a22b9c298681a863785b489c8e09b398974bce82d733464f015ff8337e"
+    },
+    "build/continuation-endgame-pair-v1/runner/source-index.json": {
+      "bytes": 42097,
+      "sha256": "c2a0b2f70fbc8692db425c85132082b26216aa62f0470c641077bb94a5458a16"
+    },
+    "build/continuation-tail-v1/run-01/report.json": {
+      "bytes": 1054470,
+      "sha256": "1bee2b1d4c40a55b666ce3269a39c4a5052e1911297b22c6c8702fb21000af66"
+    }
+  },
+  "launcher_sha256": "97ed2b508c4a743062c3ac30b9446c48766e63a65ebd95a159e3ed08804dd94e",
+  "limits": [
+    "Source/record sequencing verified; no native or neural computation repeated by reviewer",
+    "Context identity changes only for release authority; every public world/state/observation/geometry record remains joined",
+    "Entire retained JSON histories/decisions equal with no omitted values or numerical tolerance",
+    "Preterminal catalog is output-only and covers emitted candidates, not all possible geometry",
+    "Fixed simulator pair diagnoses decision credit, not general policy improvement or observed surgical outcomes",
+    "Failed original remains failed; planning/fitting/first replay paid once plus both new full replays",
+    "Inclusive timing/counter phases nest and must not be summed twice"
+  ],
+  "model_calls": 0,
+  "native_calls": 0,
+  "original_failure_retained": {
+    "calibration_calls": 1,
+    "directory": "build/continuation-endgame-pair-v1/run-01",
+    "failure": {
+      "accounting": null,
+      "committed": false,
+      "message": "Retained full native history/state projection changed",
+      "phase": "replay.RETAINED_TAIL",
+      "type": "ValueError"
+    },
+    "frozen_policy_forwards": 24,
+    "head_optimizer_updates": 64,
+    "native_previews": 3458,
+    "original_failure_preserved": true,
+    "parent_seconds": 67.31687491596676,
+    "pins": {
+      "launcher.json": "beedf54160707e8f2571a4e9a6d4add7f99ebf4cdbd5f320e7af4f89dece1808",
+      "plans.json": "6798288cbb05cce8692f61f64438b68fcad8aef15ebc5ec008b2f3e3a151521b",
+      "report.json": "2a50f3a22b9c298681a863785b489c8e09b398974bce82d733464f015ff8337e"
+    },
+    "prior_cumulative_costs": {
+      "current_head_optimizer_updates": 64,
+      "endgame_pair_worker_seconds": 66.72280920809135,
+      "failed_cache_attempt_worker_seconds": 1284.6671255419496,
+      "frozen_policy_forwards": 678,
+      "native_preview_entries": 88448,
+      "prior_direct_head_optimizer_updates": 64,
+      "prior_direct_worker_seconds": 384.7155832911376,
+      "prior_failed_attempt_not_amortized": true,
+      "prior_tail_worker_seconds": 269.88731187512167,
+      "scope": "cache-fill failure plus direct recovery plus tail contrast plus endgame pair; older original64 experiment separate"
+    },
+    "source_index_sha256": "c2a0b2f70fbc8692db425c85132082b26216aa62f0470c641077bb94a5458a16",
+    "status": "failed_or_incomplete",
+    "tail_calls": 1,
+    "worker_seconds": 66.72280920809135
+  },
+  "original_full_route_parity": true,
+  "original_planning_context_hash": "sha256:af846a42d8ec63b964ea4ba88fc65b9e670fbffa0cf37837722c3a18bf83c4cf",
+  "outcomes": {
+    "IMMEDIATE_BEST": {
+      "actions": 13,
+      "history_hash": "sha256:a1900d44f815e17ba9757e752cda251352b10af6c6033dd28adbaf0a7878a010",
+      "motions": 12,
+      "original_planning_frozen_forwards": 12,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 96.04064966080531,
+        "cumulative_contacted_tissue_upper_bound_mm3": 202.17920577005748,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 153.54175532537386,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 12,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 51,
+        "reference_target_fraction_removed": 0.0020157306035334575,
+        "simulated_removed_volume_mm3": 48.637450444683644,
+        "target_removed_mm3": 48.63745044468365,
+        "tool_changes": 1,
+        "total_reference_target_mm3": 24128.943798057662,
+        "total_reward": 48.15140979502283
+      },
+      "planning_previews": 1092,
+      "planning_seconds": 19.27061845897697,
+      "prefix_return": 43.56281043310488,
+      "remaining_return_including_forced_action": 4.588599361917957,
+      "replay_previews": 1183,
+      "replay_seconds": 23.76014450006187,
+      "subsequent_return_after_forced_action": 3.6712535517857363,
+      "switches": 1,
+      "terminal_decision_catalog": {
+        "additional_queries": 0,
+        "captured": "after_final_choice_before_terminal_transition",
+        "certified_count": 0,
+        "groups": [
+          {
+            "certified": 0,
+            "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "proposal_disposition": "PROPOSED_UNCERTIFIED",
+            "proposal_kind": "distal_nominal",
+            "proposed": 13,
+            "slots": 13,
+            "tool_id": "generic_aspirator"
+          },
+          {
+            "certified": 0,
+            "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "proposal_disposition": "PROPOSED_UNCERTIFIED",
+            "proposal_kind": "exposed_opening",
+            "proposed": 13,
+            "slots": 13,
+            "tool_id": "generic_aspirator"
+          },
+          {
+            "certified": 0,
+            "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "proposal_disposition": "PROPOSED_UNCERTIFIED",
+            "proposal_kind": "intermediate_opening",
+            "proposed": 13,
+            "slots": 13,
+            "tool_id": "generic_aspirator"
+          },
+          {
+            "certified": 0,
+            "native_reason": "DUPLICATE_GEOMETRY",
+            "proposal_disposition": "DUPLICATE_GEOMETRY",
+            "proposal_kind": "proximal_nominal",
+            "proposed": 0,
+            "slots": 13,
+            "tool_id": "generic_aspirator"
+          },
+          {
+            "certified": 0,
+            "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "proposal_disposition": "PROPOSED_UNCERTIFIED",
+            "proposal_kind": "tool_footprint_opening",
+            "proposed": 13,
+            "slots": 13,
+            "tool_id": "generic_aspirator"
+          },
+          {
+            "certified": 0,
+            "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "proposal_disposition": "PROPOSED_UNCERTIFIED",
+            "proposal_kind": "distal_nominal",
+            "proposed": 13,
+            "slots": 13,
+            "tool_id": "generic_suction"
+          },
+          {
+            "certified": 0,
+            "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "proposal_disposition": "PROPOSED_UNCERTIFIED",
+            "proposal_kind": "exposed_opening",
+            "proposed": 13,
+            "slots": 13,
+            "tool_id": "generic_suction"
+          },
+          {
+            "certified": 0,
+            "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "proposal_disposition": "PROPOSED_UNCERTIFIED",
+            "proposal_kind": "intermediate_opening",
+            "proposed": 13,
+            "slots": 13,
+            "tool_id": "generic_suction"
+          },
+          {
+            "certified": 0,
+            "native_reason": "DUPLICATE_GEOMETRY",
+            "proposal_disposition": "DUPLICATE_GEOMETRY",
+            "proposal_kind": "proximal_nominal",
+            "proposed": 0,
+            "slots": 13,
+            "tool_id": "generic_suction"
+          },
+          {
+            "certified": 0,
+            "native_reason": "DUPLICATE_GEOMETRY",
+            "proposal_disposition": "DUPLICATE_GEOMETRY",
+            "proposal_kind": "tool_footprint_opening",
+            "proposed": 0,
+            "slots": 13,
+            "tool_id": "generic_suction"
+          }
+        ],
+        "ledger_slots": 130,
+        "proposed_count": 91,
+        "selected_action": "STOP",
+        "state_hash": "sha256:f8f61dc3d9883f3f7d9ace2ebc5c1e0d4bfcb787a661850f6b2d99731d8ef050",
+        "step": 12
+      }
+    },
+    "RETAINED_TAIL": {
+      "actions": 13,
+      "history_hash": "sha256:a7e57da692fc8023babdd8dda2cab2971965a93d74cc71ea674f433d346a6e3a",
+      "motions": 12,
+      "original_planning_frozen_forwards": 12,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 96.593775502902,
+        "cumulative_contacted_tissue_upper_bound_mm3": 202.17920577005748,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 153.54175532537386,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 12,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 51,
+        "reference_target_fraction_removed": 0.0020157306035334575,
+        "simulated_removed_volume_mm3": 48.637450444683644,
+        "target_removed_mm3": 48.63745044468365,
+        "tool_changes": 3,
+        "total_reference_target_mm3": 24128.943798057662,
+        "total_reward": 48.09085666918073
+      },
+      "planning_previews": 1092,
+      "planning_seconds": 19.22090004198253,
+      "prefix_return": 43.56281043310488,
+      "remaining_return_including_forced_action": 4.52804623607586,
+      "replay_previews": 1183,
+      "replay_seconds": 23.24201241717674,
+      "subsequent_return_after_forced_action": 3.6412535517857365,
+      "switches": 3,
+      "terminal_decision_catalog": {
+        "additional_queries": 0,
+        "captured": "after_final_choice_before_terminal_transition",
+        "certified_count": 0,
+        "groups": [
+          {
+            "certified": 0,
+            "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "proposal_disposition": "PROPOSED_UNCERTIFIED",
+            "proposal_kind": "distal_nominal",
+            "proposed": 13,
+            "slots": 13,
+            "tool_id": "generic_aspirator"
+          },
+          {
+            "certified": 0,
+            "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "proposal_disposition": "PROPOSED_UNCERTIFIED",
+            "proposal_kind": "exposed_opening",
+            "proposed": 13,
+            "slots": 13,
+            "tool_id": "generic_aspirator"
+          },
+          {
+            "certified": 0,
+            "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "proposal_disposition": "PROPOSED_UNCERTIFIED",
+            "proposal_kind": "intermediate_opening",
+            "proposed": 13,
+            "slots": 13,
+            "tool_id": "generic_aspirator"
+          },
+          {
+            "certified": 0,
+            "native_reason": "DUPLICATE_GEOMETRY",
+            "proposal_disposition": "DUPLICATE_GEOMETRY",
+            "proposal_kind": "proximal_nominal",
+            "proposed": 0,
+            "slots": 13,
+            "tool_id": "generic_aspirator"
+          },
+          {
+            "certified": 0,
+            "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "proposal_disposition": "PROPOSED_UNCERTIFIED",
+            "proposal_kind": "tool_footprint_opening",
+            "proposed": 13,
+            "slots": 13,
+            "tool_id": "generic_aspirator"
+          },
+          {
+            "certified": 0,
+            "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "proposal_disposition": "PROPOSED_UNCERTIFIED",
+            "proposal_kind": "distal_nominal",
+            "proposed": 13,
+            "slots": 13,
+            "tool_id": "generic_suction"
+          },
+          {
+            "certified": 0,
+            "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "proposal_disposition": "PROPOSED_UNCERTIFIED",
+            "proposal_kind": "exposed_opening",
+            "proposed": 13,
+            "slots": 13,
+            "tool_id": "generic_suction"
+          },
+          {
+            "certified": 0,
+            "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "proposal_disposition": "PROPOSED_UNCERTIFIED",
+            "proposal_kind": "intermediate_opening",
+            "proposed": 13,
+            "slots": 13,
+            "tool_id": "generic_suction"
+          },
+          {
+            "certified": 0,
+            "native_reason": "DUPLICATE_GEOMETRY",
+            "proposal_disposition": "DUPLICATE_GEOMETRY",
+            "proposal_kind": "proximal_nominal",
+            "proposed": 0,
+            "slots": 13,
+            "tool_id": "generic_suction"
+          },
+          {
+            "certified": 0,
+            "native_reason": "DUPLICATE_GEOMETRY",
+            "proposal_disposition": "DUPLICATE_GEOMETRY",
+            "proposal_kind": "tool_footprint_opening",
+            "proposed": 0,
+            "slots": 13,
+            "tool_id": "generic_suction"
+          }
+        ],
+        "ledger_slots": 130,
+        "proposed_count": 91,
+        "selected_action": "STOP",
+        "state_hash": "sha256:23e244d0283cabeac0bdb18fc155e1f6209274a890f5ad7162b2f5d326cb5175",
+        "step": 12
+      }
+    }
+  },
+  "pair_plus_recovery_costs": {
+    "earlier_iterations": {
+      "current_head_optimizer_updates": 64,
+      "endgame_pair_worker_seconds": 66.72280920809135,
+      "failed_cache_attempt_worker_seconds": 1284.6671255419496,
+      "frozen_policy_forwards": 678,
+      "native_preview_entries": 88448,
+      "prior_direct_head_optimizer_updates": 64,
+      "prior_direct_worker_seconds": 384.7155832911376,
+      "prior_failed_attempt_not_amortized": true,
+      "prior_tail_worker_seconds": 269.88731187512167,
+      "scope": "cache-fill failure plus direct recovery plus tail contrast plus endgame pair; older original64 experiment separate"
+    },
+    "frozen_policy_forwards": 24,
+    "native_previews": 5915,
+    "original_fitting_and_replay_failure_cost_not_erased": true,
+    "worker_seconds": 119.18852454121225
+  },
+  "parent_seconds": 52.85406891722232,
+  "preassertion_evidence_sha256": {
+    "IMMEDIATE_BEST": "5d889fd03382e65945f53c9e85813de58e697cf8ae7c0005bef263187551fe05",
+    "RETAINED_TAIL": "3b36b723aa5e319e35e9410c9daad747b28bd0d0227b762a0986ded149bf3a35"
+  },
+  "recovery_context_hash": "sha256:380a9e41db6f05682b269dff29559a1c9d864dae8e5817588985d5e2d417aafc",
+  "report_sha256": "e0ab3670571e64ddf5818c190a7d599f55f96dd5e59be24ca29b1038e7b29751",
+  "sampled_peak_rss_bytes": 656637952,
+  "scope": "One fixed simulator state/treatment continuation; no policy/clinical improvement claim",
+  "seconds": 0.011262125102803111,
+  "source_index_sha256": "c42734c76c4b90d3eb8d28a3f2980491e630a400700a5c214fe72dc85ad099f4",
+  "supervision_status": "completed",
+  "worker_seconds": 52.4657153331209,
+  "world": {
+    "decision_model_hash": "sha256:610543a13a972b05ddbec5044e3390aa6d2f4d2d3c3bb833f52bed9cea751ac0",
+    "max_steps": 24,
+    "observation_track": "annotation_assisted",
+    "public_observation_binding": "sha256:688ce48052ea031c8a5e7cd148754103650ec94e4f21482005d307b91ae40c0f",
+    "source_hash": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938",
+    "subject": "ReMIND-045"
+  }
+}

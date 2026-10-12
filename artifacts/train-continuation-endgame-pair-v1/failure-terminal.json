@@ -1,0 +1,22 @@
+{
+  "worker_termination_confirmed": true,
+  "remaining_owned_pids": [],
+  "status": "failed_first_replay_publication_after_both_plans_sealed",
+  "failure": {
+    "accounting": null,
+    "committed": false,
+    "message": "Retained full native history/state projection changed",
+    "phase": "replay.RETAINED_TAIL",
+    "type": "ValueError"
+  },
+  "parent_seconds": 67.31687491596676,
+  "worker_seconds": 66.72280920809135,
+  "native_previews": 3458,
+  "frozen_forwards": 24,
+  "files": {
+    "report.json": "2a50f3a22b9c298681a863785b489c8e09b398974bce82d733464f015ff8337e",
+    "launcher.json": "beedf54160707e8f2571a4e9a6d4add7f99ebf4cdbd5f320e7af4f89dece1808",
+    "plans.json": "6798288cbb05cce8692f61f64438b68fcad8aef15ebc5ec008b2f3e3a151521b"
+  },
+  "recovery": "Must independently replay both immutable plans; failed run stays failed. No scientific outcome accepted from planning-only returns."
+}

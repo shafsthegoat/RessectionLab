@@ -1,0 +1,21 @@
+{
+  "frozen_forwards_original_plus_recovery": 24,
+  "native_previews_original_plus_recovery": 5915,
+  "original_failed_attempt_preserved": true,
+  "parent_seconds_original_plus_recovery": 120.17094383318909,
+  "pins": {
+    "independent/failure-audit-01.json": "258ab0dd042bdbde8bbbf42915d0bc6a6e4b970d8cb0fde86f8ca9396b4b1854",
+    "independent/recovery-audit-01.json": "44ee7677f3e3a7028f0de34ec4f7ecdda4754047026eb2d55e634afdcbe52b80",
+    "recovery-01/launcher.json": "97ed2b508c4a743062c3ac30b9446c48766e63a65ebd95a159e3ed08804dd94e",
+    "recovery-01/report.json": "e0ab3670571e64ddf5818c190a7d599f55f96dd5e59be24ca29b1038e7b29751",
+    "replay-recovery/source-index.json": "c42734c76c4b90d3eb8d28a3f2980491e630a400700a5c214fe72dc85ad099f4",
+    "run-01/launcher.json": "beedf54160707e8f2571a4e9a6d4add7f99ebf4cdbd5f320e7af4f89dece1808",
+    "run-01/plans.json": "6798288cbb05cce8692f61f64438b68fcad8aef15ebc5ec008b2f3e3a151521b",
+    "run-01/report.json": "2a50f3a22b9c298681a863785b489c8e09b398974bce82d733464f015ff8337e",
+    "runner/source-index.json": "c2a0b2f70fbc8692db425c85132082b26216aa62f0470c641077bb94a5458a16"
+  },
+  "remaining_owned_pids": [],
+  "scope": "Storage closure only; scientific conclusion is fixed045 diagnostic, not promoted policy or physical validation.",
+  "status": "complete_pair_after_replay_only_recovery",
+  "worker_termination_confirmed": true
+}
