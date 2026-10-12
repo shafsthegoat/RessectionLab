@@ -4,8 +4,8 @@
 performance.** Both the 512 and 1024 checkpoints stop immediately, returning zero
 and failing the goal. Retained search succeeds in five preparation/goal actions,
 with return 9.811680 and zero outside-target removal. The reverse-reset branch
-is training from the same original 256 checkpoint. Its completed 512 evaluation
-also stops immediately; reverse1024 and the whole-campaign decision remain pending.
+started from the same original 256 checkpoint. Its completed 512 evaluation
+also stops immediately. The run later [stopped at its memory limit](../train045-local-goal-curriculum-interruption-v1/RESULT.md) at reverse832; reverse1024 was not evaluated. Recovery is being prepared; the original campaign is incomplete.
 
 ![Actual interim learning curves](snapshot/plots-curriculum-01/learning-curves.png)
 

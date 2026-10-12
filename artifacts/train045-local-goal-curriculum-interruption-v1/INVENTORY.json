@@ -1,0 +1,55 @@
+{
+  "schema": "curriculum-rss-interruption-v1",
+  "files": {
+    "stopped-report.json": {
+      "source": "build/train045-local-goal-ppo-v1/curriculum-1024-01/report.json",
+      "bytes": 728856,
+      "sha256": "7a6151a62a5fa81762177c9c0751900a05e28f113ab7d4b89cf81153868b6374"
+    },
+    "launcher.json": {
+      "source": "build/train045-local-goal-ppo-v1/curriculum-1024-01/launcher.json",
+      "bytes": 3796,
+      "sha256": "ede685e94dfb7a77f771203e15a3aaea63a4a916753b08f3d40d3efa4da7b957"
+    },
+    "last-progress.json": {
+      "source": "build/train045-local-goal-ppo-v1/curriculum-1024-01/progress.json",
+      "bytes": 1605,
+      "sha256": "aef6eb161cba77fad959b43298677029f4a107054e18f2d47ebe808065714f38"
+    },
+    "reverse512-curve.json": {
+      "source": "build/train045-local-goal-ppo-v1/curriculum-1024-01/reverse-seed0/curve.json",
+      "bytes": 264554,
+      "sha256": "81f21f8dd6873bd8e0ea93aac8ddfb236102334b47696d76bd75bba97a6572a8"
+    },
+    "original-policy.py": {
+      "source": "build/train045-local-goal-ppo-v1/model/policy.py",
+      "bytes": 11618,
+      "sha256": "fce66f1de108591e57aadd55b37082930fafa4c2311bc4dfed3235f0b36d8ec8"
+    },
+    "source-postmortem.json": {
+      "source": "independent post-termination root check",
+      "bytes": 23576,
+      "sha256": "c24bb60f91eeb4d59da545cbe901dc94f7c1f35aa6e4f1ef786a8a10740f6955"
+    },
+    "plots/render_curves.py": {
+      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/render_curves.py",
+      "bytes": 23526,
+      "sha256": "c482f464c09c2c1b0f7c4aeba65e78181372f6116375745c452a79efa2da6ce8"
+    },
+    "plots/learning-curves.json": {
+      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/learning-curves.json",
+      "bytes": 397479,
+      "sha256": "d31465cea9242edb927b6e7f49e0cac14115ac4ca0ea9ae08cfe480923f9a88d"
+    },
+    "plots/learning-curves.png": {
+      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/learning-curves.png",
+      "bytes": 314054,
+      "sha256": "56d9236ed35ccb9404b9c550d0621c1827a0a26aae4f936367a1cbb5172b1472"
+    },
+    "plots/learning-curves.svg": {
+      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/learning-curves.svg",
+      "bytes": 169665,
+      "sha256": "7be5347bbf62267770c0e7c0d7d24f0036c01f760988dec2c68884b1429613b5"
+    }
+  }
+}
