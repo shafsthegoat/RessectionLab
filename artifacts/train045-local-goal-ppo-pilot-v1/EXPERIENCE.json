@@ -1,0 +1,189 @@
+{
+  "current_training_unique_patients": 1,
+  "inherited_pretraining_unique_patients": [
+    "ReMIND-002",
+    "ReMIND-015",
+    "ReMIND-018",
+    "ReMIND-045"
+  ],
+  "union_patient_count": 4,
+  "total_collected_decisions": 128,
+  "unique_native_states_across_arms": 62,
+  "unique_native_state_actions_across_arms": 64,
+  "episodes": {
+    "frozen_encoder-seed0": [
+      {
+        "episode": 1,
+        "complete": true,
+        "start_absolute_step": 16,
+        "end_absolute_step": 22,
+        "return": 9.677714045979114,
+        "success": true,
+        "native_history_hash": "sha256:bb36748dd55aeb48a4e87845401cfe1f99a89765de22dc574cd33868e3bbbeb3",
+        "final_native_state_hash": "sha256:6c45119d89c1cb7f0ed993fb4ff5b1d09d63b96d0c0f2398eb5f782f393163e2",
+        "decision_count": 5
+      },
+      {
+        "episode": 2,
+        "complete": true,
+        "start_absolute_step": 15,
+        "end_absolute_step": 24,
+        "return": -0.4389703383639501,
+        "success": false,
+        "native_history_hash": "sha256:ecb362db7ef28c7671ea8b1d563356b4efca3417972765483c126881532ec37f",
+        "final_native_state_hash": "sha256:44e5d5f7a2dc0ca143237f65fa1bff44cc8affd49955d34e6d9425e9c3bddc9d",
+        "decision_count": 9
+      },
+      {
+        "episode": 3,
+        "complete": true,
+        "start_absolute_step": 14,
+        "end_absolute_step": 24,
+        "return": 9.426040595326615,
+        "success": true,
+        "native_history_hash": "sha256:b68c143295ec4ffd656137144c130857b15311d3640dc8af795a817de7c42248",
+        "final_native_state_hash": "sha256:e42e23f50945f436d4bab9d7bcb9aea7e2492ebf39ee4f02e398caff0ef70074",
+        "decision_count": 10
+      },
+      {
+        "episode": 4,
+        "complete": true,
+        "start_absolute_step": 13,
+        "end_absolute_step": 24,
+        "return": -0.5763828417723371,
+        "success": false,
+        "native_history_hash": "sha256:50ab92d539e0b25f105907770de62d2a0bb1aae76a1d83e58d274ebdf252c2b4",
+        "final_native_state_hash": "sha256:841794c12d6bf8a494c9271a9f87cc556ebd5521860343559a6537f925661ecf",
+        "decision_count": 11
+      },
+      {
+        "episode": 5,
+        "complete": true,
+        "start_absolute_step": 13,
+        "end_absolute_step": 24,
+        "return": -0.5802890934565307,
+        "success": false,
+        "native_history_hash": "sha256:f8ce15e627814a30f5a2553a232c6aecaf89a425d8b165b8f852cddf8a888ce5",
+        "final_native_state_hash": "sha256:7cc134642adda3042376670be8a9d0c95b6f24673945d271eaccee5380c153f0",
+        "decision_count": 11
+      },
+      {
+        "episode": 6,
+        "complete": true,
+        "start_absolute_step": 12,
+        "end_absolute_step": 24,
+        "return": -0.6295937755029019,
+        "success": false,
+        "native_history_hash": "sha256:e05f0ff439582cab4270ba762f93aa7ded11d95f994e0e95f44d8c816d8d32cb",
+        "final_native_state_hash": "sha256:f000bf7a87c436317b00f5d0b4d5c46e182cf057f12f79d2c8af61f80738c294",
+        "decision_count": 12
+      }
+    ],
+    "trainable_encoder-seed0": [
+      {
+        "episode": 1,
+        "complete": true,
+        "start_absolute_step": 16,
+        "end_absolute_step": 22,
+        "return": 9.677714045979114,
+        "success": true,
+        "native_history_hash": "sha256:bb36748dd55aeb48a4e87845401cfe1f99a89765de22dc574cd33868e3bbbeb3",
+        "final_native_state_hash": "sha256:6c45119d89c1cb7f0ed993fb4ff5b1d09d63b96d0c0f2398eb5f782f393163e2",
+        "decision_count": 5
+      },
+      {
+        "episode": 2,
+        "complete": true,
+        "start_absolute_step": 15,
+        "end_absolute_step": 24,
+        "return": -0.4389703383639501,
+        "success": false,
+        "native_history_hash": "sha256:ecb362db7ef28c7671ea8b1d563356b4efca3417972765483c126881532ec37f",
+        "final_native_state_hash": "sha256:44e5d5f7a2dc0ca143237f65fa1bff44cc8affd49955d34e6d9425e9c3bddc9d",
+        "decision_count": 9
+      },
+      {
+        "episode": 3,
+        "complete": true,
+        "start_absolute_step": 14,
+        "end_absolute_step": 24,
+        "return": 9.426040595326615,
+        "success": true,
+        "native_history_hash": "sha256:b68c143295ec4ffd656137144c130857b15311d3640dc8af795a817de7c42248",
+        "final_native_state_hash": "sha256:e42e23f50945f436d4bab9d7bcb9aea7e2492ebf39ee4f02e398caff0ef70074",
+        "decision_count": 10
+      },
+      {
+        "episode": 4,
+        "complete": true,
+        "start_absolute_step": 13,
+        "end_absolute_step": 24,
+        "return": -0.5763828417723371,
+        "success": false,
+        "native_history_hash": "sha256:50ab92d539e0b25f105907770de62d2a0bb1aae76a1d83e58d274ebdf252c2b4",
+        "final_native_state_hash": "sha256:841794c12d6bf8a494c9271a9f87cc556ebd5521860343559a6537f925661ecf",
+        "decision_count": 11
+      },
+      {
+        "episode": 5,
+        "complete": true,
+        "start_absolute_step": 13,
+        "end_absolute_step": 24,
+        "return": -0.5802890934565307,
+        "success": false,
+        "native_history_hash": "sha256:f8ce15e627814a30f5a2553a232c6aecaf89a425d8b165b8f852cddf8a888ce5",
+        "final_native_state_hash": "sha256:7cc134642adda3042376670be8a9d0c95b6f24673945d271eaccee5380c153f0",
+        "decision_count": 11
+      },
+      {
+        "episode": 6,
+        "complete": true,
+        "start_absolute_step": 12,
+        "end_absolute_step": 24,
+        "return": -0.6295937755029019,
+        "success": false,
+        "native_history_hash": "sha256:e05f0ff439582cab4270ba762f93aa7ded11d95f994e0e95f44d8c816d8d32cb",
+        "final_native_state_hash": "sha256:f000bf7a87c436317b00f5d0b4d5c46e182cf057f12f79d2c8af61f80738c294",
+        "decision_count": 12
+      }
+    ]
+  },
+  "checkpoints": [
+    {
+      "arm": "frozen_encoder-seed0",
+      "local_path": "build/train045-local-goal-ppo-v1/pilot-01/frozen_encoder-seed0/ppo-0064.zip",
+      "bytes": 248122,
+      "sha256": "4b62043f5fd04a34deccba1e06eff61d7fc0377b6c2f257b1f420f96593db420",
+      "optimizer_steps": 12,
+      "training_decisions": 64,
+      "excluded_from_git": true
+    },
+    {
+      "arm": "trainable_encoder-seed0",
+      "local_path": "build/train045-local-goal-ppo-v1/pilot-01/trainable_encoder-seed0/ppo-0064.zip",
+      "bytes": 282004,
+      "sha256": "f21616e66c71f012d905e61ff80c8432e0dcf0c5d9fd86ca41376f9d858b1116",
+      "optimizer_steps": 2,
+      "training_decisions": 64,
+      "excluded_from_git": true
+    }
+  ],
+  "inherited_pretraining": {
+    "source": "build/post-exposure-learning-v1/IL64/attempt-01/result.json",
+    "sha256": "eedc4857c184d94913976cb5b59e01341e1b3a8bb0f001af43f8d079e3d87975",
+    "complete_attempt_seconds": 723.747208958026,
+    "native_previews": 12370,
+    "optimizer_updates": {
+      "IL": 64,
+      "RL": 0
+    },
+    "loss_forward_calls": 1856,
+    "status": "failed_or_unresolved",
+    "failure": {
+      "committed": false,
+      "message": "Independent native geometry rejected replay",
+      "type": "ValueError"
+    },
+    "note": "Historical IL64 training checkpoint retained despite old deployment-audit failure. Fresh local-task baseline evaluations here pass independent geometry. This historical total includes its recorded attempt only; earlier shared teacher preparation remains a separate upstream cost."
+  }
+}

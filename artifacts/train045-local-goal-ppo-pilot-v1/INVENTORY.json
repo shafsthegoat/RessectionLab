@@ -1,0 +1,126 @@
+{
+  "files": [
+    {
+      "source": "build/train045-local-goal-ppo-v1/pilot-01/report.json",
+      "snapshot": "snapshot/pilot-01/report.json",
+      "bytes": 113370,
+      "sha256": "6fdea3af96f2005d349d94c6b50d38ef35243b5c908c87ae208697a5974e1efa"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/pilot-01/launcher.json",
+      "snapshot": "snapshot/pilot-01/launcher.json",
+      "bytes": 3739,
+      "sha256": "4991f1f8de9ebc1d02f8e71013b933b39bfa7e3330669a73a766d66f152e024c"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/pilot-01/intent.json",
+      "snapshot": "snapshot/pilot-01/intent.json",
+      "bytes": 656,
+      "sha256": "f5cb4e4873cac9b18cb963cfaa470e112cc29985c4b06467712d6d974c74886f"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/pilot-01/progress.json",
+      "snapshot": "snapshot/pilot-01/progress.json",
+      "bytes": 1558,
+      "sha256": "1de3eb1269fdded4f86ea7882d4f8f9bf93a9cd3b4fcb9cd3f65b7e6e69733e2"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/pilot-01/frozen_encoder-seed0/curve.json",
+      "snapshot": "snapshot/pilot-01/frozen_encoder-seed0/curve.json",
+      "bytes": 32784,
+      "sha256": "60a2de1f83796eb8c98564f41aec4e4047f82e84f500f242a0522d9ecb2eadd1"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/pilot-01/trainable_encoder-seed0/curve.json",
+      "snapshot": "snapshot/pilot-01/trainable_encoder-seed0/curve.json",
+      "bytes": 31386,
+      "sha256": "a86cfc4cb3b96484d9c54b7068557e68d88f0bb4f8e716b3d687cd8a2d87b01d"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/plots-pilot-01/learning-curves.json",
+      "snapshot": "snapshot/plots-pilot-01/learning-curves.json",
+      "bytes": 28818,
+      "sha256": "fcd5845d88b65af97cb508da2ae585266187595bf133314e31e2f19ec1e60a4f"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/plots-pilot-01/learning-curves.png",
+      "snapshot": "snapshot/plots-pilot-01/learning-curves.png",
+      "bytes": 140713,
+      "sha256": "9a23384ddb99e8c6d8aa7e9313502ab4cbb740938909172032c7067ff66a2fbd"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/plots-pilot-01/learning-curves.svg",
+      "snapshot": "snapshot/plots-pilot-01/learning-curves.svg",
+      "bytes": 94462,
+      "sha256": "a5c9e66268096eb5e9d0c100977c5ceab9e8464b7a01df8c23bd2fee488c106d",
+      "formatting": "Trailing SVG whitespace normalized after rendering; image unchanged"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/search/beam.py",
+      "snapshot": "snapshot/search/beam.py",
+      "bytes": 10413,
+      "sha256": "cd8bdb5b1141e1f5d2374bea086063895f37650462d6c9fe0f46557c64492d7b"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/search/freeze_sources.py",
+      "snapshot": "snapshot/search/freeze_sources.py",
+      "bytes": 2319,
+      "sha256": "d8397af63a230ac072ce00c67477cd787988614493dbb29dff06cbb50b549192"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/search/run_owned.py",
+      "snapshot": "snapshot/search/run_owned.py",
+      "bytes": 10084,
+      "sha256": "0f019b1c36c62d2b710fa191b246568709147486d798880fc07a0b9a5887825d"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/search/test_beam.py",
+      "snapshot": "snapshot/search/test_beam.py",
+      "bytes": 7553,
+      "sha256": "f28ed647f4f2a5cae4f5a355b673b04d93a9c43f1e4daf1f9b90f8e3b3eb705f"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/search/worker.py",
+      "snapshot": "snapshot/search/worker.py",
+      "bytes": 14535,
+      "sha256": "fbae514da08d0ab2e07fd008126f89efd97fec9dd046309f0771b3b615a54bcc"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/search/config.json",
+      "snapshot": "snapshot/search/config.json",
+      "bytes": 2460,
+      "sha256": "ff664bb893d888e36e9951fc9630a8a3429b64790c6487d780fd5aba8037c398"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/search/source-index.json",
+      "snapshot": "snapshot/search/source-index.json",
+      "bytes": 24563,
+      "sha256": "cfd4478d77338e3156b8176e73114e16203909f90e15e9405869f4173c27ebfd"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/controls-search-01/RESULT.json",
+      "snapshot": "snapshot/controls-search-01/RESULT.json",
+      "bytes": 824,
+      "sha256": "36ed8cc21a6ebdaaa05faf471e2e7e39c9d7ad1df13e5bfbbef163fda2417e80"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/search-01/report.json",
+      "snapshot": "snapshot/search-01/report.json",
+      "bytes": 32474,
+      "sha256": "c5e5a8f61892ec9efa1c0ba25627df3249be2a0b16f384821852f8f69621f0c1"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/search-01/launcher.json",
+      "snapshot": "snapshot/search-01/launcher.json",
+      "bytes": 3730,
+      "sha256": "f6fd6e759840966565288ce7e7c949f8751777cbf7e29e8467ca8d28180bc939"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/search-01/progress.json",
+      "snapshot": "snapshot/search-01/progress.json",
+      "bytes": 1559,
+      "sha256": "42119105960c6f6f1b46dd57c14d2e72038d84c4f2e067e488c062561935ed97"
+    }
+  ],
+  "weights_and_bulk_traces": "Retained local only; exact checkpoint hashes in EXPERIENCE.json. Source and generated controls are in ../train045-local-goal-ppo-source-v1."
+}

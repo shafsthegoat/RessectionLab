@@ -1,0 +1,13 @@
+{
+  "scope": "generated search controls only; no acquired patient execution",
+  "pytest_exit_code": 0,
+  "seconds": 0.581879667006433,
+  "source_pins": {
+    "build/train045-local-goal-ppo-v1/search/worker.py": "fbae514da08d0ab2e07fd008126f89efd97fec9dd046309f0771b3b615a54bcc",
+    "build/train045-local-goal-ppo-v1/search/freeze_sources.py": "d8397af63a230ac072ce00c67477cd787988614493dbb29dff06cbb50b549192",
+    "build/train045-local-goal-ppo-v1/search/run_owned.py": "0f019b1c36c62d2b710fa191b246568709147486d798880fc07a0b9a5887825d",
+    "build/train045-local-goal-ppo-v1/search/beam.py": "cd8bdb5b1141e1f5d2374bea086063895f37650462d6c9fe0f46557c64492d7b",
+    "build/train045-local-goal-ppo-v1/search/test_beam.py": "f28ed647f4f2a5cae4f5a355b673b04d93a9c43f1e4daf1f9b90f8e3b3eb705f"
+  },
+  "source_unchanged": true
+}
