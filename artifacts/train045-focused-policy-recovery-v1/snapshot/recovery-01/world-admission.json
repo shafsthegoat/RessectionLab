@@ -1,0 +1,33 @@
+{
+  "actual_caps": {
+    "frozen_policy_forwards": 24,
+    "log_bytes": 65536,
+    "native_previews": 18000,
+    "native_transitions": 100,
+    "output_bytes": 4194304,
+    "parent_wall_seconds": 390,
+    "unique_sidecars": 4096,
+    "whole_build_bytes": 8388608,
+    "work_seconds": 360,
+    "worker_peak_rss_bytes": 3221225472
+  },
+  "execution_released": true,
+  "learning_protocol_hash": "sha256:2f9499bc196340226a814f5944db6601b1f7556cf0b80f37faf1b52711e91156",
+  "limits": {
+    "max_native_previews": 7297920,
+    "max_optimizer_updates": 128,
+    "max_policy_forwards": 18624,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 900
+  },
+  "root_source_index_sha256": "adb6d91cb2106f957c085fee7c6b438fc095510f63c903dc9c9d0b8f48677b40",
+  "schema": "train045-same-focused-catalog-frozen-tail-comparison-v1",
+  "scope": "original045 source admission; separate explicit focused deployment"
+}

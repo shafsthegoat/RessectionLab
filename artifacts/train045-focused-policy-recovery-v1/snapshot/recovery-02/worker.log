@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-policy-v1/runner-recovery2/worker.py", line 263, in execute
+    visits.run(PAIR_SUBJECT,dest,'same045_source',compare);report['source_visits']=visits.completed
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/patient_planning_cohort_sequential.py", line 91, in run
+    result = thaw_json(freeze_json(callback(base, context)))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-policy-v1/runner-recovery2/worker.py", line 199, in compare
+    chosen,account=rollout(nominal,deployment,records,frontier,method=method,
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-policy-v1/model-recovery/focused_policy.py", line 397, in rollout
+    guard();account['model_transition_calls']+=1
+    ^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-policy-v1/model-recovery/focused_policy.py", line 380, in guard
+    if time.monotonic()-started>seconds:raise TimeoutError('Focused rollout time cap')
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: Focused rollout time cap
+{"status": "failed_or_incomplete", "worker_seconds": 257.6079529579729, "diagnosis": null}

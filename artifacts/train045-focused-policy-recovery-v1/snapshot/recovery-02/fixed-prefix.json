@@ -1,0 +1,724 @@
+{
+  "focused_frontier": {
+    "action_packets_hash": "sha256:c2da1317f91a2b7de2ddf2a70f6b096ce65adb77973a8f7ace9721e1abe10476",
+    "committed_masks": {
+      "connected_free_mask": "sha256:549d6caf3ced71fa6ce97ac1406db3ac2ccb0403fbfeebb218ec001d297af4d5",
+      "contact_mask": "sha256:214e348cdd8a2c724ba8b71d7a64826c7c896a0bfd673f22f18ed946140c8978",
+      "probe_contact_mask": "sha256:cc702a22efcd1e9751028568c5dee1ea538859fc7b0e23f674f907e7eb09870b",
+      "remaining_mask": "sha256:9bf262803d492ad07028d0f24efb7d09b58a26bec11d71297adbdf9a6c4aadc3",
+      "removed_mask": "sha256:b37a3c699c1f475661011392d409651c6e14384b214cb2d592cb8a5897cdecee"
+    },
+    "current_tool": "generic_suction",
+    "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+    "native_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+    "native_state_hash": "sha256:1310923ff4b5b1384ae97f63f653b435595b32dec120fda6451b1095d63f17cf",
+    "nominal_history_hash": "sha256:03f14e90a6c99e98f7b869dc7c16ff93867bf4ed08f36a474fe61cbfa71dbf79",
+    "schema": "authenticated-focused-fixed-prefix-v1",
+    "seal": "sha256:a1eb3154c97f0f6cbe2e5de82940e050b00f8a5ee45631d57fcfcf31198ec4e3",
+    "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+    "steps": 12,
+    "total_reward": 48.09085666918073
+  },
+  "focused_packets": [
+    {
+      "action_id": "nominal-cavity-44388b74e03b769749971918",
+      "current_tool": null,
+      "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+      "focus": null,
+      "physical_action": {
+        "entry_mm": [
+          95.42137667096495,
+          -105.2830728871299,
+          11.400324228298604
+        ],
+        "tip_mm": [
+          94.15815641389963,
+          -103.19652952448322,
+          11.505590534521275
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "query_catalog_digest": "sha256:1836a6bbd74b3abe9d2ceb5d6742ec2881f12c38c05d1eef80cecee6dceb7268",
+      "schema": "focused-public-goal-action-v1",
+      "seal": "sha256:ebd20cc5d2b2366f67f1126f7917ae95dec2ef6947632359bf9425fb18b46521",
+      "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+      "source_state_hash": "sha256:bf73cc4372578e151435c6588548ed6c8f71a74b67b12ce9af1223339d26aa62",
+      "steps_taken": 0
+    },
+    {
+      "action_id": "nominal-cavity-44eb93256fa83d95420e9e35",
+      "current_tool": "generic_aspirator",
+      "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+      "focus": null,
+      "physical_action": {
+        "entry_mm": [
+          94.05787046025726,
+          -106.0304493450692,
+          9.85210539041181
+        ],
+        "tip_mm": [
+          92.28936210036585,
+          -103.10928863736387,
+          9.999478219123546
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "query_catalog_digest": "sha256:8c60bcc4dcb8abe7843b28c2cdd9c79588cf53e728a7899939599884b990b4dd",
+      "schema": "focused-public-goal-action-v1",
+      "seal": "sha256:4c069309201ed9230c60d983f84b55a9fc1ce24939d3726ba20777396f2d24c9",
+      "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+      "source_state_hash": "sha256:e585ed5aafcaa82a3d8fa617dd3054beb1ee250a1bf34a4b6ca338834baea73c",
+      "steps_taken": 1
+    },
+    {
+      "action_id": "nominal-cavity-29ddcb6803ec9da11860a85e",
+      "current_tool": "generic_aspirator",
+      "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+      "focus": null,
+      "physical_action": {
+        "entry_mm": [
+          93.33639535949453,
+          -106.6111967809245,
+          12.705561127434484
+        ],
+        "tip_mm": [
+          92.07317510242923,
+          -104.52465341827784,
+          12.810827433657153
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "query_catalog_digest": "sha256:98cdf0a6ad65a1a8eba138c66f540cc709294909d354b2ffd1642d95479be58d",
+      "schema": "focused-public-goal-action-v1",
+      "seal": "sha256:f2e4a5d13f4a39a7bd7483abad1d216fd652f062bde18dbe6690c26478e4d616",
+      "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+      "source_state_hash": "sha256:b1d2b37163ce3752488afe6f1e7131538aedf544a281a5329ff885dd55cafd2c",
+      "steps_taken": 2
+    },
+    {
+      "action_id": "nominal-cavity-62a2d3f4c79176e1927148c6",
+      "current_tool": "generic_aspirator",
+      "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+      "focus": null,
+      "physical_action": {
+        "entry_mm": [
+          94.45940986994798,
+          -106.05740280160366,
+          15.204931877662181
+        ],
+        "tip_mm": [
+          93.19618961288268,
+          -103.97085943895698,
+          15.31019818388485
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "query_catalog_digest": "sha256:58a184350732a6476b9e2d36f0bd9393e2094e215d9e7869c93fd5678c2ef000",
+      "schema": "focused-public-goal-action-v1",
+      "seal": "sha256:c77e949e8859f5e7eb5d51ccd65726b98d110273d90f569be03a94830eb296e4",
+      "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+      "source_state_hash": "sha256:7c06ec117cfcc0c94b2fa6303a15e8ccf32a311c735ef020f1bd7396342e54e1",
+      "steps_taken": 3
+    },
+    {
+      "action_id": "nominal-cavity-58b847ee6c14acb6575bc9da",
+      "current_tool": "generic_aspirator",
+      "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+      "focus": null,
+      "physical_action": {
+        "entry_mm": [
+          95.74239222593741,
+          -105.19975837608793,
+          13.601161515753335
+        ],
+        "tip_mm": [
+          93.973883866046,
+          -102.27859766838259,
+          13.748534344465071
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "query_catalog_digest": "sha256:f8644d5274dcea45d1bcb514196e7f6ff941fa310da761bd541ef57199c50409",
+      "schema": "focused-public-goal-action-v1",
+      "seal": "sha256:4aac8046204705bdde68de6a1cdba49c8243de50b3d0fcd61918de07d9fabe39",
+      "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+      "source_state_hash": "sha256:2e9a66225f0ed3de3b4bda88148d9b5a097fa88adf3cc87d54bc9b322df4762b",
+      "steps_taken": 4
+    },
+    {
+      "action_id": "nominal-cavity-43e97cbd3f5d560f45f14766",
+      "current_tool": "generic_aspirator",
+      "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+      "focus": null,
+      "physical_action": {
+        "entry_mm": [
+          91.25141404802415,
+          -107.93932067471908,
+          14.010798026570365
+        ],
+        "tip_mm": [
+          90.49348189378496,
+          -106.68739465713108,
+          14.073957810303966
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "query_catalog_digest": "sha256:77a09e26654c01fb29fbc36481ff7e7cffa0a0003c6385ea66933e92e4e77a0b",
+      "schema": "focused-public-goal-action-v1",
+      "seal": "sha256:563d5eda6de1275d263ba7b240d87dfacdc572e7dcbdb0d87a8f2e10a07f419f",
+      "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+      "source_state_hash": "sha256:e284ede6db4cfe0c57eaaf1d69b16ae6bc2f92f015f0e4ff2f43abdaad7f68ad",
+      "steps_taken": 5
+    },
+    {
+      "action_id": "nominal-cavity-3cb267783395516d6d8e3958",
+      "current_tool": "generic_aspirator",
+      "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+      "focus": null,
+      "physical_action": {
+        "entry_mm": [
+          92.61492025873181,
+          -107.1919442167798,
+          15.559016864457158
+        ],
+        "tip_mm": [
+          91.85698810449263,
+          -105.9400181991918,
+          15.62217664819076
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "query_catalog_digest": "sha256:7457620712c653bbccb27d8cd630b9de8c0b95d0620815b1c4d0e59e2301ac0b",
+      "schema": "focused-public-goal-action-v1",
+      "seal": "sha256:869a4c0f28c3cd74dec6233b557fd65149522aec04bd0336100489c7b2fa70bd",
+      "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+      "source_state_hash": "sha256:7bf3aae4d87505c2e12a740417f5690899a450fb1d4ef18d0ad426d681555330",
+      "steps_taken": 6
+    },
+    {
+      "action_id": "nominal-cavity-f0bd1eb9a01e135706580c36",
+      "current_tool": "generic_aspirator",
+      "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+      "focus": null,
+      "physical_action": {
+        "entry_mm": [
+          92.85541195898605,
+          -106.99836173816138,
+          14.607864952116264
+        ],
+        "tip_mm": [
+          91.59219170192075,
+          -104.91181837551471,
+          14.713131258338933
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "query_catalog_digest": "sha256:a2985071786223ba070c11b69581d4d8ff146b03f1841ed3b96a24a6c06c8a9d",
+      "schema": "focused-public-goal-action-v1",
+      "seal": "sha256:a6526a452f020451f73dec3b3fc66b99867d813267bc59d4c194664e9a8a61d4",
+      "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+      "source_state_hash": "sha256:a1540a00ee3d30755ed132cfe5ac9fb6ddb9139f20f8d050c4fd62d8c9c07270",
+      "steps_taken": 7
+    },
+    {
+      "action_id": "nominal-cavity-49a3ad622e2827be49f311c0",
+      "current_tool": "generic_aspirator",
+      "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+      "focus": null,
+      "physical_action": {
+        "entry_mm": [
+          91.73239744853262,
+          -107.55215571748221,
+          12.108494201888567
+        ],
+        "tip_mm": [
+          90.46917719146732,
+          -105.46561235483554,
+          12.213760508111235
+        ],
+        "tool_id": "generic_suction"
+      },
+      "query_catalog_digest": "sha256:37f356e9c96b2b1dc91e352be3cb1771283f172718923697808f3df56f23bc44",
+      "schema": "focused-public-goal-action-v1",
+      "seal": "sha256:911956aff5dc03c28bc2e18538fc6942ad574941d79517a9f0678bca3b9d85d0",
+      "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+      "source_state_hash": "sha256:e4ec9ecee6a922d56412c818788f37691fbd4af0197a0bd683454a7290d902a1",
+      "steps_taken": 8
+    },
+    {
+      "action_id": "nominal-cavity-241d0cce99ac1020a9bd696e",
+      "current_tool": "generic_suction",
+      "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+      "focus": null,
+      "physical_action": {
+        "entry_mm": [
+          90.93039849305165,
+          -108.02263518576108,
+          11.809960739115605
+        ],
+        "tip_mm": [
+          90.17246633881248,
+          -106.77070916817308,
+          11.873120522849206
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "query_catalog_digest": "sha256:1de2deb7b77c941a7df4fb8c9b13fbe8bb3a6bb76cb57d1220b73e351fd8b007",
+      "schema": "focused-public-goal-action-v1",
+      "seal": "sha256:cbc7c870b3b770d8bbadb77f746a49d8e657a3056d0db644380ab90dc7029589",
+      "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+      "source_state_hash": "sha256:806735ecaf2beb64db854e18fa1dd2957d32ef679f782f07ba0a69a544af4ae0",
+      "steps_taken": 9
+    },
+    {
+      "action_id": "nominal-cavity-ea4d94fd78de070751c84be8",
+      "current_tool": "generic_aspirator",
+      "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+      "focus": null,
+      "physical_action": {
+        "entry_mm": [
+          91.73239744853262,
+          -107.55215571748221,
+          12.108494201888567
+        ],
+        "tip_mm": [
+          90.46917719146732,
+          -105.46561235483554,
+          12.213760508111235
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "query_catalog_digest": "sha256:79a000d098d5ab00fe076d21f1df0fb24a052b9caff490287c1439784a669ee2",
+      "schema": "focused-public-goal-action-v1",
+      "seal": "sha256:dc2c0793d5e5b5f417af50e7ded0f72b89ee9f310ede79c65982e89cc323d9f1",
+      "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+      "source_state_hash": "sha256:18f5cef8d128004d00ac2ea0672c412f636262b1a26288d2d94eb93016377e9e",
+      "steps_taken": 10
+    },
+    {
+      "action_id": "nominal-cavity-4f998cdfafe81b10ea4b7ace",
+      "current_tool": "generic_aspirator",
+      "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+      "focus": null,
+      "physical_action": {
+        "entry_mm": [
+          92.21338084904112,
+          -107.16499076024533,
+          10.206190377206783
+        ],
+        "tip_mm": [
+          90.4448724891497,
+          -104.24383005254,
+          10.353563205918519
+        ],
+        "tool_id": "generic_suction"
+      },
+      "query_catalog_digest": "sha256:32196dc6fd4dccbf3c1fd4ebe5fb00f21974ef53944a710afcc5396482ac5128",
+      "schema": "focused-public-goal-action-v1",
+      "seal": "sha256:cd5c8f7aad670cbbb5fb9f75a20fdb8b267887d1f317301e2771b5f40028bbda",
+      "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+      "source_state_hash": "sha256:fc3724b279f01fa902057fc0276c441f34083e07cb64024ff352e43c180513de",
+      "steps_taken": 11
+    }
+  ],
+  "joins": [
+    {
+      "base_physical_catalog_equal": true,
+      "cumulative_return": 5.683770178866951,
+      "focused_native_state_hash": "sha256:e585ed5aafcaa82a3d8fa617dd3054beb1ee250a1bf34a4b6ca338834baea73c",
+      "focused_nominal_full_row_hash": "sha256:1558d92b669d719312bef84cbeb53dc5cadc9d622dc7d21c23810ddc353376ec",
+      "mask_hashes": {
+        "connected_free_mask": "sha256:245dc649593008e159e1d5bf1cbd132e5d0a9072d8b4cf5d4043975b954dfcee",
+        "contact_mask": "sha256:676ed4eb00e00771056054525889771a093f07caffdc5ae90b30a6c1ef7dda10",
+        "probe_contact_mask": "sha256:cc702a22efcd1e9751028568c5dee1ea538859fc7b0e23f674f907e7eb09870b",
+        "remaining_mask": "sha256:fdc26edddf28a1693d910359fbec21fbe09c952c7d97a3222d2aed204806c5db",
+        "removed_mask": "sha256:78f19f202287d37678a039f80537e5310fe54257b55531fde8879f3d22fceb13"
+      },
+      "new_action_id": "nominal-cavity-44388b74e03b769749971918",
+      "old_action_id": "nominal-cavity-8ecc581f61b868dec43b5f26",
+      "original_full_row_hash": "sha256:595955bc89c2909b8905f2268c9a6a0659cc7304d887f5cc2543339fb2d99fd9",
+      "original_native_state_hash": "sha256:05fce8c5e183ea0ec0824ab115d948d5c1a50ca6673f6850441c8daf5dde6f8a",
+      "physical_geometry": {
+        "entry_mm": [
+          95.42137667096495,
+          -105.2830728871299,
+          11.400324228298604
+        ],
+        "tip_mm": [
+          94.15815641389963,
+          -103.19652952448322,
+          11.505590534521275
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "physical_history_equal": true,
+      "reward": 5.683770178866951,
+      "step": 1
+    },
+    {
+      "base_physical_catalog_equal": true,
+      "cumulative_return": 14.226613728637902,
+      "focused_native_state_hash": "sha256:b1d2b37163ce3752488afe6f1e7131538aedf544a281a5329ff885dd55cafd2c",
+      "focused_nominal_full_row_hash": "sha256:5614454b62ccb76d86ae1897bdb7eebffd5296f83f9e88e8e0748800884b723f",
+      "mask_hashes": {
+        "connected_free_mask": "sha256:d0416ace5de9ac0d10071918bd2b6b747f2198ca0bf87e7e2d4d07c8503c8cd9",
+        "contact_mask": "sha256:e01c1b5c953540e629ed3ba78ccc4e45b5316c22a3d110108cda28d43abcd5ac",
+        "probe_contact_mask": "sha256:cc702a22efcd1e9751028568c5dee1ea538859fc7b0e23f674f907e7eb09870b",
+        "remaining_mask": "sha256:cff67be13947811e353fbf037d8f79a53d326070562f4791e8c7787455f6db97",
+        "removed_mask": "sha256:47ae82c5835a2f33060cd4d05a2ac81d2c4da57f49445fdcfaa2dc866c93a4b5"
+      },
+      "new_action_id": "nominal-cavity-44eb93256fa83d95420e9e35",
+      "old_action_id": "nominal-cavity-7b4d91f546a0f38c06a3686d",
+      "original_full_row_hash": "sha256:d7268b4da58a715129a347638590e627933e3c15da55a07dc81622f6df177409",
+      "original_native_state_hash": "sha256:8918aa4de82bcf4bf8cbc189e5f8de8b349c595cc5d76ea326be34e2cfa763c5",
+      "physical_geometry": {
+        "entry_mm": [
+          94.05787046025726,
+          -106.0304493450692,
+          9.85210539041181
+        ],
+        "tip_mm": [
+          92.28936210036585,
+          -103.10928863736387,
+          9.999478219123546
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "physical_history_equal": true,
+      "reward": 8.542843549770952,
+      "step": 2
+    },
+    {
+      "base_physical_catalog_equal": true,
+      "cumulative_return": 19.910383907504855,
+      "focused_native_state_hash": "sha256:7c06ec117cfcc0c94b2fa6303a15e8ccf32a311c735ef020f1bd7396342e54e1",
+      "focused_nominal_full_row_hash": "sha256:5658be04acdc31442ad615f60c98e7f027a9114d1167b3f96d7dc09450b7e196",
+      "mask_hashes": {
+        "connected_free_mask": "sha256:3e98505de3bf39f289113c7ebc9baf9e2e129cdd05f85651ea5099bd8fc80f12",
+        "contact_mask": "sha256:4dd234ad42a508b7bab988f82565831af1b49a8ebcf987e3f72f19d511047dbc",
+        "probe_contact_mask": "sha256:cc702a22efcd1e9751028568c5dee1ea538859fc7b0e23f674f907e7eb09870b",
+        "remaining_mask": "sha256:4be4a1a6dcc96d4df89533ed02e8c190f5164d4f9c6bf67a07d0ec94593a684f",
+        "removed_mask": "sha256:33c25e11a3f726c4c5d759192b805e204cfb8830b9a2c02fddd66555161785f6"
+      },
+      "new_action_id": "nominal-cavity-29ddcb6803ec9da11860a85e",
+      "old_action_id": "nominal-cavity-4190e33719f54da5f5ac9d3a",
+      "original_full_row_hash": "sha256:292c1ebb038ec444d692874f5104e5ffe3c1155df8e3cfec21b3cf808f073e50",
+      "original_native_state_hash": "sha256:e229c65270aafdf8a5a3c765a5f5c237a0eb0b3e0f15f119cf4854206a6b199f",
+      "physical_geometry": {
+        "entry_mm": [
+          93.33639535949453,
+          -106.6111967809245,
+          12.705561127434484
+        ],
+        "tip_mm": [
+          92.07317510242923,
+          -104.52465341827784,
+          12.810827433657153
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "physical_history_equal": true,
+      "reward": 5.6837701788669515,
+      "step": 3
+    },
+    {
+      "base_physical_catalog_equal": true,
+      "cumulative_return": 24.64047858745644,
+      "focused_native_state_hash": "sha256:2e9a66225f0ed3de3b4bda88148d9b5a097fa88adf3cc87d54bc9b322df4762b",
+      "focused_nominal_full_row_hash": "sha256:b39680bcaccf3f2f98b16cf0e7585fbac010c141aeaf1334ed2764fac76b1323",
+      "mask_hashes": {
+        "connected_free_mask": "sha256:41b85e4b6883972f1b6a6091f605daa6177ed0f2d7223bfa143bf0d386738cc1",
+        "contact_mask": "sha256:aa8314a4f9b98f06bd67817231a3d68575dc8913d3c9b774cbe0c0133021d472",
+        "probe_contact_mask": "sha256:cc702a22efcd1e9751028568c5dee1ea538859fc7b0e23f674f907e7eb09870b",
+        "remaining_mask": "sha256:52485f1a74ce759636ba87da046a91ba6e74b97a138111a9978072b5d889f9fe",
+        "removed_mask": "sha256:ca2f14c5e2d3f5addac9de29e6ed16b57557ce1bf9597decae61a13b28857fdd"
+      },
+      "new_action_id": "nominal-cavity-62a2d3f4c79176e1927148c6",
+      "old_action_id": "nominal-cavity-d0a585a64d6e39b9ecd6b253",
+      "original_full_row_hash": "sha256:90ac6811bbf4f488bcb350e918b6bf50c90401b968a1cee400bb7e5cfa529fd6",
+      "original_native_state_hash": "sha256:2892fd0742e020a46b138ac0d641b7359a35101d1b1748832d9aa81b6071fec7",
+      "physical_geometry": {
+        "entry_mm": [
+          94.45940986994798,
+          -106.05740280160366,
+          15.204931877662181
+        ],
+        "tip_mm": [
+          93.19618961288268,
+          -103.97085943895698,
+          15.31019818388485
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "physical_history_equal": true,
+      "reward": 4.730094679951585,
+      "step": 4
+    },
+    {
+      "base_physical_catalog_equal": true,
+      "cumulative_return": 34.13699763614275,
+      "focused_native_state_hash": "sha256:e284ede6db4cfe0c57eaaf1d69b16ae6bc2f92f015f0e4ff2f43abdaad7f68ad",
+      "focused_nominal_full_row_hash": "sha256:161685e8a17952df14f050d49501912b5738e9a718b8fa21ebfe3f6998d15a51",
+      "mask_hashes": {
+        "connected_free_mask": "sha256:a60d2613edef55c6ee7feaa1451b58eb56cc831ccbc426e9071ffb8ca77bde7e",
+        "contact_mask": "sha256:3a54ef4c4e9cdf138436fa44b4749de1448fb97b8d791d9af2983a2a9b836461",
+        "probe_contact_mask": "sha256:cc702a22efcd1e9751028568c5dee1ea538859fc7b0e23f674f907e7eb09870b",
+        "remaining_mask": "sha256:df02e78cd893eeb32daa35eda426f7e9421357869876ad8cc250d2bb2f6436bf",
+        "removed_mask": "sha256:dcd76faab30e43dd5501968f32ba3df40ec1ce92623f0f6a13b10a3b476b159f"
+      },
+      "new_action_id": "nominal-cavity-58b847ee6c14acb6575bc9da",
+      "old_action_id": "nominal-cavity-91800cbcada816c1df319c8d",
+      "original_full_row_hash": "sha256:31600543fef6734890f4aa32e339f501ee47cc6c983806dac85a781149a000c9",
+      "original_native_state_hash": "sha256:992b992b7aa92066945f9164b5ed535f8e091198908c0fc9bbec5a3ab2d9799c",
+      "physical_geometry": {
+        "entry_mm": [
+          95.74239222593741,
+          -105.19975837608793,
+          13.601161515753335
+        ],
+        "tip_mm": [
+          93.973883866046,
+          -102.27859766838259,
+          13.748534344465071
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "physical_history_equal": true,
+      "reward": 9.496519048686316,
+      "step": 5
+    },
+    {
+      "base_physical_catalog_equal": true,
+      "cumulative_return": 38.869045441936436,
+      "focused_native_state_hash": "sha256:7bf3aae4d87505c2e12a740417f5690899a450fb1d4ef18d0ad426d681555330",
+      "focused_nominal_full_row_hash": "sha256:ac8845f040bc0aa064f38507f8ca05b6fcffda8694c562e436b200c36849a3f9",
+      "mask_hashes": {
+        "connected_free_mask": "sha256:e635e997a112d6f125debd8ac892a2fde59e5b771f41288a6c7566d48ec5e98a",
+        "contact_mask": "sha256:04e2d7b081b11eeb01ce2641b67334e3ace54a007e5fdf66f5933d7ae663e7f5",
+        "probe_contact_mask": "sha256:cc702a22efcd1e9751028568c5dee1ea538859fc7b0e23f674f907e7eb09870b",
+        "remaining_mask": "sha256:d944b69c36516b13673f649c187922be572f35399b5262a691067853b966916c",
+        "removed_mask": "sha256:5d337d7c2e123236f70560017c5133efec621be363b4f48334750b1346f401c3"
+      },
+      "new_action_id": "nominal-cavity-43e97cbd3f5d560f45f14766",
+      "old_action_id": "nominal-cavity-5bb5732e12de51edf1046255",
+      "original_full_row_hash": "sha256:9c25a99ac18f24e6d1f77157bfa16e6f019769cf53dbcc64d6287297b54eda3c",
+      "original_native_state_hash": "sha256:d8001b99fca37f7ea5964e8f24c3425ff2ac0fa7f2201edd0461c33dd9752d82",
+      "physical_geometry": {
+        "entry_mm": [
+          91.25141404802415,
+          -107.93932067471908,
+          14.010798026570365
+        ],
+        "tip_mm": [
+          90.49348189378496,
+          -106.68739465713108,
+          14.073957810303966
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "physical_history_equal": true,
+      "reward": 4.732047805793682,
+      "step": 6
+    },
+    {
+      "base_physical_catalog_equal": true,
+      "cumulative_return": 40.74006675098402,
+      "focused_native_state_hash": "sha256:a1540a00ee3d30755ed132cfe5ac9fb6ddb9139f20f8d050c4fd62d8c9c07270",
+      "focused_nominal_full_row_hash": "sha256:3b8656c16b442df87687f908f58a424f5d43de69e00b757bc968ebca6e334926",
+      "mask_hashes": {
+        "connected_free_mask": "sha256:1ca8aa9fc299a72845c1eee0e88296b4d935efc133012795802ccc27cb0e76f5",
+        "contact_mask": "sha256:4d142113718e0f6803f0a02f035370fce7441b14b649014dfc6c7ea49ad761ad",
+        "probe_contact_mask": "sha256:cc702a22efcd1e9751028568c5dee1ea538859fc7b0e23f674f907e7eb09870b",
+        "remaining_mask": "sha256:0e25f90aef214bc8df7c7011845c130efca3293a1d88ab3a3fd5fbc46afb1a7a",
+        "removed_mask": "sha256:e8317cca806c4289f56943449bf56bf676724337f6daf29050aefcba233f801f"
+      },
+      "new_action_id": "nominal-cavity-3cb267783395516d6d8e3958",
+      "old_action_id": "nominal-cavity-089d0d7d813b7b7e3487b141",
+      "original_full_row_hash": "sha256:193c3f34a3999a52f9020000f3ec8241b65788c13a70f03ab59116bf496bcdaf",
+      "original_native_state_hash": "sha256:0d41a710089b6d6d3eb1ad430fceb41a69a982ba9ae80f294144842dd8b3632a",
+      "physical_geometry": {
+        "entry_mm": [
+          92.61492025873181,
+          -107.1919442167798,
+          15.559016864457158
+        ],
+        "tip_mm": [
+          91.85698810449263,
+          -105.9400181991918,
+          15.62217664819076
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "physical_history_equal": true,
+      "reward": 1.8710213090475858,
+      "step": 7
+    },
+    {
+      "base_physical_catalog_equal": true,
+      "cumulative_return": 43.56281043310487,
+      "focused_native_state_hash": "sha256:e4ec9ecee6a922d56412c818788f37691fbd4af0197a0bd683454a7290d902a1",
+      "focused_nominal_full_row_hash": "sha256:b122ecd6e91c49c8596bdb3f8b903817be55dce55b3826419fb631d21743adfd",
+      "mask_hashes": {
+        "connected_free_mask": "sha256:ae12cfab48516afc96b90ed31dee20c5146bb58956f10717334bdeda15a55ba9",
+        "contact_mask": "sha256:15386d8664f2fe5ffaf503860f2379b1bbaf5ece6821f97350ea0f471661666e",
+        "probe_contact_mask": "sha256:cc702a22efcd1e9751028568c5dee1ea538859fc7b0e23f674f907e7eb09870b",
+        "remaining_mask": "sha256:5d563f08228f41340771b8bf067f63cb777abee48081ec43f95bb4b11e356b40",
+        "removed_mask": "sha256:b8883ed9b49118928b909e10ac06bbb419392939a348b252b371ef8ea41d698c"
+      },
+      "new_action_id": "nominal-cavity-f0bd1eb9a01e135706580c36",
+      "old_action_id": "nominal-cavity-3536ed9f0ef3e6592a2fc158",
+      "original_full_row_hash": "sha256:555efea489c9a9a44ec370c94fe177ed26a550be5a37e6e01639f1c3b161456f",
+      "original_native_state_hash": "sha256:f6e201c1a3dcbd8bd7443bbec001dc5cd52301a950da9a4312f64d84e737997c",
+      "physical_geometry": {
+        "entry_mm": [
+          92.85541195898605,
+          -106.99836173816138,
+          14.607864952116264
+        ],
+        "tip_mm": [
+          91.59219170192075,
+          -104.91181837551471,
+          14.713131258338933
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "physical_history_equal": true,
+      "reward": 2.822743682120855,
+      "step": 8
+    },
+    {
+      "base_physical_catalog_equal": true,
+      "cumulative_return": 44.44960311739499,
+      "focused_native_state_hash": "sha256:806735ecaf2beb64db854e18fa1dd2957d32ef679f782f07ba0a69a544af4ae0",
+      "focused_nominal_full_row_hash": "sha256:060ec52e6c60fd0c951c5fb558da4c22a89a6116087266340c6e1b74ffc26172",
+      "mask_hashes": {
+        "connected_free_mask": "sha256:ac7073515a142dde9765afe838bd313302fc15bfd8626bb53d5badc23f6c7a43",
+        "contact_mask": "sha256:2d8da8a764c9b2cfdbfaefae4995ca8ca20657408275fbef77e41eb9be1a0e8d",
+        "probe_contact_mask": "sha256:cc702a22efcd1e9751028568c5dee1ea538859fc7b0e23f674f907e7eb09870b",
+        "remaining_mask": "sha256:fbec24ec319e559e1f0e8ab825d7c86260129d59d568198c416122de715ef969",
+        "removed_mask": "sha256:96aec6e9e7b0e8bbb9df4250f8abec46862441d47f8c21ba8b091b2cd6fab0c7"
+      },
+      "new_action_id": "nominal-cavity-49a3ad622e2827be49f311c0",
+      "old_action_id": "nominal-cavity-796668398d38557bae703113",
+      "original_full_row_hash": "sha256:4695bb365e5a6d0fb8423314bb1746434d4095301f14caa0fb422bc343d04bb5",
+      "original_native_state_hash": "sha256:a535d48eca75e9345820911e182de61793b2e6143f52127a49481d749e96aa22",
+      "physical_geometry": {
+        "entry_mm": [
+          91.73239744853262,
+          -107.55215571748221,
+          12.108494201888567
+        ],
+        "tip_mm": [
+          90.46917719146732,
+          -105.46561235483554,
+          12.213760508111235
+        ],
+        "tool_id": "generic_suction"
+      },
+      "physical_history_equal": true,
+      "reward": 0.8867926842901236,
+      "step": 9
+    },
+    {
+      "base_physical_catalog_equal": true,
+      "cumulative_return": 45.33694892752721,
+      "focused_native_state_hash": "sha256:18f5cef8d128004d00ac2ea0672c412f636262b1a26288d2d94eb93016377e9e",
+      "focused_nominal_full_row_hash": "sha256:84d9fd92eb02b2bf2d14d82c4c20207ded3cdb055ad2ca5aaa47b1630f6164b3",
+      "mask_hashes": {
+        "connected_free_mask": "sha256:111b46dbc34b1a57a8893403fdbfe7299fce696a48abf4a7f12f08653e71ad3f",
+        "contact_mask": "sha256:28824e639a8747c33caee8affac0ec52c1393725f92acba8cd7127ade7747ed6",
+        "probe_contact_mask": "sha256:cc702a22efcd1e9751028568c5dee1ea538859fc7b0e23f674f907e7eb09870b",
+        "remaining_mask": "sha256:d3b57c8076e71b065658abc44d1ba33abe886a1dfa68b54b661c9fa60c67f103",
+        "removed_mask": "sha256:ddb8b04ac8d617734da6a3158a99391482843d65c0d243d16aaf5567fe556b58"
+      },
+      "new_action_id": "nominal-cavity-241d0cce99ac1020a9bd696e",
+      "old_action_id": "nominal-cavity-2226a735f7bd1bf6c0b55c24",
+      "original_full_row_hash": "sha256:6c96c274190255f0de8e79431584d33f8265ffd90308037fa8370741441dac1b",
+      "original_native_state_hash": "sha256:33b672927abee5bf831913cc070a046656c3993defef98e00eb1c5ea182e73b3",
+      "physical_geometry": {
+        "entry_mm": [
+          90.93039849305165,
+          -108.02263518576108,
+          11.809960739115605
+        ],
+        "tip_mm": [
+          90.17246633881248,
+          -106.77070916817308,
+          11.873120522849206
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "physical_history_equal": true,
+      "reward": 0.8873458101322204,
+      "step": 10
+    },
+    {
+      "base_physical_catalog_equal": true,
+      "cumulative_return": 47.2060171107327,
+      "focused_native_state_hash": "sha256:fc3724b279f01fa902057fc0276c441f34083e07cb64024ff352e43c180513de",
+      "focused_nominal_full_row_hash": "sha256:98e76045d69387f8abd1347142f976b2909b21608131d88c1961685d20cb241b",
+      "mask_hashes": {
+        "connected_free_mask": "sha256:bf31fd013eb34554ec55296f454f05858541ef5f8b9f3fb6c640146c6ace54a9",
+        "contact_mask": "sha256:62030f1d19652aa441619460a31c63358935597d71499dff8e62052709d184a3",
+        "probe_contact_mask": "sha256:cc702a22efcd1e9751028568c5dee1ea538859fc7b0e23f674f907e7eb09870b",
+        "remaining_mask": "sha256:21d9d700db4d2c0cc5e3cf481c8b20567f4a8cad112945eeed87ca723370dffc",
+        "removed_mask": "sha256:aa8793a1fa22dd5b4916e99f5559fe435465ecf3682027aaae2f42ac6d86f6ae"
+      },
+      "new_action_id": "nominal-cavity-ea4d94fd78de070751c84be8",
+      "old_action_id": "nominal-cavity-3abc157632b6577eec9ee5c7",
+      "original_full_row_hash": "sha256:36a497efc92b555175bda02b217f7a110a591c2c239690f851c043406bce4c13",
+      "original_native_state_hash": "sha256:d40e21b7c46956d55ad80c07355144b4e4e710d814c0b90d7b947c6ce5e63645",
+      "physical_geometry": {
+        "entry_mm": [
+          91.73239744853262,
+          -107.55215571748221,
+          12.108494201888567
+        ],
+        "tip_mm": [
+          90.46917719146732,
+          -105.46561235483554,
+          12.213760508111235
+        ],
+        "tool_id": "generic_aspirator"
+      },
+      "physical_history_equal": true,
+      "reward": 1.8690681832054892,
+      "step": 11
+    },
+    {
+      "base_physical_catalog_equal": true,
+      "cumulative_return": 48.09085666918073,
+      "focused_native_state_hash": "sha256:1310923ff4b5b1384ae97f63f653b435595b32dec120fda6451b1095d63f17cf",
+      "focused_nominal_full_row_hash": "sha256:48c6c0a46aa4add3feecc7be6e6fe7e909ca2c20336ae80f31cb40327edeb905",
+      "mask_hashes": {
+        "connected_free_mask": "sha256:549d6caf3ced71fa6ce97ac1406db3ac2ccb0403fbfeebb218ec001d297af4d5",
+        "contact_mask": "sha256:214e348cdd8a2c724ba8b71d7a64826c7c896a0bfd673f22f18ed946140c8978",
+        "probe_contact_mask": "sha256:cc702a22efcd1e9751028568c5dee1ea538859fc7b0e23f674f907e7eb09870b",
+        "remaining_mask": "sha256:9bf262803d492ad07028d0f24efb7d09b58a26bec11d71297adbdf9a6c4aadc3",
+        "removed_mask": "sha256:b37a3c699c1f475661011392d409651c6e14384b214cb2d592cb8a5897cdecee"
+      },
+      "new_action_id": "nominal-cavity-4f998cdfafe81b10ea4b7ace",
+      "old_action_id": "nominal-cavity-496df3a8fd6d637e83ef8e78",
+      "original_full_row_hash": "sha256:b10539ffdb9a364bbe18d6ba8f29e55b287cad97e0a5372d2ecbb6791c5df1ed",
+      "original_native_state_hash": "sha256:23e244d0283cabeac0bdb18fc155e1f6209274a890f5ad7162b2f5d326cb5175",
+      "physical_geometry": {
+        "entry_mm": [
+          92.21338084904112,
+          -107.16499076024533,
+          10.206190377206783
+        ],
+        "tip_mm": [
+          90.4448724891497,
+          -104.24383005254,
+          10.353563205918519
+        ],
+        "tool_id": "generic_suction"
+      },
+      "physical_history_equal": true,
+      "reward": 0.884839558448027,
+      "step": 12
+    }
+  ],
+  "original_frontier_state": "sha256:23e244d0283cabeac0bdb18fc155e1f6209274a890f5ad7162b2f5d326cb5175",
+  "scope": "Genuine original and focused executions; physical history and rewards exact."
+}

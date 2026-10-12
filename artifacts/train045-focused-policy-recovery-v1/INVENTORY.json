@@ -1,0 +1,503 @@
+{
+  "files": [
+    {
+      "archive": "snapshot/controls-02/bootstrap/receipt.json",
+      "bytes": 839,
+      "sha256": "53a53e29e860d160aae791f316b65a7f08327b48131756be9fc2ca146bdaadc6",
+      "source": "build/train045-focused-policy-v1/controls-02/bootstrap/receipt.json"
+    },
+    {
+      "archive": "snapshot/controls-02/control_bootstrap.py",
+      "bytes": 2374,
+      "sha256": "c9ac6993f393f9df52dca0afed6d7dc376b933944eea5cb5c1791ac9ee46affb",
+      "source": "build/train045-focused-policy-v1/controls-02/control_bootstrap.py"
+    },
+    {
+      "archive": "snapshot/controls-02/controls-01.json",
+      "bytes": 7867,
+      "sha256": "c86e7870c09a8235b1c9d2469bd3f3edc9d93bb96195073e6599d50c07497325",
+      "source": "build/train045-focused-policy-v1/controls-02/controls-01.json"
+    },
+    {
+      "archive": "snapshot/controls-02/controls-01.log",
+      "bytes": 99,
+      "sha256": "9afc1fc5716ee4e2e97d9f15466b31576a5a10310e735de7d24c78ec84ad4779",
+      "source": "build/train045-focused-policy-v1/controls-02/controls-01.log"
+    },
+    {
+      "archive": "snapshot/controls-02/run_controls.py",
+      "bytes": 958,
+      "sha256": "7288202c9357415785de63af85b1765ebb5a6f732ccbb2eadd1e08594b3debed",
+      "source": "build/train045-focused-policy-v1/controls-02/run_controls.py"
+    },
+    {
+      "archive": "snapshot/controls-03/bootstrap/receipt.json",
+      "bytes": 839,
+      "sha256": "b7e5bf542fce6e08bd5ad3a2a11010af1161c505575d306f53720e207bb7ea03",
+      "source": "build/train045-focused-policy-v1/controls-03/bootstrap/receipt.json"
+    },
+    {
+      "archive": "snapshot/controls-03/control_bootstrap.py",
+      "bytes": 2378,
+      "sha256": "8ed19f8df9e5097eaa2534d2514296c850fa3e31aad021ce8dbb4cb43949178f",
+      "source": "build/train045-focused-policy-v1/controls-03/control_bootstrap.py"
+    },
+    {
+      "archive": "snapshot/controls-03/controls-01.json",
+      "bytes": 8772,
+      "sha256": "aced1e77f4ead001a8ea79d158c7d539cc58d0376cc67bbaac54958daf7d6820",
+      "source": "build/train045-focused-policy-v1/controls-03/controls-01.json"
+    },
+    {
+      "archive": "snapshot/controls-03/controls-01.log",
+      "bytes": 99,
+      "sha256": "56aee6d3feac8f0540292e895c2c1218e78490efd6ed871a51e292574964ac39",
+      "source": "build/train045-focused-policy-v1/controls-03/controls-01.log"
+    },
+    {
+      "archive": "snapshot/controls-03/run_controls.py",
+      "bytes": 959,
+      "sha256": "f84324734686167bde3478aade9f770e3203654c3e723b7c6070055251a13251",
+      "source": "build/train045-focused-policy-v1/controls-03/run_controls.py"
+    },
+    {
+      "archive": "snapshot/independent-recovery/audit_result.py",
+      "bytes": 31094,
+      "sha256": "77ca59b8c2c4ca5ef87274ee0bd4618df755030f408c8d6f9d7eac910bef23af",
+      "source": "build/train045-focused-policy-v1/independent-recovery/audit_result.py"
+    },
+    {
+      "archive": "snapshot/independent-recovery/test_adapter_boundary.py",
+      "bytes": 5540,
+      "sha256": "a9c209de83100a1789f49be1dcb07aa1b602a0d0d459471dacfed4f4a437ded9",
+      "source": "build/train045-focused-policy-v1/independent-recovery/test_adapter_boundary.py"
+    },
+    {
+      "archive": "snapshot/model-recovery/HANDOFF.txt",
+      "bytes": 1251,
+      "sha256": "879c47b79f376909c4feb6f3e59ba74bb61ad637096c62da877bec91aefb6edc",
+      "source": "build/train045-focused-policy-v1/model-recovery/HANDOFF.txt"
+    },
+    {
+      "archive": "snapshot/model-recovery/focused_policy.py",
+      "bytes": 26624,
+      "sha256": "64da4aa41a5aeccc798005d8432ae4276fcc9b442790e2b9859dbd8d5fd4d50f",
+      "source": "build/train045-focused-policy-v1/model-recovery/focused_policy.py"
+    },
+    {
+      "archive": "snapshot/model-recovery/recovery.patch",
+      "bytes": 1756,
+      "sha256": "89158fa4f156ee84bc3283ece861e8811fb7dd084fe58b92cdf39aae4e2fdb45",
+      "source": "build/train045-focused-policy-v1/model-recovery/recovery.patch"
+    },
+    {
+      "archive": "snapshot/model-recovery/source-ready.json",
+      "bytes": 1742,
+      "sha256": "607ff3251ef4f7d3983516977683a5d7cc235a4c2669986be8cba95dc7a399da",
+      "source": "build/train045-focused-policy-v1/model-recovery/source-ready.json"
+    },
+    {
+      "archive": "snapshot/model-recovery/test_focused_policy.py",
+      "bytes": 15261,
+      "sha256": "d970cbbbb780eca4b444d61bdf3ff5f9a68be41b57e0e3ae649dfcb5e44b8b64",
+      "source": "build/train045-focused-policy-v1/model-recovery/test_focused_policy.py"
+    },
+    {
+      "archive": "snapshot/recovery-01/ReMIND-045-context.json",
+      "bytes": 7168,
+      "sha256": "ff80eeb0764a5ed1561c7a60ab32030eba1eaa1f1a78d342fdd903130b88ddc7",
+      "source": "build/train045-focused-policy-v1/recovery-01/ReMIND-045-context.json"
+    },
+    {
+      "archive": "snapshot/recovery-01/fixed-prefix.json",
+      "bytes": 33382,
+      "sha256": "13e6d0bba664d030a60ca0ae66d59ba6d9e862b6b43a84682e2341f4b3fc0467",
+      "source": "build/train045-focused-policy-v1/recovery-01/fixed-prefix.json"
+    },
+    {
+      "archive": "snapshot/recovery-01/focused-deployment.json",
+      "bytes": 5289,
+      "sha256": "e0cb54b3aa23de6930f857744de625660ae8e3c98bbcd3b578cea6b669f0c26c",
+      "source": "build/train045-focused-policy-v1/recovery-01/focused-deployment.json"
+    },
+    {
+      "archive": "snapshot/recovery-01/intent.json",
+      "bytes": 676,
+      "sha256": "415a2d20cb4f13b02cf1ed1bb6713ac34ccbbd155eb39af85a7e67583da8b576",
+      "source": "build/train045-focused-policy-v1/recovery-01/intent.json"
+    },
+    {
+      "archive": "snapshot/recovery-01/launcher.json",
+      "bytes": 3876,
+      "sha256": "7113365395ec89937d7d33e26f8e77951395ef17bc60c1efc31a4a7b8f2de21e",
+      "source": "build/train045-focused-policy-v1/recovery-01/launcher.json"
+    },
+    {
+      "archive": "snapshot/recovery-01/progress.json",
+      "bytes": 1648,
+      "sha256": "49d42584a182d56630b3a6a3126783dc4326cc9f33780d73a6caa36ff50fd511",
+      "source": "build/train045-focused-policy-v1/recovery-01/progress.json"
+    },
+    {
+      "archive": "snapshot/recovery-01/report.json",
+      "bytes": 27881,
+      "sha256": "4179a5f960f442ee71e069c060a7e86c471b6b7fd8ca3732ae792ad5c90a2819",
+      "source": "build/train045-focused-policy-v1/recovery-01/report.json"
+    },
+    {
+      "archive": "snapshot/recovery-01/worker.log",
+      "bytes": 2895,
+      "sha256": "47eab76addf77570752deef332811728f01c1dcb9495b5835a9737503fc4a3c7",
+      "source": "build/train045-focused-policy-v1/recovery-01/worker.log"
+    },
+    {
+      "archive": "snapshot/recovery-01/world-admission.json",
+      "bytes": 1030,
+      "sha256": "16b5bda22bd5b442937d925bf605f509af876a062698ba541c9e573871194f53",
+      "source": "build/train045-focused-policy-v1/recovery-01/world-admission.json"
+    },
+    {
+      "archive": "snapshot/recovery-02/ReMIND-045-context.json",
+      "bytes": 7168,
+      "sha256": "fe4ae270a4336e8887579f11cb77242735ee583a9d5b3d00aff9110570dd0240",
+      "source": "build/train045-focused-policy-v1/recovery-02/ReMIND-045-context.json"
+    },
+    {
+      "archive": "snapshot/recovery-02/fixed-prefix.json",
+      "bytes": 33382,
+      "sha256": "13e6d0bba664d030a60ca0ae66d59ba6d9e862b6b43a84682e2341f4b3fc0467",
+      "source": "build/train045-focused-policy-v1/recovery-02/fixed-prefix.json"
+    },
+    {
+      "archive": "snapshot/recovery-02/focused-deployment.json",
+      "bytes": 5289,
+      "sha256": "92775bc0b6488c28ac40b13df4a0cefcbda23027af15fd753d40734f95f48e7a",
+      "source": "build/train045-focused-policy-v1/recovery-02/focused-deployment.json"
+    },
+    {
+      "archive": "snapshot/recovery-02/intent.json",
+      "bytes": 677,
+      "sha256": "d9a08b89a5111969b1ec350eb6ab2bc338898b587635608ed0b4dec4ae44a015",
+      "source": "build/train045-focused-policy-v1/recovery-02/intent.json"
+    },
+    {
+      "archive": "snapshot/recovery-02/launcher.json",
+      "bytes": 3873,
+      "sha256": "abad11ff2dbf4f9655b9ea11d6949017abdccfd7350996286e776bf14928284d",
+      "source": "build/train045-focused-policy-v1/recovery-02/launcher.json"
+    },
+    {
+      "archive": "snapshot/recovery-02/progress.json",
+      "bytes": 1647,
+      "sha256": "91c9cc2a6dbde1388380a0e7b08caff17308f5a24a4980d154046d75d862e107",
+      "source": "build/train045-focused-policy-v1/recovery-02/progress.json"
+    },
+    {
+      "archive": "snapshot/recovery-02/report.json",
+      "bytes": 32958,
+      "sha256": "079cfc74ae0499430b9a93438a94d7f3154a7559a972a40eee71f17fb8ab1af1",
+      "source": "build/train045-focused-policy-v1/recovery-02/report.json"
+    },
+    {
+      "archive": "snapshot/recovery-02/worker.log",
+      "bytes": 1760,
+      "sha256": "452685e53937bbb4b5b66775ab5b1eb96db45681cefd6665191d0015d886dd3e",
+      "source": "build/train045-focused-policy-v1/recovery-02/worker.log"
+    },
+    {
+      "archive": "snapshot/recovery-02/world-admission.json",
+      "bytes": 1030,
+      "sha256": "72a746010d9e8e77e6de337bbcc37f2612a3ac7e0a0add0e6dcc0535d084a924",
+      "source": "build/train045-focused-policy-v1/recovery-02/world-admission.json"
+    },
+    {
+      "archive": "snapshot/runner-recovery/bootstrap_smoke.py",
+      "bytes": 3911,
+      "sha256": "3d457f10ad8a9d26df4fba878b572ec540046f940637d547b902f53eecff8021",
+      "source": "build/train045-focused-policy-v1/runner-recovery/bootstrap_smoke.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery/common.py",
+      "bytes": 4192,
+      "sha256": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+      "source": "build/train045-focused-policy-v1/runner-recovery/common.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery/compact_output.py",
+      "bytes": 1617,
+      "sha256": "efbed8f076822e77575f6f74a180851363c920c71b36c4bae118e5f4767317c9",
+      "source": "build/train045-focused-policy-v1/runner-recovery/compact_output.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery/comparison.py",
+      "bytes": 3874,
+      "sha256": "d33b5eff014fb0c125ad1bc45fe33bf61918c0dc35a1697307278931c3b10bdb",
+      "source": "build/train045-focused-policy-v1/runner-recovery/comparison.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery/config.json",
+      "bytes": 2450,
+      "sha256": "c9de06cc1f6c5bc2f956759f50bb700be0d0aa59531ba58460af90652dd4fd68",
+      "source": "build/train045-focused-policy-v1/runner-recovery/config.json"
+    },
+    {
+      "archive": "snapshot/runner-recovery/freeze_sources.py",
+      "bytes": 2972,
+      "sha256": "7fc532b65f323e4ca9d762a4ca8b2439a0abfeded61b3a3cfe3596cd51a30a6a",
+      "source": "build/train045-focused-policy-v1/runner-recovery/freeze_sources.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery/frontier_protocol.py",
+      "bytes": 9949,
+      "sha256": "0dfd28ea76cffeb519119379692ded8f970b2f2eddeffda6de5cb54b71f311aa",
+      "source": "build/train045-focused-policy-v1/runner-recovery/frontier_protocol.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery/inputs.py",
+      "bytes": 10187,
+      "sha256": "9986e7fdd80e5737c3813b9ff5e9961d28512892904a495b141b9a17d2c9f07a",
+      "source": "build/train045-focused-policy-v1/runner-recovery/inputs.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery/recovery_parity.py",
+      "bytes": 3319,
+      "sha256": "22723526039ed921bbd423ef9666d03d418e75e0a8df39fc97c1910b6c8bb650",
+      "source": "build/train045-focused-policy-v1/runner-recovery/recovery_parity.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery/run_owned.py",
+      "bytes": 10362,
+      "sha256": "7b52b0707e5fe49fad6f417b0d7cce7575baa851a081b7c8b824563b7f9e65de",
+      "source": "build/train045-focused-policy-v1/runner-recovery/run_owned.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery/source-index.json",
+      "bytes": 23588,
+      "sha256": "adb6d91cb2106f957c085fee7c6b438fc095510f63c903dc9c9d0b8f48677b40",
+      "source": "build/train045-focused-policy-v1/runner-recovery/source-index.json"
+    },
+    {
+      "archive": "snapshot/runner-recovery/test_compact_output.py",
+      "bytes": 7294,
+      "sha256": "bd3bdc2692411a6308473befe8a9a9c5834fc6c1a344c90edb1602f6fad46a79",
+      "source": "build/train045-focused-policy-v1/runner-recovery/test_compact_output.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery/test_recovery_parity.py",
+      "bytes": 3107,
+      "sha256": "ec0102543fbb6e84c72fb65082c4acd68d39909da4eb716bc5f4eb9b5516823d",
+      "source": "build/train045-focused-policy-v1/runner-recovery/test_recovery_parity.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery/test_worker.py",
+      "bytes": 7180,
+      "sha256": "54d981aba672d00b776fc1e07406008cea473af0dd11bace3967b15253a73101",
+      "source": "build/train045-focused-policy-v1/runner-recovery/test_worker.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery/worker.py",
+      "bytes": 26298,
+      "sha256": "ecd82395f5937ebb55bf471a7c3c16f54e455509119e80a6c1c9f5fcb17ca451",
+      "source": "build/train045-focused-policy-v1/runner-recovery/worker.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/bootstrap_smoke.py",
+      "bytes": 3911,
+      "sha256": "3d457f10ad8a9d26df4fba878b572ec540046f940637d547b902f53eecff8021",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/bootstrap_smoke.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/common.py",
+      "bytes": 4192,
+      "sha256": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/common.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/compact_output.py",
+      "bytes": 1617,
+      "sha256": "efbed8f076822e77575f6f74a180851363c920c71b36c4bae118e5f4767317c9",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/compact_output.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/comparison.py",
+      "bytes": 4246,
+      "sha256": "0484e0f514797fc36a09e46b19dac8eaf91241679fab55a172530bd237ffaa98",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/comparison.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/config.json",
+      "bytes": 2595,
+      "sha256": "b52798bc77d4d70ff40af7960f7a9baca9de86e6107ac862cfab7069d8a5adb7",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/config.json"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/freeze_sources.py",
+      "bytes": 3213,
+      "sha256": "4a9657c320695b962ee3843578d63e0bbb13619d078046ed4b7d50464f6aa5d9",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/freeze_sources.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/frontier_protocol.py",
+      "bytes": 9949,
+      "sha256": "0dfd28ea76cffeb519119379692ded8f970b2f2eddeffda6de5cb54b71f311aa",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/frontier_protocol.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/inputs.py",
+      "bytes": 12950,
+      "sha256": "e643ed0661f89ab8866b3b325e120366efc637329f6e4675f8d1c30a858986f3",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/inputs.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/plan_transport.py",
+      "bytes": 2231,
+      "sha256": "1d0f16d137944c1f21f0e950e126d677727ff47d4d6d1c70a2a5eb9bb976b3c1",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/plan_transport.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/recovery_parity.py",
+      "bytes": 3404,
+      "sha256": "8879f775f3c3ce07e616b74ff63750d5873ea34caa4e3ec9961bd48572345f4c",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/recovery_parity.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/run_owned.py",
+      "bytes": 10543,
+      "sha256": "8615f3f714b91b33b86fa29a9f457f71fa074cabe2eb4b78bdcc1cb7de864755",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/run_owned.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/source-index.json",
+      "bytes": 24277,
+      "sha256": "9112bf00953b168bf36ba409538dcbb10a0ac018272e4d65af921a8f09c342a6",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/source-index.json"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/test_compact_output.py",
+      "bytes": 7294,
+      "sha256": "bd3bdc2692411a6308473befe8a9a9c5834fc6c1a344c90edb1602f6fad46a79",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/test_compact_output.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/test_recovery_parity.py",
+      "bytes": 3107,
+      "sha256": "ec0102543fbb6e84c72fb65082c4acd68d39909da4eb716bc5f4eb9b5516823d",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/test_recovery_parity.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/test_success_transport.py",
+      "bytes": 6467,
+      "sha256": "81ae08c5191bf2af400afef88c65f92407301b696356189005961b4f30eb33ec",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/test_success_transport.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/test_worker.py",
+      "bytes": 7450,
+      "sha256": "5ec6e82e12cd5d07940e9cd0ecabf91f2475bf33f51d92ae45cb3b5133a4238f",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/test_worker.py"
+    },
+    {
+      "archive": "snapshot/runner-recovery2/worker.py",
+      "bytes": 25850,
+      "sha256": "12b6ea65e253b2aec620be56d12dd90cc29275ad1838f4898329168eb0d8fb0d",
+      "source": "build/train045-focused-policy-v1/runner-recovery2/worker.py"
+    },
+    {
+      "archive": "snapshot/independent-result2/audit_failure_latest.py",
+      "bytes": 20792,
+      "sha256": "af5066bd0525344fdf688df7011ba4e0bf4802dc1aa1450e390e4d7109203ae4",
+      "source": "build/train045-focused-policy-v1/independent-result2/audit_failure_latest.py"
+    },
+    {
+      "archive": "snapshot/independent-result2/audit_failure_corrected.py",
+      "bytes": 23976,
+      "sha256": "d5fa4197cd66f8d70a17ae2d5642bd9cdead7c616543a5627d5e4dc3f7f82492",
+      "source": "build/train045-focused-policy-v1/independent-result2/audit_failure_corrected.py"
+    },
+    {
+      "archive": "snapshot/independent-result2/failure-audit-03.json",
+      "bytes": 3264,
+      "sha256": "9b94e3e40b868118abebe7ba2370ac04481a2ab524d458db048eeffb49f86c72",
+      "source": "build/train045-focused-policy-v1/independent-result2/failure-audit-03.json"
+    },
+    {
+      "archive": "snapshot/independent-result2/failure-audit-03-corrected.json",
+      "bytes": 29311,
+      "sha256": "f23479ad80689b6e87bee333ebcfef8c4613d311137cde8b5f6bed9781f84a8f",
+      "source": "build/train045-focused-policy-v1/independent-result2/failure-audit-03-corrected.json"
+    },
+    {
+      "archive": "snapshot/independent-result2/REPORT.txt",
+      "bytes": 2698,
+      "sha256": "7de8ff049e1eafad9045f8b721287a3f1ee7dd4a0a4577131cb79f39afad5281",
+      "source": "build/train045-focused-policy-v1/independent-result2/REPORT.txt"
+    },
+    {
+      "archive": "snapshot/terminal-storage.json",
+      "bytes": 1759,
+      "sha256": "669069278a0faef6bfe7582a769df605955ab2a85d9996433853a3d35074bade",
+      "source": "build/train045-focused-policy-v1/terminal-storage.json"
+    }
+  ],
+  "independent_saved_failure_audit": {
+    "checks": 6978,
+    "limitations": "Scalar and identity-chain checks only; no fresh independent route replay.",
+    "receipt": "snapshot/independent-result2/failure-audit-03-corrected.json",
+    "sha256": "f23479ad80689b6e87bee333ebcfef8c4613d311137cde8b5f6bed9781f84a8f",
+    "status": "PASS_saved_failure_evidence"
+  },
+  "omitted_bulk_evidence": [
+    {
+      "bytes": 345451,
+      "reason": "Bulk generated evidence stays local",
+      "sha256": "6de8657511d2e8500266995bc5e1fc861112b6064a99a9adff790fcd843bcd93",
+      "source": "build/train045-focused-policy-v1/recovery-01/first-failure-sidecars.json.gz"
+    },
+    {
+      "bytes": 1428231,
+      "decompressed_bytes": 12084814,
+      "decompressed_sha256": "2b763ead9b18bb4e6ea6373cf837911e2905bd1dc7cf0cd41e5d0834dc96c35e",
+      "reason": "Bulk generated evidence stays local",
+      "sha256": "9aead92c02d90448e0ba3a8da2918974b7ef584944d9a2e1aa4d24aba173503a",
+      "source": "build/train045-focused-policy-v1/recovery-02/GREEDY-selection.json.gz"
+    },
+    {
+      "bytes": 1301965,
+      "decompressed_bytes": 11021982,
+      "decompressed_sha256": "8d477c591731e4fca21c8558a3a9753160b1f84f14efc7216fefae0b8867f52a",
+      "reason": "Bulk generated evidence stays local",
+      "sha256": "8e6025431ef45615a3c9eaf91351157951d00e35a9bb380536793964a97d6f61",
+      "source": "build/train045-focused-policy-v1/recovery-02/TAIL-partial-selection.json.gz"
+    },
+    {
+      "bytes": 621394,
+      "reason": "Bulk generated evidence stays local",
+      "sha256": "addcbb7a9141e2d039c88677236378ea041dd49fe833dd0655948edac9040a9f",
+      "source": "build/train045-focused-policy-v1/recovery-02/first-failure-sidecars.json.gz"
+    },
+    {
+      "bytes": 191462,
+      "reason": "Complete generated native inventory retained locally; compact summary and pins suffice in Git.",
+      "sha256": "c3192b997a7c590f7b8d82a9a9b1f1258f68051dbb0343485bcd34b6606324c8",
+      "source": "build/train045-focused-policy-v1/recovery-01/original-frontier-reference.json"
+    },
+    {
+      "bytes": 191462,
+      "reason": "Complete generated native inventory retained locally; compact summary and pins suffice in Git.",
+      "sha256": "c3192b997a7c590f7b8d82a9a9b1f1258f68051dbb0343485bcd34b6606324c8",
+      "source": "build/train045-focused-policy-v1/recovery-02/original-frontier-reference.json"
+    }
+  ],
+  "original_git_head": "4ccb6adb2bd448f56fd46bac6dc8cb4ad9e30048",
+  "schema": "focused-policy-recovery-archive-v1",
+  "storage": {
+    "caveat": "Before final documentation and Git writes; global ceiling10GiB/free reserve50GiB unchanged.",
+    "extension_growth_bytes": 1817538560,
+    "free_bytes": 350382301184,
+    "measured_at_utc": "2026-10-12T13:42:05.794563+00:00",
+    "stage_allocated_bytes": 7467008,
+    "stage_closed": true,
+    "stage_reserved_bytes": 8388608
+  },
+  "weights_and_patient_arrays_copied": false
+}

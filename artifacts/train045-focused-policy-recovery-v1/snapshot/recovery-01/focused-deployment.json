@@ -1,0 +1,187 @@
+{
+  "record": {
+    "authority": {
+      "capability_serialized": false,
+      "same_canonical_capability": true,
+      "same_prepared_object": true
+    },
+    "candidate_limit": 153,
+    "controller": "initial_none_then_first_current_goal_overlap_active_first_v1",
+    "feature_change": false,
+    "focused_native_model": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+    "focused_proposals": {
+      "intermediate_opening_mm": 1.0,
+      "max_candidates": 120,
+      "nominal_min_membership": 0.0,
+      "obstruction_opening": true,
+      "obstruction_page_size": 8,
+      "obstruction_selection_rule": "target_ray_coverage_v3",
+      "offsets_source_voxels": [
+        [
+          0,
+          0
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          -2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          -2,
+          -2
+        ],
+        [
+          -2,
+          2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          -3,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          -3
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "tool_footprint_opening": true
+    },
+    "focused_source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+    "focused_task_model": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+    "frontier": {
+      "action_packets_hash": "sha256:c2da1317f91a2b7de2ddf2a70f6b096ce65adb77973a8f7ace9721e1abe10476",
+      "committed_masks": {
+        "connected_free_mask": "sha256:549d6caf3ced71fa6ce97ac1406db3ac2ccb0403fbfeebb218ec001d297af4d5",
+        "contact_mask": "sha256:214e348cdd8a2c724ba8b71d7a64826c7c896a0bfd673f22f18ed946140c8978",
+        "probe_contact_mask": "sha256:cc702a22efcd1e9751028568c5dee1ea538859fc7b0e23f674f907e7eb09870b",
+        "remaining_mask": "sha256:9bf262803d492ad07028d0f24efb7d09b58a26bec11d71297adbdf9a6c4aadc3",
+        "removed_mask": "sha256:b37a3c699c1f475661011392d409651c6e14384b214cb2d592cb8a5897cdecee"
+      },
+      "current_tool": "generic_suction",
+      "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+      "native_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+      "native_state_hash": "sha256:1310923ff4b5b1384ae97f63f653b435595b32dec120fda6451b1095d63f17cf",
+      "nominal_history_hash": "sha256:03f14e90a6c99e98f7b869dc7c16ff93867bf4ed08f36a474fe61cbfa71dbf79",
+      "schema": "authenticated-focused-fixed-prefix-v1",
+      "seal": "sha256:a1eb3154c97f0f6cbe2e5de82940e050b00f8a5ee45631d57fcfcf31198ec4e3",
+      "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+      "steps": 12,
+      "total_reward": 48.09085666918073
+    },
+    "full_actor_catalog": "STOP_then_base_once_then_page_extras",
+    "original_context_hash": "sha256:5f35a9e54c7dd4c0d2475019bd5d4aafa3f0d2e32b8402c25f820b729151b1c5",
+    "original_proposals": {
+      "intermediate_opening_mm": 1.0,
+      "max_candidates": 120,
+      "nominal_min_membership": 0.0,
+      "offsets_source_voxels": [
+        [
+          0,
+          0
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          -2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          -2,
+          -2
+        ],
+        [
+          -2,
+          2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          -3,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          -3
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "tool_footprint_opening": true
+    },
+    "physical_prefix_hash": "sha256:d25d221d6915c9e74b735fcbd5c261eb5861dff31112071a858f0bc44c9e7bb4",
+    "physical_source_hash": "sha256:ede7675b3954e17692e5529e267ad1b1f903e3911af36473c624c7daab7a86a0",
+    "prefix_length": 12,
+    "prefix_packets_hash": "sha256:c2da1317f91a2b7de2ddf2a70f6b096ce65adb77973a8f7ace9721e1abe10476",
+    "private_reference_input": false,
+    "reward": {
+      "action_cost": 0.03,
+      "graph_edge_cost": 0.0,
+      "language_per_mm3": 0.0,
+      "motion_per_mm": 0.001,
+      "motor_per_mm3": 0.0,
+      "normal_per_mm3": 0.2,
+      "target_per_mm3": 1.0,
+      "tool_change_cost": 0.03
+    },
+    "scope": "inference_only_new_focused_action_catalog",
+    "trained_world": {
+      "decision_model_hash": "sha256:610543a13a972b05ddbec5044e3390aa6d2f4d2d3c3bb833f52bed9cea751ac0",
+      "max_steps": 24,
+      "observation_track": "annotation_assisted",
+      "public_observation_binding": "sha256:688ce48052ea031c8a5e7cd148754103650ec94e4f21482005d307b91ae40c0f",
+      "source_hash": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938",
+      "subject": "ReMIND-045"
+    },
+    "training_updates": 0,
+    "version": "TRAIN045-focused-full-catalog-frozen-policy-v1"
+  },
+  "seal": "sha256:88d860fcedec298031e9c82c1e480d6805bbd54ce3bb9f9ec07339cc2f118758"
+}

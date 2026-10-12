@@ -1,0 +1,29 @@
+--- build/train045-focused-policy-v1/model/focused_policy.py
++++ build/train045-focused-policy-v1/model-recovery/focused_policy.py
+@@ -66,7 +66,7 @@
+                 or task.case.reference_target is not task.case.nominal_target
+                 or task.max_steps != 24 or task.tool_modes is not None
+                 or not self.record['prefix_length'] <= task._steps <= 24
+-                or semantic_digest(task.metrics()['history'][:self.record['prefix_length']]) != self._prefix_hash):
++                or semantic_digest(task._history[:self.record['prefix_length']]) != self._prefix_hash):
+             raise ValueError('Focused current source/world/prefix changed')
+         return task
+ 
+@@ -169,8 +169,16 @@
+                 or not np.all(self.observation.action_mask)
+                 or float(self.observation.state_features[1]) != 24):
+             raise ValueError('Union public observation/source/mask changed')
++        # The frozen task seal authenticates _history. Validate each distinct
++        # page context once; all packet/certificate/nominal-score checks below
++        # still run for every candidate, including duplicate base ownership.
++        checked = {id(self.work)}
++        for page in self.pages:
++            if id(page) not in checked:
++                self.context.require_task(page)
++                checked.add(id(page))
+         for i, (identifier, owner) in enumerate(zip(self.identifiers, self.owners)):
+-            page = self.pages[owner]; self.context.require_task(page)
++            page = self.pages[owner]
+             _same(page.export_action(identifier), self.packets[i], 'current packet/page ownership')
+             if identifier != 'STOP':
+                 _, geometry = _certificate(page, identifier)

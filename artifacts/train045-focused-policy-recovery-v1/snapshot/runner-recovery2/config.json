@@ -1,0 +1,51 @@
+{
+  "base_candidate_cap": 120,
+  "baseline_canonical_head": "ec9a9f3",
+  "caps": {
+    "frozen_policy_forwards": 24,
+    "log_bytes": 65536,
+    "native_previews": 18000,
+    "native_transitions": 100,
+    "output_bytes": 4194304,
+    "parent_wall_seconds": 390,
+    "unique_sidecars": 4096,
+    "whole_build_bytes": 8388608,
+    "work_seconds": 360,
+    "worker_peak_rss_bytes": 3221225472
+  },
+  "dependency_diagnostics_per_state": 0,
+  "extra_pairs": 32,
+  "goal_diagnostics_per_state": 120,
+  "max_steps": 24,
+  "methods": [
+    "GREEDY",
+    "TAIL"
+  ],
+  "obstruction_cells": 16,
+  "output_directory": "build/train045-focused-policy-v1/recovery-02",
+  "page_size": 8,
+  "planner_seconds": 120,
+  "prefix_nonstop_actions": 12,
+  "ranking": "Actual immediate nominal reward must be strictly positive. GREEDY maximizes it. TAIL maximizes reward+max(0,predicted raw tail). Stable first appearance in identical page union. STOP iff no actual-positive candidate.",
+  "recovery": {
+    "caps_and_scientific_rule_unchanged": true,
+    "change": "Same authenticated policy/catalog with cheaper repeated integrity checks only",
+    "prior_failed_attempt": "build/train045-focused-policy-v1/run-01",
+    "prior_partial_trace_role": "Post-plan evaluator-only exact deterministic parity; never actor input",
+    "required_greedy_prefix_parity": 11,
+    "transport_correction": "Freeze/thaw JSON transport only; persist completed rollout before validation; both prior failed attempts retained"
+  },
+  "schema": "train045-same-focused-catalog-frozen-tail-comparison-v1",
+  "scope": "One fixed original TRAIN04512-motion prefix; same expanded focused catalog and public focus lifecycle in both arms. Frozen TAIL inference only, no fitting or cache reconstruction; annotation-assisted simulation, no held-out or clinical claim.",
+  "serialization": {
+    "gzip_compresslevel": 6,
+    "gzip_mtime": 0,
+    "max_compressed_json_bytes": 3145728,
+    "max_decompressed_json_bytes": 33554432,
+    "selection": "full trace including native history, packets, scores, focus and all diagnostic records",
+    "sidecars": "complete exact first-failure records, no projection",
+    "version": "fixed045-lossless-gzip-v1"
+  },
+  "subject": "ReMIND-045",
+  "success": "Both complete independent endpoints with all full-tool constraints accepted; learned target cells/volume and total return nondecreasing, outside-target removal not increasing against same-catalog GREEDY; at least one target/return strict gain. Old STOP and80-cell heuristic reference only. Switching, travel and contact deltas reported separately."
+}

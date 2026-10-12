@@ -1,0 +1,75 @@
+{
+  "auditor_sha256": "af5066bd0525344fdf688df7011ba4e0bf4802dc1aa1450e390e4d7109203ae4",
+  "checked_source_count": 163,
+  "checked_sources_digest": "sha256:11b6e0987a8c3e153e82be2c04afb1fba452cb3b288501aa1d93aa6b0ebd3d5d",
+  "checks": 6942,
+  "elapsed_seconds": 0.27384858300000003,
+  "evidence_files": {
+    "build/train045-focused-policy-v1/independent/failure-audit-01.json": {
+      "bytes": 38244,
+      "sha256": "f02af1cd2731162b3bc7c27d1d683b87e6b23904b7e4fdf3c5188dbc648bf4b1"
+    },
+    "build/train045-focused-policy-v1/recovery-01/report.json": {
+      "bytes": 27881,
+      "sha256": "4179a5f960f442ee71e069c060a7e86c471b6b7fd8ca3732ae792ad5c90a2819"
+    },
+    "build/train045-focused-policy-v1/recovery-02/GREEDY-selection.json.gz": {
+      "bytes": 1428231,
+      "sha256": "9aead92c02d90448e0ba3a8da2918974b7ef584944d9a2e1aa4d24aba173503a"
+    },
+    "build/train045-focused-policy-v1/recovery-02/TAIL-partial-selection.json.gz": {
+      "bytes": 1301965,
+      "sha256": "8e6025431ef45615a3c9eaf91351157951d00e35a9bb380536793964a97d6f61"
+    },
+    "build/train045-focused-policy-v1/recovery-02/first-failure-sidecars.json.gz": {
+      "bytes": 621394,
+      "sha256": "addcbb7a9141e2d039c88677236378ea041dd49fe833dd0655948edac9040a9f"
+    },
+    "build/train045-focused-policy-v1/recovery-02/fixed-prefix.json": {
+      "bytes": 33382,
+      "sha256": "13e6d0bba664d030a60ca0ae66d59ba6d9e862b6b43a84682e2341f4b3fc0467"
+    },
+    "build/train045-focused-policy-v1/recovery-02/launcher.json": {
+      "bytes": 3873,
+      "sha256": "abad11ff2dbf4f9655b9ea11d6949017abdccfd7350996286e776bf14928284d"
+    },
+    "build/train045-focused-policy-v1/recovery-02/report.json": {
+      "bytes": 32958,
+      "sha256": "079cfc74ae0499430b9a93438a94d7f3154a7559a972a40eee71f17fb8ab1af1"
+    },
+    "build/train045-focused-policy-v1/run-01/GREEDY-partial-selection.json.gz": {
+      "bytes": 1306073,
+      "sha256": "2ff156084aeae3d8cbe84f1307bb39fb8577f44bb19c7b2000220bcba7b61c50"
+    },
+    "build/train045-focused-policy-v1/run-01/report.json": {
+      "bytes": 23490,
+      "sha256": "c31b88e88c77b8f50d262193ce2424d4abf203eb23fbab14eed63de032229038"
+    },
+    "build/train045-focused-policy-v1/runner-recovery2/config.json": {
+      "bytes": 2595,
+      "sha256": "b52798bc77d4d70ff40af7960f7a9baca9de86e6107ac862cfab7069d8a5adb7"
+    },
+    "build/train045-focused-policy-v1/runner-recovery2/source-index.json": {
+      "bytes": 24277,
+      "sha256": "9112bf00953b168bf36ba409538dcbb10a0ac018272e4d65af921a8f09c342a6"
+    },
+    "build/train045-focused-policy-v1/runner/source-index.json": {
+      "bytes": 22261,
+      "sha256": "46e709594e58de75233d1cb993efd4a3ec24f510a4c903938aac6069396dfb6a"
+    }
+  },
+  "failure": {
+    "message": "check 6942: Retained original context",
+    "type": "AssertionError"
+  },
+  "model_calls": 0,
+  "native_calls": 0,
+  "patient_payload_reads": 0,
+  "pins": {
+    "index": "9112bf00953b168bf36ba409538dcbb10a0ac018272e4d65af921a8f09c342a6",
+    "launcher": "abad11ff2dbf4f9655b9ea11d6949017abdccfd7350996286e776bf14928284d",
+    "report": "079cfc74ae0499430b9a93438a94d7f3154a7559a972a40eee71f17fb8ab1af1"
+  },
+  "schema": "focused-policy-third-failure-independent-v1",
+  "status": "FAIL_reader_or_evidence"
+}

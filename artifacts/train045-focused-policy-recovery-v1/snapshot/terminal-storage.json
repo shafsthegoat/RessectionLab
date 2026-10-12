@@ -1,0 +1,43 @@
+{
+  "evidence": [
+    {
+      "cleanup_verified": true,
+      "path": "build/train045-focused-policy-v1/run-01/launcher.json",
+      "sha256": "5dcad2ddc1f1ba893a1982d579598cf7dc18006cbb3703cd8d69e29f9bf10784",
+      "worker_exit_code": 1
+    },
+    {
+      "cleanup_verified": true,
+      "path": "build/train045-focused-policy-v1/recovery-01/launcher.json",
+      "sha256": "7113365395ec89937d7d33e26f8e77951395ef17bc60c1efc31a4a7b8f2de21e",
+      "worker_exit_code": 1
+    },
+    {
+      "cleanup_verified": true,
+      "path": "build/train045-focused-policy-v1/recovery-02/launcher.json",
+      "sha256": "abad11ff2dbf4f9655b9ea11d6949017abdccfd7350996286e776bf14928284d",
+      "worker_exit_code": 1
+    },
+    {
+      "generated_control_exit_code": 0,
+      "path": "build/train045-focused-policy-v1/controls-01/controls-01.json",
+      "sha256": "a5fdba0cdad798eee701f78a68a89e43a152bf28f41094222d8f195c36c9e0f3"
+    },
+    {
+      "generated_control_exit_code": 0,
+      "path": "build/train045-focused-policy-v1/controls-02/controls-01.json",
+      "sha256": "c86e7870c09a8235b1c9d2469bd3f3edc9d93bb96195073e6599d50c07497325"
+    },
+    {
+      "generated_control_exit_code": 0,
+      "path": "build/train045-focused-policy-v1/controls-03/controls-01.json",
+      "sha256": "aced1e77f4ead001a8ea79d158c7d539cc58d0376cc67bbaac54958daf7d6820"
+    }
+  ],
+  "independent_audit": "independent-result2/failure-audit-03-corrected.json",
+  "independent_audit_owner_reports_terminal": true,
+  "remaining_owned_pids": [],
+  "schema": "focused-policy-storage-terminal-v1",
+  "scientific_status": "All scientific attempts incomplete; saved evidence only; no new acquisition, model fitting or final paired route replay.",
+  "worker_termination_confirmed": true
+}

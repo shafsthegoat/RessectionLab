@@ -1,0 +1,42 @@
+{
+  "changes": [
+    "After unchanged task._assert_frozen, hash the exact _history prefix instead of metrics history; the latter made whole-grid reductions and copied all history.",
+    "Validate each distinct catalog page context once; preserve every packet, certificate, result digest and nominal score check."
+  ],
+  "files": {
+    "focused_policy.py": {
+      "bytes": 26624,
+      "sha256": "64da4aa41a5aeccc798005d8432ae4276fcc9b442790e2b9859dbd8d5fd4d50f"
+    },
+    "test_focused_policy.py": {
+      "bytes": 15261,
+      "sha256": "d970cbbbb780eca4b444d61bdf3ff5f9a68be41b57e0e3ae649dfcb5e44b8b64"
+    }
+  },
+  "focused_test": "test_guard_uses_sealed_history_without_metrics_once_per_page_and_checks_every_packet",
+  "original_helper_sha256": "f25ad10166fa8da871d5b4fabd23d89639b25ddab2908660f5ed3cba2640971a",
+  "original_loader_unchanged_sha256": "7c6bab940a36af3e362c15d9576ddbed8566b88b00ef07ce4e4d0f33a02353c9",
+  "preserved_failure": {
+    "forwards": 0,
+    "incomplete": true,
+    "launcher_sha256": "5dcad2ddc1f1ba893a1982d579598cf7dc18006cbb3703cd8d69e29f9bf10784",
+    "native_previews": 4733,
+    "report_sha256": "c31b88e88c77b8f50d262193ce2424d4abf203eb23fbab14eed63de032229038",
+    "transitions": 35
+  },
+  "schema": "focused-policy-guard-recovery-v1",
+  "science_unchanged": [
+    "source/world/reward",
+    "focus controller",
+    "catalog and ordering",
+    "policy/head/actor features",
+    "positive-immediate guard",
+    "horizon24 and fixed12prefix",
+    "120seconds per arm",
+    "all native and transition caps"
+  ],
+  "source_bytes": 41885,
+  "source_only": true,
+  "test_command": "python -B -m pytest -q build/train045-focused-policy-v1/model-recovery/test_focused_policy.py",
+  "tests_executed": false
+}

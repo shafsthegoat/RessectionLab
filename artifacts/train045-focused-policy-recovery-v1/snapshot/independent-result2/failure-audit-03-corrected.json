@@ -1,0 +1,819 @@
+{
+  "auditor_sha256": "d5fa4197cd66f8d70a17ae2d5642bd9cdead7c616543a5627d5e4dc3f7f82492",
+  "checked_source_count": 163,
+  "checked_sources_digest": "sha256:11b6e0987a8c3e153e82be2c04afb1fba452cb3b288501aa1d93aa6b0ebd3d5d",
+  "checks": 6978,
+  "elapsed_seconds": 0.381269917,
+  "evidence_files": {
+    "build/train045-focused-policy-v1/independent/failure-audit-01.json": {
+      "bytes": 38244,
+      "sha256": "f02af1cd2731162b3bc7c27d1d683b87e6b23904b7e4fdf3c5188dbc648bf4b1"
+    },
+    "build/train045-focused-policy-v1/recovery-01/report.json": {
+      "bytes": 27881,
+      "sha256": "4179a5f960f442ee71e069c060a7e86c471b6b7fd8ca3732ae792ad5c90a2819"
+    },
+    "build/train045-focused-policy-v1/recovery-02/GREEDY-selection.json.gz": {
+      "bytes": 1428231,
+      "sha256": "9aead92c02d90448e0ba3a8da2918974b7ef584944d9a2e1aa4d24aba173503a"
+    },
+    "build/train045-focused-policy-v1/recovery-02/ReMIND-045-context.json": {
+      "bytes": 7168,
+      "sha256": "fe4ae270a4336e8887579f11cb77242735ee583a9d5b3d00aff9110570dd0240"
+    },
+    "build/train045-focused-policy-v1/recovery-02/TAIL-partial-selection.json.gz": {
+      "bytes": 1301965,
+      "sha256": "8e6025431ef45615a3c9eaf91351157951d00e35a9bb380536793964a97d6f61"
+    },
+    "build/train045-focused-policy-v1/recovery-02/evaluation/source/admitted-public-bindings.json": {
+      "bytes": 18540,
+      "sha256": "c80e503fdf15d090eb0f8283bf0acbd8093ffaa6d278cb046f07689d670d5293"
+    },
+    "build/train045-focused-policy-v1/recovery-02/first-failure-sidecars.json.gz": {
+      "bytes": 621394,
+      "sha256": "addcbb7a9141e2d039c88677236378ea041dd49fe833dd0655948edac9040a9f"
+    },
+    "build/train045-focused-policy-v1/recovery-02/fixed-prefix.json": {
+      "bytes": 33382,
+      "sha256": "13e6d0bba664d030a60ca0ae66d59ba6d9e862b6b43a84682e2341f4b3fc0467"
+    },
+    "build/train045-focused-policy-v1/recovery-02/launcher.json": {
+      "bytes": 3873,
+      "sha256": "abad11ff2dbf4f9655b9ea11d6949017abdccfd7350996286e776bf14928284d"
+    },
+    "build/train045-focused-policy-v1/recovery-02/report.json": {
+      "bytes": 32958,
+      "sha256": "079cfc74ae0499430b9a93438a94d7f3154a7559a972a40eee71f17fb8ab1af1"
+    },
+    "build/train045-focused-policy-v1/recovery-02/world-admission.json": {
+      "bytes": 1030,
+      "sha256": "72a746010d9e8e77e6de337bbcc37f2612a3ac7e0a0add0e6dcc0535d084a924"
+    },
+    "build/train045-focused-policy-v1/run-01/GREEDY-partial-selection.json.gz": {
+      "bytes": 1306073,
+      "sha256": "2ff156084aeae3d8cbe84f1307bb39fb8577f44bb19c7b2000220bcba7b61c50"
+    },
+    "build/train045-focused-policy-v1/run-01/ReMIND-045-context.json": {
+      "bytes": 7168,
+      "sha256": "35f66df987b2da0a7e237fa229460039b2db304435be7273398e0783d63f5203"
+    },
+    "build/train045-focused-policy-v1/run-01/evaluation/source/admitted-public-bindings.json": {
+      "bytes": 18540,
+      "sha256": "77b8abd0dac28c1b5eb499755b32dbd4bfb2fe80dd7b8f170ccc6257f8da81b7"
+    },
+    "build/train045-focused-policy-v1/run-01/report.json": {
+      "bytes": 23490,
+      "sha256": "c31b88e88c77b8f50d262193ce2424d4abf203eb23fbab14eed63de032229038"
+    },
+    "build/train045-focused-policy-v1/run-01/world-admission.json": {
+      "bytes": 1030,
+      "sha256": "ab674649375deee17cd6508a769dfa3e4490d18161cf0eb6b35d001aebc051ab"
+    },
+    "build/train045-focused-policy-v1/runner-recovery2/config.json": {
+      "bytes": 2595,
+      "sha256": "b52798bc77d4d70ff40af7960f7a9baca9de86e6107ac862cfab7069d8a5adb7"
+    },
+    "build/train045-focused-policy-v1/runner-recovery2/source-index.json": {
+      "bytes": 24277,
+      "sha256": "9112bf00953b168bf36ba409538dcbb10a0ac018272e4d65af921a8f09c342a6"
+    },
+    "build/train045-focused-policy-v1/runner/source-index.json": {
+      "bytes": 22261,
+      "sha256": "46e709594e58de75233d1cb993efd4a3ec24f510a4c903938aac6069396dfb6a"
+    }
+  },
+  "findings": {
+    "cleanup": {
+      "child_reaped": true,
+      "errors": [],
+      "events": [
+        {
+          "pgid": 58762,
+          "phase": "bind",
+          "pid": 58762,
+          "start_identity": [
+            1791811700,
+            81468
+          ]
+        },
+        {
+          "direct_child_reaped": true,
+          "grace_seconds": 0.0,
+          "phase": "cleanup.pre_signal_exit",
+          "pid": 58762,
+          "start_identity": [
+            1791811700,
+            81468
+          ],
+          "wait_returncode": 1
+        },
+        {
+          "direct_child_reaped": true,
+          "grace_seconds": 0.5,
+          "phase": "cleanup.wait",
+          "pid": 58762,
+          "start_identity": [
+            1791811700,
+            81468
+          ],
+          "wait_returncode": 1
+        }
+      ],
+      "exit_code": 1,
+      "owned_root_pid": 58762,
+      "owned_root_start_identity": [
+        1791811700,
+        81468
+      ],
+      "remaining_owned_pids": [],
+      "remaining_state_unknown": false,
+      "verified": true
+    },
+    "costs": {
+      "all_three_attempts": {
+        "checkpoint_loads": 6,
+        "frozen_policy_forwards": 11,
+        "native_previews": 16703,
+        "native_transition_attempts": 117,
+        "prior_failed_attempts": 2,
+        "prior_parent_seconds": 307.07067891582847,
+        "scope": "Both failed workers plus current worker; current parent receipt separately reports supervision.",
+        "worker_seconds": 563.5748212090693
+      },
+      "all_three_parent_seconds": 565.1562069577631,
+      "current_forwards": 11,
+      "current_previews": 7120,
+      "current_transitions": 46,
+      "parent_seconds": 258.0855280419346,
+      "peak_rss_bytes": 1253769216,
+      "phase_costs": {
+        "GREEDY_suffix_planning": {
+          "complete_wall_seconds": 95.39767616684549,
+          "native_preview_entries": 2484,
+          "native_transition_calls": 12,
+          "native_transition_inclusive_seconds": 0.6501854569651186,
+          "native_transition_returned": 12,
+          "task_clone_calls": 59,
+          "task_clone_inclusive_seconds": 3.350753207458183,
+          "task_clone_returned": 59
+        },
+        "TAIL_suffix_planning": {
+          "complete_wall_seconds": 120.5091764589306,
+          "native_preview_entries": 2270,
+          "native_transition_calls": 10,
+          "native_transition_inclusive_seconds": 0.5430902079679072,
+          "native_transition_returned": 10,
+          "policy_forward_calls": 11,
+          "policy_forward_inclusive_seconds": 2.28310499782674,
+          "policy_forward_returned": 11,
+          "task_clone_calls": 53,
+          "task_clone_inclusive_seconds": 2.793234162265435,
+          "task_clone_returned": 53
+        },
+        "genuinely_execute_original_and_focused_prefix": {
+          "complete_wall_seconds": 36.69997916696593,
+          "inventory_build_or_terminal_empty_calls": 13,
+          "inventory_request_calls": 38,
+          "inventory_request_inclusive_seconds": 17.751354666426778,
+          "inventory_request_returned": 38,
+          "native_preview_entries": 2275,
+          "native_transition_calls": 24,
+          "native_transition_inclusive_seconds": 16.997600663919002,
+          "native_transition_returned": 24,
+          "task_clone_calls": 1,
+          "task_clone_inclusive_seconds": 0.0007147500291466713,
+          "task_clone_returned": 1
+        },
+        "load_saved_frozen_IL64_and_TAIL": {
+          "complete_wall_seconds": 0.007007333915680647,
+          "native_preview_entries": 0
+        },
+        "same045_source": {
+          "complete_wall_seconds": 252.61686037504114,
+          "native_preview_entries": 7029
+        },
+        "same045_source.public_reconstruction": {
+          "complete_wall_seconds": 1.771827582968399,
+          "inventory_build_or_terminal_empty_calls": 1,
+          "inventory_request_calls": 3,
+          "inventory_request_inclusive_seconds": 1.2994824575725943,
+          "inventory_request_returned": 3,
+          "native_preview_entries": 91
+        },
+        "saved_metadata_admission": {
+          "complete_wall_seconds": 0.012988542206585407,
+          "native_preview_entries": 0
+        }
+      },
+      "worker_seconds": 257.6079529579729
+    },
+    "failure": {
+      "committed": false,
+      "message": "Focused rollout time cap",
+      "phase": "TAIL_suffix_planning",
+      "type": "TimeoutError"
+    },
+    "limits": "No arrays, neural predictions, or geometry replay independently recomputed; planning histories are not accepted physical/patient outcomes. All current evidence is annotation-assisted TRAIN045 simulation.",
+    "parity_guard_defect": {
+      "all23_packets_and_histories_exact": true,
+      "cause": "Fresh root source-index changes world-admission file hash, admission protocol hash, original context hash, and derived focused context seal. Each chain validated separately; all other values exactly equal.",
+      "new_context_seal": "sha256:7a4e01594ac36648edbf74840cb5c70c04175e9c2235c0b17d61b5714c2d920a",
+      "new_original_context_hash": "sha256:60ead26d93c08d629b6d9ec04642f25298813a20f91a0a25d061b812cd4de53b",
+      "old_context_seal": "sha256:b72c3893e05ada7501fb44afab7d91ca247910ac88306cb101511a61acfdfc46",
+      "old_original_context_hash": "sha256:3327406e420b7ba4ba50028bc3af0f7c484ce3a5fee8c4aa5a125e1441b6f239",
+      "scientific_fields_exact": true,
+      "scope": "Current worker failed earlier at TAIL deadline. Its post-plan exact-context parity guard would also reject this legitimate identity change; that latent wrapper defect is not a scientific action mismatch."
+    },
+    "performance": {
+      "GREEDY_complete_plan_seconds": 95.39767616684549,
+      "TAIL_incomplete_plan_seconds": 120.5091764589306,
+      "TAIL_network_forward_inclusive_seconds": 2.28310499782674,
+      "TAIL_scored_catalog_seconds": 34.45754475216381,
+      "interpretation": "The scored-catalog interval includes integrity/certificate/feature/head work. Network time alone does not explain the deadline. Subtracting nested timers is descriptive; other guard costs are not separately isolated.",
+      "network_share_of_scored_catalog": 0.06625849329219458,
+      "scored_catalog_minus_network_seconds": 32.17443975433707
+    },
+    "planning_only": {
+      "GREEDY": {
+        "choices": [
+          {
+            "absolute_action": 13,
+            "action_id": "nominal-cavity-ae0009b1c02d5c71e80ea810",
+            "combined": 3.744466055194124,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                94.69990157020221,
+                -105.86382032298522,
+                14.253779965321273
+              ],
+              "tip_mm": [
+                92.9313932103108,
+                -102.9426596152799,
+                14.40115279403301
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": null,
+            "reward": 3.744466055194124
+          },
+          {
+            "absolute_action": 14,
+            "action_id": "nominal-cavity-74cdb1e19d94c9fe5a23900e",
+            "combined": 3.774466055194124,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                95.18088497071068,
+                -105.47665536574836,
+                12.351476140639493
+              ],
+              "tip_mm": [
+                93.41237661081928,
+                -102.55549465804305,
+                12.49884896935123
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": null,
+            "reward": 3.774466055194124
+          },
+          {
+            "absolute_action": 15,
+            "action_id": "nominal-cavity-2087ab0df92556256c3494b7",
+            "combined": 3.774466055194124,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                95.42137667096493,
+                -105.28307288712992,
+                11.400324228298603
+              ],
+              "tip_mm": [
+                93.65286831107352,
+                -102.36191217942459,
+                11.547697057010339
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": null,
+            "reward": 3.774466055194124
+          },
+          {
+            "absolute_action": 16,
+            "action_id": "nominal-cavity-d1cba1c0b59bc4c26eef7b43",
+            "combined": 3.774466055194124,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                93.09590365924029,
+                -106.80477925954294,
+                13.65671303977537
+              ],
+              "tip_mm": [
+                91.32739529934888,
+                -103.8836185518376,
+                13.804085868487107
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": null,
+            "reward": 3.774466055194124
+          },
+          {
+            "absolute_action": 17,
+            "action_id": "nominal-cavity-d4643766b9cd42dcab8e24b3",
+            "combined": 3.774466055194124,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                93.57688705974877,
+                -106.41761430230606,
+                11.75440921509359
+              ],
+              "tip_mm": [
+                91.80837869985737,
+                -103.49645359460075,
+                11.901782043805326
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": null,
+            "reward": 3.774466055194124
+          },
+          {
+            "absolute_action": 18,
+            "action_id": "nominal-cavity-274db3c6f311c4dd10857c1f",
+            "combined": 5.679863927182757,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                93.33639535949453,
+                -106.6111967809245,
+                12.705561127434477
+              ],
+              "tip_mm": [
+                91.062598896777,
+                -102.85541872816052,
+                12.89504047863528
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": null,
+            "reward": 5.679863927182757
+          },
+          {
+            "absolute_action": 19,
+            "action_id": "nominal-cavity-d21a91068e31a06a912feac0",
+            "combined": 4.726188428267392,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                93.81737876000301,
+                -106.22403182368764,
+                10.803257302752696
+              ],
+              "tip_mm": [
+                91.54358229728548,
+                -102.46825377092364,
+                10.9927366539535
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": null,
+            "reward": 4.726188428267392
+          },
+          {
+            "absolute_action": 20,
+            "action_id": "nominal-cavity-c20da8f3d2a14ecf4b4a8829",
+            "combined": 1.8671150573633926,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                92.21338084904112,
+                -107.16499076024533,
+                10.206190377206783
+              ],
+              "tip_mm": [
+                90.4448724891497,
+                -104.24383005254,
+                10.353563205918519
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": null,
+            "reward": 1.8671150573633926
+          },
+          {
+            "absolute_action": 21,
+            "action_id": "nominal-cavity-db9067c3e2e4e77b9fbc119c",
+            "combined": 1.8651619315212957,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                94.94039327045645,
+                -105.67023784436678,
+                13.302628052980378
+              ],
+              "tip_mm": [
+                92.66659680773891,
+                -101.91445979160278,
+                13.492107404181183
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": null,
+            "reward": 1.8651619315212957
+          },
+          {
+            "absolute_action": 22,
+            "action_id": "nominal-cavity-f6372660bb4b06166b811870",
+            "combined": 1.8651619315212957,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                94.37888601522972,
+                -105.94713483402721,
+                12.052942677866538
+              ],
+              "tip_mm": [
+                92.1050895525122,
+                -102.19135678126324,
+                12.242422029067342
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": null,
+            "reward": 1.8651619315212957
+          },
+          {
+            "absolute_action": 23,
+            "action_id": "nominal-cavity-a75676d82f03944d9da01201",
+            "combined": 0.884839558448027,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                96.7848828816726,
+                -104.53569642919064,
+                12.94854306618541
+              ],
+              "tip_mm": [
+                95.01637452178119,
+                -101.61453572148531,
+                13.095915894897146
+              ],
+              "tool_id": "generic_suction"
+            },
+            "raw_tail": null,
+            "reward": 0.884839558448027
+          },
+          {
+            "absolute_action": 24,
+            "action_id": "nominal-cavity-12aac9eb63c4828039720f23",
+            "combined": 0.914839558448027,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                93.65741091446701,
+                -106.52788226988253,
+                14.906398414889226
+              ],
+              "tip_mm": [
+                91.8889025545756,
+                -103.6067215621772,
+                15.053771243600963
+              ],
+              "tool_id": "generic_suction"
+            },
+            "raw_tail": null,
+            "reward": 0.914839558448027
+          }
+        ],
+        "committed_suffix": 12,
+        "independent_endpoint_replay": false,
+        "planning_complete": true,
+        "provisional_suffix_return": 36.6455006687228,
+        "provisional_total_return": 84.73635733790353,
+        "queries_from_saved_states": 2484,
+        "score_costs": null,
+        "scored_states": 12,
+        "total_steps": 24
+      },
+      "TAIL": {
+        "choices": [
+          {
+            "absolute_action": 13,
+            "action_id": "nominal-cavity-ae0009b1c02d5c71e80ea810",
+            "combined": 21.044780004779085,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                94.69990157020221,
+                -105.86382032298522,
+                14.253779965321273
+              ],
+              "tip_mm": [
+                92.9313932103108,
+                -102.9426596152799,
+                14.40115279403301
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": 17.30031394958496,
+            "reward": 3.744466055194124
+          },
+          {
+            "absolute_action": 14,
+            "action_id": "nominal-cavity-5983575d87e056b6fa4e0267",
+            "combined": 21.14143230275272,
+            "committed": true,
+            "immediate_rank": 3,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                93.01537980452206,
+                -106.69451129196649,
+                10.504723839979748
+              ],
+              "tip_mm": [
+                91.24687144463064,
+                -103.77335058426115,
+                10.652096668691485
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": 17.366966247558594,
+            "reward": 3.774466055194124
+          },
+          {
+            "absolute_action": 15,
+            "action_id": "nominal-cavity-7e1b5e844e5e1f9565486e02",
+            "combined": 21.069456594744906,
+            "committed": true,
+            "immediate_rank": 2,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                94.61937771548396,
+                -105.75355235540877,
+                11.101790765525651
+              ],
+              "tip_mm": [
+                92.85086935559255,
+                -102.83239164770345,
+                11.249163594237388
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": 17.29499053955078,
+            "reward": 3.774466055194124
+          },
+          {
+            "absolute_action": 16,
+            "action_id": "nominal-cavity-538158924ca2f830dea96e4d",
+            "combined": 22.804162022885883,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                94.94039327045645,
+                -105.67023784436678,
+                13.302628052980378
+              ],
+              "tip_mm": [
+                92.66659680773891,
+                -101.91445979160278,
+                13.492107404181183
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": 17.124298095703125,
+            "reward": 5.679863927182757
+          },
+          {
+            "absolute_action": 17,
+            "action_id": "nominal-cavity-a7d14bd6d4446525049c2728",
+            "combined": 21.08890773610233,
+            "committed": true,
+            "immediate_rank": 2,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                92.53439640401358,
+                -107.08167624920335,
+                12.407027664661529
+              ],
+              "tip_mm": [
+                90.76588804412216,
+                -104.16051554149803,
+                12.554400493373265
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": 17.314441680908203,
+            "reward": 3.774466055194124
+          },
+          {
+            "absolute_action": 18,
+            "action_id": "nominal-cavity-41f6c4c122b085df0fd096d2",
+            "combined": 22.799944875058735,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                93.33639535949453,
+                -106.6111967809245,
+                12.705561127434477
+              ],
+              "tip_mm": [
+                91.062598896777,
+                -102.85541872816052,
+                12.89504047863528
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": 17.120080947875977,
+            "reward": 5.679863927182757
+          },
+          {
+            "absolute_action": 19,
+            "action_id": "nominal-cavity-da5dcba37f06b625a78cd43d",
+            "combined": 20.13822868188911,
+            "committed": true,
+            "immediate_rank": 1,
+            "immediate_regret": 0.0,
+            "physical_action": {
+              "entry_mm": [
+                95.42137667096493,
+                -105.28307288712992,
+                11.400324228298603
+              ],
+              "tip_mm": [
+                93.65286831107352,
+                -102.36191217942459,
+                11.547697057010339
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": 17.31743812561035,
+            "reward": 2.8207905562787583
+          },
+          {
+            "absolute_action": 20,
+            "action_id": "nominal-cavity-057695fcc466fa24de793cbf",
+            "combined": 19.068103826052546,
+            "committed": true,
+            "immediate_rank": 2,
+            "immediate_regret": 0.0019531258420968367,
+            "physical_action": {
+              "entry_mm": [
+                93.81737876000301,
+                -106.22403182368764,
+                10.803257302752696
+              ],
+              "tip_mm": [
+                91.54358229728548,
+                -102.46825377092364,
+                10.9927366539535
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": 17.20294189453125,
+            "reward": 1.8651619315212957
+          },
+          {
+            "absolute_action": 21,
+            "action_id": "nominal-cavity-7f44f31376346609de80413e",
+            "combined": 19.00641254187286,
+            "committed": true,
+            "immediate_rank": 2,
+            "immediate_regret": 0.0019531258420968367,
+            "physical_action": {
+              "entry_mm": [
+                94.37888601522972,
+                -105.94713483402721,
+                12.052942677866538
+              ],
+              "tip_mm": [
+                92.1050895525122,
+                -102.19135678126324,
+                12.242422029067342
+              ],
+              "tool_id": "generic_aspirator"
+            },
+            "raw_tail": 17.141250610351562,
+            "reward": 1.8651619315212957
+          },
+          {
+            "absolute_action": 22,
+            "action_id": "nominal-cavity-a21064ff5e4c81c1bd4c577c",
+            "combined": 18.367681050147247,
+            "committed": true,
+            "immediate_rank": 4,
+            "immediate_regret": 0.9822754989153656,
+            "physical_action": {
+              "entry_mm": [
+                95.10036111599246,
+                -105.3663873981719,
+                9.19948694084387
+              ],
+              "tip_mm": [
+                93.33185275610104,
+                -102.44522669046657,
+                9.346859769555607
+              ],
+              "tool_id": "generic_suction"
+            },
+            "raw_tail": 17.48284149169922,
+            "reward": 0.884839558448027
+          },
+          {
+            "absolute_action": 23,
+            "action_id": "nominal-cavity-32e4545f9fdc28edc2151502",
+            "combined": 18.384146504248807,
+            "committed": false,
+            "immediate_rank": 2,
+            "immediate_regret": 0.9222754989153655,
+            "physical_action": {
+              "entry_mm": [
+                91.97288914878686,
+                -107.35857323886377,
+                11.157342289547673
+              ],
+              "tip_mm": [
+                90.20438078889546,
+                -104.43741253115846,
+                11.30471511825941
+              ],
+              "tool_id": "generic_suction"
+            },
+            "raw_tail": 17.46930694580078,
+            "reward": 0.914839558448027
+          }
+        ],
+        "committed_suffix": 10,
+        "independent_endpoint_replay": false,
+        "planning_complete": false,
+        "provisional_suffix_return": 33.86354605291139,
+        "provisional_total_return": 81.95440272209211,
+        "queries_from_saved_states": 2270,
+        "score_costs": {
+          "candidate_rows_scored": 272,
+          "elapsed_seconds": 34.45754475216381,
+          "feature_seconds": 2.2837213748134673,
+          "geometry_queries": 0,
+          "head_forwards_completed": 11,
+          "head_forwards_started": 11,
+          "observations_constructed": 0,
+          "policy_forwards_completed": 11,
+          "policy_forwards_started": 11,
+          "score_calls_completed": 11,
+          "score_calls_started": 11
+        },
+        "scored_states": 11,
+        "total_steps": 22
+      }
+    },
+    "retained_old11_decisions_exact": true,
+    "scientific_comparison": "INCOMPLETE; no sealed pair or fresh independent endpoints; no useful-gain verdict"
+  },
+  "model_calls": 0,
+  "native_calls": 0,
+  "patient_payload_reads": 0,
+  "pins": {
+    "index": "9112bf00953b168bf36ba409538dcbb10a0ac018272e4d65af921a8f09c342a6",
+    "launcher": "abad11ff2dbf4f9655b9ea11d6949017abdccfd7350996286e776bf14928284d",
+    "report": "079cfc74ae0499430b9a93438a94d7f3154a7559a972a40eee71f17fb8ab1af1"
+  },
+  "retained_failed_reader_receipt_sha256": "9b94e3e40b868118abebe7ba2370ac04481a2ab524d458db048eeffb49f86c72",
+  "schema": "focused-policy-third-failure-independent-v2",
+  "status": "PASS_failure_evidence"
+}

@@ -1,0 +1,41 @@
+Saved recovery-02 failure audit: PASS 6,978 checks in 0.3813 s.
+This accepts the saved failure evidence, not a scientific comparison.
+
+GREEDY completed a 24-motion planning history: 12 fixed prefix + 12 suffix,
+planned total return 84.7363573379 (suffix 36.6455006687), 95.397676 s.
+TAIL hit its 120 s inner cap after 10 committed suffix motions; it completed
+11 catalog scores, including one selected but uncommitted final action.
+Its 22-motion provisional return was 81.9544027221. Neither complete pair
+sealing nor final authoritative replay occurred. No useful-gain verdict exists.
+
+All candidate scalar rankings, actual-positive guards, current page ownership,
+sidecar fingerprints, and committed packet/reward joins checked. The old
+23 packets and complete native histories, and all 11 old decision records,
+match exactly. A latent post-plan parity-check defect was discovered: the fresh
+root source release changes world-admission bytes, then protocol/context hashes
+and the derived focused context seal. Each complete chain was independently
+joined to its OWN saved release; all other fields remain exactly equal. The
+current scientific worker failed earlier, at the TAIL deadline. The first
+reader and its failed receipt are retained; only this release-identity join was
+corrected in a separate reader. No action/history tolerance was introduced.
+
+TAIL catalog scoring took 34.457545 s; network forwards took 2.283105 s (6.63%
+of that nested interval). The 32.174440 s difference includes feature/head and
+integrity/certificate work; exact guard sub-costs were not isolated. The saved
+timing supports reducing repeated wrapper work, not blaming network inference.
+TAIL committed immediate regrets: actions20/21 each0.001953126, action22
+0.982275499; the final uncommitted choice's regret0.922275499 earned no return.
+
+Current: 7,120 previews, 46 transitions, 11 policy forwards, 257.607953 s worker,
+258.085528 s parent, 1,253,769,216 B sampled peak. Clean verified exit1/reaping,
+no survivors/errors. All three attempts: 16,703 previews, 117 transitions,
+11 forwards, 6 checkpoint loads; parent total565.156207 s. Both earlier negative
+attempts remain retained. No fitting, cache decoding, native replay, model
+execution, or patient payload read occurred in this audit.
+
+Artifacts in this directory:
+- audit_failure_latest.py: original reader that detected the parity issue.
+- failure-audit-03.json: retained original failed reader receipt.
+- audit_failure_corrected.py: independently authenticated release-identity join.
+- failure-audit-03-corrected.json: full compact PASS evidence and scalar findings.
+Full traces remain local, hash-pinned by the receipts; do not duplicate them here.
