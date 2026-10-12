@@ -1,0 +1,26 @@
+{
+  "schema": "focused-policy-independent-generated-controls-v1",
+  "status": "source_ready_unrun",
+  "files": {
+    "scalar_oracles.py": "f7c4ce700b44816d9c61708dc7cf0d8b852c6055e8a5f45801578d869d063af6",
+    "test_scalar_oracles.py": "9e09fdb5c81a92fd70ac50bbd5426694079fdecd005272a5cbfebe2a12ca607d",
+    "test_adapter_boundary.py": "81f5c7263b0ffa975a16bb7e26c7516b85aae9ab593b6168eca925aaaf77a4a9"
+  },
+  "reviewed_model": {
+    "focused_policy.py": "f25ad10166fa8da871d5b4fabd23d89639b25ddab2908660f5ed3cba2640971a",
+    "saved_tail.py": "7c6bab940a36af3e362c15d9576ddbed8566b88b00ef07ce4e4d0f33a02353c9",
+    "test_focused_policy.py": "61ca103e3616cc96879b3a9ea4b811bfd1bafd07710c037435e6bd48ad761504"
+  },
+  "test_count": 5,
+  "command_suffix": "-m pytest -q build/train045-focused-policy-v1/independent/test_scalar_oracles.py build/train045-focused-policy-v1/independent/test_adapter_boundary.py",
+  "execution_owner": "root_combined_60s_one_thread_generated_suite",
+  "checks": [
+    "Exhaustive positive-reward scalar selection, immediate reward once, tail clamp and stable ties",
+    "Repeated base rows once, first-appearance ordering and exact extra-page packet ownership",
+    "Real replayed-prefix fixture: exact page-versus-union actor-input row parity",
+    "Changed evaluator reference is removed through canonical nominal clone before admission; public catalog, scores, packets and frozen predictions unchanged",
+    "Legacy world/observation admission remains closed; new wrapper never mutates trained worlds"
+  ],
+  "source_review": "No remaining material blocker found after worker passes genuinely executed auth instead of base and loader compares externally pinned manifest headers while preserving exact archive/tensor hashes. Incomplete adapter accounting now saved for actual exception types. Original guards, actor feature path, nominal reward scope and owning-page commit remain intact.",
+  "limitations": "Generated controls are not patient outcome evidence. No tests, model loads, native execution or acquired payload reads were performed by this review lane. Actual frozen model transfer and matched useful gate remain to be measured."
+}

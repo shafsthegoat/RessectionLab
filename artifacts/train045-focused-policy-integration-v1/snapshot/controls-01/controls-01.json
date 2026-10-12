@@ -1,0 +1,113 @@
+{
+  "accepted": true,
+  "caps": {
+    "group_rss_bytes": 1073741824,
+    "output_bytes": 1048576,
+    "seconds": 60,
+    "threads": 1
+  },
+  "cleanup": {
+    "child_reaped": true,
+    "errors": [],
+    "events": [
+      {
+        "pgid": 57678,
+        "phase": "bind",
+        "pid": 57678,
+        "start_identity": [
+          1791779186,
+          957228
+        ]
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0,
+        "phase": "cleanup.pre_signal_exit",
+        "pid": 57678,
+        "start_identity": [
+          1791779186,
+          957228
+        ],
+        "wait_returncode": 0
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.5,
+        "phase": "cleanup.wait",
+        "pid": 57678,
+        "start_identity": [
+          1791779186,
+          957228
+        ],
+        "wait_returncode": 0
+      }
+    ],
+    "exit_code": 0,
+    "owned_root_pid": 57678,
+    "owned_root_start_identity": [
+      1791779186,
+      957228
+    ],
+    "remaining_owned_pids": [],
+    "remaining_state_unknown": false,
+    "verified": true
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-policy-v1/controls-01/absent-controls-01-cache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-policy-v1/controls-01/control_bootstrap.py"
+  ],
+  "failure": null,
+  "log_bytes": 99,
+  "log_sha256": "d3def2d1dd3caed0385621db76a5c830b39f28701f58b94c8598d35957912632",
+  "peak_group_rss_bytes": 495878144,
+  "returncode": 0,
+  "scope": "generated-only, no acquired payload or saved weights",
+  "source_after": {
+    "build/train045-focused-policy-v1/controls-01/control_bootstrap.py": "5f5d9144acc824b8d5af6e8f2520f7dbca98064f2a192be155d3d0c7fc4260e5",
+    "build/train045-focused-policy-v1/controls-01/run_controls.py": "cbfe3967b197ecd745b5a1115a94c9b4ac6bb0f7851a1e081472e80ed9790ee7",
+    "build/train045-focused-policy-v1/independent/scalar_oracles.py": "f7c4ce700b44816d9c61708dc7cf0d8b852c6055e8a5f45801578d869d063af6",
+    "build/train045-focused-policy-v1/independent/test_adapter_boundary.py": "81f5c7263b0ffa975a16bb7e26c7516b85aae9ab593b6168eca925aaaf77a4a9",
+    "build/train045-focused-policy-v1/independent/test_scalar_oracles.py": "9e09fdb5c81a92fd70ac50bbd5426694079fdecd005272a5cbfebe2a12ca607d",
+    "build/train045-focused-policy-v1/model/focused_policy.py": "f25ad10166fa8da871d5b4fabd23d89639b25ddab2908660f5ed3cba2640971a",
+    "build/train045-focused-policy-v1/model/saved_tail.py": "7c6bab940a36af3e362c15d9576ddbed8566b88b00ef07ce4e4d0f33a02353c9",
+    "build/train045-focused-policy-v1/model/test_focused_policy.py": "61ca103e3616cc96879b3a9ea4b811bfd1bafd07710c037435e6bd48ad761504",
+    "build/train045-focused-policy-v1/runner/bootstrap_smoke.py": "b14c084c3f0a9c343bdda1daad857bffe2535baac360bdd31f0026a81ab60527",
+    "build/train045-focused-policy-v1/runner/common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+    "build/train045-focused-policy-v1/runner/compact_output.py": "5005b61f346695e9c053e375cb84d4539f03b13b930bf7e3421f3bba4624ee70",
+    "build/train045-focused-policy-v1/runner/comparison.py": "d33b5eff014fb0c125ad1bc45fe33bf61918c0dc35a1697307278931c3b10bdb",
+    "build/train045-focused-policy-v1/runner/freeze_sources.py": "f8b82c1988bed17655f04c1878811d21968b011e35e1382be5d6a4a1c2b42951",
+    "build/train045-focused-policy-v1/runner/frontier_protocol.py": "0dfd28ea76cffeb519119379692ded8f970b2f2eddeffda6de5cb54b71f311aa",
+    "build/train045-focused-policy-v1/runner/inputs.py": "f6af1bd1eba765b565574e7683adc64b0855d0d01c9088aca254d546ed092be4",
+    "build/train045-focused-policy-v1/runner/run_owned.py": "604c056952c2e4033ebd148b49c8489e52a615eb052f2a820cccc6921659c7a1",
+    "build/train045-focused-policy-v1/runner/test_compact_output.py": "bd3bdc2692411a6308473befe8a9a9c5834fc6c1a344c90edb1602f6fad46a79",
+    "build/train045-focused-policy-v1/runner/test_worker.py": "081c1dff9fdb6e8d0c4ce9b8e1d5b25e2963ea8f06d9c3740754d045fffeb00b",
+    "build/train045-focused-policy-v1/runner/worker.py": "de718ea16639cf4ac9b3c1908a468d24445e5c0a27ce9afc70c4dafeb8f301b5"
+  },
+  "source_before": {
+    "build/train045-focused-policy-v1/controls-01/control_bootstrap.py": "5f5d9144acc824b8d5af6e8f2520f7dbca98064f2a192be155d3d0c7fc4260e5",
+    "build/train045-focused-policy-v1/controls-01/run_controls.py": "cbfe3967b197ecd745b5a1115a94c9b4ac6bb0f7851a1e081472e80ed9790ee7",
+    "build/train045-focused-policy-v1/independent/scalar_oracles.py": "f7c4ce700b44816d9c61708dc7cf0d8b852c6055e8a5f45801578d869d063af6",
+    "build/train045-focused-policy-v1/independent/test_adapter_boundary.py": "81f5c7263b0ffa975a16bb7e26c7516b85aae9ab593b6168eca925aaaf77a4a9",
+    "build/train045-focused-policy-v1/independent/test_scalar_oracles.py": "9e09fdb5c81a92fd70ac50bbd5426694079fdecd005272a5cbfebe2a12ca607d",
+    "build/train045-focused-policy-v1/model/focused_policy.py": "f25ad10166fa8da871d5b4fabd23d89639b25ddab2908660f5ed3cba2640971a",
+    "build/train045-focused-policy-v1/model/saved_tail.py": "7c6bab940a36af3e362c15d9576ddbed8566b88b00ef07ce4e4d0f33a02353c9",
+    "build/train045-focused-policy-v1/model/test_focused_policy.py": "61ca103e3616cc96879b3a9ea4b811bfd1bafd07710c037435e6bd48ad761504",
+    "build/train045-focused-policy-v1/runner/bootstrap_smoke.py": "b14c084c3f0a9c343bdda1daad857bffe2535baac360bdd31f0026a81ab60527",
+    "build/train045-focused-policy-v1/runner/common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+    "build/train045-focused-policy-v1/runner/compact_output.py": "5005b61f346695e9c053e375cb84d4539f03b13b930bf7e3421f3bba4624ee70",
+    "build/train045-focused-policy-v1/runner/comparison.py": "d33b5eff014fb0c125ad1bc45fe33bf61918c0dc35a1697307278931c3b10bdb",
+    "build/train045-focused-policy-v1/runner/freeze_sources.py": "f8b82c1988bed17655f04c1878811d21968b011e35e1382be5d6a4a1c2b42951",
+    "build/train045-focused-policy-v1/runner/frontier_protocol.py": "0dfd28ea76cffeb519119379692ded8f970b2f2eddeffda6de5cb54b71f311aa",
+    "build/train045-focused-policy-v1/runner/inputs.py": "f6af1bd1eba765b565574e7683adc64b0855d0d01c9088aca254d546ed092be4",
+    "build/train045-focused-policy-v1/runner/run_owned.py": "604c056952c2e4033ebd148b49c8489e52a615eb052f2a820cccc6921659c7a1",
+    "build/train045-focused-policy-v1/runner/test_compact_output.py": "bd3bdc2692411a6308473befe8a9a9c5834fc6c1a344c90edb1602f6fad46a79",
+    "build/train045-focused-policy-v1/runner/test_worker.py": "081c1dff9fdb6e8d0c4ce9b8e1d5b25e2963ea8f06d9c3740754d045fffeb00b",
+    "build/train045-focused-policy-v1/runner/worker.py": "de718ea16639cf4ac9b3c1908a468d24445e5c0a27ce9afc70c4dafeb8f301b5"
+  },
+  "source_unchanged": true,
+  "wall_seconds": 8.276877959026024
+}

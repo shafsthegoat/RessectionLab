@@ -1,0 +1,40 @@
+{
+  "apis": [
+    "saved_tail.load_saved_tail(policy, raw_checkpoint_bytes, *, expected_sha256, expected_manifest, tail_report, expected_report_hash, worlds, expected_worlds_hash, max_scores=24, seconds=600, cancelled=None)",
+    "focused_policy.admit_focused_context(original_task, original_context, focused_prefix_task, prefix_packets, frontier, expected_prefix_actions=12)",
+    "focused_policy.FrozenFocusedTail(fitted_tail, focused_context, max_scores=12, seconds=240, cancelled=None)",
+    "focused_policy.rollout(task, context, prefix_packets, frontier, method, scorer=None, seconds=120, cancelled=None, progress=None)"
+  ],
+  "files": {
+    "focused_policy.py": {
+      "bytes": 26243,
+      "sha256": "f25ad10166fa8da871d5b4fabd23d89639b25ddab2908660f5ed3cba2640971a"
+    },
+    "saved_tail.py": {
+      "bytes": 5941,
+      "sha256": "7c6bab940a36af3e362c15d9576ddbed8566b88b00ef07ce4e4d0f33a02353c9"
+    },
+    "test_focused_policy.py": {
+      "bytes": 12671,
+      "sha256": "61ca103e3616cc96879b3a9ea4b811bfd1bafd07710c037435e6bd48ad761504"
+    }
+  },
+  "fixed_scope": {
+    "absolute_horizon": 24,
+    "actor_feature_change": false,
+    "base_candidate_cap": 120,
+    "extra_candidate_cap": 32,
+    "initial_focus": null,
+    "original_prefix_actions": 12,
+    "page_size": 8,
+    "positive_immediate_guard": true,
+    "saved_tail_reloaded_without_fit": true,
+    "subject": "ReMIND-045",
+    "training_updates": 0
+  },
+  "schema": "focused-policy-model-source-ready-v1",
+  "source_bytes": 44855,
+  "source_only": true,
+  "test_command": "python -B -m pytest -q build/train045-focused-policy-v1/model/test_focused_policy.py",
+  "tests_executed": false
+}
