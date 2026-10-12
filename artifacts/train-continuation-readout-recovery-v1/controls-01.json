@@ -1,0 +1,96 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-next-iteration-v1/recovery-runner/absent-controls-01-cache",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-next-iteration-v1/recovery-runner/controls-01-tmp",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-next-iteration-v1/recovery-runner/test_runner.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 6.414003625046462,
+  "stop_reason": null,
+  "sampled_peak_group_rss_bytes": 385892352,
+  "rss_samples": 110,
+  "owned_lifecycle": {
+    "verified": true,
+    "child_reaped": true,
+    "exit_code": 0,
+    "remaining_owned_pids": [],
+    "errors": [],
+    "events": [
+      {
+        "phase": "bind",
+        "pid": 46527,
+        "pgid": 46527,
+        "start_identity": [
+          1791763845,
+          263973
+        ]
+      },
+      {
+        "phase": "sample.missing_root",
+        "pid": 46527,
+        "reported_pids": [],
+        "rss_observed": false
+      },
+      {
+        "phase": "sample.exit_race_confirmed",
+        "pid": 46527,
+        "start_identity": [
+          1791763845,
+          263973
+        ],
+        "wait_returncode": 0,
+        "direct_child_reaped": true,
+        "grace_seconds": 0.05
+      },
+      {
+        "phase": "cleanup.pre_signal_exit",
+        "pid": 46527,
+        "start_identity": [
+          1791763845,
+          263973
+        ],
+        "wait_returncode": 0,
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0
+      },
+      {
+        "phase": "cleanup.wait",
+        "pid": 46527,
+        "start_identity": [
+          1791763845,
+          263973
+        ],
+        "wait_returncode": 0,
+        "direct_child_reaped": true,
+        "grace_seconds": 0.5
+      }
+    ],
+    "remaining_state_unknown": false,
+    "owned_root_pid": 46527,
+    "owned_root_start_identity": [
+      1791763845,
+      263973
+    ]
+  },
+  "source_sha256": {
+    "build/continuation-next-iteration-v1/recovery-runner/bootstrap_smoke.py": "0cd0db0e915a9652da535e1bd6184f8fde591d24cdf6a8ba40dd0b75bc22cbc2",
+    "build/continuation-next-iteration-v1/recovery-runner/common.py": "1956bd4ae899f9fc5c0edd3d54d8fb9fc0787b7cb2e353a330e5fca81cf6cd05",
+    "build/continuation-next-iteration-v1/recovery-runner/freeze_sources.py": "a526b3dd8b82252436075c96c1be84e5780ab35e0d60e0928a92647d7905c018",
+    "build/continuation-next-iteration-v1/recovery-runner/inputs.py": "45e0073198ee0157e9351ed6c6fa6460dfa9aa2e785803ffe955caddb12ced66",
+    "build/continuation-next-iteration-v1/recovery-runner/run_owned.py": "b4537cd1414008b2dcc0c26b54f4754e7921c66e5881d82b26566e290e25c151",
+    "build/continuation-next-iteration-v1/recovery-runner/test_runner.py": "817f6ff093102a6a843f3aade77374e03e7626778b3586fac2f9fcbcf13aaed8",
+    "build/continuation-next-iteration-v1/recovery-runner/worker.py": "52d4c3e66a21d4f7556b0df461672a392088ab62a229822110a4c429a88388ab",
+    "build/continuation-next-iteration-v1/recovery-runner/config.json": "db5d0a9fa5ff65e46936693626c57def309776e6f7f2cbf631897d773cf08852"
+  },
+  "source_unchanged": true,
+  "scope": "Generated output/cache metadata gates and isolated bootstrap, exact saved JSON origin joins only; no acquired arrays/cache features/checkpoint decode, model forward, optimizer or native calls."
+}
