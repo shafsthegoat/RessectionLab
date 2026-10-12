@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/recovery/train_worker.py", line 275, in execute
+    visits.run('ReMIND-045',dest,'local_goal_MaskablePPO',campaign)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/patient_planning_cohort_sequential.py", line 91, in run
+    result = thaw_json(freeze_json(callback(base, context)))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-local-goal-ppo-v1/recovery/train_worker.py", line 160, in campaign
+    expected=historical['exploration']['history'][absolute-1]
+             ^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'historical' where it is not associated with a value
+{"status": "failed_or_incomplete", "worker_seconds": 46.578557417029515}

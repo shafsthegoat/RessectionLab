@@ -1,0 +1,35 @@
+{
+  "schema": "recovery-startup-failure-v1",
+  "files": [
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-reverse1024-01/report.json",
+      "snapshot": "report.json",
+      "bytes": 453923,
+      "sha256": "e704a1bb035a77a57fe78ac6e7279d53e1c41e2392bd519934eb3ee6c9eb3fcd"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-reverse1024-01/launcher.json",
+      "snapshot": "launcher.json",
+      "bytes": 3770,
+      "sha256": "729e619c1cf09681b03ece3ce3cef9c671168d5ff60068b005117b1753ec9686"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-reverse1024-01/progress.json",
+      "snapshot": "progress.json",
+      "bytes": 1536,
+      "sha256": "19d17c2be7490e27998057e349528023bf174d4d38be783e20afac9aed96dc78"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-reverse1024-01/worker.log",
+      "snapshot": "worker.log",
+      "bytes": 1025,
+      "sha256": "2742bedb347ba570c9cd5d69780af03f5d712affafd54032472a559032ffd133"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-reverse1024-01/intent.json",
+      "snapshot": "intent.json",
+      "bytes": 663,
+      "sha256": "731308564eac3e50be34c2c526b705022d08d1070af5d8cf0e19bd24b404eda4"
+    }
+  ]
+}
