@@ -1,0 +1,57 @@
+{
+  "caps": {
+    "checkpoint_bytes": 2097152,
+    "log_bytes": 262144,
+    "native_previews": 140000,
+    "native_transitions": 1000,
+    "output_bytes": 134217728,
+    "parent_wall_seconds": 3630,
+    "whole_build_bytes": 201326592,
+    "work_seconds": 3600,
+    "worker_peak_rss_bytes": 4294967296
+  },
+  "costs": "Original and continuation worker/native costs separate plus cumulative totals; actual optimizer counters, exact unique hash unions, retired unfinished episodes, new complete/live episodes retained",
+  "evidence": "Original initial/64 complete replay/audit evidence stays at pilot paths, authenticated by report and each artifact hash; only256 endpoint is rerun",
+  "files": {
+    "config.json": {
+      "bytes": 2184,
+      "sha256": "833079a0705406d3e04b0dfa20bbc501cdc2054cd80a7a93a21a44c150705a20"
+    },
+    "continuation.py": {
+      "bytes": 10222,
+      "sha256": "c3d62964748d735fc2d172a09822a0169c7a0fd033d7d37829d88bc073331e59"
+    },
+    "contract.py": {
+      "bytes": 7306,
+      "sha256": "24743c36a3d682c07101ed29a1777ae31dc69bec9448b905d1b9e12e6866ea1e"
+    },
+    "freeze_sources.py": {
+      "bytes": 3805,
+      "sha256": "1cd3acb3a74379467b3d9c67014936ba974aa9f112b6e1517f06eddd9cb20add"
+    },
+    "run_owned.py": {
+      "bytes": 10592,
+      "sha256": "f25f9f7ef35964d51cdb27e575983f3c1a5009c00f9abf98c0ee6a4b1ba098c0"
+    },
+    "test_continuation.py": {
+      "bytes": 7552,
+      "sha256": "317b8eec94ce6bd81763517dcc0abf58385c73b2796e2f8bad13c1a80df3beb7"
+    },
+    "train_worker.py": {
+      "bytes": 23788,
+      "sha256": "c674ed35d20a7b2a881d12844a6cac14c838bdc1efc9beb52c49f83d45216ab7"
+    }
+  },
+  "pilot": {
+    "frozen64_checkpoint_sha256": "4b62043f5fd04a34deccba1e06eff61d7fc0377b6c2f257b1f420f96593db420",
+    "launcher_sha256": "4991f1f8de9ebc1d02f8e71013b933b39bfa7e3330669a73a766d66f152e024c",
+    "report_sha256": "6fdea3af96f2005d349d94c6b50d38ef35243b5c908c87ae208697a5974e1efa",
+    "source_index_sha256": "65868d828147f5205cd886b16dc846151f53820a29291583d12802153d2902d6",
+    "trainable64_checkpoint_sha256": "f21616e66c71f012d905e61ff80c8432e0dcf0c5d9fd86ca41376f9d858b1116"
+  },
+  "resume": "Exact policy/Adam tensors and scalars before training; constant PPO configuration,64+192=256; fresh uniform genuine snapshot reset; no RNG/mid-episode continuity claim",
+  "scope": "New campaign files only; no canonical/frozen-stage edits, no model/native/test work",
+  "status": "source_ready_unexecuted",
+  "total_source_bytes": 65449,
+  "validation": "AST only; generated7 controls prepared, root executes with60s/two-thread ownership"
+}

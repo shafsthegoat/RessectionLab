@@ -1,0 +1,14 @@
+{
+  "scope": "generated optimizer-resume controls only; no patient training",
+  "pytest_exit_code": 0,
+  "seconds": 1.4365848749876022,
+  "source_pins": {
+    "build/train045-local-goal-ppo-v1/campaign/train_worker.py": "c674ed35d20a7b2a881d12844a6cac14c838bdc1efc9beb52c49f83d45216ab7",
+    "build/train045-local-goal-ppo-v1/campaign/freeze_sources.py": "1cd3acb3a74379467b3d9c67014936ba974aa9f112b6e1517f06eddd9cb20add",
+    "build/train045-local-goal-ppo-v1/campaign/continuation.py": "c3d62964748d735fc2d172a09822a0169c7a0fd033d7d37829d88bc073331e59",
+    "build/train045-local-goal-ppo-v1/campaign/test_continuation.py": "317b8eec94ce6bd81763517dcc0abf58385c73b2796e2f8bad13c1a80df3beb7",
+    "build/train045-local-goal-ppo-v1/campaign/run_owned.py": "f25f9f7ef35964d51cdb27e575983f3c1a5009c00f9abf98c0ee6a4b1ba098c0",
+    "build/train045-local-goal-ppo-v1/campaign/contract.py": "24743c36a3d682c07101ed29a1777ae31dc69bec9448b905d1b9e12e6866ea1e"
+  },
+  "source_unchanged": true
+}

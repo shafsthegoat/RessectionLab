@@ -1,0 +1,66 @@
+{
+  "source_index_sha256": "73375acd4a40b6d7eff2ad7f8105341b9683b9d74f3ca7bfae0d4313b839ce69",
+  "files": [
+    {
+      "source": "build/train045-local-goal-ppo-v1/campaign/continuation.py",
+      "snapshot": "snapshot/campaign/continuation.py",
+      "bytes": 10222,
+      "sha256": "c3d62964748d735fc2d172a09822a0169c7a0fd033d7d37829d88bc073331e59"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/campaign/contract.py",
+      "snapshot": "snapshot/campaign/contract.py",
+      "bytes": 7306,
+      "sha256": "24743c36a3d682c07101ed29a1777ae31dc69bec9448b905d1b9e12e6866ea1e"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/campaign/freeze_sources.py",
+      "snapshot": "snapshot/campaign/freeze_sources.py",
+      "bytes": 3805,
+      "sha256": "1cd3acb3a74379467b3d9c67014936ba974aa9f112b6e1517f06eddd9cb20add"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/campaign/run_owned.py",
+      "snapshot": "snapshot/campaign/run_owned.py",
+      "bytes": 10592,
+      "sha256": "f25f9f7ef35964d51cdb27e575983f3c1a5009c00f9abf98c0ee6a4b1ba098c0"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/campaign/test_continuation.py",
+      "snapshot": "snapshot/campaign/test_continuation.py",
+      "bytes": 7552,
+      "sha256": "317b8eec94ce6bd81763517dcc0abf58385c73b2796e2f8bad13c1a80df3beb7"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/campaign/train_worker.py",
+      "snapshot": "snapshot/campaign/train_worker.py",
+      "bytes": 23788,
+      "sha256": "c674ed35d20a7b2a881d12844a6cac14c838bdc1efc9beb52c49f83d45216ab7"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/campaign/config.json",
+      "snapshot": "snapshot/campaign/config.json",
+      "bytes": 2184,
+      "sha256": "833079a0705406d3e04b0dfa20bbc501cdc2054cd80a7a93a21a44c150705a20"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/campaign/source-index.json",
+      "snapshot": "snapshot/campaign/source-index.json",
+      "bytes": 30864,
+      "sha256": "73375acd4a40b6d7eff2ad7f8105341b9683b9d74f3ca7bfae0d4313b839ce69"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/campaign/source-ready.json",
+      "snapshot": "snapshot/campaign/source-ready.json",
+      "bytes": 2602,
+      "sha256": "36c43f0c4248e2bc959a393d57c92065f92c0fe7388b8c8bbb8acc3369b2a03b"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/controls-campaign-01/RESULT.json",
+      "snapshot": "snapshot/controls-campaign-01/RESULT.json",
+      "bytes": 986,
+      "sha256": "ee3d36ee3c6109d4fcc58b8a8e74165611476a03d5512af3ca0fffca914ce95e"
+    }
+  ],
+  "execution": "Running; no256 endpoint claim at this source commit"
+}
