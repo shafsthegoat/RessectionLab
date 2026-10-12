@@ -1,0 +1,89 @@
+{
+  "accepted": true,
+  "caps": {
+    "group_rss_bytes": 1073741824,
+    "output_bytes": 2097152,
+    "seconds": 60,
+    "threads": 1
+  },
+  "cleanup": {
+    "child_reaped": true,
+    "errors": [],
+    "events": [
+      {
+        "pgid": 50925,
+        "phase": "bind",
+        "pid": 50925,
+        "start_identity": [
+          1791771146,
+          460943
+        ]
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0,
+        "phase": "cleanup.pre_signal_exit",
+        "pid": 50925,
+        "start_identity": [
+          1791771146,
+          460943
+        ],
+        "wait_returncode": 0
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.5,
+        "phase": "cleanup.wait",
+        "pid": 50925,
+        "start_identity": [
+          1791771146,
+          460943
+        ],
+        "wait_returncode": 0
+      }
+    ],
+    "exit_code": 0,
+    "owned_root_pid": 50925,
+    "owned_root_start_identity": [
+      1791771146,
+      460943
+    ],
+    "remaining_owned_pids": [],
+    "remaining_state_unknown": false,
+    "verified": true
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-tail-v1/independent/absent-controls-01-cache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-tail-v1/independent/check_tail.py"
+  ],
+  "failure": null,
+  "log_bytes": 64,
+  "log_sha256": "18bf13ecd69fcab18d95f8798c1f24611073b8b2f0012d39d455aa1e8f44e232",
+  "peak_group_rss_bytes": 338345984,
+  "returncode": 0,
+  "scope": "generated-only, no acquired payload or saved weights",
+  "source_after": {
+    "build/continuation-tail-v1/independent/check_tail.py": "28aa68eb754c16e35172d2e7d1f33a1988e847f6a077c67efaaf795932516fa4",
+    "build/continuation-tail-v1/independent/tail_oracle.py": "84c636d68a71ff99124b1925b2c8318178ad5b97d35af5f4cd47833afa924db6",
+    "src/resectionlab/spatial_continuation_calibration.py": "22853df2126d2eb6efda545abb7d8108eb9f501f493fdf1e3d95a5948d5c0b11",
+    "src/resectionlab/spatial_continuation_planner.py": "fe43285ae70d3ff9944e2f4b2e532f7205d0148e5fd30aae99216a8d1243ff37",
+    "src/resectionlab/spatial_continuation_tail.py": "424729b964d505a3f4ac47317599e317c1d2abd0065dc0824eaa2fc6d65b15c5",
+    "src/resectionlab/spatial_continuation_value.py": "fbe26f0f178d903b3ef032dceb38c6aadab34ce4c2aef7d9e816d90d98243588",
+    "tests/test_spatial_continuation_value.py": "383ae72c44d96ccb2c16fb826c7261eb1a5235d2c1a122d7cfce5ea3c07e1808"
+  },
+  "source_before": {
+    "build/continuation-tail-v1/independent/check_tail.py": "28aa68eb754c16e35172d2e7d1f33a1988e847f6a077c67efaaf795932516fa4",
+    "build/continuation-tail-v1/independent/tail_oracle.py": "84c636d68a71ff99124b1925b2c8318178ad5b97d35af5f4cd47833afa924db6",
+    "src/resectionlab/spatial_continuation_calibration.py": "22853df2126d2eb6efda545abb7d8108eb9f501f493fdf1e3d95a5948d5c0b11",
+    "src/resectionlab/spatial_continuation_planner.py": "fe43285ae70d3ff9944e2f4b2e532f7205d0148e5fd30aae99216a8d1243ff37",
+    "src/resectionlab/spatial_continuation_tail.py": "424729b964d505a3f4ac47317599e317c1d2abd0065dc0824eaa2fc6d65b15c5",
+    "src/resectionlab/spatial_continuation_value.py": "fbe26f0f178d903b3ef032dceb38c6aadab34ce4c2aef7d9e816d90d98243588",
+    "tests/test_spatial_continuation_value.py": "383ae72c44d96ccb2c16fb826c7261eb1a5235d2c1a122d7cfce5ea3c07e1808"
+  },
+  "source_unchanged": true,
+  "wall_seconds": 3.9459610839840025
+}

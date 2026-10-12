@@ -1,0 +1,22 @@
+Independent generated implementation check: PASS414, first execution.
+
+Final tail and planner sources were pinned before/after; no acquired inputs,
+feature cache, checkpoint or saved weights were read. Direct enumeration of all
+future recorded prefixes agrees with 120 generated reward sequences. Current
+reward is mandatory and added exactly once; no future past recorded termination
+is invented. Float64 tails join original Q through one float32 cast.
+
+The generated tail weighted solve agrees with a separate scalar pivoted normal-
+equation solution. The real generated wrapper retains the frozen base, original
+64-update head, direct-calibrated head, hidden layer and corpus. STOP remains0;
+score_actions refuses raw tails and score_tails is distinct. Five selection
+controls cover negative-tail clipping, nonpositive-action exclusion, stable
+original-order ties and omitted inference for STOP.
+
+No material source blocker found. This validates the implementation on generated
+inputs, not productive route improvement or unlogged-action generalization.
+Actual future labels remain offline targets; deployment consumes only current
+certified reward and public-state predictions.
+
+Child3.541014s; parent3.945961s; peak338345984B; exit0, verified/reaped, no
+survivors. Caps60s/1GiB/one thread/2MiB scope. Sources unchanged.

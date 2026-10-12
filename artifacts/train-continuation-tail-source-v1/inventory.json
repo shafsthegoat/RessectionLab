@@ -1,0 +1,125 @@
+{
+  "files": {
+    "INTEGRATION.md": {
+      "bytes": 3231,
+      "sha256": "0463698d69749440ada4d4c2b6431a779562f67b27595f496947b789473c9a84"
+    },
+    "diagnostics/diagnose_direct_ranking.py": {
+      "bytes": 2500,
+      "sha256": "daa743ef2e0875801614fe597cf5304699dfd45cd838e8472d0fbfa1be8917a1"
+    },
+    "diagnostics/direct-ranking-01.json": {
+      "bytes": 26328,
+      "sha256": "3e0e303d8968c66b2beef6ab78acbce1afdee95604fd4ce8753ba42745af4b56"
+    },
+    "independent/IMPLEMENTATION.txt": {
+      "bytes": 1325,
+      "sha256": "c069cd3bc4ca8b7209ddeee32b6ecfcab46d40de2789152121ff9177a412f432"
+    },
+    "independent/check_tail.py": {
+      "bytes": 8408,
+      "sha256": "28aa68eb754c16e35172d2e7d1f33a1988e847f6a077c67efaaf795932516fa4"
+    },
+    "independent/controls-01.json": {
+      "bytes": 1565,
+      "sha256": "53d3aa1e95dc42b9fff0bc2206a7e2dc2162e838dac64c46e7fdf356ba45fa56"
+    },
+    "independent/controls-01.log": {
+      "bytes": 64,
+      "sha256": "18bf13ecd69fcab18d95f8798c1f24611073b8b2f0012d39d455aa1e8f44e232"
+    },
+    "independent/implementation-index.json": {
+      "bytes": 719,
+      "sha256": "d75c1bf2446be224d5b7676a8a5c027114d98371a816002806a5f933b0032126"
+    },
+    "independent/receipt-01.json": {
+      "bytes": 3703,
+      "sha256": "d99251822d4a696fe27e411535ebeccf3844ddf7cf41b2ca03dc027a796d9828"
+    },
+    "independent/reviewed-pins.json": {
+      "bytes": 857,
+      "sha256": "93cd10c5ac1d512484b8130f679d3f7e4025d3078f28da94df6697d33b03f77d"
+    },
+    "independent/run_controls.py": {
+      "bytes": 4348,
+      "sha256": "379a753f3de8c0d1cc4bcf8f37ce05106865602e29c14c03c67d3ebe8303d70d"
+    },
+    "independent/tail_oracle.py": {
+      "bytes": 4847,
+      "sha256": "84c636d68a71ff99124b1925b2c8318178ad5b97d35af5f4cd47833afa924db6"
+    },
+    "model/control_bootstrap.py": {
+      "bytes": 611,
+      "sha256": "c9f3851fed64a270927a431fd0b4bf2f1bc3ead4b44a7fc5848f7885089b3a6b"
+    },
+    "model/controls-01.json": {
+      "bytes": 3417,
+      "sha256": "5b1b42a98222fd1cbc41e765d5e7fb325678dab29140582fadd519d73be111d1"
+    },
+    "model/controls-01.log": {
+      "bytes": 99,
+      "sha256": "b57917d24f061c06e680aab20dd144fc2ae2c752ada1ce7cc12b18487d9d7064"
+    },
+    "model/run_controls.py": {
+      "bytes": 4333,
+      "sha256": "1d2a1b072d5bb67a2ce20568570333a3cd0ca461b788b8e361baba95359bb394"
+    },
+    "runner/README.md": {
+      "bytes": 3574,
+      "sha256": "0e3d30153042004699f6b999822dd9b23d17495ebd89e24699d6ca2de5cab753"
+    },
+    "runner/bootstrap_smoke.py": {
+      "bytes": 2897,
+      "sha256": "0cd0db0e915a9652da535e1bd6184f8fde591d24cdf6a8ba40dd0b75bc22cbc2"
+    },
+    "runner/common.py": {
+      "bytes": 14792,
+      "sha256": "0d21926e1d312d0e72ad13a69f43e9e8a0d1d4d2ba647503b3c7cea6828ca46b"
+    },
+    "runner/config.json": {
+      "bytes": 2712,
+      "sha256": "bdb7948f0f7928e166f1b16c34eb033e1dabc75a8895e02382e10755ee3dfd32"
+    },
+    "runner/freeze_sources.py": {
+      "bytes": 1710,
+      "sha256": "007b61d4cdb5d41016278716fb47eb29874149cdee1be402de3557b0d3c091e8"
+    },
+    "runner/inputs.py": {
+      "bytes": 6808,
+      "sha256": "cb815e565af3368a8eb02fe328131ff62e60793aa1144d1152dddb15006e4d7b"
+    },
+    "runner/run_owned.py": {
+      "bytes": 10100,
+      "sha256": "0d54647cc04c7d6a3a3de675edf1c0df64da0577fb42995491f3f2b8fd601bd2"
+    },
+    "runner/source-index.json": {
+      "bytes": 45063,
+      "sha256": "b5f70a83311adb2915e81dac2747a0315e704e2141d214016dba9245c7fccb04"
+    },
+    "runner/test_runner.py": {
+      "bytes": 13019,
+      "sha256": "9d76db7bfcf16665cc49e49f861f042515e413e99cbe57a09c4b41e472889793"
+    },
+    "runner/worker.py": {
+      "bytes": 36833,
+      "sha256": "5b40f5cf5d8ad44c889f4411916127cc8b19b7fbcd1de936ac603fb01229731e"
+    },
+    "runner-controls/control_bootstrap.py": {
+      "bytes": 289,
+      "sha256": "d9be72e5af4d67b7b1a35f4df5f9df834093f8ec1c8b94739537a315a3e3f918"
+    },
+    "runner-controls/controls-01.json": {
+      "bytes": 4188,
+      "sha256": "16f5e1b5ae2c0dc1cc39f3664f8cca2de5c8f11393a134a1b24ac9ea089226c3"
+    },
+    "runner-controls/controls-01.log": {
+      "bytes": 99,
+      "sha256": "d061e90c570129ef49e289d6659ba03522e06bcf0e0dea82e5b14418493f80bc"
+    },
+    "runner-controls/run_controls.py": {
+      "bytes": 703,
+      "sha256": "4c958ef8163203bf8420bb9876d5195bb33a654fc6dd204238e2e490a9c46965"
+    }
+  },
+  "canonical_source_and_tests": "Pinned in the model and runner controls and committed alongside this archive; no copied patient arrays/features/weights."
+}

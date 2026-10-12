@@ -19,9 +19,11 @@ from .native_spatial_task import NativeSpatialTask
 from .observed_search import ObservedSearchLimit
 from .patient_planning_admission import PatientPlanningContext
 from .spatial_continuation_value import FittedContinuationValue
+from .spatial_continuation_tail import FittedContinuationTail
 
 
 VERSION = "actual-positive-guarded-direct-q-nominal-rollout-v1"
+TAIL_VERSION = "actual-positive-exact-reward-plus-recorded-tail-rollout-v1"
 _SCORE_FIELDS = ("action_id", "reward", "target_removed_mm3", "normal_removed_mm3",
                  "insertion_distance_mm", "complete_tool_path_length_mm")
 
@@ -39,6 +41,17 @@ def _choose_positive(scores, predicted_q=None):
     return max(positive, key=lambda i: scores[i]["reward"]), "actual_greedy_fallback_no_positive_q"
 
 
+def _combine_tail(scores, predicted_tail):
+    """Current certified nominal reward exactly once, nonnegative tail, STOP0."""
+    if len(predicted_tail) != len(scores) or predicted_tail[0] != 0.:
+        raise ValueError('One aligned raw-tail batch with fixed STOP0 required')
+    combined = tuple(0. if i == 0 else row['reward'] + max(0., predicted_tail[i])
+                     for i, row in enumerate(scores))
+    if not all(math.isfinite(value) for value in combined):
+        raise FloatingPointError('Nonfinite exact reward plus continuation tail')
+    return combined
+
+
 def q_guided_nominal_search(task, context, scorer, *, seconds=300., cancelled=None, max_calls=24):
     """Return a completed nominal route and charged accounting, or raise.
 
@@ -54,9 +67,25 @@ def q_guided_nominal_search(task, context, scorer, *, seconds=300., cancelled=No
     call and must also be charged by the caller. A cap or interrupted operation
     produces incomplete accounting, never a successful STOP substitution.
     """
+    return _guarded_nominal_search(task, context, scorer, seconds=seconds,
+        cancelled=cancelled, max_calls=max_calls, tail_mode=False)
+
+
+def tail_guided_nominal_search(task, context, scorer, *, seconds=300., cancelled=None, max_calls=24):
+    """Same certified productive inventory; rank exact r + max(0, raw tail).
+
+STOP and final realized reward are unchanged. This consumes an exact tail
+scorer, never a direct-Q scorer, and incurs no additional observation/preview.
+"""
+    return _guarded_nominal_search(task, context, scorer, seconds=seconds,
+        cancelled=cancelled, max_calls=max_calls, tail_mode=True)
+
+
+def _guarded_nominal_search(task, context, scorer, *, seconds, cancelled, max_calls, tail_mode):
+    expected_type = FittedContinuationTail if tail_mode else FittedContinuationValue
     if (type(task) is not NativeSpatialTask or type(context) is not PatientPlanningContext
-            or type(scorer) is not FittedContinuationValue):
-        raise TypeError("Exact admitted native task, context and fitted Q head required")
+            or type(scorer) is not expected_type):
+        raise TypeError("Exact admitted native task, context and matching fitted scorer type required")
     if (type(max_calls) is not int or not 1 <= max_calls <= 24
             or isinstance(seconds, (bool, np.bool_)) or not isinstance(seconds, (int, float))
             or not math.isfinite(seconds) or not 0 < seconds <= 3600
@@ -174,21 +203,32 @@ def q_guided_nominal_search(task, context, scorer, *, seconds=300., cancelled=No
             if positive:
                 check()
                 counts["q_batches_started"] += 1
-                predicted = scorer.score_actions(observation, context)
+                predicted = (scorer.score_tails(observation, context) if tail_mode
+                             else scorer.score_actions(observation, context))
                 counts["q_batches_completed"] += 1
                 if (not isinstance(predicted, tuple) or len(predicted) != len(ids)
                         or any(isinstance(v, (bool, np.bool_)) or not isinstance(v, (int, float))
                                or not math.isfinite(v) for v in predicted) or predicted[0] != 0.):
-                    raise ValueError("Direct Q must align to all current legal actions with exact STOP0")
+                    raise ValueError("Scorer must align to all current legal actions with exact STOP0")
                 observation.assert_intact()
                 if observation.fingerprint != observation_hash:
                     raise ValueError("Q inference changed its public observation")
-            chosen, reason = _choose_positive(scores, predicted)
+            combined = (_combine_tail(scores, predicted)
+                        if tail_mode and predicted is not None else predicted)
+            chosen, reason = _choose_positive(scores, combined)
+            if tail_mode and chosen:
+                reason = 'exact_immediate_reward_plus_nonnegative_recorded_tail'
             for i, row in enumerate(scores):
-                row["predicted_q"] = None if predicted is None else predicted[i]
+                row["predicted_q"] = None if combined is None else combined[i]
                 row["actual_positive_guard"] = bool(i and row["reward"] > 0.)
+                if tail_mode:
+                    row.update(raw_predicted_tail=0. if i == 0 else None if predicted is None else predicted[i],
+                        clipped_predicted_tail=0. if i == 0 else None if predicted is None else max(0., predicted[i]),
+                        combined_nominal_q=0. if i == 0 else None if combined is None else combined[i])
+                    if i == 0:
+                        row['predicted_q'] = 0.
             decision.update(selected_action_id=ids[chosen], selection_reason=reason,
-                            selected_q=None if predicted is None else predicted[chosen])
+                            selected_q=0. if tail_mode and chosen == 0 else None if combined is None else combined[chosen])
             check()
             counts["model_transition_calls"] += 1
             decision["transition_status"] = "attempted"
@@ -234,7 +274,8 @@ def q_guided_nominal_search(task, context, scorer, *, seconds=300., cancelled=No
             error = final_error
 
     score_costs = {key: value-before_costs.get(key, 0) for key, value in scorer.costs.items()}
-    accounting = {"method": VERSION, "complete": complete and error is None, **counts, **flags,
+    accounting = {"method": TAIL_VERSION if tail_mode else VERSION,
+        "complete": complete and error is None, **counts, **flags,
         "planning_seconds": time.perf_counter()-started, "time_budget_seconds": seconds,
         "max_calls": max_calls, "max_steps": task.max_steps, "initial_steps": 0,
         "explored_actions": list(sequence), "selected_actions": list(sequence) if error is None else None,
@@ -253,6 +294,12 @@ def q_guided_nominal_search(task, context, scorer, *, seconds=300., cancelled=No
         "within_call_costs": "clone, full native inventories, immediate scoring, public observations, one Q batch per productive state, commits, integrity checks",
         "native_replay_required": True, "global_optimality_proven": False,
         "failure": None if error is None else {"type": type(error).__name__, "message": str(error)}}
+    if tail_mode:
+        accounting.update(
+            prediction_semantics='raw_tail_clipped_at_zero_then_exact_current_nominal_reward_added_once',
+            ranking='exact_immediate_reward_plus_nonnegative_tail_within_actual_positive_candidates; original_inventory_ties',
+            immediate_reward_added_to_Q=False, immediate_reward_added_to_tail=True,
+            additional_native_previews_for_tail=0, additional_observations_for_tail=0)
     if error is not None:
         error.accounting = accounting
         raise error

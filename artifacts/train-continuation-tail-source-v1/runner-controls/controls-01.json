@@ -1,0 +1,93 @@
+{
+  "accepted": true,
+  "caps": {
+    "group_rss_bytes": 1073741824,
+    "output_bytes": 8388608,
+    "seconds": 60,
+    "threads": 1
+  },
+  "cleanup": {
+    "child_reaped": true,
+    "errors": [],
+    "events": [
+      {
+        "pgid": 51054,
+        "phase": "bind",
+        "pid": 51054,
+        "start_identity": [
+          1791771170,
+          724220
+        ]
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0,
+        "phase": "cleanup.pre_signal_exit",
+        "pid": 51054,
+        "start_identity": [
+          1791771170,
+          724220
+        ],
+        "wait_returncode": 0
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.5,
+        "phase": "cleanup.wait",
+        "pid": 51054,
+        "start_identity": [
+          1791771170,
+          724220
+        ],
+        "wait_returncode": 0
+      }
+    ],
+    "exit_code": 0,
+    "owned_root_pid": 51054,
+    "owned_root_start_identity": [
+      1791771170,
+      724220
+    ],
+    "remaining_owned_pids": [],
+    "remaining_state_unknown": false,
+    "verified": true
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-tail-v1/runner-controls/absent-controls-01-cache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/continuation-tail-v1/runner-controls/control_bootstrap.py"
+  ],
+  "failure": null,
+  "log_bytes": 99,
+  "log_sha256": "d061e90c570129ef49e289d6659ba03522e06bcf0e0dea82e5b14418493f80bc",
+  "peak_group_rss_bytes": 373047296,
+  "returncode": 0,
+  "scope": "generated-only, no acquired payload or saved weights",
+  "source_after": {
+    "build/continuation-tail-v1/runner/bootstrap_smoke.py": "0cd0db0e915a9652da535e1bd6184f8fde591d24cdf6a8ba40dd0b75bc22cbc2",
+    "build/continuation-tail-v1/runner/common.py": "0d21926e1d312d0e72ad13a69f43e9e8a0d1d4d2ba647503b3c7cea6828ca46b",
+    "build/continuation-tail-v1/runner/freeze_sources.py": "007b61d4cdb5d41016278716fb47eb29874149cdee1be402de3557b0d3c091e8",
+    "build/continuation-tail-v1/runner/inputs.py": "cb815e565af3368a8eb02fe328131ff62e60793aa1144d1152dddb15006e4d7b",
+    "build/continuation-tail-v1/runner/run_owned.py": "0d54647cc04c7d6a3a3de675edf1c0df64da0577fb42995491f3f2b8fd601bd2",
+    "build/continuation-tail-v1/runner/test_runner.py": "9d76db7bfcf16665cc49e49f861f042515e413e99cbe57a09c4b41e472889793",
+    "build/continuation-tail-v1/runner/worker.py": "5b40f5cf5d8ad44c889f4411916127cc8b19b7fbcd1de936ac603fb01229731e",
+    "src/resectionlab/spatial_continuation_planner.py": "fe43285ae70d3ff9944e2f4b2e532f7205d0148e5fd30aae99216a8d1243ff37",
+    "src/resectionlab/spatial_continuation_tail.py": "424729b964d505a3f4ac47317599e317c1d2abd0065dc0824eaa2fc6d65b15c5"
+  },
+  "source_before": {
+    "build/continuation-tail-v1/runner/bootstrap_smoke.py": "0cd0db0e915a9652da535e1bd6184f8fde591d24cdf6a8ba40dd0b75bc22cbc2",
+    "build/continuation-tail-v1/runner/common.py": "0d21926e1d312d0e72ad13a69f43e9e8a0d1d4d2ba647503b3c7cea6828ca46b",
+    "build/continuation-tail-v1/runner/freeze_sources.py": "007b61d4cdb5d41016278716fb47eb29874149cdee1be402de3557b0d3c091e8",
+    "build/continuation-tail-v1/runner/inputs.py": "cb815e565af3368a8eb02fe328131ff62e60793aa1144d1152dddb15006e4d7b",
+    "build/continuation-tail-v1/runner/run_owned.py": "0d54647cc04c7d6a3a3de675edf1c0df64da0577fb42995491f3f2b8fd601bd2",
+    "build/continuation-tail-v1/runner/test_runner.py": "9d76db7bfcf16665cc49e49f861f042515e413e99cbe57a09c4b41e472889793",
+    "build/continuation-tail-v1/runner/worker.py": "5b40f5cf5d8ad44c889f4411916127cc8b19b7fbcd1de936ac603fb01229731e",
+    "src/resectionlab/spatial_continuation_planner.py": "fe43285ae70d3ff9944e2f4b2e532f7205d0148e5fd30aae99216a8d1243ff37",
+    "src/resectionlab/spatial_continuation_tail.py": "424729b964d505a3f4ac47317599e317c1d2abd0065dc0824eaa2fc6d65b15c5"
+  },
+  "source_unchanged": true,
+  "wall_seconds": 7.1786014582030475
+}
