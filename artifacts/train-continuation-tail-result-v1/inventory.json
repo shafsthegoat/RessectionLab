@@ -84,7 +84,9 @@
       "source": "build/continuation-tail-v1/independent/RESULT.txt",
       "file": "independent/RESULT.txt",
       "bytes": 6553,
-      "sha256": "335c7e06e00ba859c4bfbbd281b73de6a9c1db88f097768270e8e690e9b100aa"
+      "sha256": "700fb92c2a38e90270da951089fa6948bfe0eaf93d59992e6a225e78f5397e27",
+      "source_sha256": "335c7e06e00ba859c4bfbbd281b73de6a9c1db88f097768270e8e690e9b100aa",
+      "transformation": "Replace the seven-character ASCII heading underline with hyphens so it cannot be mistaken for a Git conflict marker; original signed note retained at the source path."
     },
     {
       "source": "build/continuation-tail-v1/terminal-storage.json",
