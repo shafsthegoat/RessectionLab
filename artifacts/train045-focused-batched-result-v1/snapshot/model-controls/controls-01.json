@@ -1,0 +1,82 @@
+{
+  "accepted": true,
+  "caps": {
+    "group_rss_bytes": 1073741824,
+    "output_bytes": 1048576,
+    "seconds": 60,
+    "threads": 1
+  },
+  "cleanup": {
+    "child_reaped": true,
+    "errors": [],
+    "events": [
+      {
+        "pgid": 60050,
+        "phase": "bind",
+        "pid": 60050,
+        "start_identity": [
+          1791813681,
+          703734
+        ]
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0,
+        "phase": "cleanup.pre_signal_exit",
+        "pid": 60050,
+        "start_identity": [
+          1791813681,
+          703734
+        ],
+        "wait_returncode": 0
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.5,
+        "phase": "cleanup.wait",
+        "pid": 60050,
+        "start_identity": [
+          1791813681,
+          703734
+        ],
+        "wait_returncode": 0
+      }
+    ],
+    "exit_code": 0,
+    "owned_root_pid": 60050,
+    "owned_root_start_identity": [
+      1791813681,
+      703734
+    ],
+    "remaining_owned_pids": [],
+    "remaining_state_unknown": false,
+    "verified": true
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-batched-v1/model-controls/absent-controls-01-cache",
+    "-c",
+    "from pathlib import Path\nimport os,sys\nroot=Path.cwd();stage=root/'build/train045-focused-batched-v1';temporary=stage/'model-controls/controls-01-tmp'\nsys.path[:0]=[str(root/'src'),str(root/'tests'),str(stage/'model')]\narchive=(Path(sys.base_prefix)/'lib'/('python%d%d.zip'%sys.version_info[:2])).resolve()\ndef generated_only(event,values):\n if event=='open' and isinstance(values[0],(str,bytes)):\n  path=Path(os.path.abspath(os.fsdecode(values[0])));mode,flags=values[1:3]\n  writing=(isinstance(mode,str) and any(c in mode for c in 'wax+')) or bool(flags & (os.O_WRONLY|os.O_RDWR|os.O_CREAT|os.O_TRUNC|os.O_APPEND))\n  if path==archive and not writing:return\n  if path.suffix.lower() in ('.npy','.npz','.psckpt','.qckpt','.mat','.zip','.nii','.gz') and not path.resolve().is_relative_to(temporary.resolve()):raise PermissionError('Generated controls cannot access saved patient/model payloads')\n if event in ('socket.connect','socket.getaddrinfo'):raise PermissionError('No network in generated controls')\nsys.addaudithook(generated_only)\nimport pytest\nraise SystemExit(pytest.main(['-q','-p','no:cacheprovider','--basetemp='+str(temporary/'pytest'),str(stage/'model/test_batched_authentication.py')]))\n"
+  ],
+  "failure": null,
+  "log_bytes": 99,
+  "log_sha256": "37d5d50fb9817a35a79be62892e759b7dc26c3a0b68bb93572007a53a8b8b3d8",
+  "peak_group_rss_bytes": 266010624,
+  "returncode": 0,
+  "scope": "generated-only, no acquired payload or saved weights",
+  "source_after": {
+    "build/train045-focused-batched-v1/model/focused_policy.py": "3aeb9e12b0b2fc08ea69863e3b1553db54bb342fb36bfb3ea368d7a8065099f3",
+    "build/train045-focused-batched-v1/model/test_batched_authentication.py": "ed7851d1248539cd005e90bb57ace4622eba9daae224d587573d50be28003dea",
+    "build/train045-focused-policy-v1/model-recovery/focused_policy.py": "64da4aa41a5aeccc798005d8432ae4276fcc9b442790e2b9859dbd8d5fd4d50f"
+  },
+  "source_before": {
+    "build/train045-focused-batched-v1/model/focused_policy.py": "3aeb9e12b0b2fc08ea69863e3b1553db54bb342fb36bfb3ea368d7a8065099f3",
+    "build/train045-focused-batched-v1/model/test_batched_authentication.py": "ed7851d1248539cd005e90bb57ace4622eba9daae224d587573d50be28003dea",
+    "build/train045-focused-policy-v1/model-recovery/focused_policy.py": "64da4aa41a5aeccc798005d8432ae4276fcc9b442790e2b9859dbd8d5fd4d50f"
+  },
+  "source_unchanged": true,
+  "wall_seconds": 6.33205687510781
+}

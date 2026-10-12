@@ -1,0 +1,778 @@
+{
+  "actions": [
+    "nominal-cavity-44388b74e03b769749971918",
+    "nominal-cavity-44eb93256fa83d95420e9e35",
+    "nominal-cavity-29ddcb6803ec9da11860a85e",
+    "nominal-cavity-62a2d3f4c79176e1927148c6",
+    "nominal-cavity-58b847ee6c14acb6575bc9da",
+    "nominal-cavity-43e97cbd3f5d560f45f14766",
+    "nominal-cavity-3cb267783395516d6d8e3958",
+    "nominal-cavity-f0bd1eb9a01e135706580c36",
+    "nominal-cavity-49a3ad622e2827be49f311c0",
+    "nominal-cavity-241d0cce99ac1020a9bd696e",
+    "nominal-cavity-ea4d94fd78de070751c84be8",
+    "nominal-cavity-4f998cdfafe81b10ea4b7ace",
+    "nominal-cavity-ae0009b1c02d5c71e80ea810",
+    "nominal-cavity-5983575d87e056b6fa4e0267",
+    "nominal-cavity-7e1b5e844e5e1f9565486e02",
+    "nominal-cavity-538158924ca2f830dea96e4d",
+    "nominal-cavity-a7d14bd6d4446525049c2728",
+    "nominal-cavity-41f6c4c122b085df0fd096d2",
+    "nominal-cavity-da5dcba37f06b625a78cd43d",
+    "nominal-cavity-057695fcc466fa24de793cbf",
+    "nominal-cavity-7f44f31376346609de80413e",
+    "nominal-cavity-a21064ff5e4c81c1bd4c577c",
+    "nominal-cavity-32e4545f9fdc28edc2151502",
+    "nominal-cavity-31b9cf7217fc2b26d0c0a72a"
+  ],
+  "audit": {
+    "accepted": true,
+    "committed_history_hash": "sha256:d466aca20ba76cd73dd6c506eefe90003093a1f11e9f37bcd8b07acfeecafc0d",
+    "complete_episode": true,
+    "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+    "distance_backend": "batch",
+    "distance_batch_size": 256,
+    "evaluation_seconds": 4.753158082952723,
+    "geometry": {
+      "action_count": 24,
+      "checker_version": "independent-native-sequence-v2",
+      "claimed_source_tissue_volume_mm3": 84.87711940346753,
+      "complete_tool_checked": true,
+      "contained_source_tissue_volume_mm3": 84.87711940346753,
+      "failures": [],
+      "feasible": true,
+      "first_failed_action": null,
+      "first_unsupported_position_mm": null,
+      "first_unsupported_source_voxel": null,
+      "frontier_checked": true,
+      "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+      "source_case_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+      "source_voxel_volume_mm3": 0.9536754989153655,
+      "unsupported_source_tissue_volume_mm3": 0.0
+    },
+    "invalid_action_attempts": null,
+    "invalid_action_attempts_reason": "caller must count rejected requests; committed history contains accepted transitions only",
+    "minimum_positive_target_source_cells": 1,
+    "outcomes": {
+      "clinical_deficit_probability": null,
+      "complete_tool_path_length_mm": 223.03756447935143,
+      "cumulative_contacted_tissue_upper_bound_mm3": 251.7703317136565,
+      "currently_retained_contacted_tissue_upper_bound_mm3": 166.89321231018897,
+      "language_surrogate": null,
+      "motor_surrogate": null,
+      "nonstop_actions": 24,
+      "normal_removed_mm3": 0.0,
+      "partial_contact_reward_weight": 0.0,
+      "positive_target_source_cells_removed": 89,
+      "reference_target_fraction_removed": 0.003517647523813289,
+      "simulated_removed_volume_mm3": 84.87711940346753,
+      "target_removed_mm3": 84.87711940346755,
+      "tool_changes": 5,
+      "total_reference_target_mm3": 24128.943798057662,
+      "total_reward": 83.78408183898816
+    },
+    "reference_hash": "sha256:28546e9a076c682094f652b2e905a194dbba91fd91375e87e30b436112bebee6",
+    "schema": "native-spatial-independent-episode-v1",
+    "scope": "geometric annotation/estimate-conditioned task, not physical surgery or clinical outcome prediction",
+    "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+    "target_access_success": true
+  },
+  "committed_masks": {
+    "connected_free_mask": "sha256:ba4a9cb70e2df25a993233a7fb11e7325ab6203e83ec80ae0f2b30419400f632",
+    "contact_mask": "sha256:f368e4bcf6f3b1650412c1b3b7b18ab1508958a24a82892ac5482a301940e5c1",
+    "probe_contact_mask": "sha256:cc702a22efcd1e9751028568c5dee1ea538859fc7b0e23f674f907e7eb09870b",
+    "remaining_mask": "sha256:ca1a8cfa43c5eded7880dbf380e75631d9149fc0529f01aebb3af82719f72f30",
+    "removed_mask": "sha256:563186c36a6111574c31f94109fc57a6be8f302f57a807516e95e251c88d9ab0"
+  },
+  "complete": true,
+  "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+  "history": [
+    {
+      "action_id": "nominal-cavity-44388b74e03b769749971918",
+      "complete_tool_path_length_mm": 8.28281462524188,
+      "contact_indices_hash": "sha256:85325047f5cc9ca372a058b750b88ab3ec69e5ff940e57f4846ddb29926a98ae",
+      "entry_mm": [
+        95.42137667096495,
+        -105.2830728871299,
+        11.400324228298604
+      ],
+      "history_row_hash": "sha256:787dfb784e79edc7afad3aa94ea6e312903707ab4c199a20e336feed61c2b784",
+      "microsteps": 18,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        96.30098182629395,
+        -106.73597414353101,
+        11.327025225121588
+      ],
+      "removed_indices_hash": "sha256:f7baa224b711338cecad887040b340e863032f1b8dacf0c7071a948f94ebd8a6",
+      "reward": 5.683770178866951,
+      "target_removed_mm3": 5.722052993492193,
+      "tip_mm": [
+        94.15815641389963,
+        -103.19652952448322,
+        11.505590534521275
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-44eb93256fa83d95420e9e35",
+      "complete_tool_path_length_mm": 10.235940467338544,
+      "contact_indices_hash": "sha256:ea8e2fedea2ef193344512f13ffb1caeb793921a9bc6ad8305f0740734cc4dc6",
+      "entry_mm": [
+        94.05787046025726,
+        -106.0304493450692,
+        9.85210539041181
+      ],
+      "history_row_hash": "sha256:2830e184f5d598438a41e7715864ddc8658c17b3eda75ff84067296439d74e3e",
+      "microsteps": 22,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        94.93747561558625,
+        -107.4833506014703,
+        9.778806387234793
+      ],
+      "removed_indices_hash": "sha256:c333173005186cef367e3a4323c3614b2b5448a5ab21bf07c581af0d8946bb01",
+      "reward": 8.542843549770952,
+      "target_removed_mm3": 8.58307949023829,
+      "tip_mm": [
+        92.28936210036585,
+        -103.10928863736387,
+        9.999478219123546
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-29ddcb6803ec9da11860a85e",
+      "complete_tool_path_length_mm": 8.282814625241826,
+      "contact_indices_hash": "sha256:c87a972d68f9c00cf875a9fc05f39a24065130da380ebda603ea614ce079be91",
+      "entry_mm": [
+        93.33639535949453,
+        -106.6111967809245,
+        12.705561127434484
+      ],
+      "history_row_hash": "sha256:f4693aa01f05856e5cef65efad1aa0b527916d1b8dedd2559716115b903509e0",
+      "microsteps": 18,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        94.21600051482352,
+        -108.0640980373256,
+        12.632262124257467
+      ],
+      "removed_indices_hash": "sha256:72be2a37469b729fa83a5be2ea9a96f2c20d226d7cf23c19ca01528bc635a86b",
+      "reward": 5.6837701788669515,
+      "target_removed_mm3": 5.722052993492193,
+      "tip_mm": [
+        92.07317510242923,
+        -104.52465341827784,
+        12.810827433657153
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-62a2d3f4c79176e1927148c6",
+      "complete_tool_path_length_mm": 8.282814625241851,
+      "contact_indices_hash": "sha256:c44d94055766af4a65e9229aad009c0693d12b2ed789c8a174ce69f7fe0da586",
+      "entry_mm": [
+        94.45940986994798,
+        -106.05740280160366,
+        15.204931877662181
+      ],
+      "history_row_hash": "sha256:5e709ff9bd6ca84e189cd2eae7c403d8cdaceebd25130f66b4ac0b4c3022d5a4",
+      "microsteps": 18,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        95.33901502527696,
+        -107.51030405800476,
+        15.131632874485167
+      ],
+      "removed_indices_hash": "sha256:2f540d18bf7d4566801c26ddc442b0ecd9dc928fbe05f021c56fc5ba16ba31ac",
+      "reward": 4.730094679951585,
+      "target_removed_mm3": 4.768377494576828,
+      "tip_mm": [
+        93.19618961288268,
+        -103.97085943895698,
+        15.31019818388485
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-58b847ee6c14acb6575bc9da",
+      "complete_tool_path_length_mm": 10.235940467338569,
+      "contact_indices_hash": "sha256:dcd8ce725f876f5eef1fd6225b8c0332d57c7561b6907b01a72edf4da1aa4d3f",
+      "entry_mm": [
+        95.74239222593741,
+        -105.19975837608793,
+        13.601161515753335
+      ],
+      "history_row_hash": "sha256:8ecc3f24064b5cffeeb721878519547500b75ab59a857d652df4f4f8427ab117",
+      "microsteps": 22,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        96.6219973812664,
+        -106.65265963248903,
+        13.527862512576318
+      ],
+      "removed_indices_hash": "sha256:87c9510aa939c69010412491745c362d40a02f74400d1f053619de367a0b4904",
+      "reward": 9.496519048686316,
+      "target_removed_mm3": 9.536754989153655,
+      "tip_mm": [
+        93.973883866046,
+        -102.27859766838259,
+        13.748534344465071
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-43e97cbd3f5d560f45f14766",
+      "complete_tool_path_length_mm": 6.329688783145124,
+      "contact_indices_hash": "sha256:97656d3e3239939398688d3f75370e96f40a96bd57dba32daac95b482352d8a4",
+      "entry_mm": [
+        91.25141404802415,
+        -107.93932067471908,
+        14.010798026570365
+      ],
+      "history_row_hash": "sha256:d2c1d8ca562f8eaead280531dd3b7118f45197534f1603d2043f250360235cbb",
+      "microsteps": 14,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        92.13101920335315,
+        -109.39222193112019,
+        13.93749902339335
+      ],
+      "removed_indices_hash": "sha256:c784c62351183d7b92e9b3e084bab4a1d1640ae5a646c6337c46e26e2dc0fbe2",
+      "reward": 4.732047805793682,
+      "target_removed_mm3": 4.768377494576828,
+      "tip_mm": [
+        90.49348189378496,
+        -106.68739465713108,
+        14.073957810303966
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-3cb267783395516d6d8e3958",
+      "complete_tool_path_length_mm": 6.329688783145124,
+      "contact_indices_hash": "sha256:179fb55f0cdbcb75d71dda8028abb35e1745df7467abd42b607997b3caad521e",
+      "entry_mm": [
+        92.61492025873181,
+        -107.1919442167798,
+        15.559016864457158
+      ],
+      "history_row_hash": "sha256:bc4233fb3c2c88244ff701efe6b0f0cb0240235b522d52f595b3f479168e610f",
+      "microsteps": 14,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        93.49452541406082,
+        -108.64484547318091,
+        15.485717861280143
+      ],
+      "removed_indices_hash": "sha256:af83305f2039bcf3838739a6a9df1e2c7383a7ad7d01fa86bcace9037eaaa12b",
+      "reward": 1.8710213090475858,
+      "target_removed_mm3": 1.907350997830731,
+      "tip_mm": [
+        91.85698810449263,
+        -105.9400181991918,
+        15.62217664819076
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-f0bd1eb9a01e135706580c36",
+      "complete_tool_path_length_mm": 8.282814625241826,
+      "contact_indices_hash": "sha256:17ed983dfdda934fb229a508b471c2c1bd6f49b9f38dc96d8f84023c5940eec0",
+      "entry_mm": [
+        92.85541195898605,
+        -106.99836173816138,
+        14.607864952116264
+      ],
+      "history_row_hash": "sha256:3b4caab380b6b363162132a33cf2fad14c1d4e18f9bcd6b7fcb3b734f1714d71",
+      "microsteps": 18,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        93.73501711431504,
+        -108.45126299456248,
+        14.534565948939248
+      ],
+      "removed_indices_hash": "sha256:d4d9bea0f199e91590ae3d43c3c26762bfd8b0f399453e1a2ebee9ad25041590",
+      "reward": 2.822743682120855,
+      "target_removed_mm3": 2.8610264967460965,
+      "tip_mm": [
+        91.59219170192075,
+        -104.91181837551471,
+        14.713131258338933
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-49a3ad622e2827be49f311c0",
+      "complete_tool_path_length_mm": 6.8828146252418225,
+      "contact_indices_hash": "sha256:839aa92b411f24b131d4311af66c58074068805a839e83c81a0586842401cfd7",
+      "entry_mm": [
+        91.73239744853262,
+        -107.55215571748221,
+        12.108494201888567
+      ],
+      "history_row_hash": "sha256:1392f802c3a7d2994d8447d7566e5636c6fef58192e4c7a3ec92bb91c0c9a0e0",
+      "microsteps": 15,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        92.2498122479155,
+        -108.40680351888435,
+        12.065377141018663
+      ],
+      "removed_indices_hash": "sha256:4a0ec93f45de9200287ef646f2007c7e25473c722822e449f758159dc7348c0a",
+      "reward": 0.8867926842901236,
+      "target_removed_mm3": 0.9536754989153655,
+      "tip_mm": [
+        90.46917719146732,
+        -105.46561235483554,
+        12.213760508111235
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-241d0cce99ac1020a9bd696e",
+      "complete_tool_path_length_mm": 6.32968878314507,
+      "contact_indices_hash": "sha256:34f584a3bd65e0d474d09c05d0f6f2008198bdb26f1cdafc186c01e0a0827c8c",
+      "entry_mm": [
+        90.93039849305165,
+        -108.02263518576108,
+        11.809960739115605
+      ],
+      "history_row_hash": "sha256:a388bae82f685b01a2154682b52920d07c9d62acb559b19d8bd64b38b3a22117",
+      "microsteps": 14,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        91.81000364838064,
+        -109.47553644216218,
+        11.736661735938588
+      ],
+      "removed_indices_hash": "sha256:acdbe3b82d7b558ed3f6cbb11f4ca97e315ab75ae082422889d4dbc017262cd7",
+      "reward": 0.8873458101322204,
+      "target_removed_mm3": 0.9536754989153655,
+      "tip_mm": [
+        90.17246633881248,
+        -106.77070916817308,
+        11.873120522849206
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-ea4d94fd78de070751c84be8",
+      "complete_tool_path_length_mm": 8.282814625241826,
+      "contact_indices_hash": "sha256:f79d2eba78bbb0f1736403fd447d424d6cea3948ddbd3d35f182f4b4e09ed1f0",
+      "entry_mm": [
+        91.73239744853262,
+        -107.55215571748221,
+        12.108494201888567
+      ],
+      "history_row_hash": "sha256:f32d1ceb5ee2a6551d73e1960d9da2cdb52f8d8d11c377c8b9672f68d8127892",
+      "microsteps": 18,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        92.61200260386161,
+        -109.00505697388331,
+        12.03519519871155
+      ],
+      "removed_indices_hash": "sha256:87340520d1c285f8762c464079dcdfb6585b608bcb0d25c1f24126ef897e770f",
+      "reward": 1.8690681832054892,
+      "target_removed_mm3": 1.907350997830731,
+      "tip_mm": [
+        90.46917719146732,
+        -105.46561235483554,
+        12.213760508111235
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-4f998cdfafe81b10ea4b7ace",
+      "complete_tool_path_length_mm": 8.83594046733854,
+      "contact_indices_hash": "sha256:3725454a5072706976664adcfcc59b6ca9a96115e4e16cb686e7bd75e5bcf59e",
+      "entry_mm": [
+        92.21338084904112,
+        -107.16499076024533,
+        10.206190377206783
+      ],
+      "history_row_hash": "sha256:1a1c31d5af4b4ae693bab0309c716224717b77b573e5b412abd2417442f6d553",
+      "microsteps": 19,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        92.73079564842399,
+        -108.01963856164747,
+        10.16307331633688
+      ],
+      "removed_indices_hash": "sha256:bcaa1602b6601ed487d424dc1fa270ca41583c461c29dbbd89dbcb90fd2c2edd",
+      "reward": 0.884839558448027,
+      "target_removed_mm3": 0.9536754989153655,
+      "tip_mm": [
+        90.4448724891497,
+        -104.24383005254,
+        10.353563205918519
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-ae0009b1c02d5c71e80ea810",
+      "complete_tool_path_length_mm": 10.235940467338544,
+      "contact_indices_hash": "sha256:ae2dc6893b49a45292a3536cc05c751a85596f46521736205772a001d76a6bf1",
+      "entry_mm": [
+        94.69990157020221,
+        -105.86382032298522,
+        14.253779965321273
+      ],
+      "history_row_hash": "sha256:37171410b0e87f8fabd34ee25e801e375545ea45d0f28c4547c3e36690849718",
+      "microsteps": 22,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        95.5795067255312,
+        -107.31672157938632,
+        14.180480962144257
+      ],
+      "removed_indices_hash": "sha256:75759c75a7b0b9d4fcbcc7d29fc2a58559e592d49a196ef47d7ca610deb20c26",
+      "reward": 3.744466055194124,
+      "target_removed_mm3": 3.814701995661462,
+      "tip_mm": [
+        92.9313932103108,
+        -102.9426596152799,
+        14.40115279403301
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-5983575d87e056b6fa4e0267",
+      "complete_tool_path_length_mm": 10.235940467338569,
+      "contact_indices_hash": "sha256:f694821c3c73f790173f4044de5574f55b79db82d57e5edf5986b2b63c963aa4",
+      "entry_mm": [
+        93.01537980452206,
+        -106.69451129196649,
+        10.504723839979748
+      ],
+      "history_row_hash": "sha256:8317ec0cb9d25c1de59779fe5ab5d9c561603b0fee59adc263114df0d2d00649",
+      "microsteps": 22,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        93.89498495985104,
+        -108.1474125483676,
+        10.431424836802732
+      ],
+      "removed_indices_hash": "sha256:3ba2321cba6f6a663e5a534a72b4ba2b2ab2e312ef1fc3bb305fde20dadb2da5",
+      "reward": 3.774466055194124,
+      "target_removed_mm3": 3.814701995661462,
+      "tip_mm": [
+        91.24687144463064,
+        -103.77335058426115,
+        10.652096668691485
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-7e1b5e844e5e1f9565486e02",
+      "complete_tool_path_length_mm": 10.235940467338544,
+      "contact_indices_hash": "sha256:f343fa02bc8c4707b106f2eb7e71d6667b1404ec9cc81741ab1b0c47bcff199c",
+      "entry_mm": [
+        94.61937771548396,
+        -105.75355235540877,
+        11.101790765525651
+      ],
+      "history_row_hash": "sha256:07ba964dd25b0b99bc8a693c724b2d3c3f1205311b988590f8ed8942c2321bf2",
+      "microsteps": 22,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        95.49898287081295,
+        -107.20645361180988,
+        11.028491762348635
+      ],
+      "removed_indices_hash": "sha256:f9c622a924ca604b68c6fef7153ae40f30823fff047759b169cfa6f13e0b0cbb",
+      "reward": 3.774466055194124,
+      "target_removed_mm3": 3.814701995661462,
+      "tip_mm": [
+        92.85086935559255,
+        -102.83239164770345,
+        11.249163594237388
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-538158924ca2f830dea96e4d",
+      "complete_tool_path_length_mm": 12.189066309435301,
+      "contact_indices_hash": "sha256:517e7e3fc00a6ec649654eb2548405c62eebe576f94b51f0d6af04b0c52d71b8",
+      "entry_mm": [
+        94.94039327045645,
+        -105.67023784436678,
+        13.302628052980378
+      ],
+      "history_row_hash": "sha256:1052148d44f0c735f9bad7630be7c51ca100b2fe249f25f1ccb6d1fdeea21280",
+      "microsteps": 26,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        95.81999842578544,
+        -107.12313910076789,
+        13.229329049803361
+      ],
+      "removed_indices_hash": "sha256:ec134f16ac49ffd9a352a8813f6ff5cdf8962f8b3c76fdab1ab31fd0532259ee",
+      "reward": 5.679863927182757,
+      "target_removed_mm3": 5.722052993492193,
+      "tip_mm": [
+        92.66659680773891,
+        -101.91445979160278,
+        13.492107404181183
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-a7d14bd6d4446525049c2728",
+      "complete_tool_path_length_mm": 10.235940467338544,
+      "contact_indices_hash": "sha256:6ca79c07c664e6b2910cbb01827726b7951876939756c458a984466058278c5b",
+      "entry_mm": [
+        92.53439640401358,
+        -107.08167624920335,
+        12.407027664661529
+      ],
+      "history_row_hash": "sha256:33b05b9de8009eed3bbad7b5648dd48d6c711527cac9918567293f2b89818f65",
+      "microsteps": 22,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        93.41400155934257,
+        -108.53457750560446,
+        12.333728661484512
+      ],
+      "removed_indices_hash": "sha256:ff095c3c0ff94e1165e9077d884957296382a981147d44c8876ae6138f571a1d",
+      "reward": 3.774466055194124,
+      "target_removed_mm3": 3.814701995661462,
+      "tip_mm": [
+        90.76588804412216,
+        -104.16051554149803,
+        12.554400493373265
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-41f6c4c122b085df0fd096d2",
+      "complete_tool_path_length_mm": 12.189066309435262,
+      "contact_indices_hash": "sha256:0f73173e9ebb3c9928bce434b154e1919d9b37bb6f9abc52bc23567d935c2325",
+      "entry_mm": [
+        93.33639535949453,
+        -106.6111967809245,
+        12.705561127434477
+      ],
+      "history_row_hash": "sha256:80cbb45116131476294fbee4f02dd97901465cfc428196a1529f4d9a31729445",
+      "microsteps": 26,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        94.21600051482352,
+        -108.0640980373256,
+        12.63226212425746
+      ],
+      "removed_indices_hash": "sha256:c0305f2caacd3f17ad76fb74950695582d73154352608eeec841462c38cc7d09",
+      "reward": 5.679863927182757,
+      "target_removed_mm3": 5.722052993492193,
+      "tip_mm": [
+        91.062598896777,
+        -102.85541872816052,
+        12.89504047863528
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-da5dcba37f06b625a78cd43d",
+      "complete_tool_path_length_mm": 10.235940467338544,
+      "contact_indices_hash": "sha256:290e07690a13fd034c32d9bf77e852acc7063067a583e1d086cdf726b8c026b4",
+      "entry_mm": [
+        95.42137667096493,
+        -105.28307288712992,
+        11.400324228298603
+      ],
+      "history_row_hash": "sha256:d37a8abff2b5c9158f6fb1777375fb387bb297302797943cba7d7d9d9fc838f3",
+      "microsteps": 22,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        96.30098182629392,
+        -106.73597414353102,
+        11.327025225121586
+      ],
+      "removed_indices_hash": "sha256:3728a0dc02373ff4b92645757c20a5c1f0810abf42e7ba33db278bdf191f1c61",
+      "reward": 2.8207905562787583,
+      "target_removed_mm3": 2.8610264967460965,
+      "tip_mm": [
+        93.65286831107352,
+        -102.36191217942459,
+        11.547697057010339
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-057695fcc466fa24de793cbf",
+      "complete_tool_path_length_mm": 12.189066309435287,
+      "contact_indices_hash": "sha256:50857f44bca9d56512423241c354f1bf63ff980e8b66d07a50de2f9542912c0a",
+      "entry_mm": [
+        93.81737876000301,
+        -106.22403182368764,
+        10.803257302752696
+      ],
+      "history_row_hash": "sha256:889da807c3de206421757af7739a76816296144d75ed2bb77a835abf8eb28723",
+      "microsteps": 26,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        94.696983915332,
+        -107.67693308008874,
+        10.72995829957568
+      ],
+      "removed_indices_hash": "sha256:a0c81bfc8849268882edee5025606d5d762311a57658113754d251421edf71f9",
+      "reward": 1.8651619315212957,
+      "target_removed_mm3": 1.907350997830731,
+      "tip_mm": [
+        91.54358229728548,
+        -102.46825377092364,
+        10.9927366539535
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-7f44f31376346609de80413e",
+      "complete_tool_path_length_mm": 12.189066309435239,
+      "contact_indices_hash": "sha256:cf483a822e01baeec8c0c1b585036f15969cef8d8c60f770835b1ce5e5a0f533",
+      "entry_mm": [
+        94.37888601522972,
+        -105.94713483402721,
+        12.052942677866538
+      ],
+      "history_row_hash": "sha256:436fc9cff17828b14090fa0984722c9e36098dd78ff94e23e20ee49b80304bc1",
+      "microsteps": 26,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        95.25849117055871,
+        -107.40003609042832,
+        11.979643674689521
+      ],
+      "removed_indices_hash": "sha256:92f5dd55b11e599d0cec280fe6638ac59377bd265edca9c7300ffabe15f1d55a",
+      "reward": 1.8651619315212957,
+      "target_removed_mm3": 1.907350997830731,
+      "tip_mm": [
+        92.1050895525122,
+        -102.19135678126324,
+        12.242422029067342
+      ],
+      "tool_id": "generic_aspirator"
+    },
+    {
+      "action_id": "nominal-cavity-a21064ff5e4c81c1bd4c577c",
+      "complete_tool_path_length_mm": 8.83594046733854,
+      "contact_indices_hash": "sha256:dcc74bbf261b248fe09a5923a8f5a136da380f43cf0274f7c51ffd5be1fe1b4e",
+      "entry_mm": [
+        95.10036111599246,
+        -105.3663873981719,
+        9.19948694084387
+      ],
+      "history_row_hash": "sha256:36bee39feb1551b2b1f90c0d4cd4a438c9ad61981ab3ccd35be8acc5939b5a24",
+      "microsteps": 19,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        95.61777591537533,
+        -106.22103519957403,
+        9.156369879973967
+      ],
+      "removed_indices_hash": "sha256:b1359c7cee0b61413a235c259167ab7b32de5ae802727635ac306912027b6281",
+      "reward": 0.884839558448027,
+      "target_removed_mm3": 0.9536754989153655,
+      "tip_mm": [
+        93.33185275610104,
+        -102.44522669046657,
+        9.346859769555607
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-32e4545f9fdc28edc2151502",
+      "complete_tool_path_length_mm": 8.8359404673385,
+      "contact_indices_hash": "sha256:57974cf7e32341377274e02de447146c5f010a3992848ba2c118b15cde8a154e",
+      "entry_mm": [
+        91.97288914878686,
+        -107.35857323886377,
+        11.157342289547673
+      ],
+      "history_row_hash": "sha256:1009ae50d16e3448adba1e1385ccd2347480a3bec9cb5c48e81eddd093103cb0",
+      "microsteps": 19,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        92.49030394816974,
+        -108.2132210402659,
+        11.11422522867777
+      ],
+      "removed_indices_hash": "sha256:45e2d8cd890a7734dc567c07361319c8abe88a48126bdca3a4ab64c6acb207f5",
+      "reward": 0.914839558448027,
+      "target_removed_mm3": 0.9536754989153655,
+      "tip_mm": [
+        90.20438078889546,
+        -104.43741253115846,
+        11.30471511825941
+      ],
+      "tool_id": "generic_suction"
+    },
+    {
+      "action_id": "nominal-cavity-31b9cf7217fc2b26d0c0a72a",
+      "complete_tool_path_length_mm": 8.835940467338563,
+      "contact_indices_hash": "sha256:c504b0cfb41701adde3df5b242df820540c9dcce27f0e6f6fe3a514b7df2ffc7",
+      "entry_mm": [
+        96.46386732670013,
+        -104.61901094023263,
+        10.747705778730664
+      ],
+      "history_row_hash": "sha256:6c9faca6725400df7315b18d6d7060e39284bbbed7a64232bbb92837b725feac",
+      "microsteps": 19,
+      "normal_removed_mm3": 0.0,
+      "outcome_scope": "separate_evaluator_reference",
+      "physical_start_mm": [
+        96.981282126083,
+        -105.47365874163476,
+        10.70458871786076
+      ],
+      "removed_indices_hash": "sha256:7501057943012e8a2e08bf9fbd05ba75ebe88b73131530698e803cd96290537b",
+      "reward": 0.9148395584480269,
+      "target_removed_mm3": 0.9536754989153655,
+      "tip_mm": [
+        94.69535896680871,
+        -101.69785023252729,
+        10.8950786074424
+      ],
+      "tool_id": "generic_suction"
+    }
+  ],
+  "history_hash": "sha256:d466aca20ba76cd73dd6c506eefe90003093a1f11e9f37bcd8b07acfeecafc0d",
+  "method": "TAIL",
+  "native_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+  "native_state_hash": "sha256:f14faf79d356e2111d5ceeecedcb746385fdabc4e228901c84117a2ee658644f",
+  "original_admitted_world": {
+    "decision_model_hash": "sha256:610543a13a972b05ddbec5044e3390aa6d2f4d2d3c3bb833f52bed9cea751ac0",
+    "max_steps": 24,
+    "observation_track": "annotation_assisted",
+    "public_observation_binding": "sha256:688ce48052ea031c8a5e7cd148754103650ec94e4f21482005d307b91ae40c0f",
+    "source_hash": "sha256:e16123b7ffe0cc1fe45e643cd9e7dc43eb7ed629d281bc52a8be744cf37ab938",
+    "subject": "ReMIND-045"
+  },
+  "plan_seal": "sha256:13cd2efdfa0cadc8d16fe6d83f905da0bc897b6b2ffc1e6e1e4323713a2fea68",
+  "planned_physical_history_matches": true,
+  "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d"
+}

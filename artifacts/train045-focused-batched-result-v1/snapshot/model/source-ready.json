@@ -1,0 +1,43 @@
+{
+  "api": {
+    "default": "Catalog.require -> Catalog.require_batched",
+    "paired_profile": "validate_catalog(catalog, mode=\"reference\"|\"batched\")",
+    "result": "same Catalog object or refusal; no persistent success cache"
+  },
+  "baseline": {
+    "path": "build/train045-focused-policy-v1/model-recovery/focused_policy.py",
+    "sha256": "64da4aa41a5aeccc798005d8432ae4276fcc9b442790e2b9859dbd8d5fd4d50f"
+  },
+  "constraints": {
+    "canonical_edits": false,
+    "previous_stage_edits": false,
+    "root_owned_test_and_profile": true,
+    "source_bytes_limit": 98304
+  },
+  "files": {
+    "build/train045-focused-batched-v1/model/focused_policy.py": {
+      "bytes": 31052,
+      "sha256": "3aeb9e12b0b2fc08ea69863e3b1553db54bb342fb36bfb3ea368d7a8065099f3"
+    },
+    "build/train045-focused-batched-v1/model/test_batched_authentication.py": {
+      "bytes": 10815,
+      "sha256": "ed7851d1248539cd005e90bb57ace4622eba9daae224d587573d50be28003dea"
+    },
+    "build/train045-focused-batched-v1/model/validator.patch": {
+      "bytes": 6158,
+      "sha256": "621812a535cf7e514d92166a112992b439b708692b8bfde4f4138c08c8cfa2ab"
+    }
+  },
+  "generated_tests_executed": false,
+  "native_or_model_execution": false,
+  "reference_body_ast_equal": true,
+  "schema": "focused-within-pass-page-authentication-source-v1",
+  "test_payload": [
+    "python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "build/train045-focused-batched-v1/model/test_batched_authentication.py"
+  ]
+}

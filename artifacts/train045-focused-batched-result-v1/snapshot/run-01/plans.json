@@ -1,0 +1,1558 @@
+{
+  "GREEDY": {
+    "frontier_seal": "sha256:a1eb3154c97f0f6cbe2e5de82940e050b00f8a5ee45631d57fcfcf31198ec4e3",
+    "planned_history_hash": "sha256:82c21aa9e519d158c21e792ecf3445c2dbc4a8d2ee9bf81d494046f113db3c7f",
+    "planned_total_return": 84.73635733790354,
+    "seal": "sha256:8d2e58720f619a55241e132f59b81960688529e0667fa80eeb414e37727e17a3",
+    "selected_action_records": [
+      {
+        "action_id": "nominal-cavity-44388b74e03b769749971918",
+        "current_tool": null,
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            95.42137667096495,
+            -105.2830728871299,
+            11.400324228298604
+          ],
+          "tip_mm": [
+            94.15815641389963,
+            -103.19652952448322,
+            11.505590534521275
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:1836a6bbd74b3abe9d2ceb5d6742ec2881f12c38c05d1eef80cecee6dceb7268",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:ebd20cc5d2b2366f67f1126f7917ae95dec2ef6947632359bf9425fb18b46521",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:bf73cc4372578e151435c6588548ed6c8f71a74b67b12ce9af1223339d26aa62",
+        "steps_taken": 0
+      },
+      {
+        "action_id": "nominal-cavity-44eb93256fa83d95420e9e35",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            94.05787046025726,
+            -106.0304493450692,
+            9.85210539041181
+          ],
+          "tip_mm": [
+            92.28936210036585,
+            -103.10928863736387,
+            9.999478219123546
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:8c60bcc4dcb8abe7843b28c2cdd9c79588cf53e728a7899939599884b990b4dd",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:4c069309201ed9230c60d983f84b55a9fc1ce24939d3726ba20777396f2d24c9",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:e585ed5aafcaa82a3d8fa617dd3054beb1ee250a1bf34a4b6ca338834baea73c",
+        "steps_taken": 1
+      },
+      {
+        "action_id": "nominal-cavity-29ddcb6803ec9da11860a85e",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            93.33639535949453,
+            -106.6111967809245,
+            12.705561127434484
+          ],
+          "tip_mm": [
+            92.07317510242923,
+            -104.52465341827784,
+            12.810827433657153
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:98cdf0a6ad65a1a8eba138c66f540cc709294909d354b2ffd1642d95479be58d",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:f2e4a5d13f4a39a7bd7483abad1d216fd652f062bde18dbe6690c26478e4d616",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:b1d2b37163ce3752488afe6f1e7131538aedf544a281a5329ff885dd55cafd2c",
+        "steps_taken": 2
+      },
+      {
+        "action_id": "nominal-cavity-62a2d3f4c79176e1927148c6",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            94.45940986994798,
+            -106.05740280160366,
+            15.204931877662181
+          ],
+          "tip_mm": [
+            93.19618961288268,
+            -103.97085943895698,
+            15.31019818388485
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:58a184350732a6476b9e2d36f0bd9393e2094e215d9e7869c93fd5678c2ef000",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:c77e949e8859f5e7eb5d51ccd65726b98d110273d90f569be03a94830eb296e4",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:7c06ec117cfcc0c94b2fa6303a15e8ccf32a311c735ef020f1bd7396342e54e1",
+        "steps_taken": 3
+      },
+      {
+        "action_id": "nominal-cavity-58b847ee6c14acb6575bc9da",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            95.74239222593741,
+            -105.19975837608793,
+            13.601161515753335
+          ],
+          "tip_mm": [
+            93.973883866046,
+            -102.27859766838259,
+            13.748534344465071
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:f8644d5274dcea45d1bcb514196e7f6ff941fa310da761bd541ef57199c50409",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:4aac8046204705bdde68de6a1cdba49c8243de50b3d0fcd61918de07d9fabe39",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:2e9a66225f0ed3de3b4bda88148d9b5a097fa88adf3cc87d54bc9b322df4762b",
+        "steps_taken": 4
+      },
+      {
+        "action_id": "nominal-cavity-43e97cbd3f5d560f45f14766",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            91.25141404802415,
+            -107.93932067471908,
+            14.010798026570365
+          ],
+          "tip_mm": [
+            90.49348189378496,
+            -106.68739465713108,
+            14.073957810303966
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:77a09e26654c01fb29fbc36481ff7e7cffa0a0003c6385ea66933e92e4e77a0b",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:563d5eda6de1275d263ba7b240d87dfacdc572e7dcbdb0d87a8f2e10a07f419f",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:e284ede6db4cfe0c57eaaf1d69b16ae6bc2f92f015f0e4ff2f43abdaad7f68ad",
+        "steps_taken": 5
+      },
+      {
+        "action_id": "nominal-cavity-3cb267783395516d6d8e3958",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            92.61492025873181,
+            -107.1919442167798,
+            15.559016864457158
+          ],
+          "tip_mm": [
+            91.85698810449263,
+            -105.9400181991918,
+            15.62217664819076
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:7457620712c653bbccb27d8cd630b9de8c0b95d0620815b1c4d0e59e2301ac0b",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:869a4c0f28c3cd74dec6233b557fd65149522aec04bd0336100489c7b2fa70bd",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:7bf3aae4d87505c2e12a740417f5690899a450fb1d4ef18d0ad426d681555330",
+        "steps_taken": 6
+      },
+      {
+        "action_id": "nominal-cavity-f0bd1eb9a01e135706580c36",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            92.85541195898605,
+            -106.99836173816138,
+            14.607864952116264
+          ],
+          "tip_mm": [
+            91.59219170192075,
+            -104.91181837551471,
+            14.713131258338933
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:a2985071786223ba070c11b69581d4d8ff146b03f1841ed3b96a24a6c06c8a9d",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:a6526a452f020451f73dec3b3fc66b99867d813267bc59d4c194664e9a8a61d4",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:a1540a00ee3d30755ed132cfe5ac9fb6ddb9139f20f8d050c4fd62d8c9c07270",
+        "steps_taken": 7
+      },
+      {
+        "action_id": "nominal-cavity-49a3ad622e2827be49f311c0",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            91.73239744853262,
+            -107.55215571748221,
+            12.108494201888567
+          ],
+          "tip_mm": [
+            90.46917719146732,
+            -105.46561235483554,
+            12.213760508111235
+          ],
+          "tool_id": "generic_suction"
+        },
+        "query_catalog_digest": "sha256:37f356e9c96b2b1dc91e352be3cb1771283f172718923697808f3df56f23bc44",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:911956aff5dc03c28bc2e18538fc6942ad574941d79517a9f0678bca3b9d85d0",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:e4ec9ecee6a922d56412c818788f37691fbd4af0197a0bd683454a7290d902a1",
+        "steps_taken": 8
+      },
+      {
+        "action_id": "nominal-cavity-241d0cce99ac1020a9bd696e",
+        "current_tool": "generic_suction",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            90.93039849305165,
+            -108.02263518576108,
+            11.809960739115605
+          ],
+          "tip_mm": [
+            90.17246633881248,
+            -106.77070916817308,
+            11.873120522849206
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:1de2deb7b77c941a7df4fb8c9b13fbe8bb3a6bb76cb57d1220b73e351fd8b007",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:cbc7c870b3b770d8bbadb77f746a49d8e657a3056d0db644380ab90dc7029589",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:806735ecaf2beb64db854e18fa1dd2957d32ef679f782f07ba0a69a544af4ae0",
+        "steps_taken": 9
+      },
+      {
+        "action_id": "nominal-cavity-ea4d94fd78de070751c84be8",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            91.73239744853262,
+            -107.55215571748221,
+            12.108494201888567
+          ],
+          "tip_mm": [
+            90.46917719146732,
+            -105.46561235483554,
+            12.213760508111235
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:79a000d098d5ab00fe076d21f1df0fb24a052b9caff490287c1439784a669ee2",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:dc2c0793d5e5b5f417af50e7ded0f72b89ee9f310ede79c65982e89cc323d9f1",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:18f5cef8d128004d00ac2ea0672c412f636262b1a26288d2d94eb93016377e9e",
+        "steps_taken": 10
+      },
+      {
+        "action_id": "nominal-cavity-4f998cdfafe81b10ea4b7ace",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            92.21338084904112,
+            -107.16499076024533,
+            10.206190377206783
+          ],
+          "tip_mm": [
+            90.4448724891497,
+            -104.24383005254,
+            10.353563205918519
+          ],
+          "tool_id": "generic_suction"
+        },
+        "query_catalog_digest": "sha256:32196dc6fd4dccbf3c1fd4ebe5fb00f21974ef53944a710afcc5396482ac5128",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:cd5c8f7aad670cbbb5fb9f75a20fdb8b267887d1f317301e2771b5f40028bbda",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:fc3724b279f01fa902057fc0276c441f34083e07cb64024ff352e43c180513de",
+        "steps_taken": 11
+      },
+      {
+        "action_id": "nominal-cavity-ae0009b1c02d5c71e80ea810",
+        "current_tool": "generic_suction",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            94.69990157020221,
+            -105.86382032298522,
+            14.253779965321273
+          ],
+          "tip_mm": [
+            92.9313932103108,
+            -102.9426596152799,
+            14.40115279403301
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:74a9ea313e1ce648c127a9f9e74d2cb1d9b69a630acf096d8619562cb2bde9be",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:28379424bc63875ec718436d59cbfaf349847d23705c805bf62aea1bbd3a3474",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:1310923ff4b5b1384ae97f63f653b435595b32dec120fda6451b1095d63f17cf",
+        "steps_taken": 12
+      },
+      {
+        "action_id": "nominal-cavity-74cdb1e19d94c9fe5a23900e",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            93.33639535949453,
+            -106.6111967809245,
+            12.705561127434477
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:59770287ff4cfc1eedc8597e0bd296635c0d22398f5bc6725ce677d05a82ea86",
+          "tip_mm": [
+            91.062598896777,
+            -102.85541872816052,
+            12.89504047863528
+          ],
+          "tool_id": "generic_suction"
+        },
+        "physical_action": {
+          "entry_mm": [
+            95.18088497071068,
+            -105.47665536574836,
+            12.351476140639493
+          ],
+          "tip_mm": [
+            93.41237661081928,
+            -102.55549465804305,
+            12.49884896935123
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:48f26a569b0e79c3038f0be526ce100ab543cb8a85254fafb65600f77e8f3ed8",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:dc6b625b533292599e177a699fe2dccc000dd03b652b2e05a0b6a291d7b004de",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:59770287ff4cfc1eedc8597e0bd296635c0d22398f5bc6725ce677d05a82ea86",
+        "steps_taken": 13
+      },
+      {
+        "action_id": "nominal-cavity-2087ab0df92556256c3494b7",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            93.33639535949453,
+            -106.6111967809245,
+            12.705561127434477
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:f24d4a741e55e950110edf412d8dee90c479ecac7fd07843cf3e808826356fce",
+          "tip_mm": [
+            91.062598896777,
+            -102.85541872816052,
+            12.89504047863528
+          ],
+          "tool_id": "generic_suction"
+        },
+        "physical_action": {
+          "entry_mm": [
+            95.42137667096493,
+            -105.28307288712992,
+            11.400324228298603
+          ],
+          "tip_mm": [
+            93.65286831107352,
+            -102.36191217942459,
+            11.547697057010339
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:f03ef1d2ecf0672251470a03ed51af79549a012c9668963b36a547074fc9070a",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:0f0f9e9a1d1f70921c9bde2fcc947f9588c6e12739747d8713f833aabe6503c0",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:f24d4a741e55e950110edf412d8dee90c479ecac7fd07843cf3e808826356fce",
+        "steps_taken": 14
+      },
+      {
+        "action_id": "nominal-cavity-d1cba1c0b59bc4c26eef7b43",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            94.94039327045645,
+            -105.6702378443668,
+            13.302628052980381
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:2ebdf04cc0cad7faf2fcfb9cfbf17886e3ee1faaca6454a650e2b1c44d20afff",
+          "tip_mm": [
+            74.98151320882484,
+            -72.70285271454958,
+            14.965835691298551
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "physical_action": {
+          "entry_mm": [
+            93.09590365924029,
+            -106.80477925954294,
+            13.65671303977537
+          ],
+          "tip_mm": [
+            91.32739529934888,
+            -103.8836185518376,
+            13.804085868487107
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:f899142581e34ec6909592a329ca0de1e62c00711cbd919fe742fd115f79eb63",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:e1f7c1e090fb4c1b5dff5edd05c82d2093cf93317ced4e76d1c191f5a699a4f9",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:2ebdf04cc0cad7faf2fcfb9cfbf17886e3ee1faaca6454a650e2b1c44d20afff",
+        "steps_taken": 15
+      },
+      {
+        "action_id": "nominal-cavity-d4643766b9cd42dcab8e24b3",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            94.94039327045645,
+            -105.6702378443668,
+            13.302628052980381
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:7a0786cf98dcde11266d4d03ac03d77bc1cf43ec084ecf583f1484b7815c9d27",
+          "tip_mm": [
+            74.98151320882484,
+            -72.70285271454958,
+            14.965835691298551
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "physical_action": {
+          "entry_mm": [
+            93.57688705974877,
+            -106.41761430230606,
+            11.75440921509359
+          ],
+          "tip_mm": [
+            91.80837869985737,
+            -103.49645359460075,
+            11.901782043805326
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:d87dcd40e8d4da45bde317ebf47d71d329d920c562e08366b1f81a7b8572276f",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:2631a343ea09a695620dde3ff963520dcdb1c30961ff461b6cc5d86e14e9db8a",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:7a0786cf98dcde11266d4d03ac03d77bc1cf43ec084ecf583f1484b7815c9d27",
+        "steps_taken": 16
+      },
+      {
+        "action_id": "nominal-cavity-274db3c6f311c4dd10857c1f",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            94.94039327045645,
+            -105.6702378443668,
+            13.302628052980381
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:7c2ea0afa073eb7299dc1fe952fb82f6c94050e6173f150660d04c7478aa159d",
+          "tip_mm": [
+            74.98151320882484,
+            -72.70285271454958,
+            14.965835691298551
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "physical_action": {
+          "entry_mm": [
+            93.33639535949453,
+            -106.6111967809245,
+            12.705561127434477
+          ],
+          "tip_mm": [
+            91.062598896777,
+            -102.85541872816052,
+            12.89504047863528
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:9e6f5a76676e5b1b5407b8136f4fe3eaee80733fff1398a51fe5509da4c3cde7",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:dd1f54627ebff72f710d683ae089ebbdb89d29780ff8228ef433c10b9beb4ab7",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:7c2ea0afa073eb7299dc1fe952fb82f6c94050e6173f150660d04c7478aa159d",
+        "steps_taken": 17
+      },
+      {
+        "action_id": "nominal-cavity-d21a91068e31a06a912feac0",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            93.33639535949455,
+            -106.6111967809245,
+            12.705561127434475
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:5d80f50d3c2c5877a2f85ef92e9e310c2c7ef8208ffd04ef82546560e9e9748c",
+          "tip_mm": [
+            72.87222719503681,
+            -72.80919430604862,
+            14.410875288241712
+          ],
+          "tool_id": "generic_suction"
+        },
+        "physical_action": {
+          "entry_mm": [
+            93.81737876000301,
+            -106.22403182368764,
+            10.803257302752696
+          ],
+          "tip_mm": [
+            91.54358229728548,
+            -102.46825377092364,
+            10.9927366539535
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:dcbaf85945198c6b3b0d75e5dad90e6694faf868de43ea22b201fc2c7be0489c",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:5bc10012c446251ef3c1085a44c7f0ecbd46f28c9d499e7b6d679c37c9319e9c",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:5d80f50d3c2c5877a2f85ef92e9e310c2c7ef8208ffd04ef82546560e9e9748c",
+        "steps_taken": 18
+      },
+      {
+        "action_id": "nominal-cavity-c20da8f3d2a14ecf4b4a8829",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            93.33639535949453,
+            -106.6111967809245,
+            12.70556112743447
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:eaadb5cdda7010f74d71cd200d50ffa331e89402b9ab32198c42609fccd628ae",
+          "tip_mm": [
+            90.05202269112478,
+            -101.1861840380432,
+            12.979253523613409
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "physical_action": {
+          "entry_mm": [
+            92.21338084904112,
+            -107.16499076024533,
+            10.206190377206783
+          ],
+          "tip_mm": [
+            90.4448724891497,
+            -104.24383005254,
+            10.353563205918519
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:8d49461fed7b88e60184d7db9f34f0db8110fc142dd7775afb3e5acb0558beea",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:762a13dbf324328cc35224fd305e8864432df57fbaad0e140001f3cd59ed0780",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:eaadb5cdda7010f74d71cd200d50ffa331e89402b9ab32198c42609fccd628ae",
+        "steps_taken": 19
+      },
+      {
+        "action_id": "nominal-cavity-db9067c3e2e4e77b9fbc119c",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            93.33639535949453,
+            -106.6111967809245,
+            12.70556112743447
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:308f4e8cfdb9c036c68e517c231851294c5cbd48613c879101c1ea4e53e46b0e",
+          "tip_mm": [
+            90.05202269112478,
+            -101.1861840380432,
+            12.979253523613409
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "physical_action": {
+          "entry_mm": [
+            94.94039327045645,
+            -105.67023784436678,
+            13.302628052980378
+          ],
+          "tip_mm": [
+            92.66659680773891,
+            -101.91445979160278,
+            13.492107404181183
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:c061454e8cdfb4e38c0e4d8773764277a0a189c566bd5dfb07973ca015084d7e",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:4261365985d95200427ebf94f0b25ec4c95e3015a427af2a80f2424c8db47f49",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:308f4e8cfdb9c036c68e517c231851294c5cbd48613c879101c1ea4e53e46b0e",
+        "steps_taken": 20
+      },
+      {
+        "action_id": "nominal-cavity-f6372660bb4b06166b811870",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            94.37888601522972,
+            -105.94713483402721,
+            12.052942677866538
+          ],
+          "tip_mm": [
+            92.1050895525122,
+            -102.19135678126324,
+            12.242422029067342
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:3f1585f98fd16364c85c3888ba8499df18b5387325d50d8f2bec0922eede5317",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:656cb21076ee1fb4e6074779c354c627ef9236ff146caced59b23595e50e9144",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:6a40b150a57b30195acd2c6c97b72a9ced20855f8b0d9d410be5cd4f33c7f51a",
+        "steps_taken": 21
+      },
+      {
+        "action_id": "nominal-cavity-a75676d82f03944d9da01201",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            93.33639535949453,
+            -106.6111967809245,
+            12.70556112743447
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:ab5067005abc32939b4369a90d2fb7f86b2eded868d6b243eed8ce9b801ffb19",
+          "tip_mm": [
+            90.05202269112478,
+            -101.1861840380432,
+            12.979253523613409
+          ],
+          "tool_id": "generic_suction"
+        },
+        "physical_action": {
+          "entry_mm": [
+            96.7848828816726,
+            -104.53569642919064,
+            12.94854306618541
+          ],
+          "tip_mm": [
+            95.01637452178119,
+            -101.61453572148531,
+            13.095915894897146
+          ],
+          "tool_id": "generic_suction"
+        },
+        "query_catalog_digest": "sha256:b50c133d9319ec71745deb34da003d75a51cd548d497972c48396d972348e270",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:cf9fd997591ee5b9e76ab28fe5ad96d0c221015ab77277daf8a85ae58e858ab9",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:ab5067005abc32939b4369a90d2fb7f86b2eded868d6b243eed8ce9b801ffb19",
+        "steps_taken": 22
+      },
+      {
+        "action_id": "nominal-cavity-12aac9eb63c4828039720f23",
+        "current_tool": "generic_suction",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            94.94039327045645,
+            -105.67023784436678,
+            13.302628052980385
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:618c85f5729c264c94e8dc2649a6737439209924806fd261fba607955641dbec",
+          "tip_mm": [
+            91.65602060208668,
+            -100.24522510148546,
+            13.576320449159326
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "physical_action": {
+          "entry_mm": [
+            93.65741091446701,
+            -106.52788226988253,
+            14.906398414889226
+          ],
+          "tip_mm": [
+            91.8889025545756,
+            -103.6067215621772,
+            15.053771243600963
+          ],
+          "tool_id": "generic_suction"
+        },
+        "query_catalog_digest": "sha256:b7c5587ac0a27c4ba1290e619bd0c7e7ad797e7fcc88b3d135ad48b5b1dd3ebf",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:d3d7391d0a361bcd88538b14f63dba9c95f7c7316c2150c2568d97b0ae6e6fae",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:618c85f5729c264c94e8dc2649a6737439209924806fd261fba607955641dbec",
+        "steps_taken": 23
+      }
+    ]
+  },
+  "TAIL": {
+    "frontier_seal": "sha256:a1eb3154c97f0f6cbe2e5de82940e050b00f8a5ee45631d57fcfcf31198ec4e3",
+    "planned_history_hash": "sha256:8b74d32873c84d89797dda42e4f16b402b1707b22d702f5161f71f36a2b8f3a4",
+    "planned_total_return": 83.78408183898819,
+    "seal": "sha256:13cd2efdfa0cadc8d16fe6d83f905da0bc897b6b2ffc1e6e1e4323713a2fea68",
+    "selected_action_records": [
+      {
+        "action_id": "nominal-cavity-44388b74e03b769749971918",
+        "current_tool": null,
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            95.42137667096495,
+            -105.2830728871299,
+            11.400324228298604
+          ],
+          "tip_mm": [
+            94.15815641389963,
+            -103.19652952448322,
+            11.505590534521275
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:1836a6bbd74b3abe9d2ceb5d6742ec2881f12c38c05d1eef80cecee6dceb7268",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:ebd20cc5d2b2366f67f1126f7917ae95dec2ef6947632359bf9425fb18b46521",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:bf73cc4372578e151435c6588548ed6c8f71a74b67b12ce9af1223339d26aa62",
+        "steps_taken": 0
+      },
+      {
+        "action_id": "nominal-cavity-44eb93256fa83d95420e9e35",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            94.05787046025726,
+            -106.0304493450692,
+            9.85210539041181
+          ],
+          "tip_mm": [
+            92.28936210036585,
+            -103.10928863736387,
+            9.999478219123546
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:8c60bcc4dcb8abe7843b28c2cdd9c79588cf53e728a7899939599884b990b4dd",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:4c069309201ed9230c60d983f84b55a9fc1ce24939d3726ba20777396f2d24c9",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:e585ed5aafcaa82a3d8fa617dd3054beb1ee250a1bf34a4b6ca338834baea73c",
+        "steps_taken": 1
+      },
+      {
+        "action_id": "nominal-cavity-29ddcb6803ec9da11860a85e",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            93.33639535949453,
+            -106.6111967809245,
+            12.705561127434484
+          ],
+          "tip_mm": [
+            92.07317510242923,
+            -104.52465341827784,
+            12.810827433657153
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:98cdf0a6ad65a1a8eba138c66f540cc709294909d354b2ffd1642d95479be58d",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:f2e4a5d13f4a39a7bd7483abad1d216fd652f062bde18dbe6690c26478e4d616",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:b1d2b37163ce3752488afe6f1e7131538aedf544a281a5329ff885dd55cafd2c",
+        "steps_taken": 2
+      },
+      {
+        "action_id": "nominal-cavity-62a2d3f4c79176e1927148c6",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            94.45940986994798,
+            -106.05740280160366,
+            15.204931877662181
+          ],
+          "tip_mm": [
+            93.19618961288268,
+            -103.97085943895698,
+            15.31019818388485
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:58a184350732a6476b9e2d36f0bd9393e2094e215d9e7869c93fd5678c2ef000",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:c77e949e8859f5e7eb5d51ccd65726b98d110273d90f569be03a94830eb296e4",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:7c06ec117cfcc0c94b2fa6303a15e8ccf32a311c735ef020f1bd7396342e54e1",
+        "steps_taken": 3
+      },
+      {
+        "action_id": "nominal-cavity-58b847ee6c14acb6575bc9da",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            95.74239222593741,
+            -105.19975837608793,
+            13.601161515753335
+          ],
+          "tip_mm": [
+            93.973883866046,
+            -102.27859766838259,
+            13.748534344465071
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:f8644d5274dcea45d1bcb514196e7f6ff941fa310da761bd541ef57199c50409",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:4aac8046204705bdde68de6a1cdba49c8243de50b3d0fcd61918de07d9fabe39",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:2e9a66225f0ed3de3b4bda88148d9b5a097fa88adf3cc87d54bc9b322df4762b",
+        "steps_taken": 4
+      },
+      {
+        "action_id": "nominal-cavity-43e97cbd3f5d560f45f14766",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            91.25141404802415,
+            -107.93932067471908,
+            14.010798026570365
+          ],
+          "tip_mm": [
+            90.49348189378496,
+            -106.68739465713108,
+            14.073957810303966
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:77a09e26654c01fb29fbc36481ff7e7cffa0a0003c6385ea66933e92e4e77a0b",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:563d5eda6de1275d263ba7b240d87dfacdc572e7dcbdb0d87a8f2e10a07f419f",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:e284ede6db4cfe0c57eaaf1d69b16ae6bc2f92f015f0e4ff2f43abdaad7f68ad",
+        "steps_taken": 5
+      },
+      {
+        "action_id": "nominal-cavity-3cb267783395516d6d8e3958",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            92.61492025873181,
+            -107.1919442167798,
+            15.559016864457158
+          ],
+          "tip_mm": [
+            91.85698810449263,
+            -105.9400181991918,
+            15.62217664819076
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:7457620712c653bbccb27d8cd630b9de8c0b95d0620815b1c4d0e59e2301ac0b",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:869a4c0f28c3cd74dec6233b557fd65149522aec04bd0336100489c7b2fa70bd",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:7bf3aae4d87505c2e12a740417f5690899a450fb1d4ef18d0ad426d681555330",
+        "steps_taken": 6
+      },
+      {
+        "action_id": "nominal-cavity-f0bd1eb9a01e135706580c36",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            92.85541195898605,
+            -106.99836173816138,
+            14.607864952116264
+          ],
+          "tip_mm": [
+            91.59219170192075,
+            -104.91181837551471,
+            14.713131258338933
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:a2985071786223ba070c11b69581d4d8ff146b03f1841ed3b96a24a6c06c8a9d",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:a6526a452f020451f73dec3b3fc66b99867d813267bc59d4c194664e9a8a61d4",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:a1540a00ee3d30755ed132cfe5ac9fb6ddb9139f20f8d050c4fd62d8c9c07270",
+        "steps_taken": 7
+      },
+      {
+        "action_id": "nominal-cavity-49a3ad622e2827be49f311c0",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            91.73239744853262,
+            -107.55215571748221,
+            12.108494201888567
+          ],
+          "tip_mm": [
+            90.46917719146732,
+            -105.46561235483554,
+            12.213760508111235
+          ],
+          "tool_id": "generic_suction"
+        },
+        "query_catalog_digest": "sha256:37f356e9c96b2b1dc91e352be3cb1771283f172718923697808f3df56f23bc44",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:911956aff5dc03c28bc2e18538fc6942ad574941d79517a9f0678bca3b9d85d0",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:e4ec9ecee6a922d56412c818788f37691fbd4af0197a0bd683454a7290d902a1",
+        "steps_taken": 8
+      },
+      {
+        "action_id": "nominal-cavity-241d0cce99ac1020a9bd696e",
+        "current_tool": "generic_suction",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            90.93039849305165,
+            -108.02263518576108,
+            11.809960739115605
+          ],
+          "tip_mm": [
+            90.17246633881248,
+            -106.77070916817308,
+            11.873120522849206
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:1de2deb7b77c941a7df4fb8c9b13fbe8bb3a6bb76cb57d1220b73e351fd8b007",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:cbc7c870b3b770d8bbadb77f746a49d8e657a3056d0db644380ab90dc7029589",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:806735ecaf2beb64db854e18fa1dd2957d32ef679f782f07ba0a69a544af4ae0",
+        "steps_taken": 9
+      },
+      {
+        "action_id": "nominal-cavity-ea4d94fd78de070751c84be8",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            91.73239744853262,
+            -107.55215571748221,
+            12.108494201888567
+          ],
+          "tip_mm": [
+            90.46917719146732,
+            -105.46561235483554,
+            12.213760508111235
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:79a000d098d5ab00fe076d21f1df0fb24a052b9caff490287c1439784a669ee2",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:dc2c0793d5e5b5f417af50e7ded0f72b89ee9f310ede79c65982e89cc323d9f1",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:18f5cef8d128004d00ac2ea0672c412f636262b1a26288d2d94eb93016377e9e",
+        "steps_taken": 10
+      },
+      {
+        "action_id": "nominal-cavity-4f998cdfafe81b10ea4b7ace",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            92.21338084904112,
+            -107.16499076024533,
+            10.206190377206783
+          ],
+          "tip_mm": [
+            90.4448724891497,
+            -104.24383005254,
+            10.353563205918519
+          ],
+          "tool_id": "generic_suction"
+        },
+        "query_catalog_digest": "sha256:32196dc6fd4dccbf3c1fd4ebe5fb00f21974ef53944a710afcc5396482ac5128",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:cd5c8f7aad670cbbb5fb9f75a20fdb8b267887d1f317301e2771b5f40028bbda",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:fc3724b279f01fa902057fc0276c441f34083e07cb64024ff352e43c180513de",
+        "steps_taken": 11
+      },
+      {
+        "action_id": "nominal-cavity-ae0009b1c02d5c71e80ea810",
+        "current_tool": "generic_suction",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            94.69990157020221,
+            -105.86382032298522,
+            14.253779965321273
+          ],
+          "tip_mm": [
+            92.9313932103108,
+            -102.9426596152799,
+            14.40115279403301
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:74a9ea313e1ce648c127a9f9e74d2cb1d9b69a630acf096d8619562cb2bde9be",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:28379424bc63875ec718436d59cbfaf349847d23705c805bf62aea1bbd3a3474",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:1310923ff4b5b1384ae97f63f653b435595b32dec120fda6451b1095d63f17cf",
+        "steps_taken": 12
+      },
+      {
+        "action_id": "nominal-cavity-5983575d87e056b6fa4e0267",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            93.33639535949453,
+            -106.6111967809245,
+            12.705561127434477
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:59770287ff4cfc1eedc8597e0bd296635c0d22398f5bc6725ce677d05a82ea86",
+          "tip_mm": [
+            91.062598896777,
+            -102.85541872816052,
+            12.89504047863528
+          ],
+          "tool_id": "generic_suction"
+        },
+        "physical_action": {
+          "entry_mm": [
+            93.01537980452206,
+            -106.69451129196649,
+            10.504723839979748
+          ],
+          "tip_mm": [
+            91.24687144463064,
+            -103.77335058426115,
+            10.652096668691485
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:48f26a569b0e79c3038f0be526ce100ab543cb8a85254fafb65600f77e8f3ed8",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:78d85a058120f5eafaa966ac5b1f08c55bf16b5e7cae01b75f8b95b10fc23693",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:59770287ff4cfc1eedc8597e0bd296635c0d22398f5bc6725ce677d05a82ea86",
+        "steps_taken": 13
+      },
+      {
+        "action_id": "nominal-cavity-7e1b5e844e5e1f9565486e02",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            93.33639535949453,
+            -106.6111967809245,
+            12.705561127434477
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:93b9c300df9eebf8d4fdc05148c5055d15371ad8febd87b47247d6fc020a2e86",
+          "tip_mm": [
+            91.062598896777,
+            -102.85541872816052,
+            12.89504047863528
+          ],
+          "tool_id": "generic_suction"
+        },
+        "physical_action": {
+          "entry_mm": [
+            94.61937771548396,
+            -105.75355235540877,
+            11.101790765525651
+          ],
+          "tip_mm": [
+            92.85086935559255,
+            -102.83239164770345,
+            11.249163594237388
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:2f3c9dda782125ef49717ead8e1b6e50d80e21be6a972bbc5050b0b89ce85968",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:4aab952330d4eeccb93e8915433259bfec85168fcce50d7da0ff639dfb80aa2a",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:93b9c300df9eebf8d4fdc05148c5055d15371ad8febd87b47247d6fc020a2e86",
+        "steps_taken": 14
+      },
+      {
+        "action_id": "nominal-cavity-538158924ca2f830dea96e4d",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            93.33639535949453,
+            -106.6111967809245,
+            12.705561127434477
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:c2c544ddaedb5544cbf7a5f332b89a3db0b3cb44b89c0f8a89d42cadfaee6cd7",
+          "tip_mm": [
+            91.062598896777,
+            -102.85541872816052,
+            12.89504047863528
+          ],
+          "tool_id": "generic_suction"
+        },
+        "physical_action": {
+          "entry_mm": [
+            94.94039327045645,
+            -105.67023784436678,
+            13.302628052980378
+          ],
+          "tip_mm": [
+            92.66659680773891,
+            -101.91445979160278,
+            13.492107404181183
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:1b39bff11c9a3782e3f6d3e5fd6f452a102e004cff267cc55103fa232930ec39",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:f14b4dbc8f2823c0f00372aaeb58f7ba8d9bc0e1d16ca19b91c63b971c2210db",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:c2c544ddaedb5544cbf7a5f332b89a3db0b3cb44b89c0f8a89d42cadfaee6cd7",
+        "steps_taken": 15
+      },
+      {
+        "action_id": "nominal-cavity-a7d14bd6d4446525049c2728",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            94.94039327045645,
+            -105.6702378443668,
+            13.302628052980381
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:35b60b15e60ca5f2eb1962651d2e4d2dd005551f652fb24809ae04327213352c",
+          "tip_mm": [
+            74.98151320882484,
+            -72.70285271454958,
+            14.965835691298551
+          ],
+          "tool_id": "generic_suction"
+        },
+        "physical_action": {
+          "entry_mm": [
+            92.53439640401358,
+            -107.08167624920335,
+            12.407027664661529
+          ],
+          "tip_mm": [
+            90.76588804412216,
+            -104.16051554149803,
+            12.554400493373265
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:69b73c120cae3dfcdd3a01e577411cfbdb1f9249dc217dfee8a616c39dfd43c8",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:771d3aa2088faf88ade50c6f8e2c195ea61e1076a074ae8f8542844cb9ffab7b",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:35b60b15e60ca5f2eb1962651d2e4d2dd005551f652fb24809ae04327213352c",
+        "steps_taken": 16
+      },
+      {
+        "action_id": "nominal-cavity-41f6c4c122b085df0fd096d2",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            93.33639535949453,
+            -106.6111967809245,
+            12.705561127434477
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:2bbab82b08f4eae4c55d3e6355a1d36ed3e432fd2be6ea195fc7cf65cff89859",
+          "tip_mm": [
+            91.062598896777,
+            -102.85541872816052,
+            12.89504047863528
+          ],
+          "tool_id": "generic_suction"
+        },
+        "physical_action": {
+          "entry_mm": [
+            93.33639535949453,
+            -106.6111967809245,
+            12.705561127434477
+          ],
+          "tip_mm": [
+            91.062598896777,
+            -102.85541872816052,
+            12.89504047863528
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:493c3b35c6a45300daf894d1c61fc2094c36b4b6efa8229148f6469bcfa3b469",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:66fb4d175b4e626407d6e676cc2f903a2c453a8c9a88beb97ab5ccab2cfbbe1b",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:2bbab82b08f4eae4c55d3e6355a1d36ed3e432fd2be6ea195fc7cf65cff89859",
+        "steps_taken": 17
+      },
+      {
+        "action_id": "nominal-cavity-da5dcba37f06b625a78cd43d",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            93.33639535949455,
+            -106.6111967809245,
+            12.705561127434475
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:959ec510501fc25e6b06047d395282306aa04031dfb5d537d63bfed0a1c26f5c",
+          "tip_mm": [
+            72.87222719503681,
+            -72.80919430604862,
+            14.410875288241712
+          ],
+          "tool_id": "generic_suction"
+        },
+        "physical_action": {
+          "entry_mm": [
+            95.42137667096493,
+            -105.28307288712992,
+            11.400324228298603
+          ],
+          "tip_mm": [
+            93.65286831107352,
+            -102.36191217942459,
+            11.547697057010339
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:8d4ca930542ea357823bcdd27662da99e8c62b405184944ad70fb7c65b2b3c92",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:68a74d6102936f47f256a151a73ab07106061fa9856c9ef2b8036ba6d3b76133",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:959ec510501fc25e6b06047d395282306aa04031dfb5d537d63bfed0a1c26f5c",
+        "steps_taken": 18
+      },
+      {
+        "action_id": "nominal-cavity-057695fcc466fa24de793cbf",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            94.94039327045645,
+            -105.67023784436678,
+            13.302628052980385
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:90d86bfb3880e02f24f2e6e8f773cd5795d7e843dced037890c7306d6fa396a9",
+          "tip_mm": [
+            91.65602060208668,
+            -100.24522510148546,
+            13.576320449159326
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "physical_action": {
+          "entry_mm": [
+            93.81737876000301,
+            -106.22403182368764,
+            10.803257302752696
+          ],
+          "tip_mm": [
+            91.54358229728548,
+            -102.46825377092364,
+            10.9927366539535
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:77cabb84ab30e984d005e895d341ac75b95c866376bac8117cc09bac889a12d9",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:34e841619fd5fc477e39056f0814cf84b73cc1ecacd66020c436562237e279e1",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:90d86bfb3880e02f24f2e6e8f773cd5795d7e843dced037890c7306d6fa396a9",
+        "steps_taken": 19
+      },
+      {
+        "action_id": "nominal-cavity-7f44f31376346609de80413e",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": null,
+        "physical_action": {
+          "entry_mm": [
+            94.37888601522972,
+            -105.94713483402721,
+            12.052942677866538
+          ],
+          "tip_mm": [
+            92.1050895525122,
+            -102.19135678126324,
+            12.242422029067342
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "query_catalog_digest": "sha256:1a2f3cd5b839c9c6832e6796c9e91fe4bfb32d1529370ebdda44cddb85e9fb92",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:c063d42dc8d95455b5b6289442e6d2b317ef1e9547aae3507f5b808b69db1133",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:74771428d23331a84432e1b4036a1abd68721237413bf12d05a2742ec9613c5f",
+        "steps_taken": 20
+      },
+      {
+        "action_id": "nominal-cavity-a21064ff5e4c81c1bd4c577c",
+        "current_tool": "generic_aspirator",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            93.33639535949453,
+            -106.6111967809245,
+            12.70556112743447
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:4d2bf0d80b6ef400fdff613e7e9ca43b4a3322698df05e9d5b6b7ace28f1d09a",
+          "tip_mm": [
+            90.05202269112478,
+            -101.1861840380432,
+            12.979253523613409
+          ],
+          "tool_id": "generic_suction"
+        },
+        "physical_action": {
+          "entry_mm": [
+            95.10036111599246,
+            -105.3663873981719,
+            9.19948694084387
+          ],
+          "tip_mm": [
+            93.33185275610104,
+            -102.44522669046657,
+            9.346859769555607
+          ],
+          "tool_id": "generic_suction"
+        },
+        "query_catalog_digest": "sha256:7c19bda75c4f596913094471954c09668f6d78a4ab471467b228c1bbf70000a0",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:587b87b4fc70ed85b0f1b53662e1e2fd6881657a42e59719d35751c83e51bc5a",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:4d2bf0d80b6ef400fdff613e7e9ca43b4a3322698df05e9d5b6b7ace28f1d09a",
+        "steps_taken": 21
+      },
+      {
+        "action_id": "nominal-cavity-32e4545f9fdc28edc2151502",
+        "current_tool": "generic_suction",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            93.81737876000301,
+            -106.22403182368764,
+            10.803257302752689
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:a5a92f0e1469068440216f0497c2dc3d9e4d4dfe40e3332d3ba62a3763a37130",
+          "tip_mm": [
+            90.53300609163325,
+            -100.79901908080632,
+            11.076949698931628
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "physical_action": {
+          "entry_mm": [
+            91.97288914878686,
+            -107.35857323886377,
+            11.157342289547673
+          ],
+          "tip_mm": [
+            90.20438078889546,
+            -104.43741253115846,
+            11.30471511825941
+          ],
+          "tool_id": "generic_suction"
+        },
+        "query_catalog_digest": "sha256:03fb1474dcca8e1467a30f8b8232b1071388384f34b9faa35c17898d2cc92c5f",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:077fd096b186fa55a04547bd99dc5de7f2eef5ad0fbba3722cf66159fdd338c2",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:a5a92f0e1469068440216f0497c2dc3d9e4d4dfe40e3332d3ba62a3763a37130",
+        "steps_taken": 22
+      },
+      {
+        "action_id": "nominal-cavity-31b9cf7217fc2b26d0c0a72a",
+        "current_tool": "generic_suction",
+        "decision_model_hash": "sha256:ff052ce3e11524ff010768cae7ec8bc951085ffc5d1ab6576c8264ae0b99eee0",
+        "focus": {
+          "entry_mm": [
+            93.81737876000301,
+            -106.22403182368764,
+            10.803257302752689
+          ],
+          "native_decision_model_hash": "sha256:7b9745fd066da205ca84d8a1646f5b02b8597c42287f7d08bdf76a66698e87ca",
+          "proposal_model_hash": "sha256:9979391699ea82f93a51ac52aa7e3b8bdbcd7fd9fd4397a9df143a427efa47d4",
+          "schema": "public-base-goal-focus-v1",
+          "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+          "source_state_hash": "sha256:9b6a3ada6c04527d9866a85a9f41589bad1f6a60c561ce458db922a7b98b4bdb",
+          "tip_mm": [
+            90.53300609163325,
+            -100.79901908080632,
+            11.076949698931628
+          ],
+          "tool_id": "generic_aspirator"
+        },
+        "physical_action": {
+          "entry_mm": [
+            96.46386732670013,
+            -104.61901094023263,
+            10.747705778730664
+          ],
+          "tip_mm": [
+            94.69535896680871,
+            -101.69785023252729,
+            10.8950786074424
+          ],
+          "tool_id": "generic_suction"
+        },
+        "query_catalog_digest": "sha256:16fbf84505161b7c275baeb69f52ff2778ca22295f267c66e2121ec1b23f66e2",
+        "schema": "focused-public-goal-action-v1",
+        "seal": "sha256:e2a35176e9f5ccd8b9efaabec0a473d5230503ed3bbfaeea520a1637cda892ac",
+        "source_hash": "sha256:539e243f52ca03c83815f6796f5c402e30bc450cc705b7ef43dd8552e44fbe9d",
+        "source_state_hash": "sha256:9b6a3ada6c04527d9866a85a9f41589bad1f6a60c561ce458db922a7b98b4bdb",
+        "steps_taken": 23
+      }
+    ]
+  }
+}

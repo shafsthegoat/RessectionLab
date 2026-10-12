@@ -1,0 +1,53 @@
+{
+  "growth_highwater_bytes": 1822773248,
+  "measurement": {
+    "allocated_bytes": {
+      ".git": 158707712,
+      ".pytest_cache": 1146880,
+      ".tools": 1643302912,
+      ".venv": 3054829568,
+      "@root-files-and-directory": 663552,
+      "artifacts": 1795186688,
+      "build": 17311510528,
+      "data": 356137070592,
+      "desktop": 18945323008,
+      "dist": 2575773696,
+      "docs": 2224128,
+      "launchers": 409600,
+      "manifests": 5283840,
+      "outputs": 16126533632,
+      "packaging": 544768,
+      "research": 53248,
+      "scripts": 9601024,
+      "src": 6815744,
+      "tests": 20385792
+    },
+    "ended_at_utc": "2026-10-12T14:43:17.808505+00:00",
+    "free_bytes": 352410738688,
+    "method": "du -k -d 1 .; allocated file blocks, no bodies or symlink traversal; statvfs f_bavail",
+    "started_at_utc": "2026-10-12T14:43:01.502980+00:00",
+    "total_allocated_bytes": 417795366912
+  },
+  "measurement_excludes_this_archive_and_later_git_writes": true,
+  "stage_reservation": {
+    "began_at_utc": "2026-10-12T14:00:58.108275+00:00",
+    "closed_at_utc": "2026-10-12T14:43:18.226097+00:00",
+    "created_at_utc": "2026-10-12T13:47:10.757639+00:00",
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 4628480,
+    "owner": "/root",
+    "pilot": false,
+    "reserved_bytes": 8388608,
+    "scope_current_allocated_bytes": 4628480,
+    "scope_initial_allocated_bytes": 0,
+    "scopes": [
+      "build/train045-focused-batched-v1"
+    ],
+    "status": "closed",
+    "terminal_note": "Storage release only; success/admission not inferred from exit status.",
+    "terminal_receipt": {
+      "path": "build/train045-focused-batched-v1/terminal-storage.json",
+      "sha256": "66a2fa941c24ba967370e83ba903dd4533ca95dfd604b739bfa7bf3ee7704dc3"
+    }
+  }
+}

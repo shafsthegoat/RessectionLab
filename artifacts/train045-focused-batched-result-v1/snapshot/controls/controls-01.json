@@ -1,0 +1,123 @@
+{
+  "accepted": true,
+  "caps": {
+    "group_rss_bytes": 1073741824,
+    "output_bytes": 1048576,
+    "seconds": 60,
+    "threads": 1
+  },
+  "cleanup": {
+    "child_reaped": true,
+    "errors": [],
+    "events": [
+      {
+        "pgid": 60481,
+        "phase": "bind",
+        "pid": 60481,
+        "start_identity": [
+          1791814494,
+          508769
+        ]
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.0,
+        "phase": "cleanup.pre_signal_exit",
+        "pid": 60481,
+        "start_identity": [
+          1791814494,
+          508769
+        ],
+        "wait_returncode": 0
+      },
+      {
+        "direct_child_reaped": true,
+        "grace_seconds": 0.5,
+        "phase": "cleanup.wait",
+        "pid": 60481,
+        "start_identity": [
+          1791814494,
+          508769
+        ],
+        "wait_returncode": 0
+      }
+    ],
+    "exit_code": 0,
+    "owned_root_pid": 60481,
+    "owned_root_start_identity": [
+      1791814494,
+      508769
+    ],
+    "remaining_owned_pids": [],
+    "remaining_state_unknown": false,
+    "verified": true
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-batched-v1/controls/absent-controls-01-cache",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-batched-v1/controls/control_bootstrap.py"
+  ],
+  "failure": null,
+  "log_bytes": 99,
+  "log_sha256": "3452514bb66af977d641f4f369a133f456f1034e4e892397761998d4ff2f9947",
+  "peak_group_rss_bytes": 493240320,
+  "returncode": 0,
+  "scope": "generated-only, no acquired payload or saved weights",
+  "source_after": {
+    "build/train045-focused-batched-v1/controls/control_bootstrap.py": "d46f98987149148b42314e3112c05d7f69680510bd492c07ffae8a7f172dbed6",
+    "build/train045-focused-batched-v1/controls/run_controls.py": "86a4862cff059a0222069de08f2856d376c33003307903bbcda60abaa749f678",
+    "build/train045-focused-batched-v1/model/focused_policy.py": "3aeb9e12b0b2fc08ea69863e3b1553db54bb342fb36bfb3ea368d7a8065099f3",
+    "build/train045-focused-batched-v1/model/test_batched_authentication.py": "ed7851d1248539cd005e90bb57ace4622eba9daae224d587573d50be28003dea",
+    "build/train045-focused-batched-v1/runner/admission_parity.py": "5a5354bf113683980b3086624e02777e8c1ddf38401bd1606dc864c204fc24b8",
+    "build/train045-focused-batched-v1/runner/bootstrap_smoke.py": "2d510226fe62c1cea85773441bdf7da106fe3e616f00a7a7502c829de032734a",
+    "build/train045-focused-batched-v1/runner/catalog_profile.py": "6f0ef80a79b48c7eadb3241a6dc5cb4aeb369be8c4c5ec94166813848919c02d",
+    "build/train045-focused-batched-v1/runner/common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+    "build/train045-focused-batched-v1/runner/compact_output.py": "efbed8f076822e77575f6f74a180851363c920c71b36c4bae118e5f4767317c9",
+    "build/train045-focused-batched-v1/runner/comparison.py": "0484e0f514797fc36a09e46b19dac8eaf91241679fab55a172530bd237ffaa98",
+    "build/train045-focused-batched-v1/runner/freeze_sources.py": "ddd23b30f97a4c0ba29c6431885e8449e3f6ff743c7bb736b3e0e3082382d89b",
+    "build/train045-focused-batched-v1/runner/frontier_protocol.py": "0dfd28ea76cffeb519119379692ded8f970b2f2eddeffda6de5cb54b71f311aa",
+    "build/train045-focused-batched-v1/runner/inputs.py": "18bae3c0193842ece94be41141c3e87f82a765be4d745180f4711d988c23fa20",
+    "build/train045-focused-batched-v1/runner/plan_transport.py": "3bfc9decb7af64da3af0b995c8d8a14f8a11d17aff602dbfa098202b19ed4b03",
+    "build/train045-focused-batched-v1/runner/recovery_parity.py": "8879f775f3c3ce07e616b74ff63750d5873ea34caa4e3ec9961bd48572345f4c",
+    "build/train045-focused-batched-v1/runner/run_owned.py": "7a0240207485abfd91352f51e1f13d9e061e17f1c8f56eab2159718f56a983af",
+    "build/train045-focused-batched-v1/runner/test_admission_parity.py": "cafb4022cfeaab432e2f51c6fe8782f225d866d1e7eba70c6b0e4d6e9f4bb7ce",
+    "build/train045-focused-batched-v1/runner/test_compact_output.py": "bd3bdc2692411a6308473befe8a9a9c5834fc6c1a344c90edb1602f6fad46a79",
+    "build/train045-focused-batched-v1/runner/test_profile.py": "9c00228362cbdaf85bca9d5601612a002d91fba17a56d01bee6d8cf57f1ec5fb",
+    "build/train045-focused-batched-v1/runner/test_recovery_parity.py": "ec0102543fbb6e84c72fb65082c4acd68d39909da4eb716bc5f4eb9b5516823d",
+    "build/train045-focused-batched-v1/runner/test_success_transport.py": "08f3040ef14ef89129e57706e7bc4d416b97a229aeb3c53d4618a8af720f3216",
+    "build/train045-focused-batched-v1/runner/test_worker.py": "357f9c8b29cbb20f77dd8a1d2b2f61a2c5c3c4ebfbb61065b0d80cc26ec519cc",
+    "build/train045-focused-batched-v1/runner/worker.py": "150774db55e22000f4d31b4a28e1ecbb5fa999560f1f21b7181332f0aedc9828",
+    "build/train045-focused-policy-v1/model/saved_tail.py": "7c6bab940a36af3e362c15d9576ddbed8566b88b00ef07ce4e4d0f33a02353c9"
+  },
+  "source_before": {
+    "build/train045-focused-batched-v1/controls/control_bootstrap.py": "d46f98987149148b42314e3112c05d7f69680510bd492c07ffae8a7f172dbed6",
+    "build/train045-focused-batched-v1/controls/run_controls.py": "86a4862cff059a0222069de08f2856d376c33003307903bbcda60abaa749f678",
+    "build/train045-focused-batched-v1/model/focused_policy.py": "3aeb9e12b0b2fc08ea69863e3b1553db54bb342fb36bfb3ea368d7a8065099f3",
+    "build/train045-focused-batched-v1/model/test_batched_authentication.py": "ed7851d1248539cd005e90bb57ace4622eba9daae224d587573d50be28003dea",
+    "build/train045-focused-batched-v1/runner/admission_parity.py": "5a5354bf113683980b3086624e02777e8c1ddf38401bd1606dc864c204fc24b8",
+    "build/train045-focused-batched-v1/runner/bootstrap_smoke.py": "2d510226fe62c1cea85773441bdf7da106fe3e616f00a7a7502c829de032734a",
+    "build/train045-focused-batched-v1/runner/catalog_profile.py": "6f0ef80a79b48c7eadb3241a6dc5cb4aeb369be8c4c5ec94166813848919c02d",
+    "build/train045-focused-batched-v1/runner/common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+    "build/train045-focused-batched-v1/runner/compact_output.py": "efbed8f076822e77575f6f74a180851363c920c71b36c4bae118e5f4767317c9",
+    "build/train045-focused-batched-v1/runner/comparison.py": "0484e0f514797fc36a09e46b19dac8eaf91241679fab55a172530bd237ffaa98",
+    "build/train045-focused-batched-v1/runner/freeze_sources.py": "ddd23b30f97a4c0ba29c6431885e8449e3f6ff743c7bb736b3e0e3082382d89b",
+    "build/train045-focused-batched-v1/runner/frontier_protocol.py": "0dfd28ea76cffeb519119379692ded8f970b2f2eddeffda6de5cb54b71f311aa",
+    "build/train045-focused-batched-v1/runner/inputs.py": "18bae3c0193842ece94be41141c3e87f82a765be4d745180f4711d988c23fa20",
+    "build/train045-focused-batched-v1/runner/plan_transport.py": "3bfc9decb7af64da3af0b995c8d8a14f8a11d17aff602dbfa098202b19ed4b03",
+    "build/train045-focused-batched-v1/runner/recovery_parity.py": "8879f775f3c3ce07e616b74ff63750d5873ea34caa4e3ec9961bd48572345f4c",
+    "build/train045-focused-batched-v1/runner/run_owned.py": "7a0240207485abfd91352f51e1f13d9e061e17f1c8f56eab2159718f56a983af",
+    "build/train045-focused-batched-v1/runner/test_admission_parity.py": "cafb4022cfeaab432e2f51c6fe8782f225d866d1e7eba70c6b0e4d6e9f4bb7ce",
+    "build/train045-focused-batched-v1/runner/test_compact_output.py": "bd3bdc2692411a6308473befe8a9a9c5834fc6c1a344c90edb1602f6fad46a79",
+    "build/train045-focused-batched-v1/runner/test_profile.py": "9c00228362cbdaf85bca9d5601612a002d91fba17a56d01bee6d8cf57f1ec5fb",
+    "build/train045-focused-batched-v1/runner/test_recovery_parity.py": "ec0102543fbb6e84c72fb65082c4acd68d39909da4eb716bc5f4eb9b5516823d",
+    "build/train045-focused-batched-v1/runner/test_success_transport.py": "08f3040ef14ef89129e57706e7bc4d416b97a229aeb3c53d4618a8af720f3216",
+    "build/train045-focused-batched-v1/runner/test_worker.py": "357f9c8b29cbb20f77dd8a1d2b2f61a2c5c3c4ebfbb61065b0d80cc26ec519cc",
+    "build/train045-focused-batched-v1/runner/worker.py": "150774db55e22000f4d31b4a28e1ecbb5fa999560f1f21b7181332f0aedc9828",
+    "build/train045-focused-policy-v1/model/saved_tail.py": "7c6bab940a36af3e362c15d9576ddbed8566b88b00ef07ce4e4d0f33a02353c9"
+  },
+  "source_unchanged": true,
+  "wall_seconds": 6.019708000123501
+}

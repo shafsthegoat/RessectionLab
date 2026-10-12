@@ -1,0 +1,1256 @@
+{
+  "auditor_sha256": "047dd241bc90ddcb35d4bd7624644b4abb5322bc0fdf9805079efdef036f2a5b",
+  "checked_source_count": 160,
+  "checked_source_digest": "sha256:4fa885c98402ab97a89ea8b9091dead57d0d2cddf89baaef2a352a03f5239d6f",
+  "checks": 7447,
+  "elapsed_seconds": 4.800213707999999,
+  "evidence": {
+    "build/continuation-tail-v1/run-01/report.json": {
+      "bytes": 1054470,
+      "sha256": "1bee2b1d4c40a55b666ce3269a39c4a5052e1911297b22c6c8702fb21000af66"
+    },
+    "build/train045-focused-batched-v1/run-01/GREEDY-selection.json.gz": {
+      "bytes": 1428232,
+      "sha256": "a08bb4f47bd07da3ede22399d94c347336479491af4389eddd6c7b37c3870c02"
+    },
+    "build/train045-focused-batched-v1/run-01/ReMIND-045-context.json": {
+      "bytes": 7168,
+      "sha256": "4db14c16489992fe008be8db081b5f7aa1c9458b4139fafa96a579a616a87ed4"
+    },
+    "build/train045-focused-batched-v1/run-01/TAIL-selection.json.gz": {
+      "bytes": 1427175,
+      "sha256": "68c9615615e2ab2a58e129e1b6e9aac1e8abddf9dc38a12118c845a521f0fbeb"
+    },
+    "build/train045-focused-batched-v1/run-01/catalog-profile.json": {
+      "bytes": 3727,
+      "sha256": "b11bb01bd6dc66b53d04de8e39fc9a655be3ab24e96fdd0e096f8e33efca3cdc"
+    },
+    "build/train045-focused-batched-v1/run-01/evaluation/GREEDY.json": {
+      "bytes": 29889,
+      "sha256": "98437ca38aac45844fba9ee777dd31616839147f4e3e0d9d0fb0859db191fdc0"
+    },
+    "build/train045-focused-batched-v1/run-01/evaluation/TAIL.json": {
+      "bytes": 29884,
+      "sha256": "4b7a5b5b6d9da541650e3f401b7e0b41b7991f82af8e68d6ddeba6cdecf7ca44"
+    },
+    "build/train045-focused-batched-v1/run-01/evaluation/source/admitted-public-bindings.json": {
+      "bytes": 18540,
+      "sha256": "50096822be3aeb030ace2fdda074a85d0f1c599b1a2d38743be72c0b8f082321"
+    },
+    "build/train045-focused-batched-v1/run-01/first-failure-sidecars.json.gz": {
+      "bytes": 651176,
+      "sha256": "c0048b9c4f0addf40f895294c02f14b932c6f6ff0364d6731c5ad79ac9157bff"
+    },
+    "build/train045-focused-batched-v1/run-01/fixed-prefix.json": {
+      "bytes": 33382,
+      "sha256": "13e6d0bba664d030a60ca0ae66d59ba6d9e862b6b43a84682e2341f4b3fc0467"
+    },
+    "build/train045-focused-batched-v1/run-01/focused-deployment.json": {
+      "bytes": 5289,
+      "sha256": "a00f4fc4a2f296ba24ea1e4be7a3154d6bd82d0e65b653521313a26d25add81c"
+    },
+    "build/train045-focused-batched-v1/run-01/launcher.json": {
+      "bytes": 4648,
+      "sha256": "a463af29e84fec3c471d68fd645b10c9658986a7843d342633a58cac7e048594"
+    },
+    "build/train045-focused-batched-v1/run-01/plans.json": {
+      "bytes": 67918,
+      "sha256": "dd83f8afc2cda6f9c72a56731622d88fe8afb033abe7740ecd1b530651134797"
+    },
+    "build/train045-focused-batched-v1/run-01/report.json": {
+      "bytes": 96885,
+      "sha256": "71a0806d9dee4a2497edeb47077844368618a9657fc70fa32f6ce7878310ca9d"
+    },
+    "build/train045-focused-batched-v1/run-01/world-admission.json": {
+      "bytes": 1030,
+      "sha256": "9a8b06f7530efe38771b55b1f151a2d0a1cee3f7f26c2376bf5f0cebb59c71da"
+    },
+    "build/train045-focused-batched-v1/runner/config.json": {
+      "bytes": 3141,
+      "sha256": "2781114b621d443df7d2b60d01fe87dcd5231518eee5917c7df39faa62ecf371"
+    },
+    "build/train045-focused-batched-v1/runner/source-index.json": {
+      "bytes": 24955,
+      "sha256": "8bf1c3def8f773f5b9b4505392b995886d8cba87a96e3eb91af926d23ccb4df6"
+    },
+    "build/train045-focused-policy-v1/recovery-01/report.json": {
+      "bytes": 27881,
+      "sha256": "4179a5f960f442ee71e069c060a7e86c471b6b7fd8ca3732ae792ad5c90a2819"
+    },
+    "build/train045-focused-policy-v1/recovery-02/GREEDY-selection.json.gz": {
+      "bytes": 1428231,
+      "sha256": "9aead92c02d90448e0ba3a8da2918974b7ef584944d9a2e1aa4d24aba173503a"
+    },
+    "build/train045-focused-policy-v1/recovery-02/ReMIND-045-context.json": {
+      "bytes": 7168,
+      "sha256": "fe4ae270a4336e8887579f11cb77242735ee583a9d5b3d00aff9110570dd0240"
+    },
+    "build/train045-focused-policy-v1/recovery-02/TAIL-partial-selection.json.gz": {
+      "bytes": 1301965,
+      "sha256": "8e6025431ef45615a3c9eaf91351157951d00e35a9bb380536793964a97d6f61"
+    },
+    "build/train045-focused-policy-v1/recovery-02/evaluation/source/admitted-public-bindings.json": {
+      "bytes": 18540,
+      "sha256": "c80e503fdf15d090eb0f8283bf0acbd8093ffaa6d278cb046f07689d670d5293"
+    },
+    "build/train045-focused-policy-v1/recovery-02/report.json": {
+      "bytes": 32958,
+      "sha256": "079cfc74ae0499430b9a93438a94d7f3154a7559a972a40eee71f17fb8ab1af1"
+    },
+    "build/train045-focused-policy-v1/recovery-02/world-admission.json": {
+      "bytes": 1030,
+      "sha256": "72a746010d9e8e77e6de337bbcc37f2612a3ac7e0a0add0e6dcc0535d084a924"
+    },
+    "build/train045-focused-policy-v1/run-01/GREEDY-partial-selection.json.gz": {
+      "bytes": 1306073,
+      "sha256": "2ff156084aeae3d8cbe84f1307bb39fb8577f44bb19c7b2000220bcba7b61c50"
+    },
+    "build/train045-focused-policy-v1/run-01/ReMIND-045-context.json": {
+      "bytes": 7168,
+      "sha256": "35f66df987b2da0a7e237fa229460039b2db304435be7273398e0783d63f5203"
+    },
+    "build/train045-focused-policy-v1/run-01/evaluation/source/admitted-public-bindings.json": {
+      "bytes": 18540,
+      "sha256": "77b8abd0dac28c1b5eb499755b32dbd4bfb2fe80dd7b8f170ccc6257f8da81b7"
+    },
+    "build/train045-focused-policy-v1/run-01/report.json": {
+      "bytes": 23490,
+      "sha256": "c31b88e88c77b8f50d262193ce2424d4abf203eb23fbab14eed63de032229038"
+    },
+    "build/train045-focused-policy-v1/run-01/world-admission.json": {
+      "bytes": 1030,
+      "sha256": "ab674649375deee17cd6508a769dfa3e4490d18161cf0eb6b35d001aebc051ab"
+    }
+  },
+  "findings": {
+    "claims": "Batched authentication improved one paired engineering microbenchmark and enabled this completed same-catalog comparison. Frozen TAIL did not improve learned planning quality. Same exposed TRAIN045 anatomy, no refit, no held-out/clinical/physical validation claim.",
+    "common_states_until_first_divergence": [
+      {
+        "GREEDY": {
+          "absolute_action": 13,
+          "action": "nominal-cavity-ae0009b1c02d5c71e80ea810",
+          "best_immediate_action": "nominal-cavity-ae0009b1c02d5c71e80ea810",
+          "best_immediate_r_plus_tail": 3.744466055194124,
+          "best_immediate_raw_tail": null,
+          "best_immediate_reward": 3.744466055194124,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 10.235940467338544,
+          "physical": {
+            "entry_mm": [
+              94.69990157020221,
+              -105.86382032298522,
+              14.253779965321273
+            ],
+            "tip_mm": [
+              92.9313932103108,
+              -102.9426596152799,
+              14.40115279403301
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:74a9ea313e1ce648c127a9f9e74d2cb1d9b69a630acf096d8619562cb2bde9be",
+          "removed_cells": 4,
+          "reward": 3.744466055194124,
+          "selected_r_plus_tail": 3.744466055194124,
+          "selected_raw_tail": null,
+          "state": "sha256:1310923ff4b5b1384ae97f63f653b435595b32dec120fda6451b1095d63f17cf",
+          "switch": true,
+          "target_mm3": 3.814701995661462
+        },
+        "TAIL": {
+          "absolute_action": 13,
+          "action": "nominal-cavity-ae0009b1c02d5c71e80ea810",
+          "best_immediate_action": "nominal-cavity-ae0009b1c02d5c71e80ea810",
+          "best_immediate_r_plus_tail": 21.044780004779085,
+          "best_immediate_raw_tail": 17.30031394958496,
+          "best_immediate_reward": 3.744466055194124,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 10.235940467338544,
+          "physical": {
+            "entry_mm": [
+              94.69990157020221,
+              -105.86382032298522,
+              14.253779965321273
+            ],
+            "tip_mm": [
+              92.9313932103108,
+              -102.9426596152799,
+              14.40115279403301
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:74a9ea313e1ce648c127a9f9e74d2cb1d9b69a630acf096d8619562cb2bde9be",
+          "removed_cells": 4,
+          "reward": 3.744466055194124,
+          "selected_r_plus_tail": 21.044780004779085,
+          "selected_raw_tail": 17.30031394958496,
+          "state": "sha256:1310923ff4b5b1384ae97f63f653b435595b32dec120fda6451b1095d63f17cf",
+          "switch": true,
+          "target_mm3": 3.814701995661462
+        },
+        "absolute_action": 13,
+        "same_action": true
+      },
+      {
+        "GREEDY": {
+          "absolute_action": 14,
+          "action": "nominal-cavity-74cdb1e19d94c9fe5a23900e",
+          "best_immediate_action": "nominal-cavity-74cdb1e19d94c9fe5a23900e",
+          "best_immediate_r_plus_tail": 3.774466055194124,
+          "best_immediate_raw_tail": null,
+          "best_immediate_reward": 3.774466055194124,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 10.235940467338505,
+          "physical": {
+            "entry_mm": [
+              95.18088497071068,
+              -105.47665536574836,
+              12.351476140639493
+            ],
+            "tip_mm": [
+              93.41237661081928,
+              -102.55549465804305,
+              12.49884896935123
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:48f26a569b0e79c3038f0be526ce100ab543cb8a85254fafb65600f77e8f3ed8",
+          "removed_cells": 4,
+          "reward": 3.774466055194124,
+          "selected_r_plus_tail": 3.774466055194124,
+          "selected_raw_tail": null,
+          "state": "sha256:59770287ff4cfc1eedc8597e0bd296635c0d22398f5bc6725ce677d05a82ea86",
+          "switch": false,
+          "target_mm3": 3.814701995661462
+        },
+        "TAIL": {
+          "absolute_action": 14,
+          "action": "nominal-cavity-5983575d87e056b6fa4e0267",
+          "best_immediate_action": "nominal-cavity-74cdb1e19d94c9fe5a23900e",
+          "best_immediate_r_plus_tail": 21.05632259205936,
+          "best_immediate_raw_tail": 17.281856536865234,
+          "best_immediate_reward": 3.774466055194124,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 10.235940467338569,
+          "physical": {
+            "entry_mm": [
+              93.01537980452206,
+              -106.69451129196649,
+              10.504723839979748
+            ],
+            "tip_mm": [
+              91.24687144463064,
+              -103.77335058426115,
+              10.652096668691485
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:48f26a569b0e79c3038f0be526ce100ab543cb8a85254fafb65600f77e8f3ed8",
+          "removed_cells": 4,
+          "reward": 3.774466055194124,
+          "selected_r_plus_tail": 21.14143230275272,
+          "selected_raw_tail": 17.366966247558594,
+          "state": "sha256:59770287ff4cfc1eedc8597e0bd296635c0d22398f5bc6725ce677d05a82ea86",
+          "switch": false,
+          "target_mm3": 3.814701995661462
+        },
+        "absolute_action": 14,
+        "same_action": false
+      }
+    ],
+    "completed_comparison": true,
+    "costs": {
+      "all_parent_seconds": 890.9508534157649,
+      "cumulative_four_attempts": {
+        "checkpoint_loads": 8,
+        "frozen_policy_forwards": 23,
+        "native_previews": 27635,
+        "native_transition_attempts": 201,
+        "prior_failed_attempts": 3,
+        "prior_parent_seconds": 565.1562069577631,
+        "scope": "All three failed workers plus current worker; current parent receipt separately reports supervision.",
+        "worker_seconds": 888.8159896251746
+      },
+      "current_forwards": 12,
+      "current_previews": 10932,
+      "current_transitions": 84,
+      "parent_seconds": 325.7946464580018,
+      "peak_rss_bytes": 1263321088,
+      "phases": {
+        "GREEDY_authoritative_suffix_replay_and_full_independent_audit": {
+          "complete_wall_seconds": 30.12197491689585,
+          "native_preview_entries": 1148,
+          "native_transition_calls": 12,
+          "native_transition_inclusive_seconds": 0.7676158740650862,
+          "native_transition_returned": 12,
+          "task_clone_calls": 1,
+          "task_clone_inclusive_seconds": 0.02471229201182723,
+          "task_clone_returned": 1
+        },
+        "GREEDY_suffix_planning": {
+          "complete_wall_seconds": 87.41960850008763,
+          "native_preview_entries": 2484,
+          "native_transition_calls": 12,
+          "native_transition_inclusive_seconds": 1.0448505415115505,
+          "native_transition_returned": 12,
+          "task_clone_calls": 59,
+          "task_clone_inclusive_seconds": 3.1749410436023027,
+          "task_clone_returned": 59
+        },
+        "TAIL_authoritative_suffix_replay_and_full_independent_audit": {
+          "complete_wall_seconds": 30.128368583042175,
+          "native_preview_entries": 1156,
+          "native_transition_calls": 12,
+          "native_transition_inclusive_seconds": 0.9096659573260695,
+          "native_transition_returned": 12,
+          "task_clone_calls": 1,
+          "task_clone_inclusive_seconds": 0.025179542135447264,
+          "task_clone_returned": 1
+        },
+        "TAIL_suffix_planning": {
+          "complete_wall_seconds": 98.93783141695894,
+          "native_preview_entries": 2478,
+          "native_transition_calls": 12,
+          "native_transition_inclusive_seconds": 0.8347895422484726,
+          "native_transition_returned": 12,
+          "policy_forward_calls": 12,
+          "policy_forward_inclusive_seconds": 2.5146252075210214,
+          "policy_forward_returned": 12,
+          "task_clone_calls": 58,
+          "task_clone_inclusive_seconds": 3.4393529612571,
+          "task_clone_returned": 58
+        },
+        "first_suffix_catalog_profile": {
+          "complete_wall_seconds": 9.971958499867469,
+          "native_preview_entries": 208,
+          "task_clone_calls": 6,
+          "task_clone_inclusive_seconds": 0.15737312496639788,
+          "task_clone_returned": 6
+        },
+        "genuinely_execute_original_and_focused_prefix": {
+          "complete_wall_seconds": 40.40316820796579,
+          "inventory_build_or_terminal_empty_calls": 13,
+          "inventory_request_calls": 38,
+          "inventory_request_inclusive_seconds": 19.27904816879891,
+          "inventory_request_returned": 38,
+          "native_preview_entries": 2275,
+          "native_transition_calls": 24,
+          "native_transition_inclusive_seconds": 18.475434788502753,
+          "native_transition_returned": 24,
+          "task_clone_calls": 1,
+          "task_clone_inclusive_seconds": 0.0008319169282913208,
+          "task_clone_returned": 1
+        },
+        "load_saved_frozen_IL64_and_TAIL": {
+          "complete_wall_seconds": 0.01360195898450911,
+          "native_preview_entries": 0
+        },
+        "post_seal_retained_trace_parity": {
+          "complete_wall_seconds": 3.1079451669938862,
+          "native_preview_entries": 0
+        },
+        "same045_source": {
+          "complete_wall_seconds": 319.25271370913833,
+          "native_preview_entries": 10841
+        },
+        "same045_source.public_reconstruction": {
+          "complete_wall_seconds": 1.9071616251021624,
+          "inventory_build_or_terminal_empty_calls": 1,
+          "inventory_request_calls": 3,
+          "inventory_request_inclusive_seconds": 1.4098801261279732,
+          "inventory_request_returned": 3,
+          "native_preview_entries": 91
+        },
+        "saved_metadata_admission": {
+          "complete_wall_seconds": 0.015038166893646121,
+          "native_preview_entries": 0
+        },
+        "shared_fresh_authoritative_prefix_replay": {
+          "complete_wall_seconds": 18.740381124895066,
+          "native_preview_entries": 1092,
+          "native_transition_calls": 12,
+          "native_transition_inclusive_seconds": 0.22900345991365612,
+          "native_transition_returned": 12
+        }
+      },
+      "scorer_costs": {
+        "candidate_rows_scored": 291,
+        "elapsed_seconds": 9.171602498507127,
+        "feature_seconds": 2.515646832063794,
+        "geometry_queries": 0,
+        "head_forwards_completed": 12,
+        "head_forwards_started": 12,
+        "observations_constructed": 0,
+        "policy_forwards_completed": 12,
+        "policy_forwards_started": 12,
+        "score_calls_completed": 12,
+        "score_calls_started": 12
+      },
+      "worker_seconds": 325.24108116608113
+    },
+    "delta_tail_minus_greedy": {
+      "complete_tool_path_length_mm": -1.3999999999999488,
+      "cumulative_contacted_tissue_upper_bound_mm3": -1.9073509978307186,
+      "currently_retained_contacted_tissue_upper_bound_mm3": -0.9536754989153451,
+      "nonstop_actions": 0,
+      "normal_removed_mm3": 0.0,
+      "positive_target_source_cells_removed": -1,
+      "target_removed_mm3": -0.9536754989153735,
+      "tool_changes": 0,
+      "total_reward": -0.9522754989153697
+    },
+    "limits": "Independent saved scalar/ranking/reward/hash arithmetic only; executed geometry certificates were produced by the worker independent full-history checker. No arrays, weights or neural predictions recomputed. State hashes/counter booleans authenticate the saved profile; this is one state, not generalized end-to-end speed evidence.",
+    "outcomes": {
+      "GREEDY": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 224.43756447935138,
+        "cumulative_contacted_tissue_upper_bound_mm3": 253.67768271148722,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 167.84688780910432,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 24,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 90,
+        "reference_target_fraction_removed": 0.003557171653294337,
+        "simulated_removed_volume_mm3": 85.83079490238289,
+        "target_removed_mm3": 85.83079490238292,
+        "tool_changes": 5,
+        "total_reference_target_mm3": 24128.943798057662,
+        "total_reward": 84.73635733790353
+      },
+      "TAIL": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 223.03756447935143,
+        "cumulative_contacted_tissue_upper_bound_mm3": 251.7703317136565,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 166.89321231018897,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 24,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 89,
+        "reference_target_fraction_removed": 0.003517647523813289,
+        "simulated_removed_volume_mm3": 84.87711940346753,
+        "target_removed_mm3": 84.87711940346755,
+        "tool_changes": 5,
+        "total_reference_target_mm3": 24128.943798057662,
+        "total_reward": 83.78408183898816
+      }
+    },
+    "profile": {
+      "batched_median_seconds": 0.20219900051597506,
+      "creation_previews": 208,
+      "gate": true,
+      "median_paired_saving_seconds": 0.7506892291130498,
+      "one_catalog_four_pairs": true,
+      "ratio": 0.2162575139475452,
+      "reference_median_seconds": 0.9349917920771986,
+      "validation_zero_scientific_calls": true
+    },
+    "removed_set_comparison": {
+      "GREEDY_removed_set_hash": "sha256:66a63b2a06caeee766403f1373fe89649946a69c09989752c956cc8a64cf143e",
+      "TAIL_removed_set_hash": "sha256:e112c0b735b219cca8140f7699ff2e582264f09638d7f84249d943c43f0230fc",
+      "common_removed_cells": 87,
+      "only_GREEDY_cells": 3,
+      "only_TAIL_cells": 2
+    },
+    "return_gap_decomposition": {
+      "action_cost": -0.0,
+      "outside_cost": -0.0,
+      "switch_cost": -0.0,
+      "target_value": -0.9536754989153735,
+      "travel_cost": 0.0013999999999999488
+    },
+    "suffix_decisions": {
+      "GREEDY": [
+        {
+          "absolute_action": 13,
+          "action": "nominal-cavity-ae0009b1c02d5c71e80ea810",
+          "best_immediate_action": "nominal-cavity-ae0009b1c02d5c71e80ea810",
+          "best_immediate_r_plus_tail": 3.744466055194124,
+          "best_immediate_raw_tail": null,
+          "best_immediate_reward": 3.744466055194124,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 10.235940467338544,
+          "physical": {
+            "entry_mm": [
+              94.69990157020221,
+              -105.86382032298522,
+              14.253779965321273
+            ],
+            "tip_mm": [
+              92.9313932103108,
+              -102.9426596152799,
+              14.40115279403301
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:74a9ea313e1ce648c127a9f9e74d2cb1d9b69a630acf096d8619562cb2bde9be",
+          "removed_cells": 4,
+          "reward": 3.744466055194124,
+          "selected_r_plus_tail": 3.744466055194124,
+          "selected_raw_tail": null,
+          "state": "sha256:1310923ff4b5b1384ae97f63f653b435595b32dec120fda6451b1095d63f17cf",
+          "switch": true,
+          "target_mm3": 3.814701995661462
+        },
+        {
+          "absolute_action": 14,
+          "action": "nominal-cavity-74cdb1e19d94c9fe5a23900e",
+          "best_immediate_action": "nominal-cavity-74cdb1e19d94c9fe5a23900e",
+          "best_immediate_r_plus_tail": 3.774466055194124,
+          "best_immediate_raw_tail": null,
+          "best_immediate_reward": 3.774466055194124,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 10.235940467338505,
+          "physical": {
+            "entry_mm": [
+              95.18088497071068,
+              -105.47665536574836,
+              12.351476140639493
+            ],
+            "tip_mm": [
+              93.41237661081928,
+              -102.55549465804305,
+              12.49884896935123
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:48f26a569b0e79c3038f0be526ce100ab543cb8a85254fafb65600f77e8f3ed8",
+          "removed_cells": 4,
+          "reward": 3.774466055194124,
+          "selected_r_plus_tail": 3.774466055194124,
+          "selected_raw_tail": null,
+          "state": "sha256:59770287ff4cfc1eedc8597e0bd296635c0d22398f5bc6725ce677d05a82ea86",
+          "switch": false,
+          "target_mm3": 3.814701995661462
+        },
+        {
+          "absolute_action": 15,
+          "action": "nominal-cavity-2087ab0df92556256c3494b7",
+          "best_immediate_action": "nominal-cavity-2087ab0df92556256c3494b7",
+          "best_immediate_r_plus_tail": 3.774466055194124,
+          "best_immediate_raw_tail": null,
+          "best_immediate_reward": 3.774466055194124,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 10.235940467338544,
+          "physical": {
+            "entry_mm": [
+              95.42137667096493,
+              -105.28307288712992,
+              11.400324228298603
+            ],
+            "tip_mm": [
+              93.65286831107352,
+              -102.36191217942459,
+              11.547697057010339
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:f03ef1d2ecf0672251470a03ed51af79549a012c9668963b36a547074fc9070a",
+          "removed_cells": 4,
+          "reward": 3.774466055194124,
+          "selected_r_plus_tail": 3.774466055194124,
+          "selected_raw_tail": null,
+          "state": "sha256:f24d4a741e55e950110edf412d8dee90c479ecac7fd07843cf3e808826356fce",
+          "switch": false,
+          "target_mm3": 3.814701995661462
+        },
+        {
+          "absolute_action": 16,
+          "action": "nominal-cavity-d1cba1c0b59bc4c26eef7b43",
+          "best_immediate_action": "nominal-cavity-d1cba1c0b59bc4c26eef7b43",
+          "best_immediate_r_plus_tail": 3.774466055194124,
+          "best_immediate_raw_tail": null,
+          "best_immediate_reward": 3.774466055194124,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 10.235940467338569,
+          "physical": {
+            "entry_mm": [
+              93.09590365924029,
+              -106.80477925954294,
+              13.65671303977537
+            ],
+            "tip_mm": [
+              91.32739529934888,
+              -103.8836185518376,
+              13.804085868487107
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:f899142581e34ec6909592a329ca0de1e62c00711cbd919fe742fd115f79eb63",
+          "removed_cells": 4,
+          "reward": 3.774466055194124,
+          "selected_r_plus_tail": 3.774466055194124,
+          "selected_raw_tail": null,
+          "state": "sha256:2ebdf04cc0cad7faf2fcfb9cfbf17886e3ee1faaca6454a650e2b1c44d20afff",
+          "switch": false,
+          "target_mm3": 3.814701995661462
+        },
+        {
+          "absolute_action": 17,
+          "action": "nominal-cavity-d4643766b9cd42dcab8e24b3",
+          "best_immediate_action": "nominal-cavity-d4643766b9cd42dcab8e24b3",
+          "best_immediate_r_plus_tail": 3.774466055194124,
+          "best_immediate_raw_tail": null,
+          "best_immediate_reward": 3.774466055194124,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 10.235940467338505,
+          "physical": {
+            "entry_mm": [
+              93.57688705974877,
+              -106.41761430230606,
+              11.75440921509359
+            ],
+            "tip_mm": [
+              91.80837869985737,
+              -103.49645359460075,
+              11.901782043805326
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:d87dcd40e8d4da45bde317ebf47d71d329d920c562e08366b1f81a7b8572276f",
+          "removed_cells": 4,
+          "reward": 3.774466055194124,
+          "selected_r_plus_tail": 3.774466055194124,
+          "selected_raw_tail": null,
+          "state": "sha256:7a0786cf98dcde11266d4d03ac03d77bc1cf43ec084ecf583f1484b7815c9d27",
+          "switch": false,
+          "target_mm3": 3.814701995661462
+        },
+        {
+          "absolute_action": 18,
+          "action": "nominal-cavity-274db3c6f311c4dd10857c1f",
+          "best_immediate_action": "nominal-cavity-274db3c6f311c4dd10857c1f",
+          "best_immediate_r_plus_tail": 5.679863927182757,
+          "best_immediate_raw_tail": null,
+          "best_immediate_reward": 5.679863927182757,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 12.189066309435262,
+          "physical": {
+            "entry_mm": [
+              93.33639535949453,
+              -106.6111967809245,
+              12.705561127434477
+            ],
+            "tip_mm": [
+              91.062598896777,
+              -102.85541872816052,
+              12.89504047863528
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:9e6f5a76676e5b1b5407b8136f4fe3eaee80733fff1398a51fe5509da4c3cde7",
+          "removed_cells": 6,
+          "reward": 5.679863927182757,
+          "selected_r_plus_tail": 5.679863927182757,
+          "selected_raw_tail": null,
+          "state": "sha256:7c2ea0afa073eb7299dc1fe952fb82f6c94050e6173f150660d04c7478aa159d",
+          "switch": false,
+          "target_mm3": 5.722052993492193
+        },
+        {
+          "absolute_action": 19,
+          "action": "nominal-cavity-d21a91068e31a06a912feac0",
+          "best_immediate_action": "nominal-cavity-d21a91068e31a06a912feac0",
+          "best_immediate_r_plus_tail": 4.726188428267392,
+          "best_immediate_raw_tail": null,
+          "best_immediate_reward": 4.726188428267392,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 12.189066309435287,
+          "physical": {
+            "entry_mm": [
+              93.81737876000301,
+              -106.22403182368764,
+              10.803257302752696
+            ],
+            "tip_mm": [
+              91.54358229728548,
+              -102.46825377092364,
+              10.9927366539535
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:dcbaf85945198c6b3b0d75e5dad90e6694faf868de43ea22b201fc2c7be0489c",
+          "removed_cells": 5,
+          "reward": 4.726188428267392,
+          "selected_r_plus_tail": 4.726188428267392,
+          "selected_raw_tail": null,
+          "state": "sha256:5d80f50d3c2c5877a2f85ef92e9e310c2c7ef8208ffd04ef82546560e9e9748c",
+          "switch": false,
+          "target_mm3": 4.768377494576828
+        },
+        {
+          "absolute_action": 20,
+          "action": "nominal-cavity-c20da8f3d2a14ecf4b4a8829",
+          "best_immediate_action": "nominal-cavity-c20da8f3d2a14ecf4b4a8829",
+          "best_immediate_r_plus_tail": 1.8671150573633926,
+          "best_immediate_raw_tail": null,
+          "best_immediate_reward": 1.8671150573633926,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 10.235940467338544,
+          "physical": {
+            "entry_mm": [
+              92.21338084904112,
+              -107.16499076024533,
+              10.206190377206783
+            ],
+            "tip_mm": [
+              90.4448724891497,
+              -104.24383005254,
+              10.353563205918519
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:8d49461fed7b88e60184d7db9f34f0db8110fc142dd7775afb3e5acb0558beea",
+          "removed_cells": 2,
+          "reward": 1.8671150573633926,
+          "selected_r_plus_tail": 1.8671150573633926,
+          "selected_raw_tail": null,
+          "state": "sha256:eaadb5cdda7010f74d71cd200d50ffa331e89402b9ab32198c42609fccd628ae",
+          "switch": false,
+          "target_mm3": 1.907350997830731
+        },
+        {
+          "absolute_action": 21,
+          "action": "nominal-cavity-db9067c3e2e4e77b9fbc119c",
+          "best_immediate_action": "nominal-cavity-db9067c3e2e4e77b9fbc119c",
+          "best_immediate_r_plus_tail": 1.8651619315212957,
+          "best_immediate_raw_tail": null,
+          "best_immediate_reward": 1.8651619315212957,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 12.189066309435301,
+          "physical": {
+            "entry_mm": [
+              94.94039327045645,
+              -105.67023784436678,
+              13.302628052980378
+            ],
+            "tip_mm": [
+              92.66659680773891,
+              -101.91445979160278,
+              13.492107404181183
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:c061454e8cdfb4e38c0e4d8773764277a0a189c566bd5dfb07973ca015084d7e",
+          "removed_cells": 2,
+          "reward": 1.8651619315212957,
+          "selected_r_plus_tail": 1.8651619315212957,
+          "selected_raw_tail": null,
+          "state": "sha256:308f4e8cfdb9c036c68e517c231851294c5cbd48613c879101c1ea4e53e46b0e",
+          "switch": false,
+          "target_mm3": 1.907350997830731
+        },
+        {
+          "absolute_action": 22,
+          "action": "nominal-cavity-f6372660bb4b06166b811870",
+          "best_immediate_action": "nominal-cavity-f6372660bb4b06166b811870",
+          "best_immediate_r_plus_tail": 1.8651619315212957,
+          "best_immediate_raw_tail": null,
+          "best_immediate_reward": 1.8651619315212957,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 12.189066309435239,
+          "physical": {
+            "entry_mm": [
+              94.37888601522972,
+              -105.94713483402721,
+              12.052942677866538
+            ],
+            "tip_mm": [
+              92.1050895525122,
+              -102.19135678126324,
+              12.242422029067342
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:3f1585f98fd16364c85c3888ba8499df18b5387325d50d8f2bec0922eede5317",
+          "removed_cells": 2,
+          "reward": 1.8651619315212957,
+          "selected_r_plus_tail": 1.8651619315212957,
+          "selected_raw_tail": null,
+          "state": "sha256:6a40b150a57b30195acd2c6c97b72a9ced20855f8b0d9d410be5cd4f33c7f51a",
+          "switch": false,
+          "target_mm3": 1.907350997830731
+        },
+        {
+          "absolute_action": 23,
+          "action": "nominal-cavity-a75676d82f03944d9da01201",
+          "best_immediate_action": "nominal-cavity-a75676d82f03944d9da01201",
+          "best_immediate_r_plus_tail": 0.884839558448027,
+          "best_immediate_raw_tail": null,
+          "best_immediate_reward": 0.884839558448027,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 8.83594046733854,
+          "physical": {
+            "entry_mm": [
+              96.7848828816726,
+              -104.53569642919064,
+              12.94854306618541
+            ],
+            "tip_mm": [
+              95.01637452178119,
+              -101.61453572148531,
+              13.095915894897146
+            ],
+            "tool_id": "generic_suction"
+          },
+          "query": "sha256:b50c133d9319ec71745deb34da003d75a51cd548d497972c48396d972348e270",
+          "removed_cells": 1,
+          "reward": 0.884839558448027,
+          "selected_r_plus_tail": 0.884839558448027,
+          "selected_raw_tail": null,
+          "state": "sha256:ab5067005abc32939b4369a90d2fb7f86b2eded868d6b243eed8ce9b801ffb19",
+          "switch": true,
+          "target_mm3": 0.9536754989153655
+        },
+        {
+          "absolute_action": 24,
+          "action": "nominal-cavity-12aac9eb63c4828039720f23",
+          "best_immediate_action": "nominal-cavity-12aac9eb63c4828039720f23",
+          "best_immediate_r_plus_tail": 0.914839558448027,
+          "best_immediate_raw_tail": null,
+          "best_immediate_reward": 0.914839558448027,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 8.83594046733854,
+          "physical": {
+            "entry_mm": [
+              93.65741091446701,
+              -106.52788226988253,
+              14.906398414889226
+            ],
+            "tip_mm": [
+              91.8889025545756,
+              -103.6067215621772,
+              15.053771243600963
+            ],
+            "tool_id": "generic_suction"
+          },
+          "query": "sha256:b7c5587ac0a27c4ba1290e619bd0c7e7ad797e7fcc88b3d135ad48b5b1dd3ebf",
+          "removed_cells": 1,
+          "reward": 0.914839558448027,
+          "selected_r_plus_tail": 0.914839558448027,
+          "selected_raw_tail": null,
+          "state": "sha256:618c85f5729c264c94e8dc2649a6737439209924806fd261fba607955641dbec",
+          "switch": false,
+          "target_mm3": 0.9536754989153655
+        }
+      ],
+      "TAIL": [
+        {
+          "absolute_action": 13,
+          "action": "nominal-cavity-ae0009b1c02d5c71e80ea810",
+          "best_immediate_action": "nominal-cavity-ae0009b1c02d5c71e80ea810",
+          "best_immediate_r_plus_tail": 21.044780004779085,
+          "best_immediate_raw_tail": 17.30031394958496,
+          "best_immediate_reward": 3.744466055194124,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 10.235940467338544,
+          "physical": {
+            "entry_mm": [
+              94.69990157020221,
+              -105.86382032298522,
+              14.253779965321273
+            ],
+            "tip_mm": [
+              92.9313932103108,
+              -102.9426596152799,
+              14.40115279403301
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:74a9ea313e1ce648c127a9f9e74d2cb1d9b69a630acf096d8619562cb2bde9be",
+          "removed_cells": 4,
+          "reward": 3.744466055194124,
+          "selected_r_plus_tail": 21.044780004779085,
+          "selected_raw_tail": 17.30031394958496,
+          "state": "sha256:1310923ff4b5b1384ae97f63f653b435595b32dec120fda6451b1095d63f17cf",
+          "switch": true,
+          "target_mm3": 3.814701995661462
+        },
+        {
+          "absolute_action": 14,
+          "action": "nominal-cavity-5983575d87e056b6fa4e0267",
+          "best_immediate_action": "nominal-cavity-74cdb1e19d94c9fe5a23900e",
+          "best_immediate_r_plus_tail": 21.05632259205936,
+          "best_immediate_raw_tail": 17.281856536865234,
+          "best_immediate_reward": 3.774466055194124,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 10.235940467338569,
+          "physical": {
+            "entry_mm": [
+              93.01537980452206,
+              -106.69451129196649,
+              10.504723839979748
+            ],
+            "tip_mm": [
+              91.24687144463064,
+              -103.77335058426115,
+              10.652096668691485
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:48f26a569b0e79c3038f0be526ce100ab543cb8a85254fafb65600f77e8f3ed8",
+          "removed_cells": 4,
+          "reward": 3.774466055194124,
+          "selected_r_plus_tail": 21.14143230275272,
+          "selected_raw_tail": 17.366966247558594,
+          "state": "sha256:59770287ff4cfc1eedc8597e0bd296635c0d22398f5bc6725ce677d05a82ea86",
+          "switch": false,
+          "target_mm3": 3.814701995661462
+        },
+        {
+          "absolute_action": 15,
+          "action": "nominal-cavity-7e1b5e844e5e1f9565486e02",
+          "best_immediate_action": "nominal-cavity-18cc25924e1546bf8f71ba08",
+          "best_immediate_r_plus_tail": 21.055883901873813,
+          "best_immediate_raw_tail": 17.281417846679688,
+          "best_immediate_reward": 3.774466055194124,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 10.235940467338544,
+          "physical": {
+            "entry_mm": [
+              94.61937771548396,
+              -105.75355235540877,
+              11.101790765525651
+            ],
+            "tip_mm": [
+              92.85086935559255,
+              -102.83239164770345,
+              11.249163594237388
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:2f3c9dda782125ef49717ead8e1b6e50d80e21be6a972bbc5050b0b89ce85968",
+          "removed_cells": 4,
+          "reward": 3.774466055194124,
+          "selected_r_plus_tail": 21.069456594744906,
+          "selected_raw_tail": 17.29499053955078,
+          "state": "sha256:93b9c300df9eebf8d4fdc05148c5055d15371ad8febd87b47247d6fc020a2e86",
+          "switch": false,
+          "target_mm3": 3.814701995661462
+        },
+        {
+          "absolute_action": 16,
+          "action": "nominal-cavity-538158924ca2f830dea96e4d",
+          "best_immediate_action": "nominal-cavity-538158924ca2f830dea96e4d",
+          "best_immediate_r_plus_tail": 22.804162022885883,
+          "best_immediate_raw_tail": 17.124298095703125,
+          "best_immediate_reward": 5.679863927182757,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 12.189066309435301,
+          "physical": {
+            "entry_mm": [
+              94.94039327045645,
+              -105.67023784436678,
+              13.302628052980378
+            ],
+            "tip_mm": [
+              92.66659680773891,
+              -101.91445979160278,
+              13.492107404181183
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:1b39bff11c9a3782e3f6d3e5fd6f452a102e004cff267cc55103fa232930ec39",
+          "removed_cells": 6,
+          "reward": 5.679863927182757,
+          "selected_r_plus_tail": 22.804162022885883,
+          "selected_raw_tail": 17.124298095703125,
+          "state": "sha256:c2c544ddaedb5544cbf7a5f332b89a3db0b3cb44b89c0f8a89d42cadfaee6cd7",
+          "switch": false,
+          "target_mm3": 5.722052993492193
+        },
+        {
+          "absolute_action": 17,
+          "action": "nominal-cavity-a7d14bd6d4446525049c2728",
+          "best_immediate_action": "nominal-cavity-22996992093669baba77c12e",
+          "best_immediate_r_plus_tail": 20.99560024098514,
+          "best_immediate_raw_tail": 17.221134185791016,
+          "best_immediate_reward": 3.774466055194124,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 10.235940467338544,
+          "physical": {
+            "entry_mm": [
+              92.53439640401358,
+              -107.08167624920335,
+              12.407027664661529
+            ],
+            "tip_mm": [
+              90.76588804412216,
+              -104.16051554149803,
+              12.554400493373265
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:69b73c120cae3dfcdd3a01e577411cfbdb1f9249dc217dfee8a616c39dfd43c8",
+          "removed_cells": 4,
+          "reward": 3.774466055194124,
+          "selected_r_plus_tail": 21.08890773610233,
+          "selected_raw_tail": 17.314441680908203,
+          "state": "sha256:35b60b15e60ca5f2eb1962651d2e4d2dd005551f652fb24809ae04327213352c",
+          "switch": false,
+          "target_mm3": 3.814701995661462
+        },
+        {
+          "absolute_action": 18,
+          "action": "nominal-cavity-41f6c4c122b085df0fd096d2",
+          "best_immediate_action": "nominal-cavity-41f6c4c122b085df0fd096d2",
+          "best_immediate_r_plus_tail": 22.799944875058735,
+          "best_immediate_raw_tail": 17.120080947875977,
+          "best_immediate_reward": 5.679863927182757,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 12.189066309435262,
+          "physical": {
+            "entry_mm": [
+              93.33639535949453,
+              -106.6111967809245,
+              12.705561127434477
+            ],
+            "tip_mm": [
+              91.062598896777,
+              -102.85541872816052,
+              12.89504047863528
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:493c3b35c6a45300daf894d1c61fc2094c36b4b6efa8229148f6469bcfa3b469",
+          "removed_cells": 6,
+          "reward": 5.679863927182757,
+          "selected_r_plus_tail": 22.799944875058735,
+          "selected_raw_tail": 17.120080947875977,
+          "state": "sha256:2bbab82b08f4eae4c55d3e6355a1d36ed3e432fd2be6ea195fc7cf65cff89859",
+          "switch": false,
+          "target_mm3": 5.722052993492193
+        },
+        {
+          "absolute_action": 19,
+          "action": "nominal-cavity-da5dcba37f06b625a78cd43d",
+          "best_immediate_action": "nominal-cavity-da5dcba37f06b625a78cd43d",
+          "best_immediate_r_plus_tail": 20.13822868188911,
+          "best_immediate_raw_tail": 17.31743812561035,
+          "best_immediate_reward": 2.8207905562787583,
+          "immediate_regret": 0.0,
+          "outside_mm3": 0.0,
+          "path_mm": 10.235940467338544,
+          "physical": {
+            "entry_mm": [
+              95.42137667096493,
+              -105.28307288712992,
+              11.400324228298603
+            ],
+            "tip_mm": [
+              93.65286831107352,
+              -102.36191217942459,
+              11.547697057010339
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:8d4ca930542ea357823bcdd27662da99e8c62b405184944ad70fb7c65b2b3c92",
+          "removed_cells": 3,
+          "reward": 2.8207905562787583,
+          "selected_r_plus_tail": 20.13822868188911,
+          "selected_raw_tail": 17.31743812561035,
+          "state": "sha256:959ec510501fc25e6b06047d395282306aa04031dfb5d537d63bfed0a1c26f5c",
+          "switch": false,
+          "target_mm3": 2.8610264967460965
+        },
+        {
+          "absolute_action": 20,
+          "action": "nominal-cavity-057695fcc466fa24de793cbf",
+          "best_immediate_action": "nominal-cavity-013c00693f7d2206509397c1",
+          "best_immediate_r_plus_tail": 17.833900488271595,
+          "best_immediate_raw_tail": 15.966785430908203,
+          "best_immediate_reward": 1.8671150573633926,
+          "immediate_regret": 0.0019531258420968367,
+          "outside_mm3": 0.0,
+          "path_mm": 12.189066309435287,
+          "physical": {
+            "entry_mm": [
+              93.81737876000301,
+              -106.22403182368764,
+              10.803257302752696
+            ],
+            "tip_mm": [
+              91.54358229728548,
+              -102.46825377092364,
+              10.9927366539535
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:77cabb84ab30e984d005e895d341ac75b95c866376bac8117cc09bac889a12d9",
+          "removed_cells": 2,
+          "reward": 1.8651619315212957,
+          "selected_r_plus_tail": 19.068103826052546,
+          "selected_raw_tail": 17.20294189453125,
+          "state": "sha256:90d86bfb3880e02f24f2e6e8f773cd5795d7e843dced037890c7306d6fa396a9",
+          "switch": false,
+          "target_mm3": 1.907350997830731
+        },
+        {
+          "absolute_action": 21,
+          "action": "nominal-cavity-7f44f31376346609de80413e",
+          "best_immediate_action": "nominal-cavity-6694f2d6277a84bd0cbc315e",
+          "best_immediate_r_plus_tail": 17.836270368947865,
+          "best_immediate_raw_tail": 15.969155311584473,
+          "best_immediate_reward": 1.8671150573633926,
+          "immediate_regret": 0.0019531258420968367,
+          "outside_mm3": 0.0,
+          "path_mm": 12.189066309435239,
+          "physical": {
+            "entry_mm": [
+              94.37888601522972,
+              -105.94713483402721,
+              12.052942677866538
+            ],
+            "tip_mm": [
+              92.1050895525122,
+              -102.19135678126324,
+              12.242422029067342
+            ],
+            "tool_id": "generic_aspirator"
+          },
+          "query": "sha256:1a2f3cd5b839c9c6832e6796c9e91fe4bfb32d1529370ebdda44cddb85e9fb92",
+          "removed_cells": 2,
+          "reward": 1.8651619315212957,
+          "selected_r_plus_tail": 19.00641254187286,
+          "selected_raw_tail": 17.141250610351562,
+          "state": "sha256:74771428d23331a84432e1b4036a1abd68721237413bf12d05a2742ec9613c5f",
+          "switch": false,
+          "target_mm3": 1.907350997830731
+        },
+        {
+          "absolute_action": 22,
+          "action": "nominal-cavity-a21064ff5e4c81c1bd4c577c",
+          "best_immediate_action": "nominal-cavity-658484f679a4a814ecfbbde7",
+          "best_immediate_r_plus_tail": 17.837506330861927,
+          "best_immediate_raw_tail": 15.970391273498535,
+          "best_immediate_reward": 1.8671150573633926,
+          "immediate_regret": 0.9822754989153656,
+          "outside_mm3": 0.0,
+          "path_mm": 8.83594046733854,
+          "physical": {
+            "entry_mm": [
+              95.10036111599246,
+              -105.3663873981719,
+              9.19948694084387
+            ],
+            "tip_mm": [
+              93.33185275610104,
+              -102.44522669046657,
+              9.346859769555607
+            ],
+            "tool_id": "generic_suction"
+          },
+          "query": "sha256:7c19bda75c4f596913094471954c09668f6d78a4ab471467b228c1bbf70000a0",
+          "removed_cells": 1,
+          "reward": 0.884839558448027,
+          "selected_r_plus_tail": 18.367681050147247,
+          "selected_raw_tail": 17.48284149169922,
+          "state": "sha256:4d2bf0d80b6ef400fdff613e7e9ca43b4a3322698df05e9d5b6b7ace28f1d09a",
+          "switch": true,
+          "target_mm3": 0.9536754989153655
+        },
+        {
+          "absolute_action": 23,
+          "action": "nominal-cavity-32e4545f9fdc28edc2151502",
+          "best_immediate_action": "nominal-cavity-46659458611c4cbf52d2a816",
+          "best_immediate_r_plus_tail": 17.717184790029407,
+          "best_immediate_raw_tail": 15.880069732666016,
+          "best_immediate_reward": 1.8371150573633925,
+          "immediate_regret": 0.9222754989153655,
+          "outside_mm3": 0.0,
+          "path_mm": 8.8359404673385,
+          "physical": {
+            "entry_mm": [
+              91.97288914878686,
+              -107.35857323886377,
+              11.157342289547673
+            ],
+            "tip_mm": [
+              90.20438078889546,
+              -104.43741253115846,
+              11.30471511825941
+            ],
+            "tool_id": "generic_suction"
+          },
+          "query": "sha256:03fb1474dcca8e1467a30f8b8232b1071388384f34b9faa35c17898d2cc92c5f",
+          "removed_cells": 1,
+          "reward": 0.914839558448027,
+          "selected_r_plus_tail": 18.384146504248807,
+          "selected_raw_tail": 17.46930694580078,
+          "state": "sha256:a5a92f0e1469068440216f0497c2dc3d9e4d4dfe40e3332d3ba62a3763a37130",
+          "switch": false,
+          "target_mm3": 0.9536754989153655
+        },
+        {
+          "absolute_action": 24,
+          "action": "nominal-cavity-31b9cf7217fc2b26d0c0a72a",
+          "best_immediate_action": "nominal-cavity-e4ba7587544945b229a7e044",
+          "best_immediate_r_plus_tail": 18.31802063449783,
+          "best_immediate_raw_tail": 17.403181076049805,
+          "best_immediate_reward": 0.914839558448027,
+          "immediate_regret": 1.1102230246251565e-16,
+          "outside_mm3": 0.0,
+          "path_mm": 8.835940467338563,
+          "physical": {
+            "entry_mm": [
+              96.46386732670013,
+              -104.61901094023263,
+              10.747705778730664
+            ],
+            "tip_mm": [
+              94.69535896680871,
+              -101.69785023252729,
+              10.8950786074424
+            ],
+            "tool_id": "generic_suction"
+          },
+          "query": "sha256:16fbf84505161b7c275baeb69f52ff2778ca22295f267c66e2121ec1b23f66e2",
+          "removed_cells": 1,
+          "reward": 0.9148395584480269,
+          "selected_r_plus_tail": 18.373171620215604,
+          "selected_raw_tail": 17.458332061767578,
+          "state": "sha256:9b6a3ada6c04527d9866a85a9f41589bad1f6a60c561ce458db922a7b98b4bdb",
+          "switch": false,
+          "target_mm3": 0.9536754989153655
+        }
+      ]
+    },
+    "useful_gain": false
+  },
+  "model_calls": 0,
+  "native_calls": 0,
+  "patient_payload_reads": 0,
+  "peak_rss_bytes": 146472960,
+  "pins": {
+    "index": "8bf1c3def8f773f5b9b4505392b995886d8cba87a96e3eb91af926d23ccb4df6",
+    "launcher": "a463af29e84fec3c471d68fd645b10c9658986a7843d342633a58cac7e048594",
+    "report": "71a0806d9dee4a2497edeb47077844368618a9657fc70fa32f6ce7878310ca9d"
+  },
+  "schema": "focused-batched-independent-result-v1",
+  "status": "PASS_saved_result"
+}

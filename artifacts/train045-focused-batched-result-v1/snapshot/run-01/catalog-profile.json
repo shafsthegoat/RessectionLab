@@ -1,0 +1,152 @@
+{
+  "after_snapshot": "sha256:7320465cf40ee07d4b7e516303792a9a8f713660eb4a533613e3661905069ddc",
+  "batched_median_seconds": 0.20219900051597506,
+  "before_snapshot": "sha256:7320465cf40ee07d4b7e516303792a9a8f713660eb4a533613e3661905069ddc",
+  "distinct_actions": 26,
+  "integrity_passed": true,
+  "material_gate_passed": true,
+  "maximum_median_ratio": 0.8,
+  "median_paired_saving_seconds": 0.7506892291130498,
+  "median_ratio": 0.2162575139475452,
+  "minimum_median_paired_saving_seconds": 0.25,
+  "orders": [
+    [
+      "reference",
+      "batched"
+    ],
+    [
+      "batched",
+      "reference"
+    ],
+    [
+      "reference",
+      "batched"
+    ],
+    [
+      "batched",
+      "reference"
+    ]
+  ],
+  "pages": 5,
+  "pairs": [
+    {
+      "order": [
+        "reference",
+        "batched"
+      ],
+      "pair": 1,
+      "timings": {
+        "batched": {
+          "calls": {
+            "certificate": 25,
+            "score": 25,
+            "state": 6
+          },
+          "cpu_seconds": 0.2016750000000016,
+          "wall_seconds": 0.20177154196426272,
+          "zero_new_preview_transition_forward": true
+        },
+        "reference": {
+          "calls": {
+            "certificate": 25,
+            "score": 25,
+            "state": 57
+          },
+          "cpu_seconds": 0.935969,
+          "wall_seconds": 0.936603375012055,
+          "zero_new_preview_transition_forward": true
+        }
+      }
+    },
+    {
+      "order": [
+        "batched",
+        "reference"
+      ],
+      "pair": 2,
+      "timings": {
+        "batched": {
+          "calls": {
+            "certificate": 25,
+            "score": 25,
+            "state": 6
+          },
+          "cpu_seconds": 0.2149699999999939,
+          "wall_seconds": 0.21542279212735593,
+          "zero_new_preview_transition_forward": true
+        },
+        "reference": {
+          "calls": {
+            "certificate": 25,
+            "score": 25,
+            "state": 57
+          },
+          "cpu_seconds": 0.9291349999999952,
+          "wall_seconds": 0.9328014580532908,
+          "zero_new_preview_transition_forward": true
+        }
+      }
+    },
+    {
+      "order": [
+        "reference",
+        "batched"
+      ],
+      "pair": 3,
+      "timings": {
+        "batched": {
+          "calls": {
+            "certificate": 25,
+            "score": 25,
+            "state": 6
+          },
+          "cpu_seconds": 0.20252000000000692,
+          "wall_seconds": 0.2026264590676874,
+          "zero_new_preview_transition_forward": true
+        },
+        "reference": {
+          "calls": {
+            "certificate": 25,
+            "score": 25,
+            "state": 57
+          },
+          "cpu_seconds": 0.963511000000004,
+          "wall_seconds": 0.9761462090536952,
+          "zero_new_preview_transition_forward": true
+        }
+      }
+    },
+    {
+      "order": [
+        "batched",
+        "reference"
+      ],
+      "pair": 4,
+      "timings": {
+        "batched": {
+          "calls": {
+            "certificate": 25,
+            "score": 25,
+            "state": 6
+          },
+          "cpu_seconds": 0.16668199999999445,
+          "wall_seconds": 0.16683358396403491,
+          "zero_new_preview_transition_forward": true
+        },
+        "reference": {
+          "calls": {
+            "certificate": 25,
+            "score": 25,
+            "state": 57
+          },
+          "cpu_seconds": 0.9328409999999963,
+          "wall_seconds": 0.9333802091423422,
+          "zero_new_preview_transition_forward": true
+        }
+      }
+    }
+  ],
+  "reference_median_seconds": 0.9349917920771986,
+  "scope": "One current public catalog; engineering timing only, no clinical or policy-quality inference",
+  "state_count": 1
+}

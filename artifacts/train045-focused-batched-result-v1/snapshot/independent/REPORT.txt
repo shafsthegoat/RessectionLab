@@ -1,0 +1,83 @@
+Independent saved-result audit: PASS; learned useful-gain criterion: FALSE.
+
+The completed, cleanly reaped comparison retains both full 24-motion endpoints,
+their sealed plans and accepted independent full-tool geometry certificates.
+The fixed 12-motion prefix, positive-immediate guard, full candidate ordering,
+TAIL clipping/selection, packet/page ownership, public focus controller, complete
+reward histories and outcome sums passed saved-evidence checks. All three old
+trace comparisons passed exactly (11 GREEDY decisions, 12 GREEDY decisions,
+10 committed TAIL decisions). Only authenticated source-release identity and
+its derived context seals differ; all other admission fields remain exact.
+
+Engineering result: on ONE current catalog (26 actions including STOP, five
+pages), four alternating reference/batched pairs gave medians 0.934991792 and
+0.202199001 s: ratio 0.216257514 and median paired saving 0.750689229 s. Both
+predeclared thresholds (ratio <=0.8, saving >=0.25 s) pass. Every call checked
+25 certificates and 25 scores; state authentications fell from 57 to six.
+Saved before/after state snapshots match and validation added zero previews,
+transitions or forwards. Creating the profile catalog cost 208 previews and
+the whole profile phase cost 9.971958500 s. This is a repeated single-state
+microbenchmark, not a general end-to-end speed estimate.
+
+GREEDY versus TAIL, respectively:
+  target cells                  90                  89
+  target removed mm3            85.8307949024        84.8771194035
+  complete return               84.7363573379        83.7840818390
+  net suffix return             36.6455006687        35.6932251698
+  motions / tool changes        24 / 5              24 / 5
+  outside-target removal mm3    0                    0
+  complete travel mm            224.4375644794       223.0375644794
+The full target denominator stays 24128.9437980577 mm3. Final removed sets
+share 87 cells, with three GREEDY-only and two TAIL-only cells. Quality
+nonregression fails, so the complete comparison is a retained negative.
+
+Both arms choose the same action 13. At their common state for action 14,
+TAIL chooses a different four-cell aspirator ray with exactly equal immediate
+reward 3.7744660552: its predicted tail 17.3669662476 beats 17.2818565369 for
+the raw-order GREEDY choice. The trajectories then differ. On TAIL's own
+states 22 and 23 it chooses one-cell suction actions despite certified
+two-cell aspirator alternatives. Their immediate regrets are 0.9822754989
+and 0.9222754989, outweighed by predicted-tail margins. These are observed
+local ranking errors relative to immediate reward, not a counterfactual proof
+that changing either action alone recovers the entire GREEDY route.
+
+The final return deficit is exactly target value -0.9536754989 plus shorter
+travel savings +0.0014 = -0.9522754989. Aggregate action, switch and outside
+costs are equal. Contact bounds also decline with the smaller removal; this
+does not establish a physical safety improvement. The remaining model
+bottleneck is useful action-dependent continuation ranking, not a failure to
+complete evaluation or extra tool-switch cost. Further learning must be judged
+by complete matched routes and this retained nonregression gate, not fit loss
+or predicted tail margin alone. This audit authorizes no new experiment.
+
+Written actual costs: 10932 previews, 84 transitions, 12 frozen-policy
+forwards, two checkpoint loads, zero updates/cache loads; worker 325.241081166
+s, parent 325.794646458 s, sampled group peak 1263321088 B. GREEDY planning
+87.419608500 s/2484 previews; TAIL planning 98.937831417 s/2478 previews.
+TAIL policy-forward inclusive time is 2.514625208 s; complete scorer time
+9.171602499 s. The three failed attempts remain counted: all four attempts
+total 27635 previews, 201 transitions, 23 forwards, eight checkpoint loads
+and 890.950853416 parent seconds. The report's cumulative worker timestamp
+888.815989625 s is nested before the final worker timestamp, not parent time.
+
+Audit lifecycle: original identical reader was killed by its 128 MiB guard
+after 3.505933542 s (137805824 B sampled), without a scientific receipt.
+That source/log/supervision is preserved. Root explicitly authorized a second
+saved-only pass at 512 MiB; it passed in 4.800213708 s, 146472960 B self peak,
+7447 checks, supervisor exit0/reaped. No native/model/array/weight/cache decode
+or scientific rerun occurred. Geometry is checked through existing accepted
+worker independent-history certificates, not a second geometry engine.
+
+Scope: exposed TRAIN045 simulation, fixed saved IL64/TAIL trained on the
+original four TRAIN cases; no refit, SELECT/EVAL opening, held-out generality,
+observed-surgery demonstration, clinical outcome or empirical physical claim.
+Full traces remain unmodified at run-01; this compact report does not replace
+them. Reproduction also requires the hash-pinned prior stdlib audit helpers
+and historical traces listed by receipt.json/source-index.json.
+
+Pins:
+  report 71a0806d9dee4a2497edeb47077844368618a9657fc70fa32f6ce7878310ca9d
+  launcher a463af29e84fec3c471d68fd645b10c9658986a7843d342633a58cac7e048594
+  index 8bf1c3def8f773f5b9b4505392b995886d8cba87a96e3eb91af926d23ccb4df6
+  auditor 047dd241bc90ddcb35d4bd7624644b4abb5322bc0fdf9805079efdef036f2a5b
+  receipt 54f5dc1b3340de7ee950b0396f3047afcc3a19166b10dfaa62fbfc388bc6ee41

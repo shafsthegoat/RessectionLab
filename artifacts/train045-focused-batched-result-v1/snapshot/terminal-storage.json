@@ -1,0 +1,459 @@
+{
+  "evidence": [
+    {
+      "path": "build/train045-focused-batched-v1/run-01/launcher.json",
+      "receipt": {
+        "automatic_retry": false,
+        "caps": {
+          "frozen_policy_forwards": 24,
+          "log_bytes": 65536,
+          "native_previews": 18000,
+          "native_transitions": 100,
+          "output_bytes": 4194304,
+          "parent_wall_seconds": 390,
+          "unique_sidecars": 4096,
+          "whole_build_bytes": 8388608,
+          "work_seconds": 360,
+          "worker_peak_rss_bytes": 3221225472
+        },
+        "command": [
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+          "-I",
+          "-B",
+          "-X",
+          "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-batched-v1/run-01/absent-worker-cache",
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-batched-v1/runner/worker.py",
+          "--source-index-sha256",
+          "8bf1c3def8f773f5b9b4505392b995886d8cba87a96e3eb91af926d23ccb4df6",
+          "--output",
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-batched-v1/run-01"
+        ],
+        "diagnosis": {
+          "comparison_admissible": true,
+          "deltas_tail_minus_greedy": {
+            "complete_tool_path_length_mm": -1.3999999999999488,
+            "cumulative_contacted_tissue_upper_bound_mm3": -1.9073509978307186,
+            "currently_retained_contacted_tissue_upper_bound_mm3": -0.9536754989153451,
+            "nonstop_actions": 0,
+            "normal_removed_mm3": 0.0,
+            "positive_target_source_cells_removed": -1,
+            "target_removed_mm3": -0.9536754989153735,
+            "tool_changes": 0,
+            "total_reward": -0.9522754989153697
+          },
+          "full_constraints_accepted": true,
+          "outside_removal_nonregression": true,
+          "quality_nonregression": false,
+          "scope": "Frozen learned productive-continuation ranking on the same expanded catalog; simulation only.",
+          "strict_quality_improvement": false,
+          "switching_travel_contact_scope": "Reported separately; no claim these improve unless measured deltas do.",
+          "tie_is_negative": true,
+          "tolerance": 1e-08,
+          "useful_gain": false
+        },
+        "elapsed_seconds": 325.7946464580018,
+        "helper_sha256": "aff4b197ea033aef8b160f43eabdd5a03394ae4024b6fc2f59f5241f2fcbfe14",
+        "last_saved_costs": {
+          "elapsed_seconds": 325.1899919582065,
+          "native_budget": {
+            "blocked_preview_attempts": 0,
+            "cache_hits": null,
+            "counting_reliable": true,
+            "elapsed_seconds": 321.18515662522987,
+            "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+            "failure": null,
+            "history_complete_caller_attestation": null,
+            "independent_audit": "outside_this_guard_not_verified",
+            "limits": {
+              "native_preview_entries": 18000,
+              "planning_execution_seconds": 355.99518454191275
+            },
+            "native_preview_entries": 10932,
+            "native_preview_profile": {
+              "phases": {
+                "unclassified": {
+                  "feasible": 1506,
+                  "raised": 0,
+                  "rejected": 9426,
+                  "rejection_reasons": {
+                    "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 9426
+                  },
+                  "returned": 10932,
+                  "returned_microsteps": 222677,
+                  "seconds": 174.6177917320747,
+                  "started": 10932
+                }
+              },
+              "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+              "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+            },
+            "observed_admissions_before_accounting_failure": 10932,
+            "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+            "requests": {},
+            "score": null,
+            "status": "active",
+            "time_overshoot_seconds": 0.0,
+            "version": "native-planning-budget-v1",
+            "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+          },
+          "phase": "TAIL_authoritative_suffix_replay_and_full_independent_audit.complete",
+          "policy_forwards": 12,
+          "transition_counts": {
+            "attempted": 84,
+            "completed": 84,
+            "raised": 0
+          },
+          "unique_sidecars": 1910
+        },
+        "owned_lifecycle": {
+          "child_reaped": true,
+          "errors": [],
+          "events": [
+            {
+              "pgid": 60517,
+              "phase": "bind",
+              "pid": 60517,
+              "start_identity": [
+                1791814525,
+                863465
+              ]
+            },
+            {
+              "direct_child_reaped": true,
+              "grace_seconds": 0.0,
+              "phase": "cleanup.pre_signal_exit",
+              "pid": 60517,
+              "start_identity": [
+                1791814525,
+                863465
+              ],
+              "wait_returncode": 0
+            },
+            {
+              "direct_child_reaped": true,
+              "grace_seconds": 0.5,
+              "phase": "cleanup.wait",
+              "pid": 60517,
+              "start_identity": [
+                1791814525,
+                863465
+              ],
+              "wait_returncode": 0
+            }
+          ],
+          "exit_code": 0,
+          "owned_root_pid": 60517,
+          "owned_root_start_identity": [
+            1791814525,
+            863465
+          ],
+          "remaining_owned_pids": [],
+          "remaining_state_unknown": false,
+          "verified": true
+        },
+        "report_sha256": "71a0806d9dee4a2497edeb47077844368618a9657fc70fa32f6ce7878310ca9d",
+        "report_status": "completed",
+        "rss_samples": 3098,
+        "sampled_peak_group_rss_bytes": 1263321088,
+        "sampler_sha256": "906a70502e4f0a48fff925cca9fc1fe45882818558cc7ac95e9034e3d6910d2c",
+        "schema": "owned-train045-focused-batched-v1",
+        "source_index_sha256": "8bf1c3def8f773f5b9b4505392b995886d8cba87a96e3eb91af926d23ccb4df6",
+        "status": "completed",
+        "stop_reason": null,
+        "worker_exit_code": 0
+      },
+      "sha256": "a463af29e84fec3c471d68fd645b10c9658986a7843d342633a58cac7e048594"
+    },
+    {
+      "path": "build/train045-focused-batched-v1/model-controls/controls-01.json",
+      "receipt": {
+        "accepted": true,
+        "caps": {
+          "group_rss_bytes": 1073741824,
+          "output_bytes": 1048576,
+          "seconds": 60,
+          "threads": 1
+        },
+        "cleanup": {
+          "child_reaped": true,
+          "errors": [],
+          "events": [
+            {
+              "pgid": 60050,
+              "phase": "bind",
+              "pid": 60050,
+              "start_identity": [
+                1791813681,
+                703734
+              ]
+            },
+            {
+              "direct_child_reaped": true,
+              "grace_seconds": 0.0,
+              "phase": "cleanup.pre_signal_exit",
+              "pid": 60050,
+              "start_identity": [
+                1791813681,
+                703734
+              ],
+              "wait_returncode": 0
+            },
+            {
+              "direct_child_reaped": true,
+              "grace_seconds": 0.5,
+              "phase": "cleanup.wait",
+              "pid": 60050,
+              "start_identity": [
+                1791813681,
+                703734
+              ],
+              "wait_returncode": 0
+            }
+          ],
+          "exit_code": 0,
+          "owned_root_pid": 60050,
+          "owned_root_start_identity": [
+            1791813681,
+            703734
+          ],
+          "remaining_owned_pids": [],
+          "remaining_state_unknown": false,
+          "verified": true
+        },
+        "command": [
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+          "-I",
+          "-B",
+          "-X",
+          "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-batched-v1/model-controls/absent-controls-01-cache",
+          "-c",
+          "from pathlib import Path\nimport os,sys\nroot=Path.cwd();stage=root/'build/train045-focused-batched-v1';temporary=stage/'model-controls/controls-01-tmp'\nsys.path[:0]=[str(root/'src'),str(root/'tests'),str(stage/'model')]\narchive=(Path(sys.base_prefix)/'lib'/('python%d%d.zip'%sys.version_info[:2])).resolve()\ndef generated_only(event,values):\n if event=='open' and isinstance(values[0],(str,bytes)):\n  path=Path(os.path.abspath(os.fsdecode(values[0])));mode,flags=values[1:3]\n  writing=(isinstance(mode,str) and any(c in mode for c in 'wax+')) or bool(flags & (os.O_WRONLY|os.O_RDWR|os.O_CREAT|os.O_TRUNC|os.O_APPEND))\n  if path==archive and not writing:return\n  if path.suffix.lower() in ('.npy','.npz','.psckpt','.qckpt','.mat','.zip','.nii','.gz') and not path.resolve().is_relative_to(temporary.resolve()):raise PermissionError('Generated controls cannot access saved patient/model payloads')\n if event in ('socket.connect','socket.getaddrinfo'):raise PermissionError('No network in generated controls')\nsys.addaudithook(generated_only)\nimport pytest\nraise SystemExit(pytest.main(['-q','-p','no:cacheprovider','--basetemp='+str(temporary/'pytest'),str(stage/'model/test_batched_authentication.py')]))\n"
+        ],
+        "failure": null,
+        "log_bytes": 99,
+        "log_sha256": "37d5d50fb9817a35a79be62892e759b7dc26c3a0b68bb93572007a53a8b8b3d8",
+        "peak_group_rss_bytes": 266010624,
+        "returncode": 0,
+        "scope": "generated-only, no acquired payload or saved weights",
+        "source_after": {
+          "build/train045-focused-batched-v1/model/focused_policy.py": "3aeb9e12b0b2fc08ea69863e3b1553db54bb342fb36bfb3ea368d7a8065099f3",
+          "build/train045-focused-batched-v1/model/test_batched_authentication.py": "ed7851d1248539cd005e90bb57ace4622eba9daae224d587573d50be28003dea",
+          "build/train045-focused-policy-v1/model-recovery/focused_policy.py": "64da4aa41a5aeccc798005d8432ae4276fcc9b442790e2b9859dbd8d5fd4d50f"
+        },
+        "source_before": {
+          "build/train045-focused-batched-v1/model/focused_policy.py": "3aeb9e12b0b2fc08ea69863e3b1553db54bb342fb36bfb3ea368d7a8065099f3",
+          "build/train045-focused-batched-v1/model/test_batched_authentication.py": "ed7851d1248539cd005e90bb57ace4622eba9daae224d587573d50be28003dea",
+          "build/train045-focused-policy-v1/model-recovery/focused_policy.py": "64da4aa41a5aeccc798005d8432ae4276fcc9b442790e2b9859dbd8d5fd4d50f"
+        },
+        "source_unchanged": true,
+        "wall_seconds": 6.33205687510781
+      },
+      "sha256": "37e64542d389992ddafea1514a2a28ebf9da91152b42f029d80deb524ef10673"
+    },
+    {
+      "path": "build/train045-focused-batched-v1/controls/controls-01.json",
+      "receipt": {
+        "accepted": true,
+        "caps": {
+          "group_rss_bytes": 1073741824,
+          "output_bytes": 1048576,
+          "seconds": 60,
+          "threads": 1
+        },
+        "cleanup": {
+          "child_reaped": true,
+          "errors": [],
+          "events": [
+            {
+              "pgid": 60481,
+              "phase": "bind",
+              "pid": 60481,
+              "start_identity": [
+                1791814494,
+                508769
+              ]
+            },
+            {
+              "direct_child_reaped": true,
+              "grace_seconds": 0.0,
+              "phase": "cleanup.pre_signal_exit",
+              "pid": 60481,
+              "start_identity": [
+                1791814494,
+                508769
+              ],
+              "wait_returncode": 0
+            },
+            {
+              "direct_child_reaped": true,
+              "grace_seconds": 0.5,
+              "phase": "cleanup.wait",
+              "pid": 60481,
+              "start_identity": [
+                1791814494,
+                508769
+              ],
+              "wait_returncode": 0
+            }
+          ],
+          "exit_code": 0,
+          "owned_root_pid": 60481,
+          "owned_root_start_identity": [
+            1791814494,
+            508769
+          ],
+          "remaining_owned_pids": [],
+          "remaining_state_unknown": false,
+          "verified": true
+        },
+        "command": [
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+          "-I",
+          "-B",
+          "-X",
+          "pycache_prefix=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-batched-v1/controls/absent-controls-01-cache",
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-batched-v1/controls/control_bootstrap.py"
+        ],
+        "failure": null,
+        "log_bytes": 99,
+        "log_sha256": "3452514bb66af977d641f4f369a133f456f1034e4e892397761998d4ff2f9947",
+        "peak_group_rss_bytes": 493240320,
+        "returncode": 0,
+        "scope": "generated-only, no acquired payload or saved weights",
+        "source_after": {
+          "build/train045-focused-batched-v1/controls/control_bootstrap.py": "d46f98987149148b42314e3112c05d7f69680510bd492c07ffae8a7f172dbed6",
+          "build/train045-focused-batched-v1/controls/run_controls.py": "86a4862cff059a0222069de08f2856d376c33003307903bbcda60abaa749f678",
+          "build/train045-focused-batched-v1/model/focused_policy.py": "3aeb9e12b0b2fc08ea69863e3b1553db54bb342fb36bfb3ea368d7a8065099f3",
+          "build/train045-focused-batched-v1/model/test_batched_authentication.py": "ed7851d1248539cd005e90bb57ace4622eba9daae224d587573d50be28003dea",
+          "build/train045-focused-batched-v1/runner/admission_parity.py": "5a5354bf113683980b3086624e02777e8c1ddf38401bd1606dc864c204fc24b8",
+          "build/train045-focused-batched-v1/runner/bootstrap_smoke.py": "2d510226fe62c1cea85773441bdf7da106fe3e616f00a7a7502c829de032734a",
+          "build/train045-focused-batched-v1/runner/catalog_profile.py": "6f0ef80a79b48c7eadb3241a6dc5cb4aeb369be8c4c5ec94166813848919c02d",
+          "build/train045-focused-batched-v1/runner/common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+          "build/train045-focused-batched-v1/runner/compact_output.py": "efbed8f076822e77575f6f74a180851363c920c71b36c4bae118e5f4767317c9",
+          "build/train045-focused-batched-v1/runner/comparison.py": "0484e0f514797fc36a09e46b19dac8eaf91241679fab55a172530bd237ffaa98",
+          "build/train045-focused-batched-v1/runner/freeze_sources.py": "ddd23b30f97a4c0ba29c6431885e8449e3f6ff743c7bb736b3e0e3082382d89b",
+          "build/train045-focused-batched-v1/runner/frontier_protocol.py": "0dfd28ea76cffeb519119379692ded8f970b2f2eddeffda6de5cb54b71f311aa",
+          "build/train045-focused-batched-v1/runner/inputs.py": "18bae3c0193842ece94be41141c3e87f82a765be4d745180f4711d988c23fa20",
+          "build/train045-focused-batched-v1/runner/plan_transport.py": "3bfc9decb7af64da3af0b995c8d8a14f8a11d17aff602dbfa098202b19ed4b03",
+          "build/train045-focused-batched-v1/runner/recovery_parity.py": "8879f775f3c3ce07e616b74ff63750d5873ea34caa4e3ec9961bd48572345f4c",
+          "build/train045-focused-batched-v1/runner/run_owned.py": "7a0240207485abfd91352f51e1f13d9e061e17f1c8f56eab2159718f56a983af",
+          "build/train045-focused-batched-v1/runner/test_admission_parity.py": "cafb4022cfeaab432e2f51c6fe8782f225d866d1e7eba70c6b0e4d6e9f4bb7ce",
+          "build/train045-focused-batched-v1/runner/test_compact_output.py": "bd3bdc2692411a6308473befe8a9a9c5834fc6c1a344c90edb1602f6fad46a79",
+          "build/train045-focused-batched-v1/runner/test_profile.py": "9c00228362cbdaf85bca9d5601612a002d91fba17a56d01bee6d8cf57f1ec5fb",
+          "build/train045-focused-batched-v1/runner/test_recovery_parity.py": "ec0102543fbb6e84c72fb65082c4acd68d39909da4eb716bc5f4eb9b5516823d",
+          "build/train045-focused-batched-v1/runner/test_success_transport.py": "08f3040ef14ef89129e57706e7bc4d416b97a229aeb3c53d4618a8af720f3216",
+          "build/train045-focused-batched-v1/runner/test_worker.py": "357f9c8b29cbb20f77dd8a1d2b2f61a2c5c3c4ebfbb61065b0d80cc26ec519cc",
+          "build/train045-focused-batched-v1/runner/worker.py": "150774db55e22000f4d31b4a28e1ecbb5fa999560f1f21b7181332f0aedc9828",
+          "build/train045-focused-policy-v1/model/saved_tail.py": "7c6bab940a36af3e362c15d9576ddbed8566b88b00ef07ce4e4d0f33a02353c9"
+        },
+        "source_before": {
+          "build/train045-focused-batched-v1/controls/control_bootstrap.py": "d46f98987149148b42314e3112c05d7f69680510bd492c07ffae8a7f172dbed6",
+          "build/train045-focused-batched-v1/controls/run_controls.py": "86a4862cff059a0222069de08f2856d376c33003307903bbcda60abaa749f678",
+          "build/train045-focused-batched-v1/model/focused_policy.py": "3aeb9e12b0b2fc08ea69863e3b1553db54bb342fb36bfb3ea368d7a8065099f3",
+          "build/train045-focused-batched-v1/model/test_batched_authentication.py": "ed7851d1248539cd005e90bb57ace4622eba9daae224d587573d50be28003dea",
+          "build/train045-focused-batched-v1/runner/admission_parity.py": "5a5354bf113683980b3086624e02777e8c1ddf38401bd1606dc864c204fc24b8",
+          "build/train045-focused-batched-v1/runner/bootstrap_smoke.py": "2d510226fe62c1cea85773441bdf7da106fe3e616f00a7a7502c829de032734a",
+          "build/train045-focused-batched-v1/runner/catalog_profile.py": "6f0ef80a79b48c7eadb3241a6dc5cb4aeb369be8c4c5ec94166813848919c02d",
+          "build/train045-focused-batched-v1/runner/common.py": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+          "build/train045-focused-batched-v1/runner/compact_output.py": "efbed8f076822e77575f6f74a180851363c920c71b36c4bae118e5f4767317c9",
+          "build/train045-focused-batched-v1/runner/comparison.py": "0484e0f514797fc36a09e46b19dac8eaf91241679fab55a172530bd237ffaa98",
+          "build/train045-focused-batched-v1/runner/freeze_sources.py": "ddd23b30f97a4c0ba29c6431885e8449e3f6ff743c7bb736b3e0e3082382d89b",
+          "build/train045-focused-batched-v1/runner/frontier_protocol.py": "0dfd28ea76cffeb519119379692ded8f970b2f2eddeffda6de5cb54b71f311aa",
+          "build/train045-focused-batched-v1/runner/inputs.py": "18bae3c0193842ece94be41141c3e87f82a765be4d745180f4711d988c23fa20",
+          "build/train045-focused-batched-v1/runner/plan_transport.py": "3bfc9decb7af64da3af0b995c8d8a14f8a11d17aff602dbfa098202b19ed4b03",
+          "build/train045-focused-batched-v1/runner/recovery_parity.py": "8879f775f3c3ce07e616b74ff63750d5873ea34caa4e3ec9961bd48572345f4c",
+          "build/train045-focused-batched-v1/runner/run_owned.py": "7a0240207485abfd91352f51e1f13d9e061e17f1c8f56eab2159718f56a983af",
+          "build/train045-focused-batched-v1/runner/test_admission_parity.py": "cafb4022cfeaab432e2f51c6fe8782f225d866d1e7eba70c6b0e4d6e9f4bb7ce",
+          "build/train045-focused-batched-v1/runner/test_compact_output.py": "bd3bdc2692411a6308473befe8a9a9c5834fc6c1a344c90edb1602f6fad46a79",
+          "build/train045-focused-batched-v1/runner/test_profile.py": "9c00228362cbdaf85bca9d5601612a002d91fba17a56d01bee6d8cf57f1ec5fb",
+          "build/train045-focused-batched-v1/runner/test_recovery_parity.py": "ec0102543fbb6e84c72fb65082c4acd68d39909da4eb716bc5f4eb9b5516823d",
+          "build/train045-focused-batched-v1/runner/test_success_transport.py": "08f3040ef14ef89129e57706e7bc4d416b97a229aeb3c53d4618a8af720f3216",
+          "build/train045-focused-batched-v1/runner/test_worker.py": "357f9c8b29cbb20f77dd8a1d2b2f61a2c5c3c4ebfbb61065b0d80cc26ec519cc",
+          "build/train045-focused-batched-v1/runner/worker.py": "150774db55e22000f4d31b4a28e1ecbb5fa999560f1f21b7181332f0aedc9828",
+          "build/train045-focused-policy-v1/model/saved_tail.py": "7c6bab940a36af3e362c15d9576ddbed8566b88b00ef07ce4e4d0f33a02353c9"
+        },
+        "source_unchanged": true,
+        "wall_seconds": 6.019708000123501
+      },
+      "sha256": "860c1cc5d2bbfd8f52cf143a5f4ff523dc036b81261b43903be593b12350e7c7"
+    },
+    {
+      "path": "build/train045-focused-batched-v1/controls/bootstrap/receipt.json",
+      "receipt": {
+        "interpreter_stdlib_archive": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python312.zip",
+        "native_calls": 0,
+        "optimizer_steps": 0,
+        "payload_open_attempts": [],
+        "policy_forwards": 0,
+        "runtime": {
+          "numpy": "2.5.3",
+          "torch": "2.14.1"
+        },
+        "runtime_archive_read_probes": [
+          "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python312.zip",
+          "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python312.zip",
+          "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python312.zip",
+          "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python312.zip"
+        ],
+        "runtime_write_denied": true,
+        "seconds": 1.8559255830477923,
+        "status": "passed",
+        "undeclared_data_read_denied": true
+      },
+      "sha256": "8dd526bbad0cad95cdc6291e177cfd220c64d039d25142a40061dbe157c27b2d"
+    },
+    {
+      "path": "build/train045-focused-batched-v1/independent/supervision.json",
+      "receipt": {
+        "audit_sha256": "047dd241bc90ddcb35d4bd7624644b4abb5322bc0fdf9805079efdef036f2a5b",
+        "child_reaped": true,
+        "command": [
+          "/Library/Developer/CommandLineTools/usr/bin/python3",
+          "-I",
+          "-B",
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-batched-v1/independent/audit.py"
+        ],
+        "elapsed_seconds": 3.505933542,
+        "exit_code": -9,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "rss_cap_bytes": 134217728,
+        "rss_samples": 44,
+        "sampled_peak_rss_bytes": 137805824,
+        "schema": "saved-stdlib-audit-supervision-v1",
+        "scientific_work": false,
+        "stop_reason": "128MiB_RSS_limit",
+        "wall_cap_seconds": 60
+      },
+      "sha256": "32768cee259e95762e25626475afadecef3cc976e501dc021d6facc4db7f14f6"
+    },
+    {
+      "path": "build/train045-focused-batched-v1/independent/supervision-02.json",
+      "receipt": {
+        "audit_sha256": "047dd241bc90ddcb35d4bd7624644b4abb5322bc0fdf9805079efdef036f2a5b",
+        "child_reaped": true,
+        "command": [
+          "/Library/Developer/CommandLineTools/usr/bin/python3",
+          "-I",
+          "-B",
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/train045-focused-batched-v1/independent/audit.py"
+        ],
+        "elapsed_seconds": 4.884518709,
+        "exit_code": 0,
+        "log_sha256": "ffe1ea72c1686f20eb215b4d6714010e23824fd58e551e1ab14758e521d7545a",
+        "receipt_sha256": "54f5dc1b3340de7ee950b0396f3047afcc3a19166b10dfaa62fbfc388bc6ee41",
+        "rss_cap_bytes": 536870912,
+        "rss_samples": 60,
+        "sampled_peak_rss_bytes": 146341888,
+        "schema": "saved-stdlib-audit-supervision-v1",
+        "scientific_work": false,
+        "stop_reason": null,
+        "wall_cap_seconds": 60
+      },
+      "sha256": "ad4781d1ee6c36bbcbec1a4155d3c85ade1d4aaf90d54a6f2dae749705b82c19"
+    }
+  ],
+  "remaining_owned_pids": [],
+  "schema": "focused-batched-storage-terminal-v1",
+  "scientific_status": "Complete matched comparison and independent saved audit. TAIL quality regression retained; no optimizer update or clinical claim.",
+  "worker_termination_confirmed": true
+}

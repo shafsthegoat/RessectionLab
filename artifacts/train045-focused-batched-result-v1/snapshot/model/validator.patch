@@ -1,0 +1,105 @@
+--- build/train045-focused-policy-v1/model-recovery/focused_policy.py
++++ build/train045-focused-batched-v1/model/focused_policy.py
+@@ -17,7 +17,7 @@
+ from resectionlab.core import freeze_json, thaw_json, semantic_digest
+ from resectionlab.patient_planning_admission import PatientPlanningContext
+ from resectionlab.native_spatial_task import NativeSpatialTask
+-from resectionlab.focused_paged_task import FocusedPagedObstructionTask
++from resectionlab.focused_paged_task import FocusedPagedObstructionTask, ACTION_SCHEMA
+ from resectionlab.focused_corridor_selector import physical_key, goal_record
+ from resectionlab.native_proposals import OBSTRUCTION_CELLS_PER_PREVIEW
+ from resectionlab.spatial_observations import (SpatialObservation, SpatialAction,
+@@ -158,7 +158,7 @@
+             'ids':self.identifiers, 'owners':self.owners, 'packets':self.packets,
+             'scores':self.scores, 'observation':self.observation.fingerprint})
+ 
+-    def require(self):
++    def require_reference(self):
+         if self._token is not _CAPABILITY or self._consumed or self._digest() != self._seal:
+             raise ValueError('Consumed or altered focused catalog')
+         self.context.require_task(self.work)
+@@ -186,6 +186,70 @@
+                       self.scores[i], 'current nominal score')
+         return self
+ 
++    def require_batched(self):
++        """Same checks, with page authentication shared ONLY within this call.
++
++        The immutable packet has page-common state/query fields and per-action
++        physical fields. Both are compared exactly, including the full seal.
++        Native commit still calls canonical advance_record/export_action.
++        """
++        if self._token is not _CAPABILITY or self._consumed or self._digest() != self._seal:
++            raise ValueError('Consumed or altered focused catalog')
++        self.context.require_task(self.work)
++        self.observation.assert_intact()
++        if (type(self.observation) is not SpatialObservation
++                or self.observation.source_id != self.context.record['focused_source_hash']
++                or tuple(self.observation.action_ids) != self.identifiers
++                or not np.all(self.observation.action_mask)
++                or float(self.observation.state_features[1]) != 24):
++            raise ValueError('Union public observation/source/mask changed')
++        common={};checked={id(self.work)}
++        for page in self.pages:
++            if id(page) in common:continue
++            if id(page) not in checked:
++                self.context.require_task(page);checked.add(id(page))
++            # Exact current PagedObstructionTask._prepare_inventory preconditions.
++            # context.require_task already invoked the focused _assert_frozen,
++            # authenticating source/contract/history and focus/state linkage.
++            page._check_cancelled()
++            if (page._active_page is None or page._inventory is None
++                    or page._page_state_hash!=page._engine.state_hash or page.terminated):
++                raise ValueError('Live current certified page required')
++            common[id(page)]={'schema':ACTION_SCHEMA,'source_hash':page._source_hash,
++                'decision_model_hash':page.decision_model_hash,
++                'source_state_hash':page._engine.state_hash,'steps_taken':page._steps,
++                'current_tool':page._current_tool,'focus':thaw_json(page._goal_focus),
++                'query_catalog_digest':page._query_catalog_digest}
++        for i,(identifier,owner) in enumerate(zip(self.identifiers,self.owners)):
++            page=self.pages[owner]
++            # Keep per-action cancellation responsiveness; no history hashing.
++            page._check_cancelled()
++            if not isinstance(identifier,str) or (identifier!='STOP' and identifier not in page._inventory):
++                raise ValueError('Current certified page action required')
++            physical=None;geometry=None
++            if identifier!='STOP':
++                # Exact _certificate checks after the already authenticated page.
++                preview=page._inventory[identifier]
++                if (not page._planning or not preview.feasible
++                        or page._engine._preview_records.get(id(preview)) is not preview
++                        or page._engine._preview_digests.get(id(preview))!=page._engine._result_digest(preview)):
++                    raise ValueError('Current owned nominal certificate required')
++                geometry=preview.to_history_record()
++                if (geometry['source_state_hash']!=page._engine.state_hash
++                        or geometry['decision_model_hash']!=page._config.fingerprint):
++                    raise ValueError('Foreign native certificate')
++                physical={key:geometry[key] for key in ('tool_id','entry_mm','tip_mm')}
++            unsigned={**common[id(page)],'action_id':identifier,'physical_action':physical}
++            expected=freeze_json({**unsigned,'seal':semantic_digest(unsigned)})
++            _same(expected,self.packets[i],'current packet/page ownership')
++            if identifier!='STOP':
++                _same(page._score_record({**geometry,'action_id':identifier},page._current_tool),
++                      self.scores[i],'current nominal score')
++        return self
++
++    def require(self):
++        return self.require_batched()
++
+     def commit(self, index):
+         self.require()
+         if type(index) is not int or not 0 <= index < len(self.identifiers):
+@@ -195,6 +259,13 @@
+         self._consumed = True
+         transition = page.advance_record(packet)
+         return page, packet, transition
++
++
++def validate_catalog(catalog, *, mode):
++    """Paired profile entrypoint: the SAME genuine Catalog, no snapshots minted."""
++    if type(catalog) is not Catalog or mode not in ('reference','batched'):
++        raise ValueError('Exact catalog and explicit validation mode required')
++    return catalog.require_reference() if mode=='reference' else catalog.require_batched()
+ 
+ 
+ def collect_catalog(work, context, active_goal=None, *, guard=lambda:None, costs=None):

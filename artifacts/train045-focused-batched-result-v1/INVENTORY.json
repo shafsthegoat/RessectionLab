@@ -1,0 +1,388 @@
+{
+  "files": [
+    {
+      "bytes": 839,
+      "sha256": "8dd526bbad0cad95cdc6291e177cfd220c64d039d25142a40061dbe157c27b2d",
+      "snapshot": "snapshot/controls/bootstrap/receipt.json",
+      "source": "build/train045-focused-batched-v1/controls/bootstrap/receipt.json"
+    },
+    {
+      "bytes": 2108,
+      "sha256": "d46f98987149148b42314e3112c05d7f69680510bd492c07ffae8a7f172dbed6",
+      "snapshot": "snapshot/controls/control_bootstrap.py",
+      "source": "build/train045-focused-batched-v1/controls/control_bootstrap.py"
+    },
+    {
+      "bytes": 8425,
+      "sha256": "860c1cc5d2bbfd8f52cf143a5f4ff523dc036b81261b43903be593b12350e7c7",
+      "snapshot": "snapshot/controls/controls-01.json",
+      "source": "build/train045-focused-batched-v1/controls/controls-01.json"
+    },
+    {
+      "bytes": 99,
+      "sha256": "3452514bb66af977d641f4f369a133f456f1034e4e892397761998d4ff2f9947",
+      "snapshot": "snapshot/controls/controls-01.log",
+      "source": "build/train045-focused-batched-v1/controls/controls-01.log"
+    },
+    {
+      "bytes": 964,
+      "sha256": "86a4862cff059a0222069de08f2856d376c33003307903bbcda60abaa749f678",
+      "snapshot": "snapshot/controls/run_controls.py",
+      "source": "build/train045-focused-batched-v1/controls/run_controls.py"
+    },
+    {
+      "bytes": 5382,
+      "sha256": "d15155979b9d336a13bab9a83c0a308c9991f2b923dfe5f6b81b97c530c9e141",
+      "snapshot": "snapshot/independent/REPORT.txt",
+      "source": "build/train045-focused-batched-v1/independent/REPORT.txt"
+    },
+    {
+      "bytes": 1574,
+      "sha256": "6a0c7b13052afc36b25004d1a8e52440c7231d3d0ff813a513f35e1a5c34b485",
+      "snapshot": "snapshot/independent/archive.json",
+      "source": "build/train045-focused-batched-v1/independent/archive.json"
+    },
+    {
+      "bytes": 212,
+      "sha256": "ffe1ea72c1686f20eb215b4d6714010e23824fd58e551e1ab14758e521d7545a",
+      "snapshot": "snapshot/independent/audit-02.log",
+      "source": "build/train045-focused-batched-v1/independent/audit-02.log"
+    },
+    {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot": "snapshot/independent/audit.log",
+      "source": "build/train045-focused-batched-v1/independent/audit.log"
+    },
+    {
+      "bytes": 24897,
+      "sha256": "047dd241bc90ddcb35d4bd7624644b4abb5322bc0fdf9805079efdef036f2a5b",
+      "snapshot": "snapshot/independent/audit.py",
+      "source": "build/train045-focused-batched-v1/independent/audit.py"
+    },
+    {
+      "bytes": 50610,
+      "sha256": "54f5dc1b3340de7ee950b0396f3047afcc3a19166b10dfaa62fbfc388bc6ee41",
+      "snapshot": "snapshot/independent/receipt.json",
+      "source": "build/train045-focused-batched-v1/independent/receipt.json"
+    },
+    {
+      "bytes": 2059,
+      "sha256": "b6a61db8ab1dab67c3ca8f8c31b3e10adce546aed2b2ea6be0f30d02f8d7c258",
+      "snapshot": "snapshot/independent/supervise.py",
+      "source": "build/train045-focused-batched-v1/independent/supervise.py"
+    },
+    {
+      "bytes": 2065,
+      "sha256": "00b0d0e5db845179bd5d9f786afe2d857d7466c8ac16b464a67367acf02bbfd1",
+      "snapshot": "snapshot/independent/supervise_02.py",
+      "source": "build/train045-focused-batched-v1/independent/supervise_02.py"
+    },
+    {
+      "bytes": 807,
+      "sha256": "ad4781d1ee6c36bbcbec1a4155d3c85ade1d4aaf90d54a6f2dae749705b82c19",
+      "snapshot": "snapshot/independent/supervision-02.json",
+      "source": "build/train045-focused-batched-v1/independent/supervision-02.json"
+    },
+    {
+      "bytes": 734,
+      "sha256": "32768cee259e95762e25626475afadecef3cc976e501dc021d6facc4db7f14f6",
+      "snapshot": "snapshot/independent/supervision.json",
+      "source": "build/train045-focused-batched-v1/independent/supervision.json"
+    },
+    {
+      "bytes": 31052,
+      "sha256": "3aeb9e12b0b2fc08ea69863e3b1553db54bb342fb36bfb3ea368d7a8065099f3",
+      "snapshot": "snapshot/model/focused_policy.py",
+      "source": "build/train045-focused-batched-v1/model/focused_policy.py"
+    },
+    {
+      "bytes": 1484,
+      "sha256": "75c8487833e373d2f06fdb0a49d4bd604ed1db41d8f860f9634a5f9528a8aa7c",
+      "snapshot": "snapshot/model/source-ready.json",
+      "source": "build/train045-focused-batched-v1/model/source-ready.json"
+    },
+    {
+      "bytes": 10815,
+      "sha256": "ed7851d1248539cd005e90bb57ace4622eba9daae224d587573d50be28003dea",
+      "snapshot": "snapshot/model/test_batched_authentication.py",
+      "source": "build/train045-focused-batched-v1/model/test_batched_authentication.py"
+    },
+    {
+      "bytes": 6158,
+      "sha256": "621812a535cf7e514d92166a112992b439b708692b8bfde4f4138c08c8cfa2ab",
+      "snapshot": "snapshot/model/validator.patch",
+      "source": "build/train045-focused-batched-v1/model/validator.patch"
+    },
+    {
+      "bytes": 3897,
+      "sha256": "37e64542d389992ddafea1514a2a28ebf9da91152b42f029d80deb524ef10673",
+      "snapshot": "snapshot/model-controls/controls-01.json",
+      "source": "build/train045-focused-batched-v1/model-controls/controls-01.json"
+    },
+    {
+      "bytes": 99,
+      "sha256": "37d5d50fb9817a35a79be62892e759b7dc26c3a0b68bb93572007a53a8b8b3d8",
+      "snapshot": "snapshot/model-controls/controls-01.log",
+      "source": "build/train045-focused-batched-v1/model-controls/controls-01.log"
+    },
+    {
+      "bytes": 7168,
+      "sha256": "4db14c16489992fe008be8db081b5f7aa1c9458b4139fafa96a579a616a87ed4",
+      "snapshot": "snapshot/run-01/ReMIND-045-context.json",
+      "source": "build/train045-focused-batched-v1/run-01/ReMIND-045-context.json"
+    },
+    {
+      "bytes": 3727,
+      "sha256": "b11bb01bd6dc66b53d04de8e39fc9a655be3ab24e96fdd0e096f8e33efca3cdc",
+      "snapshot": "snapshot/run-01/catalog-profile.json",
+      "source": "build/train045-focused-batched-v1/run-01/catalog-profile.json"
+    },
+    {
+      "bytes": 29889,
+      "sha256": "98437ca38aac45844fba9ee777dd31616839147f4e3e0d9d0fb0859db191fdc0",
+      "snapshot": "snapshot/run-01/evaluation/GREEDY.json",
+      "source": "build/train045-focused-batched-v1/run-01/evaluation/GREEDY.json"
+    },
+    {
+      "bytes": 29884,
+      "sha256": "4b7a5b5b6d9da541650e3f401b7e0b41b7991f82af8e68d6ddeba6cdecf7ca44",
+      "snapshot": "snapshot/run-01/evaluation/TAIL.json",
+      "source": "build/train045-focused-batched-v1/run-01/evaluation/TAIL.json"
+    },
+    {
+      "bytes": 18540,
+      "sha256": "50096822be3aeb030ace2fdda074a85d0f1c599b1a2d38743be72c0b8f082321",
+      "snapshot": "snapshot/run-01/evaluation/source/admitted-public-bindings.json",
+      "source": "build/train045-focused-batched-v1/run-01/evaluation/source/admitted-public-bindings.json"
+    },
+    {
+      "bytes": 11491,
+      "sha256": "58357c31f4c39b50181ed7ea05f9306777bfe10286a0fc6b802f5f5caca3bf1b",
+      "snapshot": "snapshot/run-01/evaluation/source/derived-occupancy-assumption.json",
+      "source": "build/train045-focused-batched-v1/run-01/evaluation/source/derived-occupancy-assumption.json"
+    },
+    {
+      "bytes": 4158,
+      "sha256": "971ca4258c11fc49e9e85cf6f8fccd1cc1ae5890319e7cb8c18e1654f222c55d",
+      "snapshot": "snapshot/run-01/evaluation/source/public-task-derivation.json",
+      "source": "build/train045-focused-batched-v1/run-01/evaluation/source/public-task-derivation.json"
+    },
+    {
+      "bytes": 33382,
+      "sha256": "13e6d0bba664d030a60ca0ae66d59ba6d9e862b6b43a84682e2341f4b3fc0467",
+      "snapshot": "snapshot/run-01/fixed-prefix.json",
+      "source": "build/train045-focused-batched-v1/run-01/fixed-prefix.json"
+    },
+    {
+      "bytes": 5289,
+      "sha256": "a00f4fc4a2f296ba24ea1e4be7a3154d6bd82d0e65b653521313a26d25add81c",
+      "snapshot": "snapshot/run-01/focused-deployment.json",
+      "source": "build/train045-focused-batched-v1/run-01/focused-deployment.json"
+    },
+    {
+      "bytes": 668,
+      "sha256": "ceb7f20fa887047fe7df0947ee1070b75156d4b6568c701d1502c43666798588",
+      "snapshot": "snapshot/run-01/intent.json",
+      "source": "build/train045-focused-batched-v1/run-01/intent.json"
+    },
+    {
+      "bytes": 4648,
+      "sha256": "a463af29e84fec3c471d68fd645b10c9658986a7843d342633a58cac7e048594",
+      "snapshot": "snapshot/run-01/launcher.json",
+      "source": "build/train045-focused-batched-v1/run-01/launcher.json"
+    },
+    {
+      "bytes": 67918,
+      "sha256": "dd83f8afc2cda6f9c72a56731622d88fe8afb033abe7740ecd1b530651134797",
+      "snapshot": "snapshot/run-01/plans.json",
+      "source": "build/train045-focused-batched-v1/run-01/plans.json"
+    },
+    {
+      "bytes": 1634,
+      "sha256": "88b5c188eada6a7ae3afea596805577fd0fe61ade5cbd50599e6c5564717bfd0",
+      "snapshot": "snapshot/run-01/progress.json",
+      "source": "build/train045-focused-batched-v1/run-01/progress.json"
+    },
+    {
+      "bytes": 96885,
+      "sha256": "71a0806d9dee4a2497edeb47077844368618a9657fc70fa32f6ce7878310ca9d",
+      "snapshot": "snapshot/run-01/report.json",
+      "source": "build/train045-focused-batched-v1/run-01/report.json"
+    },
+    {
+      "bytes": 951,
+      "sha256": "6e94bd6b2c0243b75ba1c394818bd6893f516baef4bcf2740d3425c0f144c750",
+      "snapshot": "snapshot/run-01/worker.log",
+      "source": "build/train045-focused-batched-v1/run-01/worker.log"
+    },
+    {
+      "bytes": 1030,
+      "sha256": "9a8b06f7530efe38771b55b1f151a2d0a1cee3f7f26c2376bf5f0cebb59c71da",
+      "snapshot": "snapshot/run-01/world-admission.json",
+      "source": "build/train045-focused-batched-v1/run-01/world-admission.json"
+    },
+    {
+      "bytes": 3887,
+      "sha256": "5a5354bf113683980b3086624e02777e8c1ddf38401bd1606dc864c204fc24b8",
+      "snapshot": "snapshot/runner/admission_parity.py",
+      "source": "build/train045-focused-batched-v1/runner/admission_parity.py"
+    },
+    {
+      "bytes": 3914,
+      "sha256": "2d510226fe62c1cea85773441bdf7da106fe3e616f00a7a7502c829de032734a",
+      "snapshot": "snapshot/runner/bootstrap_smoke.py",
+      "source": "build/train045-focused-batched-v1/runner/bootstrap_smoke.py"
+    },
+    {
+      "bytes": 5393,
+      "sha256": "6f0ef80a79b48c7eadb3241a6dc5cb4aeb369be8c4c5ec94166813848919c02d",
+      "snapshot": "snapshot/runner/catalog_profile.py",
+      "source": "build/train045-focused-batched-v1/runner/catalog_profile.py"
+    },
+    {
+      "bytes": 4192,
+      "sha256": "baad6bcdbbd0939ab0ee06948024b7544976a9119e7ed8c5c4a39d9ba32fbbf1",
+      "snapshot": "snapshot/runner/common.py",
+      "source": "build/train045-focused-batched-v1/runner/common.py"
+    },
+    {
+      "bytes": 1617,
+      "sha256": "efbed8f076822e77575f6f74a180851363c920c71b36c4bae118e5f4767317c9",
+      "snapshot": "snapshot/runner/compact_output.py",
+      "source": "build/train045-focused-batched-v1/runner/compact_output.py"
+    },
+    {
+      "bytes": 4246,
+      "sha256": "0484e0f514797fc36a09e46b19dac8eaf91241679fab55a172530bd237ffaa98",
+      "snapshot": "snapshot/runner/comparison.py",
+      "source": "build/train045-focused-batched-v1/runner/comparison.py"
+    },
+    {
+      "bytes": 3141,
+      "sha256": "2781114b621d443df7d2b60d01fe87dcd5231518eee5917c7df39faa62ecf371",
+      "snapshot": "snapshot/runner/config.json",
+      "source": "build/train045-focused-batched-v1/runner/config.json"
+    },
+    {
+      "bytes": 3348,
+      "sha256": "ddd23b30f97a4c0ba29c6431885e8449e3f6ff743c7bb736b3e0e3082382d89b",
+      "snapshot": "snapshot/runner/freeze_sources.py",
+      "source": "build/train045-focused-batched-v1/runner/freeze_sources.py"
+    },
+    {
+      "bytes": 9949,
+      "sha256": "0dfd28ea76cffeb519119379692ded8f970b2f2eddeffda6de5cb54b71f311aa",
+      "snapshot": "snapshot/runner/frontier_protocol.py",
+      "source": "build/train045-focused-batched-v1/runner/frontier_protocol.py"
+    },
+    {
+      "bytes": 16763,
+      "sha256": "18bae3c0193842ece94be41141c3e87f82a765be4d745180f4711d988c23fa20",
+      "snapshot": "snapshot/runner/inputs.py",
+      "source": "build/train045-focused-batched-v1/runner/inputs.py"
+    },
+    {
+      "bytes": 2902,
+      "sha256": "3bfc9decb7af64da3af0b995c8d8a14f8a11d17aff602dbfa098202b19ed4b03",
+      "snapshot": "snapshot/runner/plan_transport.py",
+      "source": "build/train045-focused-batched-v1/runner/plan_transport.py"
+    },
+    {
+      "bytes": 3404,
+      "sha256": "8879f775f3c3ce07e616b74ff63750d5873ea34caa4e3ec9961bd48572345f4c",
+      "snapshot": "snapshot/runner/recovery_parity.py",
+      "source": "build/train045-focused-batched-v1/runner/recovery_parity.py"
+    },
+    {
+      "bytes": 11416,
+      "sha256": "7a0240207485abfd91352f51e1f13d9e061e17f1c8f56eab2159718f56a983af",
+      "snapshot": "snapshot/runner/run_owned.py",
+      "source": "build/train045-focused-batched-v1/runner/run_owned.py"
+    },
+    {
+      "bytes": 24955,
+      "sha256": "8bf1c3def8f773f5b9b4505392b995886d8cba87a96e3eb91af926d23ccb4df6",
+      "snapshot": "snapshot/runner/source-index.json",
+      "source": "build/train045-focused-batched-v1/runner/source-index.json"
+    },
+    {
+      "bytes": 2037,
+      "sha256": "cafb4022cfeaab432e2f51c6fe8782f225d866d1e7eba70c6b0e4d6e9f4bb7ce",
+      "snapshot": "snapshot/runner/test_admission_parity.py",
+      "source": "build/train045-focused-batched-v1/runner/test_admission_parity.py"
+    },
+    {
+      "bytes": 7294,
+      "sha256": "bd3bdc2692411a6308473befe8a9a9c5834fc6c1a344c90edb1602f6fad46a79",
+      "snapshot": "snapshot/runner/test_compact_output.py",
+      "source": "build/train045-focused-batched-v1/runner/test_compact_output.py"
+    },
+    {
+      "bytes": 3822,
+      "sha256": "9c00228362cbdaf85bca9d5601612a002d91fba17a56d01bee6d8cf57f1ec5fb",
+      "snapshot": "snapshot/runner/test_profile.py",
+      "source": "build/train045-focused-batched-v1/runner/test_profile.py"
+    },
+    {
+      "bytes": 3107,
+      "sha256": "ec0102543fbb6e84c72fb65082c4acd68d39909da4eb716bc5f4eb9b5516823d",
+      "snapshot": "snapshot/runner/test_recovery_parity.py",
+      "source": "build/train045-focused-batched-v1/runner/test_recovery_parity.py"
+    },
+    {
+      "bytes": 6662,
+      "sha256": "08f3040ef14ef89129e57706e7bc4d416b97a229aeb3c53d4618a8af720f3216",
+      "snapshot": "snapshot/runner/test_success_transport.py",
+      "source": "build/train045-focused-batched-v1/runner/test_success_transport.py"
+    },
+    {
+      "bytes": 7728,
+      "sha256": "357f9c8b29cbb20f77dd8a1d2b2f61a2c5c3c4ebfbb61065b0d80cc26ec519cc",
+      "snapshot": "snapshot/runner/test_worker.py",
+      "source": "build/train045-focused-batched-v1/runner/test_worker.py"
+    },
+    {
+      "bytes": 29921,
+      "sha256": "150774db55e22000f4d31b4a28e1ecbb5fa999560f1f21b7181332f0aedc9828",
+      "snapshot": "snapshot/runner/worker.py",
+      "source": "build/train045-focused-batched-v1/runner/worker.py"
+    },
+    {
+      "bytes": 24567,
+      "sha256": "66a2fa941c24ba967370e83ba903dd4533ca95dfd604b739bfa7bf3ee7704dc3",
+      "snapshot": "snapshot/terminal-storage.json",
+      "source": "build/train045-focused-batched-v1/terminal-storage.json"
+    }
+  ],
+  "omitted_retained_local": [
+    {
+      "bytes": 1428232,
+      "reason": "Bulk generated local trace; retained in place, omitted from Git",
+      "sha256": "a08bb4f47bd07da3ede22399d94c347336479491af4389eddd6c7b37c3870c02",
+      "source": "build/train045-focused-batched-v1/run-01/GREEDY-selection.json.gz"
+    },
+    {
+      "bytes": 1427175,
+      "reason": "Bulk generated local trace; retained in place, omitted from Git",
+      "sha256": "68c9615615e2ab2a58e129e1b6e9aac1e8abddf9dc38a12118c845a521f0fbeb",
+      "source": "build/train045-focused-batched-v1/run-01/TAIL-selection.json.gz"
+    },
+    {
+      "bytes": 651176,
+      "reason": "Bulk generated local trace; retained in place, omitted from Git",
+      "sha256": "c0048b9c4f0addf40f895294c02f14b932c6f6ff0364d6731c5ad79ac9157bff",
+      "source": "build/train045-focused-batched-v1/run-01/first-failure-sidecars.json.gz"
+    },
+    {
+      "bytes": 191462,
+      "reason": "Bulk generated local trace; retained in place, omitted from Git",
+      "sha256": "c3192b997a7c590f7b8d82a9a9b1f1258f68051dbb0343485bcd34b6606324c8",
+      "source": "build/train045-focused-batched-v1/run-01/original-frontier-reference.json"
+    }
+  ],
+  "patient_arrays_and_checkpoints_copied": false,
+  "prior_source_and_failure_archive": "artifacts/train045-focused-policy-recovery-v1",
+  "schema": "focused-batched-compact-result-v1",
+  "source_head": "6aaa25303fb79fa03192163c8e304cccdc24ba9d"
+}
