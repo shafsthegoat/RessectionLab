@@ -1,0 +1,90 @@
+Independent saved result audit: PASS; scientific useful-gain criterion FALSE.
+
+One immutable auditor execution: 5,357 checks in0.347174s, zero model/native calls.
+No patient arrays, feature archive, checkpoint or head bytes decoded. All12
+complete authoritative routes and existing independent geometry certificates
+join their exact source/world/state/history. GREEDY and DIRECT_CALIBRATED
+controls reproduce prior accepted results exactly. Original failed cache fill,
+prior direct negative, fixed36 traces/497 states/34 STOP rows, TRAIN-only roles,
+and all actual costs remain retained. Independent geometry was certificate-
+checked here, not re-executed.
+
+Outcome
+=======
+ReMIND-002 GREEDY: target=0.000000000000 mm3, outside=0.000000000000, return=0.000000000000, motions=0, switches=0, path=0.000000000000 mm, planning previews=0.
+ReMIND-002 DIRECT_CALIBRATED: target=0.000000000000 mm3, outside=0.000000000000, return=0.000000000000, motions=0, switches=0, path=0.000000000000 mm, planning previews=0.
+ReMIND-002 TAIL: target=0.000000000000 mm3, outside=0.000000000000, return=0.000000000000, motions=0, switches=0, path=0.000000000000 mm, planning previews=0.
+ReMIND-015 GREEDY: target=55.313110348561 mm3, outside=0.000000000000, return=54.866215035801, motions=13, switches=0, path=56.895312760000 mm, planning previews=1139.
+ReMIND-015 DIRECT_CALIBRATED: target=55.313110348561 mm3, outside=0.000000000000, return=54.059425973121, motions=22, switches=17, path=83.684375440000 mm, planning previews=1910.
+ReMIND-015 TAIL: target=55.313110348561 mm3, outside=0.000000000000, return=54.866215035801, motions=13, switches=0, path=56.895312760000 mm, planning previews=1153.
+ReMIND-018 GREEDY: target=0.000000000000 mm3, outside=0.000000000000, return=0.000000000000, motions=0, switches=0, path=0.000000000000 mm, planning previews=0.
+ReMIND-018 DIRECT_CALIBRATED: target=0.000000000000 mm3, outside=0.000000000000, return=0.000000000000, motions=0, switches=0, path=0.000000000000 mm, planning previews=0.
+ReMIND-018 TAIL: target=0.000000000000 mm3, outside=0.000000000000, return=0.000000000000, motions=0, switches=0, path=0.000000000000 mm, planning previews=0.
+ReMIND-045 GREEDY: target=48.637450444684 mm3, outside=0.000000000000, return=48.181962920865, motions=12, switches=0, path=95.487523818709 mm, planning previews=1092.
+ReMIND-045 DIRECT_CALIBRATED: target=48.637450444684 mm3, outside=0.000000000000, return=47.487687900495, motions=20, switches=13, path=159.762544189030 mm, planning previews=1820.
+ReMIND-045 TAIL: target=48.637450444684 mm3, outside=0.000000000000, return=48.090856669181, motions=12, switches=3, path=96.593775502902 mm, planning previews=1092.
+
+TAIL restores25 motions versus DIRECT_CALIBRATED42, equal to GREEDY25. Both
+productive cases restore the same target-removal volume and zero outside
+removal. Case002/018 remain STOP0. Case015 has equal aggregate reward/path/removal
+outcomes, but a different action ordering/history from GREEDY. Case045 loses
+0.091106251684195 return: exactly3*0.03 switch cost +0.001*1.106251684193396 mm
+extra path. No claimed same-history equivalence for TAIL. Total TAIL planning
+previews=2245 vs GREEDY=2231; transitions
+=29 vs29. All strict gain predicates are false.
+Planning wall=32.851546s vs GREEDY=25.374360s in this
+fixed-order run; neither a gain nor a generalized speed result.
+
+Independent scalar calculations
+===============================
+All497 float64 tail labels reproduce direct future-prefix enumeration; current
+reward + tail joins original Q through exactly one float32 rounding. Current
+reward is added once at deployment; raw tails are clamped at0; actual-positive
+full-inventory guard and stable original-order ties verified for every choice.
+STOP remains0 and no future label enters deployment.
+
+Direct-calibrated total-Q weighted MSE87.91247905691922. Tail raw MSE
+83.46120080025597, clipped tail MSE83.37959884036628, reconstructed total-Q MSE
+83.37959800357085. These are recomputed from saved scalar predictions, not a
+neural-forward validation.70 nonSTOP raw tails are negative before clipping.
+SVD rank9/33,24 discarded/null directions, retained condition8931.102955295122.
+One fixed tail SVD, zero tail optimizer/backward/base-policy operations; original
+64-update head and direct calibration are reproduced and paid.
+
+Measured failure evidence and one next diagnostic
+=================================================
+At045 TAIL decision9, selected suction forecast exceeds the same-state immediate
+best action's predicted tail by1.30133056640625, overriding actual immediate
+loss0.03055312584210. At final decision12, the corresponding forecast difference
+is1.88803768157959 with the same immediate loss. Final productive predictions
+are17.580413818359375 on015 and15.926300048828125 on045; actual subsequent
+route return is0 (STOP). These exact observation/action pairs are absent from
+the497 recorded rows. This is exact-record support evidence, not a proof about
+feature novelty or that every alternative continuation is superior.
+
+One justified next diagnostic is a paired common-state continuation at045
+decision9: frozen tail choice versus that state's exact immediate-best choice,
+then the same unchanged tail policy to completion. Charge both full routes, use
+unchanged physics/reward/horizon and fresh independent geometry. It can determine
+whether the switch has actual continuation value; no refit, parameter sweep or
+counterfactual success is claimed from this report.
+
+Costs and limits
+================
+Current parent270.440205917s, worker269.887311875s, peak1,406,976,000 B; exit0,
+verified/reaped, no owned survivors/errors.17,856 previews and67 full policy
+forwards; two extra logged-row head forwards separately charged. Cumulative
+failed-cache + prior direct recovery + this tail iteration:84,990 previews,
+654 frozen-policy forwards,64 current +64 prior-direct head updates. Original
+older Q64 experiment remains separately referenced, not silently amortized.
+Inclusive phase times overlap and should not be summed. Same four TRAIN worlds,
+no held-out evidence, learned negative-preparation claim, Q* claim, surgical or
+physical validation.
+
+Exact pins
+==========
+report 1bee2b1d4c40a55b666ce3269a39c4a5052e1911297b22c6c8702fb21000af66
+launcher c9cf8269ceffda7ccfed0060f04164fa88e9cf59a597c5d20c851a5bb7e4d3f0
+index b5f70a83311adb2915e81dac2747a0315e704e2141d214016dba9245c7fccb04
+auditor 431b7f113efede72ec15db4f8ce06757bac2b394f6b9cf8375e58808e2cb1d7c
+audit 22d6461208c18a6751e9681530cdb8fc6c572c36eedc79a262f9103976e5cd18

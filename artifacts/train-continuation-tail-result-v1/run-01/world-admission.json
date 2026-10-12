@@ -1,0 +1,31 @@
+{
+  "actual_caps": {
+    "frozen_policy_forwards": 2048,
+    "log_bytes": 65536,
+    "native_previews": 100000,
+    "output_bytes": 12582912,
+    "parent_wall_seconds": 3630,
+    "whole_build_bytes": 33554432,
+    "work_seconds": 3600,
+    "worker_peak_rss_bytes": 3221225472
+  },
+  "execution_released": true,
+  "learning_protocol_hash": "sha256:2f9499bc196340226a814f5944db6601b1f7556cf0b80f37faf1b52711e91156",
+  "limits": {
+    "max_native_previews": 7297920,
+    "max_optimizer_updates": 128,
+    "max_policy_forwards": 18624,
+    "max_steps": 24,
+    "memory_bytes": 3221225472,
+    "search": {
+      "beam_width": 2,
+      "max_calls": 5640,
+      "seconds": 300
+    },
+    "threads": 1,
+    "worker_seconds": 900
+  },
+  "new_objective": "Q_i=r_i+max(0,Q_(i+1)); STOP=0; current negative action cost preserved",
+  "root_source_index_sha256": "b5f70a83311adb2915e81dac2747a0315e704e2141d214016dba9245c7fccb04",
+  "schema": "fixed-four-TRAIN-continuation-tail-v1"
+}

@@ -1,0 +1,115 @@
+{
+  "schema": "compact-tail-result-archive-v1",
+  "source_commit": "5944847fe474675b7df37950c9f1e14927edecf5",
+  "files": [
+    {
+      "source": "build/continuation-tail-v1/run-01/report.json",
+      "file": "run-01/report.json",
+      "bytes": 1054470,
+      "sha256": "1bee2b1d4c40a55b666ce3269a39c4a5052e1911297b22c6c8702fb21000af66"
+    },
+    {
+      "source": "build/continuation-tail-v1/run-01/launcher.json",
+      "file": "run-01/launcher.json",
+      "bytes": 4720,
+      "sha256": "c9cf8269ceffda7ccfed0060f04164fa88e9cf59a597c5d20c851a5bb7e4d3f0"
+    },
+    {
+      "source": "build/continuation-tail-v1/run-01/intent.json",
+      "file": "run-01/intent.json",
+      "bytes": 631,
+      "sha256": "5841ccd8d65793afafb08a3829e189e869dad4aedbff4e801aa19df8cf00010c"
+    },
+    {
+      "source": "build/continuation-tail-v1/run-01/logged-predictions.json",
+      "file": "run-01/logged-predictions.json",
+      "bytes": 18571,
+      "sha256": "7509da89a4898bc6ada14fbe375468060d32820ec2c717afdbdf5b231948f5fd"
+    },
+    {
+      "source": "build/continuation-tail-v1/run-01/logged-tail-targets.json",
+      "file": "run-01/logged-tail-targets.json",
+      "bytes": 30449,
+      "sha256": "cda11ee5c8f709c0478c6604626e3650c48924abed30f6cc12c73abc6ecaaf63"
+    },
+    {
+      "source": "build/continuation-tail-v1/run-01/logged-targets.json",
+      "file": "run-01/logged-targets.json",
+      "bytes": 30615,
+      "sha256": "6eaad3c010ad2c862bddfbc8327ea1c16c1f4b9f5302d78f1999c9a51a89386f"
+    },
+    {
+      "source": "build/continuation-tail-v1/run-01/trace-manifest.json",
+      "file": "run-01/trace-manifest.json",
+      "bytes": 148236,
+      "sha256": "c53bde6cfece252006d6a3f39789a9b897abf938a104287cb3c7ebb485720476"
+    },
+    {
+      "source": "build/continuation-tail-v1/run-01/world-admission.json",
+      "file": "run-01/world-admission.json",
+      "bytes": 971,
+      "sha256": "6907686045acd3c83fb24e27c7ee9c2297cc6eab3c0ef6baeb251ce693ed30e7"
+    },
+    {
+      "source": "build/continuation-tail-v1/run-01/worker.log",
+      "file": "run-01/worker.log",
+      "bytes": 1140,
+      "sha256": "801be74a2e1481e99f2658916153949102a729828c662897efc96b4e87f08850"
+    },
+    {
+      "source": "build/continuation-tail-v1/runner/source-index.json",
+      "file": "source-index.json",
+      "bytes": 45063,
+      "sha256": "b5f70a83311adb2915e81dac2747a0315e704e2141d214016dba9245c7fccb04"
+    },
+    {
+      "source": "build/continuation-tail-v1/independent/audit-01.json",
+      "file": "independent/audit-01.json",
+      "bytes": 50376,
+      "sha256": "22d6461208c18a6751e9681530cdb8fc6c572c36eedc79a262f9103976e5cd18"
+    },
+    {
+      "source": "build/continuation-tail-v1/independent/audit_saved.py",
+      "file": "independent/audit_saved.py",
+      "bytes": 29641,
+      "sha256": "431b7f113efede72ec15db4f8ce06757bac2b394f6b9cf8375e58808e2cb1d7c"
+    },
+    {
+      "source": "build/continuation-tail-v1/independent/tail_oracle.py",
+      "file": "independent/tail_oracle.py",
+      "bytes": 4847,
+      "sha256": "84c636d68a71ff99124b1925b2c8318178ad5b97d35af5f4cd47833afa924db6"
+    },
+    {
+      "source": "build/continuation-tail-v1/independent/RESULT.txt",
+      "file": "independent/RESULT.txt",
+      "bytes": 6553,
+      "sha256": "335c7e06e00ba859c4bfbbd281b73de6a9c1db88f097768270e8e690e9b100aa"
+    },
+    {
+      "source": "build/continuation-tail-v1/terminal-storage.json",
+      "file": "terminal-storage.json",
+      "bytes": 480,
+      "sha256": "6ebe06d10f71d9c5fd205de010f27a55e89f83f5cacf40ca64350798eee906e9"
+    },
+    {
+      "source": "root integration",
+      "file": "RESULT.md",
+      "bytes": 6858,
+      "sha256": "62af56c7ab7a9efedfea03a3d6180ee80b64e4747b07396df5e17099d3707f38"
+    },
+    {
+      "source": "root integration",
+      "file": "storage.json",
+      "bytes": 2226,
+      "sha256": "c83e4e31ddb4dfb2eb3a5906c2aed4e0e3d91ae6a65e2bb41a21e4ec283aae06"
+    }
+  ],
+  "excluded": [
+    "patient arrays",
+    "cached features",
+    "model weights",
+    "head checkpoints"
+  ],
+  "source_and_controls": "../train-continuation-tail-source-v1"
+}

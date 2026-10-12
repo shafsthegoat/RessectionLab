@@ -1,0 +1,50 @@
+{
+  "at_utc": "2026-10-12T02:24:59.579582+00:00",
+  "growth_highwater_bytes": 1794363392,
+  "free_bytes": 352830709760,
+  "experiment_reservation": {
+    "began_at_utc": "2026-10-12T02:15:46.182003+00:00",
+    "closed_at_utc": "2026-10-12T02:24:59.972882+00:00",
+    "created_at_utc": "2026-10-12T02:01:51.644361+00:00",
+    "execution_release": {
+      "at_utc": "2026-10-12T02:15:46.181228+00:00",
+      "forecast_previews": [
+        25000,
+        35000
+      ],
+      "forecast_seconds": [
+        400,
+        700
+      ],
+      "group_rss_cap_bytes": 3221225472,
+      "output": "build/continuation-tail-v1/run-01",
+      "output_cap_bytes": 12582912,
+      "reason": "28 focused controls,19 runner controls,414 independent arithmetic checks pass; root source review and source-only preflight accepted. Full greedy gate unchanged.",
+      "runs": 1,
+      "source_commit": "5944847",
+      "source_index_sha256": "b5f70a83311adb2915e81dac2747a0315e704e2141d214016dba9245c7fccb04",
+      "threads": 1,
+      "worker_seconds_cap": 3600,
+      "workers": 1
+    },
+    "launch_authorized_by_storage_reservation": false,
+    "observed_scope_growth_highwater_bytes": 3215360,
+    "owner": "/root",
+    "pilot": false,
+    "reserved_bytes": 33554432,
+    "scope_current_allocated_bytes": 3215360,
+    "scope_initial_allocated_bytes": 0,
+    "scope_note": "One fixed immediate-reward plus learned continuation-tail contrast. Source/controls first; no numerical acquired run released yet. Reuse read-only authenticated features and original patient data without copying. Single CPU numerical worker; no acquisition.",
+    "scopes": [
+      "build/continuation-tail-v1"
+    ],
+    "status": "closed",
+    "terminal_note": "Storage release only; success/admission not inferred from exit status.",
+    "terminal_receipt": {
+      "path": "build/continuation-tail-v1/terminal-storage.json",
+      "sha256": "6ebe06d10f71d9c5fd205de010f27a55e89f83f5cacf40ca64350798eee906e9"
+    }
+  },
+  "baseline_sha256": "db2e3bad35aadd68f23111b9498270d019debf27486c696cc7ef48bd1fff67c8",
+  "note": "After compact result copying, before final result notes, status update and commit. No new data; all original patient/checkpoint files retained."
+}
