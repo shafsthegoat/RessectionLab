@@ -1,11 +1,11 @@
-# Reset-curriculum PPO comparison: uniform1024 completed
+# Reset-curriculum PPO comparison: uniform1024 and reverse512
 
 **Completed uniform branch, October 12: more training did not improve full-task
 performance.** Both the 512 and 1024 checkpoints stop immediately, returning zero
 and failing the goal. Retained search succeeds in five preparation/goal actions,
 with return 9.811680 and zero outside-target removal. The reverse-reset branch
-is training from the same original 256 checkpoint; its 512/1024 evaluations and
-the whole-campaign decision remain pending.
+is training from the same original 256 checkpoint. Its completed 512 evaluation
+also stops immediately; reverse1024 and the whole-campaign decision remain pending.
 
 ![Actual interim learning curves](snapshot/plots-curriculum-01/learning-curves.png)
 
@@ -15,6 +15,43 @@ This is one exposed TRAIN045 geometric simulation using supplied/estimated
 anatomy, not observed surgery, physical validation or evidence of generalization.
 Search uses charged model queries under the retained protocol; it does not share
 PPO's exact feature representation. Final patient evaluation remains closed.
+
+## Reverse512 midpoint
+
+The staged reverse curriculum adds 256 decisions and 195 actual Adam updates,
+versus 46 updates for uniform at the same decision budget. Its full-start route
+still consists of the inherited twelve-action prefix followed by STOP: goal
+false, local return zero, no new target or outside removal. The compressed
+plan/history and semantic seals are identical to uniform512/1024. The independent
+review verified the checkpoint, fresh complete geometry, local reward and
+evaluation isolation from saved records without executing another model.
+
+The 37 new completed practice episodes contain eleven sampled successes:
+eight from start 16 and three from start 15. All eight start-16 successes occur
+in the first rollout, before a new optimizer update. This is more positive
+training exposure, not itself evidence of learning. The schedule has not yet
+reached starts 12–14; the midpoint is a transfer check, not the final verdict
+on the completed curriculum. Natural episode boundaries produce 132 decisions
+from start 16 and 124 from start 15, rather than forcibly truncating at 128.
+
+The segment observes 205 distinct states and 242 state/action pairs on the same
+one patient, with 38 resets. Shared-lineage totals are 512 decisions and 353
+Adam updates; 494 completed-episode decisions + 12 retired unfinished + 6 live
+unfinished decisions account for all 512. The four new rollouts apply
+30/53/48/64 optimizer steps, yet the full-start outcome remains unchanged.
+The encoder stays frozen.
+
+The local checkpoint is
+`build/train045-local-goal-ppo-v1/curriculum-1024-01/reverse-seed0/ppo-0512.zip`:
+248,968 bytes, SHA256
+`18794e285ae2b7d6219fe297bcf5a6e9d060c46710b822f6c3dc2575e5fbac47`.
+Segment cost is 1,836.670 seconds, 320.914 seconds more than uniform512.
+Training catalogue construction takes 1,555.157 seconds. The endpoint's combined
+evaluation/replay/audit/isolation costs 29.493 seconds, including one catalogue
+at 3.778 seconds; neither is a substitute for pending pure inference timing.
+RNG, mode, optimizer and training-state isolation pass, and training resumes.
+The exact reverse512 report and curve snapshots are preserved separately from
+the growing live files. No whole-campaign terminal receipt is claimed yet.
 
 ## Uniform1024 result
 
@@ -133,8 +170,8 @@ Rerun from the original runtime location:
 ```
 
 The archived renderer preserves that script; it expects the original stage
-layout. `INVENTORY.json` binds the preserved 512 snapshots, completed uniform1024
-report/curve, and updated renderer and plots.
+layout. `INVENTORY.json` binds the preserved uniform512 and reverse512 snapshots,
+completed uniform1024 report/curve, and updated renderer and plots.
 Weights, anatomy arrays and bulk trajectories are not archived in Git.
 
 ## Decision still pending
@@ -147,8 +184,8 @@ or legal actions mid-run, then decide whether the curriculum improves complete
 outcomes. No additional model sweep is launched alongside it.
 
 After this compact snapshot, before final documentation/Git writes, measured
-extension growth is 1,846,046,720 bytes (1.719 GiB), with 350,226,804,736 bytes
-free (326.174 GiB), no reservation
+extension growth is 1,848,979,456 bytes (1.722 GiB), with 350,162,235,392 bytes
+free (326.114 GiB), no reservation
 overruns and no new dataset. Runtime artifacts remain within the existing
 192 MiB stage reservation; compact archival writes use the existing root
 bookkeeping reservation. Physical measurements continue as a separate evidence

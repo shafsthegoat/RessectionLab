@@ -1,6 +1,6 @@
 {
   "schema": "local-goal-curriculum-interim-snapshot-v1",
-  "scope": "Completed uniform1024 branch and preserved512 midpoint; overallcampaignrunning, reversepending",
+  "scope": "Completed uniform1024 and reverse512 midpoint; overall campaign running, reverse1024 pending",
   "files": [
     {
       "source": "build/train045-local-goal-ppo-v1/curriculum-1024-01/report.json",
@@ -15,30 +15,6 @@
       "sha256": "7e9117072a25bfd237e1b7bbe09b920a4f39e3bd2b769176a15886f9326a288e"
     },
     {
-      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/render_curves.py",
-      "snapshot": "snapshot/plots-curriculum-01/render_curves.py",
-      "bytes": 23088,
-      "sha256": "5a2ac732d37785c76fbe60203ceddc227ae5f25ece91347c79c6a81cba8b9c1e"
-    },
-    {
-      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/learning-curves.png",
-      "snapshot": "snapshot/plots-curriculum-01/learning-curves.png",
-      "bytes": 296874,
-      "sha256": "6d390503e447fbef78b20ccec1be27e5e6d6a62aa533f6e52198220ea7cd0e43"
-    },
-    {
-      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/learning-curves.svg",
-      "snapshot": "snapshot/plots-curriculum-01/learning-curves.svg",
-      "bytes": 156049,
-      "sha256": "6a33c4dff5e2ef3284606e26c8208d0a17d5c83092a556e50f5c06ddf4678272"
-    },
-    {
-      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/learning-curves.json",
-      "snapshot": "snapshot/plots-curriculum-01/learning-curves.json",
-      "bytes": 340346,
-      "sha256": "5c444275aa4f3c3d5a85a4e78a94084734141a804454226da021263df2a48d45"
-    },
-    {
       "source": "build/train045-local-goal-ppo-v1/curriculum-1024-01/report.json",
       "snapshot": "snapshot/uniform1024-report.json",
       "bytes": 725334,
@@ -49,6 +25,42 @@
       "snapshot": "snapshot/uniform1024-curve.json",
       "bytes": 687861,
       "sha256": "1a9efbf1090ef813de2aadff7bf881aa27ffa00aa10510e5aeae502463cfecda"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/curriculum-1024-01/report.json",
+      "snapshot": "snapshot/reverse512-report.json",
+      "bytes": 728856,
+      "sha256": "7a6151a62a5fa81762177c9c0751900a05e28f113ab7d4b89cf81153868b6374"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/curriculum-1024-01/reverse-seed0/curve.json",
+      "snapshot": "snapshot/reverse512-curve.json",
+      "bytes": 264554,
+      "sha256": "81f21f8dd6873bd8e0ea93aac8ddfb236102334b47696d76bd75bba97a6572a8"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/render_curves.py",
+      "snapshot": "snapshot/plots-curriculum-01/render_curves.py",
+      "bytes": 23088,
+      "sha256": "5a2ac732d37785c76fbe60203ceddc227ae5f25ece91347c79c6a81cba8b9c1e"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/learning-curves.png",
+      "snapshot": "snapshot/plots-curriculum-01/learning-curves.png",
+      "bytes": 307496,
+      "sha256": "cf34f6cdc13885de8a8c850fc92c427dcb40281b879bc6b3448b36a633ea1717"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/learning-curves.svg",
+      "snapshot": "snapshot/plots-curriculum-01/learning-curves.svg",
+      "bytes": 163065,
+      "sha256": "c0949db7987f68310ee396984c8199ea175c17fe4419c9534feb09cfce2adfea"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/plots-curriculum-01/learning-curves.json",
+      "snapshot": "snapshot/plots-curriculum-01/learning-curves.json",
+      "bytes": 373690,
+      "sha256": "fcf3b9c70900218e15d5f4321c67f564f5958e1753f89c8f95979531fb358c08"
     }
   ]
 }

@@ -1,9 +1,9 @@
 {
   "arms": {
     "reverse": {
-      "actual_optimizer_completed_at_last_checkpoint": 158,
-      "branch_decisions_observed_lower_bound": 283,
-      "completed_training_catalog_seconds_lower_bound": 173.26926503819413,
+      "actual_optimizer_completed_at_last_checkpoint": 353,
+      "branch_decisions_observed_lower_bound": 532,
+      "completed_training_catalog_seconds_lower_bound": 1661.0011809545103,
       "completed_training_episodes": [
         {
           "catalog_seconds": 11.897720457985997,
@@ -54,13 +54,383 @@
           "return": 9.846232801071695,
           "start": 16,
           "success": true
+        },
+        {
+          "catalog_seconds": 55.994940540986136,
+          "decisions": 8,
+          "end_training_decision": 291,
+          "episode": 6,
+          "native_history_hash": "sha256:5618a38b71a1068773ac543f64fcbc1ecc79cdc125f7a86c51f98661292697c2",
+          "return": -0.4668406495808052,
+          "start": 16,
+          "success": false
+        },
+        {
+          "catalog_seconds": 17.709429166978225,
+          "decisions": 3,
+          "end_training_decision": 294,
+          "episode": 7,
+          "native_history_hash": "sha256:48499a5bbbcf64c8f14192ad994bbe157d36aefb36db09de2c8463abb130adb4",
+          "return": 9.81818592691379,
+          "start": 16,
+          "success": true
+        },
+        {
+          "catalog_seconds": 13.130715957842767,
+          "decisions": 2,
+          "end_training_decision": 296,
+          "episode": 8,
+          "native_history_hash": "sha256:e3481061d42f65acfaa1786c36afe5db2fa1bbecef89aef19ef082f6ea0f8945",
+          "return": 9.917574993223226,
+          "start": 16,
+          "success": true
+        },
+        {
+          "catalog_seconds": 39.78840050008148,
+          "decisions": 6,
+          "end_training_decision": 302,
+          "episode": 9,
+          "native_history_hash": "sha256:1450870f58eacb7b8f238070260f9ca34ad7bcd45aa143d9a712120fa5525b38",
+          "return": 9.673631231353871,
+          "start": 16,
+          "success": true
+        },
+        {
+          "catalog_seconds": 12.103488416178152,
+          "decisions": 2,
+          "end_training_decision": 304,
+          "episode": 10,
+          "native_history_hash": "sha256:9de9c83ee59df2668e17ade657f804a6248e5de0cd0c8c7665a66c8faf04a4e2",
+          "return": 9.890374993223228,
+          "start": 16,
+          "success": true
+        },
+        {
+          "catalog_seconds": 11.838247791863978,
+          "decisions": 2,
+          "end_training_decision": 306,
+          "episode": 11,
+          "native_history_hash": "sha256:cb4f05dd4688682090e511058dc1da022a7fb3cf152ac3746844974931eec0e9",
+          "return": 9.858974993223226,
+          "start": 16,
+          "success": true
+        },
+        {
+          "catalog_seconds": 42.31511545786634,
+          "decisions": 6,
+          "end_training_decision": 312,
+          "episode": 12,
+          "native_history_hash": "sha256:83db46b1fbc96f4014a07f199584ae3a3d28fa6550ed5762d3f65de6be1e7cd3",
+          "return": 9.700278105511776,
+          "start": 16,
+          "success": true
+        },
+        {
+          "catalog_seconds": 50.92222158447839,
+          "decisions": 8,
+          "end_training_decision": 320,
+          "episode": 13,
+          "native_history_hash": "sha256:db9f53cbd9db60387207d742c86f96b73469a5538555a8d8acd78b61023158cb",
+          "return": -0.4741000271070953,
+          "start": 16,
+          "success": false
+        },
+        {
+          "catalog_seconds": 53.64666295819916,
+          "decisions": 8,
+          "end_training_decision": 328,
+          "episode": 14,
+          "native_history_hash": "sha256:1446c709e5674f13e59358fb14df7e71e81743c304eb05949b2a1d133b58244c",
+          "return": -0.4079469012649986,
+          "start": 16,
+          "success": false
+        },
+        {
+          "catalog_seconds": 57.925076957792044,
+          "decisions": 8,
+          "end_training_decision": 336,
+          "episode": 15,
+          "native_history_hash": "sha256:28c4d0a86747f92d39550bb01d3ab3a659cd53e7331edcf283192306372f901d",
+          "return": -0.4082406495808052,
+          "start": 16,
+          "success": false
+        },
+        {
+          "catalog_seconds": 50.207106792135164,
+          "decisions": 8,
+          "end_training_decision": 344,
+          "episode": 16,
+          "native_history_hash": "sha256:e6021efda9ff17bc4285c0ea33ee8d878dc1197df073088b743c1aa312b3be4d",
+          "return": -0.4732531529491921,
+          "start": 16,
+          "success": false
+        },
+        {
+          "catalog_seconds": 51.658053333638236,
+          "decisions": 8,
+          "end_training_decision": 352,
+          "episode": 17,
+          "native_history_hash": "sha256:a098c5c81ea607bededdb9e5bf3f4a7464f7abca45b5484a446923388e4fd836",
+          "return": -0.43348752373870836,
+          "start": 16,
+          "success": false
+        },
+        {
+          "catalog_seconds": 41.66954724979587,
+          "decisions": 7,
+          "end_training_decision": 359,
+          "episode": 18,
+          "native_history_hash": "sha256:c42d7888eb1bd644035000253d06da32b052e85e9205c21152433b179318879a",
+          "return": -0.33027502033032147,
+          "start": 16,
+          "success": false
+        },
+        {
+          "catalog_seconds": 54.72657146025449,
+          "decisions": 8,
+          "end_training_decision": 367,
+          "episode": 19,
+          "native_history_hash": "sha256:250b6de412db0518165f7e7b70f238cf13122d5cdfe29842353a8f939ef7d436",
+          "return": -0.5007469012649985,
+          "start": 16,
+          "success": false
+        },
+        {
+          "catalog_seconds": 52.40444587310776,
+          "decisions": 8,
+          "end_training_decision": 375,
+          "episode": 20,
+          "native_history_hash": "sha256:14d9dd171237a4fefc35e0c77646f5cb5e6e1cdc3d5352b69ebc31462e271e8c",
+          "return": -0.4715937754229018,
+          "start": 16,
+          "success": false
+        },
+        {
+          "catalog_seconds": 31.135657123988494,
+          "decisions": 5,
+          "end_training_decision": 380,
+          "episode": 21,
+          "native_history_hash": "sha256:f37f966ff844275b609895cf0ac6d03982acfbb4528e2b46df578a8b679cecaf",
+          "return": -0.2520500135535476,
+          "start": 16,
+          "success": false
+        },
+        {
+          "catalog_seconds": 54.57740587531589,
+          "decisions": 8,
+          "end_training_decision": 388,
+          "episode": 22,
+          "native_history_hash": "sha256:9a8304ebd462d9ac3d69f94b74cfdb125b0dde0ae902c0510df615f9fed9c3f8",
+          "return": -0.46934690126499856,
+          "start": 16,
+          "success": false
+        },
+        {
+          "catalog_seconds": 45.716310085495934,
+          "decisions": 9,
+          "end_training_decision": 397,
+          "episode": 23,
+          "native_history_hash": "sha256:13cede4f0650bd94f231667a2505bf0327ac60ef3b322e3a7c6827ee3ec9b57a",
+          "return": -0.4462297158902405,
+          "start": 15,
+          "success": false
+        },
+        {
+          "catalog_seconds": 52.217908083694056,
+          "decisions": 9,
+          "end_training_decision": 406,
+          "episode": 24,
+          "native_history_hash": "sha256:b526ccc7db82fe6adf7b622590f39918bc374a8715e207403848375f01b31ddb",
+          "return": -0.510982841732337,
+          "start": 15,
+          "success": false
+        },
+        {
+          "catalog_seconds": 51.29642795748077,
+          "decisions": 9,
+          "end_training_decision": 415,
+          "episode": 25,
+          "native_history_hash": "sha256:508a1e5b0c1ccfa863619dcee93ec187221ccdaaf13dc467ccd56b4ff90c80ae",
+          "return": -0.4384172125218535,
+          "start": 15,
+          "success": false
+        },
+        {
+          "catalog_seconds": 48.27623004280031,
+          "decisions": 9,
+          "end_training_decision": 424,
+          "episode": 26,
+          "native_history_hash": "sha256:671cae5fade309a043d210057fafa5b2888fe9131b4c10ac8dca9640abb61932",
+          "return": -0.5031703383639503,
+          "start": 15,
+          "success": false
+        },
+        {
+          "catalog_seconds": 13.982944208197296,
+          "decisions": 3,
+          "end_training_decision": 427,
+          "episode": 27,
+          "native_history_hash": "sha256:4e7be2c5790807dedd142c58010cf2ab270b0ac766bab119c24be4ad095f2abd",
+          "return": -0.1390718809346771,
+          "start": 15,
+          "success": false
+        },
+        {
+          "catalog_seconds": 49.57367887487635,
+          "decisions": 9,
+          "end_training_decision": 436,
+          "episode": 28,
+          "native_history_hash": "sha256:b538ff416400b53274114038a07552974f8ed113bc6c1c65b3231e083e9f0c12",
+          "return": -0.5656765900481435,
+          "start": 15,
+          "success": false
+        },
+        {
+          "catalog_seconds": 43.882032208144665,
+          "decisions": 9,
+          "end_training_decision": 445,
+          "episode": 29,
+          "native_history_hash": "sha256:5a993cad121a4ea322aa00276ef39c44dd8e6278e07377146529d14f465e83a7",
+          "return": -0.5056765900481437,
+          "start": 15,
+          "success": false
+        },
+        {
+          "catalog_seconds": 45.2079674997367,
+          "decisions": 9,
+          "end_training_decision": 454,
+          "episode": 30,
+          "native_history_hash": "sha256:9f0ce7dac1c0f29109830274d909c594809af26bf86b6a93e7bdf04f0ddf817a",
+          "return": -0.40451096083766,
+          "start": 15,
+          "success": false
+        },
+        {
+          "catalog_seconds": 23.12235574889928,
+          "decisions": 4,
+          "end_training_decision": 458,
+          "episode": 31,
+          "native_history_hash": "sha256:af52a1da02b4fe74cc8b616669ecb82cf84e9b7cefb8c9f8ad062d185ca606c1",
+          "return": 9.780456238130645,
+          "start": 15,
+          "success": true
+        },
+        {
+          "catalog_seconds": 46.787188667804,
+          "decisions": 9,
+          "end_training_decision": 467,
+          "episode": 32,
+          "native_history_hash": "sha256:af4c04587eaa26a1916ff61c1d7bec066fc9273ed7d5dafef316e25fe61c6f20",
+          "return": -0.44427659004814374,
+          "start": 15,
+          "success": false
+        },
+        {
+          "catalog_seconds": 56.730354542145506,
+          "decisions": 9,
+          "end_training_decision": 476,
+          "episode": 33,
+          "native_history_hash": "sha256:f7bd3a2712485288241977343107cb303062cedddd05833c9a2bea8c54632c82",
+          "return": -0.503723464206047,
+          "start": 15,
+          "success": false
+        },
+        {
+          "catalog_seconds": 40.431778208119795,
+          "decisions": 7,
+          "end_training_decision": 483,
+          "episode": 34,
+          "native_history_hash": "sha256:34a0359521f4fb1c799397fe72f045378f1e8e878497fda5fca2342bbe446674",
+          "return": 9.579254668412824,
+          "start": 15,
+          "success": true
+        },
+        {
+          "catalog_seconds": 28.740185665665194,
+          "decisions": 5,
+          "end_training_decision": 488,
+          "episode": 35,
+          "native_history_hash": "sha256:415c07e9165e5d1e4d792a4f8bfa2fd239b9f62aee4cb748f3e34088240acf3e",
+          "return": 9.773573423505404,
+          "start": 15,
+          "success": true
+        },
+        {
+          "catalog_seconds": 50.991844123695046,
+          "decisions": 9,
+          "end_training_decision": 497,
+          "episode": 36,
+          "native_history_hash": "sha256:e08951c233c98b5410945c4f4eed637cc4bb6c6acc11c8d13fd7e7a36905abfa",
+          "return": -0.4442765900481438,
+          "start": 15,
+          "success": false
+        },
+        {
+          "catalog_seconds": 53.842085127253085,
+          "decisions": 9,
+          "end_training_decision": 506,
+          "episode": 37,
+          "native_history_hash": "sha256:cc41b82e6836cfe6b6332ebf3cc31c827a8109b928085343211e66ed7e9884f7",
+          "return": -0.4195828417323371,
+          "start": 15,
+          "success": false
+        },
+        {
+          "catalog_seconds": 45.96505887527019,
+          "decisions": 8,
+          "end_training_decision": 514,
+          "episode": 38,
+          "native_history_hash": "sha256:2237cf9506307565e91fae9f4cec030c06cdd07baf123e350c9213ae8467741e",
+          "return": 9.554499972892904,
+          "start": 15,
+          "success": true
+        },
+        {
+          "catalog_seconds": 57.88885474903509,
+          "decisions": 10,
+          "end_training_decision": 524,
+          "episode": 39,
+          "native_history_hash": "sha256:ba7e2d9c396a5ead227337b2406c83df25140f505a3a8a0b83616cf5cd224740",
+          "return": -0.5434062788312887,
+          "start": 14,
+          "success": false
+        },
+        {
+          "catalog_seconds": 41.32562420750037,
+          "decisions": 8,
+          "end_training_decision": 532,
+          "episode": 40,
+          "native_history_hash": "sha256:c7001dc38b7dbcf4ac807e17dffba274f93763c56fb93030a7b3831d4ca69de9",
+          "return": -0.42465158327136987,
+          "start": 14,
+          "success": false
         }
       ],
-      "cumulative_branch_wall_seconds_at_last_saved_boundary": null,
-      "evaluation_costs": [],
-      "full_start_evaluations": [],
+      "cumulative_branch_wall_seconds_at_last_saved_boundary": 3691.3031768321525,
+      "evaluation_costs": [
+        {
+          "catalog_construction_only_seconds": 3.7783147080335766,
+          "decisions": 512,
+          "evaluation_plus_replay_audit_and_isolation_seconds": 29.49262099992484,
+          "fresh_replay_and_audit_seconds": null,
+          "nominal_inference_seconds": null,
+          "scope": "Combined evaluation/isolation and catalog-only work are not pure inference latency."
+        }
+      ],
+      "full_start_evaluations": [
+        {
+          "decision_count": 1,
+          "decisions": 512,
+          "history_hash": "sha256:6d7e25d53db59932db8aba4eb582380d67de0229b94e60932a5497e22e2765b6",
+          "immediate_STOP": true,
+          "plan_seal": "sha256:4b2a3b2bb77862a7052322b3aff608426547678d3f4dd6e741130db5a682cae6",
+          "return": 0.0,
+          "scope": "Deterministic start12 evaluation; independently replayed geometry and task reward",
+          "success": false
+        }
+      ],
       "inherited_retired_segments": null,
-      "new_decisions_observed_lower_bound": 27,
+      "new_decisions_observed_lower_bound": 276,
       "optimizer_curve": [
         {
           "decisions": 0,
@@ -81,15 +451,423 @@
         {
           "decisions": 256,
           "optimizer_completed": 158
+        },
+        {
+          "decisions": 320,
+          "optimizer_completed": 188
+        },
+        {
+          "decisions": 384,
+          "optimizer_completed": 241
+        },
+        {
+          "decisions": 448,
+          "optimizer_completed": 289
+        },
+        {
+          "decisions": 512,
+          "optimizer_completed": 353
         }
       ],
       "pending_endpoints": [
-        512,
         1024
       ],
-      "saved_checkpoint_boundaries": [],
+      "saved_checkpoint_boundaries": [
+        {
+          "additional_optimizer_completed": 195,
+          "checkpoint": {
+            "bytes": 248968,
+            "decisions": 512,
+            "decoded_member_bytes": 33315368,
+            "encoding": "standard_SB3_ZIP_losslessly_DEFLATED",
+            "includes_optimizer_state": true,
+            "last_image_observations_excluded": true,
+            "members": {
+              "_stable_baselines3_version": {
+                "bytes": 5,
+                "sha256": "6184643630b8a8075b0c62de6daf273239a389336ecdd5b7e41070668f0c81e0"
+              },
+              "data": {
+                "bytes": 32960828,
+                "sha256": "01c5394f52baf6434a36cf31a8128a039f9cc85701a4bbb391856987b80867c4"
+              },
+              "policy.optimizer.pth": {
+                "bytes": 215095,
+                "sha256": "c22fe2c928686b1f33afe1aab74aa2872544fb1495230f19a4d5d55ad6ec26c1"
+              },
+              "policy.pth": {
+                "bytes": 137907,
+                "sha256": "febce3b4e62dafb0e09f71ff02db8a15da15feeeda019912f1ba6c485b21a5fd"
+              },
+              "pytorch_variables.pth": {
+                "bytes": 1261,
+                "sha256": "7b6bbfc035aeac78f3ee425960893ff8bb7927d3cf3425470ac4b6c6ce280c5d"
+              },
+              "system_info.txt": {
+                "bytes": 272,
+                "sha256": "296fa66f6e1245cf7220e947a93df5fef977c408cdc239990791c5676f039c26"
+              }
+            },
+            "path": "reverse-seed0/ppo-0512.zip",
+            "sha256": "18794e285ae2b7d6219fe297bcf5a6e9d060c46710b822f6c3dc2575e5fbac47"
+          },
+          "decisions": 512,
+          "experience": {
+            "automatic_STOP_transitions": 14,
+            "branch_lineage_shared_with_other_method": true,
+            "completed_catalog_costs": {
+              "automatic_STOP_transitions": 14,
+              "catalog_calls": 494,
+              "catalog_seconds": 2784.582313286606,
+              "pages": 2202,
+              "policy_native_transitions": 494,
+              "union_observations": 494
+            },
+            "completed_episode_decisions": 494,
+            "completed_episodes": 63,
+            "current_open_resets": 1,
+            "decision_partition_exact": true,
+            "decisions": 512,
+            "distinct_source_states": 395,
+            "distinct_state_physical_actions": 453,
+            "live_episode_costs": {
+              "catalog_calls": 7,
+              "catalog_seconds": 39.33535254211165,
+              "pages": 33,
+              "policy_native_transitions": 6,
+              "union_observations": 7
+            },
+            "patients": 1,
+            "reset_partition_exact": true,
+            "resets": 66,
+            "retired_catalog_costs": {
+              "catalog_calls": 14,
+              "catalog_seconds": 61.074233083752915,
+              "pages": 64,
+              "policy_native_transitions": 12,
+              "union_observations": 14
+            },
+            "retired_open_resets_total": 2,
+            "retired_segments": [
+              {
+                "catalog_costs": {
+                  "catalog_calls": 7,
+                  "catalog_seconds": 27.010890999576077,
+                  "pages": 30,
+                  "policy_native_transitions": 6,
+                  "union_observations": 7
+                },
+                "ended_at_decisions": 64,
+                "open_resets": 1,
+                "scope": "Inherited64 retirement recorded in authenticated256 receipt",
+                "unfinished_decisions": 6,
+                "unfinished_episodes": 1
+              },
+              {
+                "catalog_costs": {
+                  "catalog_calls": 7,
+                  "catalog_seconds": 34.06334208417684,
+                  "pages": 34,
+                  "policy_native_transitions": 6,
+                  "union_observations": 7
+                },
+                "ended_at_decisions": 256,
+                "open_resets": 1,
+                "scope": "Retired without terminal/failure relabeling; new physical episode at resume",
+                "unfinished_decisions": 6,
+                "unfinished_episodes": 1
+              }
+            ],
+            "retired_unfinished_decisions_total": 12,
+            "retired_unfinished_episodes_total": 2,
+            "scope": "Per branch includes shared256 once; cross-branch paid totals must not duplicate shared experience",
+            "start_counts": {
+              "12": 6,
+              "13": 5,
+              "14": 5,
+              "15": 22,
+              "16": 28
+            },
+            "successful_episodes": 15,
+            "unfinished_episode_decisions": 6,
+            "unfinished_executed_episodes": 1
+          },
+          "optimizer_completed": 353,
+          "segment_experience": {
+            "automatic_STOP_transitions": 11,
+            "completed_catalog_costs": {
+              "automatic_STOP_transitions": 11,
+              "catalog_calls": 250,
+              "catalog_seconds": 1515.8216431227047,
+              "pages": 1100,
+              "policy_native_transitions": 250,
+              "union_observations": 250
+            },
+            "completed_episodes": 37,
+            "decisions": 256,
+            "decisions_by_start": {
+              "12": 0,
+              "13": 0,
+              "14": 0,
+              "15": 124,
+              "16": 132
+            },
+            "distinct_source_states": 205,
+            "distinct_state_physical_actions": 242,
+            "goal_bonus_events": 11,
+            "live_episode_costs": {
+              "catalog_calls": 7,
+              "catalog_seconds": 39.33535254211165,
+              "pages": 33,
+              "policy_native_transitions": 6,
+              "union_observations": 7
+            },
+            "patients": 1,
+            "reset_method": "reverse",
+            "reset_records": [
+              {
+                "cumulative_decisions": 256,
+                "local_decisions": 0,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 258,
+                "local_decisions": 2,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 264,
+                "local_decisions": 8,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 272,
+                "local_decisions": 16,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 280,
+                "local_decisions": 24,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 283,
+                "local_decisions": 27,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 291,
+                "local_decisions": 35,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 294,
+                "local_decisions": 38,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 296,
+                "local_decisions": 40,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 302,
+                "local_decisions": 46,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 304,
+                "local_decisions": 48,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 306,
+                "local_decisions": 50,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 312,
+                "local_decisions": 56,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 320,
+                "local_decisions": 64,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 328,
+                "local_decisions": 72,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 336,
+                "local_decisions": 80,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 344,
+                "local_decisions": 88,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 352,
+                "local_decisions": 96,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 359,
+                "local_decisions": 103,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 367,
+                "local_decisions": 111,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 375,
+                "local_decisions": 119,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 380,
+                "local_decisions": 124,
+                "start_step": 16
+              },
+              {
+                "cumulative_decisions": 388,
+                "local_decisions": 132,
+                "start_step": 15
+              },
+              {
+                "cumulative_decisions": 397,
+                "local_decisions": 141,
+                "start_step": 15
+              },
+              {
+                "cumulative_decisions": 406,
+                "local_decisions": 150,
+                "start_step": 15
+              },
+              {
+                "cumulative_decisions": 415,
+                "local_decisions": 159,
+                "start_step": 15
+              },
+              {
+                "cumulative_decisions": 424,
+                "local_decisions": 168,
+                "start_step": 15
+              },
+              {
+                "cumulative_decisions": 427,
+                "local_decisions": 171,
+                "start_step": 15
+              },
+              {
+                "cumulative_decisions": 436,
+                "local_decisions": 180,
+                "start_step": 15
+              },
+              {
+                "cumulative_decisions": 445,
+                "local_decisions": 189,
+                "start_step": 15
+              },
+              {
+                "cumulative_decisions": 454,
+                "local_decisions": 198,
+                "start_step": 15
+              },
+              {
+                "cumulative_decisions": 458,
+                "local_decisions": 202,
+                "start_step": 15
+              },
+              {
+                "cumulative_decisions": 467,
+                "local_decisions": 211,
+                "start_step": 15
+              },
+              {
+                "cumulative_decisions": 476,
+                "local_decisions": 220,
+                "start_step": 15
+              },
+              {
+                "cumulative_decisions": 483,
+                "local_decisions": 227,
+                "start_step": 15
+              },
+              {
+                "cumulative_decisions": 488,
+                "local_decisions": 232,
+                "start_step": 15
+              },
+              {
+                "cumulative_decisions": 497,
+                "local_decisions": 241,
+                "start_step": 15
+              },
+              {
+                "cumulative_decisions": 506,
+                "local_decisions": 250,
+                "start_step": 15
+              }
+            ],
+            "resets": 38,
+            "scope": "Exposure counts in this new768-decision segment; inherited summaries remain separate",
+            "start_counts": {
+              "12": 0,
+              "13": 0,
+              "14": 0,
+              "15": 16,
+              "16": 22
+            },
+            "successful_episodes": 11,
+            "successful_episodes_by_start": {
+              "12": 0,
+              "13": 0,
+              "14": 0,
+              "15": 3,
+              "16": 8
+            },
+            "unfinished_episode_decisions": 6,
+            "unfinished_executed_episodes": 1,
+            "windows": [
+              [
+                0,
+                128,
+                16
+              ],
+              [
+                128,
+                256,
+                15
+              ],
+              [
+                256,
+                384,
+                14
+              ],
+              [
+                384,
+                512,
+                13
+              ],
+              [
+                512,
+                768,
+                12
+              ]
+            ]
+          },
+          "segment_seconds_including_evaluation": 1836.669705541106
+        }
+      ],
       "segment_experience": {},
-      "status": "in_progress",
+      "status": "running",
       "training_by_reset_start": {
         "12": {
           "decisions_in_completed_episodes": 0,
@@ -102,19 +880,19 @@
           "successes": 0
         },
         "14": {
-          "decisions_in_completed_episodes": 0,
-          "episodes": 0,
+          "decisions_in_completed_episodes": 18,
+          "episodes": 2,
           "successes": 0
         },
         "15": {
-          "decisions_in_completed_episodes": 0,
-          "episodes": 0,
-          "successes": 0
+          "decisions_in_completed_episodes": 126,
+          "episodes": 16,
+          "successes": 4
         },
         "16": {
-          "decisions_in_completed_episodes": 27,
-          "episodes": 5,
-          "successes": 2
+          "decisions_in_completed_episodes": 132,
+          "episodes": 22,
+          "successes": 8
         }
       },
       "unfinished_decisions_at_saved_summary": null
@@ -8258,10 +9036,10 @@
     }
   },
   "experience_totals": {
-    "all_paid_training_including_retained_trainable256_lower_bound": 1307,
-    "comparison_lineage_decisions_lower_bound": 1051,
+    "all_paid_training_including_retained_trainable256_lower_bound": 1556,
+    "comparison_lineage_decisions_lower_bound": 1300,
     "exact_terminal_counts": {},
-    "new_decisions_observed_lower_bound": 795,
+    "new_decisions_observed_lower_bound": 1044,
     "patients": 1,
     "shared_parent_decisions_counted_once": 256
   },
@@ -8276,16 +9054,16 @@
   ],
   "paid_worker_costs": {
     "current_comparison_terminal": null,
-    "live_preview_entries": 99019,
+    "live_preview_entries": 129586,
     "live_progress_unassigned_to_arm": {
-      "decisions": 286,
-      "optimizer_attempted": 158,
-      "optimizer_completed": 158,
+      "decisions": 532,
+      "optimizer_attempted": 353,
+      "optimizer_completed": 353,
       "phase": "training_decision",
-      "seconds": 4589.805221083807,
+      "seconds": 6329.9208739998285,
       "transitions": {
-        "attempted": 865,
-        "completed": 865,
+        "attempted": 1135,
+        "completed": 1135,
         "raised": 0
       }
     },
@@ -8317,7 +9095,7 @@
     },
     "scope": "Shared prior costs counted once; nested phase times are not summed."
   },
-  "rendered_utc": "2026-10-12T18:22:00.304607+00:00",
+  "rendered_utc": "2026-10-12T18:50:55.643739+00:00",
   "renderer_sha256": "5a2ac732d37785c76fbe60203ceddc227ae5f25ece91347c79c6a81cba8b9c1e",
   "run_status": "running",
   "schema": "offline-reset-curriculum-learning-curves-v1",
@@ -8467,14 +9245,14 @@
       "sha256": "c5e5a8f61892ec9efa1c0ba25627df3249be2a0b16f384821852f8f69621f0c1"
     },
     {
-      "bytes": 725334,
+      "bytes": 728856,
       "path": "curriculum-1024-01/report.json",
-      "sha256": "7a8a6cbe630008b3602957a9e8f464bf029f7d45552b374f6507e3c361899187"
+      "sha256": "7a6151a62a5fa81762177c9c0751900a05e28f113ab7d4b89cf81153868b6374"
     },
     {
-      "bytes": 1599,
+      "bytes": 1606,
       "path": "curriculum-1024-01/progress.json",
-      "sha256": "5ace357aa0145987aa528f3a1d12fabfc2b0829a36ab60c843e64e323dbad44f"
+      "sha256": "1f4b7fae14612efcf2de8a459929b962bb6481cf9020747262eb23db720f18c5"
     },
     {
       "bytes": 687861,
@@ -10322,6 +11100,11 @@
       "sha256": "80e5620bfbf7896bd19565e765a22c190d196ad6b36b8fb423ed80265ec745e2"
     },
     {
+      "bytes": 264554,
+      "path": "curriculum-1024-01/reverse-seed0/curve.json",
+      "sha256": "81f21f8dd6873bd8e0ea93aac8ddfb236102334b47696d76bd75bba97a6572a8"
+    },
+    {
       "bytes": 1281,
       "path": "curriculum-1024-01/reverse-seed0/episode-0001.json.gz",
       "sha256": "d722a1fb64e5382b96aa74711f884c91c2a1d8661c1dc79cc69971830f04a0ff"
@@ -10345,6 +11128,181 @@
       "bytes": 1780,
       "path": "curriculum-1024-01/reverse-seed0/episode-0005.json.gz",
       "sha256": "baa35c6ea25a00aaeec7e6d2d0873d2cb1c7a5b0d1840a6ea59bf4ff3ba07c78"
+    },
+    {
+      "bytes": 3002,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0006.json.gz",
+      "sha256": "b1630e6fdfe5595af302cb514a3a6ed36ab230e026c80ab67ccc48784a007eda"
+    },
+    {
+      "bytes": 1800,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0007.json.gz",
+      "sha256": "60d7bee477f58aca096a9ed07eb4a5ccd269ec35c0a22508623da4adf3122b89"
+    },
+    {
+      "bytes": 1515,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0008.json.gz",
+      "sha256": "8b46e6e680db5e286c0a800c17e3e8d4b00de9363d6565ca53fa88529bd3897b"
+    },
+    {
+      "bytes": 2562,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0009.json.gz",
+      "sha256": "5ab21234cbfb422c0e224f1cfb4191f11b2dfcfe7b1c7a39e2645b8dc6174cab"
+    },
+    {
+      "bytes": 1517,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0010.json.gz",
+      "sha256": "bef5eee371fc0e80ffb80c5b0e9ac9f53d9a49b4ee45776bd44c3c41af06bd4f"
+    },
+    {
+      "bytes": 1516,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0011.json.gz",
+      "sha256": "68bfee58d8893b42d92cfd7c3cf3ac0a2d84c5150b65666971db1422c2e73410"
+    },
+    {
+      "bytes": 2608,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0012.json.gz",
+      "sha256": "6b8fa92f1650121d40160a7f72baca003ee6bbbe83f67c2188504c6bee7a2440"
+    },
+    {
+      "bytes": 3023,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0013.json.gz",
+      "sha256": "ab2ffd1a48c10335cb22ea4f872885bb70f3ea88d9f707b97540685a595f2c4c"
+    },
+    {
+      "bytes": 2989,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0014.json.gz",
+      "sha256": "61eb0677115ae320306042bc95c3e481d650e88b4bc2938efb992042ecfe6506"
+    },
+    {
+      "bytes": 3004,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0015.json.gz",
+      "sha256": "2f4b42e9c9a16c8311bf176816b87589eef702ca803ec8c7c0828709993d381d"
+    },
+    {
+      "bytes": 2999,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0016.json.gz",
+      "sha256": "1eb288bbe425d3c0f3f95e9c1c447b30e789026b6ab8fec2dedc206ff9d5941c"
+    },
+    {
+      "bytes": 3001,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0017.json.gz",
+      "sha256": "e09941576e38bdc057e03107d1852a98850e8a96a6b67cf4b24731f8a6c664a8"
+    },
+    {
+      "bytes": 2617,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0018.json.gz",
+      "sha256": "8ff8d2090774b2a7d08a184d07dce2430d567e3d5f2eb5da935a1baa6a7c5539"
+    },
+    {
+      "bytes": 3000,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0019.json.gz",
+      "sha256": "c9aef96bfd20d67b1de454edd3b887dacea8eb8a261f4e819a7022b6dfec7cdb"
+    },
+    {
+      "bytes": 3005,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0020.json.gz",
+      "sha256": "6b06762c5d83e6823653fbd44bf2beaa43e3d497e7e77ab9eb1b4b203c4c4f90"
+    },
+    {
+      "bytes": 2127,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0021.json.gz",
+      "sha256": "8ef7baf8e7b608dd93a395781da1e1b7f4fccf44c7d9f2e80c37c8a462306e9e"
+    },
+    {
+      "bytes": 2979,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0022.json.gz",
+      "sha256": "53bf6946e8f860bc47ec3009d22ec06a92270af67d7bdb342eb1125b46c78dc1"
+    },
+    {
+      "bytes": 3251,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0023.json.gz",
+      "sha256": "2e94222aa2ac47b74c5fceb64d3fb5a3c17af4ab8af3139b0f2e6228756ab66e"
+    },
+    {
+      "bytes": 3283,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0024.json.gz",
+      "sha256": "4bf91ce89cc8c0bff33ae9b7f472fd0d0d4284be389a5059412bc6f0e8328b9d"
+    },
+    {
+      "bytes": 3221,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0025.json.gz",
+      "sha256": "f04d608113660da8399fd352e9a2817c9b776fbdf9d89f15ed8224339e0927df"
+    },
+    {
+      "bytes": 3311,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0026.json.gz",
+      "sha256": "b8060ee53eea4b1fc6c35d96e9797a2dad26cddec7fc88e39c10c01157cf338d"
+    },
+    {
+      "bytes": 1577,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0027.json.gz",
+      "sha256": "a25873855d4ab4ab82dd39ad97b987bd4eae546bbcb4efd475e799e480de3502"
+    },
+    {
+      "bytes": 3258,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0028.json.gz",
+      "sha256": "1b7b922c57c26a3e6b1ed7e7ea9ebce16d68902fab65c64c8dd29b1be547d53d"
+    },
+    {
+      "bytes": 3318,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0029.json.gz",
+      "sha256": "86c77165bbb21218db00b1b75f4b697dbba0badb1f3f1617ee394df559c6a143"
+    },
+    {
+      "bytes": 3287,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0030.json.gz",
+      "sha256": "7b258317511e7a7debd0b97d209b7d07979c94903b76a6e90c9fad6e6bc0239d"
+    },
+    {
+      "bytes": 2084,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0031.json.gz",
+      "sha256": "056d2467b8c58baae1df1dea3b734391e6e37cff3da256da7d99b09fe7e4cfcc"
+    },
+    {
+      "bytes": 3258,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0032.json.gz",
+      "sha256": "581d3fb071e57fc074a47df81540578dd6d52a2cbb5f328cbe62b34e71a744f1"
+    },
+    {
+      "bytes": 3270,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0033.json.gz",
+      "sha256": "ac0b320788f66620b113387527365673abf297c83fc6582640efc5968dfbdfa4"
+    },
+    {
+      "bytes": 2823,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0034.json.gz",
+      "sha256": "d1360342de08dd96d2a011f33f8d1ad71ff9f79b4a64a04a586117942de4aacb"
+    },
+    {
+      "bytes": 2335,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0035.json.gz",
+      "sha256": "29df8fbc9155c340d44c0903822ffd9178a32f609b654d2738b28b3453388f1b"
+    },
+    {
+      "bytes": 3303,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0036.json.gz",
+      "sha256": "4d634129040c1ac23064d706a33e73b9ab4c88e1c82c0faf6a0041ce82122027"
+    },
+    {
+      "bytes": 3254,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0037.json.gz",
+      "sha256": "708afb939e34588e9e94fd3bedeec8346e0c28fceaa06be78ff89c6e7463a81a"
+    },
+    {
+      "bytes": 3094,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0038.json.gz",
+      "sha256": "cb6b47db5cf192aa017427722b38826c4cf6079804a4d85bb2f1988cf42b2608"
+    },
+    {
+      "bytes": 3558,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0039.json.gz",
+      "sha256": "f0ee3a7d0c80201f5a66f1720a04339564bd7d29a4e110ce08b540793843cde9"
+    },
+    {
+      "bytes": 2910,
+      "path": "curriculum-1024-01/reverse-seed0/episode-0040.json.gz",
+      "sha256": "530936966f396b9a207bf191c4ec38183aa4125127ccb54844ada97ce8be17a0"
     }
   ],
   "warnings": []
