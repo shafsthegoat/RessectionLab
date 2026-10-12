@@ -1,0 +1,41 @@
+{
+  "files": {
+    "audit_failure.py": {
+      "bytes": 7321,
+      "sha256": "e9ce63fee31ef69b1bcbd0ab3f6dad8256fdbeaf36f4fa0346aa4d9516f1ff7f"
+    },
+    "audit_recovery.py": {
+      "bytes": 28431,
+      "sha256": "d8d09aa5990c3aed2346e36bf4e9f4d13e2e782c384aa1bb297d8bff34659161"
+    },
+    "failure-audit-01.json": {
+      "bytes": 29014,
+      "sha256": "37d3be700f1994d317b46b099c44ef3fb7a2e14f6db8e48f68679e66ddbd014e"
+    },
+    "launcher.json": {
+      "bytes": 4801,
+      "sha256": "6745bc9b70b4087b8adf574862298143ce792180dc1130b194342cf50e419d56"
+    },
+    "logged-predictions.json": {
+      "bytes": 18316,
+      "sha256": "8a246e07dafb9e465756d80ba401eae9fd6e3e765dcec18a9eadc36f85e745fd"
+    },
+    "logged-targets.json": {
+      "bytes": 30615,
+      "sha256": "6eaad3c010ad2c862bddfbc8327ea1c16c1f4b9f5302d78f1999c9a51a89386f"
+    },
+    "recovery-audit-01.json": {
+      "bytes": 51724,
+      "sha256": "ced58cfc0ed63b0d7d93095463a31f18af09bd92b21a2903251af0b34698f961"
+    },
+    "report.json": {
+      "bytes": 1153274,
+      "sha256": "c423ea87fae67fcdc5751ff0c338297429c343b912d4a7baf28dd7cb5dce3d5b"
+    },
+    "trace-manifest.json": {
+      "bytes": 148236,
+      "sha256": "c53bde6cfece252006d6a3f39789a9b897abf938a104287cb3c7ebb485720476"
+    }
+  },
+  "excluded": "Patient arrays, feature cache and weights; originals remain ignored locally."
+}
