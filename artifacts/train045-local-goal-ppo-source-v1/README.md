@@ -1,0 +1,9 @@
+# Fixed local-goal PPO pilot source
+
+The qualified TRAIN045 task requires costly preparation before a one-time goal-cell removal reward. This source runs SB3-Contrib MaskablePPO 2.9.0, comparing identical IL64 initialization with a frozen versus trainable raw-image encoder. The original models and task remain unchanged. The actor receives observed image/coverage/availability, tool and action geometry, and the declared goal; no future reward or hidden material parameters.
+
+The first released budget is 64 decisions per arm, seed 0, uniform genuine curriculum starts 12–16. Full-task evaluation always starts at 12. PPO uses 64-step rollouts, four epochs, minibatches of four, learning rate 0.0003 and masked actions. Actual optimizer steps are counted separately from epochs. Every endpoint saves a standard optimizer checkpoint, seals its route, then runs fresh full-tool replay and separately reconstructs the task reward. All acquisition, reconstruction, training and evaluation costs are retained. This is simulated experience on one reused development patient, not new-patient generalization or physical validation.
+
+Five generated policy controls and three generated training/checkpoint controls pass. They exercise initialization parity, real encoder gradients, masked SB3 updates, optimizer checkpoint restoration and genuine-start selection. They establish integration only. Actual pilot results were pending at this source commit; 64 decisions is a cost/signal pilot, not the requested final training campaign.
+
+Reproduction uses the original paths recorded in `INVENTORY.json`, the immutable qualification source/dependency archive, existing admitted local arrays and the locally retained IL64 checkpoint. `training/source-index.json` pins reused dependencies and inputs. No weights or patient payloads are committed. Additional source files for matched search are developed separately and cannot change this running frozen source.

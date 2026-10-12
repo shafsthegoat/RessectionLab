@@ -1,0 +1,14 @@
+{
+  "scope": "generated software integration only; no patient training",
+  "pytest_exit_code": 0,
+  "seconds": 1.1212129169143736,
+  "source_pins": {
+    "build/train045-local-goal-ppo-v1/training/train_worker.py": "594328c98d529aacf173a79566a5469a503281ae0130bb3142c70259bc639c89",
+    "build/train045-local-goal-ppo-v1/training/freeze_sources.py": "dda269130e821aa4b89a56f182fe0541a0f3734ab0315e45e46e24df0ff1d3cb",
+    "build/train045-local-goal-ppo-v1/training/checkpoints.py": "ec7d173ca1ee76e840c3e147c1de3fbe6b94336a2a799e0d70944694641bd996",
+    "build/train045-local-goal-ppo-v1/training/test_learning.py": "cecd10d68ac1af3d91605247b957dc1b0b48701257f4817bbbe945d3c33953f9",
+    "build/train045-local-goal-ppo-v1/training/learning.py": "78fb3331a2473eba17d073cf8393fd184c467e1b2d79adbe7c2ac5f75cecedcd",
+    "build/train045-local-goal-ppo-v1/training/run_owned.py": "be9813ac24269b603dca2fb17f2eb274ffba30f07cd9749f621d3334889b3279"
+  },
+  "source_unchanged": true
+}

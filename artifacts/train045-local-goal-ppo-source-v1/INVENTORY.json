@@ -1,0 +1,80 @@
+{
+  "scope": "Reproducible source and generated controls for the fixed actual-patient PPO pilot; acquired execution is ongoing and not evidence of gain",
+  "qualification_commit": "63c2255d28ebd04584fca051ed6676eac2aa09c9",
+  "source_index_sha256": "65868d828147f5205cd886b16dc846151f53820a29291583d12802153d2902d6",
+  "files": [
+    {
+      "source": "build/train045-local-goal-ppo-v1/model/policy.py",
+      "snapshot": "snapshot/model/policy.py",
+      "bytes": 11618,
+      "sha256": "fce66f1de108591e57aadd55b37082930fafa4c2311bc4dfed3235f0b36d8ec8"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/model/test_policy.py",
+      "snapshot": "snapshot/model/test_policy.py",
+      "bytes": 7202,
+      "sha256": "276dd0c44c558216d88c37455891237c7214a00de436c4a47bb2c108674970cc"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/training/checkpoints.py",
+      "snapshot": "snapshot/training/checkpoints.py",
+      "bytes": 1466,
+      "sha256": "ec7d173ca1ee76e840c3e147c1de3fbe6b94336a2a799e0d70944694641bd996"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/training/freeze_sources.py",
+      "snapshot": "snapshot/training/freeze_sources.py",
+      "bytes": 3188,
+      "sha256": "dda269130e821aa4b89a56f182fe0541a0f3734ab0315e45e46e24df0ff1d3cb"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/training/learning.py",
+      "snapshot": "snapshot/training/learning.py",
+      "bytes": 10485,
+      "sha256": "78fb3331a2473eba17d073cf8393fd184c467e1b2d79adbe7c2ac5f75cecedcd"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/training/run_owned.py",
+      "snapshot": "snapshot/training/run_owned.py",
+      "bytes": 10117,
+      "sha256": "be9813ac24269b603dca2fb17f2eb274ffba30f07cd9749f621d3334889b3279"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/training/test_learning.py",
+      "snapshot": "snapshot/training/test_learning.py",
+      "bytes": 3259,
+      "sha256": "cecd10d68ac1af3d91605247b957dc1b0b48701257f4817bbbe945d3c33953f9"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/training/train_worker.py",
+      "snapshot": "snapshot/training/train_worker.py",
+      "bytes": 19689,
+      "sha256": "594328c98d529aacf173a79566a5469a503281ae0130bb3142c70259bc639c89"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/training/config.json",
+      "snapshot": "snapshot/training/config.json",
+      "bytes": 1891,
+      "sha256": "5fbfe8c672487f949dec6164a2798cc28b3052801921aa94d64891ad3a66705d"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/training/source-index.json",
+      "snapshot": "snapshot/training/source-index.json",
+      "bytes": 25364,
+      "sha256": "65868d828147f5205cd886b16dc846151f53820a29291583d12802153d2902d6"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/controls-policy-01/RESULT.json",
+      "snapshot": "snapshot/controls-policy-01/RESULT.json",
+      "bytes": 443,
+      "sha256": "ce8c285c7e90ef1646aae1e0f3b29b390202fbf8ac4bbd088881ad79a9cc56e8"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/controls-training-01/RESULT.json",
+      "snapshot": "snapshot/controls-training-01/RESULT.json",
+      "bytes": 976,
+      "sha256": "f371ec9775a13a9099492d7b9612ca4606ec2edbf3b470ad025ed14f2aec28df"
+    }
+  ],
+  "omitted": "Patient arrays, model weights, acquired trajectories and live outputs remain local; dependencies are shared with the qualification archive."
+}
