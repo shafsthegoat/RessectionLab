@@ -1,5 +1,7 @@
 # Reset-curriculum PPO comparison: uniform1024 and reverse512
 
+**Later result:** [the completed reverse1024 recovery](../train045-local-goal-recovery-result-v2/RESULT.md) also fails the full-start goal. Search is retained; the interrupted original run below remains preserved as incomplete.
+
 **Completed uniform branch, October 12: more training did not improve full-task
 performance.** Both the 512 and 1024 checkpoints stop immediately, returning zero
 and failing the goal. Retained search succeeds in five preparation/goal actions,

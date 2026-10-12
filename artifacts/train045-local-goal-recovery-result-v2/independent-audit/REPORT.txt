@@ -1,0 +1,63 @@
+Recovery02 saved-result audit: PASS; scientific goal result remains NEGATIVE.
+
+Report dbbc0a67ca8b166cc3c22ffb2e27edbe01daaa052cbe89668d476161b6ed86a6
+Launcher ef62e3f6a0b29a2c227b5e2b921faa4b0a876032cffcc73f2cd56003303d1f7f
+Source index 615ac1221618abcf5f0c34998a29941766b694c3dfb5f74f784b3033cac64e3c
+Audit receipt 8e9167237c6d9238390c248289f05f9b235edbd693151a15d12dcd6f1b2c26ea
+
+The worker completed, exit0, reaped with no survivors/errors. Frozen source pins,
+checkpoint byte hashes, plan/packet/history seals, fixed prefix, independent
+complete-tool geometry and local reward receipts join. No checkpoint decoding,
+model/array access, native replay or test execution was performed by this audit.
+
+The evaluated reverse1024 policy chooses immediate STOP after the fixed12 prefix:
+return0, successfalse, no new target/outside removal,13 full history rows. Its
+physical history exactly equals retained uniform1024. The new checkpoint is
+f9dbf0b664fc67ce890e3ddc33f003145f996b2e45a497eb76470535a88aa8b6 (248696B).
+Evaluation isolation preserved training state, RNG and policy mode.
+
+New512 decisions produced232 completed episodes and2 successes, both start14.
+Start14:18 episodes/130 decisions/2 successes; start13:31/127/0;
+start12:183/255/0, including136 immediateSTOP episodes. The184th start12 reset is
+empty at the boundary, not another completed failure. There were62 new Adam
+updates (415 checkpoint-lineage total); encoder unchanged. Lineage decisions
+partition exactly1006 completed+18 retired unfinished+0 live=1024.
+
+All eight new rollouts have exactly constant saved critic values within each
+rollout (std0, min=max), although return/advantage standard deviations are
+nonzero. The constants shift from .127924 to .130059 across updates; final
+explained variance is0. This is a concrete state-discrimination diagnostic,
+not proof of dead activations, missing state/candidate inputs, insufficient
+capacity or a unique cause. The policy does receive those inputs. The observed
+behavior is sparse positive experience followed by frequent STOP; lowering
+value loss to .01928 is not evidence of goal learning.
+
+Paid PPO decisions across branches/attempts are at least2368, with shared
+frozen256 counted once. The report's known union excludes discarded tail;
+including all saved interrupted episodes gives at least1178 unique states and
+1468 state-action pairs. The574 original interrupted reverse completed decisions
+include both pre512 retained episodes and post512 discarded episodes; the union
+deduplicates the overlap and does not count all574 as discarded tail. Two last-progress live decisions and any work after
+that progress record remain unobserved. At least40 discarded Adam steps remain
+paid outside the restored model lineage (at least770 total paid updates).
+
+Current cost:64192 previews,556 transitions,2941.757678 worker seconds,
+2942.339088 parent seconds; sampled peak3940679680B, self peak3965321216B.
+All training attempts including pilot,256,RSS failure,startup failure and this
+recovery:14831.378309 parent seconds; worker time>=14827.013305 seconds,
+previews>=318705, transitions>=2807. Qualification and search are separate.
+These are reported runner/supervisor-clock durations, not separately measured
+civil elapsed time. The intent-to-launcher file-time span reported by root is
+7413.541s; this audit does not independently measure or explain the difference.
+No stale failed-worker totals were promoted to exact terminal measurements.
+
+Retain the demonstrated bounded search: same task, successful5-action route,
+return9.81167967519 versus PPO STOP0. Cheaper STOP is not a quality-preserving
+planning-cost win. Search spends model/reward/blocker queries unavailable as
+direct PPO input tensors. Reverse recovery restarted RNG and physical episode
+and used the admitted arithmetic-preserving memory change; this is not seamless
+continuation or a new fully matched timing comparison. One reused TRAIN045
+anatomy/seed, simulator experience, EVAL closed; no held-out or clinical claim.
+
+Label-only correction: prior source/receipt/report retained under original-label/.
+The same stdlib audit was rerun in0.101s; no scientific execution or result change.

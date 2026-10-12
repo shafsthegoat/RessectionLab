@@ -1,0 +1,19 @@
+{
+  "schema": "completed-recovery-storage-snapshot-v1",
+  "measured_at_utc": "2026-10-12T22:59:29.904947+00:00",
+  "growth_highwater_bytes": 1862426624,
+  "free_bytes": 351139717120,
+  "reservation_status": "closed",
+  "stage_scope_allocated_bytes": 16162816,
+  "remaining_open_reserved_bytes": 110100480,
+  "ledger_sha256": "efb61ec08916aeb031672101e181845460e424c54885b8f34f0aa0ac93fb2436",
+  "limits": {
+    "max_additional_allocated_growth_bytes": 10737418240,
+    "min_free_bytes": 53687091200,
+    "no_download_install_delete_authorized": true,
+    "one_running_dataset_pilot": true,
+    "reservation_is_not_scientific_launch_authorization": true,
+    "scientific_compute_serialization": "Root-owned; no new dataset materialized by the two experiment reservations."
+  },
+  "caveat": "Measured after result/plots/audit copies, before final compact storage/status/Git writes. No deletions or new acquisition."
+}

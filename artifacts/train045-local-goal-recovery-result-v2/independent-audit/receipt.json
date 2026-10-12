@@ -1,0 +1,368 @@
+{
+  "auditor_sha256": "133bbb3081acc81707703e410f6a67a2d9ba91f917c271c02a3be8e9cbfe723e",
+  "cost": {
+    "all_training_attempts_parent_seconds": 14831.378309334163,
+    "all_training_attempts_previews_lower_bound": 318705,
+    "all_training_attempts_transitions_lower_bound": 2807,
+    "all_training_attempts_worker_seconds_lower_bound": 14827.01330466778,
+    "current_parent_seconds": 2942.3390878338832,
+    "current_previews": 64192,
+    "current_transitions": 556,
+    "current_worker_seconds": 2941.7576776249334,
+    "duration_scope": "Runner/supervisor clock durations as reported; civil elapsed time and sleep effects not separately measured by this audit.",
+    "endpoint_nominal": {
+      "complete_wall_seconds": 4.33301983284764,
+      "native_preview_entries": 118,
+      "native_transition_calls": 1,
+      "native_transition_inclusive_seconds": 0.024376665940508246,
+      "native_transition_returned": 1,
+      "task_clone_calls": 6,
+      "task_clone_inclusive_seconds": 0.14595504105091095,
+      "task_clone_returned": 6
+    },
+    "endpoint_replay": {
+      "complete_wall_seconds": 23.156010875012726,
+      "native_preview_entries": 1183,
+      "native_transition_calls": 13,
+      "native_transition_inclusive_seconds": 0.24651987222023308,
+      "native_transition_returned": 13
+    },
+    "sampled_peak_bytes": 3940679680,
+    "scope": "Pilot,256,both curriculum branches including interrupted tail,startup failure,recovery02; qualification and search separate",
+    "self_peak_bytes": 3965321216
+  },
+  "critic_diagnostic": {
+    "every_new_rollout_constant_saved_values": true,
+    "interpretation": "Constant sampled critic outputs within each rollout despite changing experience; not proof of missing inputs, dead activation, insufficient capacity or unique causal failure.",
+    "new_rollouts": [
+      {
+        "advantages": {
+          "max": -0.06883594393730164,
+          "mean": -0.3595382599160075,
+          "min": -0.7071892023086548,
+          "std": 0.1675309574911082
+        },
+        "decisions": 576,
+        "goal_bonus_events": 0,
+        "returns": {
+          "max": 0.05908761918544769,
+          "mean": -0.23161469958722591,
+          "min": -0.5792656540870667,
+          "std": 0.16753096206310328
+        },
+        "values": {
+          "max": 0.12792356312274933,
+          "mean": 0.12792356312274933,
+          "min": 0.12792356312274933,
+          "std": 0.0
+        }
+      },
+      {
+        "advantages": {
+          "max": 9.830709457397461,
+          "mean": 2.3501077480614185,
+          "min": -0.5775312185287476,
+          "std": 4.369386944001374
+        },
+        "decisions": 640,
+        "goal_bonus_events": 2,
+        "returns": {
+          "max": 9.95976448059082,
+          "mean": 2.4791624969802797,
+          "min": -0.44847655296325684,
+          "std": 4.36938710888949
+        },
+        "values": {
+          "max": 0.12905465066432953,
+          "mean": 0.12905465066432953,
+          "min": 0.12905465066432953,
+          "std": 0.0
+        }
+      },
+      {
+        "advantages": {
+          "max": -0.03883594274520874,
+          "mean": -0.28940375335514545,
+          "min": -0.7175651788711548,
+          "std": 0.16929578509868307
+        },
+        "decisions": 704,
+        "goal_bonus_events": 0,
+        "returns": {
+          "max": 0.09141834080219269,
+          "mean": -0.15914947097189724,
+          "min": -0.5873109102249146,
+          "std": 0.16929578811153928
+        },
+        "values": {
+          "max": 0.13025428354740143,
+          "mean": 0.13025428354740143,
+          "min": 0.13025428354740143,
+          "std": 0.0
+        }
+      },
+      {
+        "advantages": {
+          "max": -0.038282811641693115,
+          "mean": -0.26335499016568065,
+          "min": -0.7178480625152588,
+          "std": 0.15198103508035765
+        },
+        "decisions": 768,
+        "goal_bonus_events": 0,
+        "returns": {
+          "max": 0.09256996214389801,
+          "mean": -0.13250221824273467,
+          "min": -0.5869953036308289,
+          "std": 0.15198103890884518
+        },
+        "values": {
+          "max": 0.13085277378559113,
+          "mean": 0.13085277378559113,
+          "min": 0.13085277378559113,
+          "std": 0.0
+        }
+      },
+      {
+        "advantages": {
+          "max": -0.07023593783378601,
+          "mean": -0.17491569672711194,
+          "min": -0.4415261149406433,
+          "std": 0.0708652747923703
+        },
+        "decisions": 832,
+        "goal_bonus_events": 0,
+        "returns": {
+          "max": 0.0607229620218277,
+          "mean": -0.04395679663866758,
+          "min": -0.3105672001838684,
+          "std": 0.07086527391641131
+        },
+        "values": {
+          "max": 0.1309588998556137,
+          "mean": 0.1309588998556137,
+          "min": 0.1309588998556137,
+          "std": 0.0
+        }
+      },
+      {
+        "advantages": {
+          "max": -0.1308780163526535,
+          "mean": -0.16299452306702733,
+          "min": -0.3456686735153198,
+          "std": 0.05066398986111879
+        },
+        "decisions": 896,
+        "goal_bonus_events": 0,
+        "returns": {
+          "max": 0.0,
+          "mean": -0.03211650671437383,
+          "min": -0.21479065716266632,
+          "std": 0.05066398986111879
+        },
+        "values": {
+          "max": 0.1308780163526535,
+          "mean": 0.1308780163526535,
+          "min": 0.1308780163526535,
+          "std": 0.0
+        }
+      },
+      {
+        "advantages": {
+          "max": -0.13062657415866852,
+          "mean": -0.14016510010696948,
+          "min": -0.26774531602859497,
+          "std": 0.024182435524919624
+        },
+        "decisions": 960,
+        "goal_bonus_events": 0,
+        "returns": {
+          "max": 0.0,
+          "mean": -0.009538525948300958,
+          "min": -0.13711874186992645,
+          "std": 0.024182435524919624
+        },
+        "values": {
+          "max": 0.13062657415866852,
+          "mean": 0.13062657415866852,
+          "min": 0.13062657415866852,
+          "std": 0.0
+        }
+      },
+      {
+        "advantages": {
+          "max": -0.13005933165550232,
+          "mean": -0.13717061141505837,
+          "min": -0.26522496342658997,
+          "std": 0.022913440773794057
+        },
+        "decisions": 1024,
+        "goal_bonus_events": 0,
+        "returns": {
+          "max": 0.0,
+          "mean": -0.007111279759556055,
+          "min": -0.13516563177108765,
+          "std": 0.022913440773794057
+        },
+        "values": {
+          "max": 0.13005933165550232,
+          "mean": 0.13005933165550232,
+          "min": 0.13005933165550232,
+          "std": 0.0
+        }
+      }
+    ]
+  },
+  "elapsed_seconds": 0.100960708,
+  "endpoint": {
+    "decision": "immediate STOP",
+    "fresh_geometry_accepted": true,
+    "full_history_rows": 13,
+    "goal_success": false,
+    "identical_uniform_physical_history": true,
+    "isolation": {
+      "paid_seconds": 27.6810256249737,
+      "policy_mode_restored": true,
+      "rng_restored": true,
+      "state_seal": "sha256:1d2ae5c2b3719cbbc68b1b22b322c1c125d883f45fae37fad622ab56fdcff7d9",
+      "unchanged_training_state": true
+    },
+    "return": 0.0
+  },
+  "experience": {
+    "completed_decisions": 1006,
+    "discarded_last_progress_unsaved_live_decisions": 2,
+    "known_all_paid_unique_state_actions_lower_bound": 1468,
+    "known_all_paid_unique_states_lower_bound": 1178,
+    "live_decisions": 0,
+    "original_interrupted_reverse_completed_episode_decisions": 574,
+    "overlap_scope": "The 574 decisions include original interrupted reverse episodes before and after checkpoint512; unique-state/pair sets deduplicate retained overlap.",
+    "paid_all_branches_decisions_lower_bound": 2368,
+    "recovered_lineage_decisions": 1024,
+    "retired_decisions": 18,
+    "unobserved_postprogress_work": null
+  },
+  "limits": [
+    "No new geometry engine/replay: audited existing fresh independent full-tool certificates.",
+    "Training episodes are simulator experience, not independently replayed surgical observations.",
+    "Checkpoint bytes hashed only; no weights/cache/arrays decoded or model imports.",
+    "Reverse recovery restarts RNG/physical episode; it is not seamless continuation or a fully matched fresh timing comparison.",
+    "Sparse positive experience and STOP preference are observed; these data do not isolate a unique causal learning defect."
+  ],
+  "new_training": {
+    "automatic_stops": 2,
+    "by_start": {
+      "12": {
+        "decisions": 255,
+        "episodes": 183,
+        "successes": 0
+      },
+      "13": {
+        "decisions": 127,
+        "episodes": 31,
+        "successes": 0
+      },
+      "14": {
+        "decisions": 130,
+        "episodes": 18,
+        "successes": 2
+      }
+    },
+    "decisions": 512,
+    "episodes": 232,
+    "immediate_STOP_by_start": {
+      "12": 136,
+      "13": 9,
+      "14": 1
+    },
+    "success_rows": [
+      {
+        "decisions": 9,
+        "ending_new_decision": 81,
+        "episode": 11,
+        "return": 9.526829661636048,
+        "start": 14
+      },
+      {
+        "decisions": 8,
+        "ending_new_decision": 111,
+        "episode": 15,
+        "return": 9.558959350419194,
+        "start": 14
+      }
+    ],
+    "successes": 2,
+    "unique_state_actions": 309,
+    "unique_states": 237
+  },
+  "optimizer": {
+    "encoder_unchanged": true,
+    "final_logged_metrics": {
+      "train/approx_kl": 0.01109418086707592,
+      "train/clip_fraction": 0.11538461538461539,
+      "train/clip_range": 0.2,
+      "train/entropy_loss": -0.49677452674278844,
+      "train/explained_variance": 0.0,
+      "train/learning_rate": 0.0003,
+      "train/loss": -0.09077668935060501,
+      "train/n_updates": 33.0,
+      "train/policy_gradient_loss": -0.02897246812398617,
+      "train/value_loss": 0.019279885607270095
+    },
+    "lineage_completed": 415,
+    "new_completed": 62,
+    "new_steps_by_rollout": [
+      [
+        576,
+        10
+      ],
+      [
+        640,
+        13
+      ],
+      [
+        704,
+        5
+      ],
+      [
+        768,
+        4
+      ],
+      [
+        832,
+        4
+      ],
+      [
+        896,
+        6
+      ],
+      [
+        960,
+        8
+      ],
+      [
+        1024,
+        12
+      ]
+    ],
+    "paid_all_attempts_completed_lower_bound": 770,
+    "restored": 353
+  },
+  "pins": {
+    "checkpoint": "f9dbf0b664fc67ce890e3ddc33f003145f996b2e45a497eb76470535a88aa8b6",
+    "curve": "587a37bc53f609276d173afba4fd5e0107c300a7d802a55624523a66eb9a16c0",
+    "history": "5d55893262df2e0cd2dd58f2d53abf32d1995aa7735fab49bdec98991a2bbf81",
+    "index": "615ac1221618abcf5f0c34998a29941766b694c3dfb5f74f784b3033cac64e3c",
+    "launcher": "ef62e3f6a0b29a2c227b5e2b921faa4b0a876032cffcc73f2cd56003303d1f7f",
+    "plan": "ddf111015893f08120be7e6d127fd96c5da886ace7215e65ee4ec4bfc8115cf9",
+    "report": "dbbc0a67ca8b166cc3c22ffb2e27edbe01daaa052cbe89668d476161b6ed86a6"
+  },
+  "search": {
+    "claim": "Retain search for this demonstrated task; paid model/reward/blocker queries differ from PPO tensor inputs, no global optimality or generalization claim",
+    "return": 9.811679675189598,
+    "success": true,
+    "suffix_decisions": 5
+  },
+  "source_files_sha_checked": 211,
+  "verdict": "PASS_saved_evidence; completed recovery, goal failure; retain successful bounded search"
+}

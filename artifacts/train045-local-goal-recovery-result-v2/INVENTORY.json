@@ -1,0 +1,142 @@
+{
+  "schema": "completed-reverse1024-recovery-v2",
+  "checkpoint": {
+    "bytes": 248696,
+    "decisions": 1024,
+    "decoded_member_bytes": 33316850,
+    "encoding": "standard_SB3_ZIP_losslessly_DEFLATED",
+    "includes_optimizer_state": true,
+    "last_image_observations_excluded": true,
+    "members": {
+      "_stable_baselines3_version": {
+        "bytes": 5,
+        "sha256": "6184643630b8a8075b0c62de6daf273239a389336ecdd5b7e41070668f0c81e0"
+      },
+      "data": {
+        "bytes": 32962310,
+        "sha256": "f618b42be17fd31d8a8ffeea287a0be52fa023be74f46cc8d0017fbfa8cba1d7"
+      },
+      "policy.optimizer.pth": {
+        "bytes": 215095,
+        "sha256": "60082a81f74e3a70ae1ded9d980fe670f7f2101396ba2dd14802b8ec17e38ae4"
+      },
+      "policy.pth": {
+        "bytes": 137907,
+        "sha256": "d9a33a07595eaa7bb41617e8ea111bcb4ec7441d08ca23b34c0104b77af0fecf"
+      },
+      "pytorch_variables.pth": {
+        "bytes": 1261,
+        "sha256": "7b6bbfc035aeac78f3ee425960893ff8bb7927d3cf3425470ac4b6c6ce280c5d"
+      },
+      "system_info.txt": {
+        "bytes": 272,
+        "sha256": "296fa66f6e1245cf7220e947a93df5fef977c408cdc239990791c5676f039c26"
+      }
+    },
+    "path": "reverse-seed0/ppo-1024.zip",
+    "sha256": "f9dbf0b664fc67ce890e3ddc33f003145f996b2e45a497eb76470535a88aa8b6",
+    "local_path": "build/train045-local-goal-ppo-v1/recovery-reverse1024-02/reverse-seed0/ppo-1024.zip",
+    "copied_to_git": false
+  },
+  "scientific_decision": "Retain search: uniform and recovered reverse fail full-start goal; no held-out or clinical inference.",
+  "source_index_sha256": "615ac1221618abcf5f0c34998a29941766b694c3dfb5f74f784b3033cac64e3c",
+  "report_sha256": "dbbc0a67ca8b166cc3c22ffb2e27edbe01daaa052cbe89668d476161b6ed86a6",
+  "files": [
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-reverse1024-02/report.json",
+      "snapshot": "snapshot/report.json",
+      "bytes": 1222624,
+      "sha256": "dbbc0a67ca8b166cc3c22ffb2e27edbe01daaa052cbe89668d476161b6ed86a6"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-reverse1024-02/launcher.json",
+      "snapshot": "snapshot/launcher.json",
+      "bytes": 3771,
+      "sha256": "ef62e3f6a0b29a2c227b5e2b921faa4b0a876032cffcc73f2cd56003303d1f7f"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-reverse1024-02/intent.json",
+      "snapshot": "snapshot/intent.json",
+      "bytes": 663,
+      "sha256": "e91ff43350cb1b422233af075a8e72b66a2c0c63d0a60e6b8b44717ea03b5dbe"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-reverse1024-02/worker.log",
+      "snapshot": "snapshot/worker.log",
+      "bytes": 62,
+      "sha256": "d94bd128c179ee3db23bf7638d0848562c31e3fa89eac1df07944e5e9c9743ec"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-reverse1024-02/progress.json",
+      "snapshot": "snapshot/progress.json",
+      "bytes": 1550,
+      "sha256": "6198c3dbc091953d6fa64a5341d2ce33b97b2811526ec894ec113fab278d1028"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-reverse1024-02/reverse-seed0/curve.json",
+      "snapshot": "snapshot/reverse-seed0/curve.json",
+      "bytes": 601376,
+      "sha256": "587a37bc53f609276d173afba4fd5e0107c300a7d802a55624523a66eb9a16c0"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-reverse1024-02/reverse-seed0-eval-1024-sealed-plan.json.gz",
+      "snapshot": "snapshot/reverse-seed0-eval-1024-sealed-plan.json.gz",
+      "bytes": 3600,
+      "sha256": "ddf111015893f08120be7e6d127fd96c5da886ace7215e65ee4ec4bfc8115cf9"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-reverse1024-02/reverse-seed0-eval-1024-history.json.gz",
+      "snapshot": "snapshot/reverse-seed0-eval-1024-history.json.gz",
+      "bytes": 21442,
+      "sha256": "5d55893262df2e0cd2dd58f2d53abf32d1995aa7735fab49bdec98991a2bbf81"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-audit-02/audit.py",
+      "snapshot": "independent-audit/audit.py",
+      "bytes": 19899,
+      "sha256": "133bbb3081acc81707703e410f6a67a2d9ba91f917c271c02a3be8e9cbfe723e"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-audit-02/receipt.json",
+      "snapshot": "independent-audit/receipt.json",
+      "bytes": 11351,
+      "sha256": "8e9167237c6d9238390c248289f05f9b235edbd693151a15d12dcd6f1b2c26ea"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/recovery-audit-02/REPORT.txt",
+      "snapshot": "independent-audit/REPORT.txt",
+      "bytes": 4185,
+      "sha256": "a073bae0ef30e194772c45a2e9e4c94f77a118693f988ce6be946cef63bb8785"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/plots-recovery-02/render_curves.py",
+      "snapshot": "plots/render_curves.py",
+      "bytes": 16411,
+      "sha256": "583be36ea92cf5c7b58d9cb9c5117a3e4ada4ef87cfcb31984a6bb491660a685"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/plots-recovery-02/learning-curves.json",
+      "snapshot": "plots/learning-curves.json",
+      "bytes": 239302,
+      "sha256": "07181f504d530be27b708215851502fd1affd04bbf8d4e2fac839a3c4fd7301f"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/plots-recovery-02/learning-curves.png",
+      "snapshot": "plots/learning-curves.png",
+      "bytes": 334131,
+      "sha256": "723bab93b8f1cd64b69518ee402500d760a1793f28a93837080d8588c8651bb0"
+    },
+    {
+      "source": "build/train045-local-goal-ppo-v1/plots-recovery-02/learning-curves.svg",
+      "snapshot": "plots/learning-curves.svg",
+      "bytes": 58252,
+      "sha256": "63fcf3d8701bcb9d0e4f7609f22164fd4cb51f6a376f6215b098380d46bf0001"
+    },
+    {
+      "source": "build/storage-extension-v1/train045-recovery-final.json",
+      "snapshot": "storage.json",
+      "bytes": 916,
+      "sha256": "1299f34bc73626b4e9b95d0e1add291a4992293012bc3332ba7491dd38e29c81"
+    }
+  ]
+}
