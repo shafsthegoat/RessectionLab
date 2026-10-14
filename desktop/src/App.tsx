@@ -80,6 +80,11 @@ import type {
   ViewerCase,
 } from "./types";
 import { ViewerWorkspace } from "./viewer/ViewerWorkspace";
+import { AnatomyPanel } from "./AnatomyPanel";
+import { CaseLibraryPanel, WorkbenchDataPanel, anatomyDescription } from "./WorkbenchPanels";
+import type { LibraryCase, AnatomyRecord } from "./WorkbenchPanels";
+import type { ViewerWorkspaceSettings } from "./viewer/workspaceSettings";
+import "./workbench.css";
 
 interface Operation {
   id: string;
@@ -536,6 +541,10 @@ export default function App() {
     {},
   );
   const [overlayOpacity, setOverlayOpacity] = useState(0.32);
+  const [primaryViewer, setPrimaryViewer] = useState<ViewerWorkspaceSettings>({});
+  const [workbenchTab,setWorkbenchTab] = useState<"cases"|"data"|"anatomy"|"research">("anatomy");
+  const [libraryCases,setLibraryCases] = useState<LibraryCase[]>([]);
+  useEffect(()=>{api?.listCases?.().then(setLibraryCases).catch(()=>{});},[api,payload]);
   const [cursor, setCursor] = useState<Vec3 | null>(null);
   const annotationCenterMm = useMemo(
     () => annotationCenter(payload, caseData),
@@ -632,6 +641,14 @@ export default function App() {
   const displayedCursor = imaging.selected ? imaging.cursor : cursor;
   const displayedLayers = imaging.selected ? imaging.visibleLayers : visibleLayers;
   const setDisplayedLayers = imaging.selected ? imaging.setVisibleLayers : setVisibleLayers;
+  const viewerSettings = imaging.selected ? imaging.viewer ?? {} : primaryViewer;
+  const setViewerSettings = imaging.selected ? imaging.setViewer : setPrimaryViewer;
+  const fusionSeries = !imaging.selected && primaryViewer.fusion?.seriesId ? imaging.series.find(s=>s.descriptor.seriesId===primaryViewer.fusion?.seriesId && s.descriptor.registration.overlayPermitted) : null;
+  const registeredFusion = useMemo(()=>fusionSeries && payload && fusionSeries.descriptor.registration.sourceToReferenceRasMm ? {
+    seriesId:fusionSeries.descriptor.seriesId,referenceCaseHash:payload.caseHash,
+    registration:{status:"source-provided" as const,overlayPermitted:true as const,sourceToReferenceRasMm:fusionSeries.descriptor.registration.sourceToReferenceRasMm},
+    volume:fusionSeries.volume,label:fusionSeries.descriptor.modality,
+  }:null,[fusionSeries,payload]);
   const busy = !!operation || hydrating || episodePending || imaging.pending || diagnostic.pending;
   const readonly = !!api?.readOnly;
   const controlsBlocked = busy || engineStopped || !display.planningInteractionPermitted;
@@ -792,6 +809,7 @@ export default function App() {
           ),
         );
         imaging.restore(source.caseHash, reopened.series, reopened.imagingState);
+        setPrimaryViewer(reopened.imagingState?.states.primary.viewer ?? {});
         if (reopened.imagingState) {
           setCursor(reopened.imagingState.states.primary.cursor);
           setVisibleLayers(reopened.imagingState.states.primary.visibleLayers);
@@ -1048,8 +1066,11 @@ export default function App() {
       const generation = ++caseGeneration.current;
       imaging.invalidate();
       const source = await api[kind]();
-      if (source && mounted.current && generation === caseGeneration.current)
-        await installCase(source, api, generation);
+      if (source && mounted.current && generation === caseGeneration.current) {
+        const installed = await installCase(source, api, generation);
+        if (installed && kind === "importNifti")
+          setMessage("Source image imported · Original file preserved · Save to keep this workspace");
+      }
     });
   const viewPrior = async (proposalId: string) => {
     if (!payload || !caseData || !api || episodeVisible || certifiedReplay || controlsBlocked)
@@ -1195,7 +1216,7 @@ export default function App() {
           visibleLayers,
           overlayOpacity,
           cursor,
-          imaging: imaging.snapshot({cursor, visibleLayers}),
+          imaging: imaging.snapshot({cursor, visibleLayers, viewer:primaryViewer}),
           episodeReplay: episodeWorkflow==='passive'&&passiveView?.source.caseHash===payload.caseHash ? {
             episodeId:passiveView.episode.episodeId,frameIndex:passiveStep,
             visible:episodeVisible&&episodeWorkflow==='passive'&&!imaging.selected,
@@ -1205,7 +1226,10 @@ export default function App() {
           } : null,
         },
       });
-      if (result?.saved) setMessage("Workspace saved locally · images, views and recorded replay preserved");
+      if (result?.saved) {
+        setMessage("Workspace saved locally · images, layers and views preserved");
+        api.listCases?.().then(setLibraryCases).catch(()=>{});
+      }
     });
 
   useEffect(() => {
@@ -1332,7 +1356,7 @@ export default function App() {
   }
 
   return (
-    <div className={`app-shell ${casePanel ? "" : "case-panel-collapsed"}`}>
+    <div className={`app-shell poc-workbench ${workbenchTab === "research" ? "research-open" : "anatomy-only"} ${casePanel ? "" : "case-panel-collapsed"}`}>
       <header className="app-header">
         <div className="window-traffic-space" />
         <div className="brand">
@@ -1342,7 +1366,7 @@ export default function App() {
           </span>
         </div>
         <div className="header-divider" />
-        <span className="header-purpose">Patient-specific planning</span>
+        <span className="header-purpose">Patient anatomy workspace</span>
         <div className="header-spacer" />
         <span className="research-tag">
           <FlaskConical size={11} /> Research workspace
@@ -1362,7 +1386,7 @@ export default function App() {
           disabled={fileNavigationBlocked}
         >
           <ArrowUpFromLine size={15} />
-          <span>Import MRI</span>
+          <span>Import image</span>
         </button>
         <button
           className="header-button save-button"
@@ -1375,33 +1399,41 @@ export default function App() {
       </header>
 
       <nav className="navigation-rail" aria-label="Workspace navigation">
-        <button
-          className={`rail-button ${casePanel ? "selected" : ""}`}
-          onClick={() => setCasePanel(!casePanel)}
-          aria-label="Toggle case and evidence panel"
-          aria-expanded={casePanel}
-          aria-controls="case-evidence-panel"
-        >
-          <Layers3 size={19} />
-          <span>Case</span>
-        </button>
-        <button
-          className="rail-button"
-          onClick={() =>
-            document.querySelector<HTMLElement>("[data-route-panel]")?.focus()
-          }
-          aria-label="Focus route comparison"
-        >
-          <Waypoints size={19} />
-          <span>Plan</span>
-        </button>
+        {([{id:"cases",label:"Cases",icon:FolderOpen},{id:"data",label:"Data",icon:Scan},{id:"anatomy",label:"3D",icon:Layers3}] as const).map(item=><button key={item.id}
+          className={`rail-button ${workbenchTab===item.id?"selected":""}`} aria-label={item.id==='anatomy'?'3D workspace':item.label}
+          onClick={()=>{setWorkbenchTab(item.id);setCasePanel(true)}}><item.icon size={19}/><span>{item.label}</span></button>)}
         <div className="rail-spacer" />
-        <span className="rail-local" title="Processing stays on this Mac">
-          <ShieldCheck size={17} />
-        </span>
+        <button className={`rail-button ${workbenchTab==='research'?'selected':''}`} aria-label="Advanced research workflows"
+          title="Earlier experimental workflows" onClick={()=>{setWorkbenchTab('research');setCasePanel(true)}}><FlaskConical size={16}/></button>
+        <span className="rail-local" title="Processing stays on this Mac"><ShieldCheck size={17}/></span>
       </nav>
 
       <aside className="case-panel" id="case-evidence-panel">
+        {workbenchTab!=="research" && <>
+          <div className="panel-heading"><span className="eyebrow">{workbenchTab==='cases'?'PATIENT LIBRARY':workbenchTab==='data'?'DATA & REGISTRATION':'ANATOMY LAYERS'}</span>
+            <button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div>
+          {workbenchTab==='cases' ? <CaseLibraryPanel cases={libraryCases} busy={fileNavigationBlocked} onBrowse={()=>load('openCase')}
+            onOpen={id=>void act(async()=>{if(api?.openListedCase){const next=await api.openListedCase(id);await installCase(next,api);setWorkbenchTab('anatomy')}})}/> : <>
+            <h1>{title}</h1><p className="case-subtitle">{displayedSource ? String(displayedSource.metadata.selected_modality??'Source image') : 'Open a case to begin'}</p>
+            {workbenchTab==='data' && payload && displayedSource && <WorkbenchDataPanel source={payload} displayed={displayedSource} series={imaging.series} selectedId={imaging.selectedId}
+              busy={busy||engineStopped} api={api} onSelect={imaging.select} onImport={request=>void act(()=>imaging.importSeries(request))}
+              settings={primaryViewer} onSettingsChange={setPrimaryViewer}/>}
+            {workbenchTab==='anatomy' && <>
+              {payload && <label className="poc-scan-selector">Source scan<select aria-label="Source scan" value={imaging.selectedId??''} disabled={busy}
+                onChange={e=>imaging.select(e.target.value||null)}><option value="">{String(payload.metadata.selected_modality??'Reference image')} · reference</option>
+                {imaging.series.map(s=><option key={s.descriptor.seriesId} value={s.descriptor.seriesId}>{s.descriptor.modality}{s.descriptor.registration.overlayPermitted?' · source registered':' · separate frame'}</option>)}</select></label>}
+              <AnatomyPanel layers={(displayedCase?.compartments??[]).map(layer=>({...layer,label:(displayedSource?.metadata.anatomy_layers as Record<string,{label?:string}>|undefined)?.[layer.name]?.label,provenance:anatomyDescription((displayedSource?.metadata.anatomy_layers as Record<string,AnatomyRecord>|undefined)?.[layer.name],imaging.selected?.descriptor.annotationKind==='estimated'?'Model estimate':annotationDescription)}))}
+                visibleLayers={displayedLayers} onVisibilityChange={setDisplayedLayers} settings={viewerSettings} onSettingsChange={setViewerSettings}
+                missingStructures={Array.isArray(displayedSource?.metadata.missing_anatomy)?displayedSource.metadata.missing_anatomy as string[]:['Skull','Vessels','Brain structures'].filter(name=>!displayedCase?.compartments.some(l=>l.name.toLowerCase().includes(name==='Brain structures'?'brain':name.toLowerCase())))}
+                provenanceLabel="Cached masks · no inference on view changes"/>
+              <AnnotationCenterButton center={imaging.selected?null:annotationCenterMm} onCenter={setCursor}/>
+              <button className="text-button" onClick={()=>setWorkbenchTab('data')}>Source files & registration <ChevronRight size={13}/></button>
+              <p className="muted-note poc-research-note">Research estimates. Missing structures are unassessed.</p>
+            </>}
+          </>}
+        </>}
+        {workbenchTab==="research" && <>
+
         <div className="panel-heading">
           <span className="eyebrow">CASE & EVIDENCE</span>
           <button
@@ -1611,16 +1643,17 @@ export default function App() {
               : "Local processing · source preserved"}
           </div>
         </div>
+        </>}
       </aside>
 
       <main className="anatomy-panel">
         <div className="workspace-heading">
           <div>
             <WorkspaceBreadcrumb caseId={caseData?.caseId ?? null} />
-            <h2>Anatomy, in context</h2>
+            <h2>{workbenchTab==='data'?'Source imaging':'Anatomy, in context'}</h2>
           </div>
           <div
-            className="view-presets"
+            className={`view-presets ${workbenchTab==='research'?'':'poc-hidden'}`}
             role="group"
             aria-label="Camera framing"
           >
@@ -1696,6 +1729,10 @@ export default function App() {
         <div className="viewer-shell">
           {caseData && (
             <ViewerWorkspace
+              workspaceSettings={viewerSettings}
+              onWorkspaceSettingsChange={setViewerSettings}
+              sourceLabel={String(displayedSource?.metadata.selected_modality??'Image')}
+              registeredFusion={registeredFusion}
               diagnosticLayer={diagnostic.view?.layer ?? null}
               diagnosticSourceSha256={diagnostic.view?.sourceSha256 ?? null}
               generatedSignal={display.primaryOverlaysPermitted && synthetic}
@@ -1722,11 +1759,10 @@ export default function App() {
               <h2>
                 From source imaging
                 <br />
-                to inspectable alternatives.
+                to inspectable anatomy.
               </h2>
               <p>
-                Load a case to explore linked MRI views, source annotations and
-                complete instrument geometry.
+                Open real imaging to explore linked source slices and cached anatomical layers.
               </p>
               <button
                 className="primary-button"
@@ -1735,13 +1771,7 @@ export default function App() {
               >
                 <FolderOpen size={16} /> Open a case
               </button>
-              <button
-                className="text-button"
-                disabled={!api || readonly || controlsBlocked}
-                onClick={() => setPlanningTab("episode")}
-              >
-                Open the generated episode workflow <ChevronRight size={13} />
-              </button>
+
             </div>
           )}
           {hydrating && (
@@ -1757,9 +1787,7 @@ export default function App() {
             RAS+ mm
           </span>
           <span>
-            {cameraMode === "anatomy"
-              ? "Anatomy focus may crop instruments"
-              : "Complete rendered instrument envelopes"}
+            {workbenchTab!=="research" ? "Local imaging · cached anatomy" : cameraMode === "anatomy" ? "Anatomy focus may crop instruments" : "Complete rendered instrument envelopes"}
           </span>
         </div>
       </main>

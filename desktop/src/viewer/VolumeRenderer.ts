@@ -2,6 +2,10 @@ import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
 import type {ViewerPublicGoal} from './publicGoal';
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { clippingForBounds, layerAppearance, validCameraState } from './workspaceSettings';
+import type { ViewerCameraState, ViewerWorkspaceSettings } from './workspaceSettings';
+import { checkedFusionTransform } from './registeredFusion';
+import type { ViewerRegisteredFusion } from './registeredFusion';
 import {
   PLANE_AXES,
   inverseAffine,
@@ -29,6 +33,7 @@ import { fragmentShader, vertexShader } from "./shaders";
 import { validateDiagnosticLayer } from "./diagnosticLayer";
 import type { CheckedDiagnosticLayer, LoadedDiagnosticLayer } from "./diagnosticLayer";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
+import { surfaceCameraDistance } from './surfaceCameraFit';
 import { paneViewport } from "./layout";
 import {
   PRIOR_COLORS,
@@ -150,6 +155,7 @@ export class VolumeRenderer {
   private priorCoverageTexture: THREE.Data3DTexture;
   private readonly surfaces = new Map<string, THREE.Mesh>();
   private readonly mriTexture: THREE.Data3DTexture;
+  private fusionTexture: THREE.Data3DTexture;
   private readonly labelTexture: THREE.Data3DTexture;
   private readonly sourcePlane: THREE.Mesh<
     THREE.BufferGeometry,
@@ -166,12 +172,19 @@ export class VolumeRenderer {
   private cursor: Point3;
   private visible: Record<string, boolean> = {};
   private opacity = 0.4;
+  private workspaceSettings: ViewerWorkspaceSettings = {};
+  private clipPlane: THREE.Plane | null = null;
+  private cameraRestored = false;
   private activePlane: SlicePlane = "axial";
   private routeSignature = "";
   private mode: "anatomy" | "instruments" = "anatomy";
   private pendingFit: "anatomy" | "instruments" | null = null;
   private readonly pickRay = new THREE.Raycaster();
   private readonly onControlsChange = () => this.requestRender();
+  private readonly onControlsEnd = () => {
+    this.cameraRestored = true;
+    this.onCameraChange?.(this.getCameraState());
+  };
   private readonly onContextLost = (event: Event) => {
     event.preventDefault();
     this.onError(
@@ -187,6 +200,7 @@ export class VolumeRenderer {
     private readonly onError: (message: string) => void,
     private readonly onSurfaceStatus: (remaining: number) => void,
     private readonly onReplayError: (message: string) => void,
+    private readonly onCameraChange?: (camera: ViewerCameraState) => void,
   ) {
     const count = volume.shape.reduce((a, b) => a * b, 1);
     if (
@@ -224,6 +238,7 @@ export class VolumeRenderer {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     this.renderer.setClearColor(0x05080d, 1);
     this.renderer.autoClear = false;
+    this.renderer.localClippingEnabled = true;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.05;
@@ -233,6 +248,7 @@ export class VolumeRenderer {
       );
     this.canvas.addEventListener("webglcontextlost", this.onContextLost);
     this.mriTexture = dataTexture(volume.mri, volume.shape);
+    this.fusionTexture = dataTexture(new Float32Array(1),[1,1,1]);
     const packed = new Uint8Array(count);
     volume.compartments.forEach((layer, index) => {
       const bit = 1 << index;
@@ -257,6 +273,12 @@ export class VolumeRenderer {
         toneMapped: false,
         uniforms: {
           uMri: { value: this.mriTexture },
+          uFusion: { value: this.fusionTexture },
+          uFusionActive: { value: 0 },
+          uFusionOpacity: { value: .5 },
+          uFusionShape: { value: new THREE.Vector3(1,1,1) },
+          uWorldToFusion: { value: new THREE.Matrix4() },
+          uFusionWindow: { value: new THREE.Vector2(0,1) },
           uLabels: { value: this.labelTexture },
           uRemoved: { value: this.removedTexture },
           uReplayActive: { value: 0 },
@@ -292,6 +314,9 @@ export class VolumeRenderer {
           uResolution: { value: new THREE.Vector2(1, 1) },
           uWindow: { value: new THREE.Vector2(...this.defaultWindow) },
           uOverlay: { value: this.opacity },
+          uLayerOpacities: { value: new Float32Array(8).fill(.66) },
+          uClipEnabled: { value: 0 },
+          uClipPlane: { value: new THREE.Vector4(0,0,1,0) },
           uThreeD: { value: threeD ? 1 : 0 },
           uVisibleBits: { value: (1 << volume.compartments.length) - 1 },
           uColors: {
@@ -371,13 +396,15 @@ export class VolumeRenderer {
     this.scene.add(this.publicGoalObject);
     this.camera.up.set(0, 0, 1);
     this.controls = new OrbitControls(this.camera, panes.anatomy);
-    this.controls.enableDamping = true;
-    this.controls.dampingFactor = 0.12;
+    // Direct controls settle at pointer/wheel end, so saved camera equals the
+    // displayed camera even if Save is pressed immediately after a gesture.
+    this.controls.enableDamping = false;
     this.controls.rotateSpeed = 0.65;
     this.controls.zoomSpeed = 0.8;
     this.controls.minDistance = 5;
     this.controls.maxDistance = 2200;
     this.controls.addEventListener("change", this.onControlsChange);
+    this.controls.addEventListener("end", this.onControlsEnd);
     this.observer = new ResizeObserver(() => this.requestRender());
     this.observer.observe(container);
     Object.values(panes).forEach((pane) => this.observer.observe(pane));
@@ -417,14 +444,16 @@ export class VolumeRenderer {
         new THREE.BufferAttribute(positions, 3),
       );
       geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
+      const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings);
       const mesh = new THREE.Mesh(
         geometry,
         new THREE.MeshStandardMaterial({
-          color: layer.color,
+          color: appearance.color,
           roughness: 0.34,
           metalness: 0.08,
           transparent: true,
-          opacity: 0.66,
+          opacity: appearance.opacity,
+          clippingPlanes: this.clipPlane ? [this.clipPlane] : [],
           side: THREE.DoubleSide,
           depthWrite: false,
         }),
@@ -434,7 +463,7 @@ export class VolumeRenderer {
       mesh.userData.compartment = layer.name;
       this.surfaces.set(layer.name, mesh);
       this.anatomy.add(mesh);
-      if (remaining === 0 && this.mode === "anatomy") this.fitCamera("anatomy");
+      if (remaining === 0 && this.mode === "anatomy" && !this.cameraRestored) this.fitCamera("anatomy");
       this.requestRender();
     };
     this.worker.onerror = () =>
@@ -506,6 +535,80 @@ export class VolumeRenderer {
       shader.uniforms.uWindow.value.set(low, high),
     );
     this.requestRender();
+  }
+
+  setWorkspaceSettings(settings: ViewerWorkspaceSettings): void {
+    this.workspaceSettings = settings;
+    const clipping = clippingForBounds(settings.clipping,this.bounds);
+    const normal = new THREE.Vector3();
+    normal.setComponent({x:0,y:1,z:2}[clipping.axis],clipping.flipped ? -1 : 1);
+    this.clipPlane = clipping.enabled ? new THREE.Plane(normal,clipping.flipped ? clipping.value : -clipping.value) : null;
+    this.volume.compartments.forEach((layer,index)=>{
+      const appearance=layerAppearance(layer.name,layer.color,settings);
+      const mesh=this.surfaces.get(layer.name);
+      if(mesh){
+        const material=mesh.material as THREE.MeshStandardMaterial;
+        material.color.set(appearance.color);material.opacity=appearance.opacity;
+        material.clippingPlanes=this.clipPlane ? [this.clipPlane] : [];
+      }
+      this.materials().forEach(shader=>{
+        shader.uniforms.uColors.value[index].set(appearance.color).convertLinearToSRGB();
+        shader.uniforms.uLayerOpacities.value[index]=appearance.opacity;
+      });
+    });
+    this.materials().forEach(shader=>{
+      shader.uniforms.uClipEnabled.value=clipping.enabled ? 1 : 0;
+      shader.uniforms.uClipPlane.value.set(normal.x,normal.y,normal.z,clipping.flipped ? clipping.value : -clipping.value);
+      shader.uniforms.uFusionOpacity.value=Number.isFinite(settings.fusion?.opacity) ? Math.max(0,Math.min(1,settings.fusion!.opacity)) : .5;
+    });
+    this.requestRender();
+  }
+
+  setRegisteredFusion(fusion: ViewerRegisteredFusion|null): void {
+    // Clear before validation so a rejected replacement never leaves stale fusion.
+    this.materials().forEach(shader=>{shader.uniforms.uFusionActive.value=0;});
+    this.fusionTexture.dispose();
+    this.fusionTexture=dataTexture(new Float32Array(1),[1,1,1]);
+    this.materials().forEach(shader=>{shader.uniforms.uFusion.value=this.fusionTexture;});
+    this.requestRender();
+    if(!fusion)return;
+    const worldToFusion=checkedFusionTransform(this.volume,fusion);
+    const gl=this.renderer.getContext() as WebGL2RenderingContext;
+    if(fusion.volume.shape.some(n=>n>gl.getParameter(gl.MAX_3D_TEXTURE_SIZE)))throw new Error('Fusion image exceeds the GPU texture limit.');
+    const window=intensityWindow(fusion.volume.mri);
+    this.fusionTexture.dispose();this.fusionTexture=dataTexture(fusion.volume.mri,fusion.volume.shape);
+    this.materials().forEach(shader=>{
+      shader.uniforms.uFusion.value=this.fusionTexture;
+      shader.uniforms.uFusionShape.value.set(...fusion.volume.shape);
+      shader.uniforms.uWorldToFusion.value.copy(matrix(worldToFusion));
+      shader.uniforms.uFusionWindow.value.set(...window);
+      shader.uniforms.uFusionActive.value=1;
+    });
+    this.requestRender();
+  }
+
+  getCameraState(): ViewerCameraState {
+    return {position:this.camera.position.toArray() as Point3,target:this.controls.target.toArray() as Point3,up:this.camera.up.toArray() as Point3};
+  }
+
+  setNavigationMode(mode: 'orbit'|'pan'): void {
+    this.controls.mouseButtons.LEFT=mode==='pan' ? THREE.MOUSE.PAN : THREE.MOUSE.ROTATE;
+    this.controls.touches.ONE=mode==='pan' ? THREE.TOUCH.PAN : THREE.TOUCH.ROTATE;
+  }
+
+  restoreCamera(state: ViewerCameraState|null|undefined): void {
+    if(!validCameraState(state))return;
+    this.cameraRestored=true;this.pendingFit=null;
+    this.camera.position.set(...state.position);this.controls.target.set(...state.target);this.camera.up.set(...state.up).normalize();
+    const distance=this.camera.position.distanceTo(this.controls.target);
+    this.camera.near=Math.max(.1,distance/1000);this.camera.far=Math.max(1000,distance*8);
+    this.camera.updateProjectionMatrix();this.controls.update();this.requestRender();
+  }
+
+  cameraPreset(preset: 'oblique'|'anterior'|'left'|'superior'): void {
+    this.fitCamera(this.mode,preset);
+    this.cameraRestored=true;
+    this.onCameraChange?.(this.getCameraState());
   }
 
   setSourcePlane(plane: SlicePlane | null): void {
@@ -1000,7 +1103,7 @@ export class VolumeRenderer {
     });
   }
 
-  fitCamera(mode: "anatomy" | "instruments" = this.mode): void {
+  fitCamera(mode: "anatomy" | "instruments" = this.mode, preset: 'oblique'|'anterior'|'left'|'superior' = 'oblique'): void {
     const pane = this.panes.anatomy.getBoundingClientRect();
     if (pane.width < 1 || pane.height < 1) {
       this.pendingFit = mode;
@@ -1026,9 +1129,11 @@ export class VolumeRenderer {
     const aspect = Math.max(0.2, pane.width / Math.max(pane.height, 1));
     const vertical = THREE.MathUtils.degToRad(this.camera.fov),
       horizontal = 2 * Math.atan(Math.tan(vertical / 2) * aspect);
-    const direction = new THREE.Vector3(0.88, -1.65, 0.8).normalize();
+    const directions = {oblique:[.88,-1.65,.8],anterior:[0,1,0],left:[-1,0,0],superior:[0,0,1]};
+    const direction = new THREE.Vector3(...directions[preset] as [number,number,number]).normalize();
+    this.camera.up.set(...(preset==='superior' ? [0,1,0] : [0,0,1]) as [number,number,number]);
     const right = new THREE.Vector3()
-      .crossVectors(new THREE.Vector3(0, 0, 1), direction)
+      .crossVectors(this.camera.up, direction)
       .normalize();
     const up = new THREE.Vector3().crossVectors(direction, right).normalize();
     let distance = 40;
@@ -1044,12 +1149,19 @@ export class VolumeRenderer {
           );
         }
     distance *= 1.06;
+    // Rounded patient anatomy leaves most expanded AABB corners empty. Fit
+    // its actual unchanged vertices; recorded instrument/replay envelopes keep
+    // the conservative complete-bounds calculation above.
+    const surfaceDistance=mode==='anatomy' && !this.replayActive && !this.passiveActive
+      ? surfaceCameraDistance(this.anatomy,centre,direction,right,up,vertical,aspect) : null;
+    if(surfaceDistance!==null)distance=surfaceDistance;
     this.camera.position.copy(centre).addScaledVector(direction, distance);
     this.panes.anatomy.dataset.cameraFit = JSON.stringify({
       mode,
       centre: centre.toArray(),
       size: size.toArray(),
       distanceMm: distance,
+      fitGeometry: surfaceDistance===null ? 'complete-bounds' : 'source-surface-vertices',
       surfaces: this.surfaces.size,
     });
     this.controls.target.copy(centre);
@@ -1072,14 +1184,15 @@ export class VolumeRenderer {
       [
         ...(this.sourcePlane.visible ? [this.sourcePlane] : []),
         ...(this.anatomy.visible
-          ? Array.from(this.surfaces.values()).filter((mesh) => mesh.visible)
+          ? Array.from(this.surfaces.values()).filter((mesh) => mesh.visible && (mesh.material as THREE.MeshStandardMaterial).opacity > 0)
           : []),
         ...this.replayGroup.children.filter((mesh) => mesh.visible),
       ],
       false,
     );
-    return hits.length
-      ? [hits[0].point.x, hits[0].point.y, hits[0].point.z]
+    const hit=hits.find(item=>!this.clipPlane || this.clipPlane.distanceToPoint(item.point)>=0);
+    return hit
+      ? [hit.point.x, hit.point.y, hit.point.z]
       : null;
   }
 
@@ -1151,11 +1264,13 @@ export class VolumeRenderer {
     this.replayWorker?.terminate();
     if (this.pendingReplayGroup) disposeObject(this.pendingReplayGroup);
     this.controls.removeEventListener("change", this.onControlsChange);
+    this.controls.removeEventListener("end", this.onControlsEnd);
     this.controls.dispose();
     this.canvas.removeEventListener("webglcontextlost", this.onContextLost);
     disposeObject(this.scene);
     this.slices.forEach((slice) => disposeObject(slice.scene));
     this.mriTexture.dispose();
+    this.fusionTexture.dispose();
     this.labelTexture.dispose();
     this.removedTexture.dispose();
     this.proposalTexture.dispose();

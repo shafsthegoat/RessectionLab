@@ -2,14 +2,14 @@ import type {CasePayload,Vec3} from './types';
 import type {DisplaySeriesPayload} from './workspace-imaging-types';
 import type {DevelopmentEpisode,EpisodeAuthorship} from './episode-types';
 import type {PersistentPassiveEpisode,PersistentPassiveResult} from './persistent-passive-types';
-export interface ImageViewState {cursor:Vec3|null;visibleLayers:Record<string,boolean>}
+export interface ImageViewState {cursor:Vec3|null;visibleLayers:Record<string,boolean>;viewer?:import('./viewer/workspaceSettings').ViewerWorkspaceSettings}
 export interface ImagingSessionState {selectedSeriesId:string|null;states:Record<string,ImageViewState>}
 export interface EpisodeReplaySelection {episodeId:string;frameIndex:number;visible:boolean}
 export interface WorkspaceEvidenceRow {
   seriesId:string;sourceCaseHash:string;sourceFrameHash:string;modality:string;
   sourceKind:'primary_source'|'source_image'|'source_annotation'|'estimated_annotation';
   displayAvailable:true;planningInput:boolean;
-  readiness:'primary_case_contract'|'display_only_registration_unreviewed';reasons:string[];
+  readiness:'primary_case_contract'|'display_only_registration_unreviewed'|'display_only_source_registered';reasons:string[];
 }
 /** This envelope is produced only after the backend validates persisted sources/history. */
 export interface WorkspaceSessionPayload {
@@ -23,5 +23,6 @@ export interface WorkspaceSessionPayload {
       accountingQualification:'declared_generated_schedule_not_measured'}
   )|null;
   evidenceInventory:WorkspaceEvidenceRow[];
+  originalFiles?:{name:string;sha256:string;bytes:number;role:string;sourceUri?:string}[];
 }
 export type WorkspaceCasePayload = CasePayload & {workspaceSession?:WorkspaceSessionPayload};

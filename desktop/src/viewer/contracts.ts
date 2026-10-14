@@ -33,6 +33,11 @@ export interface ViewerRoute {
 }
 
 export interface ViewerWorkspaceProps {
+  workspaceSettings?: import('./workspaceSettings').ViewerWorkspaceSettings;
+  onWorkspaceSettingsChange?: (settings: import('./workspaceSettings').ViewerWorkspaceSettings) => void;
+  /** Acquired modality label; synthetic signals retain their separate label. */
+  sourceLabel?: string;
+  registeredFusion?: import('./registeredFusion').ViewerRegisteredFusion | null;
   /** Separate, unreviewed scan diagnostic; never becomes a CaseData compartment. */
   diagnosticLayer?: import("./diagnosticLayer").LoadedDiagnosticLayer | null;
   /** SHA-256 of the selected, displayed atlas-grid T1c image bytes. */

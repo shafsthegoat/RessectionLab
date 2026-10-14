@@ -19,6 +19,7 @@ const { importDisplaySeries } = require('./display-series-import.cjs');
 const { importDiagnosticLayer } = require('./diagnostic-import.cjs');
 const { inspectAxisPlanning } = require('./axis-inspection.cjs');
 const { observedRequest, validateObservedResult } = require('./observed-landmark-contract.cjs');
+const { CaseLibrary } = require('./case-library.cjs');
 
 let log = message => process.stderr.write(String(message) + '\n');
 let window;
@@ -26,6 +27,8 @@ let engine;
 let allowedUrl;
 let quitting = false;
 let startupConsumed = false;
+let caseLibrary;
+let currentCasePath;
 const cliValue = name => { const index = process.argv.indexOf(name); return index >= 0 ? process.argv[index + 1] : undefined; };
 
 async function startEngine() {
@@ -33,6 +36,7 @@ async function startEngine() {
   await fs.chmod(transferDir, 0o700);
   const bundled = path.join(process.resourcesPath, 'research-engine', 'ressectionlab-engine');
   const repo = path.resolve(__dirname, '../..');
+  caseLibrary = new CaseLibrary(app.getPath('userData'), path.join(repo, 'outputs/poc-cases'));
   const runDir = path.join(app.getPath('userData'), 'research-runs');
   const config = app.isPackaged
     ? { executable: bundled, cwd: app.getPath('userData'), transferDir, runDir }
@@ -61,13 +65,24 @@ async function pick(title, extensions) {
 }
 
 function bindOperations() {
+  const openSaved = async filename => {
+    const result = await engine.request('loadCase', {path: filename});
+    currentCasePath = filename;
+    await caseLibrary.remember(filename);
+    return result;
+  };
   handle('ping', () => engine.request('ping'));
+  handle('listCases', () => caseLibrary.list());
+  handle('openListedCase', async id => openSaved(await caseLibrary.resolve(id)));
   handle('startupCase', async () => {
     if (startupConsumed) return null;
     startupConsumed = true;
     const casePath = cliValue('--case');
-    if (casePath) return engine.request('loadCase', { path: path.resolve(casePath) });
-    return process.argv.includes('--demo') ? engine.request('createSyntheticCase') : null;
+    if (casePath) return openSaved(path.resolve(casePath));
+    if (process.argv.includes('--demo')) return engine.request('createSyntheticCase');
+    const cases = await caseLibrary.list();
+    if (!cases.length) return null;
+    return openSaved(await caseLibrary.resolve(cases[0].id));
   });
   handle('publicContactFamilyAvailability',async args=>checkedFamilyAvailability(await engine.request('publicContactFamilyAvailability',familyAvailabilityRequest(args),30000)));
   handle('executePublicContactFamilyEpisode',async args=>{const catalog=structuredClone(engine.contactFamilyAvailability);const request=familyRequest(args,catalog);return validateFamilyResult(await engine.request('executePublicContactFamilyEpisode',request,30000),request,catalog);});
@@ -79,22 +94,27 @@ function bindOperations() {
   handle('createSyntheticCase', () => engine.request('createSyntheticCase'));
   handle('openCase', async () => {
     const selected = await pick('Open a saved research case', ['ressectionlab', 'rslab']);
-    return selected ? engine.request('loadCase', { path: selected }) : null;
+    return selected ? openSaved(selected) : null;
   });
   handle('importNifti', async () => {
     const structuralPath = await pick('Select the structural MRI', ['nii', 'gz']);
     if (!structuralPath) return null;
     const tumorMaskPath = await pick('Select the tumor segmentation (Cancel to import MRI only)', ['nii', 'gz']);
-    return engine.request('importNifti', { structuralPath, ...(tumorMaskPath ? { tumorMaskPath } : {}) });
+    const result = await engine.request('importNifti', { structuralPath, ...(tumorMaskPath ? { tumorMaskPath } : {}) });
+    currentCasePath = null;
+    return result;
   });
   handle('importDiagnosticLayer', args => importDiagnosticLayer(args, { pick, request: (...requestArgs) => engine.request(...requestArgs) }));
   handle('importDisplaySeries', args => importDisplaySeries(args, { pick, request: (...requestArgs) => engine.request(...requestArgs) }));
   handle('importStructuralEvidence', args => importStructuralEvidence(args, { pick, request: (...requestArgs) => engine.request(...requestArgs) }));
   handle('saveCase', async args => {
     plainArgs(args, ['caseHash', 'workspace']);
-    const selected = await dialog.showSaveDialog(window, { title: 'Save research workspace', defaultPath: 'research-case.ressectionlab', filters: [{ name: 'RessectionLab case', extensions: ['ressectionlab'] }] });
+    const selected = await dialog.showSaveDialog(window, { title: 'Save anatomy workspace', defaultPath: currentCasePath || 'research-case.ressectionlab', filters: [{ name: 'RessectionLab case', extensions: ['ressectionlab'] }] });
     if (selected.canceled || !selected.filePath) return null;
-    return engine.request('saveCase', { ...args, path: selected.filePath, overwrite: true });
+    const result = await engine.request('saveCase', { ...args, path: selected.filePath, overwrite: true });
+    currentCasePath = selected.filePath;
+    await caseLibrary.remember(selected.filePath);
+    return result;
   });
   handle('generateRoutes', args => engine.request('generateRoutes', plainArgs(args, ['caseHash', 'toolIds', 'allowEstimatedSupport', 'config'])));
   handle('generateNativeRoutes', args => engine.request('generateNativeRoutes', plainArgs(args, ['caseHash'])));

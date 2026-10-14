@@ -6,6 +6,7 @@ An explicit user association is not a verified same-person or same-time claim.
 from __future__ import annotations
 from dataclasses import dataclass, replace
 import math
+import re
 import numpy as np
 from .core import CaseData, semantic_digest, thaw_json
 from .imaging import inspect_nifti, load_nifti_case
@@ -79,7 +80,15 @@ def import_display_series(session, args, request, progress):
     state=view_state(parent.case,list(parent.display_sources.values()),parent.imaging_state)
     state['states'][series_id]=view_state(parent.case,[source])['states'][series_id]
     state['selectedSeriesId']=series_id
+    from .workspace_bundle import OriginalFile,MAX_ORIGINALS
+    original_files=list(getattr(parent,'originals',()))
+    for path,role in [(image,'imaging')]+([] if annotation is None else [(annotation,'annotation')]):
+        item=OriginalFile.from_path(path,role=role)
+        if not any(old.sha256==item.sha256 and old.source_uri==item.source_uri for old in original_files):original_files.append(item)
+    if len(original_files)>128 or sum(len(item.data) for item in original_files)>MAX_ORIGINALS:
+        raise BridgeError('CASE_SIZE_LIMIT','Original source archive exceeds the 512 MiB workspace limit.')
     request.begin_commit();parent.display_sources[series_id]=source;parent.display_series[series_id]=result
+    parent.originals=original_files
     parent.imaging_state=state;parent.workspace_hash=None
     if parent.episode_selection is not None:
         parent.episode_selection={**parent.episode_selection,'visible':False}
@@ -133,6 +142,9 @@ def display_descriptor(session,parent_case,source):
     display=source.case;modality=source.modality;kind=source.annotation_kind;expanded=source.expanded_bytes
     source_refs=[s.to_dict() for s in display.source_refs]
     series_id=source.identity(parent_case)
+    association,registration=source_registration(parent_case,display)
+    metadata=thaw_json(display.metadata)
+    aligned=registration['overlayPermitted']
     volume={'caseId':display.case_id,'caseHash':display.semantic_hash,'frame':display.frame,
         'affine':display.affine.tolist(),'shape':list(display.mri.shape),'spacingMm':list(display.spacing_mm),
         'mri':session.transfers.array(display.mri,'float32'),
@@ -141,20 +153,59 @@ def display_descriptor(session,parent_case,source):
             'array':session.transfers.array(mask,'uint8'),'sourceArray':session.transfers.array(mask,'uint8')}
             for name,mask in display.compartments.items()],
         'brainMask':None,'structuralEvidence':[],'priorProposals':[],
-        'unknowns':['display_only_attachment','same_patient_association_unverified','registration_to_reference_unreviewed',
-                    'annotation_anatomy_and_coverage_unreviewed','acquisition_time_unknown'],
+        'unknowns':['display_only_attachment','annotation_anatomy_and_coverage_unreviewed','acquisition_time_unknown']+
+                   ([] if aligned else ['same_patient_association_unverified','registration_to_reference_unreviewed']),
         'metadata':{**thaw_json(display.metadata),'workspace_display_only':True,'selected_modality':modality,
-            'modality_origin':'user_declared','annotation_kind':kind,'annotation_use':'display_only',
-            'model_identity':None,'model_lineage':'not_supplied' if kind=='estimated' else 'not_applicable'},
+            'modality_origin':'source_metadata' if aligned else 'user_declared','annotation_kind':kind,'annotation_use':'display_only',
+            'model_identity':metadata.get('model_identity'),'model_lineage':metadata.get('model_lineage','not_supplied' if kind=='estimated' else 'not_applicable')},
         'sourceRefs':source_refs}
     result={'schema':'workspace-display-series-v1','seriesId':series_id,'referenceCaseHash':parent_case.semantic_hash,
         'referenceFrameHash':structural_frame_hash(parent_case),
         'sourceFrameHash':structural_frame_hash(display),
-        'association':{'kind':'explicit_user_selected','samePersonVerified':False,'sameTimeVerified':False},
-        'registration':{'status':'unreviewed','reason':'No accepted source-to-reference registration has been supplied.',
-            'sourceToReferenceRasMm':None,'registrationHash':None,'overlayPermitted':False},
+        'association':association,'registration':registration,
         'scope':'display-only-native-grid','planningEligible':False,'evaluationEligible':False,
-        'modality':modality,'modalityOrigin':'user_declared','annotationKind':kind,
-        'annotationCoverage':'unreviewed; unlabelled voxels are unknown','acquisitionDatetime':None,
+        'modality':modality,'modalityOrigin':'source_metadata' if aligned else 'user_declared','annotationKind':kind,
+        'annotationCoverage':'unreviewed; unlabelled voxels are unknown','acquisitionDatetime':metadata.get('acquisition_datetime'),
         'expandedBytes':expanded,'volume':volume}
     return result
+
+
+def source_registration(primary,display):
+    """Admit source-declared registration only with matching identity and grids.
+
+    Equal affines alone do not establish registration. A named dataset's
+    explicit registration declaration must bind both original image hashes.
+    This describes upstream preprocessing, not independent clinical review.
+    """
+    association={'kind':'explicit_user_selected','samePersonVerified':False,'sameTimeVerified':False}
+    registration={'status':'unreviewed','reason':'No accepted source-to-reference registration has been supplied.',
+        'sourceToReferenceRasMm':None,'registrationHash':None,'overlayPermitted':False}
+    first=thaw_json(primary.metadata.get('workspace_registration'))
+    second=thaw_json(display.metadata.get('workspace_registration'))
+    required={'kind','patient_id','group_id','source_sha256_by_modality','evidence_sha256','evidence_url'}
+    if (not isinstance(first,dict) or first!=second or set(first)!=required or
+            first['kind']!='source-provided-coregistration' or
+            first['patient_id']!=primary.case_id or first['patient_id']!=display.case_id or
+            not isinstance(first['group_id'],str) or not first['group_id'] or
+            not isinstance(first['evidence_url'],str) or not first['evidence_url'].startswith('https://') or
+            not isinstance(first['evidence_sha256'],str) or not re.fullmatch('[a-f0-9]{64}',first['evidence_sha256']) or
+            not isinstance(first['source_sha256_by_modality'],dict)):
+        return association,registration
+    hashes=first['source_sha256_by_modality']
+    for case in (primary,display):
+        refs=[ref for ref in case.source_refs if ref.source_id=='structural']
+        modality=case.metadata.get('selected_modality')
+        if len(refs)!=1 or not isinstance(hashes.get(modality),str) or refs[0].sha256!=hashes[modality]:
+            return association,registration
+    association={'kind':'source_dataset_identity','samePersonVerified':True,'sameTimeVerified':False}
+    if (primary.frame!=display.frame or primary.mri.shape!=display.mri.shape or
+            not np.allclose(primary.affine,display.affine,rtol=0,atol=1e-6)):
+        registration['reason']='Dataset association is known, but the supplied grids differ; explicit registration is required.'
+        return association,registration
+    registration={'status':'source-provided',
+        'reason':'Source dataset declares co-registration; exact downloaded image hashes and equal physical grids verified. Independent anatomical review is pending.',
+        'sourceToReferenceRasMm':np.eye(4).tolist(),
+        'registrationHash':semantic_digest({'declaration':first,'referenceFrameHash':structural_frame_hash(primary),
+                                            'sourceFrameHash':structural_frame_hash(display)}),
+        'overlayPermitted':True}
+    return association,registration

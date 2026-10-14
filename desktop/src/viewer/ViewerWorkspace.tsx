@@ -4,6 +4,8 @@ import {checkedPublicGoal,publicGoalSlicePoint,PUBLIC_GOAL_COLOR} from './public
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent, PointerEvent } from "react";
 import { VolumeRenderer } from "./VolumeRenderer";
+import { clippingForBounds } from './workspaceSettings';
+import type { ViewerWorkspaceSettings } from './workspaceSettings';
 import {
   PLANE_AXES,
   PLANE_LABELS,
@@ -76,7 +78,15 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     catch (cause) { return {goal:null,error:cause instanceof Error?cause.message:String(cause)}; }
   },[caseData,props.publicGoal,diagnosticRequested,passiveRequested]);
   const publicGoal = goalSelection.goal;
-  const signalName = props.generatedSignal ? "analytic signal" : "MRI";
+  const signalName = props.generatedSignal ? "analytic signal" : (props.sourceLabel ?? "MRI");
+  const [localSettings,setLocalSettings] = useState<ViewerWorkspaceSettings>({});
+  const settings=props.workspaceSettings ?? localSettings;
+  const latestSettings=useRef(settings);latestSettings.current=settings;
+  const changeSettings=(next:ViewerWorkspaceSettings)=>{
+    latestSettings.current=next;
+    if(latestProps.current.onWorkspaceSettingsChange)latestProps.current.onWorkspaceSettingsChange(next);
+    else setLocalSettings(next);
+  };
   const container = useRef<HTMLDivElement>(null),
     canvas = useRef<HTMLCanvasElement>(null),
     anatomy = useRef<HTMLDivElement>(null);
@@ -92,17 +102,21 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const [error, setError] = useState<string | null>(null),
     [remaining, setRemaining] = useState(0),
     [ready, setReady] = useState(false);
-  const [activePlane, setActivePlane] = useState<SlicePlane>("axial"),
-    [contrast, setContrast] = useState(1),
-    [showPlane, setShowPlane] = useState(false),
-    [replayError, setReplayError] = useState<string | null>(null),
+  const [fusionError,setFusionError]=useState<string|null>(null);
+  const activePlane=settings.activePlane??'axial',contrast=settings.contrast??1,showPlane=settings.showPlane??true;
+  const setActivePlane=(activePlane:SlicePlane)=>changeSettings({...latestSettings.current,activePlane});
+  const setContrast=(contrast:number)=>changeSettings({...latestSettings.current,contrast});
+  const setShowPlane=(showPlane:boolean)=>changeSettings({...latestSettings.current,showPlane});
+  const layout=settings.layout??'mri-review';
+  const setLayout=(layout:'3d-focus'|'mri-review')=>changeSettings({...latestSettings.current,layout});
+  const [replayError, setReplayError] = useState<string | null>(null),
     [passiveError, setPassiveError] = useState<string | null>(null),
     [proposalError, setProposalError] = useState<string | null>(null),
     [proposalReviewLabel, setProposalReviewLabel] = useState<string | null>(
       null,
     );
-  const [layout, setLayout] = useState<"3d-focus" | "mri-review">("3d-focus"),
-    [expanded, setExpanded] = useState<SlicePlane | null>(null);
+  const [expanded, setExpanded] = useState<SlicePlane | null>(null);
+  const [navigationMode,setNavigationMode]=useState<'orbit'|'pan'>('orbit');
   const [displayedPrior, setDisplayedPrior] = useState<ViewerPriorLayer | null>(
       null,
     ),
@@ -158,7 +172,6 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       return;
     setError(null);
     setReady(false);
-    setContrast(1);
     try {
       const renderer = new VolumeRenderer(
         container.current,
@@ -173,6 +186,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         setError,
         setRemaining,
         setReplayError,
+        camera=>{
+          if(latestProps.current.caseData?.caseHash===caseData.caseHash)
+            changeSettings({...latestSettings.current,camera});
+        },
       );
       engine.current = renderer;
       setReady(true);
@@ -184,6 +201,16 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       setError(cause instanceof Error ? cause.message : String(cause));
     }
   }, [caseData]);
+
+  useEffect(()=>{engine.current?.setWorkspaceSettings(settings);},[ready,caseData,settings]);
+  useEffect(()=>{engine.current?.restoreCamera(settings.camera);},[ready,caseData,settings.camera]);
+  useEffect(()=>{engine.current?.setNavigationMode(navigationMode);},[ready,caseData,navigationMode]);
+  useEffect(()=>{
+    if(!engine.current)return;
+    setFusionError(null);
+    try{engine.current.setRegisteredFusion(props.registeredFusion??null);}
+    catch(cause){setFusionError(cause instanceof Error?cause.message:String(cause));}
+  },[ready,caseData,props.registeredFusion]);
 
   useEffect(() => {if(engine.current)engine.current.setPublicGoal(publicGoal);},[ready,caseData,publicGoal]);
 
@@ -198,6 +225,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     );
   }, [
     ready,
+    caseData,
     currentCursor[0],
     currentCursor[1],
     currentCursor[2],
@@ -281,7 +309,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       centre = (low + high) / 2,
       width = (high - low) * contrast;
     renderer.setWindow(centre - width / 2, centre + width / 2);
-  }, [contrast, ready]);
+  }, [contrast, ready, caseData]);
 
   useEffect(() => {
     if (!engine.current) return;
@@ -473,6 +501,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     );
 
   const refs = { axial, coronal, sagittal };
+  const displayBounds=geometry?.bounds??[[0,0,0],[1,1,1]] as [Point3,Point3];
+  const clipping=clippingForBounds(settings.clipping,displayBounds);
+  const clipAxis={x:0,y:1,z:2}[clipping.axis];
   const modeled = replay && !replayError;
   const passiveMode = passiveReplay && !passiveError;
   const inspected = !diagnosticRequested && !replay && !passiveRequested && !structuralProposal && !priorLayer &&
@@ -521,17 +552,21 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               setExpanded(null);
             }}
           >
-            {props.generatedSignal ? "Signal review" : "MRI review"}
+            {props.generatedSignal ? "Signal review" : "Image review"}
           </button>
         </div>
         <div className="rl-viewer-toolbar" hidden={Boolean(expanded)}>
+          <div className="rl-viewer-segment" role="group" aria-label="3D drag mode">
+            <button aria-label="Orbit 3D with left drag" aria-pressed={navigationMode==='orbit'} className={navigationMode==='orbit'?'is-active':''} onClick={()=>setNavigationMode('orbit')}>Orbit</button>
+            <button aria-label="Pan 3D with left drag" aria-pressed={navigationMode==='pan'} className={navigationMode==='pan'?'is-active':''} onClick={()=>setNavigationMode('pan')}>Pan</button>
+          </div>
           <button
             className={`rl-viewer-reset rl-viewer-plane-toggle ${showPlane ? "is-active" : ""}`}
             aria-pressed={showPlane}
             onClick={() => setShowPlane(!showPlane)}
             title={`Show or hide the source ${signalName} plane in 3D; linked ${signalName} views remain visible`}
           >
-            {props.generatedSignal ? "Signal" : "MRI"} plane {showPlane ? "on" : "off"}
+            Source plane {showPlane ? "on" : "off"}
           </button>
           <select
             className="rl-viewer-plane-select"
@@ -555,13 +590,29 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           </label>}
           <button
             className="rl-viewer-reset"
-            onClick={() => engine.current?.fitCamera(cameraMode)}
+            onClick={() => engine.current?.cameraPreset('oblique')}
             aria-label="Fit 3D view"
             title="Fit anatomy and the selected 3D camera preset"
           >
             ↺ <span>Fit 3D</span>
           </button>
+          <select className="rl-viewer-plane-select" aria-label="Camera preset" defaultValue="" onChange={event=>{
+            if(event.target.value)engine.current?.cameraPreset(event.target.value as 'oblique'|'anterior'|'left'|'superior');event.target.value='';
+          }}><option value="" disabled>Camera</option><option value="anterior">Anterior</option><option value="left">Left</option><option value="superior">Superior</option><option value="oblique">Oblique</option></select>
         </div>
+        {!expanded&&<div className="rl-cutaway-controls" role="group" aria-label="3D cutaway controls">
+          <label><input type="checkbox" checked={clipping.enabled} onChange={event=>changeSettings({...settings,clipping:{...clipping,enabled:event.target.checked}})}/>3D cutaway</label>
+          <select aria-label="Cutaway axis" value={clipping.axis} onChange={event=>{
+            const axis=event.target.value as 'x'|'y'|'z',index={x:0,y:1,z:2}[axis];
+            changeSettings({...settings,clipping:{...clipping,axis,value:currentCursor[index],enabled:true}});
+          }}><option value="z">Axial</option><option value="y">Coronal</option><option value="x">Sagittal</option></select>
+          <input type="range" aria-label="Cutaway position" min={displayBounds[0][clipAxis]} max={displayBounds[1][clipAxis]} step=".5" value={clipping.value}
+            disabled={!clipping.enabled} onChange={event=>changeSettings({...settings,clipping:{...clipping,value:Number(event.target.value)}})}/>
+          <output>{clipping.value.toFixed(1)} mm</output>
+          <button aria-label="Flip cutaway side" aria-pressed={Boolean(clipping.flipped)} disabled={!clipping.enabled} onClick={()=>changeSettings({...settings,clipping:{...clipping,flipped:!clipping.flipped}})}>Flip</button>
+          <span>Original slices remain intact</span>
+        </div>}
+        {props.registeredFusion&&!fusionError&&<div className="rl-fusion-readout" role="status">Fused source images · {signalName} + {props.registeredFusion.label}<span>{props.registeredFusion.registration.status==='source-provided'?'Source-provided registration':'Verified registration'} · {Math.round((settings.fusion?.opacity??.5)*100)}% blend</span></div>}
         {expanded && (
           <span className="rl-viewer-expanded-note">
             {TITLES[expanded]} {signalName} expanded
@@ -611,7 +662,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             if (point && geometry)
               onCursorChange(clampCursor(point, geometry.bounds));
           }}
-          aria-label="3-D source anatomy. Drag to rotate, scroll to zoom, double-click to set linked cursor."
+          aria-label={`3-D source anatomy. Drag to ${navigationMode==='pan'?'pan':'rotate'}, scroll to zoom, double-click to set linked cursor.`}
         >
           <div className="rl-viewer-annotations">
             <span className="rl-viewer-dot" />{" "}
@@ -619,7 +670,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               ? `Generated passive replay · frame ${passiveReplay.frameIndex}/${passiveReplay.stepCount}`
               : modeled
               ? `Modeled residual annotations · step ${replay.step}/${replay.stepCount}`
-              : "Source annotation surfaces"}
+              : "Segmentation surfaces"}
             {passiveMode && (
               <span className="rl-viewer-replay-key">
                 Blue moving tool · amber other tool · {passiveReplay.phase.replaceAll('_', ' ')} · declared {passiveReplay.elapsedGeneratedSeconds.toFixed(1)} s · generated status {passiveReplay.inspectionStatus.replaceAll('_', ' ')} · source {signalName} unchanged · no tissue removal
@@ -695,7 +746,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           </div>
           <div className="rl-viewer-scene-footer">
             <span>
-              Drag to rotate <i>·</i> Scroll to zoom
+              Drag to {navigationMode==='pan'?'pan':'rotate'} <i>·</i> Scroll to zoom <i>·</i> Right-drag to pan
             </span>
             <span>Double-click to link cursor</span>
           </div>
@@ -778,7 +829,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 {scaleMm} mm
               </span>
               <span className="rl-viewer-slice-note">
-                {props.generatedSignal ? "GENERATED ANALYTIC SIGNAL" : "SOURCE MRI"}
+                {props.generatedSignal ? "GENERATED ANALYTIC SIGNAL" : `SOURCE ${signalName.toUpperCase()}`}
                 {inspected
                   ? " · UNEXECUTED TOOL PREVIEW"
                   : proposalReviewLabel
@@ -815,10 +866,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         </label>
         <span>Neurological convention</span>
       </div>
-      {(error || replayError || passiveError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error) && (
+      {(error || replayError || passiveError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error || fusionError) && (
         <div className="rl-viewer-error" role="alert">
           <strong>Imaging view needs attention</strong>
-          <p>{error || replayError || passiveError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error}</p>
+          <p>{error || replayError || passiveError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error || fusionError}</p>
         </div>
       )}
     </div>

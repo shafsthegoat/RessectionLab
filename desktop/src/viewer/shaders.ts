@@ -16,6 +16,12 @@ in vec2 vUv;
 in vec3 vWorld;
 out vec4 outColor;
 uniform sampler3D uMri;
+uniform sampler3D uFusion;
+uniform int uFusionActive;
+uniform float uFusionOpacity;
+uniform vec3 uFusionShape;
+uniform mat4 uWorldToFusion;
+uniform vec2 uFusionWindow;
 uniform sampler3D uLabels;
 uniform sampler3D uRemoved;
 uniform int uReplayActive;
@@ -43,6 +49,9 @@ uniform vec4 uRect;
 uniform vec2 uResolution;
 uniform vec2 uWindow;
 uniform float uOverlay;
+uniform float uLayerOpacities[8];
+uniform int uClipEnabled;
+uniform vec4 uClipPlane;
 uniform int uThreeD;
 uniform int uVisibleBits;
 uniform vec3 uColors[8];
@@ -64,6 +73,17 @@ float trilinear(vec3 voxel) {
   float c01=mix(scalar(a+ivec3(0,0,1)),scalar(a+ivec3(1,0,1)),f.x);
   float c10=mix(scalar(a+ivec3(0,1,0)),scalar(a+ivec3(1,1,0)),f.x);
   float c11=mix(scalar(a+ivec3(0,1,1)),scalar(a+ivec3(1,1,1)),f.x);
+  return mix(mix(c00,c10,f.y),mix(c01,c11,f.y),f.z);
+}
+float fusionScalar(ivec3 index) {
+  return texelFetch(uFusion,clamp(index,ivec3(0),ivec3(uFusionShape)-1).zyx,0).r;
+}
+float fusionSample(vec3 voxel) {
+  ivec3 a=ivec3(floor(voxel));vec3 f=fract(voxel);
+  float c00=mix(fusionScalar(a),fusionScalar(a+ivec3(1,0,0)),f.x);
+  float c01=mix(fusionScalar(a+ivec3(0,0,1)),fusionScalar(a+ivec3(1,0,1)),f.x);
+  float c10=mix(fusionScalar(a+ivec3(0,1,0)),fusionScalar(a+ivec3(1,1,0)),f.x);
+  float c11=mix(fusionScalar(a+ivec3(0,1,1)),fusionScalar(a+ivec3(1,1,1)),f.x);
   return mix(mix(c00,c10,f.y),mix(c01,c11,f.y),f.z);
 }
 int labels(ivec3 voxel) {
@@ -113,6 +133,7 @@ bool priorAt(vec3 world,out float result) {
 }
 void main() {
   vec3 world=vWorld;
+  if(uThreeD==1 && uClipEnabled==1 && dot(uClipPlane.xyz,world)+uClipPlane.w<0.0) discard;
   vec2 point=(vUv-uRect.xy)/uRect.zw;
   if (uThreeD==0) {
     if (any(lessThan(point,vec2(0.0))) || any(greaterThan(point,vec2(1.0)))) {outColor=vec4(0.019,0.031,0.043,1.0);return;}
@@ -130,6 +151,14 @@ void main() {
   if (uThreeD==1 && abs(signal)<0.000001) discard;
   float gray=clamp((signal-uWindow.x)/max(uWindow.y-uWindow.x,0.000001),0.0,1.0);
   vec3 color=vec3(gray);
+  if(uFusionActive==1) {
+    vec3 fusionVoxel=(uWorldToFusion*vec4(world,1.0)).xyz;
+    // Outside the second acquisition's coverage the original image is retained.
+    if(all(greaterThanEqual(fusionVoxel,vec3(0.0)))&&all(lessThanEqual(fusionVoxel,uFusionShape-1.0))) {
+      float fusionGray=clamp((fusionSample(fusionVoxel)-uFusionWindow.x)/max(uFusionWindow.y-uFusionWindow.x,.000001),0.0,1.0);
+      color=mix(color,vec3(fusionGray),uFusionOpacity);
+    }
+  }
   if(uThreeD==0 && uDiagnosticActive==1 && uReplayActive==0) {
     int candidate=diagnosticAt(voxel);
     if(candidate<0) {
@@ -182,7 +211,8 @@ void main() {
   if(removed) bits=0;
   for(int i=0;i<8;i++) if((bits & (1<<i))!=0) {
     int neighbors=labels(nearest+ivec3(1,0,0))&labels(nearest-ivec3(1,0,0))&labels(nearest+ivec3(0,1,0))&labels(nearest-ivec3(0,1,0))&labels(nearest+ivec3(0,0,1))&labels(nearest-ivec3(0,0,1));
-    float edge=(neighbors&(1<<i))==0?min(0.9,uOverlay+0.3):uOverlay;
+    float layerAlpha=clamp(uOverlay*uLayerOpacities[i]/0.66,0.0,1.0);
+    float edge=(neighbors&(1<<i))==0?min(0.9,layerAlpha+0.3*uLayerOpacities[i]/0.66):layerAlpha;
     color=mix(color,uColors[i],edge);
   }
   if(removed) color=mix(color,vec3(0.66,0.94,0.82),0.70);

@@ -1,0 +1,168 @@
+{
+  "schema": "ressectionlab-poc-a-delivery-v1",
+  "completed_utc": "2026-10-14T05:29:01.806785+00:00",
+  "scope": "Actual local anatomical workbench; no clinical accuracy or surgical simulation claim",
+  "base_commit": "1e0d853",
+  "branch": "codex/patient-specific-planner",
+  "gui": {
+    "gui_checks_passed": 15,
+    "gui_checks_failed": 0,
+    "gui_checks_unverified": 0,
+    "scope": "Only checks listed; no universal UI or clinical correctness claim"
+  },
+  "exercised_gui_checks": [
+    {
+      "check": "original_mri_mpr",
+      "status": "pass"
+    },
+    {
+      "check": "layer_visibility",
+      "status": "pass"
+    },
+    {
+      "check": "model_vs_source_identity",
+      "status": "pass"
+    },
+    {
+      "check": "layer_appearance",
+      "status": "pass"
+    },
+    {
+      "check": "orbit_and_zoom",
+      "status": "pass"
+    },
+    {
+      "check": "pan",
+      "status": "pass"
+    },
+    {
+      "check": "fit_anatomy",
+      "status": "pass"
+    },
+    {
+      "check": "cutaway",
+      "status": "pass"
+    },
+    {
+      "check": "source_plane_and_layout",
+      "status": "pass"
+    },
+    {
+      "check": "contrast",
+      "status": "pass"
+    },
+    {
+      "check": "native_modality_and_fusion",
+      "status": "pass"
+    },
+    {
+      "check": "native_save_quit_reopen",
+      "status": "pass"
+    },
+    {
+      "check": "separate_case_switching",
+      "status": "pass"
+    },
+    {
+      "check": "native_nifti_import",
+      "status": "pass"
+    },
+    {
+      "check": "cache_unchanged",
+      "status": "pass"
+    }
+  ],
+  "final_native_reopen": {
+    "session_hash": "sha256:c676ddeb0c2fde8cb895774122300f469cd4806a8a10808967b2ce75860b3308",
+    "imaging_state_exact": true,
+    "original_files_exact": true,
+    "model_artifacts_unchanged": true
+  },
+  "canonical_cases": [
+    {
+      "case": "Lausanne-sub-000-ses-20110101",
+      "archived_originals": 7,
+      "original_bytes_exact": true,
+      "settings_exact": true,
+      "frontend_hydration": true
+    },
+    {
+      "case": "SynthRAD2023-1BA336",
+      "archived_originals": 7,
+      "original_bytes_exact": true,
+      "settings_exact": true,
+      "frontend_hydration": true
+    },
+    {
+      "case": "UCSF-PDGM-0004",
+      "archived_originals": 18,
+      "original_bytes_exact": true,
+      "settings_exact": true,
+      "frontend_hydration": true
+    }
+  ],
+  "verified_models": [
+    {
+      "model": "synthstrip-main",
+      "case": "UCSF-PDGM-0004",
+      "all_hashes_match": true
+    },
+    {
+      "model": "monai-brats-0.5.4",
+      "case": "UCSF-PDGM-0004",
+      "all_hashes_match": true
+    },
+    {
+      "model": "totalsegmentator-skull",
+      "case": "SynthRAD2023-1BA336",
+      "all_hashes_match": true
+    },
+    {
+      "model": "vesselfm-base",
+      "case": "Lausanne-sub-000-ses-20110101",
+      "all_hashes_match": true
+    }
+  ],
+  "validation": {
+    "staged_typescript_vite_build": "pass",
+    "desktop": {
+      "host_passed": 122,
+      "renderer_passed": 344,
+      "viewer_passed": 94
+    },
+    "focused_python_passed": 44,
+    "legacy_bridge_baseline_and_current": {
+      "passed": 13,
+      "failed": 27,
+      "errors": 8,
+      "new_failures": 0,
+      "evidence": "build/poc-a-baseline-check/comparison.json"
+    }
+  },
+  "limitations": [
+    "No same-patient MRI+CT+MRA bundle: UCSF MRI, SynthRAD CT and Lausanne MRA are separately named cases and never fused across people.",
+    "No raw DICOM import or scanner-native acquisition geometry validation; source images are distributed NIfTI with their recorded original geometry.",
+    "No complete fine brain-structure or ventricle segmentation; missing layers are explicit. Vessel source is a regional TOF slab.",
+    "No clinical accuracy or held-out tumor benchmark established; UCSF/BraTS overlap is documented. Models are research estimates.",
+    "Auxiliary native MRI selections carry three source annotation layers within the display budget; the seven primary anatomy layers remain available on the reference view with registered fusion.",
+    "Model executions were performed by model agents; independent acceptance verified their actual input, weight, output hashes, full source geometry, nonempty masks, archived voxels and unchanged caches, without re-running inference."
+  ],
+  "evidence": {
+    "outputs/poc-acceptance/gui-acceptance.json": {
+      "sha256": "10356d39708a723c0b8dee2977f35a3011f74a6b513b17f9c77a9ba76f1643fd",
+      "bytes": 9698
+    },
+    "outputs/poc-acceptance/independent-backend-hydration.json": {
+      "sha256": "1822c14f9c57129aeedfcc2fe28c55516679267d0093354d66b89e1bf48b2690",
+      "bytes": 8005
+    },
+    "outputs/poc-acceptance/ui-final-reopen-verification.json": {
+      "sha256": "717d3e8c2fa026912a979b0cfafe21ab8cf9677be571b69d0da98c397d214024",
+      "bytes": 558
+    },
+    "outputs/poc-acceptance/walkthrough.html": {
+      "sha256": "3527323f48fd9d62bf95e884cf1aa00db5ec000ddff5c327eaf603691c20e4b7",
+      "bytes": 7068
+    }
+  }
+}

@@ -4,6 +4,8 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   startupCase: () => ipcRenderer.invoke('research:startupCase'),
+  listCases: () => ipcRenderer.invoke('research:listCases'),
+  openListedCase: id => ipcRenderer.invoke('research:openListedCase', id),
   ping: () => ipcRenderer.invoke('research:ping'),
   publicContactFamilyAvailability: args => ipcRenderer.invoke('research:publicContactFamilyAvailability',args),
   executePublicContactFamilyEpisode: args => ipcRenderer.invoke('research:executePublicContactFamilyEpisode',args),
