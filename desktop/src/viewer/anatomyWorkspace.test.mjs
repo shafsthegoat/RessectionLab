@@ -33,11 +33,12 @@ test('camera rejects collapsed or collinear views and cutaway stays in physical 
   assert.deepEqual(clippingForBounds({axis:'x',value:999,enabled:true},[[-20,-30,-40],[80,90,100]]),{axis:'x',value:80,enabled:true,flipped:false});
 });
 
-let server,cache,VolumeRenderer;
+let server,cache,VolumeRenderer,ScanVolumeRenderer;
 before(async()=>{
   cache=await fs.mkdtemp(path.join(os.tmpdir(),'anatomy-workspace-'));
   server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
   VolumeRenderer=(await server.ssrLoadModule('/src/viewer/VolumeRenderer.ts')).VolumeRenderer;
+  ScanVolumeRenderer=(await server.ssrLoadModule('/src/viewer/ScanVolumeRenderer.ts')).ScanVolumeRenderer;
 });
 after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true,force:true,maxRetries:3,retryDelay:50});});
 function renderer(){
@@ -62,9 +63,52 @@ test('real renderer drops old fusion before refusing a stale replacement',()=>{
   const {r,uniforms}=renderer();r.setRegisteredFusion(fusion());assert.equal(uniforms.uFusionActive.value,1);
   const wrong=fusion();wrong.referenceCaseHash='wrong';assert.throws(()=>r.setRegisteredFusion(wrong));assert.equal(uniforms.uFusionActive.value,0);
 });
+test('opaque anatomy occludes its own rear triangles and transparency restores without changing masks',()=>{
+  const {r,mesh}=renderer(), mask=r.volume.compartments[0].mask.slice();
+  r.setWorkspaceSettings({layerOpacity:{brain:1}});
+  assert.equal(mesh.material.transparent,false);
+  assert.equal(mesh.material.depthWrite,true);
+  r.setWorkspaceSettings({layerOpacity:{brain:.2}});
+  assert.equal(mesh.material.transparent,true);
+  assert.equal(mesh.material.depthWrite,false);
+  assert.deepEqual(r.volume.compartments[0].mask,mask);
+});
+test('smoothing toggles cached display geometry; cursor picking always uses the exact source surface',()=>{
+  const {r,mesh}=renderer();
+  const source=new THREE.BoxGeometry(2,2,2),smooth=new THREE.BoxGeometry(1.8,1.8,1.8);
+  r.surfaceGeometry=new Map([['brain',{source,smooth}]]);
+  r.panes={anatomy:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})}};
+  r.camera=new THREE.PerspectiveCamera();r.sourcePlane={visible:false};r.anatomy={visible:true};r.replayGroup={children:[]};
+  let picked;
+  r.pickRay={setFromCamera(){},intersectObjects(meshes){picked=meshes[0].geometry;return [{point:new THREE.Vector3(1,2,3)}];}};
+  r.setSurfaceSmoothing(true);assert.equal(mesh.geometry,smooth);
+  assert.deepEqual(r.pick(50,50),[1,2,3]);assert.equal(picked,source);assert.equal(mesh.geometry,smooth);
+  r.setSurfaceSmoothing(false);assert.equal(mesh.geometry,source);
+  r.setSurfaceSmoothing(true);assert.equal(mesh.geometry,smooth);
+  r.pickRay.intersectObjects=()=>{throw new Error('raycast failed');};
+  assert.throws(()=>r.pick(50,50),/raycast failed/);assert.equal(mesh.geometry,smooth);
+});
 test('saved camera restoration preserves orbit, target and up and cancels pending fit',()=>{
   const {r}=renderer();r.camera=new THREE.PerspectiveCamera(34,1,.1,1000);r.controls={target:new THREE.Vector3(),update(){}};r.pendingFit='anatomy';
   const state={position:[110,-220,130],target:[10,20,30],up:[0,0,1]};
   r.restoreCamera(state);assert.deepEqual(r.getCameraState(),state);assert.equal(r.pendingFit,null);assert.equal(r.cameraRestored,true);
   r.restoreCamera({position:[0,0,0],target:[0,0,0],up:[0,0,1]});assert.deepEqual(r.getCameraState(),state);
+});
+test('volume framebuffer restores viewport/clear state, bounds workload and retains the immutable source array',()=>{
+  let target=null,restored=0;const renders=[],color=new THREE.Color('#05080d');let alpha=1;
+  const renderer={extensions:{has:()=>true},getPixelRatio:()=>2,getClearColor:out=>out.copy(color),getClearAlpha:()=>alpha,
+    setClearColor(c,a){color.set(c);alpha=a;},setRenderTarget(value){target=value;},clear(){},render(scene){renders.push({scene,target});}};
+  const original=source.mri.slice(),r=new ScanVolumeRenderer(renderer,source,[0,100]);
+  r.configure({enabled:true,preset:'mri',density:.4},'T1',null);
+  const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera();
+  r.render(scene,camera,2000,1000,false,()=>restored++);
+  assert.equal(r.texture.image.data,source.mri);assert.deepEqual(source.mri,original);
+  assert.equal(renders[0].target.width,1300);assert.equal(renders[0].target.height,650);
+  assert.equal(renders[2].target,null);assert.equal(restored,1);assert.equal(alpha,1);
+  assert.equal(color.getHexString(),'05080d');
+  r.render(scene,camera,2000,1000,true,()=>restored++);assert.equal(r.sceneTarget.width,700);
+  r.configure({enabled:false},'CT',null);const before=renders.length;
+  r.render(scene,camera,2000,1000,false,()=>restored++);assert.equal(renders.length,before+1);assert.equal(renders.at(-1).scene,scene);
+  let disposed=0;r.sceneTarget.addEventListener('dispose',()=>disposed++);r.volumeTarget.addEventListener('dispose',()=>disposed++);
+  r.texture.addEventListener('dispose',()=>disposed++);r.transfer.addEventListener('dispose',()=>disposed++);r.dispose();assert.equal(disposed,4);
 });

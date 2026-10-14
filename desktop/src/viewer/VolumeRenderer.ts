@@ -34,6 +34,8 @@ import { validateDiagnosticLayer } from "./diagnosticLayer";
 import type { CheckedDiagnosticLayer, LoadedDiagnosticLayer } from "./diagnosticLayer";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
 import { surfaceCameraDistance } from './surfaceCameraFit';
+import { ScanVolumeRenderer } from './ScanVolumeRenderer';
+import type { VolumeRenderingSettings } from './volumeTransfer';
 import { paneViewport } from "./layout";
 import {
   PRIOR_COLORS,
@@ -121,6 +123,9 @@ export class VolumeRenderer {
   readonly defaultWindow: [number, number];
   readonly affine: Affine;
   private readonly renderer: THREE.WebGLRenderer;
+  private readonly scanVolume: ScanVolumeRenderer;
+  private volumeModality = 'MRI';
+  private interacting = false;
   private readonly scene = new THREE.Scene();
   private readonly camera = new THREE.PerspectiveCamera(34, 1, 0.1, 5000);
   private readonly controls: OrbitControls;
@@ -154,6 +159,8 @@ export class VolumeRenderer {
   private priorTexture: THREE.Data3DTexture;
   private priorCoverageTexture: THREE.Data3DTexture;
   private readonly surfaces = new Map<string, THREE.Mesh>();
+  private readonly surfaceGeometry = new Map<string, { source: THREE.BufferGeometry; smooth: THREE.BufferGeometry }>();
+  private surfaceSmoothing = true;
   private readonly mriTexture: THREE.Data3DTexture;
   private fusionTexture: THREE.Data3DTexture;
   private readonly labelTexture: THREE.Data3DTexture;
@@ -181,7 +188,10 @@ export class VolumeRenderer {
   private pendingFit: "anatomy" | "instruments" | null = null;
   private readonly pickRay = new THREE.Raycaster();
   private readonly onControlsChange = () => this.requestRender();
+  private readonly onControlsStart = () => { this.interacting = true; this.requestRender(); };
   private readonly onControlsEnd = () => {
+    this.interacting = false;
+    this.requestRender();
     this.cameraRestored = true;
     this.onCameraChange?.(this.getCameraState());
   };
@@ -248,6 +258,8 @@ export class VolumeRenderer {
       );
     this.canvas.addEventListener("webglcontextlost", this.onContextLost);
     this.mriTexture = dataTexture(volume.mri, volume.shape);
+    this.scanVolume = new ScanVolumeRenderer(this.renderer, volume, this.defaultWindow);
+    this.scanVolume.configure(undefined, this.volumeModality, null);
     this.fusionTexture = dataTexture(new Float32Array(1),[1,1,1]);
     const packed = new Uint8Array(count);
     volume.compartments.forEach((layer, index) => {
@@ -404,6 +416,7 @@ export class VolumeRenderer {
     this.controls.minDistance = 5;
     this.controls.maxDistance = 2200;
     this.controls.addEventListener("change", this.onControlsChange);
+    this.controls.addEventListener("start", this.onControlsStart);
     this.controls.addEventListener("end", this.onControlsEnd);
     this.observer = new ResizeObserver(() => this.requestRender());
     this.observer.observe(container);
@@ -418,6 +431,8 @@ export class VolumeRenderer {
         name: string;
         positions?: Float32Array;
         normals?: Float32Array;
+        smoothPositions?: Float32Array;
+        smoothNormals?: Float32Array;
         error?: string;
       }>,
     ) => {
@@ -444,18 +459,28 @@ export class VolumeRenderer {
         new THREE.BufferAttribute(positions, 3),
       );
       geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
+      const { smoothPositions, smoothNormals } = event.data;
+      if (!smoothPositions || !smoothNormals || smoothPositions.length !== positions.length || smoothNormals.length !== positions.length) {
+        geometry.dispose();
+        onError("Display surface buffers do not match the source triangles.");
+        return;
+      }
+      const smooth = new THREE.BufferGeometry();
+      smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions, 3));
+      smooth.setAttribute("normal", new THREE.BufferAttribute(smoothNormals, 3));
+      this.surfaceGeometry.set(layer.name, { source: geometry, smooth });
       const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings);
       const mesh = new THREE.Mesh(
-        geometry,
+        this.surfaceSmoothing ? smooth : geometry,
         new THREE.MeshStandardMaterial({
           color: appearance.color,
           roughness: 0.34,
           metalness: 0.08,
-          transparent: true,
+          transparent: appearance.opacity < 1,
           opacity: appearance.opacity,
           clippingPlanes: this.clipPlane ? [this.clipPlane] : [],
           side: THREE.DoubleSide,
-          depthWrite: false,
+          depthWrite: appearance.opacity >= 1,
         }),
       );
       placeInSourceFrame(mesh, this.affine);
@@ -475,6 +500,8 @@ export class VolumeRenderer {
         name: layer.name,
         mask: layer.mask,
         shape: volume.shape,
+        affine: this.affine,
+        displaySmoothing: true,
       }),
     );
     this.updateSourcePlane();
@@ -549,6 +576,12 @@ export class VolumeRenderer {
       if(mesh){
         const material=mesh.material as THREE.MeshStandardMaterial;
         material.color.set(appearance.color);material.opacity=appearance.opacity;
+        const transparent = appearance.opacity < 1;
+        if (material.transparent !== transparent) {
+          material.transparent = transparent;
+          material.needsUpdate = true;
+        }
+        material.depthWrite = !transparent;
         material.clippingPlanes=this.clipPlane ? [this.clipPlane] : [];
       }
       this.materials().forEach(shader=>{
@@ -560,6 +593,23 @@ export class VolumeRenderer {
       shader.uniforms.uClipEnabled.value=clipping.enabled ? 1 : 0;
       shader.uniforms.uClipPlane.value.set(normal.x,normal.y,normal.z,clipping.flipped ? clipping.value : -clipping.value);
       shader.uniforms.uFusionOpacity.value=Number.isFinite(settings.fusion?.opacity) ? Math.max(0,Math.min(1,settings.fusion!.opacity)) : .5;
+    });
+    this.scanVolume?.configure(settings.volumeRendering, this.volumeModality, this.clipPlane);
+    this.requestRender();
+  }
+
+  setVolumeRendering(settings: VolumeRenderingSettings | undefined, modality: string): void {
+    this.volumeModality = modality;
+    this.scanVolume.configure(settings, modality, this.clipPlane);
+    this.requestRender();
+  }
+
+  /** Reversible mesh-only display; masks, slice textures and metrics are untouched. */
+  setSurfaceSmoothing(enabled: boolean): void {
+    this.surfaceSmoothing = enabled;
+    this.surfaces.forEach((mesh, name) => {
+      const pair = this.surfaceGeometry.get(name);
+      if (pair) mesh.geometry = enabled ? pair.smooth : pair.source;
     });
     this.requestRender();
   }
@@ -1180,7 +1230,18 @@ export class VolumeRenderer {
       (-(clientY - rect.top) / rect.height) * 2 + 1,
     );
     this.pickRay.setFromCamera(ndc, this.camera);
-    const hits = this.pickRay.intersectObjects(
+    // Cursor picking remains on the original isosurface in either display mode.
+    // Raycasting is synchronous; restore display geometry before any rendering.
+    const displayed = new Map<THREE.Mesh, THREE.BufferGeometry>();
+    this.surfaces.forEach((mesh, name) => {
+      const pair = this.surfaceGeometry.get(name);
+      if (pair) {
+        displayed.set(mesh, mesh.geometry);
+        mesh.geometry = pair.source;
+      }
+    });
+    let hits: THREE.Intersection[];
+    try { hits = this.pickRay.intersectObjects(
       [
         ...(this.sourcePlane.visible ? [this.sourcePlane] : []),
         ...(this.anatomy.visible
@@ -1189,7 +1250,7 @@ export class VolumeRenderer {
         ...this.replayGroup.children.filter((mesh) => mesh.visible),
       ],
       false,
-    );
+    ); } finally { displayed.forEach((geometry, mesh) => { mesh.geometry = geometry; }); }
     const hit=hits.find(item=>!this.clipPlane || this.clipPlane.distanceToPoint(item.point)>=0);
     return hit
       ? [hit.point.x, hit.point.y, hit.point.z]
@@ -1236,7 +1297,8 @@ export class VolumeRenderer {
       if (this.pendingFit) this.fitCamera(this.pendingFit);
       this.camera.aspect = main.w / main.h;
       this.camera.updateProjectionMatrix();
-      this.renderer.render(this.scene, this.camera);
+      if (this.replayActive || this.passiveActive) this.renderer.render(this.scene, this.camera);
+      else this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);});
     }
     for (const plane of SLICE_PLANES) {
       const size = viewport(this.panes[plane]);
@@ -1264,12 +1326,20 @@ export class VolumeRenderer {
     this.replayWorker?.terminate();
     if (this.pendingReplayGroup) disposeObject(this.pendingReplayGroup);
     this.controls.removeEventListener("change", this.onControlsChange);
+    this.controls.removeEventListener("start", this.onControlsStart);
     this.controls.removeEventListener("end", this.onControlsEnd);
     this.controls.dispose();
     this.canvas.removeEventListener("webglcontextlost", this.onContextLost);
+    this.surfaceGeometry.forEach((pair, name) => {
+      const displayed = this.surfaces.get(name)?.geometry;
+      if (pair.source !== displayed) pair.source.dispose();
+      if (pair.smooth !== displayed) pair.smooth.dispose();
+    });
+    this.surfaceGeometry.clear();
     disposeObject(this.scene);
     this.slices.forEach((slice) => disposeObject(slice.scene));
     this.mriTexture.dispose();
+    this.scanVolume.dispose();
     this.fusionTexture.dispose();
     this.labelTexture.dispose();
     this.removedTexture.dispose();

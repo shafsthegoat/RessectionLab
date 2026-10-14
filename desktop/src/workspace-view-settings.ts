@@ -9,7 +9,14 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
   if(!input || typeof input!=='object' || Array.isArray(input))return fail();
   const value=input as ViewerWorkspaceSettings;
   const labels=[...source.compartments.map(layer=>layer.name),...(displayBrainMask(source)?['brain']:[])];
-  if(Object.keys(value).some(key=>!['layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast'].includes(key)))return fail();
+  if(Object.keys(value).some(key=>!['volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast'].includes(key)))return fail();
+  if(value.volumeRendering!==undefined){
+    const volume=value.volumeRendering as Record<string,unknown>;
+    if(!volume||typeof volume!=='object'||Array.isArray(volume)||Object.keys(volume).some(k=>!['enabled','preset','density'].includes(k))||
+      ('enabled'in volume&&typeof volume.enabled!=='boolean')||
+      ('preset'in volume&&!['auto','ct-bone','ct-tissue','mri'].includes(volume.preset as string))||
+      ('density'in volume&&(typeof volume.density!=='number'||!Number.isFinite(volume.density)||volume.density<0||volume.density>2)))return fail();
+  }
   if(value.layout!==undefined&&!['mri-review','3d-focus'].includes(value.layout))return fail();
   if(value.activePlane!==undefined&&!['axial','coronal','sagittal'].includes(value.activePlane))return fail();
   if(value.showPlane!==undefined&&typeof value.showPlane!=='boolean')return fail();

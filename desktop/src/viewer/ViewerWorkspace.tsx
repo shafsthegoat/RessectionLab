@@ -6,6 +6,8 @@ import type { KeyboardEvent, PointerEvent } from "react";
 import { VolumeRenderer } from "./VolumeRenderer";
 import { clippingForBounds } from './workspaceSettings';
 import type { ViewerWorkspaceSettings } from './workspaceSettings';
+import { volumeSettings } from './volumeTransfer';
+import type { VolumePreset } from './volumeTransfer';
 import {
   PLANE_AXES,
   PLANE_LABELS,
@@ -81,6 +83,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const signalName = props.generatedSignal ? "analytic signal" : (props.sourceLabel ?? "MRI");
   const [localSettings,setLocalSettings] = useState<ViewerWorkspaceSettings>({});
   const settings=props.workspaceSettings ?? localSettings;
+  const scanVolume=volumeSettings(settings.volumeRendering,signalName);
   const latestSettings=useRef(settings);latestSettings.current=settings;
   const changeSettings=(next:ViewerWorkspaceSettings)=>{
     latestSettings.current=next;
@@ -117,6 +120,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     );
   const [expanded, setExpanded] = useState<SlicePlane | null>(null);
   const [navigationMode,setNavigationMode]=useState<'orbit'|'pan'>('orbit');
+  const [smoothSurfaces, setSmoothSurfaces] = useState(true);
   const [displayedPrior, setDisplayedPrior] = useState<ViewerPriorLayer | null>(
       null,
     ),
@@ -205,6 +209,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   useEffect(()=>{engine.current?.setWorkspaceSettings(settings);},[ready,caseData,settings]);
   useEffect(()=>{engine.current?.restoreCamera(settings.camera);},[ready,caseData,settings.camera]);
   useEffect(()=>{engine.current?.setNavigationMode(navigationMode);},[ready,caseData,navigationMode]);
+  useEffect(()=>{engine.current?.setSurfaceSmoothing(smoothSurfaces);},[ready,caseData,smoothSurfaces]);
+  useEffect(()=>{engine.current?.setVolumeRendering(settings.volumeRendering,signalName);},[ready,caseData,settings.volumeRendering,signalName]);
   useEffect(()=>{
     if(!engine.current)return;
     setFusionError(null);
@@ -556,6 +562,15 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           </button>
         </div>
         <div className="rl-viewer-toolbar" hidden={Boolean(expanded)}>
+          <button
+            className={`rl-viewer-reset ${smoothSurfaces ? "is-active" : ""}`}
+            aria-label="Smooth 3D surfaces"
+            aria-pressed={smoothSurfaces}
+            onClick={() => setSmoothSurfaces(!smoothSurfaces)}
+            title="Display smoothing only, limited to half the smallest voxel spacing. Scans, masks, slice overlays, measurements and cursor picking stay unchanged. Turn off for the exact voxel surface."
+          >
+            Smooth surfaces {smoothSurfaces ? "on" : "off"}
+          </button>
           <div className="rl-viewer-segment" role="group" aria-label="3D drag mode">
             <button aria-label="Orbit 3D with left drag" aria-pressed={navigationMode==='orbit'} className={navigationMode==='orbit'?'is-active':''} onClick={()=>setNavigationMode('orbit')}>Orbit</button>
             <button aria-label="Pan 3D with left drag" aria-pressed={navigationMode==='pan'} className={navigationMode==='pan'?'is-active':''} onClick={()=>setNavigationMode('pan')}>Pan</button>
@@ -611,6 +626,21 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           <output>{clipping.value.toFixed(1)} mm</output>
           <button aria-label="Flip cutaway side" aria-pressed={Boolean(clipping.flipped)} disabled={!clipping.enabled} onClick={()=>changeSettings({...settings,clipping:{...clipping,flipped:!clipping.flipped}})}>Flip</button>
           <span>Original slices remain intact</span>
+        </div>}
+        {!expanded&&<div className="rl-volume-controls" role="group" aria-label="Scan volume rendering controls">
+          <button aria-pressed={scanVolume.enabled} disabled={Boolean(replay)||passiveRequested}
+            onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:!scanVolume.enabled}})}>
+            Scan volume {scanVolume.enabled?'on':'off'}
+          </button>
+          <select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'}
+            onChange={event=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:event.target.value as VolumePreset}})}>
+            <option value="auto">Auto · {/^CT/i.test(signalName)?'CT bone':'MRI tissue'}</option>
+            <option value="ct-bone">CT bone</option><option value="ct-tissue">CT soft tissue</option><option value="mri">MRI tissue</option>
+          </select>
+          <label>Volume density <input type="range" aria-label="Scan volume density" min="0" max="2" step=".01" value={scanVolume.density}
+            onChange={event=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,density:Number(event.target.value)}})}/></label>
+          <output>{scanVolume.density.toFixed(2)}</output>
+          <span>{replay||passiveRequested?'Scan volume hidden during replay':'Scan intensities · anatomy checkboxes control annotation surfaces'}</span>
         </div>}
         {props.registeredFusion&&!fusionError&&<div className="rl-fusion-readout" role="status">Fused source images · {signalName} + {props.registeredFusion.label}<span>{props.registeredFusion.registration.status==='source-provided'?'Source-provided registration':'Verified registration'} · {Math.round((settings.fusion?.opacity??.5)*100)}% blend</span></div>}
         {expanded && (

@@ -188,8 +188,16 @@ def _center(case):
 
 def _viewer_state(case,viewer,cases):
     """Bound display preferences without treating them as image registration."""
-    if not isinstance(viewer,dict) or set(viewer)-{'layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast'}:
+    if not isinstance(viewer,dict) or set(viewer)-{'volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast'}:
         raise ValueError('Unknown viewer settings')
+    volume=viewer.get('volumeRendering')
+    if 'volumeRendering' in viewer:
+        if (not isinstance(volume,dict) or set(volume)-{'enabled','preset','density'} or
+                ('enabled' in volume and type(volume['enabled']) is not bool) or
+                ('preset' in volume and volume['preset'] not in {'auto','ct-bone','ct-tissue','mri'}) or
+                ('density' in volume and (type(volume['density']) not in (int,float) or
+                    not math.isfinite(volume['density']) or not 0<=volume['density']<=2))):
+            raise ValueError('Invalid scan volume rendering settings')
     if 'layout' in viewer and viewer['layout'] not in {'mri-review','3d-focus'}:raise ValueError('Unknown viewer layout')
     if 'activePlane' in viewer and viewer['activePlane'] not in {'axial','coronal','sagittal'}:raise ValueError('Unknown active plane')
     if 'showPlane' in viewer and type(viewer['showPlane']) is not bool:raise ValueError('Plane visibility must be boolean')

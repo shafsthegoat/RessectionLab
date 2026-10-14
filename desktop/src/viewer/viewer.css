@@ -192,6 +192,18 @@
 .rl-viewer-toolbar[hidden] {
   display: none;
 }
+.rl-volume-controls {
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px;width:100%;padding:6px 0 0;color:#9db4be;font-size:10px;
+}
+.rl-volume-controls button,.rl-volume-controls select {
+  background:#10212a;border:1px solid #29414e;border-radius:4px;color:#b9d1d5;padding:4px 7px;font:inherit;
+}
+.rl-volume-controls button[aria-pressed="true"] {border-color:#63aeb3;background:#16353e;}
+.rl-volume-controls button {flex:0 0 auto;white-space:nowrap;}
+.rl-volume-controls select {flex:0 0 170px;width:170px;max-width:170px;}
+.rl-volume-controls label {display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.rl-volume-controls input {width:110px;accent-color:#7fc8bd;}
+.rl-volume-controls span {margin-left:auto;color:#748c99;font-size:9px;}
 .rl-viewer-plane-select {
   border: 1px solid #253945;
   border-radius: 4px;
