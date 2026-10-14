@@ -47,7 +47,7 @@ MAX_PRIOR_PROPOSALS = 16
 MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
-OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "executePersistentPassiveEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
+OPERATIONS = frozenset({'anatomySaveView','anatomyComponents','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyExport',"ping", "executeDevelopmentEpisode", "executePersistentPassiveEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 TRANSFER_SUPERVISOR_SHA256 = "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
 RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
@@ -223,7 +223,7 @@ class BinaryTransfers:
         converted = np.ascontiguousarray(value, dtype=np.dtype(dtype).newbyteorder("<"))
         if converted.nbytes > MAX_ARRAY_BYTES:
             raise BridgeError("ARRAY_SIZE_LIMIT", "Array exceeds the local desktop transfer limit")
-        content = memoryview(converted).cast("B")
+        content = memoryview(converted.reshape(-1)).cast("B")
         digest = hashlib.sha256(content).hexdigest()
         key = (digest, converted.dtype.name, converted.shape)
         if key not in self._entries:
@@ -489,7 +489,7 @@ class BridgeSession:
 
     def prune_transfers(self) -> None:
         """Discard generated arrays belonging to failed or cancelled imports."""
-        retained = set()
+        retained = set(getattr(self, 'anatomy_transfer_paths', ()))
         for cached in self.cases.values():
             from .workspace_imaging import retained_paths
             retained.update(retained_paths(cached.display_series))
@@ -976,6 +976,9 @@ class BridgeSession:
             raise
 
     def execute(self, operation: str, args: dict, request: _Request, progress: Callable[[float, str], None]) -> Any:
+        if operation.startswith('anatomy'):
+            from .anatomy_bridge import dispatch
+            return dispatch(self, operation, args, request, progress)
         request.check()
         if operation in {'generateRoutes','generateNativeRoutes','inspectRefinement','inspectAxisPlanning',
                          'trainPatient','nativeTraining','evaluateCandidate','replayTraining','exportCandidate'}:

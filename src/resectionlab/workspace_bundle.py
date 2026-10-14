@@ -188,16 +188,34 @@ def _center(case):
 
 def _viewer_state(case,viewer,cases):
     """Bound display preferences without treating them as image registration."""
-    if not isinstance(viewer,dict) or set(viewer)-{'volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast'}:
+    if not isinstance(viewer,dict) or set(viewer)-{'volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip'}:
         raise ValueError('Unknown viewer settings')
     volume=viewer.get('volumeRendering')
     if 'volumeRendering' in viewer:
-        if (not isinstance(volume,dict) or set(volume)-{'enabled','preset','density'} or
+        if (not isinstance(volume,dict) or set(volume)-{'enabled','preset','density','window','points','shadows','isolateLabels'} or
                 ('enabled' in volume and type(volume['enabled']) is not bool) or
                 ('preset' in volume and volume['preset'] not in {'auto','ct-bone','ct-tissue','mri'}) or
                 ('density' in volume and (type(volume['density']) not in (int,float) or
                     not math.isfinite(volume['density']) or not 0<=volume['density']<=2))):
             raise ValueError('Invalid scan volume rendering settings')
+    if volume:
+        for flag in ('shadows','isolateLabels'):
+            if flag in volume and type(volume[flag]) is not bool:raise ValueError('Invalid volume display flag')
+        window=volume.get('window')
+        if window is not None and (not isinstance(window,list) or len(window)!=2 or not all(type(v) in (int,float) and math.isfinite(v) for v in window) or window[1]<=window[0]):raise ValueError('Invalid intensity window')
+        points=volume.get('points')
+        if points is not None and (not isinstance(points,list) or not 2<=len(points)<=32 or any(not isinstance(p,list) or len(p)!=5 or not all(type(v) in (int,float) and math.isfinite(v) and 0<=v<=1 for v in p) for p in points) or any(a[0]>=b[0] for a,b in zip(points,points[1:]))):raise ValueError('Invalid transfer points')
+    for key in ('clipBox','obliqueClip'):
+        item=viewer.get(key)
+        if item is None:continue
+        if not isinstance(item,dict) or type(item.get('enabled')) is not bool:raise ValueError('Invalid extra clip')
+        vectors=('min','max') if key=='clipBox' else ('normal',)
+        expected={'enabled',*vectors} | ({'offset'} if key=='obliqueClip' else set())
+        if set(item)!=expected:raise ValueError('Unknown extra clip fields')
+        for v in vectors:
+            if not isinstance(item[v],list) or len(item[v])!=3 or not all(type(x) in (int,float) and math.isfinite(x) and abs(x)<1e7 for x in item[v]):raise ValueError('Invalid clip vector')
+        if key=='clipBox' and any(a>=b for a,b in zip(item['min'],item['max'])):raise ValueError('Invalid clip box bounds')
+        if key=='obliqueClip' and (np.linalg.norm(item['normal'])<1e-8 or type(item['offset']) not in (int,float) or not math.isfinite(item['offset'])):raise ValueError('Invalid oblique clip plane')
     if 'layout' in viewer and viewer['layout'] not in {'mri-review','3d-focus'}:raise ValueError('Unknown viewer layout')
     if 'activePlane' in viewer and viewer['activePlane'] not in {'axial','coronal','sagittal'}:raise ValueError('Unknown active plane')
     if 'showPlane' in viewer and type(viewer['showPlane']) is not bool:raise ValueError('Plane visibility must be boolean')

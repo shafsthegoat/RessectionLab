@@ -2,7 +2,7 @@ import type { Affine, Point3 } from './coordinates';
 import { inverseAffine, rasAffine } from './coordinates.ts';
 
 export type VolumePreset = 'auto' | 'ct-bone' | 'ct-tissue' | 'mri';
-export interface VolumeRenderingSettings { enabled?: boolean; preset?: VolumePreset; density?: number }
+export interface VolumeRenderingSettings { enabled?: boolean; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; points?: Array<[number,number,number,number,number]> }
 export function volumeSettings(input: VolumeRenderingSettings = {}, modality = 'MRI') {
   const preset = input.preset && ['ct-bone','ct-tissue','mri'].includes(input.preset)
     ? input.preset : /^CT/i.test(modality) ? 'ct-bone' : 'mri';
@@ -12,9 +12,9 @@ export function volumeSettings(input: VolumeRenderingSettings = {}, modality = '
 
 /** Display LUT only. Alpha stores optical extinction per millimetre, not a
  * segmentation probability. Colors are linear RGB for physical compositing. */
-export function volumeTransfer(preset: Exclude<VolumePreset,'auto'>, window: [number,number]) {
+export function volumeTransfer(preset: Exclude<VolumePreset,'auto'>, window: [number,number], custom?: VolumeRenderingSettings) {
   type Knot = [number, number, number, number, number];
-  const knots: Knot[] = preset === 'ct-bone' ? [
+  let knots: Knot[] = preset === 'ct-bone' ? [
     [0, .52,.30,.18,0], [150,.65,.45,.28,0], [230,.75,.57,.38,.04],
     [400,.91,.78,.56,.27], [900,.98,.91,.76,.65], [1800,1,.98,.91,.95], [3000,1,1,.99,1],
   ] : preset === 'ct-tissue' ? [
@@ -26,6 +26,8 @@ export function volumeTransfer(preset: Exclude<VolumePreset,'auto'>, window: [nu
     [.4,.49,.51,.53,.025], [.65,.72,.73,.73,.07], [.85,.91,.90,.87,.16], [1,1,.98,.94,.28],
   ];
   const range: [number,number] = preset === 'mri' ? [Math.min(0,window[0]),Math.max(1,window[1])] : [knots[0][0],3000];
+  if(custom?.window && custom.window.every(Number.isFinite) && custom.window[1]>custom.window[0])range.splice(0,2,...custom.window);
+  if(custom?.points && custom.points.length>=2 && custom.points.length<=32 && custom.points.every(p=>p.length===5&&p.every(Number.isFinite)&&p.every(v=>v>=0&&v<=1)) && custom.points.every((p,i)=>i===0||p[0]>custom.points![i-1][0]))knots=custom.points.map(p=>[preset==='mri'?p[0]:range[0]+p[0]*(range[1]-range[0]),...p.slice(1)] as Knot);
   const data = new Uint8Array(1024*4);
   const linear = (n: number) => n <= .04045 ? n/12.92 : ((n+.055)/1.055)**2.4;
   for(let i=0;i<1024;i++) {

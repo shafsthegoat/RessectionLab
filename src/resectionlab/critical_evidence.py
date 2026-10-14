@@ -21,7 +21,7 @@ from urllib.parse import unquote, urlsplit
 import numpy as np
 
 from .core import SourceRef, array_digest, freeze_json, immutable_array, semantic_digest, thaw_json
-from .data_policy import DataPolicyError, require_admitted_model
+from .data_policy import DataPolicyError, require_admitted_model, ANATOMY_PRETRAINED_POLICY
 from .structural_evidence import _hash, _text, _time
 
 STRUCTURES = ("motor", "language", "vessels")
@@ -241,7 +241,7 @@ class CriticalStructureEvidence:
             raise ValueError("Coverage must describe a documented annotation domain")
         # Precision normalization has its own source-bound proof below. It must
         # never be described as equality of the untouched source headers.
-        if self.derivation.get("method") not in {"identity_grid", "source_reference_grid_normalization"}:
+        if self.derivation.get("method") not in {"identity_grid", "source_reference_grid_normalization", "patient_anatomy_snapshot"}:
             raise ValueError("Critical annotation registration/resampling is not yet admitted")
         if self.derivation["method"] == "identity_grid" and any(
                 key in self.derivation for key in ("annotation_raw_grid", "reference_raw_grid", "normalization_record_hash")):
@@ -280,6 +280,13 @@ class CriticalStructureEvidence:
             raise ValueError("Evidence affine must be an invertible RAS+ millimeter transform")
         if self.derivation["method"] == "source_reference_grid_normalization":
             _validate_reference_normalization(self, mask, coverage, affine)
+        if self.derivation['method'] == 'patient_anatomy_snapshot':
+            _hash(self.derivation.get('snapshot_id'), 'anatomy snapshot')
+            if (self.derivation.get('policy') != ANATOMY_PRETRAINED_POLICY
+                    or self.derivation.get('positive_mask_hash') != array_digest(mask)
+                    or not np.array_equal(mask, coverage)
+                    or self.lineage['kind'] != 'model_assisted'):
+                raise ValueError('Anatomy estimates require explicit policy, bound mask and positive-only coverage')
         for name, value in (("mask", mask), ("annotation_coverage", coverage), ("affine_ras_mm", affine)):
             object.__setattr__(self, name, immutable_array(value))
         object.__setattr__(self, "_array_state", self._layout())
@@ -368,6 +375,10 @@ class CriticalStructureEvidence:
 
     def exclusion_reason(self, case: Any) -> str | None:
         self.assert_matches(case)
+        anatomy = self.derivation['method'] == 'patient_anatomy_snapshot'
+        if anatomy and (case.metadata.get('patient_anatomy_snapshot') != self.derivation['snapshot_id']
+                or case.metadata.get('anatomy_model_policy') != ANATOMY_PRETRAINED_POLICY):
+            return 'anatomy_snapshot_or_policy_mismatch'
         reason = availability_exclusion(self.available_at,
             None if self.review is None else self.review["available_at"],
             None if case.context is None else case.context.planning_as_of)
@@ -375,9 +386,11 @@ class CriticalStructureEvidence:
             return reason
         for model in self.lineage.get("model_sha256", ()):
             try:
-                require_admitted_model(model, "critical_annotation_consumption")
+                require_admitted_model(model, "critical_annotation_consumption", policy=ANATOMY_PRETRAINED_POLICY if anatomy else None)
             except DataPolicyError as error:
                 return error.code
+        if anatomy:
+            return 'annotation_domain_empty' if not np.any(self.annotation_coverage) else None
         if self.lineage["kind"] not in {"manual", "manual_with_nonlearned_interpolation"}:
             return "annotation_ancestry_unresolved"
         if self.review is None or self.review["status"] != "source_human_reviewed":

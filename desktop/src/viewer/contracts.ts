@@ -8,11 +8,18 @@ export interface ViewerVolume {
   affine: Affine;
   shape: Shape3;
   mri: Float32Array;
+  /** Shared categorical volumes in the displayed grid, sampled with nearest cells. */
+  labelSets?: Array<{id:string;data:Uint16Array}>;
+  tractography?: Array<{id:string;label:string;points:Float32Array;offsets:Uint32Array}>;
   compartments: Array<{
     name: string;
     mask: Uint8Array;
+    labelSet?: string;
+    labelValue?: number;
     color: string;
     volumeMm3?: number;
+    /** Cached indexed display geometry. Masks remain the quantitative source. */
+    surface?: {positions: Float32Array; source: Float32Array; normals: Float32Array; sourceNormals: Float32Array; indices: Uint32Array};
   }>;
 }
 
@@ -33,6 +40,7 @@ export interface ViewerRoute {
 }
 
 export interface ViewerWorkspaceProps {
+  onSliceStroke?: (point: Point3 | null, phase: 'start' | 'move' | 'end') => void;
   workspaceSettings?: import('./workspaceSettings').ViewerWorkspaceSettings;
   onWorkspaceSettingsChange?: (settings: import('./workspaceSettings').ViewerWorkspaceSettings) => void;
   /** Acquired modality label; synthetic signals retain their separate label. */

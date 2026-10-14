@@ -9,14 +9,23 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
   if(!input || typeof input!=='object' || Array.isArray(input))return fail();
   const value=input as ViewerWorkspaceSettings;
   const labels=[...source.compartments.map(layer=>layer.name),...(displayBrainMask(source)?['brain']:[])];
-  if(Object.keys(value).some(key=>!['volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast'].includes(key)))return fail();
+  if(Object.keys(value).some(key=>!['volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip'].includes(key)))return fail();
   if(value.volumeRendering!==undefined){
     const volume=value.volumeRendering as Record<string,unknown>;
-    if(!volume||typeof volume!=='object'||Array.isArray(volume)||Object.keys(volume).some(k=>!['enabled','preset','density'].includes(k))||
+    if(!volume||typeof volume!=='object'||Array.isArray(volume)||Object.keys(volume).some(k=>!['enabled','preset','density','window','points','shadows','isolateLabels'].includes(k))||
       ('enabled'in volume&&typeof volume.enabled!=='boolean')||
       ('preset'in volume&&!['auto','ct-bone','ct-tissue','mri'].includes(volume.preset as string))||
       ('density'in volume&&(typeof volume.density!=='number'||!Number.isFinite(volume.density)||volume.density<0||volume.density>2)))return fail();
   }
+  const volume=value.volumeRendering;
+  if(volume){
+    if(['shadows','isolateLabels'].some(k=>k in volume&&typeof volume[k as 'shadows']!=='boolean'))return fail();
+    if(volume.window&&(!Array.isArray(volume.window)||volume.window.length!==2||!volume.window.every(Number.isFinite)||volume.window[1]<=volume.window[0]))return fail();
+    if(volume.points&&(!Array.isArray(volume.points)||volume.points.length<2||volume.points.length>32||volume.points.some((p,i)=>!Array.isArray(p)||p.length!==5||p.some(v=>!Number.isFinite(v)||v<0||v>1)||(i>0&&p[0]<=volume.points![i-1][0]))))return fail();
+  }
+  const vector=(v:unknown):v is number[]=>Array.isArray(v)&&v.length===3&&v.every(n=>Number.isFinite(n)&&Math.abs(n)<1e7);
+  if(value.clipBox&&(!vector(value.clipBox.min)||!vector(value.clipBox.max)||typeof value.clipBox.enabled!=='boolean'||value.clipBox.min.some((v,i)=>v>=value.clipBox!.max[i])))return fail();
+  if(value.obliqueClip&&(!vector(value.obliqueClip.normal)||Math.hypot(...value.obliqueClip.normal)<1e-8||!Number.isFinite(value.obliqueClip.offset)||typeof value.obliqueClip.enabled!=='boolean'))return fail();
   if(value.layout!==undefined&&!['mri-review','3d-focus'].includes(value.layout))return fail();
   if(value.activePlane!==undefined&&!['axial','coronal','sagittal'].includes(value.activePlane))return fail();
   if(value.showPlane!==undefined&&typeof value.showPlane!=='boolean')return fail();

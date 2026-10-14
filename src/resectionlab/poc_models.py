@@ -16,6 +16,7 @@ import platform
 import subprocess
 import sys
 import time
+import copy
 
 import nibabel as nib
 import numpy as np
@@ -120,15 +121,19 @@ def worker(request):
         model.load_state_dict(torch.load(request["weights"][0]["path"], map_location="cpu", weights_only=True))
         model.to(device).eval()
         model.register_forward_hook(sample)
+        parameters = request.get("parameters", {})
         inferer = SlidingWindowInferer(roi_size=(128,)*3, sw_batch_size=1, overlap=0.5,
-                                      mode="constant", sw_device=device, device="cpu", progress=True)
+                                      mode=parameters.get("blend", "constant"), sw_device=device, device="cpu", progress=True)
         with torch.inference_mode():
             logits = inferer(tensor, model)
-        # Threshold logits at zero (equivalent to sigmoid > 0.5).
-        mask = sitk.GetImageFromArray((logits[0,0].numpy() > 0).astype(np.uint8))
-        mask.CopyInformation(isotropic)
-        native = sitk.Resample(mask, image, sitk.Transform(), sitk.sitkNearestNeighbor, 0, sitk.sitkUInt8)
-        write_mask(sitk.GetArrayFromImage(native).transpose(2,1,0), reference, destination / "vessels_mask.nii.gz")
+        probability = sitk.GetImageFromArray(logits[0,0].sigmoid().numpy())
+        probability.CopyInformation(isotropic)
+        native = sitk.Resample(probability, image, sitk.Transform(), sitk.sitkLinear, 0, sitk.sitkFloat32)
+        values = sitk.GetArrayFromImage(native).transpose(2,1,0)
+        output = nib.Nifti1Image(values, reference.affine)
+        output.header.set_xyzt_units('mm')
+        nib.save(output, destination / "vessels_probability.nii.gz")
+        write_mask(values > parameters.get("threshold", .5), reference, destination / "vessels_mask.nii.gz")
     elif model_id == "synthstrip-main":
         from .brain_extraction import mps_runner_source
         original = ROOT / "data/models/synthstrip-v1/mri_synthstrip"
@@ -154,9 +159,18 @@ def worker(request):
                                                            "mps_allocator_samples": memory}, indent=2)+"\n")
 
 
-def run(image: Path, case: str, model_id: str, modality: str, device: str="mps", timeout: int=1800):
+def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps", timeout: int=1800,
+        *, experimental_t1ce=False, blend="constant", threshold=.5, cancelled=lambda: False):
     image = image.resolve()
-    model = MODEL_CONFIG[model_id]
+    model = copy.deepcopy(MODEL_CONFIG[model_id])
+    if model_id == "vesselfm-base":
+        if blend not in {"constant", "gaussian"} or not 0 < threshold < 1:
+            raise ValueError("Invalid vessel inference parameters")
+        model["parameters"].update(blend=blend, threshold=threshold, retain_probabilities=True)
+        if modality == "T1CE" and experimental_t1ce:
+            model["modality"] = [*model["modality"], "T1CE"]
+            model["requirements"] += "; T1CE is experimental, vascular completeness unvalidated"
+            model["parameters"]["input_domain"] = "T1CE-experimental"
     if modality not in model["modality"]:
         raise ValueError(f"{model_id} requires {model['modality']}, got {modality}")
     weights = [{"path": str(p.resolve()), "sha256": sha256(p), "bytes": p.stat().st_size}
@@ -171,16 +185,26 @@ def run(image: Path, case: str, model_id: str, modality: str, device: str="mps",
     if not case or Path(case).name != case or case in {".", ".."}:
         raise ValueError("Case must be a single safe directory name")
     output = ROOT / "outputs/poc-models" / case / model_id / key
+    # Cancelled/failed stages are retained. Resume starts a fresh attempt and
+    # searches successful attempts first; it never overwrites historical logs.
+    for attempt in [output,*sorted(output.parent.glob(key+"-retry-*"))]:
+        cached=attempt/"inference.json"
+        if not cached.exists():
+            continue
+        record=json.loads(cached.read_text())
+        if record.get("status") != "succeeded":
+            continue
+        members=[*record["outputs"],*([record["probability"]] if record.get("probability") else [])]
+        if not all(Path(x["path"]).exists() and sha256(Path(x["path"]))==x["sha256"] for x in members):
+            raise ValueError(f"Successful inference cache changed: {attempt}")
+        print(json.dumps({"cache_hit":True,"record":str(cached)}))
+        return record
+    if output.exists():
+        output=output.with_name(key+"-retry-"+datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%f"))
     record_path = output / "inference.json"
-    if record_path.exists():
-        record = json.loads(record_path.read_text())
-        if record.get("status") == "succeeded" and all(sha256(Path(x["path"])) == x["sha256"] for x in record["outputs"]):
-            print(json.dumps({"cache_hit": True, "record": str(record_path)}))
-            return record
-        raise ValueError(f"Existing incomplete or changed cache: {output}; preserve for inspection")
     output.mkdir(parents=True, exist_ok=False)
     request = {"image": str(image), "case": case, "model_id": model_id, "modality": modality,
-               "device": device, "output": str(output), "weights": weights}
+               "device": device, "output": str(output), "weights": weights, "parameters": model["parameters"]}
     (output / "request.json").write_text(json.dumps(request, indent=2)+"\n")
     command = [str(RUNTIME), "-m", "resectionlab.poc_models", "--worker", str(output / "request.json")]
     environment = dict(os.environ, PYTHONPATH=str(ROOT / "src"), OMP_NUM_THREADS="2", OPENBLAS_NUM_THREADS="2",
@@ -198,9 +222,9 @@ def run(image: Path, case: str, model_id: str, modality: str, device: str="mps",
             for _ in range(5):
                 family |= {pid for pid, ppid, rss in rows if ppid in family}
             maximum_rss = max(maximum_rss, sum(rss*1024 for pid, _, rss in rows if pid in family))
-            if time.monotonic()-start > timeout or maximum_rss > 8*1024**3:
+            if cancelled() or time.monotonic()-start > timeout or maximum_rss > 8*1024**3:
                 import signal
-                failure = "time_budget_exceeded" if time.monotonic()-start > timeout else "memory_budget_exceeded"
+                failure = "cancelled" if cancelled() else "time_budget_exceeded" if time.monotonic()-start > timeout else "memory_budget_exceeded"
                 os.killpg(process.pid, signal.SIGTERM)
                 try:
                     process.wait(timeout=5)
@@ -224,6 +248,8 @@ def run(image: Path, case: str, model_id: str, modality: str, device: str="mps",
                             "affine_ras_mm": mask.affine.tolist(), "provenance": "model_inference_unreviewed"})
     if not outputs:
         failure = failure or "no_saved_masks"
+    probability = output / 'vessels_probability.nii.gz'
+    probability_record = None if not probability.exists() else {"path": str(probability), "sha256": sha256(probability), "meaning": "uncalibrated_model_score"}
     record = {"schema": "resectionlab-poc-inference-v1", "status": "failed" if failure else "succeeded",
               "failure": failure, "exit_code": process.returncode, "created_at": datetime.now(timezone.utc).isoformat(),
               "case": case, "model_id": model_id, "model": model, "weights": weights,
@@ -232,7 +258,7 @@ def run(image: Path, case: str, model_id: str, modality: str, device: str="mps",
               "cache_key": key, "identity": identity, "device": device, "elapsed_seconds": time.monotonic()-start,
               "peak_process_family_rss_bytes_sampled": maximum_rss,
               "memory_caveat": "RSS sampled every 0.5 s; MPS allocated memory separately sampled where available; neither is exact peak",
-              "host": platform.platform(), "outputs": outputs, "clinical_validation": "none", "command": command}
+              "host": platform.platform(), "outputs": outputs, "probability": probability_record, "clinical_validation": "none", "command": command}
     worker_path = output / "worker.json"
     if worker_path.exists():
         record["worker"] = json.loads(worker_path.read_text())
@@ -246,6 +272,12 @@ def run(image: Path, case: str, model_id: str, modality: str, device: str="mps",
     return record
 
 
+def run(*args, **kwargs):
+    from .patient_anatomy import reconstruction_lock
+    with reconstruction_lock():
+        return _run(*args, **kwargs)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--worker", type=Path)
@@ -255,13 +287,16 @@ def main():
     parser.add_argument("--modality")
     parser.add_argument("--device", choices=["cpu", "mps"], default="mps")
     parser.add_argument("--timeout", type=int, default=1800)
+    parser.add_argument("--experimental-t1ce", action="store_true")
+    parser.add_argument("--blend", choices=["constant","gaussian"], default="gaussian")
+    parser.add_argument("--threshold", type=float, default=.5)
     args = parser.parse_args()
     if args.worker:
         worker(json.loads(args.worker.read_text()))
     else:
         if not all([args.image, args.case, args.model, args.modality]):
             parser.error("--image, --case, --model, --modality are required")
-        run(args.image, args.case, args.model, args.modality, args.device, args.timeout)
+        run(args.image, args.case, args.model, args.modality, args.device, args.timeout, experimental_t1ce=args.experimental_t1ce, blend=args.blend, threshold=args.threshold)
 
 
 if __name__ == "__main__":

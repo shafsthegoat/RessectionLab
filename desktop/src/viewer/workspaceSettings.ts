@@ -13,6 +13,8 @@ export interface ViewerWorkspaceSettings {
   layerColor?: Record<string, string>;
   camera?: ViewerCameraState | null;
   clipping?: ViewerClipping;
+  clipBox?: {enabled:boolean;min:Point3;max:Point3};
+  obliqueClip?: {enabled:boolean;normal:Point3;offset:number};
   fusion?: { seriesId: string|null; opacity: number };
 }
 export function layerAppearance(name: string, color: string, settings: ViewerWorkspaceSettings = {}) {

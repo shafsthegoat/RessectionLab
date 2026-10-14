@@ -44,7 +44,7 @@ after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true
 function renderer(){
   const r=Object.create(VolumeRenderer.prototype),mesh=new THREE.Mesh(new THREE.BoxGeometry(),new THREE.MeshStandardMaterial());
   const uniforms={uColors:{value:[new THREE.Color()]},uLayerOpacities:{value:new Float32Array(8)},uClipEnabled:{value:0},uClipPlane:{value:new THREE.Vector4()},uFusionOpacity:{value:.5},uFusionActive:{value:0},uFusion:{value:null},uFusionShape:{value:new THREE.Vector3()},uWorldToFusion:{value:new THREE.Matrix4()},uFusionWindow:{value:new THREE.Vector2()}};
-  Object.assign(r,{volume:{...source,compartments:[{name:'brain',color:'#778899',mask:new Uint8Array(60)}]},bounds:[[-20,-30,-40],[80,90,100]],surfaces:new Map([['brain',mesh]]),materials:()=>[{uniforms}],requestRender(){},fusionTexture:{dispose(){}},renderer:{getContext:()=>({MAX_3D_TEXTURE_SIZE:1,getParameter:()=>2048})}});
+  Object.assign(r,{scanVolume:{configure(){},labels(){}},volume:{...source,compartments:[{name:'brain',color:'#778899',mask:new Uint8Array(60)}]},bounds:[[-20,-30,-40],[80,90,100]],surfaces:new Map([['brain',mesh]]),materials:()=>[{uniforms}],requestRender(){},fusionTexture:{dispose(){}},renderer:{getContext:()=>({MAX_3D_TEXTURE_SIZE:1,getParameter:()=>2048})}});
   return {r,mesh,uniforms};
 }
 test('real renderer updates source material and all image uniforms without touching source data',()=>{
@@ -106,7 +106,7 @@ test('volume framebuffer restores viewport/clear state, bounds workload and reta
   assert.equal(renders[0].target.width,1300);assert.equal(renders[0].target.height,650);
   assert.equal(renders[2].target,null);assert.equal(restored,1);assert.equal(alpha,1);
   assert.equal(color.getHexString(),'05080d');
-  r.render(scene,camera,2000,1000,true,()=>restored++);assert.equal(r.sceneTarget.width,700);
+  r.render(scene,camera,2000,1000,true,()=>restored++);assert.equal(r.sceneTarget.width,420);
   r.configure({enabled:false},'CT',null);const before=renders.length;
   r.render(scene,camera,2000,1000,false,()=>restored++);assert.equal(renders.length,before+1);assert.equal(renders.at(-1).scene,scene);
   let disposed=0;r.sceneTarget.addEventListener('dispose',()=>disposed++);r.volumeTarget.addEventListener('dispose',()=>disposed++);

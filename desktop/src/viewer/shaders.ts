@@ -1,3 +1,4 @@
+import {labelMembershipShader} from './labelPacking';
 // WebGL2 samples the unresampled source grid. Manual trilinear interpolation
 // avoids depending on optional float-linear-texture support on the host GPU.
 export const vertexShader = `
@@ -23,6 +24,7 @@ uniform vec3 uFusionShape;
 uniform mat4 uWorldToFusion;
 uniform vec2 uFusionWindow;
 uniform sampler3D uLabels;
+${labelMembershipShader}
 uniform sampler3D uRemoved;
 uniform int uReplayActive;
 uniform sampler3D uProposal;
@@ -49,12 +51,12 @@ uniform vec4 uRect;
 uniform vec2 uResolution;
 uniform vec2 uWindow;
 uniform float uOverlay;
-uniform float uLayerOpacities[8];
+uniform float uLayerOpacities[128];
 uniform int uClipEnabled;
 uniform vec4 uClipPlane;
 uniform int uThreeD;
 uniform int uVisibleBits;
-uniform vec3 uColors[8];
+uniform vec3 uColors[128];
 uniform int uRouteCount;
 uniform vec3 uShaftStart[2];
 uniform vec3 uShaftEnd[2];
@@ -86,10 +88,10 @@ float fusionSample(vec3 voxel) {
   float c11=mix(fusionScalar(a+ivec3(0,1,1)),fusionScalar(a+ivec3(1,1,1)),f.x);
   return mix(mix(c00,c10,f.y),mix(c01,c11,f.y),f.z);
 }
-int labels(ivec3 voxel) {
-  if (any(lessThan(voxel,ivec3(0))) || any(greaterThanEqual(voxel,ivec3(uShape)))) return 0;
-  if (uReplayActive==1 && texelFetch(uRemoved,voxel.zyx,0).r>0.0) return 0;
-  return int(round(texelFetch(uLabels,voxel.zyx,0).r*255.0));
+ivec4 labels(ivec3 voxel) {
+  if (any(lessThan(voxel,ivec3(0))) || any(greaterThanEqual(voxel,ivec3(uShape)))) return ivec4(0);
+  if (uReplayActive==1 && texelFetch(uRemoved,voxel.zyx,0).r>0.0) return ivec4(0);
+  return ivec4(round(texelFetch(uLabels,voxel.zyx,0)*255.0));
 }
 float capsuleDistance(vec3 p,vec3 a,vec3 b) {
   vec3 v=b-a; float along=clamp(dot(p-a,v)/max(dot(v,v),0.00001),0.0,1.0);
@@ -206,13 +208,13 @@ void main() {
     if(edge && dash) color=mix(color,uProposalColor,0.94);
   }
   ivec3 nearest=ivec3(floor(voxel+0.5));
-  int bits=labels(nearest)&uVisibleBits;
+  ivec4 packed=labels(nearest);
   bool removed=uReplayActive==1 && texelFetch(uRemoved,nearest.zyx,0).r>0.0;
-  if(removed) bits=0;
-  for(int i=0;i<8;i++) if((bits & (1<<i))!=0) {
-    int neighbors=labels(nearest+ivec3(1,0,0))&labels(nearest-ivec3(1,0,0))&labels(nearest+ivec3(0,1,0))&labels(nearest-ivec3(0,1,0))&labels(nearest+ivec3(0,0,1))&labels(nearest-ivec3(0,0,1));
+  for(int i=0;i<128;i++) { if(i>=uLayerCount)break;
+    if(removed || uLayerEnabled[i]<0.5 || !hasLabel(packed,i))continue;
+    bool interior=hasLabel(labels(nearest+ivec3(1,0,0)),i)&&hasLabel(labels(nearest-ivec3(1,0,0)),i)&&hasLabel(labels(nearest+ivec3(0,1,0)),i)&&hasLabel(labels(nearest-ivec3(0,1,0)),i)&&hasLabel(labels(nearest+ivec3(0,0,1)),i)&&hasLabel(labels(nearest-ivec3(0,0,1)),i);
     float layerAlpha=clamp(uOverlay*uLayerOpacities[i]/0.66,0.0,1.0);
-    float edge=(neighbors&(1<<i))==0?min(0.9,layerAlpha+0.3*uLayerOpacities[i]/0.66):layerAlpha;
+    float edge=!interior?min(0.9,layerAlpha+0.3*uLayerOpacities[i]/0.66):layerAlpha;
     color=mix(color,uColors[i],edge);
   }
   if(removed) color=mix(color,vec3(0.66,0.94,0.82),0.70);

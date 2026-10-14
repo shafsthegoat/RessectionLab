@@ -1,3 +1,5 @@
+import {scanFitPoints} from './scanCameraFit';
+import {packAnatomyLabels,materializeLayerMask,MAX_ANATOMY_LAYERS} from './labelPacking';
 import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
 import type {ViewerPublicGoal} from './publicGoal';
 import * as THREE from "three";
@@ -161,6 +163,7 @@ export class VolumeRenderer {
   private readonly surfaces = new Map<string, THREE.Mesh>();
   private readonly surfaceGeometry = new Map<string, { source: THREE.BufferGeometry; smooth: THREE.BufferGeometry }>();
   private surfaceSmoothing = true;
+  private scanFramingPoints:Float32Array=new Float32Array();
   private readonly mriTexture: THREE.Data3DTexture;
   private fusionTexture: THREE.Data3DTexture;
   private readonly labelTexture: THREE.Data3DTexture;
@@ -180,6 +183,7 @@ export class VolumeRenderer {
   private visible: Record<string, boolean> = {};
   private opacity = 0.4;
   private workspaceSettings: ViewerWorkspaceSettings = {};
+  private extraClipPlanes: THREE.Plane[] = [];
   private clipPlane: THREE.Plane | null = null;
   private cameraRestored = false;
   private activePlane: SlicePlane = "axial";
@@ -188,9 +192,12 @@ export class VolumeRenderer {
   private pendingFit: "anatomy" | "instruments" | null = null;
   private readonly pickRay = new THREE.Raycaster();
   private readonly onControlsChange = () => this.requestRender();
-  private readonly onControlsStart = () => { this.interacting = true; this.requestRender(); };
+  private refinementStarted=0;
+  private readonly onControlsStart = () => { this.interacting = true; this.renderer.setPixelRatio(1); this.requestRender(); };
   private readonly onControlsEnd = () => {
     this.interacting = false;
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    this.refinementStarted=performance.now();
     this.requestRender();
     this.cameraRestored = true;
     this.onCameraChange?.(this.getCameraState());
@@ -218,12 +225,7 @@ export class VolumeRenderer {
       volume.mri.length !== count
     )
       throw new Error("MRI array dimensions do not match the source grid.");
-    if (volume.compartments.length > 8)
-      throw new Error(
-        "This viewer supports up to eight independently visible source compartments.",
-      );
-    if (volume.compartments.some((layer) => layer.mask.length !== count))
-      throw new Error("A source compartment does not match the MRI grid.");
+    const packedLabels=packAnatomyLabels(volume);
     this.affine = rasAffine(volume.affine, volume.frame);
     const inverse = inverseAffine(this.affine);
     this.bounds = volumeBounds(volume.shape, this.affine);
@@ -231,6 +233,7 @@ export class VolumeRenderer {
       (x, i) => (x + this.bounds[1][i]) / 2,
     ) as Point3;
     this.defaultWindow = intensityWindow(volume.mri);
+    this.scanFramingPoints=scanFitPoints(volume,this.defaultWindow);
     this.renderer = new THREE.WebGLRenderer({
       canvas,
       antialias: true,
@@ -258,16 +261,13 @@ export class VolumeRenderer {
       );
     this.canvas.addEventListener("webglcontextlost", this.onContextLost);
     this.mriTexture = dataTexture(volume.mri, volume.shape);
-    this.scanVolume = new ScanVolumeRenderer(this.renderer, volume, this.defaultWindow);
+    this.scanVolume = new ScanVolumeRenderer(this.renderer, volume, this.defaultWindow,packedLabels.codes);
     this.scanVolume.configure(undefined, this.volumeModality, null);
     this.fusionTexture = dataTexture(new Float32Array(1),[1,1,1]);
-    const packed = new Uint8Array(count);
-    volume.compartments.forEach((layer, index) => {
-      const bit = 1 << index;
-      for (let i = 0; i < count; i++) if (layer.mask[i]) packed[i] |= bit;
-      this.visible[layer.name] = true;
-    });
-    this.labelTexture = dataTexture(packed, volume.shape);
+    volume.compartments.forEach(layer=>{this.visible[layer.name]=true;});
+    this.labelTexture = dataTexture(packedLabels.data,volume.shape);
+    this.labelTexture.format=THREE.RGBAFormat;
+    this.scanVolume.labels(this.labelTexture,this.visible,this.workspaceSettings,[]);
     this.removedTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
     this.proposalTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
     this.diagnosticStateTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
@@ -326,13 +326,16 @@ export class VolumeRenderer {
           uResolution: { value: new THREE.Vector2(1, 1) },
           uWindow: { value: new THREE.Vector2(...this.defaultWindow) },
           uOverlay: { value: this.opacity },
-          uLayerOpacities: { value: new Float32Array(8).fill(.66) },
+          uLayerOpacities: { value: new Float32Array(MAX_ANATOMY_LAYERS).fill(.66) },
           uClipEnabled: { value: 0 },
           uClipPlane: { value: new THREE.Vector4(0,0,1,0) },
           uThreeD: { value: threeD ? 1 : 0 },
+          uLayerCount: {value:volume.compartments.length},
+          uLayerCodes: {value:packedLabels.codes.map(c=>new THREE.Vector2(...c))},
+          uLayerEnabled: {value:new Float32Array(MAX_ANATOMY_LAYERS).fill(1)},
           uVisibleBits: { value: (1 << volume.compartments.length) - 1 },
           uColors: {
-            value: Array.from({ length: 8 }, (_, i) =>
+            value: Array.from({ length: MAX_ANATOMY_LAYERS }, (_, i) =>
               new THREE.Color(
                 volume.compartments[i]?.color || "#738c9e",
               ).convertLinearToSRGB(),
@@ -433,6 +436,7 @@ export class VolumeRenderer {
         normals?: Float32Array;
         smoothPositions?: Float32Array;
         smoothNormals?: Float32Array;
+        indices?: Uint32Array;
         error?: string;
       }>,
     ) => {
@@ -466,6 +470,10 @@ export class VolumeRenderer {
         return;
       }
       const smooth = new THREE.BufferGeometry();
+      if (event.data.indices) {
+        geometry.setIndex(new THREE.BufferAttribute(event.data.indices, 1));
+        smooth.setIndex(new THREE.BufferAttribute(event.data.indices, 1));
+      }
       smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions, 3));
       smooth.setAttribute("normal", new THREE.BufferAttribute(smoothNormals, 3));
       this.surfaceGeometry.set(layer.name, { source: geometry, smooth });
@@ -495,15 +503,26 @@ export class VolumeRenderer {
       onError(
         "A source surface could not be prepared. The original MRI and labels remain available in the linked slices.",
       );
-    volume.compartments.forEach((layer) =>
-      this.worker.postMessage({
+    volume.compartments.forEach((layer) => {
+      if (layer.surface) {
+        const s = layer.surface;
+        this.worker.onmessage?.(new MessageEvent('message', {data: {name: layer.name,
+          positions: s.source, normals: s.sourceNormals, smoothPositions: s.positions,
+          smoothNormals: s.normals, indices: s.indices}}));
+      } else this.worker.postMessage({
         name: layer.name,
-        mask: layer.mask,
+        mask: materializeLayerMask(this.volume,layer),
         shape: volume.shape,
         affine: this.affine,
         displaySmoothing: true,
-      }),
-    );
+      });
+    });
+    for(const tract of volume.tractography??[]){
+      const indices:number[]=[];
+      for(let line=0;line<tract.offsets.length-1;line++)for(let i=tract.offsets[line];i<tract.offsets[line+1]-1;i++)indices.push(i,i+1);
+      const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(tract.points,3));geometry.setIndex(indices);
+      const lines=new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:'#91cffa',transparent:true,opacity:.45}));placeInSourceFrame(lines,this.affine);this.anatomy.add(lines);
+    }
     this.updateSourcePlane();
     this.fitCamera("anatomy");
     this.requestRender();
@@ -526,6 +545,7 @@ export class VolumeRenderer {
     this.cursor = [...cursor];
     this.visible = visible;
     this.opacity = Math.max(0, Math.min(1, opacity));
+    this.scanVolume.labels(this.labelTexture,visible,this.workspaceSettings,this.extraClipPlanes);
     let bits = 0;
     this.volume.compartments.forEach((layer, index) => {
       if (visible[layer.name] !== false) bits |= 1 << index;
@@ -540,6 +560,7 @@ export class VolumeRenderer {
     this.materials().forEach((shader) => {
       shader.uniforms.uCursor.value.set(...cursor);
       shader.uniforms.uVisibleBits.value = bits;
+      this.volume.compartments.forEach((layer,i)=>{shader.uniforms.uLayerEnabled.value[i]=visible[layer.name]!==false?1:0});
       shader.uniforms.uOverlay.value = this.opacity;
     });
     this.cursorObject.position.set(...cursor);
@@ -570,6 +591,16 @@ export class VolumeRenderer {
     const normal = new THREE.Vector3();
     normal.setComponent({x:0,y:1,z:2}[clipping.axis],clipping.flipped ? -1 : 1);
     this.clipPlane = clipping.enabled ? new THREE.Plane(normal,clipping.flipped ? clipping.value : -clipping.value) : null;
+    this.extraClipPlanes=[];
+    const box=settings.clipBox;
+    if(box?.enabled && [...box.min,...box.max].every(Number.isFinite))for(let i=0;i<3;i++){
+      const n=new THREE.Vector3().setComponent(i,1);
+      this.extraClipPlanes.push(new THREE.Plane(n,-box.min[i]),new THREE.Plane(n.clone().negate(),box.max[i]));
+    }
+    const oblique=settings.obliqueClip;
+    if(oblique?.enabled && [...oblique.normal,oblique.offset].every(Number.isFinite) && Math.hypot(...oblique.normal)>1e-5){
+      const n=new THREE.Vector3(...oblique.normal);this.extraClipPlanes.push(new THREE.Plane(n,oblique.offset).normalize());
+    }
     this.volume.compartments.forEach((layer,index)=>{
       const appearance=layerAppearance(layer.name,layer.color,settings);
       const mesh=this.surfaces.get(layer.name);
@@ -582,7 +613,7 @@ export class VolumeRenderer {
           material.needsUpdate = true;
         }
         material.depthWrite = !transparent;
-        material.clippingPlanes=this.clipPlane ? [this.clipPlane] : [];
+        material.clippingPlanes=[...this.extraClipPlanes,...(this.clipPlane ? [this.clipPlane] : [])];
       }
       this.materials().forEach(shader=>{
         shader.uniforms.uColors.value[index].set(appearance.color).convertLinearToSRGB();
@@ -595,6 +626,7 @@ export class VolumeRenderer {
       shader.uniforms.uFusionOpacity.value=Number.isFinite(settings.fusion?.opacity) ? Math.max(0,Math.min(1,settings.fusion!.opacity)) : .5;
     });
     this.scanVolume?.configure(settings.volumeRendering, this.volumeModality, this.clipPlane);
+    this.scanVolume.labels(this.labelTexture,this.visible,settings,this.extraClipPlanes);
     this.requestRender();
   }
 
@@ -748,7 +780,7 @@ export class VolumeRenderer {
       name: layer.name,
       color: layer.color,
       removed: false,
-      mask: residualMask(layer.mask, removed),
+      mask: residualMask(materializeLayerMask(this.volume,layer), removed),
     }));
     layers.push({
       id: "modeled-removal",
@@ -838,7 +870,7 @@ export class VolumeRenderer {
     for (const layer of layers) {
       worker.postMessage({
         name: layer.id,
-        mask: layer.mask,
+        mask: materializeLayerMask(this.volume,layer),
         shape: this.volume.shape,
       });
     }
@@ -1167,6 +1199,7 @@ export class VolumeRenderer {
         new THREE.Vector3(...this.bounds[1]),
       );
     else box.expandByScalar(12);
+    if(this.scanVolume?.active&&this.scanFramingPoints.length){const support=new THREE.Box3().setFromArray(this.scanFramingPoints);box.union(support.expandByScalar(3));}
     const visibleTools = this.recordedTools.visible ? this.recordedTools : this.instrumentDisplay.inspected ? this.inspectionTools : this.tools;
     if (mode === "instruments" && this.replayActive && this.replayBounds) {
       const [low, high] = this.replayBounds.boundsRasMm;
@@ -1205,6 +1238,11 @@ export class VolumeRenderer {
     const surfaceDistance=mode==='anatomy' && !this.replayActive && !this.passiveActive
       ? surfaceCameraDistance(this.anatomy,centre,direction,right,up,vertical,aspect) : null;
     if(surfaceDistance!==null)distance=surfaceDistance;
+    if(this.scanVolume?.active&&this.scanFramingPoints.length){
+      let scanDistance=40;const p=new THREE.Vector3();
+      for(let i=0;i<this.scanFramingPoints.length;i+=3){p.fromArray(this.scanFramingPoints,i).sub(centre);const depth=p.dot(direction);scanDistance=Math.max(scanDistance,depth+(Math.abs(p.dot(right))+3)/Math.tan(horizontal/2),depth+(Math.abs(p.dot(up))+3)/Math.tan(vertical/2));}
+      distance=Math.max(distance,scanDistance*1.08);
+    }
     this.camera.position.copy(centre).addScaledVector(direction, distance);
     this.panes.anatomy.dataset.cameraFit = JSON.stringify({
       mode,
@@ -1268,6 +1306,7 @@ export class VolumeRenderer {
 
   private render(): void {
     if (this.disposed) return;
+    const frameStarted=performance.now();
     const root = this.container.getBoundingClientRect(),
       width = Math.round(root.width),
       height = Math.round(root.height);
@@ -1315,6 +1354,21 @@ export class VolumeRenderer {
       this.renderer.render(slice.scene, slice.camera);
     }
     this.renderer.setScissorTest(false);
+    this.canvas.dispatchEvent(new CustomEvent('anatomy-frame',{bubbles:true,detail:{at:frameStarted,cpuMs:performance.now()-frameStarted,interactive:this.interacting,volume:this.scanVolume.active}}));
+    if(!this.interacting && this.refinementStarted){
+      const started=this.refinementStarted;this.refinementStarted=0;
+      const gl=this.renderer.getContext() as WebGL2RenderingContext,sync=gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE,0);
+      gl.flush();
+      const poll=()=>{
+        if(!sync)return;
+        if(this.disposed){gl.deleteSync(sync);return;}
+        const status=gl.clientWaitSync(sync,0,0);
+        if(status===gl.TIMEOUT_EXPIRED){requestAnimationFrame(poll);return;}
+        gl.deleteSync(sync);
+        this.canvas.dispatchEvent(new CustomEvent('anatomy-refined',{bubbles:true,detail:{completed:status!==gl.WAIT_FAILED,milliseconds:performance.now()-started,volume:this.scanVolume.active}}));
+      };
+      requestAnimationFrame(poll);
+    }
   }
 
   dispose(): void {

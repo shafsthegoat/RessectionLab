@@ -1,3 +1,7 @@
+import {useNativeWorkspace} from './use-native-workspace';
+import {NativeSidebar,NativeCorrectionBar,NativeResearch} from './NativeWorkspacePanels';
+import {isNativeBinding} from './native-anatomy-data';
+import type {NativeAnatomyApi} from './native-anatomy-data';
 import {useDiagnosticLayer} from "./use-diagnostic-layer";
 import { ImagingWorkspacePanel } from "./ImagingWorkspacePanel";
 import { useWorkspaceImaging } from "./use-workspace-imaging";
@@ -535,6 +539,9 @@ export default function App() {
   const [api, setApi] = useState<ResectionApi | null>(
     window.resectionApi ?? null,
   );
+  const native = useNativeWorkspace(api);
+  const nativeApi = api as (ResectionApi&NativeAnatomyApi)|null;
+  const [newPatient,setNewPatient]=useState('');
   const [payload, setPayload] = useState<CasePayload | null>(null);
   const [caseData, setCaseData] = useState<ViewerCase | null>(null);
   const [visibleLayers, setVisibleLayers] = useState<Record<string, boolean>>(
@@ -544,7 +551,7 @@ export default function App() {
   const [primaryViewer, setPrimaryViewer] = useState<ViewerWorkspaceSettings>({});
   const [workbenchTab,setWorkbenchTab] = useState<"cases"|"data"|"anatomy"|"research">("anatomy");
   const [libraryCases,setLibraryCases] = useState<LibraryCase[]>([]);
-  useEffect(()=>{api?.listCases?.().then(setLibraryCases).catch(()=>{});},[api,payload]);
+  useEffect(()=>{api?.listCases?.().then(setLibraryCases).catch(()=>{});},[api,payload,native.binding?.collectionId,native.binding?.document.snapshot_id]);
   const [cursor, setCursor] = useState<Vec3 | null>(null);
   const annotationCenterMm = useMemo(
     () => annotationCenter(payload, caseData),
@@ -593,6 +600,7 @@ export default function App() {
     setPriorView(null);
   }, []);
   useEffect(() => () => priorRequest.current?.abort(), []);
+  useEffect(()=>{if(native.binding){setEpisodeVisible(false);setCertifiedReplay(null);clearProposal();clearPrior();setRoutes([])}},[native.binding?.collectionId]);
   const receiveReplay = useCallback(
     (replay: CertifiedReplay | null) => {
       if (replay) {
@@ -636,22 +644,22 @@ export default function App() {
     [caseData, payload?.planningHash]);
   const display = workspaceDisplay(viewerCase, imaging.selected);
   const diagnostic = useDiagnosticLayer(imaging.selected, api);
-  const displayedCase = display.caseData;
+  const displayedCase = native.binding ? native.volume : display.caseData;
   const displayedSource = imaging.selected?.descriptor.volume ?? payload;
-  const displayedCursor = imaging.selected ? imaging.cursor : cursor;
-  const displayedLayers = imaging.selected ? imaging.visibleLayers : visibleLayers;
-  const setDisplayedLayers = imaging.selected ? imaging.setVisibleLayers : setVisibleLayers;
-  const viewerSettings = imaging.selected ? imaging.viewer ?? {} : primaryViewer;
-  const setViewerSettings = imaging.selected ? imaging.setViewer : setPrimaryViewer;
+  const displayedCursor = native.binding ? native.state.cursor : imaging.selected ? imaging.cursor : cursor;
+  const displayedLayers = native.binding ? native.state.visible : imaging.selected ? imaging.visibleLayers : visibleLayers;
+  const setDisplayedLayers = native.binding ? native.setVisible : imaging.selected ? imaging.setVisibleLayers : setVisibleLayers;
+  const viewerSettings = native.binding ? native.state.settings : imaging.selected ? imaging.viewer ?? {} : primaryViewer;
+  const setViewerSettings = native.binding ? native.setSettings : imaging.selected ? imaging.setViewer : setPrimaryViewer;
   const fusionSeries = !imaging.selected && primaryViewer.fusion?.seriesId ? imaging.series.find(s=>s.descriptor.seriesId===primaryViewer.fusion?.seriesId && s.descriptor.registration.overlayPermitted) : null;
   const registeredFusion = useMemo(()=>fusionSeries && payload && fusionSeries.descriptor.registration.sourceToReferenceRasMm ? {
     seriesId:fusionSeries.descriptor.seriesId,referenceCaseHash:payload.caseHash,
     registration:{status:"source-provided" as const,overlayPermitted:true as const,sourceToReferenceRasMm:fusionSeries.descriptor.registration.sourceToReferenceRasMm},
     volume:fusionSeries.volume,label:fusionSeries.descriptor.modality,
   }:null,[fusionSeries,payload]);
-  const busy = !!operation || hydrating || episodePending || imaging.pending || diagnostic.pending;
+  const busy = native.busy || !!operation || hydrating || episodePending || imaging.pending || diagnostic.pending;
   const readonly = !!api?.readOnly;
-  const controlsBlocked = busy || engineStopped || !display.planningInteractionPermitted;
+  const controlsBlocked = !!native.binding || busy || engineStopped || !display.planningInteractionPermitted;
   const comparisonAvailable = !readonly && !engineStopped && engineOperations.has("inspectDevelopmentEpisodeComparison");
   const comparison = useEpisodeComparison(episodeView, api, comparisonAvailable, payload?.caseHash ?? null);
   const displayedEpisodeView = comparison.activeView;
@@ -661,7 +669,7 @@ export default function App() {
   const publicGoalMarker = useMemo(() => episodeVisible && activeContactView && activeContactView.source.caseHash === payload?.caseHash ? contactGoalMarker(activeContactView,activeContactStep) : null,
     [episodeVisible,activeContactView,activeContactStep,payload?.caseHash]);
   const actorReplayVisible = useRef(false);
-  const fileNavigationBlocked = !api || busy || comparison.pending || engineStopped || readonly;
+  const fileNavigationBlocked = !!native.draft || !api || busy || comparison.pending || engineStopped || readonly;
   const restoreSourceView = () => {
     resetDisplayToPrimary();
     setEpisodeVisible(false);
@@ -953,10 +961,10 @@ export default function App() {
     let disposed = false;
     if (window.resectionApi) {
       const runtime = window.resectionApi;
-      runtime
-        .startupCase()
-        .then((source) => {
-          if (source && !disposed) return installCase(source, runtime);
+      const startup=(runtime as ResectionApi&NativeAnatomyApi).startupWorkspace;
+      (startup?startup():runtime.startupCase())
+        .then(async (source) => {
+          if(source&&!disposed){if(isNativeBinding(source)){setPayload(null);setCaseData(null);return native.install(source)}await installCase(source,runtime);}
         })
         .catch((failure) => setError(String(failure)));
       return () => {
@@ -981,7 +989,7 @@ export default function App() {
       disposed = true;
       mounted.current = false;
     };
-  }, [installCase, installSearch]);
+  }, [installCase, installSearch,native.install]);
 
   useEffect(() => {
     if (!api) return;
@@ -1065,8 +1073,10 @@ export default function App() {
       if (!api || fileNavigationBlocked) return;
       const generation = ++caseGeneration.current;
       imaging.invalidate();
-      const source = await api[kind]();
+      const source = kind==="openCase"&&nativeApi?.openWorkspace ? await nativeApi.openWorkspace() : await api[kind]();
       if (source && mounted.current && generation === caseGeneration.current) {
+        if(isNativeBinding(source)){setPayload(null);setCaseData(null);setEpisodeVisible(false);setCertifiedReplay(null);clearProposal();clearPrior();await native.install(source);setWorkbenchTab('anatomy');api.listCases?.().then(setLibraryCases);return;}
+        native.clear();
         const installed = await installCase(source, api, generation);
         if (installed && kind === "importNifti")
           setMessage("Source image imported · Original file preserved · Save to keep this workspace");
@@ -1237,10 +1247,11 @@ export default function App() {
     return api.onEvent((event) => {
       if (event.event !== "menuAction" || busy || comparison.pending || engineStopped || readonly) return;
       if (event.action === "openCase") void load("openCase");
-      if (event.action === "saveCase" && payload) void save();
+      if (event.action === "saveCase" && (payload||native.binding)) void (native.binding?native.save():save());
     });
   }, [
     api,
+    native.binding,native.series,native.state,native.draft,
     busy,
     engineStopped,
     readonly,
@@ -1356,7 +1367,7 @@ export default function App() {
   }
 
   return (
-    <div className={`app-shell poc-workbench ${workbenchTab === "research" ? "research-open" : "anatomy-only"} ${casePanel ? "" : "case-panel-collapsed"}`}>
+    <div className={`app-shell poc-workbench ${native.binding?"native-workspace":""} ${workbenchTab === "research" && !native.binding ? "research-open" : "anatomy-only"} ${casePanel ? "" : "case-panel-collapsed"}`}>
       <header className="app-header">
         <div className="window-traffic-space" />
         <div className="brand">
@@ -1367,6 +1378,7 @@ export default function App() {
         </div>
         <div className="header-divider" />
         <span className="header-purpose">Patient anatomy workspace</span>
+
         <div className="header-spacer" />
         <span className="research-tag">
           <FlaskConical size={11} /> Research workspace
@@ -1377,21 +1389,21 @@ export default function App() {
           disabled={fileNavigationBlocked}
         >
           <FolderOpen size={15} />
-          <span>Open case</span>
+          <span>Open</span>
           <kbd>⌘O</kbd>
         </button>
         <button
           className="header-button"
-          onClick={() => load("importNifti")}
+          onClick={() => native.binding ? setWorkbenchTab("data") : load("importNifti")}
           disabled={fileNavigationBlocked}
         >
           <ArrowUpFromLine size={15} />
-          <span>Import image</span>
+          <span>Add data</span>
         </button>
         <button
           className="header-button save-button"
-          onClick={save}
-          disabled={!payload || busy || engineStopped || readonly}
+          onClick={native.binding?native.save:save}
+          disabled={(!payload&&!native.binding) || busy || !!native.draft || engineStopped || readonly}
         >
           <ArrowDownToLine size={15} />
           <span>Save</span>
@@ -1399,7 +1411,7 @@ export default function App() {
       </header>
 
       <nav className="navigation-rail" aria-label="Workspace navigation">
-        {([{id:"cases",label:"Cases",icon:FolderOpen},{id:"data",label:"Data",icon:Scan},{id:"anatomy",label:"3D",icon:Layers3}] as const).map(item=><button key={item.id}
+        {([{id:"cases",label:"Cases",icon:FolderOpen},{id:"anatomy",label:"3D",icon:Layers3}] as const).map(item=><button key={item.id}
           className={`rail-button ${workbenchTab===item.id?"selected":""}`} aria-label={item.id==='anatomy'?'3D workspace':item.label}
           onClick={()=>{setWorkbenchTab(item.id);setCasePanel(true)}}><item.icon size={19}/><span>{item.label}</span></button>)}
         <div className="rail-spacer" />
@@ -1409,12 +1421,17 @@ export default function App() {
       </nav>
 
       <aside className="case-panel" id="case-evidence-panel">
+        {native.binding&&workbenchTab!=='cases'?<>
+          <div className="panel-heading"><span className="eyebrow">PATIENT WORKSPACE</span><button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div>
+          <div className="workspace-tabs"><button className={workbenchTab==='data'?'selected':''} onClick={()=>setWorkbenchTab('data')}>Scans</button><button className={workbenchTab==='anatomy'?'selected':''} onClick={()=>setWorkbenchTab('anatomy')}>Anatomy</button></div>
+          {workbenchTab==='research'?<NativeResearch workspace={native}/>:<NativeSidebar workspace={native} tab={workbenchTab==='data'?'data':'anatomy'}/>}
+        </>:<>
         {workbenchTab!=="research" && <>
           <div className="panel-heading"><span className="eyebrow">{workbenchTab==='cases'?'PATIENT LIBRARY':workbenchTab==='data'?'DATA & REGISTRATION':'ANATOMY LAYERS'}</span>
             <button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div>
-          {workbenchTab==='cases' ? <CaseLibraryPanel cases={libraryCases} busy={fileNavigationBlocked} onBrowse={()=>load('openCase')}
-            onOpen={id=>void act(async()=>{if(api?.openListedCase){const next=await api.openListedCase(id);await installCase(next,api);setWorkbenchTab('anatomy')}})}/> : <>
-            <h1>{title}</h1><p className="case-subtitle">{displayedSource ? String(displayedSource.metadata.selected_modality??'Source image') : 'Open a case to begin'}</p>
+          {workbenchTab==='cases' ? <><div className="unified-sidebar"><details className="unified-details"><summary>New patient collection</summary><input aria-label="New patient ID" placeholder="Patient ID" value={newPatient} onChange={e=>setNewPatient(e.target.value)}/><button disabled={fileNavigationBlocked||!newPatient.trim()} onClick={async()=>{const b=await native.create(newPatient.trim());if(b){setPayload(null);setCaseData(null);setWorkbenchTab('data')}}}>Create collection</button></details></div><CaseLibraryPanel cases={libraryCases} busy={fileNavigationBlocked} onBrowse={()=>load('openCase')}
+            onOpen={id=>void act(async()=>{if(api?.openListedCase){const next=nativeApi?.openListedWorkspace?await nativeApi.openListedWorkspace(id):await api.openListedCase(id);if(isNativeBinding(next)){setPayload(null);setCaseData(null);await native.install(next)}else{native.clear();await installCase(next,api)}setWorkbenchTab('anatomy')}})}/></> : <>
+            <div className="workspace-tabs"><button className={workbenchTab==='data'?'selected':''} onClick={()=>setWorkbenchTab('data')}>Scans</button><button className={workbenchTab==='anatomy'?'selected':''} onClick={()=>setWorkbenchTab('anatomy')}>Anatomy</button></div><h1>{title}</h1><p className="case-subtitle">{displayedSource ? String(displayedSource.metadata.selected_modality??'Source image') : 'Open a case to begin'}</p>
             {workbenchTab==='data' && payload && displayedSource && <WorkbenchDataPanel source={payload} displayed={displayedSource} series={imaging.series} selectedId={imaging.selectedId}
               busy={busy||engineStopped} api={api} onSelect={imaging.select} onImport={request=>void act(()=>imaging.importSeries(request))}
               settings={primaryViewer} onSettingsChange={setPrimaryViewer}/>}
@@ -1536,10 +1553,10 @@ export default function App() {
                 type="checkbox"
                 checked={displayedLayers[layer.name] ?? false}
                 onChange={(event) =>
-                  setDisplayedLayers((current) => ({
-                    ...current,
+                  setDisplayedLayers({
+                    ...displayedLayers,
                     [layer.name]: event.target.checked,
-                  }))
+                  })
                 }
               />
               <span
@@ -1549,7 +1566,7 @@ export default function App() {
               <div>
                 <strong>{readableName(layer.name)}</strong>
                 <span>
-                  {(layer.volumeMm3 / 1000).toFixed(2)} mL ·{" "}
+                  {((layer.volumeMm3??0) / 1000).toFixed(2)} mL ·{" "}
                   {imaging.selected ? imaging.selected.descriptor.annotationKind : annotationDescription.toLowerCase()}
                 </span>
               </div>
@@ -1644,13 +1661,14 @@ export default function App() {
           </div>
         </div>
         </>}
+        </>}
       </aside>
 
       <main className="anatomy-panel">
         <div className="workspace-heading">
           <div>
-            <WorkspaceBreadcrumb caseId={caseData?.caseId ?? null} />
-            <h2>{workbenchTab==='data'?'Source imaging':'Anatomy, in context'}</h2>
+            <WorkspaceBreadcrumb caseId={native.binding?.document.patient_id??caseData?.caseId ?? null} />
+            <h2>{native.binding?native.binding.document.series.find(s=>s.id===native.series)?.id.toUpperCase():workbenchTab==='data'?'Source imaging':'Anatomy, in context'}</h2>
           </div>
           <div
             className={`view-presets ${workbenchTab==='research'?'':'poc-hidden'}`}
@@ -1726,31 +1744,33 @@ export default function App() {
         {episodeVisible&&episodeWorkflow==='passive'&&passiveView&&caseData&&passiveView.source.caseHash===caseData.caseHash&&
           <div className="modeled-replay-notice" role="status"><span>GENERATED · two persistent tool poses · state {passiveStep}/5 · declared {passiveView.frames[passiveStep].elapsedGeneratedSeconds.toFixed(1)} s · no patient admission</span>
             <button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>}
+        <NativeCorrectionBar workspace={native}/>
         <div className="viewer-shell">
-          {caseData && (
+          {displayedCase && (
             <ViewerWorkspace
               workspaceSettings={viewerSettings}
               onWorkspaceSettingsChange={setViewerSettings}
-              sourceLabel={String(displayedSource?.metadata.selected_modality??'Image')}
-              registeredFusion={registeredFusion}
-              diagnosticLayer={diagnostic.view?.layer ?? null}
+              sourceLabel={native.binding?native.binding.document.series.find(s=>s.id===native.series)?.modality:String(displayedSource?.metadata.selected_modality??'Image')}
+              onSliceStroke={native.binding?native.onStroke:undefined}
+              registeredFusion={native.binding?null:registeredFusion}
+              diagnosticLayer={native.binding?null:diagnostic.view?.layer ?? null}
               diagnosticSourceSha256={diagnostic.view?.sourceSha256 ?? null}
               generatedSignal={display.primaryOverlaysPermitted && synthetic}
-              publicGoal={display.primaryOverlaysPermitted ? publicGoalMarker : null}
+              publicGoal={!native.binding && display.primaryOverlaysPermitted ? publicGoalMarker : null}
               caseData={displayedCase}
               visibleLayers={displayedLayers}
               overlayOpacity={overlayOpacity}
               cursor={displayedCursor}
-              onCursorChange={imaging.selected ? imaging.setCursor : setCursor}
-              routes={display.primaryOverlaysPermitted ? viewerRoutes : []}
+              onCursorChange={native.binding ? native.setCursor : imaging.selected ? imaging.setCursor : setCursor}
+              routes={!native.binding && display.primaryOverlaysPermitted ? viewerRoutes : []}
               cameraMode={cameraMode}
-              replay={display.primaryOverlaysPermitted ? viewerReplay : null}
+              replay={!native.binding && display.primaryOverlaysPermitted ? viewerReplay : null}
               passiveReplay={display.primaryOverlaysPermitted&&episodeVisible&&episodeWorkflow==='passive'&&passiveView&&caseData&&passiveView.source.caseHash===caseData.caseHash?passiveView.frames[passiveStep]:null}
-              structuralProposal={display.primaryOverlaysPermitted ? proposalView : null}
-              priorLayer={display.primaryOverlaysPermitted ? priorView : null}
+              structuralProposal={!native.binding && display.primaryOverlaysPermitted ? proposalView : null}
+              priorLayer={!native.binding && display.primaryOverlaysPermitted ? priorView : null}
             />
           )}
-          {!caseData && (
+          {!caseData && !native.binding && (
             <div className="welcome-overlay">
               <div className="welcome-symbol">
                 <Scan size={34} strokeWidth={1} />
@@ -1774,10 +1794,11 @@ export default function App() {
 
             </div>
           )}
-          {hydrating && (
+          {native.binding&&!displayedCase&&!native.busy&&<div className="welcome-overlay"><h2>{native.binding.document.series.length?'Scan unavailable':'Add your first scan'}</h2><p>{native.message}</p>{native.binding.document.series.length?<button className="primary-button" onClick={()=>native.run(native.refresh)}>Retry</button>:<button className="primary-button" onClick={()=>setWorkbenchTab('data')}>Add data</button>}</div>}
+          {(hydrating||native.busy) && (
             <div className="viewer-loading">
               <LoaderCircle size={22} className="spin" />
-              <span>Preparing source images…</span>
+              <span>{native.binding?native.message:"Preparing source images…"}</span>{native.busy&&<button className="header-button" onClick={native.cancel}>Cancel</button>}
             </div>
           )}
         </div>
@@ -2026,7 +2047,7 @@ export default function App() {
             ? "Local engine stopped · Reopen the app to reconnect"
             : hydrating
               ? "Transferring source imaging to the local viewer…"
-              : (operation?.message ?? message)}
+              : (operation?.message ?? (native.binding?native.message:message))}
         </span>
         {operation && (
           <>

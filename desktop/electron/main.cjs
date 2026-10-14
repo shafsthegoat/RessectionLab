@@ -29,6 +29,7 @@ let quitting = false;
 let startupConsumed = false;
 let caseLibrary;
 let currentCasePath;
+let pendingOpenPath;
 const cliValue = name => { const index = process.argv.indexOf(name); return index >= 0 ? process.argv[index + 1] : undefined; };
 
 async function startEngine() {
@@ -36,7 +37,7 @@ async function startEngine() {
   await fs.chmod(transferDir, 0o700);
   const bundled = path.join(process.resourcesPath, 'research-engine', 'ressectionlab-engine');
   const repo = path.resolve(__dirname, '../..');
-  caseLibrary = new CaseLibrary(app.getPath('userData'), path.join(repo, 'outputs/poc-cases'));
+  caseLibrary = new CaseLibrary(app.getPath('userData'), path.join(repo, 'outputs/poc-cases'), [path.join(app.getPath('downloads'),'RessectionLab-Native-Anatomy-sub-06/patient-anatomy.json')]);
   const runDir = path.join(app.getPath('userData'), 'research-runs');
   const config = app.isPackaged
     ? { executable: bundled, cwd: app.getPath('userData'), transferDir, runDir }
@@ -65,12 +66,62 @@ async function pick(title, extensions) {
 }
 
 function bindOperations() {
+  const openWorkspace = async filename => {
+    const native = path.basename(filename)==='patient-anatomy.json';
+    const result=await engine.request(native?'anatomyOpen':'loadCase',{path:filename});
+    currentCasePath=filename;await caseLibrary.remember(filename);return result;
+  };
+  handle('openWorkspace',async()=>{
+    const filename=pendingOpenPath||await pick('Open patient workspace',['ressectionlab','rslab','json']);pendingOpenPath=null;
+    return filename?openWorkspace(path.resolve(filename)):null;
+  });
+  handle('openListedWorkspace',async id=>openWorkspace(await caseLibrary.resolve(id)));
+  handle('startupWorkspace',async()=>{
+    if(startupConsumed)return null;startupConsumed=true;
+    const filename=pendingOpenPath||cliValue('--anatomy')||cliValue('--case');pendingOpenPath=null;
+    if(filename)return openWorkspace(path.resolve(filename));
+    const cases=await caseLibrary.list();return cases.length?openWorkspace(await caseLibrary.resolve(cases[0].id)):null;
+  });
   const openSaved = async filename => {
     const result = await engine.request('loadCase', {path: filename});
     currentCasePath = filename;
     await caseLibrary.remember(filename);
     return result;
   };
+  handle('anatomyCreate', async args => {
+    plainArgs(args,['patientId']);
+    const selected=await dialog.showOpenDialog(window,{title:'Choose an empty patient collection directory',properties:['openDirectory','createDirectory']});
+    if(selected.canceled)return null;const result=await engine.request('anatomyCreate',{...args,path:selected.filePaths[0]});await caseLibrary.remember(path.join(selected.filePaths[0],'patient-anatomy.json'));return result;
+  });
+  handle('anatomyOpen', async () => {
+    const filename = cliValue('--anatomy') || await pick('Open native patient collection', ['json']);
+    return filename ? engine.request('anatomyOpen', {path:path.resolve(filename)}) : null;
+  });
+  const anatomyKeys = {
+    anatomySaveView: ['viewState'],
+    anatomyComponents: ['layerId'],
+    anatomyGraph: ['layerId','point'],
+    anatomyReconstruct: ['seriesId','model','synthsegVersion'],
+    anatomyPlan: ['start','end','radiusMm'], anatomyRemoval: ['point','radiusMm','reset'],
+    anatomySection: ['seriesId','center','normal','spacingMm','movingId','checkerboard','layers'],
+    anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId'],
+    anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds'],
+    anatomySample: ['point'],
+    anatomyRegister: ['action','seriesId','movingPoints','referencePoints','reviewer'],
+  };
+  for (const [operation, keys] of Object.entries(anatomyKeys))
+    handle(operation, args => engine.request(operation, plainArgs(args, ['collectionId','snapshotId',...keys]), operation==='anatomyReconstruct'?1800000:300000));
+  handle('anatomyImport', async args => {
+    args=plainArgs(args,['collectionId','snapshotId','kind','modality','timepoint','patientId','seriesId','label']);
+    const selected=await dialog.showOpenDialog(window,{title:'Import this patient’s imaging',properties:[args.kind==='dicom'?'openDirectory':'openFile']});
+    if(selected.canceled)return null;
+    return engine.request('anatomyImport',{...args,path:selected.filePaths[0]},300000);
+  });
+  handle('anatomyExport', async args => {
+    const selected=await dialog.showOpenDialog(window,{title:'Select simulation snapshot destination',properties:['openDirectory','createDirectory']});
+    if(selected.canceled)return null;
+    return engine.request('anatomyExport',{...plainArgs(args,['collectionId','snapshotId']),path:selected.filePaths[0]},300000);
+  });
   handle('ping', () => engine.request('ping'));
   handle('listCases', () => caseLibrary.list());
   handle('openListedCase', async id => openSaved(await caseLibrary.resolve(id)));
@@ -176,7 +227,12 @@ async function createWindow() {
 
 const ownsAppInstance = app.requestSingleInstanceLock();
 if (!ownsAppInstance) app.quit();
-app.on('second-instance', () => {
+app.on('open-file',(event,filename)=>{event.preventDefault();pendingOpenPath=filename;if(window&&!window.isDestroyed())window.webContents.send('research:event',{event:'menuAction',action:'openCase'});});
+app.on('second-instance', (_event,argv) => {
+  const index=argv.findIndex(a=>a==='--case'||a==='--anatomy');
+  const filename=index>=0?argv[index+1]:argv.find(a=>/\.(ressectionlab|rslab)$/.test(a)||a.endsWith('patient-anatomy.json'));
+  if(filename){pendingOpenPath=path.resolve(filename);if(window&&!window.isDestroyed())window.webContents.send('research:event',{event:'menuAction',action:'openCase'});}
+
   if (window && !window.isDestroyed()) { if (window.isMinimized()) window.restore(); window.show(); window.focus(); }
 });
 if (ownsAppInstance) app.whenReady().then(async () => { log = createLogger(app.getPath('logs')); log(`Starting ${app.getVersion()} (${app.isPackaged ? 'packaged' : 'development'})`); await startEngine(); bindOperations(); await createWindow(); }).catch(error => {

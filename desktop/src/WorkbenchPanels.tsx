@@ -2,7 +2,7 @@ import type {CasePayload,ResectionApi} from './types';
 import {ImagingWorkspacePanel} from './ImagingWorkspacePanel';
 import type {DisplaySeriesView,ImportDisplaySeriesRequest} from './workspace-imaging-types';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
-export type LibraryCase={id:string;title:string;recent:boolean;bytes:number};
+export type LibraryCase={id:string;title:string;recent:boolean;bytes:number;native?:boolean};
 export type AnatomyRecord={label?:string;provenance?:string;kind?:string;coverage?:string;review_status?:string;runtime_seconds?:number;
   source_sha256?:string;cache_key?:string;model?:{name?:string;version?:string;license?:string;requirements?:string;weights_path?:string;weights_sha256?:string;device?:string;peak_memory_bytes?:number}};
 export function anatomyDescription(record:AnatomyRecord|undefined,fallback:string):string {
@@ -16,7 +16,7 @@ export function CaseLibraryPanel({cases,onOpen,onBrowse,busy}:{cases:LibraryCase
     <p className="muted-note">Original images, saved masks and your view travel together in one case.</p>
     <button className="outline-button" onClick={onBrowse} disabled={busy}>Open a saved case…</button>
     {cases.map(row=><button className="poc-case-card" key={row.id} onClick={()=>onOpen(row.id)} disabled={busy}>
-      <strong>{row.title}</strong><span>{row.recent?'Recently opened':'Prepared public case'} · {(row.bytes/1048576).toFixed(0)} MB</span>
+      <strong>{row.title}</strong><span>{row.recent?'Recently opened':'Prepared public case'} · {row.native?'Native anatomy':`${(row.bytes/1048576).toFixed(0)} MB`}</span>
     </button>)}
     {!cases.length&&<p className="muted-note">Open or import imaging to start a case.</p>}
   </section>;

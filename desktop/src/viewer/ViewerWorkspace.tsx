@@ -1,3 +1,4 @@
+import {TransferEditor} from './TransferEditor';
 import {sampleDiagnosticLayer} from "./diagnosticLayer";
 import type {CheckedDiagnosticLayer} from "./diagnosticLayer";
 import {checkedPublicGoal,publicGoalSlicePoint,PUBLIC_GOAL_COLOR} from './publicGoal';
@@ -106,11 +107,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     [remaining, setRemaining] = useState(0),
     [ready, setReady] = useState(false);
   const [fusionError,setFusionError]=useState<string|null>(null);
-  const activePlane=settings.activePlane??'axial',contrast=settings.contrast??1,showPlane=settings.showPlane??true;
+  const activePlane=settings.activePlane??'axial',contrast=settings.contrast??1,showPlane=settings.showPlane??false;
   const setActivePlane=(activePlane:SlicePlane)=>changeSettings({...latestSettings.current,activePlane});
   const setContrast=(contrast:number)=>changeSettings({...latestSettings.current,contrast});
   const setShowPlane=(showPlane:boolean)=>changeSettings({...latestSettings.current,showPlane});
-  const layout=settings.layout??'mri-review';
+  const layout=settings.layout??'3d-focus';
   const setLayout=(layout:'3d-focus'|'mri-review')=>changeSettings({...latestSettings.current,layout});
   const [replayError, setReplayError] = useState<string | null>(null),
     [passiveError, setPassiveError] = useState<string | null>(null),
@@ -120,6 +121,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     );
   const [expanded, setExpanded] = useState<SlicePlane | null>(null);
   const [navigationMode,setNavigationMode]=useState<'orbit'|'pan'>('orbit');
+  const [controlPanel,setControlPanel]=useState<'layout'|'appearance'|'clip'|null>(null);
+  const [obliqueAngle,setObliqueAngle]=useState(0);
   const [smoothSurfaces, setSmoothSurfaces] = useState(true);
   const [displayedPrior, setDisplayedPrior] = useState<ViewerPriorLayer | null>(
       null,
@@ -191,7 +194,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         setRemaining,
         setReplayError,
         camera=>{
-          if(latestProps.current.caseData?.caseHash===caseData.caseHash)
+          if(latestProps.current.caseData===caseData)
             changeSettings({...latestSettings.current,camera});
         },
       );
@@ -451,6 +454,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   function moveCursor(
     event: PointerEvent<HTMLDivElement>,
     plane: SlicePlane,
+    phase: 'start' | 'move' = 'move',
   ): void {
     if (!geometry || (event.button !== 0 && event.buttons !== 1)) return;
     const rect = event.currentTarget.getBoundingClientRect(),
@@ -466,6 +470,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     if (point) {
       event.preventDefault();
       onCursorChange(point);
+      props.onSliceStroke?.(point, phase);
     }
   }
 
@@ -525,6 +530,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     <div
       className={`rl-viewer rl-layout-${layout}${expanded ? " has-expanded" : ""}`}
       ref={container}
+      onKeyDownCapture={event=>{if(event.key==='Escape')setControlPanel(null)}}
+      onPointerDownCapture={event=>{if(controlPanel&&!(event.target as HTMLElement).closest('.rl-control-popover,.rl-primary-tools'))setControlPanel(null)}}
       data-layout={layout}
       data-expanded={expanded ?? undefined}
       aria-label="Linked patient imaging workspace"
@@ -535,112 +542,36 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         role="toolbar"
         aria-label="Imaging layout and 3D controls"
       >
-        <div
-          className="rl-viewer-segment"
-          role="group"
-          aria-label="View layout"
-        >
-          <button
-            aria-pressed={layout === "3d-focus" && !expanded}
-            className={layout === "3d-focus" && !expanded ? "is-active" : ""}
-            onClick={() => {
-              setLayout("3d-focus");
-              setExpanded(null);
-            }}
-          >
-            3D focus
-          </button>
-          <button
-            aria-pressed={layout === "mri-review" && !expanded}
-            className={layout === "mri-review" && !expanded ? "is-active" : ""}
-            onClick={() => {
-              setLayout("mri-review");
-              setExpanded(null);
-            }}
-          >
-            {props.generatedSignal ? "Signal review" : "Image review"}
-          </button>
+        <div className="rl-primary-tools">
+          {(['layout','appearance','clip'] as const).map(id=><button key={id} aria-expanded={controlPanel===id} onClick={()=>setControlPanel(controlPanel===id?null:id)}>{id[0].toUpperCase()+id.slice(1)}</button>)}
+          <button onClick={()=>engine.current?.cameraPreset('oblique')} aria-label="Fit 3D view">Fit</button>
         </div>
-        <div className="rl-viewer-toolbar" hidden={Boolean(expanded)}>
-          <button
-            className={`rl-viewer-reset ${smoothSurfaces ? "is-active" : ""}`}
-            aria-label="Smooth 3D surfaces"
-            aria-pressed={smoothSurfaces}
-            onClick={() => setSmoothSurfaces(!smoothSurfaces)}
-            title="Display smoothing only, limited to half the smallest voxel spacing. Scans, masks, slice overlays, measurements and cursor picking stay unchanged. Turn off for the exact voxel surface."
-          >
-            Smooth surfaces {smoothSurfaces ? "on" : "off"}
-          </button>
-          <div className="rl-viewer-segment" role="group" aria-label="3D drag mode">
-            <button aria-label="Orbit 3D with left drag" aria-pressed={navigationMode==='orbit'} className={navigationMode==='orbit'?'is-active':''} onClick={()=>setNavigationMode('orbit')}>Orbit</button>
-            <button aria-label="Pan 3D with left drag" aria-pressed={navigationMode==='pan'} className={navigationMode==='pan'?'is-active':''} onClick={()=>setNavigationMode('pan')}>Pan</button>
-          </div>
-          <button
-            className={`rl-viewer-reset rl-viewer-plane-toggle ${showPlane ? "is-active" : ""}`}
-            aria-pressed={showPlane}
-            onClick={() => setShowPlane(!showPlane)}
-            title={`Show or hide the source ${signalName} plane in 3D; linked ${signalName} views remain visible`}
-          >
-            Source plane {showPlane ? "on" : "off"}
-          </button>
-          <select
-            className="rl-viewer-plane-select"
-            aria-label={`${signalName} plane shown in 3D`}
-            value={activePlane}
-            onChange={(event) => {
-              setActivePlane(event.target.value as SlicePlane);
-              setShowPlane(true);
-            }}
-          >
-            {PLANES.map((plane) => (
-              <option key={plane} value={plane}>
-                {TITLES[plane]}
-              </option>
-            ))}
-          </select>
-          {diagnosticLayer && <label className="rl-viewer-expanded-note">
-            <input type="checkbox" checked={diagnosticVisible}
-              onChange={event=>setDiagnosticVisible(event.target.checked)} />
-            Diagnostic overlay
-          </label>}
-          <button
-            className="rl-viewer-reset"
-            onClick={() => engine.current?.cameraPreset('oblique')}
-            aria-label="Fit 3D view"
-            title="Fit anatomy and the selected 3D camera preset"
-          >
-            ↺ <span>Fit 3D</span>
-          </button>
-          <select className="rl-viewer-plane-select" aria-label="Camera preset" defaultValue="" onChange={event=>{
-            if(event.target.value)engine.current?.cameraPreset(event.target.value as 'oblique'|'anterior'|'left'|'superior');event.target.value='';
-          }}><option value="" disabled>Camera</option><option value="anterior">Anterior</option><option value="left">Left</option><option value="superior">Superior</option><option value="oblique">Oblique</option></select>
-        </div>
-        {!expanded&&<div className="rl-cutaway-controls" role="group" aria-label="3D cutaway controls">
-          <label><input type="checkbox" checked={clipping.enabled} onChange={event=>changeSettings({...settings,clipping:{...clipping,enabled:event.target.checked}})}/>3D cutaway</label>
-          <select aria-label="Cutaway axis" value={clipping.axis} onChange={event=>{
-            const axis=event.target.value as 'x'|'y'|'z',index={x:0,y:1,z:2}[axis];
-            changeSettings({...settings,clipping:{...clipping,axis,value:currentCursor[index],enabled:true}});
-          }}><option value="z">Axial</option><option value="y">Coronal</option><option value="x">Sagittal</option></select>
-          <input type="range" aria-label="Cutaway position" min={displayBounds[0][clipAxis]} max={displayBounds[1][clipAxis]} step=".5" value={clipping.value}
-            disabled={!clipping.enabled} onChange={event=>changeSettings({...settings,clipping:{...clipping,value:Number(event.target.value)}})}/>
-          <output>{clipping.value.toFixed(1)} mm</output>
-          <button aria-label="Flip cutaway side" aria-pressed={Boolean(clipping.flipped)} disabled={!clipping.enabled} onClick={()=>changeSettings({...settings,clipping:{...clipping,flipped:!clipping.flipped}})}>Flip</button>
-          <span>Original slices remain intact</span>
-        </div>}
-        {!expanded&&<div className="rl-volume-controls" role="group" aria-label="Scan volume rendering controls">
-          <button aria-pressed={scanVolume.enabled} disabled={Boolean(replay)||passiveRequested}
-            onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:!scanVolume.enabled}})}>
-            Scan volume {scanVolume.enabled?'on':'off'}
-          </button>
-          <select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'}
-            onChange={event=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:event.target.value as VolumePreset}})}>
-            <option value="auto">Auto · {/^CT/i.test(signalName)?'CT bone':'MRI tissue'}</option>
-            <option value="ct-bone">CT bone</option><option value="ct-tissue">CT soft tissue</option><option value="mri">MRI tissue</option>
-          </select>
-          <label>Volume density <input type="range" aria-label="Scan volume density" min="0" max="2" step=".01" value={scanVolume.density}
-            onChange={event=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,density:Number(event.target.value)}})}/></label>
-          <output>{scanVolume.density.toFixed(2)}</output>
-          <span>{replay||passiveRequested?'Scan volume hidden during replay':'Scan intensities · anatomy checkboxes control annotation surfaces'}</span>
+        <span className="rl-viewer-expanded-note">{expanded?TITLES[expanded]:layout==='3d-focus'?'3D + slices':'Image review'}</span>
+        {controlPanel&&<div className="rl-control-popover" role="region" aria-label={`${controlPanel} controls`}>
+          <div className="popover-heading"><strong>{controlPanel[0].toUpperCase()+controlPanel.slice(1)}</strong><button aria-label="Close view controls" onClick={()=>setControlPanel(null)}>×</button></div>
+          {controlPanel==='layout'&&<>
+            <div className="viewer-field-row"><button aria-pressed={layout==='3d-focus'} onClick={()=>{setLayout('3d-focus');setExpanded(null);setControlPanel(null)}}>3D + slices</button><button aria-pressed={layout==='mri-review'} onClick={()=>{setLayout('mri-review');setExpanded(null);setControlPanel(null)}}>Four views</button></div>
+            <label>Camera<select aria-label="Camera preset" defaultValue="oblique" onChange={e=>engine.current?.cameraPreset(e.target.value as 'oblique'|'anterior'|'left'|'superior')}><option value="oblique">Oblique</option><option value="anterior">Anterior</option><option value="left">Left</option><option value="superior">Superior</option></select></label>
+            <label>Left drag<select aria-label="3D drag mode" value={navigationMode} onChange={e=>setNavigationMode(e.target.value as 'orbit'|'pan')}><option value="orbit">Rotate</option><option value="pan">Pan</option></select></label>
+          </>}
+          {controlPanel==='appearance'&&<>
+            <label><input type="checkbox" aria-label="Scan volume" checked={scanVolume.enabled} disabled={Boolean(replay)||passiveRequested} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:e.target.checked}})}/>Scan volume</label>
+            <label>Preset<select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}><option value="auto">Automatic · {signalName}</option><option value="ct-bone">CT bone</option><option value="ct-tissue">CT tissue</option><option value="mri">MRI tissue</option></select></label>
+            <label>Scan density<input aria-label="Scan volume density" type="range" min="0" max="2" step=".01" value={scanVolume.density} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,density:+e.target.value}})}/></label>
+            <label><input type="checkbox" aria-label="Smooth 3D surfaces" checked={smoothSurfaces} onChange={e=>setSmoothSurfaces(e.target.checked)}/>Smooth surfaces</label>
+            <label><input type="checkbox" checked={settings.volumeRendering?.shadows!==false} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,shadows:e.target.checked}})}/>Volume shadows</label>
+            <label><input type="checkbox" checked={settings.volumeRendering?.isolateLabels===true} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,isolateLabels:e.target.checked}})}/>Isolate selected tissue</label>
+            {diagnosticLayer&&<label><input type="checkbox" checked={diagnosticVisible} onChange={e=>setDiagnosticVisible(e.target.checked)}/>Diagnostic overlay</label>}
+            <TransferEditor value={settings.volumeRendering??{}} onChange={volumeRendering=>changeSettings({...settings,volumeRendering})}/>
+          </>}
+          {controlPanel==='clip'&&<>
+            <label><input type="checkbox" checked={clipping.enabled} onChange={e=>changeSettings({...settings,clipping:{...clipping,enabled:e.target.checked}})}/>Cutaway</label>
+            <label>Plane<select aria-label="Cutaway axis" value={clipping.axis} onChange={e=>changeSettings({...settings,clipping:{...clipping,axis:e.target.value as 'x'|'y'|'z'}})}><option value="z">Axial</option><option value="y">Coronal</option><option value="x">Sagittal</option></select></label>
+            <input aria-label="Cutaway position" type="range" min={displayBounds[0][clipAxis]} max={displayBounds[1][clipAxis]} step=".1" value={clipping.value} disabled={!clipping.enabled} onChange={e=>changeSettings({...settings,clipping:{...clipping,value:+e.target.value}})}/>
+            <button disabled={!clipping.enabled} onClick={()=>changeSettings({...settings,clipping:{...clipping,flipped:!clipping.flipped}})}>Flip side</button>
+            <label><input type="checkbox" checked={showPlane} onChange={e=>setShowPlane(e.target.checked)}/>Source plane in 3D</label><select aria-label="Source plane orientation" value={activePlane} onChange={e=>setActivePlane(e.target.value as SlicePlane)}>{PLANES.map(p=><option key={p} value={p}>{TITLES[p]}</option>)}</select>
+            <details><summary>Oblique & box cuts</summary><label>Angle · degrees<input aria-label="Oblique angle" type="number" min="-180" max="180" value={obliqueAngle} onChange={e=>setObliqueAngle(+e.target.value)}/></label><button onClick={()=>{const normal:Point3=[Math.sin(obliqueAngle*Math.PI/180),0,Math.cos(obliqueAngle*Math.PI/180)];changeSettings({...settings,obliqueClip:{enabled:true,normal,offset:-normal.reduce((sum,n,i)=>sum+n*currentCursor[i],0)}})}}>Cut at cursor</button><button onClick={()=>changeSettings({...settings,clipBox:{enabled:true,min:currentCursor.map(n=>n-50) as Point3,max:currentCursor.map(n=>n+50) as Point3}})}>100 mm box at cursor</button><button onClick={()=>changeSettings({...settings,clipBox:undefined,obliqueClip:undefined})}>Clear extra cuts</button></details>
+          </>}
         </div>}
         {props.registeredFusion&&!fusionError&&<div className="rl-fusion-readout" role="status">Fused source images · {signalName} + {props.registeredFusion.label}<span>{props.registeredFusion.registration.status==='source-provided'?'Source-provided registration':'Verified registration'} · {Math.round((settings.fusion?.opacity??.5)*100)}% blend</span></div>}
         {expanded && (
@@ -834,12 +765,14 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 if (event.button === 0) {
                   event.currentTarget.focus({ preventScroll: true });
                   event.currentTarget.setPointerCapture(event.pointerId);
-                  moveCursor(event, plane);
+                  moveCursor(event, plane, 'start');
                 }
               }}
               onPointerMove={(event) => {
                 if (event.buttons === 1) moveCursor(event, plane);
               }}
+              onPointerUp={() => props.onSliceStroke?.(null, 'end')}
+              onPointerCancel={() => props.onSliceStroke?.(null, 'end')}
               onKeyDown={(event) => keySlice(event, plane)}
             >
               {goalPoint && <span aria-label="Declared public goal" style={{position:'absolute',left:goalPoint.left,top:goalPoint.top,transform:'translate(-50%,-50%)',color:PUBLIC_GOAL_COLOR,fontSize:20,lineHeight:1,pointerEvents:'none',zIndex:4}}>◇</span>}

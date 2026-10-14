@@ -5,10 +5,11 @@ const path = require('node:path');
 // Only native file dialogs and the prepared local case directory admit paths.
 // The renderer receives opaque list IDs, never authority to open an arbitrary path.
 class CaseLibrary {
-  constructor(userData, preparedRoot) {
+  constructor(userData, preparedRoot, nativePaths = []) {
     this.record = path.join(userData, 'anatomy-cases.json');
     this.preparedRoot = preparedRoot;
     this.paths = new Map();
+    this.nativePaths = nativePaths;
   }
   async read() {
     try {
@@ -34,14 +35,17 @@ class CaseLibrary {
     const prepared = names.filter(n => n.endsWith('.ressectionlab')).sort().map(n => path.join(this.preparedRoot, n));
     const rows = [];
     this.paths.clear();
-    for (const filename of [...new Set([...recent, ...prepared])]) {
+    for (const filename of [...new Set([...recent, ...this.nativePaths, ...prepared])]) {
       try {
         const stat = await fs.stat(filename);
         if (!stat.isFile()) continue;
         const id = require('node:crypto').createHash('sha256').update(filename).digest('hex');
+        const native=path.basename(filename)==='patient-anatomy.json';
+        const doc=native?JSON.parse(await fs.readFile(filename,'utf8')):null;
+        if(native&&doc.schema!=='patient-anatomy-v1')continue;
         this.paths.set(id, filename);
-        rows.push({id, title: path.basename(filename, '.ressectionlab'), recent: recent.includes(filename), bytes: stat.size});
-      } catch (error) { if (error.code !== 'ENOENT') throw error; }
+        rows.push({id, title: native?doc.patient_id:path.basename(filename, '.ressectionlab'), recent: recent.includes(filename), bytes: stat.size, ...(native?{native:true}:{})});
+      } catch (error) { if (error.code !== 'ENOENT' && !(error instanceof SyntaxError)) throw error; }
     }
     return rows;
   }
