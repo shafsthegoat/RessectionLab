@@ -18,7 +18,7 @@ before(async () => {
 });
 after(async () => {
   await server?.close();
-  if (cache) await fs.rm(cache, { recursive: true, force: true });
+  if (cache) await fs.rm(cache, { recursive: true, force: true, maxRetries: 3, retryDelay: 50 });
 });
 
 function fakeRenderer() {

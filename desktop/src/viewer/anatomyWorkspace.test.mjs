@@ -106,9 +106,87 @@ test('volume framebuffer restores viewport/clear state, bounds workload and reta
   assert.equal(renders[0].target.width,1300);assert.equal(renders[0].target.height,650);
   assert.equal(renders[2].target,null);assert.equal(restored,1);assert.equal(alpha,1);
   assert.equal(color.getHexString(),'05080d');
-  r.render(scene,camera,2000,1000,true,()=>restored++);assert.equal(r.sceneTarget.width,420);
+  const finalScene=r.sceneTarget,finalVolume=r.volumeTarget;
+  r.render(scene,camera,2000,1000,true,()=>restored++);
+  assert.equal(renders[3].target.width,360);assert.equal(renders[3].target.height,180);
+  const dragScene=r.interactionTargets.scene,dragVolume=r.interactionTargets.volume;
+  let resized=0;for(const target of [finalScene,finalVolume,dragScene,dragVolume])target.addEventListener('dispose',()=>resized++);
+  r.render(scene,camera,2000,1000,false,()=>restored++);
+  r.render(scene,camera,2000,1000,true,()=>restored++);
+  assert.equal(renders[6].target,finalScene);assert.equal(renders[9].target,dragScene);
+  assert.equal(r.material.uniforms.uScene.value,dragScene.texture);
+  assert.equal(r.material.uniforms.uDepth.value,dragScene.depthTexture);
+  assert.equal(r.blitMaterial.map,dragVolume.texture);
+  assert.equal(resized,0,'quality changes must reuse the GPU attachments');
   r.configure({enabled:false},'CT',null);const before=renders.length;
   r.render(scene,camera,2000,1000,false,()=>restored++);assert.equal(renders.length,before+1);assert.equal(renders.at(-1).scene,scene);
   let disposed=0;r.sceneTarget.addEventListener('dispose',()=>disposed++);r.volumeTarget.addEventListener('dispose',()=>disposed++);
   r.texture.addEventListener('dispose',()=>disposed++);r.transfer.addEventListener('dispose',()=>disposed++);r.dispose();assert.equal(disposed,4);
+  assert.equal(resized,4,'both quality levels release their attachments');
+});
+
+test('camera-only settings and cloned toolbar choices do not reapply layer materials',()=>{
+  const {r,mesh,uniforms}=renderer();let configured=0,labels=0,rendered=0;
+  r.scanVolume={configure(){configured++},labels(){labels++}};r.requestRender=()=>rendered++;
+  const settings={layerOpacity:{brain:.2},clipping:{axis:'x',value:12,enabled:true}};
+  r.setWorkspaceSettings(settings);const planes=mesh.material.clippingPlanes;
+  r.setWorkspaceSettings({...structuredClone(settings),camera:{position:[110,-220,130],target:[10,20,30],up:[0,0,1]},layout:'mri-review',contrast:2});
+  assert.equal(configured,1);assert.equal(labels,1);assert.equal(rendered,1);assert.equal(mesh.material.clippingPlanes,planes);
+  settings.layerOpacity.brain=.8;settings.clipping.value=20;r.setWorkspaceSettings(settings);
+  assert.equal(configured,2);assert.equal(mesh.material.opacity,.8);assert.equal(uniforms.uClipPlane.value.w,-20);
+});
+
+test('unchanged cursor/layers/routes avoid redraw, and in-place visibility changes reach all views',()=>{
+  const {r,mesh}=renderer();let labels=0,planeUpdates=0,rendered=0;
+  const uniforms={uCursor:{value:new THREE.Vector3()},uVisibleBits:{value:0},uLayerEnabled:{value:new Float32Array(8)},uOverlay:{value:0}};
+  Object.assign(r,{cursor:[1,2,3],visible:{},opacity:.4,routeSignature:'[]',mode:'anatomy',
+    scanVolume:{labels(){labels++}},materials:()=>[{uniforms}],replayGroup:new THREE.Group(),cursorObject:new THREE.Object3D(),
+    updateSourcePlane(){planeUpdates++},requestRender(){rendered++}});
+  const visible={brain:true};r.update([1,2,3],visible,.4,[],'anatomy');
+  assert.equal(labels,1);assert.equal(rendered,1);
+  r.update([1,2,3],{...visible},.4,[],'anatomy');
+  assert.equal(labels,1);assert.equal(rendered,1);assert.equal(planeUpdates,0);
+  r.update([2,2,3],visible,.4,[],'anatomy');assert.equal(planeUpdates,1);assert.equal(labels,1);
+  assert.deepEqual(r.cursorObject.position.toArray(),[2,2,3]);
+  visible.brain=false;r.update([2,2,3],visible,.4,[],'anatomy');
+  assert.equal(mesh.visible,false);assert.equal(uniforms.uLayerEnabled.value[0],0);assert.equal(labels,2);
+  visible.brain=true;r.update([2,2,3],visible,.7,[],'anatomy');
+  assert.equal(mesh.visible,true);assert.equal(uniforms.uLayerEnabled.value[0],1);assert.equal(uniforms.uOverlay.value,.7);
+});
+
+test('persisted camera echoes skip control updates after projection bounds settle',()=>{
+  const {r}=renderer();let updated=0,rendered=0;
+  r.camera=new THREE.PerspectiveCamera(34,1,.1,1000);
+  r.controls={target:new THREE.Vector3(),update(){updated++}};r.requestRender=()=>rendered++;
+  const state={position:[110,-220,130],target:[10,20,30],up:[0,0,1]};
+  r.restoreCamera(state);r.restoreCamera(structuredClone(state));
+  assert.equal(updated,1);assert.equal(rendered,1);assert.deepEqual(r.getCameraState(),state);
+  state.position[0]+=1;r.restoreCamera(state);assert.equal(updated,2);
+});
+
+test('rendered quality changes resize once; settled wheel frames keep the drawing buffer',()=>{
+  const previousWindow=globalThis.window;globalThis.window={devicePixelRatio:2};
+  try {
+    const {r}=renderer();let pixelRatio=2;const changes=[];
+    const empty={getBoundingClientRect:()=>({left:0,top:0,width:0,height:0})};
+    Object.assign(r,{disposed:false,width:100,height:100,interacting:false,refinementStarted:0,
+      container:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})},
+      panes:{anatomy:empty,axial:empty,coronal:empty,sagittal:empty},canvas:{dispatchEvent(){}},scanVolume:{active:false},
+      renderer:{getPixelRatio:()=>pixelRatio,setPixelRatio(value){pixelRatio=value;changes.push(value)},setScissorTest(){},clear(){}}});
+    r.render();r.render();assert.deepEqual(changes,[]);
+    r.interacting=true;r.render();r.render();assert.deepEqual(changes,[1]);
+    r.interacting=false;r.render();r.render();assert.deepEqual(changes,[1,2]);
+  } finally {if(previousWindow===undefined)delete globalThis.window;else globalThis.window=previousWindow;}
+});
+
+test('volume shader receives only visible indices, including layers beyond bit 31 and zero/opaque isolation',()=>{
+  const layers=Array.from({length:128},(_,i)=>({name:`layer-${i}`,color:'#778899',mask:new Uint8Array(60)}));
+  const renderer={extensions:{has:()=>true}},r=new ScanVolumeRenderer(renderer,{...source,compartments:layers},[0,100],layers.map((_,i)=>[i%4,i%255+1]));
+  const visible=Object.fromEntries(layers.map((l,i)=>[l.name,[0,64,127].includes(i)]));
+  r.labels(null,visible,{layerOpacity:{'layer-64':0,'layer-127':1}},[]);
+  assert.equal(r.material.uniforms.uActiveLayerCount.value,3);
+  assert.deepEqual([...r.material.uniforms.uActiveLayers.value.slice(0,3)],[0,64,127]);
+  r.labels(null,Object.fromEntries(layers.map(l=>[l.name,false])),{},[]);
+  assert.equal(r.material.uniforms.uActiveLayerCount.value,0);
+  r.dispose();
 });

@@ -1,0 +1,106 @@
+{
+  "schema": "ressectionlab_zoom_layer_ui_verification_v1",
+  "date": "2026-10-14",
+  "timezone": "America/New_York",
+  "baseline_revision": "b863d73694c606eb3f1fb508153820cb05e1c634",
+  "branch": "codex/patient-specific-planner",
+  "source_sha256": {
+    "desktop/src/use-native-workspace.ts": "2b0ec73bfc0902c44fb200d9676c507aee1c6fcfacaf72fdba13a3107689820b",
+    "desktop/src/viewer/README.md": "f09f2aa1906ffd50ab7f6bbee4895cc0fff5b81c1ebc1c1ca38f9f03fb5d5942",
+    "desktop/src/viewer/ScanVolumeRenderer.ts": "b21e67f84e6aec7c16199b11d34447b1b39f58f67d128ed32ff1182740f23941",
+    "desktop/src/viewer/VolumeRenderer.ts": "3ac9887fe4ebdb335f1b8e9286d2f26f70aa8163cd97b2d79ea578b4ddf55b54",
+    "desktop/src/viewer/anatomyWorkspace.test.mjs": "171d4ba9157b1ecb8ecbd4bbf28d1a4e3aee059694129114db54a6e2f55f9d8d",
+    "desktop/src/viewer/diagnosticRendererTransition.test.mjs": "04797805b2dc923eb19c9bbe31b6100cf097d415e120c6a41c11cd2dca593580",
+    "desktop/src/viewer/volumeRaycastShaders.ts": "08eb47e3684c3c8077a23bf420d4a79305680522db9bc6e0e7c56864916965f0"
+  },
+  "final_bundle": "assets/index-BeUrVTEb.js",
+  "final_bundle_sha256": "8c573a4a2f2cce95dbb3af574f8e763b046c2a9abffaa9e1df16b09d2a841f39",
+  "verification": {
+    "build": "passed",
+    "main_tests": 123,
+    "renderer_tests": 344,
+    "viewer_tests": 113,
+    "total_tests": 580,
+    "failures": 0
+  },
+  "computer_use": {
+    "surface": "Native Electron RessectionLab window via cua_repl",
+    "case": "ZENODO-17486320-meningioma-sub-06",
+    "scan": "T1CE",
+    "actions": [
+      "3D zoom in/out",
+      "vessel visibility off/on",
+      "all 31 brain regions on/off with vessels hidden during hydration, then vessels restored",
+      "repeated orbit drags with final refinement",
+      "scan volume off/on",
+      "selected-tissue isolation, including no selected layers",
+      "four-view layout",
+      "expanded axial slice",
+      "restore 3D-focus layout and original selections"
+    ],
+    "matched_framebuffer": {
+      "width": 1080,
+      "height": 742,
+      "format": "WebGL RGBA unsigned byte",
+      "checksum": "FNV-1a 32-bit",
+      "baseline": "d228c6a7",
+      "final": "d228c6a7",
+      "nonzero": true,
+      "matches": true,
+      "camera": "Fit 3D view",
+      "visible_layers": [
+        "vessels",
+        "brain",
+        "tumor"
+      ],
+      "contrast": 1,
+      "scan_density": 0.18,
+      "scope": "One matched patient view on this GPU; checksum and screenshots, not an exhaustive pixel comparison"
+    },
+    "zoom_observation": {
+      "baseline_steady_wheel_unchanged_dimension_writes": 4,
+      "optimized_two_wheels_dimension_writes": 0,
+      "baseline_refinement_ms": [
+        297.4,
+        120.0
+      ],
+      "optimized_refinement_ms": [
+        174.5,
+        114.9
+      ],
+      "note": "Descriptive two-gesture observations, not an FPS or latency benchmark. Baseline first-wheel reset was after OrbitControls, so only the steady second wheel retained resize records. Two optimized recorded resize writes were DevTools docking, not zoom."
+    },
+    "group_and_drag_observation": {
+      "viewer_replacements": 1,
+      "loading_appearances": 1,
+      "explanation": "Only the initial cold brain-region hydration rebuilt the viewer; hiding regions and restoring previously loaded vessels did not reload.",
+      "interactive_frames_after_alternate_layout_zoom": 3,
+      "gpu_refinements_completed": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "gpu_refinement_ms": [
+        81.2,
+        123.2,
+        139.9,
+        170.1
+      ],
+      "unchanged_dimension_writes": 0
+    },
+    "final_state": "Final production bundle loaded; default patient layers and 3D-focus layout restored; temporary probes removed; DevTools closed; app remains running"
+  },
+  "implementation": [
+    "Resize canvas pixel ratio at rendered quality transitions only",
+    "Cache drag and final-quality volume framebuffers separately",
+    "Skip unchanged material, cursor, visibility, opacity and saved-camera work",
+    "Visit visible volume-label indices in original order",
+    "Retain admitted native layers in document order during visibility hydration"
+  ],
+  "test_maintenance": [
+    "Correct stale interaction target assertion from 420 to the existing 360-pixel cap",
+    "Retry diagnostic-test temporary-directory teardown after reproducible Vite ENOTEMPTY cleanup race"
+  ],
+  "cache_tradeoff": "One additional bounded drag framebuffer pair and retained previously loaded native layer arrays until view replacement"
+}

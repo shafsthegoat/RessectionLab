@@ -56,7 +56,13 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     if(!binding||busy)return;const next={...state,visible};updateState({visible});
     const resident=new Set(volume?.compartments.map(l=>l.name));
     if(volume&&Object.keys(visible).filter(id=>visible[id]).every(id=>resident.has(id)||unavailable.includes(id)))return;
-    void run(()=>loadView(binding,series,next,original));
+    // A newly enabled layer may require hydration. Retain already admitted
+    // layers in this same scan so hiding one while loading another does not
+    // evict its masks/meshes and make the next toggle rebuild the viewer again.
+    // Use document order and IDs: transient fragment highlights are not layers
+    // that can be requested from the backend.
+    const layers = binding.document.layers.filter(layer=>resident.has(layer.id)||visible[layer.id]===true).map(layer=>layer.id);
+    void run(()=>loadView(binding,series,next,original,{layers}));
   }
   const refresh=()=>binding?loadView(binding,series,state,original):Promise.resolve();
   async function edit(action:string,points:Point3[]=[],extra:Args={}){if(!binding||!api||!editLayer)return;await run(async()=>{

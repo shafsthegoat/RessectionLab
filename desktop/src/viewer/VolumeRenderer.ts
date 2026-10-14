@@ -183,6 +183,8 @@ export class VolumeRenderer {
   private visible: Record<string, boolean> = {};
   private opacity = 0.4;
   private workspaceSettings: ViewerWorkspaceSettings = {};
+  private appearanceSignature: string | null = null;
+  private visibilitySignature: string | null = null;
   private extraClipPlanes: THREE.Plane[] = [];
   private clipPlane: THREE.Plane | null = null;
   private cameraRestored = false;
@@ -193,10 +195,9 @@ export class VolumeRenderer {
   private readonly pickRay = new THREE.Raycaster();
   private readonly onControlsChange = () => this.requestRender();
   private refinementStarted=0;
-  private readonly onControlsStart = () => { this.interacting = true; this.renderer.setPixelRatio(1); this.requestRender(); };
+  private readonly onControlsStart = () => { this.interacting = true; this.requestRender(); };
   private readonly onControlsEnd = () => {
     this.interacting = false;
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     this.refinementStarted=performance.now();
     this.requestRender();
     this.cameraRestored = true;
@@ -407,6 +408,7 @@ export class VolumeRenderer {
       }),
     );
     this.cursorObject.renderOrder = 5;
+    this.cursorObject.position.copy(centre);
     this.scene.add(this.cursorObject);
     this.scene.add(this.publicGoalObject);
     this.camera.up.set(0, 0, 1);
@@ -486,7 +488,7 @@ export class VolumeRenderer {
           metalness: 0.08,
           transparent: appearance.opacity < 1,
           opacity: appearance.opacity,
-          clippingPlanes: this.clipPlane ? [this.clipPlane] : [],
+          clippingPlanes: [...this.extraClipPlanes, ...(this.clipPlane ? [this.clipPlane] : [])],
           side: THREE.DoubleSide,
           depthWrite: appearance.opacity >= 1,
         }),
@@ -542,39 +544,49 @@ export class VolumeRenderer {
     routes: ViewerRoute[],
     cameraMode: "anatomy" | "instruments",
   ): void {
-    this.cursor = [...cursor];
+    const cursorChanged = cursor.some((value, axis) => value !== this.cursor[axis]);
+    const visibilitySignature = this.volume.compartments.map(layer => visible[layer.name] !== false ? '1' : '0').join('');
+    const visibilityChanged = visibilitySignature !== this.visibilitySignature;
+    const nextOpacity = Math.max(0, Math.min(1, opacity));
+    const opacityChanged = nextOpacity !== this.opacity;
     this.visible = visible;
-    this.opacity = Math.max(0, Math.min(1, opacity));
-    this.scanVolume.labels(this.labelTexture,visible,this.workspaceSettings,this.extraClipPlanes);
-    let bits = 0;
-    this.volume.compartments.forEach((layer, index) => {
-      if (visible[layer.name] !== false) bits |= 1 << index;
-      const mesh = this.surfaces.get(layer.name);
-      if (mesh) mesh.visible = visible[layer.name] !== false;
-    });
-    this.replayGroup.children.forEach((mesh) => {
-      mesh.visible =
-        mesh.userData.compartment === undefined ||
-        visible[mesh.userData.compartment] !== false;
-    });
-    this.materials().forEach((shader) => {
-      shader.uniforms.uCursor.value.set(...cursor);
-      shader.uniforms.uVisibleBits.value = bits;
-      this.volume.compartments.forEach((layer,i)=>{shader.uniforms.uLayerEnabled.value[i]=visible[layer.name]!==false?1:0});
-      shader.uniforms.uOverlay.value = this.opacity;
-    });
-    this.cursorObject.position.set(...cursor);
-    this.updateSourcePlane();
+    this.opacity = nextOpacity;
+    if (visibilityChanged) {
+      this.visibilitySignature = visibilitySignature;
+      this.scanVolume.labels(this.labelTexture,visible,this.workspaceSettings,this.extraClipPlanes);
+      let bits = 0;
+      this.volume.compartments.forEach((layer, index) => {
+        if (visible[layer.name] !== false) bits |= 1 << index;
+        const mesh = this.surfaces.get(layer.name);
+        if (mesh) mesh.visible = visible[layer.name] !== false;
+      });
+      this.replayGroup.children.forEach((mesh) => {
+        mesh.visible = mesh.userData.compartment === undefined || visible[mesh.userData.compartment] !== false;
+      });
+      this.materials().forEach(shader => {
+        shader.uniforms.uVisibleBits.value = bits;
+        this.volume.compartments.forEach((layer,i) => { shader.uniforms.uLayerEnabled.value[i] = visible[layer.name] !== false ? 1 : 0; });
+      });
+    }
+    if (cursorChanged) {
+      this.cursor = [...cursor];
+      this.materials().forEach(shader => shader.uniforms.uCursor.value.set(...cursor));
+      this.cursorObject.position.set(...cursor);
+      this.updateSourcePlane();
+    }
+    if (opacityChanged) this.materials().forEach(shader => { shader.uniforms.uOverlay.value = this.opacity; });
     const signature = JSON.stringify(routes);
-    if (signature !== this.routeSignature) {
+    const routesChanged = signature !== this.routeSignature;
+    if (routesChanged) {
       this.routeSignature = signature;
       this.updateRoutes(routes);
     }
-    if (cameraMode !== this.mode) {
+    const modeChanged = cameraMode !== this.mode;
+    if (modeChanged) {
       this.mode = cameraMode;
       this.fitCamera(cameraMode);
     }
-    this.requestRender();
+    if (cursorChanged || visibilityChanged || opacityChanged || routesChanged || modeChanged) this.requestRender();
   }
 
   setWindow(low: number, high: number): void {
@@ -587,6 +599,13 @@ export class VolumeRenderer {
 
   setWorkspaceSettings(settings: ViewerWorkspaceSettings): void {
     this.workspaceSettings = settings;
+    // Camera persistence and toolbar/layout choices do not change anatomy
+    // materials. Compare values so cloned or in-place edited settings work too.
+    const signature = JSON.stringify([settings.layerOpacity, settings.layerColor,
+      settings.clipping, settings.clipBox, settings.obliqueClip,
+      settings.fusion?.opacity, settings.volumeRendering]);
+    if (signature === this.appearanceSignature) return;
+    this.appearanceSignature = signature;
     const clipping = clippingForBounds(settings.clipping,this.bounds);
     const normal = new THREE.Vector3();
     normal.setComponent({x:0,y:1,z:2}[clipping.axis],clipping.flipped ? -1 : 1);
@@ -681,9 +700,14 @@ export class VolumeRenderer {
   restoreCamera(state: ViewerCameraState|null|undefined): void {
     if(!validCameraState(state))return;
     this.cameraRestored=true;this.pendingFit=null;
+    const unchanged = this.camera.position.equals(new THREE.Vector3(...state.position)) &&
+      this.controls.target.equals(new THREE.Vector3(...state.target)) &&
+      this.camera.up.equals(new THREE.Vector3(...state.up).normalize());
+    const distance = new THREE.Vector3(...state.position).distanceTo(new THREE.Vector3(...state.target));
+    const near = Math.max(.1,distance/1000), far = Math.max(1000,distance*8);
+    if (unchanged && this.camera.near === near && this.camera.far === far) return;
     this.camera.position.set(...state.position);this.controls.target.set(...state.target);this.camera.up.set(...state.up).normalize();
-    const distance=this.camera.position.distanceTo(this.controls.target);
-    this.camera.near=Math.max(.1,distance/1000);this.camera.far=Math.max(1000,distance*8);
+    this.camera.near=near;this.camera.far=far;
     this.camera.updateProjectionMatrix();this.controls.update();this.requestRender();
   }
 
@@ -1311,6 +1335,10 @@ export class VolumeRenderer {
       width = Math.round(root.width),
       height = Math.round(root.height);
     if (width < 1 || height < 1) return;
+    // OrbitControls emits wheel start/end synchronously. Only resize for the
+    // quality of a frame that will actually be drawn, never between wheel events.
+    const pixelRatio = this.interacting ? 1 : Math.min(window.devicePixelRatio || 1, 2);
+    if (pixelRatio !== this.renderer.getPixelRatio()) this.renderer.setPixelRatio(pixelRatio);
     if (width !== this.width || height !== this.height) {
       this.width = width;
       this.height = height;

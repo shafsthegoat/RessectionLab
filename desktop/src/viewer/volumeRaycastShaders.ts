@@ -28,6 +28,8 @@ ${labelMembershipShader}
 uniform int uLabelBits;
 uniform int uVisibleBits;
 uniform vec4 uLayerColor[128];
+uniform int uActiveLayerCount;
+uniform float uActiveLayers[128];
 uniform int uExtraClipCount;
 uniform vec4 uExtraClips[7];
 uniform bool uShadows;
@@ -98,8 +100,11 @@ void main(){
     vec4 tissue=texture(uTransfer,vec2(clamp((value-uRange.x)/(uRange.y-uRange.x),0.0,1.0),0.5));
     ivec4 packed=ivec4(round(texture(uLabels,((p+0.5)/uShape).zyx)*255.0));
     bool selected=false;vec3 labelColor=vec3(0.0);float extinction=0.0;
-    for(int j=0;j<128;j++){if(j>=uLayerCount)break;
-      if(uLayerEnabled[j]<0.5 || !hasLabel(packed,j))continue;
+    // The CPU supplies visible indices in original layer order. Hidden layers
+    // contribute neither membership nor color, including during isolation.
+    for(int slot=0;slot<128;slot++){if(slot>=uActiveLayerCount)break;
+      int j=int(uActiveLayers[slot]);
+      if(!hasLabel(packed,j))continue;
       selected=true;
       float opacity=uLayerColor[j].a;
       if(opacity<=0.0 || opacity>=1.0 || hasLabel(previousLabels,j))continue;

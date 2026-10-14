@@ -14,6 +14,7 @@ import { volumeVertexShader, volumeFragmentShader } from './volumeRaycastShaders
 export class ScanVolumeRenderer {
   private readonly sceneTarget: THREE.WebGLRenderTarget;
   private readonly volumeTarget: THREE.WebGLRenderTarget;
+  private interactionTargets: {scene: THREE.WebGLRenderTarget; volume: THREE.WebGLRenderTarget} | null = null;
   private readonly rayScene = new THREE.Scene();
   private readonly blitScene = new THREE.Scene();
   private readonly camera = new THREE.Camera();
@@ -51,6 +52,7 @@ export class ScanVolumeRenderer {
         uBackground:{value:this.background},
         uLayerCount:{value:volume.compartments.length},uLayerCodes:{value:(codes??packAnatomyLabels(volume).codes).map(c=>new THREE.Vector2(...c))},uLayerEnabled:{value:new Float32Array(MAX_ANATOMY_LAYERS).fill(1)},
         uLabels:{value:null},uLabelBits:{value:0},uVisibleBits:{value:0},uLayerColor:{value:Array.from({length:MAX_ANATOMY_LAYERS},()=>new THREE.Vector4())},
+        uActiveLayerCount:{value:volume.compartments.length},uActiveLayers:{value:Float32Array.from({length:MAX_ANATOMY_LAYERS},(_,i)=>i)},
         uExtraClipCount:{value:0},uExtraClips:{value:Array.from({length:7},()=>new THREE.Vector4())},
         uShadows:{value:true},uIsolate:{value:false},uInteractive:{value:false},
       }});
@@ -75,13 +77,14 @@ export class ScanVolumeRenderer {
     if(clip)this.material.uniforms.uClipPlane.value.set(clip.normal.x,clip.normal.y,clip.normal.z,clip.constant);
   }
   labels(texture:THREE.Data3DTexture,visible:Record<string,boolean>,settings:ViewerWorkspaceSettings,planes:THREE.Plane[]){
-    const u=this.material.uniforms;u.uLabels.value=texture;let bits=0,all=0;
+    const u=this.material.uniforms;u.uLabels.value=texture;let bits=0,all=0,active=0;
     this.layers.forEach((layer,i)=>{const a=layerAppearance(layer.name,layer.color,settings);
       u.uLayerEnabled.value[i]=visible[layer.name]!==false?1:0;
-      if(visible[layer.name]!==false)all|=1<<i;
+      if(visible[layer.name]!==false){all|=1<<i;u.uActiveLayers.value[active++]=i;}
       if(visible[layer.name]!==false && a.opacity<1 && a.opacity>0)bits|=1<<i;
       const color=new THREE.Color(a.color);u.uLayerColor.value[i].set(color.r,color.g,color.b,a.opacity);
     });
+    u.uActiveLayerCount.value=active;
     u.uLabelBits.value=bits;u.uVisibleBits.value=all;u.uExtraClipCount.value=Math.min(7,planes.length);
     planes.slice(0,7).forEach((p,i)=>u.uExtraClips.value[i].set(p.normal.x,p.normal.y,p.normal.z,p.constant));
   }
@@ -92,8 +95,19 @@ export class ScanVolumeRenderer {
     const pixelRatio=this.renderer.getPixelRatio();
     const scale=Math.min(pixelRatio,(interactive?360:1300)/Math.max(width,height));
     const w=Math.max(1,Math.round(width*scale)),h=Math.max(1,Math.round(height*scale));
-    if(this.sceneTarget.width!==w||this.sceneTarget.height!==h){this.sceneTarget.setSize(w,h);this.volumeTarget.setSize(w,h);}
+    // Keep the small drag buffers separate so pointer release does not discard
+    // the full-quality attachments on every gesture. Sizes/steps are unchanged.
+    if(interactive && !this.interactionTargets){
+      const scene=new THREE.WebGLRenderTarget(w,h,{type:THREE.HalfFloatType,depthBuffer:true});
+      scene.depthTexture=new THREE.DepthTexture(w,h,THREE.UnsignedIntType);
+      this.interactionTargets={scene,volume:new THREE.WebGLRenderTarget(w,h,{type:THREE.HalfFloatType,depthBuffer:false})};
+    }
+    const sceneTarget=interactive?this.interactionTargets!.scene:this.sceneTarget;
+    const volumeTarget=interactive?this.interactionTargets!.volume:this.volumeTarget;
+    if(sceneTarget.width!==w||sceneTarget.height!==h){sceneTarget.setSize(w,h);volumeTarget.setSize(w,h);}
     const uniforms=this.material.uniforms;
+    uniforms.uScene.value=sceneTarget.texture;uniforms.uDepth.value=sceneTarget.depthTexture;
+    this.blitMaterial.map=volumeTarget.texture;
     camera.updateMatrixWorld();
     uniforms.uCameraWorld.value.copy(camera.matrixWorld);
     uniforms.uInverseProjection.value.copy(camera.projectionMatrixInverse);
@@ -105,8 +119,8 @@ export class ScanVolumeRenderer {
     scene.traverse(o=>{if(o instanceof THREE.Mesh && o.visible && o.userData.compartment && !Array.isArray(o.material) && o.material.opacity<1){hidden.push(o);o.visible=false;}});
     try {
       this.renderer.setClearColor(0,0);
-      this.renderer.setRenderTarget(this.sceneTarget);this.renderer.clear();this.renderer.render(scene,camera);
-      this.renderer.setRenderTarget(this.volumeTarget);this.renderer.clear();this.renderer.render(this.rayScene,this.camera);
+      this.renderer.setRenderTarget(sceneTarget);this.renderer.clear();this.renderer.render(scene,camera);
+      this.renderer.setRenderTarget(volumeTarget);this.renderer.clear();this.renderer.render(this.rayScene,this.camera);
     } finally {
       hidden.forEach(o=>o.visible=true);
       this.renderer.setClearColor(this.background,clearAlpha);
@@ -116,6 +130,7 @@ export class ScanVolumeRenderer {
   }
   dispose(){
     this.sceneTarget.dispose();this.volumeTarget.dispose();this.texture.dispose();this.transfer?.dispose();
+    this.interactionTargets?.scene.dispose();this.interactionTargets?.volume.dispose();
     for(const scene of [this.rayScene,this.blitScene])scene.traverse(child=>{if(child instanceof THREE.Mesh)child.geometry.dispose();});
     this.material.dispose();this.blitMaterial.dispose();
   }
