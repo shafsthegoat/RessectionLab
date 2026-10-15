@@ -31,3 +31,16 @@ test('legacy skull transparency migrates without rewriting explicitly selected m
   const explicit={...view,settings:{...view.settings,skullMode:'transparent'}};
   assert.equal(migrateSkullView(explicit,layers),explicit);
 });
+
+test('legacy vessel filters migrate once; explicit new choices survive save and reopen',async()=>{
+  const {vesselScopeForView}=await import('../src/native-study-state.ts');
+  assert.equal(vesselScopeForView(),'all');
+  for(const vesselScope of ['brain','intracranial','excluded','all',undefined]){
+    const legacy={vesselScope,states:{mri:{settings:{contrast:4}}}};
+    const before=structuredClone(legacy);
+    assert.equal(vesselScopeForView(legacy),'all');
+    assert.deepEqual(legacy,before);
+    const saved=JSON.parse(JSON.stringify({...legacy,vesselDisplayVersion:2}));
+    assert.equal(vesselScopeForView(saved),vesselScope??'all');
+  }
+});

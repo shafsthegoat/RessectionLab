@@ -53,5 +53,6 @@ def brain_vessel_display(collection, row):
         result['edits'] = [{'display_only': 'brain-envelope', 'brain': brain['data']['sha256']}]
         result.pop('probability', None)
         return result, {'scope': 'brain', 'hiddenVoxels': int(mask.sum() - filtered.sum()),
-                        'brainLayer': brain['id'], 'sourcePreserved': True}
+                        'brainLayer': brain['id'], 'sourcePreserved': True,
+                        'reason': f'{int(mask.sum() - filtered.sum()):,} source voxels hidden by the brain-only filter.'}
     return row, {'scope': 'all', 'reason': 'No aligned brain mask; showing the full vessel estimate', 'sourcePreserved': True}

@@ -1,4 +1,4 @@
-import type {Binding, NativeScanState} from './native-anatomy-data';
+import type {Binding, NativeScanState, NativeViewState, VesselScope} from './native-anatomy-data';
 
 export function studyTimepoint(b:Binding):string {
   return b.document.study_timepoint??b.document.series[0]?.timepoint??'preoperative';
@@ -24,4 +24,9 @@ export function migrateSkullView(view:NativeScanState,layers:Binding['document']
     clipping:view.settings.clipping?{...view.settings.clipping,enabled:false}:undefined,
     clipBox:view.settings.clipBox?{...view.settings.clipBox,enabled:false}:undefined,
     obliqueClip:view.settings.obliqueClip?{...view.settings.obliqueClip,enabled:false}:undefined}};
+}
+
+/** Legacy scopes were implicit filters; migrate once without changing anatomy. */
+export function vesselScopeForView(view?:NativeViewState|null):VesselScope {
+  return view?.vesselDisplayVersion===2 ? view.vesselScope??'all' : 'all';
 }

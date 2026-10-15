@@ -13,8 +13,10 @@ def checked_view(collection, state):
         raise ValueError('Unsupported patient view state')
     if state.get('patientId') != collection.document['patient_id'] or state.get('snapshotId') != collection.identity():
         raise ValueError('View state belongs to a different anatomy revision')
-    if state.get('vesselScope', 'brain') not in {'brain', 'all', 'intracranial', 'excluded'}:
+    if state.get('vesselScope', 'all') not in {'brain', 'all', 'intracranial', 'excluded'}:
         raise ValueError('Invalid vessel display scope')
+    if 'vesselDisplayVersion' in state and (type(state['vesselDisplayVersion']) is not int or state['vesselDisplayVersion'] != 2):
+        raise ValueError('Unsupported vessel display version')
     series = {s['id'] for s in collection.document['series']}
     layers = {s['id'] for s in collection.document['layers']}
     if state.get('seriesId') not in series or not isinstance(state.get('states'), dict) or not set(state['states']) <= series:

@@ -55,3 +55,12 @@ test('case switch/cancellation ignores both stale data and stale error state',as
     await done;assert.equal(q.state.volume,base);assert.equal(q.installed.length,0);assert.deepEqual(q.state.failed,{});
   }
 });
+
+test('scope replacement discards in-flight filtered layers before installing full source',async()=>{
+  const q=queue(),done=drainLayerRequests(q.options);
+  q.invalidate();
+  const full={...source(),displayIdentity:'scan/revision/all/2',compartments:[{name:'vessels',mask:new Uint8Array(8).fill(1),color:'#ff0000'}]};
+  q.state.volume=full;q.answer(0);await done;
+  assert.equal(q.state.volume,full);assert.equal(q.installed.length,0);
+  assert.equal(q.state.volume.compartments[0].mask.reduce((a,b)=>a+b),8);
+});

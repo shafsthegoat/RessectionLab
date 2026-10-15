@@ -1,4 +1,4 @@
-import {nextScanState,migrateSkullView} from './native-study-state';
+import {nextScanState,migrateSkullView,vesselScopeForView} from './native-study-state';
 import {drainLayerRequests} from './native-layer-queue';
 import {mergeResidentLayers,prepareNativeLabels} from './native-layer-residency';
 import {useCallback,useEffect,useRef,useState} from 'react';
@@ -15,8 +15,8 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const [binding,setBinding]=useState<Binding|null>(null),[volume,setVolume]=useState<ViewerVolume|null>(null);
   const [series,setSeries]=useState(''),[states,setStates]=useState<Record<string,NativeScanState>>({});
   const [busy,setBusy]=useState(false),[message,setMessage]=useState(''),[registration,setRegistration]=useState('');
-  const [vesselScope,setVesselScope]=useState<VesselScope>('intracranial');
-  const scopeRef=useRef<VesselScope>('intracranial');
+  const [vesselScope,setVesselScope]=useState<VesselScope>('all');
+  const scopeRef=useRef<VesselScope>('all');
   const [unavailable,setUnavailable]=useState<string[]>([]),[draft,setDraft]=useState<Draft>(null),[original,setOriginal]=useState(false);
   const [editLayer,setEditLayer]=useState<string|null>(null),[tool,setTool]=useState('navigate'),[radius,setRadius]=useState(2),[threshold,setThreshold]=useState(.5),[author,setAuthor]=useState('');
   const [review,setReview]=useState<ComponentReview|null>(null),[components,setComponents]=useState<number[]>([]);
@@ -59,8 +59,8 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   }
   const install=useCallback(async(b:Binding)=>{
     generation.current++;resetLayers();installVolume(null);setBinding(b);setDraft(null);setOriginal(false);setReview(null);setComponents([]);setEditLayer(null);
-    scopeRef.current=b.viewState?.vesselScope==='brain'?'intracranial':b.viewState?.vesselScope??'intracranial';setVesselScope(scopeRef.current);
     const saved=b.viewState?.snapshotId===b.document.snapshot_id?b.viewState:null;
+    scopeRef.current=vesselScopeForView(saved);setVesselScope(scopeRef.current);
     const s=saved?.seriesId??b.document.reference_series??'';setSeries(s);
     const views=saved?.states??{};const v=migrateSkullView(views[s]??initial(b,s),b.document.layers);setStates({...views,[s]:v});
     if(s)await run(async()=>{setMessage('Checking study alignment…');const result=await api!.anatomyRegister({...args(b),action:'ensure'});const next={...b,document:result.document};setBinding(next);await loadView(next,s,v)});else setMessage('Add a source scan to begin.');
@@ -134,7 +134,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     if(phase==='end'&&stroke.current.length)void edit(tool,stroke.current.splice(0,10000));
   }
   async function save(saveArchive=true){if(!binding||!api||draft)return;await run(async()=>{
-    const viewState:NativeViewState={schema:'patient-anatomy-view-v1',patientId:binding.document.patient_id,snapshotId:binding.document.snapshot_id,seriesId:series,states,vesselScope:scopeRef.current};
+    const viewState:NativeViewState={schema:'patient-anatomy-view-v1',patientId:binding.document.patient_id,snapshotId:binding.document.snapshot_id,seriesId:series,states,vesselScope:scopeRef.current,vesselDisplayVersion:2};
     await api.anatomySaveView({...args(),viewState,saveArchive});setMessage('Workspace saved · scans, layers and views preserved');
   });}
   async function reviewFragments(layerId=editLayer){
@@ -150,7 +150,14 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   function highlight(ids:number[]){if(!binding||!review||busy)return;setComponents(ids);const next={...state,cursor:ids.length===1?review.components.find(c=>c.id===ids[0])?.center??state.cursor:state.cursor};void run(()=>loadView(binding,series,next,original,{highlightLayer:editLayer,highlightComponents:ids,reviewId:review.reviewId}));}
   function compare(){if(!binding)return;setOriginal(!original);void run(()=>loadView(binding,series,state,!original));}
   async function change(job:()=>Promise<{document:Binding['document']}|null>){if(!binding)return;await run(async()=>{const r=await job();if(!r)return;const imported={...binding,document:r.document};setBinding(imported);const aligned=await api!.anatomyRegister({...args(imported),action:'ensure'});const b={...imported,document:aligned.document};setBinding(b);const s=series||b.document.reference_series||'';setSeries(s);if(s)await loadView(b,s,migrateSkullView(states[s]??initial(b,s),b.document.layers));});}
-  function changeVesselScope(scope:VesselScope){if(busy||draft||!binding)return;scopeRef.current=scope;setVesselScope(scope);void run(()=>loadView(binding,series,state,original));}
+  function changeVesselScope(scope:VesselScope){
+    if(active.current||busy||draft||!binding||scope===scopeRef.current)return;
+    // Invalidate incremental requests before waiting for them; old filtered layers
+    // must never be installed into the newly selected scope.
+    generation.current++;resetLayers();installVolume(null);
+    scopeRef.current=scope;setVesselScope(scope);
+    void run(()=>loadView(binding,series,state,original));
+  }
   async function savePackage(){if(!binding||!api||draft)return;await save(false);await run(async()=>{const r=await api.anatomySavePackage(args());if(r)setMessage('Patient study file saved · '+r.path)});}
   function changeSkullMode(mode:NonNullable<ViewerWorkspaceSettings['skullMode']>){
     if(!binding)return;

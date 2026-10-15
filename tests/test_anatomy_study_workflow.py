@@ -133,3 +133,59 @@ def test_header_save_updates_the_open_portable_file(patient,tmp_path):
     assert result['portable'] is True
     with ZipFile(dest) as archive:
         assert json.loads(archive.read('workspace-view.json')) == state
+
+
+@pytest.mark.parametrize('scope', ['all', 'brain', 'intracranial', 'excluded'])
+def test_versioned_vessel_scope_roundtrip_preserves_anatomy(patient, scope):
+    from resectionlab.anatomy_workspace import save_view, read_view
+    before = deepcopy(patient.document)
+    state = {'schema': 'patient-anatomy-view-v1', 'patientId': patient.document['patient_id'],
+             'snapshotId': patient.identity(), 'seriesId': 'mri', 'vesselScope': scope,
+             'vesselDisplayVersion': 2, 'states': {'mri': {'cursor': None, 'visible': {}, 'settings': {}}}}
+    save_view(patient, state)
+    assert read_view(patient) == state
+    assert patient.document == before
+    for invalid in [True, 1, 3, '2', None]:
+        with pytest.raises(ValueError, match='vessel display version'):
+            save_view(patient, {**state, 'vesselDisplayVersion': invalid})
+
+
+def test_full_source_preserves_continuous_vessel_across_unknown_skull_slice(tmp_path):
+    import nibabel as nib
+    from scipy import ndimage as ndi
+    from resectionlab.anatomy_intracranial import intracranial_vessels
+    x, y, z = np.indices((64, 64, 12))
+    radius = np.hypot(x-32, y-32)
+    ct = np.where(radius > 26, -1000., np.where(radius > 23, 1000., 30.)).astype(np.float32)
+    ct[31:39, 50:, 6] = 0  # One open skull ring; source vessel stays continuous.
+    for name, data in [('mri', np.ones(ct.shape, np.float32)), ('ct', ct)]:
+        image = nib.Nifti1Image(data, np.eye(4)); image.header.set_xyzt_units('mm')
+        nib.save(image, tmp_path/f'{name}.nii.gz')
+    c = Collection.create(tmp_path/'continuous', 'continuous-vessel')
+    c.add_series(tmp_path/'mri.nii.gz', series_id='mri', modality='T1CE')
+    c.add_series(tmp_path/'ct.nii.gz', series_id='ct', modality='CT')
+    c.set_registration('ct', np.eye(4), status='source-provided', method='fixture')
+    vessel = np.zeros(ct.shape, np.uint8); vessel[31:34,31:34,1:11] = 1
+    c.add_layer(vessel,np.eye(4),layer_id='vessels',source_series='mri',kind='vessels',role='critical',color='#ef5679',probability=vessel*.8+.1)
+    c.add_layer((radius<19).astype(np.uint8),np.eye(4),layer_id='brain',source_series='mri',kind='brain',role='context',color='#91c4b6')
+    c.save(); before = deepcopy(c.document)
+    strict, report = intracranial_vessels(c,c.layer('vessels'))
+    assert report['uncertainVoxels'] > 0
+    assert report['outsideVoxels'] == report['boneConflictVoxels'] == 0
+    assert ndi.label(c.mask(strict))[1] == 2
+    bridge = BridgeSession(tmp_path/'transfer')
+    def call(op, args): return bridge.execute(op,args,_Request('gap-test'),lambda *x:None)
+    opened = call('anatomyOpen',{'path':str(c.root/'patient-anatomy.json')})
+    args = {'collectionId':opened['collectionId'],'snapshotId':c.identity(),'seriesId':'mri','layers':['vessels'],'previewAlignment':True}
+    for scope in ['intracranial','all','intracranial','all']:
+        result = call('anatomyView',{**args,'vesselScope':scope})['compartments'][0]
+        shown = np.fromfile(result['mask']['path'],dtype=np.uint8).reshape(vessel.shape)
+        if scope == 'all':
+            assert np.array_equal(shown,vessel)
+            assert ndi.label(shown)[1] == 1
+            assert result['displayFilter'] is None
+        else:
+            assert np.array_equal(shown,c.mask(strict))
+            assert 'Unknown skull coverage' in result['displayFilter']['reason']
+    assert c.document == before
+    assert Collection(c.root).document == before

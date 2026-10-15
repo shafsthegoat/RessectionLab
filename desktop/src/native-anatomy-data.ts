@@ -55,7 +55,7 @@ export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cached
 }
 
 export interface NativeScanState {cursor:Point3|null;visible:Record<string,boolean>;settings:ViewerWorkspaceSettings}
-export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;vesselScope?:VesselScope}
+export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;vesselScope?:VesselScope;vesselDisplayVersion?:2}
 export interface ComponentReview {reviewId:string;layerId:string;components:Array<{id:number;voxels:number;volumeMm3:number;center:Point3}>}
 export function isNativeBinding(value:unknown):value is Binding {return !!value&&typeof value==='object'&&'collectionId' in value&&'document' in value;}
 

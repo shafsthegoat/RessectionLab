@@ -15,13 +15,17 @@ parent transforms, geometry, or algorithm versions invalidate the cache.
 The default skull mode is opaque exterior. Transparent and cutaway modes change
 both mesh and CT-volume presentation; they never change source anatomy. Legacy
 views without an explicit skull mode migrate to exterior. The default vessel
-scope uses enclosed, brain-seeded CT cranial rings. A ring must be closed within
+scope is **Full source estimate**, preserving all source components and retained
+probability surfaces. Legacy saved scopes migrate once to full source; saved
+preferences with `vesselDisplayVersion: 2` retain explicit scope choices.
+The optional **Skull-supported only** filter uses enclosed, brain-seeded CT cranial rings. A ring must be closed within
 a 2 mm morphological tolerance, avoid the acquisition border, cover at least
 70% of its brain seed, and have no more than three times its area. Supported
 intracranial space can extend beyond the brain mask. Missing/open skull regions
 remain unknown; they are not completed with a convex hull or synthetic anatomy.
-The UI reports excluded volume, fragments, and unknown coverage, with full-source
-and highlighted-exclusion views. Quantitative source masks remain unchanged.
+The UI separately reports unknown coverage, estimated outside-skull voxels, and
+bone conflicts, with a direct **Show full source** action. Unsupported slices can
+remove whole bands of source vessels; filtering is never evidence of missing vessels. Quantitative source masks remain unchanged.
 
 Privacy removal can be recorded explicitly as user-reported coverage metadata.
 Privacy-redacted regions are excluded from image similarity and are not treated
@@ -305,3 +309,49 @@ derived measurements in `performance.json`. This short local sample meets the
 target average and refinement budget, but does not establish a sustained 30 FPS
 floor across all datasets, visible layers or window sizes. Smooth display does
 not certify prediction accuracy; remaining fragments require explicit review.
+
+
+### Vessel display gap repair, 15 October 2026
+
+The sub-06 skull filter hid 332,542 of 673,582 source vessel voxels, including
+203,723 with unknown skull coverage. The full-source default restores those
+existing estimates without editing anatomy, registration, thresholds or planning
+identity. Its probability surface also avoids the binary conversion used by
+filtered modes. Full-source estimates remain unreviewed and may include
+extracranial tissue or false positives.
+
+Migration preserves other view preferences and writes the version marker only
+through the existing Save flow. Incremental requests are invalidated before a
+scope replacement, preventing stale filtered layers from entering the new view.
+
+Reproduce the data and actual Electron checks on disposable patient copies:
+
+```sh
+.venv/bin/python scripts/verify_vessel_display.py PATIENT_DIR \
+  --output outputs/vessel-display-verification/PATIENT-data
+cd desktop
+VESSEL_VERIFY_OUTPUT=../outputs/vessel-display-verification/PATIENT \
+  pnpm exec electron electron/verify-vessel-display.cjs \
+  --anatomy /private/tmp/ressection-vessel-display-PATIENT/patient-anatomy.json
+```
+
+The Electron verifier requires a disposable `ressection-vessel-display-` path
+because it exercises saving and reopening view preferences. It compares both
+scopes in Structures and Volume, captures the linked slices, measures delivered
+rotation frames, and checks that the manifest remains unchanged. Data checks
+compare the transmitted full-source mask with native-source resampling and
+verify source-array hashes. Residual source-gap candidates, their physical
+coordinates and original-image/probability crops are recorded separately;
+nearby endpoints do not establish that two vessels should connect.
+
+
+Gap-repair verification passed **49 focused Python tests**, **601 desktop tests**
+(123 main, 356 renderer, 122 viewer), and the production build. The viewer suite
+passed on rerun after an unrelated temporary-directory cleanup race. Real
+Electron checks passed on sub-06 and sub-13, including saved-scope reopening and
+both render modes. Source counts were 673,582 and 33,208 respectively, with no
+source changes. Full-source volume rotation delivered about 31.9 and 30.7 FPS;
+scope replacement including settling took 11.9–12.6 and 9.0–9.3 seconds.
+Receipts and remaining source-gap coordinates/crops are in
+`outputs/vessel-display-verification/`. These timings describe this machine and
+these two cases, not general performance or anatomical validation.

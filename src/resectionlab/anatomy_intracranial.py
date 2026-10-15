@@ -107,12 +107,16 @@ def intracranial_vessels(c, row, *, excluded=False, cancelled=lambda: False):
               'excludedVolumeMm3': count*volume, 'excludedFragments': int(fragments),
               'outsideVoxels': int((known & ~outer).sum()), 'boneConflictVoxels': int((known & outer & ~keep).sum()),
               'uncertainVoxels': int((~known).sum()), 'sourcePreserved': True,
-              'reason': f'{count:,} voxels ({count*volume/1000:.2f} mL), {fragments:,} fragments excluded; {int((~known).sum()):,} voxels have unknown skull coverage.'}
+              'reason': (f'{count:,} source voxels ({count*volume/1000:.2f} mL), {fragments:,} fragments '
+                         + ('shown as exclusions from skull-supported view. ' if excluded else 'hidden by skull-supported filter. ')
+                         + f'Unknown skull coverage: {int((~known).sum()):,}; '
+                         + f'estimated outside skull: {int((known & ~outer).sum()):,}; '
+                         + f'bone conflict: {int((known & outer & ~keep).sum()):,} voxels.')}
     if c.document.get('coverage_notes', {}).get('privacy_redacted'):
         report['coverageReason'] = 'privacy-redacted'
         report['reason'] += ' Missing skull regions are privacy-redacted; no removed anatomy is reconstructed.'
     if envelope is None or not envelope['supportedSlices']:
-        report['reason'] = 'Intracranial coverage unavailable; vessels withheld in this scope. Full source estimate remains available.'
+        report['reason'] += (' Skull coverage unavailable; showing the excluded source estimate.' if excluded else ' Skull coverage unavailable; this filter withholds vessels. Full source estimate remains available.')
     else:
         report.update(ctSeries=envelope['ctSeries'], supportedSlices=envelope['supportedSlices'], brainSlices=envelope['brainSlices'])
     return result, report
