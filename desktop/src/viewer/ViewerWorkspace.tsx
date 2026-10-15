@@ -1,3 +1,4 @@
+import {SliceScrollAccumulator} from './interactionBudget';
 import {TransferEditor} from './TransferEditor';
 import {sampleDiagnosticLayer} from "./diagnosticLayer";
 import type {CheckedDiagnosticLayer} from "./diagnosticLayer";
@@ -166,6 +167,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     currentCursor[2],
   ]);
 
+  const rendererIdentity=caseData?.displayIdentity??caseData;
   useEffect(() => {
     if (
       !caseData ||
@@ -194,7 +196,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         setRemaining,
         setReplayError,
         camera=>{
-          if(latestProps.current.caseData===caseData)
+          if((latestProps.current.caseData?.displayIdentity??latestProps.current.caseData)===rendererIdentity)
             changeSettings({...latestSettings.current,camera});
         },
       );
@@ -207,7 +209,13 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : String(cause));
     }
-  }, [caseData]);
+  }, [rendererIdentity]);
+
+  useEffect(()=>{
+    if(caseData?.displayIdentity&&engine.current){
+      try{engine.current.setAnatomyLayers(caseData);}catch(cause){setError(cause instanceof Error?cause.message:String(cause));}
+    }
+  },[caseData,ready]);
 
   useEffect(()=>{engine.current?.setWorkspaceSettings(settings);},[ready,caseData,settings]);
   useEffect(()=>{engine.current?.restoreCamera(settings.camera);},[ready,caseData,settings.camera]);
@@ -360,6 +368,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       setPaneSizes(sizes);
     });
     const listeners: Array<() => void> = [];
+    const scroll=new SliceScrollAccumulator();let scrollFrame=0;
+    const aff=caseData?rasAffine(caseData.affine,caseData.frame):null;
+    const inverse=aff?inverseAffine(aff):null;
+    const bounds=aff&&caseData?volumeBounds(caseData.shape,aff):null;
     for (const plane of PLANES) {
       const node = refs[plane].current;
       if (!node) continue;
@@ -367,28 +379,23 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       const listener = (event: WheelEvent) => {
         if (event.deltaY === 0) return;
         event.preventDefault();
-        const p = latestProps.current,
-          volume = p.caseData;
-        if (!volume) return;
-        const aff = rasAffine(volume.affine, volume.frame),
-          inverse = inverseAffine(aff),
-          bounds = volumeBounds(volume.shape, aff);
-        const next = p.cursor
-          ? ([...p.cursor] as Point3)
-          : (bounds[0].map((v, i) => (v + bounds[1][i]) / 2) as Point3);
-        const axis = PLANE_AXES[plane][2],
-          step =
-            1 /
-            Math.hypot(inverse[0][axis], inverse[1][axis], inverse[2][axis]);
-        next[axis] +=
-          (event.deltaY > 0 ? -1 : 1) * step * (event.shiftKey ? 5 : 1);
-        p.onCursorChange(clampCursor(next, bounds));
+        if(!inverse||!bounds)return;
+        engine.current?.beginInteraction();engine.current?.endInteraction();
+        const axis=PLANE_AXES[plane][2];
+        const step=1/Math.hypot(inverse[0][axis],inverse[1][axis],inverse[2][axis]);
+        scroll.add(axis,(event.deltaY>0?-1:1)*step*(event.shiftKey?5:1));
+        if(!scrollFrame)scrollFrame=requestAnimationFrame(()=>{
+          scrollFrame=0;const p=latestProps.current;
+          const cursor=p.cursor??bounds[0].map((v,i)=>(v+bounds[1][i])/2);
+          p.onCursorChange(scroll.flush(cursor,bounds[0],bounds[1]));
+        });
       };
       node.addEventListener("wheel", listener, { passive: false });
       listeners.push(() => node.removeEventListener("wheel", listener));
     }
     return () => {
       observer.disconnect();
+      cancelAnimationFrame(scrollFrame);
       listeners.forEach((remove) => remove());
     };
   }, [caseData]);
@@ -531,7 +538,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       className={`rl-viewer rl-layout-${layout}${expanded ? " has-expanded" : ""}`}
       ref={container}
       onKeyDownCapture={event=>{if(event.key==='Escape')setControlPanel(null)}}
-      onPointerDownCapture={event=>{if(controlPanel&&!(event.target as HTMLElement).closest('.rl-control-popover,.rl-primary-tools'))setControlPanel(null)}}
+      onPointerDownCapture={event=>{if((event.target as HTMLInputElement).type==='range')engine.current?.beginInteraction();if(controlPanel&&!(event.target as HTMLElement).closest('.rl-control-popover,.rl-primary-tools'))setControlPanel(null)}}
+      onPointerUpCapture={event=>{if((event.target as HTMLInputElement).type==='range')engine.current?.endInteraction();}}
+      onPointerCancelCapture={()=>engine.current?.endInteraction()}
       data-layout={layout}
       data-expanded={expanded ?? undefined}
       aria-label="Linked patient imaging workspace"
@@ -545,6 +554,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         <div className="rl-primary-tools">
           {(['layout','appearance','clip'] as const).map(id=><button key={id} aria-expanded={controlPanel===id} onClick={()=>setControlPanel(controlPanel===id?null:id)}>{id[0].toUpperCase()+id.slice(1)}</button>)}
           <button onClick={()=>engine.current?.cameraPreset('oblique')} aria-label="Fit 3D view">Fit</button>
+          <span className="viewer-tool-divider"/>
+          <button aria-label="Show structures only" aria-pressed={!scanVolume.enabled} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:false}})}>Structures</button>
+          <button aria-label="Show scan volume with structures" aria-pressed={scanVolume.enabled} disabled={Boolean(replay)||passiveRequested} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:true}})}>Volume</button>
         </div>
         <span className="rl-viewer-expanded-note">{expanded?TITLES[expanded]:layout==='3d-focus'?'3D + slices':'Image review'}</span>
         {controlPanel&&<div className="rl-control-popover" role="region" aria-label={`${controlPanel} controls`}>
@@ -763,6 +775,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               aria-label={`${TITLES[plane]} source ${signalName}, neurological convention, slice position ${currentCursor[axis].toFixed(1)} millimeters. ${inspected ? "Inspection tool, unexecuted initial preview. No tissue removed. " : ""}${proposalReviewLabel ? `Estimated envelope contour, view only: ${proposalReviewLabel}. ` : ""}${displayedPrior ? "Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. " : ""}Click to set cursor; scroll or arrow keys change slice.`}
               onPointerDown={(event) => {
                 if (event.button === 0) {
+                  engine.current?.beginInteraction();
                   event.currentTarget.focus({ preventScroll: true });
                   event.currentTarget.setPointerCapture(event.pointerId);
                   moveCursor(event, plane, 'start');
@@ -771,8 +784,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               onPointerMove={(event) => {
                 if (event.buttons === 1) moveCursor(event, plane);
               }}
-              onPointerUp={() => props.onSliceStroke?.(null, 'end')}
-              onPointerCancel={() => props.onSliceStroke?.(null, 'end')}
+              onPointerUp={() => {engine.current?.endInteraction();props.onSliceStroke?.(null, 'end');}}
+              onPointerCancel={() => {engine.current?.endInteraction();props.onSliceStroke?.(null, 'end');}}
               onKeyDown={(event) => keySlice(event, plane)}
             >
               {goalPoint && <span aria-label="Declared public goal" style={{position:'absolute',left:goalPoint.left,top:goalPoint.top,transform:'translate(-50%,-50%)',color:PUBLIC_GOAL_COLOR,fontSize:20,lineHeight:1,pointerEvents:'none',zIndex:4}}>◇</span>}

@@ -167,8 +167,16 @@ def test_surfaces_do_not_merge_thin_branches_or_modify_masks(patient):
     assert np.all(
         np.linalg.norm(np.cross(f[:, 1] - f[:, 0], f[:, 2] - f[:, 0]), axis=1) > 0
     )
+    before_tumor = c.mask(c.layer("tumor")).copy()
     tumor = mesh(c, c.layer("tumor"))
-    assert float(tumor["max_displacement_mm"]) <= 0.251
+    # Tumor display has a separate 1.5-voxel / 1 mm cap; vessels retain the
+    # original subvoxel radius-dependent bound above.
+    assert 0 < float(tumor["max_displacement_mm"]) <= 0.751
+    assert np.array_equal(c.mask(c.layer("tumor")), before_tumor)
+    raw, smooth = tumor["source"][tumor["indices"]], tumor["positions"][tumor["indices"]]
+    nr = np.cross(raw[:, 1]-raw[:, 0], raw[:, 2]-raw[:, 0])
+    ns = np.cross(smooth[:, 1]-smooth[:, 0], smooth[:, 2]-smooth[:, 0])
+    assert np.all(np.einsum("ij,ij->i", nr, ns) > 0)
 
 
 def test_conservative_route_and_reversible_removal(patient):
@@ -558,3 +566,37 @@ def test_empty_segmentation_view_and_invalid_view_preferences(patient, tmp_path)
     assert view['compartments'][0]['surface']['positions']['byteLength']==0
     state=dict(schema='patient-anatomy-view-v1',patientId='patient-a',snapshotId=patient.identity(),seriesId='mri',states={'mri':dict(cursor=None,visible={},settings={'volumeRendering':{'density':999}})})
     with pytest.raises(ValueError,match='volume'):save_view(patient,state)
+
+
+def test_view_cache_reuses_source_and_layers_and_survives_transfer_pruning(patient, tmp_path, monkeypatch):
+    from resectionlab.desktop_bridge import BridgeSession, _Request
+    import resectionlab.anatomy_bridge as bridge
+    b = BridgeSession(tmp_path / "transfers")
+    req, progress = _Request("cache"), lambda *x: None
+    opened = b.execute("anatomyOpen", {"path": str(patient.root / "patient-anatomy.json")}, req, progress)
+    args = {"collectionId": opened["collectionId"], "snapshotId": patient.identity(), "seriesId": "mri"}
+    first = b.execute("anatomyView", {**args, "layers": ["vessels"]}, req, progress)
+    original_mesh = bridge.mesh
+    calls = []
+    def counted(c, row, **kwargs):
+        calls.append(row["id"])
+        return original_mesh(c, row, **kwargs)
+    monkeypatch.setattr(bridge, "mesh", counted)
+    second = b.execute("anatomyView", {**args, "layers": ["tumor"]}, req, progress)
+    assert second["mri"] == first["mri"]
+    b.prune_transfers()
+    assert Path(first["compartments"][0]["mask"]["path"]).exists()
+    third = b.execute("anatomyView", {**args, "layers": ["vessels", "tumor"]}, req, progress)
+    assert calls == ["tumor"]
+    assert third["compartments"][0] == first["compartments"][0]
+    assert third["compartments"][1] == second["compartments"][0]
+    # A failed batch may produce temporary assets, but must not publish them.
+    with pytest.raises((ValueError, KeyError, StopIteration)):
+        b.execute("anatomyView", {**args, "layers": ["brain", "absent"]}, req, progress)
+    b.prune_transfers()
+    assert "brain" not in b.anatomy_view_cache["layers"]
+    fourth = b.execute("anatomyView", {**args, "layers": ["brain"]}, req, progress)
+    assert Path(fourth["compartments"][0]["mask"]["path"]).exists()
+    # Even an unchanged original/preview switch uses a distinct cache identity.
+    b.execute("anatomyView", {**args, "layers": ["vessels"], "original": True}, req, progress)
+    assert calls[-1] == "vessels"

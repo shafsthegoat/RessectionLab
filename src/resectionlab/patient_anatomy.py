@@ -104,7 +104,9 @@ class PatientImagingCollection:
         self._verified = set()
 
     @classmethod
-    def create(cls, directory, patient_id):
+    def create(cls, directory, patient_id, *, timepoint=None):
+        if timepoint is not None and timepoint not in {"preoperative", "postoperative"}:
+            raise ValueError("Choose a preoperative or postoperative study")
         root = Path(directory)
         if (root / "patient-anatomy.json").exists():
             raise ValueError("Patient collection already exists")
@@ -114,6 +116,7 @@ class PatientImagingCollection:
             {
                 "schema": SCHEMA,
                 "patient_id": patient_id,
+                **({"study_timepoint": timepoint} if timepoint else {}),
                 "revision": 0,
                 "series": [],
                 "layers": [],
@@ -187,6 +190,11 @@ class PatientImagingCollection:
     ):
         if not isinstance(timepoint, str) or not timepoint.strip():
             raise ValueError("An explicit acquisition/timepoint is required")
+        study = self.document.get("study_timepoint")
+        if study is None and self.document["series"]:
+            study = self.document["series"][0]["timepoint"]
+        if study is not None and timepoint != study:
+            raise ValueError("Pre-op and post-op scans belong in separate patient study files. Create a new study for this timepoint.")
         if patient_id is not None and patient_id != self.document["patient_id"]:
             raise ValueError("Cannot merge different patients")
         if any(

@@ -7,6 +7,7 @@ const report={errors:[],checks:{}},pause=ms=>new Promise(r=>setTimeout(r,ms));
 app.on('browser-window-created',(_event,window)=>{
  window.webContents.on('console-message',(_event,d)=>{if(d.level==='error')report.errors.push(d.message)});
  window.webContents.once('did-finish-load',async()=>{
+  window.webContents.setBackgroundThrottling(false);window.show();window.focus();
   const js=code=>window.webContents.executeJavaScript(code,true);
   const click=text=>js(`(()=>{const b=[...document.querySelectorAll('button')].find(e=>e.textContent.trim()===${JSON.stringify(text)}||e.querySelector('span')?.textContent.trim()===${JSON.stringify(text)});if(!b)throw Error('Missing button');b.click()})()`);
   const waitFor=async(expr,seconds=240)=>{await pause(200);for(let i=0;i<seconds*4;i++){if(await js(expr))return;await pause(250)}throw Error('Timed out: '+expr)};

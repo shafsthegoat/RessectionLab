@@ -2,7 +2,7 @@ import type {ViewerVolume} from './contracts';
 export const MAX_ANATOMY_LAYERS=128;
 /** Four byte channels: each holds eight independent masks or 255 categorical
  * regions. Region membership stays exact, including overlaps between groups. */
-export function packAnatomyLabels(volume:ViewerVolume){
+export function packAnatomyLabels(volume:Pick<ViewerVolume,'shape'|'compartments'|'labelSets'>){
   const count=volume.shape.reduce((a,b)=>a*b,1);
   if(volume.compartments.length>MAX_ANATOMY_LAYERS)throw Error('Too many anatomical layers');
   const codes=Array.from({length:MAX_ANATOMY_LAYERS},()=>[0,0] as [number,number]);

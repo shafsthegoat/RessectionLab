@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   anatomySaveView: args => ipcRenderer.invoke('research:anatomySaveView',args),
   anatomyComponents: args => ipcRenderer.invoke('research:anatomyComponents',args),
   anatomyGraph: args => ipcRenderer.invoke('research:anatomyGraph', args),
+  anatomySavePackage: args => ipcRenderer.invoke('research:anatomySavePackage', args),
   anatomyCreate: args => ipcRenderer.invoke('research:anatomyCreate', args),
   anatomyReconstruct: args => ipcRenderer.invoke('research:anatomyReconstruct', args),
   anatomyPlan: args => ipcRenderer.invoke('research:anatomyPlan', args),

@@ -26,14 +26,16 @@ export class ScanVolumeRenderer {
   private enabled = true;
   private readonly spacing: number;
   private layers: ViewerVolume["compartments"];
+  private readonly ownsTexture: boolean;
   private readonly background = new THREE.Color();
 
   constructor(private readonly renderer: THREE.WebGLRenderer, volume: ViewerVolume,
-    private readonly window: [number,number], codes?:Array<[number,number]>) {
+    private readonly window: [number,number], codes?:Array<[number,number]>, sourceTexture?:THREE.Data3DTexture) {
     this.layers=volume.compartments;
     const affine=rasAffine(volume.affine,volume.frame),inverse=inverseAffine(affine);
     this.spacing=1/Math.max(...inverse.slice(0,3).map(row=>Math.hypot(...row.slice(0,3))));
-    this.texture=new THREE.Data3DTexture(volume.mri,volume.shape[2],volume.shape[1],volume.shape[0]);
+    this.ownsTexture=!sourceTexture;
+    this.texture=sourceTexture??new THREE.Data3DTexture(volume.mri,volume.shape[2],volume.shape[1],volume.shape[0]);
     this.texture.format=THREE.RedFormat;this.texture.type=THREE.FloatType;
     const linear=renderer.extensions.has('OES_texture_float_linear');
     this.texture.minFilter=this.texture.magFilter=linear?THREE.LinearFilter:THREE.NearestFilter;
@@ -88,12 +90,16 @@ export class ScanVolumeRenderer {
     u.uLabelBits.value=bits;u.uVisibleBits.value=all;u.uExtraClipCount.value=Math.min(7,planes.length);
     planes.slice(0,7).forEach((p,i)=>u.uExtraClips.value[i].set(p.normal.x,p.normal.y,p.normal.z,p.constant));
   }
+  setLayers(layers:ViewerVolume["compartments"],codes:Array<[number,number]>) {
+    this.layers=layers;this.material.uniforms.uLayerCount.value=layers.length;
+    codes.forEach((code,i)=>this.material.uniforms.uLayerCodes.value[i].set(...code));
+  }
   get active(){return this.enabled;}
   render(scene: THREE.Scene, camera: THREE.PerspectiveCamera, width: number, height: number,
-    interactive: boolean, restoreViewport: ()=>void) {
+    interactive: boolean, restoreViewport: ()=>void, longEdge=360) {
     if(!this.enabled){this.renderer.render(scene,camera);return;}
     const pixelRatio=this.renderer.getPixelRatio();
-    const scale=Math.min(pixelRatio,(interactive?360:1300)/Math.max(width,height));
+    const scale=Math.min(pixelRatio,(interactive?longEdge:1300)/Math.max(width,height));
     const w=Math.max(1,Math.round(width*scale)),h=Math.max(1,Math.round(height*scale));
     // Keep the small drag buffers separate so pointer release does not discard
     // the full-quality attachments on every gesture. Sizes/steps are unchanged.
@@ -129,7 +135,7 @@ export class ScanVolumeRenderer {
     this.renderer.render(this.blitScene,this.camera);
   }
   dispose(){
-    this.sceneTarget.dispose();this.volumeTarget.dispose();this.texture.dispose();this.transfer?.dispose();
+    this.sceneTarget.dispose();this.volumeTarget.dispose();if(this.ownsTexture)this.texture.dispose();this.transfer?.dispose();
     this.interactionTargets?.scene.dispose();this.interactionTargets?.volume.dispose();
     for(const scene of [this.rayScene,this.blitScene])scene.traverse(child=>{if(child instanceof THREE.Mesh)child.geometry.dispose();});
     this.material.dispose();this.blitMaterial.dispose();

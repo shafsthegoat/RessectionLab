@@ -44,7 +44,7 @@ class CaseLibrary {
         const doc=native?JSON.parse(await fs.readFile(filename,'utf8')):null;
         if(native&&doc.schema!=='patient-anatomy-v1')continue;
         this.paths.set(id, filename);
-        rows.push({id, title: native?doc.patient_id:path.basename(filename, '.ressectionlab'), recent: recent.includes(filename), bytes: stat.size, ...(native?{native:true}:{})});
+        rows.push({id, title: native?doc.patient_id:path.basename(filename, '.ressectionlab'), recent: recent.includes(filename), bytes: stat.size, ...(native?{native:true,timepoint:doc.study_timepoint??doc.series?.[0]?.timepoint,scanCount:doc.series?.length??0}:filename.endsWith('.rsworkspace')?{portable:true}:{})});
       } catch (error) { if (error.code !== 'ENOENT' && !(error instanceof SyntaxError)) throw error; }
     }
     return rows;

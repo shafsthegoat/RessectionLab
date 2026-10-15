@@ -1,3 +1,4 @@
+import {scanLabel} from './native-study-state';
 import {useNativeWorkspace} from './use-native-workspace';
 import {NativeSidebar,NativeCorrectionBar,NativeResearch} from './NativeWorkspacePanels';
 import {isNativeBinding} from './native-anatomy-data';
@@ -542,6 +543,7 @@ export default function App() {
   const native = useNativeWorkspace(api);
   const nativeApi = api as (ResectionApi&NativeAnatomyApi)|null;
   const [newPatient,setNewPatient]=useState('');
+  const [newStudyTimepoint,setNewStudyTimepoint]=useState('preoperative');
   const [payload, setPayload] = useState<CasePayload | null>(null);
   const [caseData, setCaseData] = useState<ViewerCase | null>(null);
   const [visibleLayers, setVisibleLayers] = useState<Record<string, boolean>>(
@@ -1402,7 +1404,7 @@ export default function App() {
         </button>
         <button
           className="header-button save-button"
-          onClick={native.binding?native.save:save}
+          onClick={native.binding?()=>native.save():save}
           disabled={(!payload&&!native.binding) || busy || !!native.draft || engineStopped || readonly}
         >
           <ArrowDownToLine size={15} />
@@ -1429,7 +1431,7 @@ export default function App() {
         {workbenchTab!=="research" && <>
           <div className="panel-heading"><span className="eyebrow">{workbenchTab==='cases'?'PATIENT LIBRARY':workbenchTab==='data'?'DATA & REGISTRATION':'ANATOMY LAYERS'}</span>
             <button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div>
-          {workbenchTab==='cases' ? <><div className="unified-sidebar"><details className="unified-details"><summary>New patient collection</summary><input aria-label="New patient ID" placeholder="Patient ID" value={newPatient} onChange={e=>setNewPatient(e.target.value)}/><button disabled={fileNavigationBlocked||!newPatient.trim()} onClick={async()=>{const b=await native.create(newPatient.trim());if(b){setPayload(null);setCaseData(null);setWorkbenchTab('data')}}}>Create collection</button></details></div><CaseLibraryPanel cases={libraryCases} busy={fileNavigationBlocked} onBrowse={()=>load('openCase')}
+          {workbenchTab==='cases' ? <><div className="unified-sidebar"><details className="unified-details"><summary>New patient study</summary><p className="subtle">One patient, one timepoint. Add multiple scans to build the workspace.</p><input aria-label="New patient ID" placeholder="Patient ID" value={newPatient} onChange={e=>setNewPatient(e.target.value)}/><label>Study<select aria-label="New study timepoint" value={newStudyTimepoint} onChange={e=>setNewStudyTimepoint(e.target.value)}><option value="preoperative">Pre-op</option><option value="postoperative">Post-op</option></select></label><button disabled={fileNavigationBlocked||!newPatient.trim()} onClick={async()=>{const b=await native.create(newPatient.trim(),newStudyTimepoint);if(b){setPayload(null);setCaseData(null);setWorkbenchTab('data')}}}>Create study…</button></details></div><CaseLibraryPanel cases={libraryCases} busy={fileNavigationBlocked} onBrowse={()=>load('openCase')}
             onOpen={id=>void act(async()=>{if(api?.openListedCase){const next=nativeApi?.openListedWorkspace?await nativeApi.openListedWorkspace(id):await api.openListedCase(id);if(isNativeBinding(next)){setPayload(null);setCaseData(null);await native.install(next)}else{native.clear();await installCase(next,api)}setWorkbenchTab('anatomy')}})}/></> : <>
             <div className="workspace-tabs"><button className={workbenchTab==='data'?'selected':''} onClick={()=>setWorkbenchTab('data')}>Scans</button><button className={workbenchTab==='anatomy'?'selected':''} onClick={()=>setWorkbenchTab('anatomy')}>Anatomy</button></div><h1>{title}</h1><p className="case-subtitle">{displayedSource ? String(displayedSource.metadata.selected_modality??'Source image') : 'Open a case to begin'}</p>
             {workbenchTab==='data' && payload && displayedSource && <WorkbenchDataPanel source={payload} displayed={displayedSource} series={imaging.series} selectedId={imaging.selectedId}
@@ -1668,7 +1670,7 @@ export default function App() {
         <div className="workspace-heading">
           <div>
             <WorkspaceBreadcrumb caseId={native.binding?.document.patient_id??caseData?.caseId ?? null} />
-            <h2>{native.binding?native.binding.document.series.find(s=>s.id===native.series)?.id.toUpperCase():workbenchTab==='data'?'Source imaging':'Anatomy, in context'}</h2>
+            <h2>{native.binding?scanLabel(native.binding.document.series.find(s=>s.id===native.series)??{id:'',modality:'Study'}):workbenchTab==='data'?'Source imaging':'Anatomy, in context'}</h2>
           </div>
           <div
             className={`view-presets ${workbenchTab==='research'?'':'poc-hidden'}`}
@@ -1744,6 +1746,7 @@ export default function App() {
         {episodeVisible&&episodeWorkflow==='passive'&&passiveView&&caseData&&passiveView.source.caseHash===caseData.caseHash&&
           <div className="modeled-replay-notice" role="status"><span>GENERATED · two persistent tool poses · state {passiveStep}/5 · declared {passiveView.frames[passiveStep].elapsedGeneratedSeconds.toFixed(1)} s · no patient admission</span>
             <button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>}
+        {native.binding&&native.registration==='alignment preview'&&<div className="workspace-alignment-banner" role="status">Estimated scan alignment <span>Shared structures · verify in Scans before planning</span></div>}
         <NativeCorrectionBar workspace={native}/>
         <div className="viewer-shell">
           {displayedCase && (

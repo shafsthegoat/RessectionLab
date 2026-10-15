@@ -42,6 +42,7 @@ def import_dicom(collection, directory, *, modality=None, timepoint="preoperativ
             modality=modality or str(headers[0].Modality),
             timepoint=timepoint,
         )
+        row["label"] = str(getattr(headers[0], "SeriesDescription", "")) or f"{row['modality']} series {len(imported) + 1}"
         row["dicom_originals"] = [collection.original(p) for p in files]
         row["acquisition_datetime"] = (
             str(getattr(headers[0], "AcquisitionDateTime", "")) or None

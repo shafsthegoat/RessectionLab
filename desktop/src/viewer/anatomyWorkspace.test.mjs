@@ -44,7 +44,7 @@ after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true
 function renderer(){
   const r=Object.create(VolumeRenderer.prototype),mesh=new THREE.Mesh(new THREE.BoxGeometry(),new THREE.MeshStandardMaterial());
   const uniforms={uColors:{value:[new THREE.Color()]},uLayerOpacities:{value:new Float32Array(8)},uClipEnabled:{value:0},uClipPlane:{value:new THREE.Vector4()},uFusionOpacity:{value:.5},uFusionActive:{value:0},uFusion:{value:null},uFusionShape:{value:new THREE.Vector3()},uWorldToFusion:{value:new THREE.Matrix4()},uFusionWindow:{value:new THREE.Vector2()}};
-  Object.assign(r,{scanVolume:{configure(){},labels(){}},volume:{...source,compartments:[{name:'brain',color:'#778899',mask:new Uint8Array(60)}]},bounds:[[-20,-30,-40],[80,90,100]],surfaces:new Map([['brain',mesh]]),materials:()=>[{uniforms}],requestRender(){},fusionTexture:{dispose(){}},renderer:{getContext:()=>({MAX_3D_TEXTURE_SIZE:1,getParameter:()=>2048})}});
+  Object.assign(r,{beginInteraction(){},endInteraction(){},scanVolume:{configure(){},labels(){}},volume:{...source,compartments:[{name:'brain',color:'#778899',mask:new Uint8Array(60)}]},bounds:[[-20,-30,-40],[80,90,100]],surfaces:new Map([['brain',mesh]]),materials:()=>[{uniforms}],requestRender(){},fusionTexture:{dispose(){}},renderer:{getContext:()=>({MAX_3D_TEXTURE_SIZE:1,getParameter:()=>2048})}});
   return {r,mesh,uniforms};
 }
 test('real renderer updates source material and all image uniforms without touching source data',()=>{
@@ -164,18 +164,18 @@ test('persisted camera echoes skip control updates after projection bounds settl
   state.position[0]+=1;r.restoreCamera(state);assert.equal(updated,2);
 });
 
-test('rendered quality changes resize once; settled wheel frames keep the drawing buffer',()=>{
+test('interaction never resizes the shared drawing buffer',()=>{
   const previousWindow=globalThis.window;globalThis.window={devicePixelRatio:2};
   try {
     const {r}=renderer();let pixelRatio=2;const changes=[];
     const empty={getBoundingClientRect:()=>({left:0,top:0,width:0,height:0})};
-    Object.assign(r,{disposed:false,width:100,height:100,interacting:false,refinementStarted:0,
+    Object.assign(r,{disposed:false,width:100,height:100,interacting:false,refinementStarted:0,budget:{longEdge:360},
       container:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})},
       panes:{anatomy:empty,axial:empty,coronal:empty,sagittal:empty},canvas:{dispatchEvent(){}},scanVolume:{active:false},
-      renderer:{getPixelRatio:()=>pixelRatio,setPixelRatio(value){pixelRatio=value;changes.push(value)},setScissorTest(){},clear(){}}});
+      renderer:{info:{memory:{},render:{calls:0}},getContext:()=>({fenceSync:()=>null}),getPixelRatio:()=>pixelRatio,setPixelRatio(value){pixelRatio=value;changes.push(value)},setScissorTest(){},clear(){}}});
     r.render();r.render();assert.deepEqual(changes,[]);
-    r.interacting=true;r.render();r.render();assert.deepEqual(changes,[1]);
-    r.interacting=false;r.render();r.render();assert.deepEqual(changes,[1,2]);
+    r.interacting=true;r.render();r.render();assert.deepEqual(changes,[]);
+    r.interacting=false;r.render();r.render();assert.deepEqual(changes,[]);
   } finally {if(previousWindow===undefined)delete globalThis.window;else globalThis.window=previousWindow;}
 });
 
@@ -189,4 +189,48 @@ test('volume shader receives only visible indices, including layers beyond bit 3
   r.labels(null,Object.fromEntries(layers.map(l=>[l.name,false])),{},[]);
   assert.equal(r.material.uniforms.uActiveLayerCount.value,0);
   r.dispose();
+});
+
+test('incremental layer install retains source texture, existing surfaces and camera, and rejects a stale source',()=>{
+  const {r,mesh,uniforms}=renderer();
+  r.volume.displayIdentity='native/revision/1';r.workspaceSettings={};
+  const original=r.volume,oldLayer=original.compartments[0];
+  r.affine=identity;r.extraClipPlanes=[];r.visible={brain:false,tumor:true};r.anatomy=new THREE.Group();r.anatomy.add(mesh);
+  r.surfaceGeometry=new Map();r.camera=new THREE.PerspectiveCamera();const camera=r.camera;
+  let disposed=0,layerUpdates=0;r.labelTexture={dispose(){disposed++}};
+  r.mriTexture={unchanged:true};const image=r.mriTexture;
+  r.scanVolume.setLayers=()=>layerUpdates++;
+  Object.assign(uniforms,{uLabels:{value:null},uLayerCount:{value:1},uLayerCodes:{value:Array.from({length:128},()=>new THREE.Vector2())},uLayerEnabled:{value:new Float32Array(128)}});
+  uniforms.uColors.value=Array.from({length:128},()=>new THREE.Color());
+  const positions=new Float32Array([0,0,0,1,0,0,0,1,0]),normals=new Float32Array([0,0,1,0,0,1,0,0,1]);
+  const layer={name:'tumor',mask:new Uint8Array(60),color:'#ff00ff',surface:{source:positions,positions:positions.slice(),sourceNormals:normals,normals:normals.slice(),indices:new Uint32Array([0,1,2])}};
+  const next={...original,compartments:[layer,oldLayer],packedLabels:{data:new Uint8Array(240),codes:Array.from({length:128},()=>[0,0])}};
+  r.setAnatomyLayers(next);assert.equal(r.volume,next);assert.equal(r.camera,camera);assert.equal(r.mriTexture,image);
+  assert.equal(r.surfaces.get('brain'),mesh);assert(r.surfaces.has('tumor'));assert.equal(disposed,1);assert.equal(layerUpdates,1);
+  assert.equal(uniforms.uLayerEnabled.value[0],1);assert.equal(uniforms.uLayerEnabled.value[1],0);
+  r.setAnatomyLayers(next);assert.equal(layerUpdates,1);
+  const installed=r.labelTexture;assert.throws(()=>r.setAnatomyLayers({...next,displayIdentity:'changed'}),/source changed/);assert.equal(r.labelTexture,installed);
+});
+
+test('shared scalar texture is not disposed by the volume pass',()=>{
+  const texture=new THREE.Data3DTexture(source.mri,5,4,3);let disposed=0;texture.addEventListener('dispose',()=>disposed++);
+  const r=new ScanVolumeRenderer({extensions:{has:()=>true}},source,[0,1],undefined,texture);
+  assert.equal(r.texture,texture);r.dispose();assert.equal(disposed,0);texture.dispose();assert.equal(disposed,1);
+});
+
+test('GPU backpressure coalesces input and submits the latest pending frame only after completion',()=>{
+  const previousWindow=globalThis.window,previousRaf=globalThis.requestAnimationFrame;
+  const callbacks=new Map();let id=0,ready=false,deleted=0;
+  globalThis.window={devicePixelRatio:1};globalThis.requestAnimationFrame=callback=>{callbacks.set(++id,callback);return id};
+  try{
+    const {r}=renderer(),empty={getBoundingClientRect:()=>({left:0,top:0,width:0,height:0})};
+    const gl={SYNC_GPU_COMMANDS_COMPLETE:1,TIMEOUT_EXPIRED:2,WAIT_FAILED:3,fenceSync:()=>({}),flush(){},clientWaitSync:()=>ready?4:2,deleteSync(){deleted++}};
+    Object.assign(r,{requestRender:VolumeRenderer.prototype.requestRender,disposed:false,frame:0,renderSerial:0,width:100,height:100,sliceRevision:0,interacting:false,refinementStarted:0,budget:{longEdge:360},gpuSync:null,
+      container:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})},panes:{anatomy:empty,axial:empty,coronal:empty,sagittal:empty},canvas:{dispatchEvent(){}},scanVolume:{active:false},controls:{update(){}},
+      renderer:{info:{memory:{},render:{calls:0}},getContext:()=>gl,getPixelRatio:()=>1,setScissorTest(){},clear(){}}});
+    r.render();for(let i=0;i<100;i++)r.requestRender(false);assert.equal(r.renderSerial,1);assert.equal(callbacks.size,1);
+    const tick=()=>{const [key,callback]=callbacks.entries().next().value;callbacks.delete(key);callback()};
+    tick();assert.equal(r.renderSerial,1);ready=true;tick();assert.equal(r.renderSerial,2);assert.equal(deleted,1);
+    tick();assert.equal(r.gpuSync,null);assert.equal(callbacks.size,0);
+  }finally{globalThis.window=previousWindow;globalThis.requestAnimationFrame=previousRaf;}
 });

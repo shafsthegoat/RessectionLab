@@ -92,25 +92,33 @@ void main(){
   float t=entry+(0.25+0.5*jitter)*stepMm;
   vec4 accumulated=vec4(0.0);
   ivec4 previousLabels=ivec4(0);
+  bool previousSelected=false;
   vec3 light=normalize(vec3(-0.4,-0.5,0.75)-direction*0.7);
   for(int i=0;i<1536;i++){
     if(t>=exit || accumulated.a>0.995)break;
     vec3 p=voxelOrigin+voxelDirection*t;
     float value=scalar(p);
     vec4 tissue=texture(uTransfer,vec2(clamp((value-uRange.x)/(uRange.y-uRange.x),0.0,1.0),0.5));
-    ivec4 packed=ivec4(round(texture(uLabels,((p+0.5)/uShape).zyx)*255.0));
-    bool selected=false;vec3 labelColor=vec3(0.0);float extinction=0.0;
+    ivec4 packed=ivec4(0);
+    if(uActiveLayerCount>0)packed=ivec4(round(texture(uLabels,((p+0.5)/uShape).zyx)*255.0));
+    bool selected=previousSelected;vec3 labelColor=vec3(0.0);float extinction=0.0;
     // The CPU supplies visible indices in original layer order. Hidden layers
     // contribute neither membership nor color, including during isolation.
-    for(int slot=0;slot<128;slot++){if(slot>=uActiveLayerCount)break;
-      int j=int(uActiveLayers[slot]);
-      if(!hasLabel(packed,j))continue;
-      selected=true;
-      float opacity=uLayerColor[j].a;
-      if(opacity<=0.0 || opacity>=1.0 || hasLabel(previousLabels,j))continue;
-      float e=-log(max(0.001,1.0-opacity))/min(stepMm,exit-t);
-      labelColor+=uLayerColor[j].rgb*e;extinction+=e;
+    // Membership and boundary color cannot change within an identical packed
+    // cell value. Reuse selection, preserving original-order entry compositing.
+    if(any(notEqual(packed,previousLabels))){
+      selected=false;
+      for(int slot=0;slot<128;slot++){if(slot>=uActiveLayerCount)break;
+        int j=int(uActiveLayers[slot]);
+        if(!hasLabel(packed,j))continue;
+        selected=true;
+        float opacity=uLayerColor[j].a;
+        if(opacity<=0.0 || opacity>=1.0 || hasLabel(previousLabels,j))continue;
+        float e=-log(max(0.001,1.0-opacity))/min(stepMm,exit-t);
+        labelColor+=uLayerColor[j].rgb*e;extinction+=e;
+      }
     }
+    previousSelected=selected;
     previousLabels=packed;
     if(uIsolate && !selected)tissue.a=0.0;
     tissue.a*=uDensity;
@@ -125,9 +133,9 @@ void main(){
         normal=normalize(normal);
         lighting=0.32+0.62*max(dot(normal,light),0.0)+0.18*max(dot(normal,-direction),0.0);
         // A short density probe supplies soft local occlusion in bone creases.
-        vec3 ahead=p+mat3(uWorldToVoxel)*light*2.0;
-        float obstruction=texture(uTransfer,vec2(clamp((scalar(ahead)-uRange.x)/(uRange.y-uRange.x),0.0,1.0),0.5)).a;
         if(uShadows){
+          vec3 ahead=p+mat3(uWorldToVoxel)*light*2.0;
+          float obstruction=texture(uTransfer,vec2(clamp((scalar(ahead)-uRange.x)/(uRange.y-uRange.x),0.0,1.0),0.5)).a;
           float shadow=obstruction*2.0;
           if(!uInteractive)for(int j=1;j<5;j++){
             vec3 probe=p+mat3(uWorldToVoxel)*light*(2.0+float(j)*3.0);

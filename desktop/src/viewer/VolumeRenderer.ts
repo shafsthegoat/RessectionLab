@@ -1,3 +1,5 @@
+import {InteractionSession, InteractionBudget} from './interactionBudget';
+import {SliceFrameCache} from './sliceFrameCache';
 import {scanFitPoints} from './scanCameraFit';
 import {packAnatomyLabels,materializeLayerMask,MAX_ANATOMY_LAYERS} from './labelPacking';
 import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
@@ -166,7 +168,7 @@ export class VolumeRenderer {
   private scanFramingPoints:Float32Array=new Float32Array();
   private readonly mriTexture: THREE.Data3DTexture;
   private fusionTexture: THREE.Data3DTexture;
-  private readonly labelTexture: THREE.Data3DTexture;
+  private labelTexture: THREE.Data3DTexture;
   private readonly sourcePlane: THREE.Mesh<
     THREE.BufferGeometry,
     THREE.ShaderMaterial
@@ -193,13 +195,31 @@ export class VolumeRenderer {
   private mode: "anatomy" | "instruments" = "anatomy";
   private pendingFit: "anatomy" | "instruments" | null = null;
   private readonly pickRay = new THREE.Raycaster();
-  private readonly onControlsChange = () => this.requestRender();
+  private sliceRevision=0;
+  private readonly sliceCaches=new Map<SlicePlane,SliceFrameCache>();
+  private paneBounds: {root:DOMRect;panes:Map<HTMLElement,DOMRect>} | null=null;
+  private gpuSync:WebGLSync|null=null;
+  private gpuPoll=0;
+  private needsFrame=false;
+  private renderSerial=0;
+  private readonly budget=new InteractionBudget();
+  private readonly interaction=new InteractionSession(active=>{
+    this.interacting=active;
+    if(active)this.refinementStarted=0;
+    this.requestRender(false);
+  });
+  private readonly onLayout=()=>{this.paneBounds=null;this.requestRender();};
+  private readonly onScroll=(event:Event)=>{
+    if(event.target===document||event.target===window||(event.target instanceof HTMLElement&&event.target.contains(this.container)))this.onLayout();
+  };
+  private readonly onBlur=()=>this.interaction.finish();
+  private readonly onControlsChange = () => this.requestRender(false);
   private refinementStarted=0;
-  private readonly onControlsStart = () => { this.interacting = true; this.requestRender(); };
+  private readonly onControlsStart = () => { this.interaction.start(); };
   private readonly onControlsEnd = () => {
-    this.interacting = false;
+    this.interaction.end();
     this.refinementStarted=performance.now();
-    this.requestRender();
+    this.requestRender(false);
     this.cameraRestored = true;
     this.onCameraChange?.(this.getCameraState());
   };
@@ -214,7 +234,7 @@ export class VolumeRenderer {
     private readonly container: HTMLElement,
     private readonly canvas: HTMLCanvasElement,
     private readonly panes: Panes,
-    private readonly volume: ViewerVolume,
+    private volume: ViewerVolume,
     private readonly onError: (message: string) => void,
     private readonly onSurfaceStatus: (remaining: number) => void,
     private readonly onReplayError: (message: string) => void,
@@ -226,7 +246,7 @@ export class VolumeRenderer {
       volume.mri.length !== count
     )
       throw new Error("MRI array dimensions do not match the source grid.");
-    const packedLabels=packAnatomyLabels(volume);
+    const packedLabels=volume.packedLabels??packAnatomyLabels(volume);
     this.affine = rasAffine(volume.affine, volume.frame);
     const inverse = inverseAffine(this.affine);
     this.bounds = volumeBounds(volume.shape, this.affine);
@@ -262,7 +282,7 @@ export class VolumeRenderer {
       );
     this.canvas.addEventListener("webglcontextlost", this.onContextLost);
     this.mriTexture = dataTexture(volume.mri, volume.shape);
-    this.scanVolume = new ScanVolumeRenderer(this.renderer, volume, this.defaultWindow,packedLabels.codes);
+    this.scanVolume = new ScanVolumeRenderer(this.renderer, volume, this.defaultWindow,packedLabels.codes,this.mriTexture);
     this.scanVolume.configure(undefined, this.volumeModality, null);
     this.fusionTexture = dataTexture(new Float32Array(1),[1,1,1]);
     volume.compartments.forEach(layer=>{this.visible[layer.name]=true;});
@@ -423,7 +443,10 @@ export class VolumeRenderer {
     this.controls.addEventListener("change", this.onControlsChange);
     this.controls.addEventListener("start", this.onControlsStart);
     this.controls.addEventListener("end", this.onControlsEnd);
-    this.observer = new ResizeObserver(() => this.requestRender());
+    this.observer = new ResizeObserver(this.onLayout);
+    window.addEventListener('scroll',this.onScroll,true);
+    window.addEventListener('blur',this.onBlur);
+    panes.anatomy.addEventListener('pointercancel',this.onControlsEnd);
     this.observer.observe(container);
     Object.values(panes).forEach((pane) => this.observer.observe(pane));
     this.worker = new Worker(new URL("./surface.worker.ts", import.meta.url), {
@@ -459,45 +482,7 @@ export class VolumeRenderer {
         onError("Source surface normals do not match its unchanged geometry.");
         return;
       }
-      const geometry = new THREE.BufferGeometry();
-      geometry.setAttribute(
-        "position",
-        new THREE.BufferAttribute(positions, 3),
-      );
-      geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
-      const { smoothPositions, smoothNormals } = event.data;
-      if (!smoothPositions || !smoothNormals || smoothPositions.length !== positions.length || smoothNormals.length !== positions.length) {
-        geometry.dispose();
-        onError("Display surface buffers do not match the source triangles.");
-        return;
-      }
-      const smooth = new THREE.BufferGeometry();
-      if (event.data.indices) {
-        geometry.setIndex(new THREE.BufferAttribute(event.data.indices, 1));
-        smooth.setIndex(new THREE.BufferAttribute(event.data.indices, 1));
-      }
-      smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions, 3));
-      smooth.setAttribute("normal", new THREE.BufferAttribute(smoothNormals, 3));
-      this.surfaceGeometry.set(layer.name, { source: geometry, smooth });
-      const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings);
-      const mesh = new THREE.Mesh(
-        this.surfaceSmoothing ? smooth : geometry,
-        new THREE.MeshStandardMaterial({
-          color: appearance.color,
-          roughness: 0.34,
-          metalness: 0.08,
-          transparent: appearance.opacity < 1,
-          opacity: appearance.opacity,
-          clippingPlanes: [...this.extraClipPlanes, ...(this.clipPlane ? [this.clipPlane] : [])],
-          side: THREE.DoubleSide,
-          depthWrite: appearance.opacity >= 1,
-        }),
-      );
-      placeInSourceFrame(mesh, this.affine);
-      mesh.visible = this.visible[layer.name] !== false;
-      mesh.userData.compartment = layer.name;
-      this.surfaces.set(layer.name, mesh);
-      this.anatomy.add(mesh);
+      this.installSurface(layer,{positions,normals,smoothPositions:event.data.smoothPositions,smoothNormals:event.data.smoothNormals,indices:event.data.indices});
       if (remaining === 0 && this.mode === "anatomy" && !this.cameraRestored) this.fitCamera("anatomy");
       this.requestRender();
     };
@@ -530,6 +515,76 @@ export class VolumeRenderer {
     this.requestRender();
   }
 
+  private installSurface(layer:ViewerVolume['compartments'][number],buffers:{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array}) {
+    const {positions,normals}=buffers;
+    const onError=this.onError;
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(positions, 3),
+    );
+    geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
+    const { smoothPositions, smoothNormals } = buffers;
+    if (!smoothPositions || !smoothNormals || smoothPositions.length !== positions.length || smoothNormals.length !== positions.length) {
+      geometry.dispose();
+      onError("Display surface buffers do not match the source triangles.");
+      return;
+    }
+    const smooth = new THREE.BufferGeometry();
+    if (buffers.indices) {
+      geometry.setIndex(new THREE.BufferAttribute(buffers.indices, 1));
+      smooth.setIndex(new THREE.BufferAttribute(buffers.indices, 1));
+    }
+    smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions, 3));
+    smooth.setAttribute("normal", new THREE.BufferAttribute(smoothNormals, 3));
+    this.surfaceGeometry.set(layer.name, { source: geometry, smooth });
+    const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings);
+    const mesh = new THREE.Mesh(
+      this.surfaceSmoothing ? smooth : geometry,
+      new THREE.MeshStandardMaterial({
+        color: appearance.color,
+        roughness: 0.34,
+        metalness: 0.08,
+        transparent: appearance.opacity < 1,
+        opacity: appearance.opacity,
+        clippingPlanes: [...this.extraClipPlanes, ...(this.clipPlane ? [this.clipPlane] : [])],
+        side: THREE.DoubleSide,
+        depthWrite: appearance.opacity >= 1,
+      }),
+    );
+    placeInSourceFrame(mesh, this.affine);
+    mesh.visible = this.visible[layer.name] !== false;
+    mesh.userData.compartment = layer.name;
+    this.surfaces.set(layer.name, mesh);
+    this.anatomy.add(mesh);
+  }
+
+  /** Append only, within an unchanged native source generation. */
+  setAnatomyLayers(next:ViewerVolume) {
+    if(next===this.volume)return;
+    if(!next.displayIdentity||next.displayIdentity!==this.volume.displayIdentity||next.mri!==this.volume.mri||next.caseHash!==this.volume.caseHash||
+      JSON.stringify([next.shape,next.affine,next.frame])!==JSON.stringify([this.volume.shape,this.volume.affine,this.volume.frame]))throw Error('Displayed source changed during layer installation');
+    const packed=next.packedLabels;
+    if(!packed||packed.data.length!==next.mri.length*4||packed.codes.length!==MAX_ANATOMY_LAYERS)throw Error('Missing prepared anatomy labels');
+    for(const old of this.volume.compartments)if(next.compartments.find(layer=>layer.name===old.name)!==old)throw Error('Resident anatomy replacement requires a new source generation');
+    const added=next.compartments.filter(layer=>!this.volume.compartments.some(old=>old.name===layer.name));
+    for(const layer of added){const s=layer.surface;if(!s||s.source.length!==s.positions.length||s.normals.length!==s.positions.length||s.sourceNormals.length!==s.positions.length)throw Error('Incremental anatomy requires valid prepared surfaces');}
+    this.beginInteraction();this.endInteraction();
+    const texture=dataTexture(packed.data,next.shape);texture.format=THREE.RGBAFormat;
+    const previous=this.labelTexture;
+    this.labelTexture=texture;this.volume=next;
+    for(const layer of added){const s=layer.surface!;if(s.source.length)this.installSurface(layer,{positions:s.source,normals:s.sourceNormals,smoothPositions:s.positions,smoothNormals:s.normals,indices:s.indices});}
+    this.materials().forEach(shader=>{
+      shader.uniforms.uLabels.value=texture;shader.uniforms.uLayerCount.value=next.compartments.length;
+      packed.codes.forEach((code,i)=>shader.uniforms.uLayerCodes.value[i].set(...code));
+      next.compartments.forEach((layer,i)=>shader.uniforms.uLayerEnabled.value[i]=this.visible[layer.name]!==false?1:0);
+    });
+    this.scanVolume.setLayers(next.compartments,packed.codes);
+    this.appearanceSignature=null;this.visibilitySignature=null;
+    this.setWorkspaceSettings(this.workspaceSettings);
+    previous.dispose();this.requestRender();
+  }
+
   private materials(): THREE.ShaderMaterial[] {
     return [
       this.sourcePlane.material,
@@ -547,6 +602,7 @@ export class VolumeRenderer {
     const cursorChanged = cursor.some((value, axis) => value !== this.cursor[axis]);
     const visibilitySignature = this.volume.compartments.map(layer => visible[layer.name] !== false ? '1' : '0').join('');
     const visibilityChanged = visibilitySignature !== this.visibilitySignature;
+    if(visibilityChanged&&this.visibilitySignature!=null){this.beginInteraction();this.endInteraction();}
     const nextOpacity = Math.max(0, Math.min(1, opacity));
     const opacityChanged = nextOpacity !== this.opacity;
     this.visible = visible;
@@ -605,6 +661,7 @@ export class VolumeRenderer {
       settings.clipping, settings.clipBox, settings.obliqueClip,
       settings.fusion?.opacity, settings.volumeRendering]);
     if (signature === this.appearanceSignature) return;
+    if(this.appearanceSignature!=null){this.beginInteraction();this.endInteraction();}
     this.appearanceSignature = signature;
     const clipping = clippingForBounds(settings.clipping,this.bounds);
     const normal = new THREE.Vector3();
@@ -697,6 +754,9 @@ export class VolumeRenderer {
     this.controls.touches.ONE=mode==='pan' ? THREE.TOUCH.PAN : THREE.TOUCH.ROTATE;
   }
 
+  beginInteraction():void { this.interaction.start(); }
+  endInteraction():void { this.refinementStarted=performance.now();this.interaction.end(); }
+
   restoreCamera(state: ViewerCameraState|null|undefined): void {
     if(!validCameraState(state))return;
     this.cameraRestored=true;this.pendingFit=null;
@@ -708,7 +768,7 @@ export class VolumeRenderer {
     if (unchanged && this.camera.near === near && this.camera.far === far) return;
     this.camera.position.set(...state.position);this.controls.target.set(...state.target);this.camera.up.set(...state.up).normalize();
     this.camera.near=near;this.camera.far=far;
-    this.camera.updateProjectionMatrix();this.controls.update();this.requestRender();
+    this.camera.updateProjectionMatrix();this.controls.update();this.requestRender(false);
   }
 
   cameraPreset(preset: 'oblique'|'anterior'|'left'|'superior'): void {
@@ -1319,8 +1379,11 @@ export class VolumeRenderer {
       : null;
   }
 
-  private requestRender(): void {
-    if (this.disposed || this.frame) return;
+  private requestRender(slicesChanged=true): void {
+    if(slicesChanged)this.sliceRevision++;
+    if(this.disposed)return;
+    if(this.gpuSync){this.needsFrame=true;return;}
+    if(this.frame)return;
     this.frame = requestAnimationFrame(() => {
       this.frame = 0;
       this.controls.update();
@@ -1331,13 +1394,14 @@ export class VolumeRenderer {
   private render(): void {
     if (this.disposed) return;
     const frameStarted=performance.now();
-    const root = this.container.getBoundingClientRect(),
+    if(!this.paneBounds)this.paneBounds={root:this.container.getBoundingClientRect(),panes:new Map(Object.values(this.panes).map(pane=>[pane,pane.getBoundingClientRect()]))};
+    const root = this.paneBounds.root,
       width = Math.round(root.width),
       height = Math.round(root.height);
     if (width < 1 || height < 1) return;
-    // OrbitControls emits wheel start/end synchronously. Only resize for the
-    // quality of a frame that will actually be drawn, never between wheel events.
-    const pixelRatio = this.interacting ? 1 : Math.min(window.devicePixelRatio || 1, 2);
+    // Interaction quality changes only offscreen 3D targets. The shared canvas
+    // and linked slices retain their display resolution throughout a gesture.
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
     if (pixelRatio !== this.renderer.getPixelRatio()) this.renderer.setPixelRatio(pixelRatio);
     if (width !== this.width || height !== this.height) {
       this.width = width;
@@ -1348,7 +1412,7 @@ export class VolumeRenderer {
     this.renderer.clear();
     this.renderer.setScissorTest(true);
     const viewport = (element: HTMLElement) => {
-      const rect = paneViewport(root, element.getBoundingClientRect());
+      const rect = paneViewport(root, this.paneBounds!.panes.get(element)!);
       if (!rect) return null;
       this.renderer.setViewport(
         rect.left,
@@ -1365,8 +1429,9 @@ export class VolumeRenderer {
       this.camera.aspect = main.w / main.h;
       this.camera.updateProjectionMatrix();
       if (this.replayActive || this.passiveActive) this.renderer.render(this.scene, this.camera);
-      else this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);});
+      else this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},this.budget.longEdge);
     }
+    let sliceDraws=0;
     for (const plane of SLICE_PLANES) {
       const size = viewport(this.panes[plane]);
       if (!size) continue;
@@ -1379,30 +1444,48 @@ export class VolumeRenderer {
         rect.height / size.h,
       );
       slice.material.uniforms.uResolution.value.set(size.w, size.h);
-      this.renderer.render(slice.scene, slice.camera);
+      let cached=this.sliceCaches.get(plane);
+      if(!cached){cached=new SliceFrameCache();this.sliceCaches.set(plane,cached);}
+      if(cached.render(this.renderer,slice.scene,slice.camera,size.w,size.h,this.sliceRevision,()=>{viewport(this.panes[plane]);}))sliceDraws++;
     }
     this.renderer.setScissorTest(false);
-    this.canvas.dispatchEvent(new CustomEvent('anatomy-frame',{bubbles:true,detail:{at:frameStarted,cpuMs:performance.now()-frameStarted,interactive:this.interacting,volume:this.scanVolume.active}}));
-    if(!this.interacting && this.refinementStarted){
-      const started=this.refinementStarted;this.refinementStarted=0;
-      const gl=this.renderer.getContext() as WebGL2RenderingContext,sync=gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE,0);
-      gl.flush();
-      const poll=()=>{
-        if(!sync)return;
-        if(this.disposed){gl.deleteSync(sync);return;}
-        const status=gl.clientWaitSync(sync,0,0);
-        if(status===gl.TIMEOUT_EXPIRED){requestAnimationFrame(poll);return;}
-        gl.deleteSync(sync);
-        this.canvas.dispatchEvent(new CustomEvent('anatomy-refined',{bubbles:true,detail:{completed:status!==gl.WAIT_FAILED,milliseconds:performance.now()-started,volume:this.scanVolume.active}}));
-      };
-      requestAnimationFrame(poll);
-    }
+    const serial=++this.renderSerial,interactive=this.interacting;
+    this.canvas.dispatchEvent(new CustomEvent('anatomy-frame',{bubbles:true,detail:{serial,at:frameStarted,cpuMs:performance.now()-frameStarted,interactive,volume:this.scanVolume.active,sliceDraws,longEdge:interactive?this.budget.longEdge:1300,resources:{...this.renderer.info.memory},drawCalls:this.renderer.info.render.calls}}));
+    const gl=this.renderer.getContext() as WebGL2RenderingContext;
+    const sync=gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE,0);
+    if(!sync)return;
+    this.gpuSync=sync;gl.flush();
+    const refinement=!interactive?this.refinementStarted:0;
+    const poll=()=>{
+      this.gpuPoll=0;
+      if(this.disposed)return;
+      const status=gl.clientWaitSync(sync,0,0);
+      if(status===gl.TIMEOUT_EXPIRED){this.gpuPoll=requestAnimationFrame(poll);return;}
+      gl.deleteSync(sync);this.gpuSync=null;
+      const elapsed=performance.now()-frameStarted;
+      if(interactive&&status!==gl.WAIT_FAILED)this.budget.sample(elapsed);
+      this.canvas.dispatchEvent(new CustomEvent('anatomy-gpu',{bubbles:true,detail:{serial,completed:status!==gl.WAIT_FAILED,milliseconds:elapsed}}));
+      if(refinement&&this.refinementStarted===refinement&&!this.interacting&&!this.needsFrame){
+        this.refinementStarted=0;
+        this.canvas.dispatchEvent(new CustomEvent('anatomy-refined',{bubbles:true,detail:{completed:status!==gl.WAIT_FAILED,milliseconds:performance.now()-refinement,volume:this.scanVolume.active}}));
+      }
+      if(this.needsFrame){this.needsFrame=false;this.controls.update();this.render();}
+    };
+    this.gpuPoll=requestAnimationFrame(poll);
   }
 
   dispose(): void {
     if (this.disposed) return;
     this.disposed = true;
     cancelAnimationFrame(this.frame);
+    cancelAnimationFrame(this.gpuPoll);
+    if(this.gpuSync)(this.renderer.getContext() as WebGL2RenderingContext).deleteSync(this.gpuSync);
+    this.gpuSync=null;
+    this.interaction.dispose();
+    this.sliceCaches.forEach(cache=>cache.dispose());this.sliceCaches.clear();
+    window.removeEventListener('scroll',this.onScroll,true);
+    window.removeEventListener('blur',this.onBlur);
+    this.panes.anatomy.removeEventListener('pointercancel',this.onControlsEnd);
     this.observer.disconnect();
     this.worker.terminate();
     this.replayWorker?.terminate();

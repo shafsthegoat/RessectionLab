@@ -21,7 +21,7 @@ def _save_cache(path, values):
             os.unlink(temporary)
 
 
-def _poly(values, probability, smooth):
+def _poly(values, probability, smooth, *, tumor=False):
     import vtk
     from vtk.util.numpy_support import numpy_to_vtk
 
@@ -40,17 +40,17 @@ def _poly(values, probability, smooth):
         contour.SetSmoothing(bool(smooth))
         if smooth:
             smoother = contour.GetSmoother()
-            smoother.SetNumberOfIterations(20)
+            smoother.SetNumberOfIterations(40 if tumor else 20)
             smoother.SetRelaxationFactor(0.25)
-            smoother.SetConstraintDistance(0.5)
+            smoother.SetConstraintDistance(1.5 if tumor else 0.5)
     contour.SetInputData(image)
     contour.Update()
     output = contour.GetOutput()
     if probability and smooth and output.GetNumberOfPoints():
         smoothing = vtk.vtkWindowedSincPolyDataFilter()
         smoothing.SetInputData(output)
-        smoothing.SetNumberOfIterations(15)
-        smoothing.SetPassBand(0.1)
+        smoothing.SetNumberOfIterations(40 if tumor else 15)
+        smoothing.SetPassBand(0.03 if tumor else 0.1)
         smoothing.BoundarySmoothingOff()
         smoothing.FeatureEdgeSmoothingOff()
         smoothing.NonManifoldSmoothingOff()
@@ -96,7 +96,7 @@ def mesh(collection, row, *, cancelled=lambda: False):
     """Separate source/display mesh; same connectivity, bounded local movement."""
     key = digest(
         {
-            "algorithm": "native-vtk-v5",
+            "algorithm": "native-vtk-tumor-v6" if row["kind"] == "tumor" else "native-vtk-v5",
             "data": row["data"],
             "probability": row.get("probability"),
             "affine": row["affine"],
@@ -134,7 +134,7 @@ def mesh(collection, row, *, cancelled=lambda: False):
     if cancelled():
         raise InterruptedError("Mesh preparation cancelled")
     raw, faces = _arrays(_poly(values, probability, False))
-    smoothed, sf = _arrays(_poly(values, probability, True))
+    smoothed, sf = _arrays(_poly(values, probability, True, tumor=row["kind"] == "tumor"))
     if raw.shape != smoothed.shape or not np.array_equal(faces, sf):
         smoothed = raw.copy()
     triangles = raw[faces]
@@ -152,6 +152,8 @@ def mesh(collection, row, *, cancelled=lambda: False):
     limit = np.full(
         len(raw), 0.5 / np.max(np.linalg.norm(np.linalg.inv(a)[:3, :3], axis=1))
     )
+    if row["kind"] == "tumor":
+        limit[:] = min(1.0, 3 * limit[0])
     if row["kind"] in {"vessels", "artery", "vein", "sinus"}:
         radius = ndi.distance_transform_edt(np.pad(cropped, 1), sampling=spacing)
         index = np.clip(np.rint(raw).astype(int), 0, np.array(radius.shape) - 1)

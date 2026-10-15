@@ -67,12 +67,12 @@ async function pick(title, extensions) {
 
 function bindOperations() {
   const openWorkspace = async filename => {
-    const native = path.basename(filename)==='patient-anatomy.json';
-    const result=await engine.request(native?'anatomyOpen':'loadCase',{path:filename});
+    const native = path.basename(filename)==='patient-anatomy.json'||filename.endsWith('.rsworkspace');
+    const result=await engine.request(native?'anatomyOpen':'loadCase',{path:filename,...(filename.endsWith('.rsworkspace')?{workingRoot:path.join(app.getPath('userData'),'patient-studies')}:{})},300000);
     currentCasePath=filename;await caseLibrary.remember(filename);return result;
   };
   handle('openWorkspace',async()=>{
-    const filename=pendingOpenPath||await pick('Open patient workspace',['ressectionlab','rslab','json']);pendingOpenPath=null;
+    const filename=pendingOpenPath||await pick('Open patient workspace',['rsworkspace','ressectionlab','rslab','json']);pendingOpenPath=null;
     return filename?openWorkspace(path.resolve(filename)):null;
   });
   handle('openListedWorkspace',async id=>openWorkspace(await caseLibrary.resolve(id)));
@@ -89,7 +89,7 @@ function bindOperations() {
     return result;
   };
   handle('anatomyCreate', async args => {
-    plainArgs(args,['patientId']);
+    plainArgs(args,['patientId','timepoint']);
     const selected=await dialog.showOpenDialog(window,{title:'Choose an empty patient collection directory',properties:['openDirectory','createDirectory']});
     if(selected.canceled)return null;const result=await engine.request('anatomyCreate',{...args,path:selected.filePaths[0]});await caseLibrary.remember(path.join(selected.filePaths[0],'patient-anatomy.json'));return result;
   });
@@ -98,13 +98,13 @@ function bindOperations() {
     return filename ? engine.request('anatomyOpen', {path:path.resolve(filename)}) : null;
   });
   const anatomyKeys = {
-    anatomySaveView: ['viewState'],
+    anatomySaveView: ['viewState','saveArchive'],
     anatomyComponents: ['layerId'],
     anatomyGraph: ['layerId','point'],
     anatomyReconstruct: ['seriesId','model','synthsegVersion'],
     anatomyPlan: ['start','end','radiusMm'], anatomyRemoval: ['point','radiusMm','reset'],
     anatomySection: ['seriesId','center','normal','spacingMm','movingId','checkerboard','layers'],
-    anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId'],
+    anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope'],
     anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds'],
     anatomySample: ['point'],
     anatomyRegister: ['action','seriesId','movingPoints','referencePoints','reviewer'],
@@ -116,6 +116,13 @@ function bindOperations() {
     const selected=await dialog.showOpenDialog(window,{title:'Import this patient’s imaging',properties:[args.kind==='dicom'?'openDirectory':'openFile']});
     if(selected.canceled)return null;
     return engine.request('anatomyImport',{...args,path:selected.filePaths[0]},300000);
+  });
+  handle('anatomySavePackage', async args => {
+    args=plainArgs(args,['collectionId','snapshotId']);
+    const selected=await dialog.showSaveDialog(window,{title:'Save portable patient study',defaultPath:'Patient-study.rsworkspace',filters:[{name:'Patient study',extensions:['rsworkspace']}]});
+    if(selected.canceled||!selected.filePath)return null;
+    const result=await engine.request('anatomySavePackage',{...args,path:selected.filePath},300000);
+    await caseLibrary.remember(selected.filePath);return result;
   });
   handle('anatomyExport', async args => {
     const selected=await dialog.showOpenDialog(window,{title:'Select simulation snapshot destination',properties:['openDirectory','createDirectory']});
@@ -230,7 +237,7 @@ if (!ownsAppInstance) app.quit();
 app.on('open-file',(event,filename)=>{event.preventDefault();pendingOpenPath=filename;if(window&&!window.isDestroyed())window.webContents.send('research:event',{event:'menuAction',action:'openCase'});});
 app.on('second-instance', (_event,argv) => {
   const index=argv.findIndex(a=>a==='--case'||a==='--anatomy');
-  const filename=index>=0?argv[index+1]:argv.find(a=>/\.(ressectionlab|rslab)$/.test(a)||a.endsWith('patient-anatomy.json'));
+  const filename=index>=0?argv[index+1]:argv.find(a=>/\.(ressectionlab|rslab)$/.test(a)||a.endsWith('patient-anatomy.json')||a.endsWith('.rsworkspace'));
   if(filename){pendingOpenPath=path.resolve(filename);if(window&&!window.isDestroyed())window.webContents.send('research:event',{event:'menuAction',action:'openCase'});}
 
   if (window && !window.isDestroyed()) { if (window.isMinimized()) window.restore(); window.show(); window.focus(); }

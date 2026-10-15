@@ -1,6 +1,10 @@
 import type { Affine, Point3, Shape3 } from "./coordinates";
 
 export interface ViewerVolume {
+  /** Native display identity; includes revision/preview generation, never just object identity. */
+  displayIdentity?: string;
+  /** Prepared off-thread for native sources. Legacy callers retain synchronous preparation. */
+  packedLabels?: {data:Uint8Array;codes:Array<[number,number]>};
   caseId: string;
   caseHash: string;
   planningHash?: string;
@@ -18,6 +22,7 @@ export interface ViewerVolume {
     labelValue?: number;
     color: string;
     volumeMm3?: number;
+    displayFilter?: {scope:string;hiddenVoxels?:number;reason?:string};
     /** Cached indexed display geometry. Masks remain the quantitative source. */
     surface?: {positions: Float32Array; source: Float32Array; normals: Float32Array; sourceNormals: Float32Array; indices: Uint32Array};
   }>;
