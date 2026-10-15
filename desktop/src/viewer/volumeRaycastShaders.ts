@@ -18,6 +18,8 @@ uniform mat4 uInverseProjection;
 uniform vec3 uShape;
 uniform vec2 uRange;
 uniform float uDensity;
+uniform int uSkullMode;
+uniform bool uCt;
 uniform float uStep;
 uniform bool uLinear;
 uniform bool uClipEnabled;
@@ -122,6 +124,12 @@ void main(){
     previousLabels=packed;
     if(uIsolate && !selected)tissue.a=0.0;
     tissue.a*=uDensity;
+    // Explicit CT skull presentation agrees with the mesh depth pass. Privacy
+    // gaps remain gaps: opacity only changes where acquired bone is present.
+    if(uCt && value>300.0 && (!uIsolate || selected)){
+      if(uSkullMode==1)tissue.a=10000.0;
+      if(uSkullMode==2)tissue.a*=0.08;
+    }
     if(extinction>0.0){tissue.rgb=(tissue.rgb*tissue.a+labelColor)/(tissue.a+extinction);tissue.a+=extinction;}
     float alpha=1.0-exp(-tissue.a*min(stepMm,exit-t));
     if(alpha>0.0001){

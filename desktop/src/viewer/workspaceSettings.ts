@@ -4,6 +4,7 @@ export interface ViewerCameraState { position: Point3; target: Point3; up: Point
 export interface ViewerClipping { axis: 'x'|'y'|'z'; value: number; enabled: boolean; flipped?: boolean }
 /** Display choices only. No setting changes source arrays, masks or registration. */
 export interface ViewerWorkspaceSettings {
+  skullMode?: 'exterior'|'transparent'|'cutaway';
   volumeRendering?: import('./volumeTransfer').VolumeRenderingSettings;
   layout?: 'mri-review'|'3d-focus';
   activePlane?: 'axial'|'coronal'|'sagittal';

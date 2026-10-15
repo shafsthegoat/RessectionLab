@@ -1,4 +1,4 @@
-import type {ViewerVolume} from './viewer/contracts';
+import type {ViewerVolume,VesselDisplayFilter} from './viewer/contracts';
 import type {Point3} from './viewer/coordinates';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 import type {ArrayDescriptor,ResectionApi,CasePayload} from './types';
@@ -29,7 +29,7 @@ export interface NativeAnatomyApi {
   anatomySample(args:Args):Promise<unknown>;
 }
 export type Surface=NonNullable<ViewerVolume['compartments'][number]['surface']>;
-export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'>&{labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{name:string;color:string;volumeMm3:number;displayFilter?:{scope:string;hiddenVoxels?:number;reason?:string};mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:Record<keyof Surface,ArrayDescriptor>}>};
+export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'>&{labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{name:string;color:string;volumeMm3:number;displayFilter?:VesselDisplayFilter;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:Record<keyof Surface,ArrayDescriptor>}>};
 export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cachedImage?:Float32Array,cached?:Pick<ViewerVolume,'labelSets'|'tractography'>):Promise<ViewerVolume>{
   async function bytes(d:ArrayDescriptor){
     if(!d || d.byteLength>512*1024**2 || d.byteOrder!=='little' || d.order!=='C')throw Error('Unsupported anatomy transfer');
@@ -55,6 +55,8 @@ export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cached
 }
 
 export interface NativeScanState {cursor:Point3|null;visible:Record<string,boolean>;settings:ViewerWorkspaceSettings}
-export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;vesselScope?:'brain'|'all'}
+export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;vesselScope?:VesselScope}
 export interface ComponentReview {reviewId:string;layerId:string;components:Array<{id:number;voxels:number;volumeMm3:number;center:Point3}>}
 export function isNativeBinding(value:unknown):value is Binding {return !!value&&typeof value==='object'&&'collectionId' in value&&'document' in value;}
+
+export type VesselScope='brain'|'all'|'intracranial'|'excluded';

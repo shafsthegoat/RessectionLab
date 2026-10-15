@@ -151,6 +151,8 @@ def review_registration(
         raise ValueError("Landmarks must not be coincident or collinear")
     t = collection.document["transforms"][series_id]
     errors = np.linalg.norm(world(affine(t["matrix"]), m) - r, axis=1)
+    if errors.max() > 2.0:
+        raise ValueError("Landmark residual exceeds 2 mm; improve alignment before accepting review")
     collection.set_registration(
         series_id,
         t["matrix"],
@@ -165,6 +167,9 @@ def review_registration(
             "meaning": "sampled landmark residuals, not a whole-image error bound",
         },
     )
+    for key in ("direction", "reference_series", "parent_series", "source_to_parent", "algorithm_version", "input_key", "quality", "transform_digest"):
+        if key in t:
+            collection.document["transforms"][series_id][key] = t[key]
     return errors.tolist()
 
 

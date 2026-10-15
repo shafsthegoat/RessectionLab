@@ -1,5 +1,62 @@
 # Native patient anatomy workbench
 
+## Automatic alignment and skull display (2026-10-15)
+
+Native workspace opening, imports, and scan selection now ensure source-bound
+automatic rigid alignment. CT soft/brain reconstruction anchors to MRI; other CT
+reconstructions connect by measured CT-to-CT registration and compose into the
+same RAS-mm frame. Identity, head-centre, and historical candidates are compared
+against independent samples, anatomical conflicts, reverse registration, and
+initialization stability. Reports and historical transforms are retained in
+manifest revisions. A warning still permits the best valid display estimate;
+automatic consistency never grants planning review. Changed source hashes,
+parent transforms, geometry, or algorithm versions invalidate the cache.
+
+The default skull mode is opaque exterior. Transparent and cutaway modes change
+both mesh and CT-volume presentation; they never change source anatomy. Legacy
+views without an explicit skull mode migrate to exterior. The default vessel
+scope uses enclosed, brain-seeded CT cranial rings. A ring must be closed within
+a 2 mm morphological tolerance, avoid the acquisition border, cover at least
+70% of its brain seed, and have no more than three times its area. Supported
+intracranial space can extend beyond the brain mask. Missing/open skull regions
+remain unknown; they are not completed with a convex hull or synthetic anatomy.
+The UI reports excluded volume, fragments, and unknown coverage, with full-source
+and highlighted-exclusion views. Quantitative source masks remain unchanged.
+
+Privacy removal can be recorded explicitly as user-reported coverage metadata.
+Privacy-redacted regions are excluded from image similarity and are not treated
+as alignment failures or reconstructed. They can still limit skull-supported
+vessel display; that limitation is reported separately from transform quality.
+
+Reproducible checks (add `--commit` only to save a new patient revision):
+
+```sh
+.venv/bin/python scripts/verify_anatomy_alignment.py PATIENT_DIR --output outputs/alignment-verification/report.json --privacy-redacted
+cd desktop
+pnpm exec electron electron/verify-alignment-display.cjs --anatomy PATIENT_DIR/patient-anatomy.json
+```
+
+The Electron check captures actual pixels in mesh and volume views, from two
+camera directions, for opaque/transparency/cutaway modes. The 1 mm synthetic
+recovery and CT-reconstruction checks and 2 mm consistency warning thresholds
+are software acceptance criteria, not clinical accuracy guarantees.
+
+Verification on 15 October: 66 focused Python tests, 599 desktop tests, and the
+production build passed. Known-transform fixtures recovered landmarks within
+1 mm, including mirrored, oblique and anisotropic grids. Actual Electron pixel
+checks passed 12 views each on sub-06 and independent sub-13 (two viewpoints,
+mesh/volume, three skull modes). CT reconstruction disagreement was 0.317 mm
+p95 on sub-06, down from 10.834 mm, and 0.460 mm on sub-13. The sub-06 alignment
+was saved as a revision with user-reported privacy metadata and historical
+transforms retained. Source series and layer descriptors were unchanged.
+
+Remaining anatomical warnings are intentionally visible: sub-06 retains a
+brain/bone conflict and competing image-similarity result; sub-13 has 2.04 mm
+forward/reverse disagreement. No independent anatomical landmark validation was
+available. Reports and screenshots are in `outputs/alignment-verification/`.
+Broader legacy synthetic bridge suites remain incompatible with the existing
+`SYNTHETIC_CASE_DISABLED` policy; that policy was not changed for these checks.
+
 Implemented in the primary checkout on 2026-10-14. Use **Open** or the case library in the main desktop workspace and select
 `/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/patient-anatomy.json`.
 The historical `.ressectionlab` workbench and sub-06 baseline remain readable.

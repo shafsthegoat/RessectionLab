@@ -1746,7 +1746,7 @@ export default function App() {
         {episodeVisible&&episodeWorkflow==='passive'&&passiveView&&caseData&&passiveView.source.caseHash===caseData.caseHash&&
           <div className="modeled-replay-notice" role="status"><span>GENERATED · two persistent tool poses · state {passiveStep}/5 · declared {passiveView.frames[passiveStep].elapsedGeneratedSeconds.toFixed(1)} s · no patient admission</span>
             <button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>}
-        {native.binding&&native.registration==='alignment preview'&&<div className="workspace-alignment-banner" role="status">Estimated scan alignment <span>Shared structures · verify in Scans before planning</span></div>}
+        {native.binding&&native.registration==='alignment preview'&&<div className="workspace-alignment-banner" role="status">Estimated scan alignment <span>{Object.values(native.volume?.alignmentQuality??{}).flatMap(q=>q.warnings)[0]??'Shared structures · verify in Scans before planning'}</span></div>}
         <NativeCorrectionBar workspace={native}/>
         <div className="viewer-shell">
           {displayedCase && (

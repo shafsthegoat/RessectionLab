@@ -38,3 +38,9 @@ test('saved volume choices round-trip detached from source arrays and reject mal
   for(const volumeRendering of [null,[],{enabled:1},{density:NaN},{density:-1},{density:3},{preset:'CTA-vessels'},{arbitrary:1}])
     assert.throws(()=>checkedViewerSettings(source,{volumeRendering}));
 });
+
+test('explicit skull modes survive settings validation',()=>{
+ const source={compartments:[],brainMask:null,metadata:{}};
+ for(const skullMode of ['exterior','transparent','cutaway'])assert.equal(checkedViewerSettings(source,{skullMode}).skullMode,skullMode);
+ assert.throws(()=>checkedViewerSettings(source,{skullMode:'guess'}));
+});

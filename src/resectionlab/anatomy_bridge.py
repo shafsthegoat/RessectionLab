@@ -115,7 +115,7 @@ def dispatch(session, operation, args, request, progress):
         t = c.document["transforms"].get(reference["id"])
         preview_alignment = args.get("previewAlignment") is True
         vessel_scope = args.get("vesselScope", "all")
-        if vessel_scope not in {"all", "brain"}:
+        if vessel_scope not in {"all", "brain", "intracranial", "excluded"}:
             raise ValueError("Unknown vessel display scope")
         try:
             displayed, estimated = display_affine(c, reference, preview=preview_alignment)
@@ -198,6 +198,10 @@ def dispatch(session, operation, args, request, progress):
             if (vessel_scope == "brain" and row["kind"] in {"vessels", "artery", "vein", "sinus"}
                     and not draft and not args.get("highlightLayer")):
                 row, display_filter = brain_vessel_display(c, row)
+            if (vessel_scope in {"intracranial", "excluded"} and row["kind"] in {"vessels", "artery", "vein", "sinus"}
+                    and not draft and not args.get("highlightLayer")):
+                from .anatomy_intracranial import intracranial_vessels
+                row, display_filter = intracranial_vessels(c, row, excluded=vessel_scope == "excluded", cancelled=request.cancelled.is_set)
             geometry = mesh(c, row, cancelled=request.cancelled.is_set)
             request.check()
             shared = row.get("kind") == "brain-region" and not row.get("edits")
@@ -304,6 +308,7 @@ def dispatch(session, operation, args, request, progress):
             "registrationStatus": ("alignment preview" if alignment_previews else "patient frame")
             if registered else "independent source frame",
             "alignmentPreviews": sorted(set(alignment_previews)),
+            "alignmentQuality": {sid: deepcopy(c.document["transforms"][sid]["quality"]) for sid in set(alignment_previews) if c.document["transforms"].get(sid, {}).get("quality")},
             "snapshotId": c.identity(),
             "draft": bool(session.anatomy_drafts.get(key)),
         }
@@ -444,7 +449,8 @@ def dispatch(session, operation, args, request, progress):
         return {"document": c.document, "result": result}
     if operation == "anatomyRegister":
         c = PatientImagingCollection(c.root, c.document)
-        from .anatomy_import import rigid_registration, review_registration
+        previous_view = read_view(c)
+        from .anatomy_import import review_registration
 
         if args.get("action") == "review":
             result = review_registration(
@@ -455,11 +461,16 @@ def dispatch(session, operation, args, request, progress):
                 args["reviewer"],
             )
         else:
-            result = rigid_registration(
-                c, args["seriesId"], cancelled=request.cancelled.is_set
-            )
+            from .anatomy_alignment import ensure_alignment
+            changed = ensure_alignment(c, force=args.get("action") == "estimate", cancelled=request.cancelled.is_set, progress=progress)
+            result = {"changed": changed}
+            if not changed:
+                return {"document": c.document, "result": result}
         request.begin_commit()
-        c.save("registration " + args["seriesId"], expected=args["snapshotId"])
+        c.save("registration " + args.get("seriesId", "study"), expected=args["snapshotId"])
+        if previous_view:
+            previous_view["snapshotId"] = c.identity()
+            save_view(c, previous_view)
         session.anatomy_collections[key] = c
         session.anatomy_drafts.pop(key, None)
         return {"document": c.document, "result": result}

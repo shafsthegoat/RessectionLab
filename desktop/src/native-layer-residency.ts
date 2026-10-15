@@ -8,7 +8,7 @@ export function mergeResidentLayers(current:ViewerVolume, incoming:ViewerVolume,
   for(const layer of incoming.compartments)if(!layers.has(layer.name))layers.set(layer.name,layer);
   const sets=new Map((current.labelSets??[]).map(set=>[set.id,set]));
   for(const set of incoming.labelSets??[])if(!sets.has(set.id))sets.set(set.id,set);
-  return {...current,packedLabels:undefined,compartments:order.filter(id=>layers.has(id)).map(id=>layers.get(id)!),labelSets:[...sets.values()]};
+  return {...current,alignmentQuality:{...current.alignmentQuality,...incoming.alignmentQuality},packedLabels:undefined,compartments:order.filter(id=>layers.has(id)).map(id=>layers.get(id)!),labelSets:[...sets.values()]};
 }
 
 /** Bounded copies avoid one large structured-clone task on the UI thread. */

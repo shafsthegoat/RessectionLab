@@ -17,7 +17,7 @@ def display_affine(collection, row, *, preview=False):
                 transform.get('source_sha256') != source['original']['sha256'] or
                 transform.get('reference_sha256') != reference['original']['sha256']):
             raise ValueError('Alignment preview does not match these source scans')
-        matrix = affine(transform['matrix'])
+        matrix = collection.registration_matrix(sid)
         if (not np.allclose(matrix[:3, :3].T @ matrix[:3, :3], np.eye(3), atol=1e-5)
                 or np.linalg.det(matrix[:3, :3]) < 0):
             raise ValueError('Alignment preview requires a rigid transform')

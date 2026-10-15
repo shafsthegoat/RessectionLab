@@ -188,8 +188,10 @@ def _center(case):
 
 def _viewer_state(case,viewer,cases):
     """Bound display preferences without treating them as image registration."""
-    if not isinstance(viewer,dict) or set(viewer)-{'volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip'}:
+    if not isinstance(viewer,dict) or set(viewer)-{'skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip'}:
         raise ValueError('Unknown viewer settings')
+    if 'skullMode' in viewer and viewer['skullMode'] not in {'exterior','transparent','cutaway'}:
+        raise ValueError('Invalid skull display mode')
     volume=viewer.get('volumeRendering')
     if 'volumeRendering' in viewer:
         if (not isinstance(volume,dict) or set(volume)-{'enabled','preset','density','window','points','shadows','isolateLabels'} or

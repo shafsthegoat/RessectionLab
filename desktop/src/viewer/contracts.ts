@@ -1,6 +1,9 @@
 import type { Affine, Point3, Shape3 } from "./coordinates";
 
+export interface AlignmentQuality {status:string;warnings:string[];notes?:string[];metrics:Record<string,number|null>;selected?:string}
+export interface VesselDisplayFilter {scope:string;hiddenVoxels?:number;reason?:string;excludedVolumeMm3?:number;excludedFragments?:number;outsideVoxels?:number;boneConflictVoxels?:number;uncertainVoxels?:number}
 export interface ViewerVolume {
+  alignmentQuality?:Record<string,AlignmentQuality>;
   /** Native display identity; includes revision/preview generation, never just object identity. */
   displayIdentity?: string;
   /** Prepared off-thread for native sources. Legacy callers retain synchronous preparation. */
@@ -22,7 +25,7 @@ export interface ViewerVolume {
     labelValue?: number;
     color: string;
     volumeMm3?: number;
-    displayFilter?: {scope:string;hiddenVoxels?:number;reason?:string};
+    displayFilter?: VesselDisplayFilter;
     /** Cached indexed display geometry. Masks remain the quantitative source. */
     surface?: {positions: Float32Array; source: Float32Array; normals: Float32Array; sourceNormals: Float32Array; indices: Uint32Array};
   }>;

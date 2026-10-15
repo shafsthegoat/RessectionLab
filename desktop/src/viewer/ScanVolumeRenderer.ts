@@ -49,7 +49,7 @@ export class ScanVolumeRenderer {
         uDepth:{value:this.sceneTarget.depthTexture},uWorldToVoxel:{value:new THREE.Matrix4().set(...inverse.flat() as Parameters<THREE.Matrix4['set']>)},
         uCameraWorld:{value:new THREE.Matrix4()},uInverseProjection:{value:new THREE.Matrix4()},
         uShape:{value:new THREE.Vector3(...volume.shape)},uRange:{value:new THREE.Vector2()},
-        uDensity:{value:.45},uStep:{value:this.spacing*.7},uLinear:{value:linear},
+        uSkullMode:{value:0},uCt:{value:false},uDensity:{value:.45},uStep:{value:this.spacing*.7},uLinear:{value:linear},
         uClipEnabled:{value:false},uClipPlane:{value:new THREE.Vector4()},
         uBackground:{value:this.background},
         uLayerCount:{value:volume.compartments.length},uLayerCodes:{value:(codes??packAnatomyLabels(volume).codes).map(c=>new THREE.Vector2(...c))},uLayerEnabled:{value:new Float32Array(MAX_ANATOMY_LAYERS).fill(1)},
@@ -72,6 +72,7 @@ export class ScanVolumeRenderer {
       this.material.uniforms.uTransfer.value=this.transfer;
       this.material.uniforms.uRange.value.set(...lut.range);this.preset=signature;
     }
+    this.material.uniforms.uCt.value=/^CT/i.test(modality);
     this.material.uniforms.uShadows.value=input?.shadows!==false;
     this.material.uniforms.uIsolate.value=input?.isolateLabels===true;
     this.material.uniforms.uDensity.value=settings.density;
@@ -79,7 +80,7 @@ export class ScanVolumeRenderer {
     if(clip)this.material.uniforms.uClipPlane.value.set(clip.normal.x,clip.normal.y,clip.normal.z,clip.constant);
   }
   labels(texture:THREE.Data3DTexture,visible:Record<string,boolean>,settings:ViewerWorkspaceSettings,planes:THREE.Plane[]){
-    const u=this.material.uniforms;u.uLabels.value=texture;let bits=0,all=0,active=0;
+    const u=this.material.uniforms;u.uLabels.value=texture;u.uSkullMode.value=settings.skullMode==='transparent'?2:settings.skullMode?1:0;let bits=0,all=0,active=0;
     this.layers.forEach((layer,i)=>{const a=layerAppearance(layer.name,layer.color,settings);
       u.uLayerEnabled.value[i]=visible[layer.name]!==false?1:0;
       if(visible[layer.name]!==false){all|=1<<i;u.uActiveLayers.value[active++]=i;}

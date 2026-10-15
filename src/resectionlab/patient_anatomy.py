@@ -327,7 +327,30 @@ class PatientImagingCollection:
         t = self.document["transforms"].get(sid)
         if t is None or t["status"] not in {"reference", "reviewed", "source-provided"}:
             raise ValueError(f"Registration for {sid} needs review")
-        return affine(t["matrix"]) @ affine(row["affine"])
+        return self.registration_matrix(sid) @ affine(row["affine"])
+
+    def registration_matrix(self, sid, seen=()):
+        """Resolve and validate a source-bound graph, independent of review state."""
+        if sid in seen or len(seen) >= 64:
+            raise ValueError('Cyclic registration graph')
+        t = self.document['transforms'].get(sid)
+        if not t:
+            raise ValueError('Missing source registration')
+        m = affine(t['matrix'])
+        source, reference = self.series(sid), self.series(self.document['reference_series'])
+        if t['status'] == 'reference':
+            if sid != reference['id'] or not np.allclose(m, np.eye(4)):
+                raise ValueError('Invalid reference registration')
+        elif (t.get('source_sha256') != source['original']['sha256'] or
+              t.get('reference_sha256') != reference['original']['sha256']):
+            raise ValueError('Registration source identity changed; repeat alignment')
+        if t.get('parent_series'):
+            parent = self.registration_matrix(t['parent_series'], (*seen, sid))
+            if t.get('reference_series') != reference['id'] or not np.allclose(parent @ affine(t['source_to_parent']), m, atol=1e-6):
+                raise ValueError('Registration parent changed; repeat alignment')
+        if t.get('transform_digest') and t['transform_digest'] != digest({'matrix': t['matrix'], 'relative': t.get('source_to_parent')}):
+            raise ValueError('Registration quality no longer matches its transform')
+        return m
 
     def set_registration(
         self, series_id, matrix, *, status, method, uncertainty_mm=None, landmarks=None
