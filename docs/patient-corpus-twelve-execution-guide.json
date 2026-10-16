@@ -1,0 +1,46 @@
+{
+  "admission_path": "manifests/patient-corpus-releases/existing-twelve-execution-admission-v1.json",
+  "admission_sha256": "76c3c7e1f3805c136c508f53c4b31eae56b0ea3e9b876b556326a08b1fb681d9",
+  "bounds": {
+    "automatic_retries": 0,
+    "maximum_metadata_output_bytes": 536870912,
+    "minimum_available_bytes": 1073741824,
+    "minimum_free_disk_bytes": 53687091200,
+    "monitor_interval_seconds": 0.1,
+    "numerical_threads": 2,
+    "process_family_plus_supervisor_rss_bytes": 1610612736,
+    "sequential_people": true,
+    "wall_seconds": 600,
+    "worker_count": 1
+  },
+  "entrypoint_after_release": "run_qualification(root, root / EXECUTION_OUTPUT, execution_plan(root)); same call for explicitly authorized cached resume",
+  "execution_release": "existing-twelve-execution-v1",
+  "launch_gate": {
+    "document": {
+      "acquisition_allowed": false,
+      "authority": "Root explicit launch release after the concurrent native diagnostic has finished; must only be written after that release.",
+      "automatic_retries": 0,
+      "execution_admission_sha256": "76c3c7e1f3805c136c508f53c4b31eae56b0ea3e9b876b556326a08b1fb681d9",
+      "execution_plan_hash": "sha256:ecdc8f380437c0f1b1536a12fac0c22a07774c3f97e7d340d25d83f4dc4121d6",
+      "model_execution_allowed": false,
+      "prospective_plan_hash": "sha256:0e27cffd8bd556c12460678d33b65b85e2a5f5819a2e09b03b23450b111c1093",
+      "prospective_release_sha256": "d1eb5d7642ac01c46ad8d7a2464627408358d438ca0c302bcaa8c71e759bbbd1",
+      "release_id": "existing-twelve-execution-v1",
+      "schema": "patient-corpus-exact-launch-admission-v1",
+      "solver_execution_allowed": false,
+      "source_decoding_authorized": true
+    },
+    "expected_file_sha256": "5bc9211c72631443add5a8d4fec1f56f5e466238a2d1b1452baf4f99fa9646ac",
+    "expected_path": "outputs/patient-corpus-twelve-execution-v1/launch-admission.json",
+    "instruction": "Do not materialize this launch receipt until root explicitly releases the actual run. Preparation writes only prepared-execution-plan.json.",
+    "serialization": "json.dumps(document, indent=2, sort_keys=True) plus one trailing newline"
+  },
+  "legacy_behavior": "Existing nine/ten RELEASES, CLI choices, app hardpins, catalogs and audits unchanged.",
+  "output_directory": "outputs/patient-corpus-twelve-execution-v1",
+  "plan_hash": "sha256:ecdc8f380437c0f1b1536a12fac0c22a07774c3f97e7d340d25d83f4dc4121d6",
+  "prospective_record_unchanged": true,
+  "schema": "patient-corpus-twelve-execution-guide-v1",
+  "scope": "Exact twelve existing acquired source people; anatomical estimates, unknown location and registration remain unaccepted. No model, acquisition, solver or training.",
+  "software_entrypoint": "resectionlab.patient_corpus; fixed execution_plan, no arbitrary release file or candidates",
+  "status": "support_prepared_actual_launch_pending"
+}

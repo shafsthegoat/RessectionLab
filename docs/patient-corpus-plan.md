@@ -264,6 +264,17 @@ These radiotherapy-source cases are not declared healthy or tumor-free, and
 missing tumor labels do not permit them to become virtual-glioma hosts. Their
 model/GUI integration is separate from the frozen ten-person catalog.
 
+The [later twelve-source release](../artifacts/patient-corpus-twelve-recovery-v1/RESULT.md)
+qualifies those two CT/MRI candidates with the exact prior ten. Its retained cold
+execution fails the memory guard; separately declared fresh workers complete the
+two pending receipts under the unchanged cap, followed by cached verification.
+An independent metadata audit preserves the earlier releases and source records.
+The actual Cases browser exposes all 12 source identities and three skull cases,
+with canonical bundle checks and separate MRI inspection. This is a source
+engineering milestone: location fields remain UNKNOWN and the intended three
+registered vascular hosts, reviewed tumor-location diversity and independently
+accepted anatomy remain open. Saved versions and virtual descendants add no people.
+
 ## One bounded PDE generator pilot, only after Gate2
 
 Use the author-maintained [TumorGrowthToolkit](https://github.com/m1balcerak/TumorGrowthToolkit)

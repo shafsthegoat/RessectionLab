@@ -25,7 +25,7 @@ reused; source files remain outside Git. The confirmed author identities are
 | 0. Inspect and reuse | Latest merged workbench pulled; source/model/corpus audit completed | Actual source, runtime, reference and failure records; maintain original data/roles. |
 | 1. Inferred anatomy in Electron | Software POC passed: three real cases/four retained model runs hash/grid checked; actual current GUI interaction and separate native save/reopen completed | Anatomical accuracy, coverage review and population validation remain open; no clinical gate is implied. |
 | 2. Narrow two-tool episode | Software POC passed: actual tool actions, play/pause/scrub, two exact-state branches, native save/fresh process reopen, screenshots and independent source/geometry/accounting checks | Physiological calibration and native-collection adapter remain open; the bounded canonical-bundle episode is operable. |
-| 3. Real/virtual corpus diversity | Separate frozen ten-person catalog passes source/resume and Electron discovery/open checks; IXI has real brain/vessel estimates and a uniform FK overlay operated/saved/reopened in Electron | Reviewed anatomical/location diversity, accepted host/tissue support and tissue-conditioned pilot remain open. Count unique people separately from variants. |
+| 3. Real/virtual corpus diversity | Separate twelve-source catalog passes bounded qualification, cached recovery and actual Electron discovery/open checks; IXI has real brain/vessel estimates and a uniform FK overlay operated/saved/reopened in Electron | Reviewed anatomical/location diversity, accepted host/tissue support and tissue-conditioned pilot remain open. Count source identities separately from saved variants; cross-cohort biological independence is unresolved. |
 | 4. Mechanics and planning | Existing search and negative PPO results retained | Named physical/observation measurements, independent tests and matched observation/budget comparisons before promoting new learning. |
 | 5. Robotics | Deferred until matched trajectories and mature simulator exist | Rights, embodiment, timestamps and frozen-baseline evidence; images/labels alone cannot close this stage. |
 
@@ -88,6 +88,17 @@ save/fresh-process reopen for the next frozen SynthRAD TRAIN B/C identities.
 Independent audits verify acquired scans, masks and originals. These two model
 candidates do not change catalog counts or accept anatomy, health or alignment.
 
+The [subsequent twelve-source release](../artifacts/patient-corpus-twelve-recovery-v1/RESULT.md)
+qualifies those two candidates alongside the frozen ten. Its first execution
+fails the RSS guard and remains recorded; a separately declared recovery uses
+fresh sequential workers under the same cap and reuses every completed receipt.
+Independent metadata checks preserve 89 prior files and the original ten receipts.
+Actual Electron shows 12 source identities, finds three skull cases and opens
+1BC077 with MRI separate from CT masks. All 138 host tests pass. The frozen nine
+and ten releases remain unchanged. Region/lobe/hemisphere remain UNKNOWN, all
+accepted-fusion counts remain zero, and the planned registered vascular and
+reviewed location-diversity targets are still open.
+
 The [IXI quality follow-up](../artifacts/ixi265-quality-independent-v1/RESULT.md)
 reproduces vessel set agreement under incomplete annotation and unresolved
 checkpoint overlap. It also independently explains the first Atropos protocol's
@@ -121,7 +132,7 @@ remain open until measured or reviewed evidence is available.
 
 ## Next executable actions
 
-Preserve the two completed CT/MRI candidates and the separate ten-person release.
+Preserve the completed twelve-source release and frozen nine/ten history.
 Address the source-bound IXI tissue dependency with explicit unknown cells and
 independent numerical/frame checks. Preserve tissue-model failures;
 source-reported health and uniform diffusion do not

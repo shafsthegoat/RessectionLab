@@ -18,8 +18,12 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
+import signal
 import sqlite3
+import subprocess
+import sys
 import tempfile
+import time
 from uuid import uuid4
 from zipfile import ZipFile
 
@@ -38,6 +42,17 @@ RELEASES=(DEFAULT_RELEASE,IXI_RELEASE)
 IXI_RELEASE_PATH='manifests/patient-corpus-releases/existing-nine-plus-ixi265-v1.json'
 IXI_RELEASE_SHA256='2c426f82e160be5b11bb19d9d5c4d2ac804ae9d85011cf46a4dc83904adbea84'
 IXI_PLAN_HASH='sha256:a1a2623d05270881d4291a1037d303578cb27a4f63d52cce28b5f5db251d8755'
+PROSPECTIVE_RELEASE='existing-ten-plus-synthrad-bc-v1'
+PROSPECTIVE_RELEASE_PATH='manifests/patient-corpus-releases/existing-ten-plus-synthrad-bc-v1.json'
+PROSPECTIVE_RELEASE_SHA256='d1eb5d7642ac01c46ad8d7a2464627408358d438ca0c302bcaa8c71e759bbbd1'
+PROSPECTIVE_PLAN_HASH='sha256:0e27cffd8bd556c12460678d33b65b85e2a5f5819a2e09b03b23450b111c1093'
+PROSPECTIVE_OUTPUT='outputs/patient-corpus-twelve-v1'
+EXECUTION_RELEASE='existing-twelve-execution-v1'
+EXECUTION_ADMISSION_PATH='manifests/patient-corpus-releases/existing-twelve-execution-admission-v1.json'
+EXECUTION_ADMISSION_SHA256='76c3c7e1f3805c136c508f53c4b31eae56b0ea3e9b876b556326a08b1fb681d9'
+EXECUTION_PLAN_HASH='sha256:ecdc8f380437c0f1b1536a12fac0c22a07774c3f97e7d340d25d83f4dc4121d6'
+EXECUTION_OUTPUT='outputs/patient-corpus-twelve-execution-v1'
+EXECUTION_LAUNCH_SHA256='5bc9211c72631443add5a8d4fec1f56f5e466238a2d1b1452baf4f99fa9646ac'
 UNKNOWN='UNKNOWN'
 READABLE_ROLES={'TRAIN','DEVELOPMENT'}
 ANATOMY=('brain','tumor','skull','vessels','ventricles')
@@ -84,15 +99,18 @@ def require_candidate(candidate,release=DEFAULT_RELEASE):
         re.search(r'resect.*(?:case)?0*4(?:\D|$)',patient,re.I))
     _require(not blocked and role in READABLE_ROLES,'PROTECTED_ROLE','Protected or undeclared participant is not opened')
     _require(canonical_patient(patient)==patient,'PARTICIPANT_ID','A canonical source-family participant ID is required')
-    _require(release in RELEASES,'RELEASE_UNKNOWN','Only explicitly frozen corpus releases are supported')
-    if release==IXI_RELEASE:
+    _require(release in (*RELEASES,EXECUTION_RELEASE),'RELEASE_UNKNOWN','Only explicitly frozen corpus releases are supported')
+    if release==EXECUTION_RELEASE:
+        _execution_admission()
+        require_prospective_candidate(candidate)
+    elif release==IXI_RELEASE:
         frozen,_=_frozen_release()
         admitted={row['patient_group']:row for row in [*frozen['base_candidates'],frozen['additional_candidate']]}
         _require(candidate==admitted.get(patient),'NOT_ALLOWLISTED','Candidate differs from the exact frozen release declaration')
     else:
         _require(ADMITTED_ROLES.get(patient)==role,'NOT_ALLOWLISTED','This participant and role are outside the frozen nine-person tranche')
     _require(candidate.get('existing_materialized') is True,'NEW_PARTICIPANT_NOT_ADMITTED','This tranche only reuses previously materialized people')
-    allowed_licenses={'CC0','CC0-1.0','CC-BY-4.0','CC-BY-NC-4.0'}|({'CC-BY-SA-3.0'} if release==IXI_RELEASE else set())
+    allowed_licenses={'CC0','CC0-1.0','CC-BY-4.0','CC-BY-NC-4.0'}|({'CC-BY-SA-3.0'} if release in {IXI_RELEASE,EXECUTION_RELEASE} else set())
     _require(candidate.get('rights',{}).get('license') in allowed_licenses,'RIGHTS_UNRESOLVED','Source rights must be explicitly established')
     _require(str(candidate['rights'].get('source','')).startswith('https://'),'RIGHTS_UNRESOLVED','Source rights require an attributed source')
 
@@ -139,6 +157,7 @@ def require_manifest(manifest,candidate,release=DEFAULT_RELEASE):
             tokens=set(re.findall(r'[a-z0-9]+',value.casefold()))
             _require(not tokens&forbidden and not {'held','out'}<=tokens,'PROTECTED_ROLE','Nested split/role remains protected')
     visit(metadata)
+    if release==EXECUTION_RELEASE:visit(manifest.get('source_refs',[]))
 
 
 def _relative(value):
@@ -245,7 +264,85 @@ def release_plan(root,release=DEFAULT_RELEASE):
     return base
 
 
+def _prospective_release(root=None):
+    return _metadata(Path(root) if root is not None else Path(__file__).resolve().parents[2],
+        PROSPECTIVE_RELEASE_PATH,PROSPECTIVE_RELEASE_SHA256)
+
+
+def require_prospective_candidate(candidate):
+    """Validate a frozen declaration only; this never grants payload access."""
+    frozen,_=_prospective_release()
+    admitted={row['patient_group']:row for row in [*frozen['base_candidates'],*frozen['additional_candidates']]}
+    _require(candidate==admitted.get(candidate.get('patient_group')),'NOT_ALLOWLISTED','Candidate differs from the exact prospective release')
+    _require(candidate['role'] in READABLE_ROLES,'PROTECTED_ROLE','Prospective candidate role remains protected')
+    _relative(candidate['bundle'])
+    for source in candidate['source_files']:_relative(source['path'])
+
+
+def _prospective_document(root):
+    """Construct only from hashed JSON evidence; no image/bundle stats or reads."""
+    root=Path(root);frozen,binding=_prospective_release(root)
+    parent=release_plan(root,IXI_RELEASE)
+    _require(parent['plan_hash']==frozen['parent_plan_hash'] and parent['candidates']==frozen['base_candidates'],
+        'BASE_RELEASE_CHANGED','The frozen ten-person parent changed')
+    _require(frozen['release_status']=='prospective_not_released' and frozen['qualification_released'] is False,
+        'RELEASE_SCOPE','This preparation does not carry qualification authority')
+    for row in frozen['metadata_evidence']:_metadata(root,row['path'],row['sha256'])
+    cohort,_=_metadata(root,'manifests/synthrad-component-cohort-v1.json',ROLE_DOCUMENTS['manifests/synthrad-component-cohort-v1.json'])
+    for candidate in frozen['additional_candidates']:
+        members=[row for row in cohort['members'] if row['patient_group']==candidate['patient_group']]
+        _require(len(members)==1 and members[0]['role']==candidate['role']=='TRAIN','PROTECTED_ROLE','Prospective CT source role differs')
+        source,_=_metadata(root,candidate['acquisition_record'])
+        _require(source['patient_group']==candidate['patient_group'] and source['role']=='TRAIN' and source['training_admitted'] is False,
+            'PARTICIPANT_ID','Prospective CT identity or training restriction differs')
+        _require({row['sha256'] for row in candidate['source_files']}=={row['sha256'] for row in source['images'].values()},
+            'SOURCE_LINEAGE','Prospective CT/MR source hashes differ from their saved receipt')
+    parent.pop('plan_hash')
+    parent.update(schema=VERSION+'.prospective-plan',release_id=PROSPECTIVE_RELEASE,
+        parent_release_id=IXI_RELEASE,parent_plan_hash=IXI_PLAN_HASH,scope='frozen_ten_plus_two_existing_synthrad_train_people_only',
+        release_status='prospective_not_released',qualification_released=False,source_image_decoding_released=False,
+        candidates=sorted([*frozen['base_candidates'],*frozen['additional_candidates']],key=lambda row:row['patient_group']),
+        existing_materialized_people=12,newly_cataloged_existing_people=0,prospective_additional_existing_people=2,
+        planned_output_directory=PROSPECTIVE_OUTPUT,qualification_completed=False)
+    parent['metadata_evidence'] += [binding,*frozen['metadata_evidence']]
+    parent['plan_hash']=semantic_digest(parent)
+    return parent
+
+
+def validate_prospective_plan(plan):
+    _require(plan.get('schema')==VERSION+'.prospective-plan' and plan.get('release_id')==PROSPECTIVE_RELEASE,
+        'PLAN_SCHEMA','Unknown prospective plan')
+    _require(plan.get('plan_hash')==PROSPECTIVE_PLAN_HASH and
+        plan['plan_hash']==semantic_digest({k:v for k,v in plan.items() if k!='plan_hash'}),
+        'RELEASE_PLAN_CHANGED','The exact prospective plan cannot be edited or self-released')
+    for candidate in plan['candidates']:require_prospective_candidate(candidate)
+
+
+def prospective_plan(root):
+    document=_prospective_document(root);validate_prospective_plan(document);return document
+
+
+def prepare_prospective_release(root):
+    """Resume metadata preparation only, in its separate fixed output directory."""
+    root=Path(root);document=prospective_plan(root);output=root/PROSPECTIVE_OUTPUT
+    _require(output.resolve()==root.resolve()/PROSPECTIVE_OUTPUT,'OUTPUT_SCOPE','Prospective output cannot redirect to another release')
+    output.mkdir(parents=True,exist_ok=True)
+    destination=output/'prepared-plan.json';reused=destination.exists()
+    _require(not destination.is_symlink(),'OUTPUT_SCOPE','Prospective plan cannot redirect to another file')
+    if reused:_require(_json(destination.read_bytes())==document,'PLAN_CHANGED','Existing prospective preparation differs; preserve it for review')
+    else:_atomic_json(destination,document)
+    return {'schema':VERSION+'.preparation','release_id':PROSPECTIVE_RELEASE,'plan_hash':document['plan_hash'],
+        'prepared_plan':str(destination.relative_to(root)),'release_status':'prospective_not_released',
+        'prospective_existing_people':12,'qualified_people_this_step':0,'new_acquisitions':0,
+        'payloads_opened':False,'source_bundle_hashes_freshly_measured':False,'reused_preparation':reused}
+
+
 def validate_plan(plan):
+    _require(plan.get('release_id')!=PROSPECTIVE_RELEASE,'QUALIFICATION_NOT_RELEASED',
+        'Twelve-person qualification and source decoding require a later explicit root release')
+    if plan.get('release_id')==EXECUTION_RELEASE:
+        validate_execution_plan(plan)
+        return
     _require(plan.get('schema')==VERSION+'.plan','PLAN_SCHEMA','Unknown qualification plan')
     _require(plan.get('plan_hash')==semantic_digest({k:v for k,v in plan.items() if k!='plan_hash'}),'PLAN_HASH','Qualification plan changed')
     candidates=plan.get('candidates',[])
@@ -270,6 +367,174 @@ def _atomic_json(path,value):
     os.replace(temporary,path)
 
 
+def _execution_admission(root=None):
+    return _metadata(Path(root) if root is not None else Path(__file__).resolve().parents[2],
+        EXECUTION_ADMISSION_PATH,EXECUTION_ADMISSION_SHA256)
+
+
+def _execution_document(root):
+    admission,binding=_execution_admission(root)
+    parent=prospective_plan(root)
+    _require(admission['prospective_release']=={'path':PROSPECTIVE_RELEASE_PATH,
+        'sha256':PROSPECTIVE_RELEASE_SHA256,'plan_hash':parent['plan_hash']},
+        'RELEASE_SCOPE','Execution admission must bind the unchanged prospective release')
+    for row in admission['source_audits']:_metadata(Path(root),row['path'],row['sha256'])
+    parent.pop('plan_hash')
+    parent.update(schema=VERSION+'.plan',release_id=EXECUTION_RELEASE,
+        prospective_release_id=PROSPECTIVE_RELEASE,prospective_plan_hash=PROSPECTIVE_PLAN_HASH,
+        release_status='execution_support_prepared_launch_receipt_required',
+        qualification_released='only_with_exact_launch_receipt_and_supervisor',source_image_decoding_released=False,
+        planned_output_directory=EXECUTION_OUTPUT,resource_bounds=admission['bounds'],
+        execution_admission=binding,newly_cataloged_existing_people=2)
+    parent['metadata_evidence'] += [binding]
+    parent['plan_hash']=semantic_digest(parent)
+    return parent
+
+
+def validate_execution_plan(plan):
+    _require(plan.get('schema')==VERSION+'.plan' and plan.get('release_id')==EXECUTION_RELEASE,
+        'PLAN_SCHEMA','Unknown execution plan')
+    _require(plan.get('plan_hash')==EXECUTION_PLAN_HASH and
+        plan['plan_hash']==semantic_digest({k:v for k,v in plan.items() if k!='plan_hash'}),
+        'RELEASE_PLAN_CHANGED','Only the exact twelve-person execution plan is admitted')
+    for row in plan['candidates']:require_candidate(row,EXECUTION_RELEASE)
+
+
+def execution_plan(root):
+    """Metadata-only preparation; actual qualification also requires a launch receipt."""
+    plan=_execution_document(root);validate_execution_plan(plan);return plan
+
+
+def _execution_output(root):
+    output=Path(root)/EXECUTION_OUTPUT
+    _require(output.resolve()==Path(root).resolve()/EXECUTION_OUTPUT,'OUTPUT_SCOPE','Execution output cannot redirect into another release')
+    return output
+
+
+def prepare_execution_release(root):
+    """Write only a reproducible plan; never create the authority to launch it."""
+    plan=execution_plan(root);output=_execution_output(root);destination=output/'prepared-execution-plan.json'
+    _require(not destination.is_symlink(),'OUTPUT_SCOPE','Prepared execution plan cannot be redirected')
+    reused=destination.exists()
+    if reused:_require(_json(destination.read_bytes())==plan,'PLAN_CHANGED','Prepared execution plan changed')
+    else:_atomic_json(destination,plan)
+    return {'schema':VERSION+'.execution-preparation','release_id':EXECUTION_RELEASE,
+        'plan_hash':plan['plan_hash'],'prepared_plan':str(destination.relative_to(root)),
+        'reused_preparation':reused,'payloads_opened':False,'qualified_people_this_step':0,
+        'actual_launch_authorized':False,'required_launch_receipt':EXECUTION_OUTPUT+'/launch-admission.json'}
+
+
+def _require_execution_launch(root,plan):
+    validate_execution_plan(plan)
+    # Rebuild from pinned JSON before accessing even one candidate path.
+    _require(execution_plan(root)==plan,'RELEASE_PLAN_CHANGED','Current execution metadata differs')
+    output=_execution_output(root);path=output/'launch-admission.json'
+    _require(path.exists() and not path.is_symlink(),'QUALIFICATION_NOT_RELEASED',
+        'Actual qualification awaits the exact later root launch receipt')
+    launch,_=_metadata(Path(root),str(path.relative_to(root)),EXECUTION_LAUNCH_SHA256)
+    _require(launch['execution_plan_hash']==plan['plan_hash'] and launch['source_decoding_authorized'] is True,
+        'QUALIFICATION_NOT_RELEASED','Root launch receipt does not authorize this exact plan')
+    return launch
+
+
+def _execution_directory_bytes(output):
+    if not output.exists():return 0
+    total=0
+    for path in output.rglob('*'):
+        _require(not path.is_symlink(),'OUTPUT_SCOPE','Execution output may not contain redirected paths')
+        if path.is_file():total+=path.stat().st_size
+    return total
+
+
+def _execution_resource_violation(bounds,*,rss,available,elapsed,output_bytes,free_disk):
+    for exceeded,code in ((rss>bounds['process_family_plus_supervisor_rss_bytes'],'RSS_LIMIT'),
+            (available<bounds['minimum_available_bytes'],'AVAILABLE_MEMORY_FLOOR'),
+            (elapsed>bounds['wall_seconds'],'WALL_TIME_LIMIT'),
+            (output_bytes>bounds['maximum_metadata_output_bytes'],'OUTPUT_LIMIT'),
+            (free_disk<bounds['minimum_free_disk_bytes'],'DISK_RESERVE')):
+        if exceeded:return code
+    return None
+
+
+def _execution_sample(psutil,output,started,worker_pid=None):
+    members=[psutil.Process()]
+    if worker_pid is not None:
+        try:
+            worker=psutil.Process(worker_pid);members += [worker,*worker.children(recursive=True)]
+        except psutil.NoSuchProcess:pass
+    rss=0
+    for process in members:
+        try:rss+=process.memory_info().rss
+        except psutil.NoSuchProcess:pass
+    return {'rss':rss,'available':psutil.virtual_memory().available,'elapsed':time.monotonic()-started,
+        'output_bytes':_execution_directory_bytes(output),'free_disk':psutil.disk_usage(output).free}
+
+
+def _stop_execution_worker(process):
+    if process.poll() is None:
+        try:os.killpg(process.pid,signal.SIGKILL)
+        except ProcessLookupError:pass  # Worker may exit between poll and kill.
+        process.wait(timeout=5)
+
+
+def run_execution_qualification(root,plan):
+    """One bounded sequential worker; failed attempts are recorded, never retried."""
+    root=Path(root).resolve();_require_execution_launch(root,plan);output=_execution_output(root)
+    import psutil
+    bounds=plan['resource_bounds'];started=time.monotonic()
+    initial=_execution_sample(psutil,output,started)
+    failure=_execution_resource_violation(bounds,**initial)
+    _require(failure is None,failure or 'RESOURCE_LIMIT','Execution resource preflight refused launch')
+    with (output/'.supervisor.lock').open('a+') as lock:
+        fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        attempt=output/'supervision'/str(uuid4());attempt.mkdir(parents=True)
+        environment=dict(os.environ,PYTHONPATH=str(root/'src'))
+        environment['RESSECTIONLAB_CORPUS_SUPERVISOR_PID']=str(os.getpid())
+        for key in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','VECLIB_MAXIMUM_THREADS',
+                'NUMEXPR_NUM_THREADS','ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS'):environment[key]='2'
+        result_path=attempt/'worker-result.json';process=None;peak=initial['rss'];minimum=initial['available']
+        record={'schema':VERSION+'.execution-supervision','release_id':EXECUTION_RELEASE,'plan_hash':plan['plan_hash'],
+            'bounds':bounds,'automatic_retries':0,'status':'started','attempt':str(attempt.relative_to(root))}
+        try:
+            command=[sys.executable,'-m','resectionlab.patient_corpus','--execution-worker',str(root),str(result_path)]
+            with (attempt/'worker.log').open('wb') as log:
+                process=subprocess.Popen(command,cwd=root,env=environment,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+                while True:
+                    sample=_execution_sample(psutil,output,started,process.pid)
+                    peak=max(peak,sample['rss']);minimum=min(minimum,sample['available'])
+                    failure=_execution_resource_violation(bounds,**sample)
+                    if failure:raise QualificationError(failure,'Execution resource budget exceeded')
+                    if process.poll() is not None:break
+                    time.sleep(bounds['monitor_interval_seconds'])
+            _require(process.returncode==0,'WORKER_FAILURE','Qualification worker failed; inspect the preserved attempt log')
+            _require(result_path.stat().st_size<=MAX_METADATA_BYTES,'METADATA_LIMIT','Worker result exceeds metadata limit')
+            result=_json(result_path.read_bytes());record.update(status='completed',result=result)
+            return result
+        except BaseException as error:
+            record.update(status='failed',failure_code=getattr(error,'code','INTERRUPTED' if isinstance(error,KeyboardInterrupt) else 'SUPERVISOR_FAILURE'),
+                reason=str(error) or type(error).__name__)
+            raise
+        finally:
+            if process is not None:_stop_execution_worker(process)
+            record.update(elapsed_seconds=time.monotonic()-started,peak_family_plus_supervisor_rss_bytes_sampled=peak,
+                minimum_available_bytes_sampled=minimum,worker_exit_code=None if process is None else process.returncode)
+            _atomic_json(attempt/'supervision.json',record)
+
+
+def _execution_worker(root,result_path):
+    root=Path(root).resolve();plan=execution_plan(root);_require_execution_launch(root,plan)
+    _require(os.environ.get('RESSECTIONLAB_CORPUS_SUPERVISOR_PID')==str(os.getppid()),
+        'SUPERVISOR_REQUIRED','The execution worker must be started by its bounded supervisor')
+    output=_execution_output(root);result_path=Path(result_path)
+    _require(result_path.resolve().is_relative_to(output/'supervision') and result_path.name=='worker-result.json',
+        'OUTPUT_SCOPE','Worker receipt must remain in the bounded attempt directory')
+    _require(all(os.environ.get(key)=='2' for key in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS',
+        'MKL_NUM_THREADS','VECLIB_MAXIMUM_THREADS','NUMEXPR_NUM_THREADS','ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS')),
+        'THREAD_BOUND','Worker requires the declared numerical thread limits')
+    result=_run_qualification(root,output,plan)
+    _atomic_json(result_path,result)
+
+
 def _manifest_preflight(path,candidate,*,check_arrays=True,release=DEFAULT_RELEASE):
     """Reject wrong identity and protected nested roles before numeric decoding."""
     with ZipFile(path) as archive:
@@ -288,6 +553,7 @@ def _manifest_preflight(path,candidate,*,check_arrays=True,release=DEFAULT_RELEA
 
 def _input_binding(root,candidate,plan):
     release=plan.get('release_id',DEFAULT_RELEASE)
+    if release==EXECUTION_RELEASE:validate_execution_plan(plan)
     require_candidate(candidate,release)
     bindings=[]
     for row in plan.get('metadata_evidence',[]):
@@ -451,7 +717,21 @@ def _qualification(root,candidate,binding):
 
 
 def run_qualification(root,output,plan,*,limit=None):
+    validate_plan(plan)
+    if plan.get('release_id')==EXECUTION_RELEASE:
+        _require(Path(output).resolve()==_execution_output(root).resolve(),'OUTPUT_SCOPE','Execution uses its fixed separate output only')
+        _require(limit is None,'RELEASE_SCOPE','Execution always visits the exact twelve candidates sequentially')
+        return run_execution_qualification(root,plan)
+    return _run_qualification(root,output,plan,limit=limit)
+
+
+def _run_qualification(root,output,plan,*,limit=None):
     root=Path(root);output=Path(output);validate_plan(plan)
+    if plan.get('release_id')==EXECUTION_RELEASE:
+        _require_execution_launch(root,plan)
+        _require(os.environ.get('RESSECTIONLAB_CORPUS_SUPERVISOR_PID')==str(os.getppid()),
+            'SUPERVISOR_REQUIRED','Execution qualification requires the bounded worker')
+        _require(output.resolve()==_execution_output(root).resolve(),'OUTPUT_SCOPE','Execution output differs')
     output.mkdir(parents=True,exist_ok=True)
     with (output/'.run.lock').open('a+') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
@@ -492,10 +772,10 @@ def run_qualification(root,output,plan,*,limit=None):
                       'newly_acquired_people':0,'rejected':counts['rejected'],'pending':counts['pending'],
                       'anatomical_truth_accepted_people':0,'anatomical_presence_combinations':combinations},
             'cross_cohort_independence':'unresolved; namespaced participants only','protected_imaging_opened':False}
-        if plan.get('release_id')==IXI_RELEASE:
-            catalog.update(release_id=IXI_RELEASE,parent_plan_hash=plan['parent_plan_hash'],
+        if plan.get('release_id') in {IXI_RELEASE,EXECUTION_RELEASE}:
+            catalog.update(release_id=plan['release_id'],parent_plan_hash=plan['parent_plan_hash'],
                 presence_combination_meaning='Same-person presence across saved grids; not accepted fusion or complete anatomy')
-            catalog['counts'].update(newly_cataloged_existing_people=1,virtual_descendants_counted_as_people=0,
+            catalog['counts'].update(newly_cataloged_existing_people=plan['newly_cataloged_existing_people'],virtual_descendants_counted_as_people=0,
                 people_with_portable_source_originals=sum(row['originals']['portable_originals_complete'] for row in qualified),
                 verified_embedded_original_files=sum(row['originals']['embedded_count'] for row in qualified),
                 same_person_presence_across_saved_grids=combinations,
@@ -535,3 +815,8 @@ def query_catalog(output,*,text='',anatomy=None,modality=None,role=None,status=N
         (not anatomy or anatomy in row.get('anatomy_present',[])) and
         (not modality or modality in {image['modality'] for image in row.get('imaging',[])}) and
         (not role or row['role']==role) and (not status or row['status']==status)]
+
+
+if __name__=='__main__':
+    _require(len(sys.argv)==4 and sys.argv[1]=='--execution-worker','WORKER_ARGUMENTS','Only the bounded worker entrypoint is supported')
+    _execution_worker(sys.argv[2],sys.argv[3])

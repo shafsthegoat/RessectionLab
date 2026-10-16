@@ -1,0 +1,78 @@
+{
+  "bounds": {
+    "automatic_retries": 0,
+    "maximum_metadata_output_bytes": 536870912,
+    "minimum_available_bytes": 1073741824,
+    "minimum_free_disk_bytes": 53687091200,
+    "monitor_interval_seconds": 0.1,
+    "numerical_threads": 2,
+    "process_family_plus_supervisor_rss_bytes": 1610612736,
+    "sequential_people": true,
+    "wall_seconds": 600,
+    "worker_count": 1
+  },
+  "commands": {
+    "after_root_launch_release": "PYTHONPATH=src .venv/bin/python scripts/qualify_patient_corpus_recovery.py --run",
+    "prepare": "PYTHONPATH=src .venv/bin/python scripts/qualify_patient_corpus_recovery.py --prepare"
+  },
+  "declaration": {
+    "path": "manifests/patient-corpus-releases/existing-twelve-recovery-v1.json",
+    "sha256": "654ba518110924cad832b185e2fe1dbcb8c329271ff1477c7ee6f6b684e65493"
+  },
+  "dispatcher_sha256": "94ddc408afa212bcc898c694b3e419cb977aa89f85ac408e20788a6dc03df7d7",
+  "launch_receipt": {
+    "document": {
+      "authority": "Later explicit root release of the frozen fresh-worker recovery; not the earlier failed-attempt release.",
+      "automatic_retries": 0,
+      "declaration_sha256": "654ba518110924cad832b185e2fe1dbcb8c329271ff1477c7ee6f6b684e65493",
+      "dispatcher_sha256": "94ddc408afa212bcc898c694b3e419cb977aa89f85ac408e20788a6dc03df7d7",
+      "execution_plan_hash": "sha256:ecdc8f380437c0f1b1536a12fac0c22a07774c3f97e7d340d25d83f4dc4121d6",
+      "preparation_hash": "sha256:c6831aae91f3ed066d524280cc14e4b0d27bb98aef8d96f5474bad42852005ac",
+      "schema": "patient-corpus-exact-recovery-launch-v1",
+      "source_decoding_authorized": true,
+      "stages": 3
+    },
+    "expected_file_sha256": "f3e83ffc36785da07ce0aa32c39e6e588d3b08b2b37a1cd2cc2d1e58920e01db",
+    "instruction": "Create only after a separate explicit root release of this frozen recovery protocol.",
+    "path": "outputs/patient-corpus-twelve-recovery-v1/launch-admission.json",
+    "serialization": "json.dumps(document, indent=2, sort_keys=True) plus one trailing newline"
+  },
+  "outputs": {
+    "qualification": "outputs/patient-corpus-twelve-execution-v1",
+    "recovery": "outputs/patient-corpus-twelve-recovery-v1"
+  },
+  "partial_catalog_rule": "After first child, catalog has eleven qualified and one pending. Completion requires all twelve source receipts; final cached-only pass must reuse all twelve without decoding. Any failure blocks later workers and retry.",
+  "preparation_hash": "sha256:c6831aae91f3ed066d524280cc14e4b0d27bb98aef8d96f5474bad42852005ac",
+  "prior_failure_preserved": {
+    "path": "artifacts/patient-corpus-twelve-execution-v1/outcome.json",
+    "sha256": "045ec9bbe30674515e4b8084406acd1883fa3880fb9b91eb242b0938c2dfa792",
+    "supervision_path": "outputs/patient-corpus-twelve-execution-v1/supervision/4565a970-7c96-4d34-ad09-7b0137d38d3d/supervision.json",
+    "supervision_sha256": "d8143e5b01128b34f016692571bc1c0198fda5bae4ee49aa514e059bdeb031a8"
+  },
+  "schema": "patient-corpus-twelve-recovery-guide-v1",
+  "scope": "Only the unchanged exact twelve-source plan and source-engineering qualification. No anatomical acceptance, training, inference, solver or acquisition.",
+  "stages": [
+    {
+      "expected_qualified": 11,
+      "expected_reused": 10,
+      "id": "qualify-1BC077",
+      "maximum_new_decodes": 1,
+      "new_patient": "SynthRAD2023:1BC077"
+    },
+    {
+      "expected_qualified": 12,
+      "expected_reused": 11,
+      "id": "qualify-UCSF004",
+      "maximum_new_decodes": 1,
+      "new_patient": "UCSF-PDGM:004"
+    },
+    {
+      "expected_qualified": 12,
+      "expected_reused": 12,
+      "id": "verify-all-cached",
+      "maximum_new_decodes": 0,
+      "new_patient": null
+    }
+  ],
+  "status": "prepared_only_not_released"
+}

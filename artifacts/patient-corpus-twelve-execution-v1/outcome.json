@@ -1,0 +1,266 @@
+{
+  "anatomical_acceptances": 0,
+  "automatic_retries": 0,
+  "cached_resume_run": false,
+  "complete_catalog_created": false,
+  "completed_receipts": [
+    {
+      "anatomical_truth_accepted": false,
+      "anatomy_present": [
+        "brain",
+        "tumor"
+      ],
+      "bundle_sha256": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12",
+      "missing_anatomy": [
+        "skull",
+        "ventricles",
+        "vessels"
+      ],
+      "original_count": 0,
+      "patient_group": "BTC:sub-PAT05",
+      "portable_originals_complete": false,
+      "receipt_file_sha256": "8f12d29a9fdbd9cd81d6f9a22ae0121d1cf4f0ba0c6395387bb81daece4c23c2",
+      "receipt_hash": "sha256:a8830b12edd3c2bb36ae15a767c9988684ec26e0169878ef8cf383dc85b4aa48",
+      "receipt_path": "outputs/patient-corpus-twelve-execution-v1/receipts/7e1123371632eaf6e8523e46e93bf3e48e77c39daa68f34b882a4c49c0981b4d.json",
+      "role": "TRAIN",
+      "status": "qualified_with_limitations"
+    },
+    {
+      "anatomical_truth_accepted": false,
+      "anatomy_present": [
+        "brain",
+        "tumor"
+      ],
+      "bundle_sha256": "b906e1c061450526e4ed4737f17f880f1ab7fdf35d667d1d6f8d7eb55b3c416b",
+      "missing_anatomy": [
+        "skull",
+        "ventricles",
+        "vessels"
+      ],
+      "original_count": 0,
+      "patient_group": "BTC:sub-PAT16",
+      "portable_originals_complete": false,
+      "receipt_file_sha256": "470ccf4c2c5a7f20bd83384c0a8da568dc6cf46c7bfb8e6030e7e5407344f766",
+      "receipt_hash": "sha256:4f3ea43655757db62712a1391a2a3c0bc57518d5e99f93c9f4ab3376e2c803cb",
+      "receipt_path": "outputs/patient-corpus-twelve-execution-v1/receipts/9741bf17d4af50c90fc2669eb0b1028d8812b77f2bff69b8219660f742db06a6.json",
+      "role": "TRAIN",
+      "status": "qualified_with_limitations"
+    },
+    {
+      "anatomical_truth_accepted": false,
+      "anatomy_present": [
+        "brain",
+        "tumor"
+      ],
+      "bundle_sha256": "edd4d0d149cf27e81dbc67c2742fd14dff5bfa6fa1c63ad111fecb4b48eca66b",
+      "missing_anatomy": [
+        "skull",
+        "ventricles",
+        "vessels"
+      ],
+      "original_count": 0,
+      "patient_group": "BTC:sub-PAT20",
+      "portable_originals_complete": false,
+      "receipt_file_sha256": "a539d44b2282e3a81274d397f977072ef66ad66f52604ba730e467f322979f18",
+      "receipt_hash": "sha256:ca15cb6d4af05d4eac832335f7b49100e0090282d1a66c8a251058617215a97d",
+      "receipt_path": "outputs/patient-corpus-twelve-execution-v1/receipts/9ce397c950dac299b34d7aab403228791efbed92e0155b5d80fa5f28f73d8f25.json",
+      "role": "TRAIN",
+      "status": "qualified_with_limitations"
+    },
+    {
+      "anatomical_truth_accepted": false,
+      "anatomy_present": [
+        "brain",
+        "tumor"
+      ],
+      "bundle_sha256": "a12ac7c2325b2c87137c112fae9c4b7ebe33e40e40cdd9bcff192d891a4b562e",
+      "missing_anatomy": [
+        "skull",
+        "ventricles",
+        "vessels"
+      ],
+      "original_count": 0,
+      "patient_group": "BTC:sub-PAT22",
+      "portable_originals_complete": false,
+      "receipt_file_sha256": "d0d1fb7309851eb7c1681f8409c5e39127739b69e70fd94543ade3360901faed",
+      "receipt_hash": "sha256:a4d9285234026cba792f41ec43584aa03671703a51b05ff714c6b6ea8eb452a4",
+      "receipt_path": "outputs/patient-corpus-twelve-execution-v1/receipts/64c1d2bcd87af294e3aba5f29dee28365b5e70bc4f8166d9615a7fb0dde5129e.json",
+      "role": "TRAIN",
+      "status": "qualified_with_limitations"
+    },
+    {
+      "anatomical_truth_accepted": false,
+      "anatomy_present": [
+        "brain",
+        "tumor"
+      ],
+      "bundle_sha256": "d635a72cc24066c2b16dc7b6d6805baae04d1750c50ca351b2410a70d913428a",
+      "missing_anatomy": [
+        "skull",
+        "ventricles",
+        "vessels"
+      ],
+      "original_count": 0,
+      "patient_group": "BTC:sub-PAT25",
+      "portable_originals_complete": false,
+      "receipt_file_sha256": "6f9a4a8e7b1e26d79d32e7d41ba2e0b6e0038f6bf9df33dcdd362180281660bc",
+      "receipt_hash": "sha256:a385afe6eef4986c544851037c77534e393ac56bb6c1c5264e8d8e0469efdf68",
+      "receipt_path": "outputs/patient-corpus-twelve-execution-v1/receipts/f7fa502e13a10a2e6150ae9082d9e237a07553c0b2949f36af1cd6622f0509ae.json",
+      "role": "TRAIN",
+      "status": "qualified_with_limitations"
+    },
+    {
+      "anatomical_truth_accepted": false,
+      "anatomy_present": [
+        "brain",
+        "tumor"
+      ],
+      "bundle_sha256": "f7fc9491cf74634de5b2be36dd5968c7e161a7b7fc22698a7045d7453c95a747",
+      "missing_anatomy": [
+        "skull",
+        "ventricles",
+        "vessels"
+      ],
+      "original_count": 0,
+      "patient_group": "BTC:sub-PAT28",
+      "portable_originals_complete": false,
+      "receipt_file_sha256": "64e21e595aeb030546f43375fd718ca886c8b7ab22d0f53d3ac2b960184913a1",
+      "receipt_hash": "sha256:245612a1312ca897545e33d2115d70ca60ff750f2caa91892aa2bb1af191be34",
+      "receipt_path": "outputs/patient-corpus-twelve-execution-v1/receipts/949af97126429808234dbd2121a2e9eb102de827627df0f440dc73595c123f93.json",
+      "role": "TRAIN",
+      "status": "qualified_with_limitations"
+    },
+    {
+      "anatomical_truth_accepted": false,
+      "anatomy_present": [
+        "brain",
+        "vessels"
+      ],
+      "bundle_sha256": "55a38ae5792c889d3f8a8e28c635c92f78ca80d42690028b7eb028d638980e0e",
+      "missing_anatomy": [
+        "skull",
+        "tumor",
+        "ventricles"
+      ],
+      "original_count": 24,
+      "patient_group": "IXI:265",
+      "portable_originals_complete": true,
+      "receipt_file_sha256": "74d25b0e7652244750c233c7e578cd5f481db57d281c65d0f40ed0c3e73069ab",
+      "receipt_hash": "sha256:e600e9ab5a1a98d41bab2dc163236622424d4c2def994c21ee3796d02c80de5c",
+      "receipt_path": "outputs/patient-corpus-twelve-execution-v1/receipts/3f2ebd02514cb3e1c381b0d799113c12b33fae3932bca3cba8ae0435d53d3c00.json",
+      "role": "TRAIN",
+      "status": "qualified_with_limitations"
+    },
+    {
+      "anatomical_truth_accepted": false,
+      "anatomy_present": [
+        "vessels"
+      ],
+      "bundle_sha256": "257fa5b5558e672fb78dddbfe55d9574d87cd1f0776e6cc8c5d9d086d2ada18c",
+      "missing_anatomy": [
+        "brain",
+        "skull",
+        "tumor",
+        "ventricles"
+      ],
+      "original_count": 7,
+      "patient_group": "Lausanne:sub-000",
+      "portable_originals_complete": true,
+      "receipt_file_sha256": "f12c1bac026576a46a06077a9b799fe97db54e8a7bdfc3cf690a0d505030bf11",
+      "receipt_hash": "sha256:1f9dce6a3dd40cd00f1c24810644a6a8bbec5c547f658739d345bbca5142bc8f",
+      "receipt_path": "outputs/patient-corpus-twelve-execution-v1/receipts/e62155f5f250ae8b214d6de780cfeccef067dc1526665433657468b603ead84b.json",
+      "role": "TRAIN",
+      "status": "qualified_with_limitations"
+    },
+    {
+      "anatomical_truth_accepted": false,
+      "anatomy_present": [
+        "brain",
+        "skull"
+      ],
+      "bundle_sha256": "98e2566e458c762ed75c07bd370a8a06797a1a79c74ce8cdc15ff09bf1e66f81",
+      "missing_anatomy": [
+        "tumor",
+        "ventricles",
+        "vessels"
+      ],
+      "original_count": 7,
+      "patient_group": "SynthRAD2023:1BA336",
+      "portable_originals_complete": true,
+      "receipt_file_sha256": "0943987ec15d99946704f1a5bd2892b902630d538ad9a368ff7e7777473a3adb",
+      "receipt_hash": "sha256:4967417eaab01d5694f39a9235305c36b7389f9c6953c5a63b3069f059d084e6",
+      "receipt_path": "outputs/patient-corpus-twelve-execution-v1/receipts/646881caa5792f23648d77dc2bfa27605cf9727eb34946805bf6b9bac6d21167.json",
+      "role": "TRAIN",
+      "status": "qualified_with_limitations"
+    },
+    {
+      "anatomical_truth_accepted": false,
+      "anatomy_present": [
+        "brain",
+        "skull"
+      ],
+      "bundle_sha256": "6da3934b794ad13945ea8d1443a70c46625a75c9b8a7cf2a800d2830c906dd82",
+      "missing_anatomy": [
+        "tumor",
+        "ventricles",
+        "vessels"
+      ],
+      "original_count": 5,
+      "patient_group": "SynthRAD2023:1BB033",
+      "portable_originals_complete": true,
+      "receipt_file_sha256": "261280ea52b9fded4bf0f5417bd0dde18d4df121a97c8dbd24707af306dd298f",
+      "receipt_hash": "sha256:5fdaa184dc707482f5c62949b9fc5cf2a88c39074b0b95f8ca780755a9b8bef8",
+      "receipt_path": "outputs/patient-corpus-twelve-execution-v1/receipts/b475d26bbd57bf419ddedf70511e00fedf31e532793890122e217d711161a0c3.json",
+      "role": "TRAIN",
+      "status": "qualified_with_limitations"
+    }
+  ],
+  "execution_plan_hash": "sha256:ecdc8f380437c0f1b1536a12fac0c22a07774c3f97e7d340d25d83f4dc4121d6",
+  "launch_receipt_sha256": "5bc9211c72631443add5a8d4fec1f56f5e466238a2d1b1452baf4f99fa9646ac",
+  "metadata_output_bytes": 244271,
+  "new_model_runs": 0,
+  "newly_acquired_people": 0,
+  "next_action": "Root reviews the sealed RSS-limit failure before any changed resource declaration or newly authorized attempt; no automatic retry or resume. No claim of complete twelve-person qualification.",
+  "old_and_prospective_files_verified_unchanged": 89,
+  "preparation_receipt_sha256": "591109a4bb4517e7b191843e0df17c12144eec023a20c014f18dca1177d22d86",
+  "qualification_completed": false,
+  "schema": "patient-corpus-twelve-execution-outcome-v1",
+  "software_controls_passed": 131,
+  "solver_runs": 0,
+  "source_receipts_completed": 10,
+  "source_rejections": 0,
+  "status": "stopped_at_declared_resource_limit",
+  "supervision": {
+    "attempt": "outputs/patient-corpus-twelve-execution-v1/supervision/4565a970-7c96-4d34-ad09-7b0137d38d3d",
+    "automatic_retries": 0,
+    "bounds": {
+      "automatic_retries": 0,
+      "maximum_metadata_output_bytes": 536870912,
+      "minimum_available_bytes": 1073741824,
+      "minimum_free_disk_bytes": 53687091200,
+      "monitor_interval_seconds": 0.1,
+      "numerical_threads": 2,
+      "process_family_plus_supervisor_rss_bytes": 1610612736,
+      "sequential_people": true,
+      "wall_seconds": 600,
+      "worker_count": 1
+    },
+    "elapsed_seconds": 4.29775037500076,
+    "failure_code": "RSS_LIMIT",
+    "minimum_available_bytes_sampled": 6248415232,
+    "path": "outputs/patient-corpus-twelve-execution-v1/supervision/4565a970-7c96-4d34-ad09-7b0137d38d3d/supervision.json",
+    "peak_family_plus_supervisor_rss_bytes_sampled": 1701134336,
+    "plan_hash": "sha256:ecdc8f380437c0f1b1536a12fac0c22a07774c3f97e7d340d25d83f4dc4121d6",
+    "reason": "Execution resource budget exceeded",
+    "release_id": "existing-twelve-execution-v1",
+    "schema": "patient-corpus-qualification-v1.execution-supervision",
+    "sha256": "d8143e5b01128b34f016692571bc1c0198fda5bae4ee49aa514e059bdeb031a8",
+    "status": "failed",
+    "worker_exit_code": -9
+  },
+  "training_admissions": 0,
+  "unfinished_or_unrecorded_people": [
+    "SynthRAD2023:1BC077",
+    "UCSF-PDGM:004"
+  ]
+}

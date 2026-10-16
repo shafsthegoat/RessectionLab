@@ -1,0 +1,69 @@
+{
+  "actual_workers_launched": 0,
+  "bound_scope": {
+    "cache_only_final_pass": true,
+    "exact_people": 12,
+    "existing_receipts": 10,
+    "maximum_new_decodes_per_stage": [
+      1,
+      1,
+      0
+    ],
+    "qualification_plan_hash": "sha256:ecdc8f380437c0f1b1536a12fac0c22a07774c3f97e7d340d25d83f4dc4121d6",
+    "remaining_new_receipts": 2
+  },
+  "core_frozen_unchanged": true,
+  "core_validator_sha256": "b8eaa63c23b0e02306070c8c7d576a70e8d9b6d22929cd8b8e4122a5c5fa18f6",
+  "declaration": {
+    "path": "manifests/patient-corpus-releases/existing-twelve-recovery-v1.json",
+    "sha256": "654ba518110924cad832b185e2fe1dbcb8c329271ff1477c7ee6f6b684e65493"
+  },
+  "dispatcher": {
+    "path": "scripts/qualify_patient_corpus_recovery.py",
+    "sha256": "94ddc408afa212bcc898c694b3e419cb977aa89f85ac408e20788a6dc03df7d7"
+  },
+  "expected_later_launch_sha256": "f3e83ffc36785da07ce0aa32c39e6e588d3b08b2b37a1cd2cc2d1e58920e01db",
+  "guide_sha256": "29fa0b6d4694a7a06e6db6e5515d0037004c64c8bd8e62a887fb2f1fabee05e7",
+  "launch_receipt_present": false,
+  "model_payloads_opened": false,
+  "new_acquisitions": 0,
+  "new_qualifications": 0,
+  "next_action": "Root review and explicit separate recovery launch release before materializing its launch receipt or running any child.",
+  "original_failure_preserved": {
+    "path": "artifacts/patient-corpus-twelve-execution-v1/outcome.json",
+    "sha256": "045ec9bbe30674515e4b8084406acd1883fa3880fb9b91eb242b0938c2dfa792",
+    "supervision_path": "outputs/patient-corpus-twelve-execution-v1/supervision/4565a970-7c96-4d34-ad09-7b0137d38d3d/supervision.json",
+    "supervision_sha256": "d8143e5b01128b34f016692571bc1c0198fda5bae4ee49aa514e059bdeb031a8"
+  },
+  "original_ten_receipts_verified_unchanged": 10,
+  "prepared_record": {
+    "path": "outputs/patient-corpus-twelve-recovery-v1/prepared-recovery.json",
+    "preparation_hash": "sha256:c6831aae91f3ed066d524280cc14e4b0d27bb98aef8d96f5474bad42852005ac",
+    "resumed_byte_identical": true,
+    "sha256": "082de22979ae9ee6d66557ef857d80be603cb143630c94c6d54477dbb3bc3224"
+  },
+  "prior_files_verified_unchanged": 89,
+  "resource_bounds": {
+    "automatic_retries": 0,
+    "maximum_metadata_output_bytes": 536870912,
+    "minimum_available_bytes": 1073741824,
+    "minimum_free_disk_bytes": 53687091200,
+    "monitor_interval_seconds": 0.1,
+    "numerical_threads": 2,
+    "process_family_plus_supervisor_rss_bytes": 1610612736,
+    "sequential_people": true,
+    "wall_seconds": 600,
+    "worker_count": 1
+  },
+  "schema": "patient-corpus-twelve-recovery-preparation-v1",
+  "software_controls": {
+    "command": "PYTHONPATH=src .venv/bin/python -m pytest tests/test_patient_corpus.py tests/test_patient_corpus_inventory.py tests/test_patient_corpus_recovery.py -q",
+    "failed": 0,
+    "new_recovery_controls": 20,
+    "passed": 151,
+    "real_source_payloads_or_workers_in_controls": false,
+    "test_sha256": "1e6fc864a8feb317e1c5971db0dbc4dd50ec091f669e7ef2b220bc67321934b6"
+  },
+  "source_payloads_opened": false,
+  "status": "prepared_only_actual_recovery_not_released"
+}

@@ -83,6 +83,21 @@ prepared with explicit boundary checks; its exact native preflight and any
 patient run require separate evidence. The prior patient crash remains failed;
 this experiment does not prove its precise cause or patient tissue accuracy.
 
+**Separate twelve-source qualification, October 16:**
+The [fixed twelve-source recovery](artifacts/patient-corpus-twelve-recovery-v1/RESULT.md)
+qualifies the frozen ten plus the two completed CT/MRI candidates. An initial
+RSS-limited execution remains failed; separate fresh workers complete only its
+two pending cases under the unchanged cap. Final verification reuses all 12
+receipts, with 89 prior files and the initial ten receipts unchanged. Independent
+metadata checking passes. Counts are 66 originals/six portable identities,
+seven brain/tumor, three brain/skull and one brain/vessel presence across grids;
+accepted anatomy/fusion/training stay zero. Source-region diversity and the
+registered vascular target remain open. The actual Electron Cases browser now
+shows all 12 source identities; skull search finds three cases and qualified
+1BC077 opens with MRI separate from CT estimates. Fresh-process review restores
+both completed CT surfaces and prior display settings. All 138 Electron host
+tests pass. The 24 saved versions shown in the library are not 24 people.
+
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and
 [patient construction plan](docs/patient-corpus-plan.md) supersede the historical

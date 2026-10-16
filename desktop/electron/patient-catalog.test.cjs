@@ -6,7 +6,7 @@ const path=require('node:path');
 const os=require('node:os');
 const {gunzipSync}=require('node:zlib');
 const {createHash}=require('node:crypto');
-const {PatientCatalog,RELEASE,validateCatalogMetadata,verifyBundleBytes}=require('./patient-catalog.cjs');
+const {PatientCatalog,RELEASE,TWELVE_RELEASE,validateCatalogMetadata,validateTwelveCatalogMetadata,verifyBundleBytes}=require('./patient-catalog.cjs');
 const {CaseLibrary}=require('./case-library.cjs');
 const hash=b=>createHash('sha256').update(b).digest('hex');
 async function metadata(){
@@ -21,6 +21,21 @@ async function fixture(t){
   const meta=await metadata();
   for(const [name,bytes] of [[RELEASE.path,meta.releaseBytes],[RELEASE.catalogPath,meta.catalogBytes]]){await fs.mkdir(path.dirname(path.join(root,name)),{recursive:true});await fs.writeFile(path.join(root,name),bytes);}
   return {base,root,original,...meta,reader:new PatientCatalog(root)};
+}
+async function twelveMetadata(){
+  const admissionBytes=await fs.readFile(path.join(__dirname,'../..',TWELVE_RELEASE.path));
+  const prospectiveBytes=await fs.readFile(path.join(__dirname,'../..',TWELVE_RELEASE.prospectivePath));
+  const twelveCatalogBytes=gunzipSync(await fs.readFile(path.join(__dirname,'fixtures/patient-catalog-existing-twelve-execution-v1.json.gz')));
+  assert.equal(hash(admissionBytes),TWELVE_RELEASE.sha256);assert.equal(hash(prospectiveBytes),TWELVE_RELEASE.prospectiveSha256);
+  assert.equal(hash(twelveCatalogBytes),TWELVE_RELEASE.catalogSha256);
+  return {admissionBytes,prospectiveBytes,twelveCatalogBytes,admission:JSON.parse(admissionBytes),prospective:JSON.parse(prospectiveBytes),twelveCatalog:JSON.parse(twelveCatalogBytes)};
+}
+async function twelveFixture(t){
+  const f=await fixture(t),meta=await twelveMetadata();
+  for(const [name,bytes] of [[TWELVE_RELEASE.path,meta.admissionBytes],[TWELVE_RELEASE.prospectivePath,meta.prospectiveBytes],[TWELVE_RELEASE.catalogPath,meta.twelveCatalogBytes]]) {
+    await fs.mkdir(path.dirname(path.join(f.root,name)),{recursive:true});await fs.writeFile(path.join(f.root,name),bytes);
+  }
+  return {...f,...meta};
 }
 function watchBundleOpens(t){
   const original=fs.open,opened=[];fs.open=async function(filename,...args){if(String(filename).endsWith('.ressectionlab'))opened.push(filename);return original.call(this,filename,...args);};
@@ -152,4 +167,106 @@ test('bundle opening checks all expected bytes and refuses same-size corruption 
   await fs.writeFile(file,Buffer.alloc(bytes.length,7));await assert.rejects(()=>verifyBundleBytes(file,hash(bytes),bytes.length),/bundle checksum changed/);
   await assert.rejects(()=>verifyBundleBytes(file,hash(bytes),bytes.length+1),/bundle size changed/);
   const alias=path.join(root,'alias.ressectionlab');await fs.symlink(file,alias);await assert.rejects(()=>verifyBundleBytes(alias,hash(bytes),bytes.length));
+});
+
+test('twelve is preferred over ten without duplicate rows or bundle reads, and IDs bind the chosen release',async t=>{
+  const f=await twelveFixture(t),opened=watchBundleOpens(t),rows=await f.reader.load();
+  assert.equal(rows.length,12);assert.equal(new Set(rows.map(row=>row.id)).size,12);
+  assert.equal(rows.filter(row=>row.source==='BTC').length,6);
+  assert.deepEqual(rows.filter(row=>row.source==='SynthRAD2023').map(row=>row.title),['SynthRAD2023-1BA336','SynthRAD2023-1BB033','SynthRAD2023-1BC077']);
+  assert.equal(rows.filter(row=>row.anatomy.includes('skull')).length,3);
+  assert(rows.every(row=>row.entry.release_id===TWELVE_RELEASE.id&&row.entry.training_admitted===false));
+  const library=new CaseLibrary(path.join(f.base,'user'),path.join(f.root,'outputs/poc-cases'),[],f.root);
+  const publicRows=await library.list();assert.equal(publicRows.length,12);
+  assert(publicRows.every(row=>!('entry' in row)&&!('aliases' in row)&&!('bundle' in row)&&!('path' in row)));
+  const shared=rows.find(row=>row.source==='BTC'),oldId='catalog-'+hash(`${RELEASE.sha256}:${RELEASE.catalogSha256}:${shared.entry.patient_group}:${shared.entry.bundle_sha256}`);
+  assert.notEqual(shared.id,oldId);await assert.rejects(()=>library.resolve(oldId),/current library/);
+  await assert.rejects(()=>library.resolve(shared.entry.bundle),/current library/);
+  assert.equal(opened.length,0);
+});
+
+test('genuinely absent twelve catalog falls back to ten, then legacy browsing when both catalogs are absent',async t=>{
+  const f=await twelveFixture(t),opened=watchBundleOpens(t),twelveRows=await f.reader.load(),catalogPath=path.join(f.root,TWELVE_RELEASE.catalogPath);
+  await fs.unlink(catalogPath);
+  for(const missing of [null,TWELVE_RELEASE.path,TWELVE_RELEASE.prospectivePath]) {
+    if(missing)await fs.unlink(path.join(f.root,missing));
+    const rows=await f.reader.load();assert.equal(rows.length,10);assert(rows.every(row=>row.entry.release_id===RELEASE.id));
+    await assert.rejects(()=>f.reader.resolve(twelveRows[0].id),/current catalog/);
+  }
+  await fs.unlink(path.join(f.root,RELEASE.catalogPath));assert.deepEqual(await f.reader.load(),[]);
+  const prepared=path.join(f.root,'prepared'),file=path.join(prepared,'Local study.ressectionlab');await fs.mkdir(prepared);await fs.writeFile(file,'tiny synthetic bytes');
+  const library=new CaseLibrary(path.join(f.base,'user'),prepared,[],f.root),rows=await library.list();
+  assert.equal(rows.length,1);assert.equal(rows[0].qualifiedCatalog,undefined);assert.equal(await library.resolve(rows[0].id),file);
+  assert.equal(opened.length,0);
+});
+
+test('present twelve metadata is checked even if another part is absent, and an existing catalog requires complete lineage',async t=>{
+  const f=await twelveFixture(t),opened=watchBundleOpens(t),catalogPath=path.join(f.root,TWELVE_RELEASE.catalogPath);
+  const parts=[[TWELVE_RELEASE.path,f.admissionBytes,/twelve admission checksum/],[TWELVE_RELEASE.prospectivePath,f.prospectiveBytes,/twelve candidate release checksum/]];
+  for(const [name,bytes,message] of parts) {
+    const filename=path.join(f.root,name);
+    await fs.unlink(filename);await assert.rejects(()=>f.reader.load(),/twelve release metadata is missing/);
+    await fs.writeFile(filename,Buffer.concat([bytes,Buffer.from(' ')]));await assert.rejects(()=>f.reader.load(),message);
+    await fs.unlink(catalogPath);await assert.rejects(()=>f.reader.load(),message);
+    await fs.writeFile(filename,bytes);assert.equal((await f.reader.load()).length,10);
+    await fs.writeFile(catalogPath,f.twelveCatalogBytes);
+  }
+  const parentPath=path.join(f.root,RELEASE.path);
+  await fs.unlink(parentPath);await assert.rejects(()=>f.reader.load(),/frozen parent release is missing/);
+  await fs.writeFile(parentPath,'{}');await assert.rejects(()=>f.reader.load(),/frozen release checksum/);
+  await fs.writeFile(parentPath,f.releaseBytes);
+  await fs.writeFile(catalogPath,'{');await assert.rejects(()=>f.reader.load(),/twelve catalog checksum/);
+  await fs.writeFile(catalogPath,Buffer.alloc(512*1024+1));await assert.rejects(()=>f.reader.load(),/read bound/);
+  assert.equal(opened.length,0);
+});
+
+test('redirected and dangling twelve metadata never silently falls back to ten',async t=>{
+  const f=await twelveFixture(t),opened=watchBundleOpens(t),catalogPath=path.join(f.root,TWELVE_RELEASE.catalogPath);
+  for(const [name,bytes] of [[TWELVE_RELEASE.path,f.admissionBytes],[TWELVE_RELEASE.prospectivePath,f.prospectiveBytes],[TWELVE_RELEASE.catalogPath,f.twelveCatalogBytes]]) {
+    const filename=path.join(f.root,name),outside=path.join(f.base,'outside.json');await fs.writeFile(outside,bytes);
+    await fs.unlink(filename);await fs.symlink(outside,filename);await assert.rejects(()=>f.reader.load(),/metadata path escaped/);
+    await fs.unlink(outside);await assert.rejects(()=>f.reader.load(),/metadata path escaped/);
+    await fs.unlink(filename);await fs.writeFile(filename,bytes);
+  }
+  await fs.unlink(catalogPath);await fs.rmdir(path.dirname(catalogPath));await fs.symlink(path.join(f.base,'missing-directory'),path.dirname(catalogPath));
+  await assert.rejects(()=>f.reader.load(),/metadata path escaped/);assert.equal(opened.length,0);
+});
+
+test('twelve metadata refuses protected roles, changed base-ten membership, source substitutions and altered new bundle identities',async()=>{
+  const original={...await metadata(),...await twelveMetadata()};
+  const newEntry=f=>f.twelveCatalog.entries.find(entry=>entry.patient_group==='SynthRAD2023:1BB033');
+  const changes=[
+    [f=>f.admission.prospective_release.sha256='0'.repeat(64),/admission/],
+    [f=>f.prospective.parent_release_sha256='0'.repeat(64),/candidate release/],
+    [f=>f.prospective.base_candidates[0].role='EVAL',/base candidates/],
+    [f=>f.prospective.additional_candidates[0].role='SELECT',/protected/],
+    [f=>f.prospective.additional_candidates[0].patient_group='SynthRAD2023:1BB034',/additional candidates/],
+    [f=>f.prospective.additional_candidates[0].bundle='../heldout.ressectionlab',/path or identity/],
+    [f=>f.prospective.additional_candidates[0].bundle_sha256='0'.repeat(64),/path or identity/],
+    [f=>newEntry(f).role='EVAL',/protected/],
+    [f=>newEntry(f).input_binding.candidate.source_files[0].sha256='f'.repeat(64),/binding/],
+    [f=>newEntry(f).imaging[0].source_sha256='f'.repeat(64),/acquired image source/],
+    [f=>newEntry(f).virtual_descendant=true,/virtual/],
+    [f=>newEntry(f).training_admitted=true,/unreviewed/],
+    [f=>f.twelveCatalog.plan_hash=RELEASE.planHash,/release identity/],
+    [f=>f.twelveCatalog.entries[1]=f.twelveCatalog.entries[0],/duplicate/],
+  ];
+  for(const [change,message] of changes){const f=structuredClone(original);change(f);assert.throws(()=>validateTwelveCatalogMetadata(f.admission,f.prospective,f.release,f.twelveCatalog),message);}
+});
+
+test('new SynthRAD aliases remain one catalog row and retain exact bundle and current-release checks before opening',async t=>{
+  const f=await twelveFixture(t),opened=watchBundleOpens(t),entry=f.twelveCatalog.entries.find(e=>e.patient_group==='SynthRAD2023:1BB033');
+  const source=path.join(f.original,entry.bundle),declared=path.join(f.root,entry.bundle),prepared=path.join(f.root,'prepared');
+  await fs.mkdir(path.dirname(source),{recursive:true});await fs.writeFile(source,'tiny synthetic invalid bundle');
+  await fs.mkdir(path.dirname(declared),{recursive:true});await fs.symlink(source,declared);
+  await fs.mkdir(prepared);await fs.symlink(source,path.join(prepared,'new-case-alias.ressectionlab'));
+  const library=new CaseLibrary(path.join(f.base,'user'),prepared,[source],f.root);await library.remember(source);
+  const rows=await library.list(),row=rows.find(r=>r.title===entry.case_id);
+  assert.equal(rows.length,12);assert.equal(row.qualifiedCatalog,true);assert.equal(row.recent,true);assert.equal(opened.length,0);
+  await assert.rejects(()=>library.resolve(hash(source)),/current library/);
+  await assert.rejects(()=>library.resolve(row.id),/bundle size changed/);assert.equal(opened.length,1);
+  await fs.writeFile(path.join(f.root,TWELVE_RELEASE.path),'{}');await assert.rejects(()=>library.resolve(row.id),/admission checksum/);assert.equal(opened.length,1);
+  await fs.writeFile(path.join(f.root,TWELVE_RELEASE.path),f.admissionBytes);
+  const outside=path.join(f.base,'protected.ressectionlab');await fs.writeFile(outside,'protected sentinel');await fs.unlink(declared);await fs.symlink(outside,declared);
+  await assert.rejects(()=>library.resolve(row.id),/escaped its exact released source/);assert.equal(opened.length,1);
 });

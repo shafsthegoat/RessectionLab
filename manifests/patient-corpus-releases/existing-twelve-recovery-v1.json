@@ -1,0 +1,133 @@
+{
+  "anatomical_acceptance": false,
+  "bounds": {
+    "automatic_retries": 0,
+    "maximum_metadata_output_bytes": 536870912,
+    "minimum_available_bytes": 1073741824,
+    "minimum_free_disk_bytes": 53687091200,
+    "monitor_interval_seconds": 0.1,
+    "numerical_threads": 2,
+    "process_family_plus_supervisor_rss_bytes": 1610612736,
+    "sequential_people": true,
+    "wall_seconds": 600,
+    "worker_count": 1
+  },
+  "catalog_rule": "Intermediate catalogs remain explicitly partial; complete only after twelve qualified and the final cached-only verification.",
+  "failure_rule": "Stop after any new rejection, resource violation, missing/changed cached binding or worker failure; no automatic retry.",
+  "frozen_qualification_code_sha256": {
+    "core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "imaging.py": "45df035c47f9c509fef91ebc02f1c3bef40266c052dbd1de6d133815a5af6afa",
+    "patient_corpus.py": "b8eaa63c23b0e02306070c8c7d576a70e8d9b6d22929cd8b8e4122a5c5fa18f6",
+    "structural_evidence.py": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019",
+    "workspace_bundle.py": "9a1bf1d0f749bb67857d65803aeeaf8f07927ebce8a03fb4364c59e8b151bf1e",
+    "workspace_imaging.py": "6da2ace8b5489f61f4b7c804f30818d0273792e040c4cb14bcddbd931cff381d"
+  },
+  "frozen_receipts": [
+    {
+      "file_sha256": "8f12d29a9fdbd9cd81d6f9a22ae0121d1cf4f0ba0c6395387bb81daece4c23c2",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/7e1123371632eaf6e8523e46e93bf3e48e77c39daa68f34b882a4c49c0981b4d.json",
+      "patient_group": "BTC:sub-PAT05",
+      "receipt_hash": "sha256:a8830b12edd3c2bb36ae15a767c9988684ec26e0169878ef8cf383dc85b4aa48"
+    },
+    {
+      "file_sha256": "470ccf4c2c5a7f20bd83384c0a8da568dc6cf46c7bfb8e6030e7e5407344f766",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/9741bf17d4af50c90fc2669eb0b1028d8812b77f2bff69b8219660f742db06a6.json",
+      "patient_group": "BTC:sub-PAT16",
+      "receipt_hash": "sha256:4f3ea43655757db62712a1391a2a3c0bc57518d5e99f93c9f4ab3376e2c803cb"
+    },
+    {
+      "file_sha256": "a539d44b2282e3a81274d397f977072ef66ad66f52604ba730e467f322979f18",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/9ce397c950dac299b34d7aab403228791efbed92e0155b5d80fa5f28f73d8f25.json",
+      "patient_group": "BTC:sub-PAT20",
+      "receipt_hash": "sha256:ca15cb6d4af05d4eac832335f7b49100e0090282d1a66c8a251058617215a97d"
+    },
+    {
+      "file_sha256": "d0d1fb7309851eb7c1681f8409c5e39127739b69e70fd94543ade3360901faed",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/64c1d2bcd87af294e3aba5f29dee28365b5e70bc4f8166d9615a7fb0dde5129e.json",
+      "patient_group": "BTC:sub-PAT22",
+      "receipt_hash": "sha256:a4d9285234026cba792f41ec43584aa03671703a51b05ff714c6b6ea8eb452a4"
+    },
+    {
+      "file_sha256": "6f9a4a8e7b1e26d79d32e7d41ba2e0b6e0038f6bf9df33dcdd362180281660bc",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/f7fa502e13a10a2e6150ae9082d9e237a07553c0b2949f36af1cd6622f0509ae.json",
+      "patient_group": "BTC:sub-PAT25",
+      "receipt_hash": "sha256:a385afe6eef4986c544851037c77534e393ac56bb6c1c5264e8d8e0469efdf68"
+    },
+    {
+      "file_sha256": "64e21e595aeb030546f43375fd718ca886c8b7ab22d0f53d3ac2b960184913a1",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/949af97126429808234dbd2121a2e9eb102de827627df0f440dc73595c123f93.json",
+      "patient_group": "BTC:sub-PAT28",
+      "receipt_hash": "sha256:245612a1312ca897545e33d2115d70ca60ff750f2caa91892aa2bb1af191be34"
+    },
+    {
+      "file_sha256": "74d25b0e7652244750c233c7e578cd5f481db57d281c65d0f40ed0c3e73069ab",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/3f2ebd02514cb3e1c381b0d799113c12b33fae3932bca3cba8ae0435d53d3c00.json",
+      "patient_group": "IXI:265",
+      "receipt_hash": "sha256:e600e9ab5a1a98d41bab2dc163236622424d4c2def994c21ee3796d02c80de5c"
+    },
+    {
+      "file_sha256": "f12c1bac026576a46a06077a9b799fe97db54e8a7bdfc3cf690a0d505030bf11",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/e62155f5f250ae8b214d6de780cfeccef067dc1526665433657468b603ead84b.json",
+      "patient_group": "Lausanne:sub-000",
+      "receipt_hash": "sha256:1f9dce6a3dd40cd00f1c24810644a6a8bbec5c547f658739d345bbca5142bc8f"
+    },
+    {
+      "file_sha256": "0943987ec15d99946704f1a5bd2892b902630d538ad9a368ff7e7777473a3adb",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/646881caa5792f23648d77dc2bfa27605cf9727eb34946805bf6b9bac6d21167.json",
+      "patient_group": "SynthRAD2023:1BA336",
+      "receipt_hash": "sha256:4967417eaab01d5694f39a9235305c36b7389f9c6953c5a63b3069f059d084e6"
+    },
+    {
+      "file_sha256": "261280ea52b9fded4bf0f5417bd0dde18d4df121a97c8dbd24707af306dd298f",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/b475d26bbd57bf419ddedf70511e00fedf31e532793890122e217d711161a0c3.json",
+      "patient_group": "SynthRAD2023:1BB033",
+      "receipt_hash": "sha256:5fdaa184dc707482f5c62949b9fc5cf2a88c39074b0b95f8ca780755a9b8bef8"
+    }
+  ],
+  "model_execution_allowed": false,
+  "new_acquisition_allowed": false,
+  "prior_failure": {
+    "path": "artifacts/patient-corpus-twelve-execution-v1/outcome.json",
+    "sha256": "045ec9bbe30674515e4b8084406acd1883fa3880fb9b91eb242b0938c2dfa792",
+    "supervision_path": "outputs/patient-corpus-twelve-execution-v1/supervision/4565a970-7c96-4d34-ad09-7b0137d38d3d/supervision.json",
+    "supervision_sha256": "d8143e5b01128b34f016692571bc1c0198fda5bae4ee49aa514e059bdeb031a8"
+  },
+  "qualification_admission": {
+    "path": "manifests/patient-corpus-releases/existing-twelve-execution-admission-v1.json",
+    "sha256": "76c3c7e1f3805c136c508f53c4b31eae56b0ea3e9b876b556326a08b1fb681d9"
+  },
+  "qualification_output": "outputs/patient-corpus-twelve-execution-v1",
+  "qualification_plan_hash": "sha256:ecdc8f380437c0f1b1536a12fac0c22a07774c3f97e7d340d25d83f4dc4121d6",
+  "qualification_release_id": "existing-twelve-execution-v1",
+  "recovery_output": "outputs/patient-corpus-twelve-recovery-v1",
+  "release_id": "existing-twelve-fresh-worker-recovery-v1",
+  "root_support_release": "Root explicitly authorized preparation of this dispatcher after reviewing the RSS-limit failure; actual recovery requires a separate later explicit root launch release.",
+  "schema": "patient-corpus-exact-recovery-declaration-v1",
+  "solver_execution_allowed": false,
+  "stages": [
+    {
+      "expected_qualified": 11,
+      "expected_reused": 10,
+      "id": "qualify-1BC077",
+      "maximum_new_decodes": 1,
+      "new_patient": "SynthRAD2023:1BC077"
+    },
+    {
+      "expected_qualified": 12,
+      "expected_reused": 11,
+      "id": "qualify-UCSF004",
+      "maximum_new_decodes": 1,
+      "new_patient": "UCSF-PDGM:004"
+    },
+    {
+      "expected_qualified": 12,
+      "expected_reused": 12,
+      "id": "verify-all-cached",
+      "maximum_new_decodes": 0,
+      "new_patient": null
+    }
+  ],
+  "status": "prepared_only_actual_launch_pending",
+  "training_admission": false,
+  "worker_rule": "One new process per fixed stage; each must exit before the next starts. Same exact twelve candidates; only frozen private qualification engine and its unchanged validators."
+}

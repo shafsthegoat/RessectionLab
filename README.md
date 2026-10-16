@@ -34,6 +34,12 @@ now open with fresh brain/skull estimates and pass native save/fresh-process
 reopen checks. Their original scans and separate MRI views are preserved. They
 remain unreviewed source/model candidates outside the frozen ten-person catalog.
 
+The [separate twelve-source release](artifacts/patient-corpus-twelve-recovery-v1/RESULT.md)
+now adds those two cases to **Cases**, preserving the frozen nine/ten releases.
+Actual Electron checks show 12 source identities, three skull cases and native
+CT/MRI switching. Independent checks preserve earlier receipts and source bytes.
+Reviewed tumor-location diversity and anatomical accuracy remain open.
+
 A local macOS anatomy workbench for acquired patient imaging, saved segmentations,
 and linked 3D/source-image inspection.
 

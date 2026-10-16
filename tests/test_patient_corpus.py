@@ -346,3 +346,289 @@ def test_estimated_layer_survives_synthetic_model_training_lineage():
         'anatomy_layers':{'estimated_vessels':{'kind':'vessels','provenance':'estimated',
             'model':{'training':{'provenance':'simulated','sources':['D_real','D_drand','D_flow']}}}}},
         'source_refs':[{'provenance':'observed'},{'provenance':'estimated'}]},candidate,pc.IXI_RELEASE)
+
+
+def test_prospective_twelve_preparation_reads_metadata_only_and_retains_exact_ten(monkeypatch):
+    root=Path(__file__).resolve().parents[1]
+    real_open=Path.open
+    def metadata_only(path,*args,**kwargs):
+        assert path.suffix=='.json','Unexpected payload/code access: '+str(path)
+        return real_open(path,*args,**kwargs)
+    monkeypatch.setattr(Path,'open',metadata_only)
+    monkeypatch.setattr(pc,'file_sha256',forbidden);monkeypatch.setattr(pc,'load_workspace',forbidden)
+    monkeypatch.setattr(pc,'_manifest_preflight',forbidden);monkeypatch.setattr(nib,'load',forbidden)
+    current=pc.release_plan(root,pc.IXI_RELEASE);prepared=pc.prospective_plan(root)
+    new_ids={'SynthRAD2023:1BB033','SynthRAD2023:1BC077'}
+    assert len(prepared['candidates'])==12
+    assert [row for row in prepared['candidates'] if row['patient_group'] not in new_ids]==current['candidates']
+    assert prepared['qualification_released'] is prepared['source_image_decoding_released'] is False
+    assert pc.PROSPECTIVE_RELEASE not in pc.RELEASES
+    assert prepared['plan_hash']==pc.PROSPECTIVE_PLAN_HASH
+
+
+@pytest.mark.parametrize('field,value',[('role','SELECT'),('training_admitted',True),('bundle','another.ressectionlab'),
+    ('bundle_sha256','0'*64),('patient_group','SynthRAD2023:1BC078'),('source_files',[])])
+def test_prospective_candidate_identity_cannot_be_changed_before_future_access(field,value):
+    frozen,_=pc._prospective_release();candidate=deepcopy(frozen['additional_candidates'][0]);candidate[field]=value
+    with pytest.raises(pc.QualificationError):pc.require_prospective_candidate(candidate)
+
+
+def test_prospective_new_people_stay_outside_both_live_releases():
+    frozen,_=pc._prospective_release()
+    for candidate in frozen['additional_candidates']:
+        pc.require_prospective_candidate(candidate)
+        for release in pc.RELEASES:
+            with pytest.raises(pc.QualificationError):pc.require_candidate(candidate,release)
+
+
+@pytest.mark.parametrize('change',['none','self_release','drop','duplicate','metadata','schema'])
+def test_prospective_plan_cannot_execute_or_self_release_before_payload_or_output(tmp_path,monkeypatch,change):
+    prepared=pc.prospective_plan(Path(__file__).resolve().parents[1])
+    if change=='self_release':prepared['qualification_released']=True
+    if change=='drop':prepared['candidates'].pop()
+    if change=='duplicate':prepared['candidates'][0]=deepcopy(prepared['candidates'][-1])
+    if change=='metadata':prepared['metadata_evidence']=[]
+    if change=='schema':prepared['schema']=pc.VERSION+'.plan'
+    prepared['plan_hash']=semantic_digest({k:v for k,v in prepared.items() if k!='plan_hash'})
+    if change!='none':
+        with pytest.raises(pc.QualificationError):pc.validate_prospective_plan(prepared)
+    monkeypatch.setattr(pc,'_input_binding',forbidden);monkeypatch.setattr(pc,'_manifest_preflight',forbidden)
+    monkeypatch.setattr(pc,'load_workspace',forbidden);monkeypatch.setattr(nib,'load',forbidden)
+    with pytest.raises(pc.QualificationError) as error:pc.run_qualification(tmp_path,tmp_path/'out',prepared)
+    assert error.value.code=='QUALIFICATION_NOT_RELEASED'
+    assert not (tmp_path/'out').exists()
+
+
+def copy_prospective_metadata(root):
+    """Copy only pinned JSON metadata to exercise preparation persistence."""
+    repository=Path(__file__).resolve().parents[1];plan=pc.prospective_plan(repository)
+    for row in plan['metadata_evidence']:
+        path=root/row['path'];path.parent.mkdir(parents=True,exist_ok=True)
+        path.write_bytes((repository/row['path']).read_bytes())
+
+
+def test_prospective_preparation_resumes_without_creating_qualified_catalog(tmp_path,monkeypatch):
+    copy_prospective_metadata(tmp_path)
+    monkeypatch.setattr(pc,'load_workspace',forbidden);monkeypatch.setattr(pc,'_input_binding',forbidden)
+    monkeypatch.setattr(nib,'load',forbidden)
+    first=pc.prepare_prospective_release(tmp_path);path=tmp_path/first['prepared_plan'];before=path.read_bytes()
+    second=pc.prepare_prospective_release(tmp_path)
+    assert first['reused_preparation'] is False and second['reused_preparation'] is True
+    assert path.read_bytes()==before and first['plan_hash']==second['plan_hash']
+    assert second['qualified_people_this_step']==0 and second['payloads_opened'] is False
+    assert not (tmp_path/pc.PROSPECTIVE_OUTPUT/'catalog.json').exists()
+    assert not (tmp_path/'outputs/patient-corpus-v1').exists()
+    assert not (tmp_path/'outputs/patient-corpus-ixi265-v1').exists()
+
+
+def test_prospective_preparation_refuses_redirect_into_previous_release(tmp_path):
+    copy_prospective_metadata(tmp_path)
+    old=tmp_path/'old-release';old.mkdir();(tmp_path/pc.PROSPECTIVE_OUTPUT).symlink_to(old,target_is_directory=True)
+    with pytest.raises(pc.QualificationError) as error:pc.prepare_prospective_release(tmp_path)
+    assert error.value.code=='OUTPUT_SCOPE' and not list(old.iterdir())
+
+
+def copy_execution_metadata(root,*,launch=False):
+    repository=Path(__file__).resolve().parents[1];document=pc.execution_plan(repository)
+    for row in document['metadata_evidence']:
+        path=root/row['path'];path.parent.mkdir(parents=True,exist_ok=True)
+        path.write_bytes((repository/row['path']).read_bytes())
+    if launch:
+        # Generated temporary authority exercises the supervisor, never real inputs.
+        guide=json.loads((repository/'docs/patient-corpus-twelve-execution-guide.json').read_text())
+        path=root/pc.EXECUTION_OUTPUT/'launch-admission.json';path.parent.mkdir(parents=True,exist_ok=True)
+        path.write_text(json.dumps(guide['launch_gate']['document'],indent=2,sort_keys=True)+'\n')
+    return document
+
+
+def test_execution_preparation_reads_only_json_preserves_exact_scope_and_old_plan_hashes(monkeypatch):
+    root=Path(__file__).resolve().parents[1];real_open=Path.open
+    def metadata_only(path,*args,**kwargs):
+        assert path.suffix=='.json','Unexpected binary/code access: '+str(path)
+        return real_open(path,*args,**kwargs)
+    monkeypatch.setattr(Path,'open',metadata_only)
+    monkeypatch.setattr(pc,'file_sha256',forbidden);monkeypatch.setattr(pc,'load_workspace',forbidden)
+    monkeypatch.setattr(pc,'_manifest_preflight',forbidden);monkeypatch.setattr(nib,'load',forbidden)
+    document=pc.execution_plan(root);parent=pc.prospective_plan(root)
+    assert document['candidates']==parent['candidates'] and len(document['candidates'])==12
+    assert pc.EXECUTION_RELEASE not in pc.RELEASES and pc.RELEASES==(pc.DEFAULT_RELEASE,pc.IXI_RELEASE)
+    assert pc.release_plan(root,pc.IXI_RELEASE)['plan_hash']==pc.IXI_PLAN_HASH
+    assert pc.default_plan(root)['plan_hash']=='sha256:2945f141cd2e91dd661e4502e06544ca636adeac98f57c354bf56ea3486bad7f'
+    assert document['source_image_decoding_released'] is False
+    assert document['plan_hash']==pc.EXECUTION_PLAN_HASH
+
+
+@pytest.mark.parametrize('change',['drop','duplicate','role','bundle','source','metadata','budget','release','launch'])
+def test_execution_plan_cannot_self_resign_scope_pins_or_budgets(tmp_path,monkeypatch,change):
+    document=pc.execution_plan(Path(__file__).resolve().parents[1])
+    if change=='drop':document['candidates'].pop()
+    if change=='duplicate':document['candidates'][0]=deepcopy(document['candidates'][-1])
+    if change=='role':document['candidates'][0]['role']='SELECT'
+    if change=='bundle':document['candidates'][-1]['bundle']='other.ressectionlab'
+    if change=='source':document['candidates'][-1]['source_files'][0]['sha256']='0'*64
+    if change=='metadata':document['metadata_evidence']=[]
+    if change=='budget':document['resource_bounds']['process_family_plus_supervisor_rss_bytes']*=2
+    if change=='release':document['release_id']='caller-release'
+    if change=='launch':document['source_image_decoding_released']=True
+    document['plan_hash']=semantic_digest({k:v for k,v in document.items() if k!='plan_hash'})
+    monkeypatch.setattr(pc,'_input_binding',forbidden);monkeypatch.setattr(pc.subprocess,'Popen',forbidden)
+    with pytest.raises(pc.QualificationError):pc.run_qualification(tmp_path,tmp_path/pc.EXECUTION_OUTPUT,document)
+    assert not (tmp_path/pc.EXECUTION_OUTPUT).exists()
+
+
+@pytest.mark.parametrize('source',[False,True])
+@pytest.mark.parametrize('nested',[{'roles':{'SELECT':True}},{'split':{'name':'validation'}},
+    {'source_collection':{'name':'UPENN-GBM'}},{'patient_group':'SynthRAD2023:1BC077'}])
+def test_execution_recursively_rejects_protected_or_wrong_identity_before_decode(source,nested,monkeypatch):
+    candidate=next(row for row in pc.execution_plan(Path(__file__).resolve().parents[1])['candidates']
+        if row['patient_group']=='SynthRAD2023:1BB033')
+    manifest={'case_id':candidate['case_id'],'metadata':{'is_synthetic':False},'source_refs':[]}
+    if source:manifest['source_refs']=[{'provenance':'observed','metadata':nested}]
+    else:manifest['metadata']['parent']=nested
+    monkeypatch.setattr(pc,'load_workspace',forbidden);monkeypatch.setattr(pc,'_case_layout',forbidden)
+    with pytest.raises(pc.QualificationError) as error:pc.require_manifest(manifest,candidate,pc.EXECUTION_RELEASE)
+    assert error.value.code in {'PROTECTED_ROLE','PATIENT_MISMATCH'}
+
+
+def test_execution_prepare_resumes_but_cannot_materialize_launch_or_decode(tmp_path,monkeypatch):
+    document=copy_execution_metadata(tmp_path)
+    monkeypatch.setattr(pc,'_input_binding',forbidden);monkeypatch.setattr(pc.subprocess,'Popen',forbidden)
+    first=pc.prepare_execution_release(tmp_path);path=tmp_path/first['prepared_plan'];before=path.read_bytes()
+    second=pc.prepare_execution_release(tmp_path)
+    assert not first['reused_preparation'] and second['reused_preparation'] and path.read_bytes()==before
+    assert not (tmp_path/pc.EXECUTION_OUTPUT/'launch-admission.json').exists()
+    with pytest.raises(pc.QualificationError) as error:pc.run_qualification(tmp_path,tmp_path/pc.EXECUTION_OUTPUT,document)
+    assert error.value.code=='QUALIFICATION_NOT_RELEASED'
+    assert not (tmp_path/pc.EXECUTION_OUTPUT/'catalog.json').exists()
+
+
+@pytest.mark.parametrize('kind',['wrong_output','symlink_output','wrong_launch','launch_symlink','limit'])
+def test_execution_launch_cannot_redirect_or_substitute_authority(tmp_path,monkeypatch,kind):
+    document=copy_execution_metadata(tmp_path,launch=True);output=tmp_path/pc.EXECUTION_OUTPUT
+    if kind=='wrong_output':output=tmp_path/'outputs/patient-corpus-ixi265-v1'
+    if kind=='symlink_output':
+        moved=tmp_path/'elsewhere';output.rename(moved);output.symlink_to(moved,target_is_directory=True)
+    if kind=='wrong_launch':(output/'launch-admission.json').write_text('{}\n')
+    if kind=='launch_symlink':
+        moved=output/'elsewhere.json';(output/'launch-admission.json').rename(moved);(output/'launch-admission.json').symlink_to(moved)
+    monkeypatch.setattr(pc,'_input_binding',forbidden);monkeypatch.setattr(pc.subprocess,'Popen',forbidden)
+    with pytest.raises(pc.QualificationError):pc.run_qualification(tmp_path,output,document,limit=1 if kind=='limit' else None)
+
+
+def safe_execution_sample(bounds):
+    return {'rss':bounds['process_family_plus_supervisor_rss_bytes'],'available':bounds['minimum_available_bytes'],
+        'elapsed':bounds['wall_seconds'],'output_bytes':bounds['maximum_metadata_output_bytes'],
+        'free_disk':bounds['minimum_free_disk_bytes']}
+
+
+@pytest.mark.parametrize('field,delta,code',[('rss',1,'RSS_LIMIT'),('available',-1,'AVAILABLE_MEMORY_FLOOR'),
+    ('elapsed',0.001,'WALL_TIME_LIMIT'),('output_bytes',1,'OUTPUT_LIMIT'),('free_disk',-1,'DISK_RESERVE')])
+def test_execution_resource_limits_accept_exact_boundary_and_refuse_excess(field,delta,code):
+    admission,_=pc._execution_admission();bounds=admission['bounds'];sample=safe_execution_sample(bounds)
+    assert bounds=={'process_family_plus_supervisor_rss_bytes':1610612736,'minimum_available_bytes':1073741824,
+        'wall_seconds':600,'numerical_threads':2,'worker_count':1,'sequential_people':True,'automatic_retries':0,
+        'minimum_free_disk_bytes':53687091200,'maximum_metadata_output_bytes':536870912,'monitor_interval_seconds':0.1}
+    assert pc._execution_resource_violation(bounds,**sample) is None
+    sample[field]+=delta
+    assert pc._execution_resource_violation(bounds,**sample)==code
+
+
+@pytest.mark.parametrize('phase',['preflight','running'])
+def test_execution_resource_refusal_stops_before_payload_or_kills_single_worker(tmp_path,monkeypatch,phase):
+    document=copy_execution_metadata(tmp_path,launch=True);safe=safe_execution_sample(document['resource_bounds'])
+    samples=[{**safe,'rss':safe['rss']+1}] if phase=='preflight' else [safe,{**safe,'rss':safe['rss']+1}]
+    monkeypatch.setattr(pc,'_execution_sample',lambda *args: samples.pop(0))
+    launched=[];killed=[]
+    class Worker:
+        pid=987654321;returncode=None
+        def poll(self):return self.returncode
+        def wait(self,timeout):self.returncode=-9;return -9
+    worker=Worker()
+    def popen(command,**kwargs):
+        launched.append(command)
+        assert kwargs['start_new_session'] is True
+        assert kwargs['env']['OMP_NUM_THREADS']==kwargs['env']['OPENBLAS_NUM_THREADS']=='2'
+        return worker
+    monkeypatch.setattr(pc.subprocess,'Popen',popen);monkeypatch.setattr(pc.os,'killpg',lambda *args:killed.append(args))
+    monkeypatch.setattr(pc,'_input_binding',forbidden)
+    with pytest.raises(pc.QualificationError) as error:pc.run_qualification(tmp_path,tmp_path/pc.EXECUTION_OUTPUT,document)
+    assert error.value.code=='RSS_LIMIT'
+    assert len(launched)==len(killed)==(0 if phase=='preflight' else 1)
+    receipts=list((tmp_path/pc.EXECUTION_OUTPUT/'supervision').glob('*/supervision.json'))
+    assert len(receipts)==(0 if phase=='preflight' else 1)
+    if receipts:
+        receipt=json.loads(receipts[0].read_text())
+        assert receipt['status']=='failed' and receipt['automatic_retries']==0 and receipt['worker_exit_code']==-9
+
+
+def test_execution_supervisor_completes_one_worker_with_metadata_receipt(tmp_path,monkeypatch):
+    document=copy_execution_metadata(tmp_path,launch=True);sample=safe_execution_sample(document['resource_bounds'])
+    monkeypatch.setattr(pc,'_execution_sample',lambda *args:sample)
+    launched=[]
+    class Worker:
+        pid=987654321;returncode=0
+        def poll(self):return 0
+    expected={'generated_software_control':True,'reused_qualification_receipts':12}
+    def popen(command,**kwargs):
+        launched.append(command);Path(command[-1]).write_text(json.dumps(expected));return Worker()
+    monkeypatch.setattr(pc.subprocess,'Popen',popen);monkeypatch.setattr(pc,'_input_binding',forbidden)
+    assert pc.run_qualification(tmp_path,tmp_path/pc.EXECUTION_OUTPUT,document)==expected
+    assert len(launched)==1
+    receipts=list((tmp_path/pc.EXECUTION_OUTPUT/'supervision').glob('*/supervision.json'))
+    assert len(receipts)==1 and json.loads(receipts[0].read_text())['status']=='completed'
+
+
+def test_execution_output_budget_rejects_nested_symlinks(tmp_path):
+    output=tmp_path/'out';output.mkdir();(output/'redirect').symlink_to(tmp_path/'elsewhere')
+    with pytest.raises(pc.QualificationError) as error:pc._execution_directory_bytes(output)
+    assert error.value.code=='OUTPUT_SCOPE'
+
+
+def test_execution_revalidates_admission_bytes_before_candidate_paths(tmp_path,monkeypatch):
+    document=copy_execution_metadata(tmp_path,launch=True)
+    (tmp_path/pc.EXECUTION_ADMISSION_PATH).write_text('{}\n')
+    monkeypatch.setattr(pc,'_input_binding',forbidden);monkeypatch.setattr(pc.subprocess,'Popen',forbidden)
+    with pytest.raises(pc.QualificationError) as error:pc.run_qualification(tmp_path,tmp_path/pc.EXECUTION_OUTPUT,document)
+    assert error.value.code=='METADATA_HASH'
+
+
+def test_execution_worker_cannot_be_started_without_supervisor(tmp_path,monkeypatch):
+    copy_execution_metadata(tmp_path,launch=True)
+    monkeypatch.delenv('RESSECTIONLAB_CORPUS_SUPERVISOR_PID',raising=False)
+    monkeypatch.setattr(pc,'_run_qualification',forbidden)
+    with pytest.raises(pc.QualificationError) as error:
+        pc._execution_worker(tmp_path,tmp_path/pc.EXECUTION_OUTPUT/'supervision/test/worker-result.json')
+    assert error.value.code=='SUPERVISOR_REQUIRED'
+
+
+def test_execution_explicit_interrupt_records_failure_and_kills_without_retry(tmp_path,monkeypatch):
+    document=copy_execution_metadata(tmp_path,launch=True);sample=safe_execution_sample(document['resource_bounds'])
+    def sampling(*args):
+        if len(args)==4:raise KeyboardInterrupt()
+        return sample
+    monkeypatch.setattr(pc,'_execution_sample',sampling)
+    launched=[];killed=[]
+    class Worker:
+        pid=987654321;returncode=None
+        def poll(self):return self.returncode
+        def wait(self,timeout):self.returncode=-9;return -9
+    worker=Worker()
+    def popen(*args,**kwargs):launched.append(args);return worker
+    monkeypatch.setattr(pc.subprocess,'Popen',popen);monkeypatch.setattr(pc.os,'killpg',lambda *args:killed.append(args))
+    with pytest.raises(KeyboardInterrupt):pc.run_qualification(tmp_path,tmp_path/pc.EXECUTION_OUTPUT,document)
+    receipts=list((tmp_path/pc.EXECUTION_OUTPUT/'supervision').glob('*/supervision.json'))
+    assert len(launched)==len(killed)==len(receipts)==1
+    receipt=json.loads(receipts[0].read_text())
+    assert receipt['status']=='failed' and receipt['failure_code']=='INTERRUPTED' and receipt['worker_exit_code']==-9
+
+
+def test_execution_cleanup_tolerates_worker_exit_between_poll_and_kill(monkeypatch):
+    waited=[]
+    class Worker:
+        pid=987654321
+        def poll(self):return None
+        def wait(self,timeout):waited.append(timeout);return 0
+    def vanished(*args):raise ProcessLookupError()
+    monkeypatch.setattr(pc.os,'killpg',vanished)
+    pc._stop_execution_worker(Worker())
+    assert waited==[5]

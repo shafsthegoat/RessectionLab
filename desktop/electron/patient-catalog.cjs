@@ -15,6 +15,19 @@ const RELEASE = Object.freeze({
   catalogHash: 'sha256:554c172ee7061c1ec803a4ea56c8025b5e6969f777bfecfe44987ec8aa2479a3',
   planHash: 'sha256:a1a2623d05270881d4291a1037d303578cb27a4f63d52cce28b5f5db251d8755',
 });
+const TWELVE_RELEASE = Object.freeze({
+  id: 'existing-twelve-execution-v1',
+  path: 'manifests/patient-corpus-releases/existing-twelve-execution-admission-v1.json',
+  sha256: '76c3c7e1f3805c136c508f53c4b31eae56b0ea3e9b876b556326a08b1fb681d9',
+  prospectiveId: 'existing-ten-plus-synthrad-bc-v1',
+  prospectivePath: 'manifests/patient-corpus-releases/existing-ten-plus-synthrad-bc-v1.json',
+  prospectiveSha256: 'd1eb5d7642ac01c46ad8d7a2464627408358d438ca0c302bcaa8c71e759bbbd1',
+  prospectivePlanHash: 'sha256:0e27cffd8bd556c12460678d33b65b85e2a5f5819a2e09b03b23450b111c1093',
+  catalogPath: 'outputs/patient-corpus-twelve-execution-v1/catalog.json',
+  catalogSha256: '5f8b833079e0b4673d2b8d01a36fab474574164755ac731a0972fa8071bcd088',
+  catalogHash: 'sha256:6354e2e955aa4f4a5e0b892d5e3e8b069d9f8cb046196787b08273e7a94b4083',
+  planHash: 'sha256:ecdc8f380437c0f1b1536a12fac0c22a07774c3f97e7d340d25d83f4dc4121d6',
+});
 const SCOPE = Object.freeze(Object.fromEntries([
   ...['05','16','20','22','25','28'].map(n=>[`BTC:sub-PAT${n}`,{role:'TRAIN',bundle:`outputs/cases/BTC-sub-PAT${n}-structural-evidence.ressectionlab`,source:'BTC'}]),
   ['UCSF-PDGM:004',{role:'DEVELOPMENT',bundle:'outputs/poc-cases/UCSF-PDGM-0004.ressectionlab',source:'UCSF-PDGM'}],
@@ -22,6 +35,10 @@ const SCOPE = Object.freeze(Object.fromEntries([
   ['SynthRAD2023:1BA336',{role:'TRAIN',bundle:'outputs/poc-cases/SynthRAD2023-1BA336.ressectionlab',source:'SynthRAD2023'}],
   ['IXI:265',{role:'TRAIN',bundle:'outputs/poc-ixi265/vesselfm-base-v1/IXI265-vesselfm-estimates.ressectionlab',source:'IXI'}],
 ]));
+const TWELVE_SCOPE = Object.freeze({...SCOPE,
+  'SynthRAD2023:1BB033':{role:'TRAIN',bundle:'outputs/poc-synthrad-bc-source-v1/1BB033/SynthRAD2023-1BB033.ressectionlab',source:'SynthRAD2023',bundleHash:'6da3934b794ad13945ea8d1443a70c46625a75c9b8a7cf2a800d2830c906dd82'},
+  'SynthRAD2023:1BC077':{role:'TRAIN',bundle:'outputs/poc-synthrad-bc-source-v1/1BC077/SynthRAD2023-1BC077.ressectionlab',source:'SynthRAD2023',bundleHash:'171101168d1244d509fc64249cd9039a74aa9a35f35535dddc753307e80f905d'},
+});
 const ANATOMY = new Set(['brain','tumor','skull','vessels','ventricles']);
 const digest = value => createHash('sha256').update(value).digest('hex');
 const stable = value => value && typeof value==='object' ? Array.isArray(value) ? value.map(stable) : Object.fromEntries(Object.keys(value).sort().map(k=>[k,stable(value[k])])) : value;
@@ -34,33 +51,60 @@ function relative(value) {
     !path.posix.isAbsolute(value) && value.split('/').every(part=>part && part!=='.' && part!=='..');
 }
 
-/** Pure metadata gate. Reading bundle/image bytes is deliberately impossible here. */
-function validateCatalogMetadata(release,catalog) {
+function tenCandidates(release) {
   need(release?.schema==='patient-corpus-frozen-release-v1'&&release.release_id===RELEASE.id&&
     release.virtual_descendants_admitted===false&&release.protected_roles_unchanged===true&&
     release.training_admission_established===false,'release scope changed');
   need(Array.isArray(release.base_candidates)&&release.base_candidates.length===9&&release.additional_candidate?.patient_group==='IXI:265','release membership changed');
-  const candidates=[...release.base_candidates,release.additional_candidate],byGroup=new Map();
+  return [...release.base_candidates,release.additional_candidate];
+}
+
+/** Pure metadata gates. Reading bundle/image bytes is deliberately impossible here. */
+function validateCatalogMetadata(release,catalog) {
+  return validateEntries(tenCandidates(release),catalog,RELEASE,SCOPE,release.base_plan_hash);
+}
+
+function validateTwelveCatalogMetadata(admission,prospective,parentRelease,catalog) {
+  need(admission?.schema==='patient-corpus-execution-admission-v1'&&admission.release_id===TWELVE_RELEASE.id&&
+    admission.parent_ten_plan_hash===RELEASE.planHash&&admission.prospective_release?.path===TWELVE_RELEASE.prospectivePath&&
+    admission.prospective_release.sha256===TWELVE_RELEASE.prospectiveSha256&&admission.prospective_release.plan_hash===TWELVE_RELEASE.prospectivePlanHash&&
+    admission.anatomical_truth_accepted===false&&admission.training_admission_established===false&&
+    admission.model_execution_allowed===false&&admission.solver_execution_allowed===false&&admission.new_acquisition_allowed===false,'twelve admission changed');
+  need(prospective?.schema==='patient-corpus-prospective-release-v1'&&prospective.release_id===TWELVE_RELEASE.prospectiveId&&
+    prospective.parent_release_id===RELEASE.id&&prospective.parent_release_path===RELEASE.path&&prospective.parent_release_sha256===RELEASE.sha256&&
+    prospective.parent_plan_hash===RELEASE.planHash&&prospective.virtual_descendants_admitted===false&&
+    prospective.training_admission_established===false,'twelve candidate release changed');
+  need(Array.isArray(prospective.base_candidates)&&prospective.base_candidates.length===10&&
+    Array.isArray(prospective.additional_candidates)&&prospective.additional_candidates.length===2,'twelve release membership changed');
+  const byGroup=items=>[...items].sort((a,b)=>String(a?.patient_group).localeCompare(String(b?.patient_group)));
+  need(equal(byGroup(prospective.base_candidates),byGroup(tenCandidates(parentRelease))),'twelve base candidates changed');
+  need(equal(prospective.additional_candidates.map(c=>c?.patient_group).sort(),['SynthRAD2023:1BB033','SynthRAD2023:1BC077']),'twelve additional candidates changed');
+  return validateEntries([...prospective.base_candidates,...prospective.additional_candidates],catalog,TWELVE_RELEASE,TWELVE_SCOPE,RELEASE.planHash);
+}
+
+function validateEntries(candidates,catalog,pins,allowed,parentPlanHash) {
+  const byGroup=new Map();
   for(const candidate of candidates) {
-    const scope=SCOPE[candidate?.patient_group];
+    const scope=allowed[candidate?.patient_group];
     need(scope&&candidate.role===scope.role&&candidate.existing_materialized===true,'protected or out-of-scope source group or role');
-    need(relative(candidate.bundle)&&candidate.bundle===scope.bundle&&sha(candidate.bundle_sha256),'bundle path or identity changed');
+    need(relative(candidate.bundle)&&candidate.bundle===scope.bundle&&sha(candidate.bundle_sha256)&&
+      (!scope.bundleHash||candidate.bundle_sha256===scope.bundleHash),'bundle path or identity changed');
     need(typeof candidate.case_id==='string'&&candidate.case_id.length<160&&Array.isArray(candidate.source_files)&&candidate.source_files.length>0&&candidate.source_files.length<=16,'source binding missing');
     need(candidate.source_files.every(s=>relative(s.path)&&sha(s.sha256)&&['imaging','annotation'].includes(s.role)),'source path or checksum is invalid');
     need(!byGroup.has(candidate.patient_group),'duplicate source group');byGroup.set(candidate.patient_group,candidate);
   }
-  need(catalog?.schema==='patient-corpus-qualification-v1.catalog'&&catalog.release_id===RELEASE.id&&catalog.plan_hash===RELEASE.planHash&&
-    catalog.parent_plan_hash===release.base_plan_hash&&catalog.catalog_hash===RELEASE.catalogHash&&catalog.protected_imaging_opened===false,'catalog release identity changed');
-  need(Array.isArray(catalog.entries)&&catalog.entries.length===10&&catalog.counts?.qualified_existing_people===10&&
+  need(catalog?.schema==='patient-corpus-qualification-v1.catalog'&&catalog.release_id===pins.id&&catalog.plan_hash===pins.planHash&&
+    catalog.parent_plan_hash===parentPlanHash&&catalog.catalog_hash===pins.catalogHash&&catalog.protected_imaging_opened===false,'catalog release identity changed');
+  need(Array.isArray(catalog.entries)&&catalog.entries.length===candidates.length&&catalog.counts?.qualified_existing_people===candidates.length&&
     catalog.counts.newly_acquired_people===0&&catalog.counts.anatomical_truth_accepted_people===0&&catalog.counts.virtual_descendants_counted_as_people===0,'catalog qualification scope changed');
   const seen=new Set();
   for(const entry of catalog.entries) {
-    const candidate=byGroup.get(entry?.patient_group),scope=SCOPE[entry?.patient_group];
+    const candidate=byGroup.get(entry?.patient_group),scope=allowed[entry?.patient_group];
     need(scope&&entry.role===scope.role&&candidate&&!seen.has(entry.patient_group),'protected, duplicate or out-of-scope catalog entry');seen.add(entry.patient_group);
-    need(entry.status==='qualified_with_limitations'&&entry.release_id===RELEASE.id&&entry.existing_materialized===true&&entry.new_patient===false&&
+    need(entry.status==='qualified_with_limitations'&&entry.release_id===pins.id&&entry.existing_materialized===true&&entry.new_patient===false&&
       entry.virtual_descendant===false&&entry.clinical_use_permitted===false&&entry.training_admission_established===false&&entry.training_admitted===false,'entry promotes unreviewed or virtual anatomy');
     need(entry.case_id===candidate.case_id&&entry.bundle===candidate.bundle&&entry.bundle_sha256===candidate.bundle_sha256&&
-      entry.input_binding?.plan_hash===RELEASE.planHash&&entry.input_binding.release_id===RELEASE.id&&equal(entry.input_binding.candidate,candidate)&&
+      entry.input_binding?.plan_hash===pins.planHash&&entry.input_binding.release_id===pins.id&&equal(entry.input_binding.candidate,candidate)&&
       entry.input_binding.bundle_sha256===candidate.bundle_sha256,'entry source or frozen candidate binding changed');
     need(Number.isSafeInteger(entry.input_binding.bundle_bytes)&&entry.input_binding.bundle_bytes>0&&entry.input_binding.bundle_bytes<=512*1024*1024,'bundle size is invalid');
     need(Array.isArray(entry.imaging)&&entry.imaging.length>0&&entry.imaging.length<=32&&entry.imaging.every(image=>
@@ -99,6 +143,35 @@ async function metadataAbsent(root,relativePath) {
   return false;
 }
 
+async function readPinnedMetadata(root,relativePath,expectedHash,maxBytes,label) {
+  let bytes;
+  try {bytes=await readBoundedMetadata(root,relativePath,maxBytes);}
+  catch(error){if(error.code==='ENOENT'&&await metadataAbsent(root,relativePath))return null;throw error;}
+  need(digest(bytes)===expectedHash,`${label} checksum changed`);
+  try {return JSON.parse(bytes);}catch{throw Error('Patient catalog unavailable: invalid metadata JSON');}
+}
+
+async function loadTwelveMetadata(root) {
+  // Check every present part before considering fallback; partial absence must
+  // never conceal corrupt or redirected metadata elsewhere in this release.
+  const admission=await readPinnedMetadata(root,TWELVE_RELEASE.path,TWELVE_RELEASE.sha256,64*1024,'twelve admission');
+  const prospective=await readPinnedMetadata(root,TWELVE_RELEASE.prospectivePath,TWELVE_RELEASE.prospectiveSha256,64*1024,'twelve candidate release');
+  const catalog=await readPinnedMetadata(root,TWELVE_RELEASE.catalogPath,TWELVE_RELEASE.catalogSha256,512*1024,'twelve catalog');
+  if(!catalog)return null;
+  need(admission&&prospective,'twelve release metadata is missing');
+  const parent=await readPinnedMetadata(root,RELEASE.path,RELEASE.sha256,64*1024,'frozen release');
+  need(parent,'frozen parent release is missing');
+  return {entries:validateTwelveCatalogMetadata(admission,prospective,parent,catalog),pins:TWELVE_RELEASE,scope:TWELVE_SCOPE};
+}
+
+async function loadTenMetadata(root) {
+  const release=await readPinnedMetadata(root,RELEASE.path,RELEASE.sha256,64*1024,'frozen release');
+  const catalog=await readPinnedMetadata(root,RELEASE.catalogPath,RELEASE.catalogSha256,512*1024,'catalog');
+  if(!catalog)return null;
+  need(release,'frozen release is missing');
+  return {entries:validateCatalogMetadata(release,catalog),pins:RELEASE,scope:SCOPE};
+}
+
 /** Streams a bounded expected bundle, without decoding ZIP, JSON or image payloads. */
 async function verifyBundleBytes(filename,expectedHash,expectedBytes) {
   need(sha(expectedHash)&&Number.isSafeInteger(expectedBytes)&&expectedBytes>0&&expectedBytes<=512*1024*1024,'invalid bundle checksum request');
@@ -122,23 +195,11 @@ class PatientCatalog {
   aliases(entry){return this.roots().map(root=>path.join(root,entry.bundle));}
   async load() {
     const root=await fs.realpath(this.root);need(root===this.root,'catalog root must be canonical');
-    let releaseBytes,catalogBytes;
-    try {releaseBytes=await readBoundedMetadata(root,RELEASE.path,64*1024);}
-    catch(error){
-      if(error.code==='ENOENT'&&await metadataAbsent(root,RELEASE.path)) {
-        if(await metadataAbsent(root,RELEASE.catalogPath))return [];
-        throw Error('Patient catalog unavailable: frozen release is missing');
-      }
-      throw error;
-    }
-    need(digest(releaseBytes)===RELEASE.sha256,'frozen release checksum changed');
-    try {catalogBytes=await readBoundedMetadata(root,RELEASE.catalogPath,512*1024);}
-    catch(error){if(error.code==='ENOENT'&&await metadataAbsent(root,RELEASE.catalogPath))return [];throw error;}
-    need(digest(catalogBytes)===RELEASE.catalogSha256,'catalog checksum changed; refresh the qualified release');
-    let release,catalog;try{release=JSON.parse(releaseBytes);catalog=JSON.parse(catalogBytes);}catch{throw Error('Patient catalog unavailable: invalid metadata JSON');}
-    return validateCatalogMetadata(release,catalog).map(entry=>({
-      id:'catalog-'+digest(`${RELEASE.sha256}:${RELEASE.catalogSha256}:${entry.patient_group}:${entry.bundle_sha256}`),
-      title:entry.case_id,bytes:entry.input_binding.bundle_bytes,qualifiedCatalog:true,source:SCOPE[entry.patient_group].source,
+    const active=await loadTwelveMetadata(root)||await loadTenMetadata(root);
+    if(!active)return [];
+    return active.entries.map(entry=>({
+      id:'catalog-'+digest(`${active.pins.sha256}:${active.pins.catalogSha256}:${entry.patient_group}:${entry.bundle_sha256}`),
+      title:entry.case_id,bytes:entry.input_binding.bundle_bytes,qualifiedCatalog:true,source:active.scope[entry.patient_group].source,
       anatomy:[...entry.anatomy_present],missingAnatomy:[...entry.missing_anatomy],
       entry,aliases:this.aliases(entry),
     }));
@@ -155,4 +216,4 @@ class PatientCatalog {
     return resolved;
   }
 }
-module.exports={PatientCatalog,RELEASE,validateCatalogMetadata,verifyBundleBytes};
+module.exports={PatientCatalog,RELEASE,TWELVE_RELEASE,validateCatalogMetadata,validateTwelveCatalogMetadata,verifyBundleBytes};
