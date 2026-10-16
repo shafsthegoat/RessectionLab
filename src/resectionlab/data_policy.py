@@ -139,7 +139,10 @@ class DataPolicyError(ValueError):
         super().__init__(f"{code}: {operation}: {REASONS[code]}")
 
 
-def require_admitted_model(model_sha256: str | None, operation: str) -> None:
+ANATOMY_PRETRAINED_POLICY = 'pretrained-anatomy-estimates-2026-10-14'
+
+
+def require_admitted_model(model_sha256: str | None, operation: str, *, policy: str | None = None) -> None:
     """Reject a model dependency at consumption, including cached mask use.
 
     No model ancestry has yet been admitted. A missing model hash is merely
@@ -149,6 +152,10 @@ def require_admitted_model(model_sha256: str | None, operation: str) -> None:
     if model_sha256 is None:
         return
     digest = model_sha256.removeprefix("sha256:")
+    if policy == ANATOMY_PRETRAINED_POLICY and operation == 'critical_annotation_consumption':
+        if len(digest) != 64 or any(c not in '0123456789abcdef' for c in digest):
+            raise ValueError('Anatomy model weights require a valid SHA-256')
+        return
     reason = ("SYNTHETIC_MODEL_INELIGIBLE" if digest in SYNTHETIC_MODEL_SHA256
               else "WEIGHT_LINEAGE_UNVERIFIED")
     raise DataPolicyError(reason, operation)

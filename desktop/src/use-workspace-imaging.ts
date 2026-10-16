@@ -39,6 +39,10 @@ export function useWorkspaceImaging(primary:CasePayload|null,api:(ResectionApi&D
     if(!selected)return;const id=selected.descriptor.seriesId;
     setStates(all=>{const view=all[id]??defaultImageView(selected.volume);return {...all,[id]:{...view,visibleLayers:typeof update==='function'?update(view.visibleLayers):{...update}}}});
   },[selected]);
+  const setViewer=useCallback((viewer:ImageViewState['viewer'])=>{
+    if(!selected)return;const id=selected.descriptor.seriesId;
+    setStates(all=>({...all,[id]:{...(all[id]??defaultImageView(selected.volume)),viewer:structuredClone(viewer)}}));
+  },[selected]);
   const snapshot=useCallback((primaryView:ImageViewState):ImagingSessionState=>({selectedSeriesId:selected?.descriptor.seriesId??null,
     states:{primary:structuredClone(primaryView),...Object.fromEntries(series.map(view=>[view.descriptor.seriesId,structuredClone(states[view.descriptor.seriesId]??defaultImageView(view.volume))]))}}),[selected,series,states]);
   const importSeries=useCallback(async(request:ImportDisplaySeriesRequest)=>{
@@ -58,5 +62,5 @@ export function useWorkspaceImaging(primary:CasePayload|null,api:(ResectionApi&D
   },[api,primary,pending]);
   const view=selected?(states[selected.descriptor.seriesId]??defaultImageView(selected.volume)):null;
   return {series,selected,selectedId:selected?.descriptor.seriesId??null,pending,cursor:view?.cursor??null,setCursor,
-    visibleLayers:view?.visibleLayers??{},setVisibleLayers,select,importSeries,resetDisplayToPrimary,snapshot,restore,invalidate};
+    visibleLayers:view?.visibleLayers??{},setVisibleLayers,viewer:view?.viewer,setViewer,select,importSeries,resetDisplayToPrimary,snapshot,restore,invalidate};
 }

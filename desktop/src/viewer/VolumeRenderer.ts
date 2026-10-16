@@ -1,7 +1,15 @@
+import {InteractionSession, InteractionBudget} from './interactionBudget';
+import {SliceFrameCache} from './sliceFrameCache';
+import {scanFitPoints} from './scanCameraFit';
+import {packAnatomyLabels,materializeLayerMask,MAX_ANATOMY_LAYERS} from './labelPacking';
 import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
 import type {ViewerPublicGoal} from './publicGoal';
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { clippingForBounds, layerAppearance, validCameraState } from './workspaceSettings';
+import type { ViewerCameraState, ViewerWorkspaceSettings } from './workspaceSettings';
+import { checkedFusionTransform } from './registeredFusion';
+import type { ViewerRegisteredFusion } from './registeredFusion';
 import {
   PLANE_AXES,
   inverseAffine,
@@ -29,6 +37,9 @@ import { fragmentShader, vertexShader } from "./shaders";
 import { validateDiagnosticLayer } from "./diagnosticLayer";
 import type { CheckedDiagnosticLayer, LoadedDiagnosticLayer } from "./diagnosticLayer";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
+import { surfaceCameraDistance } from './surfaceCameraFit';
+import { ScanVolumeRenderer } from './ScanVolumeRenderer';
+import type { VolumeRenderingSettings } from './volumeTransfer';
 import { paneViewport } from "./layout";
 import {
   PRIOR_COLORS,
@@ -116,6 +127,9 @@ export class VolumeRenderer {
   readonly defaultWindow: [number, number];
   readonly affine: Affine;
   private readonly renderer: THREE.WebGLRenderer;
+  private readonly scanVolume: ScanVolumeRenderer;
+  private volumeModality = 'MRI';
+  private interacting = false;
   private readonly scene = new THREE.Scene();
   private readonly camera = new THREE.PerspectiveCamera(34, 1, 0.1, 5000);
   private readonly controls: OrbitControls;
@@ -149,8 +163,12 @@ export class VolumeRenderer {
   private priorTexture: THREE.Data3DTexture;
   private priorCoverageTexture: THREE.Data3DTexture;
   private readonly surfaces = new Map<string, THREE.Mesh>();
+  private readonly surfaceGeometry = new Map<string, { source: THREE.BufferGeometry; smooth: THREE.BufferGeometry }>();
+  private surfaceSmoothing = true;
+  private scanFramingPoints:Float32Array=new Float32Array();
   private readonly mriTexture: THREE.Data3DTexture;
-  private readonly labelTexture: THREE.Data3DTexture;
+  private fusionTexture: THREE.Data3DTexture;
+  private labelTexture: THREE.Data3DTexture;
   private readonly sourcePlane: THREE.Mesh<
     THREE.BufferGeometry,
     THREE.ShaderMaterial
@@ -166,12 +184,45 @@ export class VolumeRenderer {
   private cursor: Point3;
   private visible: Record<string, boolean> = {};
   private opacity = 0.4;
+  private workspaceSettings: ViewerWorkspaceSettings = {};
+  private appearanceSignature: string | null = null;
+  private visibilitySignature: string | null = null;
+  private extraClipPlanes: THREE.Plane[] = [];
+  private clipPlane: THREE.Plane | null = null;
+  private cameraRestored = false;
   private activePlane: SlicePlane = "axial";
   private routeSignature = "";
   private mode: "anatomy" | "instruments" = "anatomy";
   private pendingFit: "anatomy" | "instruments" | null = null;
   private readonly pickRay = new THREE.Raycaster();
-  private readonly onControlsChange = () => this.requestRender();
+  private sliceRevision=0;
+  private readonly sliceCaches=new Map<SlicePlane,SliceFrameCache>();
+  private paneBounds: {root:DOMRect;panes:Map<HTMLElement,DOMRect>} | null=null;
+  private gpuSync:WebGLSync|null=null;
+  private gpuPoll=0;
+  private needsFrame=false;
+  private renderSerial=0;
+  private readonly budget=new InteractionBudget();
+  private readonly interaction=new InteractionSession(active=>{
+    this.interacting=active;
+    if(active)this.refinementStarted=0;
+    this.requestRender(false);
+  });
+  private readonly onLayout=()=>{this.paneBounds=null;this.requestRender();};
+  private readonly onScroll=(event:Event)=>{
+    if(event.target===document||event.target===window||(event.target instanceof HTMLElement&&event.target.contains(this.container)))this.onLayout();
+  };
+  private readonly onBlur=()=>this.interaction.finish();
+  private readonly onControlsChange = () => this.requestRender(false);
+  private refinementStarted=0;
+  private readonly onControlsStart = () => { this.interaction.start(); };
+  private readonly onControlsEnd = () => {
+    this.interaction.end();
+    this.refinementStarted=performance.now();
+    this.requestRender(false);
+    this.cameraRestored = true;
+    this.onCameraChange?.(this.getCameraState());
+  };
   private readonly onContextLost = (event: Event) => {
     event.preventDefault();
     this.onError(
@@ -183,10 +234,11 @@ export class VolumeRenderer {
     private readonly container: HTMLElement,
     private readonly canvas: HTMLCanvasElement,
     private readonly panes: Panes,
-    private readonly volume: ViewerVolume,
+    private volume: ViewerVolume,
     private readonly onError: (message: string) => void,
     private readonly onSurfaceStatus: (remaining: number) => void,
     private readonly onReplayError: (message: string) => void,
+    private readonly onCameraChange?: (camera: ViewerCameraState) => void,
   ) {
     const count = volume.shape.reduce((a, b) => a * b, 1);
     if (
@@ -194,12 +246,7 @@ export class VolumeRenderer {
       volume.mri.length !== count
     )
       throw new Error("MRI array dimensions do not match the source grid.");
-    if (volume.compartments.length > 8)
-      throw new Error(
-        "This viewer supports up to eight independently visible source compartments.",
-      );
-    if (volume.compartments.some((layer) => layer.mask.length !== count))
-      throw new Error("A source compartment does not match the MRI grid.");
+    const packedLabels=volume.packedLabels??packAnatomyLabels(volume);
     this.affine = rasAffine(volume.affine, volume.frame);
     const inverse = inverseAffine(this.affine);
     this.bounds = volumeBounds(volume.shape, this.affine);
@@ -207,6 +254,7 @@ export class VolumeRenderer {
       (x, i) => (x + this.bounds[1][i]) / 2,
     ) as Point3;
     this.defaultWindow = intensityWindow(volume.mri);
+    this.scanFramingPoints=scanFitPoints(volume,this.defaultWindow);
     this.renderer = new THREE.WebGLRenderer({
       canvas,
       antialias: true,
@@ -224,6 +272,7 @@ export class VolumeRenderer {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     this.renderer.setClearColor(0x05080d, 1);
     this.renderer.autoClear = false;
+    this.renderer.localClippingEnabled = true;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.05;
@@ -233,13 +282,13 @@ export class VolumeRenderer {
       );
     this.canvas.addEventListener("webglcontextlost", this.onContextLost);
     this.mriTexture = dataTexture(volume.mri, volume.shape);
-    const packed = new Uint8Array(count);
-    volume.compartments.forEach((layer, index) => {
-      const bit = 1 << index;
-      for (let i = 0; i < count; i++) if (layer.mask[i]) packed[i] |= bit;
-      this.visible[layer.name] = true;
-    });
-    this.labelTexture = dataTexture(packed, volume.shape);
+    this.scanVolume = new ScanVolumeRenderer(this.renderer, volume, this.defaultWindow,packedLabels.codes,this.mriTexture);
+    this.scanVolume.configure(undefined, this.volumeModality, null);
+    this.fusionTexture = dataTexture(new Float32Array(1),[1,1,1]);
+    volume.compartments.forEach(layer=>{this.visible[layer.name]=true;});
+    this.labelTexture = dataTexture(packedLabels.data,volume.shape);
+    this.labelTexture.format=THREE.RGBAFormat;
+    this.scanVolume.labels(this.labelTexture,this.visible,this.workspaceSettings,[]);
     this.removedTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
     this.proposalTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
     this.diagnosticStateTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
@@ -257,6 +306,12 @@ export class VolumeRenderer {
         toneMapped: false,
         uniforms: {
           uMri: { value: this.mriTexture },
+          uFusion: { value: this.fusionTexture },
+          uFusionActive: { value: 0 },
+          uFusionOpacity: { value: .5 },
+          uFusionShape: { value: new THREE.Vector3(1,1,1) },
+          uWorldToFusion: { value: new THREE.Matrix4() },
+          uFusionWindow: { value: new THREE.Vector2(0,1) },
           uLabels: { value: this.labelTexture },
           uRemoved: { value: this.removedTexture },
           uReplayActive: { value: 0 },
@@ -292,10 +347,16 @@ export class VolumeRenderer {
           uResolution: { value: new THREE.Vector2(1, 1) },
           uWindow: { value: new THREE.Vector2(...this.defaultWindow) },
           uOverlay: { value: this.opacity },
+          uLayerOpacities: { value: new Float32Array(MAX_ANATOMY_LAYERS).fill(.66) },
+          uClipEnabled: { value: 0 },
+          uClipPlane: { value: new THREE.Vector4(0,0,1,0) },
           uThreeD: { value: threeD ? 1 : 0 },
+          uLayerCount: {value:volume.compartments.length},
+          uLayerCodes: {value:packedLabels.codes.map(c=>new THREE.Vector2(...c))},
+          uLayerEnabled: {value:new Float32Array(MAX_ANATOMY_LAYERS).fill(1)},
           uVisibleBits: { value: (1 << volume.compartments.length) - 1 },
           uColors: {
-            value: Array.from({ length: 8 }, (_, i) =>
+            value: Array.from({ length: MAX_ANATOMY_LAYERS }, (_, i) =>
               new THREE.Color(
                 volume.compartments[i]?.color || "#738c9e",
               ).convertLinearToSRGB(),
@@ -367,18 +428,25 @@ export class VolumeRenderer {
       }),
     );
     this.cursorObject.renderOrder = 5;
+    this.cursorObject.position.copy(centre);
     this.scene.add(this.cursorObject);
     this.scene.add(this.publicGoalObject);
     this.camera.up.set(0, 0, 1);
     this.controls = new OrbitControls(this.camera, panes.anatomy);
-    this.controls.enableDamping = true;
-    this.controls.dampingFactor = 0.12;
+    // Direct controls settle at pointer/wheel end, so saved camera equals the
+    // displayed camera even if Save is pressed immediately after a gesture.
+    this.controls.enableDamping = false;
     this.controls.rotateSpeed = 0.65;
     this.controls.zoomSpeed = 0.8;
     this.controls.minDistance = 5;
     this.controls.maxDistance = 2200;
     this.controls.addEventListener("change", this.onControlsChange);
-    this.observer = new ResizeObserver(() => this.requestRender());
+    this.controls.addEventListener("start", this.onControlsStart);
+    this.controls.addEventListener("end", this.onControlsEnd);
+    this.observer = new ResizeObserver(this.onLayout);
+    window.addEventListener('scroll',this.onScroll,true);
+    window.addEventListener('blur',this.onBlur);
+    panes.anatomy.addEventListener('pointercancel',this.onControlsEnd);
     this.observer.observe(container);
     Object.values(panes).forEach((pane) => this.observer.observe(pane));
     this.worker = new Worker(new URL("./surface.worker.ts", import.meta.url), {
@@ -391,6 +459,9 @@ export class VolumeRenderer {
         name: string;
         positions?: Float32Array;
         normals?: Float32Array;
+        smoothPositions?: Float32Array;
+        smoothNormals?: Float32Array;
+        indices?: Uint32Array;
         error?: string;
       }>,
     ) => {
@@ -411,46 +482,107 @@ export class VolumeRenderer {
         onError("Source surface normals do not match its unchanged geometry.");
         return;
       }
-      const geometry = new THREE.BufferGeometry();
-      geometry.setAttribute(
-        "position",
-        new THREE.BufferAttribute(positions, 3),
-      );
-      geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
-      const mesh = new THREE.Mesh(
-        geometry,
-        new THREE.MeshStandardMaterial({
-          color: layer.color,
-          roughness: 0.34,
-          metalness: 0.08,
-          transparent: true,
-          opacity: 0.66,
-          side: THREE.DoubleSide,
-          depthWrite: false,
-        }),
-      );
-      placeInSourceFrame(mesh, this.affine);
-      mesh.visible = this.visible[layer.name] !== false;
-      mesh.userData.compartment = layer.name;
-      this.surfaces.set(layer.name, mesh);
-      this.anatomy.add(mesh);
-      if (remaining === 0 && this.mode === "anatomy") this.fitCamera("anatomy");
+      this.installSurface(layer,{positions,normals,smoothPositions:event.data.smoothPositions,smoothNormals:event.data.smoothNormals,indices:event.data.indices});
+      if (remaining === 0 && this.mode === "anatomy" && !this.cameraRestored) this.fitCamera("anatomy");
       this.requestRender();
     };
     this.worker.onerror = () =>
       onError(
         "A source surface could not be prepared. The original MRI and labels remain available in the linked slices.",
       );
-    volume.compartments.forEach((layer) =>
-      this.worker.postMessage({
+    volume.compartments.forEach((layer) => {
+      if (layer.surface) {
+        const s = layer.surface;
+        this.worker.onmessage?.(new MessageEvent('message', {data: {name: layer.name,
+          positions: s.source, normals: s.sourceNormals, smoothPositions: s.positions,
+          smoothNormals: s.normals, indices: s.indices}}));
+      } else this.worker.postMessage({
         name: layer.name,
-        mask: layer.mask,
+        mask: materializeLayerMask(this.volume,layer),
         shape: volume.shape,
-      }),
-    );
+        affine: this.affine,
+        displaySmoothing: true,
+      });
+    });
+    for(const tract of volume.tractography??[]){
+      const indices:number[]=[];
+      for(let line=0;line<tract.offsets.length-1;line++)for(let i=tract.offsets[line];i<tract.offsets[line+1]-1;i++)indices.push(i,i+1);
+      const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(tract.points,3));geometry.setIndex(indices);
+      const lines=new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:'#91cffa',transparent:true,opacity:.45}));placeInSourceFrame(lines,this.affine);this.anatomy.add(lines);
+    }
     this.updateSourcePlane();
     this.fitCamera("anatomy");
     this.requestRender();
+  }
+
+  private installSurface(layer:ViewerVolume['compartments'][number],buffers:{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array}) {
+    const {positions,normals}=buffers;
+    const onError=this.onError;
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(positions, 3),
+    );
+    geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
+    const { smoothPositions, smoothNormals } = buffers;
+    if (!smoothPositions || !smoothNormals || smoothPositions.length !== positions.length || smoothNormals.length !== positions.length) {
+      geometry.dispose();
+      onError("Display surface buffers do not match the source triangles.");
+      return;
+    }
+    const smooth = new THREE.BufferGeometry();
+    if (buffers.indices) {
+      geometry.setIndex(new THREE.BufferAttribute(buffers.indices, 1));
+      smooth.setIndex(new THREE.BufferAttribute(buffers.indices, 1));
+    }
+    smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions, 3));
+    smooth.setAttribute("normal", new THREE.BufferAttribute(smoothNormals, 3));
+    this.surfaceGeometry.set(layer.name, { source: geometry, smooth });
+    const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings);
+    const mesh = new THREE.Mesh(
+      this.surfaceSmoothing ? smooth : geometry,
+      new THREE.MeshStandardMaterial({
+        color: appearance.color,
+        roughness: 0.34,
+        metalness: 0.08,
+        transparent: appearance.opacity < 1,
+        opacity: appearance.opacity,
+        clippingPlanes: [...this.extraClipPlanes, ...(this.clipPlane ? [this.clipPlane] : [])],
+        side: THREE.DoubleSide,
+        depthWrite: appearance.opacity >= 1,
+      }),
+    );
+    placeInSourceFrame(mesh, this.affine);
+    mesh.visible = this.visible[layer.name] !== false;
+    mesh.userData.compartment = layer.name;
+    this.surfaces.set(layer.name, mesh);
+    this.anatomy.add(mesh);
+  }
+
+  /** Append only, within an unchanged native source generation. */
+  setAnatomyLayers(next:ViewerVolume) {
+    if(next===this.volume)return;
+    if(!next.displayIdentity||next.displayIdentity!==this.volume.displayIdentity||next.mri!==this.volume.mri||next.caseHash!==this.volume.caseHash||
+      JSON.stringify([next.shape,next.affine,next.frame])!==JSON.stringify([this.volume.shape,this.volume.affine,this.volume.frame]))throw Error('Displayed source changed during layer installation');
+    const packed=next.packedLabels;
+    if(!packed||packed.data.length!==next.mri.length*4||packed.codes.length!==MAX_ANATOMY_LAYERS)throw Error('Missing prepared anatomy labels');
+    for(const old of this.volume.compartments)if(next.compartments.find(layer=>layer.name===old.name)!==old)throw Error('Resident anatomy replacement requires a new source generation');
+    const added=next.compartments.filter(layer=>!this.volume.compartments.some(old=>old.name===layer.name));
+    for(const layer of added){const s=layer.surface;if(!s||s.source.length!==s.positions.length||s.normals.length!==s.positions.length||s.sourceNormals.length!==s.positions.length)throw Error('Incremental anatomy requires valid prepared surfaces');}
+    this.beginInteraction();this.endInteraction();
+    const texture=dataTexture(packed.data,next.shape);texture.format=THREE.RGBAFormat;
+    const previous=this.labelTexture;
+    this.labelTexture=texture;this.volume=next;
+    for(const layer of added){const s=layer.surface!;if(s.source.length)this.installSurface(layer,{positions:s.source,normals:s.sourceNormals,smoothPositions:s.positions,smoothNormals:s.normals,indices:s.indices});}
+    this.materials().forEach(shader=>{
+      shader.uniforms.uLabels.value=texture;shader.uniforms.uLayerCount.value=next.compartments.length;
+      packed.codes.forEach((code,i)=>shader.uniforms.uLayerCodes.value[i].set(...code));
+      next.compartments.forEach((layer,i)=>shader.uniforms.uLayerEnabled.value[i]=this.visible[layer.name]!==false?1:0);
+    });
+    this.scanVolume.setLayers(next.compartments,packed.codes);
+    this.appearanceSignature=null;this.visibilitySignature=null;
+    this.setWorkspaceSettings(this.workspaceSettings);
+    previous.dispose();this.requestRender();
   }
 
   private materials(): THREE.ShaderMaterial[] {
@@ -467,37 +599,50 @@ export class VolumeRenderer {
     routes: ViewerRoute[],
     cameraMode: "anatomy" | "instruments",
   ): void {
-    this.cursor = [...cursor];
+    const cursorChanged = cursor.some((value, axis) => value !== this.cursor[axis]);
+    const visibilitySignature = this.volume.compartments.map(layer => visible[layer.name] !== false ? '1' : '0').join('');
+    const visibilityChanged = visibilitySignature !== this.visibilitySignature;
+    if(visibilityChanged&&this.visibilitySignature!=null){this.beginInteraction();this.endInteraction();}
+    const nextOpacity = Math.max(0, Math.min(1, opacity));
+    const opacityChanged = nextOpacity !== this.opacity;
     this.visible = visible;
-    this.opacity = Math.max(0, Math.min(1, opacity));
-    let bits = 0;
-    this.volume.compartments.forEach((layer, index) => {
-      if (visible[layer.name] !== false) bits |= 1 << index;
-      const mesh = this.surfaces.get(layer.name);
-      if (mesh) mesh.visible = visible[layer.name] !== false;
-    });
-    this.replayGroup.children.forEach((mesh) => {
-      mesh.visible =
-        mesh.userData.compartment === undefined ||
-        visible[mesh.userData.compartment] !== false;
-    });
-    this.materials().forEach((shader) => {
-      shader.uniforms.uCursor.value.set(...cursor);
-      shader.uniforms.uVisibleBits.value = bits;
-      shader.uniforms.uOverlay.value = this.opacity;
-    });
-    this.cursorObject.position.set(...cursor);
-    this.updateSourcePlane();
+    this.opacity = nextOpacity;
+    if (visibilityChanged) {
+      this.visibilitySignature = visibilitySignature;
+      this.scanVolume.labels(this.labelTexture,visible,this.workspaceSettings,this.extraClipPlanes);
+      let bits = 0;
+      this.volume.compartments.forEach((layer, index) => {
+        if (visible[layer.name] !== false) bits |= 1 << index;
+        const mesh = this.surfaces.get(layer.name);
+        if (mesh) mesh.visible = visible[layer.name] !== false;
+      });
+      this.replayGroup.children.forEach((mesh) => {
+        mesh.visible = mesh.userData.compartment === undefined || visible[mesh.userData.compartment] !== false;
+      });
+      this.materials().forEach(shader => {
+        shader.uniforms.uVisibleBits.value = bits;
+        this.volume.compartments.forEach((layer,i) => { shader.uniforms.uLayerEnabled.value[i] = visible[layer.name] !== false ? 1 : 0; });
+      });
+    }
+    if (cursorChanged) {
+      this.cursor = [...cursor];
+      this.materials().forEach(shader => shader.uniforms.uCursor.value.set(...cursor));
+      this.cursorObject.position.set(...cursor);
+      this.updateSourcePlane();
+    }
+    if (opacityChanged) this.materials().forEach(shader => { shader.uniforms.uOverlay.value = this.opacity; });
     const signature = JSON.stringify(routes);
-    if (signature !== this.routeSignature) {
+    const routesChanged = signature !== this.routeSignature;
+    if (routesChanged) {
       this.routeSignature = signature;
       this.updateRoutes(routes);
     }
-    if (cameraMode !== this.mode) {
+    const modeChanged = cameraMode !== this.mode;
+    if (modeChanged) {
       this.mode = cameraMode;
       this.fitCamera(cameraMode);
     }
-    this.requestRender();
+    if (cursorChanged || visibilityChanged || opacityChanged || routesChanged || modeChanged) this.requestRender();
   }
 
   setWindow(low: number, high: number): void {
@@ -506,6 +651,130 @@ export class VolumeRenderer {
       shader.uniforms.uWindow.value.set(low, high),
     );
     this.requestRender();
+  }
+
+  setWorkspaceSettings(settings: ViewerWorkspaceSettings): void {
+    this.workspaceSettings = settings;
+    // Camera persistence and toolbar/layout choices do not change anatomy
+    // materials. Compare values so cloned or in-place edited settings work too.
+    const signature = JSON.stringify([settings.layerOpacity, settings.layerColor,
+      settings.clipping, settings.clipBox, settings.obliqueClip,
+      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode]);
+    if (signature === this.appearanceSignature) return;
+    if(this.appearanceSignature!=null){this.beginInteraction();this.endInteraction();}
+    this.appearanceSignature = signature;
+    const clipping = clippingForBounds(settings.clipping,this.bounds);
+    const normal = new THREE.Vector3();
+    normal.setComponent({x:0,y:1,z:2}[clipping.axis],clipping.flipped ? -1 : 1);
+    this.clipPlane = clipping.enabled ? new THREE.Plane(normal,clipping.flipped ? clipping.value : -clipping.value) : null;
+    this.extraClipPlanes=[];
+    const box=settings.clipBox;
+    if(box?.enabled && [...box.min,...box.max].every(Number.isFinite))for(let i=0;i<3;i++){
+      const n=new THREE.Vector3().setComponent(i,1);
+      this.extraClipPlanes.push(new THREE.Plane(n,-box.min[i]),new THREE.Plane(n.clone().negate(),box.max[i]));
+    }
+    const oblique=settings.obliqueClip;
+    if(oblique?.enabled && [...oblique.normal,oblique.offset].every(Number.isFinite) && Math.hypot(...oblique.normal)>1e-5){
+      const n=new THREE.Vector3(...oblique.normal);this.extraClipPlanes.push(new THREE.Plane(n,oblique.offset).normalize());
+    }
+    this.volume.compartments.forEach((layer,index)=>{
+      const appearance=layerAppearance(layer.name,layer.color,settings);
+      const mesh=this.surfaces.get(layer.name);
+      if(mesh){
+        const material=mesh.material as THREE.MeshStandardMaterial;
+        material.color.set(appearance.color);material.opacity=appearance.opacity;
+        const transparent = appearance.opacity < 1;
+        if (material.transparent !== transparent) {
+          material.transparent = transparent;
+          material.needsUpdate = true;
+        }
+        material.depthWrite = !transparent;
+        material.clippingPlanes=[...this.extraClipPlanes,...(this.clipPlane ? [this.clipPlane] : [])];
+      }
+      this.materials().forEach(shader=>{
+        shader.uniforms.uColors.value[index].set(appearance.color).convertLinearToSRGB();
+        shader.uniforms.uLayerOpacities.value[index]=appearance.opacity;
+      });
+    });
+    this.materials().forEach(shader=>{
+      shader.uniforms.uClipEnabled.value=clipping.enabled ? 1 : 0;
+      shader.uniforms.uClipPlane.value.set(normal.x,normal.y,normal.z,clipping.flipped ? clipping.value : -clipping.value);
+      shader.uniforms.uFusionOpacity.value=Number.isFinite(settings.fusion?.opacity) ? Math.max(0,Math.min(1,settings.fusion!.opacity)) : .5;
+    });
+    this.scanVolume?.configure(settings.volumeRendering, this.volumeModality, this.clipPlane);
+    this.scanVolume.labels(this.labelTexture,this.visible,settings,this.extraClipPlanes);
+    this.requestRender();
+  }
+
+  setVolumeRendering(settings: VolumeRenderingSettings | undefined, modality: string): void {
+    this.volumeModality = modality;
+    this.scanVolume.configure(settings, modality, this.clipPlane);
+    this.requestRender();
+  }
+
+  /** Reversible mesh-only display; masks, slice textures and metrics are untouched. */
+  setSurfaceSmoothing(enabled: boolean): void {
+    this.surfaceSmoothing = enabled;
+    this.surfaces.forEach((mesh, name) => {
+      const pair = this.surfaceGeometry.get(name);
+      if (pair) mesh.geometry = enabled ? pair.smooth : pair.source;
+    });
+    this.requestRender();
+  }
+
+  setRegisteredFusion(fusion: ViewerRegisteredFusion|null): void {
+    // Clear before validation so a rejected replacement never leaves stale fusion.
+    this.materials().forEach(shader=>{shader.uniforms.uFusionActive.value=0;});
+    this.fusionTexture.dispose();
+    this.fusionTexture=dataTexture(new Float32Array(1),[1,1,1]);
+    this.materials().forEach(shader=>{shader.uniforms.uFusion.value=this.fusionTexture;});
+    this.requestRender();
+    if(!fusion)return;
+    const worldToFusion=checkedFusionTransform(this.volume,fusion);
+    const gl=this.renderer.getContext() as WebGL2RenderingContext;
+    if(fusion.volume.shape.some(n=>n>gl.getParameter(gl.MAX_3D_TEXTURE_SIZE)))throw new Error('Fusion image exceeds the GPU texture limit.');
+    const window=intensityWindow(fusion.volume.mri);
+    this.fusionTexture.dispose();this.fusionTexture=dataTexture(fusion.volume.mri,fusion.volume.shape);
+    this.materials().forEach(shader=>{
+      shader.uniforms.uFusion.value=this.fusionTexture;
+      shader.uniforms.uFusionShape.value.set(...fusion.volume.shape);
+      shader.uniforms.uWorldToFusion.value.copy(matrix(worldToFusion));
+      shader.uniforms.uFusionWindow.value.set(...window);
+      shader.uniforms.uFusionActive.value=1;
+    });
+    this.requestRender();
+  }
+
+  getCameraState(): ViewerCameraState {
+    return {position:this.camera.position.toArray() as Point3,target:this.controls.target.toArray() as Point3,up:this.camera.up.toArray() as Point3};
+  }
+
+  setNavigationMode(mode: 'orbit'|'pan'): void {
+    this.controls.mouseButtons.LEFT=mode==='pan' ? THREE.MOUSE.PAN : THREE.MOUSE.ROTATE;
+    this.controls.touches.ONE=mode==='pan' ? THREE.TOUCH.PAN : THREE.TOUCH.ROTATE;
+  }
+
+  beginInteraction():void { this.interaction.start(); }
+  endInteraction():void { this.refinementStarted=performance.now();this.interaction.end(); }
+
+  restoreCamera(state: ViewerCameraState|null|undefined): void {
+    if(!validCameraState(state))return;
+    this.cameraRestored=true;this.pendingFit=null;
+    const unchanged = this.camera.position.equals(new THREE.Vector3(...state.position)) &&
+      this.controls.target.equals(new THREE.Vector3(...state.target)) &&
+      this.camera.up.equals(new THREE.Vector3(...state.up).normalize());
+    const distance = new THREE.Vector3(...state.position).distanceTo(new THREE.Vector3(...state.target));
+    const near = Math.max(.1,distance/1000), far = Math.max(1000,distance*8);
+    if (unchanged && this.camera.near === near && this.camera.far === far) return;
+    this.camera.position.set(...state.position);this.controls.target.set(...state.target);this.camera.up.set(...state.up).normalize();
+    this.camera.near=near;this.camera.far=far;
+    this.camera.updateProjectionMatrix();this.controls.update();this.requestRender(false);
+  }
+
+  cameraPreset(preset: 'oblique'|'anterior'|'left'|'superior'): void {
+    this.fitCamera(this.mode,preset);
+    this.cameraRestored=true;
+    this.onCameraChange?.(this.getCameraState());
   }
 
   setSourcePlane(plane: SlicePlane | null): void {
@@ -595,7 +864,7 @@ export class VolumeRenderer {
       name: layer.name,
       color: layer.color,
       removed: false,
-      mask: residualMask(layer.mask, removed),
+      mask: residualMask(materializeLayerMask(this.volume,layer), removed),
     }));
     layers.push({
       id: "modeled-removal",
@@ -685,7 +954,7 @@ export class VolumeRenderer {
     for (const layer of layers) {
       worker.postMessage({
         name: layer.id,
-        mask: layer.mask,
+        mask: materializeLayerMask(this.volume,layer),
         shape: this.volume.shape,
       });
     }
@@ -1000,7 +1269,7 @@ export class VolumeRenderer {
     });
   }
 
-  fitCamera(mode: "anatomy" | "instruments" = this.mode): void {
+  fitCamera(mode: "anatomy" | "instruments" = this.mode, preset: 'oblique'|'anterior'|'left'|'superior' = 'oblique'): void {
     const pane = this.panes.anatomy.getBoundingClientRect();
     if (pane.width < 1 || pane.height < 1) {
       this.pendingFit = mode;
@@ -1014,6 +1283,7 @@ export class VolumeRenderer {
         new THREE.Vector3(...this.bounds[1]),
       );
     else box.expandByScalar(12);
+    if(this.scanVolume?.active&&this.scanFramingPoints.length){const support=new THREE.Box3().setFromArray(this.scanFramingPoints);box.union(support.expandByScalar(3));}
     const visibleTools = this.recordedTools.visible ? this.recordedTools : this.instrumentDisplay.inspected ? this.inspectionTools : this.tools;
     if (mode === "instruments" && this.replayActive && this.replayBounds) {
       const [low, high] = this.replayBounds.boundsRasMm;
@@ -1026,9 +1296,11 @@ export class VolumeRenderer {
     const aspect = Math.max(0.2, pane.width / Math.max(pane.height, 1));
     const vertical = THREE.MathUtils.degToRad(this.camera.fov),
       horizontal = 2 * Math.atan(Math.tan(vertical / 2) * aspect);
-    const direction = new THREE.Vector3(0.88, -1.65, 0.8).normalize();
+    const directions = {oblique:[.88,-1.65,.8],anterior:[0,1,0],left:[-1,0,0],superior:[0,0,1]};
+    const direction = new THREE.Vector3(...directions[preset] as [number,number,number]).normalize();
+    this.camera.up.set(...(preset==='superior' ? [0,1,0] : [0,0,1]) as [number,number,number]);
     const right = new THREE.Vector3()
-      .crossVectors(new THREE.Vector3(0, 0, 1), direction)
+      .crossVectors(this.camera.up, direction)
       .normalize();
     const up = new THREE.Vector3().crossVectors(direction, right).normalize();
     let distance = 40;
@@ -1044,12 +1316,24 @@ export class VolumeRenderer {
           );
         }
     distance *= 1.06;
+    // Rounded patient anatomy leaves most expanded AABB corners empty. Fit
+    // its actual unchanged vertices; recorded instrument/replay envelopes keep
+    // the conservative complete-bounds calculation above.
+    const surfaceDistance=mode==='anatomy' && !this.replayActive && !this.passiveActive
+      ? surfaceCameraDistance(this.anatomy,centre,direction,right,up,vertical,aspect) : null;
+    if(surfaceDistance!==null)distance=surfaceDistance;
+    if(this.scanVolume?.active&&this.scanFramingPoints.length){
+      let scanDistance=40;const p=new THREE.Vector3();
+      for(let i=0;i<this.scanFramingPoints.length;i+=3){p.fromArray(this.scanFramingPoints,i).sub(centre);const depth=p.dot(direction);scanDistance=Math.max(scanDistance,depth+(Math.abs(p.dot(right))+3)/Math.tan(horizontal/2),depth+(Math.abs(p.dot(up))+3)/Math.tan(vertical/2));}
+      distance=Math.max(distance,scanDistance*1.08);
+    }
     this.camera.position.copy(centre).addScaledVector(direction, distance);
     this.panes.anatomy.dataset.cameraFit = JSON.stringify({
       mode,
       centre: centre.toArray(),
       size: size.toArray(),
       distanceMm: distance,
+      fitGeometry: surfaceDistance===null ? 'complete-bounds' : 'source-surface-vertices',
       surfaces: this.surfaces.size,
     });
     this.controls.target.copy(centre);
@@ -1068,23 +1352,38 @@ export class VolumeRenderer {
       (-(clientY - rect.top) / rect.height) * 2 + 1,
     );
     this.pickRay.setFromCamera(ndc, this.camera);
-    const hits = this.pickRay.intersectObjects(
+    // Cursor picking remains on the original isosurface in either display mode.
+    // Raycasting is synchronous; restore display geometry before any rendering.
+    const displayed = new Map<THREE.Mesh, THREE.BufferGeometry>();
+    this.surfaces.forEach((mesh, name) => {
+      const pair = this.surfaceGeometry.get(name);
+      if (pair) {
+        displayed.set(mesh, mesh.geometry);
+        mesh.geometry = pair.source;
+      }
+    });
+    let hits: THREE.Intersection[];
+    try { hits = this.pickRay.intersectObjects(
       [
         ...(this.sourcePlane.visible ? [this.sourcePlane] : []),
         ...(this.anatomy.visible
-          ? Array.from(this.surfaces.values()).filter((mesh) => mesh.visible)
+          ? Array.from(this.surfaces.values()).filter((mesh) => mesh.visible && (mesh.material as THREE.MeshStandardMaterial).opacity > 0)
           : []),
         ...this.replayGroup.children.filter((mesh) => mesh.visible),
       ],
       false,
-    );
-    return hits.length
-      ? [hits[0].point.x, hits[0].point.y, hits[0].point.z]
+    ); } finally { displayed.forEach((geometry, mesh) => { mesh.geometry = geometry; }); }
+    const hit=hits.find(item=>!this.clipPlane || this.clipPlane.distanceToPoint(item.point)>=0);
+    return hit
+      ? [hit.point.x, hit.point.y, hit.point.z]
       : null;
   }
 
-  private requestRender(): void {
-    if (this.disposed || this.frame) return;
+  private requestRender(slicesChanged=true): void {
+    if(slicesChanged)this.sliceRevision++;
+    if(this.disposed)return;
+    if(this.gpuSync){this.needsFrame=true;return;}
+    if(this.frame)return;
     this.frame = requestAnimationFrame(() => {
       this.frame = 0;
       this.controls.update();
@@ -1094,10 +1393,16 @@ export class VolumeRenderer {
 
   private render(): void {
     if (this.disposed) return;
-    const root = this.container.getBoundingClientRect(),
+    const frameStarted=performance.now();
+    if(!this.paneBounds)this.paneBounds={root:this.container.getBoundingClientRect(),panes:new Map(Object.values(this.panes).map(pane=>[pane,pane.getBoundingClientRect()]))};
+    const root = this.paneBounds.root,
       width = Math.round(root.width),
       height = Math.round(root.height);
     if (width < 1 || height < 1) return;
+    // Interaction quality changes only offscreen 3D targets. The shared canvas
+    // and linked slices retain their display resolution throughout a gesture.
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    if (pixelRatio !== this.renderer.getPixelRatio()) this.renderer.setPixelRatio(pixelRatio);
     if (width !== this.width || height !== this.height) {
       this.width = width;
       this.height = height;
@@ -1107,7 +1412,7 @@ export class VolumeRenderer {
     this.renderer.clear();
     this.renderer.setScissorTest(true);
     const viewport = (element: HTMLElement) => {
-      const rect = paneViewport(root, element.getBoundingClientRect());
+      const rect = paneViewport(root, this.paneBounds!.panes.get(element)!);
       if (!rect) return null;
       this.renderer.setViewport(
         rect.left,
@@ -1123,8 +1428,10 @@ export class VolumeRenderer {
       if (this.pendingFit) this.fitCamera(this.pendingFit);
       this.camera.aspect = main.w / main.h;
       this.camera.updateProjectionMatrix();
-      this.renderer.render(this.scene, this.camera);
+      if (this.replayActive || this.passiveActive) this.renderer.render(this.scene, this.camera);
+      else this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},this.budget.longEdge);
     }
+    let sliceDraws=0;
     for (const plane of SLICE_PLANES) {
       const size = viewport(this.panes[plane]);
       if (!size) continue;
@@ -1137,25 +1444,68 @@ export class VolumeRenderer {
         rect.height / size.h,
       );
       slice.material.uniforms.uResolution.value.set(size.w, size.h);
-      this.renderer.render(slice.scene, slice.camera);
+      let cached=this.sliceCaches.get(plane);
+      if(!cached){cached=new SliceFrameCache();this.sliceCaches.set(plane,cached);}
+      if(cached.render(this.renderer,slice.scene,slice.camera,size.w,size.h,this.sliceRevision,()=>{viewport(this.panes[plane]);}))sliceDraws++;
     }
     this.renderer.setScissorTest(false);
+    const serial=++this.renderSerial,interactive=this.interacting;
+    this.canvas.dispatchEvent(new CustomEvent('anatomy-frame',{bubbles:true,detail:{serial,at:frameStarted,cpuMs:performance.now()-frameStarted,interactive,volume:this.scanVolume.active,sliceDraws,longEdge:interactive?this.budget.longEdge:1300,resources:{...this.renderer.info.memory},drawCalls:this.renderer.info.render.calls}}));
+    const gl=this.renderer.getContext() as WebGL2RenderingContext;
+    const sync=gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE,0);
+    if(!sync)return;
+    this.gpuSync=sync;gl.flush();
+    const refinement=!interactive?this.refinementStarted:0;
+    const poll=()=>{
+      this.gpuPoll=0;
+      if(this.disposed)return;
+      const status=gl.clientWaitSync(sync,0,0);
+      if(status===gl.TIMEOUT_EXPIRED){this.gpuPoll=requestAnimationFrame(poll);return;}
+      gl.deleteSync(sync);this.gpuSync=null;
+      const elapsed=performance.now()-frameStarted;
+      if(interactive&&status!==gl.WAIT_FAILED)this.budget.sample(elapsed);
+      this.canvas.dispatchEvent(new CustomEvent('anatomy-gpu',{bubbles:true,detail:{serial,completed:status!==gl.WAIT_FAILED,milliseconds:elapsed}}));
+      if(refinement&&this.refinementStarted===refinement&&!this.interacting&&!this.needsFrame){
+        this.refinementStarted=0;
+        this.canvas.dispatchEvent(new CustomEvent('anatomy-refined',{bubbles:true,detail:{completed:status!==gl.WAIT_FAILED,milliseconds:performance.now()-refinement,volume:this.scanVolume.active}}));
+      }
+      if(this.needsFrame){this.needsFrame=false;this.controls.update();this.render();}
+    };
+    this.gpuPoll=requestAnimationFrame(poll);
   }
 
   dispose(): void {
     if (this.disposed) return;
     this.disposed = true;
     cancelAnimationFrame(this.frame);
+    cancelAnimationFrame(this.gpuPoll);
+    if(this.gpuSync)(this.renderer.getContext() as WebGL2RenderingContext).deleteSync(this.gpuSync);
+    this.gpuSync=null;
+    this.interaction.dispose();
+    this.sliceCaches.forEach(cache=>cache.dispose());this.sliceCaches.clear();
+    window.removeEventListener('scroll',this.onScroll,true);
+    window.removeEventListener('blur',this.onBlur);
+    this.panes.anatomy.removeEventListener('pointercancel',this.onControlsEnd);
     this.observer.disconnect();
     this.worker.terminate();
     this.replayWorker?.terminate();
     if (this.pendingReplayGroup) disposeObject(this.pendingReplayGroup);
     this.controls.removeEventListener("change", this.onControlsChange);
+    this.controls.removeEventListener("start", this.onControlsStart);
+    this.controls.removeEventListener("end", this.onControlsEnd);
     this.controls.dispose();
     this.canvas.removeEventListener("webglcontextlost", this.onContextLost);
+    this.surfaceGeometry.forEach((pair, name) => {
+      const displayed = this.surfaces.get(name)?.geometry;
+      if (pair.source !== displayed) pair.source.dispose();
+      if (pair.smooth !== displayed) pair.smooth.dispose();
+    });
+    this.surfaceGeometry.clear();
     disposeObject(this.scene);
     this.slices.forEach((slice) => disposeObject(slice.scene));
     this.mriTexture.dispose();
+    this.scanVolume.dispose();
+    this.fusionTexture.dispose();
     this.labelTexture.dispose();
     this.removedTexture.dispose();
     this.proposalTexture.dispose();

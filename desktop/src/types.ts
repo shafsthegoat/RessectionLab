@@ -456,6 +456,8 @@ export interface ObservedLandmarkResult {
 }
 
 export interface ResectionApi extends TrainingApi {
+  listCases?(): Promise<{id:string;title:string;recent:boolean;bytes:number}[]>;
+  openListedCase?(id:string): Promise<CasePayload>;
   publicContactFamilyAvailability?: (request: Record<string, never>) => Promise<import('./contact-family-types').ContactFamilyAvailability>;
   executePublicContactFamilyEpisode?: (request: import('./contact-family-types').ContactFamilyRequest) => Promise<import('./contact-family-types').ContactFamilyResult>;
   executePublicSurfaceContactEpisode?: (request: import('./public-contact-types').PublicContactRequest) => Promise<import('./public-contact-types').PublicContactResult>;

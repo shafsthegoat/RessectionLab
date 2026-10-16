@@ -1,0 +1,342 @@
+{
+  "schema": "resectionlab-poc-brats-model-manifest-v1",
+  "model_id": "monai-brats-0.5.4",
+  "model": {
+    "license": "Apache-2.0",
+    "license_url": "https://huggingface.co/MONAI/brats_mri_segmentation/blob/370f7f9d062745fbac445e7fe6d6616d35df04ec/LICENSE",
+    "name": "MONAI BraTS MRI segmentation",
+    "parameters": {
+      "adaptation": "128-cubed tiles instead of upstream 240x240x160; CPU accumulation; no CUDA AMP",
+      "blend_mode": "constant",
+      "channel_order": [
+        "T1c",
+        "T1",
+        "T2",
+        "FLAIR"
+      ],
+      "normalization": "MONAI NormalizeIntensity(nonzero=True, channel_wise=True)",
+      "overlap": 0.5,
+      "postprocessing": "upstream priority: ET=4, else TC=1, else WT=2, else background=0",
+      "precision": "float32",
+      "registration_performed": false,
+      "resampling_performed": false,
+      "roi_size": [
+        128,
+        128,
+        128
+      ],
+      "spacing_mm": [
+        1,
+        1,
+        1
+      ],
+      "sw_batch_size": 1,
+      "threshold": 0.5,
+      "tta": false
+    },
+    "revision": "370f7f9d062745fbac445e7fe6d6616d35df04ec",
+    "source": "https://huggingface.co/MONAI/brats_mri_segmentation",
+    "version": "0.5.4"
+  },
+  "acquisition": {
+    "files": [
+      {
+        "bytes": 18840620,
+        "path": "data/models/poc-monai-brats-0.5.4/models/model.pt",
+        "publisher_sha256": "860ccb3f1c21c99d0410ad8a1ac4ef6b8fab60cec0a503b0ba42675741a750ae",
+        "sha256": "860ccb3f1c21c99d0410ad8a1ac4ef6b8fab60cec0a503b0ba42675741a750ae",
+        "url": "https://huggingface.co/MONAI/brats_mri_segmentation/resolve/370f7f9d062745fbac445e7fe6d6616d35df04ec/models/model.pt"
+      },
+      {
+        "bytes": 11357,
+        "path": "data/models/poc-monai-brats-0.5.4/LICENSE",
+        "publisher_sha256": null,
+        "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "url": "https://huggingface.co/MONAI/brats_mri_segmentation/resolve/370f7f9d062745fbac445e7fe6d6616d35df04ec/LICENSE"
+      },
+      {
+        "bytes": 7612,
+        "path": "data/models/poc-monai-brats-0.5.4/docs/README.md",
+        "publisher_sha256": null,
+        "sha256": "0880c48d620c5e851d85d4070c103c474b3f67b494e64ab499a3fdd1f2865f54",
+        "url": "https://huggingface.co/MONAI/brats_mri_segmentation/resolve/370f7f9d062745fbac445e7fe6d6616d35df04ec/docs/README.md"
+      },
+      {
+        "bytes": 2441,
+        "path": "data/models/poc-monai-brats-0.5.4/docs/data_license.txt",
+        "publisher_sha256": null,
+        "sha256": "a0270a84a9009b2a6a3e281e1767bc33bb78167d6c7af7329d95b27a8aca7485",
+        "url": "https://huggingface.co/MONAI/brats_mri_segmentation/resolve/370f7f9d062745fbac445e7fe6d6616d35df04ec/docs/data_license.txt"
+      },
+      {
+        "bytes": 4257,
+        "path": "data/models/poc-monai-brats-0.5.4/configs/inference.json",
+        "publisher_sha256": null,
+        "sha256": "22dead767f9bfcd6e3e7cbf5353ef1641e52f37acd9a20cc346361c1e603cf9e",
+        "url": "https://huggingface.co/MONAI/brats_mri_segmentation/resolve/370f7f9d062745fbac445e7fe6d6616d35df04ec/configs/inference.json"
+      },
+      {
+        "bytes": 4625,
+        "path": "data/models/poc-monai-brats-0.5.4/configs/metadata.json",
+        "publisher_sha256": null,
+        "sha256": "65322a60a2a3cd49ae773a20f6b3a1bfc25baa906e5bfe784f5fb4557503dc96",
+        "url": "https://huggingface.co/MONAI/brats_mri_segmentation/resolve/370f7f9d062745fbac445e7fe6d6616d35df04ec/configs/metadata.json"
+      },
+      {
+        "bytes": 2318,
+        "path": "data/models/poc-monai-brats-0.5.4/scripts/prepare_datalist.py",
+        "publisher_sha256": null,
+        "sha256": "6bef778380d3ceffb0e6416b9fdcd178f0d56a43bbd1750c7b531871344c2a61",
+        "url": "https://huggingface.co/MONAI/brats_mri_segmentation/resolve/370f7f9d062745fbac445e7fe6d6616d35df04ec/scripts/prepare_datalist.py"
+      }
+    ],
+    "intended_use": "Example; not for diagnostic purposes",
+    "license": "Apache-2.0",
+    "model_id": "monai-brats-0.5.4",
+    "retrieved_at": "2026-10-14T05:03:37.997781+00:00",
+    "revision": "370f7f9d062745fbac445e7fe6d6616d35df04ec",
+    "source": "https://huggingface.co/MONAI/brats_mri_segmentation",
+    "training_data_license_notice": "docs/data_license.txt retained alongside model",
+    "version": "0.5.4"
+  },
+  "input_requirements": {
+    "channels_in_order": [
+      "T1c",
+      "T1",
+      "T2",
+      "FLAIR"
+    ],
+    "spacing_mm": [
+      1,
+      1,
+      1
+    ],
+    "alignment": "Same patient, source-declared co-registration, matching shapes and physical affines; no implicit alignment or resampling",
+    "brain_preprocessing": "Skull-stripped source MRI, as in the source collection and training-domain inputs"
+  },
+  "runtime": {
+    "python": ".tools/poc-model-runtime/venv/bin/python",
+    "package_versions": {
+      "monai": "1.5.2",
+      "nibabel": "5.4.2",
+      "numpy": "2.0.1",
+      "torch": "2.14.1"
+    },
+    "device": "mps",
+    "host": "macOS-26.6-arm64-arm-64bit",
+    "test_case": "UCSF-PDGM-0004",
+    "elapsed_seconds": 7.232589374994859,
+    "compute_seconds": 4.958105207886547,
+    "peak_process_rss_bytes_sampled": 1392066560,
+    "mps_allocator_samples": {
+      "driver_bytes_max_sampled": 1118519296,
+      "tensor_bytes_max_sampled": 111087360,
+      "tiles_completed": 18
+    },
+    "memory_caveat": "RSS sampled every 0.5 s; MPS allocator sampled after each tile; neither is an exact peak"
+  },
+  "result": {
+    "status": "succeeded",
+    "cache_key": "af24e4d8f13e49e37ff8",
+    "record_path": "outputs/poc-models/UCSF-PDGM-0004/monai-brats-0.5.4/af24e4d8f13e49e37ff8/inference.json",
+    "record_sha256": "759a24d44b9d2818f7b5ab536498e7fd3bac30ab37bc61ec5b3b0a40a184d499",
+    "runner_sha256": "417364a09147810df665092c4be2ca62d1708e69c65d12a667af7c376c1ec908",
+    "outputs": [
+      {
+        "affine_ras_mm": [
+          [
+            -1.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -1.0,
+            -0.0,
+            239.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "foreground_voxels": 37595,
+        "name": "monai_tumor_labels.nii.gz",
+        "path": "outputs/poc-models/UCSF-PDGM-0004/monai-brats-0.5.4/af24e4d8f13e49e37ff8/monai_tumor_labels.nii.gz",
+        "provenance": "model_inference_unreviewed",
+        "sha256": "3d9497278af1ca9242738955828e50390a903600b32cd4a1371415777f3d3a72",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      },
+      {
+        "affine_ras_mm": [
+          [
+            -1.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -1.0,
+            -0.0,
+            239.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "foreground_voxels": 37595,
+        "name": "monai_whole_tumor_mask.nii.gz",
+        "path": "outputs/poc-models/UCSF-PDGM-0004/monai-brats-0.5.4/af24e4d8f13e49e37ff8/monai_whole_tumor_mask.nii.gz",
+        "provenance": "model_inference_unreviewed",
+        "sha256": "94d29527496b419e7a7a322e32b870fc295fa22b5cd622a8222f064e2e7bc38c",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      },
+      {
+        "affine_ras_mm": [
+          [
+            -1.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -1.0,
+            -0.0,
+            239.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "foreground_voxels": 22561,
+        "name": "monai_tumor_core_mask.nii.gz",
+        "path": "outputs/poc-models/UCSF-PDGM-0004/monai-brats-0.5.4/af24e4d8f13e49e37ff8/monai_tumor_core_mask.nii.gz",
+        "provenance": "model_inference_unreviewed",
+        "sha256": "b0f1ae9a5b9800c9e32387472ef1d113fdf88858491d9fbab48b63977b33606c",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      },
+      {
+        "affine_ras_mm": [
+          [
+            -1.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -1.0,
+            -0.0,
+            239.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "foreground_voxels": 14023,
+        "name": "monai_enhancing_tumor_mask.nii.gz",
+        "path": "outputs/poc-models/UCSF-PDGM-0004/monai-brats-0.5.4/af24e4d8f13e49e37ff8/monai_enhancing_tumor_mask.nii.gz",
+        "provenance": "model_inference_unreviewed",
+        "sha256": "127339b45908e458f88ad41838d1076c50ac00783b228ecf6ea428997dfe028c",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      }
+    ]
+  },
+  "case_provenance": {
+    "source_manifest": "manifests/data_acquisition_ucsf.json",
+    "source_manifest_sha256": "b05552355f2099058e9d25bc93faf9f2981fe1c00ffb4f24443edfabeda4c6f6",
+    "source_doi": "10.7937/tcia.bdgf-8v37",
+    "license": "CC-BY-4.0",
+    "mirror_repository": "MedOtter/UCSF-PDGM",
+    "mirror_revision": "e9372219cf1cd2fdd52260cd45f7514b4aa7638e",
+    "registration_evidence": "data/provenance/ucsf-pdgm/mirror_README.md",
+    "registration_evidence_sha256": "a64ef118f23d42e2eff88eddf90fb6c6215195c61359edf19b97126d79795707",
+    "primary_source_byte_equivalence": "unverified",
+    "scanner_native_geometry": "unavailable; downloaded preprocessed image grid preserved",
+    "source_annotation_used_for_inference": false,
+    "training_overlap": "Known BraTS2021 training overlap; overlap with this BraTS2018 checkpoint is not independently excluded; demonstration only"
+  },
+  "verification": {
+    "tests": "3 passed: input order, supplied-annotation isolation, source checksum, physical geometry, class priority",
+    "cache_hit": true,
+    "cache_probe_seconds": 0.2442860419396311,
+    "inference_files_unchanged_on_cache_hit": true,
+    "cache_evidence": "outputs/poc-models/UCSF-PDGM-0004/monai-brats-0.5.4/af24e4d8f13e49e37ff8/cache_verification.json",
+    "visual_qc": "outputs/poc-models/UCSF-PDGM-0004/monai-brats-0.5.4/af24e4d8f13e49e37ff8/overlay_qc.png",
+    "visual_qc_result": "Inspected axial, sagittal, and coronal T1c/FLAIR overlays; inferred outlines follow the visible lesion; differs from supplied annotation",
+    "comparison": "outputs/poc-models/UCSF-PDGM-0004/monai-brats-0.5.4/af24e4d8f13e49e37ff8/comparison_qc.json"
+  },
+  "reproduction_commands": [
+    ".tools/poc-model-runtime/venv/bin/python scripts/poc_brats_inference.py --download",
+    ".tools/poc-model-runtime/venv/bin/python scripts/poc_brats_inference.py --check-only",
+    ".tools/poc-model-runtime/venv/bin/python scripts/poc_brats_inference.py --device mps",
+    ".venv/bin/python -m pytest -q tests/test_poc_brats_inference.py"
+  ],
+  "limitations": [
+    "Research model with no clinical validation.",
+    "Smaller 128-cubed inference tiles and float32 MPS differ from upstream 240x240x160 CUDA AMP configuration; predictions can differ.",
+    "Source annotations remain separate; this result is actual fresh model inference.",
+    "NIfTI geometry and representative overlays are checked; no claim of clinician-reviewed segmentation or independent accuracy."
+  ],
+  "primary_sources": [
+    "https://huggingface.co/MONAI/brats_mri_segmentation/tree/370f7f9d062745fbac445e7fe6d6616d35df04ec",
+    "https://huggingface.co/MONAI/brats_mri_segmentation/blob/370f7f9d062745fbac445e7fe6d6616d35df04ec/configs/metadata.json",
+    "https://huggingface.co/MONAI/brats_mri_segmentation/blob/370f7f9d062745fbac445e7fe6d6616d35df04ec/configs/inference.json",
+    "https://www.cancerimagingarchive.net/collection/ucsf-pdgm/",
+    "https://huggingface.co/datasets/MedOtter/UCSF-PDGM/blob/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/README.md"
+  ]
+}

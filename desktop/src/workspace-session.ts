@@ -1,4 +1,4 @@
-import {hydrateCase,validateCaseDescriptor} from './case-data.ts';
+import {hydrateCase,validateCaseDescriptor,displayBrainMask} from './case-data.ts';
 import {hydrateDisplaySeries} from './workspace-imaging-data.ts';
 import {checkedEpisodeAuthority} from './episode-authority.ts';
 import {hydrateDevelopmentEpisode} from './episode-data.ts';
@@ -6,6 +6,7 @@ import {hydratePersistentPassiveEpisode} from './persistent-passive-view.ts';
 import type {PersistentPassiveView} from './persistent-passive-view.ts';
 import {sourceFrameDigest} from './source-integrity.ts';
 import {rasAffine,transformPoint} from './viewer/coordinates.ts';
+import {checkedViewerSettings} from './workspace-view-settings.ts';
 import type {CasePayload,ResectionApi,ViewerCase} from './types';
 import type {DisplaySeriesView} from './workspace-imaging-types';
 import type {EpisodeView} from './episode-data';
@@ -20,7 +21,7 @@ export function defaultImageView(volume:Pick<ViewerCase,'shape'|'affine'|'compar
 export function checkedImageView(source:CasePayload,input:ImageViewState):ImageViewState {
   requireValue(input && typeof input==='object' && !Array.isArray(input),'missing image view state.');
   requireValue(input.visibleLayers && typeof input.visibleLayers==='object' && !Array.isArray(input.visibleLayers),'invalid layer visibility.');
-  const labels=source.compartments.map(layer=>layer.name),keys=Object.keys(input.visibleLayers);
+  const labels=[...source.compartments.map(layer=>layer.name),...(displayBrainMask(source)?['brain']:[])],keys=Object.keys(input.visibleLayers);
   requireValue(keys.length===labels.length && keys.every(key=>labels.includes(key) && typeof input.visibleLayers[key]==='boolean'),'visibility does not match source labels.');
   const affine=rasAffine(source.affine,source.frame);
   let cursor=input.cursor;
@@ -31,7 +32,7 @@ export function checkedImageView(source:CasePayload,input:ImageViewState):ImageV
     const corner=transformPoint(affine,[x,y,z]);for(let i=0;i<3;i++){low[i]=Math.min(low[i],corner[i]);high[i]=Math.max(high[i],corner[i]);}
   }
   requireValue(cursor.every((v,i)=>v>=low[i]-1e-5&&v<=high[i]+1e-5),'cursor lies outside its image display bounds.');
-  return {cursor:[...cursor],visibleLayers:{...input.visibleLayers}};
+  return {cursor:[...cursor],visibleLayers:{...input.visibleLayers},...(input.viewer===undefined?{}:{viewer:checkedViewerSettings(source,input.viewer)})};
 }
 export function checkedImagingState(primary:CasePayload,series:WorkspaceSessionPayload['displaySeries'],input:ImagingSessionState):ImagingSessionState {
   requireValue(input&&typeof input==='object'&&input.states&&typeof input.states==='object'&&!Array.isArray(input.states),'invalid imaging session state.');
@@ -68,7 +69,7 @@ export async function hydrateWorkspace(sourceInput:CasePayload,api:ResectionApi,
       const kind=attachment?({'none':'source_image','source-provided':'source_annotation','estimated':'estimated_annotation'} as const)[attachment.annotationKind]:'primary_source';
       const modality=attachment?.modality??String(source.metadata.selected_modality??'primary');
       const row=rows.get(id);requireValue(row&&row.sourceKind===kind&&row.modality===modality&&row.sourceCaseHash===descriptor.caseHash&&HASH.test(row.sourceFrameHash)&&row.displayAvailable===true&&
-        row.planningInput===(id==='primary')&&row.readiness===(id==='primary'?'primary_case_contract':'display_only_registration_unreviewed')&&
+        row.planningInput===(id==='primary')&&row.readiness===(id==='primary'?'primary_case_contract':attachment?.registration.overlayPermitted?'display_only_source_registered':'display_only_registration_unreviewed')&&
         Array.isArray(row.reasons)&&row.reasons.every(reason=>typeof reason==='string'),'evidence inventory differs from display-only source roles.');
       requireValue(await sourceFrameDigest(descriptor)===row.sourceFrameHash,'evidence frame identity changed.');current();
     }

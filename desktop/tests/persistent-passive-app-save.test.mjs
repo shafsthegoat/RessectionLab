@@ -31,6 +31,7 @@ async function savedReplay(episodeWorkflow, staleComparison = false) {
     episodeVisible: true,
     imaging: { selected: null, snapshot: () => ({}) },
     routeA: '', routeB: '', category: '', visibleLayers: [], overlayOpacity: 0.5,
+    primaryViewer: {},
     cursor: [0, 0, 0], setMessage: () => {},
   };
   vm.runInNewContext(`${saveSource}\nglobalThis.saveAction=save;`, context);

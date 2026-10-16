@@ -1,0 +1,30 @@
+{
+  "case_id": "Lausanne-sub-000-ses-20110101",
+  "source_name": "Lausanne TOF-MRA Aneurysm Cohort \u00b7 sub-000 / ses-20110101",
+  "source_url": "https://openneuro.org/datasets/ds003949/versions/1.0.1",
+  "source_license": "CC0-1.0",
+  "source_citation": "Lausanne_TOF-MRA_Aneurysm_Cohort, OpenNeuro ds003949 version 1.0.1. doi:10.18112/openneuro.ds003949.v1.0.1.",
+  "source_revision": "896b8846d899acee68c0246cc987ca96e77267d4",
+  "acquisition_datetime": null,
+  "acquisition_time": "09:36:17.582500",
+  "acquisition_datetime_status": "Source sidecar supplies time only; session label ses-20110101 retained without inventing a timezone or acquisition date.",
+  "source_frame_declaration": "Released NIfTI RAS affine and DICOM orientation sidecar preserved. T1/TOF alignment is unresolved; no multimodal fusion permitted.",
+  "acquisition_protocol": "3T Siemens Verio; TOF_3D_multi-slab; echo 0.00395 s; repetition 0.022 s",
+  "missing_modalities": [
+    "CT",
+    "CTA"
+  ],
+  "missing_anatomy": [
+    "skull",
+    "tumor",
+    "brain",
+    "ventricles"
+  ],
+  "limitation": "Separate TOF-MRA patient. Regional vessel estimate includes extracranial signal and has no complete-vascular-coverage claim. No fusion with glioma or CT cases.",
+  "metadata_paths": [
+    "data/anatomy/ds003949-v1.0.1/source-metadata/dataset_description.json",
+    "data/anatomy/ds003949-v1.0.1/sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.json",
+    "manifests/lausanne-train-originals-v1.json"
+  ],
+  "source_image_sha256": "8e1e772825aafbdf898e0c06e9482640098d9722514b59566957bc3ff22cc2b2"
+}

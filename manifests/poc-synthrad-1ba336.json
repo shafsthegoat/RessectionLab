@@ -1,0 +1,17 @@
+{
+  "case_id": "SynthRAD2023-1BA336",
+  "source_name": "SynthRAD2023 · subject 1BA336 · acquired CT",
+  "source_url": "https://zenodo.org/records/7260705",
+  "source_license": "CC-BY-NC-4.0",
+  "source_citation": "Thummerer A, van der Bijl E, Maspero M, et al. SynthRAD2023 Grand Challenge dataset, version 0.1 (2023). doi:10.5281/zenodo.7260705.",
+  "source_archive": "data/acquisition/synthrad-task1-v1/verified/Task1.zip",
+  "source_archive_member": "Task1/brain/1BA336/ct.nii.gz",
+  "source_image_sha256": "eb5d19088033e58f43a539399192eb154d35510aea5d1659a2657e48608da040",
+  "acquisition_datetime": null,
+  "acquisition_datetime_status": "not_released_in_selected_source",
+  "source_frame_declaration": "Released preprocessed CT NIfTI RAS affine preserved; raw DICOM and scanner-native transform chain are not available.",
+  "missing_modalities": ["CTA", "MRA"],
+  "missing_anatomy": ["tumor", "vessels", "ventricles"],
+  "limitation": "Separate CT patient. Noncommercial research data. Skull and brain are cached model estimates; no tumor or vascular claim and no fusion with the glioma case.",
+  "metadata_paths": ["manifests/synthrad-task1-original-archive-v1.json", "data/qc/synthrad-task1-first-pair-v1/ct-extraction.json"]
+}

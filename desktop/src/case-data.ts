@@ -184,14 +184,22 @@ export function validateCaseDescriptor(payload: CasePayload): {
   return { voxelCount: count, voxelVolumeMm3: Math.abs(determinant) };
 }
 
+/** Brain extraction is a display layer, never a target compartment in the engine. */
+export function displayBrainMask(payload:CasePayload):boolean {
+  const anatomy=payload.metadata.anatomy_layers as Record<string,unknown>|undefined;
+  return !!payload.brainMask && !!anatomy?.brain && !payload.compartments.some(layer=>layer.name==='brain');
+}
+
 export async function hydrateCase(
   payload: CasePayload,
   api: ResectionApi,
 ): Promise<ViewerCase> {
   const { voxelVolumeMm3 } = validateCaseDescriptor(payload);
+  const layers = [...(displayBrainMask(payload)?[{name:'brain',array:payload.brainMask!,volumeMm3:null}]:[]),
+    ...payload.compartments.map(layer=>({...layer,volumeMm3:layer.volumeMm3 as number|null}))];
   const [mriBytes, ...maskBytes] = await Promise.all([
     api.readAsset(payload.mri.assetId),
-    ...payload.compartments.map((layer) => api.readAsset(layer.array.assetId)),
+    ...layers.map((layer) => api.readAsset(layer.array.assetId)),
   ]);
   if (mriBytes.byteLength !== payload.mri.byteLength)
     throw new Error("MRI transfer is incomplete.");
@@ -216,7 +224,7 @@ export async function hydrateCase(
     spacingMm: [...payload.spacingMm],
     intensityRange: payload.intensityRange,
     mri,
-    compartments: payload.compartments.map((layer, index) => {
+    compartments: layers.map((layer, index) => {
       const mask = maskBytes[index];
       if (mask.byteLength !== layer.array.byteLength)
         throw new Error(`Incomplete ${layer.name} transfer.`);
@@ -228,15 +236,15 @@ export async function hydrateCase(
         selected += value;
       }
       if (
-        Math.abs(selected * voxelVolumeMm3 - layer.volumeMm3) >
+        layer.volumeMm3!==null && Math.abs(selected * voxelVolumeMm3 - layer.volumeMm3) >
         1e-5 * Math.max(1, layer.volumeMm3)
       )
         throw new Error(`${layer.name} volume disagrees with its source grid.`);
       return {
         name: layer.name,
-        volumeMm3: layer.volumeMm3,
+        volumeMm3: layer.volumeMm3 ?? selected * voxelVolumeMm3,
         mask,
-        color: anatomyColor(layer.name),
+        color: String((payload.metadata.anatomy_layers as Record<string,{color?:string}>|undefined)?.[layer.name]?.color ?? anatomyColor(layer.name)),
       };
     }),
   };

@@ -1,0 +1,518 @@
+{
+  "schema": "resectionlab-poc-models-v1",
+  "date": "2026-10-14",
+  "host": "Apple Silicon Mac, 16 GB unified memory",
+  "purpose": "Local noncommercial research anatomy workbench",
+  "clinical_validation": "none",
+  "models": [
+    {
+      "case": "SynthRAD2023-1BA336",
+      "source": {
+        "source_url": "https://zenodo.org/records/7260705",
+        "license": "CC BY-NC 4.0",
+        "archive": "data/acquisition/synthrad-task1-v1/verified/Task1.zip",
+        "archive_member": "Task1/brain/1BA336/ct.nii.gz",
+        "extraction_record": "data/qc/synthrad-task1-first-pair-v1/ct-extraction.json",
+        "acquired_not_synthetic": true,
+        "limitations": [
+          "Provider rigidly registered, defaced and cropped clinical CT",
+          "3 mm fast model gives coarse bone margins",
+          "Skull/brain masks are estimates without reviewed voxel labels"
+        ]
+      },
+      "inference_record": "outputs/poc-models/SynthRAD2023-1BA336/totalsegmentator-skull/32e4c06b003e5b904387/inference.json",
+      "inference_record_sha256": "4e51d65bc3d3a08b9478339725076a23f889fc9fc71ee5b2e3164fbde1e19aea",
+      "actual_inference": true,
+      "model_id": "totalsegmentator-skull",
+      "model": {
+        "name": "TotalSegmentator",
+        "version": "2.12.0 / Dataset297 v2.0.0-weights",
+        "license": "Apache-2.0",
+        "license_url": "https://github.com/wasserth/TotalSegmentator#subtasks",
+        "modality": [
+          "CT"
+        ],
+        "requirements": "Acquired CT in Hounsfield units; fast model at 3 mm",
+        "weights_glob": "data/models/poc-totalsegmentator/weights/**/checkpoint_final.pth",
+        "parameters": {
+          "task": "total",
+          "fast": true,
+          "tta": false,
+          "skull_label": 91,
+          "brain_label": 90
+        }
+      },
+      "weights": [
+        {
+          "path": "data/models/poc-totalsegmentator/weights/Dataset297_TotalSegmentator_total_3mm_1559subj/nnUNetTrainer_4000epochs_NoMirroring__nnUNetPlans__3d_fullres/fold_0/checkpoint_final.pth",
+          "sha256": "1e38e40356adc2706a662e365405a97f862d62a7da65f6bf81d025aee1b979ac",
+          "bytes": 164939235
+        }
+      ],
+      "input": {
+        "path": "data/qc/synthrad-task1-first-pair-v1/restricted/ct.nii.gz",
+        "sha256": "eb5d19088033e58f43a539399192eb154d35510aea5d1659a2657e48608da040",
+        "modality": "CT",
+        "shape": [
+          213,
+          230,
+          165
+        ],
+        "affine_ras_mm": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            107.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            71.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            -106.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "outputs": [
+        {
+          "path": "outputs/poc-models/SynthRAD2023-1BA336/totalsegmentator-skull/32e4c06b003e5b904387/brain_mask.nii.gz",
+          "sha256": "be4f96bcc39cc30eb1bf551d2a6e9138de94172c5e40bb84e0c69ab1b255607d",
+          "name": "brain_mask.nii.gz",
+          "foreground_voxels": 1264716,
+          "shape": [
+            213,
+            230,
+            165
+          ],
+          "affine_ras_mm": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              107.0
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              71.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -106.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "provenance": "model_inference_unreviewed"
+        },
+        {
+          "path": "outputs/poc-models/SynthRAD2023-1BA336/totalsegmentator-skull/32e4c06b003e5b904387/skull_mask.nii.gz",
+          "sha256": "2c05978add8e4c774039c07bdb9fc7b60fc85d3385d9cfede6ff7a245f3ee1c3",
+          "name": "skull_mask.nii.gz",
+          "foreground_voxels": 689192,
+          "shape": [
+            213,
+            230,
+            165
+          ],
+          "affine_ras_mm": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              107.0
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              71.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -106.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "provenance": "model_inference_unreviewed"
+        }
+      ],
+      "cache_key": "32e4c06b003e5b904387",
+      "elapsed_seconds": 9.46476091700606,
+      "device": "mps",
+      "peak_process_family_rss_bytes_sampled": 3690364928,
+      "worker": {
+        "compute_seconds": 8.180754542117938,
+        "runtime_versions": {
+          "torch": "2.14.1",
+          "numpy": "2.0.1",
+          "scipy": "1.15.3",
+          "nibabel": "5.4.2",
+          "TotalSegmentator": "2.12.0",
+          "nnunetv2": "2.5.2",
+          "monai": "1.5.2",
+          "surfa": "0.6.3",
+          "SimpleITK": "2.5.6"
+        },
+        "mps_allocator_samples": {
+          "tensor_bytes_max_sampled": 0,
+          "driver_bytes_max_sampled": 1126891520
+        }
+      },
+      "memory_caveat": "RSS sampled every 0.5 s; MPS allocated memory separately sampled where available; neither is exact peak"
+    },
+    {
+      "case": "Lausanne-sub-000-ses-20110101",
+      "source": {
+        "source_url": "https://openneuro.org/datasets/ds003949/versions/1.0.1",
+        "license": "CC0",
+        "identity": "sub-000/ses-20110101",
+        "acquired_not_synthetic": true,
+        "limitations": [
+          "TOF regional slab: not complete head vascular coverage",
+          "Cross-scan T1/TOF registration unresolved; only overlay on original TOF",
+          "Generic vessel detector includes extracranial vessels and possible false positives; no artery names or clinical validation"
+        ]
+      },
+      "inference_record": "outputs/poc-models/Lausanne-sub-000-ses-20110101/vesselfm-base/0cf5010a6c39c81d7f4b/inference.json",
+      "inference_record_sha256": "e41a884aba67a17cf968f28dfb07ec9ed4d9f6d0a0f664c83f6b78e6bb8fd233",
+      "actual_inference": true,
+      "model_id": "vesselfm-base",
+      "model": {
+        "name": "vesselFM",
+        "version": "base / dd70bbdd2b9de06b1316b4d1105bda9766c24fd7",
+        "license": "vesselFM Open RAIL++-M; Attachment A: research purposes and non-commercial use only",
+        "license_url": "https://huggingface.co/bwittmann/vesselFM/blob/dd70bbdd2b9de06b1316b4d1105bda9766c24fd7/LICENSE",
+        "modality": [
+          "MRA",
+          "CTA"
+        ],
+        "requirements": "Angiographic acquired image; isotropic resampling; 1st\u201399th percentile normalization",
+        "weights_glob": "data/models/poc-vesselfm-base/vesselFM_base.pt",
+        "parameters": {
+          "patch_size": 128,
+          "batch_size": 1,
+          "overlap": 0.5,
+          "threshold": 0.5,
+          "tta": false,
+          "postprocessing": false
+        }
+      },
+      "weights": [
+        {
+          "path": "data/models/poc-vesselfm-base/vesselFM_base.pt",
+          "sha256": "6da4fbd06dd9c3b597e5d50cc628deb3026919ff126d01afbd13ac8fe22ee10c",
+          "bytes": 125713671
+        }
+      ],
+      "input": {
+        "path": "data/anatomy/ds003949-v1.0.1/sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.nii.gz",
+        "sha256": "8e1e772825aafbdf898e0c06e9482640098d9722514b59566957bc3ff22cc2b2",
+        "modality": "MRA",
+        "shape": [
+          350,
+          448,
+          160
+        ],
+        "affine_ras_mm": [
+          [
+            0.46875,
+            0.0,
+            0.0,
+            -81.5625
+          ],
+          [
+            0.0,
+            0.46875,
+            0.0,
+            -104.53125
+          ],
+          [
+            0.0,
+            0.0,
+            0.699999988079071,
+            -56.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "outputs": [
+        {
+          "path": "outputs/poc-models/Lausanne-sub-000-ses-20110101/vesselfm-base/0cf5010a6c39c81d7f4b/vessels_mask.nii.gz",
+          "sha256": "215b37494a7e0af40b7d4c22c772ebe3517722f0612810fbe85022a53dd5bd7e",
+          "name": "vessels_mask.nii.gz",
+          "foreground_voxels": 235460,
+          "shape": [
+            350,
+            448,
+            160
+          ],
+          "affine_ras_mm": [
+            [
+              0.46875,
+              0.0,
+              0.0,
+              -81.5625
+            ],
+            [
+              0.0,
+              0.46875,
+              0.0,
+              -104.53125
+            ],
+            [
+              0.0,
+              0.0,
+              0.699999988079071,
+              -56.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "provenance": "model_inference_unreviewed"
+        }
+      ],
+      "cache_key": "0cf5010a6c39c81d7f4b",
+      "elapsed_seconds": 81.33657654188573,
+      "device": "mps",
+      "peak_process_family_rss_bytes_sampled": 1954611200,
+      "worker": {
+        "compute_seconds": 79.78973045805469,
+        "runtime_versions": {
+          "torch": "2.14.1",
+          "numpy": "2.0.1",
+          "scipy": "1.15.3",
+          "nibabel": "5.4.2",
+          "TotalSegmentator": "2.12.0",
+          "nnunetv2": "2.5.2",
+          "monai": "1.5.2",
+          "surfa": "0.6.3",
+          "SimpleITK": "2.5.6"
+        },
+        "mps_allocator_samples": {
+          "tensor_bytes_max_sampled": 161558784,
+          "driver_bytes_max_sampled": 3814604800
+        }
+      },
+      "memory_caveat": "RSS sampled every 0.5 s; MPS allocated memory separately sampled where available; neither is exact peak"
+    },
+    {
+      "case": "UCSF-PDGM-0004",
+      "source": {
+        "source_url": "https://huggingface.co/datasets/MedOtter/UCSF-PDGM/tree/e9372219cf1cd2fdd52260cd45f7514b4aa7638e",
+        "identity": "UCSF-PDGM-0004",
+        "license": "CC BY 4.0 collection; pinned public mirror provenance retained separately",
+        "acquired_not_synthetic": true,
+        "limitations": [
+          "Source image is already skull stripped; model estimates whole-brain envelope from that image",
+          "Brain extraction is not skull-bone segmentation or anatomical parcellation",
+          "Source mirror identity and registration claims do not establish original scanner frame"
+        ]
+      },
+      "inference_record": "outputs/poc-models/UCSF-PDGM-0004/synthstrip-main/fe693f2aed5cb0bb90aa/inference.json",
+      "inference_record_sha256": "96729a66f72e1ca5cf4d1eb2bff2cb561009cc30b96ba90892539c9ca55b5d8b",
+      "actual_inference": true,
+      "model_id": "synthstrip-main",
+      "model": {
+        "name": "SynthStrip",
+        "version": "1 / cf4bccf24875a47245b4df9fc9372d0f1c3d784f",
+        "license": "Weights MIT (official offered choice); runner FreeSurfer Software License 1.0",
+        "license_url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/",
+        "modality": [
+          "T1",
+          "T1c",
+          "T2",
+          "FLAIR",
+          "MRI"
+        ],
+        "requirements": "One structural image; brain extraction, not skull bone",
+        "weights_glob": "data/models/synthstrip-v1/synthstrip.1.pt",
+        "parameters": {
+          "border_mm": 1,
+          "threads": 2
+        }
+      },
+      "weights": [
+        {
+          "path": "data/models/synthstrip-v1/synthstrip.1.pt",
+          "sha256": "37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+          "bytes": 30851709
+        }
+      ],
+      "input": {
+        "path": "data/public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_T1c.nii.gz",
+        "sha256": "398e7a6ec44e795aaf717fbf0fee6b3a11a671c5bc944c13a308ccaf02419176",
+        "modality": "T1c",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "affine_ras_mm": [
+          [
+            -1.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -1.0,
+            -0.0,
+            239.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "outputs": [
+        {
+          "path": "outputs/poc-models/UCSF-PDGM-0004/synthstrip-main/fe693f2aed5cb0bb90aa/brain_mask.nii.gz",
+          "sha256": "6a041ac4f6666fa77e8595cc70594eb5aefb5e868951569d77e953e7a4dfbd14",
+          "name": "brain_mask.nii.gz",
+          "foreground_voxels": 1475621,
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "affine_ras_mm": [
+            [
+              -1.0,
+              -0.0,
+              -0.0,
+              0.0
+            ],
+            [
+              -0.0,
+              -1.0,
+              -0.0,
+              239.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "provenance": "model_inference_unreviewed"
+        }
+      ],
+      "cache_key": "fe693f2aed5cb0bb90aa",
+      "elapsed_seconds": 4.213462542043999,
+      "device": "mps",
+      "peak_process_family_rss_bytes_sampled": 969228288,
+      "worker": {
+        "compute_seconds": 3.2928156671114266,
+        "runtime_versions": {
+          "torch": "2.14.1",
+          "numpy": "2.0.1",
+          "scipy": "1.15.3",
+          "nibabel": "5.4.2",
+          "TotalSegmentator": "2.12.0",
+          "nnunetv2": "2.5.2",
+          "monai": "1.5.2",
+          "surfa": "0.6.3",
+          "SimpleITK": "2.5.6"
+        },
+        "mps_allocator_samples": {
+          "tensor_bytes_max_sampled": 0,
+          "driver_bytes_max_sampled": 0
+        }
+      },
+      "memory_caveat": "RSS sampled every 0.5 s; MPS allocated memory separately sampled where available; neither is exact peak",
+      "synthstrip_mps_allocator_samples": {
+        "tensor_bytes_max_sampled": 2351084544,
+        "driver_bytes_max_sampled": 4941611008
+      }
+    }
+  ],
+  "cache_verification": "outputs/poc-models/cache-reopen-check.json",
+  "same_patient_gap": "No public case in this demonstration has glioma MRI, head CT and TOF/CTA together. These three named people are separate cases and must never be anatomically fused.",
+  "not_completed": [
+    "SynthSeg anatomical parcellation/ventricles not run",
+    "TopBrain named arterial classes not run",
+    "No patient-specific functional or surgical safety inference"
+  ],
+  "alternatives_audited": [
+    {
+      "model": "TopBrain",
+      "url": "https://zenodo.org/records/21959166",
+      "decision": "Not downloaded: 4.8\u201311.9 GB containers, NVIDIA Docker-oriented runner; selected small vesselFM with actual native MPS inference instead"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "src/resectionlab/poc_models.py",
+      "sha256": "09089a87fa4d0bb276f1e322d1ce9d4fbe5891e93429f14ece983380a02e4cd6"
+    },
+    {
+      "path": "scripts/poc_model_assets.py",
+      "sha256": "3918f9fc531b3e58b35f1000987ccfed5be355b33695ad6c558a6f1325ad00d5"
+    },
+    {
+      "path": "scripts/poc_model_setup.py",
+      "sha256": "5d047da7c0ec4e1264a37305195afe3f56c71a7e9c9ee15be1b3e2f07e49742b"
+    },
+    {
+      "path": "scripts/poc_model_qc.py",
+      "sha256": "3fdcd8ec786dae047a04ee8bf98495d1b14c5c3aa5974329a4b4aae4c1a76620"
+    },
+    {
+      "path": "manifests/poc-model-runtime-requirements.txt",
+      "sha256": "8ee2e8a5e65c9793973b0675483237cf2ae05c67f1fc0e1c4bc6a73a5b03ecbe"
+    }
+  ]
+}

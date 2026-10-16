@@ -11,7 +11,7 @@ import pytest
 from resectionlab.desktop_bridge import BridgeRuntime
 from resectionlab.imaging import load_case,load_nifti_case,save_case
 from resectionlab.core import semantic_digest
-from resectionlab.workspace_bundle import canonical_episode,load_workspace,validate_episode,session_digest
+from resectionlab.workspace_bundle import canonical_episode,load_workspace,validate_episode,session_digest,save_workspace,view_state
 
 class Client:
     def __init__(self,root):
@@ -31,6 +31,22 @@ def image(path,labels=False):
     if labels:values=(values%2).astype(np.uint8)
     im=nib.Nifti1Image(values,affine);im.header.set_xyzt_units('mm');im.set_qform(affine,1);im.set_sform(affine,1);nib.save(im,path)
     return str(path)
+
+def test_volume_rendering_preferences_roundtrip_without_changing_source(tmp_path):
+    case=load_nifti_case(image(tmp_path/'source.nii.gz'),case_id='display-settings-test')
+    before=case.mri.copy();identity=case.semantic_hash
+    state=view_state(case,[])
+    settings={'enabled':True,'preset':'ct-bone','density':.32}
+    state['states']['primary']['viewer']={'volumeRendering':settings}
+    path=tmp_path/'volume.ressectionlab'
+    save_workspace(case,path,sources=[],imaging=state,episode=None,selection=None,artifacts={})
+    reopened,_,saved=load_workspace(path)
+    assert saved['imagingState']['states']['primary']['viewer']['volumeRendering']==settings
+    assert reopened.semantic_hash==identity
+    np.testing.assert_array_equal(reopened.mri,before)
+    for invalid in [None,[],{'density':float('nan')},{'density':-1},{'density':3},{'enabled':1},{'preset':'invented-vessels'},{'other':1}]:
+        state['states']['primary']['viewer']={'volumeRendering':invalid}
+        with pytest.raises(ValueError,match='volume rendering'):view_state(case,[],state)
 
 @pytest.fixture
 def saved(tmp_path):

@@ -47,7 +47,7 @@ MAX_PRIOR_PROPOSALS = 16
 MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
-OPERATIONS = frozenset({"ping", "executeDevelopmentEpisode", "executePersistentPassiveEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
+OPERATIONS = frozenset({'anatomySavePackage','anatomySaveView','anatomyComponents','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyExport',"ping", "executeDevelopmentEpisode", "executePersistentPassiveEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 TRANSFER_SUPERVISOR_SHA256 = "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
 RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
@@ -223,7 +223,7 @@ class BinaryTransfers:
         converted = np.ascontiguousarray(value, dtype=np.dtype(dtype).newbyteorder("<"))
         if converted.nbytes > MAX_ARRAY_BYTES:
             raise BridgeError("ARRAY_SIZE_LIMIT", "Array exceeds the local desktop transfer limit")
-        content = memoryview(converted).cast("B")
+        content = memoryview(converted.reshape(-1)).cast("B")
         digest = hashlib.sha256(content).hexdigest()
         key = (digest, converted.dtype.name, converted.shape)
         if key not in self._entries:
@@ -257,6 +257,8 @@ class _CaseEntry:
     routes: Any = None
     display_series: dict[str, dict] = field(default_factory=dict)
     display_sources: dict[str, Any] = field(default_factory=dict)
+    # Original source bytes are retained only by the local engine, never renderer input.
+    originals: tuple[Any, ...] = ()
     # Latest diagnostic only: two live transfer paths, never workspace/planning data.
     diagnostic_transfer_paths: tuple[str, ...] = ()
     imaging_state: dict | None = None
@@ -387,7 +389,8 @@ class BridgeSession:
             sources={source.identity(case):source for source in saved['sources']}
             return {'display_sources':sources,'display_series':{key:display_descriptor(self,case,source) for key,source in sources.items()},
                     'imaging_state':saved['imagingState'],'episode':saved['episode'],
-                    'episode_selection':saved['selection'],'workspace_hash':saved['sessionHash']}
+                    'episode_selection':saved['selection'],'workspace_hash':saved['sessionHash'],
+                    'originals':tuple(saved.get('originals', ()))}
         except Exception:
             self.prune_transfers()
             raise
@@ -486,7 +489,7 @@ class BridgeSession:
 
     def prune_transfers(self) -> None:
         """Discard generated arrays belonging to failed or cancelled imports."""
-        retained = set()
+        retained = set(getattr(self, 'anatomy_transfer_paths', ()))
         for cached in self.cases.values():
             from .workspace_imaging import retained_paths
             retained.update(retained_paths(cached.display_series))
@@ -973,7 +976,15 @@ class BridgeSession:
             raise
 
     def execute(self, operation: str, args: dict, request: _Request, progress: Callable[[float, str], None]) -> Any:
+        if operation.startswith('anatomy'):
+            from .anatomy_bridge import dispatch
+            return dispatch(self, operation, args, request, progress)
         request.check()
+        if operation in {'generateRoutes','generateNativeRoutes','inspectRefinement','inspectAxisPlanning',
+                         'trainPatient','nativeTraining','evaluateCandidate','replayTraining','exportCandidate'}:
+            entry = self.cases.get(args.get('caseHash'))
+            if entry is not None and entry.case.metadata.get('anatomy_workbench_only'):
+                raise BridgeError('ANATOMY_ONLY_CASE', 'This case is an anatomical inspection workspace. Its layers are not surgical targets or validated simulation anatomy.')
         if operation in LEGACY_OPERATION_EXCLUSIONS:
             raise DataPolicyError(LEGACY_OPERATION_EXCLUSIONS[operation], operation)
         if operation == "inspectObservedLandmarkUpdate":
@@ -1360,7 +1371,12 @@ class BridgeSession:
                     raise BridgeError("CASE_SIZE_LIMIT", "Expanded target masks exceed the desktop cache limit")
             progress(0.1, "Validating NIfTI coordinates and supplied annotations")
             case = load_nifti_case(structural, tumor, case_id=case_id, brain_mask_path=brain, label_map=label_map)
-            return self._install_case(case, {}, request)
+            from .workspace_bundle import OriginalFile,view_state
+            originals=tuple(OriginalFile.from_path(path,role=role) for path,role in
+                            ((structural,'imaging'),(tumor,'annotation'),(brain,'annotation')) if path is not None)
+            return self._install_case(case, {}, request,workspace={
+                'sources':[],'imagingState':view_state(case,[]),'episode':None,'selection':None,
+                'sessionHash':None,'originals':originals})
         if operation == "inspectEvidence":
             _keys(args, {"caseHash"})
             case = self._get_case(args.get("caseHash")).case
@@ -1522,7 +1538,8 @@ class BridgeSession:
             with tempfile.TemporaryDirectory(prefix=".resection-save-", dir=destination.parent) as temporary:
                 staged=Path(temporary)/'case.ressectionlab'
                 workspace_hash=save_workspace(entry.case,staged,sources=entry.display_sources.values(),
-                    imaging=imaging,episode=entry.episode,selection=selection,artifacts=artifacts)
+                    imaging=imaging,episode=entry.episode,selection=selection,artifacts=artifacts,
+                    originals=entry.originals)
                 request.begin_commit()
                 os.replace(staged,destination)
             entry.artifacts=freeze_json(artifacts);entry.imaging_state=imaging

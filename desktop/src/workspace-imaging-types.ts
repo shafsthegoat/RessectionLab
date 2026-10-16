@@ -6,11 +6,11 @@ export interface ImportDisplaySeriesRequest { caseHash:string; modality:DisplayM
 export interface DisplaySeriesPayload {
   schema:'workspace-display-series-v1'; seriesId:string; referenceCaseHash:string;
   referenceFrameHash:string; sourceFrameHash:string;
-  association:{kind:'explicit_user_selected';samePersonVerified:false;sameTimeVerified:false};
-  registration:{status:'unreviewed';reason:string;sourceToReferenceRasMm:Mat4|null;registrationHash:string|null;overlayPermitted:false};
+  association:{kind:'explicit_user_selected'|'source_dataset_identity';samePersonVerified:boolean;sameTimeVerified:false};
+  registration:{status:'unreviewed'|'source-provided';reason:string;sourceToReferenceRasMm:Mat4|null;registrationHash:string|null;overlayPermitted:boolean};
   scope:'display-only-native-grid'; planningEligible:false; evaluationEligible:false;
-  modality:DisplayModality;modalityOrigin:'user_declared';annotationKind:AnnotationKind;
-  annotationCoverage:string;acquisitionDatetime:null;expandedBytes:number;volume:CasePayload;
+  modality:DisplayModality;modalityOrigin:'user_declared'|'source_metadata';annotationKind:AnnotationKind;
+  annotationCoverage:string;acquisitionDatetime:string|null;expandedBytes:number;volume:CasePayload;
 }
 export interface DisplaySeriesView { descriptor:DisplaySeriesPayload; volume:ViewerCase }
 export interface DisplayImagingApi {

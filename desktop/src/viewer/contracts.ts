@@ -1,6 +1,13 @@
 import type { Affine, Point3, Shape3 } from "./coordinates";
 
+export interface AlignmentQuality {status:string;warnings:string[];notes?:string[];metrics:Record<string,number|null>;selected?:string}
+export interface VesselDisplayFilter {scope:string;hiddenVoxels?:number;reason?:string;excludedVolumeMm3?:number;excludedFragments?:number;outsideVoxels?:number;boneConflictVoxels?:number;uncertainVoxels?:number}
 export interface ViewerVolume {
+  alignmentQuality?:Record<string,AlignmentQuality>;
+  /** Native display identity; includes revision/preview generation, never just object identity. */
+  displayIdentity?: string;
+  /** Prepared off-thread for native sources. Legacy callers retain synchronous preparation. */
+  packedLabels?: {data:Uint8Array;codes:Array<[number,number]>};
   caseId: string;
   caseHash: string;
   planningHash?: string;
@@ -8,11 +15,19 @@ export interface ViewerVolume {
   affine: Affine;
   shape: Shape3;
   mri: Float32Array;
+  /** Shared categorical volumes in the displayed grid, sampled with nearest cells. */
+  labelSets?: Array<{id:string;data:Uint16Array}>;
+  tractography?: Array<{id:string;label:string;points:Float32Array;offsets:Uint32Array}>;
   compartments: Array<{
     name: string;
     mask: Uint8Array;
+    labelSet?: string;
+    labelValue?: number;
     color: string;
     volumeMm3?: number;
+    displayFilter?: VesselDisplayFilter;
+    /** Cached indexed display geometry. Masks remain the quantitative source. */
+    surface?: {positions: Float32Array; source: Float32Array; normals: Float32Array; sourceNormals: Float32Array; indices: Uint32Array};
   }>;
 }
 
@@ -33,6 +48,12 @@ export interface ViewerRoute {
 }
 
 export interface ViewerWorkspaceProps {
+  onSliceStroke?: (point: Point3 | null, phase: 'start' | 'move' | 'end') => void;
+  workspaceSettings?: import('./workspaceSettings').ViewerWorkspaceSettings;
+  onWorkspaceSettingsChange?: (settings: import('./workspaceSettings').ViewerWorkspaceSettings) => void;
+  /** Acquired modality label; synthetic signals retain their separate label. */
+  sourceLabel?: string;
+  registeredFusion?: import('./registeredFusion').ViewerRegisteredFusion | null;
   /** Separate, unreviewed scan diagnostic; never becomes a CaseData compartment. */
   diagnosticLayer?: import("./diagnosticLayer").LoadedDiagnosticLayer | null;
   /** SHA-256 of the selected, displayed atlas-grid T1c image bytes. */

@@ -1,18 +1,27 @@
 # RessectionLab
 
-A local macOS research workspace for inspecting patient-specific glioma access
-routes and testing simulated resection strategies.
+A local macOS anatomy workbench for acquired patient imaging, saved segmentations,
+and linked 3D/source-image inspection.
 
-Development is in progress. The [full surgical planning/rehearsal supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md)
-and [October 8 human steering](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md#active-human-steering-october-8)
-govern the work, with the later [integration-first directive](docs/INTEGRATION_FIRST_MULTIMODAL_STEERING.md)
-requiring shared runtime and desktop integration. The steering permits separately labeled synthetic and
-simulator-generated experience for RL development/training, with transfer evaluated
-on held-out real patients and appropriate physical measurements.
-See the [execution ledger](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md) and
-[PROJECT_STATUS.md](PROJECT_STATUS.md) for executed work and remaining gates.
-The [master plan](MASTER_PLAN.md), [references](ANNOTATED_REFERENCES.md) and
-[handoff](IMPLEMENTING_AGENT_HANDOFF.md) remain historical implementation context.
+The **October 14 POC A reset** makes Cases / Data / 3D Workspace the current
+delivery priority. Three separate public cases demonstrate glioma MRI, head CT,
+and TOF-MRA with actual locally inferred masks. Original downloaded files,
+physical coordinates, registration declarations, and viewing settings are saved
+together. Opening a case or changing layers does not run inference.
+
+On the prepared Mac, launch the actual Electron application from this repository:
+
+```sh
+./scripts/launch_poc.sh
+```
+
+The last opened case is restored. See the [POC A workbench guide](docs/poc-a-workbench.md)
+for the walkthrough, model records, acceptance results, and remaining gaps.
+The [full surgical planning/rehearsal supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md),
+[execution ledger](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md),
+[master plan](MASTER_PLAN.md), and [handoff](IMPLEMENTING_AGENT_HANDOFF.md)
+remain historical context. Simulation and RL work resumes only after the anatomy
+gate; this milestone does not establish surgical or clinical validity.
 
 The active Mac application uses **Electron, React and TypeScript**. The Python
 engine handles physical geometry, evidence and independent validation. Legacy
@@ -25,7 +34,7 @@ historical reference. Application source is in `desktop/`; the
 [desktop workflow guide](docs/desktop-workflow.md) covers opening imaging,
 inspecting evidence, comparing routes, refinement, replay and local saving.
 
-The [current development app](artifacts/integration-first-shared-episode-v1/RESULT.md)
+The [earlier simulation development app](artifacts/integration-first-shared-episode-v1/RESULT.md)
 has been exercised on this Mac with generated sequential aspiration/probe episodes,
 exact full-tool replay, and public RESECT T1/FLAIR display in separate native frames.
 The [saved workspace](artifacts/integrated-workspace-persistence-v1/RESULT.md) now

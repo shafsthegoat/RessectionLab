@@ -5,6 +5,7 @@ remain display sources. No transfer paths or renderer certification is stored.
 """
 from __future__ import annotations
 from copy import deepcopy
+from dataclasses import dataclass
 from hashlib import sha256
 from io import BytesIO
 import itertools
@@ -23,8 +24,46 @@ from .workspace_imaging import DisplaySource, MAX_ATTACHMENT_BYTES, MAX_SERIES
 SCHEMA='integrated-workspace-session-v1'
 MAX_JSON=4*1024**2
 MAX_PRIMARY=1024**3
-MAX_TOTAL=MAX_PRIMARY+MAX_ATTACHMENT_BYTES
+MAX_ORIGINALS=512*1024**2
+MAX_TOTAL=MAX_PRIMARY+MAX_ATTACHMENT_BYTES+MAX_ORIGINALS
 SOURCE_KEYS={'seriesId','sourceCaseHash','sourceFrameHash','modality','annotationKind','scope'}
+
+
+@dataclass(frozen=True)
+class OriginalFile:
+    """Exact source bytes, including NIfTI headers and acquisition sidecars.
+
+    These bytes are archived independently from normalized display arrays. They
+    are never interpreted as renderer paths or rerun as model inputs on reopen.
+    """
+    name: str
+    source_uri: str
+    sha256: str
+    data: bytes
+    role: str
+
+    def __post_init__(self):
+        if (not isinstance(self.name,str) or not self.name or len(self.name)>255 or
+                '/' in self.name or '\\' in self.name or self.name in {'.','..'} or
+                not isinstance(self.source_uri,str) or len(self.source_uri)>8192 or
+                not self.source_uri or self.role not in {'imaging','annotation','metadata','model-result'} or
+                not isinstance(self.data,bytes) or not 0<len(self.data)<=MAX_ORIGINALS or
+                not isinstance(self.sha256,str) or not re.fullmatch('[a-f0-9]{64}',self.sha256) or
+                sha256(self.data).hexdigest()!=self.sha256):
+            raise ValueError('Original source bytes or identity are invalid')
+
+    @classmethod
+    def from_path(cls,path,*,role,expected_sha256=None):
+        path=Path(path)
+        if path.stat().st_size>MAX_ORIGINALS:raise ValueError('Original source exceeds archive limit')
+        data=path.read_bytes();digest=sha256(data).hexdigest()
+        if expected_sha256 is not None and digest!=expected_sha256:
+            raise ValueError('Original source checksum differs from acquisition record')
+        return cls(path.name,path.resolve().as_uri(),digest,data,role)
+
+    def manifest(self,index):
+        return {'member':f'workspace/original-{index}.bin','name':self.name,
+                'sourceUri':self.source_uri,'sha256':self.sha256,'bytes':len(self.data),'role':self.role}
 
 
 def encoded(value):
@@ -66,7 +105,7 @@ def extension_layout(archive):
     if archive.getinfo('manifest.json').file_size>16*1024**2:raise ValueError('Primary manifest exceeds limit')
     raw=archive.read('workspace.json');document=_json(raw)
     required={'schema','referenceCaseHash','primaryPlanningHash','images','imagingState','episodeReplay','sessionHash'}
-    if set(document)!=required or document['schema']!=SCHEMA or not isinstance(document['images'],list):
+    if not required<=set(document) or set(document)-required-{'originalFiles'} or document['schema']!=SCHEMA or not isinstance(document['images'],list):
         raise ValueError('Unsupported workspace extension')
     if len(document['images'])>MAX_SERIES:raise ValueError('Too many workspace images')
     expected=['manifest.json','arrays.npz','workspace.json']
@@ -78,6 +117,17 @@ def extension_layout(archive):
             raise ValueError('Workspace image size exceeds limit')
         if archive.getinfo(name).file_size!=row['bytes'] or not re.fullmatch('[a-f0-9]{64}',str(row['sha256'])):
             raise ValueError('Workspace image byte binding differs')
+    originals=document.get('originalFiles',[])
+    if not isinstance(originals,list) or len(originals)>128:raise ValueError('Too many original source files')
+    original_bytes=0
+    for index,row in enumerate(originals):
+        name=f'workspace/original-{index}.bin';expected.append(name)
+        if (not isinstance(row,dict) or set(row)!={'member','name','sourceUri','sha256','bytes','role'} or
+                row['member']!=name or type(row['bytes']) is not int or not 0<row['bytes']<=MAX_ORIGINALS or
+                archive.getinfo(name).file_size!=row['bytes'] or not re.fullmatch('[a-f0-9]{64}',str(row['sha256']))):
+            raise ValueError('Original source member identity differs')
+        original_bytes+=row['bytes']
+    if original_bytes>MAX_ORIGINALS:raise ValueError('Original source archive exceeds limit')
     if set(names)!=set(expected) or sum(i.file_size for i in archive.infolist())>MAX_TOTAL+64*1024**2:
         raise ValueError('Unlisted workspace members or total size limit')
     if session_digest(document)!=document['sessionHash']:
@@ -136,10 +186,100 @@ def _center(case):
     return (point[:3]*([-1,-1,1] if case.frame=='LPS+' else [1,1,1])).tolist()
 
 
+def _viewer_state(case,viewer,cases):
+    """Bound display preferences without treating them as image registration."""
+    if not isinstance(viewer,dict) or set(viewer)-{'skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip'}:
+        raise ValueError('Unknown viewer settings')
+    if 'skullMode' in viewer and viewer['skullMode'] not in {'exterior','transparent','cutaway'}:
+        raise ValueError('Invalid skull display mode')
+    volume=viewer.get('volumeRendering')
+    if 'volumeRendering' in viewer:
+        if (not isinstance(volume,dict) or set(volume)-{'enabled','preset','density','window','points','shadows','isolateLabels'} or
+                ('enabled' in volume and type(volume['enabled']) is not bool) or
+                ('preset' in volume and volume['preset'] not in {'auto','ct-bone','ct-tissue','mri'}) or
+                ('density' in volume and (type(volume['density']) not in (int,float) or
+                    not math.isfinite(volume['density']) or not 0<=volume['density']<=2))):
+            raise ValueError('Invalid scan volume rendering settings')
+    if volume:
+        for flag in ('shadows','isolateLabels'):
+            if flag in volume and type(volume[flag]) is not bool:raise ValueError('Invalid volume display flag')
+        window=volume.get('window')
+        if window is not None and (not isinstance(window,list) or len(window)!=2 or not all(type(v) in (int,float) and math.isfinite(v) for v in window) or window[1]<=window[0]):raise ValueError('Invalid intensity window')
+        points=volume.get('points')
+        if points is not None and (not isinstance(points,list) or not 2<=len(points)<=32 or any(not isinstance(p,list) or len(p)!=5 or not all(type(v) in (int,float) and math.isfinite(v) and 0<=v<=1 for v in p) for p in points) or any(a[0]>=b[0] for a,b in zip(points,points[1:]))):raise ValueError('Invalid transfer points')
+    for key in ('clipBox','obliqueClip'):
+        item=viewer.get(key)
+        if item is None:continue
+        if not isinstance(item,dict) or type(item.get('enabled')) is not bool:raise ValueError('Invalid extra clip')
+        vectors=('min','max') if key=='clipBox' else ('normal',)
+        expected={'enabled',*vectors} | ({'offset'} if key=='obliqueClip' else set())
+        if set(item)!=expected:raise ValueError('Unknown extra clip fields')
+        for v in vectors:
+            if not isinstance(item[v],list) or len(item[v])!=3 or not all(type(x) in (int,float) and math.isfinite(x) and abs(x)<1e7 for x in item[v]):raise ValueError('Invalid clip vector')
+        if key=='clipBox' and any(a>=b for a,b in zip(item['min'],item['max'])):raise ValueError('Invalid clip box bounds')
+        if key=='obliqueClip' and (np.linalg.norm(item['normal'])<1e-8 or type(item['offset']) not in (int,float) or not math.isfinite(item['offset'])):raise ValueError('Invalid oblique clip plane')
+    if 'layout' in viewer and viewer['layout'] not in {'mri-review','3d-focus'}:raise ValueError('Unknown viewer layout')
+    if 'activePlane' in viewer and viewer['activePlane'] not in {'axial','coronal','sagittal'}:raise ValueError('Unknown active plane')
+    if 'showPlane' in viewer and type(viewer['showPlane']) is not bool:raise ValueError('Plane visibility must be boolean')
+    if 'contrast' in viewer and (type(viewer['contrast']) not in (int,float) or not math.isfinite(viewer['contrast']) or not .4<=viewer['contrast']<=2):
+        raise ValueError('Contrast is outside the supported range')
+    # Renderer layer IDs include the whole-brain envelope as well as labels.
+    names=set(case.compartments)|({'brain'} if case.brain_mask is not None else set())
+    for field in ('layerOpacity','layerColor'):
+        values=viewer.get(field,{})
+        if not isinstance(values,dict) or set(values)-names:
+            raise ValueError('Viewer layer names differ from source')
+        for value in values.values():
+            if field=='layerOpacity':
+                if type(value) not in (int,float) or not math.isfinite(value) or not 0<=value<=1:
+                    raise ValueError('Layer opacity must be between zero and one')
+            elif not isinstance(value,str) or not re.fullmatch('#[a-fA-F0-9]{6}',value):
+                raise ValueError('Layer color must be a six-digit hex color')
+    camera=viewer.get('camera')
+    if camera is not None:
+        if not isinstance(camera,dict) or set(camera)!={'position','target','up'}:
+            raise ValueError('Unknown camera settings')
+        for vector in camera.values():
+            if (not isinstance(vector,list) or len(vector)!=3 or
+                    any(type(v) not in (int,float) or not math.isfinite(v) or abs(v)>1e7 for v in vector)):
+                raise ValueError('Camera vectors must be finite RAS values')
+        if np.linalg.norm(np.asarray(camera['up']))<1e-8 or np.linalg.norm(np.asarray(camera['position'])-camera['target'])<1e-8:
+            raise ValueError('Camera direction and up must be nonzero')
+    clipping=viewer.get('clipping')
+    if clipping is not None:
+        if (not isinstance(clipping,dict) or not {'axis','value','enabled'}<=set(clipping) or
+                set(clipping)-{'axis','value','enabled','flipped'} or clipping['axis'] not in ('x','y','z') or
+                type(clipping['enabled']) is not bool or ('flipped' in clipping and type(clipping['flipped']) is not bool) or
+                type(clipping['value']) not in (int,float) or not math.isfinite(clipping['value'])):
+            raise ValueError('Invalid clipping settings')
+        corners=np.array([case.affine@np.array([*point,1.]) for point in itertools.product(*[(-.5,n-.5) for n in case.mri.shape])])[:,:3]
+        if case.frame=='LPS+':corners*=np.array([-1,-1,1])
+        axis=('x','y','z').index(clipping['axis'])
+        if not corners[:,axis].min()-1e-5<=clipping['value']<=corners[:,axis].max()+1e-5:
+            raise ValueError('Clipping position is outside the source image')
+    fusion=viewer.get('fusion')
+    if fusion is not None:
+        if (not isinstance(fusion,dict) or set(fusion)!={'seriesId','opacity'} or
+                fusion['seriesId'] not in {None,*cases} or type(fusion['opacity']) not in (int,float) or
+                not math.isfinite(fusion['opacity']) or not 0<=fusion['opacity']<=1):
+            raise ValueError('Invalid fusion settings')
+        if fusion['seriesId'] is not None:
+            from .workspace_imaging import source_registration
+            other=cases[fusion['seriesId']]
+            if other is case or not source_registration(case,other)[1]['overlayPermitted']:
+                raise ValueError('Fusion requires distinct, explicitly source-registered images')
+
+
+def _visible_layer_names(case):
+    names=set(case.compartments)
+    if case.brain_mask is not None and 'brain' in case.metadata.get('anatomy_layers',{}):names.add('brain')
+    return names
+
+
 def view_state(primary,sources,supplied=None):
     cases={'primary':primary,**{s.identity(primary):s.case for s in sources}}
     if supplied is None:
-        return {'selectedSeriesId':None,'states':{key:{'cursor':_center(case),'visibleLayers':{n:True for n in case.compartments}} for key,case in cases.items()}}
+        return {'selectedSeriesId':None,'states':{key:{'cursor':_center(case),'visibleLayers':{n:True for n in sorted(_visible_layer_names(case))}} for key,case in cases.items()}}
     if (not isinstance(supplied,dict) or set(supplied)!={'selectedSeriesId','states'} or
             supplied['selectedSeriesId'] not in {None,*list(cases.keys())[1:]} or
             not isinstance(supplied['states'],dict) or set(supplied['states'])!=set(cases)):
@@ -147,9 +287,11 @@ def view_state(primary,sources,supplied=None):
     result=deepcopy(supplied)
     for key,case in cases.items():
         state=result['states'][key]
-        if not isinstance(state,dict) or set(state)!={'cursor','visibleLayers'}:raise ValueError('Unknown image view state')
+        if not isinstance(state,dict) or not {'cursor','visibleLayers'}<=set(state) or set(state)-{'cursor','visibleLayers','viewer'}:raise ValueError('Unknown image view state')
+        if 'viewer' in state:_viewer_state(case,state['viewer'],cases)
         visible=state['visibleLayers']
-        if not isinstance(visible,dict) or set(visible)!=set(case.compartments) or any(type(v) is not bool for v in visible.values()):
+        names=_visible_layer_names(case)
+        if not isinstance(visible,dict) or (set(visible)!=names and set(visible)!=set(case.compartments)) or any(type(v) is not bool for v in visible.values()):
             raise ValueError('Image visibility names/types differ from source')
         cursor=state['cursor']
         if cursor is None:continue
@@ -240,9 +382,13 @@ def replay_state(envelope,supplied=None):
     return deepcopy(supplied)
 
 
-def save_workspace(primary,path,*,sources,imaging,episode,selection,artifacts):
+def save_workspace(primary,path,*,sources,imaging,episode,selection,artifacts,originals=()):
     from .imaging import save_case
     sources=list(sources)
+    originals=list(originals)
+    if (len(originals)>128 or any(not isinstance(item,OriginalFile) for item in originals) or
+            sum(len(item.data) for item in originals)>MAX_ORIGINALS):
+        raise ValueError('Original source archive exceeds limit')
     if len(sources)>MAX_SERIES or sum(s.expanded_bytes for s in sources)>MAX_ATTACHMENT_BYTES:
         raise ValueError('Workspace sources exceed display budget')
     imaging=view_state(primary,sources,imaging);selection=replay_state(episode,selection)
@@ -250,6 +396,7 @@ def save_workspace(primary,path,*,sources,imaging,episode,selection,artifacts):
         raise ValueError('Episode replay cannot be visible on an auxiliary native grid')
     document={'schema':SCHEMA,'referenceCaseHash':primary.semantic_hash,'primaryPlanningHash':primary.planning_hash,
               'images':[],'imagingState':imaging,'episodeReplay':None if episode is None else {'envelope':episode,'selection':selection}}
+    if originals:document['originalFiles']=[item.manifest(index) for index,item in enumerate(originals)]
     destination=Path(path)
     with tempfile.TemporaryDirectory(prefix='.workspace-',dir=destination.parent) as tmp:
         tmp=Path(tmp);base=save_case(primary,tmp/'primary',artifacts=artifacts)
@@ -266,6 +413,7 @@ def save_workspace(primary,path,*,sources,imaging,episode,selection,artifacts):
                 out.writestr('manifest.json',encoded(manifest));out.writestr('arrays.npz',plain.read('arrays.npz'))
                 out.writestr('workspace.json',raw)
                 for name,data in auxiliary:out.writestr(name,data)
+                for index,item in enumerate(originals):out.writestr(item.manifest(index)['member'],item.data)
         os.replace(tmp/'complete',destination)
     return document['sessionHash']
 
@@ -276,6 +424,10 @@ def load_workspace(path,cancelled=None):
         names=_members(archive)
         if 'workspace.json' not in names:return load_case(archive.fp),read_case_artifacts(archive.fp),None
         document=extension_layout(archive);_case_layout(archive,MAX_PRIMARY,extension=True)
+        originals=[]
+        for row in document.get('originalFiles',[]):
+            if cancelled is not None and cancelled():raise ValueError('Workspace load cancelled')
+            originals.append(OriginalFile(row['name'],row['sourceUri'],row['sha256'],archive.read(row['member']),row['role']))
         sources=[];expanded=0
         for row in document['images']:
             if cancelled is not None and cancelled():raise ValueError('Workspace load cancelled')
@@ -300,7 +452,7 @@ def load_workspace(path,cancelled=None):
         selection=replay_state(episode,replay['selection'])
         if selection is not None and selection['visible'] and imaging['selectedSeriesId'] is not None:
             raise ValueError('Episode replay cannot be visible on an auxiliary native grid')
-    return primary,artifacts,{'sessionHash':document['sessionHash'],'sources':sources,'imagingState':imaging,'episode':episode,'selection':selection}
+    return primary,artifacts,{'sessionHash':document['sessionHash'],'sources':sources,'imagingState':imaging,'episode':episode,'selection':selection,'originals':originals}
 
 
 def session_descriptor(entry):
@@ -309,11 +461,14 @@ def session_descriptor(entry):
         'modality':str(entry.case.metadata.get('selected_modality','primary')),'sourceKind':'primary_source','displayAvailable':True,
         'planningInput':True,'readiness':'primary_case_contract','reasons':['Primary source channel only; target, support and task admission remain separate.']}]
     for source in sources:
+        from .workspace_imaging import source_registration
+        association,registration=source_registration(entry.case,source.case)
         inventory.append({'seriesId':source.identity(entry.case),'sourceCaseHash':source.case.semantic_hash,
             'sourceFrameHash':structural_frame_hash(source.case),'modality':source.modality,
             'sourceKind':{'none':'source_image','source-provided':'source_annotation','estimated':'estimated_annotation'}[source.annotation_kind],
-            'displayAvailable':True,'planningInput':False,'readiness':'display_only_registration_unreviewed',
-            'reasons':['Association and registration unreviewed.','Annotation coverage and source time unknown.','Auxiliary pixels are absent from current policy channels.']})
+            'displayAvailable':True,'planningInput':False,
+            'readiness':'display_only_source_registered' if registration['overlayPermitted'] else 'display_only_registration_unreviewed',
+            'reasons':[registration['reason'],'Annotation coverage and source time unknown.','Auxiliary pixels are absent from current policy channels.']})
     replay=None
     if entry.episode is not None and entry.episode_selection is not None:
         passive=entry.episode['episode'].get('schema')=='resectionlab.generated-persistent-passive-episode.v1'
@@ -328,4 +483,5 @@ def session_descriptor(entry):
     identity=entry.workspace_hash or semantic_digest({'referenceCaseHash':entry.case.semantic_hash,
         'sources':[s.manifest(entry.case) for s in sources],'imagingState':state,'episodeReplay':replay})
     return {'schema':SCHEMA,'referenceCaseHash':entry.case.semantic_hash,'sessionHash':identity,
-        'displaySeries':list(entry.display_series.values()),'imagingState':state,'episodeReplay':replay,'evidenceInventory':inventory}
+        'displaySeries':list(entry.display_series.values()),'imagingState':state,'episodeReplay':replay,'evidenceInventory':inventory,
+        'originalFiles':[item.manifest(index) for index,item in enumerate(getattr(entry,'originals',()))]}
