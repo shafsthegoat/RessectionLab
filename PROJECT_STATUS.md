@@ -1,5 +1,15 @@
 # Project status
 
+**Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
+The [current gate ledger](docs/poc-first-gate-ledger.md) and
+[patient construction plan](docs/patient-corpus-plan.md) supersede the historical
+learning-first priorities below. Latest `main` includes merged PR #12. Deliver
+one source-bound, two-tool episode in Electron before expanding real cases and
+virtual gliomas; preserve search, patient splits, and the prior negative results.
+The full goal also requires diverse real/virtual cases and an independently
+validated, publishable research product. The anatomy workbench alone does not
+complete that goal.
+
 **Training comparison completed, October 12 — retain search:** [the final checkpoint, learning curves and comparison](artifacts/train045-local-goal-recovery-result-v2/RESULT.md) show that recovered reverse PPO reaches 1,024 decisions and 415 actual Adam updates but still immediately STOPs: local return0, goal not completed. Uniform1024 does the same; retained search succeeds in five actions with return9.811680. Fresh replay, full-tool geometry, separate local reward reconstruction, evaluation isolation and terminal source/lifecycle checks pass. The new checkpoint stays local, SHA `f9dbf0b664fc67ce890e3ddc33f003145f996b2e45a497eb76470535a88aa8b6`. No policy is promoted.
 
 **What the extra experience established:** the recovered branch adds512 decisions and62 updates, with two easier-start successes but none in183 completed full-start episodes;136 of those immediately STOP. All eight rollouts log constant behavior-value estimates despite varying returns. That is a specific next diagnostic, not an established cause: examine allowed input variation, scaling and critic activations before another training sweep. The episode/RNG restart and both earlier failed attempts remain explicit and paid. One reused TRAIN045 and one seed do not establish generalization or clinical benefit; final evaluation remains closed.

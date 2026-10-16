@@ -1,5 +1,11 @@
 # RessectionLab
 
+Current work follows the [October 16 first-release gate ledger](docs/poc-first-gate-ledger.md)
+and [patient corpus construction plan](docs/patient-corpus-plan.md): actual
+anatomical reconstruction, then one stateful two-tool rehearsal in Electron,
+then diverse real patients and explicitly labeled virtual gliomas. The merged
+native workbench from PR #12 is the integration base.
+
 A local macOS anatomy workbench for acquired patient imaging, saved segmentations,
 and linked 3D/source-image inspection.
 
