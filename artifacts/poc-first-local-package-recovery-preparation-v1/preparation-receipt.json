@@ -1,0 +1,22 @@
+{
+  "schema": "poc-first-local-package-recovery-preparation-v1",
+  "status": "frozen_for_root_commit_and_one_explicit_recovery_release",
+  "pins": {
+    "scripts/poc_first_local_package_build.py": "9f152233ed14ea0d99635b696d10eaeec329780a3a84974ccf620a90ae8acf55",
+    "tests/test_poc_first_local_package_build.py": "aa44ded4db3c49caae0bcb44db4a17a83cd7156fbfaba0aecf7539c7a780003f",
+    "artifacts/poc-first-local-package-recovery-preparation-v1/RESULT.md": "b3a539aab714c371675f7aaff4061b382359bead038c79f5ca60f671142186f9",
+    "artifacts/poc-first-local-package-recovery-preparation-v1/advisory-description.json": "43807d660cd72ecdc5ca4da3e0d695ba862779ace5b5351df7c78b5059011768",
+    "artifacts/poc-first-local-package-recovery-preparation-v1/generated-controls.json": "41da323def3f59ee400b6f5ae4fe57dd1d58c14b6cdf2cc04356a07f392d1511",
+    "artifacts/poc-first-local-package-recovery-preparation-v1/original-controls-13.py": "6607531a47d45a1435aa8baf43fbb0e92d0bbeef5b7bf70748e03e77ea2a9a40",
+    "artifacts/poc-first-local-package-recovery-preparation-v1/original-failure-metadata.json": "7c9b696b482b5fffeb5899c4cb55bb9d523f0fcf2443cf0691f34fe796d51036",
+    "artifacts/poc-first-local-package-recovery-preparation-v1/original-supervisor-923d8cc8.py": "923d8cc873643942d142c692d78eac21493cbe0e42c53ba72265bab9aa8c5788",
+    "artifacts/poc-first-local-package-recovery-preparation-v1/unreleased-recovery-and-electron-templates.json": "bb4a58808e40b70341152d7f98b77bdec0917c8b1b31ea1003ee78d45f19ad7f"
+  },
+  "generated_controls_passed": 28,
+  "previous_controls_retained": 13,
+  "new_builds_run": 0,
+  "failed_outputs_moved_or_copied": false,
+  "baseline_reset": false,
+  "carried_new_bytes": 1671846180,
+  "unchanged_cumulative_limit_bytes": 8589934592
+}

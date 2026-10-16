@@ -167,3 +167,109 @@ def test_release_issuer_must_be_root_before_stage_directory_or_worker(tmp_path, 
         runner.run_stage("sidecar", path)
     assert not Path(release["session_directory"]).exists()
     assert not Path(release["receipt_path"]).exists()
+
+
+def generated_predecessor(tmp_path, monkeypatch, subdirectory="sidecar", **overrides):
+    monkeypatch.setattr(runner, "ROOT", tmp_path)
+    session = tmp_path / runner.RECOVERY_SESSION
+    output = session / subdirectory
+    output.mkdir(parents=True)
+    baseline = {"roots": [str(tmp_path / name) for name in runner.SCOPES], "files": {}}
+    ledger = {str(tmp_path / "build/electron-sidecar/generated.bin"): 100}
+    runner.publish(session / "baseline.json", baseline)
+    runner.publish(output / "growth-ledger.json", ledger)
+    receipt = {"schema": runner.SCHEMA + "-receipt", "stage": subdirectory, "plan_sha256": runner.PLAN_SHA,
+               "attempts": 1, "baseline_sha256": runner.sha(session / "baseline.json"),
+               "growth_ledger_sha256": runner.sha(output / "growth-ledger.json"),
+               "cumulative_new_bytes": 100, "limits": {"new_bytes": 8 * 1024**3},
+               "status": "worker_failed", "exit_code": 1, "worker_reaped": True,
+               "source_manifest_sha256": "generated-source", **overrides}
+    runner.publish(output / "receipt.json", receipt)
+    binding = {"receipt_sha256": runner.sha(output / "receipt.json"),
+               "growth_ledger_sha256": receipt["growth_ledger_sha256"], "baseline_sha256": receipt["baseline_sha256"]}
+    monkeypatch.setattr(runner, "RECOVERY_PREDECESSOR", binding)
+    return session, binding
+
+
+def test_recovery_preserves_first_baseline_and_charges_archive_new_paths(tmp_path, monkeypatch):
+    session, binding = generated_predecessor(tmp_path, monkeypatch)
+    before = runner.sha(session / "baseline.json")
+    prior, baseline, carried = runner.recovery_state(session, {"predecessor": binding})
+    with pytest.raises(ValueError, match="EXACT_FIRST_FAILURE"):
+        runner.recovery_state(session.with_name("new-session"), {"predecessor": binding})
+    with pytest.raises(ValueError, match="CURRENT_SOURCE"):
+        runner.require_successful_sidecar(prior, "generated-source")
+    archive = str(tmp_path / "build/poc-first-local-package-v1/failed-first-sidecar/electron-sidecar/generated.bin")
+    assert sum(carried.values()) == 100
+    assert runner.accumulate_growth(baseline["files"], carried, {archive: 100}) == 200
+    assert runner.sha(session / "baseline.json") == before
+    assert runner.read(session / "sidecar/growth-ledger.json") != carried
+
+
+@pytest.mark.parametrize("key", ["receipt_sha256", "growth_ledger_sha256", "baseline_sha256"])
+def test_recovery_requires_all_exact_original_failure_pins(tmp_path, monkeypatch, key):
+    session, binding = generated_predecessor(tmp_path, monkeypatch)
+    altered = {**binding, key: "0" * 64}
+    with pytest.raises(ValueError, match="EXACT_FIRST_FAILURE"):
+        runner.recovery_state(session, {"predecessor": altered})
+
+
+@pytest.mark.parametrize("overrides", [{"status": "completed_unverified", "exit_code": 0},
+                                      {"worker_reaped": False}, {"attempts": 2}])
+def test_recovery_rejects_success_unreaped_or_repeated_predecessor(tmp_path, monkeypatch, overrides):
+    session, binding = generated_predecessor(tmp_path, monkeypatch, **overrides)
+    with pytest.raises(ValueError):
+        runner.recovery_state(session, {"predecessor": binding})
+
+
+def test_changed_original_baseline_is_rejected_without_reset(tmp_path, monkeypatch):
+    session, binding = generated_predecessor(tmp_path, monkeypatch)
+    (session / "baseline.json").write_text('{"reset":true}')
+    with pytest.raises(ValueError, match="ACCOUNTING_BINDING"):
+        runner.recovery_state(session, {"predecessor": binding})
+
+
+@pytest.mark.parametrize("subdirectory", ["../sidecar", "sidecar-recovery-02", "electron"])
+def test_arbitrary_sidecar_subdirectory_is_refused(tmp_path, subdirectory):
+    with pytest.raises(ValueError, match="SUBDIRECTORY_NOT_ALLOWED"):
+        runner.predecessor_state(tmp_path, subdirectory, {})
+
+
+def test_recovery_directory_cannot_be_silently_reused(tmp_path, monkeypatch):
+    session, binding = generated_predecessor(tmp_path, monkeypatch)
+    (session / runner.RECOVERY_STAGE).mkdir()
+    monkeypatch.setattr(runner, "plan", lambda: {"build_sequence": [{"stage": "sidecar"}]})
+    monkeypatch.setattr(runner, "supervise", lambda *_a, **_k: pytest.fail("reused recovery launched"))
+    release = {"schema": runner.SCHEMA + "-root-release", "issuer": "ROOT", "decision": "release_one_stage",
+               "stage": runner.RECOVERY_STAGE, "plan_sha256": runner.PLAN_SHA, "runner_sha256": runner.sha(runner.__file__),
+               "session_directory": str(session), "receipt_path": str(tmp_path / "artifacts/recovery.json"),
+               "predecessor": binding}
+    path = tmp_path / "recovery-release.json"
+    path.write_text(json.dumps(release))
+    with pytest.raises(FileExistsError):
+        runner.run_stage(runner.RECOVERY_STAGE, path)
+    assert not Path(release["receipt_path"]).exists()
+
+
+def test_failed_outputs_must_be_preserved_and_old_targets_absent(tmp_path, monkeypatch):
+    monkeypatch.setattr(runner, "ROOT", tmp_path)
+    archive = tmp_path / "build/poc-first-local-package-v1/failed-first-sidecar"
+    with pytest.raises(ValueError, match="PRESERVED_FAILED_OUTPUTS"):
+        runner.preserved_outputs_ready()
+    (archive / "electron-sidecar").mkdir(parents=True)
+    (archive / "ressectionlab-engine").mkdir()
+    runner.preserved_outputs_ready()
+    (tmp_path / "build/electron-sidecar").mkdir()
+    with pytest.raises(ValueError, match="PRESERVED_FAILED_OUTPUTS"):
+        runner.preserved_outputs_ready()
+
+
+@pytest.mark.parametrize("subdirectory", ["sidecar", "sidecar-recovery-01"])
+def test_electron_selects_explicit_successful_sidecar_with_current_source(tmp_path, monkeypatch, subdirectory):
+    session, binding = generated_predecessor(tmp_path, monkeypatch, subdirectory,
+                                             status="completed_unverified", exit_code=0)
+    prior, _, ledger = runner.predecessor_state(session, subdirectory, binding)
+    runner.require_successful_sidecar(prior, "generated-source")
+    assert sum(ledger.values()) == 100
+    with pytest.raises(ValueError, match="CURRENT_SOURCE"):
+        runner.require_successful_sidecar(prior, "changed-source")

@@ -31,6 +31,13 @@ PLAN = ROOT / "artifacts/poc-first-local-package-preflight-v1/build-plan.json"
 PLAN_SHA = "a7a3e918e519882e115714d0624eb4ed8e9f6952598cca505029dcbe0940a7a5"
 HELPER_SHA = "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
 SCOPES = ("build/electron-sidecar", "build/poc-first-local-package-v1", "desktop/sidecar", "desktop/release")
+RECOVERY_STAGE = "sidecar-recovery-01"
+RECOVERY_SESSION = "outputs/poc-first-local-package-build-v1"
+RECOVERY_PREDECESSOR = {
+    "receipt_sha256": "5c03bcfffb832de6a907a6e3f94044c815cdd0cd345bb66ed14c08c9f9dd42ac",
+    "growth_ledger_sha256": "8ade65f73cd9c411256272f4037abc34a052a579142022c0fa1e3a6f413f73d3",
+    "baseline_sha256": "34e8f9cdafdfac30f30b5621c1d51cfb569d71d7764cac0e74f2b5b62f5923c3",
+}
 
 
 def encode(value):
@@ -290,9 +297,58 @@ def describe():
             "environment_values_logged": False, "status": "advisory_until_root_source_commit_and_release"}
 
 
+def predecessor_state(session, subdirectory, binding):
+    """Read immutable accounting from one explicitly selected sidecar attempt."""
+    if subdirectory not in ("sidecar", RECOVERY_STAGE):
+        raise ValueError("SIDECAR_SUBDIRECTORY_NOT_ALLOWED")
+    prior_path = session / subdirectory
+    paths = {"receipt_sha256": prior_path / "receipt.json", "growth_ledger_sha256": prior_path / "growth-ledger.json",
+             "baseline_sha256": session / "baseline.json"}
+    if not isinstance(binding, dict) or set(binding) != set(paths) or any(sha(path) != binding[key] for key, path in paths.items()):
+        raise ValueError("PREDECESSOR_ACCOUNTING_BINDING_CHANGED")
+    prior, baseline, ledger = read(paths["receipt_sha256"]), read(paths["baseline_sha256"]), read(paths["growth_ledger_sha256"])
+    if (prior.get("schema") != SCHEMA + "-receipt" or prior.get("stage") != subdirectory
+            or prior.get("plan_sha256") != PLAN_SHA or prior.get("attempts") != 1
+            or prior.get("baseline_sha256") != binding["baseline_sha256"]
+            or prior.get("growth_ledger_sha256") != binding["growth_ledger_sha256"]
+            or any(type(value) is not int or value < 0 for value in ledger.values())
+            or sum(ledger.values()) != prior.get("cumulative_new_bytes")
+            or prior.get("limits", {}).get("new_bytes") != 8 * 1024**3
+            or baseline.get("roots") != [str(ROOT / name) for name in SCOPES]):
+        raise ValueError("PREDECESSOR_ACCOUNTING_INVALID")
+    return prior, baseline, ledger
+
+
+def recovery_state(session, release):
+    if (session.resolve() != (ROOT / RECOVERY_SESSION).resolve()
+            or release.get("predecessor") != RECOVERY_PREDECESSOR):
+        raise ValueError("EXACT_FIRST_FAILURE_RECOVERY_REQUIRED")
+    prior, baseline, ledger = predecessor_state(session, "sidecar", release["predecessor"])
+    if prior.get("status") != "worker_failed" or prior.get("exit_code") != 1 or prior.get("worker_reaped") is not True:
+        raise ValueError("FAILED_REAPED_FIRST_ATTEMPT_REQUIRED")
+    return prior, baseline, ledger
+
+
+def preserved_outputs_ready():
+    archive = ROOT / "build/poc-first-local-package-v1/failed-first-sidecar"
+    if archive.is_symlink():
+        raise ValueError("ROOT_PRESERVED_FAILED_OUTPUTS_REQUIRED")
+    for original, preserved in ((ROOT / "build/electron-sidecar", archive / "electron-sidecar"),
+                                (ROOT / "desktop/sidecar/ressectionlab-engine", archive / "ressectionlab-engine")):
+        if original.exists() or original.is_symlink() or not preserved.is_dir() or preserved.is_symlink():
+            raise ValueError("ROOT_PRESERVED_FAILED_OUTPUTS_REQUIRED")
+
+
+def require_successful_sidecar(prior, source_sha):
+    if (prior.get("status") != "completed_unverified" or prior.get("exit_code") != 0
+            or prior.get("worker_reaped") is not True or prior.get("source_manifest_sha256") != source_sha):
+        raise ValueError("SUCCESSFUL_SIDECAR_WITH_CURRENT_SOURCE_REQUIRED")
+
+
 def run_stage(stage_name, release_path):
     document = plan()
-    stage = next(x for x in document["build_sequence"] if x["stage"] == stage_name)
+    build_stage = "sidecar" if stage_name == RECOVERY_STAGE else stage_name
+    stage = next(x for x in document["build_sequence"] if x["stage"] == build_stage)
     release = read(release_path)
     session, artifact = Path(release["session_directory"]), Path(release["receipt_path"])
     if (release.get("schema") != SCHEMA + "-root-release" or release.get("issuer") != "ROOT"
@@ -312,6 +368,19 @@ def run_stage(stage_name, release_path):
               "build_verified": False, "attempts": 1}
     high_water = {}
     try:
+        baseline_path = session / "baseline.json"
+        if stage_name == RECOVERY_STAGE:
+            prior, baseline, high_water = recovery_state(session, release)
+            record["predecessor"] = release["predecessor"]
+            record["baseline_sha256"] = sha(baseline_path)
+            record["carried_new_bytes"] = sum(high_water.values())
+            record["cumulative_new_bytes"] = sum(high_water.values())
+        elif stage_name == "electron":
+            prior, baseline, high_water = predecessor_state(session, release.get("sidecar_subdirectory"), release.get("sidecar_binding"))
+            record["selected_sidecar_subdirectory"] = release["sidecar_subdirectory"]
+            record["selected_sidecar_binding"] = release["sidecar_binding"]
+            record["baseline_sha256"] = sha(baseline_path)
+            record["carried_new_bytes"] = record["cumulative_new_bytes"] = sum(high_water.values())
         source = source_manifest()
         if (release.get("source_commit") != source["commit"] or release.get("source_manifest_sha256") != value_sha(source)
                 or release.get("program_sha256") != sha(stage["program"])):
@@ -324,7 +393,10 @@ def run_stage(stage_name, release_path):
         env = effective_environment(stage, document)
         if release.get("environment_sha256") != value_sha(env):
             raise ValueError("ENVIRONMENT_BINDING_CHANGED")
+        if stage_name == RECOVERY_STAGE:
+            preserved_outputs_ready()  # ROOT moves these intact; this runner never moves or copies them.
         if stage_name == "electron":
+            require_successful_sidecar(prior, value_sha(source))
             addition = {"RESECTIONLAB_ELECTRON_ZIP_DIR": env["RESECTIONLAB_ELECTRON_ZIP_DIR"]}
             if release.get("allowed_environment_addition") != addition or release.get("archive") != archive_binding(document):
                 raise ValueError("EXACT_LOCAL_ARCHIVE_RELEASE_REQUIRED")
@@ -332,18 +404,8 @@ def run_stage(stage_name, release_path):
         roots = [ROOT / name for name in SCOPES]
         if any(p.is_symlink() for path in roots for p in (path, *path.parents) if p.is_relative_to(ROOT)):
             raise ValueError("MONITORED_ROOT_SYMLINK")
-        baseline_path = session / "baseline.json"
         if stage_name == "sidecar":
             publish(baseline_path, {"roots": [str(p) for p in roots], "files": disk_inventory(roots)})
-        else:
-            prior = read(session / "sidecar/receipt.json")
-            if (release.get("sidecar_receipt_sha256") != sha(session / "sidecar/receipt.json")
-                    or prior.get("status") != "completed_unverified"
-                    or prior.get("source_manifest_sha256") != value_sha(source)
-                    or prior.get("baseline_sha256") != sha(baseline_path)
-                    or prior.get("growth_ledger_sha256") != sha(session / "sidecar/growth-ledger.json")):
-                raise ValueError("SUCCESSFUL_SAME_BASELINE_SIDECAR_REQUIRED")
-            high_water = read(session / "sidecar/growth-ledger.json")
         baseline = read(baseline_path)
         if baseline["roots"] != [str(p) for p in roots]: raise ValueError("BASELINE_SCOPE_CHANGED")
         record["baseline_sha256"] = sha(baseline_path)
@@ -383,7 +445,7 @@ def run_stage(stage_name, release_path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("stage", choices=["describe", "sidecar", "electron"])
+    parser.add_argument("stage", choices=["describe", "sidecar", RECOVERY_STAGE, "electron"])
     parser.add_argument("--release", type=Path)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()

@@ -1,0 +1,33 @@
+{
+  "budget_scope": "Both preserved trees remain inside the original monitored build/poc-first-local-package-v1 root; prior baseline and growth ledger remain unchanged.",
+  "failed_bytes_remain_charged": true,
+  "failed_payload_launched": false,
+  "first_receipt_sha256": "5c03bcfffb832de6a907a6e3f94044c815cdd0cd345bb66ed14c08c9f9dd42ac",
+  "inventory_path": "outputs/poc-first-local-package-build-v1/failed-build-preservation-inventory.json",
+  "inventory_sha256": "af3b30e4f63d27b854a2fa533c4f4c8af247b17f5167716f7ce4ba0838170ed9",
+  "new_build_attempts": 0,
+  "preserved_utc": "2026-10-16T10:17:13.790727+00:00",
+  "schema": "poc-first-failed-sidecar-preservation-v1",
+  "trees": [
+    {
+      "every_member_preserved": true,
+      "file_or_link_count": 253,
+      "logical_bytes": 165014686,
+      "operation": "same_filesystem_directory_rename",
+      "original_path": "build/electron-sidecar",
+      "original_target_absent": true,
+      "preserved_path": "build/poc-first-local-package-v1/failed-first-sidecar/electron-sidecar",
+      "relative_member_inventory_sha256": "08c143805480733ecfc31c80c6e0c9d8a6c01f7ab783992c4fc1c92a79216c24"
+    },
+    {
+      "every_member_preserved": true,
+      "file_or_link_count": 2937,
+      "logical_bytes": 805361973,
+      "operation": "same_filesystem_directory_rename",
+      "original_path": "desktop/sidecar/ressectionlab-engine",
+      "original_target_absent": true,
+      "preserved_path": "build/poc-first-local-package-v1/failed-first-sidecar/ressectionlab-engine",
+      "relative_member_inventory_sha256": "39f63b9b1299413c39b4d092a1a23fa2e73a4c5d2a99202ee1494e6344e8d0e1"
+    }
+  ]
+}
