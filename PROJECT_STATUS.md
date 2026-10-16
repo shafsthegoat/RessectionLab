@@ -1,5 +1,16 @@
 # Project status
 
+**First executable patient-source rehearsal, October 16:**
+The [actual Electron demonstration and independent audit](artifacts/poc-first-rehearsal-v1/RESULT.md)
+close the narrow software Gates 1–2. Three separate genuine source cases retain
+four real pretrained inference records. Two persistent tools execute a shared
+post-exposure episode; same-state branches, play/pause/scrub, source overlays
+and native save/fresh-process reopen work. All 32 embedded originals and named
+source arrays are preserved. Physics, initial exposure and missing vascular/
+functional evidence remain explicit assumptions or unknowns. Stage 3 now starts
+with resumable qualification of existing eligible bundles and one healthy-source
+MRI/MRA host; population accuracy and publication readiness remain open.
+
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and
 [patient construction plan](docs/patient-corpus-plan.md) supersede the historical

@@ -69,6 +69,8 @@ export interface ViewerWorkspaceProps {
   routes: ViewerRoute[];
   cameraMode: "anatomy" | "instruments";
   replay?: ViewerReplay | null;
+  /** Separate source-bound patient research state; never legacy replay acceptance. */
+  rehearsalState?: ViewerRehearsalState | null;
   /** Checked generated passive motion; separate from removal replay. */
   passiveReplay?: ViewerPassiveReplay | null;
   structuralProposal?: ViewerStructuralProposal | null;
@@ -158,4 +160,27 @@ export interface ViewerPassiveReplay {
   /** Primary geometry checker covers pair clearance; independent checker covers tissue only. */
   primaryPairClearanceChecked: true;
   independentTissueMotionChecked: true;
+}
+
+/** Patient-source research episode. Its scope never asserts clinical validation or
+ * acceptance by the generated-fixture legacy replay checker. */
+export interface ViewerRehearsalState {
+  scope: 'source-bound-post-exposure-research';
+  caseHash: string;
+  episodeId: string;
+  stateId: string;
+  frameIndex: number;
+  stepCount: number;
+  shape: Shape3;
+  affine: Affine;
+  frame: 'RAS+';
+  elapsedSeconds: number;
+  kind: string;
+  tools: import('../rehearsal-types').RehearsalTool[];
+  removedMask: Uint8Array;
+  assumedExposureMask: Uint8Array;
+  fieldContactMask: Uint8Array;
+  contactMask: Uint8Array;
+  metrics: import('../rehearsal-types').RehearsalMetrics;
+  recordedEpisodeBounds: import('./recordedTool').RecordedEpisodeBounds;
 }

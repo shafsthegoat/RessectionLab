@@ -6,11 +6,18 @@ anatomical reconstruction, then one stateful two-tool rehearsal in Electron,
 then diverse real patients and explicitly labeled virtual gliomas. The merged
 native workbench from PR #12 is the integration base.
 
+The [first executable patient-source rehearsal](artifacts/poc-first-rehearsal-v1/RESULT.md)
+now passes the actual Electron and independent save/replay checks. **Rehearse**
+provides two persistent tools, a shared action timeline, play/pause/scrub and two
+continuations from the same state. Source anatomy remains unchanged. Current
+physics and initial exposure are explicit research assumptions; diverse-case
+qualification and anatomical/physiological validation remain in progress.
+
 A local macOS anatomy workbench for acquired patient imaging, saved segmentations,
 and linked 3D/source-image inspection.
 
-The **October 14 POC A reset** makes Cases / Data / 3D Workspace the current
-delivery priority. Three separate public cases demonstrate glioma MRI, head CT,
+The **October 14 POC A reset** established Cases / Data / 3D Workspace as the
+anatomy foundation. Three separate public cases demonstrate glioma MRI, head CT,
 and TOF-MRA with actual locally inferred masks. Original downloaded files,
 physical coordinates, registration declarations, and viewing settings are saved
 together. Opening a case or changing layers does not run inference.

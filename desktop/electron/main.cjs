@@ -130,6 +130,11 @@ function bindOperations() {
     return engine.request('anatomyExport',{...plainArgs(args,['collectionId','snapshotId']),path:selected.filePaths[0]},300000);
   });
   handle('ping', () => engine.request('ping'));
+  for (const op of ['createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal']) {
+    handle(op, args => engine.request(op, plainArgs(args, op === 'stepRehearsal'
+      ? ['caseHash','expectedStateId','action'] : op === 'compareRehearsal'
+      ? ['caseHash','expectedStateId'] : ['caseHash']), 120000));
+  }
   handle('listCases', () => caseLibrary.list());
   handle('openListedCase', async id => openSaved(await caseLibrary.resolve(id)));
   handle('startupCase', async () => {

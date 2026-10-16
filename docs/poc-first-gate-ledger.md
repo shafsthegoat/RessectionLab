@@ -23,9 +23,9 @@ reused; source files remain outside Git. The confirmed author identities are
 | Stage | Current state | Evidence required to close it |
 | --- | --- | --- |
 | 0. Inspect and reuse | Latest merged workbench pulled; source/model/corpus audit completed | Actual source, runtime, reference and failure records; maintain original data/roles. |
-| 1. Inferred anatomy in Electron | Three real cases and four model runs independently hash/grid checked; latest glioma UI launched | Current GUI interaction and save/reopen for tumor MRI, CT skull and angiographic vessels; visible provenance/missing-data status. |
-| 2. Narrow two-tool episode | Runtime/bridge implementation and independent checks in progress; GUI gate remains open | Actual Electron tool actions, play/pause/scrub, two same-state branches, conserved persistent effects, full-tool collisions, source identity, deterministic native save/reopen and real screenshots. |
-| 3. Real/virtual corpus diversity | Metadata inventory and construction plan prepared; expansion has not started | Qualified actual patient bundles, reviewed location diversity, one biophysical host pilot, then bounded descendants. Count unique people separately from variants. |
+| 1. Inferred anatomy in Electron | Software POC passed: three real cases/four retained model runs hash/grid checked; actual current GUI interaction and separate native save/reopen completed | Anatomical accuracy, coverage review and population validation remain open; no clinical gate is implied. |
+| 2. Narrow two-tool episode | Software POC passed: actual tool actions, play/pause/scrub, two exact-state branches, native save/fresh process reopen, screenshots and independent source/geometry/accounting checks | Physiological calibration and native-collection adapter remain open; the bounded canonical-bundle episode is operable. |
+| 3. Real/virtual corpus diversity | Construction plan frozen; resumable qualification of existing eligible bundles started after Gates 1–2 | Qualified actual patient bundles, reviewed location diversity, one biophysical host pilot, then bounded descendants. Count unique people separately from variants. |
 | 4. Mechanics and planning | Existing search and negative PPO results retained | Named physical/observation measurements, independent tests and matched observation/budget comparisons before promoting new learning. |
 | 5. Robotics | Deferred until matched trajectories and mature simulator exist | Rights, embodiment, timestamps and frozen-baseline evidence; images/labels alone cannot close this stage. |
 
@@ -39,8 +39,14 @@ The latest Electron anatomy workbench opens the real UCSF-PDGM-0004 MRI with
 source tumor labels, separate MONAI tumor estimates and SynthStrip extraction.
 CT skull/brain and TOF vessel outputs are available on separate named patients.
 The independent artifact/bridge audit checks exact original bytes, mask cells,
-native affines, saved views and unchanged model caches. The new rehearsal is
-being connected to the same viewer, source case and persistence path.
+native affines, saved views and unchanged model caches. The new rehearsal uses
+that same viewer, source case and persistence path. The [first-release result](../artifacts/poc-first-rehearsal-v1/RESULT.md)
+records actual GUI actions, 55/139 mm³ branch outcomes, native save/reopen,
+independent checks and retained failures. The [GUI-save audit](../artifacts/poc-first-rehearsal-v1/gui-save-audit.json)
+verifies exact named arrays and all 32 embedded original files across three
+separate source patients. Rehearsal effects are generated research states, not
+recorded surgery. The [operative workflow](operative-workflow-model.md) maps
+source-linked full-operation phases and OR observations to future work.
 
 Current cohort evidence and prospective targets are in the
 [construction plan](patient-corpus-plan.md). Its inventory records 291 materialized
@@ -67,9 +73,8 @@ remain open until measured or reviewed evidence is available.
 
 ## Next executable actions
 
-Finish actual desktop testing of the first source-bound episode and repair
-ordinary-use failures. Then qualify the first real-case tranche and one
-tumor-free vascular host, measure anatomical diversity and run the bounded
+Qualify the first real-case tranche and one publisher-described healthy
+vascular host, measure anatomical diversity and run the bounded
 biophysical virtual-glioma pilot described in the construction plan. Expand
 mechanics along the operative workflow with explicit sources, observations and
 validation requirements. Do not restart the failed PPO campaign merely to

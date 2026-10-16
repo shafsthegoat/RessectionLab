@@ -1,3 +1,6 @@
+import {useRehearsal} from "./use-rehearsal";
+import {RehearsalPanel} from "./RehearsalPanel";
+import type {RehearsalApi} from "./rehearsal-types";
 import {scanLabel} from './native-study-state';
 import {useNativeWorkspace} from './use-native-workspace';
 import {NativeSidebar,NativeCorrectionBar,NativeResearch} from './NativeWorkspacePanels';
@@ -551,7 +554,7 @@ export default function App() {
   );
   const [overlayOpacity, setOverlayOpacity] = useState(0.32);
   const [primaryViewer, setPrimaryViewer] = useState<ViewerWorkspaceSettings>({});
-  const [workbenchTab,setWorkbenchTab] = useState<"cases"|"data"|"anatomy"|"research">("anatomy");
+  const [workbenchTab,setWorkbenchTab] = useState<"cases"|"data"|"anatomy"|"rehearsal"|"research">("anatomy");
   const [libraryCases,setLibraryCases] = useState<LibraryCase[]>([]);
   useEffect(()=>{api?.listCases?.().then(setLibraryCases).catch(()=>{});},[api,payload,native.binding?.collectionId,native.binding?.document.snapshot_id]);
   const [cursor, setCursor] = useState<Vec3 | null>(null);
@@ -659,7 +662,21 @@ export default function App() {
     registration:{status:"source-provided" as const,overlayPermitted:true as const,sourceToReferenceRasMm:fusionSeries.descriptor.registration.sourceToReferenceRasMm},
     volume:fusionSeries.volume,label:fusionSeries.descriptor.modality,
   }:null,[fusionSeries,payload]);
-  const busy = native.busy || !!operation || hydrating || episodePending || imaging.pending || diagnostic.pending;
+  const rehearsal = useRehearsal(!native.binding && !imaging.selected ? viewerCase : null,
+    api?.createRehearsal && !api.readOnly ? api as RehearsalApi : null);
+  useEffect(()=>{
+    if (viewerCase && payload?.artifacts?.patient_rehearsal && !native.binding) {
+      const saved = (payload.artifacts.workspace as {rehearsalView?:{visible?:boolean}}|undefined)?.rehearsalView;
+      if (saved?.visible) setWorkbenchTab('rehearsal');
+      void rehearsal.inspect();
+    }
+  },[viewerCase?.caseHash,payload?.workspaceSession?.sessionHash,payload?.artifacts?.patient_rehearsal,native.binding?.collectionId]);
+  const rehearsalUnavailable = native.binding ? "Open a glioma research bundle with source-bound brain and tumor layers."
+    : !payload ? "Open a patient case to begin."
+    : imaging.selected ? "Select the reference scan before preparing a rehearsal."
+    : !payload.brainMask || !Object.values((payload.metadata.anatomy_layers??{}) as Record<string,{kind?:string}>).some(layer=>layer.kind==='tumor')
+      ? "This episode requires brain support and a named tumor layer. Missing anatomy remains unassessed." : undefined;
+  const busy = rehearsal.pending || native.busy || !!operation || hydrating || episodePending || imaging.pending || diagnostic.pending;
   const readonly = !!api?.readOnly;
   const controlsBlocked = !!native.binding || busy || engineStopped || !display.planningInteractionPermitted;
   const comparisonAvailable = !readonly && !engineStopped && engineOperations.has("inspectDevelopmentEpisodeComparison");
@@ -1219,6 +1236,7 @@ export default function App() {
       requirePersistableContact(publicContactView);
       requirePersistableContact(familyView);
       requirePersistableEpisode(episodeWorkflow==='aspiration'?displayedEpisodeView:null);
+      rehearsal.pause();
       const result = await api.saveCase({
         caseHash: payload.caseHash,
         workspace: {
@@ -1229,6 +1247,7 @@ export default function App() {
           overlayOpacity,
           cursor,
           imaging: imaging.snapshot({cursor, visibleLayers, viewer:primaryViewer}),
+          ...(rehearsal.viewPreferences ? {rehearsalView:rehearsal.viewPreferences} : {}),
           episodeReplay: episodeWorkflow==='passive'&&passiveView?.source.caseHash===payload.caseHash ? {
             episodeId:passiveView.episode.episodeId,frameIndex:passiveStep,
             visible:episodeVisible&&episodeWorkflow==='passive'&&!imaging.selected,
@@ -1413,9 +1432,9 @@ export default function App() {
       </header>
 
       <nav className="navigation-rail" aria-label="Workspace navigation">
-        {([{id:"cases",label:"Cases",icon:FolderOpen},{id:"anatomy",label:"3D",icon:Layers3}] as const).map(item=><button key={item.id}
+        {([{id:"cases",label:"Cases",icon:FolderOpen},{id:"anatomy",label:"3D",icon:Layers3},{id:"rehearsal",label:"Rehearse",icon:Target}] as const).map(item=><button key={item.id}
           className={`rail-button ${workbenchTab===item.id?"selected":""}`} aria-label={item.id==='anatomy'?'3D workspace':item.label}
-          onClick={()=>{setWorkbenchTab(item.id);setCasePanel(true)}}><item.icon size={19}/><span>{item.label}</span></button>)}
+          onClick={()=>{if(item.id==='rehearsal'){resetDisplayToPrimary();setEpisodeVisible(false);setCertifiedReplay(null);setCameraMode('instruments')}else rehearsal.hide();setWorkbenchTab(item.id);setCasePanel(true)}}><item.icon size={19}/><span>{item.label}</span></button>)}
         <div className="rail-spacer" />
         <button className={`rail-button ${workbenchTab==='research'?'selected':''}`} aria-label="Advanced research workflows"
           title="Earlier experimental workflows" onClick={()=>{setWorkbenchTab('research');setCasePanel(true)}}><FlaskConical size={16}/></button>
@@ -1423,7 +1442,7 @@ export default function App() {
       </nav>
 
       <aside className="case-panel" id="case-evidence-panel">
-        {native.binding&&workbenchTab!=='cases'?<>
+        {workbenchTab==='rehearsal'?<><div className="panel-heading"><span className="eyebrow">SURGICAL RESEARCH</span><button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div><RehearsalPanel controller={rehearsal} unavailableReason={rehearsalUnavailable}/></>:native.binding&&workbenchTab!=='cases'?<>
           <div className="panel-heading"><span className="eyebrow">PATIENT WORKSPACE</span><button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div>
           <div className="workspace-tabs"><button className={workbenchTab==='data'?'selected':''} onClick={()=>setWorkbenchTab('data')}>Scans</button><button className={workbenchTab==='anatomy'?'selected':''} onClick={()=>setWorkbenchTab('anatomy')}>Anatomy</button></div>
           {workbenchTab==='research'?<NativeResearch workspace={native}/>:<NativeSidebar workspace={native} tab={workbenchTab==='data'?'data':'anatomy'}/>}
@@ -1670,7 +1689,7 @@ export default function App() {
         <div className="workspace-heading">
           <div>
             <WorkspaceBreadcrumb caseId={native.binding?.document.patient_id??caseData?.caseId ?? null} />
-            <h2>{native.binding?scanLabel(native.binding.document.series.find(s=>s.id===native.series)??{id:'',modality:'Study'}):workbenchTab==='data'?'Source imaging':'Anatomy, in context'}</h2>
+            <h2>{workbenchTab==='rehearsal'?'Surgical research rehearsal':native.binding?scanLabel(native.binding.document.series.find(s=>s.id===native.series)??{id:'',modality:'Study'}):workbenchTab==='data'?'Source imaging':'Anatomy, in context'}</h2>
           </div>
           <div
             className={`view-presets ${workbenchTab==='research'?'':'poc-hidden'}`}
@@ -1751,6 +1770,7 @@ export default function App() {
         <div className="viewer-shell">
           {displayedCase && (
             <ViewerWorkspace
+              rehearsalState={rehearsal.viewerState}
               workspaceSettings={viewerSettings}
               onWorkspaceSettingsChange={setViewerSettings}
               sourceLabel={native.binding?native.binding.document.series.find(s=>s.id===native.series)?.modality:String(displayedSource?.metadata.selected_modality??'Image')}

@@ -36,6 +36,7 @@ from .geometry import AccessWindow, GENERIC_TOOLS
 from .native_resection import NATIVE_GENERIC_TOOLS
 from .imaging import create_synthetic_case, inspect_nifti, load_case, load_nifti_case, read_case_artifacts, save_case
 from .planning import SearchConfig, generate_candidate_routes
+from .rehearsal_bridge import OPERATIONS as REHEARSAL_OPERATIONS
 
 PROTOCOL_VERSION = 1
 MAX_REQUEST_BYTES = 1024 * 1024
@@ -48,6 +49,7 @@ MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
 OPERATIONS = frozenset({'anatomySavePackage','anatomySaveView','anatomyComponents','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyExport',"ping", "executeDevelopmentEpisode", "executePersistentPassiveEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
+OPERATIONS = OPERATIONS | REHEARSAL_OPERATIONS
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 TRANSFER_SUPERVISOR_SHA256 = "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
 RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
@@ -980,6 +982,9 @@ class BridgeSession:
             from .anatomy_bridge import dispatch
             return dispatch(self, operation, args, request, progress)
         request.check()
+        if operation in REHEARSAL_OPERATIONS:
+            from .rehearsal_bridge import dispatch
+            return dispatch(self, operation, args, request, progress)
         if operation in {'generateRoutes','generateNativeRoutes','inspectRefinement','inspectAxisPlanning',
                          'trainPatient','nativeTraining','evaluateCandidate','replayTraining','exportCandidate'}:
             entry = self.cases.get(args.get('caseHash'))
@@ -1517,10 +1522,13 @@ class BridgeSession:
             workspace = args.get("workspace", {})
             if not isinstance(workspace, dict) or len(json.dumps(workspace, allow_nan=False).encode()) > MAX_WORKSPACE_BYTES:
                 raise BridgeError("INVALID_ARGUMENT", "Workspace must be a bounded JSON object")
-            if set(workspace)&{'routes','training_report','selection_replay','episode','episodeCanonicalJson','workspaceSession','displaySeries','evidenceInventory'}:
+            if set(workspace)&{'routes','training_report','selection_replay','episode','episodeCanonicalJson','workspaceSession','displaySeries','evidenceInventory','patient_rehearsal'}:
                 raise BridgeError("INVALID_ARGUMENT", "Evaluator/source records cannot be supplied by the renderer")
             from .workspace_bundle import save_workspace,view_state,replay_state
             workspace=dict(workspace)
+            if 'rehearsalView' in workspace:
+                from .rehearsal_bridge import checked_saved_view
+                workspace['rehearsalView'] = checked_saved_view(self, entry, workspace['rehearsalView'])
             imaging=view_state(entry.case,list(entry.display_sources.values()),workspace.pop('imaging',entry.imaging_state))
             selection=replay_state(entry.episode,workspace.pop('episodeReplay',entry.episode_selection))
             artifacts = thaw_json(entry.artifacts)

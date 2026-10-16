@@ -18,4 +18,4 @@ fi
 cd "$POC_ROOT/desktop"
 node node_modules/typescript/bin/tsc --noEmit
 node node_modules/vite/bin/vite.js build
-exec node node_modules/electron/cli.js . "$@"
+exec node node_modules/electron/cli.js . --force-renderer-accessibility "$@"

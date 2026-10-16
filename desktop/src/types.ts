@@ -456,6 +456,11 @@ export interface ObservedLandmarkResult {
 }
 
 export interface ResectionApi extends TrainingApi {
+  createRehearsal?: import("./rehearsal-types").RehearsalApi["createRehearsal"];
+  inspectRehearsal?: import("./rehearsal-types").RehearsalApi["inspectRehearsal"];
+  stepRehearsal?: import("./rehearsal-types").RehearsalApi["stepRehearsal"];
+  compareRehearsal?: import("./rehearsal-types").RehearsalApi["compareRehearsal"];
+
   listCases?(): Promise<{id:string;title:string;recent:boolean;bytes:number}[]>;
   openListedCase?(id:string): Promise<CasePayload>;
   publicContactFamilyAvailability?: (request: Record<string, never>) => Promise<import('./contact-family-types').ContactFamilyAvailability>;

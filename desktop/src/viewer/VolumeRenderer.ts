@@ -22,6 +22,7 @@ import type { Affine, Bounds3, Point3, SlicePlane } from "./coordinates";
 import type {
   ViewerReplay,
   ViewerPassiveReplay,
+  ViewerRehearsalState,
   ViewerPriorLayer,
   ViewerRoute,
   ViewerStructuralProposal,
@@ -47,6 +48,7 @@ import {
   validatePriorLayer,
 } from "./priorLayer";
 import { residualMask, validateReplay } from "./replay";
+import {checkedRehearsalState, REHEARSAL_COLORS} from "./rehearsal";
 import {
   STRUCTURAL_PROPOSAL_COLOR,
   validateStructuralProposal,
@@ -85,7 +87,11 @@ function matrix(affine: Affine): THREE.Matrix4 {
 function disposeObject(object: THREE.Object3D): void {
   object.traverse((child) => {
     if (child instanceof THREE.Mesh || child instanceof THREE.Line) {
-      child.geometry.dispose();
+      // Derived replay meshes retain both source and smoothed display buffers.
+      // Dispose the inactive geometry too when a frame is replaced.
+      const replayGeometry = child.userData.replayGeometry as {source:THREE.BufferGeometry;smooth:THREE.BufferGeometry}|undefined;
+      for (const geometry of new Set([child.geometry, replayGeometry?.source, replayGeometry?.smooth]))
+        geometry?.dispose();
       const materials = Array.isArray(child.material)
         ? child.material
         : [child.material];
@@ -148,6 +154,8 @@ export class VolumeRenderer {
   private recordedDisplay: RecordedToolDisplay | null = null;
   private passiveDisplays: RecordedToolDisplay[] = [];
   private passiveActive = false;
+  private rehearsalActive = false;
+  private rehearsalDisplays: RecordedToolDisplay[] = [];
   private replayBounds: RecordedEpisodeBounds | null = null;
   private fittedReplayId: string | null = null;
   private readonly instrumentDisplay = new InstrumentDisplayState();
@@ -616,9 +624,8 @@ export class VolumeRenderer {
         const mesh = this.surfaces.get(layer.name);
         if (mesh) mesh.visible = visible[layer.name] !== false;
       });
-      this.replayGroup.children.forEach((mesh) => {
-        mesh.visible = mesh.userData.compartment === undefined || visible[mesh.userData.compartment] !== false;
-      });
+      for (const group of [this.replayGroup, this.pendingReplayGroup])
+        group?.children.forEach(mesh => this.applyReplaySurfaceAppearance(mesh));
       this.materials().forEach(shader => {
         shader.uniforms.uVisibleBits.value = bits;
         this.volume.compartments.forEach((layer,i) => { shader.uniforms.uLayerEnabled.value[i] = visible[layer.name] !== false ? 1 : 0; });
@@ -696,6 +703,10 @@ export class VolumeRenderer {
         shader.uniforms.uLayerOpacities.value[index]=appearance.opacity;
       });
     });
+    // Derived residuals and explicitly colored effects follow cutaway changes
+    // even while the worker is preparing the rest of the snapshot.
+    for (const group of [this.replayGroup, this.pendingReplayGroup])
+      group?.children.forEach(mesh => this.applyReplaySurfaceAppearance(mesh));
     this.materials().forEach(shader=>{
       shader.uniforms.uClipEnabled.value=clipping.enabled ? 1 : 0;
       shader.uniforms.uClipPlane.value.set(normal.x,normal.y,normal.z,clipping.flipped ? clipping.value : -clipping.value);
@@ -704,6 +715,30 @@ export class VolumeRenderer {
     this.scanVolume?.configure(settings.volumeRendering, this.volumeModality, this.clipPlane);
     this.scanVolume.labels(this.labelTexture,this.visible,settings,this.extraClipPlanes);
     this.requestRender();
+  }
+
+  /** Display-only styling for derived anatomy/effects. Instrument groups never
+   * enter this path: their complete safety geometry stays visible and unclipped. */
+  private applyReplaySurfaceAppearance(object: THREE.Object3D): void {
+    if (!(object instanceof THREE.Mesh)) return;
+    const material = object.material as THREE.MeshStandardMaterial;
+    const layer = this.volume.compartments.find(item => item.name === object.userData.compartment);
+    if (layer) {
+      const appearance = layerAppearance(layer.name, layer.color, this.workspaceSettings);
+      material.color.set(appearance.color);
+      material.opacity = appearance.opacity;
+      object.visible = this.visible[layer.name] !== false;
+    } else {
+      // Effect overlays retain their explicit evidence colors and opacity.
+      object.visible = true;
+    }
+    const transparent = material.opacity < 1;
+    const clippingPlanes = [...this.extraClipPlanes, ...(this.clipPlane ? [this.clipPlane] : [])];
+    if (material.transparent !== transparent || material.clippingPlanes?.length !== clippingPlanes.length)
+      material.needsUpdate = true;
+    material.transparent = transparent;
+    material.depthWrite = !transparent;
+    material.clippingPlanes = clippingPlanes;
   }
 
   setVolumeRendering(settings: VolumeRenderingSettings | undefined, modality: string): void {
@@ -719,6 +754,11 @@ export class VolumeRenderer {
       const pair = this.surfaceGeometry.get(name);
       if (pair) mesh.geometry = enabled ? pair.smooth : pair.source;
     });
+    for (const group of [this.replayGroup, this.pendingReplayGroup])
+      group?.children.forEach(mesh => {
+        const pair = mesh.userData.replayGeometry as {source:THREE.BufferGeometry;smooth:THREE.BufferGeometry}|undefined;
+        if (mesh instanceof THREE.Mesh && pair) mesh.geometry = enabled ? pair.smooth : pair.source;
+      });
     this.requestRender();
   }
 
@@ -815,6 +855,8 @@ export class VolumeRenderer {
     this.recordedDisplay = null;
     this.passiveActive = false;
     this.passiveDisplays = [];
+    this.rehearsalActive = false;
+    this.rehearsalDisplays = [];
     this.replayBounds = null;
     disposeObject(this.recordedTools);
     this.recordedTools.clear();
@@ -832,9 +874,47 @@ export class VolumeRenderer {
     this.setStructuralProposal(null);
     this.setPriorLayer(null);
 
-    // Snapshot the accepted effect so later UI updates cannot mutate this replay.
+    // Legacy certificates retain their original validation before entering the
+    // shared display-only surface builder.
     const removed = replay.removedMask.slice();
-    const texture = dataTexture(removed, this.volume.shape);
+    this.installRemovalDisplay(removed, removed, recorded ? [recorded] : [], cameraBounds,
+      "executed-generated-episode", [{id:"modeled-removal",name:"Modeled removal",color:"#b7f0d8",mask:removed,removed:true}]);
+  }
+
+  /** Separate patient-source research gate; never calls generated replay acceptance. */
+  setRehearsal(state: ViewerRehearsalState | null): void {
+    if (!state) { if (this.rehearsalActive) this.setReplay(null); return; }
+    // Withhold an invalid replacement before retaining any older effect.
+    let checked: ReturnType<typeof checkedRehearsalState>;
+    try { checked = checkedRehearsalState(this.volume, state); }
+    catch (cause) { this.setReplay(null); throw cause; }
+    if (this.rehearsalActive) {
+      ++this.replayGeneration;
+      this.replayWorker?.terminate();this.replayWorker=null;
+      if (this.pendingReplayGroup) disposeObject(this.pendingReplayGroup);
+      this.pendingReplayGroup=null;
+      disposeObject(this.recordedTools);this.recordedTools.clear();
+    } else this.setReplay(null);
+    this.setInspectionTool(null);
+    this.setDiagnosticLayer(null, null);
+    this.setStructuralProposal(null);
+    this.setPriorLayer(null);
+    this.rehearsalActive = true;
+    this.rehearsalDisplays = checked.displays;
+    this.installRemovalDisplay(checked.voidMask, checked.effectMask, checked.displays,
+      checked.bounds, state.scope, [
+        {id:"assumed-exposure",name:"Assumed initial exposure",color:REHEARSAL_COLORS.exposure,mask:state.assumedExposureMask.slice(),removed:true},
+        {id:"rehearsal-removal",name:"Modeled episode removal",color:REHEARSAL_COLORS.removal,mask:state.removedMask.slice(),removed:true},
+        {id:"rehearsal-field-contact",name:"Modeled field-management contact",color:REHEARSAL_COLORS.field_management,mask:residualMask(state.fieldContactMask,checked.voidMask),removed:true},
+      ]);
+  }
+
+  /** Builds derived meshes and textures only. Original source arrays never change. */
+  private installRemovalDisplay(removed: Uint8Array, effects: Uint8Array,
+    displays: RecordedToolDisplay[], cameraBounds: RecordedEpisodeBounds | null,
+    scope: string, overlays: Array<{id:string;name:string;color:string;mask:Uint8Array;removed:boolean}>): void {
+    const generation = this.replayGeneration;
+    const texture = dataTexture(effects, this.volume.shape);
     this.removedTexture.dispose();
     this.removedTexture = texture;
     this.materials().forEach((shader) => {
@@ -844,120 +924,79 @@ export class VolumeRenderer {
     });
     this.replayActive = true;
     this.instrumentDisplay.setReplay(true);
-    this.recordedDisplay = recorded;
+    this.recordedDisplay = this.rehearsalActive ? null : (displays[0] ?? null);
     this.replayBounds = cameraBounds;
-    if (recorded) this.recordedTools.add(instrumentCapsuleMeshes(recorded, "executed-generated-episode", recorded.identity));
+    for (const display of displays) this.recordedTools.add(instrumentCapsuleMeshes(display, scope, display.identity));
     disposeObject(this.inspectionTools);
     this.inspectionTools.clear();
     this.syncInstrumentDisplay();
     this.anatomy.visible = false;
-    // Fit after the replay is installed, once per episode. All later frame/tool
-    // changes share this envelope and preserve the user's orbit and zoom.
     if (this.mode === "instruments" && cameraBounds && this.fittedReplayId !== cameraBounds.episodeId)
       this.fitCamera("instruments");
-    // Route candidates show terminal approach poses, not certified replay motions.
     this.tools.visible = false;
     const pending = new THREE.Group();
     this.pendingReplayGroup = pending;
     const layers = this.volume.compartments.map((layer, index) => ({
-      id: `residual-${index}`,
-      name: layer.name,
-      color: layer.color,
-      removed: false,
+      id: `residual-${index}`,name: layer.name,color: layer.color,removed: false,
       mask: residualMask(materializeLayerMask(this.volume,layer), removed),
     }));
-    layers.push({
-      id: "modeled-removal",
-      name: "Modeled removal",
-      color: "#b7f0d8",
-      removed: true,
-      mask: removed,
-    });
+    layers.push(...overlays);
     const waiting = new Map(layers.map((layer) => [layer.id, layer]));
     this.onSurfaceStatus(waiting.size);
-    const worker = new Worker(new URL("./surface.worker.ts", import.meta.url), {
-      type: "module",
-    });
+    const worker = new Worker(new URL("./surface.worker.ts", import.meta.url), {type: "module"});
     this.replayWorker = worker;
     const failed = (message: string) => {
       if (this.disposed || generation !== this.replayGeneration) return;
       this.setReplay(null);
       this.onSurfaceStatus(0);
-      this.onReplayError(
-        `Modeled anatomy could not be displayed: ${message}. The original source anatomy has been restored.`,
-      );
+      this.onReplayError(`Modeled anatomy could not be displayed: ${message}. The original source anatomy has been restored.`);
     };
     worker.onerror = () => failed("surface preparation failed");
-    worker.onmessage = (
-      event: MessageEvent<{
-        name: string;
-        positions?: Float32Array;
-        normals?: Float32Array;
-        error?: string;
-      }>,
-    ) => {
+    worker.onmessage = (event: MessageEvent<{name:string;positions?:Float32Array;normals?:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array;error?:string}>) => {
       if (this.disposed || generation !== this.replayGeneration) return;
-      if (event.data.error) {
-        failed(event.data.error);
-        return;
-      }
+      if (event.data.error) {failed(event.data.error);return;}
       const layer = waiting.get(event.data.name);
-      if (!layer) {
-        failed("unexpected surface response");
-        return;
-      }
+      if (!layer) {failed("unexpected surface response");return;}
       waiting.delete(event.data.name);
-      const positions = event.data.positions;
-      if (!positions) {
-        failed("missing source-grid surface");
-        return;
-      }
-      const normals = event.data.normals;
-      if (!normals || normals.length !== positions.length) {
-        failed("surface normals do not match source-grid geometry");
-        return;
-      }
+      const positions = event.data.positions, normals = event.data.normals;
+      if (!positions || !normals || normals.length !== positions.length) {failed("missing or inconsistent source-grid surface");return;}
       if (positions.length) {
         const geometry = new THREE.BufferGeometry();
-        geometry.setAttribute(
-          "position",
-          new THREE.BufferAttribute(positions, 3),
-        );
-        geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
-        const mesh = new THREE.Mesh(
-          geometry,
-          new THREE.MeshStandardMaterial({
-            color: layer.color,
-            roughness: 0.34,
-            metalness: 0.08,
-            transparent: true,
-            opacity: layer.removed ? 0.78 : 0.66,
-            side: THREE.DoubleSide,
-            depthWrite: false,
-            wireframe: layer.removed,
-          }),
-        );
+        geometry.setAttribute("position",new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute("normal",new THREE.BufferAttribute(normals, 3));
+        if (event.data.indices) geometry.setIndex(new THREE.BufferAttribute(event.data.indices,1));
+        let smooth = geometry;
+        if (!layer.removed) {
+          const {smoothPositions,smoothNormals} = event.data;
+          if (!smoothPositions || !smoothNormals || smoothPositions.length !== positions.length || smoothNormals.length !== positions.length) {
+            geometry.dispose();failed("smoothed residual surface buffers do not match source geometry");return;
+          }
+          smooth = new THREE.BufferGeometry();
+          smooth.setAttribute("position",new THREE.BufferAttribute(smoothPositions,3));
+          smooth.setAttribute("normal",new THREE.BufferAttribute(smoothNormals,3));
+          if (event.data.indices) smooth.setIndex(new THREE.BufferAttribute(event.data.indices,1));
+        }
+        const mesh = new THREE.Mesh(this.surfaceSmoothing ? smooth : geometry,new THREE.MeshStandardMaterial({
+          color: layer.color,roughness: 0.34,metalness: 0.08,transparent: true,
+          opacity: layer.removed ? 0.78 : 0.66,side: THREE.DoubleSide,depthWrite: false,wireframe: layer.removed,
+        }));
         placeInSourceFrame(mesh, this.affine);
-        if (!layer.removed) mesh.userData.compartment = layer.name;
-        mesh.visible = layer.removed || this.visible[layer.name] !== false;
+        if (!layer.removed) {
+          mesh.userData.compartment = layer.name;
+          mesh.userData.replayGeometry = {source:geometry,smooth};
+        }
+        this.applyReplaySurfaceAppearance(mesh);
         pending.add(mesh);
       }
       this.onSurfaceStatus(waiting.size);
       if (!waiting.size) {
+        disposeObject(this.replayGroup);this.replayGroup.clear();
         for (const child of [...pending.children]) this.replayGroup.add(child);
-        this.pendingReplayGroup = null;
-        worker.terminate();
-        this.replayWorker = null;
-        this.requestRender();
+        this.pendingReplayGroup = null;worker.terminate();this.replayWorker = null;this.requestRender();
       }
     };
-    for (const layer of layers) {
-      worker.postMessage({
-        name: layer.id,
-        mask: materializeLayerMask(this.volume,layer),
-        shape: this.volume.shape,
-      });
-    }
+    for (const layer of layers) worker.postMessage({name:layer.id,mask:layer.mask,shape:this.volume.shape,
+      affine:this.affine,displaySmoothing:!layer.removed});
     this.requestRender();
   }
 
@@ -1253,8 +1292,8 @@ export class VolumeRenderer {
   private syncInstrumentDisplay(): void {
     this.tools.visible = this.instrumentDisplay.routeVisible;
     this.inspectionTools.visible = this.instrumentDisplay.inspected !== null;
-    this.recordedTools.visible = this.replayActive && (this.recordedDisplay !== null || this.passiveDisplays.length > 0);
-    const shown = this.passiveActive ? this.passiveDisplays :
+    this.recordedTools.visible = this.replayActive && (this.recordedDisplay !== null || this.passiveDisplays.length > 0 || this.rehearsalDisplays.length > 0);
+    const shown = this.rehearsalActive ? this.rehearsalDisplays : this.passiveActive ? this.passiveDisplays :
       this.recordedTools.visible ? [this.recordedDisplay!] : this.instrumentDisplay.displayed;
     this.materials().forEach((shader) => {
       shader.uniforms.uRouteCount.value = shown.length;

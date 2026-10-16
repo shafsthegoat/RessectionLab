@@ -90,7 +90,8 @@ float fusionSample(vec3 voxel) {
 }
 ivec4 labels(ivec3 voxel) {
   if (any(lessThan(voxel,ivec3(0))) || any(greaterThanEqual(voxel,ivec3(uShape)))) return ivec4(0);
-  if (uReplayActive==1 && texelFetch(uRemoved,voxel.zyx,0).r>0.0) return ivec4(0);
+  int effect=int(round(texelFetch(uRemoved,voxel.zyx,0).r*255.0));
+  if (uReplayActive==1 && (effect==1 || effect==2)) return ivec4(0);
   return ivec4(round(texelFetch(uLabels,voxel.zyx,0)*255.0));
 }
 float capsuleDistance(vec3 p,vec3 a,vec3 b) {
@@ -209,7 +210,8 @@ void main() {
   }
   ivec3 nearest=ivec3(floor(voxel+0.5));
   ivec4 packed=labels(nearest);
-  bool removed=uReplayActive==1 && texelFetch(uRemoved,nearest.zyx,0).r>0.0;
+  int effect=uReplayActive==1?int(round(texelFetch(uRemoved,nearest.zyx,0).r*255.0)):0;
+  bool removed=effect==1 || effect==2;
   for(int i=0;i<128;i++) { if(i>=uLayerCount)break;
     if(removed || uLayerEnabled[i]<0.5 || !hasLabel(packed,i))continue;
     bool interior=hasLabel(labels(nearest+ivec3(1,0,0)),i)&&hasLabel(labels(nearest-ivec3(1,0,0)),i)&&hasLabel(labels(nearest+ivec3(0,1,0)),i)&&hasLabel(labels(nearest-ivec3(0,1,0)),i)&&hasLabel(labels(nearest+ivec3(0,0,1)),i)&&hasLabel(labels(nearest-ivec3(0,0,1)),i);
@@ -217,7 +219,10 @@ void main() {
     float edge=!interior?min(0.9,layerAlpha+0.3*uLayerOpacities[i]/0.66):layerAlpha;
     color=mix(color,uColors[i],edge);
   }
-  if(removed) color=mix(color,vec3(0.66,0.94,0.82),0.70);
+  if(effect==1) color=mix(color,vec3(0.66,0.94,0.82),0.70);
+  if(effect==2) color=mix(color,vec3(0.72,0.65,0.91),0.58);
+  if(effect==3) color=mix(color,vec3(0.94,0.71,0.40),0.66);
+  if(effect==4) color=mix(color,vec3(0.93,0.80,0.54),0.36);
   for(int i=0;i<2;i++) if(i<uRouteCount) {
     float shaft=capsuleDistance(world,uShaftStart[i],uShaftEnd[i])-uRadii[i].x;
     float tip=capsuleDistance(world,uShaftEnd[i],uTipEnd[i])-uRadii[i].y;
