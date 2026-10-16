@@ -1,0 +1,580 @@
+{
+  "schema": "independent-ten-person-corpus-audit-v1",
+  "status": "pass",
+  "created_utc": "2026-10-16T06:56:43.414068+00:00",
+  "release_sha256": "2c426f82e160be5b11bb19d9d5c4d2ac804ae9d85011cf46a4dc83904adbea84",
+  "plan_hash": "sha256:a1a2623d05270881d4291a1037d303578cb27a4f63d52cce28b5f5db251d8755",
+  "catalog_sha256": "2a7ba1c26f101261e3a5fecf84ae998b637a70c5a7f66d43d224153c738ee673",
+  "corpus_source_sha256": "522d37498f49986fe24d72000ac0a907550cd1fa03fdcb78e92708006bf2f894",
+  "auditor_sha256": "e2104da8036b5065be929c4c2b9278219c8a1fd3fa4000cbf9e601b2625d1212",
+  "metadata_guards": {
+    "status": "pass",
+    "generated_metadata_controls": [
+      {
+        "declaration": {
+          "roles": {
+            "SELECT": true
+          }
+        },
+        "rejection": "PROTECTED_ROLE"
+      },
+      {
+        "declaration": {
+          "parent": {
+            "split": {
+              "name": "SELECT"
+            }
+          }
+        },
+        "rejection": "PROTECTED_ROLE"
+      },
+      {
+        "declaration": {
+          "split": {
+            "SELECT": 1
+          }
+        },
+        "rejection": "PROTECTED_ROLE"
+      },
+      {
+        "declaration": {
+          "roles": {
+            "SELECT": "false"
+          }
+        },
+        "rejection": "PROTECTED_ROLE"
+      },
+      {
+        "declaration": {
+          "parent": [
+            {
+              "usageRole": "MEASUREMENT_EVAL"
+            }
+          ]
+        },
+        "rejection": "PROTECTED_ROLE"
+      },
+      {
+        "declaration": {
+          "partition": {
+            "name": "held-out"
+          }
+        },
+        "rejection": "PROTECTED_ROLE"
+      },
+      {
+        "declaration": {
+          "source_collection": {
+            "name": "UPENN-GBM"
+          }
+        },
+        "rejection": "PROTECTED_ROLE"
+      },
+      {
+        "declaration": {
+          "ancestry": [
+            {
+              "dataset_name": "UTSW"
+            }
+          ]
+        },
+        "rejection": "PROTECTED_ROLE"
+      },
+      {
+        "declaration": {
+          "parent": {
+            "patient_group": "BTC:sub-PAT26"
+          }
+        },
+        "rejection": "PATIENT_MISMATCH"
+      },
+      {
+        "declaration": {
+          "parent": {
+            "case_id": "ReMIND-013"
+          }
+        },
+        "rejection": "PATIENT_MISMATCH"
+      },
+      {
+        "declaration": {
+          "patient_group": "IXI:266"
+        },
+        "rejection": "PATIENT_MISMATCH"
+      },
+      {
+        "declaration": {
+          "virtual_geometry": {}
+        },
+        "rejection": "GENERATED_DESCENDANT"
+      },
+      {
+        "declaration": {
+          "virtual_glioma": {
+            "host_patient_group": "IXI:265"
+          }
+        },
+        "rejection": "GENERATED_DESCENDANT"
+      },
+      {
+        "declaration": {
+          "generated_descendant": true
+        },
+        "rejection": "GENERATED_DESCENDANT"
+      },
+      {
+        "declaration": {
+          "anatomy_layers": {
+            "target": {
+              "kind": "tumor",
+              "provenance": "generated"
+            }
+          }
+        },
+        "rejection": "GENERATED_DESCENDANT"
+      },
+      {
+        "declaration": {
+          "anatomy_layers": {
+            "target": {
+              "kind": "tumor",
+              "provenance": "simulated_geometry"
+            }
+          }
+        },
+        "rejection": "GENERATED_DESCENDANT"
+      },
+      {
+        "source_provenance": "simulated",
+        "rejection": "GENERATED_DESCENDANT"
+      },
+      {
+        "source_provenance": "generated",
+        "rejection": "GENERATED_DESCENDANT"
+      }
+    ],
+    "candidate_equality_controls": [
+      {
+        "field": "patient_group",
+        "rejection": "NOT_ALLOWLISTED"
+      },
+      {
+        "field": "role",
+        "rejection": "PROTECTED_ROLE"
+      },
+      {
+        "field": "bundle",
+        "rejection": "NOT_ALLOWLISTED"
+      },
+      {
+        "field": "bundle_sha256",
+        "rejection": "NOT_ALLOWLISTED"
+      },
+      {
+        "field": "training_admitted",
+        "rejection": "NOT_ALLOWLISTED"
+      },
+      {
+        "field": "fusion_permitted",
+        "rejection": "NOT_ALLOWLISTED"
+      },
+      {
+        "field": "registration_acceptance",
+        "rejection": "NOT_ALLOWLISTED"
+      },
+      {
+        "field": "accepted_constraints",
+        "rejection": "NOT_ALLOWLISTED"
+      },
+      {
+        "field": "existing_materialized",
+        "rejection": "NOT_ALLOWLISTED"
+      },
+      {
+        "field": "source_files[0].sha256",
+        "rejection": "NOT_ALLOWLISTED"
+      }
+    ],
+    "self_resigned_plan_controls": [
+      {
+        "change": "drop_person",
+        "rejection": "RELEASE_PLAN_CHANGED"
+      },
+      {
+        "change": "duplicate_person",
+        "rejection": "DUPLICATE_PATIENT"
+      },
+      {
+        "change": "source_hash",
+        "rejection": "RELEASE_PLAN_CHANGED"
+      },
+      {
+        "change": "scope",
+        "rejection": "RELEASE_PLAN_CHANGED"
+      },
+      {
+        "change": "metadata",
+        "rejection": "RELEASE_PLAN_CHANGED"
+      },
+      {
+        "change": "unknown_release",
+        "rejection": "RELEASE_UNKNOWN"
+      }
+    ],
+    "ixi_refused_by_default_nine_release": "NOT_ALLOWLISTED",
+    "estimated_layer_with_simulated_model_training_allowed": true,
+    "payload_decoders_and_source_openers_replaced_with_failure_sentinels": true
+  },
+  "scoped_search": {
+    "status": "pass",
+    "generated_metadata_only": true,
+    "shared_release_evidence_excluded_from_person_search": true,
+    "literal_query_and_conjunctive_filters_verified": true
+  },
+  "catalog": {
+    "status": "pass",
+    "catalog_hash": "sha256:554c172ee7061c1ec803a4ea56c8025b5e6969f777bfecfe44987ec8aa2479a3",
+    "counts": {
+      "accepted_fused_anatomy_combinations": {
+        "brain_plus_skull": 0,
+        "brain_plus_tumor": 0,
+        "brain_plus_vessels": 0,
+        "brain_tumor_skull_vessels": 0
+      },
+      "anatomical_presence_combinations": {
+        "brain_plus_skull": 1,
+        "brain_plus_tumor": 7,
+        "brain_plus_vessels": 1,
+        "brain_tumor_skull_vessels": 0
+      },
+      "anatomical_truth_accepted_people": 0,
+      "existing_materialized_people": 10,
+      "newly_acquired_people": 0,
+      "newly_cataloged_existing_people": 1,
+      "pending": 0,
+      "people_with_portable_source_originals": 4,
+      "qualified_existing_people": 10,
+      "rejected": 0,
+      "same_person_presence_across_saved_grids": {
+        "brain_plus_skull": 1,
+        "brain_plus_tumor": 7,
+        "brain_plus_vessels": 1,
+        "brain_tumor_skull_vessels": 0
+      },
+      "verified_embedded_original_files": 56,
+      "virtual_descendants_counted_as_people": 0
+    },
+    "entries": [
+      {
+        "patient_group": "BTC:sub-PAT05",
+        "role": "TRAIN",
+        "receipt_hash": "sha256:7f515f379a85c5927c8caffe09c9f0c9378054ee6bfa21a919f367a74be69a18",
+        "bundle_sha256": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12",
+        "anatomy_present": [
+          "brain",
+          "tumor"
+        ],
+        "primary_anatomy": [
+          "brain",
+          "tumor"
+        ]
+      },
+      {
+        "patient_group": "BTC:sub-PAT16",
+        "role": "TRAIN",
+        "receipt_hash": "sha256:c2cd8cf977e6b8b3d46367463e33d87d8075dc2dafa63097cb60fa00c556e69f",
+        "bundle_sha256": "b906e1c061450526e4ed4737f17f880f1ab7fdf35d667d1d6f8d7eb55b3c416b",
+        "anatomy_present": [
+          "brain",
+          "tumor"
+        ],
+        "primary_anatomy": [
+          "brain",
+          "tumor"
+        ]
+      },
+      {
+        "patient_group": "BTC:sub-PAT20",
+        "role": "TRAIN",
+        "receipt_hash": "sha256:540cecc2b5a479af618091172a8c0e664c74b265f87d5d13593a5a679f6c92a3",
+        "bundle_sha256": "edd4d0d149cf27e81dbc67c2742fd14dff5bfa6fa1c63ad111fecb4b48eca66b",
+        "anatomy_present": [
+          "brain",
+          "tumor"
+        ],
+        "primary_anatomy": [
+          "brain",
+          "tumor"
+        ]
+      },
+      {
+        "patient_group": "BTC:sub-PAT22",
+        "role": "TRAIN",
+        "receipt_hash": "sha256:a58bfd4ca075632b9b770913f60c18f17f5e4e69a5f3e55f357037ac0212d231",
+        "bundle_sha256": "a12ac7c2325b2c87137c112fae9c4b7ebe33e40e40cdd9bcff192d891a4b562e",
+        "anatomy_present": [
+          "brain",
+          "tumor"
+        ],
+        "primary_anatomy": [
+          "brain",
+          "tumor"
+        ]
+      },
+      {
+        "patient_group": "BTC:sub-PAT25",
+        "role": "TRAIN",
+        "receipt_hash": "sha256:05fcc6b800275eef919e3a3cc7ddaed5cff782a358df94ac21a4d66ddc0c7453",
+        "bundle_sha256": "d635a72cc24066c2b16dc7b6d6805baae04d1750c50ca351b2410a70d913428a",
+        "anatomy_present": [
+          "brain",
+          "tumor"
+        ],
+        "primary_anatomy": [
+          "brain",
+          "tumor"
+        ]
+      },
+      {
+        "patient_group": "BTC:sub-PAT28",
+        "role": "TRAIN",
+        "receipt_hash": "sha256:ae9b693a7188e569f5d9f422d433e29b1ea8db8a75bec5d4c467f11936478074",
+        "bundle_sha256": "f7fc9491cf74634de5b2be36dd5968c7e161a7b7fc22698a7045d7453c95a747",
+        "anatomy_present": [
+          "brain",
+          "tumor"
+        ],
+        "primary_anatomy": [
+          "brain",
+          "tumor"
+        ]
+      },
+      {
+        "patient_group": "IXI:265",
+        "role": "TRAIN",
+        "receipt_hash": "sha256:accc015887cc126d387b92bfeebc716532228b92f22798566f2a1d7491005bb5",
+        "bundle_sha256": "55a38ae5792c889d3f8a8e28c635c92f78ca80d42690028b7eb028d638980e0e",
+        "anatomy_present": [
+          "brain",
+          "vessels"
+        ],
+        "primary_anatomy": [
+          "brain"
+        ]
+      },
+      {
+        "patient_group": "Lausanne:sub-000",
+        "role": "TRAIN",
+        "receipt_hash": "sha256:308c8a255237ae1f41b3cd869db0d9543aecbeededf1d1879e6b38d020bca744",
+        "bundle_sha256": "257fa5b5558e672fb78dddbfe55d9574d87cd1f0776e6cc8c5d9d086d2ada18c",
+        "anatomy_present": [
+          "vessels"
+        ],
+        "primary_anatomy": [
+          "vessels"
+        ]
+      },
+      {
+        "patient_group": "SynthRAD2023:1BA336",
+        "role": "TRAIN",
+        "receipt_hash": "sha256:89443bb37274457a45eb8c0a04bb06f7df8a812ff44d3786e5f29a826dcd7276",
+        "bundle_sha256": "98e2566e458c762ed75c07bd370a8a06797a1a79c74ce8cdc15ff09bf1e66f81",
+        "anatomy_present": [
+          "brain",
+          "skull"
+        ],
+        "primary_anatomy": [
+          "brain",
+          "skull"
+        ]
+      },
+      {
+        "patient_group": "UCSF-PDGM:004",
+        "role": "DEVELOPMENT",
+        "receipt_hash": "sha256:57b3e03d8e6395b15003ffb07a11a64b491f34aa3d293e6e8da2b1c6475c7184",
+        "bundle_sha256": "73cd0792c025e846395bafffe5ec793ef9e1823ceec8e4b0aeb8317783041571",
+        "anatomy_present": [
+          "brain",
+          "tumor"
+        ],
+        "primary_anatomy": [
+          "brain",
+          "tumor"
+        ]
+      }
+    ],
+    "receipt_seals_candidate_equality_validator_hashes_and_declared_source_lineage_verified": true,
+    "unknown_locations_and_absence_of_independent_registration_acceptance_preserved": true,
+    "unchanged_UCSF_source_declared_display_overlays": [
+      "T1",
+      "T2",
+      "FLAIR"
+    ],
+    "all_IXI_overlay_permissions_false": true,
+    "same_person_cross_grid_presence_is_not_fusion": true,
+    "scope": "Metadata consistency only; saved source equality and embedded-original claims were not rechecked against real payloads here"
+  },
+  "reader_audit": {
+    "path": "outputs/poc-first-qa/ten-person-reader-independent-qa.json",
+    "sha256": "6ceb0518d59583c7d65abb047601f60dd38b6ccb2e6ac8531812a53a896aa720",
+    "result": {
+      "schema": "independent-ten-person-reader-audit-v1",
+      "status": "pass",
+      "created_utc": "2026-10-16T06:55:54.249Z",
+      "implementation_sha256": {
+        "desktop/electron/patient-catalog.cjs": "d10dd7dca0a49344b8f5ef347b93f581bafcd9dfa2db6976c3919c84354e3dd5",
+        "desktop/electron/case-library.cjs": "b5090eea0a9c862dbaafcdfa42e95f5ccb8853ebc76ef3a13c747b23ddf9e461",
+        "desktop/src/WorkbenchPanels.tsx": "28a7de419df46835f2572b767bac6344879e3d0de11240d05e2036cb319d9247",
+        "desktop/electron/main.cjs": "5b77c0d6af8dd6f0d214c9d03d172c9fa41b346df9f2ba15dfa6911321bd5fc1"
+      },
+      "catalog_sha256": "2a7ba1c26f101261e3a5fecf84ae998b637a70c5a7f66d43d224153c738ee673",
+      "release_sha256": "2c426f82e160be5b11bb19d9d5c4d2ac804ae9d85011cf46a4dc83904adbea84",
+      "auditor_sha256": "0022d78cba078ed1eed0e3aa2684ae0653169cbabfcafc65775b9478ef0eeb03",
+      "real_payloads_opened": 0,
+      "controls": {
+        "hard_pinned_metadata_listing": {
+          "status": "pass",
+          "rows": 10,
+          "unique_opaque_ids": 10,
+          "payload_reads": 0,
+          "arbitrary_path_identity_and_unknown_id_rejected": true
+        },
+        "byte_seal_mutations": {
+          "status": "pass",
+          "cases": [
+            "role",
+            "generated",
+            "source_path",
+            "fused_registration",
+            "location",
+            "additional_person",
+            "catalog_whitespace",
+            "release_whitespace"
+          ],
+          "rejected_before_payload": true
+        },
+        "guarded_open": {
+          "status": "pass",
+          "exact_release_with_fake_bundle_rejected": true,
+          "foreign_symlink_rejected_before_read": true,
+          "generated_fixture_roundtrip": true,
+          "same_size_hash_tampering_rejected": true,
+          "size_change_rejected": true,
+          "no_follow_file_open_verified": true,
+          "successful_open_scope": "Tiny generated file with isolated trusted-row provider; real release listing tested separately; no real bundle opened"
+        },
+        "renderer_boundary": {
+          "status": "pass",
+          "list_contains_only_display_fields": true,
+          "recent_catalog_alias_deduplicated": true,
+          "open_reenters_catalog_hash_guard": true
+        },
+        "Cases_search": {
+          "status": "pass",
+          "source_and_present_anatomy_only": true,
+          "all_query_terms_required": true,
+          "missing_anatomy_and_foreign_receipt_text_excluded": true,
+          "unicode_case_normalization": true,
+          "button_passes_opaque_id_and_host_resolves_before_open": true,
+          "GUI_observation_claimed": false
+        }
+      },
+      "models_or_solvers_executed": false,
+      "scope": "Metadata gate plus tiny generated byte/path controls; no real patient bundle opened or GUI observed"
+    }
+  },
+  "input_stamps": {
+    "manifests/patient-corpus-releases/existing-nine-plus-ixi265-v1.json": {
+      "sha256": "2c426f82e160be5b11bb19d9d5c4d2ac804ae9d85011cf46a4dc83904adbea84",
+      "bytes": 17096,
+      "mtime_ns": 1792132926979931195
+    },
+    "artifacts/patient-corpus-first-tranche-v1/independent-qa.json": {
+      "sha256": "5f112d987639408911b379bd72792cab2504f68599981ef833445e31bcf7e0bd",
+      "bytes": 18706,
+      "mtime_ns": 1792131871120640478
+    },
+    "artifacts/ixi265-virtual-pilot-v1/independent-qa.json": {
+      "sha256": "61e449b05aaf1396e7383a23bb903238ab3e7e223899c23a0ed64e40c814eef0",
+      "bytes": 9412,
+      "mtime_ns": 1792132085881804749
+    },
+    "artifacts/ixi265-virtual-pilot-v1/gui-and-vessel-independent-qa.json": {
+      "sha256": "0a1700dd15a784405d47b1d66aa7713eb6dab3cc92faf3179bc608a6da36d31b",
+      "bytes": 21516,
+      "mtime_ns": 1792132878574822809
+    },
+    "outputs/poc-first-qa/ten-person-reader-independent-qa.json": {
+      "sha256": "6ceb0518d59583c7d65abb047601f60dd38b6ccb2e6ac8531812a53a896aa720",
+      "bytes": 2619,
+      "mtime_ns": 1792133754252289960
+    },
+    "outputs/patient-corpus-ixi265-v1/catalog.json": {
+      "sha256": "2a7ba1c26f101261e3a5fecf84ae998b637a70c5a7f66d43d224153c738ee673",
+      "bytes": 196357,
+      "mtime_ns": 1792133392621107753
+    },
+    "outputs/patient-corpus-v1/catalog.json": {
+      "sha256": "514efd80551294c140e69baa860790d63c8c4415a1859dc7d3cc1a0fd6823ffc",
+      "bytes": 134054,
+      "mtime_ns": 1792130842387953844
+    },
+    "outputs/patient-corpus-ixi265-v1/receipts/ade843fde7cece4be4e531b6a18577077035181e63aa921672eede049dad826e.json": {
+      "sha256": "466a562f293d9ebb7b95f8201f693fa8ed23ed026dfebe96339a61b0a3feab2b",
+      "bytes": 14231,
+      "mtime_ns": 1792133367965979941
+    },
+    "outputs/patient-corpus-ixi265-v1/receipts/4e8203d1188ce2309570ae6083f3b0bd463295d94ff3f8d4aa849bd6390fdf20.json": {
+      "sha256": "940bf86264d5ef7ce8b95d219b1b1aeb432b42c6daaef982399bdf6106b385c4",
+      "bytes": 14235,
+      "mtime_ns": 1792133368288223559
+    },
+    "outputs/patient-corpus-ixi265-v1/receipts/eafd7acf549c1f3f1e36d0a8f969c9b1f86916f372e6ba106b27ebfb0cbdb8ce.json": {
+      "sha256": "fdddd1682c27bd738a7f86a18377cd5758bcf10887cc8eddbdd927c8456fe1da",
+      "bytes": 14233,
+      "mtime_ns": 1792133368596925575
+    },
+    "outputs/patient-corpus-ixi265-v1/receipts/d57cebf26c4330ba848fd98bb3a1626de78ab1d50d7372946d41152f214b459c.json": {
+      "sha256": "592ed8293df0570b3051918c91441c9db516e0a2e9545dc3bed77e82f9d7675c",
+      "bytes": 12710,
+      "mtime_ns": 1792133368862350914
+    },
+    "outputs/patient-corpus-ixi265-v1/receipts/3af8d91e983a3ecc2e7749e75d8319fb91f24e1d5df1130e9377ac160be27298.json": {
+      "sha256": "ccf555879a13226e6458242b5dd59ce31ec1e0bbb78c7611082c7fca71aaedff",
+      "bytes": 12712,
+      "mtime_ns": 1792133369132374758
+    },
+    "outputs/patient-corpus-ixi265-v1/receipts/15d275f3037711f6cc57bfde4f95200cf5e697b1cecc090a2c16a253772b38c2.json": {
+      "sha256": "b24dbfdc825fa9dba242e5175e218ec88945f0ff940de4d2f81b8281eeeccbbb",
+      "bytes": 14224,
+      "mtime_ns": 1792133369447712451
+    },
+    "outputs/patient-corpus-ixi265-v1/receipts/3efda319df79faffe6860910e2a089a94e2634e21c5a65c34a2604ad84176b08.json": {
+      "sha256": "a7233544129d1c0853eb0f29885b207f0ee779b6d2c0467ecb40b483df5a08bb",
+      "bytes": 28697,
+      "mtime_ns": 1792133370814192891
+    },
+    "outputs/patient-corpus-ixi265-v1/receipts/d923ef2afbdb7dfedf21fba38d7f56556242219f5fba7622bb3201cc285a5e8a.json": {
+      "sha256": "6da5ef2e0d11ce3f9f169ed26ab56e2f244897ad2fd15087de9da703a19f90af",
+      "bytes": 11498,
+      "mtime_ns": 1792133371366184748
+    },
+    "outputs/patient-corpus-ixi265-v1/receipts/e70d409dc2b8918f6194835e330622ffb20f53aa540c9ad0cd7f41db0af6fea5.json": {
+      "sha256": "c378ed87ab94f114b3d901d6199cbf5e233b80d6d5bbf7c3c2098cf9600ea9ab",
+      "bytes": 12280,
+      "mtime_ns": 1792133371506371561
+    },
+    "outputs/patient-corpus-ixi265-v1/receipts/41fa27b0569007d2ca84df9ee8f0189c13903988bd8d5a1616c7804d0e539d5a.json": {
+      "sha256": "36d05240fe2f32e73e5396bae43c19a2978087f247c73f5e4c0ebc7df5278505",
+      "bytes": 40852,
+      "mtime_ns": 1792133372224002422
+    }
+  },
+  "prior_frozen_audits_unchanged": true,
+  "real_payloads_opened": 0,
+  "auditor_adjustments": [
+    "Initial overly broad overlay-disabled oracle was corrected to preserve the three existing UCSF source-declared, equal-grid display overlays. Their registration records exactly match the nine-person baseline and still carry no independent anatomical acceptance; all IXI overlays remain disabled."
+  ],
+  "models_or_solvers_executed": false,
+  "clinical_or_independent_accuracy_established": false
+}

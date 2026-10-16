@@ -244,3 +244,105 @@ def test_cached_receipt_tampering_and_changed_plan_are_refused(tmp_path,monkeypa
     changed=deepcopy(candidate);changed['rights']['use']='changed'
     with pytest.raises(pc.QualificationError,match='new corpus output version'):
         pc.run_qualification(tmp_path,out,plan(changed))
+
+
+def frozen_ixi():
+    document,_=pc._frozen_release()
+    return document['additional_candidate']
+
+
+def test_explicit_ten_person_release_is_metadata_only_and_default_stays_nine(monkeypatch):
+    root=Path(__file__).resolve().parents[1]
+    monkeypatch.setattr(pc,'load_workspace',forbidden);monkeypatch.setattr(pc,'_manifest_preflight',forbidden)
+    monkeypatch.setattr(pc,'file_sha256',forbidden)
+    monkeypatch.setattr(nib,'load',forbidden)
+    original=pc.default_plan(root);expanded=pc.release_plan(root,pc.IXI_RELEASE)
+    assert original==pc.release_plan(root)
+    assert original['plan_hash']=='sha256:2945f141cd2e91dd661e4502e06544ca636adeac98f57c354bf56ea3486bad7f'
+    assert len(original['candidates'])==9 and len(expanded['candidates'])==10
+    assert expanded['plan_hash']==pc.IXI_PLAN_HASH
+    assert [r['patient_group'] for r in expanded['candidates']].count('IXI:265')==1
+    assert all('bundle_sha256' in row for row in expanded['candidates'])
+    assert frozen_ixi()['training_admitted'] is False
+
+
+def test_ixi_remains_forbidden_without_explicit_release():
+    candidate=frozen_ixi()
+    with pytest.raises(pc.QualificationError,match='nine-person'):pc.require_candidate(candidate)
+    pc.require_candidate(candidate,pc.IXI_RELEASE)
+    assert pc.canonical_patient('IXI265-Guys-0845')=='IXI:265'
+
+
+@pytest.mark.parametrize('field,value',[
+    ('patient_group','IXI:266'),('role','SELECT'),('training_admitted',True),
+    ('bundle','outputs/poc-ixi265/virtual-FK-pilot-001/IXI265-virtual.ressectionlab'),
+    ('bundle_sha256','0'*64),('case_id','IXI265-virtual-FK-pilot-001')])
+def test_new_release_never_accepts_arbitrary_or_descendant_candidate(field,value):
+    candidate=frozen_ixi();candidate[field]=value
+    with pytest.raises(pc.QualificationError):pc.require_candidate(candidate,pc.IXI_RELEASE)
+
+
+@pytest.mark.parametrize('change',['drop','duplicate','metadata','scope','unknown_release'])
+def test_frozen_release_plan_cannot_be_self_resigned_to_change_scope(change,tmp_path,monkeypatch):
+    frozen=pc.release_plan(Path(__file__).resolve().parents[1],pc.IXI_RELEASE)
+    if change=='drop':frozen['candidates'].pop()
+    if change=='duplicate':frozen['candidates'][0]=deepcopy(frozen['candidates'][6])
+    if change=='metadata':frozen['metadata_evidence']=[]
+    if change=='scope':frozen['virtual_descendants_admitted']=True
+    if change=='unknown_release':frozen['release_id']='caller-supplied-release'
+    frozen['plan_hash']=semantic_digest({k:v for k,v in frozen.items() if k!='plan_hash'})
+    monkeypatch.setattr(pc,'_input_binding',forbidden)
+    with pytest.raises(pc.QualificationError):pc.run_qualification(tmp_path,tmp_path/'out',frozen)
+    assert not (tmp_path/'out').exists()
+
+
+def test_frozen_bundle_hash_is_checked_before_zip_or_source_access(tmp_path,monkeypatch):
+    candidate=frozen_ixi();path=tmp_path/candidate['bundle'];path.parent.mkdir(parents=True)
+    path.write_bytes(b'counterfeit named IXI bundle')
+    monkeypatch.setattr(pc,'_manifest_preflight',forbidden)
+    with pytest.raises(pc.QualificationError,match='before decoding'):
+        pc._input_binding(tmp_path,candidate,{'release_id':pc.IXI_RELEASE,'metadata_evidence':[]})
+
+
+@pytest.mark.parametrize('metadata',[{'is_synthetic':True},{'is_synthetic':False,'virtual_glioma':{'host_patient_group':'IXI:265'}},
+    {'is_synthetic':False,'split':{'role':'SELECT'}},{'is_synthetic':False,'patient_group':'IXI:266'}])
+def test_ixi_manifest_rejects_generated_roles_or_cross_patient_ancestry(metadata):
+    with pytest.raises(pc.QualificationError):
+        pc.require_manifest({'case_id':'IXI265-Guys-0845','metadata':metadata},frozen_ixi(),pc.IXI_RELEASE)
+
+
+def test_search_does_not_mistake_shared_release_provenance_for_patient_identity(tmp_path):
+    rows=[{'patient_group':'BTC:sub-PAT05','case_id':'BTC-sub-PAT05','role':'TRAIN','status':'qualified_with_limitations',
+        'input_binding':{'metadata_evidence':['IXI265 shared release role evidence']}},
+        {'patient_group':'IXI:265','case_id':'IXI265-Guys-0845','role':'TRAIN','status':'qualified_with_limitations'}]
+    pc._write_search_index(tmp_path/'catalog.sqlite',{'entries':rows})
+    assert [row['patient_group'] for row in pc.query_catalog(tmp_path,text='IXI')]==['IXI:265']
+
+
+@pytest.mark.parametrize('lineage',[{'virtual_geometry':{}},{'virtual_geometry':{'host_patient_group':'IXI:265'}},
+    {'anatomy_layers':{'lesion':{'kind':'tumor','provenance':'generated'}}},
+    {'anatomy_layers':{'lesion':{'kind':'tumor','provenance':'simulated_geometry'}}}])
+@pytest.mark.parametrize('release',[pc.DEFAULT_RELEASE,pc.IXI_RELEASE])
+def test_generated_anatomy_metadata_rejected_without_opening_payloads(tmp_path,lineage,release,monkeypatch):
+    candidate=frozen_ixi() if release==pc.IXI_RELEASE else fixture(tmp_path)[0]
+    monkeypatch.setattr(pc,'load_workspace',forbidden);monkeypatch.setattr(pc,'_manifest_preflight',forbidden)
+    with pytest.raises(pc.QualificationError) as error:
+        pc.require_manifest({'case_id':candidate['case_id'],'metadata':{'is_synthetic':False,**lineage}},candidate,release)
+    assert error.value.code=='GENERATED_DESCENDANT'
+
+
+@pytest.mark.parametrize('provenance',['simulated','generated'])
+def test_simulated_source_reference_rejected_in_manifest_before_decoding(tmp_path,provenance):
+    candidate,_,_=fixture(tmp_path)
+    with pytest.raises(pc.QualificationError) as error:
+        pc.require_manifest({'case_id':candidate['case_id'],'metadata':{'is_synthetic':False},
+            'source_refs':[{'provenance':provenance}]},candidate)
+    assert error.value.code=='GENERATED_DESCENDANT'
+
+
+def test_estimated_layer_survives_synthetic_model_training_lineage():
+    candidate=frozen_ixi()
+    pc.require_manifest({'case_id':candidate['case_id'],'metadata':{'is_synthetic':False,
+        'anatomy_layers':{'estimated_vessels':{'kind':'vessels','provenance':'estimated',
+            'model':{'training':{'provenance':'simulated','sources':['D_real','D_drand','D_flow']}}}}},
+        'source_refs':[{'provenance':'observed'},{'provenance':'estimated'}]},candidate,pc.IXI_RELEASE)

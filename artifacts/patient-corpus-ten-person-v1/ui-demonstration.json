@@ -1,0 +1,102 @@
+{
+  "schema": "patient-corpus-ten-person-gui-v1",
+  "recorded_utc": "2026-10-16T07:00:39.293633+00:00",
+  "application": "Actual Electron development application on the prepared Mac; native accessibility interaction",
+  "catalog_file_sha256": "2a7ba1c26f101261e3a5fecf84ae998b637a70c5a7f66d43d224153c738ee673",
+  "catalog_semantic_hash": "sha256:554c172ee7061c1ec803a4ea56c8025b5e6969f777bfecfe44987ec8aa2479a3",
+  "source_files_sha256": {
+    "desktop/electron/patient-catalog.cjs": "d10dd7dca0a49344b8f5ef347b93f581bafcd9dfa2db6976c3919c84354e3dd5",
+    "desktop/electron/case-library.cjs": "b5090eea0a9c862dbaafcdfa42e95f5ccb8853ebc76ef3a13c747b23ddf9e461",
+    "desktop/electron/main.cjs": "5b77c0d6af8dd6f0d214c9d03d172c9fa41b346df9f2ba15dfa6911321bd5fc1",
+    "desktop/src/WorkbenchPanels.tsx": "28a7de419df46835f2572b767bac6344879e3d0de11240d05e2036cb319d9247",
+    "desktop/electron/patient-catalog.test.cjs": "0db75de40f4a5ca32c76608c28fe1abf186472051710f6a8aecc67a1f66238a6",
+    "desktop/electron/fixtures/patient-catalog-existing-nine-plus-ixi265-v1.json.gz": "ad909c2096090e3b80919ed2645dd8447834dab5b6735cb5e751dd75dcf7a7ee",
+    "desktop/tests/case-library-panel.test.mjs": "ae26ae18363b576a80e859b34b9fff14c95688dbe13865317fdbb8c1901d5bdb"
+  },
+  "base_commit": "a17b7a0",
+  "runtime_anatomy_panel_sha256": "ecc9178fedf70f9530bde4248efafe28504580e4b53713d62438231e93e5daae",
+  "checks": {
+    "all_six_btc_catalog_cards_discovered": true,
+    "btc05_catalog_open_with_acquired_t1_and_threshold_target": true,
+    "vessels_query_exactly_ixi_and_lausanne": true,
+    "ixi_catalog_opaque_id_open": true,
+    "ixi_native_mra_model_estimate_distinct_from_source_labels": true,
+    "anatomy_remains_unreviewed": true,
+    "source_bundle_overwrites": 0,
+    "source_bundle_hashes_unchanged_after_open": [
+      {
+        "patient_group": "BTC:sub-PAT05",
+        "bundle": "outputs/cases/BTC-sub-PAT05-structural-evidence.ressectionlab",
+        "sha256_after_gui_open": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12",
+        "unchanged": true
+      },
+      {
+        "patient_group": "IXI:265",
+        "bundle": "outputs/poc-ixi265/vesselfm-base-v1/IXI265-vesselfm-estimates.ressectionlab",
+        "sha256_after_gui_open": "55a38ae5792c889d3f8a8e28c635c92f78ca80d42690028b7eb028d638980e0e",
+        "unchanged": true
+      }
+    ]
+  },
+  "scope": [
+    "Two actual catalog opens; the other eight were listed, not individually GUI opened in this slice.",
+    "Catalog patient identities are distinct from recent/save versions; the displayed case-version counter is not a unique-patient count.",
+    "BTC primary displays its threshold-derived source target; SynthStrip brain proposals remain separate unselected evidence.",
+    "Legacy BTC originals remain externally referenced, not embedded.",
+    "A relative CLI startup path failed before testing; it was dismissed and the catalog UI was used successfully.",
+    "Small human-readable missing-anatomy label cleanup was made afterward; it is excluded from this runtime source snapshot and will be verified separately."
+  ],
+  "independent_audit": {
+    "path": "artifacts/patient-corpus-ten-person-v1/independent-qa.json",
+    "sha256": "2d28dcde7d6e7ff3a432ae6fe81e3cab7fa082e6ab5f05b5ecfbcd90c685951d"
+  },
+  "tests": {
+    "focused_python": 169,
+    "main_process": 129,
+    "renderer_and_viewer": 497,
+    "typecheck_and_production_build": "passed",
+    "full_legacy_suite": "not rerun; prior baseline comparison retained"
+  },
+  "captures": [
+    {
+      "path": "outputs/poc-first-qa/extended-catalog-ui/01-btc-search.ax.txt",
+      "bytes": 4317,
+      "sha256": "202967282e5d324d3d2dfd3b7b7c694e35398d90148f9af6f2d77bd986a1751d"
+    },
+    {
+      "path": "outputs/poc-first-qa/extended-catalog-ui/01-btc-search.png",
+      "bytes": 344280,
+      "sha256": "c75da995f0a5e41e1765da22e2f5ca3b60ca0e78f9849859cb52f72d8148f75a"
+    },
+    {
+      "path": "outputs/poc-first-qa/extended-catalog-ui/02-btc-open.ax.txt",
+      "bytes": 5414,
+      "sha256": "46dcaeb90f2e5c8f8350b0dc0cdfb62d80b5be4d28ce616b247e89be3c98215c"
+    },
+    {
+      "path": "outputs/poc-first-qa/extended-catalog-ui/02-btc-open.png",
+      "bytes": 470714,
+      "sha256": "c4114867729982384eac64346a26d0bd44f4d3ef1c8860c7acda2d53e995b85d"
+    },
+    {
+      "path": "outputs/poc-first-qa/extended-catalog-ui/03-vessel-search.ax.txt",
+      "bytes": 5230,
+      "sha256": "335c83d42907bdab05d01cc47e1ca70f7a471f7ce317302b83f2c9c002b2e9cf"
+    },
+    {
+      "path": "outputs/poc-first-qa/extended-catalog-ui/03-vessel-search.png",
+      "bytes": 479739,
+      "sha256": "5f0e501b4a3a5e484cd2450d1f0858efaaceadca71d70310887c83a9f5647e32"
+    },
+    {
+      "path": "outputs/poc-first-qa/extended-catalog-ui/04-ixi-native-model.ax.txt",
+      "bytes": 5473,
+      "sha256": "ebc3a5470dee2348be0a07be30a240288170e59448570b61be22b422dab87849"
+    },
+    {
+      "path": "outputs/poc-first-qa/extended-catalog-ui/04-ixi-native-model.png",
+      "bytes": 569091,
+      "sha256": "d8cc24a001761a7f73fac101b682b65821d8592964748a9cef869ae9886c2ac2"
+    }
+  ]
+}

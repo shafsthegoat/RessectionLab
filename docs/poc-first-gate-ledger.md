@@ -25,7 +25,7 @@ reused; source files remain outside Git. The confirmed author identities are
 | 0. Inspect and reuse | Latest merged workbench pulled; source/model/corpus audit completed | Actual source, runtime, reference and failure records; maintain original data/roles. |
 | 1. Inferred anatomy in Electron | Software POC passed: three real cases/four retained model runs hash/grid checked; actual current GUI interaction and separate native save/reopen completed | Anatomical accuracy, coverage review and population validation remain open; no clinical gate is implied. |
 | 2. Narrow two-tool episode | Software POC passed: actual tool actions, play/pause/scrub, two exact-state branches, native save/fresh process reopen, screenshots and independent source/geometry/accounting checks | Physiological calibration and native-collection adapter remain open; the bounded canonical-bundle episode is operable. |
-| 3. Real/virtual corpus diversity | Nine-person catalog passes source/resume checks; one additional IXI host has real brain/vessel estimates and a uniform FK overlay operated/saved/reopened in Electron | Reviewed anatomical/location diversity, accepted host/tissue support and tissue-conditioned pilot remain open. Count unique people separately from variants. |
+| 3. Real/virtual corpus diversity | Separate frozen ten-person catalog passes source/resume and Electron discovery/open checks; IXI has real brain/vessel estimates and a uniform FK overlay operated/saved/reopened in Electron | Reviewed anatomical/location diversity, accepted host/tissue support and tissue-conditioned pilot remain open. Count unique people separately from variants. |
 | 4. Mechanics and planning | Existing search and negative PPO results retained | Named physical/observation measurements, independent tests and matched observation/budget comparisons before promoting new learning. |
 | 5. Robotics | Deferred until matched trajectories and mature simulator exist | Rights, embodiment, timestamps and frozen-baseline evidence; images/labels alone cannot close this stage. |
 
@@ -73,6 +73,15 @@ save/fresh-process reopen. It adds one generated lesion and zero people. The
 host's registration and anatomy remain unreviewed; source references and model
 estimates stay separate, with fusion disabled.
 
+The [ten-person release](../artifacts/patient-corpus-ten-person-v1/RESULT.md)
+adds that acquired IXI candidate through a fixed declaration without rewriting
+the frozen nine-person history. It exposes source-checked cases in the native
+Cases browser, verifies bundle bytes before a catalog open, and limits search
+to each case's own display fields. Independent metadata/reader tests and actual
+BTC/IXI GUI opens pass. Presence across saved grids is counted separately from
+accepted fusion; all accepted-fusion combination counts remain zero. Generated
+descendants and protected identities/roles remain excluded.
+
 ## Accuracy and publication gate
 
 Publication readiness requires claims with matching evidence, not a test count
@@ -91,11 +100,11 @@ remain open until measured or reviewed evidence is available.
 
 ## Next executable actions
 
-Add the newly constructed IXI candidate through an explicit versioned corpus
-release without rewriting the frozen nine-person catalog. Preserve tissue-model
-failures; source-reported health and uniform diffusion do not establish an
-individually reviewed tumor-free, tissue-conditioned host. Then expand the real
-tranche, measure anatomical diversity and run the qualified biophysical pilot
+Complete bounded model inference and native GUI review for the two next frozen
+TRAIN acquired CT/MR pairs, preserving the separate ten-person release. Preserve
+tissue-model failures; source-reported health and uniform diffusion do not
+establish an individually reviewed tumor-free, tissue-conditioned host. Expand
+the real tranche, measure anatomical diversity and run the qualified biophysical pilot
 described in the construction plan. Expand
 mechanics along the operative workflow with explicit sources, observations and
 validation requirements. Do not restart the failed PPO campaign merely to

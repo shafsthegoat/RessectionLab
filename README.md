@@ -22,6 +22,13 @@ also opens fresh brain/vessel estimates and an explicitly generated lesion overl
 in Electron, with native branch save/reopen. Tissue-conditioned growth and
 anatomical review remain open.
 
+The [ten-person catalog release](artifacts/patient-corpus-ten-person-v1/RESULT.md)
+now adds IXI through a separate frozen release and exposes all ten source cases
+in **Cases**, searchable by name, dataset and available anatomy. Catalog opens
+verify exact bundle checksums. Actual Electron checks cover BTC discovery/open
+and separate IXI vessel-model inspection; source checking does not accept anatomy
+as truth or count generated variants as new people.
+
 A local macOS anatomy workbench for acquired patient imaging, saved segmentations,
 and linked 3D/source-image inspection.
 

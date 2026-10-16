@@ -37,7 +37,7 @@ async function startEngine() {
   await fs.chmod(transferDir, 0o700);
   const bundled = path.join(process.resourcesPath, 'research-engine', 'ressectionlab-engine');
   const repo = path.resolve(__dirname, '../..');
-  caseLibrary = new CaseLibrary(app.getPath('userData'), path.join(repo, 'outputs/poc-cases'), [path.join(app.getPath('downloads'),'RessectionLab-Native-Anatomy-sub-06/patient-anatomy.json')]);
+  caseLibrary = new CaseLibrary(app.getPath('userData'), path.join(repo, 'outputs/poc-cases'), [path.join(app.getPath('downloads'),'RessectionLab-Native-Anatomy-sub-06/patient-anatomy.json')], repo);
   const runDir = path.join(app.getPath('userData'), 'research-runs');
   const config = app.isPackaged
     ? { executable: bundled, cwd: app.getPath('userData'), transferDir, runDir }

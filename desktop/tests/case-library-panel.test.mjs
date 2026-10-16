@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict';
+import {before,after,test} from 'node:test';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {createServer} from 'vite';
+import React from 'react';
+import {renderToStaticMarkup} from 'react-dom/server';
+let server,cache,filter,Panel;
+before(async()=>{
+  cache=await fs.mkdtemp(path.join(os.tmpdir(),'catalog-panel-'));
+  server=await createServer({root:fileURLToPath(new URL('../',import.meta.url)),cacheDir:cache,logLevel:'error',server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
+  const module=await server.ssrLoadModule('/src/WorkbenchPanels.tsx');filter=module.filterLibraryCases;Panel=module.CaseLibraryPanel;
+});
+after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true,force:true});});
+const rows=[
+  {id:'opaque-btc',title:'BTC-ds001226-sub-PAT05-preop',recent:false,bytes:9392262,qualifiedCatalog:true,source:'BTC',anatomy:['brain','tumor'],missingAnatomy:['vessels'],receipt:{unrelatedEvidence:'IXI265 Lausanne vessel source cohort'}},
+  {id:'opaque-ixi',title:'IXI265-Guys-0845',recent:false,bytes:75491573,qualifiedCatalog:true,source:'IXI',anatomy:['brain','vessels'],missingAnatomy:['tumor']},
+  {id:'opaque-native',title:'Saved study café',recent:true,bytes:1234,native:true,timepoint:'intraoperative',scanCount:3},
+];
+test('search matches each case name, own source and present anatomy, never unrelated receipt evidence or missing layers',()=>{
+  assert.deepEqual(filter(rows,'   IXI  vessels ').map(r=>r.id),['opaque-ixi']);
+  assert.deepEqual(filter(rows,'pat05').map(r=>r.id),['opaque-btc']);
+  assert.deepEqual(filter(rows,'BTC tumor').map(r=>r.id),['opaque-btc']);
+  assert.deepEqual(filter(rows,'vessel').map(r=>r.id),['opaque-ixi']);
+  assert.deepEqual(filter(rows,'Lausanne'),[]);assert.deepEqual(filter(rows,'cafe').map(r=>r.id),['opaque-native']);
+  assert.equal(filter(rows,'').length,3);assert.deepEqual(filter(rows,'BTC vessels'),[]);
+});
+test('Cases displays source-check and unreviewed-anatomy wording while retaining native browse and recent affordances',()=>{
+  const html=renderToStaticMarkup(React.createElement(Panel,{cases:rows,onOpen(){},onBrowse(){},busy:false}));
+  assert.match(html,/Search cases by name, source or anatomy/);assert.match(html,/Open a saved case/);
+  assert.match(html,/Source checked · anatomy unreviewed/);assert.match(html,/Brain \+ Vessels/);assert.match(html,/Recently opened/);assert.match(html,/3 scans/);
+  assert.match(html,/independence across datasets remain unverified/);assert.doesNotMatch(html,/validated patients|independent people|accepted anatomy|unrelatedEvidence/);
+});
+test('open controls remain disabled while busy and an empty library retains browse guidance',()=>{
+  const busy=renderToStaticMarkup(React.createElement(Panel,{cases:rows,onOpen(){},onBrowse(){},busy:true}));
+  assert.equal((busy.match(/<button[^>]*disabled=""/g)??[]).length,4);
+  const empty=renderToStaticMarkup(React.createElement(Panel,{cases:[],onOpen(){},onBrowse(){},busy:false}));assert.match(empty,/Open or import imaging to start a case/);
+});

@@ -32,6 +32,12 @@ from .workspace_bundle import _case_layout, _json, MAX_PRIMARY, MAX_ATTACHMENT_B
 from .workspace_imaging import source_registration
 
 VERSION='patient-corpus-qualification-v1'
+DEFAULT_RELEASE='existing-nine-v1'
+IXI_RELEASE='existing-nine-plus-ixi265-v1'
+RELEASES=(DEFAULT_RELEASE,IXI_RELEASE)
+IXI_RELEASE_PATH='manifests/patient-corpus-releases/existing-nine-plus-ixi265-v1.json'
+IXI_RELEASE_SHA256='2c426f82e160be5b11bb19d9d5c4d2ac804ae9d85011cf46a4dc83904adbea84'
+IXI_PLAN_HASH='sha256:a1a2623d05270881d4291a1037d303578cb27a4f63d52cce28b5f5db251d8755'
 UNKNOWN='UNKNOWN'
 READABLE_ROLES={'TRAIN','DEVELOPMENT'}
 ANATOMY=('brain','tumor','skull','vessels','ventricles')
@@ -58,19 +64,19 @@ def canonical_patient(value):
     text=str(value)
     patterns=((r'UCSF[-:]PDGM[-:]0*(\d+)','UCSF-PDGM'),(r'BTC.*?(sub-PAT\d+)','BTC'),
         (r'Lausanne[-:](sub-\d+)','Lausanne'),(r'SynthRAD2023[-:](1B[A-Z]\d+)','SynthRAD2023'),
-        (r'ReMIND[-:]0*(\d+)','ReMIND'))
+        (r'ReMIND[-:]0*(\d+)','ReMIND'),(r'IXI[-:]?0*(\d+)','IXI'))
     for pattern,family in patterns:
         match=re.search(pattern,text,re.I)
         if match:
             identifier=match.group(1)
-            if family in {'UCSF-PDGM','ReMIND'}:identifier=f'{int(identifier):03d}'
+            if family in {'UCSF-PDGM','ReMIND','IXI'}:identifier=f'{int(identifier):03d}'
             if family=='BTC':identifier='sub-PAT'+f"{int(re.search(r'\d+',identifier).group()):02d}"
             if family=='Lausanne':identifier=identifier.lower()
             return family+':'+identifier
     return None
 
 
-def require_candidate(candidate):
+def require_candidate(candidate,release=DEFAULT_RELEASE):
     """Do not stat/open a payload until its explicit participant/role passes."""
     patient=candidate.get('patient_group','');role=candidate.get('role')
     blocked=(re.search(r'upenn|utsw',patient,re.I) or patient in
@@ -78,19 +84,34 @@ def require_candidate(candidate):
         re.search(r'resect.*(?:case)?0*4(?:\D|$)',patient,re.I))
     _require(not blocked and role in READABLE_ROLES,'PROTECTED_ROLE','Protected or undeclared participant is not opened')
     _require(canonical_patient(patient)==patient,'PARTICIPANT_ID','A canonical source-family participant ID is required')
-    _require(ADMITTED_ROLES.get(patient)==role,'NOT_ALLOWLISTED','This participant and role are outside the frozen nine-person tranche')
+    _require(release in RELEASES,'RELEASE_UNKNOWN','Only explicitly frozen corpus releases are supported')
+    if release==IXI_RELEASE:
+        frozen,_=_frozen_release()
+        admitted={row['patient_group']:row for row in [*frozen['base_candidates'],frozen['additional_candidate']]}
+        _require(candidate==admitted.get(patient),'NOT_ALLOWLISTED','Candidate differs from the exact frozen release declaration')
+    else:
+        _require(ADMITTED_ROLES.get(patient)==role,'NOT_ALLOWLISTED','This participant and role are outside the frozen nine-person tranche')
     _require(candidate.get('existing_materialized') is True,'NEW_PARTICIPANT_NOT_ADMITTED','This tranche only reuses previously materialized people')
-    _require(candidate.get('rights',{}).get('license') in {'CC0','CC0-1.0','CC-BY-4.0','CC-BY-NC-4.0'},'RIGHTS_UNRESOLVED','Source rights must be explicitly established')
+    allowed_licenses={'CC0','CC0-1.0','CC-BY-4.0','CC-BY-NC-4.0'}|({'CC-BY-SA-3.0'} if release==IXI_RELEASE else set())
+    _require(candidate.get('rights',{}).get('license') in allowed_licenses,'RIGHTS_UNRESOLVED','Source rights must be explicitly established')
     _require(str(candidate['rights'].get('source','')).startswith('https://'),'RIGHTS_UNRESOLVED','Source rights require an attributed source')
 
 
-def require_manifest(manifest,candidate):
-    require_candidate(candidate)
+def require_manifest(manifest,candidate,release=DEFAULT_RELEASE):
+    require_candidate(candidate,release)
     _require(canonical_patient(manifest.get('case_id'))==candidate['patient_group'],'PATIENT_MISMATCH','Saved series belongs to another participant')
     metadata=manifest.get('metadata',{})
     _require(metadata.get('is_synthetic') is False,'NOT_ACQUIRED_IMAGING','Only explicitly acquired imaging is eligible')
+    generated_fields={'virtual_glioma','virtual_geometry','generated_descendant'}
+    _require(not any(key in metadata and metadata[key] is not False and metadata[key] is not None for key in generated_fields),
+        'GENERATED_DESCENDANT','Generated descendants are not independent acquired people')
+    _require(not any(str(ref.get('provenance','')).casefold() in {'simulated','generated'} for ref in manifest.get('source_refs',[])),
+        'GENERATED_DESCENDANT','Simulated source artifacts are not acquired patient sources')
+    for layer in metadata.get('anatomy_layers',{}).values():
+        tokens=set(re.findall(r'[a-z]+',str(layer.get('provenance','')).casefold()))
+        _require(not tokens&{'simulated','generated'},'GENERATED_DESCENDANT','Generated anatomy cannot be qualified as acquired patient anatomy')
     role_keys={'role','roles','source_role','split_role','development_role','outer_role','benchmark_role','cohort_role','data_role','usage_role','partition','split'}
-    identity_keys={'case_id','patient_id','patient_group','participant_id','subject','canonical_person'}
+    identity_keys={'case_id','patient_id','patient_group','person_group','participant_id','subject','canonical_person','host_patient_group'}
     forbidden={'select','selection','eval','evaluation','test','testing','val','validation','holdout','heldout','final','stress','restricted','unopened','transfer'}
     collection_keys={'source_collection','collection','dataset','source_dataset'}
     prose_keys={'reason','rationale','description','note','notes'}
@@ -198,15 +219,47 @@ def default_plan(root):
     return plan
 
 
+def _frozen_release(root=None):
+    return _metadata(Path(root) if root is not None else Path(__file__).resolve().parents[2],IXI_RELEASE_PATH,IXI_RELEASE_SHA256)
+
+
+def release_plan(root,release=DEFAULT_RELEASE):
+    """Fixed release selection only; no caller-supplied admission documents."""
+    _require(release in RELEASES,'RELEASE_UNKNOWN','Only explicitly frozen corpus releases are supported')
+    base=default_plan(root)
+    if release==DEFAULT_RELEASE:return base
+    frozen,release_binding=_frozen_release(root)
+    _require(base['plan_hash']==frozen['base_plan_hash'],'BASE_RELEASE_CHANGED','The nine-person parent plan changed')
+    expected_base=[{k:v for k,v in row.items() if k!='bundle_sha256'} for row in frozen['base_candidates']]
+    _require(base['candidates']==expected_base,'BASE_RELEASE_CHANGED','The original nine declarations changed')
+    for row in frozen['metadata_evidence']:_metadata(Path(root),row['path'],row['sha256'])
+    cohort,_=_metadata(Path(root),frozen['additional_candidate']['participant']['cohort_path'],frozen['additional_candidate']['participant']['cohort_sha256'])
+    people=[row for row in cohort['members'] if row['person_group']=='IXI:265']
+    _require(len(people)==1 and people[0]['role']=='TRAIN' and people[0]['training_admitted'] is False,'PROTECTED_ROLE','IXI265 frozen role differs')
+    base.pop('plan_hash')
+    base.update(release_id=release,parent_plan_hash=frozen['base_plan_hash'],scope='frozen_nine_plus_existing_ixi265_only',
+        candidates=sorted([*frozen['base_candidates'],frozen['additional_candidate']],key=lambda row:row['patient_group']),
+        existing_materialized_people=10,newly_cataloged_existing_people=1,virtual_descendants_admitted=False)
+    base['metadata_evidence'] += [release_binding,*frozen['metadata_evidence']]
+    base['plan_hash']=semantic_digest(base);validate_plan(base)
+    return base
+
+
 def validate_plan(plan):
     _require(plan.get('schema')==VERSION+'.plan','PLAN_SCHEMA','Unknown qualification plan')
     _require(plan.get('plan_hash')==semantic_digest({k:v for k,v in plan.items() if k!='plan_hash'}),'PLAN_HASH','Qualification plan changed')
     candidates=plan.get('candidates',[])
-    _require(isinstance(candidates,list) and 0<len(candidates)<=9,'PLAN_LIMIT','At most nine existing people are admitted per tranche')
+    release=plan.get('release_id',DEFAULT_RELEASE)
+    _require(release in RELEASES,'RELEASE_UNKNOWN','Only explicitly frozen corpus releases are supported')
+    _require(isinstance(candidates,list) and 0<len(candidates)<=(10 if release==IXI_RELEASE else 9),'PLAN_LIMIT','Candidate count exceeds the frozen release')
     identities=[row.get('patient_group') for row in candidates]
     _require(len(identities)==len(set(identities)),'DUPLICATE_PATIENT','Multiple bundle representations cannot count as different people')
+    if release==IXI_RELEASE:
+        _require(plan['plan_hash']==IXI_PLAN_HASH,'RELEASE_PLAN_CHANGED','The fixed release plan cannot be edited or expanded')
+        _require(set(identities)==set(ADMITTED_ROLES)|{'IXI:265'},'RELEASE_MEMBERS','The explicit release must contain exactly the frozen ten people')
+        _require(plan.get('virtual_descendants_admitted') is False and plan.get('new_patient_acquisition_allowed') is False,'RELEASE_SCOPE','New acquisitions and descendants are not released')
     for row in candidates:
-        require_candidate(row);_relative(row['bundle'])
+        require_candidate(row,release);_relative(row['bundle'])
         for source in row.get('source_files',[]):_relative(source['path'])
 
 
@@ -217,30 +270,33 @@ def _atomic_json(path,value):
     os.replace(temporary,path)
 
 
-def _manifest_preflight(path,candidate,*,check_arrays=True):
+def _manifest_preflight(path,candidate,*,check_arrays=True,release=DEFAULT_RELEASE):
     """Reject wrong identity and protected nested roles before numeric decoding."""
     with ZipFile(path) as archive:
         _require(archive.getinfo('manifest.json').file_size<=MAX_METADATA_BYTES,'METADATA_LIMIT','Bundle manifest too large')
-        manifest=_json(archive.read('manifest.json'));require_manifest(manifest,candidate)
+        manifest=_json(archive.read('manifest.json'));require_manifest(manifest,candidate,release)
         document=extension_layout(archive) if 'workspace.json' in archive.namelist() else None
         if document:
             for row in document['images']:
                 with ZipFile(BytesIO(archive.read(row['member']))) as nested:
                     _require(nested.getinfo('manifest.json').file_size<=MAX_METADATA_BYTES,'METADATA_LIMIT','Series manifest too large')
-                    require_manifest(_json(nested.read('manifest.json')),candidate)
+                    require_manifest(_json(nested.read('manifest.json')),candidate,release)
                     if check_arrays:_case_layout(nested,MAX_ATTACHMENT_BYTES)
         if check_arrays:_case_layout(archive,MAX_PRIMARY,extension=document is not None)
     return manifest
 
 
 def _input_binding(root,candidate,plan):
-    require_candidate(candidate)
+    release=plan.get('release_id',DEFAULT_RELEASE)
+    require_candidate(candidate,release)
     bindings=[]
     for row in plan.get('metadata_evidence',[]):
         _,binding=_metadata(root,row['path'],row['sha256']);bindings.append(binding)
     bundle=_payload_path(root,candidate['bundle'],patient=candidate['patient_group'])
     _require(bundle.stat().st_size<=MAX_BUNDLE_BYTES,'BUNDLE_LIMIT','Bundle exceeds bounded qualification limit')
-    _manifest_preflight(bundle,candidate,check_arrays=False)
+    if candidate.get('bundle_sha256'):
+        _require(file_sha256(bundle)==candidate['bundle_sha256'],'BUNDLE_HASH','Bundle differs from the frozen release before decoding')
+    _manifest_preflight(bundle,candidate,check_arrays=False,release=release)
     participant=candidate.get('participant',{})
     if 'path' in participant:
         path=root/_relative(participant['path']);digest=file_sha256(path)
@@ -257,7 +313,8 @@ def _input_binding(root,candidate,plan):
         bindings.append({'path':source['path'],'sha256':digest,'bytes':path.stat().st_size,'role':source['role']})
     digest=file_sha256(bundle)
     return {'plan_hash':plan['plan_hash'],'candidate':candidate,'metadata_and_sources':bindings,
-            'bundle_sha256':digest,'bundle_bytes':bundle.stat().st_size,'validation_code_sha256':_code_bindings()}
+            'bundle_sha256':digest,'bundle_bytes':bundle.stat().st_size,'validation_code_sha256':_code_bindings(),
+            **({'release_id':release} if release!=DEFAULT_RELEASE else {})}
 
 
 def _code_bindings():
@@ -272,6 +329,7 @@ def _layer_details(declared):
             'weights_license_choice','weights_license_source','upstream_code_commit','weights_version','variant')
     return {'source_sha256':declared.get('source_sha256'),'source_role':declared.get('source_role'),
         'coverage':thaw_json(declared.get('coverage')),
+        **{key:thaw_json(declared[key]) for key in ('source_license','source_lineage','registration_status','policy_use','training_lineage') if key in declared},
         'model':{key:thaw_json(model[key]) for key in fields if key in model} if isinstance(model,Mapping) else None}
 
 
@@ -284,7 +342,8 @@ def _mask_record(name,kind,mask,case,provenance,review,extra=None):
 
 
 def _qualification(root,candidate,binding):
-    path=root/candidate['bundle'];_manifest_preflight(path,candidate)
+    release=binding.get('release_id',DEFAULT_RELEASE)
+    path=root/candidate['bundle'];_manifest_preflight(path,candidate,release=release)
     case,_,workspace=load_workspace(path)
     _require(case.case_id==candidate['case_id'],'PATIENT_MISMATCH','Primary case ID differs from metadata-only declaration')
     cases=[case]+([] if workspace is None else [item.case for item in workspace['sources']])
@@ -295,6 +354,8 @@ def _qualification(root,candidate,binding):
         for observed in current.source_refs:
             if observed.provenance=='observed':
                 _require(observed.sha256 in source_by_hash,'SOURCE_LINEAGE','Observed source is absent from the same-person acquisition record')
+                declared_license=source_by_hash[observed.sha256].get('license')
+                _require(declared_license is None or observed.license==declared_license,'RIGHTS_MISMATCH','Saved source rights differ from the frozen per-file declaration')
         ref=next((r for r in current.source_refs if r.source_id=='structural'),None)
         _require(ref is not None and ref.provenance=='observed' and ref.sha256 in source_by_hash,'IMAGE_LINEAGE','Saved image is not bound to this participant acquisition')
         normalize=lambda value:'CC0-1.0' if value=='CC0' else value
@@ -307,7 +368,8 @@ def _qualification(root,candidate,binding):
         del original
         imaging.append({'modality':current.metadata.get('selected_modality',UNKNOWN),'source_sha256':ref.sha256,
             'source_path':source['path'],'shape':list(current.mri.shape),'affine_ras_mm':ras.tolist(),
-            'frame_hash':structural_frame_hash(current),'array_hash':array_digest(current.mri),'source_voxels_equal':True})
+            'frame_hash':structural_frame_hash(current),'array_hash':array_digest(current.mri),'source_voxels_equal':True,
+            **({'license':ref.license} if release!=DEFAULT_RELEASE else {})})
     layers=[];tumor_masks=[];brain_masks=[];metadata_layers=case.metadata.get('anatomy_layers',{})
     for name,mask in case.compartments.items():
         declared=metadata_layers.get(name,{})
@@ -326,6 +388,19 @@ def _qualification(root,candidate,binding):
         evidence.assert_matches(case);brain_masks.append((identity,evidence.mask))
         layers.append(_mask_record(identity,'brain',evidence.mask,case,evidence.provenance,evidence.review_status,
             {**_layer_details(evidence.metadata),'model_sha256':evidence.model_sha256,'evidence_hash':evidence.evidence_hash,'selected_as_working_brain':False}))
+    primary_present=sorted({row['kind'] for row in layers if row['present'] and row['kind'] in ANATOMY})
+    if release!=DEFAULT_RELEASE and workspace:
+        # Per-series masks stay on their saved native grid; no resampling/fusion.
+        for source in workspace['sources']:
+            for name,mask in source.case.compartments.items():
+                declared=source.case.metadata.get('anatomy_layers',{}).get(name,{})
+                refs=[r for r in source.case.source_refs if r.source_id=='supplied_target_annotation']
+                layers.append(_mask_record(name,declared.get('kind','unknown'),mask,source.case,
+                    declared.get('provenance','unknown'),declared.get('review_status',declared.get('anatomical_review','unreviewed')),
+                    {**_layer_details(declared),'series_id':source.identity(case),'modality':source.modality,
+                     'scope':'display-only-native-grid','accepted_constraint':False,
+                     'annotation_sha256':refs[0].sha256 if refs else None,
+                     'annotation_license':refs[0].license if refs else None}))
     present=sorted({row['kind'] for row in layers if row['present'] and row['kind'] in ANATOMY})
     missing=sorted(set(ANATOMY)-set(present));location={'lobe':UNKNOWN,'hemisphere':UNKNOWN,'anatomical_region':UNKNOWN,'centroid_ras_mm':None}
     conflicts=[]
@@ -345,7 +420,10 @@ def _qualification(root,candidate,binding):
             association,registration=source_registration(case,source.case)
             registrations.append({'source_modality':source.modality,'source_frame_hash':structural_frame_hash(source.case),
                 'reference_frame_hash':structural_frame_hash(case),'same_person':association['samePersonVerified'],**registration,
-                'independently_validated_registration':False})
+                'independently_validated_registration':False,
+                **({'series_id':source.identity(case),'same_person_source_identity_verified':True,
+                    'saved_registration_candidate_status':source.case.metadata.get('registration_candidate',{}).get('classification'),
+                    'anatomical_registration_accepted':False} if release!=DEFAULT_RELEASE else {})})
     originals=[] if workspace is None else workspace.get('originals',[])
     embedded_hashes={row.sha256 for row in originals}
     _require(file_sha256(path)==binding['bundle_sha256'],'INPUT_CHANGED','Bundle changed during qualification')
@@ -366,7 +444,10 @@ def _qualification(root,candidate,binding):
             'No new inference, registration optimization, planning, training or downloads performed.',
             'Engineering qualification does not establish clinical or independent model accuracy.']+
             ([] if originals else ['Legacy bundle references original files externally; exact original bytes are not embedded.']),
-        'clinical_use_permitted':False,'training_admission_established':False,'gui_reopen_verified_by_this_pipeline':False}
+        'clinical_use_permitted':False,'training_admission_established':False,'gui_reopen_verified_by_this_pipeline':False,
+        **({'release_id':release,'anatomy_present_on_primary':primary_present,
+            'anatomy_presence_scope':'Saved same-person layers across separate native grids; registration, completeness and constraints are not accepted.',
+            'training_admitted':False,'virtual_descendant':False,'coverage':candidate.get('coverage','Completeness not established')} if release!=DEFAULT_RELEASE else {})}
 
 
 def run_qualification(root,output,plan,*,limit=None):
@@ -411,6 +492,14 @@ def run_qualification(root,output,plan,*,limit=None):
                       'newly_acquired_people':0,'rejected':counts['rejected'],'pending':counts['pending'],
                       'anatomical_truth_accepted_people':0,'anatomical_presence_combinations':combinations},
             'cross_cohort_independence':'unresolved; namespaced participants only','protected_imaging_opened':False}
+        if plan.get('release_id')==IXI_RELEASE:
+            catalog.update(release_id=IXI_RELEASE,parent_plan_hash=plan['parent_plan_hash'],
+                presence_combination_meaning='Same-person presence across saved grids; not accepted fusion or complete anatomy')
+            catalog['counts'].update(newly_cataloged_existing_people=1,virtual_descendants_counted_as_people=0,
+                people_with_portable_source_originals=sum(row['originals']['portable_originals_complete'] for row in qualified),
+                verified_embedded_original_files=sum(row['originals']['embedded_count'] for row in qualified),
+                same_person_presence_across_saved_grids=combinations,
+                accepted_fused_anatomy_combinations={name:0 for name in combinations})
         catalog['catalog_hash']=semantic_digest(catalog)
         version=output/'catalogs'/f"{catalog['catalog_hash'].removeprefix('sha256:')}.json"
         if not version.exists():_atomic_json(version,catalog)
@@ -438,7 +527,11 @@ def query_catalog(output,*,text='',anatomy=None,modality=None,role=None,status=N
     path=(Path(output)/'catalog.sqlite').resolve()
     with sqlite3.connect(path.as_uri()+'?mode=ro',uri=True) as connection:
         rows=[json.loads(row[0]) for row in connection.execute('SELECT payload FROM cases ORDER BY patient_group')]
-    return [row for row in rows if (not text or text.casefold() in json.dumps(row).casefold()) and
+    def searchable(row):
+        # Shared release evidence is an audit binding, not this person's identity.
+        return json.dumps({key:row.get(key) for key in ('patient_group','case_id','role','status',
+            'anatomy_present','missing_anatomy','imaging','layers','tumor_location','rights','overlap_caveat')}).casefold()
+    return [row for row in rows if (not text or text.casefold() in searchable(row)) and
         (not anatomy or anatomy in row.get('anatomy_present',[])) and
         (not modality or modality in {image['modality'] for image in row.get('imaging',[])}) and
         (not role or row['role']==role) and (not status or row['status']==status)]

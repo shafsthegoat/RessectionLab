@@ -30,7 +30,21 @@ the acquired MRI and executes the same two-tool runtime; branches, native saves
 and fresh-process reopen work. Three SynthSeg memory failures remain recorded;
 GM/WM, ventricles, individual host review and tissue-conditioned growth remain
 open. This is one generated lesion on one real host, adding zero patients. The
-frozen searchable catalog remains nine people pending an explicit new release.
+original nine-person catalog remains immutable; the separate ten-person release
+below now includes the acquired IXI source candidate.
+
+**Ten-person source catalog in Electron, October 16:**
+The [separate frozen release and app check](artifacts/patient-corpus-ten-person-v1/RESULT.md)
+qualify ten existing named source identities, with no new acquisition or virtual
+people counted. Cases now searches their own names, datasets and listed anatomy;
+catalog opens verify the frozen file checksum. Actual GUI checks find all six BTC
+cases, open BTC05's acquired T1/threshold-derived source annotation, and open IXI's
+native vessel estimate separately from source labels. Independent metadata/reader
+review passes; the 40 historical nine-person files remain unchanged. Seven people
+have brain/tumor presence, one brain/skull and one brain/vessels across separate
+grids. No fused anatomy or anatomical truth is independently accepted. Two further
+frozen TRAIN CT/MR pairs have passed source preparation; inference and GUI review
+are separate work and do not change this catalog.
 
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and
