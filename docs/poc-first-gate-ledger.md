@@ -181,3 +181,11 @@ is the next separately bounded accuracy measurement: fit before/during
 ultrasound from image signal only, freeze identity and rigid transforms, then
 score every published full-tag landmark without refitting or exclusions.
 Prepared header/source and generated controls are not an acquired-data result.
+
+The [one actual image-only fit](../artifacts/poc-resect-case3-image-registration-v1/RESULT.md)
+is now frozen from commit `fa44c9e`: 1.301515 seconds, 1.481 GiB sampled family
+RSS and improved image NMI, with no declared QC flag. Independent saved-fit
+checking passes 24 controls. The separate all-point scorer passes 52 generated
+controls and is committed before any full-tag coordinates are opened. Its next
+release measures rigid-versus-identity landmark error without another fit;
+image similarity alone closes no anatomical-accuracy gate.

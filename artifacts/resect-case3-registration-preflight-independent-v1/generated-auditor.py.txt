@@ -1,0 +1,324 @@
+"""Independent Case3 registration preflight controls; no acquired arrays/tags.
+
+Initial counterexamples use the retained source snapshot. Final controls require
+explicit pins and exercise only generated arrays, headers and subprocesses.
+"""
+from __future__ import annotations
+
+import argparse
+from contextlib import ExitStack
+from copy import deepcopy
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import tempfile
+import time
+import types
+from unittest.mock import patch
+
+import numpy as np
+
+ROOT=Path(__file__).resolve().parents[1]
+BASE=ROOT/'artifacts/resect-case3-registration-preflight-independent-v1'
+RUNNER=ROOT/'scripts/poc_resect_case3_image_registration.py'
+SNAPSHOT=BASE/'initial-runner.py.txt'
+SNAPSHOT_SHA='6de7f253efa7db3806fbe46fb63344d2c4ef9106462608e31c35ba4ad45a516c'
+
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def load(path):
+    sys.path.insert(0,str(ROOT/'scripts'));sys.path.insert(0,str(ROOT/'src'))
+    module=types.ModuleType('independent_case3_registration')
+    module.__file__=str(RUNNER)
+    exec(compile(Path(path).read_bytes(),str(path),'exec'),module.__dict__)
+    module.__file__=str(path)
+    return module
+
+
+def candidate(module,inverse=True):
+    forward=np.eye(4);forward[:3,3]=[3.,-2.,1.]
+    record={'schema':module.SCHEMA+'-candidate','case_id':module.CASE,
+        'preflight_sha256':'a'*64,'fit_release_sha256':'b'*64,'runner_sha256':module.digest(module.__file__),
+        'sources_rechecked_after_each_decode':True,
+        'source_fixity_after_fit':{name:item['sha256'] for name,item in module.INPUTS.items()},
+        'runtime':{'generated_fixture':True},
+        'report':{'before_RAS_mm_to_during_RAS_mm':forward.tolist(),'landmarks_used':False,'configuration':module.CONFIG,
+            'fixed':'before_resection_US','moving':'during_resection_US',
+            'sampling_direction':'before-RAS output physical point -> during-RAS input physical point',
+            'identity_baseline_before_RAS_to_during_RAS':np.eye(4).tolist()}}
+    if inverse: record['report']['during_RAS_mm_to_before_RAS_mm']=np.linalg.inv(forward).tolist()
+    return record
+
+
+def supervision(module):
+    return {'status':'completed','exit_code':0,'worker_reaped':True,'samples':2,
+        'sampled_family_rss_stop_bytes':module.LIMITS['sampled_family_rss_stop_bytes'],
+        'peak_family_rss_bytes_sampled':1024}
+
+
+class CompletedProcessDouble:
+    pid=99999999
+    waited=False
+    def poll(self):return 0
+    def wait(self,timeout=None):self.waited=True;return 0
+
+
+def initial_findings():
+    assert sha(SNAPSHOT)==SNAPSHOT_SHA
+    module=load(SNAPSHOT)
+    findings=[]
+    for kind in ('missing_inverse','inconsistent_inverse'):
+        with tempfile.TemporaryDirectory(prefix='case3-independent-') as directory:
+            output=Path(directory)
+            record=candidate(module,inverse=kind!='missing_inverse')
+            if kind=='inconsistent_inverse':record['report']['during_RAS_mm_to_before_RAS_mm']=np.eye(4).tolist()
+            module.publish(output/'candidate.json',record)
+            module.publish(output/'supervision.json',supervision(module))
+            module.seal_attempt(output,'completed',0,'a'*64,'b'*64)
+            assert (output/'frozen-transform.json').exists()
+            findings.append({'name':kind,'actual':'success freeze published','expected':'reject before freeze'})
+    with tempfile.TemporaryDirectory(prefix='case3-independent-') as directory:
+        child=CompletedProcessDouble()
+        with patch.object(module.subprocess,'Popen',return_value=child),patch.object(module.os,'killpg',side_effect=PermissionError('generated cleanup failure')):
+            try:
+                module.supervise_sampled(['generated'],Path(directory)/'log',deadline=time.monotonic()+5,
+                    on_start=lambda _:None,observer=lambda *_:{'worker_rss_bytes':10,'family_rss_bytes':10,'available_bytes':100,'live_members':[]})
+            except PermissionError:
+                assert not child.waited
+                findings.append({'name':'killpg_permission_error','actual':'exception escapes; process.wait not reached; no supervision record returned',
+                    'expected':'retain cleanup failure, attempt reap, return durable failure evidence'})
+            else:raise AssertionError('initial cleanup counterexample not reproduced')
+    record={'schema':'independent-resect-case3-initial-findings-v1','status':'reproduced_prefit_defects',
+        'source_snapshot_sha256':SNAPSHOT_SHA,'counterexamples':findings,
+        'other_source_review_observations':[
+            'Initial viewed worker omitted source rehash after decode/fit; owner had already added it before retained snapshot. No source-mutation reproduction claimed against snapshot.',
+            'Snapshot run_fit does not route ordinary SIGTERM through termination_cleanup; source observation only at this stage.',
+            'Snapshot runtime identity is version/path metadata without Python or SimpleITK binary hashes.'],
+        'acquired_arrays_or_tags_opened':False,'optimizer_executed':False,'real_worker_spawned':False}
+    target=BASE/'initial-findings.json'
+    with target.open('x') as stream:json.dump(record,stream,indent=2);stream.write('\n')
+    print(json.dumps({'path':str(target.relative_to(ROOT)),'sha256':sha(target),'counterexamples':len(findings)},indent=2))
+
+
+def expect_rejection(call):
+    try:call()
+    except (ValueError,TypeError):return
+    raise AssertionError('invalid generated input accepted')
+
+
+def final_controls(module):
+    checks=[]
+    cohort={'members':[{'patient_group':module.CASE,'case_id':'Case3','role':'TRAIN','all_timepoints_and_derivatives_grouped':True}]}
+    for kind in ('case','source_hash','source_path','role','duplicate','cohort_pin'):
+        identity=module.CASE;inputs=deepcopy(module.INPUTS);roles=deepcopy(cohort);pin=module.COHORT_SHA
+        if kind=='case':identity='RESECT:Case4'
+        elif kind=='source_hash':inputs['before']['sha256']='0'*64
+        elif kind=='source_path':inputs['during']['path']='data/other.nii.gz'
+        elif kind=='role':roles['members'][0]['role']='SELECT'
+        elif kind=='duplicate':roles['members']*=2
+        else:pin='0'*64
+        expect_rejection(lambda:module.validate_identity(identity,inputs,roles,pin));checks.append('identity_'+kind)
+    import nibabel as nib
+    h=nib.Nifti1Header();h.set_data_shape((9,10,11));h.set_data_dtype(np.float32);h.set_xyzt_units('mm')
+    affine=np.array([[0.,-1.5,0.,7.],[2.,0.,0.,-5.],[0.,0.,2.5,3.],[0.,0.,0.,1.]])
+    h.set_sform(affine,code=1);h.set_zooms((2.,1.5,2.5));h['qform_code']=0;h['pixdim'][0]=0
+    h['vox_offset']=352;h['scl_slope']=.9;h['scl_inter']=0
+    with patch.object(nib,'load',side_effect=AssertionError('header check opened array proxy')):
+        observed=module.inspect_header(h.binaryblock)
+        assert observed['selected_affine']==affine.tolist() and observed['inactive_qform_reconstructed'] is False
+        assert observed['image_array_accessed'] is False and observed['qform_qfac_raw']==0
+        for field,value in [('sform_code',0),('qform_code',1),('vox_offset',360),('scl_slope',0)]:
+            changed=h.copy();changed[field]=value
+            if field=='qform_code':changed['pixdim'][0]=1
+            expect_rejection(lambda:module.inspect_header(changed.binaryblock));checks.append('header_'+field)
+    checks.append('active_sform_inactive_invalid_qfac_preserved')
+    # Point/voxel direction check without running any registration optimizer.
+    import SimpleITK as sitk
+    from resectionlab.preprocessing import to_sitk,sitk_transform_to_ras,RAS_TO_LPS
+    a=np.zeros((9,10,11),np.float32);a[6,4,5]=1
+    image=to_sitk(a,affine)
+    for index in ((0,0,0),(6,4,5),(8,9,10)):
+        expected=(RAS_TO_LPS@np.r_[nib.affines.apply_affine(affine,index),1.])[:3]
+        np.testing.assert_allclose(image.TransformIndexToPhysicalPoint(index),expected,atol=1e-10)
+    shift=affine[:3,0]*2
+    transform=sitk.TranslationTransform(3,tuple(RAS_TO_LPS[:3,:3]@shift))
+    matrix=sitk_transform_to_ras(transform)
+    np.testing.assert_allclose(matrix[:3,3],shift,atol=1e-10)
+    sampled=module.rigid.resample(a,affine,a,affine,transform,label=True)
+    assert np.argwhere(sampled==1).tolist()==[[4,4,5]]
+    before=nib.affines.apply_affine(affine,[4,4,5]);during=nib.affines.apply_affine(affine,[6,4,5])
+    np.testing.assert_allclose(nib.affines.apply_affine(matrix,before),during)
+    np.testing.assert_allclose(nib.affines.apply_affine(np.linalg.inv(matrix),during),before)
+    checks.append('generated_RAS_LPS_and_fixed_to_moving_sampling_direction')
+    # The worker read guard denies tags globally and every unlisted data path.
+    with tempfile.TemporaryDirectory(prefix='case3-independent-') as directory:
+        data=Path(directory)/'data';data.mkdir();allowed=data/'before.nii.gz';allowed.write_bytes(b'generated')
+        guard=module.patient_read_guard(data,[allowed])
+        guard('open',(str(allowed),'rb',os.O_RDONLY))
+        for path,mode,flags in [(data/'other.nii.gz','rb',os.O_RDONLY),(Path(directory)/'points.tag','rb',os.O_RDONLY),
+                                (allowed,'wb',os.O_WRONLY),(allowed,'rb',os.O_RDWR)]:
+            try:guard('open',(str(path),mode,flags))
+            except PermissionError:checks.append('patient_read_guard_'+path.name+'_'+str(flags))
+            else:raise AssertionError('unallowed read or write admitted')
+    for kind in ('missing_inverse','inconsistent_inverse','direction','identity','runtime','source_fixity','landmarks','config'):
+        with tempfile.TemporaryDirectory(prefix='case3-independent-') as directory,patch.object(module,'runtime_record',return_value={'generated_fixture':True}):
+            output=Path(directory);record=candidate(module)
+            if kind=='missing_inverse':del record['report']['during_RAS_mm_to_before_RAS_mm']
+            elif kind=='inconsistent_inverse':record['report']['during_RAS_mm_to_before_RAS_mm']=np.eye(4).tolist()
+            elif kind=='direction':record['report']['sampling_direction']='during-to-before'
+            elif kind=='identity':record['report']['identity_baseline_before_RAS_to_during_RAS'][0][3]=2
+            elif kind=='runtime':record['runtime']={'changed':True}
+            elif kind=='source_fixity':record['source_fixity_after_fit']['before']='0'*64
+            elif kind=='landmarks':record['report']['landmarks_used']=True
+            else:record['report']['configuration']={}
+            module.publish(output/'candidate.json',record);module.publish(output/'supervision.json',supervision(module))
+            expect_rejection(lambda:module.seal_attempt(output,'completed',0,'a'*64,'b'*64))
+            assert not (output/'frozen-transform.json').exists();checks.append('seal_reject_'+kind)
+    with tempfile.TemporaryDirectory(prefix='case3-independent-') as directory,patch.object(module,'runtime_record',return_value={'generated_fixture':True}):
+        output=Path(directory);module.publish(output/'candidate.json',candidate(module));module.publish(output/'supervision.json',supervision(module))
+        module.seal_attempt(output,'completed',0,'a'*64,'b'*64)
+        expect_rejection(lambda:module.evaluation_gate(output,{}))
+        before_hash=sha(output/'frozen-transform.json')
+        try:module.publish(output/'frozen-transform.json',{'changed':True})
+        except FileExistsError:pass
+        else:raise AssertionError('freeze overwritten')
+        assert sha(output/'frozen-transform.json')==before_hash
+        checks.append('success_freeze_exclusive_and_evaluation_still_separately_gated')
+    for state,code in [('timeout',-9),('memory_stop',-9),('cleanup_failed',0),('worker_failed',1),('supervisor_failed',None)]:
+        with tempfile.TemporaryDirectory(prefix='case3-independent-') as directory:
+            output=Path(directory);module.publish(output/'candidate.json',candidate(module))
+            module.seal_attempt(output,state,code,'a'*64,'b'*64)
+            assert not (output/'frozen-transform.json').exists();expect_rejection(lambda:module.evaluation_gate(output,{}))
+            checks.append('failed_state_never_freezes_'+state)
+    with tempfile.TemporaryDirectory(prefix='case3-independent-') as directory:
+        child=CompletedProcessDouble()
+        with patch.object(module.subprocess,'Popen',return_value=child),patch.object(module.os,'killpg',side_effect=PermissionError('generated cleanup failure')):
+            result=module.supervise_sampled(['generated'],Path(directory)/'log',deadline=time.monotonic()+5,
+                on_start=lambda _:None,observer=lambda *_:{'worker_rss_bytes':10,'family_rss_bytes':10,'available_bytes':100,'live_members':[]})
+        assert result['status']=='cleanup_failed' and result['worker_reaped'] and child.waited
+        checks.append('killpg_permission_failure_retained_and_reaped')
+    return checks
+
+
+def worker_continuity_controls(module):
+    checks=[]
+    for change in ('none','during_decode','during_fit','runtime','code'):
+        with tempfile.TemporaryDirectory(prefix='case3-independent-') as directory,ExitStack() as stack:
+            root=Path(directory);inputs={};arrays={};headers={}
+            for key in ('before','during'):
+                path=root/(key+'.bin');path.write_bytes(b'generated-'+key.encode())
+                inputs[key]={'path':path.name,'bytes':path.stat().st_size,'sha256':sha(path)}
+                headers[key]={'expected_expanded_bytes':352+4*4**3,'selected_affine':np.eye(4).tolist()}
+            output=root/'output';output.mkdir();pre=root/'pre.json';rel=root/'release.json';pre.write_text('{}');rel.write_text('{}')
+            runtime={'generated_fixture':True};baseline={'headers':headers,'runtime':runtime,'runner_sha256':module.digest(module.__file__)}
+            calls=[]
+            actual_verify=module.verify_source_file
+            def verify(path,entry,*args,**kwargs):calls.append(Path(path).name);return actual_verify(path,entry,*args,**kwargs)
+            def decode(path,digest):
+                if change=='during_decode':Path(path).write_bytes(b'changed-source')
+                return types.SimpleNamespace(affine=np.eye(4)),np.ones((4,4,4),np.float32),352+4*4**3
+            fitted=False
+            def fit(*args):
+                nonlocal fitted
+                fitted=True
+                if change=='during_fit':(root/inputs['before']['path']).write_bytes(b'changed-source')
+                return None,candidate(module)['report']
+            def runtime_value():return {'changed':True} if change=='runtime' and fitted else runtime
+            def code_check():
+                if change=='code' and fitted:raise ValueError('generated code pin changed')
+            for obj,name,value in [(module,'ROOT',root),(module,'INPUTS',inputs),(module,'require_fit_release',lambda *_:baseline),
+                (module,'preflight',lambda:baseline),(module.sys,'addaudithook',lambda *_:None),(module.rigid,'checked_source',decode),
+                (module,'verify_source_file',verify),(module,'fit_arrays',fit),(module,'runtime_record',runtime_value),(module,'verify_metadata',code_check)]:
+                stack.enter_context(patch.object(obj,name,value))
+            if change=='none':
+                module.worker(pre,rel,output)
+                assert (output/'candidate.json').exists() and calls==['before.bin','during.bin','before.bin','during.bin']
+                assert json.loads((output/'candidate.json').read_text())['source_fixity_after_fit']=={k:v['sha256'] for k,v in inputs.items()}
+            else:
+                expect_rejection(lambda:module.worker(pre,rel,output))
+                assert not (output/'candidate.json').exists()
+                if change=='during_decode':assert not fitted
+            checks.append('worker_source_runtime_code_continuity_'+change)
+    return checks
+
+
+def subprocess_controls(module):
+    results={}
+    with tempfile.TemporaryDirectory(prefix='case3-independent-') as directory:
+        base=Path(directory)
+        for name,command,cap,deadline in [
+            ('timeout',[sys.executable,'-c','import time;time.sleep(10)'],None,.2),
+            ('memory_stop',[sys.executable,'-c','import time;x=bytearray(32*1024**2);time.sleep(10)'],24*1024**2,3),
+            ('success',[sys.executable,'-c','pass'],None,3)]:
+            result=module.supervise_sampled(command,base/(name+'.log'),deadline=time.monotonic()+deadline,on_start=lambda _:None,rss_stop=cap)
+            assert result['status']==('completed' if name=='success' else name)
+            assert result['worker_reaped'] and result['process_group_cleanup_attempted']
+            assert result['samples']>0 and result['minimum_available_memory_bytes_sampled']>0
+            results[name]=result
+        # Real SIGTERM reaches supervisor, whose handler must reap its own worker
+        # and kill the worker's child. All three are generated sleeping processes.
+        program=r'''
+import sys,time,json,importlib.util
+from pathlib import Path
+spec=importlib.util.spec_from_file_location('qa',sys.argv[1]);qa=importlib.util.module_from_spec(spec);spec.loader.exec_module(qa)
+runner=qa.load(qa.RUNNER);base=Path(sys.argv[2])
+child_code="import subprocess,sys,time;from pathlib import Path;p=subprocess.Popen([sys.executable,'-c','import time;time.sleep(20)']);Path(sys.argv[1]).write_text(str(p.pid));time.sleep(20)"
+result=runner.supervise_sampled([sys.executable,'-c',child_code,str(base/'grandchild.pid')],base/'sigterm.log',deadline=time.monotonic()+10,on_start=lambda pid:(base/'worker.pid').write_text(str(pid)))
+(base/'sigterm-result.json').write_text(json.dumps(result))
+'''
+        supervisor=subprocess.Popen([sys.executable,'-c',program,__file__,directory],stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+        try:
+            until=time.monotonic()+5
+            while not (base/'grandchild.pid').exists() and time.monotonic()<until:time.sleep(.02)
+            assert (base/'grandchild.pid').exists()
+            supervisor.send_signal(signal.SIGTERM)
+            stdout,stderr=supervisor.communicate(timeout=5);assert supervisor.returncode==0,(stdout,stderr)
+            result=json.loads((base/'sigterm-result.json').read_text())
+            assert result['status']=='supervisor_failed' and result['worker_reaped'] and 'SIGTERM' in result['error']
+            import psutil
+            for filename in ('worker.pid','grandchild.pid'):
+                pid=int((base/filename).read_text())
+                try:
+                    child=psutil.Process(pid)
+                    until=time.monotonic()+1
+                    while child.is_running() and child.status()!=psutil.STATUS_ZOMBIE and time.monotonic()<until:time.sleep(.02)
+                    assert not child.is_running() or child.status()==psutil.STATUS_ZOMBIE
+                except psutil.NoSuchProcess:pass
+            results['SIGTERM_and_descendant_cleanup']=result
+        finally:
+            if supervisor.poll() is None:supervisor.kill();supervisor.wait()
+            for filename in ('worker.pid','grandchild.pid'):
+                if (base/filename).exists():
+                    try:os.kill(int((base/filename).read_text()),signal.SIGKILL)
+                    except ProcessLookupError:pass
+    return results
+
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--initial',action='store_true')
+    parser.add_argument('--generated-checks',action='store_true')
+    args=parser.parse_args()
+    if args.initial:initial_findings()
+    elif args.generated_checks:
+        module=load(RUNNER)
+        before=sha(RUNNER)
+        checks=final_controls(module)+worker_continuity_controls(module)
+        processes=subprocess_controls(module)
+        assert sha(RUNNER)==before,'runner changed during audit'
+        result={'schema':'independent-resect-case3-generated-preflight-controls-v1','status':'pass',
+            'runner_sha256':before,'auditor_sha256':sha(__file__),'checks':checks,'subprocess_controls':processes,
+            'acquired_arrays_or_tags_opened':False,'registration_optimizer_executed':False,
+            'initial_findings_sha256':sha(BASE/'initial-findings.json'),'initial_source_snapshot_sha256':sha(SNAPSHOT)}
+        target=BASE/'generated-controls.json'
+        with target.open('x') as stream:json.dump(result,stream,indent=2);stream.write('\n')
+        print(json.dumps({'status':'pass','checks':len(checks),'process_controls':len(processes),'sha256':sha(target)},indent=2))
+    else:parser.error('choose --initial or --generated-checks')

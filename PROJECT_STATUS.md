@@ -148,6 +148,17 @@ independent runner/process checks pass, including memory stops and cleanup.
 No acquired arrays, landmark coordinates or actual fit were used in preparation;
 source frame checks do not yet establish anatomical alignment.
 
+**One image-only ultrasound fit frozen, October 16:**
+The [single Case3 fit](artifacts/poc-resect-case3-image-registration-v1/RESULT.md)
+completed in 1.301515 seconds with 1,590,722,560 sampled family RSS bytes;
+neither declared resource stop fired. Matched image NMI rose from 1.069655 to
+1.078429. This is image similarity, not measured landmark accuracy. Independent
+saved-fit checking passes 24 controls; the separate scorer passes 52 generated
+controls. All full-tag coordinates remain unopened at this committed stage.
+Identity, rigid transform, source bytes and scoring rules are fixed before
+the separately released all-point comparison. There is one fit and no retry,
+new patient or anatomical acceptance.
+
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and
 [patient construction plan](docs/patient-corpus-plan.md) supersede the historical

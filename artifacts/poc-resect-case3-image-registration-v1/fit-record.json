@@ -1,0 +1,90 @@
+{
+  "schema": "poc-resect-case3-image-only-fit-record-v1",
+  "status": "completed_unaccepted_candidate",
+  "fit_attempts": 1,
+  "automatic_retries": 0,
+  "patient_group": "RESECT:Case3",
+  "role": "TRAIN",
+  "new_acquisitions": 0,
+  "new_people": 0,
+  "neural_training_or_model_inference": false,
+  "landmark_coordinates_opened": false,
+  "anatomical_alignment_accepted": false,
+  "prepared_source_commit": "fa44c9e",
+  "fit_release": {
+    "path": "artifacts/poc-resect-case3-image-registration-v1/root-fit-release.json",
+    "sha256": "bc196c57fb4701c161f50bcb4b3edae03b5988b864308a0c217e9c83ac8962e0",
+    "bytes": 2066
+  },
+  "output_inventory": [
+    {
+      "path": "outputs/poc-resect-case3-image-registration-v1/candidate.json",
+      "sha256": "17a9599de644b9d7d4cd3fd9b356630adb3e38180496b9501f914520056949ef",
+      "bytes": 28186
+    },
+    {
+      "path": "outputs/poc-resect-case3-image-registration-v1/frozen-transform.json",
+      "sha256": "e6648339d69841985f8fa644ae5d69168422ce12ca5dadc4659b275a8b9cd8af",
+      "bytes": 28460
+    },
+    {
+      "path": "outputs/poc-resect-case3-image-registration-v1/result.json",
+      "sha256": "ea8e57322989e6b5f580c67181201deead9235a4829315781bc7aad0f598b12b",
+      "bytes": 572
+    },
+    {
+      "path": "outputs/poc-resect-case3-image-registration-v1/started.json",
+      "sha256": "360b23b64d11d468a989340f1c825067632196ecfae999144badfc7b408ca0f5",
+      "bytes": 1253
+    },
+    {
+      "path": "outputs/poc-resect-case3-image-registration-v1/supervision.json",
+      "sha256": "e675d52669dfef2442e31d019e98c8d14eb705a470692510f0bc37a1cf2c9fe9",
+      "bytes": 563
+    },
+    {
+      "path": "outputs/poc-resect-case3-image-registration-v1/worker.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "supervision": {
+    "elapsed_seconds": 1.3015150830615312,
+    "exit_code": 0,
+    "memory_control": "sampled_stop_enforcement",
+    "minimum_available_memory_bytes_sampled": 6302629888,
+    "os_hard_memory_limit": false,
+    "peak_family_rss_bytes_sampled": 1590722560,
+    "peak_worker_rss_bytes_sampled": 1590722560,
+    "pid": 24203,
+    "process_group_cleanup_attempted": true,
+    "sampled_family_rss_stop_bytes": 4294967296,
+    "samples": 7,
+    "sampling_interval_seconds": 0.2,
+    "schema": "resect-case3-image-registration-v1-supervision",
+    "status": "completed",
+    "worker_reaped": true
+  },
+  "registration_metrics": {
+    "elapsed_registration_seconds": 0.021308332914486527,
+    "optimizer_stop_reason": "RegularStepGradientDescentOptimizerv4: Step too small after 30 iterations. Current step (0.00195312) is less than minimum step (0.002).",
+    "matched_objective": {
+      "after": 1.0784286829478935,
+      "before": 1.0696549865908977,
+      "metric": "fixed-bin histogram NMI32, same paired voxels",
+      "overlap_retained_fraction": 1.0,
+      "voxels": 9052
+    },
+    "center_displacement_mm": 2.50136305746248,
+    "rotation_degrees": 5.929371484268228,
+    "flags": [],
+    "native_fixed_positive_signal_support_voxels": 7259948
+  },
+  "sources_rechecked_after_each_decode": true,
+  "source_fixity_after_fit": {
+    "before": "9fbb4d63cb26d324c7c8281a2b2b932a55a5f3abf4a8fd571a0e0518ac996192",
+    "during": "431ae1e23bd2984801c0b0d2720c9f4c240a404bab5fe37f5d8afdac521ddb20"
+  },
+  "candidate_and_full_transform_stay_outside_git": true,
+  "next": "Separate fixed all-point source landmark scoring; image similarity is not anatomical accuracy."
+}
