@@ -175,3 +175,9 @@ described in the construction plan. Expand
 mechanics along the operative workflow with explicit sources, observations and
 validation requirements. Do not restart the failed PPO campaign merely to
 produce training activity.
+
+The [fixed Case3 observation test](../artifacts/resect-case3-image-registration-preparation-v1/RESULT.md)
+is the next separately bounded accuracy measurement: fit before/during
+ultrasound from image signal only, freeze identity and rigid transforms, then
+score every published full-tag landmark without refitting or exclusions.
+Prepared header/source and generated controls are not an acquired-data result.

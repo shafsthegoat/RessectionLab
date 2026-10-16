@@ -1,0 +1,30 @@
+{
+  "schema": "independent-resect-case3-initial-findings-v1",
+  "status": "reproduced_prefit_defects",
+  "source_snapshot_sha256": "6de7f253efa7db3806fbe46fb63344d2c4ef9106462608e31c35ba4ad45a516c",
+  "counterexamples": [
+    {
+      "name": "missing_inverse",
+      "actual": "success freeze published",
+      "expected": "reject before freeze"
+    },
+    {
+      "name": "inconsistent_inverse",
+      "actual": "success freeze published",
+      "expected": "reject before freeze"
+    },
+    {
+      "name": "killpg_permission_error",
+      "actual": "exception escapes; process.wait not reached; no supervision record returned",
+      "expected": "retain cleanup failure, attempt reap, return durable failure evidence"
+    }
+  ],
+  "other_source_review_observations": [
+    "Initial viewed worker omitted source rehash after decode/fit; owner had already added it before retained snapshot. No source-mutation reproduction claimed against snapshot.",
+    "Snapshot run_fit does not route ordinary SIGTERM through termination_cleanup; source observation only at this stage.",
+    "Snapshot runtime identity is version/path metadata without Python or SimpleITK binary hashes."
+  ],
+  "acquired_arrays_or_tags_opened": false,
+  "optimizer_executed": false,
+  "real_worker_spawned": false
+}

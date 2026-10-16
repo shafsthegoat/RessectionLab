@@ -1,0 +1,53 @@
+{
+  "schema": "resect-case3-image-registration-preparation-receipt-v1",
+  "status": "ready_for_root_preflight_review_and_separate_one_fit_release",
+  "files": {
+    "scripts/poc_resect_case3_image_registration.py": {
+      "sha256": "e17d755eeadb6a3d1fd365b7a3b4dc31f9e27c4f93afdb6045d8f6e27ef9612f",
+      "bytes": 28893
+    },
+    "tests/test_poc_resect_case3_image_registration.py": {
+      "sha256": "bec991c70320d981e6d37cf65d4db988a50535f5744d6ccc27aab0771244f908",
+      "bytes": 18279
+    },
+    "artifacts/resect-case3-image-registration-preparation-v1/header-preflight.json": {
+      "sha256": "bffa3f73d3b54a73de961f2524b4606be5a1525e10c678b444c2ba86bd8d7a5c",
+      "bytes": 8548
+    },
+    "artifacts/resect-case3-image-registration-preparation-v1/header-preflight-rss-v2.json": {
+      "sha256": "ef9e0cd6029e869a6364de6c946f0284bc0a7ca1f700695a8bb75b52e60fd7ba",
+      "bytes": 9539
+    },
+    "artifacts/resect-case3-image-registration-preparation-v1/prospective-protocol.json": {
+      "sha256": "b1b27118ae79b6d6ab576c97298749ba5f126d8fac985788c147e42961e14bd7",
+      "bytes": 10640
+    },
+    "artifacts/resect-case3-image-registration-preparation-v1/generated-controls-r1.json": {
+      "sha256": "97ae20f19db1cc48f99bbba9bee6813348082948885e5cb9e2697e94b06d654f",
+      "bytes": 1051
+    }
+  },
+  "pair_float32_bytes": 204159024,
+  "planning_bytes": 2449908288,
+  "fit_limits": {
+    "hard_rss_limit_enforced": false,
+    "maximum_compressed_pair_bytes": 33554432,
+    "maximum_expanded_bytes_each": 134217728,
+    "maximum_record_bytes": 1048576,
+    "maximum_source_voxels_each": 32000000,
+    "memory_planning_envelope_bytes": 4294967296,
+    "memory_sampling_interval_seconds": 0.2,
+    "preflight_seconds": 30.0,
+    "sampled_family_rss_stop_bytes": 4294967296,
+    "worker_wall_seconds": 240.0,
+    "workers": 1
+  },
+  "generated_tests_passed": 30,
+  "independent_generated_controls_passed": 36,
+  "independent_generated_process_controls_passed": 4,
+  "acquired_array_decodes": 0,
+  "tag_coordinates_read": 0,
+  "acquired_fits": 0,
+  "anatomical_alignment_accepted": false,
+  "preliminary_receipt_policy": "header-preflight.json preserved with its earlier source identity; use header-preflight-rss-v2.json for release."
+}

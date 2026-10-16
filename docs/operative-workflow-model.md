@@ -14,6 +14,22 @@ Hebb's original technique report distinguishes ultrasonic fragmentation/aspirati
 
 Serial intraoperative MRI documented regional deformation during surgery. Clinical tool-tracking research also reports limitations from brain shift and interrupted tracking visibility. A historical navigation image, a current observation, an estimated transform, and simulated physical truth are distinct. Touching a region with an instrument is not itself proof that the region was removed. [S6, S7]
 
+RESECT's full methods describe tracked ultrasound probes with sterile covers,
+initial imaging often before dural opening, and saline in the cavity for later
+acquisitions. Patient positioning helped retain that fluid. An ultrasound
+information action therefore needs field preparation, probe/tracking status and
+an acquisition phase; it cannot be modeled as a universally available perfect
+scan. These are reported cohort practices, not confirmed states or timing for
+each source file. The supplied landmarks measure sparse anatomical
+correspondence, and the full before/during set extends the shorter set rather
+than forming an independent fitting/evaluation split. [S11]
+
+The dataset creator specifies millimeter world coordinates, reference-image
+points first, and matching world coordinates between the supplied MINC and
+NIfTI representations. Registration tests must retain that direction and check
+each image's active header transform before scoring. Filename order alone is
+insufficient to establish coordinate semantics. [S14]
+
 ## Phase map and simulator contract
 
 The following states, preconditions, and records are **engineering proposals inferred from the cited evidence**, not measured transition laws. Numbering expresses dependencies; phases 7–12 recur and can overlap. No fixed surgical durations are inferred from edited videos. Each phase must retain entry/exit times, actors, evidence references, and a reason for transitions or interruption.
@@ -98,6 +114,7 @@ All sources checked 2026-10-16 using web search/open. “Indexed text” means t
 | S8 | Japan Awake Surgery Conference, [Guidelines for Awake Surgery](https://www.awake-surgery.jp/wp-content/uploads/2024/01/Guidelines-for-Awake-Surgery.pdf), 2024-01-15; DOI 10.2176/jns-nmc.2023-0111. | Official society PDF; team/selection/task structure, no dosing model. |
 | S9 | Sanai et al., [Functional outcome after language mapping](https://pubmed.ncbi.nlm.nih.gov/18172171/), 2008-01-03; DOI 10.1056/NEJMoa067819. | Original 250-patient study abstract; variability, not transferable safe-distance or deficit rules. |
 | S10 | Karschnia et al., [RANO tissue-sampling recommendations](https://pmc.ncbi.nlm.nih.gov/articles/PMC10849105/), 2023-11; DOI 10.1016/S1470-2045(23)00453-9. | Indexed consensus recommendations; specimen–image–time provenance. |
-| S11 | Xiao et al., [RESECT clinical database](https://aapm.onlinelibrary.wiley.com/doi/10.1002/mp.12268), online 2017-04-09. | Publisher dataset abstract; serial MRI/ultrasound observation support. |
+| S11 | Xiao et al., [RESECT clinical database](https://aapm.onlinelibrary.wiley.com/doi/10.1002/mp.12268), online 2017-04-09; [author-hosted full manuscript](https://users.encs.concordia.ca/~hrivaz/Xiao_Database_MedPhys.pdf). | Full acquisition/landmark methods read; reported field preparation and sparse correspondence, not tool-force trajectories or universal case states. |
 | S12 | Juvekar et al., [ReMIND database](https://www.nature.com/articles/s41597-024-03295-z), 2024-05-14. | Publisher dataset description; intraoperative imaging, not complete operative trajectories. |
 | S13 | Incekara et al., [Randomized intraoperative B-mode ultrasound trial](https://pubmed.ncbi.nlm.nih.gov/34094939/), 2021-05-19; DOI 10.3389/fonc.2021.649797. | Primary trial abstract; evidence for an information action, not perfect residual detection. |
+| S14 | Xiao, [RESECT creator's dataset instructions](https://yimingxiao.weebly.com/data-repositories.html), accessed 2026-10-16. | Reference/moving landmark order, millimeter world coordinates and MINC/NIfTI correspondence; no clinical registration tolerance. |

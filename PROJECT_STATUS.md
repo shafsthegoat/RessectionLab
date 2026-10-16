@@ -139,6 +139,15 @@ identities preserved. No IXI acceptance or new real-host solve follows. A
 separate IBSR20 comparison prospectus remains blocked at access/terms and
 decoder/adapter preparation; no acquisition or model run occurred.
 
+**Observed ultrasound alignment test prepared, October 16:**
+The [fixed RESECT Case3 protocol](artifacts/resect-case3-image-registration-preparation-v1/RESULT.md)
+qualifies two existing TRAIN ultrasound sources by byte identity and headers.
+One image-only rigid candidate will be compared with identity using the full
+landmark set only after the transform is frozen. Thirty generated tests and
+independent runner/process checks pass, including memory stops and cleanup.
+No acquired arrays, landmark coordinates or actual fit were used in preparation;
+source frame checks do not yet establish anatomical alignment.
+
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and
 [patient construction plan](docs/patient-corpus-plan.md) supersede the historical

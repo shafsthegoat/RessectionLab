@@ -1,0 +1,16 @@
+{
+  "schema": "resect-case3-image-registration-generated-controls-v1",
+  "status": "passed",
+  "command": ".venv/bin/python -m pytest -q tests/test_poc_resect_case3_image_registration.py",
+  "passed": 30,
+  "elapsed_pytest_seconds": 1.78,
+  "source_pins": {
+    "scripts/poc_resect_case3_image_registration.py": "e17d755eeadb6a3d1fd365b7a3b4dc31f9e27c4f93afdb6045d8f6e27ef9612f",
+    "tests/test_poc_resect_case3_image_registration.py": "bec991c70320d981e6d37cf65d4db988a50535f5744d6ccc27aab0771244f908"
+  },
+  "controls": "Generated headers, arrays, points, source mutations, fixed rigid signal control, support/coverage failures, wrong identity/hash/role, audited tag/label refusals, transform-direction/inverse/identity validation, exclusive freeze/evaluation gate, sampled memory stop, descendant cleanup, observer failure, PermissionError cleanup, timeout/failure sealing.",
+  "acquired_image_arrays_read": false,
+  "acquired_landmark_coordinates_read": false,
+  "acquired_registration_run": false,
+  "clinical_or_anatomical_validation": false
+}
