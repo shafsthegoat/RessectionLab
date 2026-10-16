@@ -1,0 +1,500 @@
+{
+  "N4_raw": {
+    "shape": [
+      48,
+      48,
+      48
+    ],
+    "dtype": "float32",
+    "C_order_bytes_sha256": "4aeb0fef14923187982250aa20b93638d9bb90f3aad44fd1c92166077c69b4ce"
+  },
+  "mask_boundary": {
+    "native_pixeltype": "float",
+    "numpy_dtype": "float32",
+    "binary_values": [
+      0.0,
+      1.0
+    ],
+    "values_exact": true,
+    "support_exact": true,
+    "frame": {
+      "candidate_affine_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 0.0,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    },
+    "representation": {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "float32",
+      "C_order_bytes_sha256": "3abe92bfedbe5cef1b82cc50935a6cd2b72278c728fecf4adf8a2c97ab4a55ab"
+    }
+  },
+  "native_frame": {
+    "candidate_affine_ras_mm": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_affine_ras_mm": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "affine_max_abs_difference": 0.0,
+    "eight_cell_corner_errors_mm": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "output_saved_with_original_affine": true,
+    "array_permutation_or_resampling": false
+  },
+  "N4_parameters": {
+    "shrink_factor": 4,
+    "convergence": {
+      "iters": [
+        30,
+        20,
+        10
+      ],
+      "tol": 1e-07
+    },
+    "spline_param": 150,
+    "rescale_intensities": false,
+    "return_bias_field": false,
+    "verbose": true
+  },
+  "input_unchanged": true,
+  "Atropos_parameters": {
+    "i": "KMeans[3]",
+    "m": "[0.1,1x1x1]",
+    "c": "[10,0]",
+    "priorweight": 0.0,
+    "r": 0,
+    "v": 1
+  },
+  "raw_class_validation": {
+    "classes": [
+      {
+        "class": 1,
+        "voxels": 19224,
+        "corrected_intensity_mean": 49.1870231628418,
+        "declared_assumption": "csf_like_intensity_estimated",
+        "anatomical_acceptance": false
+      },
+      {
+        "class": 2,
+        "voxels": 11216,
+        "corrected_intensity_mean": 103.89188385009766,
+        "declared_assumption": "gray_matter_like_intensity_estimated",
+        "anatomical_acceptance": false
+      },
+      {
+        "class": 3,
+        "voxels": 3112,
+        "corrected_intensity_mean": 170.3937225341797,
+        "declared_assumption": "white_matter_like_intensity_estimated",
+        "anatomical_acceptance": false
+      }
+    ],
+    "posterior_sum_max_abs_error": 3.036691431645977e-08,
+    "probabilities_modified": false
+  },
+  "Atropos_frames": [
+    {
+      "candidate_affine_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 0.0,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    },
+    {
+      "candidate_affine_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 0.0,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    },
+    {
+      "candidate_affine_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 0.0,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    },
+    {
+      "candidate_affine_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 0.0,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    }
+  ],
+  "generated_truth_agreement": 1.0,
+  "posteriors_semantics": "unmodified_membership_probabilities_not_PVE",
+  "raw_class_representation": {
+    "shape": [
+      48,
+      48,
+      48
+    ],
+    "dtype": "float32",
+    "C_order_bytes_sha256": "d4ece0b2bb9c052cf5b31fe47a6429c1ef930605658d1723b22ef0c965de835b"
+  },
+  "status": "generated_arm_completed",
+  "anatomy_accepted": false,
+  "patient_inputs_read": false,
+  "clinical_validity_inferred": false
+}

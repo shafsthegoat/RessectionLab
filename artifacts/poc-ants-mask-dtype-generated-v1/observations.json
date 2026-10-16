@@ -1,0 +1,86 @@
+{
+  "outcome_sha256": "f7a0844d9569ddd8add755c167d316a0c8a7fd840aef76a9ce35ed8674a53102",
+  "declaration_sha256": "81742cfbdf5f1fe8828ca5e670f2b17fc6d54cccf08943ab37cc296b2e8556d8",
+  "both_arms_exited_zero": true,
+  "comparison": {
+    "uint8": {
+      "array": {
+        "shape": [
+          48,
+          48,
+          48
+        ],
+        "dtype": "float32",
+        "C_order_bytes_sha256": "71db79b4d45d922a8b2770bacccb6e8061becd0035d0c9900a449714d501f139"
+      },
+      "maximum_absolute_change_from_generated_input": 15.64263916015625,
+      "input_equality": false,
+      "generated_class_CV": [
+        0.10542411357164383,
+        0.07292203605175018,
+        0.021441735327243805
+      ],
+      "log_nonpositive_warning": true,
+      "log_original_intensity_range": [
+        "Original intensity range:  [0, 91.9219]"
+      ]
+    },
+    "float32": {
+      "array": {
+        "shape": [
+          48,
+          48,
+          48
+        ],
+        "dtype": "float32",
+        "C_order_bytes_sha256": "4aeb0fef14923187982250aa20b93638d9bb90f3aad44fd1c92166077c69b4ce"
+      },
+      "maximum_absolute_change_from_generated_input": 36.21226501464844,
+      "input_equality": false,
+      "generated_class_CV": [
+        0.009723426774144173,
+        0.0050469329580664635,
+        0.0018691057339310646
+      ],
+      "log_nonpositive_warning": false,
+      "log_original_intensity_range": [
+        "Original intensity range:  [36.0215, 146.733]"
+      ]
+    }
+  },
+  "maximum_absolute_between_arm_difference": 36.21226501464844,
+  "arms_equal": false,
+  "float_generated_truth_agreement": 1.0,
+  "float_raw_class_validation": {
+    "classes": [
+      {
+        "class": 1,
+        "voxels": 19224,
+        "corrected_intensity_mean": 49.1870231628418,
+        "declared_assumption": "csf_like_intensity_estimated",
+        "anatomical_acceptance": false
+      },
+      {
+        "class": 2,
+        "voxels": 11216,
+        "corrected_intensity_mean": 103.89188385009766,
+        "declared_assumption": "gray_matter_like_intensity_estimated",
+        "anatomical_acceptance": false
+      },
+      {
+        "class": 3,
+        "voxels": 3112,
+        "corrected_intensity_mean": 170.3937225341797,
+        "declared_assumption": "white_matter_like_intensity_estimated",
+        "anatomical_acceptance": false
+      }
+    ],
+    "posterior_sum_max_abs_error": 3.036691431645977e-08,
+    "probabilities_modified": false
+  },
+  "float_mask_native_type": "float",
+  "mask_values_and_frames_exact_in_both_arms": true,
+  "conclusion": "Pinned native N4 requires a float mask and float32 adapter successfully completes the generated pipeline. uint8 noncrash does not make its mismatched pointer contract valid. This does not prove the cause of the prior real-source crash or anatomical validity.",
+  "patient_sources_read": false,
+  "patient_v3_run_authorized": false
+}

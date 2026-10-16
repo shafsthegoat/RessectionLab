@@ -296,6 +296,14 @@ Any resulting class posteriors are fitted membership probabilities, not physical
 partial-volume tissue fractions, and cannot automatically enter the GM/WM solver
 contract. A successful fit still requires anatomical and host review.
 
+The [subsequent generated comparison](../artifacts/poc-ants-mask-dtype-generated-v1/RESULT.md)
+isolates our N4 mask representation defect: unsigned-byte and float masks have
+equal values/frames, but the unsigned-byte pointer is interpreted incorrectly by
+the native float-mask interface. The float arm completes the generated pipeline;
+a separately prepared typed kernel changes only that API representation.
+This supports a targeted adapter repair while preserving both failed real
+protocols, source support and the tissue/host acceptance gates.
+
 Select exactly **one existing TRAIN host** with reviewed tumor-free status,
 brain/tissue support and accepted within-person frames. Prefer a qualified
 Lausanne/IXI T1–MRA host so retained vessels can constrain the same scene. If no

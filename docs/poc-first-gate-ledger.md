@@ -98,6 +98,10 @@ The [subsequent actual v2 attempt](../artifacts/poc-ixi265-atropos-positive-doma
 passes the support guard but fails at native N4 entry. Independent failure
 checking confirms no tissue candidate and unchanged sources; native compatibility
 must be resolved before another patient attempt.
+The [generated mask-type comparison](../artifacts/poc-ants-mask-dtype-generated-v1/RESULT.md)
+now establishes the adapter's native-contract defect and verifies a float-mask
+generated pipeline. A typed kernel is prepared; exact-kernel preflight and
+patient execution remain separate from this diagnostic.
 
 ## Accuracy and publication gate
 

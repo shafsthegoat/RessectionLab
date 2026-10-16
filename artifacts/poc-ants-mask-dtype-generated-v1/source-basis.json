@@ -1,0 +1,52 @@
+{
+  "upstream_ANTs_commit": "b53aad349e6767de8e1d99a392f05a82b1bf2373",
+  "upstream_ANTsPy_commit": "6341c47f07ec063c848afd69e6c5060d77617c41",
+  "primary_sources": [
+    {
+      "url": "https://raw.githubusercontent.com/ANTsX/ANTs/b53aad349e6767de8e1d99a392f05a82b1bf2373/Examples/N4BiasFieldCorrection.cxx",
+      "sha256": "a491e231b9eae58408c53d6bebf2034337443c0fda3a0050fbd47bbb0d595556",
+      "bytes": 38479,
+      "line_range_1based": [
+        64,
+        70
+      ],
+      "finding": "RealType float; image and mask both instantiated with RealType"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ANTsX/ANTs/b53aad349e6767de8e1d99a392f05a82b1bf2373/Utilities/ReadWriteData.h",
+      "sha256": "9422a37f37a9a29e1df33fb38259bc151f0d34bcce72c61c2d9ac2b59dfbbfaf",
+      "bytes": 36642,
+      "line_range_1based": [
+        197,
+        208
+      ],
+      "finding": "Image pointer read uses requested-image SmartPointer static_cast; no safe source-pixel-type conversion"
+    }
+  ],
+  "installed_API_sources": [
+    {
+      "path": "ants/segmentation/atropos.py",
+      "sha256": "bc0f65e59d04ef2fb25171338d467a2155ab17abf643d0d7040671d36eeea4ad"
+    },
+    {
+      "path": "ants/ops/bias_correction.py",
+      "sha256": "bb435f036db5e3a4211c982658a1565ac3e2d51870a3bfe7fb99acc3778556e6"
+    },
+    {
+      "path": "ants/core/ants_image_io.py",
+      "sha256": "dc4f25ae3eb1c8426eb10912d47850da6456454f9ab29f6efb205f2d7ed29e15"
+    }
+  ],
+  "native_binaries": [
+    {
+      "path": "ants/.dylibs/libpng16.16.dylib",
+      "sha256": "8064d5b03346634041aa98bae6becf6d1dc59e7259cf36057bc0b544d30adf6e"
+    },
+    {
+      "path": "ants/lib.cpython-312-darwin.so",
+      "sha256": "93f4e1418216de4f2f7b44be9f2926354a7c4bb098593904b95bb8db94f68021"
+    }
+  ],
+  "python_wrapper_finding": "N4 casts intensity to float, forwards supplied mask unchanged; Atropos separately clones mask to unsigned int",
+  "scope": "N4 native mask representation contract, not anatomy or universal crash causation"
+}

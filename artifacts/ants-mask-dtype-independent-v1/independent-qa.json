@@ -1,0 +1,367 @@
+{
+  "schema": "ants-mask-dtype-independent-generated-audit-v1",
+  "status": "pass_generated_diagnostic_recount",
+  "created_utc": "2026-10-16T08:00:11.650744+00:00",
+  "pinned_metadata_and_prior_v2_failure_unchanged": {
+    "artifacts/poc-ants-mask-dtype-generated-v1/outcome.json": {
+      "sha256": "f7a0844d9569ddd8add755c167d316a0c8a7fd840aef76a9ce35ed8674a53102",
+      "bytes": 5633,
+      "mtime_ns": 1792137314579059562
+    },
+    "artifacts/poc-ants-mask-dtype-generated-v1/observations.json": {
+      "sha256": "173a3c355b28fa38a9c89a0707f2a8ecb7716e2294dbe2e4ffa189f5fcc52332",
+      "bytes": 2874,
+      "mtime_ns": 1792137353450882015
+    },
+    "scripts/poc_ants_mask_dtype_diagnostic.py": {
+      "sha256": "1feb74ffca22a14d226bc9b52b0b5049a607225e95bb8dee6d11df5151aa003c",
+      "bytes": 15911,
+      "mtime_ns": 1792137266824024693
+    },
+    "artifacts/poc-ants-mask-dtype-generated-v1/source-basis.json": {
+      "sha256": "5e14e9cfed6b8670041b365206bd78991c8944fdce7f2704e53a1771ec525891",
+      "bytes": 2010,
+      "mtime_ns": 1792137289294354926
+    },
+    "artifacts/poc-ixi265-atropos-preparation-v1/installed-runtime-audit.json": {
+      "sha256": "8dc074db35e17be3b10f05e68e19ff61cdd44a6d1e0e744bbfc25e1da9073e79",
+      "bytes": 6026,
+      "mtime_ns": 1792135066057559785
+    },
+    "artifacts/poc-ixi265-atropos-positive-domain-run-v2/outcome.json": {
+      "sha256": "dce67f0acde21aa11fa99bdaa270108c8b53b5a091514182870e69e01fa78e21",
+      "bytes": 7588,
+      "mtime_ns": 1792136837982051321
+    },
+    "artifacts/ixi265-positive-domain-independent-v2/result-qa.json": {
+      "sha256": "9c90b165a5da5657394ee1d26f0aa35193bc072e627b3b198d5fea1018beae72",
+      "bytes": 7639,
+      "mtime_ns": 1792136985358216860
+    },
+    "artifacts/ixi265-positive-domain-independent-v2/prospective-qa.json": {
+      "sha256": "894af5ba11bb92ed6f1cc6f41ea93d5d6e6b4d49053f9cd04987dc875744a3bc",
+      "bytes": 6210,
+      "mtime_ns": 1792136459158191412
+    }
+  },
+  "generated_output_manifest_unchanged": {
+    "declaration.json": {
+      "sha256": "81742cfbdf5f1fe8828ca5e670f2b17fc6d54cccf08943ab37cc296b2e8556d8",
+      "bytes": 9684,
+      "mtime_ns": 1792137299369589672
+    },
+    "float32/attempt.json": {
+      "sha256": "4953fcea54d0929897e51a34aeeb2ee5d2521f7beb84486efc5270a185dc6767",
+      "bytes": 978,
+      "mtime_ns": 1792137314535246985
+    },
+    "float32/classes_raw.npy": {
+      "sha256": "dbf0a584404bae8362e97caa335b064905349f51ee17468f6598370b3f1a230b",
+      "bytes": 442496,
+      "mtime_ns": 1792137314402702264
+    },
+    "float32/n4_raw.npy": {
+      "sha256": "cde4b6da3870bf8baaca92190010ff8dd0aca196daa8a46521167561422e409e",
+      "bytes": 442496,
+      "mtime_ns": 1792137313685208167
+    },
+    "float32/posterior_1_raw.npy": {
+      "sha256": "74d18d9b021183541333b0d269e870dfe1320af696a5de10bff09bae4002be91",
+      "bytes": 442496,
+      "mtime_ns": 1792137314402820180
+    },
+    "float32/posterior_2_raw.npy": {
+      "sha256": "a43a6fc7062dedd580901bba27be7381e03525d06bdd2199df43286fbe057adf",
+      "bytes": 442496,
+      "mtime_ns": 1792137314402912929
+    },
+    "float32/posterior_3_raw.npy": {
+      "sha256": "468dfaa2285f3bbccb268fc295db28f405b85a035c62ca0dab3b606620d2f0c5",
+      "bytes": 442496,
+      "mtime_ns": 1792137314403013220
+    },
+    "float32/result.json": {
+      "sha256": "cd672b68e5e0d70bde4fded365a0be93ff3dc9c2b56ed6e692c16cce1d5467c1",
+      "bytes": 8371,
+      "mtime_ns": 1792137314403737673
+    },
+    "float32/stages.json": {
+      "sha256": "03a7dd729c7fdb129abdf4ea4cfe497cea459ad1d3e846bac606d62303553a87",
+      "bytes": 3930,
+      "mtime_ns": 1792137314403171344
+    },
+    "float32/temporary/antsrxpn6_2syprob01.nii.gz": {
+      "sha256": "9a5122e774a199a209e47a63158b217334f75d8eed3b8e88068e19fb2c36bc0d",
+      "bytes": 57515,
+      "mtime_ns": 1792137314390213986
+    },
+    "float32/temporary/antsrxpn6_2syprob02.nii.gz": {
+      "sha256": "184090c4db12f78196868a527a16864ef7a7e29f28557a55a242347e9c9812b2",
+      "bytes": 87262,
+      "mtime_ns": 1792137314391566434
+    },
+    "float32/temporary/antsrxpn6_2syprob03.nii.gz": {
+      "sha256": "c0db6b11da5dba0a9196093fc17c3b11dfcf07ec4b1132bb22135354563cf9fb",
+      "bytes": 114050,
+      "mtime_ns": 1792137314393053964
+    },
+    "float32/temporary/matplotlib/fontlist-v390.json": {
+      "sha256": "245446d4f0803ab8c850e8bb2488471a512e47b85121a7ececb9b98bfe0d5e20",
+      "bytes": 125096,
+      "mtime_ns": 1792137313325271920
+    },
+    "float32/worker.log": {
+      "sha256": "e0b53d114f37d50aacbc2dd797208b1af14942c9c8a54414b3149909413862c3",
+      "bytes": 12285,
+      "mtime_ns": 1792137314393151630
+    },
+    "uint8/attempt.json": {
+      "sha256": "a191feadb668dcadb417577b5aa886c74e16613173b4dcfec7a72c3f12f428d0",
+      "bytes": 975,
+      "mtime_ns": 1792137306821517533
+    },
+    "uint8/n4_raw.npy": {
+      "sha256": "56fe9f847770bac724ab73bbd0cad2dae707841636cc9ca96e8d93c16ea04994",
+      "bytes": 442496,
+      "mtime_ns": 1792137306639069657
+    },
+    "uint8/result.json": {
+      "sha256": "af0523c3aaf37f1e546c23940259e83ed97b6ce540f7b6ed9ca0a0c63c5e7ce4",
+      "bytes": 2971,
+      "mtime_ns": 1792137306639909984
+    },
+    "uint8/stages.json": {
+      "sha256": "ed635c1bb2ea86b53ea8e009ca18108e20f64c34cd63b4c7786d53573843065d",
+      "bytes": 3932,
+      "mtime_ns": 1792137306639296947
+    },
+    "uint8/temporary/matplotlib/fontlist-v390.json": {
+      "sha256": "7d57664e3fb1f51a77f2f2b19d08b333c77b94c38a57e10030605fb166247004",
+      "bytes": 125096,
+      "mtime_ns": 1792137306283033921
+    },
+    "uint8/worker.log": {
+      "sha256": "8360d223c398f1dc0e1b5d8eb4879d5b9faf5d7120b2544ff02544892aab1e17",
+      "bytes": 9342,
+      "mtime_ns": 1792137306590956155
+    }
+  },
+  "independent_source_contract": {
+    "primary_texts_independently_read_and_rehashed": [
+      {
+        "url": "https://raw.githubusercontent.com/ANTsX/ANTs/b53aad349e6767de8e1d99a392f05a82b1bf2373/Examples/N4BiasFieldCorrection.cxx",
+        "sha256": "a491e231b9eae58408c53d6bebf2034337443c0fda3a0050fbd47bbb0d595556",
+        "bytes": 38479
+      },
+      {
+        "url": "https://raw.githubusercontent.com/ANTsX/ANTs/b53aad349e6767de8e1d99a392f05a82b1bf2373/Utilities/ReadWriteData.h",
+        "sha256": "9422a37f37a9a29e1df33fb38259bc151f0d34bcce72c61c2d9ac2b59dfbbfaf",
+        "bytes": 36642
+      }
+    ],
+    "pinned_build_script_sha256": "835b51ebd3d6aa445d865d18204165146ac0e3009fd00b4fd0089747ff118786",
+    "ANTs_build_commit": "b53aad349e6767de8e1d99a392f05a82b1bf2373",
+    "installed_API_text_hashes_verified": [
+      {
+        "path": "ants/segmentation/atropos.py",
+        "sha256": "bc0f65e59d04ef2fb25171338d467a2155ab17abf643d0d7040671d36eeea4ad"
+      },
+      {
+        "path": "ants/ops/bias_correction.py",
+        "sha256": "bb435f036db5e3a4211c982658a1565ac3e2d51870a3bfe7fb99acc3778556e6"
+      },
+      {
+        "path": "ants/core/ants_image_io.py",
+        "sha256": "dc4f25ae3eb1c8426eb10912d47850da6456454f9ab29f6efb205f2d7ed29e15"
+      }
+    ],
+    "native_contract": "N4 instantiates both image and mask as float. Pointer input is statically interpreted as the requested image type before an identity-type cast filter; no safe source-pixel-type adaptation is performed.",
+    "python_boundary": "Pinned N4 wrapper casts intensity to float but forwards supplied mask unchanged. Atropos separately clones its mask to unsigned int.",
+    "scope": "Verified pinned source contract, not a universal proof of every binary crash's cause."
+  },
+  "independently_recreated_input": {
+    "values": {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "float32",
+      "C_order_bytes_sha256": "0f2501b5e86fbddd6b06f561233854cedefc6a5edb0c3874340154952595cc1f"
+    },
+    "mask": {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "bool",
+      "C_order_bytes_sha256": "73776148163e66f83e4884723af9a82edc785a6fbab2c970fd0137dad193f82f"
+    },
+    "truth": {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "uint8",
+      "C_order_bytes_sha256": "8380cc70855ac0ac465d8427dcac0f9bef86b5f1d1306493a8763d02a59c5085"
+    },
+    "masked_voxels": 33552,
+    "class_counts": [
+      19224,
+      11216,
+      3112
+    ],
+    "masked_range": [
+      36.021522521972656,
+      146.73292541503906
+    ]
+  },
+  "arms": {
+    "uint8": {
+      "native_mask_type": "unsigned char",
+      "exact_binary_support_representation": {
+        "shape": [
+          48,
+          48,
+          48
+        ],
+        "dtype": "uint8",
+        "C_order_bytes_sha256": "73776148163e66f83e4884723af9a82edc785a6fbab2c970fd0137dad193f82f"
+      },
+      "N4_raw": {
+        "shape": [
+          48,
+          48,
+          48
+        ],
+        "dtype": "float32",
+        "C_order_bytes_sha256": "71db79b4d45d922a8b2770bacccb6e8061becd0035d0c9900a449714d501f139"
+      },
+      "logged_original_masked_range": [
+        0.0,
+        91.9219
+      ],
+      "nonpositive_warning": true,
+      "independent_generated_masked_range": [
+        36.021522521972656,
+        146.73292541503906
+      ],
+      "maximum_change_from_input": 15.64263916015625,
+      "independent_float64_generated_class_CV": [
+        0.10542412236752421,
+        0.07292203758897255,
+        0.02144173855695704
+      ],
+      "N4_completed": true,
+      "Atropos_completed": false,
+      "exit_code": 0,
+      "resources": {
+        "elapsed_seconds": 7.451258458895609,
+        "peak_supervisor_and_process_family_rss_bytes_sampled": 369278976,
+        "minimum_available_memory_bytes_sampled": 7458226176,
+        "combined_output_and_temporary_bytes": 594060
+      }
+    },
+    "float32": {
+      "native_mask_type": "float",
+      "exact_binary_support_representation": {
+        "shape": [
+          48,
+          48,
+          48
+        ],
+        "dtype": "float32",
+        "C_order_bytes_sha256": "3abe92bfedbe5cef1b82cc50935a6cd2b72278c728fecf4adf8a2c97ab4a55ab"
+      },
+      "N4_raw": {
+        "shape": [
+          48,
+          48,
+          48
+        ],
+        "dtype": "float32",
+        "C_order_bytes_sha256": "4aeb0fef14923187982250aa20b93638d9bb90f3aad44fd1c92166077c69b4ce"
+      },
+      "logged_original_masked_range": [
+        36.0215,
+        146.733
+      ],
+      "nonpositive_warning": false,
+      "independent_generated_masked_range": [
+        36.021522521972656,
+        146.73292541503906
+      ],
+      "maximum_change_from_input": 36.21226501464844,
+      "independent_float64_generated_class_CV": [
+        0.009723427061086094,
+        0.0050469332738127615,
+        0.001869105834961315
+      ],
+      "N4_completed": true,
+      "Atropos_completed": true,
+      "exit_code": 0,
+      "resources": {
+        "elapsed_seconds": 7.712963999947533,
+        "peak_supervisor_and_process_family_rss_bytes_sampled": 389218304,
+        "minimum_available_memory_bytes_sampled": 7467433984,
+        "combined_output_and_temporary_bytes": 3216026
+      }
+    }
+  },
+  "maximum_paired_N4_difference": 36.21226501464844,
+  "float_arm_class_truth_exact_on_all_33552_generated_foreground_cells": true,
+  "float_raw_posteriors": [
+    {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "float32",
+      "C_order_bytes_sha256": "71c70b54d6daef23badb02323aa266504bfceb3ae194126f8a4fe6311add5141"
+    },
+    {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "float32",
+      "C_order_bytes_sha256": "8068020ff3c96ba9683077868f3b3352d9ed5793233e034866cf1c2f4d513242"
+    },
+    {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "float32",
+      "C_order_bytes_sha256": "ead28d5c75635b3b4723ff2561257035465518814e47b191146ae0309f17f57b"
+    }
+  ],
+  "float_posterior_sum_max_abs_error": 3.036691431645977e-08,
+  "float_class_corrected_intensity_means_float64": [
+    49.18702135213057,
+    103.89188178765791,
+    170.3937217986982
+  ],
+  "conclusions": [
+    "Exact pinned native N4 and wrapper source establish the float mask representation contract.",
+    "The uint8 arm exited successfully yet reported a masked source intensity range inconsistent with the exact declared support, including an impossible zero minimum. This is observed mask misinterpretation at the native interface.",
+    "The float32 arm reported the correct masked range, completed N4 and Atropos, and reproduced all generated classes with normalized raw membership probabilities.",
+    "The paired outputs differ materially despite identical intensity, support values, frame and N4 settings; native mask representation is the declared controlled change.",
+    "This makes the historical uint8 adapter a concrete defect and a plausible cause of v2 failure. It does not prove the exact cause of the unsymbolicated patient SIGSEGV."
+  ],
+  "limitations": [
+    "Generated concentric class agreement does not estimate real-patient tissue accuracy or anatomical validity.",
+    "NPY files contain array shape/dtype without physical transforms; frame verification here checks sealed native-boundary/output metadata, independently recomputing all eight cell corners.",
+    "There were two separately declared generated arms, one attempt each, not patient retries. The real-protocol history stays two failures with zero accepted tissue results.",
+    "Raw class membership probabilities are not physical partial-volume fractions, and CSF-like intensity is not a ventricular segmentation.",
+    "No new native execution, ANTs import, patient image read, host promotion or patient fitting release occurs in this audit."
+  ],
+  "no_native_execution_or_patient_reads": true,
+  "auditor_sha256": "170d99f3e2a4786db8500f9f606cc6bb5d05a87a61aafc1dc37eae52b8d6976f",
+  "own_process_peak_rss_bytes": 38649856
+}

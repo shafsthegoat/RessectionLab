@@ -73,6 +73,16 @@ and zero successful/accepted results across both N4/Atropos protocols. A
 generated-only mask-type diagnostic is separate. Class probabilities are not
 physical tissue fractions; no host or growth acceptance follows.
 
+**N4 adapter defect isolated on generated data, October 16:**
+The [fixed two-arm diagnostic](artifacts/poc-ants-mask-dtype-generated-v1/RESULT.md)
+shows incorrect native mask interpretation with our unsigned-byte adapter,
+despite successful process exit. A value-identical float32 mask satisfies the
+pinned native contract and completes N4/Atropos on the generated phantom.
+Independent output/source checking passes. A separate typed-mask kernel is
+prepared with explicit boundary checks; its exact native preflight and any
+patient run require separate evidence. The prior patient crash remains failed;
+this experiment does not prove its precise cause or patient tissue accuracy.
+
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and
 [patient construction plan](docs/patient-corpus-plan.md) supersede the historical

@@ -1,0 +1,164 @@
+{
+  "declaration_sha256": "81742cfbdf5f1fe8828ca5e670f2b17fc6d54cccf08943ab37cc296b2e8556d8",
+  "arms": [
+    {
+      "arm": "uint8",
+      "started_utc": "2026-10-16T07:54:59.370022+00:00",
+      "supervisor_pid": 21537,
+      "resources": {
+        "threads": 2,
+        "rss_limit_bytes": 1073741824,
+        "available_memory_floor_bytes": 1073741824,
+        "seconds_per_arm": 120.0,
+        "output_temporary_limit_bytes": 16777216,
+        "disk_floor_bytes": 53687091200,
+        "sample_interval_seconds": 0.1,
+        "attempts_per_arm": 1,
+        "RSS_scope": "supervising_Python_plus_worker_and_recursive_descendants"
+      },
+      "attempts": 1,
+      "worker_pid": 21539,
+      "status": "generated_arm_completed",
+      "elapsed_seconds": 7.451258458895609,
+      "finished_utc": "2026-10-16T07:55:06.821174+00:00",
+      "peak_supervisor_and_process_family_rss_bytes_sampled": 369278976,
+      "minimum_available_memory_bytes_sampled": 7458226176,
+      "minimum_free_disk_bytes_sampled": 343415181312,
+      "combined_output_and_temporary_bytes": 594060,
+      "exit_code": 0,
+      "sampling_limitation": "Between-sample peaks are not a hard memory reservation"
+    },
+    {
+      "arm": "float32",
+      "started_utc": "2026-10-16T07:55:06.821931+00:00",
+      "supervisor_pid": 21537,
+      "resources": {
+        "threads": 2,
+        "rss_limit_bytes": 1073741824,
+        "available_memory_floor_bytes": 1073741824,
+        "seconds_per_arm": 120.0,
+        "output_temporary_limit_bytes": 16777216,
+        "disk_floor_bytes": 53687091200,
+        "sample_interval_seconds": 0.1,
+        "attempts_per_arm": 1,
+        "RSS_scope": "supervising_Python_plus_worker_and_recursive_descendants"
+      },
+      "attempts": 1,
+      "worker_pid": 21547,
+      "status": "generated_arm_completed",
+      "elapsed_seconds": 7.712963999947533,
+      "finished_utc": "2026-10-16T07:55:14.534753+00:00",
+      "peak_supervisor_and_process_family_rss_bytes_sampled": 389218304,
+      "minimum_available_memory_bytes_sampled": 7467433984,
+      "minimum_free_disk_bytes_sampled": 343417094144,
+      "combined_output_and_temporary_bytes": 3216026,
+      "exit_code": 0,
+      "sampling_limitation": "Between-sample peaks are not a hard memory reservation"
+    }
+  ],
+  "runtime_unchanged": true,
+  "patient_inputs_read": false,
+  "anatomy_accepted": false,
+  "manifest": [
+    {
+      "path": "declaration.json",
+      "sha256": "81742cfbdf5f1fe8828ca5e670f2b17fc6d54cccf08943ab37cc296b2e8556d8",
+      "bytes": 9684
+    },
+    {
+      "path": "float32/attempt.json",
+      "sha256": "4953fcea54d0929897e51a34aeeb2ee5d2521f7beb84486efc5270a185dc6767",
+      "bytes": 978
+    },
+    {
+      "path": "float32/classes_raw.npy",
+      "sha256": "dbf0a584404bae8362e97caa335b064905349f51ee17468f6598370b3f1a230b",
+      "bytes": 442496
+    },
+    {
+      "path": "float32/n4_raw.npy",
+      "sha256": "cde4b6da3870bf8baaca92190010ff8dd0aca196daa8a46521167561422e409e",
+      "bytes": 442496
+    },
+    {
+      "path": "float32/posterior_1_raw.npy",
+      "sha256": "74d18d9b021183541333b0d269e870dfe1320af696a5de10bff09bae4002be91",
+      "bytes": 442496
+    },
+    {
+      "path": "float32/posterior_2_raw.npy",
+      "sha256": "a43a6fc7062dedd580901bba27be7381e03525d06bdd2199df43286fbe057adf",
+      "bytes": 442496
+    },
+    {
+      "path": "float32/posterior_3_raw.npy",
+      "sha256": "468dfaa2285f3bbccb268fc295db28f405b85a035c62ca0dab3b606620d2f0c5",
+      "bytes": 442496
+    },
+    {
+      "path": "float32/result.json",
+      "sha256": "cd672b68e5e0d70bde4fded365a0be93ff3dc9c2b56ed6e692c16cce1d5467c1",
+      "bytes": 8371
+    },
+    {
+      "path": "float32/stages.json",
+      "sha256": "03a7dd729c7fdb129abdf4ea4cfe497cea459ad1d3e846bac606d62303553a87",
+      "bytes": 3930
+    },
+    {
+      "path": "float32/temporary/antsrxpn6_2syprob01.nii.gz",
+      "sha256": "9a5122e774a199a209e47a63158b217334f75d8eed3b8e88068e19fb2c36bc0d",
+      "bytes": 57515
+    },
+    {
+      "path": "float32/temporary/antsrxpn6_2syprob02.nii.gz",
+      "sha256": "184090c4db12f78196868a527a16864ef7a7e29f28557a55a242347e9c9812b2",
+      "bytes": 87262
+    },
+    {
+      "path": "float32/temporary/antsrxpn6_2syprob03.nii.gz",
+      "sha256": "c0db6b11da5dba0a9196093fc17c3b11dfcf07ec4b1132bb22135354563cf9fb",
+      "bytes": 114050
+    },
+    {
+      "path": "float32/temporary/matplotlib/fontlist-v390.json",
+      "sha256": "245446d4f0803ab8c850e8bb2488471a512e47b85121a7ececb9b98bfe0d5e20",
+      "bytes": 125096
+    },
+    {
+      "path": "float32/worker.log",
+      "sha256": "e0b53d114f37d50aacbc2dd797208b1af14942c9c8a54414b3149909413862c3",
+      "bytes": 12285
+    },
+    {
+      "path": "uint8/attempt.json",
+      "sha256": "a191feadb668dcadb417577b5aa886c74e16613173b4dcfec7a72c3f12f428d0",
+      "bytes": 975
+    },
+    {
+      "path": "uint8/n4_raw.npy",
+      "sha256": "56fe9f847770bac724ab73bbd0cad2dae707841636cc9ca96e8d93c16ea04994",
+      "bytes": 442496
+    },
+    {
+      "path": "uint8/result.json",
+      "sha256": "af0523c3aaf37f1e546c23940259e83ed97b6ce540f7b6ed9ca0a0c63c5e7ce4",
+      "bytes": 2971
+    },
+    {
+      "path": "uint8/stages.json",
+      "sha256": "ed635c1bb2ea86b53ea8e009ca18108e20f64c34cd63b4c7786d53573843065d",
+      "bytes": 3932
+    },
+    {
+      "path": "uint8/temporary/matplotlib/fontlist-v390.json",
+      "sha256": "7d57664e3fb1f51a77f2f2b19d08b333c77b94c38a57e10030605fb166247004",
+      "bytes": 125096
+    },
+    {
+      "path": "uint8/worker.log",
+      "sha256": "8360d223c398f1dc0e1b5d8eb4879d5b9faf5d7120b2544ff02544892aab1e17",
+      "bytes": 9342
+    }
+  ]
+}

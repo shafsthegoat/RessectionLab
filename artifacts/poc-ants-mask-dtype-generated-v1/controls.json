@@ -1,0 +1,17 @@
+{
+  "test_path": "tests/test_poc_ants_mask_dtype_diagnostic.py",
+  "test_sha256": "8bf339ea2ee782f209fe6a2cd71a419da52e028e30e0a0dd282890bafe1c1954",
+  "runner_sha256": "1feb74ffca22a14d226bc9b52b0b5049a607225e95bb8dee6d11df5151aa003c",
+  "result": "12 passed in 0.07s",
+  "native_ANTs_executed": false,
+  "patient_inputs_read": false,
+  "controls": [
+    "independent generated support and concentric class checks",
+    "exact mask value, native type, dtype, shape and all eight physical corners",
+    "wrong type/dtype/support/frame refusal",
+    "release-before-access",
+    "all five resource budget guards",
+    "frozen reference and exact parameters",
+    "runtime aliases require same resolved target and exact binary pins"
+  ]
+}
