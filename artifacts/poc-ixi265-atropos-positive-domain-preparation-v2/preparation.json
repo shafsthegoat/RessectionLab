@@ -1,0 +1,355 @@
+{
+  "schema": "resectionlab-ixi265-atropos-positive-domain-preparation-v2",
+  "status": "source_only_preparation_frozen_fit_not_released",
+  "created_utc": "2026-10-16T07:36:53.102290+00:00",
+  "method": {
+    "schema": "resectionlab-ixi265-atropos-positive-domain-candidate-v2",
+    "status": "prepared_fit_unreleased",
+    "patient_group": "IXI:265",
+    "role": "TRAIN",
+    "training_admitted": false,
+    "source_hashes": {
+      "T1": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "brain_mask": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+      "host_bundle": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1"
+    },
+    "package": {
+      "name": "antspyx",
+      "version": "0.6.3",
+      "wheel_sha256": "e378329089f622c72eacc47e4e2c18503d0f3fbf2cc39ccb9df65880c0a7846f"
+    },
+    "parameters": {
+      "N4": {
+        "shrink_factor": 4,
+        "convergence": {
+          "iters": [
+            30,
+            20,
+            10
+          ],
+          "tol": 1e-07
+        },
+        "spline_param": 150,
+        "rescale_intensities": false,
+        "return_bias_field": false,
+        "verbose": true
+      },
+      "Atropos": {
+        "i": "KMeans[3]",
+        "m": "[0.1,1x1x1]",
+        "c": "[10,0]",
+        "priorweight": 0.0,
+        "r": 0,
+        "v": 1
+      },
+      "grid": "full_native_grid_no_resampling_no_crop",
+      "priors": null,
+      "intensity_clipping_or_normalization": null,
+      "Atropos_random_seed_option": "r=0 (fixed upstream seed)"
+    },
+    "resources": {
+      "threads": 2,
+      "rss_limit_bytes": 3221225472,
+      "minimum_available_bytes": 1073741824,
+      "timeout_seconds": 600.0,
+      "output_limit_bytes": 536870912,
+      "free_disk_floor_bytes": 53687091200,
+      "sample_interval_seconds": 0.2,
+      "max_voxels": 12000000,
+      "attempts": 1
+    },
+    "frame_tolerance_mm": 0.0001,
+    "hard_class_assumptions": {
+      "1": "csf_like_intensity_estimated",
+      "2": "gray_matter_like_intensity_estimated",
+      "3": "white_matter_like_intensity_estimated"
+    },
+    "posterior_semantics": "unmodified_fitted_class_membership_probabilities",
+    "anatomy_accepted": false,
+    "host_accepted": false,
+    "growth_use_accepted": false,
+    "limitations": [
+      "within_image_finite_mixture_fitting_not_pretrained_inference",
+      "ordered_T1_intensity_to_CSF_GM_WM_is_an_unreviewed_assumption",
+      "posterior_probabilities_are_not_physical_partial_volume_fractions",
+      "CSF_like_class_does_not_identify_ventricles",
+      "no_anatomical_acceptance_host_upgrade_or_automatic_growth_use",
+      "two_thread_floating_point_execution_not_claimed_bitwise_reproducible",
+      "eight_missing_intensity_cells_are_unknown_not_tissue_predictions",
+      "positive_intensity_domain_is_a_declared_fitting_support_not_a_corrected_brain_segmentation"
+    ],
+    "protocol": "positive_intensity_fitting_domain_with_explicit_missing_intensity_abstention",
+    "fitting_domain": "unchanged_original_brain_mask AND unchanged_acquired_T1 > 0",
+    "expected_unknown_indices_native": [
+      [
+        60,
+        125,
+        75
+      ],
+      [
+        67,
+        135,
+        49
+      ],
+      [
+        69,
+        131,
+        40
+      ],
+      [
+        89,
+        120,
+        83
+      ],
+      [
+        107,
+        123,
+        65
+      ],
+      [
+        127,
+        219,
+        68
+      ],
+      [
+        128,
+        115,
+        125
+      ],
+      [
+        185,
+        127,
+        119
+      ]
+    ],
+    "expected_original_shape": [
+      256,
+      256,
+      150
+    ],
+    "expected_original_brain_voxels": 1451509,
+    "expected_fit_domain_voxels": 1451501,
+    "excluded_cell_semantics": "UNKNOWN_ABSTAINED_missing_intensity_not_CSF_not_anatomy_correction",
+    "brain_mask_replaced": false,
+    "intensity_offset_or_clipping": false,
+    "source_crop": false,
+    "domain_maps_retained_separately": [
+      "fit_domain_native",
+      "excluded_unknown_native"
+    ],
+    "v1_source_sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b",
+    "single_attempt_marker": "ixi265-n4-atropos-positive-domain-v2-attempt.json"
+  },
+  "diagnostic_lineage": {
+    "schema": "resectionlab-ixi265-atropos-positive-domain-diagnostic-lineage-v2",
+    "independent_diagnostic": {
+      "path": "artifacts/ixi265-quality-independent-v1/independent-qa.json",
+      "sha256": "7a51ca88a898b11eb7fc132180d5f77da4a0bffaf49ceb6e5b8eb229d6d162a6"
+    },
+    "records": [
+      {
+        "path": "artifacts/ixi265-quality-independent-v1/independent-qa.json",
+        "sha256": "7a51ca88a898b11eb7fc132180d5f77da4a0bffaf49ceb6e5b8eb229d6d162a6"
+      },
+      {
+        "path": "artifacts/poc-ixi265-atropos-run-v1/outcome.json",
+        "sha256": "55f4dd46f7cc692d4a66799cefca21bfa37430d3f5cf2ebe3eda675b6e4c989e"
+      }
+    ],
+    "unknown_indices_native": [
+      [
+        60,
+        125,
+        75
+      ],
+      [
+        67,
+        135,
+        49
+      ],
+      [
+        69,
+        131,
+        40
+      ],
+      [
+        89,
+        120,
+        83
+      ],
+      [
+        107,
+        123,
+        65
+      ],
+      [
+        127,
+        219,
+        68
+      ],
+      [
+        128,
+        115,
+        125
+      ],
+      [
+        185,
+        127,
+        119
+      ]
+    ],
+    "original_brain_voxels": 1451509,
+    "source_native_shape": [
+      256,
+      256,
+      150
+    ],
+    "source_hashes": {
+      "T1": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "brain_mask": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+      "host_bundle": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1"
+    },
+    "unknown_world_centers_ras_mm": [
+      [
+        4.400055557489395,
+        61.182694788090885,
+        -1.4310756991617382
+      ],
+      [
+        -26.35173248127103,
+        56.148834438063204,
+        10.118115933262743
+      ],
+      [
+        -37.468472849577665,
+        54.82429623324424,
+        7.137899701832794
+      ],
+      [
+        12.281895745545626,
+        33.566659927368164,
+        -6.771851224009879
+      ],
+      [
+        -9.880006331950426,
+        17.776697737164795,
+        -2.4402835251530632
+      ],
+      [
+        -0.9012161530554295,
+        -1.4094736529514194,
+        87.09068688203115
+      ],
+      [
+        60.345574632287025,
+        -5.439333717338741,
+        -14.979265131056309
+      ],
+      [
+        51.30354994907975,
+        -58.48805311974138,
+        -3.230060302768834
+      ]
+    ],
+    "diagnosed_values": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "interpretation": "Imaging/anatomical cause undetermined; excluded fitting cells remain UNKNOWN/ABSTAINED. No source correction or tissue claim."
+  },
+  "frozen_files": [
+    {
+      "path": "scripts/poc_ixi265_atropos_positive_domain.py",
+      "sha256": "0652eca1ba81304e053f24c9a9fc2f8c89174bfe7447accfd21105263592d81d",
+      "bytes": 17483
+    },
+    {
+      "path": "tests/test_poc_ixi265_atropos_positive_domain.py",
+      "sha256": "8568e4455190c5735263b56541c8893e060111401cc527dd1a9a1948cf40a318",
+      "bytes": 6343
+    },
+    {
+      "path": "scripts/poc_ixi265_atropos.py",
+      "sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b",
+      "bytes": 22254
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-positive-domain-preparation-v2/diagnostic-lineage.json",
+      "sha256": "29ed23dd49ddd1035314d70697bd3a11be0fe3798dc5ed87e34765fd7b22745c",
+      "bytes": 2393
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-positive-domain-preparation-v2/prospective-method.json",
+      "sha256": "8088bf796d95f78dbd399b38eb4ea7758a1d780a519e537e45a948928c49641d",
+      "bytes": 3728
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-positive-domain-preparation-v2/prospective-run-spec.json",
+      "sha256": "3f615e3e434a5eac79b8ff98c36dc330deacc81b78a54f362e61b83ee1f16015",
+      "bytes": 1255
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-preparation-v1/installed-runtime-audit.json",
+      "sha256": "8dc074db35e17be3b10f05e68e19ff61cdd44a6d1e0e744bbfc25e1da9073e79",
+      "bytes": 6026
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-preparation-v1/runtime-plan.json",
+      "sha256": "629c045ba0a0c57c8d3c345249b111659e88aca2987cd3e438dac9463b35c4a8",
+      "bytes": 269918
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-preparation-v1/official-provenance.json",
+      "sha256": "547732fee3b617f15e085d254dd4c43b2fbbc6a448537500fac1c0f58f6d696b",
+      "bytes": 4047
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-preparation-v1/asset-setup.json",
+      "sha256": "2f0b911c330a9e5e719a7daf86d1a2bf655a61b8f0ee67064b529efa26004aa7",
+      "bytes": 2331
+    }
+  ],
+  "generated_controls": {
+    "new_protocol_passed": 17,
+    "including_inherited_and_setup_controls_passed": 52,
+    "failed": 0,
+    "real_source_decode": false,
+    "ANTs_imported": false,
+    "fitting_run": false,
+    "new_downloads_or_installation": false,
+    "checks": [
+      "exact_eight_cell_support_partition_and_source_immutability",
+      "class_zero_inside_original_brain_only_at_declared_unknown_cells",
+      "unchanged_raw_posteriors_zero_on_unknown_support",
+      "extra_missing_moved_zero_negative_nonfinite_or_changed_brain_refused",
+      "unknown_assigned_CSF_or_posterior_and_extra_abstention_refused",
+      "exact_diagnostic_and_historical_lineage_before_payload_access",
+      "v1_parameters_resource_budgets_and_source_pin_unchanged",
+      "separate_marker_and_explicit_v2_release_guard"
+    ]
+  },
+  "historical_v1": {
+    "source_sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b",
+    "outcome_sha256": "55f4dd46f7cc692d4a66799cefca21bfa37430d3f5cf2ebe3eda675b6e4c989e",
+    "marker_exists": true,
+    "marker_sha256": "000c813b68f7d96d78b22de068db50e4890cc45d5e07877a3be57256d82ae870",
+    "attempts_started": 1,
+    "N4_completions": 0,
+    "Atropos_completions": 0,
+    "acceptance": 0
+  },
+  "prospective_v2": {
+    "output": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-positive-domain-v2",
+    "marker": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.tools/poc-antspyx-0.6.3-py312-v1/runtime/ixi265-n4-atropos-positive-domain-v2-attempt.json",
+    "marker_exists": false,
+    "fit_release_required": true,
+    "automatic_retry_tuning_crop_or_source_correction": false
+  },
+  "no_anatomical_host_or_growth_acceptance": true
+}

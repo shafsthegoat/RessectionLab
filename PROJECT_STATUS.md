@@ -57,6 +57,18 @@ Optional catalog absence now permits ordinary native browsing in clean checkouts
 present invalid catalog metadata still fails closed. The next tissue candidate
 must retain failed model attempts and distinguish unknown cells from tissue.
 
+**IXI quality checks and tissue-protocol review, October 16:**
+The [independent quality result](artifacts/ixi265-quality-independent-v1/RESULT.md)
+reproduces the fixed vessel set comparison without treating unlabelled reference
+cells as negatives. Incomplete annotation and unresolved checkpoint overlap
+prevent an independent accuracy claim. The first N4/Atropos attempt stopped
+before fitting because of eight zero-intensity cells inside the unchanged brain
+mask; that failure remains recorded. A separately frozen positive-domain
+protocol preserves those cells as UNKNOWN. Its independent prospective review
+passes45 generated/metadata checks before any actual v2 attempt. Class
+probabilities are not physical tissue fractions; no host or growth acceptance
+follows from this preparation.
+
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and
 [patient construction plan](docs/patient-corpus-plan.md) supersede the historical

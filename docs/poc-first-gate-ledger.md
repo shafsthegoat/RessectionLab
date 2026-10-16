@@ -88,6 +88,13 @@ save/fresh-process reopen for the next frozen SynthRAD TRAIN B/C identities.
 Independent audits verify acquired scans, masks and originals. These two model
 candidates do not change catalog counts or accept anatomy, health or alignment.
 
+The [IXI quality follow-up](../artifacts/ixi265-quality-independent-v1/RESULT.md)
+reproduces vessel set agreement under incomplete annotation and unresolved
+checkpoint overlap. It also independently explains the first Atropos protocol's
+pre-fit rejection at eight zero-intensity cells. The separate positive-domain
+protocol passes independent prospective checks with those cells UNKNOWN and
+sources unchanged; no real v2 result is implied by that review.
+
 ## Accuracy and publication gate
 
 Publication readiness requires claims with matching evidence, not a test count

@@ -1,0 +1,164 @@
+{
+  "schema": "ixi265-positive-domain-independent-prospective-audit-v2",
+  "status": "pass_preparation_only_fit_unreleased",
+  "created_utc": "2026-10-16T07:40:59.157838+00:00",
+  "pinned_inputs_unchanged": {
+    "scripts/poc_ixi265_atropos_positive_domain.py": {
+      "sha256": "0652eca1ba81304e053f24c9a9fc2f8c89174bfe7447accfd21105263592d81d",
+      "mtime_ns": 1792136159778650722
+    },
+    "tests/test_poc_ixi265_atropos_positive_domain.py": {
+      "sha256": "8568e4455190c5735263b56541c8893e060111401cc527dd1a9a1948cf40a318",
+      "mtime_ns": 1792136102521856208
+    },
+    "artifacts/poc-ixi265-atropos-positive-domain-preparation-v2/preparation.json": {
+      "sha256": "2c1d39e4a318598385dfe331de08e1f6de3e2dba5850a8b0acd8978045376c3d",
+      "mtime_ns": 1792136213105723894
+    },
+    "scripts/poc_ixi265_atropos.py": {
+      "sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b",
+      "mtime_ns": 1792135066085133764
+    },
+    "artifacts/ixi265-quality-independent-v1/independent-qa.json": {
+      "sha256": "7a51ca88a898b11eb7fc132180d5f77da4a0bffaf49ceb6e5b8eb229d6d162a6",
+      "mtime_ns": 1792135910610588988
+    },
+    "artifacts/poc-ixi265-atropos-run-v1/outcome.json": {
+      "sha256": "55f4dd46f7cc692d4a66799cefca21bfa37430d3f5cf2ebe3eda675b6e4c989e",
+      "mtime_ns": 1792135445417421534
+    }
+  },
+  "checks": [
+    "pinned_lineage_parameters_roles_no_acceptance_separate_unreleased_attempt",
+    "eight_unknowns_exact_disjoint_complete_partition_with_readonly_source",
+    "fake_transport_retains_native_source_raw_classes_posteriors_and_unknown_abstention",
+    "independent_reflected_oblique_eight_cell_corners_transport",
+    "refuse_extra_zero",
+    "refuse_missing_zero",
+    "refuse_negative",
+    "refuse_nan",
+    "refuse_brain_excludes_unknown",
+    "refuse_unsigned_brain",
+    "refuse_CSF_at_unknown",
+    "refuse_posterior_at_unknown",
+    "refuse_extra_abstention",
+    "refuse_overlapping_partition",
+    "refuse_missing_partition_cell",
+    "refuse_changed_physical_origin",
+    "refuse_axis_permutation",
+    "unreleased_v2_stops_before_code_source_runtime",
+    "worker_bad_identity_before_preparation_or_payload_0",
+    "supervisor_bad_identity_before_preparation_or_payload_0",
+    "worker_bad_identity_before_preparation_or_payload_1",
+    "supervisor_bad_identity_before_preparation_or_payload_1",
+    "worker_bad_identity_before_preparation_or_payload_2",
+    "supervisor_bad_identity_before_preparation_or_payload_2",
+    "worker_bad_identity_before_preparation_or_payload_3",
+    "supervisor_bad_identity_before_preparation_or_payload_3",
+    "worker_bad_identity_before_preparation_or_payload_4",
+    "supervisor_bad_identity_before_preparation_or_payload_4",
+    "worker_bad_identity_before_preparation_or_payload_5",
+    "supervisor_bad_identity_before_preparation_or_payload_5",
+    "worker_bad_identity_before_preparation_or_payload_6",
+    "supervisor_bad_identity_before_preparation_or_payload_6",
+    "worker_bad_identity_before_preparation_or_payload_7",
+    "supervisor_bad_identity_before_preparation_or_payload_7",
+    "all_path_validation_precedes_first_hash_T1",
+    "all_path_validation_precedes_first_hash_brain_mask",
+    "all_path_validation_precedes_first_hash_host_bundle",
+    "symlink_source_refused_before_hash",
+    "resource_sum_includes_supervisor_worker_and_recursive_descendant",
+    "resource_limit_refuses_rss",
+    "resource_limit_refuses_available",
+    "resource_limit_refuses_elapsed",
+    "resource_limit_refuses_output_bytes",
+    "resource_limit_refuses_free_disk",
+    "supervisor_samples_family_caps_terminates_group_and_uses_exclusive_new_marker_output"
+  ],
+  "check_count": 45,
+  "findings_requiring_fix": [],
+  "declared_real_domain": {
+    "original_estimated_brain_voxels": 1451509,
+    "fitting_voxels": 1451501,
+    "unknown_abstained_voxels": 8,
+    "unknown_indices_native": [
+      [
+        60,
+        125,
+        75
+      ],
+      [
+        67,
+        135,
+        49
+      ],
+      [
+        69,
+        131,
+        40
+      ],
+      [
+        89,
+        120,
+        83
+      ],
+      [
+        107,
+        123,
+        65
+      ],
+      [
+        127,
+        219,
+        68
+      ],
+      [
+        128,
+        115,
+        125
+      ],
+      [
+        185,
+        127,
+        119
+      ]
+    ],
+    "diagnostic_lineage_sha256": "7a51ca88a898b11eb7fc132180d5f77da4a0bffaf49ceb6e5b8eb229d6d162a6"
+  },
+  "original_brain_and_acquired_intensity_preservation": true,
+  "raw_class_probabilities_are_not_PVE": true,
+  "CSF_like_class_is_not_ventricles": true,
+  "anatomical_host_growth_or_training_acceptance": false,
+  "resource_policy": {
+    "threads": 2,
+    "rss_limit_bytes": 3221225472,
+    "minimum_available_bytes": 1073741824,
+    "timeout_seconds": 600.0,
+    "output_limit_bytes": 536870912,
+    "free_disk_floor_bytes": 53687091200,
+    "sample_interval_seconds": 0.2,
+    "max_voxels": 12000000,
+    "attempts": 1
+  },
+  "sampled_RSS_includes_supervisor": true,
+  "historical_v1": {
+    "marker_sha256_unchanged": "000c813b68f7d96d78b22de068db50e4890cc45d5e07877a3be57256d82ae870",
+    "started": 1,
+    "N4_completed": 0,
+    "Atropos_completed": 0,
+    "accepted": 0
+  },
+  "v2_real_attempts_started": 0,
+  "real_patient_image_or_bundle_open": false,
+  "ANTs_or_model_import": false,
+  "new_assets_or_downloads": false,
+  "test_backend": "Independent generated transport fixture only; no N4/Atropos numerical accuracy claim",
+  "auditor_sha256": "6e31fc1301bf5ebad6013a2fcff27f8a48e746a7e3dbba2c592837e3fe477ae2",
+  "limitations": [
+    "This prospective review does not release fitting or establish a successful real candidate.",
+    "The mask remains an unaccepted model estimate. Removing eight missing-intensity cells from fitting support does not correct or validate anatomy.",
+    "Real output class ordering, posterior normalization, abstention maps, native frames, source fixity and resource use require a separate post-fit audit.",
+    "The3GiB family RSS cap is sampled every0.2seconds and can miss between-sample peaks.",
+    "A future v2 attempt must retain the historical failed v1 denominator separately; there is no automatic retry."
+  ]
+}

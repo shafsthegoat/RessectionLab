@@ -1,0 +1,248 @@
+"""Generated source-only controls; ANTs is neither installed nor executed."""
+import importlib.util
+import itertools
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+from types import SimpleNamespace
+
+import numpy as np
+import pytest
+from packaging.markers import default_environment
+from packaging.requirements import Requirement
+from packaging.tags import sys_tags
+from packaging.utils import canonicalize_name, parse_wheel_filename
+
+SPEC = importlib.util.spec_from_file_location("ixi_atropos_candidate", Path(__file__).resolve().parents[1]/"scripts/poc_ixi265_atropos.py")
+candidate = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(candidate)
+
+
+def admitted():
+    return {"patient_group": "IXI:265", "role": "TRAIN", "training_admitted": False,
+            "T1_sha256": candidate.T1_SHA, "brain_mask_sha256": candidate.MASK_SHA, "host_sha256": candidate.HOST_SHA}
+
+
+def generated():
+    shape = (9, 8, 7)
+    mask = np.ones(shape, bool); mask[:, 0, :] = False
+    labels = np.broadcast_to(np.repeat([1, 2, 3], 3)[:, None, None], shape).copy()
+    labels[~mask] = 0
+    values = np.array([0, 20, 50, 90], np.float32)[labels]
+    angle = .43
+    affine = np.eye(4)
+    affine[:3, :3] = np.array([[np.cos(angle), -np.sin(angle), 0],
+        [np.sin(angle), np.cos(angle), 0], [0, 0, 1]]) @ np.diag([-1.7, 2.1, 2.8])
+    affine[:3, 3] = [31, -28, 9]
+    return values, mask, labels, affine
+
+
+class Image:
+    def __init__(self, data, **geometry):
+        self.data = data.copy()
+        self.shape = data.shape
+        self.origin = geometry["origin"]
+        self.spacing = geometry["spacing"]
+        self.direction = geometry["direction"].copy()
+    def numpy(self): return self.data.copy()
+    def like(self, data):
+        return Image(data, origin=self.origin, spacing=self.spacing, direction=self.direction)
+
+
+class GeneratedBackend:
+    """Transport double only, explicitly no numerical ANTs-fitting oracle."""
+    def __init__(self): self.calls = []
+    def from_numpy(self, data, **geometry): return Image(data, **geometry)
+    def n4_bias_field_correction(self, image, *, mask, **parameters):
+        self.calls.append(("N4", parameters))
+        assert parameters == candidate.N4_PARAMETERS
+        return image.like(image.data)
+    def atropos(self, *, a, x, **parameters):
+        self.calls.append(("Atropos", parameters))
+        assert parameters == candidate.ATROPOS_PARAMETERS
+        labels = np.searchsorted([30, 70], a.data) + 1
+        labels[x.data == 0] = 0
+        probabilities = [np.where(x.data, np.where(labels == k, .8, .1), 0).astype(np.float32) for k in (1, 2, 3)]
+        return {"segmentation": a.like(labels.astype(np.float32)),
+                "probabilityimages": [a.like(p) for p in probabilities]}
+
+
+def test_exact_native_ras_lps_geometry_preserves_independent_eight_corners():
+    values, mask, labels, affine = generated()
+    original = affine.copy()
+    geometry = candidate.ras_to_lps_geometry(affine)
+    for point in itertools.product(*[(-.5, n-.5) for n in values.shape]):
+        actual = np.asarray(geometry["origin"]) + geometry["direction"] @ (np.asarray(geometry["spacing"]) * point)
+        expected = (affine @ np.r_[point, 1])[:3] * [-1, -1, 1]
+        np.testing.assert_allclose(actual, expected, rtol=0, atol=2e-14)
+    receipt = candidate.require_native_frame(values.shape, affine, values.shape, **geometry)
+    assert max(receipt["eight_cell_corner_errors_mm"]) < 2e-14
+    assert np.array_equal(affine, original)
+    with pytest.raises(ValueError, match="shape"):
+        candidate.require_native_frame(values.shape, affine, (8, 9, 7), **geometry)
+
+
+def test_cumulative_corner_error_rejects_even_small_affine_error_and_roundoff_is_recorded():
+    _, _, _, affine = generated()
+    geometry = candidate.ras_to_lps_geometry(affine)
+    geometry["direction"] = geometry["direction"] + np.diag([1e-6, 0, 0])
+    with pytest.raises(ValueError, match="corners"):
+        candidate.require_native_frame((256, 256, 150), affine, (256, 256, 150), **geometry)
+    geometry = candidate.ras_to_lps_geometry(affine)
+    geometry["direction"] += np.eye(3)*1e-10
+    report = candidate.require_native_frame((256, 256, 150), affine, (256, 256, 150), **geometry)
+    assert 0 < max(report["eight_cell_corner_errors_mm"]) < 1e-4
+
+
+def test_generated_transport_keeps_source_and_probabilities_unchanged_and_declares_assumptions():
+    values, mask, expected_labels, affine = generated()
+    source = [a.copy() for a in (values, mask, affine)]
+    backend = GeneratedBackend()
+    corrected, labels, probabilities, audit = candidate.fit_arrays(values, mask, affine, backend)
+    assert np.array_equal(labels, expected_labels)
+    assert np.array_equal(corrected, values)
+    for code, posterior in enumerate(probabilities, 1):
+        assert np.array_equal(posterior, np.where(mask, np.where(labels == code, .8, .1), 0).astype(np.float32))
+    for actual, before in zip((values, mask, affine), source): assert np.array_equal(actual, before)
+    assert [name for name, _ in backend.calls] == ["N4", "Atropos"]
+    assert audit["classes"]["probabilities_modified"] is False
+    assert not candidate.plan()["growth_use_accepted"]
+    assert all("estimated" in row["declared_assumption"] for row in audit["classes"]["classes"])
+
+
+@pytest.mark.parametrize("kind", ["posterior_negative", "posterior_sum", "outside_mask", "class_swap", "empty_class"])
+def test_invalid_posterior_or_class_results_refuse_without_repair(kind):
+    values, mask, labels, _ = generated()
+    probabilities = [np.where(mask, labels == k, 0).astype(np.float32) for k in (1, 2, 3)]
+    if kind == "posterior_negative": probabilities[0][1, 1, 1] = -1e-8
+    elif kind == "posterior_sum": probabilities[0][1, 1, 1] = .9
+    elif kind == "outside_mask": labels[0, 0, 0] = 1
+    elif kind == "class_swap": labels = np.where(labels == 1, 3, np.where(labels == 3, 1, labels))
+    else: labels[labels == 1] = 2
+    with pytest.raises(ValueError): candidate.validate_classes(values, mask, labels, probabilities)
+
+
+@pytest.mark.parametrize("alteration", [{"patient_group": "UPENN-GBM"}, {"role": "SELECT"},
+    {"parent": {"role": "EVAL"}}, {"T1_sha256": "0"*64}, {"training_admitted": True}, {"training_admitted": 0}])
+def test_admission_rejects_before_any_source_access(monkeypatch, alteration):
+    def forbidden(*args, **kwargs): pytest.fail("No source bytes may be read for an unadmitted request")
+    monkeypatch.setattr(candidate, "digest", forbidden)
+    with pytest.raises(ValueError, match="frozen"):
+        candidate.bound_inputs({"T1": "/never/open"}, {**admitted(), **alteration})
+
+
+def test_default_release_guard_precedes_sources_and_runtime(monkeypatch):
+    monkeypatch.setattr(candidate, "digest", lambda *_: pytest.fail("Unreleased run accessed files"))
+    with pytest.raises(ValueError, match="not released"):
+        candidate.run({}, {}, "/absent/runtime", "/absent/output")
+
+
+def canonical_paths(root):
+    return {"T1": root/"outputs/poc-ixi265/originals/IXI265-T1.nii.gz",
+            "brain_mask": root/"outputs/poc-ixi265/synthstrip/brain_mask.nii.gz",
+            "host_bundle": root/"outputs/poc-ixi265/IXI265-Guys-0845.ressectionlab"}
+
+
+@pytest.mark.parametrize("key", ["T1", "brain_mask", "host_bundle"])
+def test_foreign_paths_are_all_rejected_before_hashing_any_payload(tmp_path, monkeypatch, key):
+    monkeypatch.setattr(candidate, "ROOT", tmp_path)
+    paths = canonical_paths(tmp_path); paths[key] = tmp_path/"UPENN-protected-never-open.nii.gz"
+    monkeypatch.setattr(candidate, "digest", lambda _: pytest.fail("Foreign path reached a payload read"))
+    with pytest.raises(ValueError, match="canonical nonredirected"):
+        candidate.bound_inputs(paths, admitted())
+
+
+@pytest.mark.parametrize("redirection", ["leaf", "ancestor"])
+def test_canonical_path_symlink_redirection_refuses_before_any_hash(tmp_path, monkeypatch, redirection):
+    monkeypatch.setattr(candidate, "ROOT", tmp_path)
+    paths = canonical_paths(tmp_path)
+    protected = tmp_path/"protected-never-open"; protected.mkdir()
+    if redirection == "leaf":
+        paths["brain_mask"].parent.mkdir(parents=True)
+        paths["brain_mask"].symlink_to(protected/"foreign.nii.gz")
+    else:
+        (tmp_path/"outputs").mkdir()
+        (tmp_path/"outputs/poc-ixi265").symlink_to(protected, target_is_directory=True)
+    monkeypatch.setattr(candidate, "digest", lambda _: pytest.fail("Symlink reached a payload read"))
+    with pytest.raises(ValueError, match="canonical nonredirected"):
+        candidate.bound_inputs(paths, admitted())
+
+
+def test_only_exact_unredirected_paths_reach_all_three_source_hashes(tmp_path, monkeypatch):
+    monkeypatch.setattr(candidate, "ROOT", tmp_path)
+    paths = canonical_paths(tmp_path); observed = []
+    expected = dict(zip(paths.values(), [candidate.T1_SHA, candidate.MASK_SHA, candidate.HOST_SHA]))
+    def recorded_digest(path): observed.append(path); return expected[path]
+    monkeypatch.setattr(candidate, "digest", recorded_digest)
+    candidate.bound_inputs(paths, admitted())
+    assert observed == list(paths.values())
+
+
+def test_sampled_memory_includes_supervisor_worker_and_recursive_children():
+    def process(rss, descendants=()):
+        return SimpleNamespace(memory_info=lambda: SimpleNamespace(rss=rss),
+            is_running=lambda: True, children=lambda recursive: descendants)
+    child = process(300)
+    rows = {os.getpid(): process(100), 42: process(200, [child])}
+    monitor = SimpleNamespace(Process=lambda pid: rows[pid])
+    assert candidate.sampled_rss(monitor) == 100
+    assert candidate.sampled_rss(monitor, 42) == 600
+
+
+@pytest.mark.parametrize("position,bad,reason", [(0, candidate.RSS_LIMIT+1, "RSS"),
+    (1, candidate.MEMORY_FLOOR-1, "memory_floor"), (2, candidate.TIME_LIMIT+1, "time_limit"),
+    (3, candidate.OUTPUT_LIMIT+1, "bytes_limit"), (4, candidate.DISK_FLOOR-1, "disk_floor")])
+def test_each_resource_boundary_refuses(position, bad, reason):
+    state = [candidate.RSS_LIMIT, candidate.MEMORY_FLOOR, candidate.TIME_LIMIT, candidate.OUTPUT_LIMIT, candidate.DISK_FLOOR]
+    assert candidate.resource_violation(*state) is None
+    state[position] = bad
+    assert reason in candidate.resource_violation(*state)
+
+
+def test_pinned_wheel_inventory_is_binary_compatible_complete_and_under_budget():
+    document = json.loads((candidate.PREPARATION/"runtime-plan.json").read_text())
+    packages = {canonicalize_name(p["name"]): p for p in document["packages"]}
+    tags = set(sys_tags())
+    environment = default_environment(); environment["extra"] = ""
+    for row in packages.values():
+        assert parse_wheel_filename(row["filename"])[3] & tags
+        assert len(row["sha256"]) == 64
+        for entry in row["requires_dist_active"]:
+            requirement = Requirement(entry)
+            assert requirement.specifier.contains(packages[canonicalize_name(requirement.name)]["version"])
+    assert packages["antspyx"]["sha256"] == candidate.WHEEL_SHA
+    assert sum(p["bytes"] for p in packages.values()) == document["wheel_download_bytes"] < document["wheel_download_ceiling_bytes"]
+    assert document["status"] == "metadata_only_not_downloaded_not_installed"
+
+
+def test_supervisor_terminates_generated_process_retains_failure_and_prevents_retry(tmp_path, monkeypatch):
+    import psutil
+    runtime = tmp_path/"isolated"; (runtime/"bin").mkdir(parents=True)
+    (runtime/"bin/python").write_text("generated fixture, not a fitting runtime")
+    output = tmp_path/"attempt"
+    processes = []
+    real_popen = subprocess.Popen
+    def generated_process(command, **kwargs):
+        process = real_popen([sys.executable, "-I", "-c", "import time; time.sleep(30)"], **kwargs)
+        processes.append(process)
+        return process
+    monkeypatch.setattr(candidate, "bound_inputs", lambda *args: None)
+    monkeypatch.setattr(candidate.subprocess, "Popen", generated_process)
+    monkeypatch.setattr(candidate, "RSS_LIMIT", 1)
+    original_sample = candidate.sampled_rss
+    monkeypatch.setattr(candidate, "sampled_rss", lambda module, pid=None: 0 if pid is None else original_sample(module, pid))
+    monkeypatch.setattr(psutil, "virtual_memory", lambda: SimpleNamespace(available=2*candidate.MEMORY_FLOOR))
+    monkeypatch.setattr(psutil, "disk_usage", lambda _: SimpleNamespace(free=2*candidate.DISK_FLOOR))
+    with pytest.raises(RuntimeError, match="RSS"):
+        candidate.run({}, admitted(), runtime, output, released_single_attempt=True)
+    assert processes[0].poll() is not None
+    receipt = json.loads((output/"attempt.json").read_text())
+    assert receipt["status"] == "failed" and "RSS" in receipt["failure"]
+    assert receipt["memory_scope"] == "supervising_Python_plus_worker_and_recursive_descendants"
+    assert receipt["minimum_available_memory_bytes_sampled"] == 2*candidate.MEMORY_FLOOR
+    assert (output/"worker.log").is_file()
+    with pytest.raises(FileExistsError):
+        candidate.run({}, admitted(), runtime, tmp_path/"second-attempt", released_single_attempt=True)
+    assert len(processes) == 1 and not (tmp_path/"second-attempt").exists()

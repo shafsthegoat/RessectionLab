@@ -284,6 +284,15 @@ campaign. The [separate ten-person catalog release](../artifacts/patient-corpus-
 now includes the acquired IXI candidate; the frozen nine-person catalog remains
 unchanged and the generated descendant is excluded.
 
+The [later independent quality checks](../artifacts/ixi265-quality-independent-v1/RESULT.md)
+retain a first N4/Atropos rejection before fitting: eight zero-intensity cells
+within the original estimated brain mask. A separate positive-intensity fitting
+support declares those exact cells UNKNOWN and preserves the source mask,
+intensities and native grid. Prospective review passes without any real v2 fit.
+Any resulting class posteriors are fitted membership probabilities, not physical
+partial-volume tissue fractions, and cannot automatically enter the GM/WM solver
+contract. A successful fit still requires anatomical and host review.
+
 Select exactly **one existing TRAIN host** with reviewed tumor-free status,
 brain/tissue support and accepted within-person frames. Prefer a qualified
 Lausanne/IXI T1–MRA host so retained vessels can constrain the same scene. If no

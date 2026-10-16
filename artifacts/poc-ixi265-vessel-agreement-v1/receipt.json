@@ -1,0 +1,147 @@
+{
+  "schema": "poc-ixi265-fixed-native-agreement-artifact-receipt-v1",
+  "status": "succeeded",
+  "patient_group": "IXI:265",
+  "role": "TRAIN",
+  "training_admitted": false,
+  "inputs_unchanged_after_execution": [
+    {
+      "name": "MRA",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-MRA.nii.gz",
+      "sha256": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+      "post_run_sha256": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+      "bytes": 14307469
+    },
+    {
+      "name": "reference",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-derived_vessel_label.nii.gz",
+      "sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe",
+      "post_run_sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe",
+      "bytes": 109932
+    },
+    {
+      "name": "prediction",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/vesselfm-base-v1/vessels_mask.nii.gz",
+      "sha256": "d3eedb5a89e598cddd5eb017054f7fb0ce91c678278411c285cc00c2b8d277bc",
+      "post_run_sha256": "d3eedb5a89e598cddd5eb017054f7fb0ce91c678278411c285cc00c2b8d277bc",
+      "bytes": 285799
+    },
+    {
+      "name": "score",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/vesselfm-base-v1/vessels_probability.nii.gz",
+      "sha256": "1745f34949bec22c4c2418e0f7e115c8e3acf0cd974e6ba4b18f7e81e80ecc75",
+      "post_run_sha256": "1745f34949bec22c4c2418e0f7e115c8e3acf0cd974e6ba4b18f7e81e80ecc75",
+      "bytes": 95385330
+    },
+    {
+      "name": "coverage",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/vesselfm-base-v1/native_sampling_coverage.nii.gz",
+      "sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b",
+      "post_run_sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b",
+      "bytes": 169180
+    }
+  ],
+  "files": [
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_vessel_agreement.py",
+      "sha256": "6065b78d86e1bfc8293ae6c32a27a0963e8d8ec2b5d939294579efc37b6dc668",
+      "bytes": 15802
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/tests/test_poc_ixi265_vessel_agreement.py",
+      "sha256": "2c8e8754743dfb28b04ba8f074bcabff8250290290dc9d032a319bffe7aeed68",
+      "bytes": 3774
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-vessel-agreement-v1/protocol.json",
+      "sha256": "027e97310ba84177b69d8f874a0a0d6b8d2f360d5a118987842baf422e631e66",
+      "bytes": 6446
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-vessel-agreement-v1/execution-declaration.json",
+      "sha256": "f59f2f23204210a5dfc689d4b6952e5c0d79022f842735024e65beca95f2df5e",
+      "bytes": 215
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-vessel-agreement-v1/controls.txt",
+      "sha256": "01f07cb7bd01ae10ef9a84860fb125d1d7008df4f14d3870b25a8826563bffad",
+      "bytes": 77
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-vessel-agreement-v1/agreement.json",
+      "sha256": "bebf7ae7354fe198fda4f2ee24e422a385b84697f7096cfa8a9c8b5172b3e85e",
+      "bytes": 10038
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-vessel-agreement-v1/runtime.json",
+      "sha256": "871e15aeb2039dd55ddacf8a96ef1e05af203df4a54a0030d1675fe84d1387a6",
+      "bytes": 641
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-vessel-agreement-v1/diagnostic.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "controls": {
+    "generated_tests": 7,
+    "passed": 7,
+    "elapsed_seconds": 0.23,
+    "patient_payloads_read": false
+  },
+  "counts_and_agreement": {
+    "sampling_domain_voxels": 25489800,
+    "native_grid_voxels": 26214400,
+    "native_prediction_voxels": 185231,
+    "native_reference_positive_voxels": 77377,
+    "prediction_in_domain_voxels": 182108,
+    "reference_in_domain_voxels": 76744,
+    "intersection_voxels": 71379,
+    "union_voxels": 187473,
+    "positive_mask_dice": 0.5515043345232025,
+    "positive_mask_jaccard": 0.3807428269670833,
+    "provided_positive_reference_coverage_fraction": 0.9300922547691025,
+    "reference_positive_voxels_not_covered_by_prediction": 5365,
+    "prediction_in_UNLABELLED_reference_voxels": 110729,
+    "reference_positive_fraction_retained_by_sampling_domain": 0.9918192744614033,
+    "prediction_voxels_excluded_by_sampling_domain": 3123,
+    "reference_voxels_excluded_by_sampling_domain": 633,
+    "physical_volumes_mm3": {
+      "prediction_in_domain": 32011.178342406532,
+      "reference_in_domain": 13490.158975496117,
+      "intersection": 12547.09237871283
+    },
+    "interpretation": "Descriptive foreground set agreement only; unlabelled reference background is unknown"
+  },
+  "runtime": {
+    "status": "succeeded",
+    "exit_code": 0,
+    "guard_failure": null,
+    "elapsed_seconds": 1.927127500064671,
+    "peak_family_plus_supervisor_rss_bytes_sampled": 942047232,
+    "minimum_available_bytes_sampled": 6732185600,
+    "sampling_seconds": 0.1,
+    "release_sha256": "f59f2f23204210a5dfc689d4b6952e5c0d79022f842735024e65beca95f2df5e",
+    "bounds": {
+      "wall_seconds": 120,
+      "family_rss_bytes": 1073741824,
+      "minimum_available_bytes": 1073741824,
+      "output_bytes": 16777216,
+      "free_disk_reserve_bytes": 53687091200,
+      "threads": 2
+    },
+    "agreement_sha256": "bebf7ae7354fe198fda4f2ee24e422a385b84697f7096cfa8a9c8b5172b3e85e"
+  },
+  "output_bytes": 10679,
+  "limitations": [
+    "Descriptive positive-set agreement only; no independent, clinical or held-out accuracy claim.",
+    "Public reference is model-assisted and manually refined, emphasizes major connected vessels/Circle of Willis; complete vascular labelling and negative background are not established.",
+    "Provided-positive-reference coverage is not sensitivity to all vessels.",
+    "Prediction in unlabelled reference voxels remains unlabelled; never treated as false positive.",
+    "vesselFM base checkpoint training includes IXI through CSD; person-level overlap unresolved.",
+    "Same native MRA frame only. No T1 registration, brain clipping, threshold tuning, postprocessing or new inference.",
+    "RSS is sampled every 0.1 seconds, not a continuous allocator peak."
+  ],
+  "source_reference_was_not_used_for_frozen_inference": true,
+  "frozen_after_receipt": true
+}

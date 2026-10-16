@@ -1,0 +1,123 @@
+{
+  "schema": "resectionlab-ixi265-atropos-positive-domain-diagnostic-lineage-v2",
+  "independent_diagnostic": {
+    "path": "artifacts/ixi265-quality-independent-v1/independent-qa.json",
+    "sha256": "7a51ca88a898b11eb7fc132180d5f77da4a0bffaf49ceb6e5b8eb229d6d162a6"
+  },
+  "records": [
+    {
+      "path": "artifacts/ixi265-quality-independent-v1/independent-qa.json",
+      "sha256": "7a51ca88a898b11eb7fc132180d5f77da4a0bffaf49ceb6e5b8eb229d6d162a6"
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-run-v1/outcome.json",
+      "sha256": "55f4dd46f7cc692d4a66799cefca21bfa37430d3f5cf2ebe3eda675b6e4c989e"
+    }
+  ],
+  "unknown_indices_native": [
+    [
+      60,
+      125,
+      75
+    ],
+    [
+      67,
+      135,
+      49
+    ],
+    [
+      69,
+      131,
+      40
+    ],
+    [
+      89,
+      120,
+      83
+    ],
+    [
+      107,
+      123,
+      65
+    ],
+    [
+      127,
+      219,
+      68
+    ],
+    [
+      128,
+      115,
+      125
+    ],
+    [
+      185,
+      127,
+      119
+    ]
+  ],
+  "original_brain_voxels": 1451509,
+  "source_native_shape": [
+    256,
+    256,
+    150
+  ],
+  "source_hashes": {
+    "T1": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+    "brain_mask": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+    "host_bundle": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1"
+  },
+  "unknown_world_centers_ras_mm": [
+    [
+      4.400055557489395,
+      61.182694788090885,
+      -1.4310756991617382
+    ],
+    [
+      -26.35173248127103,
+      56.148834438063204,
+      10.118115933262743
+    ],
+    [
+      -37.468472849577665,
+      54.82429623324424,
+      7.137899701832794
+    ],
+    [
+      12.281895745545626,
+      33.566659927368164,
+      -6.771851224009879
+    ],
+    [
+      -9.880006331950426,
+      17.776697737164795,
+      -2.4402835251530632
+    ],
+    [
+      -0.9012161530554295,
+      -1.4094736529514194,
+      87.09068688203115
+    ],
+    [
+      60.345574632287025,
+      -5.439333717338741,
+      -14.979265131056309
+    ],
+    [
+      51.30354994907975,
+      -58.48805311974138,
+      -3.230060302768834
+    ]
+  ],
+  "diagnosed_values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "interpretation": "Imaging/anatomical cause undetermined; excluded fitting cells remain UNKNOWN/ABSTAINED. No source correction or tissue claim."
+}

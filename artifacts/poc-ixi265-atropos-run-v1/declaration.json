@@ -1,0 +1,174 @@
+{
+  "schema": "resectionlab-ixi265-n4-atropos-real-run-declaration-v1",
+  "created_utc": "2026-10-16T07:22:08.830806+00:00",
+  "release": "Root explicitly released exactly one actual IXI265 fitting attempt after source/runtime preparation and guard follow-up",
+  "status": "declared_before_source_decode",
+  "attempt_number": 1,
+  "automatic_retry_or_tuning": false,
+  "patient_group": "IXI:265",
+  "role": "TRAIN",
+  "training_admitted": false,
+  "source_records": [
+    {
+      "role": "T1",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-T1.nii.gz",
+      "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "bytes": 6980629
+    },
+    {
+      "role": "brain_mask",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/synthstrip/brain_mask.nii.gz",
+      "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+      "bytes": 129560
+    },
+    {
+      "role": "host_bundle",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/IXI265-Guys-0845.ressectionlab",
+      "sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+      "bytes": 57052870
+    }
+  ],
+  "frozen_records": [
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_atropos.py",
+      "sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b",
+      "bytes": 22254
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-atropos-preparation-v1/preparation.json",
+      "sha256": "a49e2dd8978bf4f0d93db52574108a9d2be99b4c3eeff5eec740ce074a931683",
+      "bytes": 4719
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-atropos-preparation-v1/prefit-guard-followup.json",
+      "sha256": "9d9f5c8cb1493aacdb21b4d2e0a6aa559c409ff6dedcfe747d8e58d3e0e865f0",
+      "bytes": 2853
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-atropos-preparation-v1/runtime-plan.json",
+      "sha256": "629c045ba0a0c57c8d3c345249b111659e88aca2987cd3e438dac9463b35c4a8",
+      "bytes": 269918
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-atropos-preparation-v1/official-provenance.json",
+      "sha256": "547732fee3b617f15e085d254dd4c43b2fbbc6a448537500fac1c0f58f6d696b",
+      "bytes": 4047
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-atropos-preparation-v1/requirements.lock",
+      "sha256": "32a1ba8867797ec76fe3082d9e17137cc802927a5e9319fb42e5927970d62258",
+      "bytes": 2974
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-antspyx-0.6.3-py312-v1/setup.json",
+      "sha256": "2f0b911c330a9e5e719a7daf86d1a2bf655a61b8f0ee67064b529efa26004aa7",
+      "bytes": 2331
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-antspyx-0.6.3-py312-v1/installed-runtime-audit.json",
+      "sha256": "8dc074db35e17be3b10f05e68e19ff61cdd44a6d1e0e744bbfc25e1da9073e79",
+      "bytes": 6026
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-antspyx-0.6.3-py312-v1/runtime/pyvenv.cfg",
+      "sha256": "d5f4673e351ed1e0848a494fc17516f3d2d13740a17ce96a1cf161ecf82bb766",
+      "bytes": 509
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-antspyx-0.6.3-py312-v1/runtime/bin/python",
+      "sha256": "39bf33dd80ffd5e8c087cbd52164cbe0d8485f73b44687d0d466b0f49e197129",
+      "bytes": 18058560
+    }
+  ],
+  "candidate_plan": {
+    "schema": "resectionlab-ixi265-atropos-candidate-v1",
+    "status": "prepared_not_run",
+    "patient_group": "IXI:265",
+    "role": "TRAIN",
+    "training_admitted": false,
+    "source_hashes": {
+      "T1": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "brain_mask": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+      "host_bundle": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1"
+    },
+    "package": {
+      "name": "antspyx",
+      "version": "0.6.3",
+      "wheel_sha256": "e378329089f622c72eacc47e4e2c18503d0f3fbf2cc39ccb9df65880c0a7846f"
+    },
+    "parameters": {
+      "N4": {
+        "shrink_factor": 4,
+        "convergence": {
+          "iters": [
+            30,
+            20,
+            10
+          ],
+          "tol": 1e-07
+        },
+        "spline_param": 150,
+        "rescale_intensities": false,
+        "return_bias_field": false,
+        "verbose": true
+      },
+      "Atropos": {
+        "i": "KMeans[3]",
+        "m": "[0.1,1x1x1]",
+        "c": "[10,0]",
+        "priorweight": 0.0,
+        "r": 0,
+        "v": 1
+      },
+      "grid": "full_native_grid_no_resampling_no_crop",
+      "priors": null,
+      "intensity_clipping_or_normalization": null,
+      "Atropos_random_seed_option": "r=0 (fixed upstream seed)"
+    },
+    "resources": {
+      "threads": 2,
+      "rss_limit_bytes": 3221225472,
+      "minimum_available_bytes": 1073741824,
+      "timeout_seconds": 600.0,
+      "output_limit_bytes": 536870912,
+      "free_disk_floor_bytes": 53687091200,
+      "sample_interval_seconds": 0.2,
+      "max_voxels": 12000000,
+      "attempts": 1
+    },
+    "frame_tolerance_mm": 0.0001,
+    "hard_class_assumptions": {
+      "1": "csf_like_intensity_estimated",
+      "2": "gray_matter_like_intensity_estimated",
+      "3": "white_matter_like_intensity_estimated"
+    },
+    "posterior_semantics": "unmodified_fitted_class_membership_probabilities",
+    "anatomy_accepted": false,
+    "host_accepted": false,
+    "growth_use_accepted": false,
+    "limitations": [
+      "within_image_finite_mixture_fitting_not_pretrained_inference",
+      "ordered_T1_intensity_to_CSF_GM_WM_is_an_unreviewed_assumption",
+      "posterior_probabilities_are_not_physical_partial_volume_fractions",
+      "CSF_like_class_does_not_identify_ventricles",
+      "no_anatomical_acceptance_host_upgrade_or_automatic_growth_use",
+      "two_thread_floating_point_execution_not_claimed_bitwise_reproducible"
+    ]
+  },
+  "runtime_native_binary_hashes_verified_before_decode": [
+    {
+      "path": "ants/.dylibs/libpng16.16.dylib",
+      "sha256": "8064d5b03346634041aa98bae6becf6d1dc59e7259cf36057bc0b544d30adf6e"
+    },
+    {
+      "path": "ants/lib.cpython-312-darwin.so",
+      "sha256": "93f4e1418216de4f2f7b44be9f2926354a7c4bb098593904b95bb8db94f68021"
+    }
+  ],
+  "source_image_or_mask_decoded_at_declaration": false,
+  "output": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-v1",
+  "all_tissue_classes_and_posteriors_unaccepted": true,
+  "host_case_promotion": false,
+  "growth_run": false,
+  "no_source_or_catalog_changes": true
+}

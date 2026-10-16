@@ -1,0 +1,965 @@
+{
+  "schema": "ixi265-quality-independent-audit-v1",
+  "status": "pass_audit_with_failed_fit_retained",
+  "created_utc": "2026-10-16T07:31:50.609870+00:00",
+  "generated_controls": {
+    "truth_table_all_eight_states": true,
+    "empty_denominators_null": true,
+    "diagonal_26_connectivity_and_6_boundary": true,
+    "reflected_oblique_anisotropic_cell_corner_transport": true
+  },
+  "pinned_metadata_unchanged": {
+    "scripts/poc_ixi265_atropos.py": {
+      "sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b",
+      "bytes": 22254,
+      "mtime_ns": 1792135066085133764
+    },
+    "artifacts/poc-ixi265-atropos-run-v1/declaration.json": {
+      "sha256": "0a7358f2a6623953af832946af2c2b6dd94c948b32bf531cd2b688c3d2f83788",
+      "bytes": 7626,
+      "mtime_ns": 1792135328851206894
+    },
+    "artifacts/poc-ixi265-atropos-run-v1/outcome.json": {
+      "sha256": "55f4dd46f7cc692d4a66799cefca21bfa37430d3f5cf2ebe3eda675b6e4c989e",
+      "bytes": 3333,
+      "mtime_ns": 1792135445417421534
+    },
+    "artifacts/poc-ixi265-atropos-run-v1/attempt.json": {
+      "sha256": "d94e31d123ecced47179b025c778ebcb7c3f59f00f68b3ca2ed73ed487344ffc",
+      "bytes": 3446,
+      "mtime_ns": 1792135445416820864
+    },
+    "artifacts/poc-ixi265-atropos-preparation-v1/prefit-guard-followup.json": {
+      "sha256": "9d9f5c8cb1493aacdb21b4d2e0a6aa559c409ff6dedcfe747d8e58d3e0e865f0",
+      "bytes": 2853,
+      "mtime_ns": 1792135157138225071
+    },
+    "scripts/poc_ixi265_vessel_agreement.py": {
+      "sha256": "6065b78d86e1bfc8293ae6c32a27a0963e8d8ec2b5d939294579efc37b6dc668",
+      "bytes": 15802,
+      "mtime_ns": 1792135201737603691
+    },
+    "artifacts/poc-ixi265-vessel-agreement-v1/protocol.json": {
+      "sha256": "027e97310ba84177b69d8f874a0a0d6b8d2f360d5a118987842baf422e631e66",
+      "bytes": 6446,
+      "mtime_ns": 1792135222473780425
+    },
+    "artifacts/poc-ixi265-vessel-agreement-v1/receipt.json": {
+      "sha256": "b2efe42553817dba6900aedc2f6d4b7bd47cfcde002a4938a2fb2d248d2ea5c6",
+      "bytes": 7492,
+      "mtime_ns": 1792135272467983485
+    },
+    "outputs/poc-ixi265-vessel-agreement-v1/agreement.json": {
+      "sha256": "bebf7ae7354fe198fda4f2ee24e422a385b84697f7096cfa8a9c8b5172b3e85e",
+      "bytes": 10038,
+      "mtime_ns": 1792135224449111630
+    },
+    "outputs/poc-ixi265-vessel-agreement-v1/runtime.json": {
+      "sha256": "871e15aeb2039dd55ddacf8a96ef1e05af203df4a54a0030d1675fe84d1387a6",
+      "bytes": 641,
+      "mtime_ns": 1792135224478257325
+    }
+  },
+  "failed_tissue_fit": {
+    "status": "failed_attempt_independently_explained",
+    "inputs": {
+      "T1": {
+        "path": "outputs/poc-ixi265/originals/IXI265-T1.nii.gz",
+        "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+        "bytes": 6980629,
+        "mtime_ns": 1792130312941604756
+      },
+      "brain_mask": {
+        "path": "outputs/poc-ixi265/synthstrip/brain_mask.nii.gz",
+        "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+        "bytes": 129560,
+        "mtime_ns": 1792131019547993465
+      },
+      "host_bundle": {
+        "path": "outputs/poc-ixi265/IXI265-Guys-0845.ressectionlab",
+        "sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+        "bytes": 57052870,
+        "mtime_ns": 1792131126176165021
+      }
+    },
+    "guard_predicates": {
+      "three_dimensions": true,
+      "within_12000000_voxels": true,
+      "mask_shape_matches": true,
+      "mask_dtype_bool": true,
+      "mask_nonempty": true,
+      "all_source_values_finite": true,
+      "all_masked_source_values_strictly_positive": false
+    },
+    "exact_failing_clause": "np.any(values[mask] <= 0)",
+    "source_native_shape": [
+      256,
+      256,
+      150
+    ],
+    "source_voxels": 9830400,
+    "source_storage_dtype": "int16",
+    "guard_decoded_dtype": "float32",
+    "mask_storage_dtype": "uint8",
+    "mask_unique_values": [
+      0,
+      1
+    ],
+    "estimated_brain_voxels": 1451509,
+    "source_intensity_min_max": [
+      0.0,
+      988.0
+    ],
+    "masked_intensity_min_max": [
+      0.0,
+      686.0
+    ],
+    "masked_zero_voxels": 8,
+    "masked_negative_voxels": 0,
+    "masked_zero_fraction": 5.511505612435059e-06,
+    "masked_zero_voxel_volume_mm3": 8.437495465447483,
+    "rejected_index_bbox": [
+      [
+        60,
+        115,
+        40
+      ],
+      [
+        185,
+        219,
+        125
+      ]
+    ],
+    "rejected_world_center_bbox_ras_mm": [
+      [
+        -37.468472849577665,
+        -58.48805311974138,
+        -14.979265131056309
+      ],
+      [
+        60.345574632287025,
+        61.182694788090885,
+        87.09068688203115
+      ]
+    ],
+    "rejected_26_components": 8,
+    "rejected_component_sizes": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "minimum_pairwise_rejected_center_distance_mm": 11.585249529399096,
+    "rejected_cells": [
+      {
+        "index_ijk": [
+          60,
+          125,
+          75
+        ],
+        "world_center_ras_mm": [
+          4.400055557489395,
+          61.182694788090885,
+          -1.4310756991617382
+        ],
+        "value": 0.0,
+        "brain_neighbors_of_26": 16,
+        "positive_intensity_neighbors_of_26": 26,
+        "neighbor_intensity_min_median_max": [
+          3.0,
+          27.5,
+          165.0
+        ]
+      },
+      {
+        "index_ijk": [
+          67,
+          135,
+          49
+        ],
+        "world_center_ras_mm": [
+          -26.35173248127103,
+          56.148834438063204,
+          10.118115933262743
+        ],
+        "value": 0.0,
+        "brain_neighbors_of_26": 26,
+        "positive_intensity_neighbors_of_26": 26,
+        "neighbor_intensity_min_median_max": [
+          9.0,
+          55.5,
+          238.0
+        ]
+      },
+      {
+        "index_ijk": [
+          69,
+          131,
+          40
+        ],
+        "world_center_ras_mm": [
+          -37.468472849577665,
+          54.82429623324424,
+          7.137899701832794
+        ],
+        "value": 0.0,
+        "brain_neighbors_of_26": 24,
+        "positive_intensity_neighbors_of_26": 26,
+        "neighbor_intensity_min_median_max": [
+          10.0,
+          74.0,
+          245.0
+        ]
+      },
+      {
+        "index_ijk": [
+          89,
+          120,
+          83
+        ],
+        "world_center_ras_mm": [
+          12.281895745545626,
+          33.566659927368164,
+          -6.771851224009879
+        ],
+        "value": 0.0,
+        "brain_neighbors_of_26": 18,
+        "positive_intensity_neighbors_of_26": 26,
+        "neighbor_intensity_min_median_max": [
+          1.0,
+          26.5,
+          71.0
+        ]
+      },
+      {
+        "index_ijk": [
+          107,
+          123,
+          65
+        ],
+        "world_center_ras_mm": [
+          -9.880006331950426,
+          17.776697737164795,
+          -2.4402835251530632
+        ],
+        "value": 0.0,
+        "brain_neighbors_of_26": 26,
+        "positive_intensity_neighbors_of_26": 26,
+        "neighbor_intensity_min_median_max": [
+          15.0,
+          95.5,
+          208.0
+        ]
+      },
+      {
+        "index_ijk": [
+          127,
+          219,
+          68
+        ],
+        "world_center_ras_mm": [
+          -0.9012161530554295,
+          -1.4094736529514194,
+          87.09068688203115
+        ],
+        "value": 0.0,
+        "brain_neighbors_of_26": 17,
+        "positive_intensity_neighbors_of_26": 26,
+        "neighbor_intensity_min_median_max": [
+          5.0,
+          76.5,
+          356.0
+        ]
+      },
+      {
+        "index_ijk": [
+          128,
+          115,
+          125
+        ],
+        "world_center_ras_mm": [
+          60.345574632287025,
+          -5.439333717338741,
+          -14.979265131056309
+        ],
+        "value": 0.0,
+        "brain_neighbors_of_26": 20,
+        "positive_intensity_neighbors_of_26": 26,
+        "neighbor_intensity_min_median_max": [
+          5.0,
+          31.0,
+          194.0
+        ]
+      },
+      {
+        "index_ijk": [
+          185,
+          127,
+          119
+        ],
+        "world_center_ras_mm": [
+          51.30354994907975,
+          -58.48805311974138,
+          -3.230060302768834
+        ],
+        "value": 0.0,
+        "brain_neighbors_of_26": 19,
+        "positive_intensity_neighbors_of_26": 26,
+        "neighbor_intensity_min_median_max": [
+          15.0,
+          70.5,
+          258.0
+        ]
+      }
+    ],
+    "distribution_interpretation": "Eight isolated zero-valued samples spread across the estimated mask; no negative or nonfinite source values. Their imaging/anatomical cause is undetermined. This does not establish the mask's anatomical validity.",
+    "native_frame_checks": {
+      "T1": {
+        "shape": [
+          256,
+          256,
+          150
+        ],
+        "storage_dtype": "int16",
+        "affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "eight_center_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "qform_sform": {
+          "qform_code": 1,
+          "qform_max_cell_corner_error_mm": 1.8300677366913934e-05,
+          "qform_within_0_0001_mm_of_selected_affine": true,
+          "sform_code": 1,
+          "sform_max_cell_corner_error_mm": 0.0,
+          "sform_within_0_0001_mm_of_selected_affine": true
+        }
+      },
+      "brain_mask": {
+        "shape": [
+          256,
+          256,
+          150
+        ],
+        "storage_dtype": "uint8",
+        "affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "eight_center_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "qform_sform": {
+          "qform_code": 1,
+          "qform_max_cell_corner_error_mm": 1.8300677366913934e-05,
+          "qform_within_0_0001_mm_of_selected_affine": true,
+          "sform_code": 1,
+          "sform_max_cell_corner_error_mm": 0.0,
+          "sform_within_0_0001_mm_of_selected_affine": true
+        }
+      }
+    },
+    "source_bytes_unchanged": true,
+    "host_bundle_hashed_only_not_decoded": true,
+    "denominator": {
+      "started_attempts": 1,
+      "N4_completions": 0,
+      "Atropos_completions": 0,
+      "accepted_tissue_results": 0,
+      "retries": 0
+    },
+    "retained_attempt": {
+      "worker_exit_code": 1,
+      "elapsed_seconds": 46.054974750149995,
+      "peak_supervisor_plus_worker_family_rss_bytes_sampled": 541605888,
+      "minimum_available_memory_bytes_sampled": 7138312192,
+      "failure_was_resource_limit": false
+    },
+    "candidate_or_posteriors_exist": false,
+    "source_fix_clipping_or_normalization": false,
+    "anatomical_acceptance": false,
+    "host_or_catalog_promotion": false,
+    "growth_use_accepted": false,
+    "limitations": [
+      "No real N4 or Atropos result exists; solver resource feasibility and tissue accuracy remain untested.",
+      "No retry, new mask, intensity repair, or model import was performed by this audit.",
+      "Any future intensity-class posterior would still not establish physical partial-volume fractions or ventricles."
+    ]
+  },
+  "vessel_agreement": {
+    "status": "pass_descriptive_set_agreement",
+    "inputs": {
+      "MRA": {
+        "path": "outputs/poc-ixi265/originals/IXI265-MRA.nii.gz",
+        "sha256": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+        "bytes": 14307469,
+        "mtime_ns": 1792130313048310270
+      },
+      "reference": {
+        "path": "outputs/poc-ixi265/originals/IXI265-derived_vessel_label.nii.gz",
+        "sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe",
+        "bytes": 109932,
+        "mtime_ns": 1792130433254925498
+      },
+      "prediction": {
+        "path": "outputs/poc-ixi265/vesselfm-base-v1/vessels_mask.nii.gz",
+        "sha256": "d3eedb5a89e598cddd5eb017054f7fb0ce91c678278411c285cc00c2b8d277bc",
+        "bytes": 285799,
+        "mtime_ns": 1792131735454125275
+      },
+      "score": {
+        "path": "outputs/poc-ixi265/vesselfm-base-v1/vessels_probability.nii.gz",
+        "sha256": "1745f34949bec22c4c2418e0f7e115c8e3acf0cd974e6ba4b18f7e81e80ecc75",
+        "bytes": 95385330,
+        "mtime_ns": 1792131735419768721
+      },
+      "coverage": {
+        "path": "outputs/poc-ixi265/vesselfm-base-v1/native_sampling_coverage.nii.gz",
+        "sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b",
+        "bytes": 169180,
+        "mtime_ns": 1792131736680303273
+      }
+    },
+    "source_MRA_hashed_and_header_checked_only": true,
+    "native_frame_checks": {
+      "MRA": {
+        "shape": [
+          512,
+          512,
+          100
+        ],
+        "storage_dtype": "int16",
+        "affine_ras_mm": [
+          [
+            -0.4675968885421753,
+            0.022762440145015717,
+            0.04044419899582863,
+            113.11631774902344
+          ],
+          [
+            0.021471189334988594,
+            0.46756595373153687,
+            -0.043432630598545074,
+            -131.24533081054688
+          ],
+          [
+            0.024873699992895126,
+            0.024300718680024147,
+            0.7977957725524902,
+            -36.80162048339844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "eight_center_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "qform_sform": {
+          "qform_code": 1,
+          "qform_max_cell_corner_error_mm": 0.000228071386490438,
+          "qform_within_0_0001_mm_of_selected_affine": false,
+          "sform_code": 1,
+          "sform_max_cell_corner_error_mm": 0.0,
+          "sform_within_0_0001_mm_of_selected_affine": true
+        }
+      },
+      "reference": {
+        "shape": [
+          512,
+          512,
+          100
+        ],
+        "storage_dtype": "int16",
+        "affine_ras_mm": [
+          [
+            -0.4675968885421753,
+            0.022762438282370567,
+            0.04044419899582863,
+            113.11631774902344
+          ],
+          [
+            0.021471187472343445,
+            0.46756595373153687,
+            -0.043432630598545074,
+            -131.24533081054688
+          ],
+          [
+            0.024873699992895126,
+            0.024300716817378998,
+            0.7977957725524902,
+            -36.80162048339844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "eight_center_corner_errors_mm": [
+          0.0,
+          0.0,
+          1.3460649743166782e-06,
+          1.3460649743166782e-06,
+          9.51811671257019e-07,
+          9.51811671257019e-07,
+          1.6485861738542026e-06,
+          1.6485861738542026e-06
+        ],
+        "eight_cell_corner_errors_mm": [
+          1.6130980174698654e-09,
+          1.6130980174698654e-09,
+          1.3473823852018661e-06,
+          1.3473823852018661e-06,
+          9.52743904214948e-07,
+          9.52743904214948e-07,
+          1.6501992718716724e-06,
+          1.6501992718716724e-06
+        ],
+        "qform_sform": {
+          "qform_code": 1,
+          "qform_max_cell_corner_error_mm": 0.00022984447755395885,
+          "qform_within_0_0001_mm_of_selected_affine": false,
+          "sform_code": 1,
+          "sform_max_cell_corner_error_mm": 0.0,
+          "sform_within_0_0001_mm_of_selected_affine": true
+        }
+      },
+      "prediction": {
+        "shape": [
+          512,
+          512,
+          100
+        ],
+        "storage_dtype": "uint8",
+        "affine_ras_mm": [
+          [
+            -0.4675968885421753,
+            0.022762440145015717,
+            0.04044419899582863,
+            113.11631774902344
+          ],
+          [
+            0.021471189334988594,
+            0.46756595373153687,
+            -0.043432630598545074,
+            -131.24533081054688
+          ],
+          [
+            0.024873699992895126,
+            0.024300718680024147,
+            0.7977957725524902,
+            -36.80162048339844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "eight_center_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "qform_sform": {
+          "qform_code": 1,
+          "qform_max_cell_corner_error_mm": 0.000228071386490438,
+          "qform_within_0_0001_mm_of_selected_affine": false,
+          "sform_code": 1,
+          "sform_max_cell_corner_error_mm": 0.0,
+          "sform_within_0_0001_mm_of_selected_affine": true
+        }
+      },
+      "score": {
+        "shape": [
+          512,
+          512,
+          100
+        ],
+        "storage_dtype": "float32",
+        "affine_ras_mm": [
+          [
+            -0.4675968885421753,
+            0.022762440145015717,
+            0.04044419899582863,
+            113.11631774902344
+          ],
+          [
+            0.021471189334988594,
+            0.46756595373153687,
+            -0.043432630598545074,
+            -131.24533081054688
+          ],
+          [
+            0.024873699992895126,
+            0.024300718680024147,
+            0.7977957725524902,
+            -36.80162048339844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "eight_center_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "qform_sform": {
+          "qform_code": 0,
+          "sform_code": 2,
+          "sform_max_cell_corner_error_mm": 0.0,
+          "sform_within_0_0001_mm_of_selected_affine": true
+        }
+      },
+      "coverage": {
+        "shape": [
+          512,
+          512,
+          100
+        ],
+        "storage_dtype": "uint8",
+        "affine_ras_mm": [
+          [
+            -0.4675968885421753,
+            0.022762440145015717,
+            0.04044419899582863,
+            113.11631774902344
+          ],
+          [
+            0.021471189334988594,
+            0.46756595373153687,
+            -0.043432630598545074,
+            -131.24533081054688
+          ],
+          [
+            0.024873699992895126,
+            0.024300718680024147,
+            0.7977957725524902,
+            -36.80162048339844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "eight_center_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "qform_sform": {
+          "qform_code": 1,
+          "qform_max_cell_corner_error_mm": 0.000228071386490438,
+          "qform_within_0_0001_mm_of_selected_affine": false,
+          "sform_code": 1,
+          "sform_max_cell_corner_error_mm": 0.0,
+          "sform_within_0_0001_mm_of_selected_affine": true
+        }
+      }
+    },
+    "binary_sets_exact": true,
+    "score_min_max": [
+      2.2704188751276888e-08,
+      1.0
+    ],
+    "threshold": 0.5,
+    "saved_prediction_equals_score_strictly_above_threshold": true,
+    "coverage_exactly_one_native_border_cell_excluded": true,
+    "joint_state_bit_order": "prediction + 2*reference + 4*coverage",
+    "eight_state_counts": [
+      721348,
+      2619,
+      129,
+      504,
+      25302327,
+      110729,
+      5365,
+      71379
+    ],
+    "counts_and_agreement": {
+      "sampling_domain_voxels": 25489800,
+      "native_grid_voxels": 26214400,
+      "native_prediction_voxels": 185231,
+      "native_reference_positive_voxels": 77377,
+      "prediction_in_domain_voxels": 182108,
+      "reference_in_domain_voxels": 76744,
+      "intersection_voxels": 71379,
+      "union_voxels": 187473,
+      "positive_mask_dice": 0.5515043345232025,
+      "positive_mask_jaccard": 0.3807428269670833,
+      "provided_positive_reference_coverage_fraction": 0.9300922547691025,
+      "reference_positive_voxels_not_covered_by_prediction": 5365,
+      "prediction_in_UNLABELLED_reference_voxels": 110729,
+      "reference_positive_fraction_retained_by_sampling_domain": 0.9918192744614033,
+      "prediction_voxels_excluded_by_sampling_domain": 3123,
+      "reference_voxels_excluded_by_sampling_domain": 633,
+      "physical_volumes_mm3": {
+        "prediction_in_domain": 32011.178342406532,
+        "reference_in_domain": 13490.158975496117,
+        "intersection": 12547.09237871283
+      }
+    },
+    "sparse_graph_components_and_boundaries": {
+      "prediction": {
+        "connectivity": 26,
+        "connected_components": 573,
+        "largest_component_voxels": 111687,
+        "component_count_by_size": {
+          "1": 113,
+          "2_to_9": 181,
+          "10_to_99": 186,
+          "100_or_more": 93
+        },
+        "boundary_connectivity": 6,
+        "boundary_voxels": 120359,
+        "foreground_on_sampling_domain_boundary_voxels": 3812
+      },
+      "reference": {
+        "connectivity": 26,
+        "connected_components": 195,
+        "largest_component_voxels": 49419,
+        "component_count_by_size": {
+          "1": 9,
+          "2_to_9": 52,
+          "10_to_99": 99,
+          "100_or_more": 35
+        },
+        "boundary_connectivity": 6,
+        "boundary_voxels": 63869,
+        "foreground_on_sampling_domain_boundary_voxels": 674
+      }
+    },
+    "oracle": "Independent eight-bin slab contingency; Python sparse 26-neighbor DFS and six-neighbor membership boundary checks; no production diagnostic or scipy labeling/erosion invoked.",
+    "all_reported_counts_reproduced": true,
+    "source_bytes_unchanged": true,
+    "patient_group": "IXI:265",
+    "role": "TRAIN",
+    "training_admitted": false,
+    "model_weight_sha256_retained_from_frozen_inference": "6da4fbd06dd9c3b597e5d50cc628deb3026919ff126d01afbd13ac8fe22ee10c",
+    "new_weight_hash_sweep": false,
+    "reference_used_only_for_this_diagnostic": true,
+    "new_model_runs": 0,
+    "new_thresholds_or_postprocessing": false,
+    "limitations": [
+      "Positive-set agreement is descriptive; no independent, held-out or clinical accuracy claim.",
+      "110729 prediction voxels in UNLABELLED reference remain unknown, not false positives.",
+      "Reference is model-assisted and manually refined; completeness and negative-safe background are unestablished.",
+      "Provided-positive-reference coverage is not sensitivity to all vessels.",
+      "IXI occurs in checkpoint training collection; exact IXI265 subject overlap is unresolved.",
+      "No T1 registration, brain clipping, anatomical topology or surface-distance validation is implied."
+    ]
+  },
+  "auditor_sha256": "97fefdaac2cf282fc9b53495bba0d4846b936a1c37df5a102b319a5dbff8d86d",
+  "elapsed_seconds": 2.3167849578894675,
+  "own_process_peak_rss_bytes": 647282688,
+  "memory_samples": [
+    {
+      "phase": "start",
+      "own_rss_bytes": 36143104,
+      "available_bytes": 7049887744
+    },
+    {
+      "phase": "fit_input_diagnosis",
+      "own_rss_bytes": 162611200,
+      "available_bytes": 6969573376
+    },
+    {
+      "phase": "vessel_threshold",
+      "own_rss_bytes": 604323840,
+      "available_bytes": 6729072640
+    },
+    {
+      "phase": "vessel_prediction_before_sparse_graph",
+      "own_rss_bytes": 604323840,
+      "available_bytes": 6814842880
+    },
+    {
+      "phase": "vessel_prediction_after_sparse_graph",
+      "own_rss_bytes": 628408320,
+      "available_bytes": 6739492864
+    },
+    {
+      "phase": "vessel_reference_before_sparse_graph",
+      "own_rss_bytes": 628408320,
+      "available_bytes": 6739492864
+    },
+    {
+      "phase": "vessel_reference_after_sparse_graph",
+      "own_rss_bytes": 631783424,
+      "available_bytes": 6744932352
+    },
+    {
+      "phase": "finished",
+      "own_rss_bytes": 631783424,
+      "available_bytes": 6719291392
+    }
+  ],
+  "heavy_model_or_solver_execution": false,
+  "real_payload_scope": "Only fixed IXI265 T1/mask and native vessel set/score/coverage sources; host bundle byte hash only. No protected people or source edits.",
+  "prior_audit_rewrites": false,
+  "audit_harness_corrections": [
+    {
+      "initial_check": "Applied the tissue runner's strict qform-versus-sform cell-corner tolerance to the separate vessel diagnostic.",
+      "observed": "Native MRA qform differs from its selected sform by 0.000228071386490438 mm at the furthest cell corner; derived reference differs by 0.00022984447755395885 mm. These existing header values are retained.",
+      "correction": "Vessel comparison uses the fixed selected native affines, whose corresponding corners agree within 0.0001 mm. Both header forms and their small discrepancy are reported; no header or source was rewritten. The stricter tissue source-frame guard remains checked."
+    }
+  ]
+}

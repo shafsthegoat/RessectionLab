@@ -1,0 +1,62 @@
+{
+  "schema": "resectionlab-ixi265-atropos-prefit-guard-followup-v1",
+  "status": "frozen_generated_controls_passed_fit_unreleased",
+  "created_utc": "2026-10-16T07:19:17.136944+00:00",
+  "initial_preparation": {
+    "path": "artifacts/poc-ixi265-atropos-preparation-v1/preparation.json",
+    "sha256": "a49e2dd8978bf4f0d93db52574108a9d2be99b4c3eeff5eec740ce074a931683",
+    "runner_snapshot": "artifacts/poc-ixi265-atropos-preparation-v1/initial-runner-f0482764.py.txt",
+    "runner_sha256": "f048276404f2c7c1300d32e6e880a622d65931d90e0247111f8212cc19d49f00",
+    "controls_snapshot": "artifacts/poc-ixi265-atropos-preparation-v1/initial-controls-bc26602c.py.txt"
+  },
+  "changes": [
+    "All three source paths must equal fixed canonical IXI265 paths and resolve without redirection before any source hash is read. Metadata admission still runs first.",
+    "Fitting RSS includes supervising Python plus worker and recursive descendants; minimum available system memory is retained."
+  ],
+  "frozen_files": [
+    {
+      "path": "scripts/poc_ixi265_atropos.py",
+      "sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b",
+      "bytes": 22254
+    },
+    {
+      "path": "tests/test_poc_ixi265_atropos.py",
+      "sha256": "afe604bab6f8f852397f5cf4f08ee3f11d0a23c8c79ed85622e603fb63e64582",
+      "bytes": 13113
+    },
+    {
+      "path": "scripts/setup_ixi265_atropos.py",
+      "sha256": "d21825ea5f0bc9c99a80c165ca3099bddcd2f951deaf33614acf9c5a335d30c5",
+      "bytes": 9759
+    },
+    {
+      "path": "tests/test_setup_ixi265_atropos.py",
+      "sha256": "c0cfe7af41c24d1c94ccb45a60b3a1a3590173ad6b4f636b35ed9c65f86ba188",
+      "bytes": 2270
+    }
+  ],
+  "controls": {
+    "passed": 35,
+    "failed": 0,
+    "files": [
+      "tests/test_poc_ixi265_atropos.py",
+      "tests/test_setup_ixi265_atropos.py"
+    ],
+    "real_ANTs_fitting": false,
+    "real_source_or_mask_decoding": false,
+    "foreign_path_and_leaf_ancestor_symlink_sentinels": "passed_before_any_payload_digest",
+    "supervisor_worker_recursive_child_RSS_sum": "passed",
+    "generated_child_termination_failure_retention_no_retry": "passed"
+  },
+  "asset_setup": {
+    "receipt": "artifacts/poc-ixi265-atropos-preparation-v1/asset-setup.json",
+    "sha256": "2f0b911c330a9e5e719a7daf86d1a2bf655a61b8f0ee67064b529efa26004aa7",
+    "runtime_python": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-antspyx-0.6.3-py312-v1/runtime/bin/python",
+    "runtime_root_resolved": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.tools/poc-antspyx-0.6.3-py312-v1/runtime",
+    "status": "succeeded_assets_only",
+    "fit_marker_exists": false
+  },
+  "fit_release_required": true,
+  "anatomical_acceptance": false,
+  "host_or_growth_acceptance": false
+}
