@@ -114,6 +114,15 @@ now establishes the adapter's native-contract defect and verifies a float-mask
 generated pipeline. A typed kernel is prepared; exact-kernel preflight and
 patient execution remain separate from this diagnostic.
 
+The [later typed-mask v3 result](../artifacts/poc-ixi265-atropos-typed-mask-run-v3/RESULT.md)
+completes one native N4/Atropos fit after exact generated-kernel preflight and
+independent supervisor review. Independent saved-array/frame checking passes:
+1,451,501 known cells and the exact eight UNKNOWN cells partition the unchanged
+original brain, and all raw posteriors remain unchanged. Two real protocol
+failures remain retained. The intensity classes remain unreviewed estimates;
+no host, anatomy, physical PVE or tissue-conditioned growth gate is accepted.
+Separate native display/save/reopen integration follows this numerical result.
+
 ## Accuracy and publication gate
 
 Publication readiness requires claims with matching evidence, not a test count

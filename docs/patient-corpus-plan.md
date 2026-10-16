@@ -315,6 +315,14 @@ a separately prepared typed kernel changes only that API representation.
 This supports a targeted adapter repair while preserving both failed real
 protocols, source support and the tissue/host acceptance gates.
 
+The [subsequent typed-mask v3 run](../artifacts/poc-ixi265-atropos-typed-mask-run-v3/RESULT.md)
+now completes one bounded N4/Atropos fit and passes independent checks on all ten
+native outputs. The acquired T1 and original brain are unchanged; eight exact
+cells remain UNKNOWN and raw memberships remain unmodified. This is an unreviewed
+intensity-class candidate, not accepted tissue fractions or a qualified host.
+Separate display packaging and actual Electron save/reopen follow the numerical
+result; the tissue-conditioned campaign remains gated by the review below.
+
 Select exactly **one existing TRAIN host** with reviewed tumor-free status,
 brain/tissue support and accepted within-person frames. Prefer a qualified
 Lausanne/IXI T1–MRA host so retained vessels can constrain the same scene. If no

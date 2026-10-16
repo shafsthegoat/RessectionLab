@@ -1,0 +1,16 @@
+{
+  "result": "87 passed in 0.30s",
+  "runner_controls": 15,
+  "prior_controls": 72,
+  "native_fitting_in_controls": false,
+  "patient_files_read": false,
+  "test_path": "tests/test_poc_ixi265_atropos_typed_mask_run.py",
+  "test_sha256": "527cff47ebaefabd17fdaf2e6ba13c1062acdf20fecfe9af4f1c1336f4d22657",
+  "new_whole_supervisor_controls": [
+    "ProcessLookupError during SIGTERM does not skip continuity/final receipt",
+    "PermissionError during SIGTERM retained separately from original failure",
+    "Unexpected cleanup helper failure cannot skip final postchecks",
+    "runtime_unchanged false demotes successful worker result to failure"
+  ],
+  "generated_execution_only": "subprocess and psutil doubles, generated temporary files; no external process launched"
+}

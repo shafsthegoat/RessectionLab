@@ -1,0 +1,183 @@
+"""Source-only patient-runner admission, continuity, and lineage controls."""
+import importlib.util
+import json
+from pathlib import Path
+from types import SimpleNamespace
+import sys
+
+import pytest
+
+ROOT=Path(__file__).resolve().parents[1]
+def load(name,path):
+    spec=importlib.util.spec_from_file_location(name,ROOT/path)
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
+
+runner=load("typed_patient_runner","scripts/poc_ixi265_atropos_typed_mask_run.py")
+preflight=load("typed_preflight","scripts/poc_ants_typed_mask_preflight.py")
+
+
+def metadata(base):
+    return {"patient_group":"IXI:265","role":"TRAIN","training_admitted":False,
+        "T1_sha256":base.T1_SHA,"brain_mask_sha256":base.MASK_SHA,"host_sha256":base.HOST_SHA}
+
+
+def fixture_paths(tmp_path,monkeypatch):
+    monkeypatch.setattr(runner,"ROOT",tmp_path)
+    paths={"T1":tmp_path/"outputs/poc-ixi265/originals/IXI265-T1.nii.gz",
+        "brain_mask":tmp_path/"outputs/poc-ixi265/synthstrip/brain_mask.nii.gz",
+        "host_bundle":tmp_path/"outputs/poc-ixi265/IXI265-Guys-0845.ressectionlab"}
+    for p in paths.values():p.parent.mkdir(parents=True,exist_ok=True)
+    return paths
+
+
+def test_unreleased_native_and_patient_paths_never_access_dependencies(monkeypatch):
+    monkeypatch.setattr(runner,"kernel",lambda:pytest.fail("Unreleased patient dependency read"))
+    monkeypatch.setattr(preflight,"dependencies",lambda:pytest.fail("Unreleased native import"))
+    with pytest.raises(ValueError,match="not released"):runner.run({}, {}, "/unused", "/unused")
+    with pytest.raises(ValueError,match="release"):preflight.run()
+
+
+@pytest.mark.parametrize("fault",["foreign","leaf_symlink","ancestor_symlink","extra"])
+def test_every_source_path_is_checked_before_any_payload_hash(tmp_path,monkeypatch,fault):
+    base=runner.kernel().previous().reference();paths=fixture_paths(tmp_path,monkeypatch)
+    if fault=="foreign":paths["brain_mask"]=tmp_path/"UPENN-protected.nii.gz"
+    elif fault=="leaf_symlink":paths["brain_mask"].symlink_to(tmp_path/"protected")
+    elif fault=="ancestor_symlink":
+        parent=paths["brain_mask"].parent;parent.rmdir();parent.symlink_to(tmp_path/"protected",target_is_directory=True)
+    else:paths["foreign"]=tmp_path/"protected"
+    monkeypatch.setattr(runner,"sha",lambda path:pytest.fail("Payload was read before path rejection"))
+    record=runner.source_continuity(paths,metadata(base),base)
+    assert not record["all_unchanged"] and not record["payloads_hashed"]
+
+
+def test_metadata_rejected_before_even_canonical_path_inspection(monkeypatch):
+    base=runner.kernel().previous().reference()
+    monkeypatch.setattr(runner,"canonical_paths",lambda paths:pytest.fail("Path inspection before metadata rejection"))
+    bad=metadata(base);bad["role"]="SELECT"
+    record=runner.source_continuity({},bad,base)
+    assert not record["all_unchanged"] and not record["payloads_hashed"]
+
+
+def test_continuity_hashes_all_admitted_files_and_preserves_prior_failure(tmp_path,monkeypatch):
+    real=runner.kernel().previous().reference();paths=fixture_paths(tmp_path,monkeypatch)
+    for name,p in paths.items():p.write_bytes(name.encode())
+    expected={name:runner.sha(p) for name,p in paths.items()}
+    base=SimpleNamespace(require_admission=lambda m:None,T1_SHA=expected["T1"],MASK_SHA=expected["brain_mask"],HOST_SHA=expected["host_bundle"])
+    assert runner.source_continuity(paths,{},base)["all_unchanged"]
+    paths["brain_mask"].write_bytes(b"changed")
+    report=runner.source_continuity(paths,{},base)
+    assert report["files"]["T1"]["unchanged"] and report["files"]["host_bundle"]["unchanged"]
+    assert not report["files"]["brain_mask"]["unchanged"]
+    record={"status":"failed","failure":"native_worker_signal_11"}
+    runner.attach_continuity(record,report)
+    assert record["failure"]=="native_worker_signal_11" and record["additional_source_continuity_failure"]
+    successful={"status":"fitted_candidate_unaccepted"};runner.attach_continuity(successful,report)
+    assert successful["status"]=="failed"
+
+
+def test_missing_source_on_failure_is_reported_without_masking_original(tmp_path,monkeypatch):
+    paths=fixture_paths(tmp_path,monkeypatch)
+    base=SimpleNamespace(require_admission=lambda m:None,T1_SHA="x",MASK_SHA="x",HOST_SHA="x")
+    report=runner.source_continuity(paths,{},base)
+    assert len(report["files"])==3 and all("read_failure" in r for r in report["files"].values())
+    record={"status":"failed","failure":"original_failure"};runner.attach_continuity(record,report)
+    assert record["failure"]=="original_failure"
+
+
+def test_frozen_native_preflight_and_independent_diagnostic_proof():
+    evidence=runner.lineage()
+    assert evidence==runner.LINEAGE
+    outcome=json.loads((ROOT/next(iter(evidence))).read_text())
+    assert outcome["exit_code"]==0 and outcome["runtime_unchanged"] and not outcome["patient_inputs_read"]
+    declaration=json.loads((ROOT/"artifacts/poc-ants-typed-mask-native-preflight-v3/declaration.json").read_text())
+    assert declaration["pins"]["scripts/poc_ixi265_atropos_typed_mask.py"]==runner.KERNEL_SHA
+    assert declaration["generated_input"]["values"]["shape"]==[48,48,48]
+
+
+def test_tampered_lineage_fails_before_any_patient_access(monkeypatch):
+    original=runner.sha
+    def altered(path):
+        return "changed" if str(path).endswith("independent-qa.json") else original(path)
+    monkeypatch.setattr(runner,"sha",altered)
+    with pytest.raises(ValueError,match="lineage"):runner.lineage()
+
+
+def test_patient_v3_protocol_keeps_source_support_parameters_and_budget():
+    method=runner.method();old=runner.kernel().previous().method()
+    for key in ["source_hashes","resources","parameters","expected_unknown_indices_native","expected_fit_domain_voxels"]:
+        assert method[key]==old[key]
+    assert method["native_kernel_preflight_passed"] and not method["patient_fitting_released"]
+    assert runner.MARKER not in ["ixi265-n4-atropos-single-attempt.json",old["single_attempt_marker"]]
+    assert runner.OUTPUT.name=="poc-ixi265-atropos-typed-mask-v3"
+
+
+@pytest.mark.parametrize("cleanup_fault",["exit_race","signal_permission","helper_failure"])
+def test_full_supervisor_preserves_original_failure_and_final_receipt_after_cleanup_fault(tmp_path,monkeypatch,cleanup_fault):
+    result,calls,output=simulated_supervisor(tmp_path,monkeypatch,cleanup_fault=cleanup_fault)
+    assert result["status"]=="failed" and result["failure"]=="original_resource_failure"
+    assert result["source_continuity_after_attempt"]["all_unchanged"]
+    assert result["runtime_unchanged"] and result["lineage_unchanged"]
+    assert all(result["historical_markers_unchanged"].values())
+    assert calls==["source_continuity","runtime_postcheck","lineage_postcheck"]
+    assert json.loads((output/"attempt.json").read_text())==result
+    if cleanup_fault=="exit_race":
+        assert result["cleanup"]["normal_exit_races"]==["SIGTERM"] and not result["cleanup"]["errors"]
+    else:assert result["cleanup"]["errors"]
+
+
+def test_runtime_false_cannot_leave_successful_candidate_status(tmp_path,monkeypatch):
+    result,calls,output=simulated_supervisor(tmp_path,monkeypatch,runtime_changed=True)
+    assert result["status"]=="failed" and result["runtime_unchanged"] is False
+    assert result["continuity_guard_error"]=="Runtime continuity comparison failed"
+    assert calls==["source_continuity","runtime_postcheck","lineage_postcheck"]
+    assert json.loads((output/"attempt.json").read_text())==result
+
+
+def simulated_supervisor(tmp_path,monkeypatch,*,cleanup_fault=None,runtime_changed=False):
+    """Execute the whole supervisor with generated files/process/psutil doubles."""
+    base=runner.kernel().previous().reference();paths=fixture_paths(tmp_path,monkeypatch)
+    runtime=tmp_path/"runtime";runtime.mkdir();output=tmp_path/"v3-output"
+    prep=tmp_path/"prep";prep.mkdir();(prep/"preparation.json").write_text("{}")
+    for name in ["ixi265-n4-atropos-single-attempt.json","ixi265-n4-atropos-positive-domain-v2-attempt.json"]:
+        (runtime/name).write_text("generated-historical-marker")
+    monkeypatch.setattr(runner,"RUNTIME",runtime);monkeypatch.setattr(runner,"OUTPUT",output)
+    monkeypatch.setattr(runner,"PREPARATION",prep)
+    monkeypatch.setattr(runner,"kernel",lambda:SimpleNamespace(previous=lambda:SimpleNamespace(reference=lambda:base)))
+    monkeypatch.setattr(runner,"method",lambda:{"patient_fitting_released":False})
+    monkeypatch.setattr(runner,"preparation_intact",lambda:{"frozen_files":[]})
+    monkeypatch.setattr(base,"bound_inputs",lambda paths,metadata:None)
+    monkeypatch.setattr(base,"sampled_rss",lambda *args:100)
+    invocations=0
+    def resources(*args):
+        nonlocal invocations
+        invocations+=1
+        return "original_resource_failure" if cleanup_fault and invocations>1 else None
+    monkeypatch.setattr(base,"resource_violation",resources)
+    calls=[];runtime_calls=0
+    def verify(base):
+        nonlocal runtime_calls
+        runtime_calls+=1
+        if runtime_calls>1:calls.append("runtime_postcheck")
+        return {"version":"changed" if runtime_changed and runtime_calls>1 else "original"}
+    monkeypatch.setattr(runner,"verify_runtime",verify)
+    monkeypatch.setattr(runner,"lineage",lambda:calls.append("lineage_postcheck") or dict(runner.LINEAGE))
+    monkeypatch.setattr(runner,"source_continuity",lambda *args:calls.append("source_continuity") or {"all_unchanged":True})
+    monkeypatch.setitem(sys.modules,"psutil",SimpleNamespace(virtual_memory=lambda:SimpleNamespace(available=8*1024**3),
+        disk_usage=lambda path:SimpleNamespace(free=100*1024**3),NoSuchProcess=RuntimeError))
+    class Process:
+        pid=101;returncode=None if cleanup_fault else 0
+        def poll(self):return self.returncode
+        def wait(self,timeout):self.returncode=-15;return self.returncode
+    process=Process()
+    def popen(*args,**kwargs):
+        if not cleanup_fault:(output/"candidate.json").write_text('{"generated":true}')
+        return process
+    monkeypatch.setattr(runner.subprocess,"Popen",popen)
+    def kill(pid,sig):
+        if cleanup_fault=="exit_race":raise ProcessLookupError("generated normal exit race")
+        if cleanup_fault=="signal_permission":raise PermissionError("generated cleanup permission failure")
+    monkeypatch.setattr(runner.os,"killpg",kill)
+    if cleanup_fault=="helper_failure":
+        def helper(process):raise RuntimeError("generated unexpected cleanup helper failure")
+        monkeypatch.setattr(runner,"cleanup_worker",helper)
+    return runner.run(paths,metadata(base),runtime,output,released_single_attempt=True),calls,output

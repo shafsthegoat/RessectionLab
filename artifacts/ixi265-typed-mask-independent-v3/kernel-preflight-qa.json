@@ -1,0 +1,153 @@
+{
+  "schema": "ixi265-typed-mask-independent-kernel-preflight-v3",
+  "status": "pass_kernel_and_generated_native_preflight_patient_unreleased",
+  "created_utc": "2026-10-16T08:05:42.339912+00:00",
+  "pinned_sources_evidence_unchanged": {
+    "scripts/poc_ixi265_atropos_typed_mask.py": {
+      "sha256": "211d715a05b2dd269358b7bc5585488a053859ba65c04b9f31f60b69e41ec954",
+      "bytes": 5903,
+      "mtime_ns": 1792137477612567336
+    },
+    "scripts/poc_ants_typed_mask_preflight.py": {
+      "sha256": "db90c0a4f40a0c6be20438b8d1766c35a16d7ed7636852018b6babb6a852a107",
+      "bytes": 8210,
+      "mtime_ns": 1792137718797027523
+    },
+    "artifacts/poc-ants-typed-mask-native-preflight-v3/outcome.json": {
+      "sha256": "b9b8841d81d1ac9f10303aecdbfa838bba59fe4764065cd7898f44026b129c78",
+      "bytes": 3178,
+      "mtime_ns": 1792137726794129318
+    },
+    "artifacts/ants-mask-dtype-independent-v1/independent-qa.json": {
+      "sha256": "9c4b3bc648b9920ba7de4c5fd0c921b08382796e2ead3467caffc4213ee0c128",
+      "bytes": 13805,
+      "mtime_ns": 1792137611651496899
+    },
+    "artifacts/ixi265-positive-domain-independent-v2/result-qa.json": {
+      "sha256": "9c90b165a5da5657394ee1d26f0aa35193bc072e627b3b198d5fea1018beae72",
+      "bytes": 7639,
+      "mtime_ns": 1792136985358216860
+    }
+  },
+  "pure_generated_controls": [
+    "readonly_intensity_brain_domain_unknown_affine_preserved",
+    "float_mask_exact_support",
+    "raw_posteriors_and_eight_unknowns_preserved",
+    "ordered_stage_callbacks_after_checks",
+    "refuse_before_native_call_native_type",
+    "refuse_before_native_call_float64",
+    "refuse_before_native_call_value",
+    "refuse_before_native_call_origin",
+    "refuse_before_native_call_shape",
+    "refuse_before_native_call_input_intensity",
+    "recheck_same_mask_support_before_Atropos",
+    "bad_posterior_refused_before_completion_callback_without_repair",
+    "same_protocol_source_domain_parameters_resources_unreleased_no_acceptance"
+  ],
+  "pure_generated_control_count": 13,
+  "new_findings_requiring_fix": [],
+  "native_saved_preflight": {
+    "kernel_sha256": "211d715a05b2dd269358b7bc5585488a053859ba65c04b9f31f60b69e41ec954",
+    "output_manifest_unchanged": {
+      "classes_raw.npy": {
+        "sha256": "96fe26947bc2e81afce42c18c987c3a329903ac45f1c9df8c905b43ee0460de3",
+        "bytes": 110720,
+        "mtime_ns": 1792137726631281165
+      },
+      "corrected_raw.npy": {
+        "sha256": "cde4b6da3870bf8baaca92190010ff8dd0aca196daa8a46521167561422e409e",
+        "bytes": 442496,
+        "mtime_ns": 1792137726631173249
+      },
+      "declaration.json": {
+        "sha256": "a4fd0d950f3c8b30d0388ed6489733aa22ffc97ddc20fc73f5957dffc32a446a",
+        "bytes": 9466,
+        "mtime_ns": 1792137718908981237
+      },
+      "posterior_1_raw.npy": {
+        "sha256": "74d18d9b021183541333b0d269e870dfe1320af696a5de10bff09bae4002be91",
+        "bytes": 442496,
+        "mtime_ns": 1792137726631371039
+      },
+      "posterior_2_raw.npy": {
+        "sha256": "a43a6fc7062dedd580901bba27be7381e03525d06bdd2199df43286fbe057adf",
+        "bytes": 442496,
+        "mtime_ns": 1792137726631466580
+      },
+      "posterior_3_raw.npy": {
+        "sha256": "468dfaa2285f3bbccb268fc295db28f405b85a035c62ca0dab3b606620d2f0c5",
+        "bytes": 442496,
+        "mtime_ns": 1792137726631573996
+      },
+      "result.json": {
+        "sha256": "2a985702fab8f13d27896e07ff7cbb1c4b7e0d77832fb0206a773ed63375d95a",
+        "bytes": 20065,
+        "mtime_ns": 1792137726634625889
+      },
+      "stages.json": {
+        "sha256": "2730f7d05faf0913a17afaf5b7eea81b616c355ec5b122ae57de4024285d6c14",
+        "bytes": 4788,
+        "mtime_ns": 1792137726630518546
+      },
+      "temporary/antsrh2rqe4giprob01.nii.gz": {
+        "sha256": "9a5122e774a199a209e47a63158b217334f75d8eed3b8e88068e19fb2c36bc0d",
+        "bytes": 57515,
+        "mtime_ns": 1792137726618082267
+      },
+      "temporary/antsrh2rqe4giprob02.nii.gz": {
+        "sha256": "184090c4db12f78196868a527a16864ef7a7e29f28557a55a242347e9c9812b2",
+        "bytes": 87262,
+        "mtime_ns": 1792137726619357757
+      },
+      "temporary/antsrh2rqe4giprob03.nii.gz": {
+        "sha256": "c0db6b11da5dba0a9196093fc17c3b11dfcf07ec4b1132bb22135354563cf9fb",
+        "bytes": 114050,
+        "mtime_ns": 1792137726620746455
+      },
+      "temporary/matplotlib/fontlist-v390.json": {
+        "sha256": "ed96260e0cb6cfbeed5822d6ee8af118e343a8bba054ad080af1bb7adef5b65f",
+        "bytes": 125096,
+        "mtime_ns": 1792137725595999201
+      },
+      "worker.log": {
+        "sha256": "9652d41a2197a244676ccfc7ee3e8eb92169664062c126a92f8a91407cbfdd97",
+        "bytes": 12286,
+        "mtime_ns": 1792137726620846371
+      }
+    },
+    "mask_native_type": "float",
+    "mask_dtype": "float32",
+    "mask_support_voxels": 33552,
+    "stage_names": [
+      "N4_start",
+      "N4_complete",
+      "Atropos_start",
+      "Atropos_complete"
+    ],
+    "all_eight_native_cell_corners_exact": true,
+    "all_33552_generated_class_ids_exact": true,
+    "corrected_and_posterior_bytes_match_previously_audited_float_arm": true,
+    "class_array_dtype": "uint8",
+    "posterior_sum_max_abs_error": 3.036691431645977e-08,
+    "unchanged_parameter_source_and_runtime_lineage": true,
+    "elapsed_seconds": 7.843961624894291,
+    "peak_supervisor_and_process_family_rss_bytes_sampled": 387874816,
+    "exit_code": 0
+  },
+  "reuse_of_prior_source_contract_and_two_arm_audit": "9c4b3bc648b9920ba7de4c5fd0c921b08382796e2ead3467caffc4213ee0c128",
+  "patient_data_decoded": false,
+  "new_native_execution": false,
+  "ANTs_or_model_import": false,
+  "patient_fitting_released": false,
+  "anatomical_host_growth_or_PVE_acceptance": false,
+  "auditor_sha256": "55c959005dfa3afdd18707430af0eea23a82a8103c8eb928b48c516a069e4759",
+  "own_process_peak_rss_bytes": 46891008,
+  "limitations": [
+    "Only the mask API representation changes numerically; added boundary and stage checks make that change observable. Source intensity, exact fitting support, parameters and output semantics stay fixed.",
+    "This kernel is worker-only. Exact patient admission and a supervised release remain the caller's responsibility and require a separate review.",
+    "The native preflight used a simple generated identity-grid phantom. Pure controls also check an oblique reflected frame, but do not execute native code.",
+    "NPY files have no embedded affine; physical frames are independently recomputed from sealed native boundary/output metadata.",
+    "One successful generated preflight does not prove real-patient compatibility, anatomical accuracy, or the precise cause of the earlier unsymbolicated crash.",
+    "Historical real attempts remain two failures, with no accepted tissue results; no patient fit is released by this audit."
+  ]
+}

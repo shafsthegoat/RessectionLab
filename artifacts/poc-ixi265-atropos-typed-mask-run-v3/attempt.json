@@ -1,0 +1,157 @@
+{
+  "schema": "resectionlab-typed-mask-patient-attempt-v3",
+  "status": "fitted_candidate_unaccepted",
+  "started_utc": "2026-10-16T08:21:15.427552+00:00",
+  "supervisor_pid": 22283,
+  "runner_sha256": "b8d65e0522130df1a4e012811527ab17116a46436805c0152c0a3956a921e9ec",
+  "kernel_sha256": "211d715a05b2dd269358b7bc5585488a053859ba65c04b9f31f60b69e41ec954",
+  "resources": {
+    "threads": 2,
+    "rss_limit_bytes": 3221225472,
+    "minimum_available_bytes": 1073741824,
+    "timeout_seconds": 600.0,
+    "output_limit_bytes": 536870912,
+    "free_disk_floor_bytes": 53687091200,
+    "sample_interval_seconds": 0.2,
+    "max_voxels": 12000000,
+    "attempts": 1
+  },
+  "memory_scope": "supervising_Python_plus_worker_and_recursive_descendants",
+  "worker_pid": 22285,
+  "source_continuity_after_attempt": {
+    "all_unchanged": true,
+    "files": {
+      "T1": {
+        "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+        "expected_sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+        "unchanged": true
+      },
+      "brain_mask": {
+        "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+        "expected_sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+        "unchanged": true
+      },
+      "host_bundle": {
+        "sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+        "expected_sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+        "unchanged": true
+      }
+    },
+    "payloads_hashed": true
+  },
+  "historical_markers_unchanged": {
+    "ixi265-n4-atropos-single-attempt.json": true,
+    "ixi265-n4-atropos-positive-domain-v2-attempt.json": true
+  },
+  "runtime_unchanged": true,
+  "lineage_unchanged": true,
+  "exit_code": 0,
+  "elapsed_seconds": 19.126011667074636,
+  "peak_supervisor_and_process_family_rss_bytes_sampled": 1642381312,
+  "minimum_available_memory_bytes_sampled": 6968803328,
+  "minimum_free_disk_bytes_sampled": 343279857664,
+  "output_and_temporary_bytes": 47245684,
+  "finished_utc": "2026-10-16T08:21:34.553778+00:00",
+  "declaration_sha256": "dfbf67397325d3f4e5411160b2bc12e144c148eb6aa954c303929f10e5eeac2b",
+  "sampling_limitation": "Between-sample peaks are not a hard memory reservation",
+  "anatomy_accepted": false,
+  "host_accepted": false,
+  "growth_use_accepted": false,
+  "manifest": [
+    {
+      "path": "candidate.json",
+      "sha256": "55188c2f9916d226beed701bbf9c85e29aa60533ea34e0bdf0518fd63e52fa9f",
+      "bytes": 31203
+    },
+    {
+      "path": "class_1_posterior.nii.gz",
+      "sha256": "377f691004eb87dbb8cc65f45c6fbb5fbe44311915cad462d6ea4da4b0f0669c",
+      "bytes": 5425300
+    },
+    {
+      "path": "class_2_posterior.nii.gz",
+      "sha256": "2700b62ad949e9cc3dbef55943d7eb9efba99762c5309e2374b6599015fda25f",
+      "bytes": 5682413
+    },
+    {
+      "path": "class_3_posterior.nii.gz",
+      "sha256": "f375119f53fbf0e6137173b32d10713851c194e92cecb369e9741f1fa30f9b7e",
+      "bytes": 5550733
+    },
+    {
+      "path": "class_labels_raw.nii.gz",
+      "sha256": "7cd021de6201e7fea0ee586cde0a27b3d1106dd4645f9d0a833f98d0923f6791",
+      "bytes": 343423
+    },
+    {
+      "path": "csf_like_intensity_estimated.nii.gz",
+      "sha256": "a474f70c9cebc74ebb04d59df84c502d31a2816ccafea39428a286f20025a930",
+      "bytes": 222094
+    },
+    {
+      "path": "declaration.json",
+      "sha256": "dfbf67397325d3f4e5411160b2bc12e144c148eb6aa954c303929f10e5eeac2b",
+      "bytes": 17248
+    },
+    {
+      "path": "excluded_unknown_native.nii.gz",
+      "sha256": "b9b744588e970abd988155f1997290d568f7732c0c66ed6d1a3bd82ef89cb4e8",
+      "bytes": 43135
+    },
+    {
+      "path": "fit_domain_native.nii.gz",
+      "sha256": "8f6f7bc22d69cdc92c4ae1201a64ad5dc45afbf5fed44102e7bd0951bbf2ab5e",
+      "bytes": 129142
+    },
+    {
+      "path": "gray_matter_like_intensity_estimated.nii.gz",
+      "sha256": "567d806a0e5dacaa2542d1f6c415f6c1bccb01d73049ab22b72493e0eab4be05",
+      "bytes": 301337
+    },
+    {
+      "path": "n4_corrected_estimated.nii.gz",
+      "sha256": "a0208d470624f706ed278852239f296d8a2509b5d94de0fc64d90bf765730138",
+      "bytes": 13094415
+    },
+    {
+      "path": "stages.json",
+      "sha256": "f76146672305ef58071083c1a1e7c565d7b18b9a9daf2124dfbfaf661424255c",
+      "bytes": 6331
+    },
+    {
+      "path": "temporary/antsrbz4ch0ltprob01.nii.gz",
+      "sha256": "8adace1c376f1ba926c5e28f2daf789cd4de33f9ad2c6788603c379ea2fb22ae",
+      "bytes": 5211867
+    },
+    {
+      "path": "temporary/antsrbz4ch0ltprob02.nii.gz",
+      "sha256": "8c87204528e9b99f8bb64247e0eb4335106ca487b30b428c4fce4aec081e2b7c",
+      "bytes": 5462561
+    },
+    {
+      "path": "temporary/antsrbz4ch0ltprob03.nii.gz",
+      "sha256": "e386015a7897cb455bb9b8e0c22b28f8abe0ae440e10eada69fd6fa93be07f58",
+      "bytes": 5369599
+    },
+    {
+      "path": "temporary/matplotlib/fontlist-v390.json",
+      "sha256": "9f8bdc1229cd7a5b81dc9b9a3b242d873de4df288b5c2e416e5f92f4309a6d4c",
+      "bytes": 125096
+    },
+    {
+      "path": "white_matter_like_intensity_estimated.nii.gz",
+      "sha256": "a9d1c122ea39a93fbb3de007415b4312b15ee90eb7c37889c0fc4d129f5c7729",
+      "bytes": 215767
+    },
+    {
+      "path": "worker-input.json",
+      "sha256": "7016c54135280b6f984f516a98f5c9f0534eede1b7136b71d7933e501c4bd11c",
+      "bytes": 1351
+    },
+    {
+      "path": "worker.log",
+      "sha256": "e72234ea456001d4799bbbc7882ad54a4b2281f99c11d7b7647f54435d68c4c3",
+      "bytes": 11944
+    }
+  ]
+}

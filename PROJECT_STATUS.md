@@ -98,6 +98,17 @@ shows all 12 source identities; skull search finds three cases and qualified
 both completed CT surfaces and prior display settings. All 138 Electron host
 tests pass. The 24 saved versions shown in the library are not 24 people.
 
+**IXI tissue fitting completes, October 16:**
+The [separate typed-mask v3 attempt](artifacts/poc-ixi265-atropos-typed-mask-run-v3/RESULT.md)
+completes N4/Atropos in 19.126 s at 1.53 GiB sampled supervisor/family RSS.
+Independent saved-output checks reproduce all ten outputs, native frames, raw
+posterior arrays and the exact 1,451,501 known/eight UNKNOWN partition. Acquired
+source bytes, original brain mask and all prior failures remain unchanged. This
+is one completed numerical candidate across three real protocol attempts, with
+zero anatomical/host/growth acceptance. Class names remain intensity assumptions,
+and posteriors are not physical tissue fractions. Separate display packaging
+and actual app inspection/save/reopen are the next integration.
+
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and
 [patient construction plan](docs/patient-corpus-plan.md) supersede the historical

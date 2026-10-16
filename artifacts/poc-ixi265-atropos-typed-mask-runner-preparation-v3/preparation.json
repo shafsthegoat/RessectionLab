@@ -1,0 +1,279 @@
+{
+  "schema": "resectionlab-typed-mask-v3-patient-runner-source-preparation",
+  "runner_sha256": "dd7d71631c6724f519dd0af76f4f8338e260de9056f0c3f6c5fddae585085d85",
+  "kernel_sha256": "211d715a05b2dd269358b7bc5585488a053859ba65c04b9f31f60b69e41ec954",
+  "patient_fitting_released": false,
+  "frozen_files": [
+    {
+      "path": "scripts/poc_ixi265_atropos_typed_mask_run.py",
+      "sha256": "dd7d71631c6724f519dd0af76f4f8338e260de9056f0c3f6c5fddae585085d85"
+    },
+    {
+      "path": "tests/test_poc_ixi265_atropos_typed_mask_run.py",
+      "sha256": "2c60c8c2a28bfb82d6c5b22a6b8d7c658d5fc66ecbb96f2ce8072a84731eae3e"
+    },
+    {
+      "path": "scripts/poc_ixi265_atropos_typed_mask.py",
+      "sha256": "211d715a05b2dd269358b7bc5585488a053859ba65c04b9f31f60b69e41ec954"
+    },
+    {
+      "path": "scripts/poc_ixi265_atropos_positive_domain.py",
+      "sha256": "0652eca1ba81304e053f24c9a9fc2f8c89174bfe7447accfd21105263592d81d"
+    },
+    {
+      "path": "scripts/poc_ixi265_atropos.py",
+      "sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b"
+    },
+    {
+      "path": "scripts/poc_ants_typed_mask_preflight.py",
+      "sha256": "db90c0a4f40a0c6be20438b8d1766c35a16d7ed7636852018b6babb6a852a107"
+    },
+    {
+      "path": "artifacts/poc-ants-typed-mask-native-preflight-v3/declaration.json",
+      "sha256": "a4fd0d950f3c8b30d0388ed6489733aa22ffc97ddc20fc73f5957dffc32a446a"
+    },
+    {
+      "path": "artifacts/poc-ants-typed-mask-native-preflight-v3/result.json",
+      "sha256": "2a985702fab8f13d27896e07ff7cbb1c4b7e0d77832fb0206a773ed63375d95a"
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-preparation-v1/installed-runtime-audit.json",
+      "sha256": "8dc074db35e17be3b10f05e68e19ff61cdd44a6d1e0e744bbfc25e1da9073e79"
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-positive-domain-preparation-v2/diagnostic-lineage.json",
+      "sha256": "29ed23dd49ddd1035314d70697bd3a11be0fe3798dc5ed87e34765fd7b22745c"
+    },
+    {
+      "path": "artifacts/poc-ants-typed-mask-native-preflight-v3/outcome.json",
+      "sha256": "b9b8841d81d1ac9f10303aecdbfa838bba59fe4764065cd7898f44026b129c78"
+    },
+    {
+      "path": "artifacts/ants-mask-dtype-independent-v1/independent-qa.json",
+      "sha256": "9c4b3bc648b9920ba7de4c5fd0c921b08382796e2ead3467caffc4213ee0c128"
+    },
+    {
+      "path": "artifacts/ixi265-typed-mask-independent-v3/kernel-preflight-qa.json",
+      "sha256": "08fc33228534fd2adb392a9093b57790695560ab9a881ee96cebddf0a23636b5"
+    },
+    {
+      "path": "artifacts/poc-ants-mask-dtype-generated-v1/outcome.json",
+      "sha256": "f7a0844d9569ddd8add755c167d316a0c8a7fd840aef76a9ce35ed8674a53102"
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-positive-domain-run-v2/outcome.json",
+      "sha256": "dce67f0acde21aa11fa99bdaa270108c8b53b5a091514182870e69e01fa78e21"
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-typed-mask-runner-preparation-v3/prospective-run-spec.json",
+      "sha256": "166993c982b28770dfe61c34aae7aae6abee0bb392cb69c55e2b92be25e26194"
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-typed-mask-runner-preparation-v3/prospective-method.json",
+      "sha256": "a0cb3ddd876f9fd30a890487745b57e0025b84427b9e0a7ef1ea442c3b1a1f2f"
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-typed-mask-runner-preparation-v3/controls.json",
+      "sha256": "db4e34fb3e0d88c07101282c3db09e781a6452c63f8176d3ae79f7f9541c43d2"
+    }
+  ],
+  "completed_native_preflight": {
+    "outcome_sha256": "b9b8841d81d1ac9f10303aecdbfa838bba59fe4764065cd7898f44026b129c78",
+    "exact_kernel_sha256": "211d715a05b2dd269358b7bc5585488a053859ba65c04b9f31f60b69e41ec954",
+    "independent_QA_sha256": "08fc33228534fd2adb392a9093b57790695560ab9a881ee96cebddf0a23636b5"
+  },
+  "runtime_verified_without_ANTs_import": {
+    "packages": [
+      {
+        "name": "antspyx",
+        "version": "0.6.3",
+        "metadata_sha256": "1785cd9da7d963996fc814931e95a678dda1e4ad91d67873a78cebbff0db26ea"
+      },
+      {
+        "name": "numpy",
+        "version": "2.2.6",
+        "metadata_sha256": "91d66d0d60ad467c679555c0e12ac739bb395940dc22bc5a39d45780aba129ad"
+      },
+      {
+        "name": "scipy",
+        "version": "1.15.3",
+        "metadata_sha256": "98a671c6721432d60306593cdb7903477473d3b712544c666482ed113864f676"
+      },
+      {
+        "name": "pandas",
+        "version": "2.3.3",
+        "metadata_sha256": "40ee953dc7ca155840b639a1881ff84578075187fce0ac20eeda55a7fa0d9a90"
+      },
+      {
+        "name": "pyyaml",
+        "version": "6.0.3",
+        "metadata_sha256": "03c3b415ed38d09faedc49360e930769b40c58f68585e6de00e2e4916a858d34"
+      },
+      {
+        "name": "statsmodels",
+        "version": "0.14.6",
+        "metadata_sha256": "cbf436009e40693a0e2811aa5c55808a37baa2dbb6871e6dbf47e55c2bca1336"
+      },
+      {
+        "name": "webcolors",
+        "version": "24.11.1",
+        "metadata_sha256": "821dc0f89860bda2137ea1ee3b059e2abaefb9891d30f60027be3ec1390a0788"
+      },
+      {
+        "name": "matplotlib",
+        "version": "3.10.8",
+        "metadata_sha256": "271a91ad64b587781e3ccc76add7e042acb74e1ee94081decf4dc382be91fa06"
+      },
+      {
+        "name": "pillow",
+        "version": "12.0.0",
+        "metadata_sha256": "ad620452bfa53cbfa294d7da7b66dab5a086a54ede0ce178bd74e380ebc434c8"
+      },
+      {
+        "name": "requests",
+        "version": "2.32.5",
+        "metadata_sha256": "65b5a08da81f4915513e760965ff14b7518f65b7bb3efe0dab364bbcc4d40cb0"
+      },
+      {
+        "name": "scikit-learn",
+        "version": "1.7.2",
+        "metadata_sha256": "a301770d816e5ef5e2a262886115f1e6002637324f3bfe73f92378897dea8c63"
+      },
+      {
+        "name": "nibabel",
+        "version": "5.3.2",
+        "metadata_sha256": "1212d35344c5c57f6ff6c41f411b65c409ac4d7c25ff609a8ff4492b7cda9af0"
+      },
+      {
+        "name": "psutil",
+        "version": "7.1.3",
+        "metadata_sha256": "3578dc4ee5f43e542d29839741b9e3d8760c3c0e5d8c388ec2b0b980bd8c66a1"
+      },
+      {
+        "name": "packaging",
+        "version": "25.0",
+        "metadata_sha256": "5b611a609c38fefc3d616bf45d20aec98fb7d53f245daca9e2c30fc85c7ac282"
+      },
+      {
+        "name": "python-dateutil",
+        "version": "2.9.0.post0",
+        "metadata_sha256": "a9d436da322be808332f98d88325998e87cb693a678a9969feb4cfad729a6e93"
+      },
+      {
+        "name": "pytz",
+        "version": "2025.2",
+        "metadata_sha256": "e620e4e1f9f1c8019619388d4da496eb02119a13f35aaad55f022694a3c81f6c"
+      },
+      {
+        "name": "tzdata",
+        "version": "2025.2",
+        "metadata_sha256": "c2cc876ee200b84d1b8bee22290bc673ae4cf8e8be1a85cd2909a2715215794b"
+      },
+      {
+        "name": "patsy",
+        "version": "1.0.2",
+        "metadata_sha256": "c095d948f15b9bd16f13d0a52749da67031aad53bd0565295c5302f193e4cbaf"
+      },
+      {
+        "name": "contourpy",
+        "version": "1.3.3",
+        "metadata_sha256": "c43cef86baef09cff9c77975e578fa8cca0c9454df40dc176938b499a63de54a"
+      },
+      {
+        "name": "cycler",
+        "version": "0.12.1",
+        "metadata_sha256": "23289e19b76f1e01394227696e6af2b6cd1ce79e89731209bf9195148b18ed36"
+      },
+      {
+        "name": "fonttools",
+        "version": "4.61.1",
+        "metadata_sha256": "b05d21d549792a841a9b870d8dc0ce5c9d43d99d67621ff1379b18be8a7c3940"
+      },
+      {
+        "name": "kiwisolver",
+        "version": "1.4.9",
+        "metadata_sha256": "cad34a37b5cb66cfa1b9676f33721037ae2d850b9b0c71377478a1d6bf0c7d40"
+      },
+      {
+        "name": "pyparsing",
+        "version": "3.2.5",
+        "metadata_sha256": "cd543f26f0f59ac7b446f57cc91e8def7a3eb735fdd5e91c4e402b8725696eba"
+      },
+      {
+        "name": "charset-normalizer",
+        "version": "3.4.4",
+        "metadata_sha256": "8d5b94141b62f1d6afd7d60bbd68acb138a155d176a33518e0a28cc3b8dd9014"
+      },
+      {
+        "name": "idna",
+        "version": "3.11",
+        "metadata_sha256": "7c2c12c30f52ba237c4c81e59454804944025b9e6102cf1dcca9ebf5168411b0"
+      },
+      {
+        "name": "urllib3",
+        "version": "2.6.2",
+        "metadata_sha256": "532da8b2c7b39b017e837451b0d9c946061a2ec4a9e04d4161e487166a731a53"
+      },
+      {
+        "name": "certifi",
+        "version": "2025.11.12",
+        "metadata_sha256": "fc9a6b1aeff595649d1e5aee44129ca2b5e7adfbc10e1bd7ffa291afc1d06cb7"
+      },
+      {
+        "name": "joblib",
+        "version": "1.5.2",
+        "metadata_sha256": "cf385b71bfce1aa630dedb3b3749e841826a5cb8ee15c5e75e06dadfacc44a3d"
+      },
+      {
+        "name": "threadpoolctl",
+        "version": "3.6.0",
+        "metadata_sha256": "a45df8d07ea1883d772183a501d7d526076aa70dfcfddb276a2cbdc04def5341"
+      },
+      {
+        "name": "six",
+        "version": "1.17.0",
+        "metadata_sha256": "562042078c2752549f6d8a7c86dbc5dd708088a7be6d80672ec7b07100b72468"
+      },
+      {
+        "name": "typing-extensions",
+        "version": "4.15.0",
+        "metadata_sha256": "c138378fe8f18934ac99de060535c53ec6c13aeed65e94c32641da7ee3192a72"
+      }
+    ],
+    "runtime_plan_sha256": "629c045ba0a0c57c8d3c345249b111659e88aca2987cd3e438dac9463b35c4a8",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "prefix": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-antspyx-0.6.3-py312-v1/runtime",
+    "verified_official_API_sources": [
+      {
+        "path": "ants/segmentation/atropos.py",
+        "sha256": "bc0f65e59d04ef2fb25171338d467a2155ab17abf643d0d7040671d36eeea4ad"
+      },
+      {
+        "path": "ants/ops/bias_correction.py",
+        "sha256": "bb435f036db5e3a4211c982658a1565ac3e2d51870a3bfe7fb99acc3778556e6"
+      },
+      {
+        "path": "ants/core/ants_image_io.py",
+        "sha256": "dc4f25ae3eb1c8426eb10912d47850da6456454f9ab29f6efb205f2d7ed29e15"
+      }
+    ],
+    "installed_native_binary_hashes": [
+      {
+        "path": "ants/.dylibs/libpng16.16.dylib",
+        "sha256": "8064d5b03346634041aa98bae6becf6d1dc59e7259cf36057bc0b544d30adf6e"
+      },
+      {
+        "path": "ants/lib.cpython-312-darwin.so",
+        "sha256": "93f4e1418216de4f2f7b44be9f2926354a7c4bb098593904b95bb8db94f68021"
+      }
+    ]
+  },
+  "patient_output_exists": false,
+  "patient_attempt_marker_exists": false,
+  "source_or_runtime_mutation": false,
+  "remaining_before_patient_run": [
+    "independent review of exact frozen patient worker/supervisor",
+    "explicit parent release of separate actual spec"
+  ],
+  "prior_v1_v2_kernel_and_preparation_unchanged": true
+}

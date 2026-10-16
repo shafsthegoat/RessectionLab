@@ -1,0 +1,715 @@
+{
+  "schema": "resectionlab-sealed-typed-mask-v3-real-fit-outcome",
+  "status": "fitted_candidate_unaccepted",
+  "exit_code": 0,
+  "root_release_declaration_sha256": "85910005da495df7d2265b6d9cce3bb1a4b8d9bcaadaf1bc54bb1aed30003d71",
+  "released_spec_sha256": "b50c9cdba0b70b723f152bed0d3786fa335dc0f901faf10f80b8b824605b54df",
+  "attempt_sha256": "bd2631506457632078e65c049a2101962bbc83f061b424adf56627dea21b5595",
+  "declaration_sha256": "dfbf67397325d3f4e5411160b2bc12e144c148eb6aa954c303929f10e5eeac2b",
+  "candidate_sha256": "55188c2f9916d226beed701bbf9c85e29aa60533ea34e0bdf0518fd63e52fa9f",
+  "stages_sha256": "f76146672305ef58071083c1a1e7c565d7b18b9a9daf2124dfbfaf661424255c",
+  "output_inventory_sha256": "8fd232d60f752953c2c288fc7a7f9b2f6bd7b3b025f0f05744d23ef924816f8a",
+  "runner_sha256": "b8d65e0522130df1a4e012811527ab17116a46436805c0152c0a3956a921e9ec",
+  "kernel_sha256": "211d715a05b2dd269358b7bc5585488a053859ba65c04b9f31f60b69e41ec954",
+  "preparation_sha256": "8a8335d6ab2f0b671c96eb80e6ae421e17cdaced294a5132dfeaf0c59ccfb6a1",
+  "independent_supervisor_QA_sha256": "1013cc0cde560fdce0e3c16338edd100421623cba2629c8bf3eaeeee8a8ed0c4",
+  "resources": {
+    "elapsed_seconds": 19.126011667074636,
+    "peak_supervisor_and_process_family_rss_bytes_sampled": 1642381312,
+    "minimum_available_memory_bytes_sampled": 6968803328,
+    "minimum_free_disk_bytes_sampled": 343279857664,
+    "output_and_temporary_bytes": 47245684,
+    "sampling_limitation": "Between-sample peaks are not a hard memory reservation"
+  },
+  "stages_completed": [
+    "N4_start",
+    "N4_complete",
+    "Atropos_start",
+    "Atropos_complete"
+  ],
+  "support": {
+    "original_brain_voxels": 1451509,
+    "fit_domain_voxels": 1451501,
+    "excluded_unknown_voxels": 8,
+    "unknown_indices_native": [
+      [
+        60,
+        125,
+        75
+      ],
+      [
+        67,
+        135,
+        49
+      ],
+      [
+        69,
+        131,
+        40
+      ],
+      [
+        89,
+        120,
+        83
+      ],
+      [
+        107,
+        123,
+        65
+      ],
+      [
+        127,
+        219,
+        68
+      ],
+      [
+        128,
+        115,
+        125
+      ],
+      [
+        185,
+        127,
+        119
+      ]
+    ],
+    "excluded_semantics": "UNKNOWN_ABSTAINED",
+    "source_arrays_modified": false,
+    "domain_is_anatomical_correction": false
+  },
+  "numerical_checks": {
+    "frames": {
+      "input": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912157,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 1.3877787807814457e-17,
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      },
+      "mask": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912157,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 1.3877787807814457e-17,
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      },
+      "N4": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912157,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 1.3877787807814457e-17,
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      },
+      "classes": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912157,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 1.3877787807814457e-17,
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      },
+      "posterior_1": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.046656829993057605,
+            0.06588857598793152,
+            1.1955414390858834,
+            -90.70220947265625
+          ],
+          [
+            -0.936338159158255,
+            -0.002922833887342569,
+            -0.059605210148493175,
+            122.19873046875
+          ],
+          [
+            0.00036077752681023666,
+            0.9351772038476716,
+            -0.0844190161122087,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 5.7249945895065935e-08,
+        "eight_cell_corner_errors_mm": [
+          3.386044591075289e-08,
+          8.78336766543268e-06,
+          1.986502568974974e-06,
+          1.0753989630601422e-05,
+          6.943174619882037e-06,
+          1.0222543451575228e-05,
+          7.115904126934017e-06,
+          1.1894726226022832e-05
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      },
+      "posterior_2": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.046656829993057605,
+            0.06588857598793152,
+            1.1955414390858834,
+            -90.70220947265625
+          ],
+          [
+            -0.936338159158255,
+            -0.002922833887342569,
+            -0.059605210148493175,
+            122.19873046875
+          ],
+          [
+            0.00036077752681023666,
+            0.9351772038476716,
+            -0.0844190161122087,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 5.7249945895065935e-08,
+        "eight_cell_corner_errors_mm": [
+          3.386044591075289e-08,
+          8.78336766543268e-06,
+          1.986502568974974e-06,
+          1.0753989630601422e-05,
+          6.943174619882037e-06,
+          1.0222543451575228e-05,
+          7.115904126934017e-06,
+          1.1894726226022832e-05
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      },
+      "posterior_3": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.046656829993057605,
+            0.06588857598793152,
+            1.1955414390858834,
+            -90.70220947265625
+          ],
+          [
+            -0.936338159158255,
+            -0.002922833887342569,
+            -0.059605210148493175,
+            122.19873046875
+          ],
+          [
+            0.00036077752681023666,
+            0.9351772038476716,
+            -0.0844190161122087,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 5.7249945895065935e-08,
+        "eight_cell_corner_errors_mm": [
+          3.386044591075289e-08,
+          8.78336766543268e-06,
+          1.986502568974974e-06,
+          1.0753989630601422e-05,
+          6.943174619882037e-06,
+          1.0222543451575228e-05,
+          7.115904126934017e-06,
+          1.1894726226022832e-05
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      }
+    },
+    "classes": {
+      "classes": [
+        {
+          "class": 1,
+          "voxels": 263320,
+          "corrected_intensity_mean": 222.40606689453125,
+          "declared_assumption": "csf_like_intensity_estimated",
+          "anatomical_acceptance": false
+        },
+        {
+          "class": 2,
+          "voxels": 607861,
+          "corrected_intensity_mean": 428.67388916015625,
+          "declared_assumption": "gray_matter_like_intensity_estimated",
+          "anatomical_acceptance": false
+        },
+        {
+          "class": 3,
+          "voxels": 580320,
+          "corrected_intensity_mean": 557.5263671875,
+          "declared_assumption": "white_matter_like_intensity_estimated",
+          "anatomical_acceptance": false
+        }
+      ],
+      "posterior_sum_max_abs_error": 1.4156103134155273e-07,
+      "probabilities_modified": false
+    },
+    "N4_mask_boundary": {
+      "native_pixeltype": "float",
+      "numpy_dtype": "float32",
+      "binary_values_exact": true,
+      "support_voxels": 1451501,
+      "support_unchanged": true,
+      "frame": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912157,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 1.3877787807814457e-17,
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      }
+    },
+    "mask_representation_only_change": true,
+    "parameters_changed": false
+  },
+  "source_continuity": {
+    "all_unchanged": true,
+    "files": {
+      "T1": {
+        "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+        "expected_sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+        "unchanged": true
+      },
+      "brain_mask": {
+        "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+        "expected_sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+        "unchanged": true
+      },
+      "host_bundle": {
+        "sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+        "expected_sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+        "unchanged": true
+      }
+    },
+    "payloads_hashed": true
+  },
+  "historical_markers_unchanged": {
+    "ixi265-n4-atropos-single-attempt.json": true,
+    "ixi265-n4-atropos-positive-domain-v2-attempt.json": true
+  },
+  "runtime_unchanged": true,
+  "lineage_unchanged": true,
+  "installed_native_binary_hashes": [
+    {
+      "path": "ants/.dylibs/libpng16.16.dylib",
+      "sha256": "8064d5b03346634041aa98bae6becf6d1dc59e7259cf36057bc0b544d30adf6e"
+    },
+    {
+      "path": "ants/lib.cpython-312-darwin.so",
+      "sha256": "93f4e1418216de4f2f7b44be9f2926354a7c4bb098593904b95bb8db94f68021"
+    }
+  ],
+  "retained_failures": {
+    "artifacts/poc-ixi265-atropos-run-v1/outcome.json": "55f4dd46f7cc692d4a66799cefca21bfa37430d3f5cf2ebe3eda675b6e4c989e",
+    "artifacts/poc-ixi265-atropos-positive-domain-run-v2/outcome.json": "dce67f0acde21aa11fa99bdaa270108c8b53b5a091514182870e69e01fa78e21"
+  },
+  "actual_attempt_denominator": {
+    "total_patient_protocol_attempts_started": 3,
+    "retained_failed_attempts": 2,
+    "completed_fitting_candidates": 1,
+    "N4_started": 2,
+    "N4_completed": 1,
+    "Atropos_started": 1,
+    "Atropos_completed": 1,
+    "anatomy_accepted": 0,
+    "host_accepted": 0,
+    "growth_use_accepted": 0
+  },
+  "interpretation": "Successful bounded within-image fitting candidate. Ordered intensity classes are estimated under the declared assumption; raw posteriors are membership probabilities, not physical PVE. Independent saved-array/frame/unknown review remains required.",
+  "patient_pipeline_automatically_repeated": false,
+  "source_or_host_repackaged": false,
+  "anatomy_accepted": false,
+  "host_accepted": false,
+  "growth_use_accepted": false
+}

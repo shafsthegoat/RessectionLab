@@ -1,0 +1,256 @@
+{
+  "schema": "ixi265-typed-supervisor-independent-review-v3",
+  "status": "pass_prospective_guarded_supervisor_only_patient_run_unreleased",
+  "created_utc": "2026-10-16T08:19:38.161041+00:00",
+  "pins": {
+    "scripts/poc_ixi265_atropos_typed_mask_run.py": "b8d65e0522130df1a4e012811527ab17116a46436805c0152c0a3956a921e9ec",
+    "tests/test_poc_ixi265_atropos_typed_mask_run.py": "527cff47ebaefabd17fdaf2e6ba13c1062acdf20fecfe9af4f1c1336f4d22657",
+    "artifacts/poc-ixi265-atropos-typed-mask-runner-guard-followup-v3/preparation.json": "8a8335d6ab2f0b671c96eb80e6ae421e17cdaced294a5132dfeaf0c59ccfb6a1",
+    "artifacts/poc-ixi265-atropos-typed-mask-runner-preparation-v3/preparation.json": "0e0a5b9069aca2fb0e4677c50a05593fdb5e40f79a62bd9a48dd0e6313d11797",
+    "artifacts/poc-ixi265-atropos-typed-mask-runner-guard-followup-v3/initial-runner.py.txt": "dd7d71631c6724f519dd0af76f4f8338e260de9056f0c3f6c5fddae585085d85",
+    "artifacts/poc-ixi265-atropos-typed-mask-runner-guard-followup-v3/initial-tests.py.txt": "2c60c8c2a28bfb82d6c5b22a6b8d7c658d5fc66ecbb96f2ce8072a84731eae3e",
+    "artifacts/ixi265-typed-mask-independent-v3/supervisor-initial-findings.json": "41e74da8c8edd02418400ab87f73b29bcc155a265f383e47f1be1b15be3d01e9",
+    "artifacts/poc-ixi265-atropos-typed-mask-runner-guard-followup-v3/prospective-run-spec.json": "166993c982b28770dfe61c34aae7aae6abee0bb392cb69c55e2b92be25e26194",
+    "scripts/poc_ixi265_atropos_typed_mask.py": "211d715a05b2dd269358b7bc5585488a053859ba65c04b9f31f60b69e41ec954",
+    "artifacts/ixi265-typed-mask-independent-v3/kernel-preflight-qa.json": "08fc33228534fd2adb392a9093b57790695560ab9a881ee96cebddf0a23636b5",
+    "artifacts/ants-mask-dtype-independent-v1/independent-qa.json": "9c4b3bc648b9920ba7de4c5fd0c921b08382796e2ead3467caffc4213ee0c128",
+    "artifacts/poc-ixi265-atropos-positive-domain-run-v2/outcome.json": "dce67f0acde21aa11fa99bdaa270108c8b53b5a091514182870e69e01fa78e21",
+    "artifacts/poc-ixi265-atropos-run-v1/outcome.json": "55f4dd46f7cc692d4a66799cefca21bfa37430d3f5cf2ebe3eda675b6e4c989e"
+  },
+  "auditor_sha256": "f067f86a21fdcbc03bb9cb3518a96fae83ded00367d9ff115e3d1e0966e0f665",
+  "controls_passed": 30,
+  "controls": [
+    "all_frozen_source_control_history_and_exact_native_preflight_pins",
+    "frozen_v2_eight_unknown_support_parameters_and_unaccepted_semantics",
+    "repair_changes_no_worker_source_support_kernel_parameters_or_output_math",
+    "only_typed_kernel_with_raw_outputs_unknown_map_native_frame_and_reopen_checks",
+    "unreleased_supervisor_and_worker_refuse_before_dependencies",
+    "eight_metadata_tamper_cases_refused_before_paths_in_supervisor_worker_and_postcheck",
+    "all_paths_before_hash_foreign",
+    "all_paths_before_hash_extra",
+    "all_paths_before_hash_leaf_symlink",
+    "all_paths_before_hash_ancestor_symlink",
+    "source_postcheck_attempts_all_three_files_and_preserves_original_failure",
+    "resource_boundary_sampled_process_family_RSS_limit",
+    "resource_boundary_available_memory_floor",
+    "resource_boundary_time_limit",
+    "resource_boundary_output_and_temporary_bytes_limit",
+    "resource_boundary_free_disk_floor",
+    "sampled_rss_includes_supervisor_worker_and_live_recursive_children",
+    "full_supervisor_success_durable_receipt_and_all_postchecks",
+    "full_supervisor_native_failure_durable_receipt_and_all_postchecks",
+    "full_supervisor_missing_candidate_durable_receipt_and_all_postchecks",
+    "full_supervisor_exit_race_durable_receipt_and_all_postchecks",
+    "full_supervisor_signal_permission_durable_receipt_and_all_postchecks",
+    "full_supervisor_cleanup_helper_error_durable_receipt_and_all_postchecks",
+    "full_supervisor_wait_timeout_durable_receipt_and_all_postchecks",
+    "full_supervisor_runtime_false_durable_receipt_and_all_postchecks",
+    "full_supervisor_lineage_false_durable_receipt_and_all_postchecks",
+    "full_supervisor_source_false_durable_receipt_and_all_postchecks",
+    "full_supervisor_history_false_durable_receipt_and_all_postchecks",
+    "full_supervisor_marker_exists_refused_before_worker",
+    "full_supervisor_output_exists_refused_before_worker"
+  ],
+  "whole_supervisor_generated_scenarios": [
+    {
+      "scenario": "success",
+      "status": "fitted_candidate_unaccepted",
+      "failure": null,
+      "all_postchecks_executed": true,
+      "durable_final_receipt_matches_returned_record": true,
+      "cleanup": null,
+      "worker_invocations": 1,
+      "actual_worker_started": false
+    },
+    {
+      "scenario": "native_failure",
+      "status": "failed",
+      "failure": "worker_failed_see_retained_log",
+      "all_postchecks_executed": true,
+      "durable_final_receipt_matches_returned_record": true,
+      "cleanup": {
+        "normal_exit_races": [],
+        "errors": [],
+        "worker_started": true
+      },
+      "worker_invocations": 1,
+      "actual_worker_started": false
+    },
+    {
+      "scenario": "missing_candidate",
+      "status": "failed",
+      "failure": "Missing candidate receipt",
+      "all_postchecks_executed": true,
+      "durable_final_receipt_matches_returned_record": true,
+      "cleanup": {
+        "normal_exit_races": [],
+        "errors": [],
+        "worker_started": true
+      },
+      "worker_invocations": 1,
+      "actual_worker_started": false
+    },
+    {
+      "scenario": "exit_race",
+      "status": "failed",
+      "failure": "sampled_process_family_RSS_limit",
+      "all_postchecks_executed": true,
+      "durable_final_receipt_matches_returned_record": true,
+      "cleanup": {
+        "normal_exit_races": [
+          "SIGTERM"
+        ],
+        "errors": [],
+        "worker_started": true,
+        "returncode_after_cleanup": 0
+      },
+      "worker_invocations": 1,
+      "actual_worker_started": false
+    },
+    {
+      "scenario": "signal_permission",
+      "status": "failed",
+      "failure": "sampled_process_family_RSS_limit",
+      "all_postchecks_executed": true,
+      "durable_final_receipt_matches_returned_record": true,
+      "cleanup": {
+        "normal_exit_races": [],
+        "errors": [
+          {
+            "operation": "SIGTERM",
+            "type": "PermissionError",
+            "message": "generated signal permission failure"
+          }
+        ],
+        "worker_started": true,
+        "returncode_after_cleanup": -15
+      },
+      "worker_invocations": 1,
+      "actual_worker_started": false
+    },
+    {
+      "scenario": "cleanup_helper_error",
+      "status": "failed",
+      "failure": "sampled_process_family_RSS_limit",
+      "all_postchecks_executed": true,
+      "durable_final_receipt_matches_returned_record": true,
+      "cleanup": {
+        "errors": [
+          {
+            "operation": "cleanup_worker",
+            "type": "RuntimeError",
+            "message": "generated helper fault"
+          }
+        ]
+      },
+      "worker_invocations": 1,
+      "actual_worker_started": false
+    },
+    {
+      "scenario": "wait_timeout",
+      "status": "failed",
+      "failure": "sampled_process_family_RSS_limit",
+      "all_postchecks_executed": true,
+      "durable_final_receipt_matches_returned_record": true,
+      "cleanup": {
+        "normal_exit_races": [],
+        "errors": [],
+        "worker_started": true,
+        "returncode_after_cleanup": -9
+      },
+      "worker_invocations": 1,
+      "actual_worker_started": false
+    },
+    {
+      "scenario": "runtime_false",
+      "status": "failed",
+      "failure": "Runtime/history continuity guard failed",
+      "all_postchecks_executed": true,
+      "durable_final_receipt_matches_returned_record": true,
+      "cleanup": null,
+      "worker_invocations": 1,
+      "actual_worker_started": false
+    },
+    {
+      "scenario": "lineage_false",
+      "status": "failed",
+      "failure": "Runtime/history continuity guard failed",
+      "all_postchecks_executed": true,
+      "durable_final_receipt_matches_returned_record": true,
+      "cleanup": null,
+      "worker_invocations": 1,
+      "actual_worker_started": false
+    },
+    {
+      "scenario": "source_false",
+      "status": "failed",
+      "failure": "Source continuity postcheck failed",
+      "all_postchecks_executed": true,
+      "durable_final_receipt_matches_returned_record": true,
+      "cleanup": null,
+      "worker_invocations": 1,
+      "actual_worker_started": false
+    },
+    {
+      "scenario": "history_false",
+      "status": "failed",
+      "failure": "Runtime/history continuity guard failed",
+      "all_postchecks_executed": true,
+      "durable_final_receipt_matches_returned_record": true,
+      "cleanup": null,
+      "worker_invocations": 1,
+      "actual_worker_started": false
+    },
+    {
+      "scenario": "marker_exists",
+      "worker_started": false,
+      "refused": true
+    },
+    {
+      "scenario": "output_exists",
+      "worker_started": false,
+      "refused": true
+    }
+  ],
+  "scope": {
+    "source_and_small_metadata_only": true,
+    "patient_payload_reads": false,
+    "native_ANTs_imports_or_calls": false,
+    "actual_child_processes_or_signals": false,
+    "real_attempt_marker_or_output_created": false,
+    "old_failure_and_audit_bytes_unchanged": true
+  },
+  "fixed_initial_findings": [
+    "Process-exit cleanup race retains original failure and completes postchecks/final receipt.",
+    "False runtime or lineage continuity comparison forces failed status."
+  ],
+  "physical_and_semantic_contract": {
+    "fitting_support_voxels": 1451501,
+    "unknown_abstained_voxels": 8,
+    "original_source_intensity_and_brain_unchanged_by_design": true,
+    "source_hashes_native_frame_raw_outputs_and_typed_kernel": "unchanged frozen source; prior exact-kernel native preflight remains the execution evidence",
+    "posterior_probabilities_are_PVE": false,
+    "anatomy_accepted": false,
+    "host_accepted": false,
+    "growth_use_accepted": false,
+    "training_admitted": false
+  },
+  "resources": {
+    "threads": 2,
+    "rss_limit_bytes": 3221225472,
+    "minimum_available_bytes": 1073741824,
+    "timeout_seconds": 600.0,
+    "output_limit_bytes": 536870912,
+    "free_disk_floor_bytes": 53687091200,
+    "sample_interval_seconds": 0.2,
+    "max_voxels": 12000000,
+    "attempts": 1
+  },
+  "limits": [
+    "Generated process doubles prove supervisor control flow, not successful patient fitting or anatomical validity.",
+    "No patient N4/Atropos run or release is performed by this audit.",
+    "Two previous actual patient protocol attempts remain failures; zero successful candidates or anatomical acceptance before v3.",
+    "Memory and elapsed-time guards are sampled; between-sample peaks are not hard reservations.",
+    "Prior un-symbolicated real SIGSEGV causation remains inferred from the independently established mask representation defect."
+  ]
+}
