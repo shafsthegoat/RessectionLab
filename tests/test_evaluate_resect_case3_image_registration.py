@@ -269,6 +269,33 @@ def test_source_six_field_comment_and_final_inline_terminator():
     assert parsed.tolist() == [[1, -2, .3, 4, 5, 6]]
 
 
+@pytest.mark.parametrize("inline_terminator", [False, True])
+def test_seventeen_generated_rows_allow_optional_empty_minc_label_without_changing_points(inline_terminator):
+    pairs = np.arange(102, dtype=float).reshape(17, 6)
+    rows = [" ".join(map(str, row)) + ' ""' for row in pairs]
+    payload = ("MNI Tag Point File\nVolumes=2;\nPoints=\n" + "\n".join(rows)
+               + (";\n" if inline_terminator else "\n;\n")).encode()
+    parsed = ev.parse_full_tag(payload)
+    np.testing.assert_array_equal(parsed, pairs)
+    baseline = ev.parse_full_tag(generated_tag(pairs))
+    headers = {name: generated_header() for name in ev.IMAGES}
+    assert ev.score_pairs(parsed, np.eye(4), headers) == ev.score_pairs(baseline, np.eye(4), headers)
+
+
+@pytest.mark.parametrize("suffix", [' "nonempty"', ' " "', ' "', ' "" ""', ' 7 ""', ' "" trailing'])
+def test_empty_label_compatibility_does_not_admit_other_labels_or_extra_fields(suffix):
+    payload = ("MNI Tag Point File\nVolumes=2;\nPoints=\n1 2 3 4 5 6" + suffix + ";\n").encode()
+    with pytest.raises(ValueError):
+        ev.parse_full_tag(payload)
+
+
+@pytest.mark.parametrize("last_number", ["NaN", "Inf", "-Inf", "1e999"])
+def test_empty_label_compatibility_still_rejects_nonfinite_coordinate_fields(last_number):
+    payload = ('MNI Tag Point File\nVolumes=2;\nPoints=\n1 2 3 4 5 ' + last_number + ' "";\n').encode()
+    with pytest.raises(ValueError):
+        ev.parse_full_tag(payload)
+
+
 @pytest.mark.parametrize("change", ["reflection", "scale", "nan", "last_row", "shape"])
 def test_nonrigid_or_nonfinite_transforms_are_rejected(change):
     matrix = np.eye(4)

@@ -159,6 +159,12 @@ Identity, rigid transform, source bytes and scoring rules are fixed before
 the separately released all-point comparison. There is one fit and no retry,
 new patient or anatomical acceptance.
 
+The first scoring invocation subsequently refused the source's optional empty
+MINC labels before computing accuracy. The preserved refusal and
+[v2 format correction](artifacts/resect-case3-registration-evaluation-preparation-v2/diagnosis.json)
+retain all 17 rows, with 64 generated checks and unchanged transforms/statistics.
+Prior tag exposure is explicit; corrected scoring remains separately pending.
+
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and
 [patient construction plan](docs/patient-corpus-plan.md) supersede the historical

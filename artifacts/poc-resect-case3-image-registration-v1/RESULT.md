@@ -2,8 +2,9 @@
 
 The single predeclared RESECT Case3 fit completed from preparation commit
 `fa44c9e`. It uses only the two existing TRAIN ultrasound images and
-image-derived signal/coverage support. The full-tag landmark coordinates remain
-unopened at this stage. No new person, acquisition, neural training or accepted
+image-derived signal/coverage support. The full-tag landmark coordinates were
+unopened when the fit and scoring preparation were committed as `21e7b1b`.
+No new person, acquisition, neural training or accepted
 anatomy is added.
 
 The [fit record](fit-record.json), SHA256
@@ -54,3 +55,15 @@ and its exact generated-auditor snapshot are preserved. That audit is software,
 source/header and runtime evidence. Sparse landmark scoring, effective imaging
 resolution, scanner/tracker calibration, dense deformation, tool causality and
 clinical validity remain separate questions.
+
+The first separately released scoring invocation then read the exact full tag
+and refused its syntax before computing accuracy. All 17 rows carry an empty
+quoted MINC label after their six numeric fields; the original reader required
+exactly six tokens. The [refusal](initial-evaluation-refusal.json) and
+[format diagnosis](../resect-case3-registration-evaluation-preparation-v2/diagnosis.json)
+remain preserved. A minimal format correction accepts that optional empty label;
+64 generated controls pass. Transform, statistics, inclusion, duplicate retention
+and all scientific settings are unchanged. The separate
+[v2 preparation](../resect-case3-registration-evaluation-preparation-v2/preparation.json)
+discloses this prior tag exposure. Corrected scoring is still pending at this
+commit; there is no refit or outcome-based selection.

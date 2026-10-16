@@ -1,0 +1,69 @@
+{
+  "all_other_scientific_fields_exact": true,
+  "command": ".venv/bin/python -m pytest -q tests/test_evaluate_resect_case3_image_registration.py",
+  "coordinate_values_in_this_record": false,
+  "corrected_actual_scoring_executed": false,
+  "correction": "Format-only: optional single empty quoted MINC label after exactly six finite coordinate fields. Existing terminator stripping permits final empty label adjacent to semicolon.",
+  "diagnosis_sha256": "a9edc80d8129abf2fca13ac2d6b2f79d667ee5dcd7aaf1ff544c136425c772f3",
+  "evaluator_sha256": "7d987eb0bd31375d924e444e1838e4255327cef7036ea2e4ed7e9d78b9e3406e",
+  "generated_test_operations_opened_acquired_tag": false,
+  "generated_test_operations_opened_images": false,
+  "new_generated_controls": [
+    "17 generated rows with optional empty label and separate terminator",
+    "17 generated rows with optional empty label and inline final terminator",
+    "exact generated point arrays and all scoring results equal unlabeled baseline",
+    "nonempty/whitespace/malformed/double labels and extra fields refused",
+    "nonfinite fields with empty labels refused"
+  ],
+  "no_fitting_selection_or_new_parameters": true,
+  "preparation_sha256": "0b9668d8b6a1adf319b55a6ed8aded986039bc6eed8876a4c1fabf9f50f5518b",
+  "preserved_v1_records": [
+    {
+      "byte_exact_to_21e7b1b": true,
+      "path": "artifacts/resect-case3-registration-evaluation-preparation-v1/preparation.json",
+      "sha256": "ac278b45fe7dc3db95c789bf6ede84d23df23ffa60fe0c024ac77ea5a24a2e6b"
+    },
+    {
+      "byte_exact_to_21e7b1b": true,
+      "path": "artifacts/resect-case3-registration-evaluation-preparation-v1/generated-controls.json",
+      "sha256": "3d2cc7e930267d78e969fe5440310ddadef9abcd2163261fcbcbcfdaac34b29f"
+    },
+    {
+      "byte_exact_to_21e7b1b": true,
+      "path": "artifacts/resect-case3-registration-evaluation-preparation-v1/root-release-template-WITHHELD.json",
+      "sha256": "bd0677cdb7e83a82f63553860ac86d5cd16d6179add6380db81497afa9b2c9d2"
+    }
+  ],
+  "prior_actual_tag_exposure": {
+    "accuracy_computed": false,
+    "actual_full_tag_read": true,
+    "coordinate_values_printed_or_committed": false,
+    "development_status": "Actual tag exposed for subsequent development; no held-out or independent accuracy claim",
+    "diagnosis": "ROOT-authorized post-fit syntax inspection; optional empty MINC labels confirmed",
+    "diagnosis_path": "artifacts/resect-case3-registration-evaluation-preparation-v2/diagnosis.json",
+    "diagnosis_sha256": "a9edc80d8129abf2fca13ac2d6b2f79d667ee5dcd7aaf1ff544c136425c772f3",
+    "initial_attempt": "metadata gate passed; exact full tag read; syntax refused before accuracy computation",
+    "initial_refusal_sha256": "49f7d947e44487c7e7a274628541a7b5a3611d389d731d4be3d9b14dbf28bd16"
+  },
+  "runtime": {
+    "numpy": "2.5.3",
+    "python": "3.12.14"
+  },
+  "schema": "resect-case3-registration-evaluation-v1-generated-controls-v2",
+  "scientific_functions_ast_byte_equivalent_to_v1": [
+    "score_pairs",
+    "metrics",
+    "rigid_matrix",
+    "inclusion",
+    "map_points",
+    "evaluation_gate",
+    "evaluate"
+  ],
+  "specification_fields_changed": [
+    "tag_format"
+  ],
+  "status": "64_generated_tests_passed",
+  "tests_failed": 0,
+  "tests_passed": 64,
+  "tests_sha256": "eda3b282c158ceaecb1320fed0722e0e4ea8bdabad416826ca665192538d5007"
+}

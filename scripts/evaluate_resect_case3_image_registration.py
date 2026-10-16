@@ -30,7 +30,18 @@ RUNNER_SHA = "e17d755eeadb6a3d1fd365b7a3b4dc31f9e27c4f93afdb6045d8f6e27ef9612f"
 PREFLIGHT = "artifacts/resect-case3-image-registration-preparation-v1/header-preflight-rss-v2.json"
 PREFLIGHT_SHA = "ef9e0cd6029e869a6364de6c946f0284bc0a7ca1f700695a8bb75b52e60fd7ba"
 TESTS = "tests/test_evaluate_resect_case3_image_registration.py"
-PREPARATION_DIR = "artifacts/resect-case3-registration-evaluation-preparation-v1"
+PREPARATION_DIR = "artifacts/resect-case3-registration-evaluation-preparation-v2"
+PRIOR_TAG_EXPOSURE = {
+    "actual_full_tag_read": True,
+    "initial_attempt": "metadata gate passed; exact full tag read; syntax refused before accuracy computation",
+    "diagnosis": "ROOT-authorized post-fit syntax inspection; optional empty MINC labels confirmed",
+    "diagnosis_path": PREPARATION_DIR + "/diagnosis.json",
+    "diagnosis_sha256": "a9edc80d8129abf2fca13ac2d6b2f79d667ee5dcd7aaf1ff544c136425c772f3",
+    "initial_refusal_sha256": "49f7d947e44487c7e7a274628541a7b5a3611d389d731d4be3d9b14dbf28bd16",
+    "coordinate_values_printed_or_committed": False,
+    "accuracy_computed": False,
+    "development_status": "Actual tag exposed for subsequent development; no held-out or independent accuracy claim",
+}
 TAG = {"path": "data/anatomy/resect-v1/Case3/Landmarks/Case3-beforeUS-duringUS-full.tag",
        "bytes": 1190, "sha256": "585769a006d8e5a995f987d91cef75ca45288cf6132aa3842cd44ca19927fc08"}
 IMAGES = {
@@ -44,7 +55,7 @@ FORWARD = "before_RAS_mm_to_during_RAS_mm"
 INVERSE = "during_RAS_mm_to_before_RAS_mm"
 DIRECTION = "before-RAS output physical point -> during-RAS input physical point"
 SPEC = {
-    "tag_format": "ASCII MNI Tag Point File; Volumes=2; exactly six numbers per point row",
+    "tag_format": "ASCII MNI Tag Point File; Volumes=2; exactly six numbers per point row, optionally followed by one empty quoted label",
     "point_order": "first three before/reference world mm; last three during world mm; original 1-based row indices",
     "coordinate_convention": "MINC and NIfTI world coordinates identical; active sform RAS mm; no LPS conversion of tag points",
     "transform_direction": FORWARD,
@@ -188,6 +199,8 @@ def prepare(preflight_path, destination):
               "fit_configuration": preflight["configuration"], "fit_limits": preflight["limits"],
               "acquired_landmark_coordinates_read": False, "acquired_image_arrays_read": False,
               "actual_evaluation_run": False,
+              "operation_scope": "The preceding read/run flags describe this metadata-only preparation call, not prior attempts",
+              "prior_actual_tag_exposure": PRIOR_TAG_EXPOSURE,
               "release_requirement": "Separate ROOT-authored release binding this preparation, evaluator and complete successful fit metadata chain before any tag open"}
     publish(destination, record)
     return record
@@ -310,7 +323,7 @@ NUMBER = re.compile(r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?\Z")
 
 
 def parse_full_tag(payload):
-    """Strict source-declared six-value rows. Indices include duplicate rows."""
+    """Six-value rows with an optional empty MINC label; all indices retained."""
     if type(payload) is not bytes or not 0 < len(payload) <= MAX_RECORD:
         raise ValueError("BOUNDED_IMMUTABLE_TAG_REQUIRED")
     try:
@@ -332,6 +345,8 @@ def parse_full_tag(payload):
         if not line.strip():
             continue
         tokens = line.split()
+        if len(tokens) == 7 and tokens[-1] == '""':
+            tokens = tokens[:-1]
         if len(tokens) != 6 or any(NUMBER.fullmatch(token) is None for token in tokens):
             raise ValueError("EXACTLY_SIX_FINITE_NUMBERS_PER_ROW_REQUIRED")
         row = [float(token) for token in tokens]
