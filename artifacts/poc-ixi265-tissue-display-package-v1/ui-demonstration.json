@@ -1,0 +1,144 @@
+{
+  "schema": "ixi265-tissue-estimates-native-ui-v1",
+  "observer": "parent via native Electron CUA",
+  "model_or_fitting_run_by_UI": false,
+  "new_people": 0,
+  "package_sha256": "bfa03b853dcb8e6893982e75a6c113e8ba3de1ce88225bb631f8a758ded1350f",
+  "saved_bundle": {
+    "path": "outputs/poc-first-qa/ixi265-tissue-ui/saved/IXI265-tissue-estimates-reviewed.ressectionlab",
+    "sha256": "1cfb479807c92bb76537df0e188c161df5e6488aabeb19021c8ba72d0485c024",
+    "bytes": 113751144
+  },
+  "estimated_source_label_observed": "T1 · estimated tissues · model estimate · separate frame",
+  "layers_observed": [
+    "CSF-like estimate",
+    "Gray matter-like estimate",
+    "White matter-like estimate",
+    "Unknown · 8 voxels"
+  ],
+  "displayed_volumes_ml": {
+    "CSF-like": 277.7,
+    "Gray-matter-like": 641.1,
+    "White-matter-like": 612.1,
+    "UNKNOWN": 0.0
+  },
+  "small_UNKNOWN_volume_rounded_in_UI": true,
+  "UNKNOWN_voxel_count_explicit_in_label": 8,
+  "individual_visibility_and_opacity_controls_operated": true,
+  "structures_only_operated": true,
+  "axial_cutaway_operated": true,
+  "original_T1_switch_observed": {
+    "source_label": "T1 · reference",
+    "layers": [
+      "Brain extraction (estimated)"
+    ],
+    "brain_display_volume_ml": 1530.9,
+    "fitted_tissue_masks_absent": true
+  },
+  "return_to_estimated_source_restores_per_source_settings": true,
+  "native_save_and_fresh_process_reopen": {
+    "completed": true,
+    "original_and_reopen_process_exit_codes": [
+      0,
+      0
+    ],
+    "selected_series_id": "sha256:9990200f5f1457b103c34582db6f184c35c1e8c9e1373d743c19685bc1769d25",
+    "layer_opacity": {
+      "atropos_csf_like_estimate": 0.12,
+      "atropos_gray_matter_like_estimate": 0.26,
+      "atropos_white_matter_like_estimate": 0.7,
+      "unknown_missing_intensity": 1.0
+    },
+    "visible_layers": {
+      "atropos_csf_like_estimate": false,
+      "atropos_gray_matter_like_estimate": true,
+      "atropos_white_matter_like_estimate": true,
+      "unknown_missing_intensity": true
+    },
+    "cutaway_enabled": true,
+    "cutaway_axis": "z",
+    "volume_rendering": false,
+    "all_four_surfaces_finished": true
+  },
+  "source_byte_or_anatomical_acceptance_inferred_from_GUI": false,
+  "captures": [
+    {
+      "path": "outputs/poc-first-qa/ixi265-tissue-ui/01-estimated-tissues.ax.txt",
+      "sha256": "cbfcfb28fb6b693d70c0e06bd0152f5cef75e45623e536dd588bd3cc05b24419",
+      "bytes": 7732
+    },
+    {
+      "path": "outputs/poc-first-qa/ixi265-tissue-ui/01-estimated-tissues.png",
+      "sha256": "108bd07f6e4725dddd9663c6542f817b902051e1ba9418a7075ada2377858f8a",
+      "bytes": 625690
+    },
+    {
+      "path": "outputs/poc-first-qa/ixi265-tissue-ui/02-tissue-cutaway.ax.txt",
+      "sha256": "758d7482f50a2c6ceb217bf21c80127bef70bca31543326a4885547cad817bc9",
+      "bytes": 7728
+    },
+    {
+      "path": "outputs/poc-first-qa/ixi265-tissue-ui/02-tissue-cutaway.png",
+      "sha256": "71c6d5f267ed396cb52124b91a09de305ba70ed43e3a4bb201501c2414b53e6d",
+      "bytes": 588129
+    },
+    {
+      "path": "outputs/poc-first-qa/ixi265-tissue-ui/03-original-mri.ax.txt",
+      "sha256": "a2aa40c0978f023a667bce4dce758ed7822365f7ebac22c06beb614dc0f171fa",
+      "bytes": 5414
+    },
+    {
+      "path": "outputs/poc-first-qa/ixi265-tissue-ui/03-original-mri.png",
+      "sha256": "a23f8798b8631ce44e757aefbf3c3f6634c434c24528caeb014bd9e2e9024076",
+      "bytes": 475589
+    },
+    {
+      "path": "outputs/poc-first-qa/ixi265-tissue-ui/04-native-save.ax.txt",
+      "sha256": "db28f132f7288d72f8b35316e3f8939943dc93336c437a35fc906d76d42c2dd5",
+      "bytes": 7852
+    },
+    {
+      "path": "outputs/poc-first-qa/ixi265-tissue-ui/04-native-save.png",
+      "sha256": "e8d417c95e4c79cdd570b46251626f5103ab18efd994de54642e9ceb4a7d4b0f",
+      "bytes": 589404
+    },
+    {
+      "path": "outputs/poc-first-qa/ixi265-tissue-ui/05-fresh-reopen.ax.txt",
+      "sha256": "35edb5796cbd9dd5e3cdd467907a4b7961e5fa35d20709983391997ea122ef88",
+      "bytes": 7840
+    },
+    {
+      "path": "outputs/poc-first-qa/ixi265-tissue-ui/05-fresh-reopen.png",
+      "sha256": "bdca480d6f9d20d466f2279c17b2472f6fb5d5878dda153c92097a5328da7464",
+      "bytes": 588341
+    }
+  ],
+  "runtime": [
+    {
+      "path": "desktop/src/workspace-imaging-data.ts",
+      "sha256": "33c5c68f66cb9f1459671c31ee5bda99c4315942342a465dcdb397d73c562015",
+      "bytes": 4344
+    },
+    {
+      "path": "desktop/tests/workspace-imaging.test.mjs",
+      "sha256": "54599c4ee800167746930ee90b7c5a1616a922d5da9f97dac166b15eff4b481b",
+      "bytes": 5275
+    },
+    {
+      "path": "desktop/dist/index.html",
+      "sha256": "3a5a41aaf2dc901b13ddabff2e28e91d199d345eb2e07a42b0cf4bd15ad0cf50",
+      "bytes": 712
+    },
+    {
+      "path": "desktop/dist/assets/index-13OYEygL.js",
+      "sha256": "9cf521d2c56ebf5128d32e35fe7045fc965dbf37fae7c7d646fe1ca5ec16fb2d",
+      "bytes": 1255122
+    }
+  ],
+  "validation": {
+    "renderer_source_choice_tests_passed": 7,
+    "backend_package_and_persistence_tests_passed": 30,
+    "typescript_passed": true,
+    "production_renderer_build_passed": true
+  }
+}

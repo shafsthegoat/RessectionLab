@@ -123,6 +123,14 @@ failures remain retained. The intensity classes remain unreviewed estimates;
 no host, anatomy, physical PVE or tissue-conditioned growth gate is accepted.
 Separate native display/save/reopen integration follows this numerical result.
 
+That [subsequent actual display integration](../artifacts/poc-ixi265-tissue-display-package-v1/RESULT.md)
+now passes native layer/opacity/cutaway, original-image switching and save/fresh
+process reopen. The independent package audit preserves primary/source bytes,
+both prior references and all archived evidence. Four estimated/UNKNOWN layers
+remain a separate display, with no planning, host, training or anatomical
+promotion. Reviewed tissue/host support and the tissue-conditioned pilot are
+still open.
+
 ## Accuracy and publication gate
 
 Publication readiness requires claims with matching evidence, not a test count

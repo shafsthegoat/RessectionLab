@@ -1,0 +1,113 @@
+{
+  "schema": "ixi265-tissue-display-source-preparation-v1",
+  "script_sha256": "0e6b716c23ac7674779a48f8aa0145db77770dae38c5a08d9cc0d006b0525e3c",
+  "frozen_files": [
+    {
+      "path": "scripts/prepare_ixi265_tissue_display.py",
+      "sha256": "0e6b716c23ac7674779a48f8aa0145db77770dae38c5a08d9cc0d006b0525e3c"
+    },
+    {
+      "path": "tests/test_prepare_ixi265_tissue_display.py",
+      "sha256": "dffeb539ff3665f75cea3f80074be9d93566ff68a5bb68e875bd5ba41efbb573"
+    },
+    {
+      "path": "scripts/poc_ixi265_atropos_typed_mask_run.py",
+      "sha256": "b8d65e0522130df1a4e012811527ab17116a46436805c0152c0a3956a921e9ec"
+    },
+    {
+      "path": "scripts/poc_ixi265_atropos_typed_mask.py",
+      "sha256": "211d715a05b2dd269358b7bc5585488a053859ba65c04b9f31f60b69e41ec954"
+    },
+    {
+      "path": "scripts/poc_ixi265_atropos_positive_domain.py",
+      "sha256": "0652eca1ba81304e053f24c9a9fc2f8c89174bfe7447accfd21105263592d81d"
+    },
+    {
+      "path": "scripts/poc_ixi265_atropos.py",
+      "sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b"
+    },
+    {
+      "path": "src/resectionlab/core.py",
+      "sha256": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b"
+    },
+    {
+      "path": "src/resectionlab/imaging.py",
+      "sha256": "45df035c47f9c509fef91ebc02f1c3bef40266c052dbd1de6d133815a5af6afa"
+    },
+    {
+      "path": "src/resectionlab/workspace_bundle.py",
+      "sha256": "9a1bf1d0f749bb67857d65803aeeaf8f07927ebce8a03fb4364c59e8b151bf1e"
+    },
+    {
+      "path": "src/resectionlab/workspace_imaging.py",
+      "sha256": "6da2ace8b5489f61f4b7c804f30818d0273792e040c4cb14bcddbd931cff381d"
+    },
+    {
+      "path": "artifacts/ixi265-tissue-display-preparation-v1/expected-host.json",
+      "sha256": "7ceaba365bb0d6074f08558872515dc07016759eaa7f652c43ae496aa192e3bb"
+    },
+    {
+      "path": "artifacts/ixi265-tissue-display-preparation-v1/prospective-method.json",
+      "sha256": "e786909c715cb5ded4b8ac3a1ae36851a67980610904ed37dcb92cd5d703d84f"
+    },
+    {
+      "path": "artifacts/ixi265-tissue-display-preparation-v1/expected-inputs.json",
+      "sha256": "5015fb7b766f4830caa92e83395f56e347e31dacc26140019a3ccb7448945094"
+    },
+    {
+      "path": "artifacts/ixi265-tissue-display-preparation-v1/expected-outputs.json",
+      "sha256": "1f103e4b48004f63387797f2a6d105a66c2dcc209b97f3a98b6568a63424b353"
+    },
+    {
+      "path": "artifacts/ixi265-tissue-display-preparation-v1/controls.json",
+      "sha256": "f456d71753f637c03fc515c940ca455f69261bbb5337ea7881bbba47ed260f7d"
+    },
+    {
+      "path": "outputs/poc-ixi265-atropos-typed-mask-v3/candidate.json",
+      "sha256": "55188c2f9916d226beed701bbf9c85e29aa60533ea34e0bdf0518fd63e52fa9f"
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-typed-mask-run-v3/outcome.json",
+      "sha256": "a9c241064f0ebc67e460c2f500f6b389e23bdb09fbda3667ab41d02b544c1bcf"
+    },
+    {
+      "path": "artifacts/ixi265-typed-mask-independent-v3/result-qa.json",
+      "sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509"
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-typed-mask-run-v3/root-release-declaration.json",
+      "sha256": "85910005da495df7d2265b6d9cce3bb1a4b8d9bcaadaf1bc54bb1aed30003d71"
+    },
+    {
+      "path": "artifacts/ixi265-typed-mask-independent-v3/supervisor-qa.json",
+      "sha256": "1013cc0cde560fdce0e3c16338edd100421623cba2629c8bf3eaeeee8a8ed0c4"
+    },
+    {
+      "path": "artifacts/poc-ants-typed-mask-native-preflight-v3/outcome.json",
+      "sha256": "b9b8841d81d1ac9f10303aecdbfa838bba59fe4764065cd7898f44026b129c78"
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-typed-mask-runner-guard-followup-v3/preparation.json",
+      "sha256": "8a8335d6ab2f0b671c96eb80e6ae421e17cdaced294a5132dfeaf0c59ccfb6a1"
+    }
+  ],
+  "resources": {
+    "threads": 2,
+    "rss_limit_bytes": 2147483648,
+    "seconds": 300.0,
+    "available_memory_floor_bytes": 1073741824,
+    "output_temporary_limit_bytes": 536870912,
+    "disk_floor_bytes": 53687091200,
+    "sample_interval_seconds": 0.2,
+    "attempts": 1,
+    "memory_scope": "supervising_Python_plus_worker_and_recursive_descendants"
+  },
+  "packaging_released": false,
+  "expected_source_originals": 16,
+  "expected_added_originals": 21,
+  "expected_total_originals": 37,
+  "parent_host_untouched": true,
+  "patient_array_decoding_during_preparation": false,
+  "required_next_step": "Root review and explicit single packaging release; resulting bundle then independent read-only audit",
+  "command_after_separate_release": ".venv/bin/python -I scripts/prepare_ixi265_tissue_display.py --released-package-spec PATH_TO_SEPARATE_RELEASED_SPEC"
+}

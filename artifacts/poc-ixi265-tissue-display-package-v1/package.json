@@ -1,0 +1,854 @@
+{
+  "schema": "ixi265-display-only-tissue-package-v1",
+  "patient_group": "IXI:265",
+  "role": "TRAIN",
+  "display_label": "T1 \u00b7 estimated tissues",
+  "layer_names": [
+    "atropos_csf_like_estimate",
+    "atropos_gray_matter_like_estimate",
+    "atropos_white_matter_like_estimate",
+    "unknown_missing_intensity"
+  ],
+  "layer_labels": [
+    "CSF-like estimate",
+    "Gray matter-like estimate",
+    "White matter-like estimate",
+    "Unknown \u00b7 8 voxels"
+  ],
+  "source_host_sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+  "acquired_primary_T1_sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+  "fit_outcome_sha256": "a9c241064f0ebc67e460c2f500f6b389e23bdb09fbda3667ab41d02b544c1bcf",
+  "numerical_result_QA_sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509",
+  "resources": {
+    "threads": 2,
+    "rss_limit_bytes": 2147483648,
+    "seconds": 300.0,
+    "available_memory_floor_bytes": 1073741824,
+    "output_temporary_limit_bytes": 536870912,
+    "disk_floor_bytes": 53687091200,
+    "sample_interval_seconds": 0.2,
+    "attempts": 1,
+    "memory_scope": "supervising_Python_plus_worker_and_recursive_descendants"
+  },
+  "output": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-tissue-display-v1/IXI265-Guys-0845-tissue-estimates.ressectionlab",
+  "preserved_original_count": 16,
+  "preserved_reference_display_count": 2,
+  "new_display_count": 1,
+  "estimated_total_attachment_expanded_bytes": 334233600,
+  "source_primary_unchanged": true,
+  "raw_posteriors": "archived_unmodified_class_membership_probabilities_not_physical_PVE",
+  "unknown": "eight_missing_intensity_cells_remain_unclassified_not_CSF",
+  "frame_policy": "native_indices_preserved; original_T1_affine_retained; any_tolerated_header_roundoff_explicitly_recorded",
+  "cross_source_fusion_permitted": false,
+  "anatomy_accepted": false,
+  "host_accepted": false,
+  "growth_use_accepted": false,
+  "training_admitted": false,
+  "fitting_or_registration_run": false,
+  "catalog_modified": false,
+  "packaging_released": true,
+  "session_hash": "sha256:347ab996b5cd966db535adf9280d2ef86928a7ec779874aeab6bdbd741eb6066",
+  "primary_case_hash": "sha256:72f6ae73183d8d5d52f30eafd90a533b0cf81a38e0070d7fa70ca954461c505c",
+  "primary_planning_hash": "sha256:01f037f27b7c46d20a12cbb9a6ccd66a33fe826675a8654aa8d64ce2ec4da0cf",
+  "estimated_series_id": "sha256:9990200f5f1457b103c34582db6f184c35c1e8c9e1373d743c19685bc1769d25",
+  "source_manifest": {
+    "seriesId": "sha256:9990200f5f1457b103c34582db6f184c35c1e8c9e1373d743c19685bc1769d25",
+    "sourceCaseHash": "sha256:c31d6015d82ccd73819a1a1864111f6e341adc6c4171d84a4e0d916b63d15ec2",
+    "sourceFrameHash": "sha256:2513ca69c435d3fab93f67f69be820d3c69f454489b36d4e68a50dcebe6026db",
+    "modality": "T1",
+    "annotationKind": "estimated",
+    "scope": "display-only-native-grid"
+  },
+  "originals_count": 37,
+  "preserved_originals_count": 16,
+  "all_original_bytes_unchanged": true,
+  "primary_and_existing_references_unchanged": true,
+  "all_native_arrays_verified_after_reopen": true,
+  "fusion_permitted": false,
+  "status": "display_only_candidate_packaged_unaccepted",
+  "bundle_sha256": "bfa03b853dcb8e6893982e75a6c113e8ba3de1ce88225bb631f8a758ded1350f",
+  "bundle_bytes": 113750604,
+  "script_sha256": "0e6b716c23ac7674779a48f8aa0145db77770dae38c5a08d9cc0d006b0525e3c",
+  "preparation_sha256": "820d552f82e07fe2ab2d0dcac9df0c4c464c7075b3b4b756f795a171a51a0ead",
+  "provenance": {
+    "labels_sha256": "7cd021de6201e7fea0ee586cde0a27b3d1106dd4645f9d0a833f98d0923f6791",
+    "unknown_sha256": "b9b744588e970abd988155f1997290d568f7732c0c66ed6d1a3bd82ef89cb4e8",
+    "mask_sha256": [
+      "a474f70c9cebc74ebb04d59df84c502d31a2816ccafea39428a286f20025a930",
+      "567d806a0e5dacaa2542d1f6c415f6c1bccb01d73049ab22b72493e0eab4be05",
+      "a9d1c122ea39a93fbb3de007415b4312b15ee90eb7c37889c0fc4d129f5c7729"
+    ],
+    "runtime_seconds": 19.126011667074636,
+    "candidate_sha256": "55188c2f9916d226beed701bbf9c85e29aa60533ea34e0bdf0518fd63e52fa9f",
+    "parameters": {
+      "N4": {
+        "shrink_factor": 4,
+        "convergence": {
+          "iters": [
+            30,
+            20,
+            10
+          ],
+          "tol": 1e-07
+        },
+        "spline_param": 150,
+        "rescale_intensities": false,
+        "return_bias_field": false,
+        "verbose": true
+      },
+      "Atropos": {
+        "i": "KMeans[3]",
+        "m": "[0.1,1x1x1]",
+        "c": "[10,0]",
+        "priorweight": 0.0,
+        "r": 0,
+        "v": 1
+      },
+      "grid": "full_native_grid_no_resampling_no_crop",
+      "priors": null,
+      "intensity_clipping_or_normalization": null,
+      "Atropos_random_seed_option": "r=0 (fixed upstream seed)"
+    },
+    "source_binding": {
+      "T1": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "brain_mask": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+      "host_bundle": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1"
+    },
+    "partition": {
+      "fit_domain_voxels": 1451501,
+      "unknown_voxels": 8,
+      "class_voxels": [
+        263320,
+        607861,
+        580320
+      ],
+      "source_arrays_changed": false,
+      "tissue_identity_confirmed": false
+    },
+    "posterior_sum_max_abs_error": 1.4156103134155273e-07,
+    "raw_native_posterior_header_roundoff_record": {
+      "independent_result_QA_sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509",
+      "limit_mm": 0.0001,
+      "per_class_native_checks": [
+        {
+          "class": 1,
+          "saved_array_exactly_equals_retained_native_raw_array": true,
+          "native_temporary_selected_frame_eight_corner_errors_mm": [
+            2.8430141247383565e-08,
+            1.258963969801575e-06,
+            1.9038319845269585e-06,
+            2.2822704111553154e-06,
+            1.5230853930405573e-05,
+            1.4713715181763793e-05,
+            1.5349354364328403e-05,
+            1.4836346666293653e-05
+          ]
+        },
+        {
+          "class": 2,
+          "saved_array_exactly_equals_retained_native_raw_array": true,
+          "native_temporary_selected_frame_eight_corner_errors_mm": [
+            2.8430141247383565e-08,
+            1.258963969801575e-06,
+            1.9038319845269585e-06,
+            2.2822704111553154e-06,
+            1.5230853930405573e-05,
+            1.4713715181763793e-05,
+            1.5349354364328403e-05,
+            1.4836346666293653e-05
+          ]
+        },
+        {
+          "class": 3,
+          "saved_array_exactly_equals_retained_native_raw_array": true,
+          "native_temporary_selected_frame_eight_corner_errors_mm": [
+            2.8430141247383565e-08,
+            1.258963969801575e-06,
+            1.9038319845269585e-06,
+            2.2822704111553154e-06,
+            1.5230853930405573e-05,
+            1.4713715181763793e-05,
+            1.5349354364328403e-05,
+            1.4836346666293653e-05
+          ]
+        }
+      ],
+      "raw_probability_values_unchanged": true,
+      "bitwise_affine_equality_claimed": false,
+      "no_resampling": true
+    }
+  },
+  "native_output_frames": {
+    "class_labels_raw": {
+      "candidate_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912157,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912155,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 1.3877787807814457e-17,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    },
+    "fit_domain_native": {
+      "candidate_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912157,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912155,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 1.3877787807814457e-17,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    },
+    "excluded_unknown_native": {
+      "candidate_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912157,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912155,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 1.3877787807814457e-17,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    },
+    "csf_like_intensity_estimated": {
+      "candidate_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912157,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912155,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 1.3877787807814457e-17,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    },
+    "gray_matter_like_intensity_estimated": {
+      "candidate_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912157,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912155,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 1.3877787807814457e-17,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    },
+    "white_matter_like_intensity_estimated": {
+      "candidate_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912157,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912155,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 1.3877787807814457e-17,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    },
+    "class_1_posterior": {
+      "candidate_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912157,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912155,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 1.3877787807814457e-17,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    },
+    "class_2_posterior": {
+      "candidate_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912157,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912155,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 1.3877787807814457e-17,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    },
+    "class_3_posterior": {
+      "candidate_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912157,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912155,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 1.3877787807814457e-17,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    },
+    "n4_corrected_estimated": {
+      "candidate_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912157,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912155,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 1.3877787807814457e-17,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    }
+  },
+  "source_host_bytes_unchanged": true
+}

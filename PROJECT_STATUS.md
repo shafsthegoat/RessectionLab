@@ -109,6 +109,15 @@ zero anatomical/host/growth acceptance. Class names remain intensity assumptions
 and posteriors are not physical tissue fractions. Separate display packaging
 and actual app inspection/save/reopen are the next integration.
 
+**IXI tissue estimates in Electron, October 16:**
+The [separate display integration](artifacts/poc-ixi265-tissue-display-package-v1/RESULT.md)
+preserves acquired T1, primary/planning identities, original brain, 16 archived
+files and two references; it adds a four-layer estimate display and 21 derived/
+provenance files. Independent package and native-save checks pass. Actual native layer/opacity,
+cutaway and original-image switching work; a fresh process restores the reviewed
+save with all surfaces finished. Unknown cells remain explicit; source and model
+layers stay separate. This adds zero patients or anatomy/host/growth acceptance.
+
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and
 [patient construction plan](docs/patient-corpus-plan.md) supersede the historical

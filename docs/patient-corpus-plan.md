@@ -323,6 +323,24 @@ intensity-class candidate, not accepted tissue fractions or a qualified host.
 Separate display packaging and actual Electron save/reopen follow the numerical
 result; the tissue-conditioned campaign remains gated by the review below.
 
+The [later native display integration](../artifacts/poc-ixi265-tissue-display-package-v1/RESULT.md)
+now preserves the acquired T1, original brain, primary/planning identities and
+both references while adding one four-layer estimate display. Independent saved
+mask/source checks and actual Electron controls/save/fresh reopen pass. The raw
+memberships remain archived, and no anatomical or normal-host acceptance follows.
+
+**Manual tissue-reference lead, checked October 16:**
+[IBSR's publisher](https://www.nitrc.org/projects/ibsr/) provides expert-guided
+segmentations; its [file list](https://www.nitrc.org/frs/?group_id=48) separates
+18-subject and 20-normal-subject releases. The
+[18-subject release notes](https://www.nitrc.org/frs/shownotes.php?release_id=2316)
+document rotated, bias-corrected T1 and trinary tissue labels. This is a possible
+independent tissue-component reference, not raw native imaging, a glioma cohort
+or evidence about IXI265. Published resource/release rights differ and require
+reconciliation before use. The general README download redirected to login;
+no account, agreement or image acquisition occurred. Freeze version, label
+mapping, participant roles and preprocessing before any benchmark or host use.
+
 Select exactly **one existing TRAIN host** with reviewed tumor-free status,
 brain/tissue support and accepted within-person frames. Prefer a qualified
 Lausanne/IXI T1–MRA host so retained vessels can constrain the same scene. If no

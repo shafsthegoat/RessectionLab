@@ -1,0 +1,4060 @@
+{
+  "schema": "ixi265-tissue-display-bundle-inventory-v1",
+  "bundle_path": "outputs/poc-ixi265-tissue-display-v1/IXI265-Guys-0845-tissue-estimates.ressectionlab",
+  "bundle_sha256": "bfa03b853dcb8e6893982e75a6c113e8ba3de1ce88225bb631f8a758ded1350f",
+  "bundle_bytes": 113750604,
+  "members": [
+    {
+      "member": "manifest.json",
+      "bytes": 15138,
+      "sha256": "365a56f4c3e640a083e4fbf4a1de7ce4117cb96c5a5f42290f191d6d8e6a7848"
+    },
+    {
+      "member": "arrays.npz",
+      "bytes": 8694960,
+      "sha256": "049c71569c31e1d0ebc8eca4ff722e13dfaed6e74df08986c6bf390cd7abef15"
+    },
+    {
+      "member": "workspace.json",
+      "bytes": 16999,
+      "sha256": "dbbcfea71dd8e5609fc51293988cc0284ff87bb56d75f11d00db4fe6d14cc3c2"
+    },
+    {
+      "member": "workspace/series-0.ressectionlab",
+      "bytes": 17696449,
+      "sha256": "23277f5ab1e0f407098a125e5ff05f2f2703bd8667e6e88912fc723dd23d990c"
+    },
+    {
+      "member": "workspace/series-1.ressectionlab",
+      "bytes": 8626917,
+      "sha256": "7c50011982d1eba82d2b3caaff0d0f4a6dbb412c385af0dedf6ce87b0f6b3c91"
+    },
+    {
+      "member": "workspace/series-2.ressectionlab",
+      "bytes": 9518469,
+      "sha256": "03c04b7a6d82c7296e0294dede51f54e6848bbd5fb41a2942ec7ab11136a6485"
+    },
+    {
+      "member": "workspace/original-0.bin",
+      "bytes": 6980629,
+      "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950"
+    },
+    {
+      "member": "workspace/original-1.bin",
+      "bytes": 14307469,
+      "sha256": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4"
+    },
+    {
+      "member": "workspace/original-2.bin",
+      "bytes": 109932,
+      "sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe"
+    },
+    {
+      "member": "workspace/original-3.bin",
+      "bytes": 129560,
+      "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192"
+    },
+    {
+      "member": "workspace/original-4.bin",
+      "bytes": 5703,
+      "sha256": "0045ef08168b9347f62ebca8ced2d08a65b325146c9a0a77bfc18b555d20cd91"
+    },
+    {
+      "member": "workspace/original-5.bin",
+      "bytes": 8194,
+      "sha256": "2f4f6507f56e6592f851ddc9c4520d217f9e85fd649c45025f4d0e079559eac6"
+    },
+    {
+      "member": "workspace/original-6.bin",
+      "bytes": 11376,
+      "sha256": "30d79cf98d10386fad2af8eafaaf6a754661f0b98a1a8d3cb7ab23f8b6073b1b"
+    },
+    {
+      "member": "workspace/original-7.bin",
+      "bytes": 65160,
+      "sha256": "b1aac5b57af64b71c4694876302a8f4cc84f96b9f35ecc60a2266dc204ba1c71"
+    },
+    {
+      "member": "workspace/original-8.bin",
+      "bytes": 484,
+      "sha256": "404c1b6325bf67eb4dcba2c55625af2329b6f16f8a661d11340f213a4a5eae83"
+    },
+    {
+      "member": "workspace/original-9.bin",
+      "bytes": 347,
+      "sha256": "5ac523e6fae83057fd55c75cffac7c3ef89561ce5a3208f0a56ff2d1f742ef0b"
+    },
+    {
+      "member": "workspace/original-10.bin",
+      "bytes": 89419,
+      "sha256": "3c8c4c50ce25c8439f608f42679e3fabd76f0d15df9ca446296dedca2e900b18"
+    },
+    {
+      "member": "workspace/original-11.bin",
+      "bytes": 92891,
+      "sha256": "e0a18a9d7c18e0be5510b12a89aafd22b4297519577d7e08d5e6a7bb64b8352b"
+    },
+    {
+      "member": "workspace/original-12.bin",
+      "bytes": 169180,
+      "sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b"
+    },
+    {
+      "member": "workspace/original-13.bin",
+      "bytes": 2541,
+      "sha256": "1354808cdee53bbb8681196a22ece34514e1f4a763de58c6b534692a67c4fdee"
+    },
+    {
+      "member": "workspace/original-14.bin",
+      "bytes": 29248,
+      "sha256": "f80f30853eeeeec6caf90ae4410c712fe447161808c238dea8111396020efe8c"
+    },
+    {
+      "member": "workspace/original-15.bin",
+      "bytes": 6901,
+      "sha256": "273b9fcf4b6219d4a77986ef53ccfd7a8b5b0a706aa1477cff414958d8948798"
+    },
+    {
+      "member": "workspace/original-16.bin",
+      "bytes": 13094415,
+      "sha256": "a0208d470624f706ed278852239f296d8a2509b5d94de0fc64d90bf765730138"
+    },
+    {
+      "member": "workspace/original-17.bin",
+      "bytes": 343423,
+      "sha256": "7cd021de6201e7fea0ee586cde0a27b3d1106dd4645f9d0a833f98d0923f6791"
+    },
+    {
+      "member": "workspace/original-18.bin",
+      "bytes": 129142,
+      "sha256": "8f6f7bc22d69cdc92c4ae1201a64ad5dc45afbf5fed44102e7bd0951bbf2ab5e"
+    },
+    {
+      "member": "workspace/original-19.bin",
+      "bytes": 43135,
+      "sha256": "b9b744588e970abd988155f1997290d568f7732c0c66ed6d1a3bd82ef89cb4e8"
+    },
+    {
+      "member": "workspace/original-20.bin",
+      "bytes": 5425300,
+      "sha256": "377f691004eb87dbb8cc65f45c6fbb5fbe44311915cad462d6ea4da4b0f0669c"
+    },
+    {
+      "member": "workspace/original-21.bin",
+      "bytes": 5682413,
+      "sha256": "2700b62ad949e9cc3dbef55943d7eb9efba99762c5309e2374b6599015fda25f"
+    },
+    {
+      "member": "workspace/original-22.bin",
+      "bytes": 5550733,
+      "sha256": "f375119f53fbf0e6137173b32d10713851c194e92cecb369e9741f1fa30f9b7e"
+    },
+    {
+      "member": "workspace/original-23.bin",
+      "bytes": 222094,
+      "sha256": "a474f70c9cebc74ebb04d59df84c502d31a2816ccafea39428a286f20025a930"
+    },
+    {
+      "member": "workspace/original-24.bin",
+      "bytes": 301337,
+      "sha256": "567d806a0e5dacaa2542d1f6c415f6c1bccb01d73049ab22b72493e0eab4be05"
+    },
+    {
+      "member": "workspace/original-25.bin",
+      "bytes": 215767,
+      "sha256": "a9d1c122ea39a93fbb3de007415b4312b15ee90eb7c37889c0fc4d129f5c7729"
+    },
+    {
+      "member": "workspace/original-26.bin",
+      "bytes": 5211867,
+      "sha256": "8adace1c376f1ba926c5e28f2daf789cd4de33f9ad2c6788603c379ea2fb22ae"
+    },
+    {
+      "member": "workspace/original-27.bin",
+      "bytes": 5462561,
+      "sha256": "8c87204528e9b99f8bb64247e0eb4335106ca487b30b428c4fce4aec081e2b7c"
+    },
+    {
+      "member": "workspace/original-28.bin",
+      "bytes": 5369599,
+      "sha256": "e386015a7897cb455bb9b8e0c22b28f8abe0ae440e10eada69fd6fa93be07f58"
+    },
+    {
+      "member": "workspace/original-29.bin",
+      "bytes": 31203,
+      "sha256": "55188c2f9916d226beed701bbf9c85e29aa60533ea34e0bdf0518fd63e52fa9f"
+    },
+    {
+      "member": "workspace/original-30.bin",
+      "bytes": 19030,
+      "sha256": "a9c241064f0ebc67e460c2f500f6b389e23bdb09fbda3667ab41d02b544c1bcf"
+    },
+    {
+      "member": "workspace/original-31.bin",
+      "bytes": 28049,
+      "sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509"
+    },
+    {
+      "member": "workspace/original-32.bin",
+      "bytes": 9059,
+      "sha256": "85910005da495df7d2265b6d9cce3bb1a4b8d9bcaadaf1bc54bb1aed30003d71"
+    },
+    {
+      "member": "workspace/original-33.bin",
+      "bytes": 10749,
+      "sha256": "1013cc0cde560fdce0e3c16338edd100421623cba2629c8bf3eaeeee8a8ed0c4"
+    },
+    {
+      "member": "workspace/original-34.bin",
+      "bytes": 3178,
+      "sha256": "b9b8841d81d1ac9f10303aecdbfa838bba59fe4764065cd7898f44026b129c78"
+    },
+    {
+      "member": "workspace/original-35.bin",
+      "bytes": 12027,
+      "sha256": "8a8335d6ab2f0b671c96eb80e6ae421e17cdaced294a5132dfeaf0c59ccfb6a1"
+    },
+    {
+      "member": "workspace/original-36.bin",
+      "bytes": 2171,
+      "sha256": "e786909c715cb5ded4b8ac3a1ae36851a67980610904ed37dcb92cd5d703d84f"
+    }
+  ],
+  "source_manifests": [
+    {
+      "member": "manifest.json",
+      "manifest": {
+        "array_index": {
+          "compartments": {},
+          "source_compartments": {}
+        },
+        "array_sha256": "049c71569c31e1d0ebc8eca4ff722e13dfaed6e74df08986c6bf390cd7abef15",
+        "artifacts": {},
+        "case_id": "IXI265-Guys-0845",
+        "case_semantic_hash": "sha256:72f6ae73183d8d5d52f30eafd90a533b0cf81a38e0070d7fa70ca954461c505c",
+        "context": null,
+        "frame": "RAS+",
+        "metadata": {
+          "acquisition_datetime": null,
+          "anatomy_layers": {
+            "brain": {
+              "cache_key": "0a7cc803006645ce47eb",
+              "color": "#65bfff",
+              "coverage": "Brain extraction envelope; not skull, vessels or parcellation",
+              "inference_manifest_sha256": "0045ef08168b9347f62ebca8ced2d08a65b325146c9a0a77bfc18b555d20cd91",
+              "input_sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+              "kind": "brain",
+              "label": "Brain extraction (estimated)",
+              "model": {
+                "device": "mps",
+                "license": "Weights MIT (official offered choice); runner FreeSurfer Software License 1.0",
+                "license_url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/",
+                "modality": [
+                  "T1",
+                  "T1c",
+                  "T2",
+                  "FLAIR",
+                  "MRI"
+                ],
+                "name": "SynthStrip",
+                "parameters": {
+                  "border_mm": 1,
+                  "threads": 2
+                },
+                "peak_memory_bytes": null,
+                "requirements": "One structural image; brain extraction, not skull bone",
+                "version": "1 / cf4bccf24875a47245b4df9fc9372d0f1c3d784f",
+                "weights": [
+                  {
+                    "bytes": 30851709,
+                    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/models/synthstrip-v1/synthstrip.1.pt",
+                    "sha256": "37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33"
+                  }
+                ],
+                "weights_glob": "data/models/synthstrip-v1/synthstrip.1.pt",
+                "weights_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/models/synthstrip-v1/synthstrip.1.pt",
+                "weights_sha256": "37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33"
+              },
+              "name": "brain",
+              "provenance": "estimated",
+              "review_status": "model output; local anatomical review pending",
+              "runtime_seconds": 3.5157337090931833,
+              "source_role": "cached_model_inference",
+              "source_sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+              "source_uri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/synthstrip/brain_mask.nii.gz"
+            }
+          },
+          "anatomy_workbench_only": true,
+          "annotation_policy_use": "excluded",
+          "annotation_review": "pending",
+          "benchmark_track": "viewer_only",
+          "clinical_deficit_probability": null,
+          "clinical_probability_reason": "no_validated_clinical_outcome_model",
+          "clinical_use_status": "research_only",
+          "cohort_role": "TRAIN",
+          "cohort_sha256": "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127",
+          "diffusion_status": "not_audited",
+          "eligibility_source_receipt": {
+            "individual_scan_pathology_review": false,
+            "source_html_sha256": "f80f30853eeeeec6caf90ae4410c712fe447161808c238dea8111396020efe8c",
+            "url": "https://brain-development.org/ixi-dataset/"
+          },
+          "functional_evidence": {
+            "language": "unassessed",
+            "motor": "unassessed"
+          },
+          "imaging_qc": {
+            "structural": {
+              "affine_ras_mm": [
+                [
+                  -0.04665682837367058,
+                  0.06588856875896454,
+                  1.1955413818359375,
+                  -90.70220947265625
+                ],
+                [
+                  -0.9363381862640381,
+                  -0.0029228338971734047,
+                  -0.059605203568935394,
+                  122.19873046875
+                ],
+                [
+                  0.00036077748518437147,
+                  0.935177206993103,
+                  -0.08441900461912155,
+                  -112.01844787597656
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "anisotropic": true,
+              "file": "IXI265-T1.nii.gz",
+              "frame": "RAS+",
+              "handedness": "left",
+              "obliquity_degrees": [
+                4.940287892108874,
+                2.852719146290038,
+                4.0341050387381205
+              ],
+              "orientation": [
+                "P",
+                "S",
+                "R"
+              ],
+              "physical_units": "mm",
+              "qform_code": 1,
+              "qform_native": [
+                [
+                  -0.04665683705034007,
+                  0.06588860148888928,
+                  1.195541436684528,
+                  -90.70220947265625
+                ],
+                [
+                  -0.9363382184830493,
+                  -0.002922830186959935,
+                  -0.05960521301253242,
+                  122.19873046875
+                ],
+                [
+                  0.00036078310315008216,
+                  0.9351772020625484,
+                  -0.08441904809798166,
+                  -112.01844787597656
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "sform_code": 1,
+              "sform_native": [
+                [
+                  -0.04665682837367058,
+                  0.06588856875896454,
+                  1.1955413818359375,
+                  -90.70220947265625
+                ],
+                [
+                  -0.9363381862640381,
+                  -0.0029228338971734047,
+                  -0.059605203568935394,
+                  122.19873046875
+                ],
+                [
+                  0.00036077748518437147,
+                  0.935177206993103,
+                  -0.08441900461912155,
+                  -112.01844787597656
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "shape": [
+                256,
+                256,
+                150
+              ],
+              "simulation_frame": "source_coded_frame_native_status_requires_source_provenance",
+              "source_units": "mm",
+              "spacing_mm": [
+                0.9374999673869394,
+                0.9375000026296088,
+                1.1999993934646636
+              ],
+              "status": "passed_header_checks",
+              "unit_scale_to_mm": 1.0,
+              "visual_alignment_review": "pending",
+              "voxel_volume_mm3": 1.0546869331809354
+            }
+          },
+          "input_mode": "restricted_structural",
+          "is_synthetic": false,
+          "label_conventions": {},
+          "missing_anatomy": [
+            "skull",
+            "tissue_classes",
+            "ventricles",
+            "fresh_vessel_inference"
+          ],
+          "patient_group": "IXI:265",
+          "patient_id": "IXI265-Guys-0845",
+          "patient_name": "IXI265-Guys-0845",
+          "registration_candidate": {
+            "MRA_RAS_mm_to_T1_RAS_mm": [
+              [
+                0.9999989148019892,
+                -0.00036557054576875166,
+                -0.0014271485626832603,
+                0.2133971422976657
+              ],
+              [
+                0.00035609775544803013,
+                0.999977943413947,
+                -0.006632185160382632,
+                0.31196470292623424
+              ],
+              [
+                0.001429541616206971,
+                0.006631669758748548,
+                0.9999769884187228,
+                1.9234664966972368
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T1_RAS_mm_to_MRA_RAS_mm": [
+              [
+                0.9999989148019892,
+                0.0003560977554480371,
+                0.0014295416162068975,
+                -0.2162576760544108
+              ],
+              [
+                -0.00036557054576874526,
+                0.9999779434139471,
+                0.006631669758748626,
+                -0.32463560493825666
+              ],
+              [
+                -0.0014271485626833336,
+                -0.006632185160382553,
+                0.9999769884187227,
+                -1.9210486775933926
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "anatomical_registration_accepted": false,
+            "brain_mask_sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+            "center_displacement_mm": 1.8708033892395604,
+            "classification": "software_valid_candidate_anatomical_review_pending",
+            "configuration": {
+              "coarse_spacing_mm": 1.5,
+              "iterations_per_level": 80,
+              "sampling_fraction": 0.2,
+              "seed": 41,
+              "shrink_levels": [
+                4,
+                2,
+                1
+              ],
+              "threads": 2,
+              "timeout_seconds": 180.0
+            },
+            "elapsed_registration_seconds": 0.31633158307522535,
+            "fixed": "T1",
+            "flags": [],
+            "local_visual_qc": {
+              "image": "registration-qc.png",
+              "independent_anatomical_landmark_validation": false,
+              "observations": [
+                "No gross orientation reversal or displacement in inspected slices",
+                "Central ventricular/callosal and head contours broadly correspond in overlap",
+                "MRA excludes superior and inferior anatomy; no full-brain vascular claim",
+                "Brain contour is an unreviewed model estimate; no cortical access permission"
+              ],
+              "planes": [
+                "axial",
+                "coronal",
+                "sagittal"
+              ],
+              "status": "candidate_display_inspected_not_anatomically_accepted",
+              "viewer": "view_image"
+            },
+            "matched_objective": {
+              "after": 1.0523871238989007,
+              "before": 1.0326692442540233,
+              "metric": "fixed-bin histogram NMI32, same paired voxels",
+              "overlap_retained_fraction": 1.0,
+              "voxels": 291399
+            },
+            "method": "SimpleITK Euler3D rigid, identity physical pose, Mattes MI32",
+            "metric_improvement_is_anatomical_acceptance": false,
+            "moving": "MRA",
+            "normalization_windows": {
+              "MRA": [
+                1.0,
+                66.0
+              ],
+              "T1": [
+                40.0,
+                448.0
+              ]
+            },
+            "optimizer_history": [
+              {
+                "iteration": 0,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.42187504040304574
+              },
+              {
+                "iteration": 1,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4624763794675814
+              },
+              {
+                "iteration": 2,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.46860247683177636
+              },
+              {
+                "iteration": 3,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4717073067400104
+              },
+              {
+                "iteration": 4,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.471474492141085
+              },
+              {
+                "iteration": 5,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4721978690313183
+              },
+              {
+                "iteration": 6,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.47274443880345274
+              },
+              {
+                "iteration": 7,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4729521473906274
+              },
+              {
+                "iteration": 8,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4731638657397877
+              },
+              {
+                "iteration": 9,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4733213433578065
+              },
+              {
+                "iteration": 10,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.47351114113005754
+              },
+              {
+                "iteration": 11,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4736224193600756
+              },
+              {
+                "iteration": 12,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4741313152900559
+              },
+              {
+                "iteration": 13,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.47431177551333015
+              },
+              {
+                "iteration": 0,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3389049838685211
+              },
+              {
+                "iteration": 1,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.33907161999524493
+              },
+              {
+                "iteration": 2,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.346209739276001
+              },
+              {
+                "iteration": 3,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3431880872792253
+              },
+              {
+                "iteration": 4,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34536455082432305
+              },
+              {
+                "iteration": 5,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34742292402529495
+              },
+              {
+                "iteration": 6,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3469690785911193
+              },
+              {
+                "iteration": 7,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3465995189637038
+              },
+              {
+                "iteration": 8,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34699279593623766
+              },
+              {
+                "iteration": 9,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34712849694596
+              },
+              {
+                "iteration": 10,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3470286400797834
+              },
+              {
+                "iteration": 11,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3471449373644375
+              },
+              {
+                "iteration": 12,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.347121937908558
+              },
+              {
+                "iteration": 13,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3470941624249346
+              },
+              {
+                "iteration": 0,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.25510711732058267
+              },
+              {
+                "iteration": 1,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.25724284927085145
+              },
+              {
+                "iteration": 2,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26470482939342593
+              },
+              {
+                "iteration": 3,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.25642963794434337
+              },
+              {
+                "iteration": 4,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2626607945932155
+              },
+              {
+                "iteration": 5,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2662156919777359
+              },
+              {
+                "iteration": 6,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2652942524058958
+              },
+              {
+                "iteration": 7,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26365476274091676
+              },
+              {
+                "iteration": 8,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.264800119599534
+              },
+              {
+                "iteration": 9,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2659777130541248
+              },
+              {
+                "iteration": 10,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2655652450469191
+              },
+              {
+                "iteration": 11,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26531490669600294
+              },
+              {
+                "iteration": 12,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2656003889671117
+              },
+              {
+                "iteration": 13,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2659002950881078
+              },
+              {
+                "iteration": 14,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26580663936834303
+              }
+            ],
+            "optimizer_stop_reason": "RegularStepGradientDescentOptimizerv4: Step too small after 15 iterations. Current step (0.00195312) is less than minimum step (0.002).",
+            "outputs": [
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_on_T1_before.nii.gz",
+                "sha256": "f4c541ed0a7c6bc016acce135f51a4318ad28f9efc4380c2d02736b7b9ee0885"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_on_T1_candidate.nii.gz",
+                "sha256": "39b81e12539fcfc50051bf2bba95b3b2a1f99d50b3e258c5048a60474830f1c2"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_native_sampling_coverage.nii.gz",
+                "sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_coverage_on_T1_before.nii.gz",
+                "sha256": "3c8c4c50ce25c8439f608f42679e3fabd76f0d15df9ca446296dedca2e900b18"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_coverage_on_T1_candidate.nii.gz",
+                "sha256": "e0a18a9d7c18e0be5510b12a89aafd22b4297519577d7e08d5e6a7bb64b8352b"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/source_vessels_on_T1_candidate.nii.gz",
+                "sha256": "b1aac5b57af64b71c4694876302a8f4cc84f96b9f35ecc60a2266dc204ba1c71"
+              }
+            ],
+            "registration_reviewed": false,
+            "rotation_degrees": 0.3892468927997449,
+            "runtime_observation": {
+              "command": [
+                "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-model-runtime/venv/bin/python",
+                "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_registration.py",
+                "--output",
+                "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265",
+                "--stage",
+                "registration"
+              ],
+              "elapsed_seconds": 3.76239295816049,
+              "exit_code": 0,
+              "failure": null,
+              "log": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration-attempt1.log",
+              "memory_is_sampled_not_exact_peak": true,
+              "minimum_system_available_memory_bytes_sampled": 9036185600,
+              "peak_total_family_plus_supervisor_rss_bytes_sampled": 2219458560,
+              "rss_limit_bytes": 4294967296,
+              "sampling_interval_seconds": 0.2,
+              "stage": "registration"
+            },
+            "sampling_direction": "T1 output physical point -> MRA input physical point",
+            "simpleitk_version": "2.5.6",
+            "software_grid_qc": {
+              "brain_fraction_with_MRA_sampling_after": 0.7840282078857245,
+              "brain_fraction_with_MRA_sampling_before": 0.7789279983796173,
+              "coverage_meaning": "Conservative acquired MRA FOV; excludes one native border voxel. Does not establish annotation completeness.",
+              "label_outside_saved_coverage_voxels": 0,
+              "maximum_point_roundtrip_error_mm": 2.4613922385709617e-14,
+              "reference_near_brain_boundary_voxels": 2529,
+              "registered_reference_outside_brain_voxels": 128,
+              "registered_reference_total_voxels": 12731,
+              "rotation_determinant": 1.0
+            },
+            "source_hashes": {
+              "MRA": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+              "T1": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+              "reference": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe"
+            }
+          },
+          "segmentation_cache_policy": "saved masks only; never reinfer on open",
+          "selected_modality": "T1",
+          "source_eligibility": "publisher-described healthy; individual pathology review not performed",
+          "source_license": "CC-BY-SA-3.0",
+          "source_name": "IXI",
+          "source_record_url": "https://brain-development.org/ixi-dataset/",
+          "source_url": "https://brain-development.org/ixi-dataset/",
+          "split": {
+            "patient_group": "IXI:265",
+            "role": "TRAIN",
+            "training_admitted": false
+          },
+          "training_admitted": false,
+          "workspace_registration": {
+            "kind": "estimated-unreviewed",
+            "overlayPermitted": false
+          }
+        },
+        "revision": 1,
+        "schema": "resectionlab.case/1",
+        "source_refs": [
+          {
+            "license": "CC-BY-SA-3.0",
+            "native_frame": "RAS+",
+            "provenance": "observed",
+            "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+            "source_id": "structural",
+            "uri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-T1.nii.gz"
+          },
+          {
+            "license": "Weights MIT (official offered choice); runner FreeSurfer Software License 1.0",
+            "native_frame": "RAS+",
+            "provenance": "estimated",
+            "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+            "source_id": "supplied_brain_mask",
+            "uri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/synthstrip/brain_mask.nii.gz"
+          }
+        ],
+        "unknowns": [
+          "brain_segmentation_unassessed",
+          "diffusion_not_audited",
+          "language_function_unassessed",
+          "motor_function_unassessed",
+          "native_frame_provenance_requires_review",
+          "skull_anatomy_unassessed",
+          "vascular_anatomy_unassessed"
+        ],
+        "workspace_sha256": "dbbcfea71dd8e5609fc51293988cc0284ff87bb56d75f11d00db4fe6d14cc3c2"
+      },
+      "arrays_npz_sha256": "049c71569c31e1d0ebc8eca4ff722e13dfaed6e74df08986c6bf390cd7abef15"
+    },
+    {
+      "member": "workspace/series-0.ressectionlab",
+      "manifest": {
+        "array_index": {
+          "compartments": {
+            "source_vessels": "compartments_0"
+          },
+          "source_compartments": {
+            "source_vessels": "source_compartments_0"
+          }
+        },
+        "array_sha256": "766b1defc24a489789bd9fc19d2bff10905fa46bfb535d1d2f7980b541d1c6a0",
+        "artifacts": {},
+        "case_id": "IXI265-Guys-0845",
+        "case_semantic_hash": "sha256:e7a463c522abce66428e4771cd2e384be1143fa46bd51aaad8449eb962e3a7d2",
+        "context": null,
+        "frame": "RAS+",
+        "metadata": {
+          "acquisition_datetime": null,
+          "anatomy_layers": {
+            "source_vessels": {
+              "color": "#ff597c",
+              "coverage": "Partial MRA FOV; incomplete reference; unlabelled anatomy unknown",
+              "kind": "vessels",
+              "label": "Source vessel reference (registration estimated)",
+              "model": null,
+              "name": "source_vessels",
+              "policy_use": "excluded",
+              "provenance": "source-provided",
+              "registration_status": "estimated_unreviewed",
+              "source_license": "CC-BY-4.0",
+              "source_lineage": "Published SynthStrip/Frangi-assisted, manually refined reference; no new vessel inference",
+              "source_role": "display_only_public_reference"
+            }
+          },
+          "anatomy_workbench_only": true,
+          "annotation_policy_use": "excluded",
+          "annotation_review": "pending",
+          "annotation_use": "display_only",
+          "benchmark_track": "viewer_only",
+          "clinical_deficit_probability": null,
+          "clinical_probability_reason": "no_validated_clinical_outcome_model",
+          "clinical_use_status": "research_only",
+          "cohort_role": "TRAIN",
+          "cohort_sha256": "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127",
+          "diffusion_status": "not_audited",
+          "eligibility_source_receipt": {
+            "individual_scan_pathology_review": false,
+            "source_html_sha256": "f80f30853eeeeec6caf90ae4410c712fe447161808c238dea8111396020efe8c",
+            "url": "https://brain-development.org/ixi-dataset/"
+          },
+          "functional_evidence": {
+            "language": "unassessed",
+            "motor": "unassessed"
+          },
+          "imaging_qc": {
+            "structural": {
+              "affine_ras_mm": [
+                [
+                  -0.4675968885421753,
+                  0.022762440145015717,
+                  0.04044419899582863,
+                  113.11631774902344
+                ],
+                [
+                  0.021471189334988594,
+                  0.46756595373153687,
+                  -0.043432630598545074,
+                  -131.24533081054688
+                ],
+                [
+                  0.024873699992895126,
+                  0.024300718680024147,
+                  0.7977957725524902,
+                  -36.80162048339844
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "anisotropic": true,
+              "file": "IXI265-MRA.nii.gz",
+              "frame": "RAS+",
+              "handedness": "left",
+              "obliquity_degrees": [
+                4.019683163763321,
+                4.073288470753625,
+                4.254359673742527
+              ],
+              "orientation": [
+                "L",
+                "A",
+                "S"
+              ],
+              "physical_units": "mm",
+              "qform_code": 1,
+              "qform_native": [
+                [
+                  -0.4675968658915527,
+                  0.022762450512280544,
+                  0.0404449228126845,
+                  113.11631774902344
+                ],
+                [
+                  0.021471178297718427,
+                  0.46756594066599144,
+                  -0.04343264959961386,
+                  -131.24533081054688
+                ],
+                [
+                  0.024874123319319312,
+                  0.02430070936829939,
+                  0.7977957275993646,
+                  -36.80162048339844
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "sform_code": 1,
+              "sform_native": [
+                [
+                  -0.4675968885421753,
+                  0.022762440145015717,
+                  0.04044419899582863,
+                  113.11631774902344
+                ],
+                [
+                  0.021471189334988594,
+                  0.46756595373153687,
+                  -0.043432630598545074,
+                  -131.24533081054688
+                ],
+                [
+                  0.024873699992895126,
+                  0.024300718680024147,
+                  0.7977957725524902,
+                  -36.80162048339844
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "shape": [
+                512,
+                512,
+                100
+              ],
+              "simulation_frame": "source_coded_frame_native_status_requires_source_provenance",
+              "source_units": "mm",
+              "spacing_mm": [
+                0.4687500006369269,
+                0.46875001301184277,
+                0.800000138334831
+              ],
+              "status": "passed_header_checks",
+              "unit_scale_to_mm": 1.0,
+              "visual_alignment_review": "pending",
+              "voxel_volume_mm3": 0.17578128551412642
+            }
+          },
+          "input_mode": "restricted_structural",
+          "is_synthetic": false,
+          "label_conventions": {},
+          "missing_anatomy": [
+            "skull",
+            "tissue_classes",
+            "ventricles",
+            "fresh_vessel_inference"
+          ],
+          "patient_group": "IXI:265",
+          "patient_id": "IXI265-Guys-0845",
+          "patient_name": "IXI265-Guys-0845",
+          "registration_candidate": {
+            "MRA_RAS_mm_to_T1_RAS_mm": [
+              [
+                0.9999989148019892,
+                -0.00036557054576875166,
+                -0.0014271485626832603,
+                0.2133971422976657
+              ],
+              [
+                0.00035609775544803013,
+                0.999977943413947,
+                -0.006632185160382632,
+                0.31196470292623424
+              ],
+              [
+                0.001429541616206971,
+                0.006631669758748548,
+                0.9999769884187228,
+                1.9234664966972368
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T1_RAS_mm_to_MRA_RAS_mm": [
+              [
+                0.9999989148019892,
+                0.0003560977554480371,
+                0.0014295416162068975,
+                -0.2162576760544108
+              ],
+              [
+                -0.00036557054576874526,
+                0.9999779434139471,
+                0.006631669758748626,
+                -0.32463560493825666
+              ],
+              [
+                -0.0014271485626833336,
+                -0.006632185160382553,
+                0.9999769884187227,
+                -1.9210486775933926
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "anatomical_registration_accepted": false,
+            "brain_mask_sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+            "center_displacement_mm": 1.8708033892395604,
+            "classification": "software_valid_candidate_anatomical_review_pending",
+            "configuration": {
+              "coarse_spacing_mm": 1.5,
+              "iterations_per_level": 80,
+              "sampling_fraction": 0.2,
+              "seed": 41,
+              "shrink_levels": [
+                4,
+                2,
+                1
+              ],
+              "threads": 2,
+              "timeout_seconds": 180.0
+            },
+            "elapsed_registration_seconds": 0.31633158307522535,
+            "fixed": "T1",
+            "flags": [],
+            "local_visual_qc": {
+              "image": "registration-qc.png",
+              "independent_anatomical_landmark_validation": false,
+              "observations": [
+                "No gross orientation reversal or displacement in inspected slices",
+                "Central ventricular/callosal and head contours broadly correspond in overlap",
+                "MRA excludes superior and inferior anatomy; no full-brain vascular claim",
+                "Brain contour is an unreviewed model estimate; no cortical access permission"
+              ],
+              "planes": [
+                "axial",
+                "coronal",
+                "sagittal"
+              ],
+              "status": "candidate_display_inspected_not_anatomically_accepted",
+              "viewer": "view_image"
+            },
+            "matched_objective": {
+              "after": 1.0523871238989007,
+              "before": 1.0326692442540233,
+              "metric": "fixed-bin histogram NMI32, same paired voxels",
+              "overlap_retained_fraction": 1.0,
+              "voxels": 291399
+            },
+            "method": "SimpleITK Euler3D rigid, identity physical pose, Mattes MI32",
+            "metric_improvement_is_anatomical_acceptance": false,
+            "moving": "MRA",
+            "normalization_windows": {
+              "MRA": [
+                1.0,
+                66.0
+              ],
+              "T1": [
+                40.0,
+                448.0
+              ]
+            },
+            "optimizer_history": [
+              {
+                "iteration": 0,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.42187504040304574
+              },
+              {
+                "iteration": 1,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4624763794675814
+              },
+              {
+                "iteration": 2,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.46860247683177636
+              },
+              {
+                "iteration": 3,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4717073067400104
+              },
+              {
+                "iteration": 4,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.471474492141085
+              },
+              {
+                "iteration": 5,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4721978690313183
+              },
+              {
+                "iteration": 6,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.47274443880345274
+              },
+              {
+                "iteration": 7,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4729521473906274
+              },
+              {
+                "iteration": 8,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4731638657397877
+              },
+              {
+                "iteration": 9,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4733213433578065
+              },
+              {
+                "iteration": 10,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.47351114113005754
+              },
+              {
+                "iteration": 11,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4736224193600756
+              },
+              {
+                "iteration": 12,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4741313152900559
+              },
+              {
+                "iteration": 13,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.47431177551333015
+              },
+              {
+                "iteration": 0,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3389049838685211
+              },
+              {
+                "iteration": 1,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.33907161999524493
+              },
+              {
+                "iteration": 2,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.346209739276001
+              },
+              {
+                "iteration": 3,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3431880872792253
+              },
+              {
+                "iteration": 4,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34536455082432305
+              },
+              {
+                "iteration": 5,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34742292402529495
+              },
+              {
+                "iteration": 6,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3469690785911193
+              },
+              {
+                "iteration": 7,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3465995189637038
+              },
+              {
+                "iteration": 8,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34699279593623766
+              },
+              {
+                "iteration": 9,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34712849694596
+              },
+              {
+                "iteration": 10,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3470286400797834
+              },
+              {
+                "iteration": 11,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3471449373644375
+              },
+              {
+                "iteration": 12,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.347121937908558
+              },
+              {
+                "iteration": 13,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3470941624249346
+              },
+              {
+                "iteration": 0,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.25510711732058267
+              },
+              {
+                "iteration": 1,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.25724284927085145
+              },
+              {
+                "iteration": 2,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26470482939342593
+              },
+              {
+                "iteration": 3,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.25642963794434337
+              },
+              {
+                "iteration": 4,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2626607945932155
+              },
+              {
+                "iteration": 5,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2662156919777359
+              },
+              {
+                "iteration": 6,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2652942524058958
+              },
+              {
+                "iteration": 7,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26365476274091676
+              },
+              {
+                "iteration": 8,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.264800119599534
+              },
+              {
+                "iteration": 9,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2659777130541248
+              },
+              {
+                "iteration": 10,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2655652450469191
+              },
+              {
+                "iteration": 11,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26531490669600294
+              },
+              {
+                "iteration": 12,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2656003889671117
+              },
+              {
+                "iteration": 13,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2659002950881078
+              },
+              {
+                "iteration": 14,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26580663936834303
+              }
+            ],
+            "optimizer_stop_reason": "RegularStepGradientDescentOptimizerv4: Step too small after 15 iterations. Current step (0.00195312) is less than minimum step (0.002).",
+            "outputs": [
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_on_T1_before.nii.gz",
+                "sha256": "f4c541ed0a7c6bc016acce135f51a4318ad28f9efc4380c2d02736b7b9ee0885"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_on_T1_candidate.nii.gz",
+                "sha256": "39b81e12539fcfc50051bf2bba95b3b2a1f99d50b3e258c5048a60474830f1c2"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_native_sampling_coverage.nii.gz",
+                "sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_coverage_on_T1_before.nii.gz",
+                "sha256": "3c8c4c50ce25c8439f608f42679e3fabd76f0d15df9ca446296dedca2e900b18"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_coverage_on_T1_candidate.nii.gz",
+                "sha256": "e0a18a9d7c18e0be5510b12a89aafd22b4297519577d7e08d5e6a7bb64b8352b"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/source_vessels_on_T1_candidate.nii.gz",
+                "sha256": "b1aac5b57af64b71c4694876302a8f4cc84f96b9f35ecc60a2266dc204ba1c71"
+              }
+            ],
+            "registration_reviewed": false,
+            "rotation_degrees": 0.3892468927997449,
+            "runtime_observation": {
+              "command": [
+                "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-model-runtime/venv/bin/python",
+                "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_registration.py",
+                "--output",
+                "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265",
+                "--stage",
+                "registration"
+              ],
+              "elapsed_seconds": 3.76239295816049,
+              "exit_code": 0,
+              "failure": null,
+              "log": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration-attempt1.log",
+              "memory_is_sampled_not_exact_peak": true,
+              "minimum_system_available_memory_bytes_sampled": 9036185600,
+              "peak_total_family_plus_supervisor_rss_bytes_sampled": 2219458560,
+              "rss_limit_bytes": 4294967296,
+              "sampling_interval_seconds": 0.2,
+              "stage": "registration"
+            },
+            "sampling_direction": "T1 output physical point -> MRA input physical point",
+            "simpleitk_version": "2.5.6",
+            "software_grid_qc": {
+              "brain_fraction_with_MRA_sampling_after": 0.7840282078857245,
+              "brain_fraction_with_MRA_sampling_before": 0.7789279983796173,
+              "coverage_meaning": "Conservative acquired MRA FOV; excludes one native border voxel. Does not establish annotation completeness.",
+              "label_outside_saved_coverage_voxels": 0,
+              "maximum_point_roundtrip_error_mm": 2.4613922385709617e-14,
+              "reference_near_brain_boundary_voxels": 2529,
+              "registered_reference_outside_brain_voxels": 128,
+              "registered_reference_total_voxels": 12731,
+              "rotation_determinant": 1.0
+            },
+            "source_hashes": {
+              "MRA": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+              "T1": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+              "reference": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe"
+            }
+          },
+          "segmentation_cache_policy": "saved masks only; never reinfer on open",
+          "selected_modality": "MRA",
+          "source_eligibility": "publisher-described healthy; individual pathology review not performed",
+          "source_license": "CC-BY-SA-3.0",
+          "source_name": "IXI",
+          "source_record_url": "https://brain-development.org/ixi-dataset/",
+          "source_url": "https://brain-development.org/ixi-dataset/",
+          "split": {
+            "patient_group": "IXI:265",
+            "role": "TRAIN",
+            "training_admitted": false
+          },
+          "training_admitted": false,
+          "workspace_registration": {
+            "kind": "estimated-unreviewed",
+            "overlayPermitted": false
+          }
+        },
+        "revision": 1,
+        "schema": "resectionlab.case/1",
+        "source_refs": [
+          {
+            "license": "CC-BY-SA-3.0",
+            "native_frame": "RAS+",
+            "provenance": "observed",
+            "sha256": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+            "source_id": "structural",
+            "uri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-MRA.nii.gz"
+          },
+          {
+            "license": "CC-BY-4.0",
+            "native_frame": "RAS+",
+            "provenance": "observed",
+            "sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe",
+            "source_id": "supplied_target_annotation",
+            "uri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-derived_vessel_label.nii.gz"
+          }
+        ],
+        "unknowns": [
+          "brain_segmentation_unassessed",
+          "diffusion_not_audited",
+          "language_function_unassessed",
+          "motor_function_unassessed",
+          "native_frame_provenance_requires_review",
+          "skull_anatomy_unassessed",
+          "vascular_anatomy_unassessed"
+        ]
+      },
+      "arrays_npz_sha256": "766b1defc24a489789bd9fc19d2bff10905fa46bfb535d1d2f7980b541d1c6a0"
+    },
+    {
+      "member": "workspace/series-1.ressectionlab",
+      "manifest": {
+        "array_index": {
+          "compartments": {
+            "source_vessels": "compartments_0"
+          },
+          "source_compartments": {
+            "source_vessels": "source_compartments_0"
+          }
+        },
+        "array_sha256": "5ad66d3a5a85a8ba797b1a91892b43f192798b44d02b6269aa924f896491dee4",
+        "artifacts": {},
+        "case_id": "IXI265-Guys-0845",
+        "case_semantic_hash": "sha256:a4c67f16c1f7e41853fefb64346eb61f9acc395b41e5642619f9a9359056f931",
+        "context": null,
+        "frame": "RAS+",
+        "metadata": {
+          "acquisition_datetime": null,
+          "anatomy_layers": {
+            "source_vessels": {
+              "color": "#ff597c",
+              "coverage": "Partial MRA FOV; incomplete reference; unlabelled anatomy unknown",
+              "kind": "vessels",
+              "label": "Source vessel reference (registration estimated)",
+              "model": null,
+              "name": "source_vessels",
+              "policy_use": "excluded",
+              "provenance": "source-provided",
+              "registration_status": "estimated_unreviewed",
+              "source_license": "CC-BY-4.0",
+              "source_lineage": "Published SynthStrip/Frangi-assisted, manually refined reference; no new vessel inference",
+              "source_role": "display_only_public_reference"
+            }
+          },
+          "anatomy_workbench_only": true,
+          "annotation_policy_use": "excluded",
+          "annotation_review": "pending",
+          "annotation_use": "display_only",
+          "benchmark_track": "viewer_only",
+          "clinical_deficit_probability": null,
+          "clinical_probability_reason": "no_validated_clinical_outcome_model",
+          "clinical_use_status": "research_only",
+          "cohort_role": "TRAIN",
+          "cohort_sha256": "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127",
+          "diffusion_status": "not_audited",
+          "eligibility_source_receipt": {
+            "individual_scan_pathology_review": false,
+            "source_html_sha256": "f80f30853eeeeec6caf90ae4410c712fe447161808c238dea8111396020efe8c",
+            "url": "https://brain-development.org/ixi-dataset/"
+          },
+          "functional_evidence": {
+            "language": "unassessed",
+            "motor": "unassessed"
+          },
+          "imaging_qc": {
+            "structural": {
+              "affine_ras_mm": [
+                [
+                  -0.04665682837367058,
+                  0.06588856875896454,
+                  1.1955413818359375,
+                  -90.70220947265625
+                ],
+                [
+                  -0.9363381862640381,
+                  -0.0029228338971734047,
+                  -0.059605203568935394,
+                  122.19873046875
+                ],
+                [
+                  0.00036077748518437147,
+                  0.935177206993103,
+                  -0.08441900461912155,
+                  -112.01844787597656
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "anisotropic": true,
+              "file": "IXI265-T1.nii.gz",
+              "frame": "RAS+",
+              "handedness": "left",
+              "obliquity_degrees": [
+                4.940287892108874,
+                2.852719146290038,
+                4.0341050387381205
+              ],
+              "orientation": [
+                "P",
+                "S",
+                "R"
+              ],
+              "physical_units": "mm",
+              "qform_code": 1,
+              "qform_native": [
+                [
+                  -0.04665683705034007,
+                  0.06588860148888928,
+                  1.195541436684528,
+                  -90.70220947265625
+                ],
+                [
+                  -0.9363382184830493,
+                  -0.002922830186959935,
+                  -0.05960521301253242,
+                  122.19873046875
+                ],
+                [
+                  0.00036078310315008216,
+                  0.9351772020625484,
+                  -0.08441904809798166,
+                  -112.01844787597656
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "sform_code": 1,
+              "sform_native": [
+                [
+                  -0.04665682837367058,
+                  0.06588856875896454,
+                  1.1955413818359375,
+                  -90.70220947265625
+                ],
+                [
+                  -0.9363381862640381,
+                  -0.0029228338971734047,
+                  -0.059605203568935394,
+                  122.19873046875
+                ],
+                [
+                  0.00036077748518437147,
+                  0.935177206993103,
+                  -0.08441900461912155,
+                  -112.01844787597656
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "shape": [
+                256,
+                256,
+                150
+              ],
+              "simulation_frame": "source_coded_frame_native_status_requires_source_provenance",
+              "source_units": "mm",
+              "spacing_mm": [
+                0.9374999673869394,
+                0.9375000026296088,
+                1.1999993934646636
+              ],
+              "status": "passed_header_checks",
+              "unit_scale_to_mm": 1.0,
+              "visual_alignment_review": "pending",
+              "voxel_volume_mm3": 1.0546869331809354
+            }
+          },
+          "input_mode": "restricted_structural",
+          "is_synthetic": false,
+          "label_conventions": {},
+          "missing_anatomy": [
+            "skull",
+            "tissue_classes",
+            "ventricles",
+            "fresh_vessel_inference"
+          ],
+          "patient_group": "IXI:265",
+          "patient_id": "IXI265-Guys-0845",
+          "patient_name": "IXI265-Guys-0845",
+          "registration_candidate": {
+            "MRA_RAS_mm_to_T1_RAS_mm": [
+              [
+                0.9999989148019892,
+                -0.00036557054576875166,
+                -0.0014271485626832603,
+                0.2133971422976657
+              ],
+              [
+                0.00035609775544803013,
+                0.999977943413947,
+                -0.006632185160382632,
+                0.31196470292623424
+              ],
+              [
+                0.001429541616206971,
+                0.006631669758748548,
+                0.9999769884187228,
+                1.9234664966972368
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T1_RAS_mm_to_MRA_RAS_mm": [
+              [
+                0.9999989148019892,
+                0.0003560977554480371,
+                0.0014295416162068975,
+                -0.2162576760544108
+              ],
+              [
+                -0.00036557054576874526,
+                0.9999779434139471,
+                0.006631669758748626,
+                -0.32463560493825666
+              ],
+              [
+                -0.0014271485626833336,
+                -0.006632185160382553,
+                0.9999769884187227,
+                -1.9210486775933926
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "anatomical_registration_accepted": false,
+            "brain_mask_sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+            "center_displacement_mm": 1.8708033892395604,
+            "classification": "software_valid_candidate_anatomical_review_pending",
+            "configuration": {
+              "coarse_spacing_mm": 1.5,
+              "iterations_per_level": 80,
+              "sampling_fraction": 0.2,
+              "seed": 41,
+              "shrink_levels": [
+                4,
+                2,
+                1
+              ],
+              "threads": 2,
+              "timeout_seconds": 180.0
+            },
+            "elapsed_registration_seconds": 0.31633158307522535,
+            "fixed": "T1",
+            "flags": [],
+            "local_visual_qc": {
+              "image": "registration-qc.png",
+              "independent_anatomical_landmark_validation": false,
+              "observations": [
+                "No gross orientation reversal or displacement in inspected slices",
+                "Central ventricular/callosal and head contours broadly correspond in overlap",
+                "MRA excludes superior and inferior anatomy; no full-brain vascular claim",
+                "Brain contour is an unreviewed model estimate; no cortical access permission"
+              ],
+              "planes": [
+                "axial",
+                "coronal",
+                "sagittal"
+              ],
+              "status": "candidate_display_inspected_not_anatomically_accepted",
+              "viewer": "view_image"
+            },
+            "matched_objective": {
+              "after": 1.0523871238989007,
+              "before": 1.0326692442540233,
+              "metric": "fixed-bin histogram NMI32, same paired voxels",
+              "overlap_retained_fraction": 1.0,
+              "voxels": 291399
+            },
+            "method": "SimpleITK Euler3D rigid, identity physical pose, Mattes MI32",
+            "metric_improvement_is_anatomical_acceptance": false,
+            "moving": "MRA",
+            "normalization_windows": {
+              "MRA": [
+                1.0,
+                66.0
+              ],
+              "T1": [
+                40.0,
+                448.0
+              ]
+            },
+            "optimizer_history": [
+              {
+                "iteration": 0,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.42187504040304574
+              },
+              {
+                "iteration": 1,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4624763794675814
+              },
+              {
+                "iteration": 2,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.46860247683177636
+              },
+              {
+                "iteration": 3,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4717073067400104
+              },
+              {
+                "iteration": 4,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.471474492141085
+              },
+              {
+                "iteration": 5,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4721978690313183
+              },
+              {
+                "iteration": 6,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.47274443880345274
+              },
+              {
+                "iteration": 7,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4729521473906274
+              },
+              {
+                "iteration": 8,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4731638657397877
+              },
+              {
+                "iteration": 9,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4733213433578065
+              },
+              {
+                "iteration": 10,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.47351114113005754
+              },
+              {
+                "iteration": 11,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4736224193600756
+              },
+              {
+                "iteration": 12,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4741313152900559
+              },
+              {
+                "iteration": 13,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.47431177551333015
+              },
+              {
+                "iteration": 0,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3389049838685211
+              },
+              {
+                "iteration": 1,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.33907161999524493
+              },
+              {
+                "iteration": 2,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.346209739276001
+              },
+              {
+                "iteration": 3,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3431880872792253
+              },
+              {
+                "iteration": 4,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34536455082432305
+              },
+              {
+                "iteration": 5,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34742292402529495
+              },
+              {
+                "iteration": 6,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3469690785911193
+              },
+              {
+                "iteration": 7,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3465995189637038
+              },
+              {
+                "iteration": 8,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34699279593623766
+              },
+              {
+                "iteration": 9,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34712849694596
+              },
+              {
+                "iteration": 10,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3470286400797834
+              },
+              {
+                "iteration": 11,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3471449373644375
+              },
+              {
+                "iteration": 12,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.347121937908558
+              },
+              {
+                "iteration": 13,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3470941624249346
+              },
+              {
+                "iteration": 0,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.25510711732058267
+              },
+              {
+                "iteration": 1,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.25724284927085145
+              },
+              {
+                "iteration": 2,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26470482939342593
+              },
+              {
+                "iteration": 3,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.25642963794434337
+              },
+              {
+                "iteration": 4,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2626607945932155
+              },
+              {
+                "iteration": 5,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2662156919777359
+              },
+              {
+                "iteration": 6,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2652942524058958
+              },
+              {
+                "iteration": 7,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26365476274091676
+              },
+              {
+                "iteration": 8,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.264800119599534
+              },
+              {
+                "iteration": 9,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2659777130541248
+              },
+              {
+                "iteration": 10,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2655652450469191
+              },
+              {
+                "iteration": 11,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26531490669600294
+              },
+              {
+                "iteration": 12,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2656003889671117
+              },
+              {
+                "iteration": 13,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2659002950881078
+              },
+              {
+                "iteration": 14,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26580663936834303
+              }
+            ],
+            "optimizer_stop_reason": "RegularStepGradientDescentOptimizerv4: Step too small after 15 iterations. Current step (0.00195312) is less than minimum step (0.002).",
+            "outputs": [
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_on_T1_before.nii.gz",
+                "sha256": "f4c541ed0a7c6bc016acce135f51a4318ad28f9efc4380c2d02736b7b9ee0885"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_on_T1_candidate.nii.gz",
+                "sha256": "39b81e12539fcfc50051bf2bba95b3b2a1f99d50b3e258c5048a60474830f1c2"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_native_sampling_coverage.nii.gz",
+                "sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_coverage_on_T1_before.nii.gz",
+                "sha256": "3c8c4c50ce25c8439f608f42679e3fabd76f0d15df9ca446296dedca2e900b18"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_coverage_on_T1_candidate.nii.gz",
+                "sha256": "e0a18a9d7c18e0be5510b12a89aafd22b4297519577d7e08d5e6a7bb64b8352b"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/source_vessels_on_T1_candidate.nii.gz",
+                "sha256": "b1aac5b57af64b71c4694876302a8f4cc84f96b9f35ecc60a2266dc204ba1c71"
+              }
+            ],
+            "registration_reviewed": false,
+            "rotation_degrees": 0.3892468927997449,
+            "runtime_observation": {
+              "command": [
+                "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-model-runtime/venv/bin/python",
+                "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_registration.py",
+                "--output",
+                "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265",
+                "--stage",
+                "registration"
+              ],
+              "elapsed_seconds": 3.76239295816049,
+              "exit_code": 0,
+              "failure": null,
+              "log": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration-attempt1.log",
+              "memory_is_sampled_not_exact_peak": true,
+              "minimum_system_available_memory_bytes_sampled": 9036185600,
+              "peak_total_family_plus_supervisor_rss_bytes_sampled": 2219458560,
+              "rss_limit_bytes": 4294967296,
+              "sampling_interval_seconds": 0.2,
+              "stage": "registration"
+            },
+            "sampling_direction": "T1 output physical point -> MRA input physical point",
+            "simpleitk_version": "2.5.6",
+            "software_grid_qc": {
+              "brain_fraction_with_MRA_sampling_after": 0.7840282078857245,
+              "brain_fraction_with_MRA_sampling_before": 0.7789279983796173,
+              "coverage_meaning": "Conservative acquired MRA FOV; excludes one native border voxel. Does not establish annotation completeness.",
+              "label_outside_saved_coverage_voxels": 0,
+              "maximum_point_roundtrip_error_mm": 2.4613922385709617e-14,
+              "reference_near_brain_boundary_voxels": 2529,
+              "registered_reference_outside_brain_voxels": 128,
+              "registered_reference_total_voxels": 12731,
+              "rotation_determinant": 1.0
+            },
+            "source_hashes": {
+              "MRA": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+              "T1": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+              "reference": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe"
+            }
+          },
+          "segmentation_cache_policy": "saved masks only; never reinfer on open",
+          "selected_modality": "T1",
+          "source_eligibility": "publisher-described healthy; individual pathology review not performed",
+          "source_license": "CC-BY-SA-3.0",
+          "source_name": "IXI",
+          "source_record_url": "https://brain-development.org/ixi-dataset/",
+          "source_url": "https://brain-development.org/ixi-dataset/",
+          "split": {
+            "patient_group": "IXI:265",
+            "role": "TRAIN",
+            "training_admitted": false
+          },
+          "training_admitted": false,
+          "workspace_registration": {
+            "kind": "estimated-unreviewed",
+            "overlayPermitted": false
+          }
+        },
+        "revision": 1,
+        "schema": "resectionlab.case/1",
+        "source_refs": [
+          {
+            "license": "CC-BY-SA-3.0",
+            "native_frame": "RAS+",
+            "provenance": "observed",
+            "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+            "source_id": "structural",
+            "uri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-T1.nii.gz"
+          },
+          {
+            "license": "CC-BY-4.0",
+            "native_frame": "RAS+",
+            "provenance": "observed",
+            "sha256": "b1aac5b57af64b71c4694876302a8f4cc84f96b9f35ecc60a2266dc204ba1c71",
+            "source_id": "supplied_target_annotation",
+            "uri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/source_vessels_on_T1_candidate.nii.gz"
+          }
+        ],
+        "unknowns": [
+          "brain_segmentation_unassessed",
+          "diffusion_not_audited",
+          "language_function_unassessed",
+          "motor_function_unassessed",
+          "native_frame_provenance_requires_review",
+          "skull_anatomy_unassessed",
+          "vascular_anatomy_unassessed"
+        ]
+      },
+      "arrays_npz_sha256": "5ad66d3a5a85a8ba797b1a91892b43f192798b44d02b6269aa924f896491dee4"
+    },
+    {
+      "member": "workspace/series-2.ressectionlab",
+      "manifest": {
+        "array_index": {
+          "compartments": {
+            "atropos_csf_like_estimate": "compartments_0",
+            "atropos_gray_matter_like_estimate": "compartments_1",
+            "atropos_white_matter_like_estimate": "compartments_2",
+            "unknown_missing_intensity": "compartments_3"
+          },
+          "source_compartments": {
+            "atropos_csf_like_estimate": "source_compartments_0",
+            "atropos_gray_matter_like_estimate": "source_compartments_1",
+            "atropos_white_matter_like_estimate": "source_compartments_2",
+            "unknown_missing_intensity": "source_compartments_3"
+          }
+        },
+        "array_sha256": "0829f57e49ca240772958ef526e46a4970fd51d58bf405126b8cd5b83c1199d5",
+        "artifacts": {},
+        "case_id": "IXI265-Guys-0845",
+        "case_semantic_hash": "sha256:c31d6015d82ccd73819a1a1864111f6e341adc6c4171d84a4e0d916b63d15ec2",
+        "context": null,
+        "frame": "RAS+",
+        "metadata": {
+          "acquisition_datetime": null,
+          "anatomical_review": "pending",
+          "anatomy_accepted": false,
+          "anatomy_layers": {
+            "atropos_csf_like_estimate": {
+              "color": "#65bfff",
+              "coverage": "Estimated ordered T1 intensity class; tissue name is an assumption, not confirmed anatomy. Raw posteriors are probabilities, not physical partial-volume fractions.",
+              "fit_outcome_sha256": "a9c241064f0ebc67e460c2f500f6b389e23bdb09fbda3667ab41d02b544c1bcf",
+              "independent_numerical_QA_sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509",
+              "kind": "tissue_estimate",
+              "label": "CSF-like estimate",
+              "model": {
+                "device": "CPU \u00b7 2 threads",
+                "license": "Apache-2.0",
+                "name": "N4 + Atropos within-image fitting",
+                "requirements": "Acquired T1 and positive estimated brain support; no tissue priors",
+                "version": "ANTsPy 0.6.3",
+                "weights_path": "None \u00b7 no pretrained weights",
+                "weights_sha256": "not applicable"
+              },
+              "name": "atropos_csf_like_estimate",
+              "policy_use": "excluded",
+              "provenance": "estimated",
+              "review_status": "Anatomical identity unreviewed",
+              "runtime_seconds": 19.126011667074636,
+              "source_class_id": 1,
+              "source_role": "display_only_fitted_intensity_class",
+              "source_sha256": "a474f70c9cebc74ebb04d59df84c502d31a2816ccafea39428a286f20025a930"
+            },
+            "atropos_gray_matter_like_estimate": {
+              "color": "#e8b56a",
+              "coverage": "Estimated ordered T1 intensity class; tissue name is an assumption, not confirmed anatomy. Raw posteriors are probabilities, not physical partial-volume fractions.",
+              "fit_outcome_sha256": "a9c241064f0ebc67e460c2f500f6b389e23bdb09fbda3667ab41d02b544c1bcf",
+              "independent_numerical_QA_sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509",
+              "kind": "tissue_estimate",
+              "label": "Gray matter-like estimate",
+              "model": {
+                "device": "CPU \u00b7 2 threads",
+                "license": "Apache-2.0",
+                "name": "N4 + Atropos within-image fitting",
+                "requirements": "Acquired T1 and positive estimated brain support; no tissue priors",
+                "version": "ANTsPy 0.6.3",
+                "weights_path": "None \u00b7 no pretrained weights",
+                "weights_sha256": "not applicable"
+              },
+              "name": "atropos_gray_matter_like_estimate",
+              "policy_use": "excluded",
+              "provenance": "estimated",
+              "review_status": "Anatomical identity unreviewed",
+              "runtime_seconds": 19.126011667074636,
+              "source_class_id": 2,
+              "source_role": "display_only_fitted_intensity_class",
+              "source_sha256": "567d806a0e5dacaa2542d1f6c415f6c1bccb01d73049ab22b72493e0eab4be05"
+            },
+            "atropos_white_matter_like_estimate": {
+              "color": "#d5a0ff",
+              "coverage": "Estimated ordered T1 intensity class; tissue name is an assumption, not confirmed anatomy. Raw posteriors are probabilities, not physical partial-volume fractions.",
+              "fit_outcome_sha256": "a9c241064f0ebc67e460c2f500f6b389e23bdb09fbda3667ab41d02b544c1bcf",
+              "independent_numerical_QA_sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509",
+              "kind": "tissue_estimate",
+              "label": "White matter-like estimate",
+              "model": {
+                "device": "CPU \u00b7 2 threads",
+                "license": "Apache-2.0",
+                "name": "N4 + Atropos within-image fitting",
+                "requirements": "Acquired T1 and positive estimated brain support; no tissue priors",
+                "version": "ANTsPy 0.6.3",
+                "weights_path": "None \u00b7 no pretrained weights",
+                "weights_sha256": "not applicable"
+              },
+              "name": "atropos_white_matter_like_estimate",
+              "policy_use": "excluded",
+              "provenance": "estimated",
+              "review_status": "Anatomical identity unreviewed",
+              "runtime_seconds": 19.126011667074636,
+              "source_class_id": 3,
+              "source_role": "display_only_fitted_intensity_class",
+              "source_sha256": "a9d1c122ea39a93fbb3de007415b4312b15ee90eb7c37889c0fc4d129f5c7729"
+            },
+            "unknown_missing_intensity": {
+              "color": "#ff4fa3",
+              "coverage": "Eight exact zero-intensity source voxels are UNKNOWN; not CSF or corrected anatomy.",
+              "fit_outcome_sha256": "a9c241064f0ebc67e460c2f500f6b389e23bdb09fbda3667ab41d02b544c1bcf",
+              "independent_numerical_QA_sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509",
+              "kind": "unknown",
+              "label": "Unknown \u00b7 8 voxels",
+              "model": null,
+              "name": "unknown_missing_intensity",
+              "policy_use": "excluded",
+              "provenance": "observed",
+              "review_status": "Unclassified missing intensity",
+              "runtime_seconds": 19.126011667074636,
+              "source_class_id": null,
+              "source_role": "missing_intensity_abstention",
+              "source_sha256": "b9b744588e970abd988155f1997290d568f7732c0c66ed6d1a3bd82ef89cb4e8"
+            }
+          },
+          "anatomy_workbench_only": true,
+          "annotation_policy_use": "excluded",
+          "annotation_review": "pending",
+          "annotation_use": "display_only",
+          "benchmark_track": "viewer_only",
+          "clinical_deficit_probability": null,
+          "clinical_probability_reason": "no_validated_clinical_outcome_model",
+          "clinical_use_status": "research_only",
+          "cohort_role": "TRAIN",
+          "cohort_sha256": "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127",
+          "diffusion_status": "not_audited",
+          "display_label": "T1 \u00b7 estimated tissues",
+          "eligibility_source_receipt": {
+            "individual_scan_pathology_review": false,
+            "source_html_sha256": "f80f30853eeeeec6caf90ae4410c712fe447161808c238dea8111396020efe8c",
+            "url": "https://brain-development.org/ixi-dataset/"
+          },
+          "functional_evidence": {
+            "language": "unassessed",
+            "motor": "unassessed"
+          },
+          "growth_use_accepted": false,
+          "host_accepted": false,
+          "imaging_qc": {
+            "structural": {
+              "affine_ras_mm": [
+                [
+                  -0.04665682837367058,
+                  0.06588856875896454,
+                  1.1955413818359375,
+                  -90.70220947265625
+                ],
+                [
+                  -0.9363381862640381,
+                  -0.0029228338971734047,
+                  -0.059605203568935394,
+                  122.19873046875
+                ],
+                [
+                  0.00036077748518437147,
+                  0.935177206993103,
+                  -0.08441900461912155,
+                  -112.01844787597656
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "anisotropic": true,
+              "file": "IXI265-T1.nii.gz",
+              "frame": "RAS+",
+              "handedness": "left",
+              "obliquity_degrees": [
+                4.940287892108874,
+                2.852719146290038,
+                4.0341050387381205
+              ],
+              "orientation": [
+                "P",
+                "S",
+                "R"
+              ],
+              "physical_units": "mm",
+              "qform_code": 1,
+              "qform_native": [
+                [
+                  -0.04665683705034007,
+                  0.06588860148888928,
+                  1.195541436684528,
+                  -90.70220947265625
+                ],
+                [
+                  -0.9363382184830493,
+                  -0.002922830186959935,
+                  -0.05960521301253242,
+                  122.19873046875
+                ],
+                [
+                  0.00036078310315008216,
+                  0.9351772020625484,
+                  -0.08441904809798166,
+                  -112.01844787597656
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "sform_code": 1,
+              "sform_native": [
+                [
+                  -0.04665682837367058,
+                  0.06588856875896454,
+                  1.1955413818359375,
+                  -90.70220947265625
+                ],
+                [
+                  -0.9363381862640381,
+                  -0.0029228338971734047,
+                  -0.059605203568935394,
+                  122.19873046875
+                ],
+                [
+                  0.00036077748518437147,
+                  0.935177206993103,
+                  -0.08441900461912155,
+                  -112.01844787597656
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "shape": [
+                256,
+                256,
+                150
+              ],
+              "simulation_frame": "source_coded_frame_native_status_requires_source_provenance",
+              "source_units": "mm",
+              "spacing_mm": [
+                0.9374999673869394,
+                0.9375000026296088,
+                1.1999993934646636
+              ],
+              "status": "passed_header_checks",
+              "unit_scale_to_mm": 1.0,
+              "visual_alignment_review": "pending",
+              "voxel_volume_mm3": 1.0546869331809354
+            }
+          },
+          "input_mode": "restricted_structural",
+          "is_synthetic": false,
+          "label_conventions": {},
+          "missing_anatomy": [
+            "skull",
+            "ventricles",
+            "confirmed_tissue_identity",
+            "fresh_vessel_inference"
+          ],
+          "model_identity": {
+            "device": "CPU \u00b7 2 threads",
+            "license": "Apache-2.0",
+            "name": "N4 + Atropos within-image fitting",
+            "requirements": "Acquired T1 and positive estimated brain support; no tissue priors",
+            "version": "ANTsPy 0.6.3",
+            "weights_path": "None \u00b7 no pretrained weights",
+            "weights_sha256": "not applicable"
+          },
+          "patient_group": "IXI:265",
+          "patient_id": "IXI265-Guys-0845",
+          "patient_name": "IXI265-Guys-0845",
+          "registration_candidate": {
+            "MRA_RAS_mm_to_T1_RAS_mm": [
+              [
+                0.9999989148019892,
+                -0.00036557054576875166,
+                -0.0014271485626832603,
+                0.2133971422976657
+              ],
+              [
+                0.00035609775544803013,
+                0.999977943413947,
+                -0.006632185160382632,
+                0.31196470292623424
+              ],
+              [
+                0.001429541616206971,
+                0.006631669758748548,
+                0.9999769884187228,
+                1.9234664966972368
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T1_RAS_mm_to_MRA_RAS_mm": [
+              [
+                0.9999989148019892,
+                0.0003560977554480371,
+                0.0014295416162068975,
+                -0.2162576760544108
+              ],
+              [
+                -0.00036557054576874526,
+                0.9999779434139471,
+                0.006631669758748626,
+                -0.32463560493825666
+              ],
+              [
+                -0.0014271485626833336,
+                -0.006632185160382553,
+                0.9999769884187227,
+                -1.9210486775933926
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "anatomical_registration_accepted": false,
+            "brain_mask_sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+            "center_displacement_mm": 1.8708033892395604,
+            "classification": "software_valid_candidate_anatomical_review_pending",
+            "configuration": {
+              "coarse_spacing_mm": 1.5,
+              "iterations_per_level": 80,
+              "sampling_fraction": 0.2,
+              "seed": 41,
+              "shrink_levels": [
+                4,
+                2,
+                1
+              ],
+              "threads": 2,
+              "timeout_seconds": 180.0
+            },
+            "elapsed_registration_seconds": 0.31633158307522535,
+            "fixed": "T1",
+            "flags": [],
+            "local_visual_qc": {
+              "image": "registration-qc.png",
+              "independent_anatomical_landmark_validation": false,
+              "observations": [
+                "No gross orientation reversal or displacement in inspected slices",
+                "Central ventricular/callosal and head contours broadly correspond in overlap",
+                "MRA excludes superior and inferior anatomy; no full-brain vascular claim",
+                "Brain contour is an unreviewed model estimate; no cortical access permission"
+              ],
+              "planes": [
+                "axial",
+                "coronal",
+                "sagittal"
+              ],
+              "status": "candidate_display_inspected_not_anatomically_accepted",
+              "viewer": "view_image"
+            },
+            "matched_objective": {
+              "after": 1.0523871238989007,
+              "before": 1.0326692442540233,
+              "metric": "fixed-bin histogram NMI32, same paired voxels",
+              "overlap_retained_fraction": 1.0,
+              "voxels": 291399
+            },
+            "method": "SimpleITK Euler3D rigid, identity physical pose, Mattes MI32",
+            "metric_improvement_is_anatomical_acceptance": false,
+            "moving": "MRA",
+            "normalization_windows": {
+              "MRA": [
+                1.0,
+                66.0
+              ],
+              "T1": [
+                40.0,
+                448.0
+              ]
+            },
+            "optimizer_history": [
+              {
+                "iteration": 0,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.42187504040304574
+              },
+              {
+                "iteration": 1,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4624763794675814
+              },
+              {
+                "iteration": 2,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.46860247683177636
+              },
+              {
+                "iteration": 3,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4717073067400104
+              },
+              {
+                "iteration": 4,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.471474492141085
+              },
+              {
+                "iteration": 5,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4721978690313183
+              },
+              {
+                "iteration": 6,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.47274443880345274
+              },
+              {
+                "iteration": 7,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4729521473906274
+              },
+              {
+                "iteration": 8,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4731638657397877
+              },
+              {
+                "iteration": 9,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4733213433578065
+              },
+              {
+                "iteration": 10,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.47351114113005754
+              },
+              {
+                "iteration": 11,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4736224193600756
+              },
+              {
+                "iteration": 12,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.4741313152900559
+              },
+              {
+                "iteration": 13,
+                "level": 0,
+                "sampled_negative_mattes_mi": -0.47431177551333015
+              },
+              {
+                "iteration": 0,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3389049838685211
+              },
+              {
+                "iteration": 1,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.33907161999524493
+              },
+              {
+                "iteration": 2,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.346209739276001
+              },
+              {
+                "iteration": 3,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3431880872792253
+              },
+              {
+                "iteration": 4,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34536455082432305
+              },
+              {
+                "iteration": 5,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34742292402529495
+              },
+              {
+                "iteration": 6,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3469690785911193
+              },
+              {
+                "iteration": 7,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3465995189637038
+              },
+              {
+                "iteration": 8,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34699279593623766
+              },
+              {
+                "iteration": 9,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.34712849694596
+              },
+              {
+                "iteration": 10,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3470286400797834
+              },
+              {
+                "iteration": 11,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3471449373644375
+              },
+              {
+                "iteration": 12,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.347121937908558
+              },
+              {
+                "iteration": 13,
+                "level": 1,
+                "sampled_negative_mattes_mi": -0.3470941624249346
+              },
+              {
+                "iteration": 0,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.25510711732058267
+              },
+              {
+                "iteration": 1,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.25724284927085145
+              },
+              {
+                "iteration": 2,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26470482939342593
+              },
+              {
+                "iteration": 3,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.25642963794434337
+              },
+              {
+                "iteration": 4,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2626607945932155
+              },
+              {
+                "iteration": 5,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2662156919777359
+              },
+              {
+                "iteration": 6,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2652942524058958
+              },
+              {
+                "iteration": 7,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26365476274091676
+              },
+              {
+                "iteration": 8,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.264800119599534
+              },
+              {
+                "iteration": 9,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2659777130541248
+              },
+              {
+                "iteration": 10,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2655652450469191
+              },
+              {
+                "iteration": 11,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26531490669600294
+              },
+              {
+                "iteration": 12,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2656003889671117
+              },
+              {
+                "iteration": 13,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.2659002950881078
+              },
+              {
+                "iteration": 14,
+                "level": 2,
+                "sampled_negative_mattes_mi": -0.26580663936834303
+              }
+            ],
+            "optimizer_stop_reason": "RegularStepGradientDescentOptimizerv4: Step too small after 15 iterations. Current step (0.00195312) is less than minimum step (0.002).",
+            "outputs": [
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_on_T1_before.nii.gz",
+                "sha256": "f4c541ed0a7c6bc016acce135f51a4318ad28f9efc4380c2d02736b7b9ee0885"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_on_T1_candidate.nii.gz",
+                "sha256": "39b81e12539fcfc50051bf2bba95b3b2a1f99d50b3e258c5048a60474830f1c2"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_native_sampling_coverage.nii.gz",
+                "sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_coverage_on_T1_before.nii.gz",
+                "sha256": "3c8c4c50ce25c8439f608f42679e3fabd76f0d15df9ca446296dedca2e900b18"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_coverage_on_T1_candidate.nii.gz",
+                "sha256": "e0a18a9d7c18e0be5510b12a89aafd22b4297519577d7e08d5e6a7bb64b8352b"
+              },
+              {
+                "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/source_vessels_on_T1_candidate.nii.gz",
+                "sha256": "b1aac5b57af64b71c4694876302a8f4cc84f96b9f35ecc60a2266dc204ba1c71"
+              }
+            ],
+            "registration_reviewed": false,
+            "rotation_degrees": 0.3892468927997449,
+            "runtime_observation": {
+              "command": [
+                "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-model-runtime/venv/bin/python",
+                "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_registration.py",
+                "--output",
+                "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265",
+                "--stage",
+                "registration"
+              ],
+              "elapsed_seconds": 3.76239295816049,
+              "exit_code": 0,
+              "failure": null,
+              "log": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration-attempt1.log",
+              "memory_is_sampled_not_exact_peak": true,
+              "minimum_system_available_memory_bytes_sampled": 9036185600,
+              "peak_total_family_plus_supervisor_rss_bytes_sampled": 2219458560,
+              "rss_limit_bytes": 4294967296,
+              "sampling_interval_seconds": 0.2,
+              "stage": "registration"
+            },
+            "sampling_direction": "T1 output physical point -> MRA input physical point",
+            "simpleitk_version": "2.5.6",
+            "software_grid_qc": {
+              "brain_fraction_with_MRA_sampling_after": 0.7840282078857245,
+              "brain_fraction_with_MRA_sampling_before": 0.7789279983796173,
+              "coverage_meaning": "Conservative acquired MRA FOV; excludes one native border voxel. Does not establish annotation completeness.",
+              "label_outside_saved_coverage_voxels": 0,
+              "maximum_point_roundtrip_error_mm": 2.4613922385709617e-14,
+              "reference_near_brain_boundary_voxels": 2529,
+              "registered_reference_outside_brain_voxels": 128,
+              "registered_reference_total_voxels": 12731,
+              "rotation_determinant": 1.0
+            },
+            "source_hashes": {
+              "MRA": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+              "T1": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+              "reference": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe"
+            }
+          },
+          "segmentation_cache_policy": "saved masks only; never refit on open",
+          "selected_modality": "T1",
+          "source_eligibility": "publisher-described healthy; individual pathology review not performed",
+          "source_license": "CC-BY-SA-3.0",
+          "source_name": "IXI",
+          "source_record_url": "https://brain-development.org/ixi-dataset/",
+          "source_url": "https://brain-development.org/ixi-dataset/",
+          "split": {
+            "patient_group": "IXI:265",
+            "role": "TRAIN",
+            "training_admitted": false
+          },
+          "tissue_estimate_provenance": {
+            "candidate_sha256": "55188c2f9916d226beed701bbf9c85e29aa60533ea34e0bdf0518fd63e52fa9f",
+            "display_affine_is_unchanged_acquired_T1": true,
+            "labels_sha256": "7cd021de6201e7fea0ee586cde0a27b3d1106dd4645f9d0a833f98d0923f6791",
+            "mask_sha256": [
+              "a474f70c9cebc74ebb04d59df84c502d31a2816ccafea39428a286f20025a930",
+              "567d806a0e5dacaa2542d1f6c415f6c1bccb01d73049ab22b72493e0eab4be05",
+              "a9d1c122ea39a93fbb3de007415b4312b15ee90eb7c37889c0fc4d129f5c7729"
+            ],
+            "native_indices_unchanged": true,
+            "native_output_frames": {
+              "class_1_posterior": {
+                "affine_max_abs_difference": 1.3877787807814457e-17,
+                "array_permutation_or_resampling": false,
+                "candidate_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912157,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "eight_cell_corner_errors_mm": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "output_saved_with_original_affine": true,
+                "source_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912155,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ]
+              },
+              "class_2_posterior": {
+                "affine_max_abs_difference": 1.3877787807814457e-17,
+                "array_permutation_or_resampling": false,
+                "candidate_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912157,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "eight_cell_corner_errors_mm": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "output_saved_with_original_affine": true,
+                "source_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912155,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ]
+              },
+              "class_3_posterior": {
+                "affine_max_abs_difference": 1.3877787807814457e-17,
+                "array_permutation_or_resampling": false,
+                "candidate_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912157,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "eight_cell_corner_errors_mm": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "output_saved_with_original_affine": true,
+                "source_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912155,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ]
+              },
+              "class_labels_raw": {
+                "affine_max_abs_difference": 1.3877787807814457e-17,
+                "array_permutation_or_resampling": false,
+                "candidate_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912157,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "eight_cell_corner_errors_mm": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "output_saved_with_original_affine": true,
+                "source_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912155,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ]
+              },
+              "csf_like_intensity_estimated": {
+                "affine_max_abs_difference": 1.3877787807814457e-17,
+                "array_permutation_or_resampling": false,
+                "candidate_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912157,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "eight_cell_corner_errors_mm": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "output_saved_with_original_affine": true,
+                "source_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912155,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ]
+              },
+              "excluded_unknown_native": {
+                "affine_max_abs_difference": 1.3877787807814457e-17,
+                "array_permutation_or_resampling": false,
+                "candidate_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912157,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "eight_cell_corner_errors_mm": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "output_saved_with_original_affine": true,
+                "source_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912155,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ]
+              },
+              "fit_domain_native": {
+                "affine_max_abs_difference": 1.3877787807814457e-17,
+                "array_permutation_or_resampling": false,
+                "candidate_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912157,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "eight_cell_corner_errors_mm": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "output_saved_with_original_affine": true,
+                "source_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912155,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ]
+              },
+              "gray_matter_like_intensity_estimated": {
+                "affine_max_abs_difference": 1.3877787807814457e-17,
+                "array_permutation_or_resampling": false,
+                "candidate_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912157,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "eight_cell_corner_errors_mm": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "output_saved_with_original_affine": true,
+                "source_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912155,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ]
+              },
+              "n4_corrected_estimated": {
+                "affine_max_abs_difference": 1.3877787807814457e-17,
+                "array_permutation_or_resampling": false,
+                "candidate_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912157,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "eight_cell_corner_errors_mm": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "output_saved_with_original_affine": true,
+                "source_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912155,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ]
+              },
+              "white_matter_like_intensity_estimated": {
+                "affine_max_abs_difference": 1.3877787807814457e-17,
+                "array_permutation_or_resampling": false,
+                "candidate_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912157,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "eight_cell_corner_errors_mm": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "output_saved_with_original_affine": true,
+                "source_affine_ras_mm": [
+                  [
+                    -0.04665682837367058,
+                    0.06588856875896454,
+                    1.1955413818359375,
+                    -90.70220947265625
+                  ],
+                  [
+                    -0.9363381862640381,
+                    -0.0029228338971734047,
+                    -0.059605203568935394,
+                    122.19873046875
+                  ],
+                  [
+                    0.00036077748518437147,
+                    0.935177206993103,
+                    -0.08441900461912155,
+                    -112.01844787597656
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ]
+              }
+            },
+            "parameters": {
+              "Atropos": {
+                "c": "[10,0]",
+                "i": "KMeans[3]",
+                "m": "[0.1,1x1x1]",
+                "priorweight": 0.0,
+                "r": 0,
+                "v": 1
+              },
+              "Atropos_random_seed_option": "r=0 (fixed upstream seed)",
+              "N4": {
+                "convergence": {
+                  "iters": [
+                    30,
+                    20,
+                    10
+                  ],
+                  "tol": 1e-07
+                },
+                "rescale_intensities": false,
+                "return_bias_field": false,
+                "shrink_factor": 4,
+                "spline_param": 150,
+                "verbose": true
+              },
+              "grid": "full_native_grid_no_resampling_no_crop",
+              "intensity_clipping_or_normalization": null,
+              "priors": null
+            },
+            "partition": {
+              "class_voxels": [
+                263320,
+                607861,
+                580320
+              ],
+              "fit_domain_voxels": 1451501,
+              "source_arrays_changed": false,
+              "tissue_identity_confirmed": false,
+              "unknown_voxels": 8
+            },
+            "posterior_semantics": "membership_probabilities_not_PVE",
+            "posterior_sum_max_abs_error": 1.4156103134155273e-07,
+            "raw_native_posterior_header_roundoff_record": {
+              "bitwise_affine_equality_claimed": false,
+              "independent_result_QA_sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509",
+              "limit_mm": 0.0001,
+              "no_resampling": true,
+              "per_class_native_checks": [
+                {
+                  "class": 1,
+                  "native_temporary_selected_frame_eight_corner_errors_mm": [
+                    2.8430141247383565e-08,
+                    1.258963969801575e-06,
+                    1.9038319845269585e-06,
+                    2.2822704111553154e-06,
+                    1.5230853930405573e-05,
+                    1.4713715181763793e-05,
+                    1.5349354364328403e-05,
+                    1.4836346666293653e-05
+                  ],
+                  "saved_array_exactly_equals_retained_native_raw_array": true
+                },
+                {
+                  "class": 2,
+                  "native_temporary_selected_frame_eight_corner_errors_mm": [
+                    2.8430141247383565e-08,
+                    1.258963969801575e-06,
+                    1.9038319845269585e-06,
+                    2.2822704111553154e-06,
+                    1.5230853930405573e-05,
+                    1.4713715181763793e-05,
+                    1.5349354364328403e-05,
+                    1.4836346666293653e-05
+                  ],
+                  "saved_array_exactly_equals_retained_native_raw_array": true
+                },
+                {
+                  "class": 3,
+                  "native_temporary_selected_frame_eight_corner_errors_mm": [
+                    2.8430141247383565e-08,
+                    1.258963969801575e-06,
+                    1.9038319845269585e-06,
+                    2.2822704111553154e-06,
+                    1.5230853930405573e-05,
+                    1.4713715181763793e-05,
+                    1.5349354364328403e-05,
+                    1.4836346666293653e-05
+                  ],
+                  "saved_array_exactly_equals_retained_native_raw_array": true
+                }
+              ],
+              "raw_probability_values_unchanged": true
+            },
+            "resampling_or_thresholding": false,
+            "runtime_seconds": 19.126011667074636,
+            "source_binding": {
+              "T1": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+              "brain_mask": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+              "host_bundle": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1"
+            },
+            "unknown_sha256": "b9b744588e970abd988155f1997290d568f7732c0c66ed6d1a3bd82ef89cb4e8"
+          },
+          "training_admitted": false,
+          "workspace_registration": {
+            "kind": "estimated-unreviewed",
+            "overlayPermitted": false
+          }
+        },
+        "revision": 1,
+        "schema": "resectionlab.case/1",
+        "source_refs": [
+          {
+            "license": "CC-BY-SA-3.0",
+            "native_frame": "RAS+",
+            "provenance": "observed",
+            "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+            "source_id": "structural",
+            "uri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-T1.nii.gz"
+          },
+          {
+            "license": "Apache-2.0 software; source acquisition CC-BY-SA-3.0",
+            "native_frame": "RAS+",
+            "provenance": "estimated",
+            "sha256": "7cd021de6201e7fea0ee586cde0a27b3d1106dd4645f9d0a833f98d0923f6791",
+            "source_id": "supplied_target_annotation",
+            "uri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-typed-mask-v3/class_labels_raw.nii.gz"
+          }
+        ],
+        "unknowns": [
+          "brain_segmentation_unassessed",
+          "diffusion_not_audited",
+          "language_function_unassessed",
+          "motor_function_unassessed",
+          "native_frame_provenance_requires_review",
+          "skull_anatomy_unassessed",
+          "vascular_anatomy_unassessed"
+        ]
+      },
+      "arrays_npz_sha256": "0829f57e49ca240772958ef526e46a4970fd51d58bf405126b8cd5b83c1199d5"
+    }
+  ],
+  "workspace_manifest": {
+    "episodeReplay": null,
+    "images": [
+      {
+        "bytes": 17696449,
+        "member": "workspace/series-0.ressectionlab",
+        "sha256": "23277f5ab1e0f407098a125e5ff05f2f2703bd8667e6e88912fc723dd23d990c",
+        "source": {
+          "annotationKind": "source-provided",
+          "modality": "MRA",
+          "scope": "display-only-native-grid",
+          "seriesId": "sha256:96364833177048440090bb6b3ba051fb44ae5b6cb6f934cd91873da0736ecb57",
+          "sourceCaseHash": "sha256:e7a463c522abce66428e4771cd2e384be1143fa46bd51aaad8449eb962e3a7d2",
+          "sourceFrameHash": "sha256:caadf2bd319e41e9b4dc77211e60646cc85c73f1ed5c58755905a0c440b437b7"
+        }
+      },
+      {
+        "bytes": 8626917,
+        "member": "workspace/series-1.ressectionlab",
+        "sha256": "7c50011982d1eba82d2b3caaff0d0f4a6dbb412c385af0dedf6ce87b0f6b3c91",
+        "source": {
+          "annotationKind": "source-provided",
+          "modality": "T1",
+          "scope": "display-only-native-grid",
+          "seriesId": "sha256:2a76a27e8512747f1a10514f87a4529d27f2fed5fed61f7dcb2c4a771346ad85",
+          "sourceCaseHash": "sha256:a4c67f16c1f7e41853fefb64346eb61f9acc395b41e5642619f9a9359056f931",
+          "sourceFrameHash": "sha256:2513ca69c435d3fab93f67f69be820d3c69f454489b36d4e68a50dcebe6026db"
+        }
+      },
+      {
+        "bytes": 9518469,
+        "member": "workspace/series-2.ressectionlab",
+        "sha256": "03c04b7a6d82c7296e0294dede51f54e6848bbd5fb41a2942ec7ab11136a6485",
+        "source": {
+          "annotationKind": "estimated",
+          "modality": "T1",
+          "scope": "display-only-native-grid",
+          "seriesId": "sha256:9990200f5f1457b103c34582db6f184c35c1e8c9e1373d743c19685bc1769d25",
+          "sourceCaseHash": "sha256:c31d6015d82ccd73819a1a1864111f6e341adc6c4171d84a4e0d916b63d15ec2",
+          "sourceFrameHash": "sha256:2513ca69c435d3fab93f67f69be820d3c69f454489b36d4e68a50dcebe6026db"
+        }
+      }
+    ],
+    "imagingState": {
+      "selectedSeriesId": "sha256:9990200f5f1457b103c34582db6f184c35c1e8c9e1373d743c19685bc1769d25",
+      "states": {
+        "primary": {
+          "cursor": [
+            0.8176703732460737,
+            -1.997637267690152,
+            0.9734293008805253
+          ],
+          "viewer": {
+            "layerColor": {
+              "brain": "#65bfff"
+            },
+            "layerOpacity": {
+              "brain": 0.16
+            }
+          },
+          "visibleLayers": {
+            "brain": true
+          }
+        },
+        "sha256:2a76a27e8512747f1a10514f87a4529d27f2fed5fed61f7dcb2c4a771346ad85": {
+          "cursor": [
+            0.8176703732460737,
+            -1.997637267690152,
+            0.9734293008805253
+          ],
+          "visibleLayers": {
+            "source_vessels": true
+          }
+        },
+        "sha256:96364833177048440090bb6b3ba051fb44ae5b6cb6f934cd91873da0736ecb57": {
+          "cursor": [
+            1.4631040338426828,
+            -8.446255971677601,
+            15.253334228880703
+          ],
+          "visibleLayers": {
+            "source_vessels": true
+          }
+        },
+        "sha256:9990200f5f1457b103c34582db6f184c35c1e8c9e1373d743c19685bc1769d25": {
+          "cursor": [
+            0.8176703732460737,
+            -1.997637267690152,
+            0.9734293008805253
+          ],
+          "viewer": {
+            "layerColor": {
+              "atropos_csf_like_estimate": "#65bfff",
+              "atropos_gray_matter_like_estimate": "#e8b56a",
+              "atropos_white_matter_like_estimate": "#d5a0ff",
+              "unknown_missing_intensity": "#ff4fa3"
+            },
+            "layerOpacity": {
+              "atropos_csf_like_estimate": 0.48,
+              "atropos_gray_matter_like_estimate": 0.48,
+              "atropos_white_matter_like_estimate": 0.48,
+              "unknown_missing_intensity": 1.0
+            }
+          },
+          "visibleLayers": {
+            "atropos_csf_like_estimate": true,
+            "atropos_gray_matter_like_estimate": true,
+            "atropos_white_matter_like_estimate": true,
+            "unknown_missing_intensity": true
+          }
+        }
+      }
+    },
+    "originalFiles": [
+      {
+        "bytes": 6980629,
+        "member": "workspace/original-0.bin",
+        "name": "IXI265-T1.nii.gz",
+        "role": "imaging",
+        "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-T1.nii.gz"
+      },
+      {
+        "bytes": 14307469,
+        "member": "workspace/original-1.bin",
+        "name": "IXI265-MRA.nii.gz",
+        "role": "imaging",
+        "sha256": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-MRA.nii.gz"
+      },
+      {
+        "bytes": 109932,
+        "member": "workspace/original-2.bin",
+        "name": "IXI265-derived_vessel_label.nii.gz",
+        "role": "annotation",
+        "sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-derived_vessel_label.nii.gz"
+      },
+      {
+        "bytes": 129560,
+        "member": "workspace/original-3.bin",
+        "name": "brain_mask.nii.gz",
+        "role": "model-result",
+        "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/synthstrip/brain_mask.nii.gz"
+      },
+      {
+        "bytes": 5703,
+        "member": "workspace/original-4.bin",
+        "name": "inference.json",
+        "role": "metadata",
+        "sha256": "0045ef08168b9347f62ebca8ced2d08a65b325146c9a0a77bfc18b555d20cd91",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/synthstrip/inference.json"
+      },
+      {
+        "bytes": 8194,
+        "member": "workspace/original-5.bin",
+        "name": "source-receipt.json",
+        "role": "metadata",
+        "sha256": "2f4f6507f56e6592f851ddc9c4520d217f9e85fd649c45025f4d0e079559eac6",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/source-receipt.json"
+      },
+      {
+        "bytes": 11376,
+        "member": "workspace/original-6.bin",
+        "name": "registration.json",
+        "role": "metadata",
+        "sha256": "30d79cf98d10386fad2af8eafaaf6a754661f0b98a1a8d3cb7ab23f8b6073b1b",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/registration.json"
+      },
+      {
+        "bytes": 65160,
+        "member": "workspace/original-7.bin",
+        "name": "source_vessels_on_T1_candidate.nii.gz",
+        "role": "annotation",
+        "sha256": "b1aac5b57af64b71c4694876302a8f4cc84f96b9f35ecc60a2266dc204ba1c71",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/source_vessels_on_T1_candidate.nii.gz"
+      },
+      {
+        "bytes": 484,
+        "member": "workspace/original-8.bin",
+        "name": "MRA_to_T1_points.tfm",
+        "role": "metadata",
+        "sha256": "404c1b6325bf67eb4dcba2c55625af2329b6f16f8a661d11340f213a4a5eae83",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_to_T1_points.tfm"
+      },
+      {
+        "bytes": 347,
+        "member": "workspace/original-9.bin",
+        "name": "T1_to_MRA_sampling.tfm",
+        "role": "metadata",
+        "sha256": "5ac523e6fae83057fd55c75cffac7c3ef89561ce5a3208f0a56ff2d1f742ef0b",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/T1_to_MRA_sampling.tfm"
+      },
+      {
+        "bytes": 89419,
+        "member": "workspace/original-10.bin",
+        "name": "MRA_coverage_on_T1_before.nii.gz",
+        "role": "model-result",
+        "sha256": "3c8c4c50ce25c8439f608f42679e3fabd76f0d15df9ca446296dedca2e900b18",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_coverage_on_T1_before.nii.gz"
+      },
+      {
+        "bytes": 92891,
+        "member": "workspace/original-11.bin",
+        "name": "MRA_coverage_on_T1_candidate.nii.gz",
+        "role": "model-result",
+        "sha256": "e0a18a9d7c18e0be5510b12a89aafd22b4297519577d7e08d5e6a7bb64b8352b",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_coverage_on_T1_candidate.nii.gz"
+      },
+      {
+        "bytes": 169180,
+        "member": "workspace/original-12.bin",
+        "name": "MRA_native_sampling_coverage.nii.gz",
+        "role": "model-result",
+        "sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_native_sampling_coverage.nii.gz"
+      },
+      {
+        "bytes": 2541,
+        "member": "workspace/original-13.bin",
+        "name": "source-rights-and-head-proofs.json",
+        "role": "metadata",
+        "sha256": "1354808cdee53bbb8681196a22ece34514e1f4a763de58c6b534692a67c4fdee",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/ixi-t1-mra-vessel-byte-intake-v1/source-rights-and-head-proofs.json"
+      },
+      {
+        "bytes": 29248,
+        "member": "workspace/original-14.bin",
+        "name": "ixi-page.html",
+        "role": "metadata",
+        "sha256": "f80f30853eeeeec6caf90ae4410c712fe447161808c238dea8111396020efe8c",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/ixi-vessel-source-preparation-v1/ixi-page.html"
+      },
+      {
+        "bytes": 6901,
+        "member": "workspace/original-15.bin",
+        "name": "zenodo-record.json",
+        "role": "metadata",
+        "sha256": "273b9fcf4b6219d4a77986ef53ccfd7a8b5b0a706aa1477cff414958d8948798",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/ixi-vessel-source-preparation-v1/zenodo-record.json"
+      },
+      {
+        "bytes": 13094415,
+        "member": "workspace/original-16.bin",
+        "name": "n4_corrected_estimated.nii.gz",
+        "role": "model-result",
+        "sha256": "a0208d470624f706ed278852239f296d8a2509b5d94de0fc64d90bf765730138",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-typed-mask-v3/n4_corrected_estimated.nii.gz"
+      },
+      {
+        "bytes": 343423,
+        "member": "workspace/original-17.bin",
+        "name": "class_labels_raw.nii.gz",
+        "role": "model-result",
+        "sha256": "7cd021de6201e7fea0ee586cde0a27b3d1106dd4645f9d0a833f98d0923f6791",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-typed-mask-v3/class_labels_raw.nii.gz"
+      },
+      {
+        "bytes": 129142,
+        "member": "workspace/original-18.bin",
+        "name": "fit_domain_native.nii.gz",
+        "role": "model-result",
+        "sha256": "8f6f7bc22d69cdc92c4ae1201a64ad5dc45afbf5fed44102e7bd0951bbf2ab5e",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-typed-mask-v3/fit_domain_native.nii.gz"
+      },
+      {
+        "bytes": 43135,
+        "member": "workspace/original-19.bin",
+        "name": "excluded_unknown_native.nii.gz",
+        "role": "model-result",
+        "sha256": "b9b744588e970abd988155f1997290d568f7732c0c66ed6d1a3bd82ef89cb4e8",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-typed-mask-v3/excluded_unknown_native.nii.gz"
+      },
+      {
+        "bytes": 5425300,
+        "member": "workspace/original-20.bin",
+        "name": "class_1_posterior.nii.gz",
+        "role": "model-result",
+        "sha256": "377f691004eb87dbb8cc65f45c6fbb5fbe44311915cad462d6ea4da4b0f0669c",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-typed-mask-v3/class_1_posterior.nii.gz"
+      },
+      {
+        "bytes": 5682413,
+        "member": "workspace/original-21.bin",
+        "name": "class_2_posterior.nii.gz",
+        "role": "model-result",
+        "sha256": "2700b62ad949e9cc3dbef55943d7eb9efba99762c5309e2374b6599015fda25f",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-typed-mask-v3/class_2_posterior.nii.gz"
+      },
+      {
+        "bytes": 5550733,
+        "member": "workspace/original-22.bin",
+        "name": "class_3_posterior.nii.gz",
+        "role": "model-result",
+        "sha256": "f375119f53fbf0e6137173b32d10713851c194e92cecb369e9741f1fa30f9b7e",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-typed-mask-v3/class_3_posterior.nii.gz"
+      },
+      {
+        "bytes": 222094,
+        "member": "workspace/original-23.bin",
+        "name": "csf_like_intensity_estimated.nii.gz",
+        "role": "model-result",
+        "sha256": "a474f70c9cebc74ebb04d59df84c502d31a2816ccafea39428a286f20025a930",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-typed-mask-v3/csf_like_intensity_estimated.nii.gz"
+      },
+      {
+        "bytes": 301337,
+        "member": "workspace/original-24.bin",
+        "name": "gray_matter_like_intensity_estimated.nii.gz",
+        "role": "model-result",
+        "sha256": "567d806a0e5dacaa2542d1f6c415f6c1bccb01d73049ab22b72493e0eab4be05",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-typed-mask-v3/gray_matter_like_intensity_estimated.nii.gz"
+      },
+      {
+        "bytes": 215767,
+        "member": "workspace/original-25.bin",
+        "name": "white_matter_like_intensity_estimated.nii.gz",
+        "role": "model-result",
+        "sha256": "a9d1c122ea39a93fbb3de007415b4312b15ee90eb7c37889c0fc4d129f5c7729",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-typed-mask-v3/white_matter_like_intensity_estimated.nii.gz"
+      },
+      {
+        "bytes": 5211867,
+        "member": "workspace/original-26.bin",
+        "name": "antsrbz4ch0ltprob01.nii.gz",
+        "role": "model-result",
+        "sha256": "8adace1c376f1ba926c5e28f2daf789cd4de33f9ad2c6788603c379ea2fb22ae",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-typed-mask-v3/temporary/antsrbz4ch0ltprob01.nii.gz"
+      },
+      {
+        "bytes": 5462561,
+        "member": "workspace/original-27.bin",
+        "name": "antsrbz4ch0ltprob02.nii.gz",
+        "role": "model-result",
+        "sha256": "8c87204528e9b99f8bb64247e0eb4335106ca487b30b428c4fce4aec081e2b7c",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-typed-mask-v3/temporary/antsrbz4ch0ltprob02.nii.gz"
+      },
+      {
+        "bytes": 5369599,
+        "member": "workspace/original-28.bin",
+        "name": "antsrbz4ch0ltprob03.nii.gz",
+        "role": "model-result",
+        "sha256": "e386015a7897cb455bb9b8e0c22b28f8abe0ae440e10eada69fd6fa93be07f58",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-typed-mask-v3/temporary/antsrbz4ch0ltprob03.nii.gz"
+      },
+      {
+        "bytes": 31203,
+        "member": "workspace/original-29.bin",
+        "name": "candidate.json",
+        "role": "metadata",
+        "sha256": "55188c2f9916d226beed701bbf9c85e29aa60533ea34e0bdf0518fd63e52fa9f",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-typed-mask-v3/candidate.json"
+      },
+      {
+        "bytes": 19030,
+        "member": "workspace/original-30.bin",
+        "name": "outcome.json",
+        "role": "metadata",
+        "sha256": "a9c241064f0ebc67e460c2f500f6b389e23bdb09fbda3667ab41d02b544c1bcf",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-atropos-typed-mask-run-v3/outcome.json"
+      },
+      {
+        "bytes": 28049,
+        "member": "workspace/original-31.bin",
+        "name": "result-qa.json",
+        "role": "metadata",
+        "sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/ixi265-typed-mask-independent-v3/result-qa.json"
+      },
+      {
+        "bytes": 9059,
+        "member": "workspace/original-32.bin",
+        "name": "root-release-declaration.json",
+        "role": "metadata",
+        "sha256": "85910005da495df7d2265b6d9cce3bb1a4b8d9bcaadaf1bc54bb1aed30003d71",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-atropos-typed-mask-run-v3/root-release-declaration.json"
+      },
+      {
+        "bytes": 10749,
+        "member": "workspace/original-33.bin",
+        "name": "supervisor-qa.json",
+        "role": "metadata",
+        "sha256": "1013cc0cde560fdce0e3c16338edd100421623cba2629c8bf3eaeeee8a8ed0c4",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/ixi265-typed-mask-independent-v3/supervisor-qa.json"
+      },
+      {
+        "bytes": 3178,
+        "member": "workspace/original-34.bin",
+        "name": "outcome.json",
+        "role": "metadata",
+        "sha256": "b9b8841d81d1ac9f10303aecdbfa838bba59fe4764065cd7898f44026b129c78",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ants-typed-mask-native-preflight-v3/outcome.json"
+      },
+      {
+        "bytes": 12027,
+        "member": "workspace/original-35.bin",
+        "name": "preparation.json",
+        "role": "metadata",
+        "sha256": "8a8335d6ab2f0b671c96eb80e6ae421e17cdaced294a5132dfeaf0c59ccfb6a1",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-atropos-typed-mask-runner-guard-followup-v3/preparation.json"
+      },
+      {
+        "bytes": 2171,
+        "member": "workspace/original-36.bin",
+        "name": "prospective-method.json",
+        "role": "metadata",
+        "sha256": "e786909c715cb5ded4b8ac3a1ae36851a67980610904ed37dcb92cd5d703d84f",
+        "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/ixi265-tissue-display-preparation-v1/prospective-method.json"
+      }
+    ],
+    "primaryPlanningHash": "sha256:01f037f27b7c46d20a12cbb9a6ccd66a33fe826675a8654aa8d64ce2ec4da0cf",
+    "referenceCaseHash": "sha256:72f6ae73183d8d5d52f30eafd90a533b0cf81a38e0070d7fa70ca954461c505c",
+    "schema": "integrated-workspace-session-v1",
+    "sessionHash": "sha256:347ab996b5cd966db535adf9280d2ef86928a7ec779874aeab6bdbd741eb6066"
+  },
+  "inventory_method": "ZIP metadata and streamed member hashes; pixel arrays not decoded in sealing"
+}

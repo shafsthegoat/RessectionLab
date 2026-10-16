@@ -1,0 +1,60 @@
+{
+  "schema": "ixi265-tissue-display-package-outcome-v1",
+  "sealed_utc": "2026-10-16T08:43:59.832085+00:00",
+  "status": "display_only_candidate_packaged_unaccepted",
+  "attempt": {
+    "status": "display_only_candidate_packaged_unaccepted",
+    "supervisor_pid": 22755,
+    "resources": {
+      "threads": 2,
+      "rss_limit_bytes": 2147483648,
+      "seconds": 300.0,
+      "available_memory_floor_bytes": 1073741824,
+      "output_temporary_limit_bytes": 536870912,
+      "disk_floor_bytes": 53687091200,
+      "sample_interval_seconds": 0.2,
+      "attempts": 1,
+      "memory_scope": "supervising_Python_plus_worker_and_recursive_descendants"
+    },
+    "worker_pid": 22758,
+    "source_and_result_inputs_unchanged": true,
+    "elapsed_seconds": 11.73202387499623,
+    "exit_code": 0,
+    "peak_supervisor_and_worker_rss_bytes_sampled": 1523679232,
+    "minimum_available_memory_bytes_sampled": 6189219840,
+    "minimum_free_disk_bytes_sampled": 343208382464,
+    "output_bytes": 113786747,
+    "sampling_limitation": "Between-sample peaks are not a hard reservation",
+    "anatomy_accepted": false,
+    "host_accepted": false,
+    "growth_use_accepted": false,
+    "finished_utc": "2026-10-16T08:43:05.922834+00:00"
+  },
+  "package": {
+    "path": "outputs/poc-ixi265-tissue-display-v1/IXI265-Guys-0845-tissue-estimates.ressectionlab",
+    "bytes": 113750604,
+    "sha256": "bfa03b853dcb8e6893982e75a6c113e8ba3de1ce88225bb631f8a758ded1350f",
+    "session_hash": "sha256:347ab996b5cd966db535adf9280d2ef86928a7ec779874aeab6bdbd741eb6066",
+    "estimated_series_id": "sha256:9990200f5f1457b103c34582db6f184c35c1e8c9e1373d743c19685bc1769d25",
+    "primary_case_hash": "sha256:72f6ae73183d8d5d52f30eafd90a533b0cf81a38e0070d7fa70ca954461c505c",
+    "primary_planning_hash": "sha256:01f037f27b7c46d20a12cbb9a6ccd66a33fe826675a8654aa8d64ce2ec4da0cf",
+    "originals_count": 37
+  },
+  "evidence": {
+    "attempt.json": "3b98e2f4b18569a41ad256b8ff5c0d861d48e29ed9d659de03663bb3828e6e97",
+    "attempt-marker.json": "4e39f9de36f6c575b0d8f447fdb256ccc65f78c4f3700e4cd4b11c1a651c6087",
+    "declaration.json": "c8866b30789c71fb8af5b32cdb22efa7c1602fd5fe2f2fa62828ae80232d4256",
+    "package.json": "927348d7e3f2d0e5bb92d52f9511dfa19366ac63958ce75a9b4e0109c2394cf0",
+    "worker.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "released-package-spec.json": "8413ac3eb390005b707f068a1cd8c59dea6b9ef6e7fa45b9e07ed9186241004f",
+    "root-release-declaration.json": "b07bce075ffdc4e4ff84a3f025ba2d31de951769edc93f7e0516ee49880aeff2",
+    "bundle-inventory.json": "4fc855c95d3e0c5c84f9d7187c00f5976b6efe5cb36ec0a5e2c179b169cae4d9",
+    "output-inventory.json": "78a3902ac2324626075e05ea9135aeddcc8f620336ef2ef0ac5a4f811f589f87"
+  },
+  "source_and_result_inputs_unchanged": true,
+  "packaging_attempts": 1,
+  "anatomy_accepted": false,
+  "host_accepted": false,
+  "growth_use_accepted": false,
+  "independent_payload_audit_status": "pending_separate_ROOT_release"
+}

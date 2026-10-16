@@ -22,5 +22,15 @@ test('same-modality source references and model estimates are distinguishable be
  assert.equal(estimated,'MRA · model estimate · separate frame');
  assert.equal(displaySeriesLabel(attachment),'MRA · image · separate frame');
 });
+test('specific image captions preserve model and registration status in source choices',async()=>{
+ const {attachment}=await fixture();attachment.annotationKind='estimated';
+ attachment.volume.metadata.display_label='T1 · estimated tissues';
+ assert.equal(displaySeriesLabel(attachment),'T1 · estimated tissues · model estimate · separate frame');
+ for(const caption of ['', '  ', 'x'.repeat(81), 'misleading\ncaption', {label:'invalid'}]){
+  attachment.volume.metadata.display_label=caption;
+  assert.equal(displaySeriesLabel(attachment),'MRA · model estimate · separate frame');
+ }
+ assert.equal(attachment.planningEligible,false);assert.equal(attachment.registration.overlayPermitted,false);
+});
 test('host cancellation cannot start image or annotation import',async()=>{for(const annotationKind of ['none','estimated']){let calls=0;const value=await importDisplaySeries({caseHash:hash,modality:'T2',annotationKind},{pick:async()=>null,request:()=>{calls++;assert.fail('cancelled dialog')}});assert.equal(value,null);assert.equal(calls,0)}});
 test('host passes only native-selected image/mask paths and declared provenance',async()=>{const choices=['/generated/image.nii.gz','/generated/mask.nii.gz'];let call;await importDisplaySeries({caseHash:hash,modality:'MRA',annotationKind:'source-provided'},{pick:async()=>choices.shift(),request:async(...args)=>{call=args;return {}}});assert.deepEqual(call,['importDisplaySeries',{caseHash:hash,modality:'MRA',annotationKind:'source-provided',imagePath:'/generated/image.nii.gz',annotationPath:'/generated/mask.nii.gz'}]);await assert.rejects(importDisplaySeries({caseHash:hash,modality:'T1',annotationKind:'none',imagePath:'/injected'},{pick:()=>assert.fail(),request:()=>assert.fail()}));});

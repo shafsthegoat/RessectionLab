@@ -1,0 +1,184 @@
+{
+  "primary_case_hash": "sha256:72f6ae73183d8d5d52f30eafd90a533b0cf81a38e0070d7fa70ca954461c505c",
+  "primary_planning_hash": "sha256:01f037f27b7c46d20a12cbb9a6ccd66a33fe826675a8654aa8d64ce2ec4da0cf",
+  "primary_arrays_sha256": "049c71569c31e1d0ebc8eca4ff722e13dfaed6e74df08986c6bf390cd7abef15",
+  "host_sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+  "originals": [
+    {
+      "bytes": 6980629,
+      "member": "workspace/original-0.bin",
+      "name": "IXI265-T1.nii.gz",
+      "role": "imaging",
+      "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-T1.nii.gz"
+    },
+    {
+      "bytes": 14307469,
+      "member": "workspace/original-1.bin",
+      "name": "IXI265-MRA.nii.gz",
+      "role": "imaging",
+      "sha256": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-MRA.nii.gz"
+    },
+    {
+      "bytes": 109932,
+      "member": "workspace/original-2.bin",
+      "name": "IXI265-derived_vessel_label.nii.gz",
+      "role": "annotation",
+      "sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-derived_vessel_label.nii.gz"
+    },
+    {
+      "bytes": 129560,
+      "member": "workspace/original-3.bin",
+      "name": "brain_mask.nii.gz",
+      "role": "model-result",
+      "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/synthstrip/brain_mask.nii.gz"
+    },
+    {
+      "bytes": 5703,
+      "member": "workspace/original-4.bin",
+      "name": "inference.json",
+      "role": "metadata",
+      "sha256": "0045ef08168b9347f62ebca8ced2d08a65b325146c9a0a77bfc18b555d20cd91",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/synthstrip/inference.json"
+    },
+    {
+      "bytes": 8194,
+      "member": "workspace/original-5.bin",
+      "name": "source-receipt.json",
+      "role": "metadata",
+      "sha256": "2f4f6507f56e6592f851ddc9c4520d217f9e85fd649c45025f4d0e079559eac6",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/source-receipt.json"
+    },
+    {
+      "bytes": 11376,
+      "member": "workspace/original-6.bin",
+      "name": "registration.json",
+      "role": "metadata",
+      "sha256": "30d79cf98d10386fad2af8eafaaf6a754661f0b98a1a8d3cb7ab23f8b6073b1b",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/registration.json"
+    },
+    {
+      "bytes": 65160,
+      "member": "workspace/original-7.bin",
+      "name": "source_vessels_on_T1_candidate.nii.gz",
+      "role": "annotation",
+      "sha256": "b1aac5b57af64b71c4694876302a8f4cc84f96b9f35ecc60a2266dc204ba1c71",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/source_vessels_on_T1_candidate.nii.gz"
+    },
+    {
+      "bytes": 484,
+      "member": "workspace/original-8.bin",
+      "name": "MRA_to_T1_points.tfm",
+      "role": "metadata",
+      "sha256": "404c1b6325bf67eb4dcba2c55625af2329b6f16f8a661d11340f213a4a5eae83",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_to_T1_points.tfm"
+    },
+    {
+      "bytes": 347,
+      "member": "workspace/original-9.bin",
+      "name": "T1_to_MRA_sampling.tfm",
+      "role": "metadata",
+      "sha256": "5ac523e6fae83057fd55c75cffac7c3ef89561ce5a3208f0a56ff2d1f742ef0b",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/T1_to_MRA_sampling.tfm"
+    },
+    {
+      "bytes": 89419,
+      "member": "workspace/original-10.bin",
+      "name": "MRA_coverage_on_T1_before.nii.gz",
+      "role": "model-result",
+      "sha256": "3c8c4c50ce25c8439f608f42679e3fabd76f0d15df9ca446296dedca2e900b18",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_coverage_on_T1_before.nii.gz"
+    },
+    {
+      "bytes": 92891,
+      "member": "workspace/original-11.bin",
+      "name": "MRA_coverage_on_T1_candidate.nii.gz",
+      "role": "model-result",
+      "sha256": "e0a18a9d7c18e0be5510b12a89aafd22b4297519577d7e08d5e6a7bb64b8352b",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_coverage_on_T1_candidate.nii.gz"
+    },
+    {
+      "bytes": 169180,
+      "member": "workspace/original-12.bin",
+      "name": "MRA_native_sampling_coverage.nii.gz",
+      "role": "model-result",
+      "sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_native_sampling_coverage.nii.gz"
+    },
+    {
+      "bytes": 2541,
+      "member": "workspace/original-13.bin",
+      "name": "source-rights-and-head-proofs.json",
+      "role": "metadata",
+      "sha256": "1354808cdee53bbb8681196a22ece34514e1f4a763de58c6b534692a67c4fdee",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/ixi-t1-mra-vessel-byte-intake-v1/source-rights-and-head-proofs.json"
+    },
+    {
+      "bytes": 29248,
+      "member": "workspace/original-14.bin",
+      "name": "ixi-page.html",
+      "role": "metadata",
+      "sha256": "f80f30853eeeeec6caf90ae4410c712fe447161808c238dea8111396020efe8c",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/ixi-vessel-source-preparation-v1/ixi-page.html"
+    },
+    {
+      "bytes": 6901,
+      "member": "workspace/original-15.bin",
+      "name": "zenodo-record.json",
+      "role": "metadata",
+      "sha256": "273b9fcf4b6219d4a77986ef53ccfd7a8b5b0a706aa1477cff414958d8948798",
+      "sourceUri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/ixi-vessel-source-preparation-v1/zenodo-record.json"
+    }
+  ],
+  "reference_sources": [
+    {
+      "annotationKind": "source-provided",
+      "modality": "MRA",
+      "scope": "display-only-native-grid",
+      "seriesId": "sha256:96364833177048440090bb6b3ba051fb44ae5b6cb6f934cd91873da0736ecb57",
+      "sourceCaseHash": "sha256:e7a463c522abce66428e4771cd2e384be1143fa46bd51aaad8449eb962e3a7d2",
+      "sourceFrameHash": "sha256:caadf2bd319e41e9b4dc77211e60646cc85c73f1ed5c58755905a0c440b437b7"
+    },
+    {
+      "annotationKind": "source-provided",
+      "modality": "T1",
+      "scope": "display-only-native-grid",
+      "seriesId": "sha256:2a76a27e8512747f1a10514f87a4529d27f2fed5fed61f7dcb2c4a771346ad85",
+      "sourceCaseHash": "sha256:a4c67f16c1f7e41853fefb64346eb61f9acc395b41e5642619f9a9359056f931",
+      "sourceFrameHash": "sha256:2513ca69c435d3fab93f67f69be820d3c69f454489b36d4e68a50dcebe6026db"
+    }
+  ],
+  "reference_source_bundle_records": [
+    {
+      "bytes": 17696449,
+      "member": "workspace/series-0.ressectionlab",
+      "sha256": "39a8cfde2deb0c7c1bf6a39790cf8bee29771efc64bf0c2b8cedc803d4538615",
+      "source": {
+        "annotationKind": "source-provided",
+        "modality": "MRA",
+        "scope": "display-only-native-grid",
+        "seriesId": "sha256:96364833177048440090bb6b3ba051fb44ae5b6cb6f934cd91873da0736ecb57",
+        "sourceCaseHash": "sha256:e7a463c522abce66428e4771cd2e384be1143fa46bd51aaad8449eb962e3a7d2",
+        "sourceFrameHash": "sha256:caadf2bd319e41e9b4dc77211e60646cc85c73f1ed5c58755905a0c440b437b7"
+      }
+    },
+    {
+      "bytes": 8626917,
+      "member": "workspace/series-1.ressectionlab",
+      "sha256": "f150037cdd68188c2693736d251549aad71302d18ee133593ccd3791ddbc20e2",
+      "source": {
+        "annotationKind": "source-provided",
+        "modality": "T1",
+        "scope": "display-only-native-grid",
+        "seriesId": "sha256:2a76a27e8512747f1a10514f87a4529d27f2fed5fed61f7dcb2c4a771346ad85",
+        "sourceCaseHash": "sha256:a4c67f16c1f7e41853fefb64346eb61f9acc395b41e5642619f9a9359056f931",
+        "sourceFrameHash": "sha256:2513ca69c435d3fab93f67f69be820d3c69f454489b36d4e68a50dcebe6026db"
+      }
+    }
+  ],
+  "source_metadata_inspection_only": true,
+  "source_array_decoding_performed": false
+}

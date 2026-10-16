@@ -5,7 +5,9 @@ import type { DisplaySeriesPayload, DisplaySeriesView } from './workspace-imagin
 const HASH=/^sha256:[a-f0-9]{64}$/;
 export function displaySeriesLabel(series:DisplaySeriesPayload):string {
   const annotation=series.annotationKind==='estimated'?'model estimate':series.annotationKind==='source-provided'?'source labels':'image';
-  return `${series.modality} · ${annotation} · ${series.registration.overlayPermitted?'source registered':'separate frame'}`;
+  const caption=series.volume.metadata.display_label;
+  const name=typeof caption==='string'&&caption.trim()&&caption.length<=80&&!/[\u0000-\u001f\u007f]/.test(caption)?caption.trim():series.modality;
+  return `${name} · ${annotation} · ${series.registration.overlayPermitted?'source registered':'separate frame'}`;
 }
 function validRegistration(primary:CasePayload,incoming:DisplaySeriesPayload) {
   const r=incoming.registration,a=incoming.association;

@@ -40,6 +40,11 @@ Actual Electron checks show 12 source identities, three skull cases and native
 CT/MRI switching. Independent checks preserve earlier receipts and source bytes.
 Reviewed tumor-location diversity and anatomical accuracy remain open.
 
+The [IXI tissue-estimate workspace](artifacts/poc-ixi265-tissue-display-package-v1/RESULT.md)
+now shows separate tissue estimates and explicit UNKNOWN voxels in actual
+Electron. Layer controls, cutaway, original-image switching and native save/fresh
+reopen work; the acquired image and earlier references remain unchanged.
+
 A local macOS anatomy workbench for acquired patient imaging, saved segmentations,
 and linked 3D/source-image inspection.
 

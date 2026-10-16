@@ -1,0 +1,50 @@
+{
+  "schema": "ixi265-display-only-tissue-package-v1",
+  "patient_group": "IXI:265",
+  "role": "TRAIN",
+  "display_label": "T1 \u00b7 estimated tissues",
+  "layer_names": [
+    "atropos_csf_like_estimate",
+    "atropos_gray_matter_like_estimate",
+    "atropos_white_matter_like_estimate",
+    "unknown_missing_intensity"
+  ],
+  "layer_labels": [
+    "CSF-like estimate",
+    "Gray matter-like estimate",
+    "White matter-like estimate",
+    "Unknown \u00b7 8 voxels"
+  ],
+  "source_host_sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+  "acquired_primary_T1_sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+  "fit_outcome_sha256": "a9c241064f0ebc67e460c2f500f6b389e23bdb09fbda3667ab41d02b544c1bcf",
+  "numerical_result_QA_sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509",
+  "resources": {
+    "threads": 2,
+    "rss_limit_bytes": 2147483648,
+    "seconds": 300.0,
+    "available_memory_floor_bytes": 1073741824,
+    "output_temporary_limit_bytes": 536870912,
+    "disk_floor_bytes": 53687091200,
+    "sample_interval_seconds": 0.2,
+    "attempts": 1,
+    "memory_scope": "supervising_Python_plus_worker_and_recursive_descendants"
+  },
+  "output": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-tissue-display-v1/IXI265-Guys-0845-tissue-estimates.ressectionlab",
+  "preserved_original_count": 16,
+  "preserved_reference_display_count": 2,
+  "new_display_count": 1,
+  "estimated_total_attachment_expanded_bytes": 334233600,
+  "source_primary_unchanged": true,
+  "raw_posteriors": "archived_unmodified_class_membership_probabilities_not_physical_PVE",
+  "unknown": "eight_missing_intensity_cells_remain_unclassified_not_CSF",
+  "frame_policy": "native_indices_preserved; original_T1_affine_retained; any_tolerated_header_roundoff_explicitly_recorded",
+  "cross_source_fusion_permitted": false,
+  "anatomy_accepted": false,
+  "host_accepted": false,
+  "growth_use_accepted": false,
+  "training_admitted": false,
+  "fitting_or_registration_run": false,
+  "catalog_modified": false,
+  "packaging_released": false
+}
