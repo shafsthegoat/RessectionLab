@@ -60,3 +60,16 @@ test('reported sites have explicit source/review context and are not guessed for
   const unrelated=renderToStaticMarkup(React.createElement(Panel,{cases:rows,onOpen(){},onBrowse(){},busy:false}));
   assert.doesNotMatch(unrelated,/Reported site:/);assert.doesNotMatch(html,/accepted location|reviewed location|occipital|cerebellum/);
 });
+test('packaged Cases offers a native library chooser without a renderer path input and retains native Open',()=>{
+  const html=renderToStaticMarkup(React.createElement(Panel,{cases:[],onOpen(){},onBrowse(){},onChooseLibrary(){},libraryFolder:{folder:null},busy:false}));
+  assert.match(html,/Choose case library/);assert.match(html,/No library folder selected/);assert.match(html,/Open a saved case/);
+  assert.match(html,/folder containing your source-checked case catalog/);
+  assert.equal((html.match(/<input/g)??[]).length,1);assert.match(html,/<input type="search"/);
+});
+test('selected folder and recoverable catalog errors are visible while case actions obey the busy state',()=>{
+  const html=renderToStaticMarkup(React.createElement(Panel,{cases:rows,onOpen(){},onBrowse(){},onChooseLibrary(){},libraryFolder:{folder:'/Local studies/Research library'},libraryError:'Saved case library is unavailable. Choose its folder again.',busy:true}));
+  assert.match(html,/\/Local studies\/Research library/);assert.match(html,/role="alert"/);assert.match(html,/Saved case library is unavailable/);
+  assert.equal((html.match(/<button[^>]*disabled=""/g)??[]).length,5);
+  const available=renderToStaticMarkup(React.createElement(Panel,{cases:[],onOpen(){},onBrowse(){},onChooseLibrary(){},libraryFolder:{folder:'/Moved folder',error:'Choose the library folder again.'},busy:false}));
+  assert.match(available,/role="alert"/);assert.doesNotMatch(available,/<button[^>]*disabled=""/);
+});

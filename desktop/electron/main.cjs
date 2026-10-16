@@ -19,7 +19,7 @@ const { importDisplaySeries } = require('./display-series-import.cjs');
 const { importDiagnosticLayer } = require('./diagnostic-import.cjs');
 const { inspectAxisPlanning } = require('./axis-inspection.cjs');
 const { observedRequest, validateObservedResult } = require('./observed-landmark-contract.cjs');
-const { CaseLibrary } = require('./case-library.cjs');
+const { CaseLibrarySelection } = require('./case-library-selection.cjs');
 
 let log = message => process.stderr.write(String(message) + '\n');
 let window;
@@ -37,7 +37,9 @@ async function startEngine() {
   await fs.chmod(transferDir, 0o700);
   const bundled = path.join(process.resourcesPath, 'research-engine', 'ressectionlab-engine');
   const repo = path.resolve(__dirname, '../..');
-  caseLibrary = new CaseLibrary(app.getPath('userData'), path.join(repo, 'outputs/poc-cases'), [path.join(app.getPath('downloads'),'RessectionLab-Native-Anatomy-sub-06/patient-anatomy.json')], repo);
+  caseLibrary = new CaseLibrarySelection({userData:app.getPath('userData'),defaultRoot:app.isPackaged?null:repo,
+    preparedRoot:app.isPackaged?path.join(app.getPath('userData'),'prepared-cases'):path.join(repo,'outputs/poc-cases'),nativePaths:[path.join(app.getPath('downloads'),'RessectionLab-Native-Anatomy-sub-06/patient-anatomy.json')]});
+  await caseLibrary.restore();
   const runDir = path.join(app.getPath('userData'), 'research-runs');
   const config = app.isPackaged
     ? { executable: bundled, cwd: app.getPath('userData'), transferDir, runDir }
@@ -136,6 +138,11 @@ function bindOperations() {
       ? ['caseHash','expectedStateId'] : ['caseHash']), 120000));
   }
   handle('listCases', () => caseLibrary.list());
+  handle('caseLibraryInfo', () => caseLibrary.info());
+  handle('chooseCaseLibrary', args => {
+    plainArgs(args??{},[]);
+    return caseLibrary.choose(()=>dialog.showOpenDialog(window,{title:'Choose case library',properties:['openDirectory'],...(caseLibrary.info().folder?{defaultPath:caseLibrary.info().folder}:{})}));
+  });
   handle('openListedCase', async id => openSaved(await caseLibrary.resolve(id)));
   handle('startupCase', async () => {
     if (startupConsumed) return null;

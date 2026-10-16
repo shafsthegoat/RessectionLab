@@ -1,0 +1,20 @@
+{
+  "schema": "poc-first-local-package-supervisor-preparation-v2",
+  "status": "frozen_for_root_source_commit_and_separate_stage_release",
+  "pins": {
+    "scripts/poc_first_local_package_build.py": "923d8cc873643942d142c692d78eac21493cbe0e42c53ba72265bab9aa8c5788",
+    "tests/test_poc_first_local_package_build.py": "6607531a47d45a1435aa8baf43fbb0e92d0bbeef5b7bf70748e03e77ea2a9a40",
+    "artifacts/poc-first-local-package-supervisor-preparation-v1/advisory-description-root-review-v2.json": "1f0543e2b22d9c8f3b5c58645194c23b1fbf87b9fc4a1fbff53fa2566d5e2127",
+    "artifacts/poc-first-local-package-supervisor-preparation-v1/generated-controls-root-review-v2.json": "7ba7631988f04bf7205263e70021f9e3ec6d375e06d4599eb93cac514fc9f319",
+    "artifacts/poc-first-local-package-supervisor-preparation-v1/unreleased-stage-templates-root-review-v2.json": "e690ca45d999c1b8c5589b04d499f7f44c85378b4e4591c5cc8391543ebee99a",
+    "artifacts/poc-first-local-package-supervisor-preparation-v1/root-review-resolution-r2.json": "ec1669239897b1d84448cf3bb2eec6a2f64628dff3c41a819cb5c310fdf96f9f",
+    "artifacts/poc-first-local-package-supervisor-preparation-v1/RESULT.md": "0ece5ee22e7002bc7779326ed5f16c748a5a88e56048d69afb352e8dbd9422ab"
+  },
+  "generated_tests_passed": 13,
+  "builds_run": 0,
+  "commands": {
+    "describe": ".venv/bin/python scripts/poc_first_local_package_build.py describe --output outputs/poc-first-local-package-release-description.json",
+    "sidecar": ".venv/bin/python scripts/poc_first_local_package_build.py sidecar --release artifacts/poc-first-local-package-build-v1/sidecar-release.json",
+    "electron": ".venv/bin/python scripts/poc_first_local_package_build.py electron --release artifacts/poc-first-local-package-build-v1/electron-release.json"
+  }
+}

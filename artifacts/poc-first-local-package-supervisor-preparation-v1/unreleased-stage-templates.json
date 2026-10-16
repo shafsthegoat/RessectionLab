@@ -1,0 +1,37 @@
+{
+  "sidecar": {
+    "schema": "poc-first-local-package-supervisor-v1-root-release",
+    "decision": "NOT_RELEASED",
+    "stage": "sidecar",
+    "plan_sha256": "a7a3e918e519882e115714d0624eb4ed8e9f6952598cca505029dcbe0940a7a5",
+    "runner_sha256": "41ce325c22ff922e18de48fcfd93f83dd0f1e5385737a73411f6dcf1971fdf10",
+    "source_commit": "ROOT_TO_BIND_AFTER_SOURCE_COMMIT",
+    "source_manifest_sha256": "ROOT_TO_REFRESH_DESCRIPTION_AFTER_COMMIT",
+    "program_sha256": "39bf33dd80ffd5e8c087cbd52164cbe0d8485f73b44687d0d466b0f49e197129",
+    "environment_sha256": "b1dc7c8fbe6e29a14b24e6dafcbf78192d5e9402d8f00a81d9c2a3a9427873a2",
+    "session_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-first-local-package-build-v1",
+    "receipt_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-first-local-package-build-v1/sidecar-supervision.json"
+  },
+  "electron": {
+    "schema": "poc-first-local-package-supervisor-v1-root-release",
+    "decision": "NOT_RELEASED",
+    "stage": "electron",
+    "plan_sha256": "a7a3e918e519882e115714d0624eb4ed8e9f6952598cca505029dcbe0940a7a5",
+    "runner_sha256": "41ce325c22ff922e18de48fcfd93f83dd0f1e5385737a73411f6dcf1971fdf10",
+    "source_commit": "ROOT_TO_BIND_AFTER_SOURCE_COMMIT",
+    "source_manifest_sha256": "ROOT_TO_REFRESH_DESCRIPTION_AFTER_COMMIT",
+    "program_sha256": "743cbaf12bd9323937b85f6297d8182b086526510c9f9c5875fa74d2aad9072d",
+    "environment_sha256": "af40a73a0653146ae48634715a0c359d62d771798652fb213a6f6d47ae40f55c",
+    "session_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-first-local-package-build-v1",
+    "receipt_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-first-local-package-build-v1/electron-supervision.json",
+    "allowed_environment_addition": {
+      "RESECTIONLAB_ELECTRON_ZIP_DIR": "/Users/sayemkamal/Library/Caches/electron/773aa4e04f5abf2d0c5fef6d69bfaa8ef10f8e9615d6ee8300fd1f572dfbc32b"
+    },
+    "archive": {
+      "existing_verified_archive": "/Users/sayemkamal/Library/Caches/electron/773aa4e04f5abf2d0c5fef6d69bfaa8ef10f8e9615d6ee8300fd1f572dfbc32b/electron-v44.5.1-darwin-arm64.zip",
+      "sha256": "1d75703019bb16461ae65f3081d7e6f5c0b11e901d0ccb5c343bcf7bcdd6435c",
+      "bytes": 130259261
+    },
+    "sidecar_receipt_sha256": "ROOT_TO_BIND_SUCCESSFUL_SIDECAR_PRIVATE_RECEIPT"
+  }
+}

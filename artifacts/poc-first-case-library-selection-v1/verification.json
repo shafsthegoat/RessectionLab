@@ -1,0 +1,58 @@
+{
+  "schema": "poc-first-case-library-selection-v1",
+  "status": "implemented_and_focused_checks_passed",
+  "source_hashes": {
+    "desktop/electron/case-library-selection.cjs": "05cd1d8c534efdbf5e50e82da8c4ba5acae21074af4bbf2427afd03064dc9046",
+    "desktop/electron/case-library-selection.test.cjs": "174331e1c21f1d89bdde89f8b6330a9c85adec589e591248813fe38708615f65",
+    "desktop/electron/main.cjs": "3b822e58837346e1d6215f3780a9e295112f0ca4267d9d32b8449c16dea00548",
+    "desktop/electron/preload.cjs": "b3f043d1af9c921603f606bde4134d7ea5a5d121876a3d07b1efccb3be7dc620",
+    "desktop/src/App.tsx": "1a4fbebf153a233405287d0935c99a8361e291e8a0104613e861b6fef1d252fb",
+    "desktop/src/WorkbenchPanels.tsx": "8030bcd077c3dbdf93dab60dcf5ca4a9fcedcfb89a0607ad91fd60794ffab535",
+    "desktop/src/types.ts": "ae83fb1ba399ab2a51cc39e4ff456730f4733009f0d4c3877ab002ac40f61f08",
+    "desktop/src/workbench.css": "7ccec2b20025ffcd21924507ef1ce0be7389fd298879c32f7c544a056b30d34e",
+    "desktop/tests/case-library-panel.test.mjs": "5eae49791855ea1cabeb5b3616b2bdc6a133272a2e14f1cc465fc53dada30d91"
+  },
+  "catalog_reader": {
+    "path": "desktop/electron/patient-catalog.cjs",
+    "sha256": "2383adf1fc42b82d16dec8b193bda2ba5afc3fa45eb2e1f456ecb836aa913556",
+    "byte_exact": true
+  },
+  "checks": {
+    "host": {
+      "passed": 27,
+      "failed": 0
+    },
+    "renderer": {
+      "passed": 7,
+      "failed": 0
+    },
+    "typescript": "passed",
+    "production_build": "passed",
+    "diff_check": "passed"
+  },
+  "logs": {
+    "host-tests.log": "e221c91924029a513f9ed1e3ee54483e3a8208055d5f397360cc8003a8eb09fe",
+    "renderer-tests.log": "4dbf739128c0b027305218366ef0e4f6f90eec6772d086e6c8a1962e8671e31f",
+    "production-build.log": "d10207f3f1b2e698dc39eeb084bfa1d7d9eed190d9d93c84da871c6601b8c96c"
+  },
+  "behavior": [
+    "Only native folder dialog results can select a root; renderer API transmits no path.",
+    "Whole CaseLibrary instance switches only after pinned metadata validation and successful atomic persistence.",
+    "Saved canonical directory identity and catalog are rechecked at launch; invalid saved selection blocks list/opaque-ID open while native Open can remember successful selections.",
+    "Development default remains checkout; packaged default has no catalog root or app.asar catalog dependency.",
+    "Cancel and invalid new selections retain previous instance and exact saved record.",
+    "Selected roots never change engine, observedSourceRoot, model, reconstruction or inference configuration."
+  ],
+  "scope": {
+    "actual_patient_payload_reads": 0,
+    "model_runs": 0,
+    "gui_actions": 0,
+    "package_builds": 0,
+    "commits": 0
+  },
+  "pending": [
+    "Independent code audit",
+    "Root native GUI selection/restart verification",
+    "Root fresh local package build and packaged-app acceptance"
+  ]
+}

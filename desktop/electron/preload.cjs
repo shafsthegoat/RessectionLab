@@ -28,6 +28,8 @@ contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   compareRehearsal: args => ipcRenderer.invoke('research:compareRehearsal', args),
   startupCase: () => ipcRenderer.invoke('research:startupCase'),
   listCases: () => ipcRenderer.invoke('research:listCases'),
+  caseLibraryInfo: () => ipcRenderer.invoke('research:caseLibraryInfo'),
+  chooseCaseLibrary: () => ipcRenderer.invoke('research:chooseCaseLibrary'),
   openListedCase: id => ipcRenderer.invoke('research:openListedCase', id),
   ping: () => ipcRenderer.invoke('research:ping'),
   publicContactFamilyAvailability: args => ipcRenderer.invoke('research:publicContactFamilyAvailability',args),

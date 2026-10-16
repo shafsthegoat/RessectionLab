@@ -78,6 +78,7 @@ import type { SelectedRoute } from "./route-selection";
 import type {
   BridgeEvent,
   CasePayload,
+  CaseLibraryFolder,
   CertifiedReplay,
   ResectionApi,
   RouteCandidate,
@@ -556,7 +557,24 @@ export default function App() {
   const [primaryViewer, setPrimaryViewer] = useState<ViewerWorkspaceSettings>({});
   const [workbenchTab,setWorkbenchTab] = useState<"cases"|"data"|"anatomy"|"rehearsal"|"research">("anatomy");
   const [libraryCases,setLibraryCases] = useState<LibraryCase[]>([]);
-  useEffect(()=>{api?.listCases?.().then(setLibraryCases).catch(()=>{});},[api,payload,native.binding?.collectionId,native.binding?.document.snapshot_id]);
+  const [libraryFolder,setLibraryFolder] = useState<CaseLibraryFolder|null>(null);
+  const [libraryError,setLibraryError] = useState<string|null>(null);
+  const [choosingLibrary,setChoosingLibrary] = useState(false);
+  useEffect(()=>{
+    let live=true;
+    api?.caseLibraryInfo?.().then(info=>{if(live)setLibraryFolder(info);}).catch(error=>{if(live)setLibraryError(error instanceof Error?error.message:String(error));});
+    api?.listCases?.().then(rows=>{if(live){setLibraryCases(rows);setLibraryError(null);}}).catch(error=>{if(live){setLibraryCases([]);setLibraryError(error instanceof Error?error.message:String(error));}});
+    return ()=>{live=false;};
+  },[api,payload,native.binding?.collectionId,native.binding?.document.snapshot_id]);
+  const chooseCaseLibrary=async()=>{
+    if(!api?.chooseCaseLibrary||choosingLibrary)return;
+    setChoosingLibrary(true);
+    try {
+      const selected=await api.chooseCaseLibrary();
+      if(selected){setLibraryFolder(selected);const rows=await api.listCases?.();if(rows)setLibraryCases(rows);setLibraryError(null);}
+    } catch(error){setLibraryError(error instanceof Error?error.message:String(error));}
+    finally {setChoosingLibrary(false);}
+  };
   const [cursor, setCursor] = useState<Vec3 | null>(null);
   const annotationCenterMm = useMemo(
     () => annotationCenter(payload, caseData),
@@ -1450,7 +1468,8 @@ export default function App() {
         {workbenchTab!=="research" && <>
           <div className="panel-heading"><span className="eyebrow">{workbenchTab==='cases'?'PATIENT LIBRARY':workbenchTab==='data'?'DATA & REGISTRATION':'ANATOMY LAYERS'}</span>
             <button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div>
-          {workbenchTab==='cases' ? <><div className="unified-sidebar"><details className="unified-details"><summary>New patient study</summary><p className="subtle">One patient, one timepoint. Add multiple scans to build the workspace.</p><input aria-label="New patient ID" placeholder="Patient ID" value={newPatient} onChange={e=>setNewPatient(e.target.value)}/><label>Study<select aria-label="New study timepoint" value={newStudyTimepoint} onChange={e=>setNewStudyTimepoint(e.target.value)}><option value="preoperative">Pre-op</option><option value="postoperative">Post-op</option></select></label><button disabled={fileNavigationBlocked||!newPatient.trim()} onClick={async()=>{const b=await native.create(newPatient.trim(),newStudyTimepoint);if(b){setPayload(null);setCaseData(null);setWorkbenchTab('data')}}}>Create study…</button></details></div><CaseLibraryPanel cases={libraryCases} busy={fileNavigationBlocked} onBrowse={()=>load('openCase')}
+          {workbenchTab==='cases' ? <><div className="unified-sidebar"><details className="unified-details"><summary>New patient study</summary><p className="subtle">One patient, one timepoint. Add multiple scans to build the workspace.</p><input aria-label="New patient ID" placeholder="Patient ID" value={newPatient} onChange={e=>setNewPatient(e.target.value)}/><label>Study<select aria-label="New study timepoint" value={newStudyTimepoint} onChange={e=>setNewStudyTimepoint(e.target.value)}><option value="preoperative">Pre-op</option><option value="postoperative">Post-op</option></select></label><button disabled={fileNavigationBlocked||!newPatient.trim()} onClick={async()=>{const b=await native.create(newPatient.trim(),newStudyTimepoint);if(b){setPayload(null);setCaseData(null);setWorkbenchTab('data')}}}>Create study…</button></details></div><CaseLibraryPanel cases={libraryCases} busy={fileNavigationBlocked||choosingLibrary} onBrowse={()=>load('openCase')}
+            libraryFolder={libraryFolder} libraryError={libraryError} onChooseLibrary={api?.chooseCaseLibrary?()=>void chooseCaseLibrary():undefined}
             onOpen={id=>void act(async()=>{if(api?.openListedCase){const next=nativeApi?.openListedWorkspace?await nativeApi.openListedWorkspace(id):await api.openListedCase(id);if(isNativeBinding(next)){setPayload(null);setCaseData(null);await native.install(next)}else{native.clear();await installCase(next,api)}setWorkbenchTab('anatomy')}})}/></> : <>
             <div className="workspace-tabs"><button className={workbenchTab==='data'?'selected':''} onClick={()=>setWorkbenchTab('data')}>Scans</button><button className={workbenchTab==='anatomy'?'selected':''} onClick={()=>setWorkbenchTab('anatomy')}>Anatomy</button></div><h1>{title}</h1><p className="case-subtitle">{displayedSource ? String(displayedSource.metadata.selected_modality??'Source image') : 'Open a case to begin'}</p>
             {workbenchTab==='data' && payload && displayedSource && <WorkbenchDataPanel source={payload} displayed={displayedSource} series={imaging.series} selectedId={imaging.selectedId}

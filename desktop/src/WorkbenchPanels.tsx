@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {studyLabel} from './native-study-state';
-import type {CasePayload,ResectionApi} from './types';
+import type {CasePayload,ResectionApi,CaseLibraryFolder} from './types';
 import {ImagingWorkspacePanel} from './ImagingWorkspacePanel';
 import type {DisplaySeriesView,ImportDisplaySeriesRequest} from './workspace-imaging-types';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
@@ -23,13 +23,19 @@ export function filterLibraryCases(cases:LibraryCase[],query:string):LibraryCase
   return cases.filter(row=>{const location=row.qualifiedCatalog&&row.sourceLocation?.status==='source-reported-unreviewed'?row.sourceLocation.label:'';
     const text=normalize([row.title,row.source??'',...(row.anatomy??[]),location].join(' '));return terms.every(term=>text.includes(term));});
 }
-export function CaseLibraryPanel({cases,onOpen,onBrowse,busy}:{cases:LibraryCase[];onOpen:(id:string)=>void;onBrowse:()=>void;busy:boolean}) {
+export function CaseLibraryPanel({cases,onOpen,onBrowse,busy,libraryFolder,onChooseLibrary,libraryError}:{cases:LibraryCase[];onOpen:(id:string)=>void;onBrowse:()=>void;busy:boolean;libraryFolder?:CaseLibraryFolder|null;onChooseLibrary?:()=>void;libraryError?:string|null}) {
   const [query,setQuery]=useState('');
   const shown=filterLibraryCases(cases,query),hasCatalog=cases.some(row=>row.qualifiedCatalog);
   return <section className="poc-case-library" aria-label="Saved cases">
     <span className="eyebrow">CASES ON THIS MAC</span><h2>Find a case</h2>
     <p className="muted-note">Open a saved study or explore source-checked research cases.</p>
     <button className="outline-button" onClick={onBrowse} disabled={busy}>Open a saved case…</button>
+    {onChooseLibrary&&<div className="poc-library-folder">
+      <span>Case library folder</span><p>{libraryFolder?.folder??'No library folder selected'}</p>
+      <button className="outline-button" onClick={onChooseLibrary} disabled={busy}>Choose case library…</button>
+      {!libraryFolder?.folder&&<small>Choose the folder containing your source-checked case catalog.</small>}
+    </div>}
+    {(libraryError||libraryFolder?.error)&&<p className="poc-caution" role="alert">{libraryError||libraryFolder?.error}</p>}
     <label>Search cases<input type="search" aria-label="Search cases by name, source, anatomy or reported site" placeholder="Name, source, anatomy or reported site" value={query} maxLength={100} onChange={event=>setQuery(event.target.value)} style={{width:'100%',marginTop:7}}/></label>
     <p className="muted-note" role="status">{shown.length} {shown.length===1?'case':'cases'}{query.trim()?` matching “${query.trim()}”`:''}</p>
     {shown.map(row=><button className="poc-case-card" key={row.id} onClick={()=>onOpen(row.id)} disabled={busy}>

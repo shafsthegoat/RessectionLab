@@ -1,0 +1,584 @@
+{
+  "schema": "poc-first-local-package-read-only-preflight-v1",
+  "created_utc": "2026-10-16T09:51:49.695127+00:00",
+  "checkout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first",
+  "revision": "1810a334234e44dc20b3d05428368f9bde971213",
+  "git_status": [
+    "?? .tools",
+    "?? .venv",
+    "?? artifacts/poc-resect-case3-image-registration-v1/root-evaluation-release-v2.json",
+    "?? data",
+    "?? desktop/node_modules",
+    "?? scripts/plot_resect_case3_registration.py"
+  ],
+  "read_only_scope": "Read source, installed metadata, prior build manifests, archive metadata, hash existing bytes; no image decode, build, model/native execution, install, download, signing or source mutation. Only this new artifact directory was written.",
+  "current_inputs": {
+    "scripts/build_electron_sidecar.py": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/build_electron_sidecar.py",
+      "bytes": 5252,
+      "sha256": "78cd9b4f1185b5b30b61af935492cf1ebde5bb85ab1f0602df18b0f92dd8c9a2"
+    },
+    "packaging/sidecar_entry.py": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/packaging/sidecar_entry.py",
+      "bytes": 238,
+      "sha256": "a56fdc32c0ae7379d8ac7b5d451d07a52a622d9dad7cf638c42dd4719f8ec157"
+    },
+    "packaging/python_notices.py": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/packaging/python_notices.py",
+      "bytes": 13409,
+      "sha256": "bbfc21bc59c2cd16c95953da0d4aaf48a2f1cb99b9be258c6ea3fbe1652845db"
+    },
+    "desktop/electron/package-macos.cjs": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/electron/package-macos.cjs",
+      "bytes": 10780,
+      "sha256": "432ba8120feb28eaf957065a18a0a81ad46aba6f231d0787aa8be9adcecf4833"
+    },
+    "desktop/electron/publish.cjs": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/electron/publish.cjs",
+      "bytes": 1123,
+      "sha256": "47b6f8d56b60ec31c8941ca5467eb4beaf21692e56c96351e2715411a15fd1a2"
+    },
+    "desktop/electron/main.cjs": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/electron/main.cjs",
+      "bytes": 18011,
+      "sha256": "5b77c0d6af8dd6f0d214c9d03d172c9fa41b346df9f2ba15dfa6911321bd5fc1"
+    },
+    "desktop/electron/preload.cjs": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/electron/preload.cjs",
+      "bytes": 4908,
+      "sha256": "37a66b41b9e741e51230eafca7a55f34a644c58d9aa9b853a4ee5ae786ff8afa"
+    },
+    "desktop/electron/sidecar.cjs": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/electron/sidecar.cjs",
+      "bytes": 10988,
+      "sha256": "8b3f9026f09fe19cac602012fdf6d751b0aa7245d892eb76ce38eabf4c6eeb00"
+    },
+    "desktop/electron/case-library.cjs": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/electron/case-library.cjs",
+      "bytes": 4858,
+      "sha256": "35d9582eee330bb3b6f860c0bc0c830e6ccca6b9295d8504fc646b87d4d14cf0"
+    },
+    "desktop/electron/patient-catalog.cjs": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/electron/patient-catalog.cjs",
+      "bytes": 23004,
+      "sha256": "2383adf1fc42b82d16dec8b193bda2ba5afc3fa45eb2e1f456ecb836aa913556"
+    },
+    "desktop/src/WorkbenchPanels.tsx": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/src/WorkbenchPanels.tsx",
+      "bytes": 9873,
+      "sha256": "e209704c12b9ba31e792f47883f85eb54a7f201d536bdf5ab7fb5d6bc37147a5"
+    },
+    "desktop/package.json": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/package.json",
+      "bytes": 1196,
+      "sha256": "85a5de6b50a9cfa326ade817cd65e0ad9f69a7775f237ebe0247eb913fcf5450"
+    },
+    "desktop/pnpm-lock.yaml": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/pnpm-lock.yaml",
+      "bytes": 62870,
+      "sha256": "996e46fd73b851f4e9fae58285b408a4b02117fa319fd97f95b918a1177e87f0"
+    },
+    "desktop/vite.config.ts": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/vite.config.ts",
+      "bytes": 300,
+      "sha256": "f0b8efdbbf1695ffbf06f154df152807e527608b9dd2b42ed3222c00f6cb1532"
+    },
+    "pyproject.toml": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/pyproject.toml",
+      "bytes": 1016,
+      "sha256": "4ef62e9efc5610b163e0790600e2fd7806a987b01f7d4625d70061ad7284da15"
+    },
+    "requirements-lock.txt": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/requirements-lock.txt",
+      "bytes": 998,
+      "sha256": "836f3d9ada81d5a710e6690f9657ff73e5fa0f12f051d9aa4834e12332d55e5a"
+    },
+    "packaging/RessectionLab.icns": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/packaging/RessectionLab.icns",
+      "bytes": 462379,
+      "sha256": "2d5d7e7a83f9269f85adfa855e27f6e3407bfeb4b6a09386258a704b08d399c4"
+    },
+    "src/resectionlab/desktop_bridge.py": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/src/resectionlab/desktop_bridge.py",
+      "bytes": 126143,
+      "sha256": "27f4f8dfde118f49f65f81b9d79a9931d2cad46140857cc505f4411e7d924c33"
+    },
+    "src/resectionlab/rehearsal_bridge.py": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/src/resectionlab/rehearsal_bridge.py",
+      "bytes": 9227,
+      "sha256": "6adb1f9b6f8d9d13b8991c7a7cad1aa9375aa2049ce3ce35c3cc5d7af791597e"
+    },
+    "src/resectionlab/rehearsal_episode.py": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/src/resectionlab/rehearsal_episode.py",
+      "bytes": 39150,
+      "sha256": "4c5b0b8b7d941069b54266904383f1a3113d96830847bf9cd3ba02f28807e6fe"
+    },
+    "src/resectionlab/workspace_bundle.py": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/src/resectionlab/workspace_bundle.py",
+      "bytes": 32413,
+      "sha256": "9a1bf1d0f749bb67857d65803aeeaf8f07927ebce8a03fb4364c59e8b151bf1e"
+    },
+    "src/resectionlab/workspace_imaging.py": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/src/resectionlab/workspace_imaging.py",
+      "bytes": 13473,
+      "sha256": "6da2ace8b5489f61f4b7c804f30818d0273792e040c4cb14bcddbd931cff381d"
+    },
+    "src/resectionlab/anatomy_bridge.py": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/src/resectionlab/anatomy_bridge.py",
+      "bytes": 25684,
+      "sha256": "ffc4381892a08841707a9af7ebe78450b33ee44336af714c42202f3018ae3bc3"
+    },
+    "src/resectionlab/patient_anatomy.py": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/src/resectionlab/patient_anatomy.py",
+      "bytes": 29305,
+      "sha256": "6df3c766e7fe3cf83dafc8b463d1901a19cc93bcdb2ec4ec26ffbfa985678727"
+    }
+  },
+  "current_python_file_count": 163,
+  "current_python_digest": "759537a27bbd498cd7ff2e287150c3c1fa3b68e80c6ea2c783e1040460f14ec6",
+  "current_build_outputs_exist": {
+    "desktop/sidecar": false,
+    "desktop/release": false,
+    "build/electron-sidecar": false
+  },
+  "old_frozen_engine": {
+    "manifest": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/sidecar/ressectionlab-engine/_internal/build_info/BUILD_INPUT_MANIFEST.json",
+      "bytes": 5174,
+      "sha256": "1461db9a4aa20646e08eb2f55b1e710062beb4d25428b3219617d572b1c02db8"
+    },
+    "executable": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/sidecar/ressectionlab-engine/ressectionlab-engine",
+      "bytes": 47185216,
+      "sha256": "85a92eff69cb1ea97afc400bc80433c53d146174dd32a9cf36061b8420f72ddd"
+    },
+    "packaged_executable": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/ressectionlab-engine",
+      "bytes": 47185216,
+      "sha256": "85a92eff69cb1ea97afc400bc80433c53d146174dd32a9cf36061b8420f72ddd"
+    },
+    "created_utc": "2026-10-04T10:35:48.211235+00:00",
+    "revision": "0b4e3345137316bb72d6daf9bf2a15ee6b613ed7",
+    "source_digest": "afd2436576c29f8029af6f8c40b4789fa7610b38959d65b95829fff1b18bd5cd",
+    "source_count": 41,
+    "changed_existing_inputs": 19,
+    "new_python_module_count": 126,
+    "required_module_presence": {
+      "desktop_bridge.py": true,
+      "rehearsal_bridge.py": false,
+      "rehearsal_episode.py": false,
+      "workspace_bundle.py": false,
+      "workspace_imaging.py": false,
+      "anatomy_bridge.py": false,
+      "patient_anatomy.py": false
+    },
+    "may_reuse": false
+  },
+  "historical_packaged_renderer": {
+    "revision": "c09ee50a72b787f76ed157a98fb966e290ba977c",
+    "created_utc": "2026-10-04T13:56:33.181Z",
+    "source_digest": "834c7cebe711f34cd877a92b4832f9f25428bfe36e0e46f74b23699a4a9345b0",
+    "embedded_manifest_sha256": "dfa08742f0d85874d889bee339ae834b49822109e42a8e479f1bb95a0f5fad5f",
+    "electron_version": "44.5.1",
+    "app_version": "0.2.0",
+    "source_count": 73,
+    "changed_existing_desktop_files": 16,
+    "actual_manifest_read_via": "installed @electron/asar.extractFile; no app execution"
+  },
+  "installed_dependencies": {
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "python_executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.venv/bin/python",
+    "python_executable_resolved": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "lock_entries": [
+      {
+        "package": "altgraph",
+        "required": "==0.17.5",
+        "installed": "0.17.5",
+        "match": true
+      },
+      {
+        "package": "annotated-doc",
+        "required": "==0.0.5",
+        "installed": "0.0.5",
+        "match": true
+      },
+      {
+        "package": "cachebox",
+        "required": "==5.2.3",
+        "installed": "5.2.3",
+        "match": true
+      },
+      {
+        "package": "contourpy",
+        "required": "==1.4.0",
+        "installed": "1.4.0",
+        "match": true
+      },
+      {
+        "package": "cycler",
+        "required": "==0.12.1",
+        "installed": "0.12.1",
+        "match": true
+      },
+      {
+        "package": "deepdiff",
+        "required": "==9.1.0",
+        "installed": "9.1.0",
+        "match": true
+      },
+      {
+        "package": "dipy",
+        "required": "==1.12.1",
+        "installed": "1.12.1",
+        "match": true
+      },
+      {
+        "package": "filelock",
+        "required": "==4.0.10",
+        "installed": "4.0.10",
+        "match": true
+      },
+      {
+        "package": "fonttools",
+        "required": "==4.66.1",
+        "installed": "4.66.1",
+        "match": true
+      },
+      {
+        "package": "fsspec",
+        "required": "==2026.9.0",
+        "installed": "2026.9.0",
+        "match": true
+      },
+      {
+        "package": "h5py",
+        "required": "==3.16.0",
+        "installed": "3.16.0",
+        "match": true
+      },
+      {
+        "package": "ImageIO",
+        "required": "==2.38.0",
+        "installed": "2.38.0",
+        "match": true
+      },
+      {
+        "package": "iniconfig",
+        "required": "==2.3.0",
+        "installed": "2.3.0",
+        "match": true
+      },
+      {
+        "package": "Jinja2",
+        "required": "==3.1.6",
+        "installed": "3.1.6",
+        "match": true
+      },
+      {
+        "package": "kiwisolver",
+        "required": "==1.5.1",
+        "installed": "1.5.1",
+        "match": true
+      },
+      {
+        "package": "lazy-loader",
+        "required": "==0.6",
+        "installed": "0.6",
+        "match": true
+      },
+      {
+        "package": "macholib",
+        "required": "==1.16.4",
+        "installed": "1.16.4",
+        "match": true
+      },
+      {
+        "package": "markdown-it-py",
+        "required": "==4.2.0",
+        "installed": "4.2.0",
+        "match": true
+      },
+      {
+        "package": "MarkupSafe",
+        "required": "==3.0.4",
+        "installed": "3.0.4",
+        "match": true
+      },
+      {
+        "package": "matplotlib",
+        "required": "==3.11.2",
+        "installed": "3.11.2",
+        "match": true
+      },
+      {
+        "package": "mdurl",
+        "required": "==0.1.2",
+        "installed": "0.1.2",
+        "match": true
+      },
+      {
+        "package": "mpmath",
+        "required": "==1.3.0",
+        "installed": "1.3.0",
+        "match": true
+      },
+      {
+        "package": "networkx",
+        "required": "==3.7",
+        "installed": "3.7",
+        "match": true
+      },
+      {
+        "package": "nibabel",
+        "required": "==5.4.2",
+        "installed": "5.4.2",
+        "match": true
+      },
+      {
+        "package": "numpy",
+        "required": "==2.5.3",
+        "installed": "2.5.3",
+        "match": true
+      },
+      {
+        "package": "orderly-set",
+        "required": "==5.5.0",
+        "installed": "5.5.0",
+        "match": true
+      },
+      {
+        "package": "packaging",
+        "required": "==26.3",
+        "installed": "26.3",
+        "match": true
+      },
+      {
+        "package": "pillow",
+        "required": "==12.3.0",
+        "installed": "12.3.0",
+        "match": true
+      },
+      {
+        "package": "pluggy",
+        "required": "==1.6.0",
+        "installed": "1.6.0",
+        "match": true
+      },
+      {
+        "package": "Pygments",
+        "required": "==2.21.0",
+        "installed": "2.21.0",
+        "match": true
+      },
+      {
+        "package": "pyinstaller",
+        "required": "==6.22.3",
+        "installed": "6.22.3",
+        "match": true
+      },
+      {
+        "package": "pyinstaller-hooks-contrib",
+        "required": "==2026.8",
+        "installed": "2026.8",
+        "match": true
+      },
+      {
+        "package": "pyparsing",
+        "required": "==3.3.3",
+        "installed": "3.3.3",
+        "match": true
+      },
+      {
+        "package": "pytest",
+        "required": "==9.1.1",
+        "installed": "9.1.1",
+        "match": true
+      },
+      {
+        "package": "python-dateutil",
+        "required": "==2.9.0.post0",
+        "installed": "2.9.0.post0",
+        "match": true
+      },
+      {
+        "package": "rich",
+        "required": "==15.0.0",
+        "installed": "15.0.0",
+        "match": true
+      },
+      {
+        "package": "scikit-image",
+        "required": "==0.26.0",
+        "installed": "0.26.0",
+        "match": true
+      },
+      {
+        "package": "scipy",
+        "required": "==1.18.1",
+        "installed": "1.18.1",
+        "match": true
+      },
+      {
+        "package": "setuptools",
+        "required": "==84.0.0",
+        "installed": "84.0.0",
+        "match": true
+      },
+      {
+        "package": "shellingham",
+        "required": "==1.5.4",
+        "installed": "1.5.4",
+        "match": true
+      },
+      {
+        "package": "simpleitk",
+        "required": "==2.5.6",
+        "installed": "2.5.6",
+        "match": true
+      },
+      {
+        "package": "six",
+        "required": "==1.17.0",
+        "installed": "1.17.0",
+        "match": true
+      },
+      {
+        "package": "surfa",
+        "required": "==0.6.3",
+        "installed": "0.6.3",
+        "match": true
+      },
+      {
+        "package": "sympy",
+        "required": "==1.14.0",
+        "installed": "1.14.0",
+        "match": true
+      },
+      {
+        "package": "tifffile",
+        "required": "==2026.9.20",
+        "installed": "2026.9.20",
+        "match": true
+      },
+      {
+        "package": "torch",
+        "required": "==2.14.1",
+        "installed": "2.14.1",
+        "match": true
+      },
+      {
+        "package": "tqdm",
+        "required": "==4.70.1",
+        "installed": "4.70.1",
+        "match": true
+      },
+      {
+        "package": "trx-python",
+        "required": "==0.6",
+        "installed": "0.6",
+        "match": true
+      },
+      {
+        "package": "typer",
+        "required": "==0.27.2",
+        "installed": "0.27.2",
+        "match": true
+      },
+      {
+        "package": "typing_extensions",
+        "required": "==4.16.0",
+        "installed": "4.16.0",
+        "match": true
+      },
+      {
+        "package": "xxhash",
+        "required": "==4.0.1",
+        "installed": "4.0.1",
+        "match": true
+      }
+    ],
+    "all_51_lock_entries_match": true,
+    "psutil_extra_not_in_current_lock": "7.2.2",
+    "node_executable": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "node_version": "v24.19.0",
+    "node_packages": {
+      "electron": {
+        "version": "44.5.1",
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/node_modules/.pnpm/electron@44.5.1/node_modules/electron/package.json",
+        "bytes": 744,
+        "sha256": "686050bd77b967aab170a2dcacdc0254072446f5be1d5fb6e4383d577342fc19"
+      },
+      "@electron/packager": {
+        "version": "20.3.0",
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/node_modules/.pnpm/@electron+packager@20.3.0/node_modules/@electron/packager/package.json",
+        "bytes": 2673,
+        "sha256": "c36c55a4a847e933a4332be20f4d70a9206ceaed80a36f8d742b9dbab1c3d38c"
+      },
+      "typescript": {
+        "version": "7.0.2",
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/node_modules/.pnpm/typescript@7.0.2/node_modules/typescript/package.json",
+        "bytes": 3087,
+        "sha256": "3722b30210616a13a3213ded11575ba6b2dbab10c32a5ef67afca8513e27017e"
+      },
+      "vite": {
+        "version": "8.3.2",
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/node_modules/.pnpm/vite@8.3.2_@types+node@26.6.4/node_modules/vite/package.json",
+        "bytes": 5081,
+        "sha256": "2b906339263f24e9be4219f93d966b4bcf0d4141adc05939a537c3a8fd6f760a"
+      }
+    },
+    "reinstall_needed_for_poc_bundle_scope": false,
+    "optional_pydicom_metadata_present": false
+  },
+  "electron_archive": {
+    "path": "/Users/sayemkamal/Library/Caches/electron/773aa4e04f5abf2d0c5fef6d69bfaa8ef10f8e9615d6ee8300fd1f572dfbc32b/electron-v44.5.1-darwin-arm64.zip",
+    "bytes": 130259261,
+    "sha256": "1d75703019bb16461ae65f3081d7e6f5c0b11e901d0ccb5c343bcf7bcdd6435c",
+    "matches_installed_checksum": true,
+    "expected_sha256": "1d75703019bb16461ae65f3081d7e6f5c0b11e901d0ccb5c343bcf7bcdd6435c",
+    "download_needed": false
+  },
+  "historical_sizes": {
+    "engine": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/sidecar/ressectionlab-engine",
+      "bytes": 627176091,
+      "files": 2782,
+      "symlinks": 27
+    },
+    "app": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+      "bytes": 958979707,
+      "files": 3339,
+      "symlinks": 41
+    },
+    "pyinstaller_work": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/electron-sidecar/work",
+      "bytes": 156805130,
+      "files": 15,
+      "symlinks": 0
+    }
+  },
+  "historical_build_times_seconds": {
+    "engine": 83.1417800419731,
+    "electron_app": 11.906
+  },
+  "current_read_only_resource_observation": {
+    "available_memory_bytes": 7113392128,
+    "free_disk_bytes": 344137375744
+  },
+  "existing_notice_gaps": [
+    {
+      "component": "react-remove-scroll-bar@2.3.8",
+      "reason": "Installed runtime package declares a license but contains no upstream root license/notice text. Its package.json is retained; no substitute license is invented."
+    },
+    {
+      "component": "CPython 3.12.14 static vendor libraries",
+      "reason": "No verified static-vendor notice/version manifest has been configured for this exact runtime. Its upstream build provenance must supply that closure; copying CPython LICENSE.txt alone does not resolve the gap."
+    }
+  ],
+  "published": false,
+  "distribution_readiness_established": false,
+  "clinical_readiness_established": false,
+  "build_released": false,
+  "snapshot_limitation": "Host/UI source is being prepared by another agent; final source/lock freeze and tests must be captured after its commit. This is a preflight, not future build identity."
+}
