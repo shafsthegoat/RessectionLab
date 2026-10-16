@@ -1,0 +1,128 @@
+{
+  "schema": "resectionlab-ixi265-actual-gui-evidence-v1",
+  "capture": "Actual native Electron interaction through CUA; no generated/mock screenshots",
+  "source_commit": "3eefcc9 (source/runtime); subsequent UI target-centering/source-choice changes recorded below",
+  "files": [
+    {
+      "path": "outputs/poc-first-qa/stage3-ui/01-ixi-host.png",
+      "sha256": "3137c23a3a15751a1e63baab1894a91080e286c23b80c8ab53b47afa14e8e58b",
+      "bytes": 469596
+    },
+    {
+      "path": "outputs/poc-first-qa/stage3-ui/02-ixi-native-source-reference.png",
+      "sha256": "6b5c1a61295c43e947253c3d4387d37137fa8eff29e16fc36ae2ae49bf99ea85",
+      "bytes": 533844
+    },
+    {
+      "path": "outputs/poc-first-qa/stage3-ui/03-ixi-registration-warning.png",
+      "sha256": "ce55958b695666a615518068594218e8bec629780234b5aef62f4f3f242351e3",
+      "bytes": 548100
+    },
+    {
+      "path": "outputs/poc-first-qa/stage3-ui/04-generated-overlay-centered.png",
+      "sha256": "b9c80f7428220ee6b3f39d96178d4fa3f633a4c49595bbdd58068f2ca394faf7",
+      "bytes": 456370
+    },
+    {
+      "path": "outputs/poc-first-qa/stage3-ui/05-generated-branch-comparison.png",
+      "sha256": "ec5a02984b0a3988f714491b60ceccec1c7d214564a5842521f23dc472ec3583",
+      "bytes": 517276
+    },
+    {
+      "path": "outputs/poc-first-qa/stage3-ui/06-generated-deeper-stop.png",
+      "sha256": "3c83d9e06424cb5e497a24d759d7acd9cb56ef9eb7c1ce49151bc9668c2d17f4",
+      "bytes": 523813
+    },
+    {
+      "path": "outputs/poc-first-qa/stage3-ui/07-native-vesselfm-estimate.png",
+      "sha256": "71c53f39c6300b86642b57cd12c5be4044cb1929748d3b0e07fac5d5e3c2b913",
+      "bytes": 541761
+    },
+    {
+      "path": "outputs/poc-first-qa/stage3-ui/08-source-estimate-picker.png",
+      "sha256": "9e1c35de1d2fd95763bc30f0a7c7dc171d79ee8dda05d5fb1fa2784b9a21b0c4",
+      "bytes": 583567
+    },
+    {
+      "path": "outputs/poc-first-qa/stage3-ui/08-source-estimate-picker.txt",
+      "sha256": "5f53da235254834a56e5c6f31c7a9741f4823703d84d162281672f874d1fc25e",
+      "bytes": 856
+    },
+    {
+      "path": "outputs/poc-first-qa/stage3-ui/09-vessel-reopened.png",
+      "sha256": "496a856d4fbe5c7eb0c6f0f9e75f77a0bc6e1e6b6255d09f5175842f6a14be64",
+      "bytes": 568461
+    },
+    {
+      "path": "outputs/poc-first-qa/stage3-ui/09-vessel-reopened.txt",
+      "sha256": "ebc3a5470dee2348be0a07be30a240288170e59448570b61be22b422dab87849",
+      "bytes": 5473
+    },
+    {
+      "path": "outputs/poc-first-qa/stage3-ui/10-generated-reopened.png",
+      "sha256": "1eb4de3c2dd362174c12bc5e818679134ce0ad05e09fc9d2bf7b0399afa7f21d",
+      "bytes": 527183
+    },
+    {
+      "path": "outputs/poc-first-qa/stage3-ui/10-generated-reopened.txt",
+      "sha256": "56de499b7b6d1de454b96e9aa16edc33e44d52f152192eb638495e495403bdf9",
+      "bytes": 7289
+    },
+    {
+      "path": "outputs/poc-first-qa/stage3-ui/11-reopened-assumptions.png",
+      "sha256": "ea0470c87145626cd32414762d265f5cd8b90729d8c3dd73e6b53c42bf364577",
+      "bytes": 533462
+    },
+    {
+      "path": "outputs/poc-first-qa/stage3-ui/11-reopened-assumptions.txt",
+      "sha256": "3ab6b80982b8d646d1b5adf2b5341492b7b4e5a6fa3a27e28c3363c4f87d3c02",
+      "bytes": 1143
+    }
+  ],
+  "cases": {
+    "real_host": "outputs/poc-ixi265/IXI265-Guys-0845.ressectionlab",
+    "vessel_candidate": "outputs/poc-ixi265/vesselfm-base-v1/IXI265-vesselfm-estimates.ressectionlab",
+    "vessel_gui_save": "outputs/poc-ixi265/vesselfm-base-v1/IXI265-vesselfm-reviewed.ressectionlab",
+    "virtual_candidate": "outputs/poc-ixi265/virtual-FK-pilot-001/IXI265-Guys-0845-virtual-FK-pilot-001.ressectionlab",
+    "virtual_gui_save": "outputs/poc-ixi265/virtual-FK-pilot-001/IXI265-virtual-FK-pilot-001-reviewed.ressectionlab"
+  },
+  "verified_actions": [
+    "Native T1/estimated brain and separate MRA/reference inspection",
+    "Generated-label attribution corrected and visible in rebuilt app",
+    "Tumor centering fixed and actual MPR coordinate -21.1/21.0/36.1mm verified",
+    "Persistent1mm aspiration and two branches from nonempty1s state",
+    "Deeper branch selection, Play, scrub to committed STOP frame21/21",
+    "Native GUI save to separate virtual/vessel copies",
+    "Quit original app; fresh process opens saved native vessel estimate at0.65opacity",
+    "Same fresh process opens reviewed virtual copy on saved deeper branch/frame21/21/STOP7s; paused Play control",
+    "Scan picker distinguishes source labels, model estimate and separate frames",
+    "Source/assumption panel exposes uncalibrated effects and unknown evidence"
+  ],
+  "source_hashes": {
+    "desktop/src/case-data.ts": "9d9f516bed49fee7541b0f0f795e5f576de9d83c5dc04b8d7920f68856259cd9",
+    "desktop/src/workspace-imaging-data.ts": "845bc72c924a61dd184d502d893666d47068ebcbe538bcc44a1a1703c5b4130b",
+    "desktop/src/WorkbenchPanels.tsx": "446113e07103073839fd3d102b2c6ac5a23aa0e09878746634a03526b3102309",
+    "desktop/src/App.tsx": "93f86b19f4f5b65f2f350ddf86e99e8af014dc0ab1ea7a7845fd37e75b732616",
+    "desktop/src/ImagingWorkspacePanel.tsx": "00e1e7805dbebc571aa0cf2e3e11dd370cccb7b6e99a6f08d4047e39a1af8c35"
+  },
+  "validation": {
+    "renderer_tests": 361,
+    "renderer_result_sha256": "961784161dd879ee96b32b75a8a5e2a1f80e9d8c1b9d0d89c8faeb0806f8e525",
+    "python_model_controls": 14,
+    "python_model_junit_sha256": "367e1cbc47890892b9ed3547ffb92352af16e41b4e7204d293f090a7a60c4b46",
+    "typescript_and_vite_build": "passed; retained existing chunk-size advisory"
+  },
+  "limitations": [
+    "Visual software review only; no expert anatomical acceptance",
+    "Unreviewed registration; fusion disabled",
+    "Conservative voxel-sphere cover for rounded oblique IXI affine",
+    "Uniform diffusion; no tissue classes, CSF barriers, deformation or physiology"
+  ],
+  "case_file_sha256": {
+    "real_host": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+    "vessel_candidate": "55a38ae5792c889d3f8a8e28c635c92f78ca80d42690028b7eb028d638980e0e",
+    "vessel_gui_save": "0c6c313ee453efb5fccb31b12b6e16e082f0c9c05dc09bf7ce65274b37668135",
+    "virtual_candidate": "aeb2d7574bcd091009da60252763ac401a11478b66d8c3a7e71d35ef56ba2b51",
+    "virtual_gui_save": "301757a33ed1e0595aefd4e88afaddc769b2be347e50e6da699eb0676d01b76f"
+  }
+}

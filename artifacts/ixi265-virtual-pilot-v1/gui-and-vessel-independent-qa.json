@@ -1,0 +1,514 @@
+{
+  "schema": "independent-final-ixi-gui-vessel-audit-v1",
+  "status": "pass",
+  "created_utc": "2026-10-16T06:41:18.571812+00:00",
+  "input_stamps": {
+    "outputs/poc-ixi265/IXI265-Guys-0845.ressectionlab": {
+      "sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+      "bytes": 57052870,
+      "mtime_ns": 1792131126176165021
+    },
+    "outputs/poc-ixi265/virtual-FK-pilot-001/IXI265-Guys-0845-virtual-FK-pilot-001.ressectionlab": {
+      "sha256": "aeb2d7574bcd091009da60252763ac401a11478b66d8c3a7e71d35ef56ba2b51",
+      "bytes": 57065603,
+      "mtime_ns": 1792131873121365965
+    },
+    "outputs/poc-ixi265/virtual-FK-pilot-001/IXI265-virtual-FK-pilot-001-reviewed.ressectionlab": {
+      "sha256": "301757a33ed1e0595aefd4e88afaddc769b2be347e50e6da699eb0676d01b76f",
+      "bytes": 57091671,
+      "mtime_ns": 1792132362849799001
+    },
+    "outputs/poc-ixi265/vesselfm-base-v1/IXI265-vesselfm-estimates.ressectionlab": {
+      "sha256": "55a38ae5792c889d3f8a8e28c635c92f78ca80d42690028b7eb028d638980e0e",
+      "bytes": 75491573,
+      "mtime_ns": 1792132175770004457
+    },
+    "outputs/poc-ixi265/vesselfm-base-v1/IXI265-vesselfm-reviewed.ressectionlab": {
+      "sha256": "0c6c313ee453efb5fccb31b12b6e16e082f0c9c05dc09bf7ce65274b37668135",
+      "bytes": 75491906,
+      "mtime_ns": 1792132543733292876
+    },
+    "artifacts/patient-corpus-first-tranche-v1/independent-qa.json": {
+      "sha256": "5f112d987639408911b379bd72792cab2504f68599981ef833445e31bcf7e0bd",
+      "bytes": 18706,
+      "mtime_ns": 1792131871120640478
+    },
+    "artifacts/ixi265-virtual-pilot-v1/independent-qa.json": {
+      "sha256": "61e449b05aaf1396e7383a23bb903238ab3e7e223899c23a0ed64e40c814eef0",
+      "bytes": 9412,
+      "mtime_ns": 1792132085881804749
+    },
+    "outputs/poc-ixi265/vesselfm-base-v1/inference.json": {
+      "sha256": "a1b7a4198b33b2f429f058b658ecc4a70c33c31f7e25d7ad17e4d2b002eedfdf",
+      "bytes": 6031,
+      "mtime_ns": 1792131736053759388
+    },
+    "outputs/poc-ixi265/vesselfm-base-v1/registered.json": {
+      "sha256": "de0430fd5600a22c26437b1928a56237f2e76423cbd9d21bc3f8afb18595680e",
+      "bytes": 3524,
+      "mtime_ns": 1792131737247714234
+    },
+    "outputs/poc-ixi265/vesselfm-base-v1/prepared.json": {
+      "sha256": "17c319ac433bb40349e5197d1aa0fbd696835e8f9fe4c3a5cb993fdf8422b1e6",
+      "bytes": 6257,
+      "mtime_ns": 1792131652043845691
+    },
+    "outputs/poc-ixi265/vesselfm-base-v1/vessels_mask.nii.gz": {
+      "sha256": "d3eedb5a89e598cddd5eb017054f7fb0ce91c678278411c285cc00c2b8d277bc",
+      "bytes": 285799,
+      "mtime_ns": 1792131735454125275
+    },
+    "outputs/poc-ixi265/vesselfm-base-v1/vessels_probability.nii.gz": {
+      "sha256": "1745f34949bec22c4c2418e0f7e115c8e3acf0cd974e6ba4b18f7e81e80ecc75",
+      "bytes": 95385330,
+      "mtime_ns": 1792131735419768721
+    },
+    "outputs/poc-ixi265/vesselfm-base-v1/native_sampling_coverage.nii.gz": {
+      "sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b",
+      "bytes": 169180,
+      "mtime_ns": 1792131736680303273
+    },
+    "outputs/poc-ixi265/vesselfm-base-v1/T1_sampling_coverage.nii.gz": {
+      "sha256": "e0a18a9d7c18e0be5510b12a89aafd22b4297519577d7e08d5e6a7bb64b8352b",
+      "bytes": 92891,
+      "mtime_ns": 1792131736688869214
+    },
+    "outputs/poc-ixi265/vesselfm-base-v1/vessels_mask_on_T1_estimated.nii.gz": {
+      "sha256": "eb53afbaa5ea26f7aa0e8f138133f59eda65a44f58ea43ea9e24c37fc4e4c6bc",
+      "bytes": 77419,
+      "mtime_ns": 1792131736697297489
+    },
+    "outputs/poc-ixi265/vesselfm-base-v1/vessels_score_on_T1_estimated.nii.gz": {
+      "sha256": "93c548921a5fe46a6dbe293764a396f960396eed647cbd6bf65e0a4fae195238",
+      "bytes": 11598919,
+      "mtime_ns": 1792131737239545248
+    }
+  },
+  "gui_rehearsal": {
+    "status": "pass",
+    "source_preservation": {
+      "primary_arrays_and_semantic_metadata_exact": true,
+      "case_hash": "sha256:b47c777475c1a2439fd2d05e831b3257e26369d055642f8f50c3ef7a5ba05640",
+      "parent_original_count": 16,
+      "all_parent_original_bytes_exact": true,
+      "parent_display_count": 2,
+      "all_parent_display_contents_exact": true,
+      "additional_originals_hash_verified": 0,
+      "additional_display_series": 0
+    },
+    "rehearsal": {
+      "schema": "resectionlab.source-bound-rehearsal.v2",
+      "live_record_hash": "sha256:3d632adc3e0540463008786271651e1fb6e92bab1def30492481fe48797f3610",
+      "initial_state_id": "sha256:f6ce351723303ccaad8466b3d181961094da80e6eb2a72b53af8fee31a150cc1",
+      "live_state_id": "sha256:69218b53adcf525e794f2baf1fc035c13ff66b0e20fe3e31fcd8882a3840fe46",
+      "comparison_snapshot_id": "sha256:69218b53adcf525e794f2baf1fc035c13ff66b0e20fe3e31fcd8882a3840fe46",
+      "planning_input_hash": "sha256:b11308f0da4167b88f0baff3540a6da47f058116d223878f66924989e8f9a7cb",
+      "source_frame_hash": "sha256:2513ca69c435d3fab93f67f69be820d3c69f454489b36d4e68a50dcebe6026db",
+      "source_target_hash": "sha256:0e7b09667d458f092f6776db5ba1f2e740dba188c7b7de72ce89f8ce72401a06",
+      "target_layer_names": [
+        "virtual_glioma_threshold_0p1"
+      ],
+      "live_actions": [
+        {
+          "durationSeconds": 1,
+          "kind": "aspirate",
+          "tipRasMm": [
+            -22.048283731011487,
+            22.148965396257058,
+            26.838592045204066
+          ],
+          "toolId": "aspirator"
+        }
+      ],
+      "live_replay": {
+        "frames": 4,
+        "persistent_unique_removal": true,
+        "source_tissue_and_target_accounting_exact": true,
+        "contact_field_management_and_burden_accounting_exact": true,
+        "full_tool_parallel_clearance": true,
+        "independent_full_shaft_and_tip_retained_tissue_clearance": true,
+        "metrics": {
+          "targetRemovedMm3": 1.0546869331809354,
+          "nonTargetRemovedMm3": 11.60155626499029,
+          "removedMm3": 12.656243198171225,
+          "residualTargetMm3": 885.9370238719857,
+          "sourceTargetMm3": 886.9917108051667,
+          "targetOutsideSupportMm3": 0.0,
+          "assumedExposureTargetMm3": 0.0,
+          "assumedExposureTissueMm3": 16968.85806794807,
+          "remainingTissueMm3": 1513906.06138338,
+          "sourceTissueMm3": 1530887.5756945263,
+          "contactCellSeconds": 4.0,
+          "fieldManagementCellSeconds": 0,
+          "fieldBurden": 0.024,
+          "elapsedSeconds": 1.0,
+          "vascularEvents": null,
+          "motorRisk": null,
+          "languageRisk": null,
+          "anatomicalConflicts": 0,
+          "stopReason": null,
+          "terminated": false
+        },
+        "independent_conservative_sphere_cell_cover_exact": true
+      },
+      "branches": [
+        {
+          "id": "short_pass_field_management",
+          "label": "Short pass + field management",
+          "record_hash": "sha256:18f03e2410263ac67a67e2fa4c084ac1c71b3a724ed9aed062f498fe25366613",
+          "initial_state_id": "sha256:f6ce351723303ccaad8466b3d181961094da80e6eb2a72b53af8fee31a150cc1",
+          "final_state_id": "sha256:9b4ff60332deb227498920eb90677585064577e145214ebb1af44aaf46516c70",
+          "action_count": 6,
+          "actions": [
+            {
+              "durationSeconds": 1,
+              "kind": "aspirate",
+              "tipRasMm": [
+                -22.048283731011487,
+                22.148965396257058,
+                26.838592045204066
+              ],
+              "toolId": "aspirator"
+            },
+            {
+              "durationSeconds": 1.0,
+              "kind": "inspect"
+            },
+            {
+              "durationSeconds": 2.0,
+              "kind": "aspirate",
+              "tipRasMm": [
+                -21.907721451386628,
+                22.14273001729391,
+                28.833636747860087
+              ],
+              "toolId": "aspirator"
+            },
+            {
+              "durationSeconds": 2.0,
+              "kind": "clear_field",
+              "tipRasMm": [
+                -16.10571437032776,
+                21.852498072517,
+                25.917735633098054
+              ],
+              "toolId": "field_manager"
+            },
+            {
+              "durationSeconds": 1.0,
+              "kind": "reassess"
+            },
+            {
+              "durationSeconds": 0.0,
+              "kind": "STOP",
+              "reason": "bounded_short_pass_then_field_management; vessels_and_function_unknown"
+            }
+          ],
+          "exact_saved_action_prefix": true,
+          "exact_replayed_frame_prefix": true,
+          "replayed_serialization_exact": true,
+          "independent_frame_audit": {
+            "frames": 17,
+            "persistent_unique_removal": true,
+            "source_tissue_and_target_accounting_exact": true,
+            "contact_field_management_and_burden_accounting_exact": true,
+            "full_tool_parallel_clearance": true,
+            "independent_full_shaft_and_tip_retained_tissue_clearance": true,
+            "metrics": {
+              "targetRemovedMm3": 14.765617064533096,
+              "nonTargetRemovedMm3": 44.29685119359929,
+              "removedMm3": 59.062468258132384,
+              "residualTargetMm3": 872.2260937406336,
+              "sourceTargetMm3": 886.9917108051667,
+              "targetOutsideSupportMm3": 0.0,
+              "assumedExposureTargetMm3": 0.0,
+              "assumedExposureTissueMm3": 16968.85806794807,
+              "remainingTissueMm3": 1513859.6551583202,
+              "sourceTissueMm3": 1530887.5756945263,
+              "contactCellSeconds": 64.5,
+              "fieldManagementCellSeconds": 38.5,
+              "fieldBurden": 0.0,
+              "elapsedSeconds": 7.0,
+              "vascularEvents": null,
+              "motorRisk": null,
+              "languageRisk": null,
+              "anatomicalConflicts": 0,
+              "stopReason": "bounded_short_pass_then_field_management; vessels_and_function_unknown",
+              "terminated": true
+            },
+            "independent_conservative_sphere_cell_cover_exact": true
+          }
+        },
+        {
+          "id": "deeper_pass_reassess",
+          "label": "Deeper pass + reassess",
+          "record_hash": "sha256:2abb0ab1e50a374476747ea2c93f7186b8ad19c2fc48d7bf214571ff863e8a72",
+          "initial_state_id": "sha256:f6ce351723303ccaad8466b3d181961094da80e6eb2a72b53af8fee31a150cc1",
+          "final_state_id": "sha256:91f1ba6030f6483a4b6837beca0f22b35f17cf71ec0add035514de0e1e1100fd",
+          "action_count": 5,
+          "actions": [
+            {
+              "durationSeconds": 1,
+              "kind": "aspirate",
+              "tipRasMm": [
+                -22.048283731011487,
+                22.148965396257058,
+                26.838592045204066
+              ],
+              "toolId": "aspirator"
+            },
+            {
+              "durationSeconds": 1.0,
+              "kind": "inspect"
+            },
+            {
+              "durationSeconds": 4.0,
+              "kind": "aspirate",
+              "tipRasMm": [
+                -21.62659689213691,
+                22.130259259367616,
+                32.82372615317213
+              ],
+              "toolId": "aspirator"
+            },
+            {
+              "durationSeconds": 1.0,
+              "kind": "reassess"
+            },
+            {
+              "durationSeconds": 0.0,
+              "kind": "STOP",
+              "reason": "bounded_deeper_pass_limit; vessels_and_function_unknown"
+            }
+          ],
+          "exact_saved_action_prefix": true,
+          "exact_replayed_frame_prefix": true,
+          "replayed_serialization_exact": true,
+          "independent_frame_audit": {
+            "frames": 22,
+            "persistent_unique_removal": true,
+            "source_tissue_and_target_accounting_exact": true,
+            "contact_field_management_and_burden_accounting_exact": true,
+            "full_tool_parallel_clearance": true,
+            "independent_full_shaft_and_tip_retained_tissue_clearance": true,
+            "metrics": {
+              "targetRemovedMm3": 85.42964158765577,
+              "nonTargetRemovedMm3": 68.5546506567608,
+              "removedMm3": 153.98429224441657,
+              "residualTargetMm3": 801.562069217511,
+              "sourceTargetMm3": 886.9917108051667,
+              "targetOutsideSupportMm3": 0.0,
+              "assumedExposureTargetMm3": 0.0,
+              "assumedExposureTissueMm3": 16968.85806794807,
+              "remainingTissueMm3": 1513764.7333343339,
+              "sourceTissueMm3": 1530887.5756945263,
+              "contactCellSeconds": 45.23076923076923,
+              "fieldManagementCellSeconds": 0,
+              "fieldBurden": 0.29200000000000004,
+              "elapsedSeconds": 7.0,
+              "vascularEvents": null,
+              "motorRisk": null,
+              "languageRisk": null,
+              "anatomicalConflicts": 0,
+              "stopReason": "bounded_deeper_pass_limit; vessels_and_function_unknown",
+              "terminated": true
+            },
+            "independent_conservative_sphere_cell_cover_exact": true
+          }
+        }
+      ],
+      "saved_view": {
+        "branchId": "deeper_pass_reassess",
+        "episodeInitialStateId": "sha256:f6ce351723303ccaad8466b3d181961094da80e6eb2a72b53af8fee31a150cc1",
+        "frameIndex": 21,
+        "selectedTool": "aspirator",
+        "visible": true
+      },
+      "selected_frame": {
+        "index": 21,
+        "last_index": 21,
+        "elapsed_seconds": 7.0,
+        "state_id": "sha256:91f1ba6030f6483a4b6837beca0f22b35f17cf71ec0add035514de0e1e1100fd",
+        "kind": "STOP",
+        "metrics": {
+          "targetRemovedMm3": 85.42964158765577,
+          "nonTargetRemovedMm3": 68.5546506567608,
+          "removedMm3": 153.98429224441657,
+          "residualTargetMm3": 801.562069217511,
+          "sourceTargetMm3": 886.9917108051667,
+          "targetOutsideSupportMm3": 0.0,
+          "assumedExposureTargetMm3": 0.0,
+          "assumedExposureTissueMm3": 16968.85806794807,
+          "remainingTissueMm3": 1513764.7333343339,
+          "sourceTissueMm3": 1530887.5756945263,
+          "contactCellSeconds": 45.23076923076923,
+          "fieldManagementCellSeconds": 0,
+          "fieldBurden": 0.29200000000000004,
+          "elapsedSeconds": 7.0,
+          "vascularEvents": null,
+          "motorRisk": null,
+          "languageRisk": null,
+          "anatomicalConflicts": 0,
+          "stopReason": "bounded_deeper_pass_limit; vessels_and_function_unknown",
+          "terminated": true
+        }
+      },
+      "source_arrays_modified": false,
+      "clinical_validation": false,
+      "limitations": [
+        "Assumed post-exposure cavity is generated and separately accounted.",
+        "Field management is a dimensionless debris proxy, not coagulation or hemostasis.",
+        "Vessels, motor/language function and vascular outcomes remain unknown on this real MRI case.",
+        "The independent checks establish software/replay consistency, not surgical realism or clinical accuracy."
+      ]
+    },
+    "cell_geometry": {
+      "source_affine_orthogonality_defect": 2.364007655918627e-09,
+      "runtime_exact_box_cutoff": 1e-10,
+      "selected_geometry": "conservative voxel-bounding-sphere cell cover",
+      "meaning": "Independent match to declared conservative removal/clearance coverage; not exact physical tissue intersection"
+    },
+    "paused_reopen": {
+      "saved_playing_flag_exists": false,
+      "saved_terminal_frame_verified": true,
+      "frontend_control_flow_reviewed": "useRehearsal initializes and resets playing=false, including inspect; branch/frame/tool preferences are restored",
+      "frontend_source_sha256": "6feb2c43f3a32207d434c43dee15a1b3e766b38b211c3ed67bcb20b910eafdd0",
+      "actual_GUI_pause_observation": "Owned by parent; this file audit does not claim an independent GUI observation"
+    }
+  },
+  "vascular_candidate": {
+    "status": "pass",
+    "source_preservation": {
+      "primary_arrays_and_semantic_metadata_exact": true,
+      "case_hash": "sha256:72f6ae73183d8d5d52f30eafd90a533b0cf81a38e0070d7fa70ca954461c505c",
+      "parent_original_count": 16,
+      "all_parent_original_bytes_exact": true,
+      "parent_display_count": 2,
+      "all_parent_display_contents_exact": true,
+      "additional_originals_hash_verified": 8,
+      "additional_display_series": 1
+    },
+    "native_geometry": {
+      "shape": [
+        512,
+        512,
+        100
+      ],
+      "affine_ras_mm": [
+        [
+          -0.4675968885421753,
+          0.022762440145015717,
+          0.04044419899582863,
+          113.11631774902344
+        ],
+        [
+          0.021471189334988594,
+          0.46756595373153687,
+          -0.043432630598545074,
+          -131.24533081054688
+        ],
+        [
+          0.024873699992895126,
+          0.024300718680024147,
+          0.7977957725524902,
+          -36.80162048339844
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "mask_voxels": 185231,
+      "mask_array_hash": "sha256:514652bbc9509d2af75174fd71e65340cd0f719ea7f24af3c35408324c21e3e8"
+    },
+    "score_threshold_rule": "saved uncalibrated score >0.5",
+    "threshold_exact": true,
+    "score_range": [
+      2.2704188751276888e-08,
+      1.0
+    ],
+    "native_estimate_separate_from_source_annotations": true,
+    "source_MRA_arrays_exact": true,
+    "saved_output_hashes": {
+      "vessels_mask.nii.gz": "d3eedb5a89e598cddd5eb017054f7fb0ce91c678278411c285cc00c2b8d277bc",
+      "vessels_probability.nii.gz": "1745f34949bec22c4c2418e0f7e115c8e3acf0cd974e6ba4b18f7e81e80ecc75",
+      "native_sampling_coverage.nii.gz": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b",
+      "T1_sampling_coverage.nii.gz": "e0a18a9d7c18e0be5510b12a89aafd22b4297519577d7e08d5e6a7bb64b8352b",
+      "vessels_mask_on_T1_estimated.nii.gz": "eb53afbaa5ea26f7aa0e8f138133f59eda65a44f58ea43ea9e24c37fc4e4c6bc",
+      "vessels_score_on_T1_estimated.nii.gz": "93c548921a5fe46a6dbe293764a396f960396eed647cbd6bf65e0a4fae195238"
+    },
+    "saved_weight_sha256": "6da4fbd06dd9c3b597e5d50cc628deb3026919ff126d01afbd13ac8fe22ee10c",
+    "weight_file_rehashed_this_audit": false,
+    "worker_source_sha256_verified": "7446332d8e948624c055f3c19ad5d64c12018095d8e4b330535d62c47908c28b",
+    "model_revision": "dd70bbdd2b9de06b1316b4d1105bda9766c24fd7",
+    "registrations": [
+      {
+        "modality": "MRA",
+        "annotation_kind": "source-provided",
+        "status": "unreviewed",
+        "overlay_permitted": false
+      },
+      {
+        "modality": "T1",
+        "annotation_kind": "source-provided",
+        "status": "unreviewed",
+        "overlay_permitted": false
+      },
+      {
+        "modality": "MRA",
+        "annotation_kind": "estimated",
+        "status": "unreviewed",
+        "overlay_permitted": false
+      }
+    ],
+    "independent_registered_mask_transfer_exact": true,
+    "registered_mask_voxels": 24219,
+    "mapped_cells_excluded_by_recorded_coverage": 375,
+    "anatomical_registration_accepted": false,
+    "training_admitted": false,
+    "held_out_accuracy_claim": false,
+    "limitations": [
+      "Native prediction is limited to acquired partial MRA coverage; completeness unknown.",
+      "IXI collection occurs in model training lineage; individual subject overlap unknown.",
+      "Score is uncalibrated. Research/noncommercial model restrictions remain attached.",
+      "Weights hash matched across saved records and earlier audit; no repeated weight-file read here.",
+      "Registered T1 mask remains an unreviewed archived candidate, excluded from fusion and primary planning."
+    ]
+  },
+  "vascular_GUI_save": {
+    "status": "pass",
+    "preservation": {
+      "primary_arrays_and_semantic_metadata_exact": true,
+      "case_hash": "sha256:72f6ae73183d8d5d52f30eafd90a533b0cf81a38e0070d7fa70ca954461c505c",
+      "parent_original_count": 24,
+      "all_parent_original_bytes_exact": true,
+      "parent_display_count": 3,
+      "all_parent_display_contents_exact": true,
+      "additional_originals_hash_verified": 0,
+      "additional_display_series": 0
+    },
+    "selected_source": {
+      "annotationKind": "estimated",
+      "modality": "MRA",
+      "scope": "display-only-native-grid",
+      "seriesId": "sha256:70edf7b44df7e9650bca154aa76267b66cd1e52a1b0dc794f3ba7d9ad80cdbf8",
+      "sourceCaseHash": "sha256:0b4ed8624ad42a354d6edc4cbcdcf30bd8f584ec8d0909a4f79a65ff56b84dfe",
+      "sourceFrameHash": "sha256:caadf2bd319e41e9b4dc77211e60646cc85c73f1ed5c58755905a0c440b437b7"
+    },
+    "selected_estimate_visible": true,
+    "saved_estimate_opacity": 0.65,
+    "rehearsal_attached": false,
+    "anatomical_review_status_changed": false,
+    "actual_GUI_observation": "Owned by parent; independent file inspection confirms persisted settings only"
+  },
+  "auditor_adjustments": [
+    "Initial vessel pre-coverage count oracle used scipy continuous-center boundaries; corrected to the actual declared ITK half-voxel extent. Covered output mask was exact in both checks; no product change was needed."
+  ],
+  "all_inputs_and_frozen_audits_unchanged": true,
+  "no_model_or_FK_solver_executed": true,
+  "scope": "Fresh saved-artifact inspection; GUI actions observed separately by parent; no clinical or anatomical validation",
+  "auditor_sha256": "07a8ecaff5295373f17c7a886127ee771e94b04a49d4e495b36d26317e4f8adf",
+  "rehearsal_runtime_sha256": "4c5b0b8b7d941069b54266904383f1a3113d96830847bf9cd3ba02f28807e6fe"
+}

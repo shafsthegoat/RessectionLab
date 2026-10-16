@@ -17,6 +17,10 @@ The [first nine-person corpus qualification](artifacts/patient-corpus-first-tran
 now provides resumable source checks and JSON/SQLite search. A bounded, pinned FK
 adapter passes independent numerical and source-admission checks; generated
 geometry remains distinct from observed tumors and physiological validation.
+The [IXI265 integration demonstration](artifacts/ixi265-virtual-pilot-v1/RESULT.md)
+also opens fresh brain/vessel estimates and an explicitly generated lesion overlay
+in Electron, with native branch save/reopen. Tissue-conditioned growth and
+anatomical review remain open.
 
 A local macOS anatomy workbench for acquired patient imaging, saved segmentations,
 and linked 3D/source-image inspection.

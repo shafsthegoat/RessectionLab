@@ -3,6 +3,10 @@ import { sourceFrameDigest } from './source-integrity.ts';
 import type { CasePayload, ResectionApi, ViewerCase } from './types';
 import type { DisplaySeriesPayload, DisplaySeriesView } from './workspace-imaging-types';
 const HASH=/^sha256:[a-f0-9]{64}$/;
+export function displaySeriesLabel(series:DisplaySeriesPayload):string {
+  const annotation=series.annotationKind==='estimated'?'model estimate':series.annotationKind==='source-provided'?'source labels':'image';
+  return `${series.modality} · ${annotation} · ${series.registration.overlayPermitted?'source registered':'separate frame'}`;
+}
 function validRegistration(primary:CasePayload,incoming:DisplaySeriesPayload) {
   const r=incoming.registration,a=incoming.association;
   if(!r || !a || a.sameTimeVerified!==false)return false;

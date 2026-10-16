@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {test} from 'node:test';
-import {hydrateDisplaySeries,workspaceDisplay} from '../src/workspace-imaging-data.ts';
+import {hydrateDisplaySeries,workspaceDisplay,displaySeriesLabel} from '../src/workspace-imaging-data.ts';
 import {sourceFrameDigest} from '../src/source-integrity.ts';
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
@@ -14,5 +14,13 @@ return {primary,attachment:{schema:'workspace-display-series-v1',seriesId:`sha25
 test('actual hydration preserves separate native grid and suppresses all primary overlays',async()=>{const {primary,attachment}=await fixture();let reads=0;const api={readAsset:async()=>{reads++;return new Uint8Array(new Float32Array([0,1,2,3,4,5,6,7]).buffer)}};const view=await hydrateDisplaySeries(primary,attachment,api);assert.equal(reads,1);assert.equal(view.volume.affine[0][3],100);const selected=workspaceDisplay({caseHash:primary.caseHash},view);assert.equal(selected.primaryOverlaysPermitted,false);assert.equal(selected.planningInteractionPermitted,false);assert.equal(selected.caseData,view.volume);assert.equal(workspaceDisplay({caseHash:primary.caseHash},null).primaryOverlaysPermitted,true)});
 test('mutated frame and stale case refuse before any asset reads',async()=>{for(const mutate of [a=>a.volume.affine[0][3]++,a=>a.referenceFrameHash=hash,a=>a.sourceFrameHash=hash,a=>a.referenceCaseHash='stale',a=>a.registration.overlayPermitted=true,a=>a.planningEligible=true]){const {primary,attachment}=await fixture();mutate(attachment);await assert.rejects(hydrateDisplaySeries(primary,attachment,{readAsset:()=>assert.fail('asset read before binding check')}));}});
 test('native selection refuses a stale case reference',()=>assert.throws(()=>workspaceDisplay({caseHash:hash},{descriptor:{referenceCaseHash:'wrong'}})));
+test('same-modality source references and model estimates are distinguishable before selection',async()=>{
+ const {attachment}=await fixture();
+ const source=displaySeriesLabel({...attachment,annotationKind:'source-provided'});
+ const estimated=displaySeriesLabel({...attachment,annotationKind:'estimated'});
+ assert.notEqual(source,estimated);assert.equal(source,'MRA · source labels · separate frame');
+ assert.equal(estimated,'MRA · model estimate · separate frame');
+ assert.equal(displaySeriesLabel(attachment),'MRA · image · separate frame');
+});
 test('host cancellation cannot start image or annotation import',async()=>{for(const annotationKind of ['none','estimated']){let calls=0;const value=await importDisplaySeries({caseHash:hash,modality:'T2',annotationKind},{pick:async()=>null,request:()=>{calls++;assert.fail('cancelled dialog')}});assert.equal(value,null);assert.equal(calls,0)}});
 test('host passes only native-selected image/mask paths and declared provenance',async()=>{const choices=['/generated/image.nii.gz','/generated/mask.nii.gz'];let call;await importDisplaySeries({caseHash:hash,modality:'MRA',annotationKind:'source-provided'},{pick:async()=>choices.shift(),request:async(...args)=>{call=args;return {}}});assert.deepEqual(call,['importDisplaySeries',{caseHash:hash,modality:'MRA',annotationKind:'source-provided',imagePath:'/generated/image.nii.gz',annotationPath:'/generated/mask.nii.gz'}]);await assert.rejects(importDisplaySeries({caseHash:hash,modality:'T1',annotationKind:'none',imagePath:'/injected'},{pick:()=>assert.fail(),request:()=>assert.fail()}));});

@@ -1,0 +1,597 @@
+{
+  "schema": "resectionlab-ixi265-virtual-pilot-receipt-v1",
+  "scope": "One source-reported healthy host, one uniform diffusion geometry control; no anatomical or clinical acceptance",
+  "simulation": {
+    "schema": "resectionlab.virtual-glioma-fk.v1",
+    "label": "Virtual glioma geometry; generated FK concentration on a source-qualified host",
+    "evidenceKind": "simulator_generated_geometry_only",
+    "originalAcquiredStructuresChanged": false,
+    "sourceBinding": {
+      "caseId": "IXI265-Guys-0845",
+      "caseHash": "sha256:72f6ae73183d8d5d52f30eafd90a533b0cf81a38e0070d7fa70ca954461c505c",
+      "imageHash": "sha256:f47aad533f660e6bd74c8156811c6550e8bdf3487a3c911f0b80a72ce9ce8cc1",
+      "frameHash": "sha256:2513ca69c435d3fab93f67f69be820d3c69f454489b36d4e68a50dcebe6026db",
+      "affineHash": "sha256:a46904c6587d2738292abd668045fed4ba31d8384613e6bfd356a15f51af90dc",
+      "brainEnvelopeHash": "sha256:143360451b16afd3db7c8023a96c53064ad68ad3cfa4486bf95c5bb7ea28ceac",
+      "sourceRefsHash": "sha256:942c2e0e0c282b043f787880ad5e737c4bbded5924ff64a468ffa9b612d8200b",
+      "compartmentHashes": {},
+      "sourceCompartmentHashes": {},
+      "criticalEvidenceHashes": {}
+    },
+    "qualification": {
+      "schema": "resectionlab.virtual-glioma-host-qualification.v1",
+      "sourceBinding": {
+        "caseId": "IXI265-Guys-0845",
+        "caseHash": "sha256:72f6ae73183d8d5d52f30eafd90a533b0cf81a38e0070d7fa70ca954461c505c",
+        "imageHash": "sha256:f47aad533f660e6bd74c8156811c6550e8bdf3487a3c911f0b80a72ce9ce8cc1",
+        "frameHash": "sha256:2513ca69c435d3fab93f67f69be820d3c69f454489b36d4e68a50dcebe6026db",
+        "affineHash": "sha256:a46904c6587d2738292abd668045fed4ba31d8384613e6bfd356a15f51af90dc",
+        "brainEnvelopeHash": "sha256:143360451b16afd3db7c8023a96c53064ad68ad3cfa4486bf95c5bb7ea28ceac",
+        "sourceRefsHash": "sha256:942c2e0e0c282b043f787880ad5e737c4bbded5924ff64a468ffa9b612d8200b",
+        "compartmentHashes": {},
+        "sourceCompartmentHashes": {},
+        "criticalEvidenceHashes": {}
+      },
+      "patientGroup": "IXI:265",
+      "role": "TRAIN",
+      "healthySourceEvidence": {
+        "status": "source_reported_healthy",
+        "patient_group": "IXI:265",
+        "source_url": "https://brain-development.org/ixi-dataset/",
+        "source_sha256": "f80f30853eeeeec6caf90ae4410c712fe447161808c238dea8111396020efe8c",
+        "statement": "Publisher-described normal healthy cohort; no individual pathology review or tumor-absence certificate"
+      },
+      "qualifiedBy": "automated_source_and_geometry_QC_no_anatomical_expert_acceptance",
+      "qualificationScope": "source_reported_host_research_only_not_clinical_certificate",
+      "gridShape": [
+        55,
+        62,
+        56
+      ],
+      "gridAffineRasMm": [
+        [
+          3.0,
+          0.0,
+          0.0,
+          -78.0
+        ],
+        [
+          0.0,
+          3.0,
+          0.0,
+          -99.0
+        ],
+        [
+          0.0,
+          0.0,
+          3.0,
+          -69.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "tissueMode": "UNIFORM_DIFFUSION_DOMAIN",
+      "sourceWmLayer": null,
+      "sourceGmLayer": null,
+      "mapping": {
+        "sourceAffineHash": "sha256:a46904c6587d2738292abd668045fed4ba31d8384613e6bfd356a15f51af90dc",
+        "targetAffineHash": "sha256:baeabd3ac076cb605e13f48f4a441908df38e3b61516d1e3eb2a58ccd3a009d9",
+        "targetShape": [
+          55,
+          62,
+          56
+        ],
+        "targetVoxelToSourceVoxel": [
+          [
+            -0.1592553261902803,
+            -3.196034564432188,
+            0.0012314536109816288,
+            234.9962896322383
+          ],
+          [
+            0.22489965334528456,
+            -0.009976605814882508,
+            3.1920715148343572,
+            47.46049904168335
+          ],
+          [
+            2.4907137306550147,
+            -0.1241776270787334,
+            -0.17587309896879177,
+            17.17990442162114
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "exactGridIdentityCopy": false,
+        "brainEnvelopeInterpolation": "nearest_neighbor_order0_constant0_voxel_centers",
+        "tissueFractionInterpolation": null,
+        "sourceBrainEnvelopeHash": "sha256:143360451b16afd3db7c8023a96c53064ad68ad3cfa4486bf95c5bb7ea28ceac",
+        "resampledBrainEnvelopeHash": "sha256:58152c9f1be3d7bf75e65886251229290e395e4fc4e8df9fa3cb0f922c85955a",
+        "admittedDomainHash": "sha256:58152c9f1be3d7bf75e65886251229290e395e4fc4e8df9fa3cb0f922c85955a",
+        "sourceTissues": {},
+        "wmFractionHash": null,
+        "gmFractionHash": null,
+        "matterThreshold": 0.1,
+        "fractionRoundoffTolerance": null,
+        "fractionValuesClippedOrRenormalized": false,
+        "mappedFractionRange": null,
+        "domainRule": "brain_envelope_only_explicit_parameter_fiction"
+      },
+      "qualificationHash": "sha256:10113c3a0f4012004256424891a4626521f070235353807998173692fd3e56b9"
+    },
+    "hostPatientGroup": "IXI:265",
+    "inheritedHostRole": "TRAIN",
+    "newPatientCount": 0,
+    "virtualLesionCount": 1,
+    "clinicalValidation": false,
+    "frame": "RAS+",
+    "gridShape": [
+      55,
+      62,
+      56
+    ],
+    "gridAffineRasMm": [
+      [
+        3.0,
+        0.0,
+        0.0,
+        -78.0
+      ],
+      [
+        0.0,
+        3.0,
+        0.0,
+        -99.0
+      ],
+      [
+        0.0,
+        0.0,
+        3.0,
+        -69.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "spacingMm": [
+      3.0,
+      3.0,
+      3.0
+    ],
+    "tissueMode": "UNIFORM_DIFFUSION_DOMAIN",
+    "mapping": {
+      "sourceAffineHash": "sha256:a46904c6587d2738292abd668045fed4ba31d8384613e6bfd356a15f51af90dc",
+      "targetAffineHash": "sha256:baeabd3ac076cb605e13f48f4a441908df38e3b61516d1e3eb2a58ccd3a009d9",
+      "targetShape": [
+        55,
+        62,
+        56
+      ],
+      "targetVoxelToSourceVoxel": [
+        [
+          -0.1592553261902803,
+          -3.196034564432188,
+          0.0012314536109816288,
+          234.9962896322383
+        ],
+        [
+          0.22489965334528456,
+          -0.009976605814882508,
+          3.1920715148343572,
+          47.46049904168335
+        ],
+        [
+          2.4907137306550147,
+          -0.1241776270787334,
+          -0.17587309896879177,
+          17.17990442162114
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "exactGridIdentityCopy": false,
+      "brainEnvelopeInterpolation": "nearest_neighbor_order0_constant0_voxel_centers",
+      "tissueFractionInterpolation": null,
+      "sourceBrainEnvelopeHash": "sha256:143360451b16afd3db7c8023a96c53064ad68ad3cfa4486bf95c5bb7ea28ceac",
+      "resampledBrainEnvelopeHash": "sha256:58152c9f1be3d7bf75e65886251229290e395e4fc4e8df9fa3cb0f922c85955a",
+      "admittedDomainHash": "sha256:58152c9f1be3d7bf75e65886251229290e395e4fc4e8df9fa3cb0f922c85955a",
+      "sourceTissues": {},
+      "wmFractionHash": null,
+      "gmFractionHash": null,
+      "matterThreshold": 0.1,
+      "fractionRoundoffTolerance": null,
+      "fractionValuesClippedOrRenormalized": false,
+      "mappedFractionRange": null,
+      "domainRule": "brain_envelope_only_explicit_parameter_fiction"
+    },
+    "parameters": {
+      "seed_center_ras_mm": [
+        -21.0,
+        21.0,
+        36.0
+      ],
+      "seed_sigma_mm": 3.0,
+      "seed_peak": 0.2,
+      "seed_support_sigma": 3.0,
+      "diffusion_mm2_per_day": 0.05,
+      "growth_per_day": 0.025,
+      "wm_to_gm_diffusion_ratio": 10.0,
+      "duration_days": 60.0,
+      "max_dt_days": 1.0,
+      "stability_safety": 0.9,
+      "concentration_thresholds": [
+        0.1,
+        0.5
+      ],
+      "stopping_integral_mm3": null
+    },
+    "kernel": {
+      "name": "TumorGrowthToolkit FK",
+      "version": "0.2",
+      "commit": "162c2cbbab5882fff7c3c05d9fedd87453298a0f",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2023 Michal Balcerak",
+      "files": {
+        "TumorGrowthToolkit/FK/FK.py": {
+          "url": "https://raw.githubusercontent.com/m1balcerak/TumorGrowthToolkit/162c2cbbab5882fff7c3c05d9fedd87453298a0f/TumorGrowthToolkit/FK/FK.py",
+          "sha256": "cf66c619a42876351ca90f75ef92fe1fb8bf611cdda0f10404b3ab28cced8f88",
+          "bytes": 11731
+        },
+        "TumorGrowthToolkit/base_solver.py": {
+          "url": "https://raw.githubusercontent.com/m1balcerak/TumorGrowthToolkit/162c2cbbab5882fff7c3c05d9fedd87453298a0f/TumorGrowthToolkit/base_solver.py",
+          "sha256": "4d8df08041a8170dcb5db0d0a8e4ee1d9e016a6287875adfcecbc1ba2a80e84a",
+          "bytes": 189
+        },
+        "LICENSE": {
+          "url": "https://raw.githubusercontent.com/m1balcerak/TumorGrowthToolkit/162c2cbbab5882fff7c3c05d9fedd87453298a0f/LICENSE",
+          "sha256": "fe6b4ce9724b2e8ce5e281875448293931a6164c66f49f774d54b55599d8684d",
+          "bytes": 1072
+        }
+      },
+      "executedMethods": [
+        "Solver.get_D",
+        "Solver.FK_update"
+      ],
+      "upstreamSolveExecuted": false
+    },
+    "wrapperSha256": "ac6bf026b204edb3ea4f853aa6749c0385eb7f16b48d0ef2b1e8d5c469802555",
+    "numericalContract": {
+      "dtype": "float64",
+      "zeroPaddingCells": 1,
+      "boundary": "zero_face_conductivity_no_flux; padded_roll_edges_cannot_connect",
+      "initialCondition": "physical_gaussian_truncated_at_declared_sigma_multiple_and_masked_to_admitted_domain",
+      "stabilityBoundDays": 17.142857142857142,
+      "maxDiffusiveOutflowPerDay": 0.03333333333333333,
+      "sufficientBound": "dt*(max_sum_neighbor_diffusive_rates+rho)<=1",
+      "dtDays": 1.0,
+      "plannedSteps": 60,
+      "executedSteps": 60,
+      "timeZeroIsExactInitialCondition": true,
+      "cropping": "none",
+      "resamplingDuringSolve": "none",
+      "badResultClipping": false,
+      "randomDraws": 0,
+      "maximumIntegralBalanceResidualMm3": 9.592326932761353e-14,
+      "integralBalanceToleranceMm3": 8.118331606965512e-08,
+      "integralBalanceRule": "sum(new)=sum(old)+dt*rho*sum(old*(1-old)); diffusion contributes zero",
+      "uniformEncoding": "Homogeneous coefficient encoded in upstream WM argument; not white-matter anatomy"
+    },
+    "timeSeriesMetrics": [
+      {
+        "step": 0,
+        "timeDays": 0.0,
+        "integralConcentrationMm3": 82.99139797919489,
+        "minimum": 0.0,
+        "maximum": 0.2
+      },
+      {
+        "step": 3,
+        "timeDays": 3.0,
+        "integralConcentrationMm3": 88.89648121866149,
+        "minimum": 0.0,
+        "maximum": 0.2042065753987137
+      },
+      {
+        "step": 6,
+        "timeDays": 6.0,
+        "integralConcentrationMm3": 95.21125842111724,
+        "minimum": 0.0,
+        "maximum": 0.2086419338792689
+      },
+      {
+        "step": 9,
+        "timeDays": 9.0,
+        "integralConcentrationMm3": 101.96264936141736,
+        "minimum": 0.0,
+        "maximum": 0.2133077526301873
+      },
+      {
+        "step": 12,
+        "timeDays": 12.0,
+        "integralConcentrationMm3": 109.17917440563805,
+        "minimum": 0.0,
+        "maximum": 0.21820577316491205
+      },
+      {
+        "step": 15,
+        "timeDays": 15.0,
+        "integralConcentrationMm3": 116.89103079258268,
+        "minimum": 0.0,
+        "maximum": 0.22333775887566917
+      },
+      {
+        "step": 18,
+        "timeDays": 18.0,
+        "integralConcentrationMm3": 125.13017056566765,
+        "minimum": 0.0,
+        "maximum": 0.22870545227146588
+      },
+      {
+        "step": 21,
+        "timeDays": 21.0,
+        "integralConcentrationMm3": 133.9303799676789,
+        "minimum": 0.0,
+        "maximum": 0.23431053183325148
+      },
+      {
+        "step": 24,
+        "timeDays": 24.0,
+        "integralConcentrationMm3": 143.32736008459347,
+        "minimum": 0.0,
+        "maximum": 0.24015456845919597
+      },
+      {
+        "step": 27,
+        "timeDays": 27.0,
+        "integralConcentrationMm3": 153.35880849757518,
+        "minimum": 0.0,
+        "maximum": 0.2462389815138981
+      },
+      {
+        "step": 30,
+        "timeDays": 30.0,
+        "integralConcentrationMm3": 164.0645016746608,
+        "minimum": 0.0,
+        "maximum": 0.252564994537136
+      },
+      {
+        "step": 33,
+        "timeDays": 33.0,
+        "integralConcentrationMm3": 175.48637780586486,
+        "minimum": 0.0,
+        "maximum": 0.25913359071042835
+      },
+      {
+        "step": 36,
+        "timeDays": 36.0,
+        "integralConcentrationMm3": 187.66861975782587,
+        "minimum": 0.0,
+        "maximum": 0.2659454682229738
+      },
+      {
+        "step": 39,
+        "timeDays": 39.0,
+        "integralConcentrationMm3": 200.6577377970929,
+        "minimum": 0.0,
+        "maximum": 0.273000995722159
+      },
+      {
+        "step": 42,
+        "timeDays": 42.0,
+        "integralConcentrationMm3": 214.50265170519026,
+        "minimum": 0.0,
+        "maximum": 0.2803001680773241
+      },
+      {
+        "step": 45,
+        "timeDays": 45.0,
+        "integralConcentrationMm3": 229.25477188417074,
+        "minimum": 0.0,
+        "maximum": 0.28784256272828485
+      },
+      {
+        "step": 48,
+        "timeDays": 48.0,
+        "integralConcentrationMm3": 244.96807902904604,
+        "minimum": 0.0,
+        "maximum": 0.2956272969315476
+      },
+      {
+        "step": 51,
+        "timeDays": 51.0,
+        "integralConcentrationMm3": 261.69920192380016,
+        "minimum": 0.0,
+        "maximum": 0.3036529862564256
+      },
+      {
+        "step": 54,
+        "timeDays": 54.0,
+        "integralConcentrationMm3": 279.5074929012639,
+        "minimum": 0.0,
+        "maximum": 0.3119177047194762
+      },
+      {
+        "step": 57,
+        "timeDays": 57.0,
+        "integralConcentrationMm3": 298.45510049453304,
+        "minimum": 0.0,
+        "maximum": 0.32041894697785184
+      },
+      {
+        "step": 60,
+        "timeDays": 60.0,
+        "integralConcentrationMm3": 318.60703879945777,
+        "minimum": 0.0,
+        "maximum": 0.3291535930292554
+      }
+    ],
+    "finalTimeDays": 60.0,
+    "stopReason": "time",
+    "integralConcentrationMm3": 318.60703879945777,
+    "integralMeaning": "model concentration integral; not measured tumor volume or tissue mass",
+    "initialConcentrationHash": "sha256:6d3a790d796764d5c70651e356266a7d7c569fc00b6f573548759a3b72db9bf2",
+    "concentrationHash": "sha256:634d4fb066a7821932ce55f20195e663e86c6ff60d80471d3e4a48902602cf61",
+    "thresholdMasks": [
+      {
+        "name": "virtual_concentration_ge_0p1",
+        "threshold": 0.1,
+        "maskHash": "sha256:e7d53cf03c9bf8f833a310df419ed83af68d11e240b67bd3d378ddc9adbcbc02",
+        "volumeMm3": 891.0,
+        "semantics": "declared_scalar_concentration_threshold_only"
+      },
+      {
+        "name": "virtual_concentration_ge_0p5",
+        "threshold": 0.5,
+        "maskHash": "sha256:9d4a2d50da54a1ca98ea96ac67a2925ac23f6c5d822aa52699a03613ee4594ed",
+        "volumeMm3": 0.0,
+        "semantics": "declared_scalar_concentration_threshold_only"
+      }
+    ],
+    "resources": {
+      "wallSeconds": 0.08922566683031619,
+      "processPeakRssBytes": 739164160,
+      "rssScope": "whole_process_lifetime_not_isolated_increment",
+      "estimatedArrayWorkingBytesUpperBound": 382279680,
+      "arrayEstimateScope": "solver_and_resampling_temporaries; excludes_preexisting_immutable_host_and_interpreter",
+      "maxSourceVoxels": 32000000,
+      "cellUpdates": 12695040,
+      "maxCellUpdates": 180000000,
+      "maxWallSeconds": 45.0,
+      "maxShapePerAxis": 96,
+      "execution": "one_CPU_process_sequential_steps_no_training"
+    },
+    "environment": {
+      "python": "3.12.14",
+      "numpy": "2.5.3",
+      "scipy": "1.18.1"
+    },
+    "limitations": [
+      "geometry_only_no_mass_effect_or_host_deformation",
+      "no_edema_necrosis_or_enhancement_labels",
+      "no_vascular_avoidance_perfusion_or_functional_risk",
+      "uncalibrated_growth_parameters_not_patient_forecast",
+      "source_hazards_and_private_annotations_preserved_unchanged",
+      "uniform_parameter_fiction_no_GM_WM_classification_or_CSF_barriers"
+    ],
+    "simulationId": "sha256:22dbd6072fcc78aa5df89805501f1d40fba19c9514fe7c1644c5a523471d50ad",
+    "outputFiles": {
+      "virtual-glioma.npz": {
+        "sha256": "77c3d9018d8e09df60feb75396b4d243df36ad5e67d9054e4f37537fd77861c1",
+        "bytes": 346873
+      }
+    }
+  },
+  "bundle": {
+    "schema": "ixi265-virtual-glioma-pilot-v1",
+    "status": "generated_geometry_saved_not_anatomically_accepted",
+    "host_bundle_sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+    "host": {
+      "case_hash": "sha256:72f6ae73183d8d5d52f30eafd90a533b0cf81a38e0070d7fa70ca954461c505c",
+      "image_hash": "sha256:f47aad533f660e6bd74c8156811c6550e8bdf3487a3c911f0b80a72ce9ce8cc1",
+      "brain_hash": "sha256:143360451b16afd3db7c8023a96c53064ad68ad3cfa4486bf95c5bb7ea28ceac",
+      "affine_hash": "sha256:a46904c6587d2738292abd668045fed4ba31d8384613e6bfd356a15f51af90dc"
+    },
+    "patient_group": "IXI:265",
+    "role": "TRAIN",
+    "training_admitted": false,
+    "new_patient_count": 0,
+    "virtual_lesion_count": 1,
+    "source_original_files": 16,
+    "source_arrays_and_originals_unchanged": true,
+    "runner_sha256": "e445b11bcc660c55ee24b30dd3777974ac605d9e223bd3310316ec029c3100c8",
+    "simulation_id": "sha256:22dbd6072fcc78aa5df89805501f1d40fba19c9514fe7c1644c5a523471d50ad",
+    "placement": {
+      "method": "nearest_admitted_9mm_interior_cell_to_normalized_RAS_bounds_0.32_0.68_0.65",
+      "requested_ras_mm": [
+        -21.6,
+        20.040000000000006,
+        34.95
+      ],
+      "actual_ras_mm": [
+        -21.0,
+        21.0,
+        36.0
+      ],
+      "hemisphere": "UNKNOWN_UNREVIEWED",
+      "lobe": "UNKNOWN_UNREVIEWED",
+      "clinical_placement_review": false
+    },
+    "display_transfer": {
+      "method": "nearest_neighbor_voxel_centers_then_explicit_intersection_with_source_brain_estimate",
+      "native_to_coarse_voxel": [
+        [
+          -0.015552276124556858,
+          0.02196285625298818,
+          0.3985137939453125,
+          -4.23406982421875
+        ],
+        [
+          -0.3121127287546793,
+          -0.0009742779657244682,
+          -0.01986840118964513,
+          73.73291015625
+        ],
+        [
+          0.00012025916172812381,
+          0.3117257356643677,
+          -0.028139668206373848,
+          -14.339482625325516
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "transferred_cells_before_intersection": 841,
+      "cells_outside_source_brain_excluded_by_display_definition": 0,
+      "native_cells": 841,
+      "pde_arrays_modified": false,
+      "qualification": "Display overlay construction on acquired T1; not an MR signal simulation or equivalent coarse-grid volume",
+      "native_volume_mm3": 886.9917108051667
+    },
+    "bundle": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/virtual-FK-pilot-001/IXI265-Guys-0845-virtual-FK-pilot-001.ressectionlab",
+    "bundle_sha256": "aeb2d7574bcd091009da60252763ac401a11478b66d8c3a7e71d35ef56ba2b51",
+    "case_hash": "sha256:b47c777475c1a2439fd2d05e831b3257e26369d055642f8f50c3ef7a5ba05640",
+    "session_hash": "sha256:e79fc8aef78034cf95434b148e817ff9058d822997d01c93e6123765b6b8bbd5",
+    "reopened_identical": true,
+    "tissue_mode": "UNIFORM_DIFFUSION_DOMAIN",
+    "anatomical_acceptance": false,
+    "clinical_validation": false,
+    "counts_scope": "One generated lesion on one already named host; not added to frozen nine-person catalog"
+  },
+  "raw_receipts_sha256": {
+    "manifest.json": "b085649f30287a62cfbb898a1e141b619af149b627485437ace8469ec3c2495c",
+    "bundle-receipt.json": "7e442e31a8efb350fdd7140e33be896ff77bbf58b47042480864ccba0eb49303"
+  },
+  "tests": {
+    "core_and_pilot_controls": 139,
+    "model_preparation_and_geometry_controls": 14,
+    "renderer_provenance_controls_in_source_commit": 3,
+    "legacy_test_limit": "See ../patient-corpus-first-tranche-v1/legacy-baseline-comparison.json"
+  },
+  "remaining_gates": [
+    "Individual pathology/tumor-free review",
+    "GM/WM and ventricle segmentation",
+    "Tissue-conditioned growth and refinement",
+    "Anatomical registration landmarks and vessel accuracy/coverage",
+    "Reviewed location diversity and population validation"
+  ]
+}

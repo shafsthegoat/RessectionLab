@@ -9,7 +9,7 @@ import type {NativeAnatomyApi} from './native-anatomy-data';
 import {useDiagnosticLayer} from "./use-diagnostic-layer";
 import { ImagingWorkspacePanel } from "./ImagingWorkspacePanel";
 import { useWorkspaceImaging } from "./use-workspace-imaging";
-import { workspaceDisplay } from "./workspace-imaging-data";
+import { workspaceDisplay, displaySeriesLabel } from "./workspace-imaging-data";
 import { hydrateWorkspace } from "./workspace-session";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -1459,7 +1459,7 @@ export default function App() {
             {workbenchTab==='anatomy' && <>
               {payload && <label className="poc-scan-selector">Source scan<select aria-label="Source scan" value={imaging.selectedId??''} disabled={busy}
                 onChange={e=>imaging.select(e.target.value||null)}><option value="">{String(payload.metadata.selected_modality??'Reference image')} · reference</option>
-                {imaging.series.map(s=><option key={s.descriptor.seriesId} value={s.descriptor.seriesId}>{s.descriptor.modality}{s.descriptor.registration.overlayPermitted?' · source registered':' · separate frame'}</option>)}</select></label>}
+                {imaging.series.map(s=><option key={s.descriptor.seriesId} value={s.descriptor.seriesId}>{displaySeriesLabel(s.descriptor)}</option>)}</select></label>}
               <AnatomyPanel layers={(displayedCase?.compartments??[]).map(layer=>({...layer,label:(displayedSource?.metadata.anatomy_layers as Record<string,{label?:string}>|undefined)?.[layer.name]?.label,provenance:anatomyDescription((displayedSource?.metadata.anatomy_layers as Record<string,AnatomyRecord>|undefined)?.[layer.name],imaging.selected?.descriptor.annotationKind==='estimated'?'Model estimate':annotationDescription)}))}
                 visibleLayers={displayedLayers} onVisibilityChange={setDisplayedLayers} settings={viewerSettings} onSettingsChange={setViewerSettings}
                 missingStructures={Array.isArray(displayedSource?.metadata.missing_anatomy)?displayedSource.metadata.missing_anatomy as string[]:['Skull','Vessels','Brain structures'].filter(name=>!displayedCase?.compartments.some(l=>l.name.toLowerCase().includes(name==='Brain structures'?'brain':name.toLowerCase())))}

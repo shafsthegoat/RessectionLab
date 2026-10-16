@@ -25,7 +25,7 @@ reused; source files remain outside Git. The confirmed author identities are
 | 0. Inspect and reuse | Latest merged workbench pulled; source/model/corpus audit completed | Actual source, runtime, reference and failure records; maintain original data/roles. |
 | 1. Inferred anatomy in Electron | Software POC passed: three real cases/four retained model runs hash/grid checked; actual current GUI interaction and separate native save/reopen completed | Anatomical accuracy, coverage review and population validation remain open; no clinical gate is implied. |
 | 2. Narrow two-tool episode | Software POC passed: actual tool actions, play/pause/scrub, two exact-state branches, native save/fresh process reopen, screenshots and independent source/geometry/accounting checks | Physiological calibration and native-collection adapter remain open; the bounded canonical-bundle episode is operable. |
-| 3. Real/virtual corpus diversity | Nine existing people source-qualified with limitations; exact cached resume and independent FK numerical controls pass; new host integration in progress | Reviewed anatomical/location diversity, accepted host/tissue support and tissue-conditioned pilot remain open. Count unique people separately from variants. |
+| 3. Real/virtual corpus diversity | Nine-person catalog passes source/resume checks; one additional IXI host has real brain/vessel estimates and a uniform FK overlay operated/saved/reopened in Electron | Reviewed anatomical/location diversity, accepted host/tissue support and tissue-conditioned pilot remain open. Count unique people separately from variants. |
 | 4. Mechanics and planning | Existing search and negative PPO results retained | Named physical/observation measurements, independent tests and matched observation/budget comparisons before promoting new learning. |
 | 5. Robotics | Deferred until matched trajectories and mature simulator exist | Rights, embodiment, timestamps and frozen-baseline evidence; images/labels alone cannot close this stage. |
 
@@ -64,6 +64,15 @@ geometry control; the latter cannot close the planned tissue-conditioned gate.
 Catalog qualification accepts source/persistence engineering, not anatomical
 truth or permission to train. No additional person is counted by that run.
 
+The [IXI source/virtual-overlay result](../artifacts/ixi265-virtual-pilot-v1/RESULT.md)
+adds a separately named same-person T1/MRA candidate. Fresh SynthStrip and vesselFM
+inference succeeded. Three bounded SynthSeg trials failed the memory guard, so
+no tissue/ventricle result is accepted. A clearly labeled uniform FK control
+preserves the source MRI, supports two-tool branches and passes native GUI
+save/fresh-process reopen. It adds one generated lesion and zero people. The
+host's registration and anatomy remain unreviewed; source references and model
+estimates stay separate, with fusion disabled.
+
 ## Accuracy and publication gate
 
 Publication readiness requires claims with matching evidence, not a test count
@@ -82,8 +91,8 @@ remain open until measured or reviewed evidence is available.
 
 ## Next executable actions
 
-Complete one publisher-described healthy vascular-host integration and inspect
-its separately labeled generated overlay in Electron. Preserve tissue-model
+Add the newly constructed IXI candidate through an explicit versioned corpus
+release without rewriting the frozen nine-person catalog. Preserve tissue-model
 failures; source-reported health and uniform diffusion do not establish an
 individually reviewed tumor-free, tissue-conditioned host. Then expand the real
 tranche, measure anatomical diversity and run the qualified biophysical pilot

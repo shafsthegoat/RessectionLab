@@ -117,6 +117,17 @@ test("annotation centering is unavailable for absent, empty or stale-case annota
   const absent = await hydrateCase(input, api());
   assert.equal(annotationCenter(input, absent), null);
 });
+test("generated target centering is not diluted by a much larger brain extraction",async()=>{
+  for(const frame of ['RAS+','LPS+']){
+    const input=fixture();input.frame=frame;
+    input.metadata.anatomy_layers={brain:{kind:'brain',provenance:'estimated'},enhancing_target:{kind:'tumor',provenance:'simulated'}};
+    input.compartments.unshift({name:'brain',volumeMm3:192,array:descriptor('uint8','brain')});
+    const data=await hydrateCase(input,api({brain:new Uint8Array(8).fill(1)}));
+    const before=data.compartments.map(layer=>layer.mask.slice());
+    assert.deepEqual(annotationCenter(input,data),frame==='LPS+'?[-12,2,11]:[12,-2,11]);
+    assert.deepEqual(data.compartments.map(layer=>layer.mask),before);
+  }
+});
 test("MRI and mask encodings are rejected before transfer", async () => {
   const mutations = [
     (p) => (p.mri.dtype = "float64"),

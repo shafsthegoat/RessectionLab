@@ -259,6 +259,16 @@ MIT code license. Pin a commit and inspect its exact license/solver interface
 before installation; the repository name alone establishes no data rights or
 physiological validation. No generator was installed or run during this audit.
 
+**Execution update, October 16:** the [subsequent IXI integration result](../artifacts/ixi265-virtual-pilot-v1/RESULT.md)
+now records a pinned FK adapter and one homogeneous-domain geometry control on
+the publisher-described healthy IXI265 host, after the actual first-release
+gate. It preserves acquired MRI and passes numerical/source and Electron
+save/reopen checks. Individual tumor-free review and tissue maps are still
+missing; three bounded SynthSeg failures are retained. This control does not
+close the tissue-conditioned pilot specified below or release the 96-descendant
+campaign. A separate explicit catalog extension is being prepared; the frozen
+nine-person catalog remains unchanged.
+
 Select exactly **one existing TRAIN host** with reviewed tumor-free status,
 brain/tissue support and accepted within-person frames. Prefer a qualified
 Lausanne/IXI T1–MRA host so retained vessels can constrain the same scene. If no

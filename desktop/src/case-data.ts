@@ -31,7 +31,7 @@ export function rasPoint(point: Vec3, frame: string): Vec3 {
     : [...point];
 }
 
-/** Source annotation navigation uses the same physical center as initial case loading. */
+/** Prefer visible tumor annotations to broad support anatomy when navigating. */
 export function annotationCenter(
   payload: CasePayload | null,
   caseData: ViewerCase | null,
@@ -44,9 +44,10 @@ export function annotationCenter(
     !caseData.compartments.some((layer) => layer.volumeMm3 > 0)
   )
     return null;
-  return payload.targetCentroidMm
-    ? rasPoint(payload.targetCentroidMm, payload.frame)
-    : initialCursor(caseData);
+  if(payload.targetCentroidMm)return rasPoint(payload.targetCentroidMm,payload.frame);
+  const anatomy=payload.metadata.anatomy_layers as Record<string,{kind?:string}>|undefined;
+  const targets=caseData.compartments.filter(layer=>anatomy?.[layer.name]?.kind==='tumor'&&layer.volumeMm3>0);
+  return initialCursor(targets.length?{...caseData,compartments:targets}:caseData);
 }
 
 /** Validate the physical/data contract before fetching or allocating any renderer arrays. */

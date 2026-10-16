@@ -22,6 +22,16 @@ an explicitly homogeneous geometry control. New IXI host and generated-overlay
 integration remain separate from the frozen catalog; anatomical diversity and
 physiological validation are still open.
 
+**IXI same-person source/virtual-overlay integration, October 16:**
+The [new IXI265 demonstration](artifacts/ixi265-virtual-pilot-v1/RESULT.md)
+retains real T1/MRA and fresh SynthStrip/vesselFM estimates, with unreviewed
+alignment and explicit partial coverage. A uniform FK lesion overlay preserves
+the acquired MRI and executes the same two-tool runtime; branches, native saves
+and fresh-process reopen work. Three SynthSeg memory failures remain recorded;
+GM/WM, ventricles, individual host review and tissue-conditioned growth remain
+open. This is one generated lesion on one real host, adding zero patients. The
+frozen searchable catalog remains nine people pending an explicit new release.
+
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and
 [patient construction plan](docs/patient-corpus-plan.md) supersede the historical
