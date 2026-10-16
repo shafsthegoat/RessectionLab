@@ -1,0 +1,30 @@
+{
+  "acquired_payloads_read": false,
+  "actual_evaluation_run": false,
+  "actual_score_verification_run": false,
+  "auditor_sha256": "02825e1ebb64a207f1a844b7b58b1d35735c0fb37f07c332062234234050939a",
+  "checks_passed": 18,
+  "generated_points": 17,
+  "mutations_rejected": [
+    "point omitted",
+    "point reordered",
+    "duplicate removed",
+    "wrong coordinates",
+    "wrong prediction",
+    "wrong voxel",
+    "wrong inclusion",
+    "wrong duplicate",
+    "wrong maximum",
+    "wrong median",
+    "wrong RMS",
+    "wrong delta",
+    "exclusion",
+    "clinical claim",
+    "anatomy acceptance",
+    "changed binding",
+    "wrong coordinate hash"
+  ],
+  "oracle_sha256": "5b9fdb550ccea490691f7861cb8842cfc57a93351549cce1dd6dac256c2dd240",
+  "schema": "resect-case3-saved-score-auditor-generated-v1",
+  "status": "pass"
+}

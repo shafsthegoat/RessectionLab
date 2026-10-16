@@ -1,4 +1,54 @@
-# One image-only ultrasound fit is frozen for landmark scoring
+# Image-only rigid fitting did not improve Case3 landmark alignment
+
+The fixed image-only fit improves image similarity but increases the primary
+landmark error on one existing RESECT TRAIN person. All 17 published full-tag
+pairs are retained at equal weight. Identity remains the comparison baseline;
+the rigid candidate is preserved and not promoted.
+
+| Fixed method | All-point RMS (mm) | Median (mm) | Maximum (mm) |
+| --- | ---: | ---: | ---: |
+| Physical identity (unchanged scans) | 2.028542 | 1.891915 | 3.019541 |
+| Image-only rigid fit | 2.087485 | 1.913277 | 3.275634 |
+
+The predeclared primary difference, rigid minus identity RMS, is
+**+0.058944 mm**. Seven point errors decrease and ten increase. No point is
+excluded, repeated or outside any of the four declared native-image checks
+(before, during, identity-predicted during, rigid-predicted during). Bounds
+checks establish geometric inclusion only, not image quality or anatomy.
+
+![Every paired landmark and within-case summary](figures/alignment-comparison.png)
+
+The [exact scalar result](scalar-results.json), SHA256
+`1794a37ad11861f7ee96bc738b4806f47674fc4b9000c15b673396de98b9cc06`,
+and [execution accounting](evaluation-record.json) retain the negative result.
+Full coordinates remain outside Git under the separately pinned output path.
+The [corrected ROOT release](root-evaluation-release-v2.json) follows format-only
+preparation commit `1810a33`; it does not permit another registration fit.
+
+These are sparse observations within one TRAIN person. There is no population
+confidence interval, clinical threshold, dense-deformation, causal tool-action,
+tissue-law or neurological-outcome claim. Case3's exposed full-tag points are
+consumed development evidence for future work. Protected cohort roles and
+payloads are unchanged.
+
+The [independent actual-score audit](../resect-case3-evaluation-independent-v1/independent-score-qa.json)
+passes after the outputs are frozen (SHA256
+`e59808143c01bfea2b492ec2f4153dee67faea9044771d93662199b46040d661`).
+Its separately frozen Decimal/shlex parser and standard-library arithmetic
+reconstruct every point, prediction, native voxel, inclusion flag, duplicate
+marker and scalar. Agreement is within the fixed 1e-9 absolute / 1e-11 relative
+software tolerance. It rechecks source bytes and all release/output pins before
+and after, without image decoding or refitting. Thirty prospective generated
+checks and 18 wrapper controls pass. Numerical agreement verifies the reported
+comparison; it does not establish anatomical or clinical acceptance.
+
+The [creator's instructions](https://yimingxiao.weebly.com/data-repositories.html)
+and [full methods](https://users.encs.concordia.ca/~hrivaz/Xiao_Database_MedPhys.pdf)
+support reference-first landmark pairs in millimeter world coordinates and
+matching MINC/NIfTI world frames. They do not supply this case's per-tool forces,
+action times, effective ultrasound resolution or a clinical error tolerance.
+
+## Frozen fit and retained preparation history
 
 The single predeclared RESECT Case3 fit completed from preparation commit
 `fa44c9e`. It uses only the two existing TRAIN ultrasound images and
@@ -25,10 +75,10 @@ not comparative latency measurements.
 
 Matched image NMI rises from 1.069655 to 1.078429 over 9,052 paired coarse-grid
 voxels, with full declared overlap retained. No predefined image-QC flag fires.
-This measures image similarity, not anatomical alignment. The next fixed stage
-must compare identity and the frozen rigid transform against every published
+This measures image similarity, not anatomical alignment. The subsequent fixed
+stage compares identity and the frozen rigid transform against every published
 full-tag landmark, without refitting, case replacement or outcome-based
-exclusion. No landmark accuracy result is claimed here.
+exclusion. The measured result is above.
 
 The [independent saved-fit audit](../resect-case3-registration-result-independent-v1/independent-fit-qa.json)
 passes 24 generated/tamper controls and checks the actual saved hash chain,
@@ -65,5 +115,7 @@ remain preserved. A minimal format correction accepts that optional empty label;
 64 generated controls pass. Transform, statistics, inclusion, duplicate retention
 and all scientific settings are unchanged. The separate
 [v2 preparation](../resect-case3-registration-evaluation-preparation-v2/preparation.json)
-discloses this prior tag exposure. Corrected scoring is still pending at this
-commit; there is no refit or outcome-based selection.
+discloses this prior tag exposure. Corrected scoring was pending at commit
+`1810a33`, before the second ROOT release and the one completed comparison
+reported above. There is one fit, one syntax refusal, one completed all-point
+comparison and no refit or outcome-based selection.

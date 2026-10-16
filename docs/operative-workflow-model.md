@@ -98,6 +98,16 @@ Full incision, bone work, dural manipulation, physiological anesthesia, real map
 
 No such external mechanism calibration or specialist endorsement was performed in this research pass.
 
+The [fixed Case3 image-only test](../artifacts/poc-resect-case3-image-registration-v1/RESULT.md)
+now supplies a measured limitation for phase 11: image NMI improves while
+all-17-landmark RMS increases from 2.028542 to 2.087485 mm. This one TRAIN case
+does not justify an automatic anatomy update. The earlier
+[Case2 conditional comparison](../artifacts/resect-case2-sparse-update-v1/RESULT.md)
+uses six observed correspondences as input and ten different points for scoring;
+its lower error answers a different, observation-conditioned question. Neither
+comparison identifies the surgical action causing displacement, validates dense
+tissue response or establishes a safe navigation tolerance.
+
 ## Primary source register
 
 All sources checked 2026-10-16 using web search/open. “Indexed text” means the browser search returned source text but a direct open was blocked; it is not claimed as a downloaded full paper. Links are to original publications, professional guidance, or their PubMed/PMC records.

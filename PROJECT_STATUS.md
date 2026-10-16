@@ -165,6 +165,19 @@ MINC labels before computing accuracy. The preserved refusal and
 retain all 17 rows, with 64 generated checks and unchanged transforms/statistics.
 Prior tag exposure is explicit; corrected scoring remains separately pending.
 
+**Measured ultrasound result, October 16:**
+The [completed all-point Case3 comparison](artifacts/poc-resect-case3-image-registration-v1/RESULT.md)
+retains all 17 full-tag pairs. Identity RMS is 2.028542 mm; the frozen image-only
+rigid fit is 2.087485 mm, a **+0.058944 mm** primary difference. Image similarity
+improved while sparse landmark alignment worsened. There are no excluded,
+duplicate or out-of-bounds rows. The baseline and negative candidate are both
+preserved; no refit, case substitution or anatomical promotion follows. This is
+one TRAIN person, not population or clinical validation. Case3 landmarks are
+now consumed development evidence, with protected roles unchanged.
+Independent parsing/arithmetic verifies all saved points, predictions, inclusion,
+duplicates and scalars, with source/output pins unchanged. Thirty prospective
+and 18 wrapper controls pass; the negative result is preserved.
+
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and
 [patient construction plan](docs/patient-corpus-plan.md) supersede the historical

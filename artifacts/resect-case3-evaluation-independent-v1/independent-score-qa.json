@@ -1,0 +1,388 @@
+{
+  "acquired_image_arrays_read": false,
+  "all_before_after_hashes_unchanged": true,
+  "all_point_numerical_recount": {
+    "excluded_point_indices": [],
+    "identity": {
+      "RMS_mm": 2.028541694767465,
+      "max_mm": 3.0195407594887658,
+      "median_mm": 1.8919147858598162
+    },
+    "inclusion_failure_indices": {
+      "before_native": [],
+      "during_native": [],
+      "identity_in_during_native": [],
+      "rigid_in_during_native": []
+    },
+    "point_count": 17,
+    "primary_delta_RMS_mm_rigid_minus_identity": 0.058943748938619756,
+    "rigid": {
+      "RMS_mm": 2.087485443706085,
+      "max_mm": 3.275633790261078,
+      "median_mm": 1.9132767999235218
+    },
+    "rows": [
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 2.853051042779817,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": -2.16730035607808,
+        "point_index": 1,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 0.6857506867017367
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 1.4369181857301445,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": 0.4763586141933773,
+        "point_index": 2,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 1.9132767999235218
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 2.2781805669105792,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": 0.5996010192237633,
+        "point_index": 3,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 2.8777815861343425
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 1.4838046779876397,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": 0.8996003285562615,
+        "point_index": 4,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 2.383405006543901
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 1.6757823895491328,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": -0.8186584130823974,
+        "point_index": 5,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 0.8571239764667354
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 2.48885284382524,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": 0.1806504550067518,
+        "point_index": 6,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 2.6695032988319918
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 1.7914765120896818,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": -0.39594432212670627,
+        "point_index": 7,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 1.3955321899629756
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 2.0985987114665376,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": 0.018662193171015584,
+        "point_index": 8,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 2.1172609046375532
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 2.3301286066783913,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": -0.7480079975362941,
+        "point_index": 9,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 1.5821206091420972
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 3.0195407594887658,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": 0.25609303077231216,
+        "point_index": 10,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 3.275633790261078
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 1.557340649145844,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": 0.13386609986933173,
+        "point_index": 11,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 1.6912067490151756
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 1.8919147858598162,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": -0.4313254743256998,
+        "point_index": 12,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 1.4605893115341164
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 0.6726370984877339,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": 1.8775243250514748,
+        "point_index": 13,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 2.5501614235392087
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 1.0176503209634433,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": 1.6400143226631514,
+        "point_index": 14,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 2.6576646436265947
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 2.043616050221767,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": 0.5662580143557143,
+        "point_index": 15,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 2.609874064577481
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 1.393053821650838,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": -0.03466387179820174,
+        "point_index": 16,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 1.3583899498526362
+      },
+      {
+        "duplicate_of_first_point_index": {
+          "before": null,
+          "during": null,
+          "pair": null
+        },
+        "identity_TRE_mm": 2.7541480558179883,
+        "included_in_native_image": {
+          "before_native": true,
+          "during_native": true,
+          "identity_in_during_native": true,
+          "rigid_in_during_native": true
+        },
+        "paired_rigid_minus_identity_TRE_mm": -1.6382505569887984,
+        "point_index": 17,
+        "retained_in_all_statistics": true,
+        "rigid_TRE_mm": 1.1158974988291899
+      }
+    ]
+  },
+  "all_saved_coordinates_predictions_voxels_verified": true,
+  "anatomical_alignment_accepted": false,
+  "auditor_sha256": "02825e1ebb64a207f1a844b7b58b1d35735c0fb37f07c332062234234050939a",
+  "case_id": "RESECT:Case3",
+  "clinical_acceptance": false,
+  "comparison_tolerance": {
+    "absolute": 1e-09,
+    "relative": 1e-11
+  },
+  "compressed_source_pins": {
+    "data/anatomy/resect-v1/Case3/US/Case3-US-before.nii.gz": "9fbb4d63cb26d324c7c8281a2b2b932a55a5f3abf4a8fd571a0e0518ac996192",
+    "data/annotations/resect-seg-v1/originals/Case3-US-during.nii.gz": "431ae1e23bd2984801c0b0d2720c9f4c240a404bab5fe37f5d8afdac521ddb20"
+  },
+  "coordinate_values_in_report": false,
+  "denominator": {
+    "actual_image_only_fits": 1,
+    "completed_corrected_scoring_outputs": 1,
+    "full_tag_rows": 17,
+    "initial_scoring_refusals": 1,
+    "people": 1
+  },
+  "full_tag_read": true,
+  "full_tag_sha256": "585769a006d8e5a995f987d91cef75ca45288cf6132aa3842cd44ca19927fc08",
+  "limits": [
+    "One TRAIN person; source tag was exposed for syntax development before scoring.",
+    "All full-tag rows retained, including duplicates or out-of-image points.",
+    "Numerical agreement is not held-out accuracy or clinical alignment acceptance."
+  ],
+  "model_or_optimizer_run": false,
+  "oracle_sha256": "5b9fdb550ccea490691f7861cb8842cfc57a93351549cce1dd6dac256c2dd240",
+  "pins": {
+    "artifacts/poc-resect-case3-image-registration-v1/initial-evaluation-refusal.json": "49f7d947e44487c7e7a274628541a7b5a3611d389d731d4be3d9b14dbf28bd16",
+    "artifacts/poc-resect-case3-image-registration-v1/root-evaluation-release-v2.json": "b52400db2661132e226eddec97439f54051b06a2b06da921e2fc6f669b021d37",
+    "artifacts/poc-resect-case3-image-registration-v1/root-fit-release.json": "bc196c57fb4701c161f50bcb4b3edae03b5988b864308a0c217e9c83ac8962e0",
+    "artifacts/resect-case3-evaluation-independent-v1/prospective-qa.json": "6c9afea9647399b743174203fa10814615acf6ccbeb32708317d058ec5d0a265",
+    "artifacts/resect-case3-image-registration-preparation-v1/header-preflight-rss-v2.json": "ef9e0cd6029e869a6364de6c946f0284bc0a7ca1f700695a8bb75b52e60fd7ba",
+    "artifacts/resect-case3-registration-evaluation-preparation-v2/diagnosis.json": "a9edc80d8129abf2fca13ac2d6b2f79d667ee5dcd7aaf1ff544c136425c772f3",
+    "artifacts/resect-case3-registration-evaluation-preparation-v2/preparation.json": "0b9668d8b6a1adf319b55a6ed8aded986039bc6eed8876a4c1fabf9f50f5518b",
+    "artifacts/resect-case3-registration-result-independent-v1/independent-fit-qa.json": "3277460d1529126ea04828e8785ffd0ebfebdc1ae6209b77e7d4cd92eed1a955",
+    "manifests/resect-component-cohort-v1.json": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
+    "outputs/poc-resect-case3-image-registration-evaluation-v1/all-points-with-coordinates.json": "a6e20c324207ec5f03f6e904e80a391ad0ea864612a00483de681496279b3db7",
+    "outputs/poc-resect-case3-image-registration-evaluation-v1/summary-no-coordinates.json": "1794a37ad11861f7ee96bc738b4806f47674fc4b9000c15b673396de98b9cc06",
+    "outputs/poc-resect-case3-image-registration-v1/candidate.json": "17a9599de644b9d7d4cd3fd9b356630adb3e38180496b9501f914520056949ef",
+    "outputs/poc-resect-case3-image-registration-v1/frozen-transform.json": "e6648339d69841985f8fa644ae5d69168422ce12ca5dadc4659b275a8b9cd8af",
+    "outputs/poc-resect-case3-image-registration-v1/result.json": "ea8e57322989e6b5f580c67181201deead9235a4829315781bc7aad0f598b12b",
+    "outputs/poc-resect-case3-image-registration-v1/supervision.json": "e675d52669dfef2442e31d019e98c8d14eb705a470692510f0bc37a1cf2c9fe9",
+    "scripts/evaluate_resect_case3_image_registration.py": "7d987eb0bd31375d924e444e1838e4255327cef7036ea2e4ed7e9d78b9e3406e",
+    "scripts/poc_resect_case3_image_registration.py": "e17d755eeadb6a3d1fd365b7a3b4dc31f9e27c4f93afdb6045d8f6e27ef9612f",
+    "tests/first_resect_case3_evaluation_qa.py": "5b9fdb550ccea490691f7861cb8842cfc57a93351549cce1dd6dac256c2dd240",
+    "tests/test_evaluate_resect_case3_image_registration.py": "eda3b282c158ceaecb1320fed0722e0e4ea8bdabad416826ca665192538d5007"
+  },
+  "role": "TRAIN",
+  "schema": "resect-case3-evaluation-independent-saved-result-v1",
+  "short_tag_read": false,
+  "status": "pass"
+}

@@ -189,3 +189,15 @@ checking passes 24 controls. The separate all-point scorer passes 52 generated
 controls and is committed before any full-tag coordinates are opened. Its next
 release measures rigid-versus-identity landmark error without another fit;
 image similarity alone closes no anatomical-accuracy gate.
+
+The [subsequent all-point result](../artifacts/poc-resect-case3-image-registration-v1/RESULT.md)
+is negative for the fixed rigid method: RMS 2.028542 mm at identity versus
+2.087485 mm after fitting (+0.058944 mm). Every one of 17 full-tag pairs is
+retained, with no duplicate or native-box failure. The original empty-label
+syntax refusal is retained; its format-only correction changes no scientific
+rule or fitted transform. There is one fit and no refit. Image NMI improvement
+does not promote the candidate. One TRAIN person establishes neither dense
+deformation nor population/clinical validity; Case3's points are consumed.
+Independent parsing/arithmetic verifies all 17 saved points and scalar outcomes
+with source/output pins unchanged. The measured limitation is retained for
+future observation-model development, without another fit on these results.

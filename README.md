@@ -51,6 +51,12 @@ expected left-frontal/parietal cases and open the matching acquired scan.
 Labels say “Dataset / paper report · review pending”; reviewed anatomy remains
 UNKNOWN and unrelated saved versions receive no inferred location.
 
+The [fixed RESECT ultrasound comparison](artifacts/poc-resect-case3-image-registration-v1/RESULT.md)
+now measures real paired-image alignment: on all 17 landmarks of one TRAIN
+person, the image-only rigid fit increases RMS error from 2.029 to 2.087 mm.
+The negative result, unchanged baseline and initial file-format refusal remain
+preserved. Improved image similarity does not establish anatomical accuracy.
+
 A local macOS anatomy workbench for acquired patient imaging, saved segmentations,
 and linked 3D/source-image inspection.
 
