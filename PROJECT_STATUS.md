@@ -43,8 +43,19 @@ native vessel estimate separately from source labels. Independent metadata/reade
 review passes; the 40 historical nine-person files remain unchanged. Seven people
 have brain/tumor presence, one brain/skull and one brain/vessels across separate
 grids. No fused anatomy or anatomical truth is independently accepted. Two further
-frozen TRAIN CT/MR pairs have passed source preparation; inference and GUI review
-are separate work and do not change this catalog.
+frozen TRAIN CT/MR pairs now have the separate integration result below and do
+not change this catalog.
+
+**Two additional acquired CT/MRI cases, October 16:**
+The [fixed SynthRAD B/C integration](artifacts/poc-synthrad-bc-integration-v1/RESULT.md)
+preserves four original scans, runs the unchanged brain/skull model twice and
+passes independent source/mask/native-save checks. Actual fresh-process Electron
+checks restore both cases and their viewing settings, with MRI separate from CT
+estimates. These are two new source/model candidates outside the ten-person
+catalog; anatomy, health status, registration and training remain unaccepted.
+Optional catalog absence now permits ordinary native browsing in clean checkouts;
+present invalid catalog metadata still fails closed. The next tissue candidate
+must retain failed model attempts and distinguish unknown cells from tissue.
 
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and

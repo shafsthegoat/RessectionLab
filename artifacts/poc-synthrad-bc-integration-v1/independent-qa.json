@@ -1,0 +1,593 @@
+{
+  "schema": "independent-synthrad-bc-integration-audit-v1",
+  "status": "pass",
+  "created_utc": "2026-10-16T07:06:59.845887+00:00",
+  "metadata_and_controls": {
+    "status": "pass",
+    "exact_subjects": [
+      "1BB033",
+      "1BC077"
+    ],
+    "rank_and_roles_independently_recomputed": true,
+    "source_only_admission_unchanged": true,
+    "separate_model_execution_declaration_bound": true,
+    "source_rebinding_controls_rejected_before_payload": [
+      "role",
+      "subject",
+      "training",
+      "ct_hash",
+      "ct_path",
+      "nested_role",
+      "mr_hash",
+      "extra_generated"
+    ],
+    "five_resource_limit_edges_pass": true,
+    "budgets": {
+      "workers": 1,
+      "subjects_sequential": [
+        "1BB033",
+        "1BC077"
+      ],
+      "threads": 2,
+      "wall_seconds_per_inference": 180,
+      "process_family_rss_bytes": 5368709120,
+      "minimum_system_available_bytes": 1073741824,
+      "campaign_wall_seconds": 600,
+      "automatic_retries": 0,
+      "device": "mps",
+      "model_parameters_changed": false,
+      "allocator_cap": "Existing worker0.55 recommended-memory fraction, unchanged",
+      "new_outputs_bytes": 536870912,
+      "free_disk_reserve_bytes": 53687091200
+    },
+    "saved_model_config_matches_worker_literal": true,
+    "small_model_support_files_rehashed": {
+      "dataset.json": "e804e08ad8912e3a6f541741c8c78799d75acbd3f4f3f18ff5f211bbd3da961a",
+      "plans.json": "d1cb3c15f53dc36fdb618e0f9082573d1f50b74a9b5fa73094ac8680845839f1",
+      "dataset_fingerprint.json": "f1336cd0df44e0eeecfa69143226c05b246c550e690b7b12929f65ca9843260f"
+    },
+    "training_admitted": false,
+    "registration_runs": 0,
+    "preparation_real_payload_reads": 0,
+    "limitations": [
+      "Clinical HU calibration and source anatomical coverage remain unreviewed.",
+      "Publisher-preprocessed acquired CT/MR are preserved; this does not establish raw scanner-native fidelity."
+    ]
+  },
+  "generated_transfer_control": {
+    "status": "pass",
+    "generated_voxels": 60,
+    "every_value_and_world_center_preserved": true,
+    "array_flip_affine_shift_and_value_change_detected": true
+  },
+  "cases": [
+    {
+      "status": "pass",
+      "subject_id": "1BB033",
+      "role": "TRAIN",
+      "training_admitted": false,
+      "bundle_sha256": "6da3934b794ad13945ea8d1443a70c46625a75c9b8a7cf2a800d2830c906dd82",
+      "case_hash": "sha256:34914516b31c5a88dbdbeac4a7893fb69759e556a2cae4e67e2153e836ad66e0",
+      "source_arrays": {
+        "ct": {
+          "source_sha256": "4999e29411f5c76d986eb188f59a8148f8dbad7ef8bd30abef2e155a1681cafd",
+          "native_shape": [
+            212,
+            246,
+            181
+          ],
+          "native_affine": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              102.51171875
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              360.51171875
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -120.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "saved_affine": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              102.51171875
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              360.51171875
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -120.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "saved_array_hash": "sha256:1a76435056ef04eaff92332882eaa01b25766b393a5c7f232504c81447cafa49",
+          "native_order_and_affine_exact_no_reorientation": true,
+          "original_bytes_exact": true,
+          "scalar_minimum": -1024.0,
+          "scalar_maximum": 3000.0
+        },
+        "mr": {
+          "source_sha256": "68fe4d165a8b3063bfce58f7b75bf7b22ce52243a7dd3c0704b2a29984b7a228",
+          "native_shape": [
+            212,
+            246,
+            181
+          ],
+          "native_affine": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              102.51171875
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              360.51171875
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -120.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "saved_affine": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              102.51171875
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              360.51171875
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -120.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "saved_array_hash": "sha256:9e285e2a29ee3762a3091f839d7269963c407509014dd4ec8a5f7c8b46988f7c",
+          "native_order_and_affine_exact_no_reorientation": true,
+          "original_bytes_exact": true,
+          "scalar_minimum": 0.0,
+          "scalar_maximum": 993.0
+        }
+      },
+      "mask_transfer": {
+        "brain": {
+          "native_saved_mask_sha256": "7800cf900931f51d4970df07cc75398fec7a98316ecb7ff9400d6a650a7a5578",
+          "voxels": 1281637,
+          "volume_mm3": 1281637.0,
+          "saved_array_hash": "sha256:310bf62d03579fc8e38a8b71bb7c31afc64d61478640fdb109395b44dca0aecd",
+          "native_to_workspace_arrays_and_affines_exact": true,
+          "positive_boundary_voxels_face_sum": 0,
+          "provenance": "estimated",
+          "anatomical_accuracy_validated": false
+        },
+        "skull": {
+          "native_saved_mask_sha256": "5676513664ee1edeef4f7cd770db3226b811df3c8207dd61e6015711ac537e12",
+          "voxels": 677099,
+          "volume_mm3": 677099.0,
+          "saved_array_hash": "sha256:83af8bc2a10690abba299684ba7badda1eca0eaed48d35597ef07c8a1faa684c",
+          "native_to_workspace_arrays_and_affines_exact": true,
+          "positive_boundary_voxels_face_sum": 726,
+          "provenance": "estimated",
+          "anatomical_accuracy_validated": false
+        }
+      },
+      "all_five_embedded_originals_exact": true,
+      "MR_native_source_separate": true,
+      "fusion_permitted": false,
+      "registration_status": "unreviewed",
+      "model_cache_key": "cd74e07c2b611f9943d7",
+      "model_seconds": 9.000078083015978,
+      "sampled_process_family_rss_bytes": 3393273856,
+      "missing_anatomy": [
+        "tumor",
+        "vessels",
+        "ventricles"
+      ],
+      "clinical_validation": false,
+      "limitation": "Saved native binary model masks match the workspace exactly; the original full multiclass prediction was not retained for a separate label-extraction replay. No inference or accuracy evaluation was performed."
+    },
+    {
+      "status": "pass",
+      "subject_id": "1BC077",
+      "role": "TRAIN",
+      "training_admitted": false,
+      "bundle_sha256": "171101168d1244d509fc64249cd9039a74aa9a35f35535dddc753307e80f905d",
+      "case_hash": "sha256:128463ef5705f8556e16128816458fc98587d728963ad704ec997d549210098a",
+      "source_arrays": {
+        "ct": {
+          "source_sha256": "5a33487b11e9762c84f6b1ce8fb3e9f2c008e1ede78c57cd2a053c3cb14dead7",
+          "native_shape": [
+            229,
+            277,
+            182
+          ],
+          "native_affine": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              111.0
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              78.0999984741211
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              75.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "saved_affine": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              111.0
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              78.0999984741211
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              75.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "saved_array_hash": "sha256:e1ddf060539fe4333bff22385fe8b1c38f76db2afa16dd25e9992184882ed497",
+          "native_order_and_affine_exact_no_reorientation": true,
+          "original_bytes_exact": true,
+          "scalar_minimum": -1024.0,
+          "scalar_maximum": 3000.0
+        },
+        "mr": {
+          "source_sha256": "f41eb00d101bab4b27665a6870794d6e4eb169d70bea0f9cfc28c02625dd72c0",
+          "native_shape": [
+            229,
+            277,
+            182
+          ],
+          "native_affine": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              111.0
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              78.0999984741211
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              75.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "saved_affine": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              111.0
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              78.0999984741211
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              75.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "saved_array_hash": "sha256:f5b15e9ed10533b0e6697c03a2bca0d56cde18ba9b6aa4c49cda6437c57ef622",
+          "native_order_and_affine_exact_no_reorientation": true,
+          "original_bytes_exact": true,
+          "scalar_minimum": 0.0,
+          "scalar_maximum": 1093.0
+        }
+      },
+      "mask_transfer": {
+        "brain": {
+          "native_saved_mask_sha256": "dba1683c3b5eb600f4d83f9d3a7ebf8c70c9796eb10cfc94367070a0eed69028",
+          "voxels": 1246316,
+          "volume_mm3": 1246316.0,
+          "saved_array_hash": "sha256:ec5a4c56e4e30bb0c2c65afc3f5a1c2c323cd7587799a6f2e973d373ebd610b0",
+          "native_to_workspace_arrays_and_affines_exact": true,
+          "positive_boundary_voxels_face_sum": 0,
+          "provenance": "estimated",
+          "anatomical_accuracy_validated": false
+        },
+        "skull": {
+          "native_saved_mask_sha256": "bd75f0feab5ca398a746e0e7a88a598945e975d1fbf872aa950c55a7d7450aae",
+          "voxels": 737268,
+          "volume_mm3": 737268.0,
+          "saved_array_hash": "sha256:bec53dce2226f7452f6d25e41ec9968f63c954d2ecada01658bffd594daa448a",
+          "native_to_workspace_arrays_and_affines_exact": true,
+          "positive_boundary_voxels_face_sum": 153,
+          "provenance": "estimated",
+          "anatomical_accuracy_validated": false
+        }
+      },
+      "all_five_embedded_originals_exact": true,
+      "MR_native_source_separate": true,
+      "fusion_permitted": false,
+      "registration_status": "unreviewed",
+      "model_cache_key": "94d62cb06df44f08b15b",
+      "model_seconds": 7.958724875003099,
+      "sampled_process_family_rss_bytes": 3634118656,
+      "missing_anatomy": [
+        "tumor",
+        "vessels",
+        "ventricles"
+      ],
+      "clinical_validation": false,
+      "limitation": "Saved native binary model masks match the workspace exactly; the original full multiclass prediction was not retained for a separate label-extraction replay. No inference or accuracy evaluation was performed."
+    }
+  ],
+  "campaign_sha256": "409da7da53fe817abd7bdb8f43a75ea3c55a941754d148cca3402e0e8da5f3a1",
+  "campaign_seconds": 29.504685499938205,
+  "measured_source_and_model_output_bytes": 149452038,
+  "fixed_source_people_materialized": 2,
+  "ten_person_catalog_unchanged": true,
+  "model_weight_rehashed_once": true,
+  "inputs_unchanged": true,
+  "prior_audits_unchanged": true,
+  "model_or_solver_executed": false,
+  "model_frameworks_imported": false,
+  "auditor_adjustments": [
+    "Initial oracle incorrectly assumed RAS world coordinates meant canonical RAS array-axis ordering. Corrected to require exact native arrays and affines, matching the loader's no-reorientation contract. No product change was needed."
+  ],
+  "input_stamps": {
+    "artifacts/patient-corpus-first-tranche-v1/independent-qa.json": {
+      "sha256": "5f112d987639408911b379bd72792cab2504f68599981ef833445e31bcf7e0bd",
+      "bytes": 18706,
+      "mtime_ns": 1792131871120640478
+    },
+    "artifacts/ixi265-virtual-pilot-v1/independent-qa.json": {
+      "sha256": "61e449b05aaf1396e7383a23bb903238ab3e7e223899c23a0ed64e40c814eef0",
+      "bytes": 9412,
+      "mtime_ns": 1792132085881804749
+    },
+    "artifacts/ixi265-virtual-pilot-v1/gui-and-vessel-independent-qa.json": {
+      "sha256": "0a1700dd15a784405d47b1d66aa7713eb6dab3cc92faf3179bc608a6da36d31b",
+      "bytes": 21516,
+      "mtime_ns": 1792132878574822809
+    },
+    "artifacts/patient-corpus-ten-person-v1/independent-qa.json": {
+      "sha256": "2d28dcde7d6e7ff3a432ae6fe81e3cab7fa082e6ab5f05b5ecfbcd90c685951d",
+      "bytes": 19405,
+      "mtime_ns": 1792133803414957857
+    },
+    "manifests/poc-synthrad-bc-source-admission-v1.json": {
+      "sha256": "75dc377966ab15da03ebb454a79059414876676cf39cd790019798924f828dd8",
+      "bytes": 11160,
+      "mtime_ns": 1792133517576136030
+    },
+    "outputs/poc-synthrad-bc-source-v1/source-result.json": {
+      "sha256": "4d2e85f0e2ba808f922f4d1f6f364e52e5f51d589e83746eb81793106b19e2ff",
+      "bytes": 17037,
+      "mtime_ns": 1792133524782873660
+    },
+    "outputs/poc-synthrad-bc-source-v1/model-execution-declaration.json": {
+      "sha256": "7a541611e509fd7368abac9b153eaec477011ea2717a984129656d6fb0c7c252",
+      "bytes": 3984,
+      "mtime_ns": 1792134051996065249
+    },
+    "scripts/poc_synthrad_extension.py": {
+      "sha256": "bb873b545c740300c89584bb3ae6e8f20e7418062c25d2539dfcef21eebbe20a",
+      "bytes": 31463,
+      "mtime_ns": 1792134008323302113
+    },
+    "src/resectionlab/poc_models.py": {
+      "sha256": "7446332d8e948624c055f3c19ad5d64c12018095d8e4b330535d62c47908c28b",
+      "bytes": 17340,
+      "mtime_ns": 1792128109535214665
+    },
+    "manifests/synthrad-component-cohort-v1.json": {
+      "sha256": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30",
+      "bytes": 108926,
+      "mtime_ns": 1792128109499701152
+    },
+    "external-model/dataset.json": {
+      "sha256": "e804e08ad8912e3a6f541741c8c78799d75acbd3f4f3f18ff5f211bbd3da961a",
+      "bytes": 3796,
+      "mtime_ns": 1791954378965567443
+    },
+    "external-model/plans.json": {
+      "sha256": "d1cb3c15f53dc36fdb618e0f9082573d1f50b74a9b5fa73094ac8680845839f1",
+      "bytes": 7110,
+      "mtime_ns": 1791954378963461611
+    },
+    "external-model/dataset_fingerprint.json": {
+      "sha256": "f1336cd0df44e0eeecfa69143226c05b246c550e690b7b12929f65ca9843260f",
+      "bytes": 232834,
+      "mtime_ns": 1791954378965760110
+    },
+    "outputs/poc-first-qa/synthrad-bc-parent-release-pins.json": {
+      "sha256": "84fc492ff6ac29d1e6249b4797a5f0805ebaf50241932f5e5dbecc86a397b9a8",
+      "bytes": 819,
+      "mtime_ns": 1792134366488511078
+    },
+    "artifacts/poc-synthrad-bc-preparation-v1/receipt.json": {
+      "sha256": "50ba6725e4c118f8f13f7acfcc27359be55028f13e948cccb5bb30b9333ebc35",
+      "bytes": 27027,
+      "mtime_ns": 1792134221261962830
+    },
+    "outputs/patient-corpus-ixi265-v1/catalog.json": {
+      "sha256": "2a7ba1c26f101261e3a5fecf84ae998b637a70c5a7f66d43d224153c738ee673",
+      "bytes": 196357,
+      "mtime_ns": 1792133392621107753
+    },
+    "outputs/poc-synthrad-bc-source-v1/model-campaign.json": {
+      "sha256": "409da7da53fe817abd7bdb8f43a75ea3c55a941754d148cca3402e0e8da5f3a1",
+      "bytes": 2335,
+      "mtime_ns": 1792134097770274721
+    },
+    "outputs/poc-synthrad-bc-source-v1/model-denominator-initial.json": {
+      "sha256": "c5dcfeb4f361be5b24df906f23e65720c1cf7ee3637bd09d78a11774334ad73d",
+      "bytes": 469,
+      "mtime_ns": 1792134068266164152
+    },
+    "external-model/checkpoint_final.pth": {
+      "sha256": "1e38e40356adc2706a662e365405a97f862d62a7da65f6bf81d025aee1b979ac",
+      "bytes": 164939235,
+      "mtime_ns": 1791954378963237528
+    },
+    "outputs/poc-synthrad-bc-source-v1/1BB033/SynthRAD2023-1BB033.ressectionlab": {
+      "sha256": "6da3934b794ad13945ea8d1443a70c46625a75c9b8a7cf2a800d2830c906dd82",
+      "bytes": 38261823,
+      "mtime_ns": 1792134083975741135
+    },
+    "outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/inference.json": {
+      "sha256": "fe916ff4a0c1bd4f7daae11253c429faffd88e2d6162ecb8b2bdb9047bb9acbc",
+      "bytes": 5412,
+      "mtime_ns": 1792134077486653991
+    },
+    "outputs/poc-synthrad-bc-source-v1/1BB033/ct.nii.gz": {
+      "sha256": "4999e29411f5c76d986eb188f59a8148f8dbad7ef8bd30abef2e155a1681cafd",
+      "bytes": 11357517,
+      "mtime_ns": 1792133524061741567
+    },
+    "outputs/poc-synthrad-bc-source-v1/1BB033/mr.nii.gz": {
+      "sha256": "68fe4d165a8b3063bfce58f7b75bf7b22ce52243a7dd3c0704b2a29984b7a228",
+      "bytes": 7878632,
+      "mtime_ns": 1792133524462492177
+    },
+    "outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/brain_mask.nii.gz": {
+      "sha256": "7800cf900931f51d4970df07cc75398fec7a98316ecb7ff9400d6a650a7a5578",
+      "bytes": 145578,
+      "mtime_ns": 1792134076624305478
+    },
+    "outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/skull_mask.nii.gz": {
+      "sha256": "5676513664ee1edeef4f7cd770db3226b811df3c8207dd61e6015711ac537e12",
+      "bytes": 184703,
+      "mtime_ns": 1792134076601012001
+    },
+    "outputs/poc-synthrad-bc-source-v1/1BC077/SynthRAD2023-1BC077.ressectionlab": {
+      "sha256": "171101168d1244d509fc64249cd9039a74aa9a35f35535dddc753307e80f905d",
+      "bytes": 33535523,
+      "mtime_ns": 1792134097581497322
+    },
+    "outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/inference.json": {
+      "sha256": "d4869860fd252cd9f4f9cabdc5d6d90febc6072915040bc5f89696b4c85fc470",
+      "bytes": 5397,
+      "mtime_ns": 1792134092240064190
+    },
+    "outputs/poc-synthrad-bc-source-v1/1BC077/ct.nii.gz": {
+      "sha256": "5a33487b11e9762c84f6b1ce8fb3e9f2c008e1ede78c57cd2a053c3cb14dead7",
+      "bytes": 8854360,
+      "mtime_ns": 1792133524589815126
+    },
+    "outputs/poc-synthrad-bc-source-v1/1BC077/mr.nii.gz": {
+      "sha256": "f41eb00d101bab4b27665a6870794d6e4eb169d70bea0f9cfc28c02625dd72c0",
+      "bytes": 8000741,
+      "mtime_ns": 1792133524720427393
+    },
+    "outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/brain_mask.nii.gz": {
+      "sha256": "dba1683c3b5eb600f4d83f9d3a7ebf8c70c9796eb10cfc94367070a0eed69028",
+      "bytes": 159748,
+      "mtime_ns": 1792134091404350847
+    },
+    "outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/skull_mask.nii.gz": {
+      "sha256": "bd75f0feab5ca398a746e0e7a88a598945e975d1fbf872aa950c55a7d7450aae",
+      "bytes": 202417,
+      "mtime_ns": 1792134091372071482
+    }
+  },
+  "auditor_sha256": "a44a370db7eba44bb599e85cbcb4f96ec1327a137cd530fce8da7285e78737df",
+  "limitations": [
+    "Sampled RSS is not an exact peak and must not be added to shared Metal allocations.",
+    "Dataset overlap, HU calibration, anatomical completeness and model accuracy are unvalidated.",
+    "Model estimates are not source annotations. Matching CT/MR coded grids do not grant fusion."
+  ]
+}

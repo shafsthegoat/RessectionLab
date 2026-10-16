@@ -250,6 +250,20 @@ admitted. Expansion does not require new paid services, agreements or uploads.
    Re-run the inventory and publish counts by people, visits, bundles, variants,
    anatomy combination, QC disposition and role.
 
+The next real scaffold slice now uses the exact next two TRAIN people in the
+frozen SynthRAD center order: `1BB033` and `1BC077`, following center A's existing
+`1BA336`. A fresh full archive checksum precedes extraction of only their four
+named acquired CT/MR members; ZIP/gzip CRC, exact length, physical frame and
+finite-value checks precede reconstruction. The unchanged pinned TotalSegmentator
+fast model estimates brain/skull on CT and restores the native grid. Each saved
+case retains both original acquisitions, model outputs and receipt, with MRI as
+a separate unreviewed display source and fusion disabled. Source checks and both
+bounded model runs passed, followed by the
+[independent source/mask/bundle audit](../artifacts/poc-synthrad-bc-integration-v1/independent-qa.json).
+These radiotherapy-source cases are not declared healthy or tumor-free, and
+missing tumor labels do not permit them to become virtual-glioma hosts. Their
+model/GUI integration is separate from the frozen ten-person catalog.
+
 ## One bounded PDE generator pilot, only after Gate2
 
 Use the author-maintained [TumorGrowthToolkit](https://github.com/m1balcerak/TumorGrowthToolkit)
@@ -266,8 +280,9 @@ gate. It preserves acquired MRI and passes numerical/source and Electron
 save/reopen checks. Individual tumor-free review and tissue maps are still
 missing; three bounded SynthSeg failures are retained. This control does not
 close the tissue-conditioned pilot specified below or release the 96-descendant
-campaign. A separate explicit catalog extension is being prepared; the frozen
-nine-person catalog remains unchanged.
+campaign. The [separate ten-person catalog release](../artifacts/patient-corpus-ten-person-v1/RESULT.md)
+now includes the acquired IXI candidate; the frozen nine-person catalog remains
+unchanged and the generated descendant is excluded.
 
 Select exactly **one existing TRAIN host** with reviewed tumor-free status,
 brain/tissue support and accepted within-person frames. Prefer a qualified

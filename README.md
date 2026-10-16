@@ -29,6 +29,11 @@ verify exact bundle checksums. Actual Electron checks cover BTC discovery/open
 and separate IXI vessel-model inspection; source checking does not accept anatomy
 as truth or count generated variants as new people.
 
+Two further [acquired SynthRAD CT/MRI cases](artifacts/poc-synthrad-bc-integration-v1/RESULT.md)
+now open with fresh brain/skull estimates and pass native save/fresh-process
+reopen checks. Their original scans and separate MRI views are preserved. They
+remain unreviewed source/model candidates outside the frozen ten-person catalog.
+
 A local macOS anatomy workbench for acquired patient imaging, saved segmentations,
 and linked 3D/source-image inspection.
 

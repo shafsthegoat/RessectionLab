@@ -40,6 +40,58 @@ test('sealed metadata lists exactly ten own-source cases without any bundle exis
   await assert.rejects(()=>library.resolve('a'.repeat(64)),/current library/);assert.equal(opened.length,0);
 });
 
+test('an absent optional catalog preserves native, prepared and recent browsing without catalog authority',async t=>{
+  const f=await fixture(t),staleId=(await f.reader.load())[0].id;
+  const prepared=path.join(f.root,'outputs/poc-cases'),user=path.join(f.base,'user');
+  const preparedFile=path.join(prepared,'UCSF-PDGM-0004.ressectionlab'),recentFile=path.join(f.base,'Saved study.rsworkspace');
+  const nativeFile=path.join(f.base,'patient-anatomy.json');
+  await fs.mkdir(prepared,{recursive:true});
+  await fs.writeFile(preparedFile,'tiny synthetic prepared bytes');await fs.writeFile(recentFile,'tiny synthetic saved bytes');
+  await fs.writeFile(nativeFile,JSON.stringify({schema:'patient-anatomy-v1',patient_id:'Native study'}));
+  const library=new CaseLibrary(user,prepared,[nativeFile],f.root);await library.remember(recentFile);
+  const opened=watchBundleOpens(t);
+  await fs.unlink(path.join(f.root,RELEASE.catalogPath));
+  for(const removeCatalogDirectory of [false,true]) {
+    if(removeCatalogDirectory)await fs.rmdir(path.dirname(path.join(f.root,RELEASE.catalogPath)));
+    assert.deepEqual(await f.reader.load(),[]);
+    const rows=await library.list();assert.equal(rows.length,3);
+    assert(rows.every(row=>!row.qualifiedCatalog&&!row.id.startsWith('catalog-')));
+    assert.equal(rows.find(row=>row.native)?.title,'Native study');assert.equal(rows.find(row=>row.recent)?.portable,true);
+    for(const filename of [nativeFile,preparedFile,recentFile])assert.equal(await library.resolve(hash(filename)),filename);
+    await assert.rejects(()=>f.reader.resolve(staleId),/current catalog/);
+    await assert.rejects(()=>library.resolve(staleId),/current library/);
+    await assert.rejects(()=>library.resolve(preparedFile),/current library/);
+  }
+  await fs.mkdir(path.dirname(path.join(f.root,RELEASE.catalogPath)));
+  await fs.writeFile(path.join(f.root,RELEASE.catalogPath),'{');
+  await assert.rejects(()=>library.list(),/catalog checksum/);
+  await assert.rejects(()=>library.resolve(hash(preparedFile)),/catalog checksum/);
+  assert.equal(opened.length,0);
+});
+
+test('optional absence never suppresses an existing changed release or a catalog without its release',async t=>{
+  const f=await fixture(t),opened=watchBundleOpens(t),catalogPath=path.join(f.root,RELEASE.catalogPath),releasePath=path.join(f.root,RELEASE.path);
+  await fs.unlink(catalogPath);
+  await fs.writeFile(releasePath,Buffer.concat([f.releaseBytes,Buffer.from(' ')]));
+  await assert.rejects(()=>f.reader.load(),/release checksum/);
+  await fs.writeFile(releasePath,'{');await assert.rejects(()=>f.reader.load(),/release checksum/);
+  await fs.unlink(releasePath);assert.deepEqual(await f.reader.load(),[]);
+  await fs.writeFile(catalogPath,f.catalogBytes);await assert.rejects(()=>f.reader.load(),/frozen release is missing/);
+  assert.equal(opened.length,0);
+});
+
+test('dangling catalog or release paths remain errors rather than optional absence',async t=>{
+  const f=await fixture(t),opened=watchBundleOpens(t),catalogPath=path.join(f.root,RELEASE.catalogPath),releasePath=path.join(f.root,RELEASE.path);
+  const absent=path.join(f.base,'absent-target');
+  await fs.unlink(catalogPath);await fs.symlink(absent,catalogPath);
+  await assert.rejects(()=>f.reader.load(),/metadata path escaped/);
+  await fs.unlink(catalogPath);await fs.rmdir(path.dirname(catalogPath));await fs.symlink(absent,path.dirname(catalogPath));
+  await assert.rejects(()=>f.reader.load(),/metadata path escaped/);
+  await fs.unlink(path.dirname(catalogPath));await fs.unlink(releasePath);await fs.symlink(absent,releasePath);
+  await assert.rejects(()=>f.reader.load(),/metadata path escaped/);
+  assert.equal(opened.length,0);
+});
+
 test('metadata policy refuses protected roles, changed source binding, virtual lineage and escaped paths before payload IO',async()=>{
   const original=await metadata();
   const changes=[

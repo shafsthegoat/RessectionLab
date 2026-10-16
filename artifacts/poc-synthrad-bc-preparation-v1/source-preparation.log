@@ -1,0 +1,565 @@
+{
+  "schema": "poc-synthrad-bc-source-result-v1",
+  "admission_sha256": "75dc377966ab15da03ebb454a79059414876676cf39cd790019798924f828dd8",
+  "denominator": [
+    {
+      "subject_id": "1BB033",
+      "patient_group": "SynthRAD2023:1BB033",
+      "role": "TRAIN",
+      "status": "source_checks_passed_anatomy_unreviewed",
+      "training_admitted": false
+    },
+    {
+      "subject_id": "1BC077",
+      "patient_group": "SynthRAD2023:1BC077",
+      "role": "TRAIN",
+      "status": "source_checks_passed_anatomy_unreviewed",
+      "training_admitted": false
+    }
+  ],
+  "pairs": [
+    {
+      "subject_id": "1BB033",
+      "patient_group": "SynthRAD2023:1BB033",
+      "role": "TRAIN",
+      "training_admitted": false,
+      "images": {
+        "ct": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BB033/ct.nii.gz",
+          "sha256": "4999e29411f5c76d986eb188f59a8148f8dbad7ef8bd30abef2e155a1681cafd",
+          "bytes": 11357517,
+          "header": {
+            "header_sha256": "4c5948db9f85553ca2b70dc15f19db92411c6545fae2e204cea327eaa2a16016",
+            "extensions": [],
+            "text_fields": {
+              "descrip": {
+                "sha256": "5b6fb58e61fa475939767d68a446f97f1bff02c0e5935a3ea8bb51e6515783d8",
+                "nonempty": false
+              },
+              "aux_file": {
+                "sha256": "9d908ecfb6b256def8b49a7c504e6c889c4b0e41fe6ce3e01863dd7b61a20aa0",
+                "nonempty": false
+              },
+              "intent_name": {
+                "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+                "nonempty": false
+              }
+            },
+            "metadata_privacy": "no_nonempty_text_or_extension",
+            "dtype_native": "<f4",
+            "dtype_effective": "float64",
+            "shape": [
+              212,
+              246,
+              181
+            ],
+            "native_payload_bytes": 37758048,
+            "data_offset": 352,
+            "raw_scaling": [
+              1.0,
+              0.0
+            ],
+            "effective_scaling": [
+              1.0,
+              0.0
+            ],
+            "scaling_active": true,
+            "scalar_workspace_bytes_bound": 7340032
+          },
+          "grid": {
+            "affine_ras_mm": [
+              [
+                -1.0,
+                0.0,
+                0.0,
+                102.51171875
+              ],
+              [
+                0.0,
+                -1.0,
+                0.0,
+                360.51171875
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                -120.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "spacing_mm": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "shape": [
+              212,
+              246,
+              181
+            ],
+            "orientation": [
+              "L",
+              "P",
+              "S"
+            ],
+            "qform_code": 1,
+            "sform_code": 0,
+            "qform_status": "active",
+            "qform_sform_corner_residual_mm": 0.0,
+            "source_unit_code": 2,
+            "unit_scale_to_mm": 1.0,
+            "world_corner_bounds_mm": [
+              [
+                -108.48828125,
+                115.51171875,
+                -120.0
+              ],
+              [
+                102.51171875,
+                360.51171875,
+                60.0
+              ]
+            ],
+            "field_of_view_mm": [
+              212.0,
+              246.0,
+              181.0
+            ],
+            "voxel_volume_mm3": 1.0,
+            "handedness": "right",
+            "obliquity_degrees": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "claim": "source coded geometry only; no scanner or anatomical registration admission"
+          },
+          "scalar": {
+            "finite_voxels": 9439512,
+            "minimum": -1024.0,
+            "maximum": 3000.0,
+            "zero_fraction": 0.001490966905916323,
+            "units": "source effective values; HU not independently calibrated"
+          },
+          "gzip_crc_and_exact_payload_length": "passed",
+          "privacy_review": "pending",
+          "anatomical_coverage_review": "pending",
+          "clinical_or_training_admission": false
+        },
+        "mr": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BB033/mr.nii.gz",
+          "sha256": "68fe4d165a8b3063bfce58f7b75bf7b22ce52243a7dd3c0704b2a29984b7a228",
+          "bytes": 7878632,
+          "header": {
+            "header_sha256": "4c5948db9f85553ca2b70dc15f19db92411c6545fae2e204cea327eaa2a16016",
+            "extensions": [],
+            "text_fields": {
+              "descrip": {
+                "sha256": "5b6fb58e61fa475939767d68a446f97f1bff02c0e5935a3ea8bb51e6515783d8",
+                "nonempty": false
+              },
+              "aux_file": {
+                "sha256": "9d908ecfb6b256def8b49a7c504e6c889c4b0e41fe6ce3e01863dd7b61a20aa0",
+                "nonempty": false
+              },
+              "intent_name": {
+                "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+                "nonempty": false
+              }
+            },
+            "metadata_privacy": "no_nonempty_text_or_extension",
+            "dtype_native": "<f4",
+            "dtype_effective": "float64",
+            "shape": [
+              212,
+              246,
+              181
+            ],
+            "native_payload_bytes": 37758048,
+            "data_offset": 352,
+            "raw_scaling": [
+              1.0,
+              0.0
+            ],
+            "effective_scaling": [
+              1.0,
+              0.0
+            ],
+            "scaling_active": true,
+            "scalar_workspace_bytes_bound": 7340032
+          },
+          "grid": {
+            "affine_ras_mm": [
+              [
+                -1.0,
+                0.0,
+                0.0,
+                102.51171875
+              ],
+              [
+                0.0,
+                -1.0,
+                0.0,
+                360.51171875
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                -120.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "spacing_mm": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "shape": [
+              212,
+              246,
+              181
+            ],
+            "orientation": [
+              "L",
+              "P",
+              "S"
+            ],
+            "qform_code": 1,
+            "sform_code": 0,
+            "qform_status": "active",
+            "qform_sform_corner_residual_mm": 0.0,
+            "source_unit_code": 2,
+            "unit_scale_to_mm": 1.0,
+            "world_corner_bounds_mm": [
+              [
+                -108.48828125,
+                115.51171875,
+                -120.0
+              ],
+              [
+                102.51171875,
+                360.51171875,
+                60.0
+              ]
+            ],
+            "field_of_view_mm": [
+              212.0,
+              246.0,
+              181.0
+            ],
+            "voxel_volume_mm3": 1.0,
+            "handedness": "right",
+            "obliquity_degrees": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "claim": "source coded geometry only; no scanner or anatomical registration admission"
+          },
+          "scalar": {
+            "finite_voxels": 9439512,
+            "minimum": 0.0,
+            "maximum": 993.0,
+            "zero_fraction": 0.31484487757417967,
+            "units": "source effective values; HU not independently calibrated"
+          },
+          "gzip_crc_and_exact_payload_length": "passed",
+          "privacy_review": "pending",
+          "anatomical_coverage_review": "pending",
+          "clinical_or_training_admission": false
+        }
+      },
+      "coded_grids_equal": true,
+      "registration": "Publisher declares rigid preprocessing; independent anatomical correspondence pending; no transform chain available",
+      "coverage": "Defaced and cropped source acquisition; calvarium/skull-base/vertex coverage unreviewed"
+    },
+    {
+      "subject_id": "1BC077",
+      "patient_group": "SynthRAD2023:1BC077",
+      "role": "TRAIN",
+      "training_admitted": false,
+      "images": {
+        "ct": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BC077/ct.nii.gz",
+          "sha256": "5a33487b11e9762c84f6b1ce8fb3e9f2c008e1ede78c57cd2a053c3cb14dead7",
+          "bytes": 8854360,
+          "header": {
+            "header_sha256": "25c95be55f84d85c418077638f1483312c6672d9dd449d28787d544b77cfd3ea",
+            "extensions": [],
+            "text_fields": {
+              "descrip": {
+                "sha256": "5b6fb58e61fa475939767d68a446f97f1bff02c0e5935a3ea8bb51e6515783d8",
+                "nonempty": false
+              },
+              "aux_file": {
+                "sha256": "9d908ecfb6b256def8b49a7c504e6c889c4b0e41fe6ce3e01863dd7b61a20aa0",
+                "nonempty": false
+              },
+              "intent_name": {
+                "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+                "nonempty": false
+              }
+            },
+            "metadata_privacy": "no_nonempty_text_or_extension",
+            "dtype_native": "<f4",
+            "dtype_effective": "float64",
+            "shape": [
+              229,
+              277,
+              182
+            ],
+            "native_payload_bytes": 46179224,
+            "data_offset": 352,
+            "raw_scaling": [
+              1.0,
+              0.0
+            ],
+            "effective_scaling": [
+              1.0,
+              0.0
+            ],
+            "scaling_active": true,
+            "scalar_workspace_bytes_bound": 7340032
+          },
+          "grid": {
+            "affine_ras_mm": [
+              [
+                -1.0,
+                0.0,
+                0.0,
+                111.0
+              ],
+              [
+                0.0,
+                -1.0,
+                0.0,
+                78.0999984741211
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                75.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "spacing_mm": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "shape": [
+              229,
+              277,
+              182
+            ],
+            "orientation": [
+              "L",
+              "P",
+              "S"
+            ],
+            "qform_code": 1,
+            "sform_code": 0,
+            "qform_status": "active",
+            "qform_sform_corner_residual_mm": 0.0,
+            "source_unit_code": 2,
+            "unit_scale_to_mm": 1.0,
+            "world_corner_bounds_mm": [
+              [
+                -117.0,
+                -197.9000015258789,
+                75.0
+              ],
+              [
+                111.0,
+                78.0999984741211,
+                256.0
+              ]
+            ],
+            "field_of_view_mm": [
+              229.0,
+              277.0,
+              182.0
+            ],
+            "voxel_volume_mm3": 1.0,
+            "handedness": "right",
+            "obliquity_degrees": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "claim": "source coded geometry only; no scanner or anatomical registration admission"
+          },
+          "scalar": {
+            "finite_voxels": 11544806,
+            "minimum": -1024.0,
+            "maximum": 3000.0,
+            "zero_fraction": 0.0016209886939633287,
+            "units": "source effective values; HU not independently calibrated"
+          },
+          "gzip_crc_and_exact_payload_length": "passed",
+          "privacy_review": "pending",
+          "anatomical_coverage_review": "pending",
+          "clinical_or_training_admission": false
+        },
+        "mr": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BC077/mr.nii.gz",
+          "sha256": "f41eb00d101bab4b27665a6870794d6e4eb169d70bea0f9cfc28c02625dd72c0",
+          "bytes": 8000741,
+          "header": {
+            "header_sha256": "25c95be55f84d85c418077638f1483312c6672d9dd449d28787d544b77cfd3ea",
+            "extensions": [],
+            "text_fields": {
+              "descrip": {
+                "sha256": "5b6fb58e61fa475939767d68a446f97f1bff02c0e5935a3ea8bb51e6515783d8",
+                "nonempty": false
+              },
+              "aux_file": {
+                "sha256": "9d908ecfb6b256def8b49a7c504e6c889c4b0e41fe6ce3e01863dd7b61a20aa0",
+                "nonempty": false
+              },
+              "intent_name": {
+                "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+                "nonempty": false
+              }
+            },
+            "metadata_privacy": "no_nonempty_text_or_extension",
+            "dtype_native": "<f4",
+            "dtype_effective": "float64",
+            "shape": [
+              229,
+              277,
+              182
+            ],
+            "native_payload_bytes": 46179224,
+            "data_offset": 352,
+            "raw_scaling": [
+              1.0,
+              0.0
+            ],
+            "effective_scaling": [
+              1.0,
+              0.0
+            ],
+            "scaling_active": true,
+            "scalar_workspace_bytes_bound": 7340032
+          },
+          "grid": {
+            "affine_ras_mm": [
+              [
+                -1.0,
+                0.0,
+                0.0,
+                111.0
+              ],
+              [
+                0.0,
+                -1.0,
+                0.0,
+                78.0999984741211
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                75.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "spacing_mm": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "shape": [
+              229,
+              277,
+              182
+            ],
+            "orientation": [
+              "L",
+              "P",
+              "S"
+            ],
+            "qform_code": 1,
+            "sform_code": 0,
+            "qform_status": "active",
+            "qform_sform_corner_residual_mm": 0.0,
+            "source_unit_code": 2,
+            "unit_scale_to_mm": 1.0,
+            "world_corner_bounds_mm": [
+              [
+                -117.0,
+                -197.9000015258789,
+                75.0
+              ],
+              [
+                111.0,
+                78.0999984741211,
+                256.0
+              ]
+            ],
+            "field_of_view_mm": [
+              229.0,
+              277.0,
+              182.0
+            ],
+            "voxel_volume_mm3": 1.0,
+            "handedness": "right",
+            "obliquity_degrees": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "claim": "source coded geometry only; no scanner or anatomical registration admission"
+          },
+          "scalar": {
+            "finite_voxels": 11544806,
+            "minimum": 0.0,
+            "maximum": 1093.0,
+            "zero_fraction": 0.5438993084855649,
+            "units": "source effective values; HU not independently calibrated"
+          },
+          "gzip_crc_and_exact_payload_length": "passed",
+          "privacy_review": "pending",
+          "anatomical_coverage_review": "pending",
+          "clinical_or_training_admission": false
+        }
+      },
+      "coded_grids_equal": true,
+      "registration": "Publisher declares rigid preprocessing; independent anatomical correspondence pending; no transform chain available",
+      "coverage": "Defaced and cropped source acquisition; calvarium/skull-base/vertex coverage unreviewed"
+    }
+  ],
+  "training_admitted": false,
+  "model_runs": 0,
+  "registration_runs": 0,
+  "archive_read_bytes_after_hash": 36055737,
+  "runtime": {
+    "elapsed_seconds": 7.1011396672111005,
+    "peak_rss_bytes_sampled": 77594624,
+    "output_bytes": 36106993
+  }
+}

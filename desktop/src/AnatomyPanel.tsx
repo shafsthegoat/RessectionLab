@@ -2,6 +2,12 @@ import { layerAppearance } from './viewer/workspaceSettings';
 import type { ViewerWorkspaceSettings } from './viewer/workspaceSettings';
 import './AnatomyPanel.css';
 
+function missingStructureLabel(name:string):string {
+  const labels:Record<string,string>={tissue_classes:'Brain tissue types',fresh_vessel_inference:'Vessels on this scan'};
+  const text=Object.hasOwn(labels,name)?labels[name]:name.replaceAll('_',' ');
+  return text.charAt(0).toUpperCase()+text.slice(1);
+}
+
 export interface AnatomyPanelProps {
   layers: Array<{name:string;label?:string;color:string;volumeMm3?:number;provenance?:string}>;
   visibleLayers: Record<string,boolean>;
@@ -40,6 +46,6 @@ export function AnatomyPanel(props: AnatomyPanelProps) {
       </div>;
     })}
     {!props.layers.length&&<p className="anatomy-empty">No segmentation layers are attached to this image. Original imaging remains available.</p>}
-    {!!props.missingStructures?.length&&<div className="anatomy-missing"><h3>Missing anatomy</h3>{props.missingStructures.map(name=><span key={name}>{name}<b>Not available</b></span>)}</div>}
+    {!!props.missingStructures?.length&&<div className="anatomy-missing"><h3>Missing anatomy</h3>{props.missingStructures.map(name=><span key={name}>{missingStructureLabel(name)}<b>Not available</b></span>)}</div>}
   </section>;
 }

@@ -1,0 +1,265 @@
+{
+  "schema": "poc-synthrad-two-train-source-admission-v1",
+  "authorization_scope": "Exactly four named acquired CT/MR members; source verification/header/finiteness only",
+  "subjects": [
+    "1BB033",
+    "1BC077"
+  ],
+  "pairs": [
+    {
+      "anonymous_center": "B",
+      "candidate_acquired_members": [
+        {
+          "comment_bytes": 0,
+          "comment_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "compressed_bytes": 11302762,
+          "compression_method": 8,
+          "crc32": "72c32202",
+          "create_system": 3,
+          "directory": false,
+          "external_attr": 2179825696,
+          "extra_bytes": 36,
+          "extra_sha256": "06159a5c175609a7c4d497298d21fa6d69d07ff096419b9db5980f236b68c4d1",
+          "flag_bits": 0,
+          "header_offset": 1620527876,
+          "name": "Task1/brain/1BB033/ct.nii.gz",
+          "zip_entry_bytes": 11357517
+        },
+        {
+          "comment_bytes": 0,
+          "comment_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "compressed_bytes": 7819368,
+          "compression_method": 8,
+          "crc32": "8b99acb3",
+          "create_system": 3,
+          "directory": false,
+          "external_attr": 2179825696,
+          "extra_bytes": 36,
+          "extra_sha256": "6f01fb4c4705a01a0de3049f5e3f6de9c74a7066b5dd218da57b274a845868b4",
+          "flag_bits": 0,
+          "header_offset": 1631895242,
+          "name": "Task1/brain/1BB033/mr.nii.gz",
+          "zip_entry_bytes": 7878632
+        }
+      ],
+      "derived_outline_member": {
+        "comment_bytes": 0,
+        "comment_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "compressed_bytes": 64486,
+        "compression_method": 8,
+        "crc32": "07346451",
+        "create_system": 3,
+        "directory": false,
+        "external_attr": 2179825696,
+        "extra_bytes": 36,
+        "extra_sha256": "06159a5c175609a7c4d497298d21fa6d69d07ff096419b9db5980f236b68c4d1",
+        "flag_bits": 0,
+        "header_offset": 1631830696,
+        "name": "Task1/brain/1BB033/mask.nii.gz",
+        "zip_entry_bytes": 91523
+      },
+      "exact_pair_mapping_present": true,
+      "identity_sha256": "0177bd09c9e95705f2eaa8567db37d0a10643198d5e81b3daf5aacf40dc94459",
+      "image_qc": "not_run",
+      "patient_group": "SynthRAD2023:1BB033",
+      "rank_within_center": 1,
+      "role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "source_family": "SynthRAD2023",
+      "subject_id": "1BB033"
+    },
+    {
+      "anonymous_center": "C",
+      "candidate_acquired_members": [
+        {
+          "comment_bytes": 0,
+          "comment_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "compressed_bytes": 8793969,
+          "compression_method": 8,
+          "crc32": "2b500717",
+          "create_system": 3,
+          "directory": false,
+          "external_attr": 2179825696,
+          "extra_bytes": 36,
+          "extra_sha256": "3a0c783322c1b98d1e9dde93e340b65328c9c1d029799e160245e3f6a9f27849",
+          "flag_bits": 0,
+          "header_offset": 3309242229,
+          "name": "Task1/brain/1BC077/ct.nii.gz",
+          "zip_entry_bytes": 8854360
+        },
+        {
+          "comment_bytes": 0,
+          "comment_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "compressed_bytes": 7928472,
+          "compression_method": 8,
+          "crc32": "9c60dfe2",
+          "create_system": 3,
+          "directory": false,
+          "external_attr": 2179825696,
+          "extra_bytes": 36,
+          "extra_sha256": "b627f52f6157bd610ad3395f25da7d08a0085179b8cb0964cd1b06cf03eb84cc",
+          "flag_bits": 0,
+          "header_offset": 3318111725,
+          "name": "Task1/brain/1BC077/mr.nii.gz",
+          "zip_entry_bytes": 8000741
+        }
+      ],
+      "derived_outline_member": {
+        "comment_bytes": 0,
+        "comment_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "compressed_bytes": 75409,
+        "compression_method": 8,
+        "crc32": "1dae48c8",
+        "create_system": 3,
+        "directory": false,
+        "external_attr": 2179825696,
+        "extra_bytes": 36,
+        "extra_sha256": "3a0c783322c1b98d1e9dde93e340b65328c9c1d029799e160245e3f6a9f27849",
+        "flag_bits": 0,
+        "header_offset": 3318036256,
+        "name": "Task1/brain/1BC077/mask.nii.gz",
+        "zip_entry_bytes": 112409
+      },
+      "exact_pair_mapping_present": true,
+      "identity_sha256": "01fb1216893a40e014b23cb03db81d42e9e5c1d148fa9c38a5c26db6d886d001",
+      "image_qc": "not_run",
+      "patient_group": "SynthRAD2023:1BC077",
+      "rank_within_center": 1,
+      "role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "source_family": "SynthRAD2023",
+      "subject_id": "1BC077"
+    }
+  ],
+  "preserve_existing_person": "1BA336",
+  "cohort_sha256": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30",
+  "selection": "Ranks1 B/C in frozen full_train_order; no performance or pixel selection",
+  "bounds": {
+    "new_disk_bytes": 536870912,
+    "free_disk_reserve_bytes": 53687091200,
+    "max_native_payload_bytes_per_image": 536870912,
+    "max_voxels_per_image": 134217728,
+    "max_nifti_data_offset": 1048576,
+    "max_scalar_workspace_bytes": 8388608,
+    "scalar_chunk_voxels": 65536,
+    "worker_rss_stop_bytes": 805306368,
+    "wall_seconds": 600,
+    "max_extracted_member_bytes": 67108864,
+    "threads": 1,
+    "automatic_retries": 0
+  },
+  "pins": {
+    "manifests/synthrad-component-cohort-v1.json": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30",
+    "manifests/synthrad-task1-original-archive-v1.json": "f8b854a961ef0c799c96643445501c145630329fe61714e1dc89a263a3544c5b",
+    "artifacts/synthrad-first-pair-qc-preparation-v1/central-directory.json": "d22c9e6a7dd28c2425b8e7c76b3bd323d6033d57a128e23ca6d3dfe7da4af3a7",
+    "artifacts/synthrad-first-pair-qc-preparation-v1/directory-review.json": "96d29da46f2ba4ee856fe04f08cf751671f1b9cf80f4274c0aa7af101081680e",
+    "artifacts/synthrad-first-pair-qc-preparation-v1/brain-pair-map.json": "2d3a10f7bdbeec1c6d6499d487e42d789eb8d46f92185389ef6ea76647feee20",
+    "artifacts/synthrad-acquisition-preparation-v1/source-metadata/zenodo-record-7260705.json": "1761a3dc69342aa82bf77cdbaf961bda1698cb4bf06196aad04f7be136afe14b",
+    "data/acquisition/synthrad-task1-v1/objects/synthrad-2023-task1-archive/completion.json": "5dbe792ca0f65ecedcb5036b9d54ebd6033f240b5f457dea376a5727e6645172",
+    "scripts/synthrad_first_pair_qc_v1.py": "be2a90d009989d25cababc46945b6b40e1d5268b318b2c3894e1df9ff1cff4f3",
+    "src/resectionlab/poc_models.py": "7446332d8e948624c055f3c19ad5d64c12018095d8e4b330535d62c47908c28b"
+  },
+  "archive": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/acquisition/synthrad-task1-v1/verified/Task1.zip",
+    "sha256": "43526037fcd23bdf4318bc193edd4f810e9b8806b6b8f57d41b8ef4e39c1f4cf",
+    "stat": {
+      "st_ctime_ns": 1791510808244446814,
+      "st_dev": 16777232,
+      "st_ino": 8705129,
+      "st_mode": 33188,
+      "st_mtime_ns": 1791510768267198282,
+      "st_nlink": 1,
+      "st_size": 14471900926
+    },
+    "central_start": 14471689992
+  },
+  "rights": {
+    "access": "open",
+    "license_spdx": "CC-BY-NC-4.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc/4.0/",
+    "permitted_project_scope": "Noncommercial research only under source license; retain attribution, license link and indicate changes when sharing derivatives.",
+    "commercial_product_use_admitted": false,
+    "accounts_agreements_billing_required_for_observed_endpoint": false,
+    "attribution": {
+      "creators": [
+        {
+          "name": "Thummerer, Adrian",
+          "affiliation": "UMC Groningen",
+          "orcid": "0000-0002-1874-5030"
+        },
+        {
+          "name": "van der Bijl, Erik",
+          "affiliation": "Radboud UMC",
+          "orcid": "0000-0001-7663-4390"
+        },
+        {
+          "name": "Maspero, Matteo",
+          "affiliation": "UMC Utrecht",
+          "orcid": "0000-0003-0347-3375"
+        }
+      ],
+      "title": "SynthRAD2023 Grand Challenge dataset: synthetizing computed tomography for radiotherapy",
+      "publication_date": "2023-04-01",
+      "doi": "10.5281/zenodo.7260705",
+      "version": "0.1"
+    },
+    "preprocessing_code_license": "Repository listing reports GPL-3.0 for preprocessing code; that separate code license does not replace dataset CC-BY-NC-4.0."
+  },
+  "lineage": {
+    "acquisition_origin": "Provider reports clinical CT and MRI acquired for radiotherapy planning, including T1-weighted MRI. They are acquired images released after preprocessing, not CT generated by a synthesis model.",
+    "provider_preprocessing": [
+      "DICOM to compressed NIfTI",
+      "Rigid registration of CT and MRI",
+      "Face removal for brain patients",
+      "Patient outline segmentation",
+      "Cropping to remove background"
+    ],
+    "original_definition": "Preserve exact publisher archive bytes and released acquired CT/MRI. This is not a claim of untouched scanner DICOM or native geometry.",
+    "mask": "Provider mask is a dilated patient outline; it is not an annotated skull, tumor, vessel, or surgical corridor.",
+    "excluded": [
+      "Generated synthetic CT",
+      "Any synthesis outputs",
+      "Unknown-origin members",
+      "Task2 archive",
+      "Pelvis scientific use",
+      "Provider outline as human anatomical ground truth"
+    ],
+    "transforms_and_model_ancestry": "Exact conversion/registration transforms, preprocessing execution revision and any model dependence are unresolved; no anatomical-fidelity claim."
+  },
+  "source_url": "https://zenodo.org/records/7260705",
+  "training_admitted": false,
+  "model_execution_authorized": false,
+  "registration_execution_authorized": false,
+  "model_assets": {
+    "name": "TotalSegmentator",
+    "version": "2.12.0 / Dataset297 v2.0.0-weights",
+    "license": "Apache-2.0",
+    "weights_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/models/poc-totalsegmentator/weights/Dataset297_TotalSegmentator_total_3mm_1559subj/nnUNetTrainer_4000epochs_NoMirroring__nnUNetPlans__3d_fullres/fold_0/checkpoint_final.pth",
+    "weights_sha256": "1e38e40356adc2706a662e365405a97f862d62a7da65f6bf81d025aee1b979ac",
+    "weights_bytes": 164939235,
+    "input": "CT only; clinical HU interpretation remains unresolved until source qualification",
+    "parameters": {
+      "task": "total",
+      "fast": true,
+      "tta": false,
+      "skull_label": 91,
+      "brain_label": 90
+    }
+  },
+  "denominator": [
+    {
+      "subject_id": "1BB033",
+      "patient_group": "SynthRAD2023:1BB033",
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "training_admitted": false
+    },
+    {
+      "subject_id": "1BC077",
+      "patient_group": "SynthRAD2023:1BC077",
+      "role": "TRAIN",
+      "status": "not_attempted",
+      "training_admitted": false
+    }
+  ]
+}

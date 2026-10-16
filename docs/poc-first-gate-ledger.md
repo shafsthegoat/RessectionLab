@@ -82,6 +82,12 @@ BTC/IXI GUI opens pass. Presence across saved grids is counted separately from
 accepted fusion; all accepted-fusion combination counts remain zero. Generated
 descendants and protected identities/roles remain excluded.
 
+The [separate two-person CT/MRI integration](../artifacts/poc-synthrad-bc-integration-v1/RESULT.md)
+now completes source checks, unchanged model inference and actual native
+save/fresh-process reopen for the next frozen SynthRAD TRAIN B/C identities.
+Independent audits verify acquired scans, masks and originals. These two model
+candidates do not change catalog counts or accept anatomy, health or alignment.
+
 ## Accuracy and publication gate
 
 Publication readiness requires claims with matching evidence, not a test count
@@ -100,9 +106,10 @@ remain open until measured or reviewed evidence is available.
 
 ## Next executable actions
 
-Complete bounded model inference and native GUI review for the two next frozen
-TRAIN acquired CT/MR pairs, preserving the separate ten-person release. Preserve
-tissue-model failures; source-reported health and uniform diffusion do not
+Preserve the two completed CT/MRI candidates and the separate ten-person release.
+Address the source-bound IXI tissue dependency with explicit unknown cells and
+independent numerical/frame checks. Preserve tissue-model failures;
+source-reported health and uniform diffusion do not
 establish an individually reviewed tumor-free, tissue-conditioned host. Expand
 the real tranche, measure anatomical diversity and run the qualified biophysical pilot
 described in the construction plan. Expand

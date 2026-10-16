@@ -86,6 +86,19 @@ async function readBoundedMetadata(root,relativePath,maxBytes) {
   } finally {await file.close();}
 }
 
+// An ungenerated catalog is optional. A dangling symlink or redirected parent
+// is an existing invalid metadata path, not an absent optional artifact.
+async function metadataAbsent(root,relativePath) {
+  const parts=relativePath.split('/');let filename=root;
+  for(let i=0;i<parts.length;i++) {
+    filename=path.join(filename,parts[i]);let stat;
+    try {stat=await fs.lstat(filename);}catch(error){if(error.code==='ENOENT')return true;throw error;}
+    need(!stat.isSymbolicLink(),'metadata path escaped the release root');
+    if(i<parts.length-1)need(stat.isDirectory(),'metadata parent is not a directory');
+  }
+  return false;
+}
+
 /** Streams a bounded expected bundle, without decoding ZIP, JSON or image payloads. */
 async function verifyBundleBytes(filename,expectedHash,expectedBytes) {
   need(sha(expectedHash)&&Number.isSafeInteger(expectedBytes)&&expectedBytes>0&&expectedBytes<=512*1024*1024,'invalid bundle checksum request');
@@ -111,9 +124,16 @@ class PatientCatalog {
     const root=await fs.realpath(this.root);need(root===this.root,'catalog root must be canonical');
     let releaseBytes,catalogBytes;
     try {releaseBytes=await readBoundedMetadata(root,RELEASE.path,64*1024);}
-    catch(error){if(error.code==='ENOENT'){try{await fs.access(path.join(root,RELEASE.catalogPath));}catch(absent){if(absent.code==='ENOENT')return [];throw absent;}throw Error('Patient catalog unavailable: frozen release is missing');}throw error;}
+    catch(error){
+      if(error.code==='ENOENT'&&await metadataAbsent(root,RELEASE.path)) {
+        if(await metadataAbsent(root,RELEASE.catalogPath))return [];
+        throw Error('Patient catalog unavailable: frozen release is missing');
+      }
+      throw error;
+    }
     need(digest(releaseBytes)===RELEASE.sha256,'frozen release checksum changed');
-    catalogBytes=await readBoundedMetadata(root,RELEASE.catalogPath,512*1024);
+    try {catalogBytes=await readBoundedMetadata(root,RELEASE.catalogPath,512*1024);}
+    catch(error){if(error.code==='ENOENT'&&await metadataAbsent(root,RELEASE.catalogPath))return [];throw error;}
     need(digest(catalogBytes)===RELEASE.catalogSha256,'catalog checksum changed; refresh the qualified release');
     let release,catalog;try{release=JSON.parse(releaseBytes);catalog=JSON.parse(catalogBytes);}catch{throw Error('Patient catalog unavailable: invalid metadata JSON');}
     return validateCatalogMetadata(release,catalog).map(entry=>({

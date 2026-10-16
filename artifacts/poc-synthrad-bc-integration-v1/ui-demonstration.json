@@ -1,0 +1,148 @@
+{
+  "schema": "poc-synthrad-bc-native-ui-v1",
+  "observer": "parent agent; actual native Electron via CUA",
+  "source_people": [
+    "SynthRAD2023:1BB033",
+    "SynthRAD2023:1BC077"
+  ],
+  "observations": [
+    "Both canonical CT cases opened with estimated brain/skull volumes matching saved masks.",
+    "Both acquired T1 MRI views selected separately; no CT estimates shown on the MRI (Anatomy0/0).",
+    "Native Save wrote separate reviewed copies outside frozen source/model output directories.",
+    "Application quit; a fresh process launched the reviewed1BB033 with T1 selected. Switching to CT retained brain/skull visibility, opacity0.18/0.32 and structures-only.",
+    "The reviewed1BC077 opened in the fresh process with CT selected, brain/skull visible, opacity0.20/0.44 and structures-only.",
+    "GUI checks establish persistence/display behavior; no anatomical registration or accuracy acceptance."
+  ],
+  "captures": [
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/01-1BB033-ct.png",
+      "bytes": 491951,
+      "sha256": "a860983a0e4e3d20b20dbc276849c83e3419cfba2e37b615ff417271bbd663ea"
+    },
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/02-1BB033-mri.png",
+      "bytes": 453758,
+      "sha256": "a186c4cdea1a1b75833df20ce9fccfdca33bf2e101b8000fc26e19c13538c53b"
+    },
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/03-1BC077-ct.png",
+      "bytes": 542864,
+      "sha256": "d3023e8760375decfdb5bd54232226c5456258f05fbbf34fbe80b5038d0433fb"
+    },
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/04-1BC077-mri.png",
+      "bytes": 451641,
+      "sha256": "70d2a28b91bccb8e1c291e13c95b50ace3eda0cda9619e20b87080ab06f3bcd6"
+    },
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/05-1BB033-fresh-mri.png",
+      "bytes": 443738,
+      "sha256": "e1a44ce1d58d966c84c55697defc0972982c88759de2bd8a8d28068bf70f0295"
+    },
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/06-1BB033-fresh-ct.png",
+      "bytes": 424501,
+      "sha256": "86fa5f6b4b0fd92056d9e4b33bba4f427e476a8a54638ddd7390837ca7df8d0f"
+    },
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/07-1BC077-fresh-ct.png",
+      "bytes": 452983,
+      "sha256": "03d178f9e857ad05ae6566f697bd9bbdb3d384e3d207a092d69e31d2dd5cad4c"
+    },
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/01-1BB033-ct.ax.txt",
+      "bytes": 5961,
+      "sha256": "cc9d13e06fffe2c7d9a6f723f1393d6251ebaca8b4a970a343beea23d361340e"
+    },
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/02-1BB033-mri.ax.txt",
+      "bytes": 4992,
+      "sha256": "7d829aaf21ccefb82e2e41a8643d066ae2e52060f52f01bb92c6d291e580a319"
+    },
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/03-1BC077-ct.ax.txt",
+      "bytes": 5918,
+      "sha256": "87d279f31a7a36d048c968848a8a33226b45382647762f66345b491e7ad53958"
+    },
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/04-1BC077-mri.ax.txt",
+      "bytes": 4992,
+      "sha256": "f399d05f173218b87ea2fb442b1f878ecc44ed6ee5ba4f50b24474c14cc915e0"
+    },
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/05-1BB033-fresh-mri.ax.txt",
+      "bytes": 4890,
+      "sha256": "ea8e84fb086dcd74ce7d697bc88b3b79ff49db2b3420a46b85d88650dd379d4f"
+    },
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/06-1BB033-fresh-ct.ax.txt",
+      "bytes": 5973,
+      "sha256": "ab37baaae25b7fdce1364362103c894890a72d9d4ee2b98a500f22d7787d8209"
+    },
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/07-1BC077-fresh-ct.ax.txt",
+      "bytes": 6075,
+      "sha256": "b7e5984aa3888f68d95c10e74290c9be92830c0bef5a80dc51531bf19a0c97af"
+    }
+  ],
+  "saved_cases": [
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/saved/SynthRAD2023-1BB033-reviewed.ressectionlab",
+      "bytes": 38262173,
+      "sha256": "1c4224bc625fbba2c612d74a7914a3e002f2a28ceaaa0a241a42bb9e897f5368"
+    },
+    {
+      "path": "outputs/poc-first-qa/synthrad-bc-ui/saved/SynthRAD2023-1BC077-reviewed.ressectionlab",
+      "bytes": 33535803,
+      "sha256": "1d879da5da68f2711e148e9809dedb9d9db5c44d36c4ee3fba681f1d8fea19aa"
+    }
+  ],
+  "runtime": [
+    {
+      "path": "desktop/electron/patient-catalog.cjs",
+      "bytes": 12554,
+      "sha256": "fa09711abc45a5e0a0bea8f2bf559f98e7eee0617d20b504c862e2b0b81938a5"
+    },
+    {
+      "path": "desktop/src/AnatomyPanel.tsx",
+      "bytes": 3641,
+      "sha256": "1b8c7e11be7a94e1e447ac4e0efe3731199f271cf3782f09c3946ef78c0aae42"
+    },
+    {
+      "path": "desktop/electron/main.cjs",
+      "bytes": 18011,
+      "sha256": "5b77c0d6af8dd6f0d214c9d03d172c9fa41b346df9f2ba15dfa6911321bd5fc1"
+    },
+    {
+      "path": "desktop/src/WorkbenchPanels.tsx",
+      "bytes": 9378,
+      "sha256": "28a7de419df46835f2572b767bac6344879e3d0de11240d05e2036cb319d9247"
+    }
+  ],
+  "verification": [
+    {
+      "path": "artifacts/poc-synthrad-bc-integration-v1/independent-qa.json",
+      "bytes": 20068,
+      "sha256": "90eadfb9fd95d4c64778a7356791c49da8735bee8b21562ebe70f3f84d617346"
+    },
+    {
+      "path": "artifacts/poc-synthrad-bc-integration-v1/gui-save-independent-qa.json",
+      "bytes": 13751,
+      "sha256": "1d8b36e84916d8dc88c20212eb927b7a63c40ea62d9089c447d06f0170b53847"
+    },
+    {
+      "path": "outputs/poc-first-qa/ct-extension-main-final.log",
+      "bytes": 11799,
+      "sha256": "1dc15d17ca5b41207359de605a0654de0bae82ea77e68918258ebda9021eb7b9"
+    },
+    {
+      "path": "outputs/poc-first-qa/ct-extension-build-final.log",
+      "bytes": 922,
+      "sha256": "bb403dd6bbabdc8a9067c768ba79b837b66bee333f564369ca84691a4df994d1"
+    }
+  ],
+  "qualification_catalog_people": 10,
+  "new_source_model_candidates_outside_catalog": 2,
+  "anatomical_acceptance": false,
+  "training_admitted": false
+}
