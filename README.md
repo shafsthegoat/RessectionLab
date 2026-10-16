@@ -13,6 +13,11 @@ continuations from the same state. Source anatomy remains unchanged. Current
 physics and initial exposure are explicit research assumptions; diverse-case
 qualification and anatomical/physiological validation remain in progress.
 
+The [first nine-person corpus qualification](artifacts/patient-corpus-first-tranche-v1/RESULT.md)
+now provides resumable source checks and JSON/SQLite search. A bounded, pinned FK
+adapter passes independent numerical and source-admission checks; generated
+geometry remains distinct from observed tumors and physiological validation.
+
 A local macOS anatomy workbench for acquired patient imaging, saved segmentations,
 and linked 3D/source-image inspection.
 

@@ -88,13 +88,18 @@ def _require_development_source(case):
     Role records can be nested in split/cohort/source bindings. In particular,
     BTC's outer role "development" does not supersede its locked inner
     "checkpoint_selection_development" role. Prose reasons and eligibility
-    booleans are not role declarations. No image/path is opened by this check.
+    booleans are not role declarations. Within a role record a protected key
+    is inactive only when explicitly false or null; string/integer flags cannot
+    bypass admission. No image/path is opened by this check.
     """
     role_keys = {"role", "roles", "split_role", "development_role", "outer_role",
                  "benchmark_role", "source_role", "cohort_role", "data_role",
                  "usage_role", "partition", "split"}
     identity_keys = {"case_id", "patient_id", "patient_group", "participant_id",
                      "subject", "canonical_person"}
+    collection_keys = {"source_collection", "collection", "dataset", "source_dataset"}
+    forbidden_roles = {"select", "selection", "eval", "evaluation", "test", "testing", "val", "validation",
+                       "holdout", "heldout", "final", "stress", "restricted", "unopened", "transfer"}
     roles, identities = [], [case.case_id]
     restricted = False
 
@@ -103,19 +108,26 @@ def _require_development_source(case):
         if isinstance(value, Mapping):
             for key, item in value.items():
                 key = re.sub(r"(?<=[a-z])(?=[A-Z])", "_", str(key)).lower()
-                if key in {"restricted", "is_restricted", "is_holdout"} and item is True:
+                if key in {"restricted", "is_restricted", "is_holdout"} and item is not False and item is not None:
                     restricted = True
                 split_value = bool(path) and path[-1] in {"split", "partition"} and key in {"name", "value", "code", "label"}
                 declared_role = key in role_keys or split_value or (key == "purpose" and "split" in path)
-                if (role_payload or "split" in path) and item is True:
-                    roles.append(key)
+                key_tokens = set(re.findall(r"[a-z0-9]+", key))
+                role_mapping = role_payload or bool(path and path[-1] in role_keys)
+                if (role_mapping and (key_tokens & forbidden_roles or {"held", "out"}.issubset(key_tokens))
+                        and item is not False and item is not None):
+                    restricted = True
                 # A split object contains comments/counts as well as its role;
                 # inspect named role fields, not every word in that object.
                 if key in {"split", "partition"} and isinstance(item, Mapping):
                     declared_role = False
                 structured_value = role_payload and key not in {"reason", "rationale", "description", "note", "notes"}
+                collection_identity = (key in collection_keys | {"collection_name", "dataset_name"}
+                                       or bool(path and path[-1] in collection_keys
+                                               and key in {"name", "id", "identifier", "title"}))
                 visit(item, (*path, key), role_payload=declared_role or structured_value,
-                      identity_payload=key in identity_keys or identity_payload)
+                      identity_payload=key in identity_keys or identity_payload
+                      or (collection_identity and isinstance(item, str)))
         elif isinstance(value, (list, tuple)):
             for item in value:
                 visit(item, path, role_payload=role_payload, identity_payload=identity_payload)
@@ -126,18 +138,14 @@ def _require_development_source(case):
                 identities.append(value)
 
     visit(case.metadata)
-    collection = case.metadata.get("source_collection", {})
-    identities.append(str(collection.get("name", "")) if isinstance(collection, Mapping) else str(collection))
     tokens = {token for role in roles for token in re.findall(r"[a-z0-9]+", role.casefold())}
-    forbidden_roles = {"select", "selection", "eval", "evaluation", "test", "testing", "val", "validation",
-                       "holdout", "heldout", "final", "stress", "restricted", "unopened", "transfer"}
     identity = " ".join(identities).casefold()
     # Preserve the already fixed SELECT people even if an old bundle omits a
     # role or a caller relabels it TRAIN. These canonical IDs are established in
     # btc-spatial-development-cohort-v1 and remind-component-cohort-v1 metadata.
     locked_select = (re.search(r"\bremind[-_: ]0*(?:13|37)(?![0-9])", identity) is not None
                      or ("btc" in identity and re.search(r"\b(?:sub[-_: ]?)?pat0*(?:26|27)(?![0-9])", identity) is not None))
-    if (restricted or "upenn" in identity or locked_select or tokens & forbidden_roles
+    if (restricted or "upenn" in identity or "utsw" in identity or locked_select or tokens & forbidden_roles
             or {"held", "out"}.issubset(tokens)):
         raise ValueError("Protected cohort/split/source is not admitted to development rehearsal")
 

@@ -255,6 +255,10 @@ def test_malformed_motion_payload_is_an_atomic_rejection():
     {"source_assets": [{"policy": {"restricted": True}}]},
     {"roles": {"TRAIN": True, "SELECT": True}}, {"split": {"name": "SELECT"}},
     {"split": {"SELECT": True}},
+    {"roles": {"SELECT": "true"}}, {"roles": {"SELECT": 1}},
+    {"roles": {"SELECT": "false"}}, {"roles": {"SELECT": 0}},
+    {"parent": {"split": {"MEASUREMENT_EVAL": "enabled"}}},
+    {"parent": {"restricted": "true"}},
 ])
 def test_nested_protected_role_rejected_before_geometry_without_source_access(monkeypatch, declaration):
     import builtins
@@ -279,6 +283,10 @@ def test_nested_protected_role_rejected_before_geometry_without_source_access(mo
     ("renamed-fixture", {"source": {"patientGroup": "ReMIND:037"}}),
     ("UPENN-GBM-0001", {}),
     ("renamed-fixture", {"source_collection": {"name": "UPENN-GBM"}}),
+    ("renamed-fixture", {"parent": {"source_collection": {"name": "UPENN-GBM"}}}),
+    ("renamed-fixture", {"source_collection": {"name": "UTSW"}}),
+    ("renamed-fixture", {"parent": {"sourceDataset": {"identifier": "UTSW"}}}),
+    ("renamed-fixture", {"parent": {"collectionName": "UPENN-GBM"}}),
 ])
 def test_locked_select_and_upenn_identities_cannot_be_relabelled(monkeypatch, identity, metadata):
     import builtins
@@ -303,6 +311,8 @@ def test_locked_select_and_upenn_identities_cannot_be_relabelled(monkeypatch, id
     {"cohort": {"binding": {"role": {"name": "TRAIN"}}}},
     {"source_files": [{"source_role": "imported_source_annotation"}]},
     {"roles": {"TRAIN": True, "SELECT": False}}, {"split": {"name": "TRAIN"}},
+    {"roles": {"TRAIN": 1, "SELECT": None}},
+    {"parent": {"source_collection": {"name": "Generated", "notes": "No UPENN or UTSW data used"}}},
 ])
 def test_training_development_and_legacy_absent_role_remain_admitted(declaration):
     case = source_case()

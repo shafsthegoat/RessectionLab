@@ -8,8 +8,10 @@ export type AnatomyRecord={label?:string;provenance?:string;kind?:string;coverag
   source_sha256?:string;cache_key?:string;model?:{name?:string;version?:string;license?:string;requirements?:string;weights_path?:string;weights_sha256?:string;device?:string;peak_memory_bytes?:number}};
 export function anatomyDescription(record:AnatomyRecord|undefined,fallback:string):string {
   if(!record)return fallback;
+  if(record.provenance==='simulated'||record.provenance==='generated')return `Generated research geometry · Unvalidated${record.coverage?'. '+record.coverage:''}`;
   if(record.provenance==='estimated')return `${record.model?.name??'Model'} estimate · ${record.review_status??'Unreviewed'}${record.coverage?'. '+record.coverage:''}`;
-  return `Source-provided annotation${record.coverage?'. '+record.coverage:''}`;
+  if(record.provenance==='source-provided'||record.provenance==='observed')return `Source-provided annotation${record.coverage?'. '+record.coverage:''}`;
+  return `${fallback}${record.coverage?'. '+record.coverage:''}`;
 }
 export function CaseLibraryPanel({cases,onOpen,onBrowse,busy}:{cases:LibraryCase[];onOpen:(id:string)=>void;onBrowse:()=>void;busy:boolean}) {
   return <section className="poc-case-library" aria-label="Saved cases">

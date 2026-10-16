@@ -1,0 +1,16 @@
+{
+  "schema": "legacy-bridge-baseline-probe-v1",
+  "baseline_head": "78fc4f5610a36926669c0541bc640426adaf2f4b",
+  "baseline_archive_sha256": "1c986af9c1c8288c429a303c2f175ab64f4fca553f6c8e7a7bf55dee4f8daef4",
+  "tests": [
+    "tests/test_desktop_bridge.py",
+    "tests/test_desktop_bridge_adversarial.py"
+  ],
+  "exit_code": 1,
+  "source": "Read-only git archive in temporary directory; no user checkout changes",
+  "summary": "27 failed, 13 passed, 8 errors in 6.79s",
+  "current_summary": "27 failed, 13 passed, 8 errors in 6.77s",
+  "same_test_statuses": true,
+  "changed_tests": [],
+  "reason": "Legacy tests expect operations that the unchanged October8 data policy intentionally excludes; no legacy pathway reopened."
+}

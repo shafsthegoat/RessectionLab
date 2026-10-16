@@ -11,6 +11,17 @@ functional evidence remain explicit assumptions or unknowns. Stage 3 now starts
 with resumable qualification of existing eligible bundles and one healthy-source
 MRI/MRA host; population accuracy and publication readiness remain open.
 
+**First source-qualified corpus and numerical growth adapter, October 16:**
+The [nine-person qualification result](artifacts/patient-corpus-first-tranche-v1/RESULT.md)
+adds a resumable searchable catalog and preserves exact source/hash/role records.
+All nine cached receipts are reused on resume. Independent diffusion, physical
+mapping, protected-metadata and cache-invalidation controls pass after retained
+findings were fixed. This adds zero newly acquired people and accepts no anatomy
+as truth. The bounded FK adapter keeps tissue-conditioned growth separate from
+an explicitly homogeneous geometry control. New IXI host and generated-overlay
+integration remain separate from the frozen catalog; anatomical diversity and
+physiological validation are still open.
+
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and
 [patient construction plan](docs/patient-corpus-plan.md) supersede the historical
