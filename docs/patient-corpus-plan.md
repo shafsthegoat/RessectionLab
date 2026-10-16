@@ -137,10 +137,20 @@ Those fields therefore remain **UNKNOWN**.
 BTC volumes use the fixed fractional-label threshold. UCSF includes core,
 enhancement and FLAIR abnormality; the union is not histological tumor volume.
 These differing label definitions prevent treating the table as a common
-clinical tumor-size distribution. Archival free-text labels such as BTC 16
-“fronto-temporal” and BTC 20 “parietal” remain source-reported context, not
-accepted spatial localization or deployment inputs. SELECT/EVAL tumor
-locations were not measured or used to choose cases.
+clinical tumor-size distribution. SELECT/EVAL tumor locations were not measured
+or used to choose cases.
+
+The separate [six-case source-report sidecar](../artifacts/btc-six-source-location-evidence-v1/evidence.json)
+binds exact TRAIN identities to the pinned BTC participants table and
+[primary paper, Table 1](https://www.eneuro.org/content/5/3/ENEURO.0083-18.2018/tab-figures-data).
+It reports PAT05/PAT28 left frontal, PAT16 right fronto-temporal, PAT20/PAT22
+right parietal and PAT25 right temporal. These are six patient-level reports
+across four named site categories, with two left and four right reports. They
+do not establish native-mask localization, reviewed anatomical diversity,
+functional boundaries or automatic seed locations. The canonical catalogs'
+region/lobe/hemisphere fields remain UNKNOWN; the additive labels carry
+`source_reported_unreviewed` status and grant no training or anatomy acceptance.
+No location is guessed for UCSF004 or unrelated saved variants.
 
 ## Construction driven by the recording
 

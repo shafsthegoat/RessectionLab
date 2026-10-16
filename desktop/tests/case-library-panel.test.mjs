@@ -29,7 +29,7 @@ test('search matches each case name, own source and present anatomy, never unrel
 });
 test('Cases displays source-check and unreviewed-anatomy wording while retaining native browse and recent affordances',()=>{
   const html=renderToStaticMarkup(React.createElement(Panel,{cases:rows,onOpen(){},onBrowse(){},busy:false}));
-  assert.match(html,/Search cases by name, source or anatomy/);assert.match(html,/Open a saved case/);
+  assert.match(html,/Search cases by name, source, anatomy or reported site/);assert.match(html,/Open a saved case/);
   assert.match(html,/Source checked · anatomy unreviewed/);assert.match(html,/Brain \+ Vessels/);assert.match(html,/Recently opened/);assert.match(html,/3 scans/);
   assert.match(html,/independence across datasets remain unverified/);assert.doesNotMatch(html,/validated patients|independent people|accepted anatomy|unrelatedEvidence/);
 });
@@ -37,4 +37,26 @@ test('open controls remain disabled while busy and an empty library retains brow
   const busy=renderToStaticMarkup(React.createElement(Panel,{cases:rows,onOpen(){},onBrowse(){},busy:true}));
   assert.equal((busy.match(/<button[^>]*disabled=""/g)??[]).length,4);
   const empty=renderToStaticMarkup(React.createElement(Panel,{cases:[],onOpen(){},onBrowse(){},busy:false}));assert.match(empty,/Open or import imaging to start a case/);
+});
+const sourceRows=[...rows,...[['05','Left Frontal'],['16','Right Fronto-temporal'],['20','Right Parietal'],['22','Right Parietal'],['25','Right Temporal'],['28','Left Frontal']].map(([person,label])=>({
+  id:`source-btc-${person}`,title:`BTC-ds001226-sub-PAT${person}-preop`,recent:false,bytes:1,qualifiedCatalog:true,source:'BTC',anatomy:['brain','tumor'],
+  sourceLocation:{label,status:'source-reported-unreviewed'},receipt:{unrelatedEvidence:'occipital cerebellum'},
+}))];
+test('source-reported region and side search only their own reviewed-pending catalog rows',()=>{
+  assert.deepEqual(filter(sourceRows,'left frontal').map(row=>row.id),['source-btc-05','source-btc-28']);
+  assert.deepEqual(filter(sourceRows,'right parietal').map(row=>row.id),['source-btc-20','source-btc-22']);
+  assert.deepEqual(filter(sourceRows,'temporal').map(row=>row.id),['source-btc-16','source-btc-25']);
+  assert.deepEqual(filter(sourceRows,'BTC fronto-temporal').map(row=>row.id),['source-btc-16']);
+  assert.deepEqual(filter(sourceRows,'IXI frontal'),[]);assert.deepEqual(filter(sourceRows,'occipital'),[]);
+  assert.deepEqual(filter([rows[0]],'left frontal'),[]);
+  const unrelated={...rows[2],sourceLocation:{label:'Unbound location',status:'source-reported-unreviewed'}};
+  assert.deepEqual(filter([unrelated],'unbound'),[]);
+});
+test('reported sites have explicit source/review context and are not guessed for matching names or accepted anatomy',()=>{
+  const html=renderToStaticMarkup(React.createElement(Panel,{cases:sourceRows,onOpen(){},onBrowse(){},busy:false}));
+  assert.equal((html.match(/Reported site:/g)??[]).length,6);
+  assert.equal((html.match(/Dataset \/ paper report · review pending/g)??[]).length,6);
+  assert.match(html,/Reported site: Left Frontal/);assert.match(html,/Reported site: Right Fronto-temporal/);
+  const unrelated=renderToStaticMarkup(React.createElement(Panel,{cases:rows,onOpen(){},onBrowse(){},busy:false}));
+  assert.doesNotMatch(unrelated,/Reported site:/);assert.doesNotMatch(html,/accepted location|reviewed location|occipital|cerebellum/);
 });

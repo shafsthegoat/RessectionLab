@@ -57,7 +57,7 @@ class CaseLibrary {
       if (addedCatalog.has(row.id)) return;
       addedCatalog.add(row.id);this.paths.set(row.id,{catalog:true});
       rows.push({id:row.id,title:row.title,recent:wasRecent,bytes:row.bytes,qualifiedCatalog:true,
-        source:row.source,anatomy:row.anatomy,missingAnatomy:row.missingAnatomy});
+        source:row.source,anatomy:row.anatomy,missingAnatomy:row.missingAnatomy,...(row.sourceLocation?{sourceLocation:row.sourceLocation}:{})});
     };
     for (const filename of [...new Set([...recent, ...this.nativePaths, ...prepared])]) {
       try {

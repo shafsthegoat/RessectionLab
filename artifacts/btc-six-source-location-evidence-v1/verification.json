@@ -1,0 +1,45 @@
+{
+  "all_prior_89_files_verified_unchanged": true,
+  "all_twelve_source_receipt_files_verified_unchanged": true,
+  "anatomical_review_accepted": false,
+  "automatic_seed_placement_allowed": false,
+  "canonical_catalog_unchanged": true,
+  "catalog_sha256": "5f8b833079e0b4673d2b8d01a36fab474574164755ac731a0972fa8071bcd088",
+  "copied_subject_facts": [
+    "subject ID",
+    "tumor location",
+    "tumor lateralization"
+  ],
+  "evidence": {
+    "path": "artifacts/btc-six-source-location-evidence-v1/evidence.json",
+    "sha256": "f5d9db8e86f7ecc8343b5c302715f93d65727246dfd94a735d5db94d56c64362"
+  },
+  "frozen_qualification_module_unchanged": true,
+  "image_bundle_label_payloads_opened": false,
+  "metadata_controls": {
+    "all_passed": true,
+    "negative_controls": 12,
+    "positive_controls": 1
+  },
+  "new_model_runs": 0,
+  "new_qualification_runs": 0,
+  "other_participant_rows_or_demographics_copied": false,
+  "participants_tsv_sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+  "primary_archival_xml_sha256": "38e4890b6dc7d7b3bb84e2abfda005f050e7d93cf3c8a9586f74ce0c1a16589d",
+  "primary_table": "T1",
+  "primary_xml_verified_from_exact_uri_this_task": true,
+  "reported_site_counts": {
+    "Left Frontal": 2,
+    "Right Fronto-temporal": 1,
+    "Right Parietal": 2,
+    "Right Temporal": 1
+  },
+  "reviewed_anatomical_lobe_and_hemisphere": "UNKNOWN for all six; the source-reported fields do not replace them",
+  "schema": "btc-six-source-location-evidence-verification-v1",
+  "scope": "Additive patient-level source report only; not native-mask localization or atlas registration.",
+  "selected_primary_rows_verified": 6,
+  "selected_tsv_rows_verified": 6,
+  "status": "verified_source_reports_unreviewed_anatomy",
+  "training_admission_established": false,
+  "verifier_sha256": "83f324dca5107050a31e75bc41c78f2daa75407717eda870450af14ba03daaa6"
+}

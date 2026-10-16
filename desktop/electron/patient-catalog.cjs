@@ -28,6 +28,20 @@ const TWELVE_RELEASE = Object.freeze({
   catalogHash: 'sha256:6354e2e955aa4f4a5e0b892d5e3e8b069d9f8cb046196787b08273e7a94b4083',
   planHash: 'sha256:ecdc8f380437c0f1b1536a12fac0c22a07774c3f97e7d340d25d83f4dc4121d6',
 });
+const LOCATION_EVIDENCE = Object.freeze({
+  path:'artifacts/btc-six-source-location-evidence-v1/evidence.json',
+  sha256:'f5d9db8e86f7ecc8343b5c302715f93d65727246dfd94a735d5db94d56c64362',
+  sourcePath:'data/diffusion_source/ds001226-v5.0.1/participants.tsv',
+  sourceSha256:'2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d',
+  sourceUri:'https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv',
+  paperSha256:'38e4890b6dc7d7b3bb84e2abfda005f050e7d93cf3c8a9586f74ce0c1a16589d',
+  paperUri:'https://www.eneuro.org/content/5/3/ENEURO.0083-18.2018/tab-figures-data',
+  paperMetadataUri:'https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6001263/fullTextXML',
+});
+const BTC_REPORTED_SITES=Object.freeze(Object.fromEntries([
+  ['05','Frontal','Left'],['16','Fronto-temporal','Right'],['20','Parietal','Right'],
+  ['22','Parietal','Right'],['25','Temporal','Right'],['28','Frontal','Left'],
+].map(([id,location,side])=>[`BTC:sub-PAT${id}`,{participant:`sub-PAT${id}`,location,side}])));
 const SCOPE = Object.freeze(Object.fromEntries([
   ...['05','16','20','22','25','28'].map(n=>[`BTC:sub-PAT${n}`,{role:'TRAIN',bundle:`outputs/cases/BTC-sub-PAT${n}-structural-evidence.ressectionlab`,source:'BTC'}]),
   ['UCSF-PDGM:004',{role:'DEVELOPMENT',bundle:'outputs/poc-cases/UCSF-PDGM-0004.ressectionlab',source:'UCSF-PDGM'}],
@@ -118,6 +132,49 @@ function validateEntries(candidates,catalog,pins,allowed,parentPlanHash) {
   return catalog.entries;
 }
 
+/** Patient-level source reports stay separate from reviewed anatomical fields. */
+function validateSourceLocationEvidence(evidence,catalogEntries=null) {
+  need(evidence?.schema==='btc-six-source-location-evidence-v1'&&evidence.status==='source_reported_unreviewed'&&
+    evidence.anatomical_review_accepted===false&&evidence.automatic_seed_placement_allowed===false&&evidence.canonical_catalog_modified===false&&
+    evidence.native_mask_localization_established===false&&evidence.training_admission_established===false,'source-location review status changed');
+  need(equal(evidence.catalog,{path:TWELVE_RELEASE.catalogPath,sha256:TWELVE_RELEASE.catalogSha256,catalog_hash:TWELVE_RELEASE.catalogHash}),'source-location catalog binding changed');
+  const source=evidence.source,paper=evidence.paper_source;
+  need(source?.dataset==='BTC_preop'&&source.accession==='ds001226'&&source.version==='5.0.1'&&
+    source.commit==='359d372c5e972a161966312128adb365870df949'&&source.path===LOCATION_EVIDENCE.sourcePath&&
+    source.sha256===LOCATION_EVIDENCE.sourceSha256&&source.uri===LOCATION_EVIDENCE.sourceUri&&
+    source.field==='tumor location'&&source.identity_field==='participant_id','source-location dataset identity changed');
+  need(paper?.doi==='10.1523/ENEURO.0083-18.2018'&&paper.pmcid==='PMC6001263'&&paper.table_id==='T1'&&
+    paper.sha256===LOCATION_EVIDENCE.paperSha256&&paper.publication_uri===LOCATION_EVIDENCE.paperUri&&paper.metadata_uri===LOCATION_EVIDENCE.paperMetadataUri&&
+    paper.representation==='Europe PMC archival full-text JATS XML of the primary article; hash is not of publisher HTML'&&
+    equal(paper.selected_fields,['Subject ID','Tumor location','Tumor lateralization']),'source-location paper identity changed');
+  need(Array.isArray(evidence.entries)&&evidence.entries.length===6,'source-location membership changed');
+  if(catalogEntries!==null)need(Array.isArray(catalogEntries)&&catalogEntries.length===12&&catalogEntries.every(e=>e.release_id===TWELVE_RELEASE.id),'source-location selected release changed');
+  const locations=new Map();
+  for(const entry of evidence.entries) {
+    const expected=BTC_REPORTED_SITES[entry?.patient_group],scope=SCOPE[entry?.patient_group];
+    need(expected&&entry.role==='TRAIN'&&!locations.has(entry.patient_group),'protected, duplicate or out-of-scope source-location row');
+    need(entry.status==='source_reported_unreviewed'&&entry.hemisphere==='UNKNOWN'&&entry.anatomical_lobe==='UNKNOWN'&&
+      entry.anatomical_review_accepted===false&&entry.automatic_seed_placement_allowed===false,'source-location row promotes unreviewed anatomy');
+    need(entry.participant_id===expected.participant&&entry.case_id===`BTC-ds001226-${expected.participant}-preop`&&
+      entry.bundle===scope.bundle&&sha(entry.bundle_sha256)&&relative(entry.acquisition_record)&&
+      Array.isArray(entry.source_files)&&entry.source_files.length>0&&entry.source_files.every(s=>relative(s.path)&&sha(s.sha256)&&['imaging','annotation'].includes(s.role)),
+      'source-location row identity changed');
+    need(entry.source_reported_location===expected.location&&entry.source_reported_lateralization===expected.side&&
+      Number.isSafeInteger(entry.row_number)&&entry.row_number>1&&
+      equal(entry.row_evidence,{participant_id:expected.participant,'tumor location':expected.location})&&
+      equal(entry.paper_row_evidence,{'Subject ID':expected.participant.slice(4),'Tumor location':expected.location,'Tumor lateralization':expected.side}),
+      'source-location reported fields changed');
+    if(catalogEntries!==null) {
+      const candidate=catalogEntries.find(row=>row.patient_group===entry.patient_group)?.input_binding?.candidate;
+      need(candidate&&['case_id','role','bundle','bundle_sha256','source_files','acquisition_record'].every(key=>equal(entry[key],candidate[key]))&&
+        candidate.participant?.value===entry.participant_id&&candidate.participant.path===source.path&&candidate.participant.sha256===source.sha256,
+        'source-location frozen member binding changed');
+    }
+    locations.set(entry.patient_group,{label:`${expected.side} ${expected.location}`,status:'source-reported-unreviewed'});
+  }
+  return locations;
+}
+
 async function readBoundedMetadata(root,relativePath,maxBytes) {
   const filename=path.join(root,relativePath),resolved=await fs.realpath(filename);
   need(resolved===filename,'metadata path escaped the release root');
@@ -196,11 +253,14 @@ class PatientCatalog {
   async load() {
     const root=await fs.realpath(this.root);need(root===this.root,'catalog root must be canonical');
     const active=await loadTwelveMetadata(root)||await loadTenMetadata(root);
+    const evidence=await readPinnedMetadata(root,LOCATION_EVIDENCE.path,LOCATION_EVIDENCE.sha256,32*1024,'source-location evidence');
+    const locations=evidence?validateSourceLocationEvidence(evidence,active?.pins===TWELVE_RELEASE?active.entries:null):new Map();
     if(!active)return [];
     return active.entries.map(entry=>({
       id:'catalog-'+digest(`${active.pins.sha256}:${active.pins.catalogSha256}:${entry.patient_group}:${entry.bundle_sha256}`),
       title:entry.case_id,bytes:entry.input_binding.bundle_bytes,qualifiedCatalog:true,source:active.scope[entry.patient_group].source,
       anatomy:[...entry.anatomy_present],missingAnatomy:[...entry.missing_anatomy],
+      ...(active.pins===TWELVE_RELEASE&&locations.has(entry.patient_group)?{sourceLocation:locations.get(entry.patient_group)}:{}),
       entry,aliases:this.aliases(entry),
     }));
   }
@@ -216,4 +276,4 @@ class PatientCatalog {
     return resolved;
   }
 }
-module.exports={PatientCatalog,RELEASE,TWELVE_RELEASE,validateCatalogMetadata,validateTwelveCatalogMetadata,verifyBundleBytes};
+module.exports={PatientCatalog,RELEASE,TWELVE_RELEASE,LOCATION_EVIDENCE,validateCatalogMetadata,validateTwelveCatalogMetadata,validateSourceLocationEvidence,verifyBundleBytes};

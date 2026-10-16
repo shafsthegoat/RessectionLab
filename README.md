@@ -45,6 +45,12 @@ now shows separate tissue estimates and explicit UNKNOWN voxels in actual
 Electron. Layer controls, cutaway, original-image switching and native save/fresh
 reopen work; the acquired image and earlier references remain unchanged.
 
+The [six BTC source reports](artifacts/btc-six-source-location-evidence-v1/RESULT.md)
+now add location and side to **Cases** search. Actual Electron checks find the
+expected left-frontal/parietal cases and open the matching acquired scan.
+Labels say “Dataset / paper report · review pending”; reviewed anatomy remains
+UNKNOWN and unrelated saved versions receive no inferred location.
+
 A local macOS anatomy workbench for acquired patient imaging, saved segmentations,
 and linked 3D/source-image inspection.
 

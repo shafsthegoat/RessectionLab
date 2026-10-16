@@ -6,7 +6,7 @@ const path=require('node:path');
 const os=require('node:os');
 const {gunzipSync}=require('node:zlib');
 const {createHash}=require('node:crypto');
-const {PatientCatalog,RELEASE,TWELVE_RELEASE,validateCatalogMetadata,validateTwelveCatalogMetadata,verifyBundleBytes}=require('./patient-catalog.cjs');
+const {PatientCatalog,RELEASE,TWELVE_RELEASE,LOCATION_EVIDENCE,validateCatalogMetadata,validateTwelveCatalogMetadata,validateSourceLocationEvidence,verifyBundleBytes}=require('./patient-catalog.cjs');
 const {CaseLibrary}=require('./case-library.cjs');
 const hash=b=>createHash('sha256').update(b).digest('hex');
 async function metadata(){
@@ -36,6 +36,14 @@ async function twelveFixture(t){
     await fs.mkdir(path.dirname(path.join(f.root,name)),{recursive:true});await fs.writeFile(path.join(f.root,name),bytes);
   }
   return {...f,...meta};
+}
+async function locationMetadata(){
+  const bytes=await fs.readFile(path.join(__dirname,'../..',LOCATION_EVIDENCE.path));assert.equal(hash(bytes),LOCATION_EVIDENCE.sha256);
+  return {bytes,evidence:JSON.parse(bytes)};
+}
+async function installLocationEvidence(f){
+  const meta=await locationMetadata(),filename=path.join(f.root,LOCATION_EVIDENCE.path);
+  await fs.mkdir(path.dirname(filename),{recursive:true});await fs.writeFile(filename,meta.bytes);return {...meta,filename};
 }
 function watchBundleOpens(t){
   const original=fs.open,opened=[];fs.open=async function(filename,...args){if(String(filename).endsWith('.ressectionlab'))opened.push(filename);return original.call(this,filename,...args);};
@@ -269,4 +277,74 @@ test('new SynthRAD aliases remain one catalog row and retain exact bundle and cu
   await fs.writeFile(path.join(f.root,TWELVE_RELEASE.path),f.admissionBytes);
   const outside=path.join(f.base,'protected.ressectionlab');await fs.writeFile(outside,'protected sentinel');await fs.unlink(declared);await fs.symlink(outside,declared);
   await assert.rejects(()=>library.resolve(row.id),/escaped its exact released source/);assert.equal(opened.length,1);
+});
+
+test('six source sites decorate only exact twelve-catalog members without changing IDs, canonical anatomy or reading bundles',async t=>{
+  const f=await twelveFixture(t),opened=watchBundleOpens(t),before=await f.reader.load();await installLocationEvidence(f);
+  const rows=await f.reader.load();assert.deepEqual(rows.map(row=>row.id),before.map(row=>row.id));assert.deepEqual(rows.map(row=>row.entry),before.map(row=>row.entry));
+  assert.deepEqual(rows.filter(row=>row.sourceLocation).map(row=>[row.entry.patient_group,row.sourceLocation]),[
+    ['BTC:sub-PAT05',{label:'Left Frontal',status:'source-reported-unreviewed'}],['BTC:sub-PAT16',{label:'Right Fronto-temporal',status:'source-reported-unreviewed'}],
+    ['BTC:sub-PAT20',{label:'Right Parietal',status:'source-reported-unreviewed'}],['BTC:sub-PAT22',{label:'Right Parietal',status:'source-reported-unreviewed'}],
+    ['BTC:sub-PAT25',{label:'Right Temporal',status:'source-reported-unreviewed'}],['BTC:sub-PAT28',{label:'Left Frontal',status:'source-reported-unreviewed'}],
+  ]);
+  assert(rows.every(row=>['lobe','hemisphere','anatomical_region'].every(key=>row.entry.tumor_location[key]==='UNKNOWN')));
+  const prepared=path.join(f.root,'prepared'),variant=path.join(prepared,'BTC-ds001226-sub-PAT05-preop.ressectionlab');
+  await fs.mkdir(prepared);await fs.writeFile(variant,'tiny unrelated saved variant');
+  const library=new CaseLibrary(path.join(f.base,'user'),prepared,[],f.root);await library.remember(variant);
+  const publicRows=await library.list();assert.equal(publicRows.length,13);assert.equal(publicRows.filter(row=>row.sourceLocation).length,6);
+  assert.equal(publicRows.find(row=>row.id===hash(variant)).sourceLocation,undefined);
+  assert(publicRows.filter(row=>row.sourceLocation).every(row=>row.qualifiedCatalog&&!('entry' in row)&&!('source_files' in row)&&!('hemisphere' in row)));
+  assert.equal(opened.length,0);
+});
+
+test('missing optional source evidence and missing twelve catalog preserve unlabelled ten and legacy browsing',async t=>{
+  const f=await twelveFixture(t),opened=watchBundleOpens(t),meta=await installLocationEvidence(f),before=await f.reader.load();
+  await fs.unlink(meta.filename);
+  const absent=await f.reader.load();assert.deepEqual(absent.map(row=>row.id),before.map(row=>row.id));assert(absent.every(row=>!row.sourceLocation));
+  await fs.rmdir(path.dirname(meta.filename));assert.equal((await f.reader.load()).length,12);
+  await installLocationEvidence(f);await fs.unlink(path.join(f.root,TWELVE_RELEASE.catalogPath));
+  const ten=await f.reader.load();assert.equal(ten.length,10);assert(ten.every(row=>!row.sourceLocation));
+  await fs.unlink(path.join(f.root,RELEASE.catalogPath));assert.deepEqual(await f.reader.load(),[]);
+  const prepared=path.join(f.root,'prepared');await fs.mkdir(prepared);await fs.writeFile(path.join(prepared,'Saved study.ressectionlab'),'tiny synthetic bytes');
+  const library=new CaseLibrary(path.join(f.base,'user'),prepared,[],f.root),legacy=await library.list();assert.equal(legacy.length,1);assert.equal(legacy[0].sourceLocation,undefined);
+  assert.equal(opened.length,0);
+});
+
+test('source-location metadata refuses mismatched catalog, source, paper, member, role, review state and reported fields',async()=>{
+  const {evidence}=await locationMetadata(),{twelveCatalog}=await twelveMetadata();
+  const changes=[
+    [f=>f.evidence.catalog.sha256='f'.repeat(64),/catalog binding/],
+    [f=>f.evidence.source.sha256='f'.repeat(64),/dataset identity/],
+    [f=>f.evidence.source.uri='https://unrelated.invalid/participants.tsv',/dataset identity/],
+    [f=>f.evidence.paper_source.sha256='f'.repeat(64),/paper identity/],
+    [f=>f.evidence.paper_source.representation='publisher HTML',/paper identity/],
+    [f=>f.evidence.status='accepted',/review status/],
+    [f=>f.evidence.automatic_seed_placement_allowed=true,/review status/],
+    [f=>f.evidence.entries[0].role='EVAL',/protected/],
+    [f=>f.evidence.entries[0].patient_group='BTC:sub-PAT26',/out-of-scope/],
+    [f=>f.evidence.entries[1]=f.evidence.entries[0],/duplicate/],
+    [f=>f.evidence.entries[0].status='reviewed',/unreviewed anatomy/],
+    [f=>f.evidence.entries[0].hemisphere='Left',/unreviewed anatomy/],
+    [f=>f.evidence.entries[0].anatomical_review_accepted=true,/unreviewed anatomy/],
+    [f=>f.evidence.entries[0].source_reported_lateralization='Right',/reported fields/],
+    [f=>f.evidence.entries[0].paper_row_evidence['Subject ID']='PAT28',/reported fields/],
+    [f=>f.evidence.entries[0].case_id='unrelated saved variant',/row identity/],
+    [f=>f.evidence.entries[0].bundle='../protected.ressectionlab',/row identity/],
+    [f=>f.evidence.entries[0].bundle_sha256='f'.repeat(64),/frozen member binding/],
+    [f=>f.evidence.entries[0].source_files[0].sha256='f'.repeat(64),/frozen member binding/],
+    [f=>f.evidence.entries[0].acquisition_record='manifests/unrelated.json',/frozen member binding/],
+    [f=>f.entries[0].release_id=RELEASE.id,/selected release/],
+  ];
+  for(const [change,message] of changes){const f=structuredClone({evidence,entries:twelveCatalog.entries});change(f);assert.throws(()=>validateSourceLocationEvidence(f.evidence,f.entries),message);}
+});
+
+test('present changed, oversized or redirected source evidence fails closed before any selected bundle open',async t=>{
+  const f=await twelveFixture(t),opened=watchBundleOpens(t),meta=await installLocationEvidence(f),row=(await f.reader.load())[0];
+  const library=new CaseLibrary(path.join(f.base,'user'),path.join(f.root,'outputs/poc-cases'),[],f.root);
+  await fs.writeFile(meta.filename,'{');await assert.rejects(()=>library.list(),/source-location evidence checksum/);await assert.rejects(()=>library.resolve(row.id),/source-location evidence checksum/);
+  await fs.unlink(path.join(f.root,TWELVE_RELEASE.catalogPath));await assert.rejects(()=>library.list(),/source-location evidence checksum/);
+  await fs.writeFile(meta.filename,Buffer.alloc(32*1024+1));await assert.rejects(()=>f.reader.load(),/read bound/);
+  const outside=path.join(f.base,'outside-evidence.json');await fs.writeFile(outside,meta.bytes);await fs.unlink(meta.filename);await fs.symlink(outside,meta.filename);
+  await assert.rejects(()=>f.reader.load(),/metadata path escaped/);await fs.unlink(outside);await assert.rejects(()=>f.reader.load(),/metadata path escaped/);
+  assert.equal(opened.length,0);
 });

@@ -118,6 +118,17 @@ cutaway and original-image switching work; a fresh process restores the reviewed
 save with all surfaces finished. Unknown cells remain explicit; source and model
 layers stay separate. This adds zero patients or anatomy/host/growth acceptance.
 
+**Source-reported tumor sites in Cases, October 16:**
+The [additive BTC evidence and native check](artifacts/btc-six-source-location-evidence-v1/RESULT.md)
+bind six existing TRAIN cases to their dataset rows and primary-paper table.
+Cases searches reported location/side with explicit review-pending labels:
+left frontal finds two, parietal two and right four; an unrelated IXI/frontal
+search finds none. Opening the parietal result loads BTC20's acquired T1 and
+threshold-derived annotation. Canonical catalog IDs and UNKNOWN anatomy fields
+are unchanged. Independent source/table/reader checking passes. This adds zero
+people, inference or anatomical acceptance;
+source reports do not establish mask localization or functional boundaries.
+
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and
 [patient construction plan](docs/patient-corpus-plan.md) supersede the historical

@@ -131,6 +131,14 @@ remain a separate display, with no planning, host, training or anatomical
 promotion. Reviewed tissue/host support and the tissue-conditioned pilot are
 still open.
 
+The [additive BTC source reports](../artifacts/btc-six-source-location-evidence-v1/RESULT.md)
+now support reported-site/side search in actual Electron. Exact dataset and
+paper rows bind six existing TRAIN cases; left frontal returns two, parietal two
+and right four. The matching parietal result opens BTC20's acquired source.
+Review-pending labels remain separate from canonical UNKNOWN anatomy fields;
+catalog IDs, source counts and qualification receipts are unchanged. This
+measures reported-site coverage only, not anatomical, functional or seed review.
+
 ## Accuracy and publication gate
 
 Publication readiness requires claims with matching evidence, not a test count
