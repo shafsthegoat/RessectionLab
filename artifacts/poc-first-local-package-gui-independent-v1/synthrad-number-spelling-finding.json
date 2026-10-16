@@ -1,0 +1,10 @@
+{
+  "schema": "native-gui-save-qa-preparation-finding-v1",
+  "kind": "auditor-normalization-scope",
+  "initial_auditor_sha256": "57cc1ed3dff4a2000eae4fca2845747891cac62d7557cdb2b8187528eb8e667e",
+  "finding": "Selected-series persistence intentionally recomputes sessionHash. Two existing cursor first components change from integral float JSON spelling to integer spelling, with identical numeric values. Auditor required byte-encoded metadata equality before accounting for those exact fields.",
+  "initial_output": "AssertionError: JSON values/types/ordered arrays differ after normalization of selection and container hash only",
+  "source_snapshot": "outputs/poc-first-local-package-gui-v1/qa-preparation/second-audit_saved_synthrad.py.txt",
+  "result_written": false,
+  "correction": "Verify both session hashes from their complete documents before normalization; allow exactly the two known cursor first-component numeric spelling changes, requiring float-to-int and numeric equality. Keep every other cursor component and all remaining fields exact."
+}

@@ -1,5 +1,18 @@
 # Project status
 
+**Current packaged Mac research preview, October 16:**
+The [local Apple Silicon build](artifacts/poc-first-local-package-build-v1/RESULT.md)
+now operates with the current bundled engine, without the development Python
+launch path. Actual GUI checks cover library selection/cancel/rejection/restart,
+both rehearsal tools and branches, play/pause/scrub, tissue opacity/cutaway and
+separate CT/MRI views. A confirmed full process shutdown restores the library and
+saved MRI selection. The packaged-engine test passes source-array, original-file,
+UNKNOWN-partition and fresh-engine replay checks. Its first JSON-order-only test
+failure and the earlier missing-lock-pin build failure remain preserved. The
+catalog still has 12 source identities; saved copies add no people. This closes
+local packaging/persistence engineering, not anatomy/physics accuracy or public
+distribution. Independent native-save evidence is linked from the build result.
+
 **First executable patient-source rehearsal, October 16:**
 The [actual Electron demonstration and independent audit](artifacts/poc-first-rehearsal-v1/RESULT.md)
 close the narrow software Gates 1–2. Three separate genuine source cases retain

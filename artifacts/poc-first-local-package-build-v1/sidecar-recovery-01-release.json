@@ -1,0 +1,21 @@
+{
+  "schema": "poc-first-local-package-supervisor-v1-root-release",
+  "issuer": "ROOT",
+  "decision": "release_one_stage",
+  "plan_sha256": "a7a3e918e519882e115714d0624eb4ed8e9f6952598cca505029dcbe0940a7a5",
+  "runner_sha256": "9f152233ed14ea0d99635b696d10eaeec329780a3a84974ccf620a90ae8acf55",
+  "source_commit": "78edfe44b7c91daed1877be9d4c0d3830d36a8fd",
+  "source_manifest_sha256": "234633ac90adf470db163e226411b22c201a80eedbd158e0546310b2909143c3",
+  "session_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-first-local-package-build-v1",
+  "stage": "sidecar-recovery-01",
+  "program_sha256": "39bf33dd80ffd5e8c087cbd52164cbe0d8485f73b44687d0d466b0f49e197129",
+  "environment_sha256": "b1dc7c8fbe6e29a14b24e6dafcbf78192d5e9402d8f00a81d9c2a3a9427873a2",
+  "receipt_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-first-local-package-build-v1/sidecar-recovery-01-supervision.json",
+  "predecessor": {
+    "receipt_sha256": "5c03bcfffb832de6a907a6e3f94044c815cdd0cd345bb66ed14c08c9f9dd42ac",
+    "growth_ledger_sha256": "8ade65f73cd9c411256272f4037abc34a052a579142022c0fa1e3a6f413f73d3",
+    "baseline_sha256": "34e8f9cdafdfac30f30b5621c1d51cfb569d71d7764cac0e74f2b5b62f5923c3"
+  },
+  "released_utc": "2026-10-16T10:24:57.767063+00:00",
+  "reason": "ROOT reviewed exact one-line installed psutil lock correction, full closure audit, 34 controls, and intact failed-build preservation; one recovery under unchanged resource limits."
+}

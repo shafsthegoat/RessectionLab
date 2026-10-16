@@ -1,0 +1,10 @@
+{
+  "schema": "native-gui-save-qa-preparation-finding-v1",
+  "kind": "auditor-assumption",
+  "initial_auditor_sha256": "9e8b79cf9f8fd260ec929d72f9854a8b6e28d40d97ff35fcf65e221359acf77e",
+  "finding": "Required brain_mask.npy in each auxiliary source-native MRI archive, although original and saved auxiliary MRI archives can omit it. Primary brain requirement remains mandatory. No detected product data discrepancy.",
+  "initial_output": "AssertionError in compare_case at exact member-set check on first auxiliary MRI.",
+  "source_snapshot": "outputs/poc-first-local-package-gui-v1/qa-preparation/initial-audit_saved_ucsf.py.txt",
+  "result_written": false,
+  "correction": "Infer only presence of optional brain_mask.npy separately in each archive, then require exact logical array sets and bytes across both; all unindexed members still rejected."
+}

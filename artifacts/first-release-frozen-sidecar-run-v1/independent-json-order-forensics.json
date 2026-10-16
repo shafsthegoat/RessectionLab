@@ -1,0 +1,434 @@
+{
+  "schema": "independent-frozen-sidecar-json-order-forensics-v1",
+  "status": "cause_confirmed",
+  "createdUtc": "2026-10-16T10:34:35.384Z",
+  "auditorSha256": "b1fd58e698132cd93b052f8a761560b3564eda80f9dd628b403c07780dbf4e72",
+  "generatedControls": {
+    "passed": 11,
+    "scope": "Generated key-order, value, type, ordered-array, key-set and signed-zero controls"
+  },
+  "scope": "Existing JSON, compressed bundle byte hashes and only its manifest.json member; no array decoding, backend execution or clinical acceptance.",
+  "inputFiles": {
+    "outputs/first-release-frozen-sidecar-run-v1/report.json": {
+      "sha256": "a7251122a901c384f6c12228888da05945ba35d20300c9ee39ae57244580713a",
+      "bytes": 22958
+    },
+    "outputs/first-release-frozen-sidecar-run-v1/compact-summary.json": {
+      "sha256": "2192f6df5273229434d74d3f16adc6ecd3c4e044fdcdc91a25d3d811443a233b",
+      "bytes": 3545
+    },
+    "outputs/first-release-frozen-sidecar-run-v1/stopped-rehearsal.json": {
+      "sha256": "7b5423cd916bdc4ab1be05148c4a44fd04f4e37606ef002ef164c4ef2b8fa285",
+      "bytes": 680215
+    },
+    "outputs/first-release-frozen-sidecar-run-v1/UCSF-frozen-reviewed.ressectionlab": {
+      "sha256": "4605b84b79b5d643ceae9108267b77ed33ed6a036354eeb53983038b27285a3d",
+      "bytes": 31531201
+    },
+    "artifacts/first-release-frozen-sidecar-preparation-v2/frozen-auditor.mjs": {
+      "sha256": "e177a8f1499609b30db84627f758b0553282a4e251ab8c0b0c3163f389c70109",
+      "bytes": 36406
+    },
+    "artifacts/first-release-frozen-sidecar-preparation-v2/preparation.json": {
+      "sha256": "40c53acf6b203614a374c423fdf5b3d0594fdc3125bd64e20a9199cfd7d85547",
+      "bytes": 69658
+    },
+    "src/resectionlab/imaging.py": {
+      "sha256": "45df035c47f9c509fef91ebc02f1c3bef40266c052dbd1de6d133815a5af6afa",
+      "bytes": 42272
+    },
+    "src/resectionlab/workspace_bundle.py": {
+      "sha256": "9a1bf1d0f749bb67857d65803aeeaf8f07927ebce8a03fb4364c59e8b151bf1e",
+      "bytes": 32413
+    },
+    "src/resectionlab/rehearsal_bridge.py": {
+      "sha256": "6adb1f9b6f8d9d13b8991c7a7cad1aa9375aa2049ce3ce35c3cc5d7af791597e",
+      "bytes": 9227
+    },
+    "src/resectionlab/rehearsal_episode.py": {
+      "sha256": "4c5b0b8b7d941069b54266904383f1a3113d96830847bf9cd3ba02f28807e6fe",
+      "bytes": 39150
+    },
+    "src/resectionlab/core.py": {
+      "sha256": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+      "bytes": 30914
+    }
+  },
+  "inputFilesUnchangedAfterAudit": true,
+  "archiveRead": {
+    "member": "manifest.json",
+    "bytes": 61178,
+    "sha256": "cca109ec15e7f10e0d2cf497a04b408d7d5b2d8e7c927ffec716e8edcc1a50df",
+    "otherMembersDecoded": 0
+  },
+  "originalFailure": {
+    "status": "failed",
+    "name": "AssertionError",
+    "assertion": "Fresh engine episode hash mismatch",
+    "actualSha256": "4e644bb998e66cfe7d6e4b4567baddb6c2cf14bed3db403dfcfc5fb7e186bf49",
+    "expectedSha256": "8bbdd7f0bc9d67485adb2013f69146c0b151e1b399f3bc107a160198d3f7b90c",
+    "requests": 21,
+    "engineByteDifferences": 0,
+    "childExitCodes": [
+      0,
+      0
+    ],
+    "remainingCaseChecksReached": false
+  },
+  "sourceMechanism": [
+    {
+      "file": "artifacts/first-release-frozen-sidecar-preparation-v2/frozen-auditor.mjs",
+      "detail": "jsonSha hashes JSON.stringify without canonical object-key order; fresh episode assertion used this encoding fingerprint."
+    },
+    {
+      "file": "src/resectionlab/imaging.py",
+      "detail": "save_case encodes the manifest with sort_keys=True."
+    },
+    {
+      "file": "src/resectionlab/workspace_bundle.py",
+      "detail": "encoded sorts JSON keys; save_workspace writes the manifest through encoded."
+    },
+    {
+      "file": "src/resectionlab/core.py",
+      "detail": "freeze/thaw preserve mapping iteration order; semantic_digest sorts keys."
+    },
+    {
+      "file": "src/resectionlab/rehearsal_episode.py",
+      "detail": "restore executes saved action dictionaries; history and serialize retain their insertion order, while source and final-state checks use semantic identity."
+    },
+    {
+      "file": "src/resectionlab/rehearsal_bridge.py",
+      "detail": "Payload export rebuilds the live and alternative episodes and adds the saved view as a final response field."
+    }
+  ],
+  "live": {
+    "actions": 3,
+    "historyEntries": 3,
+    "replayFrames": 10,
+    "savedRecord": {
+      "nodes": 237,
+      "objects": 23,
+      "arrays": 23,
+      "scalars": 191,
+      "numbers": 60,
+      "differences": [],
+      "objectKeyOrderPaths": [
+        "$",
+        "$.sourceBinding",
+        "$.sourceBinding.sourceRefs[0]",
+        "$.sourceBinding.sourceRefs[1]",
+        "$.sourceBinding.sourceRefs[2]",
+        "$.sourceBinding.sourceRefs[3]",
+        "$.sourceBinding.sourceRefs[4]",
+        "$.sourceBinding.sourceRefs[5]",
+        "$.config",
+        "$.actions[0]",
+        "$.actions[1]",
+        "$.actions[2]"
+      ],
+      "signedZeroRepresentationPaths": [
+        "$.sourceBinding.affine[0][1]",
+        "$.sourceBinding.affine[0][2]",
+        "$.sourceBinding.affine[1][0]",
+        "$.sourceBinding.affine[1][2]",
+        "$.sourceBinding.affineRasMm[0][1]",
+        "$.sourceBinding.affineRasMm[0][2]",
+        "$.sourceBinding.affineRasMm[1][0]",
+        "$.sourceBinding.affineRasMm[1][2]"
+      ],
+      "objectKeyOrderChanges": 12,
+      "signedZeroRepresentationChanges": 8,
+      "canonicalSha256": "8c80affe689233fe0f4bd62940cc1caf6f185916435ccb6e22926e239c6eadb9",
+      "leftRawJsonSha256": "e09a2e794338e1095fdf987d64d6cac79988434c4446d84621b1d1ebbfc7e9de",
+      "rightRawJsonSha256": "8c80affe689233fe0f4bd62940cc1caf6f185916435ccb6e22926e239c6eadb9"
+    },
+    "exportedEpisode": {
+      "nodes": 52426,
+      "objects": 129,
+      "arrays": 12876,
+      "scalars": 39421,
+      "numbers": 38896,
+      "differences": [],
+      "objectKeyOrderPaths": [
+        "$.history[0].action",
+        "$.history[1].action",
+        "$.history[2].action",
+        "$.savedEpisode.actions[0]",
+        "$.savedEpisode.actions[1]",
+        "$.savedEpisode.actions[2]"
+      ],
+      "signedZeroRepresentationPaths": [],
+      "objectKeyOrderChanges": 6,
+      "signedZeroRepresentationChanges": 0,
+      "canonicalSha256": "5fa3130fab9c828f763cf090a2172c1759701faa007c2dee59c42410f65d363c",
+      "leftRawJsonSha256": "8bbdd7f0bc9d67485adb2013f69146c0b151e1b399f3bc107a160198d3f7b90c",
+      "rightRawJsonSha256": "4e644bb998e66cfe7d6e4b4567baddb6c2cf14bed3db403dfcfc5fb7e186bf49"
+    }
+  },
+  "branches": [
+    {
+      "id": "short_pass_field_management",
+      "actions": 7,
+      "historyEntries": 7,
+      "replayFrames": 22,
+      "savedRecord": {
+        "nodes": 259,
+        "objects": 27,
+        "arrays": 25,
+        "scalars": 207,
+        "numbers": 70,
+        "differences": [],
+        "objectKeyOrderPaths": [
+          "$",
+          "$.sourceBinding",
+          "$.sourceBinding.sourceRefs[0]",
+          "$.sourceBinding.sourceRefs[1]",
+          "$.sourceBinding.sourceRefs[2]",
+          "$.sourceBinding.sourceRefs[3]",
+          "$.sourceBinding.sourceRefs[4]",
+          "$.sourceBinding.sourceRefs[5]",
+          "$.config",
+          "$.actions[0]",
+          "$.actions[1]",
+          "$.actions[2]",
+          "$.actions[3]",
+          "$.actions[4]",
+          "$.actions[5]",
+          "$.actions[6]"
+        ],
+        "signedZeroRepresentationPaths": [
+          "$.sourceBinding.affine[0][1]",
+          "$.sourceBinding.affine[0][2]",
+          "$.sourceBinding.affine[1][0]",
+          "$.sourceBinding.affine[1][2]",
+          "$.sourceBinding.affineRasMm[0][1]",
+          "$.sourceBinding.affineRasMm[0][2]",
+          "$.sourceBinding.affineRasMm[1][0]",
+          "$.sourceBinding.affineRasMm[1][2]"
+        ],
+        "objectKeyOrderChanges": 16,
+        "signedZeroRepresentationChanges": 8,
+        "canonicalSha256": "2945cf7cd4165834d2959b9b7bfc3faedc251bc58b9378187c7498018fdccf12",
+        "leftRawJsonSha256": "1ec371dfebad34b32e68473248f986f22bba11894bcdccaed98ba0fcdca0b996",
+        "rightRawJsonSha256": "2945cf7cd4165834d2959b9b7bfc3faedc251bc58b9378187c7498018fdccf12"
+      },
+      "exportedEpisode": {
+        "nodes": 54586,
+        "objects": 229,
+        "arrays": 13238,
+        "scalars": 41119,
+        "numbers": 40306,
+        "differences": [],
+        "objectKeyOrderPaths": [
+          "$.history[0].action",
+          "$.history[1].action",
+          "$.history[2].action",
+          "$.history[3].action",
+          "$.history[4].action",
+          "$.history[5].action",
+          "$.history[6].action",
+          "$.savedEpisode.actions[0]",
+          "$.savedEpisode.actions[1]",
+          "$.savedEpisode.actions[2]",
+          "$.savedEpisode.actions[3]",
+          "$.savedEpisode.actions[4]",
+          "$.savedEpisode.actions[5]",
+          "$.savedEpisode.actions[6]"
+        ],
+        "signedZeroRepresentationPaths": [],
+        "objectKeyOrderChanges": 14,
+        "signedZeroRepresentationChanges": 0,
+        "canonicalSha256": "d397a073cb0052d7532cd1186deaf474bff4cda48bf456b0e90ba427f7f0208a",
+        "leftRawJsonSha256": "2d5737d1f11783d10d410d981ab361f1b84d8e68c0875bf2e96054e4a8ce9687",
+        "rightRawJsonSha256": "c2ba88edbefa487314e1594f912a627242f4824b4ed05f72b3a224a0884110f9"
+      }
+    },
+    {
+      "id": "deeper_pass_reassess",
+      "actions": 6,
+      "historyEntries": 6,
+      "replayFrames": 26,
+      "savedRecord": {
+        "nodes": 251,
+        "objects": 26,
+        "arrays": 24,
+        "scalars": 201,
+        "numbers": 66,
+        "differences": [],
+        "objectKeyOrderPaths": [
+          "$",
+          "$.sourceBinding",
+          "$.sourceBinding.sourceRefs[0]",
+          "$.sourceBinding.sourceRefs[1]",
+          "$.sourceBinding.sourceRefs[2]",
+          "$.sourceBinding.sourceRefs[3]",
+          "$.sourceBinding.sourceRefs[4]",
+          "$.sourceBinding.sourceRefs[5]",
+          "$.config",
+          "$.actions[0]",
+          "$.actions[1]",
+          "$.actions[2]",
+          "$.actions[3]",
+          "$.actions[4]",
+          "$.actions[5]"
+        ],
+        "signedZeroRepresentationPaths": [
+          "$.sourceBinding.affine[0][1]",
+          "$.sourceBinding.affine[0][2]",
+          "$.sourceBinding.affine[1][0]",
+          "$.sourceBinding.affine[1][2]",
+          "$.sourceBinding.affineRasMm[0][1]",
+          "$.sourceBinding.affineRasMm[0][2]",
+          "$.sourceBinding.affineRasMm[1][0]",
+          "$.sourceBinding.affineRasMm[1][2]"
+        ],
+        "objectKeyOrderChanges": 15,
+        "signedZeroRepresentationChanges": 8,
+        "canonicalSha256": "c9f939c37aee9c7d9e5bb84bd8899371620d7495afe3796f0fe39e64e40e3355",
+        "leftRawJsonSha256": "adcc834667283f58a7be9c3e1e756fabe6b2c635ee6cfb68a7338fe6a9be3d67",
+        "rightRawJsonSha256": "c9f939c37aee9c7d9e5bb84bd8899371620d7495afe3796f0fe39e64e40e3355"
+      },
+      "exportedEpisode": {
+        "nodes": 55430,
+        "objects": 258,
+        "arrays": 13403,
+        "scalars": 41769,
+        "numbers": 40879,
+        "differences": [],
+        "objectKeyOrderPaths": [
+          "$.history[0].action",
+          "$.history[1].action",
+          "$.history[2].action",
+          "$.history[3].action",
+          "$.history[4].action",
+          "$.history[5].action",
+          "$.savedEpisode.actions[0]",
+          "$.savedEpisode.actions[1]",
+          "$.savedEpisode.actions[2]",
+          "$.savedEpisode.actions[3]",
+          "$.savedEpisode.actions[4]",
+          "$.savedEpisode.actions[5]"
+        ],
+        "signedZeroRepresentationPaths": [],
+        "objectKeyOrderChanges": 12,
+        "signedZeroRepresentationChanges": 0,
+        "canonicalSha256": "2f0bfb8bce32223bacd921e54c1a968c903da8c2185876b0a24819d81fbaaef0",
+        "leftRawJsonSha256": "319b21a0b9df00083c7240877a0693cc16804f62e70d1354b695516a157c4389",
+        "rightRawJsonSha256": "84246a06a2b1011297806256a419d4630d9fa34faa58e64988ab300c7445006c"
+      }
+    }
+  ],
+  "comparison": {
+    "nodes": 110025,
+    "objects": 490,
+    "arrays": 26642,
+    "scalars": 82893,
+    "numbers": 81185,
+    "differences": [],
+    "objectKeyOrderPaths": [
+      "$.alternatives[0].episode.history[0].action",
+      "$.alternatives[0].episode.history[1].action",
+      "$.alternatives[0].episode.history[2].action",
+      "$.alternatives[0].episode.history[3].action",
+      "$.alternatives[0].episode.history[4].action",
+      "$.alternatives[0].episode.history[5].action",
+      "$.alternatives[0].episode.history[6].action",
+      "$.alternatives[0].episode.savedEpisode.actions[0]",
+      "$.alternatives[0].episode.savedEpisode.actions[1]",
+      "$.alternatives[0].episode.savedEpisode.actions[2]",
+      "$.alternatives[0].episode.savedEpisode.actions[3]",
+      "$.alternatives[0].episode.savedEpisode.actions[4]",
+      "$.alternatives[0].episode.savedEpisode.actions[5]",
+      "$.alternatives[0].episode.savedEpisode.actions[6]",
+      "$.alternatives[1].episode.history[0].action",
+      "$.alternatives[1].episode.history[1].action",
+      "$.alternatives[1].episode.history[2].action",
+      "$.alternatives[1].episode.history[3].action",
+      "$.alternatives[1].episode.history[4].action",
+      "$.alternatives[1].episode.history[5].action",
+      "$.alternatives[1].episode.savedEpisode.actions[0]",
+      "$.alternatives[1].episode.savedEpisode.actions[1]",
+      "$.alternatives[1].episode.savedEpisode.actions[2]",
+      "$.alternatives[1].episode.savedEpisode.actions[3]",
+      "$.alternatives[1].episode.savedEpisode.actions[4]",
+      "$.alternatives[1].episode.savedEpisode.actions[5]"
+    ],
+    "signedZeroRepresentationPaths": [],
+    "objectKeyOrderChanges": 26,
+    "signedZeroRepresentationChanges": 0,
+    "canonicalSha256": "c5cc36f2cf03cb2ee9788ce87e1ed712777c9d4b9f19aba8fd58eb7d226eeb06",
+    "leftRawJsonSha256": "85cc6f97c9b59916557338bbdd2b081713393d1158cb9d7c7e1dc07be3b7648f",
+    "rightRawJsonSha256": "6619dbc6b6d0d7624ba04f98e0512b91f10bbd05221e5c3d5668201c23569731"
+  },
+  "wholeReplyBeforeSavedView": {
+    "nodes": 162455,
+    "objects": 620,
+    "arrays": 39519,
+    "scalars": 122316,
+    "numbers": 120081,
+    "differences": [],
+    "objectKeyOrderPaths": [
+      "$.episode.history[0].action",
+      "$.episode.history[1].action",
+      "$.episode.history[2].action",
+      "$.episode.savedEpisode.actions[0]",
+      "$.episode.savedEpisode.actions[1]",
+      "$.episode.savedEpisode.actions[2]",
+      "$.comparison.alternatives[0].episode.history[0].action",
+      "$.comparison.alternatives[0].episode.history[1].action",
+      "$.comparison.alternatives[0].episode.history[2].action",
+      "$.comparison.alternatives[0].episode.history[3].action",
+      "$.comparison.alternatives[0].episode.history[4].action",
+      "$.comparison.alternatives[0].episode.history[5].action",
+      "$.comparison.alternatives[0].episode.history[6].action",
+      "$.comparison.alternatives[0].episode.savedEpisode.actions[0]",
+      "$.comparison.alternatives[0].episode.savedEpisode.actions[1]",
+      "$.comparison.alternatives[0].episode.savedEpisode.actions[2]",
+      "$.comparison.alternatives[0].episode.savedEpisode.actions[3]",
+      "$.comparison.alternatives[0].episode.savedEpisode.actions[4]",
+      "$.comparison.alternatives[0].episode.savedEpisode.actions[5]",
+      "$.comparison.alternatives[0].episode.savedEpisode.actions[6]",
+      "$.comparison.alternatives[1].episode.history[0].action",
+      "$.comparison.alternatives[1].episode.history[1].action",
+      "$.comparison.alternatives[1].episode.history[2].action",
+      "$.comparison.alternatives[1].episode.history[3].action",
+      "$.comparison.alternatives[1].episode.history[4].action",
+      "$.comparison.alternatives[1].episode.history[5].action",
+      "$.comparison.alternatives[1].episode.savedEpisode.actions[0]",
+      "$.comparison.alternatives[1].episode.savedEpisode.actions[1]",
+      "$.comparison.alternatives[1].episode.savedEpisode.actions[2]",
+      "$.comparison.alternatives[1].episode.savedEpisode.actions[3]",
+      "$.comparison.alternatives[1].episode.savedEpisode.actions[4]",
+      "$.comparison.alternatives[1].episode.savedEpisode.actions[5]"
+    ],
+    "signedZeroRepresentationPaths": [],
+    "objectKeyOrderChanges": 32,
+    "signedZeroRepresentationChanges": 0,
+    "canonicalSha256": "e2044c10fe4f261b733e0e8f9fbc518d272c6fc5db0e1fde967bf098a5e4f57a",
+    "leftRawJsonSha256": "7b5423cd916bdc4ab1be05148c4a44fd04f4e37606ef002ef164c4ef2b8fa285",
+    "rightRawJsonSha256": "e67807eefc9e593bda2d777060dbf2aa7fdf7fa8f224aad6b6c7f50993b5792c"
+  },
+  "freshReply": {
+    "journalSha256": "452641d0f3757b3a09991118d64405d2cd1e84f935ea8acc92d155d16a39c1af",
+    "independentReconstructionSha256": "452641d0f3757b3a09991118d64405d2cd1e84f935ea8acc92d155d16a39c1af",
+    "exactMatch": true,
+    "savedViewAddition": {
+      "keys": [
+        "branchId",
+        "episodeInitialStateId",
+        "frameIndex",
+        "selectedTool",
+        "visible"
+      ],
+      "rawJsonSha256": "086197902ec046fa4f802c1f7559ff01c2d83180a1fb17e598d26f6df7c3bc31"
+    },
+    "reconstructionFile": "outputs/first-release-frozen-sidecar-run-v1/independent-order-forensics/reconstructed-fresh-reply.json"
+  },
+  "conclusion": "Object insertion order explains the complete observed fresh reply and the original failed episode fingerprint. The live export has no numeric, JSON-type, scalar-value or ordered-array change. Eight signed-zero spelling differences in each directly archived source-binding record normalize under JSON.stringify and are not causal.",
+  "limits": [
+    "This is an independent reconstruction from retained records, not a new engine run or independently captured fresh reply.",
+    "The exact full-reply journal hash supplies the link to the actual fresh-process response.",
+    "The original failed protocol run remains failed; later case checks were not reached.",
+    "No anatomy, physics, surgical or clinical acceptance is inferred."
+  ]
+}

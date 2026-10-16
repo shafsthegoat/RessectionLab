@@ -1,0 +1,38 @@
+{
+  "schema": "poc-first-local-package-verification-v1",
+  "status": "local_software_acceptance_passed",
+  "verified_utc": "2026-10-16T10:43:17.556370+00:00",
+  "build_source_commit": "78edfe44b7c91daed1877be9d4c0d3830d36a8fd",
+  "current_runtime_source_files_unchanged": 381,
+  "binary_bindings": {
+    "executable": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/ressectionlab-engine",
+      "sha256": "bd8e656abce7e9b9e07aade58f3104cd7d2874634acef39b12fdb61201db306b"
+    },
+    "appAsar": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar",
+      "sha256": "7ded25f4150ebe6360fcc1e686448e9765491ca9dd2c33d850e061b35ab46359"
+    },
+    "packageManifestSha256": "aeb2f77676eec57b6737f550d83766e481d92976d08ceaa2168eddc3c9f91386",
+    "engineSourceManifestSha256": "5396845ef6a780e6f223ea46787dc4e2e325287ed44956ca45ad9fd24eca6df0"
+  },
+  "signature_checks": {
+    "appDeepStrict": true,
+    "engineArchitecture": "arm64",
+    "engineIndividualStrict": true
+  },
+  "evidence_sha256": {
+    "artifacts/poc-first-local-package-build-v1/sidecar-recovery-01-supervision.json": "316068d6520e7a7c0d0104703a4fc3901d61f0631c9b038c03ee2f319ab2539d",
+    "artifacts/poc-first-local-package-build-v1/electron-supervision.json": "79358ec47dcba0dc9a4d77313113b68d4d92893d5bb401b0f7877ff04cf95a10",
+    "artifacts/first-release-frozen-sidecar-run-v1/independent-json-order-forensics.json": "291bcf714ced797137d7587a09f8e1179bad10126871c4e72cca0ba3c1fcfd34",
+    "artifacts/first-release-frozen-sidecar-run-v2/compact-summary.json": "6b2ec7dbff5d2d27656777a394d7658738c7752688a26d18e71019d0bfdea42e",
+    "artifacts/first-release-frozen-sidecar-run-v2/supervision.json": "4c39c131b4c06208a3bf818438de89684da2dcd0b94677bb6d6ed8ea16d803ec",
+    "artifacts/poc-first-local-package-gui-v1/evidence.json": "fecc6174712ca519a60acf6893e62c9016bf5134b834c0dc5352e24fc2c0f3bb",
+    "artifacts/poc-first-local-package-gui-independent-v1/saved-ucsf-independent-qa.json": "d2f228ce98920a4107859d828aa11643faeb7b15c6522657323b8984d3881969",
+    "artifacts/poc-first-local-package-gui-independent-v1/saved-synthrad-independent-qa.json": "66e6cd10ad46736e53c22617e70819e426bbc8552b3c3f3064f1bd175540e22d",
+    "artifacts/poc-first-local-package-build-v1/RESULT.md": "b94fb1b4105050c9c66c65722d716fb578cacc959d43c37c4646154515602dfb"
+  },
+  "scope": "Local packaged-engine and actual native GUI behavior, source preservation and persistence. No new clinical, anatomical or physiological acceptance.",
+  "public_distribution_ready": false,
+  "research_accuracy_goal_complete": false
+}

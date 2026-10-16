@@ -6,6 +6,14 @@ anatomical reconstruction, then one stateful two-tool rehearsal in Electron,
 then diverse real patients and explicitly labeled virtual gliomas. The merged
 native workbench from PR #12 is the integration base.
 
+The [local Apple Silicon app](artifacts/poc-first-local-package-build-v1/RESULT.md)
+now runs the current workbench with its bundled numerical engine. Actual app
+checks cover the remembered case-library folder, two-tool rehearsal, branches,
+play/pause/scrub, tissue cutaways, separate CT/MRI views and native save/restart.
+The packaged-engine audit preserves every tested source array and original file.
+This is a local research preview; anatomical accuracy, physiological calibration,
+and public-distribution licensing/notarization remain open.
+
 The [first executable patient-source rehearsal](artifacts/poc-first-rehearsal-v1/RESULT.md)
 now passes the actual Electron and independent save/replay checks. **Rehearse**
 provides two persistent tools, a shared action timeline, play/pause/scrub and two

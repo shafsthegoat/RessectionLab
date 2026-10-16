@@ -1,0 +1,44 @@
+{
+  "appAsar": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar",
+    "sha256": "7ded25f4150ebe6360fcc1e686448e9765491ca9dd2c33d850e061b35ab46359"
+  },
+  "auditorSha256": "2b6f01639d1c6b5ef351fe8586e158447801ab3ec004f27d08154a92e733a56d",
+  "authority": "ROOT",
+  "buildCompleted": true,
+  "buildSourceCommit": "78edfe44b7c91daed1877be9d4c0d3830d36a8fd",
+  "controlsSha256": "2a374fcc9ab09d655db4ac97228a75d6fc0b615697bcf3bc7e812680e9657ee1",
+  "engineSourceManifestSha256": "5396845ef6a780e6f223ea46787dc4e2e325287ed44956ca45ad9fd24eca6df0",
+  "executable": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/ressectionlab-engine",
+    "sha256": "bd8e656abce7e9b9e07aade58f3104cd7d2874634acef39b12fdb61201db306b"
+  },
+  "outputDirectory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/first-release-frozen-sidecar-run-v2",
+  "packageManifestSha256": "aeb2f77676eec57b6737f550d83766e481d92976d08ceaa2168eddc3c9f91386",
+  "predecessor": {
+    "growth_ledger_sha256": "08d175d25be43a379c2c3ce67661cd014213840147684f193aa63af1651621ec",
+    "report_sha256": "a7251122a901c384f6c12228888da05945ba35d20300c9ee39ae57244580713a",
+    "root_release_sha256": "f9da63e98283128266b53aa00ff84819f118bcbee80c7241bc2b5062e17d0bfd",
+    "supervision_sha256": "f70e4e580bc83db054929f632fde1f4d2a0dced3f08ea85f57836c23578bbc4e"
+  },
+  "preparationSha256": "4b4ddbed3032db02385598983e1fb2b053b5b953ffad69942bdf56392f38fa0c",
+  "reason": "ROOT independently ran 45 generated controls and reviewed the exact object-key-order-only persistence fix, with deep value/type/ordered-array equality. Same package bytes and scientific request plan; first actual failure retained.",
+  "releasedUtc": "2026-10-16T10:34:02.454264+00:00",
+  "resourceLimits": {
+    "available_bytes": 1073741824,
+    "free_disk_bytes": 53687091200,
+    "interval_seconds": 0.2,
+    "new_bytes": 4294967296,
+    "rss_bytes": 4294967296,
+    "wall_seconds": 300
+  },
+  "schema": "first-release-frozen-sidecar-root-release-v1",
+  "scope": "Packaged host Sidecar, actual bundled engine, binary transfer, source-bound renderer contracts, live rehearsal and fresh-process persistence. No Electron GUI, anatomy/physics accuracy or clinical acceptance.",
+  "signatureChecks": {
+    "appDeepStrict": true,
+    "engineArchitecture": "arm64",
+    "engineIndividualStrict": true
+  },
+  "status": "RELEASED",
+  "unreviewedEngineByteDifferencesAllowed": false
+}

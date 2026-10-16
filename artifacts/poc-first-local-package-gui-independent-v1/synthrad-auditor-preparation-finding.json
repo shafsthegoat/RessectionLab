@@ -1,0 +1,10 @@
+{
+  "schema": "native-gui-save-qa-preparation-finding-v1",
+  "kind": "auditor-assumption",
+  "initial_auditor_sha256": "8b7223bf5ac46ede6078874d7cb6e704d625642f8f194176a5b3e447942e26cd",
+  "finding": "An untouched native MRI view state omits the optional viewer key; the auditor assumed an explicit empty object. Canonical and saved view-state schemas are still compared exactly after only the selectedSeriesId change is normalized.",
+  "initial_output": "KeyError: viewer before result writing",
+  "source_snapshot": "outputs/poc-first-local-package-gui-v1/qa-preparation/initial-audit_saved_synthrad.py.txt",
+  "result_written": false,
+  "correction": "Require optional viewer state to be empty if present, retaining exact source-versus-saved workspace comparison including key presence."
+}

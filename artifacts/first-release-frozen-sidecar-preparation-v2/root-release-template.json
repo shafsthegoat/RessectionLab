@@ -1,0 +1,22 @@
+{
+  "schema": "first-release-frozen-sidecar-root-release-v1",
+  "authority": "ROOT",
+  "status": "WITHHELD",
+  "buildCompleted": false,
+  "preparationSha256": "40c53acf6b203614a374c423fdf5b3d0594fdc3125bd64e20a9199cfd7d85547",
+  "auditorSha256": "e177a8f1499609b30db84627f758b0553282a4e251ab8c0b0c3163f389c70109",
+  "controlsSha256": "29061ee08e94cf3b34033548a8851684ac674ab088e8257b095fa68c5fc3204d",
+  "executable": {
+    "path": null,
+    "sha256": null
+  },
+  "appAsar": {
+    "path": null,
+    "sha256": null
+  },
+  "packageManifestSha256": null,
+  "engineSourceManifestSha256": null,
+  "outputDirectory": null,
+  "scope": "Packaged host Sidecar, actual bundled engine, binary transfer, source-bound renderer contracts, live rehearsal and fresh-process persistence. No Electron GUI, anatomy/physics accuracy or clinical acceptance.",
+  "unreviewedEngineByteDifferencesAllowed": false
+}

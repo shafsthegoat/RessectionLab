@@ -35,6 +35,16 @@ the declared order.
 
 ## What can operate now
 
+The [current local Apple Silicon package](../artifacts/poc-first-local-package-build-v1/RESULT.md)
+uses the source-bound frozen engine and remembered native case-library chooser.
+Actual packaged-GUI checks cover the two-tool episode, branches, play/pause/scrub,
+native save/restart, four tissue/UNKNOWN layers, opacity/cutaway, and separate
+CT/MRI selection. The packaged-engine audit also verifies exact source arrays,
+original files, UNKNOWN partition and fresh-engine replay. Both first failures
+remain recorded; no data, weights, anatomical acceptance or new patient count is
+created by packaging. Public-distribution notice/license and notarization work
+remain separate from this local preview.
+
 The latest Electron anatomy workbench opens the real UCSF-PDGM-0004 MRI with
 source tumor labels, separate MONAI tumor estimates and SynthStrip extraction.
 CT skull/brain and TOF vessel outputs are available on separate named patients.
@@ -177,10 +187,11 @@ validation requirements. Do not restart the failed PPO campaign merely to
 produce training activity.
 
 The [fixed Case3 observation test](../artifacts/resect-case3-image-registration-preparation-v1/RESULT.md)
-is the next separately bounded accuracy measurement: fit before/during
-ultrasound from image signal only, freeze identity and rigid transforms, then
-score every published full-tag landmark without refitting or exclusions.
-Prepared header/source and generated controls are not an acquired-data result.
+has completed the image-only fit and all-point measurement below. Preserve its
+negative result and consumed landmarks. The next accuracy claim needs a new
+prospective comparison with independent source labels or observations and known
+checkpoint lineage; do not refit this case from its evaluated errors. The
+IBSR20 component prospectus remains gated by access/rights and decoder work.
 
 The [one actual image-only fit](../artifacts/poc-resect-case3-image-registration-v1/RESULT.md)
 is now frozen from commit `fa44c9e`: 1.301515 seconds, 1.481 GiB sampled family

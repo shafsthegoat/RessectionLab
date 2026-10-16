@@ -1,0 +1,38 @@
+{
+  "schema": "first-release-frozen-sidecar-root-release-v1",
+  "authority": "ROOT",
+  "status": "RELEASED",
+  "buildCompleted": true,
+  "preparationSha256": "40c53acf6b203614a374c423fdf5b3d0594fdc3125bd64e20a9199cfd7d85547",
+  "auditorSha256": "e177a8f1499609b30db84627f758b0553282a4e251ab8c0b0c3163f389c70109",
+  "controlsSha256": "29061ee08e94cf3b34033548a8851684ac674ab088e8257b095fa68c5fc3204d",
+  "executable": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/ressectionlab-engine",
+    "sha256": "bd8e656abce7e9b9e07aade58f3104cd7d2874634acef39b12fdb61201db306b"
+  },
+  "appAsar": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar",
+    "sha256": "7ded25f4150ebe6360fcc1e686448e9765491ca9dd2c33d850e061b35ab46359"
+  },
+  "packageManifestSha256": "aeb2f77676eec57b6737f550d83766e481d92976d08ceaa2168eddc3c9f91386",
+  "engineSourceManifestSha256": "5396845ef6a780e6f223ea46787dc4e2e325287ed44956ca45ad9fd24eca6df0",
+  "outputDirectory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/first-release-frozen-sidecar-run-v1",
+  "scope": "Packaged host Sidecar, actual bundled engine, binary transfer, source-bound renderer contracts, live rehearsal and fresh-process persistence. No Electron GUI, anatomy/physics accuracy or clinical acceptance.",
+  "unreviewedEngineByteDifferencesAllowed": false,
+  "releasedUtc": "2026-10-16T10:26:49.711Z",
+  "buildSourceCommit": "78edfe44b7c91daed1877be9d4c0d3830d36a8fd",
+  "signatureChecks": {
+    "appDeepStrict": true,
+    "engineIndividualStrict": true,
+    "engineArchitecture": "arm64"
+  },
+  "resourceLimits": {
+    "rss_bytes": 4294967296,
+    "wall_seconds": 300,
+    "available_bytes": 1073741824,
+    "free_disk_bytes": 53687091200,
+    "new_bytes": 4294967296,
+    "interval_seconds": 0.2
+  },
+  "reason": "ROOT verified successful source-bound package stages and exact fixed auditor/preparation; one actual bounded bundled-engine protocol test. GUI and scientific accuracy remain separate."
+}

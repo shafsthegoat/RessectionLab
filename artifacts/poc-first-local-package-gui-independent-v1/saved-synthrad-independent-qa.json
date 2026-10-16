@@ -1,0 +1,202 @@
+{
+  "schema": "packaged-native-mr-selected-save-independent-v1",
+  "status": "passed",
+  "created_utc": "2026-10-16T10:41:32.690970+00:00",
+  "auditor_sha256": "1f407589b4b71f107379815a4c02e5058cb1a567746f3aca9bcc720f44c3370e",
+  "byte_oracle_source_sha256": "c58f95dc03c2526d0090b0f6ae123ff577e695745ed5616c00e9d2001cad4929",
+  "byte_oracle_generated_controls": 8,
+  "inputs": {
+    "outputs/poc-synthrad-bc-source-v1/1BC077/SynthRAD2023-1BC077.ressectionlab": {
+      "sha256": "171101168d1244d509fc64249cd9039a74aa9a35f35535dddc753307e80f905d",
+      "bytes": 33535523
+    },
+    "outputs/poc-first-local-package-gui-v1/saved/SynthRAD-packaged-MR-selected.ressectionlab": {
+      "sha256": "9a992b202cdcea35efd266e000ba7a2921d6f4416848ce6f683aed4ba3080557",
+      "bytes": 33535837
+    }
+  },
+  "primary": {
+    "case_id": "SynthRAD2023-1BC077",
+    "case_semantic_hash": "sha256:128463ef5705f8556e16128816458fc98587d728963ad704ec997d549210098a",
+    "frame": "RAS+",
+    "array_members": {
+      "mri": {
+        "npy_sha256": "795930a608cd2e24eea90e080c1bf0f11b557e7d44c9d23c1c8e0e679d97a02c",
+        "array_digest": "sha256:e1ddf060539fe4333bff22385fe8b1c38f76db2afa16dd25e9992184882ed497",
+        "dtype": "<f4",
+        "shape": [
+          229,
+          277,
+          182
+        ],
+        "payload_bytes": 46179224
+      },
+      "affine": {
+        "npy_sha256": "e66be0b23ff4e2189864427814950ff197be3da5185b720a3d9988c663edb171",
+        "array_digest": "sha256:d2cc671ba00dc3de1f90980030814360a0edcaa4c78730c33594835e8635ac8a",
+        "dtype": "<f8",
+        "shape": [
+          4,
+          4
+        ],
+        "payload_bytes": 128
+      },
+      "compartments/brain": {
+        "npy_sha256": "43a7784ed805806b4e791f1e393c25d62771bb1a94d80c71b7e1def544e8f80d",
+        "array_digest": "sha256:ec5a4c56e4e30bb0c2c65afc3f5a1c2c323cd7587799a6f2e973d373ebd610b0",
+        "dtype": "|b1",
+        "shape": [
+          229,
+          277,
+          182
+        ],
+        "payload_bytes": 11544806,
+        "foreground_cells": 1246316
+      },
+      "compartments/skull": {
+        "npy_sha256": "d66950cde0cd0ea4258914683eba27e6c26241fd217ed16a718d08322b249ccb",
+        "array_digest": "sha256:bec53dce2226f7452f6d25e41ec9968f63c954d2ecada01658bffd594daa448a",
+        "dtype": "|b1",
+        "shape": [
+          229,
+          277,
+          182
+        ],
+        "payload_bytes": 11544806,
+        "foreground_cells": 737268
+      },
+      "source_compartments/brain": {
+        "npy_sha256": "43a7784ed805806b4e791f1e393c25d62771bb1a94d80c71b7e1def544e8f80d",
+        "array_digest": "sha256:ec5a4c56e4e30bb0c2c65afc3f5a1c2c323cd7587799a6f2e973d373ebd610b0",
+        "dtype": "|b1",
+        "shape": [
+          229,
+          277,
+          182
+        ],
+        "payload_bytes": 11544806,
+        "foreground_cells": 1246316
+      },
+      "source_compartments/skull": {
+        "npy_sha256": "d66950cde0cd0ea4258914683eba27e6c26241fd217ed16a718d08322b249ccb",
+        "array_digest": "sha256:bec53dce2226f7452f6d25e41ec9968f63c954d2ecada01658bffd594daa448a",
+        "dtype": "|b1",
+        "shape": [
+          229,
+          277,
+          182
+        ],
+        "payload_bytes": 11544806,
+        "foreground_cells": 737268
+      }
+    },
+    "nonstorage_manifest_sha256": "3bdbd7600ad581e56ed91e1c6d153d6d1fd2aa6503de21c5564a99d7b9328fe1",
+    "array_storage_index_renumbered": false,
+    "logical_npy_payloads_exact": true
+  },
+  "native_mri": {
+    "case_id": "SynthRAD2023-1BC077",
+    "case_semantic_hash": "sha256:7cd425640c949c5c3387704cde60bb667328b4b3f0a033c05c7774d104d5be5f",
+    "frame": "RAS+",
+    "array_members": {
+      "mri": {
+        "npy_sha256": "6facad3e3d57810e640c8f284f5e91450e78177920574d2a79c69999dcb467b8",
+        "array_digest": "sha256:f5b15e9ed10533b0e6697c03a2bca0d56cde18ba9b6aa4c49cda6437c57ef622",
+        "dtype": "<f4",
+        "shape": [
+          229,
+          277,
+          182
+        ],
+        "payload_bytes": 46179224
+      },
+      "affine": {
+        "npy_sha256": "e66be0b23ff4e2189864427814950ff197be3da5185b720a3d9988c663edb171",
+        "array_digest": "sha256:d2cc671ba00dc3de1f90980030814360a0edcaa4c78730c33594835e8635ac8a",
+        "dtype": "<f8",
+        "shape": [
+          4,
+          4
+        ],
+        "payload_bytes": 128
+      }
+    },
+    "nonstorage_manifest_sha256": "5c39d0089909e11a7929093359494123e9880d04e9ee4bdbbbf492b638f4856b",
+    "array_storage_index_renumbered": false,
+    "logical_npy_payloads_exact": true
+  },
+  "original_files": [
+    {
+      "name": "ct.nii.gz",
+      "role": "imaging",
+      "sha256": "5a33487b11e9762c84f6b1ce8fb3e9f2c008e1ede78c57cd2a053c3cb14dead7",
+      "bytes": 8854360
+    },
+    {
+      "name": "inference.json",
+      "role": "metadata",
+      "sha256": "d4869860fd252cd9f4f9cabdc5d6d90febc6072915040bc5f89696b4c85fc470",
+      "bytes": 5397
+    },
+    {
+      "name": "brain_mask.nii.gz",
+      "role": "model-result",
+      "sha256": "dba1683c3b5eb600f4d83f9d3a7ebf8c70c9796eb10cfc94367070a0eed69028",
+      "bytes": 159748
+    },
+    {
+      "name": "skull_mask.nii.gz",
+      "role": "model-result",
+      "sha256": "bd75f0feab5ca398a746e0e7a88a598945e975d1fbf872aa950c55a7d7450aae",
+      "bytes": 202417
+    },
+    {
+      "name": "mr.nii.gz",
+      "role": "imaging",
+      "sha256": "f41eb00d101bab4b27665a6870794d6e4eb169d70bea0f9cfc28c02625dd72c0",
+      "bytes": 8000741
+    }
+  ],
+  "selected_series_id": "sha256:2508a110e0226daff3463491a3ae44e5d79ac8b2c833d703f0eee1c1bc5c6cdd",
+  "native_mri_source": {
+    "annotationKind": "none",
+    "modality": "T1",
+    "scope": "display-only-native-grid",
+    "seriesId": "sha256:2508a110e0226daff3463491a3ae44e5d79ac8b2c833d703f0eee1c1bc5c6cdd",
+    "sourceCaseHash": "sha256:7cd425640c949c5c3387704cde60bb667328b4b3f0a033c05c7774d104d5be5f",
+    "sourceFrameHash": "sha256:887c9958676d07ae744548f38b43c0c2b9efc75e8b14e3997a298cc1d109c96e"
+  },
+  "native_mri_layers": 0,
+  "overlay_permitted": false,
+  "training_admitted": false,
+  "workspace_changes": [
+    "selectedSeriesId becomes existing native T1 source",
+    "recomputed nested source container bytes/hash",
+    "native workspace view record added",
+    "session identity independently recomputed",
+    "two cursor JSON number spellings normalize without changing numeric values"
+  ],
+  "source_and_saved_session_hashes": [
+    "sha256:9492f482f0fbbe6b36661c4f5e9614a2e6b460507a9fd51fec8589791ed41902",
+    "sha256:aaf6fd0eee351aa3672c79403cc747e01b4cb70b34fd02e17a2242e9457ec326"
+  ],
+  "number_spelling_only_paths": [
+    "imagingState.states.primary.cursor[0]",
+    "imagingState.states.sha256:2508a110e0226daff3463491a3ae44e5d79ac8b2c833d703f0eee1c1bc5c6cdd.cursor[0]"
+  ],
+  "all_other_source_case_role_model_registration_and_workspace_fields_exact": true,
+  "native_capture_hashes": {
+    "outputs/poc-first-local-package-gui-v1/12-mri-view-saved.png": "63e95caf204b34cdc1c5c4b337b5764ae066e4d0d0f9281f3fb494475a43ed1c",
+    "outputs/poc-first-local-package-gui-v1/12-mri-view-saved.ax.txt": "463672e594cef0eb966228fb1a2a046f972769e68c76489068f9a5e3b750f0b9",
+    "outputs/poc-first-local-package-gui-v1/13-fresh-mri-reopen.png": "7eee6aa5a56a58e156c7c4cceacb4c261fbbaa0f2d6aec75e28ea033d81237c9",
+    "outputs/poc-first-local-package-gui-v1/13-fresh-mri-reopen.ax.txt": "d0ec8063938b8cb90e0dac583ae7eeb40213b5e00d5a52eb3f12b9c926acfedb"
+  },
+  "fresh_native_mri_selection_and_zero_layers_in_captures": true,
+  "inputs_and_frozen_oracle_unchanged": true,
+  "peak_process_rss_bytes_macos": 77987840,
+  "scope": "Independent exact logical NPY and original-byte preservation, native frame and selected-view metadata audit; no image array decoding or engine/model execution.",
+  "limits": [
+    "QA inspected ROOT-captured accessibility text and bound screenshots without performing GUI actions.",
+    "No cross-frame fusion, training admission or anatomical/clinical acceptance is introduced."
+  ]
+}

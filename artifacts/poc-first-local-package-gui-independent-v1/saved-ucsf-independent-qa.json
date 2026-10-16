@@ -1,0 +1,705 @@
+{
+  "schema": "packaged-native-ucsf-save-independent-v1",
+  "status": "passed",
+  "started_utc": "2026-10-16T10:38:52.295296+00:00",
+  "finished_utc": "2026-10-16T10:38:53.703607+00:00",
+  "auditor_sha256": "c58f95dc03c2526d0090b0f6ae123ff577e695745ed5616c00e9d2001cad4929",
+  "inputs": {
+    "outputs/poc-cases/UCSF-PDGM-0004.ressectionlab": {
+      "sha256": "73cd0792c025e846395bafffe5ec793ef9e1823ceec8e4b0aeb8317783041571",
+      "bytes": 31495606
+    },
+    "outputs/poc-first-local-package-gui-v1/saved/UCSF-packaged-rehearsal-reviewed.ressectionlab": {
+      "sha256": "0294cd855debabcf6183a437b2b2f6222b873534206c6ba374da3ec7f46fc950",
+      "bytes": 31531423
+    }
+  },
+  "generated_controls_passed": 8,
+  "peak_process_rss_bytes_macos": 91684864,
+  "primary": {
+    "case_id": "UCSF-PDGM-0004",
+    "case_semantic_hash": "sha256:b860284211ca984b3862a1ef22856989c182b53476792d388eb1ecf5466a95e2",
+    "frame": "RAS+",
+    "array_members": {
+      "mri": {
+        "npy_sha256": "b53e9810c82882c0ddcb4636a3ad6b1257b17a33a86a5bff9e7c434d5a940335",
+        "array_digest": "sha256:88666f74a0aa1e7e83b8b555605f2c6408a7ce88b11d49c0705717838d5b5c74",
+        "dtype": "<f4",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "payload_bytes": 35712000
+      },
+      "affine": {
+        "npy_sha256": "35e72acb4807794dd87fd0d03b25919ac56bd2b60788fd8421d560ac3d61af99",
+        "array_digest": "sha256:5a52792ccc572d29932e785f6dbe96d45b4a7ae6582374aae411115e9d7ccc0d",
+        "dtype": "<f8",
+        "shape": [
+          4,
+          4
+        ],
+        "payload_bytes": 128
+      },
+      "brain_mask": {
+        "npy_sha256": "51cc6feba73eb28f64e7754a167d9cc000dff40329ba0a730072a2c45ffd3811",
+        "array_digest": "sha256:5327db90fc65145b2ef19dfd5604b297a73cb6fc786566b77ebd7ba00e6463b7",
+        "dtype": "|b1",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "payload_bytes": 8928000,
+        "foreground_cells": 1475621
+      },
+      "compartments/FLAIR_abnormality": {
+        "npy_sha256": "84b96cc7fdcbd745c2f4a3a6f8eeb5933318d2d40b69e48fb536afdc12a27b82",
+        "array_digest": "sha256:24519ce2c7e92bb5fd0081a96b9231cc4bdc5c6b276723a177f8faafebc301a5",
+        "dtype": "|b1",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "payload_bytes": 8928000,
+        "foreground_cells": 18654
+      },
+      "compartments/enhancing_target": {
+        "npy_sha256": "17e144c21614e2e68ecf15c2c10be38d96027cc1a9b20951120ea155d2dd4be0",
+        "array_digest": "sha256:d31446ba469ef31bbe1a0b18c3f9788df49c51ba61282a2569822da381ad9f8f",
+        "dtype": "|b1",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "payload_bytes": 8928000,
+        "foreground_cells": 15672
+      },
+      "compartments/monai_enhancing_tumor": {
+        "npy_sha256": "f096d0b4fbdb9f5d1f65be9a6201425469f2ad009bead9fe54f7562263b493ac",
+        "array_digest": "sha256:a39d60e088314625116f37ce6df83be37aa70dfdf7b50dda2f773d13d255c068",
+        "dtype": "|b1",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "payload_bytes": 8928000,
+        "foreground_cells": 14023
+      },
+      "compartments/monai_tumor_core": {
+        "npy_sha256": "2470a66c4361f8ed1d85795544e86359df5a1d7d724e4c6f37108e0f1625d2bd",
+        "array_digest": "sha256:c2fa868aae146629db511ac0331f6635fe8413c47ff2eb4d5a43ac57a5164e1a",
+        "dtype": "|b1",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "payload_bytes": 8928000,
+        "foreground_cells": 22561
+      },
+      "compartments/monai_whole_tumor": {
+        "npy_sha256": "529da9dc86b3681eb5052716572019b8d88097243ab09e6c231b09289f0997b0",
+        "array_digest": "sha256:b69e4a4f825412944d6a44b8047a6b6e01e289236fcb40e8cdeeae0c61d9896e",
+        "dtype": "|b1",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "payload_bytes": 8928000,
+        "foreground_cells": 37595
+      },
+      "compartments/nonenhancing_or_necrotic_core": {
+        "npy_sha256": "51bee4aa1a9f3bc6502c6755bc95b6462e6b62b3fa667fbfe3b55c2f903ca1a2",
+        "array_digest": "sha256:68b6d9ed6dd95f7df47b16a7499155b38fbba22196a7756b6600d4b229143363",
+        "dtype": "|b1",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "payload_bytes": 8928000,
+        "foreground_cells": 7593
+      },
+      "source_compartments/FLAIR_abnormality": {
+        "npy_sha256": "84b96cc7fdcbd745c2f4a3a6f8eeb5933318d2d40b69e48fb536afdc12a27b82",
+        "array_digest": "sha256:24519ce2c7e92bb5fd0081a96b9231cc4bdc5c6b276723a177f8faafebc301a5",
+        "dtype": "|b1",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "payload_bytes": 8928000,
+        "foreground_cells": 18654
+      },
+      "source_compartments/enhancing_target": {
+        "npy_sha256": "17e144c21614e2e68ecf15c2c10be38d96027cc1a9b20951120ea155d2dd4be0",
+        "array_digest": "sha256:d31446ba469ef31bbe1a0b18c3f9788df49c51ba61282a2569822da381ad9f8f",
+        "dtype": "|b1",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "payload_bytes": 8928000,
+        "foreground_cells": 15672
+      },
+      "source_compartments/monai_enhancing_tumor": {
+        "npy_sha256": "f096d0b4fbdb9f5d1f65be9a6201425469f2ad009bead9fe54f7562263b493ac",
+        "array_digest": "sha256:a39d60e088314625116f37ce6df83be37aa70dfdf7b50dda2f773d13d255c068",
+        "dtype": "|b1",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "payload_bytes": 8928000,
+        "foreground_cells": 14023
+      },
+      "source_compartments/monai_tumor_core": {
+        "npy_sha256": "2470a66c4361f8ed1d85795544e86359df5a1d7d724e4c6f37108e0f1625d2bd",
+        "array_digest": "sha256:c2fa868aae146629db511ac0331f6635fe8413c47ff2eb4d5a43ac57a5164e1a",
+        "dtype": "|b1",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "payload_bytes": 8928000,
+        "foreground_cells": 22561
+      },
+      "source_compartments/monai_whole_tumor": {
+        "npy_sha256": "529da9dc86b3681eb5052716572019b8d88097243ab09e6c231b09289f0997b0",
+        "array_digest": "sha256:b69e4a4f825412944d6a44b8047a6b6e01e289236fcb40e8cdeeae0c61d9896e",
+        "dtype": "|b1",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "payload_bytes": 8928000,
+        "foreground_cells": 37595
+      },
+      "source_compartments/nonenhancing_or_necrotic_core": {
+        "npy_sha256": "51bee4aa1a9f3bc6502c6755bc95b6462e6b62b3fa667fbfe3b55c2f903ca1a2",
+        "array_digest": "sha256:68b6d9ed6dd95f7df47b16a7499155b38fbba22196a7756b6600d4b229143363",
+        "dtype": "|b1",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "payload_bytes": 8928000,
+        "foreground_cells": 7593
+      }
+    },
+    "nonstorage_manifest_sha256": "23cb835131b1df30c79b6189f6cb90284cf0f3632d76c37384d3420e1e6397ba",
+    "array_storage_index_renumbered": true,
+    "logical_npy_payloads_exact": true
+  },
+  "display_sources": [
+    {
+      "case_id": "UCSF-PDGM-0004",
+      "case_semantic_hash": "sha256:ef8d28898c4decd983957f9a33fa50eaeb1de051b1cbcdb6753a88b7e96d89f9",
+      "frame": "RAS+",
+      "array_members": {
+        "mri": {
+          "npy_sha256": "a76515db91a59cc1a362e442de28a2bc1922019ec51083d3620308765e85a016",
+          "array_digest": "sha256:3c9bfe9a0594f940de7adb0e94f9b427c4a5568726617f251342d1bd32240fb6",
+          "dtype": "<f4",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 35712000
+        },
+        "affine": {
+          "npy_sha256": "35e72acb4807794dd87fd0d03b25919ac56bd2b60788fd8421d560ac3d61af99",
+          "array_digest": "sha256:5a52792ccc572d29932e785f6dbe96d45b4a7ae6582374aae411115e9d7ccc0d",
+          "dtype": "<f8",
+          "shape": [
+            4,
+            4
+          ],
+          "payload_bytes": 128
+        },
+        "compartments/FLAIR_abnormality": {
+          "npy_sha256": "84b96cc7fdcbd745c2f4a3a6f8eeb5933318d2d40b69e48fb536afdc12a27b82",
+          "array_digest": "sha256:24519ce2c7e92bb5fd0081a96b9231cc4bdc5c6b276723a177f8faafebc301a5",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 18654
+        },
+        "compartments/enhancing_target": {
+          "npy_sha256": "17e144c21614e2e68ecf15c2c10be38d96027cc1a9b20951120ea155d2dd4be0",
+          "array_digest": "sha256:d31446ba469ef31bbe1a0b18c3f9788df49c51ba61282a2569822da381ad9f8f",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 15672
+        },
+        "compartments/nonenhancing_or_necrotic_core": {
+          "npy_sha256": "51bee4aa1a9f3bc6502c6755bc95b6462e6b62b3fa667fbfe3b55c2f903ca1a2",
+          "array_digest": "sha256:68b6d9ed6dd95f7df47b16a7499155b38fbba22196a7756b6600d4b229143363",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 7593
+        },
+        "source_compartments/FLAIR_abnormality": {
+          "npy_sha256": "84b96cc7fdcbd745c2f4a3a6f8eeb5933318d2d40b69e48fb536afdc12a27b82",
+          "array_digest": "sha256:24519ce2c7e92bb5fd0081a96b9231cc4bdc5c6b276723a177f8faafebc301a5",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 18654
+        },
+        "source_compartments/enhancing_target": {
+          "npy_sha256": "17e144c21614e2e68ecf15c2c10be38d96027cc1a9b20951120ea155d2dd4be0",
+          "array_digest": "sha256:d31446ba469ef31bbe1a0b18c3f9788df49c51ba61282a2569822da381ad9f8f",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 15672
+        },
+        "source_compartments/nonenhancing_or_necrotic_core": {
+          "npy_sha256": "51bee4aa1a9f3bc6502c6755bc95b6462e6b62b3fa667fbfe3b55c2f903ca1a2",
+          "array_digest": "sha256:68b6d9ed6dd95f7df47b16a7499155b38fbba22196a7756b6600d4b229143363",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 7593
+        }
+      },
+      "nonstorage_manifest_sha256": "c72f5eed39bf828faec492a56cb2684ebafcd0aafe8e8290200dfc81616d7852",
+      "array_storage_index_renumbered": true,
+      "logical_npy_payloads_exact": true
+    },
+    {
+      "case_id": "UCSF-PDGM-0004",
+      "case_semantic_hash": "sha256:c777ce5217a6ae70516eb03c92372f77bf7996392397d9932bc4cda2fabf9559",
+      "frame": "RAS+",
+      "array_members": {
+        "mri": {
+          "npy_sha256": "04d4f6f165abe03e908b09e815a6c090725264d296a467842506dde43200e889",
+          "array_digest": "sha256:e907e3ac92617374d00444a9b9c869b40b2360da7059bc64afee1dac996b7a9c",
+          "dtype": "<f4",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 35712000
+        },
+        "affine": {
+          "npy_sha256": "35e72acb4807794dd87fd0d03b25919ac56bd2b60788fd8421d560ac3d61af99",
+          "array_digest": "sha256:5a52792ccc572d29932e785f6dbe96d45b4a7ae6582374aae411115e9d7ccc0d",
+          "dtype": "<f8",
+          "shape": [
+            4,
+            4
+          ],
+          "payload_bytes": 128
+        },
+        "compartments/FLAIR_abnormality": {
+          "npy_sha256": "84b96cc7fdcbd745c2f4a3a6f8eeb5933318d2d40b69e48fb536afdc12a27b82",
+          "array_digest": "sha256:24519ce2c7e92bb5fd0081a96b9231cc4bdc5c6b276723a177f8faafebc301a5",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 18654
+        },
+        "compartments/enhancing_target": {
+          "npy_sha256": "17e144c21614e2e68ecf15c2c10be38d96027cc1a9b20951120ea155d2dd4be0",
+          "array_digest": "sha256:d31446ba469ef31bbe1a0b18c3f9788df49c51ba61282a2569822da381ad9f8f",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 15672
+        },
+        "compartments/nonenhancing_or_necrotic_core": {
+          "npy_sha256": "51bee4aa1a9f3bc6502c6755bc95b6462e6b62b3fa667fbfe3b55c2f903ca1a2",
+          "array_digest": "sha256:68b6d9ed6dd95f7df47b16a7499155b38fbba22196a7756b6600d4b229143363",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 7593
+        },
+        "source_compartments/FLAIR_abnormality": {
+          "npy_sha256": "84b96cc7fdcbd745c2f4a3a6f8eeb5933318d2d40b69e48fb536afdc12a27b82",
+          "array_digest": "sha256:24519ce2c7e92bb5fd0081a96b9231cc4bdc5c6b276723a177f8faafebc301a5",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 18654
+        },
+        "source_compartments/enhancing_target": {
+          "npy_sha256": "17e144c21614e2e68ecf15c2c10be38d96027cc1a9b20951120ea155d2dd4be0",
+          "array_digest": "sha256:d31446ba469ef31bbe1a0b18c3f9788df49c51ba61282a2569822da381ad9f8f",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 15672
+        },
+        "source_compartments/nonenhancing_or_necrotic_core": {
+          "npy_sha256": "51bee4aa1a9f3bc6502c6755bc95b6462e6b62b3fa667fbfe3b55c2f903ca1a2",
+          "array_digest": "sha256:68b6d9ed6dd95f7df47b16a7499155b38fbba22196a7756b6600d4b229143363",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 7593
+        }
+      },
+      "nonstorage_manifest_sha256": "fea86ba63c7f3043bef8e8d9425da544c1e8e2f63d64c62d43c8673610fcd3f4",
+      "array_storage_index_renumbered": true,
+      "logical_npy_payloads_exact": true
+    },
+    {
+      "case_id": "UCSF-PDGM-0004",
+      "case_semantic_hash": "sha256:b7aed64b39684cc2f1e334afa0832e4da245418b10437fabd5108b89e0a43433",
+      "frame": "RAS+",
+      "array_members": {
+        "mri": {
+          "npy_sha256": "328046dbee81b7d662986da11d123c0ca723908b9bbb4641630a98fdd0a0253d",
+          "array_digest": "sha256:6814dc07ba39d3ca9bc27831571af045d5dbd210dbce33b3c9b661dd8e691ba8",
+          "dtype": "<f4",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 35712000
+        },
+        "affine": {
+          "npy_sha256": "35e72acb4807794dd87fd0d03b25919ac56bd2b60788fd8421d560ac3d61af99",
+          "array_digest": "sha256:5a52792ccc572d29932e785f6dbe96d45b4a7ae6582374aae411115e9d7ccc0d",
+          "dtype": "<f8",
+          "shape": [
+            4,
+            4
+          ],
+          "payload_bytes": 128
+        },
+        "compartments/FLAIR_abnormality": {
+          "npy_sha256": "84b96cc7fdcbd745c2f4a3a6f8eeb5933318d2d40b69e48fb536afdc12a27b82",
+          "array_digest": "sha256:24519ce2c7e92bb5fd0081a96b9231cc4bdc5c6b276723a177f8faafebc301a5",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 18654
+        },
+        "compartments/enhancing_target": {
+          "npy_sha256": "17e144c21614e2e68ecf15c2c10be38d96027cc1a9b20951120ea155d2dd4be0",
+          "array_digest": "sha256:d31446ba469ef31bbe1a0b18c3f9788df49c51ba61282a2569822da381ad9f8f",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 15672
+        },
+        "compartments/nonenhancing_or_necrotic_core": {
+          "npy_sha256": "51bee4aa1a9f3bc6502c6755bc95b6462e6b62b3fa667fbfe3b55c2f903ca1a2",
+          "array_digest": "sha256:68b6d9ed6dd95f7df47b16a7499155b38fbba22196a7756b6600d4b229143363",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 7593
+        },
+        "source_compartments/FLAIR_abnormality": {
+          "npy_sha256": "84b96cc7fdcbd745c2f4a3a6f8eeb5933318d2d40b69e48fb536afdc12a27b82",
+          "array_digest": "sha256:24519ce2c7e92bb5fd0081a96b9231cc4bdc5c6b276723a177f8faafebc301a5",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 18654
+        },
+        "source_compartments/enhancing_target": {
+          "npy_sha256": "17e144c21614e2e68ecf15c2c10be38d96027cc1a9b20951120ea155d2dd4be0",
+          "array_digest": "sha256:d31446ba469ef31bbe1a0b18c3f9788df49c51ba61282a2569822da381ad9f8f",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 15672
+        },
+        "source_compartments/nonenhancing_or_necrotic_core": {
+          "npy_sha256": "51bee4aa1a9f3bc6502c6755bc95b6462e6b62b3fa667fbfe3b55c2f903ca1a2",
+          "array_digest": "sha256:68b6d9ed6dd95f7df47b16a7499155b38fbba22196a7756b6600d4b229143363",
+          "dtype": "|b1",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "payload_bytes": 8928000,
+          "foreground_cells": 7593
+        }
+      },
+      "nonstorage_manifest_sha256": "f857687498efde4d90442483d8a310b0360fbf06518041ddab0ae3d71feee518",
+      "array_storage_index_renumbered": true,
+      "logical_npy_payloads_exact": true
+    }
+  ],
+  "original_files": [
+    {
+      "name": "data_acquisition_ucsf.json",
+      "role": "metadata",
+      "sha256": "b05552355f2099058e9d25bc93faf9f2981fe1c00ffb4f24443edfabeda4c6f6",
+      "bytes": 10598
+    },
+    {
+      "name": "UCSF-PDGM-0004_FLAIR.nii.gz",
+      "role": "imaging",
+      "sha256": "4f85b3a6e253a42f9c04df95f2059d256dd9ac46f68de99553915b7c82e3384b",
+      "bytes": 2947932
+    },
+    {
+      "name": "UCSF-PDGM-0004_T1.nii.gz",
+      "role": "imaging",
+      "sha256": "519c83d1cac08d15b299707403e94e90b4a9fe6369cf77acf01b754b276147e5",
+      "bytes": 2811372
+    },
+    {
+      "name": "UCSF-PDGM-0004_T1c.nii.gz",
+      "role": "imaging",
+      "sha256": "398e7a6ec44e795aaf717fbf0fee6b3a11a671c5bc944c13a308ccaf02419176",
+      "bytes": 2834824
+    },
+    {
+      "name": "UCSF-PDGM-0004_T2.nii.gz",
+      "role": "imaging",
+      "sha256": "6662aa3b30670944d73486ba6300b5b9d3a5916e0ba74b225816c0806c5a7824",
+      "bytes": 2912543
+    },
+    {
+      "name": "UCSF-PDGM-0004_tumor_segmentation.nii.gz",
+      "role": "annotation",
+      "sha256": "54e51eb6ae60d8985ed5379a4267438017e2682255418833fac1b704813b483e",
+      "bytes": 53055
+    },
+    {
+      "name": "UCSF-PDGM-metadata_glossary.csv",
+      "role": "metadata",
+      "sha256": "f1404bcd730572d05bdf7ead2e62e32843944d0e27a05cd0ef2dcca8ce69378d",
+      "bytes": 1964
+    },
+    {
+      "name": "UCSF-PDGM-metadata_v5.csv",
+      "role": "metadata",
+      "sha256": "afc1c23a0eb0597b56e603741e72f2308b4860281187cd3808e05b7a0116fd78",
+      "bytes": 58149
+    },
+    {
+      "name": "mirror_README.md",
+      "role": "metadata",
+      "sha256": "a64ef118f23d42e2eff88eddf90fb6c6215195c61359edf19b97126d79795707",
+      "bytes": 6167
+    },
+    {
+      "name": "mirror_case_listing.json",
+      "role": "metadata",
+      "sha256": "e66deea0c0782628158693340299d121c552aade32dd925af368fd504addb780",
+      "bytes": 1701
+    },
+    {
+      "name": "mirror_repository_metadata.json",
+      "role": "metadata",
+      "sha256": "4991e4f7d7ca5ce880edf46a4009ee3db3f9fd11dcd7a2c5ee8da28af3de408b",
+      "bytes": 151195
+    },
+    {
+      "name": "official_collection_2026-10-04.html",
+      "role": "metadata",
+      "sha256": "418408a5734ad96db3df297e6dd7a4eb1c64290b65fe5344df72ac0e6bf24c99",
+      "bytes": 342016
+    },
+    {
+      "name": "brain_mask.nii.gz",
+      "role": "model-result",
+      "sha256": "6a041ac4f6666fa77e8595cc70594eb5aefb5e868951569d77e953e7a4dfbd14",
+      "bytes": 159231
+    },
+    {
+      "name": "inference.json",
+      "role": "metadata",
+      "sha256": "96729a66f72e1ca5cf4d1eb2bff2cb561009cc30b96ba90892539c9ca55b5d8b",
+      "bytes": 4415
+    },
+    {
+      "name": "inference.json",
+      "role": "metadata",
+      "sha256": "759a24d44b9d2818f7b5ab536498e7fd3bac30ab37bc61ec5b3b0a40a184d499",
+      "bytes": 16423
+    },
+    {
+      "name": "monai_whole_tumor_mask.nii.gz",
+      "role": "model-result",
+      "sha256": "94d29527496b419e7a7a322e32b870fc295fa22b5cd622a8222f064e2e7bc38c",
+      "bytes": 49419
+    },
+    {
+      "name": "monai_tumor_core_mask.nii.gz",
+      "role": "model-result",
+      "sha256": "b0f1ae9a5b9800c9e32387472ef1d113fdf88858491d9fbab48b63977b33606c",
+      "bytes": 46790
+    },
+    {
+      "name": "monai_enhancing_tumor_mask.nii.gz",
+      "role": "model-result",
+      "sha256": "127339b45908e458f88ad41838d1076c50ac00783b228ecf6ea428997dfe028c",
+      "bytes": 47156
+    }
+  ],
+  "workspace_except_recomputed_nested_container_hashes_exact": true,
+  "primary_metadata_role_source_refs_context_and_semantic_identity_exact": true,
+  "source_binding": {
+    "imageHash": "sha256:88666f74a0aa1e7e83b8b555605f2c6408a7ce88b11d49c0705717838d5b5c74",
+    "frameHash": "sha256:8f3dba204e861a0c5b714729a78da92768137c122d04b45ffde4f69728b1f8f7",
+    "supportHash": "sha256:5327db90fc65145b2ef19dfd5604b297a73cb6fc786566b77ebd7ba00e6463b7",
+    "targetHash": "sha256:c2fa868aae146629db511ac0331f6635fe8413c47ff2eb4d5a43ac57a5164e1a",
+    "planningInputHash": "sha256:c5c53c7c4d7efddfad405075e3caaf275c11ebdd24222161f7f3c6cf749935bd",
+    "privateReferencePublished": false
+  },
+  "live": {
+    "actions": 2,
+    "action_kinds": [
+      "aspirate",
+      "clear_field"
+    ],
+    "elapsed_seconds": 2,
+    "record_hash": "sha256:0ec9f113e3c89acacc696367aef17d7f0c1dc37ce76787187d4d5b362655418c",
+    "initial_state_id": "sha256:f3784c9c3a42990c0dbf2b6ff1ba98eb78a43c14ea6f20b7b424d8e9e35187e2",
+    "final_state_id": "sha256:a5dfecb3e4c56e9034b8cb5726f31631015ba686d3ae9e010c04e549e61cb87b"
+  },
+  "branches": [
+    {
+      "id": "short_pass_field_management",
+      "actions": 7,
+      "action_kinds": [
+        "aspirate",
+        "clear_field",
+        "inspect",
+        "aspirate",
+        "clear_field",
+        "reassess",
+        "STOP"
+      ],
+      "elapsed_seconds": 8.0,
+      "record_hash": "sha256:2d83087cfa53f254117b4878bbdaeb7d0713f9c45f35a6c26a5bf91b538cce2a",
+      "initial_state_id": "sha256:f3784c9c3a42990c0dbf2b6ff1ba98eb78a43c14ea6f20b7b424d8e9e35187e2",
+      "final_state_id": "sha256:97f6966c28ecbcdbfa2022bd369cb2a04fc0c10c7ec1d9cc9a8ccc7da3c11519"
+    },
+    {
+      "id": "deeper_pass_reassess",
+      "actions": 6,
+      "action_kinds": [
+        "aspirate",
+        "clear_field",
+        "inspect",
+        "aspirate",
+        "reassess",
+        "STOP"
+      ],
+      "elapsed_seconds": 8.0,
+      "record_hash": "sha256:33dff82f69357ee51a9f00d0ee309a665e56948c3ee13646a2516b86c80d3eb8",
+      "initial_state_id": "sha256:f3784c9c3a42990c0dbf2b6ff1ba98eb78a43c14ea6f20b7b424d8e9e35187e2",
+      "final_state_id": "sha256:4e68b42d8915fdd4c9c2f6eaffb21e257723f3b89838a90569fc21fd159bee4c"
+    }
+  ],
+  "saved_view": {
+    "branchId": "deeper_pass_reassess",
+    "episodeInitialStateId": "sha256:f3784c9c3a42990c0dbf2b6ff1ba98eb78a43c14ea6f20b7b424d8e9e35187e2",
+    "frameIndex": 21,
+    "selectedTool": "field_manager",
+    "visible": true
+  },
+  "native_capture_hashes": {
+    "outputs/poc-first-local-package-gui-v1/06-native-save.png": "61bdf793a50a5a27a4ced3ede81a4d7c8989fbee4a91d4b45c9c6300bc873151",
+    "outputs/poc-first-local-package-gui-v1/06-native-save.ax.txt": "a97bbd9e8bbabedb342ca24bef1f02a68bac525666733d5207894e28752ccf3c",
+    "outputs/poc-first-local-package-gui-v1/07-fresh-rehearsal-reopen.png": "b2f21f1af4079621b7ca240b4c1afd977f1f7a8aa42e2bb8d5a0978f891e19b2",
+    "outputs/poc-first-local-package-gui-v1/07-fresh-rehearsal-reopen.ax.txt": "a94110dc8e5684d60a8904bd9810397ed1447dbced46203b4fb2946020011cd6"
+  },
+  "fresh_capture_has_selected_branch_frame_tool_and_paused_play_button": true,
+  "archive_inputs_unchanged": true,
+  "scope": "Independent logical NPY byte, native affine, original-byte, source metadata, saved-action seal/prefix and saved-view audit. No engine/model execution or replay by this auditor.",
+  "limits": [
+    "Archive compression and numbered compartment storage keys differ on resave; all logically named NPY bytes match exactly.",
+    "Saved action records contain no replay frame arrays; their integrity and common prefix were verified, not numerical trajectory recomputation.",
+    "Native reopen evidence is ROOT-captured accessibility text and screenshots; QA performed no GUI action.",
+    "No anatomy, physics, surgical or clinical acceptance is inferred."
+  ]
+}

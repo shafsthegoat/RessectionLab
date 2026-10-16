@@ -1,0 +1,45 @@
+✔ complete generated release binds plan, auditor, tests, preparation, paths and final hashes (0.739208ms)
+✔ release refuses withheld release before launch or payload access (0.452583ms)
+✔ release refuses missing build success before launch or payload access (0.141584ms)
+✔ release refuses wrong authority before launch or payload access (0.094916ms)
+✔ release refuses auditor changed before launch or payload access (0.070083ms)
+✔ release refuses controls changed before launch or payload access (0.082667ms)
+✔ release refuses preparation changed before launch or payload access (0.069833ms)
+✔ release refuses unbound prepared auditor before launch or payload access (0.0595ms)
+✔ release refuses unbound prepared controls before launch or payload access (0.068459ms)
+✔ release refuses wrong engine path before launch or payload access (0.1015ms)
+✔ release refuses wrong asar path before launch or payload access (0.075167ms)
+✔ release refuses unreleased output before launch or payload access (0.066167ms)
+✔ release refuses missing final engine hash before launch or payload access (0.06525ms)
+✔ release refuses missing final asar hash before launch or payload access (0.056375ms)
+✔ release refuses missing source manifest before launch or payload access (0.066958ms)
+✔ release refuses missing package manifest before launch or payload access (0.096208ms)
+✔ release refuses silent signing exception before launch or payload access (0.049667ms)
+✔ release refuses changed aspiration plan before launch or payload access (0.301667ms)
+✔ CLI requires explicit absolute packaged paths and refuses source/Python fallback (0.191ms)
+✔ clean environment drops Python/VENV/CONDA/DYLD and restores parent after synchronous spawn (0.141917ms)
+✔ narrow requester denies all generic training/search/model/native paths before process call (1.054125ms)
+✔ generated renderer contract reconstructs distinct aspiration and field masks with two exact prefixes (0.790958ms)
+✔ generated renderer refuses branch prefix mutation (0.196708ms)
+✔ generated renderer refuses stale live state (0.085ms)
+✔ generated renderer refuses unknown risk invented (0.079792ms)
+✔ generated renderer refuses duplicate removed cell (0.124417ms)
+✔ generated renderer refuses source grid changed (0.059833ms)
+✔ generated four tissue layers preserve exact eight UNKNOWN cells and brain partition (0.235708ms)
+✔ generated tissue payload refuses lost UNKNOWN (0.086875ms)
+✔ generated tissue payload refuses UNKNOWN moved with same count (0.074875ms)
+✔ generated tissue payload refuses overlap (0.055542ms)
+✔ generated tissue payload refuses changed source MRI (0.106917ms)
+✔ generated tissue payload refuses invented fusion (1.3445ms)
+✔ generated tissue payload refuses changed original identity (0.097125ms)
+✔ generated tissue payload refuses missing fourth layer (0.056875ms)
+✔ binary verifier traverses working/source/brain masks and refuses missing or mutated bytes (0.260125ms)
+✔ actual host Sidecar generated executable verifies clean spawn, binary hydration, four operations and owned shutdown (308.920083ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 380.433792
