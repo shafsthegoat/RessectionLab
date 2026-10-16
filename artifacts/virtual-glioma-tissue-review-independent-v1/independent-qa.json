@@ -1,0 +1,757 @@
+{
+  "schema": "independent-virtual-tissue-review-admission-v1",
+  "status": "pass_generated_admission_only",
+  "source_pins_unchanged_before_after": {
+    "src/resectionlab/virtual_glioma.py": "c726a61516a68809f45ace18cf51f7bf547d40816be81cb0cb47aa7e3ef2a03d",
+    "tests/test_virtual_glioma_tissue_review.py": "3a213e1bfc547b868bbdd338ed2eca09c359332c313de6ac325a0ab98a4b2289",
+    "artifacts/virtual-glioma-tissue-review-independent-v1/initial-coverage-finding.json": "671a0167409745c567fb7080fc8c80af0e8a30c1472b984621140cf981403e83"
+  },
+  "previous_uniform_source_sha256": "ac6bf026b204edb3ea4f853aa6749c0385eb7f16b48d0ef2b1e8d5c469802555",
+  "auditor_sha256": "0c5d7a52823f52de26cb0dcf18358c975c8554e7551f94444649c4bb130bd261",
+  "checks": [
+    "real_ordered_classes_without_review",
+    "sham_accepted",
+    "sham_tissue_review_accepted",
+    "sham_anatomical_review_accepted",
+    "sham_reviewed",
+    "sham_host_accepted",
+    "sham_nested_accepted",
+    "exact_generated_review_contract_roundtrip",
+    "legacy_unreviewed_strict_receipt_rejected",
+    "stale_wm_array",
+    "stale_gm_array",
+    "stale_classified_array",
+    "stale_unknown_array",
+    "stale_image",
+    "stale_frame",
+    "stale_brain",
+    "stale_case_id",
+    "stale_source_refs",
+    "stale_wm_method",
+    "stale_wm_source_role",
+    "stale_wm_run_sha256",
+    "stale_wm_source_sha256",
+    "stale_wm_source_image_hash",
+    "stale_wm_source_frame_hash",
+    "stale_gm_method",
+    "stale_gm_source_role",
+    "stale_gm_run_sha256",
+    "stale_gm_source_sha256",
+    "stale_gm_source_image_hash",
+    "stale_gm_source_frame_hash",
+    "stale_classified_method",
+    "stale_classified_source_role",
+    "stale_classified_run_sha256",
+    "stale_classified_source_sha256",
+    "stale_classified_source_image_hash",
+    "stale_classified_source_frame_hash",
+    "stale_unknown_method",
+    "stale_unknown_source_role",
+    "stale_unknown_run_sha256",
+    "stale_unknown_source_sha256",
+    "stale_unknown_source_image_hash",
+    "stale_unknown_source_frame_hash",
+    "bad_review_decision",
+    "bad_review_reviewer_id",
+    "bad_review_rationale",
+    "bad_review_reviewed_at",
+    "bad_review_scope",
+    "bad_review_evidence_hash",
+    "stale_review_seal",
+    "PVE_claim",
+    "freshly_sealed_wrong_wm_class_meaning",
+    "freshly_sealed_wrong_gm_class_meaning",
+    "freshly_sealed_detached_source_sha256",
+    "freshly_sealed_detached_run_sha256",
+    "freshly_sealed_invalid_overlap",
+    "freshly_sealed_invalid_unknown_in_support",
+    "freshly_sealed_invalid_missing_coverage",
+    "freshly_sealed_invalid_support_outside_brain",
+    "freshly_sealed_invalid_wm_in_unknown",
+    "generated_exemption_reject_00000",
+    "generated_exemption_reject_00001",
+    "generated_exemption_reject_00010",
+    "generated_exemption_reject_00011",
+    "generated_exemption_reject_00100",
+    "generated_exemption_reject_00101",
+    "generated_exemption_reject_00110",
+    "generated_exemption_reject_00111",
+    "generated_exemption_reject_01000",
+    "generated_exemption_reject_01001",
+    "generated_exemption_reject_01010",
+    "generated_exemption_reject_01011",
+    "generated_exemption_reject_01100",
+    "generated_exemption_reject_01101",
+    "generated_exemption_reject_01110",
+    "generated_exemption_reject_01111",
+    "generated_exemption_reject_10000",
+    "generated_exemption_reject_10001",
+    "generated_exemption_reject_10010",
+    "generated_exemption_reject_10011",
+    "generated_exemption_reject_10100",
+    "generated_exemption_reject_10101",
+    "generated_exemption_reject_10110",
+    "generated_exemption_reject_10111",
+    "generated_exemption_reject_11000",
+    "generated_exemption_reject_11001",
+    "generated_exemption_reject_11010",
+    "generated_exemption_reject_11011",
+    "generated_exemption_reject_11100",
+    "generated_exemption_reject_11101",
+    "generated_exemption_reject_11110",
+    "generated_exemption_all_five_conditions",
+    "protected_role_SELECT",
+    "protected_role_EVAL",
+    "protected_role_EXTERNAL_TEST",
+    "uniform_mode_ignores_unused_tissue_review_as_before",
+    "shifted_oblique_reflected_UNKNOWN_coverage_excluded_all_three_axes"
+  ],
+  "uniform_and_generated_strict_continuity": [
+    {
+      "fixture": "real_schema_uniform",
+      "qualification_hash": "sha256:cca8c8e39ed9ef27126a9daee9285d9b75cdd4a01d6f10e9a498146dfa034886",
+      "qualification_and_reconstruction_equal": true
+    },
+    {
+      "fixture": "generated_uniform",
+      "qualification_hash": "sha256:cb3fb11b66303e69a44769bc1163a7ac040140620f80fb5ead81b918fe33c821",
+      "qualification_and_reconstruction_equal": true
+    },
+    {
+      "fixture": "generated_strict",
+      "qualification_hash": "sha256:0cec566f9732fc86b0e81be17e2b6f1743dbf301197305756ccd85ad84d3c31b",
+      "qualification_and_reconstruction_equal": true
+    }
+  ],
+  "reviewed_real_mapped_coverage": [
+    {
+      "source_axis": 0,
+      "shift_source_voxels": 0.25,
+      "nearest_unknown_target": [
+        2,
+        3,
+        4
+      ],
+      "uncorrected_domain_included_target": true,
+      "final_domain_included_target": false,
+      "independent_mapped_support_hash": "sha256:06ffee59a683609ee4f7efef55fa8fde3d5451f5a1a684dd9f6445b623bd72d9",
+      "independent_mapped_unknown_hash": "sha256:537a624b0a3d15d1fdbacd3e176ef75f51032380c7fc215802533508928f41aa",
+      "final_domain_hash": "sha256:a3553122606466285a48b1e8a3ff9b946614f3973897c87c867a62cd3836c7fc",
+      "linear_weights_unchanged": true,
+      "mapping": {
+        "sourceAffineHash": "sha256:c9d2ab251dd43a430ce0ddcac7e6e775d30a4c7df0efc37df2e1327c3a97fb8d",
+        "targetAffineHash": "sha256:e746365c0e19bb0816505eff1e432e0aac3ba1977ea8d3765d4ff4658770a4ca",
+        "targetShape": [
+          7,
+          6,
+          5
+        ],
+        "targetVoxelToSourceVoxel": [
+          [
+            0.9999999999999998,
+            -5.551115123125783e-17,
+            0.0,
+            0.25
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "exactGridIdentityCopy": false,
+        "brainEnvelopeInterpolation": "nearest_neighbor_order0_constant0_voxel_centers",
+        "tissueFractionInterpolation": "linear_order1_constant0_no_renormalization",
+        "sourceBrainEnvelopeHash": "sha256:0af971dab2ebdcbda2de5ac54246c6dd691f7bfbbe11d84d29c61e4f6f3c5d06",
+        "resampledBrainEnvelopeHash": "sha256:0221e5ecf0d4fbd759ae0ba426022b59054d2e2098d6911ebbc2c2eec58462d7",
+        "admittedDomainHash": "sha256:a3553122606466285a48b1e8a3ff9b946614f3973897c87c867a62cd3836c7fc",
+        "sourceTissues": {
+          "white_matter": {
+            "name": "wm",
+            "arrayHash": "sha256:2d514c17279572344e40708dcc7e8936f904d21933c7e11fe3ef5d6cfc218b84",
+            "provenance": {
+              "kind": "brain_tissue",
+              "tissue_class": "white_matter",
+              "provenance": "estimated",
+              "source_role": "unreviewed_intensity_class",
+              "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+              "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+              "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+              "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+              "method": "tiny constructed QA fixture, no real person or model"
+            }
+          },
+          "gray_matter": {
+            "name": "gm",
+            "arrayHash": "sha256:1f45b2e047c056c40735ae756a547225e5cb780f5a0eaf56c4cda429c7fde5ac",
+            "provenance": {
+              "kind": "brain_tissue",
+              "tissue_class": "gray_matter",
+              "provenance": "estimated",
+              "source_role": "unreviewed_intensity_class",
+              "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+              "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+              "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+              "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+              "method": "tiny constructed QA fixture, no real person or model"
+            }
+          }
+        },
+        "wmFractionHash": "sha256:e90529028f7e18a5216a88ddd8c65e474c343b5ab16f032e11f8987ddffe5d07",
+        "gmFractionHash": "sha256:5e5ed6edf7c332b6f47753c038584d06cb255956a14f29cc71073dfa1c17e6f0",
+        "matterThreshold": 0.1,
+        "fractionRoundoffTolerance": 1.7763568394002505e-15,
+        "fractionValuesClippedOrRenormalized": false,
+        "mappedFractionRange": {
+          "wm": [
+            0.0,
+            1.0
+          ],
+          "gm": [
+            0.0,
+            1.0
+          ],
+          "sum": [
+            0.0,
+            1.0
+          ]
+        },
+        "domainRule": "brain_and_known_support_and_not_UNKNOWN_and_GM_plus_WM_at_least_threshold",
+        "tissuePairReview": {
+          "schema": "resectionlab.fk-categorical-tissue-pair-review.v1",
+          "evidence": {
+            "case_id": "qa-constructed-host",
+            "patient_group": "qa:constructed",
+            "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+            "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+            "source_refs_hash": "sha256:72d7c00d3bc1f213bb319190a484f1b3d4e8626936f578e47619bd56f1aa2794",
+            "brain_envelope_hash": "sha256:0af971dab2ebdcbda2de5ac54246c6dd691f7bfbbe11d84d29c61e4f6f3c5d06",
+            "classification_support_layer": "classified",
+            "unknown_layer": "unknown",
+            "representation": "disjoint_binary_tissue_classes",
+            "physical_partial_volume_claim": false,
+            "layers": {
+              "white_matter": {
+                "name": "wm",
+                "array_hash": "sha256:2d514c17279572344e40708dcc7e8936f904d21933c7e11fe3ef5d6cfc218b84",
+                "provenance": {
+                  "kind": "brain_tissue",
+                  "tissue_class": "white_matter",
+                  "provenance": "estimated",
+                  "source_role": "unreviewed_intensity_class",
+                  "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+                  "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+                  "method": "tiny constructed QA fixture, no real person or model"
+                }
+              },
+              "gray_matter": {
+                "name": "gm",
+                "array_hash": "sha256:1f45b2e047c056c40735ae756a547225e5cb780f5a0eaf56c4cda429c7fde5ac",
+                "provenance": {
+                  "kind": "brain_tissue",
+                  "tissue_class": "gray_matter",
+                  "provenance": "estimated",
+                  "source_role": "unreviewed_intensity_class",
+                  "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+                  "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+                  "method": "tiny constructed QA fixture, no real person or model"
+                }
+              },
+              "classification_support": {
+                "name": "classified",
+                "array_hash": "sha256:3b399e3bd08c3cfdcc3f1fe1f6f75b095efca2869d035bd03b738364fb187601",
+                "provenance": {
+                  "kind": "brain_tissue",
+                  "tissue_class": "classification_support",
+                  "provenance": "estimated",
+                  "source_role": "unreviewed_intensity_class",
+                  "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+                  "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+                  "method": "tiny constructed QA fixture, no real person or model"
+                }
+              },
+              "unknown": {
+                "name": "unknown",
+                "array_hash": "sha256:537a624b0a3d15d1fdbacd3e176ef75f51032380c7fc215802533508928f41aa",
+                "provenance": {
+                  "kind": "brain_tissue",
+                  "tissue_class": "unknown",
+                  "provenance": "estimated",
+                  "source_role": "unreviewed_intensity_class",
+                  "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+                  "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+                  "method": "tiny constructed QA fixture, no real person or model"
+                }
+              }
+            }
+          },
+          "evidence_hash": "sha256:3bbc11f41fcbce032a77518c0a28404ca89231107c541a174d0f7d22c8f30e1f",
+          "review": {
+            "evidence_hash": "sha256:3bbc11f41fcbce032a77518c0a28404ca89231107c541a174d0f7d22c8f30e1f",
+            "reviewer_id": "generated-independent-test-only",
+            "reviewed_at": "2026-10-16T00:00:00+00:00",
+            "decision": "accepted",
+            "rationale": "Constructed positive control, no patient approval.",
+            "scope": "research_categorical_GM_WM_support_for_FK"
+          }
+        },
+        "tissueInterpolationSemantics": "reviewed_categorical_classes_mapped_to_geometric_weights_not_physical_PVE",
+        "reviewedCoverageMapping": {
+          "interpolation": "nearest_neighbor_order0_constant0_voxel_centers",
+          "classificationSupportHash": "sha256:06ffee59a683609ee4f7efef55fa8fde3d5451f5a1a684dd9f6445b623bd72d9",
+          "unknownHash": "sha256:537a624b0a3d15d1fdbacd3e176ef75f51032380c7fc215802533508928f41aa",
+          "domainRule": "brain_and_known_support_and_not_UNKNOWN_and_GM_plus_WM_at_least_threshold"
+        }
+      }
+    },
+    {
+      "source_axis": 1,
+      "shift_source_voxels": -0.25,
+      "nearest_unknown_target": [
+        2,
+        3,
+        4
+      ],
+      "uncorrected_domain_included_target": true,
+      "final_domain_included_target": false,
+      "independent_mapped_support_hash": "sha256:a5a561a6cfd7dd56745b95fbb81a0a8bb8267d22c8fc5736e420f89591317960",
+      "independent_mapped_unknown_hash": "sha256:537a624b0a3d15d1fdbacd3e176ef75f51032380c7fc215802533508928f41aa",
+      "final_domain_hash": "sha256:d19795c24f36c68b3479ba494186becf3819843daa23030d6f2a0d44072301f5",
+      "linear_weights_unchanged": true,
+      "mapping": {
+        "sourceAffineHash": "sha256:c9d2ab251dd43a430ce0ddcac7e6e775d30a4c7df0efc37df2e1327c3a97fb8d",
+        "targetAffineHash": "sha256:26922bef3cd96449f63caca9a12c2ec81a2b23e47f535066ef4d92018d9f178c",
+        "targetShape": [
+          7,
+          6,
+          5
+        ],
+        "targetVoxelToSourceVoxel": [
+          [
+            0.9999999999999998,
+            -5.551115123125783e-17,
+            0.0,
+            2.220446049250313e-16
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.2499999999999999
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "exactGridIdentityCopy": false,
+        "brainEnvelopeInterpolation": "nearest_neighbor_order0_constant0_voxel_centers",
+        "tissueFractionInterpolation": "linear_order1_constant0_no_renormalization",
+        "sourceBrainEnvelopeHash": "sha256:0af971dab2ebdcbda2de5ac54246c6dd691f7bfbbe11d84d29c61e4f6f3c5d06",
+        "resampledBrainEnvelopeHash": "sha256:09cdac45fee76d33563616e060776e97047eb2ec98ffe33928a7f5abfa058d2d",
+        "admittedDomainHash": "sha256:d19795c24f36c68b3479ba494186becf3819843daa23030d6f2a0d44072301f5",
+        "sourceTissues": {
+          "white_matter": {
+            "name": "wm",
+            "arrayHash": "sha256:2d514c17279572344e40708dcc7e8936f904d21933c7e11fe3ef5d6cfc218b84",
+            "provenance": {
+              "kind": "brain_tissue",
+              "tissue_class": "white_matter",
+              "provenance": "estimated",
+              "source_role": "unreviewed_intensity_class",
+              "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+              "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+              "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+              "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+              "method": "tiny constructed QA fixture, no real person or model"
+            }
+          },
+          "gray_matter": {
+            "name": "gm",
+            "arrayHash": "sha256:1f45b2e047c056c40735ae756a547225e5cb780f5a0eaf56c4cda429c7fde5ac",
+            "provenance": {
+              "kind": "brain_tissue",
+              "tissue_class": "gray_matter",
+              "provenance": "estimated",
+              "source_role": "unreviewed_intensity_class",
+              "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+              "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+              "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+              "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+              "method": "tiny constructed QA fixture, no real person or model"
+            }
+          }
+        },
+        "wmFractionHash": "sha256:a0cd81675bf7c70e78687ddbf3fb992ea31e43bcfce8549aaa41eda8ef4f985a",
+        "gmFractionHash": "sha256:047f0601a58cdd1daf67ed7b0f8cf576c40ada1a4de0e7bd8a874d2816ec9a4c",
+        "matterThreshold": 0.1,
+        "fractionRoundoffTolerance": 1.7763568394002505e-15,
+        "fractionValuesClippedOrRenormalized": false,
+        "mappedFractionRange": {
+          "wm": [
+            0.0,
+            1.0
+          ],
+          "gm": [
+            0.0,
+            1.0
+          ],
+          "sum": [
+            0.0,
+            1.0
+          ]
+        },
+        "domainRule": "brain_and_known_support_and_not_UNKNOWN_and_GM_plus_WM_at_least_threshold",
+        "tissuePairReview": {
+          "schema": "resectionlab.fk-categorical-tissue-pair-review.v1",
+          "evidence": {
+            "case_id": "qa-constructed-host",
+            "patient_group": "qa:constructed",
+            "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+            "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+            "source_refs_hash": "sha256:72d7c00d3bc1f213bb319190a484f1b3d4e8626936f578e47619bd56f1aa2794",
+            "brain_envelope_hash": "sha256:0af971dab2ebdcbda2de5ac54246c6dd691f7bfbbe11d84d29c61e4f6f3c5d06",
+            "classification_support_layer": "classified",
+            "unknown_layer": "unknown",
+            "representation": "disjoint_binary_tissue_classes",
+            "physical_partial_volume_claim": false,
+            "layers": {
+              "white_matter": {
+                "name": "wm",
+                "array_hash": "sha256:2d514c17279572344e40708dcc7e8936f904d21933c7e11fe3ef5d6cfc218b84",
+                "provenance": {
+                  "kind": "brain_tissue",
+                  "tissue_class": "white_matter",
+                  "provenance": "estimated",
+                  "source_role": "unreviewed_intensity_class",
+                  "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+                  "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+                  "method": "tiny constructed QA fixture, no real person or model"
+                }
+              },
+              "gray_matter": {
+                "name": "gm",
+                "array_hash": "sha256:1f45b2e047c056c40735ae756a547225e5cb780f5a0eaf56c4cda429c7fde5ac",
+                "provenance": {
+                  "kind": "brain_tissue",
+                  "tissue_class": "gray_matter",
+                  "provenance": "estimated",
+                  "source_role": "unreviewed_intensity_class",
+                  "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+                  "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+                  "method": "tiny constructed QA fixture, no real person or model"
+                }
+              },
+              "classification_support": {
+                "name": "classified",
+                "array_hash": "sha256:3b399e3bd08c3cfdcc3f1fe1f6f75b095efca2869d035bd03b738364fb187601",
+                "provenance": {
+                  "kind": "brain_tissue",
+                  "tissue_class": "classification_support",
+                  "provenance": "estimated",
+                  "source_role": "unreviewed_intensity_class",
+                  "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+                  "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+                  "method": "tiny constructed QA fixture, no real person or model"
+                }
+              },
+              "unknown": {
+                "name": "unknown",
+                "array_hash": "sha256:537a624b0a3d15d1fdbacd3e176ef75f51032380c7fc215802533508928f41aa",
+                "provenance": {
+                  "kind": "brain_tissue",
+                  "tissue_class": "unknown",
+                  "provenance": "estimated",
+                  "source_role": "unreviewed_intensity_class",
+                  "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+                  "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+                  "method": "tiny constructed QA fixture, no real person or model"
+                }
+              }
+            }
+          },
+          "evidence_hash": "sha256:3bbc11f41fcbce032a77518c0a28404ca89231107c541a174d0f7d22c8f30e1f",
+          "review": {
+            "evidence_hash": "sha256:3bbc11f41fcbce032a77518c0a28404ca89231107c541a174d0f7d22c8f30e1f",
+            "reviewer_id": "generated-independent-test-only",
+            "reviewed_at": "2026-10-16T00:00:00+00:00",
+            "decision": "accepted",
+            "rationale": "Constructed positive control, no patient approval.",
+            "scope": "research_categorical_GM_WM_support_for_FK"
+          }
+        },
+        "tissueInterpolationSemantics": "reviewed_categorical_classes_mapped_to_geometric_weights_not_physical_PVE",
+        "reviewedCoverageMapping": {
+          "interpolation": "nearest_neighbor_order0_constant0_voxel_centers",
+          "classificationSupportHash": "sha256:a5a561a6cfd7dd56745b95fbb81a0a8bb8267d22c8fc5736e420f89591317960",
+          "unknownHash": "sha256:537a624b0a3d15d1fdbacd3e176ef75f51032380c7fc215802533508928f41aa",
+          "domainRule": "brain_and_known_support_and_not_UNKNOWN_and_GM_plus_WM_at_least_threshold"
+        }
+      }
+    },
+    {
+      "source_axis": 2,
+      "shift_source_voxels": -0.2,
+      "nearest_unknown_target": [
+        2,
+        3,
+        4
+      ],
+      "uncorrected_domain_included_target": true,
+      "final_domain_included_target": false,
+      "independent_mapped_support_hash": "sha256:efc75a8533257a132f1c5b12a84844047d1f3690816bea54fa3e637a0502b675",
+      "independent_mapped_unknown_hash": "sha256:537a624b0a3d15d1fdbacd3e176ef75f51032380c7fc215802533508928f41aa",
+      "final_domain_hash": "sha256:dfbe648230f6388422ee7820ca38a0a4031d453ad77ddbd69387e6588cde4896",
+      "linear_weights_unchanged": true,
+      "mapping": {
+        "sourceAffineHash": "sha256:c9d2ab251dd43a430ce0ddcac7e6e775d30a4c7df0efc37df2e1327c3a97fb8d",
+        "targetAffineHash": "sha256:a50519f7ac0108e1f010b1148723f747cfcd503fcd0352b87ccfb08b5478e999",
+        "targetShape": [
+          7,
+          6,
+          5
+        ],
+        "targetVoxelToSourceVoxel": [
+          [
+            0.9999999999999998,
+            -5.551115123125783e-17,
+            0.0,
+            2.220446049250313e-16
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -2.220446049250313e-16
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            -0.20000000000000018
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "exactGridIdentityCopy": false,
+        "brainEnvelopeInterpolation": "nearest_neighbor_order0_constant0_voxel_centers",
+        "tissueFractionInterpolation": "linear_order1_constant0_no_renormalization",
+        "sourceBrainEnvelopeHash": "sha256:0af971dab2ebdcbda2de5ac54246c6dd691f7bfbbe11d84d29c61e4f6f3c5d06",
+        "resampledBrainEnvelopeHash": "sha256:dad48b0d0b68b7096e99165ca32405618b890349361aea6944e8aa3f8fc5b12d",
+        "admittedDomainHash": "sha256:dfbe648230f6388422ee7820ca38a0a4031d453ad77ddbd69387e6588cde4896",
+        "sourceTissues": {
+          "white_matter": {
+            "name": "wm",
+            "arrayHash": "sha256:2d514c17279572344e40708dcc7e8936f904d21933c7e11fe3ef5d6cfc218b84",
+            "provenance": {
+              "kind": "brain_tissue",
+              "tissue_class": "white_matter",
+              "provenance": "estimated",
+              "source_role": "unreviewed_intensity_class",
+              "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+              "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+              "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+              "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+              "method": "tiny constructed QA fixture, no real person or model"
+            }
+          },
+          "gray_matter": {
+            "name": "gm",
+            "arrayHash": "sha256:1f45b2e047c056c40735ae756a547225e5cb780f5a0eaf56c4cda429c7fde5ac",
+            "provenance": {
+              "kind": "brain_tissue",
+              "tissue_class": "gray_matter",
+              "provenance": "estimated",
+              "source_role": "unreviewed_intensity_class",
+              "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+              "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+              "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+              "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+              "method": "tiny constructed QA fixture, no real person or model"
+            }
+          }
+        },
+        "wmFractionHash": "sha256:a6bcd61ad1832df1ec0ab55dbdeb1ee243344a3ba8a2b1c301a517da4cae2764",
+        "gmFractionHash": "sha256:55a06d02a7f28799671ba786f1c243a8ab618e9ec9e8904173faf4fa7fc52c74",
+        "matterThreshold": 0.1,
+        "fractionRoundoffTolerance": 1.7763568394002505e-15,
+        "fractionValuesClippedOrRenormalized": false,
+        "mappedFractionRange": {
+          "wm": [
+            0.0,
+            1.0
+          ],
+          "gm": [
+            0.0,
+            1.0
+          ],
+          "sum": [
+            0.0,
+            1.0
+          ]
+        },
+        "domainRule": "brain_and_known_support_and_not_UNKNOWN_and_GM_plus_WM_at_least_threshold",
+        "tissuePairReview": {
+          "schema": "resectionlab.fk-categorical-tissue-pair-review.v1",
+          "evidence": {
+            "case_id": "qa-constructed-host",
+            "patient_group": "qa:constructed",
+            "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+            "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+            "source_refs_hash": "sha256:72d7c00d3bc1f213bb319190a484f1b3d4e8626936f578e47619bd56f1aa2794",
+            "brain_envelope_hash": "sha256:0af971dab2ebdcbda2de5ac54246c6dd691f7bfbbe11d84d29c61e4f6f3c5d06",
+            "classification_support_layer": "classified",
+            "unknown_layer": "unknown",
+            "representation": "disjoint_binary_tissue_classes",
+            "physical_partial_volume_claim": false,
+            "layers": {
+              "white_matter": {
+                "name": "wm",
+                "array_hash": "sha256:2d514c17279572344e40708dcc7e8936f904d21933c7e11fe3ef5d6cfc218b84",
+                "provenance": {
+                  "kind": "brain_tissue",
+                  "tissue_class": "white_matter",
+                  "provenance": "estimated",
+                  "source_role": "unreviewed_intensity_class",
+                  "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+                  "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+                  "method": "tiny constructed QA fixture, no real person or model"
+                }
+              },
+              "gray_matter": {
+                "name": "gm",
+                "array_hash": "sha256:1f45b2e047c056c40735ae756a547225e5cb780f5a0eaf56c4cda429c7fde5ac",
+                "provenance": {
+                  "kind": "brain_tissue",
+                  "tissue_class": "gray_matter",
+                  "provenance": "estimated",
+                  "source_role": "unreviewed_intensity_class",
+                  "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+                  "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+                  "method": "tiny constructed QA fixture, no real person or model"
+                }
+              },
+              "classification_support": {
+                "name": "classified",
+                "array_hash": "sha256:3b399e3bd08c3cfdcc3f1fe1f6f75b095efca2869d035bd03b738364fb187601",
+                "provenance": {
+                  "kind": "brain_tissue",
+                  "tissue_class": "classification_support",
+                  "provenance": "estimated",
+                  "source_role": "unreviewed_intensity_class",
+                  "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+                  "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+                  "method": "tiny constructed QA fixture, no real person or model"
+                }
+              },
+              "unknown": {
+                "name": "unknown",
+                "array_hash": "sha256:537a624b0a3d15d1fdbacd3e176ef75f51032380c7fc215802533508928f41aa",
+                "provenance": {
+                  "kind": "brain_tissue",
+                  "tissue_class": "unknown",
+                  "provenance": "estimated",
+                  "source_role": "unreviewed_intensity_class",
+                  "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "run_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "source_image_hash": "sha256:236ed152fc539f9d725f5685c56fe6be649292fda5db1dce484e2d63577c84c8",
+                  "source_frame_hash": "sha256:5df062db96c2a74c7226cfd61495936f74ffb31ed617b552557c90e36a7a6c6b",
+                  "method": "tiny constructed QA fixture, no real person or model"
+                }
+              }
+            }
+          },
+          "evidence_hash": "sha256:3bbc11f41fcbce032a77518c0a28404ca89231107c541a174d0f7d22c8f30e1f",
+          "review": {
+            "evidence_hash": "sha256:3bbc11f41fcbce032a77518c0a28404ca89231107c541a174d0f7d22c8f30e1f",
+            "reviewer_id": "generated-independent-test-only",
+            "reviewed_at": "2026-10-16T00:00:00+00:00",
+            "decision": "accepted",
+            "rationale": "Constructed positive control, no patient approval.",
+            "scope": "research_categorical_GM_WM_support_for_FK"
+          }
+        },
+        "tissueInterpolationSemantics": "reviewed_categorical_classes_mapped_to_geometric_weights_not_physical_PVE",
+        "reviewedCoverageMapping": {
+          "interpolation": "nearest_neighbor_order0_constant0_voxel_centers",
+          "classificationSupportHash": "sha256:efc75a8533257a132f1c5b12a84844047d1f3690816bea54fa3e637a0502b675",
+          "unknownHash": "sha256:537a624b0a3d15d1fdbacd3e176ef75f51032380c7fc215802533508928f41aa",
+          "domainRule": "brain_and_known_support_and_not_UNKNOWN_and_GM_plus_WM_at_least_threshold"
+        }
+      }
+    }
+  ],
+  "positive_fixture": {
+    "shape": [
+      7,
+      6,
+      5
+    ],
+    "brain_cells": 180,
+    "classification_support_cells": 179,
+    "unknown_cells": 1,
+    "GM_WM_domain_cells": 149,
+    "review_created_for_actual_patient": false
+  },
+  "real_patient_review_created": false,
+  "patient_arrays_opened": false,
+  "fitting_or_growth_executed": false,
+  "retained_initial_finding": {
+    "path": "artifacts/virtual-glioma-tissue-review-independent-v1/initial-coverage-finding.json",
+    "source_sha256": "d8ad944f31dbb26fd1bd4dda749aad7bc02701e3c17d030ea0436f9b8820ce46",
+    "initial_source_snapshot_retained": false,
+    "limitation": "Only the exact source hash and generated numerical witness were retained; original source bytes had changed before snapshot request."
+  },
+  "limitations": [
+    "The review is a declared, hash-bound research record, not authentication of a human reviewer or anatomical correctness.",
+    "Positive controls use only constructed arrays and fictional evidence; no IXI tissue, host, growth or training acceptance is created.",
+    "Categorical tissue occupancy after interpolation is not a validated physical partial-volume estimate."
+  ]
+}

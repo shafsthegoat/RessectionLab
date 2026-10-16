@@ -139,6 +139,14 @@ Review-pending labels remain separate from canonical UNKNOWN anatomy fields;
 catalog IDs, source counts and qualification receipts are unchanged. This
 measures reported-site coverage only, not anatomical, functional or seed review.
 
+The [strict tissue-review guard](../artifacts/virtual-glioma-tissue-review-guard-v1/RESULT.md)
+now requires exact pair/coverage/provenance review for real GM/WM growth inputs.
+Mapped known/UNKNOWN coverage constrains interpolation. Generated-only owner
+and independent checks pass while preserving uniform/generated qualification
+identities; this creates no review or acceptance for the existing IXI candidate.
+The separate IBSR20 component prospectus is metadata-reviewable but remains
+unreleased for acquisition or execution.
+
 ## Accuracy and publication gate
 
 Publication readiness requires claims with matching evidence, not a test count

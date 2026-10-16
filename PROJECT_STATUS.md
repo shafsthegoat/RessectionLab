@@ -129,6 +129,16 @@ are unchanged. Independent source/table/reader checking passes. This adds zero
 people, inference or anatomical acceptance;
 source reports do not establish mask localization or functional boundaries.
 
+**Exact tissue review required for strict growth inputs, October 16:**
+The [new admission guard](artifacts/virtual-glioma-tissue-review-guard-v1/RESULT.md)
+binds real GM/WM inputs to their exact masks, source/frame, method and UNKNOWN
+coverage. Resampling cannot fill an UNKNOWN cell; categorical interpolation
+weights do not become physical tissue fractions. All 63 focused/regression and
+96 independent checks pass, with existing uniform/generated qualification
+identities preserved. No IXI acceptance or new real-host solve follows. A
+separate IBSR20 comparison prospectus remains blocked at access/terms and
+decoder/adapter preparation; no acquisition or model run occurred.
+
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and
 [patient construction plan](docs/patient-corpus-plan.md) supersede the historical

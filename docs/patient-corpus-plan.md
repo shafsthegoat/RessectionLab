@@ -317,6 +317,13 @@ Any resulting class posteriors are fitted membership probabilities, not physical
 partial-volume tissue fractions, and cannot automatically enter the GM/WM solver
 contract. A successful fit still requires anatomical and host review.
 
+The [later strict admission guard](../artifacts/virtual-glioma-tissue-review-guard-v1/RESULT.md)
+now enforces a review bound to the exact real GM/WM pair, image/frame, source,
+method, known support and UNKNOWN masks. Mapped categorical coverage remains
+separate from interpolated class weights. This does not create a review for the
+IXI candidate or turn memberships into physical tissue fractions; the existing
+uniform numerical control retains its prior qualification identity.
+
 The [subsequent generated comparison](../artifacts/poc-ants-mask-dtype-generated-v1/RESULT.md)
 isolates our N4 mask representation defect: unsigned-byte and float masks have
 equal values/frames, but the unsigned-byte pointer is interpreted incorrectly by
@@ -350,6 +357,15 @@ or evidence about IXI265. Published resource/release rights differ and require
 reconciliation before use. The general README download redirected to login;
 no account, agreement or image acquisition occurred. Freeze version, label
 mapping, participant roles and preprocessing before any benchmark or host use.
+
+The [subsequent IBSR20 component prospectus](../artifacts/ibsr20-component-prospectus-v1/PROTOCOL.md)
+finds the separate updated 20-Normals README publicly accessible and fixes
+record `2_4`, source slice offset, label codes and image-first scoring. Both
+selected image/label archive HEAD requests redirect to login; exact transfer
+bounds, additional terms and project-use eligibility remain unresolved. No
+payload or model run is released. The protocol forbids reference-label support
+and label-driven class remapping; a later component score could not establish
+IXI265 tissue accuracy or qualify its host.
 
 Select exactly **one existing TRAIN host** with reviewed tumor-free status,
 brain/tissue support and accepted within-person frames. Prefer a qualified

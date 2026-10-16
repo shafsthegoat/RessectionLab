@@ -1,0 +1,404 @@
+{
+  "generated=True,uniform=False": {
+    "schema": "resectionlab.virtual-glioma-host-qualification.v1",
+    "sourceBinding": {
+      "caseId": "tiny-contract-fixture",
+      "caseHash": "sha256:b83f1ec358d2cb20c35e996a199a29dfe9b03b321b759c36f775595ecef49a37",
+      "imageHash": "sha256:4f4088aab4db374e6717fd8ca373ec2472b4cd8091c3a859c7fab6cae7b6cafb",
+      "frameHash": "sha256:41eedc4a70ee6faaaa2a374e62fb0b183ee4f35aca8d400c772b98ac010bd600",
+      "affineHash": "sha256:6d82b8a720bac06f7c5e187cb08b37d45b21b551cd29978fbce928113f8c9919",
+      "brainEnvelopeHash": "sha256:1aae587f3a9381a85feff77ab05e166d28cdc67f492bfa46f43210501645e7ac",
+      "sourceRefsHash": "sha256:513b0e58b8609996c1d04a3fa7261f255197f48bcd213a46700a4ecfc74de016",
+      "compartmentHashes": {
+        "wm": "sha256:faff96a17788a9a7cf89cf0583ec9a4cb85a8064fb1568c97def9365a0d028b8",
+        "gm": "sha256:7992d8554ab8f54333ebf2649bba039bc29a7b0b679c23d2cfe36aa98d0eb7d7",
+        "support": "sha256:217c4e485ded53c6019f486a845ad13ed16233ada03cf7d91865d676fe7333d4",
+        "unknown": "sha256:a166f7c3a593e16dda83061f979be370af714b57667068e442c78558b7648195"
+      },
+      "sourceCompartmentHashes": {
+        "wm": "sha256:faff96a17788a9a7cf89cf0583ec9a4cb85a8064fb1568c97def9365a0d028b8",
+        "gm": "sha256:7992d8554ab8f54333ebf2649bba039bc29a7b0b679c23d2cfe36aa98d0eb7d7",
+        "support": "sha256:217c4e485ded53c6019f486a845ad13ed16233ada03cf7d91865d676fe7333d4",
+        "unknown": "sha256:a166f7c3a593e16dda83061f979be370af714b57667068e442c78558b7648195"
+      },
+      "criticalEvidenceHashes": {}
+    },
+    "patientGroup": "fixture:pair",
+    "role": "TRAIN",
+    "healthySourceEvidence": {
+      "status": "generated_numerical_control",
+      "patient_group": "fixture:pair",
+      "source_url": "https://example.invalid/generated-contract-fixture",
+      "source_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "statement": "Generated test text; never a statement about an acquired person"
+    },
+    "qualifiedBy": "generated-test",
+    "qualificationScope": "source_reported_host_research_only_not_clinical_certificate",
+    "gridShape": [
+      6,
+      5,
+      4
+    ],
+    "gridAffineRasMm": [
+      [
+        2.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        2.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        2.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "tissueMode": "GM_WM_FRACTIONS",
+    "sourceWmLayer": "wm",
+    "sourceGmLayer": "gm",
+    "mapping": {
+      "sourceAffineHash": "sha256:6d82b8a720bac06f7c5e187cb08b37d45b21b551cd29978fbce928113f8c9919",
+      "targetAffineHash": "sha256:6d82b8a720bac06f7c5e187cb08b37d45b21b551cd29978fbce928113f8c9919",
+      "targetShape": [
+        6,
+        5,
+        4
+      ],
+      "targetVoxelToSourceVoxel": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "exactGridIdentityCopy": true,
+      "brainEnvelopeInterpolation": "nearest_neighbor_order0_constant0_voxel_centers",
+      "tissueFractionInterpolation": "linear_order1_constant0_no_renormalization",
+      "sourceBrainEnvelopeHash": "sha256:1aae587f3a9381a85feff77ab05e166d28cdc67f492bfa46f43210501645e7ac",
+      "resampledBrainEnvelopeHash": "sha256:1aae587f3a9381a85feff77ab05e166d28cdc67f492bfa46f43210501645e7ac",
+      "admittedDomainHash": "sha256:217c4e485ded53c6019f486a845ad13ed16233ada03cf7d91865d676fe7333d4",
+      "sourceTissues": {
+        "white_matter": {
+          "name": "wm",
+          "arrayHash": "sha256:faff96a17788a9a7cf89cf0583ec9a4cb85a8064fb1568c97def9365a0d028b8",
+          "provenance": {
+            "tissue_class": "white_matter",
+            "source_role": "generated_numerical_control",
+            "source_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+            "run_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+            "method": "tiny generated test partition",
+            "provenance": "simulated",
+            "source_image_hash": "sha256:4f4088aab4db374e6717fd8ca373ec2472b4cd8091c3a859c7fab6cae7b6cafb",
+            "source_frame_hash": "sha256:41eedc4a70ee6faaaa2a374e62fb0b183ee4f35aca8d400c772b98ac010bd600"
+          }
+        },
+        "gray_matter": {
+          "name": "gm",
+          "arrayHash": "sha256:7992d8554ab8f54333ebf2649bba039bc29a7b0b679c23d2cfe36aa98d0eb7d7",
+          "provenance": {
+            "tissue_class": "gray_matter",
+            "source_role": "generated_numerical_control",
+            "source_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+            "run_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+            "method": "tiny generated test partition",
+            "provenance": "simulated",
+            "source_image_hash": "sha256:4f4088aab4db374e6717fd8ca373ec2472b4cd8091c3a859c7fab6cae7b6cafb",
+            "source_frame_hash": "sha256:41eedc4a70ee6faaaa2a374e62fb0b183ee4f35aca8d400c772b98ac010bd600"
+          }
+        }
+      },
+      "wmFractionHash": "sha256:64a8aef15528f6c67827d262cb5c9cb387ee9c77e38acad202d723229a6eeee9",
+      "gmFractionHash": "sha256:18df63343c11b19273f62e163ab4752a72a7549d65432e44da0db985be3c0f1f",
+      "matterThreshold": 0.1,
+      "fractionRoundoffTolerance": 1.7763568394002505e-15,
+      "fractionValuesClippedOrRenormalized": false,
+      "mappedFractionRange": {
+        "wm": [
+          0.0,
+          1.0
+        ],
+        "gm": [
+          0.0,
+          1.0
+        ],
+        "sum": [
+          0.0,
+          1.0
+        ]
+      },
+      "domainRule": "brain_envelope_and_GM_plus_WM_at_least_threshold"
+    },
+    "qualificationHash": "sha256:411ee7131f27c6261ed75a2e49c8b5ad01e7ca03da5e50ce42bb17d74e81c067"
+  },
+  "generated=False,uniform=True": {
+    "schema": "resectionlab.virtual-glioma-host-qualification.v1",
+    "sourceBinding": {
+      "caseId": "tiny-contract-fixture",
+      "caseHash": "sha256:0063684fec82f1ee81ebc70dfc28b781f74bc7f98e616598413b83baab87266e",
+      "imageHash": "sha256:4f4088aab4db374e6717fd8ca373ec2472b4cd8091c3a859c7fab6cae7b6cafb",
+      "frameHash": "sha256:41eedc4a70ee6faaaa2a374e62fb0b183ee4f35aca8d400c772b98ac010bd600",
+      "affineHash": "sha256:6d82b8a720bac06f7c5e187cb08b37d45b21b551cd29978fbce928113f8c9919",
+      "brainEnvelopeHash": "sha256:1aae587f3a9381a85feff77ab05e166d28cdc67f492bfa46f43210501645e7ac",
+      "sourceRefsHash": "sha256:2165a3a554f6ed6f765898129e4d8849e81febdbd93f84ffbca9c585119effdc",
+      "compartmentHashes": {
+        "wm": "sha256:faff96a17788a9a7cf89cf0583ec9a4cb85a8064fb1568c97def9365a0d028b8",
+        "gm": "sha256:7992d8554ab8f54333ebf2649bba039bc29a7b0b679c23d2cfe36aa98d0eb7d7",
+        "support": "sha256:217c4e485ded53c6019f486a845ad13ed16233ada03cf7d91865d676fe7333d4",
+        "unknown": "sha256:a166f7c3a593e16dda83061f979be370af714b57667068e442c78558b7648195"
+      },
+      "sourceCompartmentHashes": {
+        "wm": "sha256:faff96a17788a9a7cf89cf0583ec9a4cb85a8064fb1568c97def9365a0d028b8",
+        "gm": "sha256:7992d8554ab8f54333ebf2649bba039bc29a7b0b679c23d2cfe36aa98d0eb7d7",
+        "support": "sha256:217c4e485ded53c6019f486a845ad13ed16233ada03cf7d91865d676fe7333d4",
+        "unknown": "sha256:a166f7c3a593e16dda83061f979be370af714b57667068e442c78558b7648195"
+      },
+      "criticalEvidenceHashes": {}
+    },
+    "patientGroup": "fixture:pair",
+    "role": "TRAIN",
+    "healthySourceEvidence": {
+      "status": "source_reported_healthy",
+      "patient_group": "fixture:pair",
+      "source_url": "https://example.invalid/generated-contract-fixture",
+      "source_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "statement": "Generated test text; never a statement about an acquired person"
+    },
+    "qualifiedBy": "generated-test",
+    "qualificationScope": "source_reported_host_research_only_not_clinical_certificate",
+    "gridShape": [
+      6,
+      5,
+      4
+    ],
+    "gridAffineRasMm": [
+      [
+        2.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        2.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        2.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "tissueMode": "UNIFORM_DIFFUSION_DOMAIN",
+    "sourceWmLayer": null,
+    "sourceGmLayer": null,
+    "mapping": {
+      "sourceAffineHash": "sha256:6d82b8a720bac06f7c5e187cb08b37d45b21b551cd29978fbce928113f8c9919",
+      "targetAffineHash": "sha256:6d82b8a720bac06f7c5e187cb08b37d45b21b551cd29978fbce928113f8c9919",
+      "targetShape": [
+        6,
+        5,
+        4
+      ],
+      "targetVoxelToSourceVoxel": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "exactGridIdentityCopy": true,
+      "brainEnvelopeInterpolation": "nearest_neighbor_order0_constant0_voxel_centers",
+      "tissueFractionInterpolation": null,
+      "sourceBrainEnvelopeHash": "sha256:1aae587f3a9381a85feff77ab05e166d28cdc67f492bfa46f43210501645e7ac",
+      "resampledBrainEnvelopeHash": "sha256:1aae587f3a9381a85feff77ab05e166d28cdc67f492bfa46f43210501645e7ac",
+      "admittedDomainHash": "sha256:1aae587f3a9381a85feff77ab05e166d28cdc67f492bfa46f43210501645e7ac",
+      "sourceTissues": {},
+      "wmFractionHash": null,
+      "gmFractionHash": null,
+      "matterThreshold": 0.1,
+      "fractionRoundoffTolerance": null,
+      "fractionValuesClippedOrRenormalized": false,
+      "mappedFractionRange": null,
+      "domainRule": "brain_envelope_only_explicit_parameter_fiction"
+    },
+    "qualificationHash": "sha256:86b4d0bff3b7844240f2c7e2d30532ba50a808f8231c161a1b9cb7c407255c82"
+  },
+  "generated=True,uniform=True": {
+    "schema": "resectionlab.virtual-glioma-host-qualification.v1",
+    "sourceBinding": {
+      "caseId": "tiny-contract-fixture",
+      "caseHash": "sha256:b83f1ec358d2cb20c35e996a199a29dfe9b03b321b759c36f775595ecef49a37",
+      "imageHash": "sha256:4f4088aab4db374e6717fd8ca373ec2472b4cd8091c3a859c7fab6cae7b6cafb",
+      "frameHash": "sha256:41eedc4a70ee6faaaa2a374e62fb0b183ee4f35aca8d400c772b98ac010bd600",
+      "affineHash": "sha256:6d82b8a720bac06f7c5e187cb08b37d45b21b551cd29978fbce928113f8c9919",
+      "brainEnvelopeHash": "sha256:1aae587f3a9381a85feff77ab05e166d28cdc67f492bfa46f43210501645e7ac",
+      "sourceRefsHash": "sha256:513b0e58b8609996c1d04a3fa7261f255197f48bcd213a46700a4ecfc74de016",
+      "compartmentHashes": {
+        "wm": "sha256:faff96a17788a9a7cf89cf0583ec9a4cb85a8064fb1568c97def9365a0d028b8",
+        "gm": "sha256:7992d8554ab8f54333ebf2649bba039bc29a7b0b679c23d2cfe36aa98d0eb7d7",
+        "support": "sha256:217c4e485ded53c6019f486a845ad13ed16233ada03cf7d91865d676fe7333d4",
+        "unknown": "sha256:a166f7c3a593e16dda83061f979be370af714b57667068e442c78558b7648195"
+      },
+      "sourceCompartmentHashes": {
+        "wm": "sha256:faff96a17788a9a7cf89cf0583ec9a4cb85a8064fb1568c97def9365a0d028b8",
+        "gm": "sha256:7992d8554ab8f54333ebf2649bba039bc29a7b0b679c23d2cfe36aa98d0eb7d7",
+        "support": "sha256:217c4e485ded53c6019f486a845ad13ed16233ada03cf7d91865d676fe7333d4",
+        "unknown": "sha256:a166f7c3a593e16dda83061f979be370af714b57667068e442c78558b7648195"
+      },
+      "criticalEvidenceHashes": {}
+    },
+    "patientGroup": "fixture:pair",
+    "role": "TRAIN",
+    "healthySourceEvidence": {
+      "status": "generated_numerical_control",
+      "patient_group": "fixture:pair",
+      "source_url": "https://example.invalid/generated-contract-fixture",
+      "source_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "statement": "Generated test text; never a statement about an acquired person"
+    },
+    "qualifiedBy": "generated-test",
+    "qualificationScope": "source_reported_host_research_only_not_clinical_certificate",
+    "gridShape": [
+      6,
+      5,
+      4
+    ],
+    "gridAffineRasMm": [
+      [
+        2.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        2.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        2.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "tissueMode": "UNIFORM_DIFFUSION_DOMAIN",
+    "sourceWmLayer": null,
+    "sourceGmLayer": null,
+    "mapping": {
+      "sourceAffineHash": "sha256:6d82b8a720bac06f7c5e187cb08b37d45b21b551cd29978fbce928113f8c9919",
+      "targetAffineHash": "sha256:6d82b8a720bac06f7c5e187cb08b37d45b21b551cd29978fbce928113f8c9919",
+      "targetShape": [
+        6,
+        5,
+        4
+      ],
+      "targetVoxelToSourceVoxel": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "exactGridIdentityCopy": true,
+      "brainEnvelopeInterpolation": "nearest_neighbor_order0_constant0_voxel_centers",
+      "tissueFractionInterpolation": null,
+      "sourceBrainEnvelopeHash": "sha256:1aae587f3a9381a85feff77ab05e166d28cdc67f492bfa46f43210501645e7ac",
+      "resampledBrainEnvelopeHash": "sha256:1aae587f3a9381a85feff77ab05e166d28cdc67f492bfa46f43210501645e7ac",
+      "admittedDomainHash": "sha256:1aae587f3a9381a85feff77ab05e166d28cdc67f492bfa46f43210501645e7ac",
+      "sourceTissues": {},
+      "wmFractionHash": null,
+      "gmFractionHash": null,
+      "matterThreshold": 0.1,
+      "fractionRoundoffTolerance": null,
+      "fractionValuesClippedOrRenormalized": false,
+      "mappedFractionRange": null,
+      "domainRule": "brain_envelope_only_explicit_parameter_fiction"
+    },
+    "qualificationHash": "sha256:83bdea3fc1bdebeb3a1aada6c36e3b3f4d1fef81ebf0f3e78ce656c81e5b3498"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "independent-ibsr20-prospectus-readonly-review-v1",
+  "status": "no_concrete_data_use_or_scoring_error_found",
+  "source_scope": "Supplied protocol and pinned publisher README only; no new login, archive access, rights adjudication, or payload decoding.",
+  "pins": {
+    "artifacts/ibsr20-component-prospectus-v1/20Normals.README.txt": "464b08abf07331a8882a31ad2e5cefcf1badccb74ae61b9a08292194089fbf10",
+    "artifacts/ibsr20-component-prospectus-v1/PROTOCOL.md": "7ef751677cfc7411bdccdce537f3c4f044b9db1010938827e1191008979b9292",
+    "artifacts/ibsr20-component-prospectus-v1/protocol.json": "c5250c805dffabfd75412093e0f2fdb4d783314c884ab0b33a04a1796e0298fe",
+    "artifacts/ibsr20-component-prospectus-v1/source-metadata.json": "e3839a933677c08db2af8ff15b12ce4ec45d171a2b952b0dcfcf385b1fbd4105",
+    "artifacts/ibsr20-component-prospectus-v1/validation.json": "e3a9abd08922ffb49907543cc8ed9a3f23ec8f16f4d4b13a2b55001ba3fd1911"
+  },
+  "checks": [
+    "2_4 offset6, per-record spacing and documented slice range agree with README; unknown label depth remains bounded rather than invented.",
+    "Primary scoring domain covers all represented tissue-labelled voxels, independent of predicted support; abstentions remain false negatives.",
+    "Unlabelled zero and unannotated slices are excluded, not treated as negative labels; whole-brain precision/extraction accuracy not claimed.",
+    "Fixed ascending class mapping is sealed before label access; no permutation, offset search, retry or best-case selection.",
+    "Predicted/reference volumes and errors are explicitly conditional on labelled scoring domain E; undefined denominators remain NA.",
+    "Image-only support and known-positive fitting domain precede labels; no ground-truth brain-mask input permitted.",
+    "No invented world frame; raw axis/header validation and IBSR adapter/scorer remain prerequisites.",
+    "IBSR18 public-domain statement is not imported; project noncommercial eligibility and post-login conditions remain unresolved.",
+    "No authority to acquire, fit, admit training, accept anatomy/host, or generalize to IXI is created."
+  ],
+  "limitations": [
+    "Reference agreement on one record is not independent generalization or IXI anatomical validation.",
+    "No scorer implementation exists yet; this checks prospective formulas and leakage rules, not executable scoring correctness.",
+    "External access/license statements are retained as supplied metadata evidence; no new legal conclusion or terms acceptance."
+  ],
+  "patient_arrays_opened": false,
+  "models_or_solvers_executed": false
+}

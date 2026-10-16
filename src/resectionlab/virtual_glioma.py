@@ -14,6 +14,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import asdict, dataclass
+from datetime import datetime
 import hashlib
 import json
 import math
@@ -45,6 +46,8 @@ SOURCE_FILES = {
 }
 GM_WM_FRACTIONS = "GM_WM_FRACTIONS"
 UNIFORM_DIFFUSION_DOMAIN = "UNIFORM_DIFFUSION_DOMAIN"
+TISSUE_REVIEW_SCHEMA = "resectionlab.fk-categorical-tissue-pair-review.v1"
+TISSUE_REVIEW_SCOPE = "research_categorical_GM_WM_support_for_FK"
 MAX_SHAPE = 96
 MAX_SOURCE_VOXELS = 32_000_000
 MAX_STEPS = 2048
@@ -186,11 +189,98 @@ def _resample(array, source_affine, grid_affine, shape, order):
                             output_shape=shape, order=order, mode="constant", cval=0., prefilter=False)
 
 
-def _derived_domain(case, shape, affine, mode, threshold, wm_layer, gm_layer):
+def _reviewed_tissue_pair(case, wm_layer, gm_layer, healthy_source_evidence):
+    """Admit an exact reviewed categorical pair, never a case-wide acceptance.
+
+    The named support and UNKNOWN masks partition the source brain envelope.
+    The review seals their arrays and all four layers' source/method provenance.
+    It grants neither physical partial-volume semantics nor host/clinical review.
+    Generated fixtures are exempt only when every lineage condition agrees.
+    """
+    layers = case.metadata.get("anatomy_layers", {})
+    if (not isinstance(wm_layer, str) or not isinstance(gm_layer, str) or wm_layer == gm_layer
+            or wm_layer not in case.compartments or gm_layer not in case.compartments):
+        raise ValueError("Strict mode requires two named attached source WM/GM layers")
+    generated = (case.metadata.get("is_synthetic") is True
+                 and all(ref.provenance == "simulated" for ref in case.source_refs)
+                 and isinstance(healthy_source_evidence, Mapping)
+                 and healthy_source_evidence.get("status") == "generated_numerical_control"
+                 and all(layers.get(name, {}).get("source_role") == "generated_numerical_control"
+                         for name in (wm_layer, gm_layer)))
+    if generated:
+        return None
+    if case.metadata.get("is_synthetic") is True:
+        raise ValueError("Generated tissue exemption requires exclusively simulated source and layer lineage")
+    value = case.metadata.get("fk_tissue_pair_review")
+    if not isinstance(value, Mapping) or set(value) != {"schema", "evidence", "evidence_hash", "review"}:
+        raise ValueError("Real strict tissue admission requires an explicit pair-bound tissue review")
+    record = _json(value)
+    evidence, review = record["evidence"], record["review"]
+    if (record["schema"] != TISSUE_REVIEW_SCHEMA or not isinstance(evidence, dict)
+            or not isinstance(review, dict)
+            or set(review) != {"evidence_hash", "reviewer_id", "reviewed_at", "decision", "rationale", "scope"}
+            or review["scope"] != TISSUE_REVIEW_SCOPE or review["decision"] != "accepted"):
+        raise ValueError("Tissue review schema, decision or limited research scope is invalid")
+    for key in ("reviewer_id", "rationale", "reviewed_at"):
+        if not isinstance(review[key], str) or not review[key].strip() or len(review[key]) > 4096:
+            raise ValueError("Tissue review requires a named reviewer, rationale and timestamp")
+    try:
+        reviewed_at = datetime.fromisoformat(review["reviewed_at"].replace("Z", "+00:00"))
+    except ValueError as error:
+        raise ValueError("Tissue review timestamp must be timezone-aware") from error
+    if reviewed_at.tzinfo is None or reviewed_at.utcoffset() is None:
+        raise ValueError("Tissue review timestamp must be timezone-aware")
+    support_name, unknown_name = evidence.get("classification_support_layer"), evidence.get("unknown_layer")
+    names = (wm_layer, gm_layer, support_name, unknown_name)
+    if (any(not isinstance(name, str) or name not in case.compartments for name in names)
+            or len(set(names)) != 4):
+        raise ValueError("Tissue review requires distinct attached GM, WM, classification support and UNKNOWN masks")
+    image_hash, frame_hash = array_digest(case.mri), structural_frame_hash(case)
+    source_hashes = {ref.sha256 for ref in case.source_refs if ref.sha256 is not None}
+    bound_layers = {}
+    for kind, name in zip(("white_matter", "gray_matter", "classification_support", "unknown"), names):
+        provenance = layers.get(name, {})
+        if (not isinstance(provenance, Mapping)
+                or provenance.get("source_image_hash") != image_hash
+                or provenance.get("source_frame_hash") != frame_hash
+                or provenance.get("provenance") not in {"observed", "estimated", "supplied"}
+                or any(not isinstance(provenance.get(key), str) or not provenance[key].strip()
+                       or len(provenance[key]) > 4096 for key in ("method", "source_role"))
+                or provenance.get("source_role") == "generated_numerical_control"
+                or kind in {"white_matter", "gray_matter"} and provenance.get("tissue_class") != kind):
+            raise ValueError("Reviewed tissue/support layers require matching source, frame, class and method provenance")
+        for key in ("source_sha256", "run_sha256"):
+            if _hash(provenance.get(key), "tissue " + key) not in source_hashes:
+                raise ValueError("Reviewed tissue source and method receipt must occur in attached source provenance")
+        bound_layers[kind] = {"name": name, "array_hash": array_digest(case.compartments[name]),
+                              "provenance": _json(provenance)}
+    support, unknown = (case.compartments[name] for name in (support_name, unknown_name))
+    wm, gm = case.compartments[wm_layer], case.compartments[gm_layer]
+    if (np.any(support & unknown) or not np.array_equal(support | unknown, case.brain_mask)
+            or np.any(wm & gm) or np.any((wm | gm) & ~support)):
+        raise ValueError("Reviewed tissue classes must be disjoint inside known support; support/UNKNOWN must partition the brain")
+    split = case.metadata.get("split", {})
+    patient_group = case.metadata.get("patient_group", split.get("patient_group") if isinstance(split, Mapping) else None)
+    expected = {"case_id": case.case_id, "patient_group": case.case_id if patient_group is None else patient_group,
+                "source_image_hash": image_hash, "source_frame_hash": frame_hash,
+                "source_refs_hash": semantic_digest([ref.to_dict() for ref in case.source_refs]),
+                "brain_envelope_hash": array_digest(case.brain_mask), "classification_support_layer": support_name,
+                "unknown_layer": unknown_name, "representation": "disjoint_binary_tissue_classes",
+                "physical_partial_volume_claim": False, "layers": bound_layers}
+    digest = semantic_digest(expected)
+    if evidence != expected or record["evidence_hash"] != digest or review["evidence_hash"] != digest:
+        raise ValueError("Tissue pair review is stale or belongs to different arrays, coverage, source, frame or method")
+    return record
+
+
+def _derived_domain(case, shape, affine, mode, threshold, wm_layer, gm_layer, *, healthy_source_evidence=None):
     if case.mri.size > MAX_SOURCE_VOXELS:
         raise ValueError("Host source exceeds the bounded resampling workspace budget")
     if case.frame != "RAS+" or case.brain_mask is None or not case.brain_mask.any():
         raise ValueError("Host needs an immutable source-bound RAS+ brain envelope")
+    # Missing/stale real-source review is rejected before even brain resampling.
+    tissue_review = (_reviewed_tissue_pair(case, wm_layer, gm_layer, healthy_source_evidence)
+                     if mode == GM_WM_FRACTIONS else None)
     layers = case.metadata.get("anatomy_layers", {})
     for name, mask in case.compartments.items():
         if (layers.get(name, {}).get("kind") in {"tumor", "glioma", "lesion"}
@@ -200,6 +290,7 @@ def _derived_domain(case, shape, affine, mode, threshold, wm_layer, gm_layer):
     if not brain.any():
         raise ValueError("Simulation grid contains no mapped brain support")
     source_layers = {}
+    reviewed_coverage = None
     if mode == GM_WM_FRACTIONS:
         if not isinstance(wm_layer, str) or not isinstance(gm_layer, str) or wm_layer == gm_layer:
             raise ValueError("Strict mode requires two named source WM/GM layers")
@@ -225,6 +316,17 @@ def _derived_domain(case, shape, affine, mode, threshold, wm_layer, gm_layer):
                 or np.max(wm + gm) > 1 + tolerance):
             raise ValueError("Mapped WM/GM fractions are not nonnegative bounded disjoint tissue fractions")
         domain = brain & (wm + gm >= threshold)
+        if tissue_review is not None:
+            evidence = tissue_review["evidence"]
+            known = _resample(case.compartments[evidence["classification_support_layer"]], case.affine, affine, shape, 0) > .5
+            unknown = _resample(case.compartments[evidence["unknown_layer"]], case.affine, affine, shape, 0) > .5
+            # Linear class weights may enter a cell whose nearest source label
+            # is UNKNOWN. Coverage remains categorical; interpolation cannot
+            # invent reviewed support or fill an explicit abstention.
+            domain &= known & ~unknown
+            reviewed_coverage = {"interpolation": "nearest_neighbor_order0_constant0_voxel_centers",
+                                 "classificationSupportHash": array_digest(known), "unknownHash": array_digest(unknown),
+                                 "domainRule": "brain_and_known_support_and_not_UNKNOWN_and_GM_plus_WM_at_least_threshold"}
     elif mode == UNIFORM_DIFFUSION_DOMAIN:
         if wm_layer is not None or gm_layer is not None:
             raise ValueError("Uniform diffusion must not masquerade as classified WM/GM")
@@ -249,6 +351,11 @@ def _derived_domain(case, shape, affine, mode, threshold, wm_layer, gm_layer):
                    "wm": [float(wm.min()), float(wm.max())], "gm": [float(gm.min()), float(gm.max())],
                    "sum": [float((wm + gm).min()), float((wm + gm).max())]},
                "domainRule": "brain_envelope_and_GM_plus_WM_at_least_threshold" if mode == GM_WM_FRACTIONS else "brain_envelope_only_explicit_parameter_fiction"}
+    if tissue_review is not None:
+        mapping["tissuePairReview"] = tissue_review
+        mapping["tissueInterpolationSemantics"] = "reviewed_categorical_classes_mapped_to_geometric_weights_not_physical_PVE"
+        mapping["reviewedCoverageMapping"] = reviewed_coverage
+        mapping["domainRule"] = reviewed_coverage["domainRule"]
     return domain, wm, gm, mapping
 
 
@@ -291,7 +398,8 @@ def qualify_host(case, *, patient_group, role, healthy_source_evidence, qualifie
         raise ValueError("A real host needs reviewed source-reported health evidence, not absence of a tumor mask")
     shape, affine, _ = _grid(grid_shape, grid_affine)
     threshold = _number(matter_threshold, "matter_threshold", maximum=1., positive=True)
-    _, _, _, mapping = _derived_domain(case, shape, affine, tissue_mode, threshold, source_wm_layer, source_gm_layer)
+    _, _, _, mapping = _derived_domain(case, shape, affine, tissue_mode, threshold, source_wm_layer, source_gm_layer,
+                                      healthy_source_evidence=evidence)
     record = {"schema": QUALIFICATION_SCHEMA, "sourceBinding": _source_binding(case), "patientGroup": patient_group,
               "role": role, "healthySourceEvidence": evidence, "qualifiedBy": qualified_by,
               "qualificationScope": "source_reported_host_research_only_not_clinical_certificate",
@@ -319,7 +427,8 @@ def _validate_qualification(case, qualification):
         raise ValueError("Host source identity, grid, domain or tissue provenance differs from qualification")
     shape, affine, spacing = _grid(qualification["gridShape"], qualification["gridAffineRasMm"])
     domain, wm, gm, mapping = _derived_domain(case, shape, affine, qualification["tissueMode"],
-        qualification["mapping"]["matterThreshold"], qualification["sourceWmLayer"], qualification["sourceGmLayer"])
+        qualification["mapping"]["matterThreshold"], qualification["sourceWmLayer"], qualification["sourceGmLayer"],
+        healthy_source_evidence=qualification["healthySourceEvidence"])
     return shape, affine, spacing, domain, wm, gm, mapping
 
 
@@ -551,7 +660,9 @@ def simulate_virtual_glioma(case, qualification, params, *, source_cache=DEFAULT
                 "limitations": ["geometry_only_no_mass_effect_or_host_deformation", "no_edema_necrosis_or_enhancement_labels",
                     "no_vascular_avoidance_perfusion_or_functional_risk", "uncalibrated_growth_parameters_not_patient_forecast",
                     "source_hazards_and_private_annotations_preserved_unchanged",
-                    *( ["uniform_parameter_fiction_no_GM_WM_classification_or_CSF_barriers"] if qualification["tissueMode"] == UNIFORM_DIFFUSION_DOMAIN else ["source_estimated_tissue_fractions_not_histology"])]}
+                    *( ["uniform_parameter_fiction_no_GM_WM_classification_or_CSF_barriers"] if qualification["tissueMode"] == UNIFORM_DIFFUSION_DOMAIN
+                       else ["reviewed_categorical_tissue_interpolation_weights_not_physical_PVE_or_histology"] if "tissuePairReview" in mapping
+                       else ["source_estimated_tissue_fractions_not_histology"])]}
     # A deterministic artifact identity omits measured performance metadata.
     manifest["simulationId"] = semantic_digest({key: value for key, value in manifest.items() if key != "resources"})
     return VirtualGliomaResult(final, initial, masks, manifest)
