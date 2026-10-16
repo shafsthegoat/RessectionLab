@@ -94,6 +94,10 @@ checkpoint overlap. It also independently explains the first Atropos protocol's
 pre-fit rejection at eight zero-intensity cells. The separate positive-domain
 protocol passes independent prospective checks with those cells UNKNOWN and
 sources unchanged; no real v2 result is implied by that review.
+The [subsequent actual v2 attempt](../artifacts/poc-ixi265-atropos-positive-domain-run-v2/RESULT.md)
+passes the support guard but fails at native N4 entry. Independent failure
+checking confirms no tissue candidate and unchanged sources; native compatibility
+must be resolved before another patient attempt.
 
 ## Accuracy and publication gate
 

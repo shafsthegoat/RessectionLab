@@ -1,0 +1,180 @@
+{
+  "schema": "ixi265-positive-domain-independent-result-audit-v2",
+  "status": "failed_attempt_retained_no_candidate_acceptance",
+  "created_utc": "2026-10-16T07:49:45.357780+00:00",
+  "result": {
+    "status": "failed_attempt_retained_no_candidate_acceptance",
+    "sealed_outcome_sha256": "dce67f0acde21aa11fa99bdaa270108c8b53b5a091514182870e69e01fa78e21",
+    "failure": "worker_failed_see_retained_log",
+    "support_and_native_frame_guards_passed": true,
+    "guard_evidence": "Inference from pinned worker control flow: support construction and inherited input/native-frame guards precede the observed native N4 entry banner.",
+    "N4_entered": true,
+    "N4_completions": 0,
+    "Atropos_entered": false,
+    "Atropos_completions": 0,
+    "phase_evidence": "Retained log ends at N4 entry, then the native worker exits SIGSEGV. Sealed outcome records no completed N4 and no Atropos entry; no saved candidate, classes or posteriors exist.",
+    "worker_exit_code": -11,
+    "candidate_exists": false,
+    "source_arrays_decoded": false,
+    "posteriors_claimed": false,
+    "crash_report_sha256": "f35429445d3dbf177cc849c604d9fad0e54403c1f8563fc1aa9d3f348ec7d8e4",
+    "worker_pid": 21276,
+    "supervisor_pid": 21273,
+    "exception": {
+      "type": "EXC_BAD_ACCESS",
+      "signal": "SIGSEGV"
+    },
+    "faulting_top_symbol": "_platform_memmove",
+    "matching_ANTs_native_frames": 6,
+    "installed_MachO_UUID_independently_read": "e52ccef8-46ab-3b61-9cea-c3218f5a31a8",
+    "installed_binary_hash_retained_metadata": "93f4e1418216de4f2f7b44be9f2926354a7c4bb098593904b95bb8db94f68021",
+    "installed_binary_header_bytes_read": 1992,
+    "native_library_import_or_execution": false,
+    "new_native_binary_hash_sweep": false,
+    "no_supervisor_resource_limit_fired": true,
+    "actual_attempt_resource_receipt": {
+      "elapsed_seconds": 7.677682624896988,
+      "peak_process_family_rss_bytes_sampled": 493420544,
+      "minimum_available_memory_bytes_sampled": 7271006208,
+      "output_and_temporary_bytes": 140355,
+      "exit_code": -11
+    },
+    "prospective_45_checks_remain_valid_only_for_generated_contracts": true,
+    "native_compatibility_not_proven_by_generated_contract_checks": true,
+    "failure_cause": "Native memory-access failure established. Exact adapter/runtime cause remains unresolved by this crash evidence alone; any separate generated mask-dtype probe must be evaluated independently."
+  },
+  "sources_unchanged": {
+    "T1": {
+      "path": "outputs/poc-ixi265/originals/IXI265-T1.nii.gz",
+      "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "bytes": 6980629,
+      "mtime_ns": 1792130312941604756
+    },
+    "brain_mask": {
+      "path": "outputs/poc-ixi265/synthstrip/brain_mask.nii.gz",
+      "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+      "bytes": 129560,
+      "mtime_ns": 1792131019547993465
+    },
+    "host_bundle": {
+      "path": "outputs/poc-ixi265/IXI265-Guys-0845.ressectionlab",
+      "sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+      "bytes": 57052870,
+      "mtime_ns": 1792131126176165021
+    }
+  },
+  "host_bundle_hashed_only": true,
+  "frozen_prior_evidence_unchanged": {
+    "scripts/poc_ixi265_atropos_positive_domain.py": {
+      "sha256": "0652eca1ba81304e053f24c9a9fc2f8c89174bfe7447accfd21105263592d81d",
+      "bytes": 17483,
+      "mtime_ns": 1792136159778650722
+    },
+    "scripts/poc_ixi265_atropos.py": {
+      "sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b",
+      "bytes": 22254,
+      "mtime_ns": 1792135066085133764
+    },
+    "artifacts/ixi265-positive-domain-independent-v2/prospective-qa.json": {
+      "sha256": "894af5ba11bb92ed6f1cc6f41ea93d5d6e6b4d49053f9cd04987dc875744a3bc",
+      "bytes": 6210,
+      "mtime_ns": 1792136459158191412
+    },
+    "artifacts/ixi265-quality-independent-v1/independent-qa.json": {
+      "sha256": "7a51ca88a898b11eb7fc132180d5f77da4a0bffaf49ceb6e5b8eb229d6d162a6",
+      "bytes": 27128,
+      "mtime_ns": 1792135910610588988
+    },
+    "artifacts/poc-ixi265-atropos-run-v1/outcome.json": {
+      "sha256": "55f4dd46f7cc692d4a66799cefca21bfa37430d3f5cf2ebe3eda675b6e4c989e",
+      "bytes": 3333,
+      "mtime_ns": 1792135445417421534
+    },
+    "artifacts/poc-ixi265-atropos-positive-domain-preparation-v2/preparation.json": {
+      "sha256": "2c1d39e4a318598385dfe331de08e1f6de3e2dba5850a8b0acd8978045376c3d",
+      "bytes": 10705,
+      "mtime_ns": 1792136213105723894
+    },
+    "artifacts/poc-ixi265-atropos-preparation-v1/installed-runtime-audit.json": {
+      "sha256": "8dc074db35e17be3b10f05e68e19ff61cdd44a6d1e0e744bbfc25e1da9073e79",
+      "bytes": 6026,
+      "mtime_ns": 1792135066057559785
+    }
+  },
+  "new_attempt_metadata_unchanged": {
+    "attempt.json": {
+      "sha256": "36204a082ecedc2fb2ad3744496d3328d58e50b5bfad1d196f7bf53cc0062ae9",
+      "bytes": 4225,
+      "mtime_ns": 1792136563894897126
+    },
+    "declaration.json": {
+      "sha256": "e0348db341dfcea09749366052dbb9668c1b513f0ce018c8a640c8a670891f64",
+      "bytes": 9933,
+      "mtime_ns": 1792136556216406509
+    },
+    "worker-input.json": {
+      "sha256": "ab7fb676db5d61013d39e531b76e26b90b0b072fa4ae4e98b335e894c9f8c5c5",
+      "bytes": 1255,
+      "mtime_ns": 1792136556216527882
+    },
+    "worker.log": {
+      "sha256": "11833c96b512d60113636f2ba033d3528db5cf380c5ae8b544d8b48e8eb74930",
+      "bytes": 102,
+      "mtime_ns": 1792136563752675880
+    }
+  },
+  "single_attempt_markers": {
+    "v1_marker_sha256": "000c813b68f7d96d78b22de068db50e4890cc45d5e07877a3be57256d82ae870",
+    "v2_marker_sha256": "a273d34ce4f9e6919cadae94f99036efa738a1c851d5b961fa49ec9104a39c9b"
+  },
+  "generated_controls": {
+    "valid_generated_partition_and_probabilities": true,
+    "six_corruption_controls_refused": 6,
+    "real_images_read": false,
+    "production_validation_helpers_called": false
+  },
+  "historical_v1": {
+    "started": 1,
+    "N4_completions": 0,
+    "Atropos_completions": 0,
+    "accepted_tissues": 0
+  },
+  "v2": {
+    "started": 1,
+    "completed_numerical_candidates": 0,
+    "accepted_tissues": 0,
+    "automatic_retries": 0
+  },
+  "combined_real_protocol_denominator": {
+    "attempts_started": 2,
+    "successful_candidates": 0,
+    "accepted_tissues": 0,
+    "automatic_retries": 0
+  },
+  "source_fix_clipping_normalization_or_mask_replacement": false,
+  "model_or_solver_import_or_execution": false,
+  "elapsed_seconds": 0.0445550000295043,
+  "own_process_peak_rss_bytes": 37961728,
+  "memory_samples": [
+    {
+      "phase": "before_source_decode",
+      "rss_bytes": 37699584,
+      "available_bytes": 7838760960
+    },
+    {
+      "phase": "finished",
+      "rss_bytes": 37945344,
+      "available_bytes": 7839006720
+    }
+  ],
+  "auditor_sha256": "3d5f594ee7a54f794b15be4f69ecd9257faeadfff2486f39d620d49a9af8eec3",
+  "release_pins_sha256": "1f551ef42e62f075437b72293fc879ad411b93cd4f7382cfe11f4b500c4cc4e2",
+  "limitations": [
+    "This verifies saved numerical consistency, not anatomical correctness or biophysical validity.",
+    "Intensity-ordered hard-class labels are unreviewed assumptions; posterior memberships are not physical partial-volume fractions.",
+    "Unknown cells remain abstained and CSF-like intensity does not identify ventricles.",
+    "No tissue-conditioned growth, host upgrade, training admission or clinical accuracy is accepted.",
+    "The frozen API/native-binary and runtime metadata are compared without reimporting ANTs; no numerical fitter is rerun.",
+    "The production RSS cap is sampled; between-sample peaks are not established."
+  ]
+}

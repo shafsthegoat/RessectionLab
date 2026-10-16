@@ -59,3 +59,8 @@ excluded cells as UNKNOWN/ABSTAINED. That changes fitting support explicitly;
 it cannot erase this failed attempt. Any later class posteriors remain fitted
 membership probabilities, not physical tissue-volume fractions. Numerical
 success alone will not accept anatomy or release tissue-conditioned growth.
+
+The [later separately released v2 attempt](../poc-ixi265-atropos-positive-domain-run-v2/RESULT.md)
+passes this declared support check but crashes at native N4 entry. Its failure
+and separate independent audit are retained without changing this frozen v1
+diagnostic or the original scan/mask.

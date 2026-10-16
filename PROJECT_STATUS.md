@@ -65,9 +65,13 @@ prevent an independent accuracy claim. The first N4/Atropos attempt stopped
 before fitting because of eight zero-intensity cells inside the unchanged brain
 mask; that failure remains recorded. A separately frozen positive-domain
 protocol preserves those cells as UNKNOWN. Its independent prospective review
-passes45 generated/metadata checks before any actual v2 attempt. Class
-probabilities are not physical tissue fractions; no host or growth acceptance
-follows from this preparation.
+passes45 generated/metadata checks. The later
+[one actual v2 attempt](artifacts/poc-ixi265-atropos-positive-domain-run-v2/RESULT.md)
+passes the support guard but crashes at native N4 entry before any tissue result;
+no resource limit fires. Independent failure checking verifies unchanged sources
+and zero successful/accepted results across both N4/Atropos protocols. A
+generated-only mask-type diagnostic is separate. Class probabilities are not
+physical tissue fractions; no host or growth acceptance follows.
 
 **Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
 The [current gate ledger](docs/poc-first-gate-ledger.md) and

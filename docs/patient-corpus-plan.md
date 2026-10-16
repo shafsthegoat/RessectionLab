@@ -288,7 +288,10 @@ The [later independent quality checks](../artifacts/ixi265-quality-independent-v
 retain a first N4/Atropos rejection before fitting: eight zero-intensity cells
 within the original estimated brain mask. A separate positive-intensity fitting
 support declares those exact cells UNKNOWN and preserves the source mask,
-intensities and native grid. Prospective review passes without any real v2 fit.
+intensities and native grid. Prospective review passes; the subsequent single v2
+attempt passes those guards but crashes at native N4 entry, with no completed
+fitting or candidate. That failure and unchanged source bytes are independently
+verified and retained before any generated-image compatibility diagnostic.
 Any resulting class posteriors are fitted membership probabilities, not physical
 partial-volume tissue fractions, and cannot automatically enter the GM/WM solver
 contract. A successful fit still requires anatomical and host review.

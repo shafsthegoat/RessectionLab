@@ -1,0 +1,96 @@
+{
+  "path": "/Users/sayemkamal/Library/Logs/DiagnosticReports/python3.12-2026-10-16-034247.ips",
+  "sha256": "f35429445d3dbf177cc849c604d9fad0e54403c1f8563fc1aa9d3f348ec7d8e4",
+  "worker_pid": 21276,
+  "supervisor_pid": 21273,
+  "launch": "2026-10-16 03:42:36.2171 -0400",
+  "capture": "2026-10-16 03:42:43.8319 -0400",
+  "exception": {
+    "codes": "0x0000000000000001, 0x000000049e980000",
+    "rawCodes": [
+      1,
+      19840630784
+    ],
+    "type": "EXC_BAD_ACCESS",
+    "signal": "SIGSEGV",
+    "subtype": "KERN_INVALID_ADDRESS at 0x000000049e980000"
+  },
+  "termination": {
+    "flags": 0,
+    "code": 11,
+    "namespace": "SIGNAL",
+    "indicator": "Segmentation fault: 11",
+    "byProc": "exc handler",
+    "byPid": 21276
+  },
+  "faulting_thread": 1,
+  "faulting_frames": [
+    {
+      "symbol": "_platform_memmove",
+      "symbolLocation": 52,
+      "imageOffset": 13204,
+      "image": "libsystem_platform.dylib",
+      "image_uuid": "4c6bd0fe-25f2-38d8-be5c-24dac1dedcfb"
+    },
+    {
+      "symbol": null,
+      "symbolLocation": null,
+      "imageOffset": 6979676,
+      "image": "lib.cpython-312-darwin.so",
+      "image_uuid": "e52ccef8-46ab-3b61-9cea-c3218f5a31a8"
+    },
+    {
+      "symbol": null,
+      "symbolLocation": null,
+      "imageOffset": 654468,
+      "image": "lib.cpython-312-darwin.so",
+      "image_uuid": "e52ccef8-46ab-3b61-9cea-c3218f5a31a8"
+    },
+    {
+      "symbol": null,
+      "symbolLocation": null,
+      "imageOffset": 19162200,
+      "image": "lib.cpython-312-darwin.so",
+      "image_uuid": "e52ccef8-46ab-3b61-9cea-c3218f5a31a8"
+    },
+    {
+      "symbol": null,
+      "symbolLocation": null,
+      "imageOffset": 19159564,
+      "image": "lib.cpython-312-darwin.so",
+      "image_uuid": "e52ccef8-46ab-3b61-9cea-c3218f5a31a8"
+    },
+    {
+      "symbol": null,
+      "symbolLocation": null,
+      "imageOffset": 19165076,
+      "image": "lib.cpython-312-darwin.so",
+      "image_uuid": "e52ccef8-46ab-3b61-9cea-c3218f5a31a8"
+    },
+    {
+      "symbol": null,
+      "symbolLocation": null,
+      "imageOffset": 19167500,
+      "image": "lib.cpython-312-darwin.so",
+      "image_uuid": "e52ccef8-46ab-3b61-9cea-c3218f5a31a8"
+    },
+    {
+      "symbol": "_pthread_start",
+      "symbolLocation": 136,
+      "imageOffset": 27736,
+      "image": "libsystem_pthread.dylib",
+      "image_uuid": "12342372-0084-37a5-9ea6-2e4dc940c685"
+    },
+    {
+      "symbol": "thread_start",
+      "symbolLocation": 8,
+      "imageOffset": 7196,
+      "image": "libsystem_pthread.dylib",
+      "image_uuid": "12342372-0084-37a5-9ea6-2e4dc940c685"
+    }
+  ],
+  "matching_basis": "Exact launch/capture interval and exact installed ANTs Mach-O UUID in faulting frames; PIDs recovered from report",
+  "ANTs_binary_uuid": "e52ccef8-46ab-3b61-9cea-c3218f5a31a8",
+  "ANTs_binary_sha256": "93f4e1418216de4f2f7b44be9f2926354a7c4bb098593904b95bb8db94f68021",
+  "limitation": "Mostly unsymbolicated native frames do not establish the root cause."
+}

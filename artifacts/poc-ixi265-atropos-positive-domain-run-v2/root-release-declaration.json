@@ -1,0 +1,233 @@
+{
+  "schema": "resectionlab-ixi265-positive-domain-v2-root-release",
+  "created_utc": "2026-10-16T07:42:36.096548+00:00",
+  "release": "Root explicitly released exactly one actual positive-domain v2 N4/Atropos attempt after independent prospective QA passed45 checks",
+  "status": "declared_before_source_decode",
+  "committed_source_revision": "66998e3",
+  "attempts_authorized": 1,
+  "automatic_retry_or_tuning": false,
+  "source_records": [
+    {
+      "role": "T1",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-T1.nii.gz",
+      "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "bytes": 6980629
+    },
+    {
+      "role": "brain_mask",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/synthstrip/brain_mask.nii.gz",
+      "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+      "bytes": 129560
+    },
+    {
+      "role": "host_bundle",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/IXI265-Guys-0845.ressectionlab",
+      "sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+      "bytes": 57052870
+    }
+  ],
+  "frozen_records": [
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_atropos_positive_domain.py",
+      "sha256": "0652eca1ba81304e053f24c9a9fc2f8c89174bfe7447accfd21105263592d81d",
+      "bytes": 17483
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-atropos-positive-domain-preparation-v2/preparation.json",
+      "sha256": "2c1d39e4a318598385dfe331de08e1f6de3e2dba5850a8b0acd8978045376c3d",
+      "bytes": 10705
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-atropos-positive-domain-preparation-v2/prospective-method.json",
+      "sha256": "8088bf796d95f78dbd399b38eb4ea7758a1d780a519e537e45a948928c49641d",
+      "bytes": 3728
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-atropos-positive-domain-preparation-v2/diagnostic-lineage.json",
+      "sha256": "29ed23dd49ddd1035314d70697bd3a11be0fe3798dc5ed87e34765fd7b22745c",
+      "bytes": 2393
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-atropos-positive-domain-preparation-v2/prospective-run-spec.json",
+      "sha256": "3f615e3e434a5eac79b8ff98c36dc330deacc81b78a54f362e61b83ee1f16015",
+      "bytes": 1255
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/ixi265-positive-domain-independent-v2/prospective-qa.json",
+      "sha256": "894af5ba11bb92ed6f1cc6f41ea93d5d6e6b4d49053f9cd04987dc875744a3bc",
+      "bytes": 6210
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_atropos.py",
+      "sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b",
+      "bytes": 22254
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-ixi265-atropos-preparation-v1/installed-runtime-audit.json",
+      "sha256": "8dc074db35e17be3b10f05e68e19ff61cdd44a6d1e0e744bbfc25e1da9073e79",
+      "bytes": 6026
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.tools/poc-antspyx-0.6.3-py312-v1/runtime/pyvenv.cfg",
+      "sha256": "d5f4673e351ed1e0848a494fc17516f3d2d13740a17ce96a1cf161ecf82bb766",
+      "bytes": 509
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.tools/poc-antspyx-0.6.3-py312-v1/runtime/bin/python",
+      "sha256": "39bf33dd80ffd5e8c087cbd52164cbe0d8485f73b44687d0d466b0f49e197129",
+      "bytes": 18058560
+    }
+  ],
+  "candidate_method": {
+    "schema": "resectionlab-ixi265-atropos-positive-domain-candidate-v2",
+    "status": "prepared_fit_unreleased",
+    "patient_group": "IXI:265",
+    "role": "TRAIN",
+    "training_admitted": false,
+    "source_hashes": {
+      "T1": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "brain_mask": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+      "host_bundle": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1"
+    },
+    "package": {
+      "name": "antspyx",
+      "version": "0.6.3",
+      "wheel_sha256": "e378329089f622c72eacc47e4e2c18503d0f3fbf2cc39ccb9df65880c0a7846f"
+    },
+    "parameters": {
+      "N4": {
+        "shrink_factor": 4,
+        "convergence": {
+          "iters": [
+            30,
+            20,
+            10
+          ],
+          "tol": 1e-07
+        },
+        "spline_param": 150,
+        "rescale_intensities": false,
+        "return_bias_field": false,
+        "verbose": true
+      },
+      "Atropos": {
+        "i": "KMeans[3]",
+        "m": "[0.1,1x1x1]",
+        "c": "[10,0]",
+        "priorweight": 0.0,
+        "r": 0,
+        "v": 1
+      },
+      "grid": "full_native_grid_no_resampling_no_crop",
+      "priors": null,
+      "intensity_clipping_or_normalization": null,
+      "Atropos_random_seed_option": "r=0 (fixed upstream seed)"
+    },
+    "resources": {
+      "threads": 2,
+      "rss_limit_bytes": 3221225472,
+      "minimum_available_bytes": 1073741824,
+      "timeout_seconds": 600.0,
+      "output_limit_bytes": 536870912,
+      "free_disk_floor_bytes": 53687091200,
+      "sample_interval_seconds": 0.2,
+      "max_voxels": 12000000,
+      "attempts": 1
+    },
+    "frame_tolerance_mm": 0.0001,
+    "hard_class_assumptions": {
+      "1": "csf_like_intensity_estimated",
+      "2": "gray_matter_like_intensity_estimated",
+      "3": "white_matter_like_intensity_estimated"
+    },
+    "posterior_semantics": "unmodified_fitted_class_membership_probabilities",
+    "anatomy_accepted": false,
+    "host_accepted": false,
+    "growth_use_accepted": false,
+    "limitations": [
+      "within_image_finite_mixture_fitting_not_pretrained_inference",
+      "ordered_T1_intensity_to_CSF_GM_WM_is_an_unreviewed_assumption",
+      "posterior_probabilities_are_not_physical_partial_volume_fractions",
+      "CSF_like_class_does_not_identify_ventricles",
+      "no_anatomical_acceptance_host_upgrade_or_automatic_growth_use",
+      "two_thread_floating_point_execution_not_claimed_bitwise_reproducible",
+      "eight_missing_intensity_cells_are_unknown_not_tissue_predictions",
+      "positive_intensity_domain_is_a_declared_fitting_support_not_a_corrected_brain_segmentation"
+    ],
+    "protocol": "positive_intensity_fitting_domain_with_explicit_missing_intensity_abstention",
+    "fitting_domain": "unchanged_original_brain_mask AND unchanged_acquired_T1 > 0",
+    "expected_unknown_indices_native": [
+      [
+        60,
+        125,
+        75
+      ],
+      [
+        67,
+        135,
+        49
+      ],
+      [
+        69,
+        131,
+        40
+      ],
+      [
+        89,
+        120,
+        83
+      ],
+      [
+        107,
+        123,
+        65
+      ],
+      [
+        127,
+        219,
+        68
+      ],
+      [
+        128,
+        115,
+        125
+      ],
+      [
+        185,
+        127,
+        119
+      ]
+    ],
+    "expected_original_shape": [
+      256,
+      256,
+      150
+    ],
+    "expected_original_brain_voxels": 1451509,
+    "expected_fit_domain_voxels": 1451501,
+    "excluded_cell_semantics": "UNKNOWN_ABSTAINED_missing_intensity_not_CSF_not_anatomy_correction",
+    "brain_mask_replaced": false,
+    "intensity_offset_or_clipping": false,
+    "source_crop": false,
+    "domain_maps_retained_separately": [
+      "fit_domain_native",
+      "excluded_unknown_native"
+    ],
+    "v1_source_sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b",
+    "single_attempt_marker": "ixi265-n4-atropos-positive-domain-v2-attempt.json"
+  },
+  "runtime_native_binary_hashes_verified": [
+    {
+      "path": "ants/.dylibs/libpng16.16.dylib",
+      "sha256": "8064d5b03346634041aa98bae6becf6d1dc59e7259cf36057bc0b544d30adf6e"
+    },
+    {
+      "path": "ants/lib.cpython-312-darwin.so",
+      "sha256": "93f4e1418216de4f2f7b44be9f2926354a7c4bb098593904b95bb8db94f68021"
+    }
+  ],
+  "v1_marker_sha256_before": "000c813b68f7d96d78b22de068db50e4890cc45d5e07877a3be57256d82ae870",
+  "source_image_or_mask_decoded_at_declaration": false,
+  "host_anatomy_growth_acceptance": false,
+  "output": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-positive-domain-v2"
+}
