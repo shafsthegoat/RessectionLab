@@ -384,7 +384,7 @@ def replay_state(envelope,supplied=None):
 
 
 def save_workspace(primary,path,*,sources,imaging,episode,selection,artifacts,originals=()):
-    from .imaging import save_case
+    from .imaging import MAX_MANIFEST_BYTES, save_case
     sources=list(sources)
     originals=list(originals)
     if (len(originals)>128 or any(not isinstance(item,OriginalFile) for item in originals) or
@@ -410,8 +410,10 @@ def save_workspace(primary,path,*,sources,imaging,episode,selection,artifacts,or
         if len(raw)>MAX_JSON:raise ValueError('Workspace metadata exceeds limit')
         with ZipFile(base) as plain:
             manifest=_json(plain.read('manifest.json'));manifest['workspace_sha256']=sha256(raw).hexdigest()
+            encoded_manifest=encoded(manifest)
+            if len(encoded_manifest)>MAX_MANIFEST_BYTES:raise ValueError('Primary manifest exceeds limit')
             with ZipFile(tmp/'complete','w',compression=ZIP_STORED) as out:
-                out.writestr('manifest.json',encoded(manifest));out.writestr('arrays.npz',plain.read('arrays.npz'))
+                out.writestr('manifest.json',encoded_manifest);out.writestr('arrays.npz',plain.read('arrays.npz'))
                 out.writestr('workspace.json',raw)
                 for name,data in auxiliary:out.writestr(name,data)
                 for index,item in enumerate(originals):out.writestr(item.manifest(index)['member'],item.data)
