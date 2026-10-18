@@ -48,6 +48,7 @@ export interface ViewerRoute {
 }
 
 export interface ViewerWorkspaceProps {
+  surgicalInteraction?: import("../surgical-types").SurgicalInteraction;
   onSliceStroke?: (point: Point3 | null, phase: 'start' | 'move' | 'end') => void;
   workspaceSettings?: import('./workspaceSettings').ViewerWorkspaceSettings;
   onWorkspaceSettingsChange?: (settings: import('./workspaceSettings').ViewerWorkspaceSettings) => void;

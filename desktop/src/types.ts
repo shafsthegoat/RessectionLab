@@ -458,6 +458,9 @@ export interface ObservedLandmarkResult {
 export type CaseLibraryFolder = {folder:string|null;error?:string};
 
 export interface ResectionApi extends TrainingApi {
+  importSurgicalScene?(args:{frame:string;units:string;material:string;resolution:number;topology:string;thicknessMm?:number}):Promise<CasePayload|null>;
+  surgicalRehearsal?: import("./surgical-types").SurgicalApi["surgicalRehearsal"];
+  createSurgicalFixture?: import("./surgical-types").SurgicalApi["createSurgicalFixture"];
   createRehearsal?: import("./rehearsal-types").RehearsalApi["createRehearsal"];
   inspectRehearsal?: import("./rehearsal-types").RehearsalApi["inspectRehearsal"];
   stepRehearsal?: import("./rehearsal-types").RehearsalApi["stepRehearsal"];

@@ -1,3 +1,6 @@
+import {TransformControls} from "three/addons/controls/TransformControls.js";
+import {surgicalToolMesh,surgicalEffectGroup} from "./surgicalGeometry";
+import type {SurgicalInteraction} from "../surgical-types";
 import {InteractionSession, InteractionBudget} from './interactionBudget';
 import {SliceFrameCache} from './sliceFrameCache';
 import {scanFitPoints} from './scanCameraFit';
@@ -789,6 +792,36 @@ export class VolumeRenderer {
     return {position:this.camera.position.toArray() as Point3,target:this.controls.target.toArray() as Point3,up:this.camera.up.toArray() as Point3};
   }
 
+  private surgicalGroup: THREE.Group | null = null;
+  private surgicalGhost: THREE.Group | null = null;
+  private surgicalGizmo: TransformControls | null = null;
+  private surgicalInteraction: SurgicalInteraction | null = null;
+  setSurgical(interaction: SurgicalInteraction | null): void {
+    this.surgicalInteraction=interaction;
+    if(!this.surgicalGroup){this.surgicalGroup=new THREE.Group();this.scene.add(this.surgicalGroup);}
+    disposeObject(this.surgicalGroup);this.surgicalGroup.clear();
+    if(!interaction?.view){this.surgicalGizmo?.detach();if(this.surgicalGhost)this.surgicalGhost.visible=false;this.controls.enabled=true;this.requestRender();return;}
+    const {pose,path,selectedSlot,mode}=interaction;const view=interaction.preview??interaction.view;
+    this.surgicalGroup.add(surgicalEffectGroup(view,!!interaction.preview,interaction.outcome));
+    for(const slot of Object.values(view.slots)){const tool=view.catalog.find(t=>t.id===slot.instrument);if(tool)this.surgicalGroup.add(surgicalToolMesh(tool,slot));}
+    if(!this.surgicalGhost){
+      this.surgicalGhost=new THREE.Group();this.scene.add(this.surgicalGhost);
+      this.surgicalGizmo=new TransformControls(this.camera,this.panes.anatomy);
+      this.scene.add(this.surgicalGizmo.getHelper());
+      this.surgicalGizmo.addEventListener('dragging-changed',event=>{this.controls.enabled=!event.value;});
+      this.surgicalGizmo.addEventListener('objectChange',()=>{if(this.surgicalGhost&&this.surgicalInteraction){this.surgicalInteraction.onPose({position:this.surgicalGhost.position.toArray(),quaternion:this.surgicalGhost.quaternion.toArray()});this.requestRender();}});
+    }
+    this.surgicalGhost.visible=true;
+    this.surgicalGhost.position.set(...pose.position);this.surgicalGhost.quaternion.set(...pose.quaternion);
+    disposeObject(this.surgicalGhost);this.surgicalGhost.clear();
+    const selected=view.slots[selectedSlot],tool=view.catalog.find(t=>t.id===selected.instrument);
+    if(tool){const ghost=surgicalToolMesh(tool,{...selected,parameters:{...selected.parameters,...interaction.parameters},position:[0,0,0],quaternion:[0,0,0,1]},true);this.surgicalGhost.add(ghost);}
+    if(mode==='translate'||mode==='rotate'){this.surgicalGizmo!.attach(this.surgicalGhost);this.surgicalGizmo!.setMode(mode);}else this.surgicalGizmo!.detach();
+    this.controls.enabled=mode!=='draw';
+    if(path.length>1){const geometry=new THREE.BufferGeometry().setFromPoints(path.map(p=>new THREE.Vector3(...p.position)));this.surgicalGroup.add(new THREE.Line(geometry,new THREE.LineBasicMaterial({color:'#8cffe0'})));}
+    this.requestRender();
+  }
+
   setNavigationMode(mode: 'orbit'|'pan'): void {
     this.controls.mouseButtons.LEFT=mode==='pan' ? THREE.MOUSE.PAN : THREE.MOUSE.ROTATE;
     this.controls.touches.ONE=mode==='pan' ? THREE.TOUCH.PAN : THREE.TOUCH.ROTATE;
@@ -1514,6 +1547,9 @@ export class VolumeRenderer {
   }
 
   dispose(): void {
+    this.surgicalGizmo?.dispose();
+    if(this.surgicalGroup)disposeObject(this.surgicalGroup);
+    if(this.surgicalGhost)disposeObject(this.surgicalGhost);
     if (this.disposed) return;
     this.disposed = true;
     cancelAnimationFrame(this.frame);

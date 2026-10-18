@@ -132,6 +132,13 @@ function bindOperations() {
     return engine.request('anatomyExport',{...plainArgs(args,['collectionId','snapshotId']),path:selected.filePaths[0]},300000);
   });
   handle('ping', () => engine.request('ping'));
+  handle('createSurgicalFixture', () => engine.request('createSurgicalFixture', {}));
+  handle('importSurgicalScene', async args => {
+    args=plainArgs(args,['frame','units','material','resolution','topology','thicknessMm']);
+    const filename=await pick('Import segmented geometry', ['nii','gz','obj','stl']);
+    return filename ? engine.request('importSurgicalScene', {...args,path:filename}, 120000) : null;
+  });
+  handle('surgicalRehearsal', args => engine.request('surgicalRehearsal', plainArgs(args, ['caseHash','command','expectedStateId','action','mapping','position','branchId','source']), 120000));
   for (const op of ['createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal']) {
     handle(op, args => engine.request(op, plainArgs(args, op === 'stepRehearsal'
       ? ['caseHash','expectedStateId','action'] : op === 'compareRehearsal'

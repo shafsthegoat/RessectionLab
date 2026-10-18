@@ -1,3 +1,5 @@
+import {useSurgical} from "./use-surgical";
+import {SurgicalPanel} from "./SurgicalPanel";
 import {useRehearsal} from "./use-rehearsal";
 import {RehearsalPanel} from "./RehearsalPanel";
 import type {RehearsalApi} from "./rehearsal-types";
@@ -680,6 +682,10 @@ export default function App() {
     registration:{status:"source-provided" as const,overlayPermitted:true as const,sourceToReferenceRasMm:fusionSeries.descriptor.registration.sourceToReferenceRasMm},
     volume:fusionSeries.volume,label:fusionSeries.descriptor.modality,
   }:null,[fusionSeries,payload]);
+  const surgicalApi = useMemo(()=>api?.surgicalRehearsal ? {
+    surgicalRehearsal:(input:import('./surgical-types').SurgicalRequest)=>api.surgicalRehearsal!({...input,...(native.binding?{source:{collectionId:native.binding.collectionId,snapshotId:native.binding.document.snapshot_id,seriesId:native.series}}:{})}),
+  }:null,[api,native.binding?.collectionId,native.binding?.document.snapshot_id,native.series]);
+  const surgical = useSurgical(displayedCase, surgicalApi, workbenchTab === "rehearsal");
   const rehearsal = useRehearsal(!native.binding && !imaging.selected ? viewerCase : null,
     api?.createRehearsal && !api.readOnly ? api as RehearsalApi : null);
   useEffect(()=>{
@@ -1460,7 +1466,7 @@ export default function App() {
       </nav>
 
       <aside className="case-panel" id="case-evidence-panel">
-        {workbenchTab==='rehearsal'?<><div className="panel-heading"><span className="eyebrow">SURGICAL RESEARCH</span><button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div><RehearsalPanel controller={rehearsal} unavailableReason={rehearsalUnavailable}/></>:native.binding&&workbenchTab!=='cases'?<>
+        {workbenchTab==='rehearsal'?<><div className="panel-heading"><span className="eyebrow">SURGICAL RESEARCH</span><button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div><SurgicalPanel c={surgical} onImport={async options=>{if(api?.importSurgicalScene){const imported=await api.importSurgicalScene(options);if(imported){native.clear();await installCase(imported,api);setWorkbenchTab("rehearsal")}}}} available={!!displayedCase} onFixture={()=>void act(async()=>{if(api?.createSurgicalFixture){native.clear();await installCase(await api.createSurgicalFixture(),api);setWorkbenchTab("rehearsal")}})}/><details><summary>Legacy bounded rehearsal</summary><RehearsalPanel controller={rehearsal} unavailableReason={rehearsalUnavailable}/></details></>:native.binding&&workbenchTab!=='cases'?<>
           <div className="panel-heading"><span className="eyebrow">PATIENT WORKSPACE</span><button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div>
           <div className="workspace-tabs"><button className={workbenchTab==='data'?'selected':''} onClick={()=>setWorkbenchTab('data')}>Scans</button><button className={workbenchTab==='anatomy'?'selected':''} onClick={()=>setWorkbenchTab('anatomy')}>Anatomy</button></div>
           {workbenchTab==='research'?<NativeResearch workspace={native}/>:<NativeSidebar workspace={native} tab={workbenchTab==='data'?'data':'anatomy'}/>}
@@ -1789,7 +1795,8 @@ export default function App() {
         <div className="viewer-shell">
           {displayedCase && (
             <ViewerWorkspace
-              rehearsalState={rehearsal.viewerState}
+              surgicalInteraction={workbenchTab==="rehearsal"?surgical.interaction:undefined}
+              rehearsalState={surgical.view?null:rehearsal.viewerState}
               workspaceSettings={viewerSettings}
               onWorkspaceSettingsChange={setViewerSettings}
               sourceLabel={native.binding?native.binding.document.series.find(s=>s.id===native.series)?.modality:String(displayedSource?.metadata.selected_modality??'Image')}
@@ -1799,7 +1806,7 @@ export default function App() {
               diagnosticSourceSha256={diagnostic.view?.sourceSha256 ?? null}
               generatedSignal={display.primaryOverlaysPermitted && synthetic}
               publicGoal={!native.binding && display.primaryOverlaysPermitted ? publicGoalMarker : null}
-              caseData={displayedCase}
+              caseData={surgical.previewVolume??surgical.volume??displayedCase}
               visibleLayers={displayedLayers}
               overlayOpacity={overlayOpacity}
               cursor={displayedCursor}

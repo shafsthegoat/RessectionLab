@@ -1,0 +1,33 @@
+import type {Point3, Affine, Shape3} from './viewer/coordinates';
+export type SurgicalPose = {position:Point3;quaternion:[number,number,number,number]};
+export type SurgicalSlot = SurgicalPose & {instrument:string;active:boolean;inserted:boolean;grip:number[];parameters:Record<string,number>};
+export interface SurgicalTool {id:string;name:string;category:string;geometry:string;materials:string[];effect:string;radiusMm:number;shaftRadiusMm:number;workingLengthMm:number;parameters?:Record<string,{min:number;max:number;default:number;unit?:string}>;approximation?:string}
+export interface SurgicalRegion {id:number;name:string;material:string;target:boolean;color:string}
+export interface SurgicalAction {slot:string;operation:string;instrument?:string;pose?:SurgicalPose;path?:SurgicalPose[];parameters?:Record<string,number>;duration:number}
+export interface SurgicalOutcome {status:'accepted'|'partial'|'rejected';reason:string|null;completedFraction:number;events:Array<Record<string,unknown>>}
+export interface SurgicalImportOptions {frame:'RAS+'|'LPS+';units:'mm'|'meter'|'micron';material:string;resolution:number;topology:'solid'|'sheet'|'strand';thicknessMm?:number}
+export interface SurgicalMeshSeam {kind:'retained_sheet_seam'|'retained_strand_break';points:Point3[];faceId?:number;edge?:[number,number]}
+export interface SurgicalView {schema:string;stateId:string;scene:{sceneId:string;shape:Shape3;affine:Affine;regions:SurgicalRegion[];resolutionMm:Point3;approximations:string[]};catalog:SurgicalTool[];slots:Record<string,SurgicalSlot>;removed:number[];moved:Array<[number,number]>;cuts:Array<{tool:string;cells:number[];edges?:Array<[number,number]>;normal?:Point3}>;cutEdges?:Array<[number,number]>;meshCutEdges?:Array<[number,number]>;meshSeams?:SurgicalMeshSeam[];transectedEdges?:Array<[number,number]>;separatedAttachments?:string[];flapComponents?:Array<{cells:number[];separable:boolean|null}>;debris?:Record<string,number>;sources?:Array<Record<string,unknown>>;observations?:Array<Record<string,unknown>>;contact:number[];thermal:Record<string,number>;fluid:Record<string,number>;metrics:Record<string,number|Record<string,number>>;history:Array<{action:SurgicalAction;status:string;reason:string|null;completedFraction?:number;events:Array<Record<string,unknown>>}>}
+export interface SurgicalResponse {caseHash:string;view:SurgicalView;outcome:SurgicalOutcome|null;position:number;branchId:string;branches:Array<{id:string;steps:number}>}
+export interface SurgicalRequest {caseHash:string;source?:{collectionId:string;snapshotId:string;seriesId:string};command:string;expectedStateId?:string;action?:SurgicalAction;mapping?:SurgicalRegion[];position?:number;branchId?:string}
+export interface SurgicalApi {surgicalRehearsal(input:SurgicalRequest):Promise<SurgicalResponse|null>;createSurgicalFixture():Promise<import('./types').CasePayload>}
+export interface SurgicalInteraction {view:SurgicalView|null;preview?:SurgicalView|null;outcome?:SurgicalOutcome|null;parameters?:Record<string,number>;pose:SurgicalPose;path:SurgicalPose[];selectedSlot:string;mode:'navigate'|'draw'|'translate'|'rotate';onPose:(pose:SurgicalPose)=>void;onStroke:(point:Point3,phase:'start'|'move'|'end')=>void}
+
+export interface SurgicalEventSummary {kind:string;label:string;count:number;details:string[]}
+/** Summarize repeated microstep events without inventing effects or a reason. */
+export function summarizeSurgicalEvents(events:Array<Record<string,unknown>>):SurgicalEventSummary[]{
+  const groups=new Map<string,Array<Record<string,unknown>>>();
+  for(const event of events){const kind=String(event.kind??'event');const items=groups.get(kind)??[];items.push(event);groups.set(kind,items);}
+  const names:Record<string,string>={removal:'Tissue removal',incision:'Incision',sheet_opening:'Sheet cut',strand_transection:'Strand transection',attachment_release:'Attachment release',bone_kerf:'Bone kerf',detached_extraction:'Fragment extraction',grasp_created:'Grasp created',hold_created:'Hold created',aspiration:'Aspiration',irrigation:'Irrigation',local_energy:'Local energy',mapping:'Stimulation observation',contact_stop:'Contact stop',no_material_effect:'No material effect'};
+  const numeric:Record<string,string>={cells:'cells',edges:'grid edges',meshEdges:'mesh edges',attachments:'attachments',volumeMm3:'mm³',fluid:'fluid mm³',debris:'debris mm³',exposure:'exposure units'};
+  return [...groups].map(([kind,items])=>{
+    const details:string[]=[];
+    for(const [key,label] of Object.entries(numeric)){const values=items.map(e=>e[key]).filter((n):n is number=>typeof n==='number'&&Number.isFinite(n));if(values.length)details.push(`${+values.reduce((a,b)=>a+b,0).toFixed(3)} ${label}`);}
+    const components=items.map(e=>e.components).filter((n):n is number=>typeof n==='number'&&Number.isFinite(n));if(components.length)details.push(`${components.at(-1)} retained components at last sample`);
+    const controlled=new Set(items.flatMap(e=>Array.isArray(e.controlledBleedingSources)?e.controlledBleedingSources.map(String):[]));if(controlled.size)details.push(`${controlled.size} bleeding sources controlled`);
+    for(const reason of new Set(items.flatMap(e=>typeof e.reason==='string'?[e.reason]:[])))details.push(reason);
+    if(items.some(e=>e.piecesRetained===true))details.push('Pieces retained');
+    if(kind==='mapping'){const last=items.at(-1)!;details.push(`Result: ${String(last.result??'unknown').replaceAll('_',' ')}`);}
+    return {kind,label:names[kind]??kind.replaceAll('_',' '),count:items.length,details};
+  });
+}

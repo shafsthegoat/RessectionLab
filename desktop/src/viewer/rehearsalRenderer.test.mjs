@@ -10,7 +10,7 @@ import {InstrumentDisplayState} from './inspectionTool.ts';
 let server,cache,VolumeRenderer,originalWorker;
 before(async()=>{
   cache=await fs.mkdtemp(path.join(os.tmpdir(),'rehearsal-renderer-'));
-  server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,logLevel:'error',server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
+  server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
   VolumeRenderer=(await server.ssrLoadModule('/src/viewer/VolumeRenderer.ts')).VolumeRenderer;
   originalWorker=globalThis.Worker;
   globalThis.Worker=class{messages=[];postMessage(value){this.messages.push(value);}terminate(){this.terminated=true;}};

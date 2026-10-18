@@ -1,3 +1,4 @@
+import {surgicalEffectMarkers,clipSurgicalMarkersToSlab} from './surgicalGeometry';
 import {SliceScrollAccumulator} from './interactionBudget';
 import {TransferEditor} from './TransferEditor';
 import {sampleDiagnosticLayer} from "./diagnosticLayer";
@@ -112,6 +113,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     [ready, setReady] = useState(false);
   const [fusionError,setFusionError]=useState<string|null>(null);
   const activePlane=settings.activePlane??'axial',contrast=settings.contrast??1,showPlane=settings.showPlane??false;
+  const surgicalView=props.surgicalInteraction?.preview??props.surgicalInteraction?.view;
+  const surgicalMarkers=useMemo(()=>surgicalView?surgicalEffectMarkers(surgicalView,props.surgicalInteraction?.outcome):[],[surgicalView,props.surgicalInteraction?.outcome]);
   const setActivePlane=(activePlane:SlicePlane)=>changeSettings({...latestSettings.current,activePlane});
   const setContrast=(contrast:number)=>changeSettings({...latestSettings.current,contrast});
   const setShowPlane=(showPlane:boolean)=>changeSettings({...latestSettings.current,showPlane});
@@ -223,6 +226,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
 
   useEffect(()=>{engine.current?.setWorkspaceSettings(settings);},[ready,caseData,settings]);
   useEffect(()=>{engine.current?.restoreCamera(settings.camera);},[ready,caseData,settings.camera]);
+  useEffect(()=>{engine.current?.setSurgical(props.surgicalInteraction??null);},[ready,caseData,props.surgicalInteraction]);
   useEffect(()=>{engine.current?.setNavigationMode(navigationMode);},[ready,caseData,navigationMode]);
   useEffect(()=>{engine.current?.setSurfaceSmoothing(smoothSurfaces);},[ready,caseData,smoothSurfaces]);
   useEffect(()=>{engine.current?.setVolumeRendering(settings.volumeRendering,signalName);},[ready,caseData,settings.volumeRendering,signalName]);
@@ -643,6 +647,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         <div
           className="rl-viewer-anatomy-image"
           ref={anatomy}
+          onPointerDown={event=>{if(props.surgicalInteraction?.mode==='draw'){const p=engine.current?.pick(event.clientX,event.clientY);if(p){event.currentTarget.setPointerCapture(event.pointerId);props.surgicalInteraction.onStroke(p,'start');}}}}
+          onPointerMove={event=>{if(event.buttons===1&&props.surgicalInteraction?.mode==='draw'){const p=engine.current?.pick(event.clientX,event.clientY);if(p)props.surgicalInteraction.onStroke(p,'move');}}}
+          onPointerUp={event=>{if(props.surgicalInteraction?.mode==='draw'){const p=engine.current?.pick(event.clientX,event.clientY);if(p)props.surgicalInteraction.onStroke(p,'end');}}}
           onDoubleClick={(event) => {
             const point = engine.current?.pick(event.clientX, event.clientY);
             if (point && geometry)
@@ -758,6 +765,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         const pxPerMm = image ? image.width / mmWidth : 1;
         const scaleMm = pxPerMm * 20 < 78 ? 20 : 10;
         const goalPoint = publicGoal && geometry ? publicGoalSlicePoint(publicGoal,geometry.bounds,plane,currentCursor,width,height) : null;
+        const [horizontal,vertical]=PLANE_AXES[plane];
+        const slab=(surgicalView?Math.max(...surgicalView.scene.resolutionMm):1)*.6;
+        const marks=image&&geometry?clipSurgicalMarkersToSlab(surgicalMarkers,axis as 0|1|2,currentCursor[axis],slab).map(m=>({color:m.color,points:m.points.map(p=>[image.left+(p[horizontal]-geometry.bounds[0][horizontal])*image.width/(geometry.bounds[1][horizontal]-geometry.bounds[0][horizontal]),image.top+(geometry.bounds[1][vertical]-p[vertical])*image.height/(geometry.bounds[1][vertical]-geometry.bounds[0][vertical])])})):[];
         return (
           <div
             key={plane}
@@ -807,6 +817,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               onPointerCancel={() => {engine.current?.endInteraction();props.onSliceStroke?.(null, 'end');}}
               onKeyDown={(event) => keySlice(event, plane)}
             >
+              {surgicalView&&<svg aria-label="Modeled surgical effects" width="100%" height="100%" style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:3}}>{marks.map((m,i)=>m.points.length===1?<circle key={i} cx={m.points[0][0]} cy={m.points[0][1]} r={2.5} fill={m.color}/>:<polyline key={i} points={m.points.map(p=>p.join(',')).join(' ')} stroke={m.color} strokeWidth={2} fill="none"/>)}</svg>}
               {goalPoint && <span aria-label="Declared public goal" style={{position:'absolute',left:goalPoint.left,top:goalPoint.top,transform:'translate(-50%,-50%)',color:PUBLIC_GOAL_COLOR,fontSize:20,lineHeight:1,pointerEvents:'none',zIndex:4}}>◇</span>}
               <span className="rl-orientation rl-orientation-left">{left}</span>
               <span className="rl-orientation rl-orientation-right">
@@ -825,7 +836,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               </span>
               <span className="rl-viewer-slice-note">
                 {props.generatedSignal ? "GENERATED ANALYTIC SIGNAL" : `SOURCE ${signalName.toUpperCase()}`}
-                {rehearsalMode ? " · RESEARCH EFFECT OVERLAY" : inspected
+                {surgicalView ? (props.surgicalInteraction?.preview?" · MODELED PREVIEW":" · MODELED EFFECT OVERLAY") : rehearsalMode ? " · RESEARCH EFFECT OVERLAY" : inspected
                   ? " · UNEXECUTED TOOL PREVIEW"
                   : proposalReviewLabel
                   ? " · ESTIMATE"
