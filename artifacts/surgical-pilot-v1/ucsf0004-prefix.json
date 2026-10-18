@@ -1,0 +1,255 @@
+{
+  "schema": "resectionlab.surgical-rl.v1",
+  "environmentId": "sha256:35217cc20508b4d8ee08573ffc285d94948c34a94c48e0932e8bcc620fe5afd2",
+  "attempts": [
+    {
+      "action": {
+        "slot": "left",
+        "operation": "exchange",
+        "instrument": "cusa",
+        "duration": 0.1
+      },
+      "decodeError": null,
+      "stateId": "sha256:3a0ac5499cb6ee3c70ba68933cbb9e5e4450d7f173c6e883d8737497e08e6345",
+      "reward": -0.0011,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.0001,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "accepted",
+      "reason": null
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "place",
+        "duration": 0.1,
+        "parameters": {
+          "radiusMm": 0.6
+        },
+        "pose": {
+          "position": [
+            -177.0,
+            76.0,
+            159.0
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:58c651493ca15a57b08772f308d3dbcbb77d6795b2ee20cc7890235532c84c49",
+      "reward": -0.0011,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.0001,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "accepted",
+      "reason": null
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 1.0,
+        "pose": {
+          "position": [
+            -177.0,
+            76.0,
+            104.0
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:b98b0d2eefa240e2b35cfc9af42bf6781c520b4bbd38e80bd42b0b99a2fc996b",
+      "reward": -0.026000000000000006,
+      "terms": {
+        "tumor_removal": 0.008,
+        "healthy_removal": -0.032,
+        "bone_removal": -0.0,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.001000000000000004,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "accepted",
+      "reason": null
+    }
+  ],
+  "config": {
+    "max_steps": 80,
+    "max_seconds": 120.0,
+    "max_action_seconds": 5.0,
+    "success_fraction": 0.95,
+    "max_healthy_removed_mm3": 100.0,
+    "max_vessel_damage_mm2": 0.5,
+    "max_bleeding_mm3": 10.0,
+    "max_invalid_actions": 16,
+    "require_critical_coverage": true,
+    "critical_max_displacement_mm": 0.0,
+    "near_margin_mm": 2.0,
+    "local_spacing_mm": 1.0
+  },
+  "reward_config": {
+    "tumor_removal_weight": 1.0,
+    "healthy_removal_weight": 2.0,
+    "bone_removal_weight": 0.05,
+    "healthy_thermal_weight": 0.1,
+    "healthy_cut_weight": 1.0,
+    "deformation_weight": 1.0,
+    "vessel_damage_weight": 4.0,
+    "bleeding_weight": 1.0,
+    "protected_damage_weight": 5.0,
+    "near_contact_weight": 1.0,
+    "action_cost": 0.001,
+    "time_cost": 0.001,
+    "invalid_action_cost": 0.1,
+    "protected_blocked_weight": 1.0,
+    "volume_scale_mm3": 1000.0,
+    "area_scale_mm2": 100.0,
+    "thermal_exposure_scale": 100.0,
+    "near_contact_scale_mm3_seconds": 1000.0,
+    "time_scale_seconds": 1.0
+  },
+  "stateId": "sha256:b98b0d2eefa240e2b35cfc9af42bf6781c520b4bbd38e80bd42b0b99a2fc996b",
+  "measurements": {
+    "tumor_removed_mm3": 8.0,
+    "healthy_removed_mm3": 16.0,
+    "bone_removed_mm3": 0.0,
+    "healthy_cut_mm2": 0.0,
+    "deformation_injury_mm3": 0.0,
+    "healthy_thermal_exposure": 0.0,
+    "vessel_damage_mm2": 0.0,
+    "bleeding_generated_mm3": 0.0,
+    "protected_damage_mm3": 0.0,
+    "near_contact_exposure_mm3_seconds": 0.0,
+    "elapsed_seconds": 1.200000000000004
+  },
+  "totalReward": -0.028200000000000006,
+  "terminated": false,
+  "truncated": false,
+  "rng": {
+    "bit_generator": "PCG64",
+    "state": {
+      "state": 191425278619858320667688084520535371943,
+      "inc": 78856291631749604729656725519709880197
+    },
+    "has_uint32": 0,
+    "uinteger": 0
+  },
+  "actionRng": {
+    "duration": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 41392456500180329660346103072162508074,
+        "inc": 332318424967998057045615480595427394911
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    },
+    "instrument": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 249264870991697679748891483707778661199,
+        "inc": 276090039830669185360326791167126505163
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    },
+    "operation": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 267883192080094577456133493555914301516,
+        "inc": 170757895772767904355266861337478580289
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    },
+    "parameter_mask": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 109662506786550563532238020749454409179,
+        "inc": 200415091720005203062700071280780370325
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    },
+    "parameters": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 225512469011113605045157804216628433833,
+        "inc": 151948809234829179358140094003273225147
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    },
+    "pose": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 179095265908389867012713401737961834438,
+        "inc": 37917381884584589467339682850574983225
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    },
+    "slot": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 60868700521920017974307379217045751343,
+        "inc": 269219932285775563635680350554976332757
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    },
+    "use_pose": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 329470282183717484023129588099989176039,
+        "inc": 334968507022362438986353960534076770229
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    }
+  }
+}

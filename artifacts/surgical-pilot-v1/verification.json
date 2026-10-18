@@ -1,0 +1,129 @@
+{
+  "status": "verified_from_recorded_outputs_without_new_transitions",
+  "preparation_integrity_verified": true,
+  "checkpoints": [
+    {
+      "seed": 17,
+      "path": "policy-seed-17.pt",
+      "file_sha256": "554c3c743dd8ede2b3aa9f630ca25e7977abf864d38402b7b50fa5959455ebba",
+      "initial_parameter_sha256": "f621220e96285d151d40cf04dcc396fcf93a6eeb71df7d5984ee0e2e4f59c67d",
+      "final_parameter_sha256": "29382995eb3aee03af3be77a3eae10fa1aaed414b6b4834770c1c8cf010dc30f",
+      "optimizer_updates": 4,
+      "all_update_hashes_changed": true
+    },
+    {
+      "seed": 29,
+      "path": "policy-seed-29.pt",
+      "file_sha256": "83afb4b65dacbf491b1b46d2c2db9d212e036bfa681e47348a49d2654d30995f",
+      "initial_parameter_sha256": "f210b718b31f490edeee4c2f4a4da3bdbb7f4a04736405fd06efeaa92b852161",
+      "final_parameter_sha256": "6e551c41a993a48b7d45cb3575e67ecf5605883a212b3c40cc609be27259964d",
+      "optimizer_updates": 4,
+      "all_update_hashes_changed": true
+    },
+    {
+      "seed": 43,
+      "path": "policy-seed-43.pt",
+      "file_sha256": "0b0932aa1ba26b7dedf9cdc76c7e2ad43351174abaf64439da19dfe940c0314c",
+      "initial_parameter_sha256": "3d60264316dccdd2b3fdfeed0412550b55909a37f0f2d38659a9b11ba81b992a",
+      "final_parameter_sha256": "c1caeace37c7552afa911d8bc5ebaea1e40b79230ef737fd7cbf31946365d242",
+      "optimizer_updates": 4,
+      "all_update_hashes_changed": true
+    }
+  ],
+  "optimizer_update_hash_chain_verified": true,
+  "assessment_episodes": 30,
+  "training_episodes": 24,
+  "assessment_seeds_complete": true,
+  "identical_prefix_metrics_verified": true,
+  "final_physical_replay_receipts": [
+    {
+      "case": "sub06",
+      "seed": 17,
+      "path": "sub06-seed-17-final-replay.json",
+      "state_id": "sha256:0104618fc16356d60ad3083d1d1a5a07d7917db3677f7ae0a370973bce332417",
+      "reward_ledger_equal": true,
+      "measurements_equal": true,
+      "file_sha256": "54c2844cf6aeca3b66596c5ce6cf182a84815143ecf043ead74a6f72ccf522d3",
+      "prefix_equal": true
+    },
+    {
+      "case": "ucsf0004",
+      "seed": 17,
+      "path": "ucsf0004-seed-17-final-replay.json",
+      "state_id": "sha256:e735cfe32e13248846da7130263ef35ccd89aeff79f7e3340f30db201b378ceb",
+      "reward_ledger_equal": true,
+      "measurements_equal": true,
+      "file_sha256": "74a2bd4c65b07fd69c5ded655593d35ec6fd51ba4397f94098f4459f5e3e8369",
+      "prefix_equal": true
+    },
+    {
+      "case": "sub06",
+      "seed": 29,
+      "path": "sub06-seed-29-final-replay.json",
+      "state_id": "sha256:38b08ffb9658b37ff7e05ec3356ed481c11022c8886d0c717253b427afdb2499",
+      "reward_ledger_equal": true,
+      "measurements_equal": true,
+      "file_sha256": "27c17fae8d32c0ff4de381ca1b741b397c478cd094e59ee4cfe13d3ab2f5dc28",
+      "prefix_equal": true
+    },
+    {
+      "case": "ucsf0004",
+      "seed": 29,
+      "path": "ucsf0004-seed-29-final-replay.json",
+      "state_id": "sha256:5d0630a3777590c62a3023bab14c0680386880e47e107eea0ee0dd69540d488b",
+      "reward_ledger_equal": true,
+      "measurements_equal": true,
+      "file_sha256": "86903a586e0e8d8ee86ff996545d5d7e7a915663ef91f8718b217e428e23d8c9",
+      "prefix_equal": true
+    },
+    {
+      "case": "sub06",
+      "seed": 43,
+      "path": "sub06-seed-43-final-replay.json",
+      "state_id": "sha256:0104618fc16356d60ad3083d1d1a5a07d7917db3677f7ae0a370973bce332417",
+      "reward_ledger_equal": true,
+      "measurements_equal": true,
+      "file_sha256": "54c2844cf6aeca3b66596c5ce6cf182a84815143ecf043ead74a6f72ccf522d3",
+      "prefix_equal": true
+    },
+    {
+      "case": "ucsf0004",
+      "seed": 43,
+      "path": "ucsf0004-seed-43-final-replay.json",
+      "state_id": "sha256:b98b0d2eefa240e2b35cfc9af42bf6781c520b4bbd38e80bd42b0b99a2fc996b",
+      "reward_ledger_equal": true,
+      "measurements_equal": true,
+      "file_sha256": "1fcd6221fafce39eed7b5de82ffac4fb29faf6401a11c3b4d68dc0aa28bfc230",
+      "prefix_equal": true
+    }
+  ],
+  "all_trained_additional_target_zero": true,
+  "all_assessed_vessel_bleeding_protected_damage_zero": true,
+  "local_healthy_budget_failures": [
+    {
+      "case": "ucsf0004",
+      "method": "scripted",
+      "seed": 17,
+      "healthy_mm3": 6.0
+    },
+    {
+      "case": "ucsf0004",
+      "method": "scripted",
+      "seed": 29,
+      "healthy_mm3": 6.0
+    },
+    {
+      "case": "ucsf0004",
+      "method": "scripted",
+      "seed": 43,
+      "healthy_mm3": 6.0
+    }
+  ],
+  "gradient_norm_is_preclip": true,
+  "losses_are_combined_policy_plus_entropy_objective": true,
+  "max_preclip_gradient_norm": 6.025694847106934,
+  "updates_clipped": 8,
+  "proxy_definition": "A zero-target movement attempt requests an axis move but has zero tumor-removal reward. Requested mm = count x 2. This includes rejections, partial commands, reversals and healthy-only movement; actual wasted travel is not measured.",
+  "no_held_out_evidence": true,
+  "no_further_fit": true
+}

@@ -1,0 +1,781 @@
+{
+  "schema": "resectionlab.surgical-rl.v1",
+  "environmentId": "sha256:9cc35b884804f7af1907081cbf0f1572a2e61267a473c117dbfffe471ec5b08e",
+  "attempts": [
+    {
+      "action": {
+        "slot": "left",
+        "operation": "place",
+        "duration": 0.2,
+        "parameters": {
+          "radiusMm": 3,
+          "forceN": 5.0,
+          "rpm": 60000.0,
+          "duty": 1.0
+        },
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -369.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:f862d423d25562ede987e31aa2c869bfc07191d19812bda85036e8e1fbfc05ba",
+      "reward": -0.0012000000000000001,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.0002,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "accepted",
+      "reason": null
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 5.0,
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -425.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:b5343df236b16db4de5c06285c90e2414ecd16bb639339dedb700d387ce72f67",
+      "reward": -0.007700000000000003,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0017000000000000001,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.005000000000000003,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "partial",
+      "reason": "BONE_CUTTING_IN_PROGRESS"
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 5.0,
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -425.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:906c3b643660c6a9f264635953be5cc94fe13bfaf779ce132ad83cc8825db90d",
+      "reward": -0.009999999999999998,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.004,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.004999999999999998,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "partial",
+      "reason": "BONE_CUTTING_IN_PROGRESS"
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 5.0,
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -425.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:ca798fa740c658cd0a6c3b0cc88907225855d3436b525daeb6f8a5772ff91b36",
+      "reward": -0.010149999999999958,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.00415,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.004999999999999958,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "partial",
+      "reason": "BONE_CUTTING_IN_PROGRESS"
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 5.0,
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -425.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:af7203b31e1b6b45de7f01fcb63e058311d1a55e5a4368b32c3e2b3a241ca455",
+      "reward": -0.009500000000000055,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0035,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.005000000000000055,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "partial",
+      "reason": "BONE_CUTTING_IN_PROGRESS"
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 5.0,
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -425.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:cf9d703b6229f0d3d2d1f406c8d2c97fb3ace77fd5d39effb98871d8aae6f01a",
+      "reward": -0.009650000000000072,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0036500000000000005,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.005000000000000071,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "partial",
+      "reason": "BONE_CUTTING_IN_PROGRESS"
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 5.0,
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -425.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:e2a71b6fb5de506c936635f2dcdda399dbd0c3653fe654148d331e5688e29b95",
+      "reward": -0.009750000000000071,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.00375,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.005000000000000071,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "partial",
+      "reason": "BONE_CUTTING_IN_PROGRESS"
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 5.0,
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -425.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:3447bc54f2b43d82b6e5ec0a9658367e7a5f90bd55411c28664b8e8803eec91f",
+      "reward": -0.009500000000000067,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0035,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.005000000000000068,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "partial",
+      "reason": "BONE_CUTTING_IN_PROGRESS"
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 5.0,
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -425.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:53d4cce63feff7a394d312c01935fe3f8cc536cfdc57e9e7c37f294bdbb6e090",
+      "reward": -0.009700000000000071,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0037,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.005000000000000071,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "partial",
+      "reason": "BONE_CUTTING_IN_PROGRESS"
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 5.0,
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -425.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:0b2f47182003323e5d9739721d0616382087153c20cac499eae9d9d6f84d55a7",
+      "reward": -0.009650000000000072,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0036500000000000005,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.005000000000000071,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "partial",
+      "reason": "BONE_CUTTING_IN_PROGRESS"
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 5.0,
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -425.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:5de50aa50d1c1bd4bdf8972d862e21a211d504f2605cab677f879eeff79e0f55",
+      "reward": -0.009700000000000071,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0037,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.005000000000000071,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "partial",
+      "reason": "BONE_CUTTING_IN_PROGRESS"
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 5.0,
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -425.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:1e25848b64209abd143c9a65a62da58320ec5f05cd6f02532a96e3248cfd8bbc",
+      "reward": -0.0015000000000000044,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0002,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.00030000000000000426,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "partial",
+      "reason": "UNSUPPORTED_MATERIAL"
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "withdraw",
+        "duration": 0.2
+      },
+      "decodeError": null,
+      "stateId": "sha256:28f0515676257adf0387c30474609feb4406901be4eba04dc9e1782f8cfe0532",
+      "reward": -0.0012000000000002445,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.00020000000000024444,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "accepted",
+      "reason": null
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "exchange",
+        "duration": 0.2,
+        "instrument": "cusa"
+      },
+      "decodeError": null,
+      "stateId": "sha256:4cfb29a3dd7ef77d1340850e281622bb3547a76a0612c377700e17bf76f4e39d",
+      "reward": -0.001200000000000003,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.00020000000000000286,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "accepted",
+      "reason": null
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "place",
+        "duration": 0.2,
+        "parameters": {
+          "radiusMm": 1
+        },
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -369.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:3783999f223d4e67ae0f425b91db66044c2a0cabda05dfa2766205f1dfdf2bcc",
+      "reward": -0.001200000000000003,
+      "terms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.00020000000000000286,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "accepted",
+      "reason": null
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 1,
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -425.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "decodeError": null,
+      "stateId": "sha256:0886df0ace6881140e781f855f9332226ae21e19e776583ddb85f8dc8e6ce587",
+      "reward": 0.025000000000000227,
+      "terms": {
+        "tumor_removal": 0.027,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.0009999999999997726,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "status": "accepted",
+      "reason": null
+    }
+  ],
+  "config": {
+    "max_steps": 80,
+    "max_seconds": 120.0,
+    "max_action_seconds": 5.0,
+    "success_fraction": 0.95,
+    "max_healthy_removed_mm3": 100.0,
+    "max_vessel_damage_mm2": 0.5,
+    "max_bleeding_mm3": 10.0,
+    "max_invalid_actions": 16,
+    "require_critical_coverage": true,
+    "critical_max_displacement_mm": 0.0,
+    "near_margin_mm": 2.0,
+    "local_spacing_mm": 1.0
+  },
+  "reward_config": {
+    "tumor_removal_weight": 1.0,
+    "healthy_removal_weight": 2.0,
+    "bone_removal_weight": 0.05,
+    "healthy_thermal_weight": 0.1,
+    "healthy_cut_weight": 1.0,
+    "deformation_weight": 1.0,
+    "vessel_damage_weight": 4.0,
+    "bleeding_weight": 1.0,
+    "protected_damage_weight": 5.0,
+    "near_contact_weight": 1.0,
+    "action_cost": 0.001,
+    "time_cost": 0.001,
+    "invalid_action_cost": 0.1,
+    "protected_blocked_weight": 1.0,
+    "volume_scale_mm3": 1000.0,
+    "area_scale_mm2": 100.0,
+    "thermal_exposure_scale": 100.0,
+    "near_contact_scale_mm3_seconds": 1000.0,
+    "time_scale_seconds": 1.0
+  },
+  "stateId": "sha256:0886df0ace6881140e781f855f9332226ae21e19e776583ddb85f8dc8e6ce587",
+  "measurements": {
+    "tumor_removed_mm3": 27.0,
+    "healthy_removed_mm3": 0.0,
+    "bone_removed_mm3": 710.0,
+    "healthy_cut_mm2": 0.0,
+    "deformation_injury_mm3": 0.0,
+    "healthy_thermal_exposure": 0.0,
+    "vessel_damage_mm2": 0.0,
+    "bleeding_generated_mm3": 0.0,
+    "protected_damage_mm3": 0.0,
+    "near_contact_exposure_mm3_seconds": 0.0,
+    "elapsed_seconds": 52.10000000000046
+  },
+  "totalReward": -0.07660000000000047,
+  "terminated": false,
+  "truncated": false,
+  "rng": {
+    "bit_generator": "PCG64",
+    "state": {
+      "state": 191425278619858320667688084520535371943,
+      "inc": 78856291631749604729656725519709880197
+    },
+    "has_uint32": 0,
+    "uinteger": 0
+  },
+  "actionRng": {
+    "duration": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 41392456500180329660346103072162508074,
+        "inc": 332318424967998057045615480595427394911
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    },
+    "instrument": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 249264870991697679748891483707778661199,
+        "inc": 276090039830669185360326791167126505163
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    },
+    "operation": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 267883192080094577456133493555914301516,
+        "inc": 170757895772767904355266861337478580289
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    },
+    "parameter_mask": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 109662506786550563532238020749454409179,
+        "inc": 200415091720005203062700071280780370325
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    },
+    "parameters": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 225512469011113605045157804216628433833,
+        "inc": 151948809234829179358140094003273225147
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    },
+    "pose": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 179095265908389867012713401737961834438,
+        "inc": 37917381884584589467339682850574983225
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    },
+    "slot": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 60868700521920017974307379217045751343,
+        "inc": 269219932285775563635680350554976332757
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    },
+    "use_pose": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 329470282183717484023129588099989176039,
+        "inc": 334968507022362438986353960534076770229
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    }
+  }
+}

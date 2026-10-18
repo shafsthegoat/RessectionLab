@@ -1,0 +1,20 @@
+{
+  "schema": "resectionlab.surgical-pilot-launch.v1",
+  "preparation_sha256": "195327d1222cbd9ac8f8e032f5335d77524cda8522dc739756a5b8d9c17fc823",
+  "authorized": true,
+  "desktop_sub06_demonstrated": true,
+  "desktop_ucsf0004_demonstrated": true,
+  "shared_guards_verified": true,
+  "performance_and_telemetry_verified": true,
+  "authority": "Explicit parent lead go, after actual Electron two-case checks, guards, performance and telemetry verification",
+  "evidence_references": [
+    "outputs/integrated-rehearsal-v1/desktop-bimanual-reopen.json",
+    "artifacts/integrated-rehearsal-v1/telemetry-verification.json",
+    "docs/shared-surgical-guards.md"
+  ],
+  "desktop_evidence": {
+    "sub06": "Actual Electron retractor preview and commit; right CUSA live preview and commit removed 3 mm3; native Save; fresh Python reopen state 77f7ad45, target 57 mm3, left hold 1 source cell.",
+    "ucsf0004": "Actual Electron loaded strict 11-mask protection, unknown bone coverage; existing CUSA 8 mm3 / other 16 mm3 persisted; right drill approach 104 preview and commit both rejected UNSUPPORTED_MATERIAL with unchanged anatomy."
+  },
+  "fit_scope": "One declared three-seed/four-update run; no sweep or repeat fitting; 900 s, 1000 transitions, 6 GiB caps."
+}
