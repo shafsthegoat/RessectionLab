@@ -1,7 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {Euler,Quaternion} from 'three';
 import type {SurgicalController} from './use-surgical';
-import type {SurgicalRegion,SurgicalImportOptions,SurgicalOutcome} from './surgical-types';
+import type {SurgicalRegion,SurgicalImportOptions,SurgicalOutcome,SurgicalView} from './surgical-types';
 import './SurgicalPanel.css';
 import {summarizeSurgicalEvents} from './surgical-types.ts';
 const materials=['unknown','bone','soft_tissue','tumor','membrane','vessel','fluid','functional_region'];
@@ -27,6 +27,37 @@ function StimulationObservation({observation,preview}:{observation:Record<string
     <dl>{[['Probe',observation.probe],['Result',observation.result??'unknown'],['Coverage',observation.coverage??'unknown'],['Uncertainty',observation.uncertainty??'not supplied'],['Position · RAS mm',observation.position],['Contact cells',Array.isArray(observation.cells)?observation.cells.length:undefined]].map(([label,value])=><div key={String(label)}><dt>{String(label)}</dt><dd>{displayValue(value)}</dd></div>)}</dl>
     <p>Stimulus: {Object.entries((observation.parameters??{}) as Record<string,unknown>).map(([key,value])=>`${parameterSpecs[key]?.label??key}: ${displayValue(value)}`).join(' · ')||'Parameters not supplied'}</p>
     {evidence.length?<details><summary>Supplied evidence · {evidence.length} records</summary><ol>{evidence.map((record,i)=><li key={i}>{record&&typeof record==='object'?<dl>{Object.entries(record).map(([key,value])=><div key={key}><dt>{key.replaceAll('_',' ')}</dt><dd>{displayValue(value)}</dd></div>)}</dl>:displayValue(record)}</li>)}</ol></details>:<p>No matching supplied functional evidence. Unknown does not establish a negative stimulation response.</p>}
+  </section>;
+}
+
+function DeclaredFields({data}:{data:Record<string,unknown>}){
+  return <dl className="surgical-declared-fields">{Object.entries(data).map(([key,value])=><div key={key}><dt>{key.replace(/([a-z])([A-Z])/g,'$1 $2').replaceAll('_',' ')}</dt><dd>{value&&typeof value==='object'&&!Array.isArray(value)?<details><summary>Declared fields</summary><DeclaredFields data={value as Record<string,unknown>}/></details>:displayValue(value)}</dd></div>)}</dl>;
+}
+function SceneResearchDetails({view,preview}:{view:SurgicalView;preview:boolean}){
+  const source=view.scene.source,adapter=source?.adapter,physics=view.physics??view.scene.physics;
+  const patientDerivative=adapter?.type==='native-patient-research-derivative';
+  const mapped=new Set(view.scene.regions.map(r=>r.material));
+  const metrics:Record<string,unknown>={...view.metrics,...physics?.metrics};
+  const metricLabels:Record<string,string>={severedVesselConnections:'Severed local vessel adjacencies',activeVesselWounds:'Active modeled wound outlets',modeledVesselFluidGeneratedMm3:'Modeled vessel fluid generated · mm³',modeledVesselReservoirMm3:'Modeled vessel fluid retained · mm³'};
+  const wounds=physics?.wounds??view.sources?.filter(s=>s.kind==='modeled-vessel-wound');
+  return <section aria-label="Scene provenance and research behavior" className="surgical-research-context">
+    {patientDerivative&&<div className="surgical-warning"><strong>Patient-derived research estimate</strong><p>This scene is derived from patient anatomy. Material properties and flow behavior are declared research assumptions, not measured patient physiology. Derived geometry is separate from source annotations.</p></div>}
+    {adapter?.warnings?.length? <ul className="surgical-warning">{adapter.warnings.map((warning,i)=><li key={i}>{warning}</li>)}</ul>:null}
+    <p className="surgical-note">Scene grid: {view.scene.resolutionMm.map(n=>+n.toFixed(3)).join(' × ')} mm · {view.scene.shape.join(' × ')} cells.</p>
+    <details><summary>Provenance, material behavior, and assumptions</summary>
+      {source&&<DeclaredFields data={Object.fromEntries(Object.entries(source).filter(([key])=>key!=='adapter'))}/>}
+      {adapter&&<details><summary>Source adapter and declared patient source</summary><DeclaredFields data={adapter}/></details>}
+      <ul className="surgical-note">
+        {mapped.has('bone')&&<li>Bone: rigid cells; drilling and kerf cutting remove cells and produce modeled debris.</li>}
+        {(mapped.has('soft_tissue')||mapped.has('tumor'))&&<li>Brain / soft tissue and tumor: lattice patch displacement and compatible-tool removal; no calibrated deformation law.</li>}
+        {mapped.has('vessel')&&<li>Vessels: local adjacency cutting retains pieces. {physics?.capabilities?.damageTriggeredVesselWounds===true?'Declared damage-triggered wound outlets use an assumed local flow proxy.':'Damage-triggered vessel wound behavior is not declared as enabled.'} Global perfusion is unknown.</li>}
+        {mapped.has('membrane')&&<li>Membranes: retained cut seams and graph separation; no fabricated physical aperture.</li>}
+        {mapped.has('unknown')&&<li>Unknown material remains explicitly unmapped; no tissue behavior is inferred from its label.</li>}
+      </ul>
+      {view.scene.approximations.length>0&&<ul className="surgical-note">{view.scene.approximations.map((a,i)=><li key={i}>{a}</li>)}</ul>}
+      {physics?<><p>Declared research physics: {physics.enabled===true?'enabled':physics.enabled===false?'disabled':'enablement not supplied'}.</p><DeclaredFields data={physics.profile??Object.fromEntries(Object.entries(physics).filter(([key])=>!['wounds','metrics','limits','capabilities'].includes(key)))}/>{physics.limits?.length?<ul className="surgical-note">{physics.limits.map((limit,i)=><li key={i}>{limit}</li>)}</ul>:null}{physics.capabilities&&<details><summary>Declared capabilities</summary><DeclaredFields data={physics.capabilities}/></details>}</>:<p className="surgical-note">No material physics profile was supplied. No patient physiology is inferred.</p>}
+    </details>
+    {(physics?.capabilities?.damageTriggeredVesselWounds===true||wounds?.length)&&<details><summary>{preview?'Preview':'Recorded'} modeled vessel wounds / fluid</summary><p className="surgical-note">Equivalent wound outlets describe the declared local model. These volumes are not estimates of patient blood loss; global perfusion remains unknown.</p><dl className="surgical-declared-fields">{Object.entries(metricLabels).map(([key,label])=><div key={key}><dt>{label}</dt><dd>{displayValue(metrics[key])}</dd></div>)}</dl>{wounds?.length?<details><summary>Wound outlet records · {wounds.length}</summary>{wounds.map((wound,i)=><DeclaredFields key={String(wound.id??i)} data={wound}/>)}</details>:<p>No modeled wound records supplied for this state.</p>}{view.vesselConnections&&Object.keys(view.vesselConnections).length>0&&<details><summary>Local severed connections · {Object.keys(view.vesselConnections).length}</summary><DeclaredFields data={view.vesselConnections}/></details>}{view.vesselWounds&&Object.keys(view.vesselWounds).length>0&&<details><summary>Declared wound interpretations</summary><DeclaredFields data={view.vesselWounds}/></details>}</details>}
   </section>;
 }
 
@@ -63,6 +94,7 @@ export function SurgicalPanel({c,onFixture,onImport,available}:{c:SurgicalContro
       <button onClick={()=>{setImporting(true);setImportError(null);Promise.resolve().then(()=>onImport({...importOptions,...(importOptions.topology==='solid'?{thicknessMm:undefined}:{})})).catch(e=>setImportError(String(e))).finally(()=>setImporting(false));}}>{importing?'Importing…':'Choose segmentation file…'}</button>
       </fieldset>{importError&&<p role="alert" className="surgical-error">{importError}</p>}</details>}
     {!v?<button className="primary-button" disabled={!available||c.pending||importing} onClick={()=>void c.create()}>Prepare instrument scene</button>:<>
+    <SceneResearchDetails view={displayed??v} preview={!!c.preview}/>
     <div className="surgical-slots">{Object.entries(v.slots).map(([s,t])=><button key={s} disabled={c.pending||playing} aria-pressed={c.slot===s} onClick={()=>c.selectSlot(s)}><strong>{s} hand</strong><span>{v.catalog.find(x=>x.id===t.instrument)?.name}</span><small>{t.inserted?'Inserted':'Withdrawn'} · {t.active?'Active':'Inactive'}</small></button>)}</div>
     <input aria-label="Search instruments" placeholder="Search instruments…" value={search} onChange={e=>setSearch(e.target.value)}/>
     <div className="surgical-toolbox">{v.catalog.filter(t=>(t.name+' '+t.category).toLowerCase().includes(search.toLowerCase())).map(t=><button key={t.id} aria-pressed={selected?.instrument===t.id} disabled={c.pending||playing} onClick={()=>stopRun('step',{action:{slot:c.slot,operation:'exchange',instrument:t.id,duration:1}})}><small>{t.category}</small>{t.name}</button>)}</div>

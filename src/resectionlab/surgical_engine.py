@@ -228,7 +228,12 @@ class SurgicalEngine:
                 t = (j + 1) / n
                 p = ((1 - t) * finite(start['position'], 3) + t * finite(end['position'], 3))
                 quat = interpolation(t).as_quat()
-                old = copy.deepcopy(self.state)
+                # Bone component summaries are replaced only by finalize_action,
+                # never mutated by a microstep. Share them within this action's
+                # rollback checkpoints rather than copying thousands of source
+                # components for every fraction of a millimeter.
+                components = self.state.get('flapComponents')
+                old = copy.deepcopy(self.state, {id(components): components} if components is not None else None)
                 try:
                     delta_events = self._substep(key, op, p, quat, active, duration / total)
                 except ValueError as error:
@@ -332,6 +337,10 @@ class SurgicalEngine:
             if slot['instrument'] == 'cranial_drill':
                 for i in new: self.state['debris'][str(i)] = self.state['debris'].get(str(i), 0.) + self.scene.voxel_mm3
                 self.state['debrisMm3'] = sum(self.state['debris'].values())
+                # Preserve v1 replay interpretation for earlier scenes. The
+                # explicit material profile enables updated bone connectivity.
+                if new and self.scene.properties.get('tissuePhysics'):
+                    self.state['boneTopologyDirty'] = True
             return [{'kind': 'removal', 'cells': len(new), 'volumeMm3': len(new) * self.scene.voxel_mm3}] if new else []
         if tool['effect'] == 'retract':
             if not cells and key not in self.state['holds']: return []
@@ -343,12 +352,13 @@ class SurgicalEngine:
         return apply_effect(self, key, op, cells, p, q, dt)
 
     def metrics(self):
+        from .surgical_physics import physics_metrics
         by_label = {}
         for i in self.state['removed']:
             name = self.by_label[int(self.scene.labels.ravel()[i])]['name']
             by_label[name] = by_label.get(name, 0.) + self.scene.voxel_mm3
         target = sum(self.scene.voxel_mm3 for i in self.state['removed'] if self.by_label[int(self.scene.labels.ravel()[i])].get('target'))
-        return {'removedByLabelMm3': by_label, 'targetRemovedMm3': target,
+        return {**physics_metrics(self), 'removedByLabelMm3': by_label, 'targetRemovedMm3': target,
                 'nonTargetRemovedMm3': len(self.state['removed']) * self.scene.voxel_mm3 - target,
                 'elapsedSeconds': self.state['elapsedSeconds'], 'travelMm': self.state['travelMm'],
                 'contactCellSeconds': sum(self.state['contact'].values()), 'debrisMm3': self.state['debrisMm3'],
@@ -364,7 +374,9 @@ class SurgicalEngine:
                 'unknownMaterialCells': int(sum(np.count_nonzero(self.scene.labels == r['id']) for r in self.scene.regions if r['material'] == 'unknown'))}
 
     def observe(self):
+        from .surgical_physics import physics_descriptor
         return {'schema': SCHEMA, 'stateId': self.state_id, 'slots': copy.deepcopy(self.state['slots']),
+                'physics': physics_descriptor(self),
                 'metrics': self.metrics(), 'observations': copy.deepcopy(self.state['observations']),
                 'unknowns': ['unmapped anatomy', 'uncalibrated mechanics', 'clinical outcomes unknown']}
 
@@ -382,7 +394,8 @@ class SurgicalEngine:
                 'contact': list(map(int, self.state['contact'])), 'thermal': copy.deepcopy(self.state['thermal']),
                 'fluid': copy.deepcopy(self.state['fluid']), 'history': copy.deepcopy(self.history),
                 **{name: copy.deepcopy(self.state.get(name)) for name in ('cutEdges', 'separatedAttachments',
-                    'transectedEdges', 'flapComponents', 'debris', 'sources', 'meshCutEdges', 'meshSeams')}}
+                    'transectedEdges', 'flapComponents', 'debris', 'sources', 'meshCutEdges', 'meshSeams',
+                    'vesselConnections', 'vesselWounds')}}
 
     def snapshot(self):
         return {'schema': SCHEMA, 'sceneId': self.scene.identity, 'actions': copy.deepcopy(self.actions), 'stateId': self.state_id,

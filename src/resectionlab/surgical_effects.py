@@ -11,6 +11,8 @@ from .surgical_tools import TOOLS
 
 
 def initialize_effect_state(engine):
+    from .surgical_physics import initialize_physics
+    initialize_physics(engine)
     for name in ('cutEdges', 'separatedAttachments', 'transectedEdges', 'flapComponents', 'meshCutEdges', 'meshSeams'):
         engine.state.setdefault(name, [])
     engine.state.setdefault('debris', {})
@@ -63,18 +65,33 @@ def _release(engine, cells, kinds):
 
 
 def _bone_components(engine):
-    labels = engine.scene.labels.ravel()
-    bone = {i for i in np.flatnonzero(labels) if engine.by_label[int(labels[i])]['material'] == 'bone'} - set(engine.state['removed'])
-    anchors = set(engine.scene.properties.get('boneAnchors', []))
-    components = []
-    while bone:
-        seed = min(bone); bone.remove(seed); group = [seed]; stack = [seed]
-        while stack:
-            for j in _neighbors(engine, stack.pop()):
-                if j in bone:
-                    bone.remove(j); group.append(j); stack.append(j)
-        components.append({'cells': sorted(map(int, group)), 'separable': not bool(anchors & set(group)) if anchors else None})
-    engine.state['flapComponents'] = components
+    """Compiled connected components; bounded summaries for patient grids."""
+    from scipy.ndimage import label, find_objects
+    bone_labels = [identifier for identifier, region in engine.by_label.items() if region['material'] == 'bone']
+    mask = np.isin(engine.scene.labels, bone_labels)
+    mask.ravel()[engine.state['removed']] = False
+    components, count = label(mask)
+    sizes = np.bincount(components.ravel(), minlength=count + 1)
+    anchors = engine.scene.properties.get('boneAnchors', [])
+    anchored = set(map(int, components.ravel()[anchors])) if anchors else set()
+    compact = bool(engine.scene.properties.get('tissuePhysics'))
+    summaries = []
+    for identifier, slices in enumerate(find_objects(components), 1):
+        if slices is None: continue
+        size = int(sizes[identifier]); cells = []
+        if size <= 4096 or not compact:
+            local = np.argwhere(components[slices] == identifier)
+            local += np.array([part.start for part in slices])
+            cells = sorted(map(int, np.ravel_multi_index(local.T, engine.scene.shape)))
+        if not compact:
+            # Preserve original v1 checkpoint contents for existing rehearsals.
+            summaries.append({'cells': cells, 'separable': identifier not in anchored if anchors else None})
+            continue
+        summaries.append({'componentId': identifier, 'cellCount': size, 'cells': cells,
+                          'cellsOmitted': size > 4096,
+                          'boundsIjk': [[part.start for part in slices], [part.stop - 1 for part in slices]],
+                          'separable': identifier not in anchored if anchors else None})
+    engine.state['flapComponents'] = summaries
 
 
 def apply_effect(engine, key, op, cells, p, q, dt):
@@ -114,15 +131,24 @@ def apply_effect(engine, key, op, cells, p, q, dt):
         return [{'kind': 'bone_kerf', 'cells': len(new), 'components': len(state['flapComponents'])}] if new else []
     if effect == 'transect':
         if params['jawOpeningMm'] > 0.5: return []
-        if 'strands' not in engine.scene.properties and _source_geometry(engine).get('topology') != 'strand': raise ValueError('MISSING_STRAND_PROPERTIES')
+        from .surgical_physics import vessel_profile, record_vessel_transections
+        profile = vessel_profile(engine)
+        if 'strands' not in engine.scene.properties and _source_geometry(engine).get('topology') != 'strand' and profile is None: raise ValueError('MISSING_STRAND_PROPERTIES')
         edges = []
         for strand in engine.scene.properties.get('strands', []):
             eligible = set(strand['cells'])
             edges.extend(_edges(engine, sorted(set(cells) & eligible), eligible))
+        if profile is not None:
+            labels = engine.scene.labels.ravel()
+            local_vessels = [i for i in cells if engine.by_label[int(labels[i])]['material'] == 'vessel']
+            for i in local_vessels:
+                edges.extend((min(i, j), max(i, j)) for j in _neighbors(engine, i)
+                             if labels[j] and j not in engine.state['removed'] and engine.by_label[int(labels[j])]['material'] == 'vessel')
         normal = orientation.apply([0., 1., 0.])
         edges = [edge for edge in edges
                  if (lambda side: side.min() <= 0 < side.max())((_current_points(engine, edge) - p) @ normal)]
         count = _record_edges(engine, 'transectedEdges', edges)
+        record_vessel_transections(engine, edges)
         mesh_count = _mesh_seam(engine, p, orientation, params) if _source_geometry(engine).get('topology') == 'strand' else 0
         return [{'kind': 'strand_transection', 'edges': count, 'meshEdges': mesh_count, 'piecesRetained': True}] if count or mesh_count else []
     if effect == 'grasp':
@@ -223,6 +249,7 @@ def tick_fields(engine, dt):
         if source.get('bleedingActive', True):
             if 'rateMm3PerSecond' not in source or 'cell' not in source: raise ValueError('MISSING_BLEEDING_SOURCE_PROPERTIES')
             amount = source['rateMm3PerSecond'] * dt
+            if source.get('kind') == 'modeled-vessel-wound': source['emittedMm3'] += amount
             source['reservoirMm3'] = source.get('reservoirMm3', 0.) + amount
             engine.state['fluidAddedMm3'] += amount
         destination = _free_outlet(engine, source['cell'])

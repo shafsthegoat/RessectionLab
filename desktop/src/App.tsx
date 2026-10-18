@@ -1487,7 +1487,11 @@ export default function App() {
                 {imaging.series.map(s=><option key={s.descriptor.seriesId} value={s.descriptor.seriesId}>{displaySeriesLabel(s.descriptor)}</option>)}</select></label>}
               <AnatomyPanel layers={(displayedCase?.compartments??[]).map(layer=>({...layer,label:(displayedSource?.metadata.anatomy_layers as Record<string,{label?:string}>|undefined)?.[layer.name]?.label,provenance:anatomyDescription((displayedSource?.metadata.anatomy_layers as Record<string,AnatomyRecord>|undefined)?.[layer.name],imaging.selected?.descriptor.annotationKind==='estimated'?'Model estimate':annotationDescription)}))}
                 visibleLayers={displayedLayers} onVisibilityChange={setDisplayedLayers} settings={viewerSettings} onSettingsChange={setViewerSettings}
-                missingStructures={Array.isArray(displayedSource?.metadata.missing_anatomy)?displayedSource.metadata.missing_anatomy as string[]:['Skull','Vessels','Brain structures'].filter(name=>!displayedCase?.compartments.some(l=>l.name.toLowerCase().includes(name==='Brain structures'?'brain':name.toLowerCase())))}
+                missingStructures={Array.isArray(displayedSource?.metadata.missing_anatomy)?displayedSource.metadata.missing_anatomy as string[]:['Skull','Vessels','Brain structures'].filter(name=>!displayedCase?.compartments.some(layer=>{
+                  const kind=(displayedSource?.metadata.anatomy_layers as Record<string,{kind?:string}>|undefined)?.[layer.name]?.kind?.toLowerCase();
+                  const kinds=name==='Skull'?['skull','bone']:name==='Vessels'?['vessel','vessels']:['brain','soft_tissue'];
+                  return (kind!==undefined&&kinds.includes(kind))||layer.name.toLowerCase().includes(name==='Brain structures'?'brain':name.toLowerCase());
+                }))}
                 provenanceLabel="Cached masks · no inference on view changes"/>
               <AnnotationCenterButton center={imaging.selected?null:annotationCenterMm} onCenter={setCursor}/>
               <button className="text-button" onClick={()=>setWorkbenchTab('data')}>Source files & registration <ChevronRight size={13}/></button>

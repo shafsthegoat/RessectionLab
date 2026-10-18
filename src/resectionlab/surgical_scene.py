@@ -54,6 +54,8 @@ class SurgicalScene:
 
     def _validate_properties(self):
         """Reject invalid explicit physics before any transition can run."""
+        from .surgical_physics import validate_tissue_physics
+        validate_tissue_physics(self)
         def cell(value):
             if type(value) is not int or not 0 <= value < self.labels.size:
                 raise ValueError('Property cell must index this source grid')
@@ -101,6 +103,14 @@ def from_case(case, mapping=None):
     masks = dict(case.compartments)
     if case.brain_mask is not None and 'brain' not in masks:
         masks = {'brain': case.brain_mask, **masks}
+    # Bundle JSON canonicalization sorts dictionary keys. Explicit ownership
+    # order must survive saving; it cannot depend on insertion/alphabetic order.
+    adapter = thaw_json(case.metadata).get('surgical_adapter') or {}
+    precedence = adapter.get('ownershipPrecedence')
+    if precedence is not None:
+        if len(precedence) != len(masks) or set(precedence) != set(masks):
+            raise ValueError('Saved ownership precedence must name every annotation exactly once')
+        masks = {name: masks[name] for name in precedence}
     if not masks:
         raise ValueError('No segmentation supplied; import a labelmap or assign regions first')
     regions = mapping or [{'id': i + 1, 'name': name, 'material': KINDS.get(layers.get(name, {}).get('kind'), 'unknown'),
