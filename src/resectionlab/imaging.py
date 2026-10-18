@@ -27,6 +27,7 @@ from .core import CaseData, PatientContext, SourceRef, array_digest
 
 
 BUNDLE_SCHEMA = "resectionlab.case/1"
+MAX_MANIFEST_BYTES = 16 * 1024 * 1024
 _UNIT_TO_MM = {"mm": 1.0, "meter": 1000.0, "micron": 0.001}
 
 
@@ -441,7 +442,11 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
         manifest["prior_proposals"] = prior_records
     if functional is not None:
         manifest["functional_evidence"] = {"array_keys": functional_keys, "manifest": functional.to_manifest()}
-    encoded_manifest = json.dumps(manifest, indent=2, sort_keys=True, allow_nan=False).encode("utf-8")
+    # Persist growing episode branches within the same limit enforced on open.
+    # Whitespace can otherwise turn valid bounded data into an unreadable save.
+    encoded_manifest = json.dumps(manifest, separators=(",", ":"), sort_keys=True, allow_nan=False).encode("utf-8")
+    if len(encoded_manifest) > MAX_MANIFEST_BYTES:
+        raise ImagingError("MANIFEST_TOO_LARGE", "Episode metadata exceeds the 16 MiB save/open budget; preserve this file and shorten the saved history.")
     temporary: Path | None = None
     try:
         with tempfile.NamedTemporaryFile(dir=destination.parent, prefix=f".{destination.name}.", delete=False) as handle:
@@ -465,7 +470,7 @@ def _read_bundle(path: str | Path) -> tuple[dict[str, Any], bytes]:
                     raise ImagingError("INVALID_BUNDLE_MEMBERS", "Bundle must contain the case pair or a bounded workspace extension.")
                 from .workspace_bundle import extension_layout
                 extension_layout(archive)
-            if archive.getinfo("manifest.json").file_size > 16 * 1024 * 1024:
+            if archive.getinfo("manifest.json").file_size > MAX_MANIFEST_BYTES:
                 raise ImagingError("BUNDLE_SIZE_LIMIT", "Manifest exceeds the 16 MiB local import limit.")
             if archive.getinfo("arrays.npz").file_size > 2 * 1024 ** 3:
                 raise ImagingError("BUNDLE_SIZE_LIMIT", "Array payload exceeds the 2 GiB local import limit.")

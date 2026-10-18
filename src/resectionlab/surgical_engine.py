@@ -581,6 +581,7 @@ class SurgicalEngine:
             moved.extend(raster(self))
         return {**self.observe(_state_id=identity), 'scene': self.scene.descriptor(), 'catalog': catalog(),
                 'geometryRevision': identity, 'removed': self.state['removed'][:], 'moved': moved, 'cuts': copy.deepcopy(self.state['cuts']),
+                'holds': copy.deepcopy(self.state['holds']),
                 'contact': list(map(int, self.state['contact'])), 'thermal': copy.deepcopy(self.state['thermal']),
                 'fluid': copy.deepcopy(self.state['fluid']), 'history': copy.deepcopy(self.history),
                 **{name: copy.deepcopy(self.state.get(name)) for name in ('cutEdges', 'separatedAttachments',

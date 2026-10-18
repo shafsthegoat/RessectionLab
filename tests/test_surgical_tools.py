@@ -274,11 +274,14 @@ def test_two_forceps_cannot_hold_same_connected_fragment():
 def test_releasing_hold_does_not_restore_cells_removed_by_other_instrument():
     e=_two_slot_coupon();_position_slot(e,'left','tumor_forceps',8.)
     assert e.step({'slot':'left','operation':'grasp','pose':{'position':[8.,8.,7.],'quaternion':[0.,0.,0.,1.]}})['status']=='accepted'
+    displayed=e.view()['holds'];assert displayed['left']['cells']==e.state['holds']['left']['cells']
+    displayed['left']['cells'].clear();assert e.state['holds']['left']['cells']
     _position_slot(e,'right','cusa',16.)
     assert e.step({'slot':'right','operation':'apply','pose':{'position':[16.,8.,7.],'quaternion':[0.,0.,0.,1.]}})['status']=='accepted'
     removed=e.state['removed'][:];assert removed
     assert e.step({'slot':'left','operation':'release'})['status']=='accepted'
     assert e.state['removed']==removed and 'left' not in e.state['holds']
+    assert e.view()['holds']=={}
     assert all(e.occupancy()[cell]==0 for cell in removed)
     assert SurgicalEngine.restore(e.scene,e.snapshot()).state_id==e.state_id
 
