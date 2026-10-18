@@ -33,6 +33,10 @@ def save_package(collection, destination, *, check=lambda: None, progress=lambda
         files[name] = checksum
     if (collection.root / 'workspace-view.json').exists():
         files['workspace-view.json'] = None
+    if (collection.root / 'surgical-toolbox.json').exists():
+        if (collection.root / 'surgical-toolbox.json').stat().st_size > 32 * 1024**2:
+            raise ValueError('Surgical history exceeds archive budget')
+        files['surgical-toolbox.json'] = file_hash(collection.root / 'surgical-toolbox.json')
     if sum(collection.path(name).stat().st_size for name in files) > MAX_BYTES:
         raise ValueError('Patient study exceeds the 16 GiB archive limit')
     fd, temporary = tempfile.mkstemp(dir=destination.parent, suffix='.rsworkspace')
