@@ -1,0 +1,255 @@
+{
+  "schema": "resectionlab.surgical-action-benchmark.v1",
+  "repeats": 5,
+  "python": "3.12.12",
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "definitions": {
+    "reset": "Gym reset including observations",
+    "step": "clone fixed base then engine step",
+    "preview": "engine preview including view",
+    "guardSweep": "full measured action swept geometry only; excludes indirect postchecks",
+    "clone": "clone fixed base with setup history",
+    "rlStepAction": "Full RL step_action, including validation, engine, reward, observation, info; identical reset/setup excluded"
+  },
+  "cases": {
+    "small": {
+      "source": {},
+      "sceneId": "sha256:ff468e0c5d66c357def691702157ed0a734ff8b68e1df5e03ac9ddda7cb7b17a",
+      "labelHash": "sha256:e1540eef635f2770a0b2e86903a54fa463554153fd074582e2e938666db68acb",
+      "shape": [
+        24,
+        24,
+        24
+      ],
+      "protectedCells": 1,
+      "protectionId": "sha256:756ee5cc00c070e57826a8d08941a8693dca1ad76326de093334bc37fba24589",
+      "seed": 17,
+      "setupActions": [
+        {
+          "slot": "left",
+          "operation": "exchange",
+          "instrument": "cusa",
+          "duration": 0.1
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "parameters": {
+            "radiusMm": 0.5
+          },
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              -5.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        }
+      ],
+      "measuredAction": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 0.2,
+        "pose": {
+          "position": [
+            9.0,
+            9.0,
+            9.0
+          ],
+          "quaternion": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "preStateId": "sha256:05c2224da4a3e06e52fb196f520a30528c5c12ce1d606bc8622b8742f71f1b67",
+      "outcome": {
+        "status": "accepted",
+        "reasonCode": null,
+        "stateId": "sha256:da1a83aa48c8abd64eff6c271872802e663692d915b7cf483679b30e23a0579f",
+        "reward": 0.0098,
+        "terminated": false,
+        "truncated": false,
+        "transitionSignature": "sha256:2fa7fe8d3082d7a92f68ef23f3b51289410034bf197af0bdab429cb71ff280eb",
+        "identicalAcrossRepeats": true
+      },
+      "timings": {
+        "rlStepAction": {
+          "medianMs": 106.2125419266522,
+          "p95Ms": 110.07635807618499,
+          "samplesMs": [
+            104.70070829614997,
+            91.51054220274091,
+            107.6064589433372,
+            110.69383285939693,
+            106.2125419266522
+          ]
+        }
+      },
+      "rlConfig": {
+        "max_steps": 128,
+        "max_seconds": 600.0,
+        "max_action_seconds": 5.0,
+        "success_fraction": 0.95,
+        "max_healthy_removed_mm3": 1000000000.0,
+        "max_vessel_damage_mm2": 1000000000.0,
+        "max_bleeding_mm3": 1000000000.0,
+        "max_invalid_actions": 16,
+        "require_critical_coverage": true,
+        "critical_max_displacement_mm": 0.0,
+        "near_margin_mm": 2.0,
+        "local_spacing_mm": 2.0
+      },
+      "rewardConfig": {
+        "tumor_removal_weight": 1.0,
+        "healthy_removal_weight": 2.0,
+        "bone_removal_weight": 0.05,
+        "healthy_thermal_weight": 0.1,
+        "healthy_cut_weight": 1.0,
+        "deformation_weight": 1.0,
+        "vessel_damage_weight": 4.0,
+        "bleeding_weight": 1.0,
+        "protected_damage_weight": 5.0,
+        "near_contact_weight": 1.0,
+        "action_cost": 0.001,
+        "time_cost": 0.001,
+        "invalid_action_cost": 0.1,
+        "protected_blocked_weight": 1.0,
+        "volume_scale_mm3": 1000.0,
+        "area_scale_mm2": 100.0,
+        "thermal_exposure_scale": 100.0,
+        "near_contact_scale_mm3_seconds": 1000.0,
+        "time_scale_seconds": 1.0
+      }
+    },
+    "sub-06": {
+      "source": {
+        "casePath": "/Users/shaf/coding_projects/RessectionLab/testcases/history/surgical-patient-v2/patient.ressectionlab",
+        "caseSha256": "17b440a46de4dc4c42f75ac562ee71749856e3c7be1d6854325fe8a07554906f",
+        "protectionManifestSha256": "f571e98ad6a0a17cbb7eb8469cd5f03b14dbd538130c679a054be138b9cd7801"
+      },
+      "sceneId": "sha256:e292ba41b650b221c90fb582bae49cd069597b119f9635e3f881b951e1138c56",
+      "labelHash": "sha256:9930330418c439d7d042054d7419c05d3158e2422f62ce69b034044a563ecd76",
+      "shape": [
+        220,
+        220,
+        181
+      ],
+      "protectedCells": 111661,
+      "protectionId": "sha256:d8d813bf029e76d5564647c9f6f3c6c6def9b4205aa2bc4d1b2710cdda5d5e97",
+      "seed": 17,
+      "setupActions": [
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.2,
+          "parameters": {
+            "radiusMm": 3,
+            "forceN": 5.0,
+            "rpm": 60000.0,
+            "duty": 1.0
+          },
+          "pose": {
+            "position": [
+              -26.464996337890625,
+              18.441162109375,
+              -369.25
+            ],
+            "quaternion": [
+              0.0,
+              1.0,
+              -0.0,
+              -0.0
+            ]
+          }
+        }
+      ],
+      "measuredAction": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 5.0,
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -425.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "preStateId": "sha256:f862d423d25562ede987e31aa2c869bfc07191d19812bda85036e8e1fbfc05ba",
+      "outcome": {
+        "status": "partial",
+        "reasonCode": "BONE_CUTTING_IN_PROGRESS",
+        "stateId": "sha256:b5343df236b16db4de5c06285c90e2414ecd16bb639339dedb700d387ce72f67",
+        "reward": -0.007700000000000003,
+        "terminated": false,
+        "truncated": false,
+        "transitionSignature": "sha256:57fac51fa830495eac990ac597af985ee4a15324b5362859ff5620087cfcf722",
+        "identicalAcrossRepeats": true
+      },
+      "timings": {
+        "rlStepAction": {
+          "medianMs": 1455.4012496955693,
+          "p95Ms": 1548.3170419931412,
+          "samplesMs": [
+            1548.9207920618355,
+            1455.2022921852767,
+            1427.272167056799,
+            1545.9020417183638,
+            1455.4012496955693
+          ]
+        }
+      },
+      "rlConfig": {
+        "max_steps": 128,
+        "max_seconds": 600.0,
+        "max_action_seconds": 5.0,
+        "success_fraction": 0.95,
+        "max_healthy_removed_mm3": 1000000000.0,
+        "max_vessel_damage_mm2": 1000000000.0,
+        "max_bleeding_mm3": 1000000000.0,
+        "max_invalid_actions": 16,
+        "require_critical_coverage": true,
+        "critical_max_displacement_mm": 0.0,
+        "near_margin_mm": 2.0,
+        "local_spacing_mm": 2.0
+      },
+      "rewardConfig": {
+        "tumor_removal_weight": 1.0,
+        "healthy_removal_weight": 2.0,
+        "bone_removal_weight": 0.05,
+        "healthy_thermal_weight": 0.1,
+        "healthy_cut_weight": 1.0,
+        "deformation_weight": 1.0,
+        "vessel_damage_weight": 4.0,
+        "bleeding_weight": 1.0,
+        "protected_damage_weight": 5.0,
+        "near_contact_weight": 1.0,
+        "action_cost": 0.001,
+        "time_cost": 0.001,
+        "invalid_action_cost": 0.1,
+        "protected_blocked_weight": 1.0,
+        "volume_scale_mm3": 1000.0,
+        "area_scale_mm2": 100.0,
+        "thermal_exposure_scale": 100.0,
+        "near_contact_scale_mm3_seconds": 1000.0,
+        "time_scale_seconds": 1.0
+      }
+    }
+  }
+}

@@ -132,7 +132,8 @@ def dispatch(session, operation, args, request, progress):
         command = 'inspect'  # An unchanged mapping must not erase a timeline.
     if command == 'create' or raw is None and command != 'inspect':
         scene = scene_builder(args.get('mapping'))
-        engine = SurgicalEngine(scene)
+        from .surgical_rl_protection import GuardConfig
+        engine = SurgicalEngine(scene, guard_config=GuardConfig(require_critical_coverage=False))
         record = {'environmentSchema': ENVIRONMENT_SCHEMA, 'physicsProfile': copy.deepcopy(scene.properties['tissuePhysicsV2']), 'mapping': scene.regions, 'branches': {'main': engine.snapshot()}, 'branchId': 'main', 'position': 0, 'parents': {'main': None}, 'timeline': {'main': []}}
     elif raw is None:
         return None
@@ -177,7 +178,7 @@ def dispatch(session, operation, args, request, progress):
         record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(full.history)
     elif command in ('branch', 'reset'):
         parent = {'branchId': record['branchId'], 'position': record['position'], 'reset': command == 'reset'}
-        if command == 'reset': engine = SurgicalEngine(engine.scene)
+        if command == 'reset': engine = engine.fresh()
         record['branchId'] = 'branch-' + str(len(record['branches']))
         record.setdefault('parents', {})[record['branchId']] = parent
         record['branches'][record['branchId']] = engine.snapshot()

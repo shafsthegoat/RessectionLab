@@ -33,8 +33,23 @@ def rotation(q):
 
 
 class SurgicalEngine:
-    def __init__(self, scene):
+    def __init__(self, scene, *, protection=None, guard_config=None):
         self.scene = scene
+        from .surgical_rl_protection import GuardConfig, ProtectionSet, missing_critical, protection_contract
+        self.protection = protection
+        self.guard_config = guard_config
+        self._protection_contract = None
+        self._protected_ids = frozenset()
+        if protection is not None or guard_config is not None:
+            self.protection = protection if protection is not None else ProtectionSet(scene)
+            self.guard_config = guard_config if guard_config is not None else GuardConfig()
+            if not isinstance(self.guard_config, GuardConfig): raise ValueError('Shared GuardConfig required')
+            if self.protection.scene.identity != scene.identity: raise ValueError('Protection scene mismatch')
+            missing = missing_critical(self.protection)
+            if self.guard_config.require_critical_coverage and missing:
+                raise ValueError('MISSING_CRITICAL_ANNOTATIONS: ' + ', '.join(missing))
+            self._protected_ids = frozenset(map(int, self.protection.cells))
+            self._protection_contract = protection_contract(self.protection, self.guard_config)
         self.grid = GeometryScene(np.zeros(scene.shape, bool), scene.affine)
         self.by_label = {r['id']: r for r in scene.regions}
         corners = np.array(list(itertools.product(*[(0, n - 1) for n in scene.shape]))) @ scene.affine[:3, :3].T + scene.affine[:3, 3]
@@ -53,7 +68,27 @@ class SurgicalEngine:
         initialize_effect_state(self)
 
     @property
-    def state_id(self): return semantic_digest({'scene': self.scene.identity, 'state': self.state})
+    def state_id(self):
+        return semantic_digest({'scene': self.scene.identity, 'state': self.state,
+            **({'protectionContract': self._protection_contract['contentHash']} if self._protection_contract else {})})
+
+    def fresh(self):
+        """Intact anatomy with the same evidence and guard policy."""
+        return type(self)(self.scene, protection=self.protection, guard_config=self.guard_config)
+
+    def guard_report(self):
+        from .surgical_rl_protection import missing_critical
+        if self.protection is None:
+            return {'configured': False, 'mode': 'unconfigured-research', 'contractId': None,
+                'status': 'unknown-coverage', 'missingRequired': ['brainstem'], 'clearanceMm': 0.,
+                'criticalMaxDisplacementMm': None, 'anatomicalCompleteness': 'unknown',
+                'clinicalValidation': 'none', 'structures': [], 'unknownStructures': ['critical anatomy not supplied']}
+        missing = missing_critical(self.protection)
+        return {**self.protection.report(), 'configured': True,
+            'mode': 'strict-research' if self.guard_config.require_critical_coverage else 'relaxed-research',
+            'contractId': self._protection_contract['contentHash'], 'missingRequired': list(missing),
+            'status': 'unknown-coverage' if missing else 'declared-masks-only',
+            'criticalMaxDisplacementMm': self.guard_config.critical_max_displacement_mm}
 
     def clone(self):
         other = copy.copy(self)
@@ -125,14 +160,21 @@ class SurgicalEngine:
     def preview(self, action):
         candidate = self.clone()
         result = candidate.step(action)
-        return {**result, 'preview': True, 'view': candidate.view()}
+        return {**result, 'preview': True, 'view': candidate.view(_state_id=result['stateId'])}
 
     def reset(self, scene=None):
-        self.__init__(self.scene if scene is None else scene)
+        if scene is not None and scene.identity != self.scene.identity:
+            if self.guard_config is not None:
+                raise ValueError('Construct a new engine with protection bound to the new scene')
+            initial = type(self)(scene).__dict__
+        else:
+            initial = self.fresh().__dict__
+        self.__dict__.clear()
+        self.__dict__.update(initial)
         return self.observe()
 
     def replay(self, actions):
-        result = type(self)(self.scene)
+        result = self.fresh()
         for action in actions:
             if result.step(action)['status'] == 'rejected':
                 raise ValueError('Replay contains an inadmissible action')
@@ -174,6 +216,7 @@ class SurgicalEngine:
 
     def step(self, action):
         before = self.state_id
+        after = before
         before_time = self.state['elapsedSeconds']
         before_removed = set(self.state['removed'])
         candidate = self.clone()
@@ -188,13 +231,16 @@ class SurgicalEngine:
             from .surgical_effects import finalize_action
             finalize_action(candidate)
             result['elapsedSeconds'] = candidate.state['elapsedSeconds'] - before_time
+            # Finalization is the last state mutation. Reuse this exact digest
+            # for result/history instead of serializing the large state three times.
+            after = candidate.state_id
             result['deltas'] = {'removedCells': sorted(set(candidate.state['removed']) - before_removed),
-                                'geometryRevision': candidate.state_id}
+                                'geometryRevision': after}
             candidate.actions.append(copy.deepcopy(action))
             candidate.history.append({'action': copy.deepcopy(action), 'stateBefore': before,
-                                      'stateAfter': candidate.state_id, **result})
+                                      'stateAfter': after, **result})
             self.__dict__.update(candidate.__dict__)
-        return {**result, 'stateId': self.state_id, 'metrics': self.metrics()}
+        return {**result, 'stateId': after, 'metrics': self.metrics()}
 
     def _execute(self, action, duration, points):
         key, op = action['slot'], action['operation']
@@ -305,7 +351,63 @@ class SurgicalEngine:
                 events.append({'kind': 'drill_contact_dwell', 'position': contact_position, 'remainingPathMm': remaining})
         return {'status': 'partial' if reason else 'accepted', 'reason': reason, 'completedFraction': fraction, 'contactPosition': contact_position, 'events': events}
 
+    def _positions(self):
+        """Current protected source membership in the shared occupancy raster."""
+        if not self._protected_ids: return None
+        mapping = {}
+        for hold in self.state['holds'].values():
+            if 'target' in hold or not any(hold['offset']): continue
+            for cell in self._protected_ids.intersection(hold['cells']):
+                destination = np.asarray(np.unravel_index(cell, self.scene.shape)) + hold['offset']
+                mapping[cell] = int(np.ravel_multi_index(destination, self.scene.shape))
+        from .surgical_physics_v2 import raster
+        mapping.update((cell, destination) for cell, destination in raster(self) if cell in self._protected_ids)
+        if not any(cell != destination for cell, destination in mapping.items()): return None
+        return self.scene.points([mapping.get(int(cell), int(cell)) for cell in self.protection.cells])
+
+    def _guard_sweep(self, key, p, q, positions):
+        for other_key, other in self.state['slots'].items():
+            end = {'position': p, 'quaternion': q} if other_key == key else other
+            if len(self.protection.sweep_hits(TOOLS[other['instrument']], self.parameters(other), other, end, positions=positions)):
+                raise ValueError('PROTECTED_STRUCTURE: instrument or shaft enters the declared clearance')
+
+    def _protected_exposure(self):
+        fields = {'thermal': self.state['thermal'],
+            'boneTemperature': self.state.get('drillingV2', {}).get('temperatureC', {}),
+            'boneDose': self.state.get('drillingV2', {}).get('thermalDoseCSeconds', {})}
+        return {(name, cell): value for name, values in fields.items() for cell, value in values.items() if int(cell) in self._protected_ids}
+
     def _substep(self, key, op, p, q, active, dt):
+        if not self._protected_ids:
+            return self._physical_substep(key, op, p, q, active, dt)
+        self._guard_sweep(key, p, q, self._positions())
+        previous_thermal = self._protected_exposure()
+        events = self._physical_substep(key, op, p, q, active, dt)
+        impacted = set(self.state['removed'])
+        for field in ('cutEdges', 'transectedEdges'):
+            impacted.update(cell for edge in self.state.get(field, []) for cell in edge)
+        if impacted & self._protected_ids:
+            raise ValueError('PROTECTED_STRUCTURE: indirect removal or cutting is blocked')
+        limit = self.guard_config.critical_max_displacement_mm + 1e-9
+        for cell, displacement in self.state.get('deformation', {}).items():
+            if int(cell) in self._protected_ids and np.linalg.norm(displacement) > limit:
+                raise ValueError('PROTECTED_STRUCTURE: indirect deformation exceeds the declared limit')
+        for hold in self.state['holds'].values():
+            if 'target' not in hold and self._protected_ids.intersection(hold['cells']) and np.linalg.norm(self.scene.affine[:3, :3] @ np.asarray(hold['offset'])) > limit:
+                raise ValueError('PROTECTED_STRUCTURE: grasp displaces protected fragment membership')
+        ambient = self.scene.properties.get('tissuePhysicsV2', {}).get('bone', {}).get('ambientTemperatureC', 37.)
+        for (name, cell), value in self._protected_exposure().items():
+            if value > previous_thermal.get((name, cell), ambient if name == 'boneTemperature' else 0.):
+                raise ValueError('PROTECTED_STRUCTURE: indirect thermal exposure is blocked')
+        for face in self.state.get('vesselsV2', {}).get('faces', {}).values():
+            if face['damage'] > 0 and self._protected_ids.intersection(face['cells']):
+                raise ValueError('PROTECTED_STRUCTURE: indirect vessel injury is blocked')
+        # A coupled patch can enter a parked instrument after the tool sweep.
+        positions = self._positions()
+        if positions is not None: self._guard_sweep(key, p, q, positions)
+        return events
+
+    def _physical_substep(self, key, op, p, q, active, dt):
         from .surgical_motion import envelopes, swept_envelopes, pair_conflict
         slot = self.state['slots'][key]; tool = TOOLS[slot['instrument']]; params = self.parameters(slot)
         axis = rotation(q).apply([0, 0, 1]); previous = finite(slot['position'], 3)
@@ -454,16 +556,18 @@ class SurgicalEngine:
                 'collisions': sum(h['status'] == 'partial' and (not self.scene.properties.get('tissuePhysicsV2') or h.get('reason') != 'BONE_CUTTING_IN_PROGRESS') for h in self.history),
                 'unknownMaterialCells': int(sum(np.count_nonzero(self.scene.labels == r['id']) for r in self.scene.regions if r['material'] == 'unknown'))}
 
-    def observe(self):
+    def observe(self, *, _state_id=None):
         from .surgical_physics import physics_descriptor
         if self.scene.properties.get('tissuePhysicsV2'):
             from .surgical_physics_v2 import descriptor as physics_descriptor
-        return {'schema': SCHEMA, 'stateId': self.state_id, 'slots': copy.deepcopy(self.state['slots']),
+        return {'schema': SCHEMA, 'stateId': self.state_id if _state_id is None else _state_id, 'slots': copy.deepcopy(self.state['slots']),
+                'protection': self.guard_report(),
                 'physics': physics_descriptor(self),
                 'metrics': self.metrics(), 'observations': copy.deepcopy(self.state['observations']),
                 'unknowns': ['unmapped anatomy', 'uncalibrated mechanics', 'clinical outcomes unknown']}
 
-    def view(self):
+    def view(self, *, _state_id=None):
+        identity = self.state_id if _state_id is None else _state_id
         moved = []
         removed = set(self.state['removed'])
         for hold in self.state['holds'].values():
@@ -475,8 +579,8 @@ class SurgicalEngine:
         if 'deformation' in self.state:
             from .surgical_physics_v2 import raster
             moved.extend(raster(self))
-        return {**self.observe(), 'scene': self.scene.descriptor(), 'catalog': catalog(),
-                'geometryRevision': self.state_id, 'removed': self.state['removed'][:], 'moved': moved, 'cuts': copy.deepcopy(self.state['cuts']),
+        return {**self.observe(_state_id=identity), 'scene': self.scene.descriptor(), 'catalog': catalog(),
+                'geometryRevision': identity, 'removed': self.state['removed'][:], 'moved': moved, 'cuts': copy.deepcopy(self.state['cuts']),
                 'contact': list(map(int, self.state['contact'])), 'thermal': copy.deepcopy(self.state['thermal']),
                 'fluid': copy.deepcopy(self.state['fluid']), 'history': copy.deepcopy(self.history),
                 **{name: copy.deepcopy(self.state.get(name)) for name in ('cutEdges', 'separatedAttachments',
@@ -485,12 +589,18 @@ class SurgicalEngine:
 
     def snapshot(self):
         return {'schema': SCHEMA, 'sceneId': self.scene.identity, 'actions': copy.deepcopy(self.actions), 'stateId': self.state_id,
+                **({'protectionContract': copy.deepcopy(self._protection_contract)} if self._protection_contract else {}),
                 'checkpoint': {'position': len(self.actions), 'stateId': self.state_id, 'state': copy.deepcopy(self.state)}}
 
     @classmethod
     def restore(cls, scene, record):
         if record['schema'] != SCHEMA or record['sceneId'] != scene.identity: raise ValueError('Saved scene or engine version differs')
-        result = cls(scene)
+        options = {}
+        if 'protectionContract' in record:
+            from .surgical_rl_protection import restore_protection_contract
+            protection, config = restore_protection_contract(scene, record['protectionContract'])
+            options = {'protection': protection, 'guard_config': config}
+        result = cls(scene, **options)
         for action in record['actions']:
             if result.step(action)['status'] == 'rejected': raise ValueError('Saved action no longer replays')
         if result.state_id != record['stateId']: raise ValueError('Replay state identity differs')
@@ -501,6 +611,6 @@ class SurgicalEngine:
 
     def branch(self, position):
         if type(position) is not int or not 0 <= position <= len(self.actions): raise ValueError('Invalid history position')
-        result = type(self)(self.scene)
+        result = self.fresh()
         for action in self.actions[:position]: result.step(action)
         return result

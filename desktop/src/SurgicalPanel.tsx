@@ -126,6 +126,8 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls}:{
       <p>{v.scene.resolutionMm.map(n=>+n.toFixed(3)).join(' × ')} mm · {v2?'V2 mechanics':'Historical mechanics profile'} · RAS+ mm</p>
       <p>{Object.entries(v.scene.environment?.anatomy??{}).map(([role,status])=>`${role}: ${status}`).join(' · ')}</p>
       <p className="surgical-note">Supplied masks do not establish completeness. Missing anatomy and function remain unknown.</p>
+      <p className={v.protection?.mode==='strict-research'?'surgical-note':'surgical-warning'} role="status">Protection: {v.protection?.mode??'unconfigured-research'}. {v.protection?.configured?`${v.protection.structures.length} declared exclusion masks; clearance ${v.protection.clearanceMm??0} mm.`:'No critical-structure exclusion contract is bound to this episode.'} Anatomical completeness remains unknown.</p>
+      {!!v.protection?.missingRequired.length&&<p className="surgical-warning">Required evidence unavailable: {v.protection.missingRequired.join(', ')}.</p>}
       {!v.scene.environment?.standardized&&<button disabled={c.pending} onClick={()=>void c.create(v.scene.regions)}>Create standard V2 environment</button>}
     </section>
     {anatomyControls}

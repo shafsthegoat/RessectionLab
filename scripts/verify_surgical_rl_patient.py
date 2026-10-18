@@ -16,7 +16,7 @@ from resectionlab.imaging import load_case, save_case
 from resectionlab.surgical_scene import from_case
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_rl_env import SurgicalRLEnv, RLConfig, RewardConfig
-from resectionlab.surgical_rl_protection import load_protection
+from resectionlab.surgical_rl_protection import GuardConfig, load_protection
 
 
 def file_hash(path):
@@ -87,7 +87,9 @@ def verify(case_path='outputs/surgical-patient-v2/patient.ressectionlab',
         reset_started = time.perf_counter()
         obs, initial_info = env.reset(seed=17)
         reset_seconds = time.perf_counter() - reset_started
-        reference = SurgicalEngine(scene)
+        reference = SurgicalEngine(scene, protection=protection, guard_config=GuardConfig(
+            require_critical_coverage=config.require_critical_coverage,
+            critical_max_displacement_mm=config.critical_max_displacement_mm))
         if env.engine.state['removed']: raise AssertionError('Episode did not begin intact')
         if not env.observation_space.contains(obs): raise AssertionError('Reset observation outside declared space')
         rows = []
@@ -97,7 +99,7 @@ def verify(case_path='outputs/surgical-patient-v2/patient.ressectionlab',
             obs, reward, terminated, truncated, info = env.step_action(action)
             action_seconds = time.perf_counter() - action_started
             blocked = name == 'brain' and str(info['outcome'].get('reason', '')).startswith('PROTECTED_STRUCTURE')
-            if env.engine.state_id != reference.state_id and not blocked:
+            if env.engine.state_id != reference.state_id:
                 raise AssertionError(name + ' wrapper/engine transition differs: ' + str(info))
             if result['status'] == 'rejected': raise AssertionError('Known patient action rejected: ' + str(result))
             if not env.observation_space.contains(obs) or not np.isfinite(reward):
@@ -138,16 +140,15 @@ def verify(case_path='outputs/surgical-patient-v2/patient.ressectionlab',
             if fresh['stateId'] != snapshot['stateId'] or fresh['totalReward'] != snapshot['totalReward']:
                 raise AssertionError('Fresh-process guarded RL replay differs')
             fresh_verified = True
-        # A guarded partial action must replay with the same protection set.
-        # Bare desktop engine replay does not carry that wrapper guard.
-        native = None
-        if name != 'brain':
-            SurgicalEngine.restore(scene, restored.engine.snapshot())
-            native = save_case(case, output / ('patient-' + name + '-rl.ressectionlab'), artifacts={'surgical_toolbox': {
-                'mapping': scene.regions, 'branches': {'main': restored.engine.snapshot()},
-                'branchId': 'main', 'position': len(restored.engine.actions), 'parents': {'main': None}}})
+        # Native snapshots carry the complete guard, including partial stops.
+        native_engine = SurgicalEngine.restore(scene, restored.engine.snapshot())
+        if native_engine.guard_report() != restored.engine.guard_report():
+            raise AssertionError('Native engine protection contract differs')
+        native = save_case(case, output / ('patient-' + name + '-rl.ressectionlab'), artifacts={'surgical_toolbox': {
+            'mapping': scene.regions, 'branches': {'main': restored.engine.snapshot()},
+            'branchId': 'main', 'position': len(restored.engine.actions), 'parents': {'main': None}}})
         episodes[name] = {'actions': rows, 'metrics': metrics, 'preRemovedCells': 0,
-            'resetWallSeconds': reset_seconds, 'initialInfo': initial_info, 'engineTransitionsIdentical': name != 'brain', 'protectedApproachBlocked': name == 'brain', 'jsonReplayVerified': True,
+            'resetWallSeconds': reset_seconds, 'initialInfo': initial_info, 'engineTransitionsIdentical': True, 'protectedApproachBlocked': name == 'brain', 'jsonReplayVerified': True,
             'postRestoreTransitionVerified': True, 'freshProcessReplayVerified': fresh_verified, 'nativeCase': str(native) if native else None}
     if file_hash(case_path) != source_hash or array_digest(scene.labels) != labels_hash or array_digest(case.mri) != intensity_hash:
         raise AssertionError('Source patient changed')

@@ -5,12 +5,60 @@ cells). These research exclusion regions are not anatomical certification.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 import itertools
 from pathlib import Path
 import numpy as np
 from scipy.spatial import cKDTree
 from .core import array_digest, semantic_digest
+
+GUARD_SCHEMA = 'resectionlab.surgical-protection-contract.v1'
+
+
+@dataclass(frozen=True)
+class GuardConfig:
+    """Shared research exclusion policy; relaxed coverage is an explicit choice."""
+    require_critical_coverage: bool = True
+    critical_max_displacement_mm: float = 0.
+
+    def __post_init__(self):
+        if type(self.require_critical_coverage) is not bool:
+            raise ValueError('Critical coverage choice must be boolean')
+        if type(self.critical_max_displacement_mm) not in (int, float) or not np.isfinite(self.critical_max_displacement_mm) or self.critical_max_displacement_mm < 0:
+            raise ValueError('Critical displacement allowance must be finite nonnegative millimeters')
+
+
+def missing_critical(protection):
+    present = {a.structure_id for a in protection.annotations if a.cells}
+    return tuple(sorted(set(protection.missing) | ({'brainstem'} - present)))
+
+
+def protection_contract(protection, config):
+    """Self-contained, content-bound evidence for native Save/Open and replay."""
+    record = {'schema': GUARD_SCHEMA, 'sceneId': protection.scene.identity,
+        'sourceBinding': grid_binding(protection.scene), 'config': asdict(config),
+        'clearanceMm': protection.clearance_mm, 'required': list(protection.required),
+        'annotations': [{'structureId': a.structure_id, 'cells': list(a.cells),
+            'provenance': a.provenance, 'reviewStatus': a.review_status, 'displayName': a.display_name}
+            for a in protection.annotations]}
+    record['contentHash'] = semantic_digest(record)
+    return record
+
+
+def restore_protection_contract(scene, record):
+    record = dict(record)
+    digest = record.pop('contentHash', None)
+    if record.get('schema') != GUARD_SCHEMA or semantic_digest(record) != digest:
+        raise ValueError('Protection contract integrity mismatch')
+    if record.get('sceneId') != scene.identity or record.get('sourceBinding') != grid_binding(scene):
+        raise ValueError('Protection contract source scene mismatch')
+    annotations = [ProtectionAnnotation(row['structureId'], tuple(row['cells']), record['sourceBinding'],
+        row['provenance'], row['reviewStatus'], row['displayName']) for row in record['annotations']]
+    protection = ProtectionSet(scene, annotations, clearance_mm=record['clearanceMm'], required=record['required'])
+    config = GuardConfig(**record['config'])
+    if config.require_critical_coverage and missing_critical(protection):
+        raise ValueError('MISSING_CRITICAL_ANNOTATIONS: ' + ', '.join(missing_critical(protection)))
+    return protection, config
 
 
 def grid_binding(scene):

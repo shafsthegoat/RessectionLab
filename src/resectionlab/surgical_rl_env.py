@@ -18,7 +18,7 @@ from .core import semantic_digest
 from .surgical_engine import SurgicalEngine
 from .surgical_tools import TOOLS
 from .surgical_scene import MATERIALS
-from .surgical_rl_protection import ProtectionSet
+from .surgical_rl_protection import ProtectionSet, GuardConfig
 from .surgical_rl_rewards import RewardConfig, RewardTracker, compute_reward
 
 SCHEMA = 'resectionlab.surgical-rl.v1'
@@ -58,67 +58,38 @@ class RLConfig:
             raise ValueError('Invalid time, success or observation resolution')
 
 class _ProtectedEngine(SurgicalEngine):
-    """Engine clone/rollback semantics are preserved; extra ledgers are sparse."""
+    """Reward-only ledgers; the base engine owns all protection decisions."""
     def __init__(self, scene, protection, config):
-        self.protection = protection
         self.rl_config = config
         self.rl_strain_peaks = {}
         self.rl_near_exposure = 0.
-        self._protected_ids = frozenset(map(int,protection.cells))
-        super().__init__(scene)
+        super().__init__(scene, protection=protection, guard_config=GuardConfig(
+            require_critical_coverage=config.require_critical_coverage,
+            critical_max_displacement_mm=config.critical_max_displacement_mm))
+
+    def fresh(self):
+        return type(self)(self.scene, self.protection, self.rl_config)
 
     def clone(self):
         result = super().clone()
         result.rl_strain_peaks = self.rl_strain_peaks.copy()
         return result
 
-    def _positions(self):
-        # Default no-go rule forbids displacement; the optional numerical limit
-        # still follows the exact raster used by collision and the desktop.
-        mapping = {}
-        for hold in self.state['holds'].values():
-            if 'target' in hold or not any(hold['offset']): continue
-            cells = [c for c in hold['cells'] if c in self._protected_ids]
-            for c in cells:
-                destination = np.asarray(np.unravel_index(c,self.scene.shape)) + hold['offset']
-                mapping[c] = int(np.ravel_multi_index(destination,self.scene.shape))
-        from .surgical_physics_v2 import raster
-        mapping.update(raster(self))
-        if not any(c in self._protected_ids and destination != c for c,destination in mapping.items()): return None
-        return self.scene.points([mapping.get(int(c), int(c)) for c in self.protection.cells])
-
-    def _substep(self,key,op,p,q,active,dt):
+    def _substep(self, key, op, p, q, active, dt):
         from .surgical_motion import swept_envelopes
-        positions = self._positions()
         nearby = set()
-        for other_key,other in self.state['slots'].items():
-            end = {'position':p,'quaternion':q} if other_key == key else other
-            tool,params = TOOLS[other['instrument']],self.parameters(other)
-            if len(self.protection.sweep_hits(tool,params,other,end,positions=positions)):
-                raise ValueError('PROTECTED_STRUCTURE: instrument or shaft enters the declared clearance')
-            if self.rl_config.near_margin_mm:
-                for a,b,radius,_ in swept_envelopes(tool,params,other,end):
-                    nearby.update(map(int,self.protection.capsule_hits(a,b,radius+self.rl_config.near_margin_mm,positions=positions)))
-        previous_thermal = {c:v for c,v in self.state['thermal'].items() if int(c) in self._protected_ids}
-        events = super()._substep(key,op,p,q,active,dt)
-        impacted = set(self.state['removed'])
-        for field in ('cutEdges','transectedEdges'):
-            impacted.update(c for edge in self.state.get(field,[]) for c in edge)
-        if impacted & self._protected_ids:
-            raise ValueError('PROTECTED_STRUCTURE: indirect removal or cutting is blocked')
-        for cell,u in self.state.get('deformation',{}).items():
-            if int(cell) in self._protected_ids and np.linalg.norm(u) > self.rl_config.critical_max_displacement_mm + 1e-9:
-                raise ValueError('PROTECTED_STRUCTURE: indirect deformation exceeds the declared limit')
-        for hold in self.state['holds'].values():
-            if 'target' in hold: continue
-            if np.linalg.norm(self.scene.affine[:3,:3] @ np.asarray(hold['offset'])) > self.rl_config.critical_max_displacement_mm + 1e-9 and self._protected_ids.intersection(hold['cells']):
-                raise ValueError('PROTECTED_STRUCTURE: grasp displaces protected fragment membership')
-        if any(int(c) in self._protected_ids and v > previous_thermal.get(c,0.) for c,v in self.state['thermal'].items()):
-            raise ValueError('PROTECTED_STRUCTURE: indirect thermal exposure is blocked')
-        # Commit only after all checks. Failed microsteps never accrue burden.
+        if self.rl_config.near_margin_mm and self._protected_ids:
+            positions = self._positions()
+            for other_key, other in self.state['slots'].items():
+                end = {'position': p, 'quaternion': q} if other_key == key else other
+                for a, b, radius, _ in swept_envelopes(TOOLS[other['instrument']], self.parameters(other), other, end):
+                    nearby.update(map(int, self.protection.capsule_hits(a, b,
+                        radius + self.rl_config.near_margin_mm, positions=positions)))
+        events = super()._substep(key, op, p, q, active, dt)
+        # Shared guard checks finish before reward ledgers can change.
         from .surgical_rl_rewards import deformation_scores
-        for cell,value in deformation_scores(self).items():
-            self.rl_strain_peaks[cell] = max(self.rl_strain_peaks.get(cell,0.),value)
+        for cell, value in deformation_scores(self).items():
+            self.rl_strain_peaks[cell] = max(self.rl_strain_peaks.get(cell, 0.), value)
         self.rl_near_exposure += len(nearby) * self.scene.voxel_mm3 * dt
         return events
 
@@ -160,9 +131,26 @@ class SurgicalRLEnv(gym.Env):
     @classmethod
     def from_patient(cls,path,*,protection_path=None,**kwargs):
         from .surgical_environment import load_environment
-        from .surgical_rl_protection import load_protection
+        from .surgical_rl_protection import load_protection, restore_protection_contract
+        from .imaging import read_case_artifacts
         scene = load_environment(path)
+        record = read_case_artifacts(path).get('surgical_toolbox') or {}
+        snapshot = record.get('branches', {}).get(record.get('branchId'), {})
+        embedded = snapshot.get('protectionContract')
         protection = load_protection(scene,protection_path) if protection_path else None
+        if embedded is not None:
+            saved_protection, saved_config = restore_protection_contract(scene, embedded)
+            if protection is not None:
+                from .surgical_rl_protection import protection_contract
+                if protection_contract(protection, saved_config) != embedded:
+                    raise ValueError('Explicit protection differs from saved environment contract')
+            else: protection = saved_protection
+            config = kwargs.get('config')
+            if config is None:
+                kwargs['config'] = RLConfig(require_critical_coverage=saved_config.require_critical_coverage,
+                    critical_max_displacement_mm=saved_config.critical_max_displacement_mm)
+            elif config.require_critical_coverage != saved_config.require_critical_coverage or config.critical_max_displacement_mm != saved_config.critical_max_displacement_mm:
+                raise ValueError('RL guard configuration differs from saved environment contract')
         return cls(scene,protection=protection,**kwargs)
 
     def reset(self,*,seed=None,options=None):
@@ -296,8 +284,7 @@ class SurgicalRLEnv(gym.Env):
             'config':asdict(self.config),'reward_config':asdict(self.reward_config),
             'metrics':self.measurements.copy(),'reward_terms':dict(terms or {}),'total_reward':self.total_reward,
             'outcome':copy.deepcopy(outcome),'termination_reason':self.termination_reason,'success':self.termination_reason=='target_fraction_reached',
-            'protection':{**self.protection.report(),'missingRequired':list(self.missing_critical),
-                'status':'unknown-coverage' if self.missing_critical else 'declared-masks-only'},'observation_semantics':'partial modeled segmentation observations; not a full Markov state',
+            'protection':self.engine.guard_report(),'observation_semantics':'partial modeled segmentation observations; not a full Markov state',
             'unassessed':['functional motor/language cortex','corticospinal and other white-matter tracts','optic pathways unless separately supplied'],
             'approximations':['uncalibrated dynamics and rewards','conservative registered-mask exclusion zones','local 2 mm sampled observations by default']}
 
