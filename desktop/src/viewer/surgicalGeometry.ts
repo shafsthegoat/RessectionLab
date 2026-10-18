@@ -75,6 +75,11 @@ export function surgicalEffectMarkers(view:import('../surgical-types').SurgicalV
   for(const [field,material] of [['thermal',true],['fluid',false],['debris',false]] as const){
     for(const [id,value] of Object.entries(view[field]??{})){const p=point(Number(id),material);if(p)add(field,[p],value);}
   }
+  const boneProfile=view.physics?.profile?.bone as {ambientTemperatureC?:number}|undefined;
+  const ambient=boneProfile?.ambientTemperatureC;
+  if(Number.isFinite(ambient))for(const [id,temperature] of Object.entries(view.drillingV2?.temperatureC??{})){
+    const p=point(Number(id),false);if(p&&temperature>(ambient??0)+.01)add('thermal',[p],temperature-(ambient??0));
+  }
   const edgeKeys=new Set<string>();
   const indices=(id:number)=>[Math.floor(id/(ny*nz)),Math.floor(id/nz)%ny,id%nz];
   const removed=new Set(view.removed);

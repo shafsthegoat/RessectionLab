@@ -10,7 +10,7 @@ function Numeric({value,onChange,label,min,max,step=.1}:{value:number;onChange:(
   useEffect(()=>{if(!focused.current)setDraft(String(+value.toFixed(3)));},[value]);
   return <input aria-label={label} type="number" min={min} max={max} step={step} value={draft} onFocus={()=>{focused.current=true;}} onChange={e=>{setDraft(e.target.value);const n=e.target.valueAsNumber;if(Number.isFinite(n)&&(min===undefined||n>=min)&&(max===undefined||n<=max))onChange(n);}} onBlur={()=>{focused.current=false;setDraft(String(+value.toFixed(3)));}}/>;
 }
-const parameterSpecs:Record<string,{label:string;min:number;max:number;default:number}>={amplitudeMa:{label:'Stimulus amplitude · mA',min:0,max:20,default:1},frequencyHz:{label:'Frequency · Hz',min:0,max:500,default:60},pulseWidthUs:{label:'Pulse width · µs',min:0,max:1000,default:100},radiusMm:{label:'Tip radius · mm',min:.1,max:12,default:2},depthMm:{label:'Working depth · mm',min:.1,max:20,default:2},flowMm3PerSecond:{label:'Flow · mm³/s',min:0,max:1000,default:20},power:{label:'Power · model units',min:0,max:10,default:1},jawOpeningMm:{label:'Jaw opening · mm',min:0,max:12,default:2}};
+const parameterSpecs:Record<string,{label:string;min:number;max:number;default:number}>={rpm:{label:'Drill speed · rpm',min:0,max:80000,default:40000},forceN:{label:'Contact force · N',min:0,max:20,default:1},duty:{label:'Drill duty fraction',min:0,max:1,default:1},amplitudeMa:{label:'Stimulus amplitude · mA',min:0,max:20,default:1},frequencyHz:{label:'Frequency · Hz',min:0,max:500,default:60},pulseWidthUs:{label:'Pulse width · µs',min:0,max:1000,default:100},radiusMm:{label:'Tip radius · mm',min:.1,max:12,default:2},depthMm:{label:'Working depth · mm',min:.1,max:20,default:2},flowMm3PerSecond:{label:'Flow · mm³/s',min:0,max:1000,default:20},power:{label:'Power · model units',min:0,max:10,default:1},jawOpeningMm:{label:'Jaw opening · mm',min:0,max:12,default:2}};
 
 function ActionResult({outcome,title}:{outcome:Pick<SurgicalOutcome,'reason'|'events'>&{status:string;completedFraction?:number};title:string}){
   const summaries=summarizeSurgicalEvents(outcome.events??[]);
@@ -35,6 +35,7 @@ function DeclaredFields({data}:{data:Record<string,unknown>}){
 }
 function SceneResearchDetails({view,preview}:{view:SurgicalView;preview:boolean}){
   const source=view.scene.source,adapter=source?.adapter,physics=view.physics??view.scene.physics;
+  const v2=physics?.profile?.schema==='resectionlab.tissue-physics.v2';
   const patientDerivative=adapter?.type==='native-patient-research-derivative';
   const mapped=new Set(view.scene.regions.map(r=>r.material));
   const metrics:Record<string,unknown>={...view.metrics,...physics?.metrics};
@@ -44,13 +45,14 @@ function SceneResearchDetails({view,preview}:{view:SurgicalView;preview:boolean}
     {patientDerivative&&<div className="surgical-warning"><strong>Patient-derived research estimate</strong><p>This scene is derived from patient anatomy. Material properties and flow behavior are declared research assumptions, not measured patient physiology. Derived geometry is separate from source annotations.</p></div>}
     {adapter?.warnings?.length? <ul className="surgical-warning">{adapter.warnings.map((warning,i)=><li key={i}>{warning}</li>)}</ul>:null}
     <p className="surgical-note">Scene grid: {view.scene.resolutionMm.map(n=>+n.toFixed(3)).join(' × ')} mm · {view.scene.shape.join(' × ')} cells.</p>
+    {v2&&<p className="surgical-note">V2 research mechanics: coupled brain relaxation, work and heat based drilling, and pressure-driven clustered bleeding. Parameters are uncalibrated assumptions; the volume penalty is approximate and global perfusion is unknown.</p>}
     <details><summary>Provenance, material behavior, and assumptions</summary>
       {source&&<DeclaredFields data={Object.fromEntries(Object.entries(source).filter(([key])=>key!=='adapter'))}/>}
       {adapter&&<details><summary>Source adapter and declared patient source</summary><DeclaredFields data={adapter}/></details>}
       <ul className="surgical-note">
-        {mapped.has('bone')&&<li>Bone: rigid cells; drilling and kerf cutting remove cells and produce modeled debris.</li>}
-        {(mapped.has('soft_tissue')||mapped.has('tumor'))&&<li>Brain / soft tissue and tumor: lattice patch displacement and compatible-tool removal; no calibrated deformation law.</li>}
-        {mapped.has('vessel')&&<li>Vessels: local adjacency cutting retains pieces. {physics?.capabilities?.damageTriggeredVesselWounds===true?'Declared damage-triggered wound outlets use an assumed local flow proxy.':'Damage-triggered vessel wound behavior is not declared as enabled.'} Global perfusion is unknown.</li>}
+        {mapped.has('bone')&&<li>Bone: rigid cells; {v2?'drilling accumulates work before removal and models heat generation and cooling.':'drilling and kerf cutting remove cells and produce modeled debris.'}</li>}
+        {(mapped.has('soft_tissue')||mapped.has('tumor'))&&<li>Brain / soft tissue and tumor: {v2?'coupled local tissue deformation with timed relaxation after release, distinct assumed stiffness, and an approximate volume penalty.':'lattice patch displacement and compatible-tool removal; no calibrated deformation law.'}</li>}
+        {mapped.has('vessel')&&<li>Vessels: local adjacency cutting retains pieces. {v2?'Clustered wound outlets use assumed pressure, finite vascular reserves, and refill; the fluid budget is tracked.':physics?.capabilities?.damageTriggeredVesselWounds===true?'Declared damage-triggered wound outlets use an assumed local flow proxy.':'Damage-triggered vessel wound behavior is not declared as enabled.'} Global perfusion is unknown.</li>}
         {mapped.has('membrane')&&<li>Membranes: retained cut seams and graph separation; no fabricated physical aperture.</li>}
         {mapped.has('unknown')&&<li>Unknown material remains explicitly unmapped; no tissue behavior is inferred from its label.</li>}
       </ul>
@@ -61,6 +63,29 @@ function SceneResearchDetails({view,preview}:{view:SurgicalView;preview:boolean}
   </section>;
 }
 
+function MechanicsV2Details({view,preview}:{view:SurgicalView;preview:boolean}){
+  const drill=view.drillingV2,brain=view.deformationModel,vessels=view.vesselsV2;
+  const sum=(values:Record<string,number>|undefined)=>values?Object.values(values).reduce((a,b)=>a+b,0):undefined;
+  const displacement=view.deformation?Math.max(0,...Object.values(view.deformation).map(v=>Math.hypot(...v))):undefined;
+  const temperature=drill&&Object.keys(drill.temperatureC).length?Object.values(drill.temperatureC).reduce((max,value)=>Math.max(max,value),-Infinity):view.metrics.drillMaxTemperatureC;
+  const rows:Array<[string,unknown]>=[
+    ['Drill input energy · J',drill?.inputEnergyJ??view.metrics.drillInputEnergyJ],
+    ['Pending cutting work · J',sum(drill?.workJ)??view.metrics.drillPendingWorkJ],
+    ['Generated heat · J',drill?.heatGeneratedJ??view.metrics.drillHeatGeneratedJ],
+    ['Maximum modeled temperature · °C',temperature],
+    ['Brain elastic energy · N·mm',brain?.elasticEnergyNmm],
+    ['Active deformation cells',brain?.activeNodes??brain?.active?.length],
+    ['Maximum displacement · mm',displacement],
+    ['Maximum neighbor displacement / spacing',brain?.maxNeighborDisplacementRatio],
+    ['Vascular pressure · Pa',vessels?.pressurePa],
+    ['Vascular reserve remaining · mm³',vessels?.remainingMm3],
+    ['Vascular refill · mm³',vessels?.refilledMm3],
+    ['Generated wound fluid · mm³',vessels?.generatedMm3],
+    ['Vascular budget residual · mm³',vessels?vessels.initialMm3+vessels.refilledMm3-vessels.remainingMm3-vessels.generatedMm3:undefined],
+  ];
+  return <details><summary>{preview?'Preview':'Recorded'} V2 mechanics and fluid budget</summary><dl className="surgical-declared-fields">{rows.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{typeof value==='number'&&Number.isFinite(value)?+value.toFixed(5):displayValue(value)}</dd></div>)}</dl><p className="surgical-note">The vascular budget compares initial reserve plus refill against remaining reserve and generated fluid. These modeled quantities do not estimate patient blood loss or predict tissue injury.</p></details>;
+}
+
 export function SurgicalPanel({c,onFixture,onImport,available}:{c:SurgicalController;onFixture:()=>void;onImport?:(options:SurgicalImportOptions)=>Promise<void>|void;available:boolean}){
   const [importOptions,setImportOptions]=useState<SurgicalImportOptions>({frame:'RAS+',units:'mm',material:'unknown',resolution:1,topology:'solid',thicknessMm:1});
   const [importing,setImporting]=useState(false),[importError,setImportError]=useState<string|null>(null);
@@ -68,19 +93,20 @@ export function SurgicalPanel({c,onFixture,onImport,available}:{c:SurgicalContro
   const [mapping,setMapping]=useState<SurgicalRegion[]|null>(null);
   const v=c.view,selected=v?.slots[c.slot],tool=v?.catalog.find(t=>t.id===selected?.instrument),r=c.result;
   const displayed=c.preview??v;
+  const v2=v?.physics?.profile?.schema==='resectionlab.tissue-physics.v2';
   const latestOutcome=c.preview?c.previewOutcome:r?.outcome??v?.history.at(-1);
   const observation=displayed?.observations?.at(-1);
   const q=new Euler().setFromQuaternion(new Quaternion(...c.pose.quaternion));
   const steps=r?.branches.find(b=>b.id===r.branchId)?.steps??0;
   useEffect(()=>{setMapping(null);setPlaying(false);},[v?.scene.sceneId]);
   useEffect(()=>{if(!playing||c.pending)return;if(!r||r.position>=steps){setPlaying(false);return;}const timer=setTimeout(()=>{void c.run('seek',{position:r.position+1}).then(ok=>{if(!ok)setPlaying(false);});},600);return()=>clearTimeout(timer);},[playing,c.pending,r?.position,r?.branchId,steps]);
-  const keys=['radiusMm',...(tool?.effect==='probe'?['amplitudeMa','frequencyHz','pulseWidthUs']:[]),...(['incise','kerf','sheet_cut','transect','irrigate'].includes(tool?.effect??'')?['depthMm']:[]),...(['suction','irrigate'].includes(tool?.effect??'')?['flowMm3PerSecond']:[]),...(tool?.effect==='coagulate'?['power']:[]),...(['forceps','scissors'].includes(tool?.geometry??'')?['jawOpeningMm']:[])];
+  const keys=['radiusMm',...(v2&&tool?.id==='cranial_drill'?['rpm','forceN','duty']:v2&&tool?.materials.includes('vessel')?['forceN']:[]),...(tool?.effect==='probe'?['amplitudeMa','frequencyHz','pulseWidthUs']:[]),...(['incise','kerf','sheet_cut','transect','irrigate'].includes(tool?.effect??'')?['depthMm']:[]),...(['suction','irrigate'].includes(tool?.effect??'')?['flowMm3PerSecond']:[]),...(tool?.effect==='coagulate'?['power']:[]),...(['forceps','scissors'].includes(tool?.geometry??'')?['jawOpeningMm']:[])];
   const params=Object.fromEntries(keys.map(k=>[k,c.parameters[k]??(k==='radiusMm'?tool?.radiusMm:undefined)??parameterSpecs[k].default]));
   const compatible=tool?.materials.length===0||v?.scene.regions.some(row=>tool?.materials.includes(row.material));
   const changeMap=(fn:(rows:SurgicalRegion[])=>void)=>{const rows=structuredClone(mapping??v?.scene.regions??[]);fn(rows);setMapping(rows);};
   const stopRun=(command:string,extra:Record<string,unknown>={})=>{setPlaying(false);void c.run(command,extra);};
   return <section className="surgical-panel" aria-label="Surgical instrument toolbox"><span className="eyebrow">SURGICAL WORKBENCH</span><h2>Instrument toolbox</h2>
-    <p className="surgical-note">Geometric research simulation · source anatomy preserved. Grid-snapped displacement, contact, fluid, and energy are uncalibrated approximations.</p>
+    <p className="surgical-note">Geometric research simulation · source anatomy preserved. {v2?'Continuous local deformation is displayed and checked on the declared scene grid; contact, fluid, and energy remain uncalibrated approximations.':'Grid-snapped displacement, contact, fluid, and energy are uncalibrated approximations.'}</p>
     <button disabled={c.pending||importing} onClick={onFixture}>Open engineering test scene</button>
     {onImport&&<details><summary>Import segmentation / geometry</summary><p className="surgical-note">Choose NIfTI labels (.nii/.nii.gz), OBJ, or STL. Declare the source coordinates and units before selecting a file. Imported segmentation has no acquired MRI intensity image.</p><fieldset disabled={c.pending||importing} className="surgical-controls">
       <label>Source frame<select aria-label="Import source frame" value={importOptions.frame} onChange={e=>setImportOptions({...importOptions,frame:e.target.value as SurgicalImportOptions['frame']})}><option value="RAS+">RAS+</option><option value="LPS+">LPS+</option></select></label>
@@ -113,6 +139,7 @@ export function SurgicalPanel({c,onFixture,onImport,available}:{c:SurgicalContro
     </fieldset>
     {c.preview&&<div className="surgical-preview" role="status"><strong>PREVIEW · uncommitted outcome</strong><p>Target removal +{(Number(c.preview.metrics.targetRemovedMm3)-Number(v.metrics.targetRemovedMm3)).toFixed(2)} mm³ · other removal +{(Number(c.preview.metrics.nonTargetRemovedMm3)-Number(v.metrics.nonTargetRemovedMm3)).toFixed(2)} mm³. Apply commits; Cancel returns to recorded anatomy.</p></div>}
     {latestOutcome&&<ActionResult outcome={latestOutcome} title={c.preview?'Preview result':'Last action result'}/>}
+    {displayed&&v2&&<MechanicsV2Details view={displayed} preview={!!c.preview}/>}
     {observation&&<StimulationObservation observation={observation} preview={!!c.preview}/>}
     <div className="surgical-actions"><button disabled={c.pending||!r?.position} onClick={()=>stopRun('undo')}>Undo</button><button disabled={c.pending||r?.position===steps} onClick={()=>stopRun('redo')}>Redo</button><button disabled={c.pending} onClick={()=>stopRun('reset')}>Reset</button><button disabled={c.pending} onClick={()=>stopRun('branch')}>Branch</button></div>
     <label>Branch<select disabled={c.pending} value={r?.branchId} onChange={e=>stopRun('selectBranch',{branchId:e.target.value})}>{r?.branches.map(b=><option key={b.id} value={b.id}>{b.id} · {b.steps} actions</option>)}</select></label>

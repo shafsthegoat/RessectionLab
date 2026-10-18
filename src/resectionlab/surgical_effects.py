@@ -13,6 +13,8 @@ from .surgical_tools import TOOLS
 def initialize_effect_state(engine):
     from .surgical_physics import initialize_physics
     initialize_physics(engine)
+    from .surgical_physics_v2 import initialize
+    initialize(engine)
     for name in ('cutEdges', 'separatedAttachments', 'transectedEdges', 'flapComponents', 'meshCutEdges', 'meshSeams'):
         engine.state.setdefault(name, [])
     engine.state.setdefault('debris', {})
@@ -74,7 +76,7 @@ def _bone_components(engine):
     sizes = np.bincount(components.ravel(), minlength=count + 1)
     anchors = engine.scene.properties.get('boneAnchors', [])
     anchored = set(map(int, components.ravel()[anchors])) if anchors else set()
-    compact = bool(engine.scene.properties.get('tissuePhysics'))
+    compact = bool(engine.scene.properties.get('tissuePhysics') or engine.scene.properties.get('tissuePhysicsV2'))
     summaries = []
     for identifier, slices in enumerate(find_objects(components), 1):
         if slices is None: continue
@@ -132,7 +134,7 @@ def apply_effect(engine, key, op, cells, p, q, dt):
     if effect == 'transect':
         if params['jawOpeningMm'] > 0.5: return []
         from .surgical_physics import vessel_profile, record_vessel_transections
-        profile = vessel_profile(engine)
+        profile = vessel_profile(engine) or engine.scene.properties.get('tissuePhysicsV2', {}).get('vessel')
         if 'strands' not in engine.scene.properties and _source_geometry(engine).get('topology') != 'strand' and profile is None: raise ValueError('MISSING_STRAND_PROPERTIES')
         edges = []
         for strand in engine.scene.properties.get('strands', []):
@@ -148,7 +150,10 @@ def apply_effect(engine, key, op, cells, p, q, dt):
         edges = [edge for edge in edges
                  if (lambda side: side.min() <= 0 < side.max())((_current_points(engine, edge) - p) @ normal)]
         count = _record_edges(engine, 'transectedEdges', edges)
-        record_vessel_transections(engine, edges)
+        if engine.scene.properties.get('tissuePhysicsV2'):
+            from .surgical_vessels_v2 import damage
+            damage(engine, edges)
+        else: record_vessel_transections(engine, edges)
         mesh_count = _mesh_seam(engine, p, orientation, params) if _source_geometry(engine).get('topology') == 'strand' else 0
         return [{'kind': 'strand_transection', 'edges': count, 'meshEdges': mesh_count, 'piecesRetained': True}] if count or mesh_count else []
     if effect == 'grasp':
@@ -212,7 +217,11 @@ def apply_effect(engine, key, op, cells, p, q, dt):
         exposure = params['power'] * dt
         for i in cells: state['thermal'][str(i)] = state['thermal'].get(str(i), 0.) + exposure
         changed = []
+        if engine.scene.properties.get('tissuePhysicsV2'):
+            from .surgical_vessels_v2 import coagulate
+            coagulate(engine, cells, params['power'], dt)
         for source in state['sources']:
+            if source.get('modelVersion') == 2: continue
             if source['cell'] in cells:
                 if 'coagulationExposure' not in source: raise ValueError('MISSING_SOURCE_COAGULATION_PROPERTY')
                 source['exposure'] += exposure
@@ -369,6 +378,10 @@ def _source_geometry(engine):
 def _current_points(engine, cells):
     """Blade geometry follows persistent source cells through lattice holds."""
     ids = list(cells)
+    if engine.scene.properties.get('tissuePhysicsV2'):
+        from .surgical_physics_v2 import raster
+        positions = dict(raster(engine))
+        return engine.scene.points([positions.get(i, i) for i in ids])
     points = engine.scene.points(ids)
     locations = {int(cell): index for index, cell in enumerate(ids)}
     for hold in engine.state['holds'].values():

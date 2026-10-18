@@ -7,7 +7,8 @@ import numpy as np
 
 
 class MaterialOccupancy:
-    def __init__(self, labels, cleared, moved):
+    def __init__(self, labels, cleared, moved, memberships=None):
+        self.memberships = memberships or {}
         self.labels = labels.ravel()
         self.cleared = frozenset(cleared)
         self.moved = dict(moved)
@@ -22,6 +23,13 @@ class MaterialOccupancy:
             if int(i) in self.moved: values[at] = self.moved[int(i)]
             elif int(i) in self.cleared: values[at] = 0
         return values
+
+    def material_ids(self, indices):
+        result = set()
+        for cell, value in zip(indices, self[indices]):
+            if int(cell) in self.memberships: result.update(self.memberships[int(cell)])
+            elif value: result.add(int(value) - 1)
+        return sorted(result)
 
     def __array__(self, dtype=None, copy=None):
         result = np.where(self.labels != 0, np.arange(len(self.labels), dtype=np.int32) + 1, 0)

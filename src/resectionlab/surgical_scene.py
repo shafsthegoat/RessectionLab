@@ -56,6 +56,8 @@ class SurgicalScene:
         """Reject invalid explicit physics before any transition can run."""
         from .surgical_physics import validate_tissue_physics
         validate_tissue_physics(self)
+        from .surgical_physics_v2 import validate
+        validate(self)
         def cell(value):
             if type(value) is not int or not 0 <= value < self.labels.size:
                 raise ValueError('Property cell must index this source grid')
@@ -91,7 +93,7 @@ class SurgicalScene:
         return {'sceneId': self.identity, 'shape': list(self.shape), 'affine': self.affine.tolist(),
                 'regions': copy.deepcopy(self.regions), 'source': copy.deepcopy(self.source),
                 'resolutionMm': self.spacing.tolist(), 'frame': 'RAS+', 'units': 'mm',
-                'approximations': ['whole-cell removal', 'reversible lattice patch displacement',
+                'approximations': ['whole-cell removal', ('continuous coupled displacement with shared grid raster' if self.properties.get('tissuePhysicsV2') else 'reversible lattice patch displacement'),
                                    'geometric contact; no calibrated force or clinical risk']}
 
 

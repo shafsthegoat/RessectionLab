@@ -17,7 +17,8 @@ export function modeledVolume(source:ViewerVolume,view:SurgicalView):ViewerVolum
   const sourceRas=rasAffine(source.affine,source.frame),sceneRas=rasAffine(view.scene.affine,'RAS+');
   if(sourceRas.some((row,i)=>row.some((value,j)=>Math.abs(value-sceneRas[i][j])>1e-6)))throw Error('Simulation/source affine mismatch');
   const count=source.shape.reduce((a,b)=>a*b,1),regions=view.scene.regions;
-  const key=JSON.stringify([regions,view.removed,view.moved]);
+  const coupled = view.physics?.profile?.schema === 'resectionlab.tissue-physics.v2';
+  const key=JSON.stringify([regions,view.removed,view.moved,...(coupled?['coupled-v2']:[])]);
   const cached=geometryCache.get(source)??new Map<string,ViewerVolume>();
   const existing=cached.get(key);
   if(existing)return existing;
@@ -30,7 +31,8 @@ export function modeledVolume(source:ViewerVolume,view:SurgicalView):ViewerVolum
     const original=owner.slice(),valid=(i:number)=>Number.isInteger(i)&&i>=0&&i<count;
     for(const i of view.removed){if(!valid(i))throw Error('Invalid removed cell');owner[i]=0;}
     for(const [a,b] of view.moved){if(!valid(a)||!valid(b))throw Error('Invalid displacement');owner[a]=0;}
-    for(const [a,b] of view.moved)owner[b]=original[a];
+    const priority = new Map(regions.map((r,i)=>[r.id,i]));
+    for(const [a,b] of view.moved){if(!coupled || (priority.get(original[a])??-1)>=(priority.get(owner[b])??-1))owner[b]=original[a];}
     compartments=regions.map(r=>{const mask=new Uint8Array(count);for(let i=0;i<count;i++)mask[i]=Number(owner[i]===r.id);return {name:r.name,color:r.color,mask};});
     // Regions absent from a mapping remain inspectable, with their original source masks.
     for(const layer of source.compartments)if(!regions.some(r=>r.name===layer.name)){

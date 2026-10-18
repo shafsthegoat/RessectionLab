@@ -142,3 +142,29 @@ test('MPR clipping shows cut faces and segments crossing a slab even when every 
   assert.equal(clipSurgicalMarkersToSlab([face],0,4,.5).length,0);
   assert.equal(face.points[0][2],-2,'source marker stays untouched');
 });
+
+test('coupled soft-cell raster uses saved precedence independently of label numbers and move order',()=>{
+  const s=source(),renamed=regions.map((r,i)=>({...r,id:i?3:98}));
+  const v=view({physics:{profile:{schema:'resectionlab.tissue-physics.v2'}},scene:{shape:s.shape,regions:renamed,affine:identity()},moved:[[1,2],[0,2]]});
+  const modeled=modeledVolume(s,v);
+  assert.deepEqual([...modeled.compartments[0].mask],[0,0,0,0]);
+  assert.deepEqual([...modeled.compartments[1].mask],[0,0,1,0]);
+  assert.equal(modeled.mri,s.mri);
+  assert.deepEqual([...modeledVolume(s,{...v,moved:[...v.moved].reverse()}).compartments[1].mask],[0,0,1,0]);
+});
+
+test('drill temperature markers use authoritative physical cells and common slice/3D marker state',async()=>{
+  const {surgicalEffectMarkers,clipSurgicalMarkersToSlab}=await import('../src/viewer/surgicalGeometry.ts');
+  const v=view({physics:{profile:{bone:{ambientTemperatureC:37}}},contact:[],thermal:{},fluid:{},cuts:[],history:[],drillingV2:{temperatureC:{1:45,2:37,3:NaN}}});
+  const markers=surgicalEffectMarkers(v);
+  assert.equal(markers.length,1);assert.deepEqual(markers[0].points,[[1,0,0]]);assert.equal(markers[0].value,8);
+  assert.equal(clipSurgicalMarkersToSlab(markers,0,1,.5).length,1);
+  assert.equal(clipSurgicalMarkersToSlab(markers,0,3,.5).length,0);
+});
+
+test('drill event summaries report physical work and removal without summing pending contacts',async()=>{
+  const {summarizeSurgicalEvents}=await import('../src/surgical-types.ts');
+  const rows=summarizeSurgicalEvents([{kind:'drill_work',inputEnergyJ:2,cuttingWorkJ:1.5,removedVolumeMm3:2,pendingCells:3},{kind:'drill_work',inputEnergyJ:3,cuttingWorkJ:2,removedVolumeMm3:4,pendingCells:2}]);
+  assert.equal(rows[0].label,'Bone cutting work');
+  assert.deepEqual(rows[0].details,['6 mm³ removed','5 J input','3.5 J cutting work']);
+});

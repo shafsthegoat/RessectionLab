@@ -63,7 +63,7 @@ class SurgicalEngine:
         return other
 
     def occupancy(self):
-        key = semantic_digest({'removed': self.state['removed'], 'holds': self.state['holds']})
+        key = semantic_digest({'removed': self.state['removed'], 'holds': self.state['holds'], **({'deformation': self.state['deformation']} if 'deformation' in self.state else {})})
         if self._occupancy_cache is not None and self._occupancy_cache[0] == key:
             return self._occupancy_cache[1]
         from .surgical_occupancy import MaterialOccupancy
@@ -72,6 +72,7 @@ class SurgicalEngine:
         moves = []
         held_ids = set()
         for hold in self.state['holds'].values():
+            if 'target' in hold: continue
             retained = np.array([i for i in hold['cells'] if i not in removed], dtype=np.int64)
             if not len(retained): continue
             if held_ids.intersection(retained): raise ValueError('MATERIAL_ALREADY_HELD')
@@ -88,7 +89,22 @@ class SurgicalEngine:
                 if target in destinations or (base[target] and target not in cleared):
                     raise ValueError('DISPLACEMENT_COLLISION')
                 destinations[int(target)] = int(original) + 1
-        owner = MaterialOccupancy(self.scene.labels, cleared, destinations)
+        memberships = {}
+        if 'deformation' in self.state:
+            from .surgical_physics_v2 import raster
+            pairs = raster(self)
+            cleared.update(a for a, b in pairs)
+            for original, target in pairs:
+                if base[target] and target not in cleared:
+                    material = self.by_label[int(base[target])]['material']
+                    if material not in ('soft_tissue', 'tumor'): raise ValueError('DISPLACEMENT_COLLISION')
+                    memberships.setdefault(target, []).append(target)
+                memberships.setdefault(target, []).append(original)
+            for target, originals in memberships.items():
+                memberships[target] = sorted(set(originals))
+                precedence = {r['id']: rank for rank, r in enumerate(self.scene.regions)}
+                destinations[target] = max(originals, key=lambda c: (precedence[int(base[c])], c)) + 1
+        owner = MaterialOccupancy(self.scene.labels, cleared, destinations, memberships)
         self._occupancy_cache = (key, owner)
         return owner
 
@@ -99,12 +115,12 @@ class SurgicalEngine:
 
     def touched(self, a, b, radius):
         cells = self.cells(a, b, radius)
-        material = self.occupancy()[cells]
-        return sorted(set(map(int, material[material > 0] - 1)))
+        return self.occupancy().material_ids(cells)
 
     def parameters(self, slot):
         tool = TOOLS[slot['instrument']]
-        return {'radiusMm': tool['radiusMm'], 'depthMm': 2., 'flowMm3PerSecond': 20., 'power': 1., 'jawOpeningMm': 2., **slot['parameters']}
+        extra = {'rpm': 40000., 'forceN': 1., 'duty': 1.} if self.scene.properties.get('tissuePhysicsV2') else {}
+        return {**extra, 'radiusMm': tool['radiusMm'], 'depthMm': 2., 'flowMm3PerSecond': 20., 'power': 1., 'jawOpeningMm': 2., **slot['parameters']}
 
     def preview(self, action):
         candidate = self.clone()
@@ -140,10 +156,20 @@ class SurgicalEngine:
         limits = {'radiusMm': (.1, 12.), 'depthMm': (.1, 20.), 'flowMm3PerSecond': (0., 1000.),
                   'power': (0., 10.), 'jawOpeningMm': (0., 12.),
                   'amplitudeMa': (0., 20.), 'frequencyHz': (0., 500.), 'pulseWidthUs': (0., 1000.)}
+        if self.scene.properties.get('tissuePhysicsV2'):
+            limits.update(rpm=(0., 80000.), forceN=(0., 20.), duty=(0., 1.))
         if set(parameters) - set(limits): raise ValueError('Unsupported instrument parameters')
         for name, value in parameters.items():
             if type(value) not in (int, float) or not math.isfinite(value) or not limits[name][0] <= value <= limits[name][1]:
                 raise ValueError('Invalid parameter: ' + name)
+        if self.scene.properties.get('tissuePhysicsV2'):
+            slot = self.state['slots'][action['slot']]
+            instrument = action.get('instrument', slot['instrument']) if action['operation'] == 'exchange' else slot['instrument']
+            if instrument == 'cranial_drill':
+                existing = {} if action['operation'] == 'exchange' else slot['parameters']
+                radius = parameters.get('radiusMm', existing.get('radiusMm', TOOLS[instrument]['radiusMm']))
+                if radius > self.scene.properties['tissuePhysicsV2']['bone']['maxRadiusMm']:
+                    raise ValueError('DRILL_RADIUS_EXCEEDS_PROFILE: geometry and cutting radius must agree')
         return duration, points
 
     def step(self, action):
@@ -222,6 +248,8 @@ class SurgicalEngine:
         done = 0
         reason = None
         contact_position = None
+        path_fraction = None
+        completed_length = 0.
         for start, end, n in segments:
             interpolation = Slerp([0, 1], Rotation.from_quat([start['quaternion'], end['quaternion']]))
             for j in range(n):
@@ -244,21 +272,49 @@ class SurgicalEngine:
                 events.extend(delta_events)
                 done += 1
             if reason: break
+            segment_length = float(np.linalg.norm(np.subtract(end['position'], start['position'])))
+            # A stalled waypoint cannot be skipped in favor of a later leg:
+            # that would change a drawn trajectory into an unintended shortcut.
+            if len(segments) > 1 and active and slot['instrument'] == 'cranial_drill' and self.scene.properties.get('tissuePhysicsV2'):
+                remaining = float(np.linalg.norm(np.subtract(self.state['slots'][key]['position'], end['position'])))
+                if remaining > 1e-5:
+                    length = sum(float(np.linalg.norm(np.subtract(b['position'], a['position']))) for a, b, _ in segments)
+                    path_fraction = (completed_length + max(0., segment_length - remaining)) / max(length, 1e-15)
+                    reason = 'BONE_CUTTING_IN_PROGRESS'
+                    contact_position = self.state['slots'][key]['position'][:]
+                    events.append({'kind': 'drill_contact_dwell', 'position': contact_position, 'remainingPathMm': length * (1. - path_fraction)})
+                    break
+            completed_length += segment_length
         if reason:
             events.append({'kind': 'contact_stop', 'reason': reason, 'position': contact_position})
         if done == 0: return {'status': 'rejected', 'reason': reason, 'completedFraction': 0., 'events': events}
         if op == 'withdraw' and not reason: slot = self.state['slots'][key]; slot['inserted'] = False
-        if op in ('hold', 'grasp') and key in self.state['holds']:
+        if op in ('hold', 'grasp') and key in self.state['holds'] and 'target' not in self.state['holds'][key]:
             self.state['holds'][key]['origin'] = self.state['slots'][key]['position'][:]
         if active and not events:
             events.append({'kind': 'no_material_effect', 'reason': 'No compatible structure intersected by the working tip'})
         events.insert(0, {'kind': op, 'instrument': tool['name'], 'slot': key})
-        return {'status': 'partial' if reason else 'accepted', 'reason': reason, 'completedFraction': done / total, 'contactPosition': contact_position, 'events': events}
+        fraction = done / total if path_fraction is None else path_fraction
+        if not reason and points and tool['name'] == 'Cranial drill' and self.scene.properties.get('tissuePhysicsV2'):
+            remaining = float(np.linalg.norm(np.subtract(self.state['slots'][key]['position'], points[-1]['position'])))
+            if remaining > 1e-5:
+                length = sum(float(np.linalg.norm(np.subtract(b['position'], a['position']))) for a, b, _ in segments)
+                fraction = max(0., 1. - remaining / max(length, remaining))
+                reason = 'BONE_CUTTING_IN_PROGRESS'
+                contact_position = self.state['slots'][key]['position'][:]
+                events.append({'kind': 'drill_contact_dwell', 'position': contact_position, 'remainingPathMm': remaining})
+        return {'status': 'partial' if reason else 'accepted', 'reason': reason, 'completedFraction': fraction, 'contactPosition': contact_position, 'events': events}
 
     def _substep(self, key, op, p, q, active, dt):
         from .surgical_motion import envelopes, swept_envelopes, pair_conflict
         slot = self.state['slots'][key]; tool = TOOLS[slot['instrument']]; params = self.parameters(slot)
         axis = rotation(q).apply([0, 0, 1]); previous = finite(slot['position'], 3)
+        v2 = bool(self.scene.properties.get('tissuePhysicsV2'))
+        if v2:
+            from . import surgical_drilling_v2 as drill
+            drill.begin_step(self)
+            if active and slot['instrument'] == 'cranial_drill':
+                p, _ = drill.contact_limited_pose(self, previous, p, params['radiusMm'])
         tip_cells = self.touched(previous, p, params['radiusMm'])
         end_pose = {'position': p, 'quaternion': q}
         swept = swept_envelopes(tool, params, slot, end_pose)
@@ -299,8 +355,12 @@ class SurgicalEngine:
             from .surgical_effects import validate_hold_motion
             validate_hold_motion(self, key)
             hold = self.state['holds'][key]
-            delta = self.scene.inverse[:3, :3] @ (p - finite(hold['origin'], 3))
-            hold['offset'] = np.rint(delta).astype(int).tolist()
+            if v2 and 'target' in hold:
+                from .surgical_deformation_v2 import set_target
+                set_target(self, key, p)
+            else:
+                delta = self.scene.inverse[:3, :3] @ (p - finite(hold['origin'], 3))
+                hold['offset'] = np.rint(delta).astype(int).tolist()
             self.occupancy()
         # A stationary active instrument shares the same clock and exposure.
         for other_key, other in self.state['slots'].items():
@@ -311,6 +371,9 @@ class SurgicalEngine:
             if other_tool['materials'] and len(other_eligible) != len(other_cells):
                 raise ValueError('OTHER_ACTIVE_TOOL_UNSUPPORTED_MATERIAL:' + other_key)
             events.extend(self._effect(other_key, 'apply', other_eligible, np.asarray(other['position']), np.asarray(other['quaternion']), dt))
+            if v2:
+                from .surgical_vessels_v2 import contact
+                contact(self, other_cells, dt, self.parameters(other)['forceN'])
         vessels = [i for i in working_cells if self.by_label[int(self.scene.labels.ravel()[i])]['material'] == 'vessel']
         self.state['vesselEncounters'] = sorted(set(self.state['vesselEncounters']) | set(vessels))
         for i in working_cells:
@@ -326,12 +389,25 @@ class SurgicalEngine:
         self.state['elapsedSeconds'] += dt
         self.state['travelMm'] += float(np.linalg.norm(p - previous))
         from .surgical_effects import tick_fields
+        if v2:
+            from . import surgical_deformation_v2 as brain
+            from . import surgical_vessels_v2 as vessel
+            # Force is an explicit proxy, never inferred from a segmentation.
+            vessel.contact(self, vessels, dt, params['forceN'] if active else 0.)
+            brain.tick(self, dt)
+            self.occupancy()
+            drill.end_step(self, dt)
+            vessel.tick(self, dt)
         tick_fields(self, dt)
         return events
 
     def _effect(self, key, op, cells, p, q, dt):
         slot = self.state['slots'][key]; tool = TOOLS[slot['instrument']]
         if tool['effect'] == 'remove':
+            if slot['instrument'] == 'cranial_drill' and self.scene.properties.get('tissuePhysicsV2'):
+                from .surgical_drilling_v2 import apply
+                events, _, _ = apply(self, cells, dt, self.parameters(slot), cool=False)
+                return events
             new = set(cells) - set(self.state['removed'])
             self.state['removed'] = sorted(set(self.state['removed']) | new)
             if slot['instrument'] == 'cranial_drill':
@@ -345,6 +421,10 @@ class SurgicalEngine:
         if tool['effect'] == 'retract':
             if not cells and key not in self.state['holds']: return []
             if key not in self.state['holds']:
+                if self.scene.properties.get('tissuePhysicsV2'):
+                    from .surgical_deformation_v2 import begin_hold
+                    begin_hold(self, key, cells, p)
+                    return [{'kind': 'coupled_hold_created', 'cells': len(cells)}]
                 self.state['holds'][key] = {'cells': cells, 'origin': p.tolist(), 'offset': [0, 0, 0]}
                 return [{'kind': 'hold_created', 'cells': len(cells)}]
             return []
@@ -353,12 +433,13 @@ class SurgicalEngine:
 
     def metrics(self):
         from .surgical_physics import physics_metrics
+        from .surgical_physics_v2 import metrics as v2_metrics
         by_label = {}
         for i in self.state['removed']:
             name = self.by_label[int(self.scene.labels.ravel()[i])]['name']
             by_label[name] = by_label.get(name, 0.) + self.scene.voxel_mm3
         target = sum(self.scene.voxel_mm3 for i in self.state['removed'] if self.by_label[int(self.scene.labels.ravel()[i])].get('target'))
-        return {**physics_metrics(self), 'removedByLabelMm3': by_label, 'targetRemovedMm3': target,
+        return {**physics_metrics(self), **v2_metrics(self), 'removedByLabelMm3': by_label, 'targetRemovedMm3': target,
                 'nonTargetRemovedMm3': len(self.state['removed']) * self.scene.voxel_mm3 - target,
                 'elapsedSeconds': self.state['elapsedSeconds'], 'travelMm': self.state['travelMm'],
                 'contactCellSeconds': sum(self.state['contact'].values()), 'debrisMm3': self.state['debrisMm3'],
@@ -370,11 +451,13 @@ class SurgicalEngine:
                 'vesselEncounters': len(self.state['vesselEncounters']),
                 'exposureByMaterialCellSeconds': copy.deepcopy(self.state['materialExposure']),
                 'unknownStimulationSites': sum(o.get('result') == 'unknown' for o in self.state['observations']),
-                'collisions': sum(h['status'] == 'partial' for h in self.history),
+                'collisions': sum(h['status'] == 'partial' and (not self.scene.properties.get('tissuePhysicsV2') or h.get('reason') != 'BONE_CUTTING_IN_PROGRESS') for h in self.history),
                 'unknownMaterialCells': int(sum(np.count_nonzero(self.scene.labels == r['id']) for r in self.scene.regions if r['material'] == 'unknown'))}
 
     def observe(self):
         from .surgical_physics import physics_descriptor
+        if self.scene.properties.get('tissuePhysicsV2'):
+            from .surgical_physics_v2 import descriptor as physics_descriptor
         return {'schema': SCHEMA, 'stateId': self.state_id, 'slots': copy.deepcopy(self.state['slots']),
                 'physics': physics_descriptor(self),
                 'metrics': self.metrics(), 'observations': copy.deepcopy(self.state['observations']),
@@ -389,13 +472,16 @@ class SurgicalEngine:
                 if i in removed: continue
                 target = np.asarray(np.unravel_index(i, self.scene.shape)) + hold['offset']
                 moved.append([i, int(np.ravel_multi_index(target, self.scene.shape))])
+        if 'deformation' in self.state:
+            from .surgical_physics_v2 import raster
+            moved.extend(raster(self))
         return {**self.observe(), 'scene': self.scene.descriptor(), 'catalog': catalog(),
                 'geometryRevision': self.state_id, 'removed': self.state['removed'][:], 'moved': moved, 'cuts': copy.deepcopy(self.state['cuts']),
                 'contact': list(map(int, self.state['contact'])), 'thermal': copy.deepcopy(self.state['thermal']),
                 'fluid': copy.deepcopy(self.state['fluid']), 'history': copy.deepcopy(self.history),
                 **{name: copy.deepcopy(self.state.get(name)) for name in ('cutEdges', 'separatedAttachments',
                     'transectedEdges', 'flapComponents', 'debris', 'sources', 'meshCutEdges', 'meshSeams',
-                    'vesselConnections', 'vesselWounds')}}
+                    'vesselConnections', 'vesselWounds', 'deformation', 'deformationModel', 'drillingV2', 'vesselsV2')}}
 
     def snapshot(self):
         return {'schema': SCHEMA, 'sceneId': self.scene.identity, 'actions': copy.deepcopy(self.actions), 'stateId': self.state_id,
