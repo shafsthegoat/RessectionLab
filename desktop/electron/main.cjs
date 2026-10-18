@@ -30,6 +30,16 @@ let startupConsumed = false;
 let caseLibrary;
 let currentCasePath;
 let pendingOpenPath;
+const { RehearsalUnsaved } = require('./rehearsal-unsaved.cjs');
+const rehearsalUnsaved = new RehearsalUnsaved(async()=>{
+  const answer = await dialog.showMessageBox(window, {type:'warning', title:'Unsaved rehearsal',
+    message:'This rehearsal has unsaved changes.', detail:'Keep working to save the workspace, or discard these changes before opening another environment.',
+    buttons:['Keep working','Discard unsaved rehearsal'],defaultId:0,cancelId:0,noLink:true});
+  return answer.response === 1;
+});
+let currentCaseHash;
+let currentCaseName = 'research-case';
+const casePaths = new Map();
 const cliValue = name => { const index = process.argv.indexOf(name); return index >= 0 ? process.argv[index + 1] : undefined; };
 
 async function startEngine() {
@@ -69,10 +79,12 @@ async function pick(title, extensions) {
 
 function bindOperations() {
   const openWorkspace = async filename => {
+    if (!await rehearsalUnsaved.allowNavigation()) return null;
     const native = path.basename(filename)==='patient-anatomy.json'||filename.endsWith('.rsworkspace');
     const result=await engine.request(native?'anatomyOpen':'loadCase',{path:filename,...(filename.endsWith('.rsworkspace')?{workingRoot:path.join(app.getPath('userData'),'patient-studies')}:{})},300000);
-    currentCasePath=filename;await caseLibrary.remember(filename);return result;
+    currentCasePath=filename;if(result?.caseHash)casePaths.set(result.caseHash,filename);await caseLibrary.remember(filename);return result;
   };
+  handle('workspaceInstalled', args=>{args=plainArgs(args,['caseHash','caseId']);currentCaseHash=args.caseHash;currentCaseName=String(args.caseId||'research-case').replace(/[^a-zA-Z0-9._-]/g,'-');rehearsalUnsaved.installed();return true;});
   handle('openWorkspace',async()=>{
     const filename=pendingOpenPath||await pick('Open patient workspace',['rsworkspace','ressectionlab','rslab','json']);pendingOpenPath=null;
     return filename?openWorkspace(path.resolve(filename)):null;
@@ -85,12 +97,15 @@ function bindOperations() {
     const cases=await caseLibrary.list();return cases.length?openWorkspace(await caseLibrary.resolve(cases[0].id)):null;
   });
   const openSaved = async filename => {
+    if (!await rehearsalUnsaved.allowNavigation()) return null;
     const result = await engine.request('loadCase', {path: filename});
     currentCasePath = filename;
+    casePaths.set(result.caseHash,filename);
     await caseLibrary.remember(filename);
     return result;
   };
   handle('anatomyCreate', async args => {
+    if (!await rehearsalUnsaved.allowNavigation()) return null;
     plainArgs(args,['patientId','timepoint']);
     const selected=await dialog.showOpenDialog(window,{title:'Choose an empty patient collection directory',properties:['openDirectory','createDirectory']});
     if(selected.canceled)return null;const result=await engine.request('anatomyCreate',{...args,path:selected.filePaths[0]});await caseLibrary.remember(path.join(selected.filePaths[0],'patient-anatomy.json'));return result;
@@ -132,17 +147,27 @@ function bindOperations() {
     return engine.request('anatomyExport',{...plainArgs(args,['collectionId','snapshotId']),path:selected.filePaths[0]},300000);
   });
   handle('ping', () => engine.request('ping'));
-  handle('createSurgicalFixture', () => engine.request('createSurgicalFixture', {}));
+  handle('createSurgicalFixture', async () => {
+    if (!await rehearsalUnsaved.allowNavigation()) return null;
+    const result=await engine.request('createSurgicalFixture', {}); currentCasePath=null; return result;
+  });
+  handle('prepareSurgicalEnvironment', async args=>{
+    if(!await rehearsalUnsaved.allowNavigation())return null;
+    args=plainArgs(args,['collectionId','snapshotId','layers','allowUnreviewedRegistration']);
+    const result=await engine.request('prepareSurgicalEnvironment',args,300000);currentCasePath=null;return result;
+  });
   handle('importSurgicalScene', async args => {
+    if (!await rehearsalUnsaved.allowNavigation()) return null;
     args=plainArgs(args,['frame','units','material','resolution','topology','thicknessMm']);
     const filename=await pick('Import segmented geometry', ['nii','gz','obj','stl']);
-    return filename ? engine.request('importSurgicalScene', {...args,path:filename}, 120000) : null;
+    if (!filename) return null;
+    const result=await engine.request('importSurgicalScene', {...args,path:filename}, 120000);currentCasePath=null;return result;
   });
-  handle('surgicalRehearsal', args => engine.request('surgicalRehearsal', plainArgs(args, ['caseHash','command','expectedStateId','action','mapping','position','branchId','source']), 120000));
+  handle('surgicalRehearsal', async args => {args=plainArgs(args, ['caseHash','command','expectedStateId','action','mapping','position','branchId','source','sceneIndex']);const result=await engine.request('surgicalRehearsal',args,120000);rehearsalUnsaved.changed(args,result);return result;});
   for (const op of ['createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal']) {
-    handle(op, args => engine.request(op, plainArgs(args, op === 'stepRehearsal'
+    handle(op, async args => {const result=await engine.request(op, plainArgs(args, op === 'stepRehearsal'
       ? ['caseHash','expectedStateId','action'] : op === 'compareRehearsal'
-      ? ['caseHash','expectedStateId'] : ['caseHash']), 120000));
+      ? ['caseHash','expectedStateId'] : ['caseHash']), 120000);if(op!=='inspectRehearsal')rehearsalUnsaved.changed({command:'step'},result);return result;});
   }
   handle('listCases', () => caseLibrary.list());
   handle('caseLibraryInfo', () => caseLibrary.info());
@@ -168,12 +193,13 @@ function bindOperations() {
   handle('executeDevelopmentEpisode', args => engine.request('executeDevelopmentEpisode', episodeRequest(args), 30000));
   handle('executePersistentPassiveEpisode', args => engine.request('executePersistentPassiveEpisode', persistentPassiveRequest(args), 30000));
   handle('evaluateDevelopmentEpisodeVascular', async args => { const request=vascularRequest(args); return validateVascularResult(await engine.request('evaluateDevelopmentEpisodeVascular',request),request); });
-  handle('createSyntheticCase', () => engine.request('createSyntheticCase'));
+  handle('createSyntheticCase', async () => await rehearsalUnsaved.allowNavigation()?engine.request('createSyntheticCase'):null);
   handle('openCase', async () => {
     const selected = await pick('Open a saved research case', ['ressectionlab', 'rslab']);
     return selected ? openSaved(selected) : null;
   });
   handle('importNifti', async () => {
+    if (!await rehearsalUnsaved.allowNavigation()) return null;
     const structuralPath = await pick('Select the structural MRI', ['nii', 'gz']);
     if (!structuralPath) return null;
     const tumorMaskPath = await pick('Select the tumor segmentation (Cancel to import MRI only)', ['nii', 'gz']);
@@ -186,10 +212,12 @@ function bindOperations() {
   handle('importStructuralEvidence', args => importStructuralEvidence(args, { pick, request: (...requestArgs) => engine.request(...requestArgs) }));
   handle('saveCase', async args => {
     plainArgs(args, ['caseHash', 'workspace']);
-    const selected = await dialog.showSaveDialog(window, { title: 'Save anatomy workspace', defaultPath: currentCasePath || 'research-case.ressectionlab', filters: [{ name: 'RessectionLab case', extensions: ['ressectionlab'] }] });
+    const selected = await dialog.showSaveDialog(window, { title: 'Save anatomy workspace', defaultPath: casePaths.get(args.caseHash) || currentCaseName+'.ressectionlab', filters: [{ name: 'RessectionLab case', extensions: ['ressectionlab'] }] });
     if (selected.canceled || !selected.filePath) return null;
     const result = await engine.request('saveCase', { ...args, path: selected.filePath, overwrite: true });
     currentCasePath = selected.filePath;
+    casePaths.set(args.caseHash,selected.filePath);
+    rehearsalUnsaved.saved();
     await caseLibrary.remember(selected.filePath);
     return result;
   });
@@ -247,6 +275,9 @@ async function createWindow() {
     ] }, { role: 'editMenu' }, { role: 'viewMenu' }, { role: 'windowMenu' },
   ]));
   window.once('ready-to-show', () => window.show());
+  window.on('close', event=>{
+    if(!quitting&&rehearsalUnsaved.dirty){event.preventDefault();void rehearsalUnsaved.allowNavigation().then(allowed=>{if(allowed){rehearsalUnsaved.saved();window?.close();}});}
+  });
   window.on('closed', () => { window = undefined; });
   await window.loadURL(allowedUrl);
 }
@@ -266,5 +297,5 @@ if (ownsAppInstance) app.whenReady().then(async () => { log = createLogger(app.g
 });
 app.on('window-all-closed', () => app.quit());
 app.on('before-quit', event => {
-  if (!quitting && engine) { event.preventDefault(); quitting = true; engine.stop().finally(() => app.quit()); }
+  if (!quitting && engine) { event.preventDefault();void rehearsalUnsaved.allowNavigation().then(allowed=>{if(allowed){quitting = true;engine.stop().finally(() => app.quit());}}); }
 });

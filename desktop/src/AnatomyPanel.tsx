@@ -9,7 +9,7 @@ function missingStructureLabel(name:string):string {
 }
 
 export interface AnatomyPanelProps {
-  layers: Array<{name:string;label?:string;color:string;volumeMm3?:number;provenance?:string}>;
+  layers: Array<{name:string;kind?:string;label?:string;color:string;volumeMm3?:number;provenance?:string}>;
   visibleLayers: Record<string,boolean>;
   onVisibilityChange: (layers:Record<string,boolean>)=>void;
   settings: ViewerWorkspaceSettings;
@@ -25,7 +25,7 @@ export function AnatomyPanel(props: AnatomyPanelProps) {
         <button onClick={()=>props.onVisibilityChange(Object.fromEntries(props.layers.map(layer=>[layer.name,false])))}>Hide all</button></div>}
     </div>
     {props.layers.map(layer=>{
-      const appearance=layerAppearance(layer.name,layer.color,props.settings);
+      const appearance=layerAppearance(layer.name,layer.color,props.settings,layer.kind);
       const name=layer.label??layer.name.replaceAll('_',' ');
       const provenance=layer.provenance??props.provenanceLabel??'Provenance not supplied';
       return <div className="anatomy-layer" key={layer.name} data-visible={props.visibleLayers[layer.name]!==false}>

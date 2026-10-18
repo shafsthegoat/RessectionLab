@@ -159,10 +159,9 @@ class SurgicalRLEnv(gym.Env):
 
     @classmethod
     def from_patient(cls,path,*,protection_path=None,**kwargs):
-        from .imaging import load_case
-        from .surgical_scene import from_case
+        from .surgical_environment import load_environment
         from .surgical_rl_protection import load_protection
-        scene = from_case(load_case(path))
+        scene = load_environment(path)
         protection = load_protection(scene,protection_path) if protection_path else None
         return cls(scene,protection=protection,**kwargs)
 

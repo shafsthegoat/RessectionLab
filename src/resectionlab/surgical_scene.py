@@ -90,7 +90,9 @@ class SurgicalScene:
         return indices @ self.affine[:3, :3].T + self.affine[:3, 3]
 
     def descriptor(self):
+        from .surgical_environment import descriptor
         return {'sceneId': self.identity, 'shape': list(self.shape), 'affine': self.affine.tolist(),
+                'environment': descriptor(self),
                 'regions': copy.deepcopy(self.regions), 'source': copy.deepcopy(self.source),
                 'resolutionMm': self.spacing.tolist(), 'frame': 'RAS+', 'units': 'mm',
                 'approximations': ['whole-cell removal', ('continuous coupled displacement with shared grid raster' if self.properties.get('tissuePhysicsV2') else 'reversible lattice patch displacement'),

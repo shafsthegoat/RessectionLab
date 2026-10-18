@@ -173,7 +173,8 @@ export function validateCaseDescriptor(payload: CasePayload): {
     payload.intensityRange &&
     (payload.intensityRange.length !== 2 ||
       payload.intensityRange.some((v) => !Number.isFinite(v)) ||
-      payload.intensityRange[0] >= payload.intensityRange[1])
+      payload.intensityRange[0] > payload.intensityRange[1] ||
+      (payload.intensityRange[0] === payload.intensityRange[1] && payload.metadata.generated_signal !== true))
   )
     throw new Error("Invalid MRI intensity range.");
   if (
@@ -223,7 +224,8 @@ export async function hydrateCase(
     affine,
     shape: [...payload.shape],
     spacingMm: [...payload.spacingMm],
-    intensityRange: payload.intensityRange,
+    intensityRange: payload.intensityRange?.[0] === payload.intensityRange?.[1] && payload.intensityRange
+      ? [payload.intensityRange[0] - .5, payload.intensityRange[1] + .5] : payload.intensityRange,
     mri,
     compartments: layers.map((layer, index) => {
       const mask = maskBytes[index];
@@ -243,6 +245,9 @@ export async function hydrateCase(
         throw new Error(`${layer.name} volume disagrees with its source grid.`);
       return {
         name: layer.name,
+        kind: (payload.metadata.anatomy_layers as Record<string,{kind?:string}>|undefined)?.[layer.name]?.kind,
+        sourceIdentity: `${payload.caseHash}:${layer.name}:${layer.array.sha256}`,
+        qa: layer.qa,
         volumeMm3: layer.volumeMm3 ?? selected * voxelVolumeMm3,
         mask,
         color: String((payload.metadata.anatomy_layers as Record<string,{color?:string}>|undefined)?.[layer.name]?.color ?? anatomyColor(layer.name)),

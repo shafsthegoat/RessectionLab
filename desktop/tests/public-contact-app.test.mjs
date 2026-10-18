@@ -10,7 +10,7 @@ test('actual Save guard rejects contact before API even when another workflow ta
 test('actual ordinary reopen clears contact and restores aspiration workflow and saved actor frame',async()=>{
  const code=functionText('installCase','  const showEpisode'),calls={diagnosticClears:0},actor={episode:{selector:'RL256_ASPIRATION_TRANSFER'}};
  const reopened={source:{caseHash:'same-case',metadata:{is_synthetic:true}},volume:{compartments:[]},episodeView:actor,episodeStep:7,episodeVisible:true,series:[],imagingState:null};
- const context={useCallback:f=>f,caseGeneration:{current:0},activeCaseHash:{current:'same-case'},mounted:{current:true},imaging:{invalidate(){},restore(){}},diagnostic:{clear(){calls.diagnosticClears++}},hydrateWorkspace:async()=>{assert.equal(calls.diagnosticClears,1,'diagnostics must clear before reopen hydration');return reopened},clearPrior(){},clearProposal(){},resetDisplayToPrimary(){},initialCursor:()=>[0,0,0],rasPoint:v=>v};
+ const context={useCallback:f=>f,caseGeneration:{current:0},activeCaseHash:{current:'same-case'},mounted:{current:true},native:{clear(){}},imaging:{invalidate(){},restore(){}},diagnostic:{clear(){calls.diagnosticClears++}},hydrateWorkspace:async()=>{assert.equal(calls.diagnosticClears,0,'current diagnostics stay visible until replacement hydration succeeds');return reopened},clearPrior(){},clearProposal(){},resetDisplayToPrimary(){},initialCursor:()=>[0,0,0],rasPoint:v=>v};
  for(const name of code.matchAll(/\b(set[A-Z]\w*)\(/g))context[name[1]]=v=>{calls[name[1]]=v};
  vm.runInNewContext(code+'\nglobalThis.install=installCase;',context);assert.equal(await context.install(reopened.source,{}),true);
  assert.equal(calls.diagnosticClears,1);assert.equal(calls.setPublicContactView,null);assert.equal(calls.setContactStep,0);assert.equal(calls.setEpisodeWorkflow,'aspiration');assert.equal(calls.setEpisodeView,actor);assert.equal(calls.setEpisodeStep,7);assert.equal(calls.setEpisodeVisible,true);
@@ -19,4 +19,17 @@ test('actual imported actor step/show restores aspiration workflow and primary s
  const calls=[],context={displayedEpisodeView:{source:{caseHash:'same'},frames:[{},{}]},activeCaseHash:{current:'same'},comparison:{arm:'actor'},resetDisplayToPrimary:()=>calls.push('primary'),inspection:{invalidate(){}},clearPrior(){},clearProposal(){},setCertifiedReplay(){},setEpisodeVisible:v=>calls.push(['visible',v]),setEpisodeWorkflow:v=>calls.push(['workflow',v]),setCameraMode(){},setMessage(){},setEpisodeStep:v=>calls.push(['step',v])};
  vm.runInNewContext(functionText('showEpisode','  const selectComparisonArm')+'\nglobalThis.step=requestEpisodeStep;',context);context.step(1);
  assert(calls.some(v=>Array.isArray(v)&&v[0]==='workflow'&&v[1]==='aspiration'));assert(calls.includes('primary'));assert(calls.some(v=>Array.isArray(v)&&v[0]==='step'&&v[1]===1));
+});
+
+test('failed replacement hydration preserves the current native and research viewer',async()=>{
+ const code=functionText('installCase','  const showEpisode'),events=[];
+ const context={useCallback:f=>f,caseGeneration:{current:0},activeCaseHash:{current:'old'},mounted:{current:true},
+   native:{clear:()=>events.push('native cleared')},imaging:{invalidate:()=>events.push('imaging cleared')},diagnostic:{clear:()=>events.push('diagnostics cleared')},
+   hydrateWorkspace:async()=>{throw Error('invalid replacement')},clearPrior(){},clearProposal(){},resetDisplayToPrimary(){}};
+ for(const name of code.matchAll(/\b(set[A-Z]\w*)\(/g))context[name[1]]=v=>events.push([name[1],v]);
+ vm.runInNewContext(code+'\nglobalThis.install=installCase;',context);
+ assert.equal(await context.install({caseHash:'new'},{}),false);
+ assert.equal(context.activeCaseHash.current,'old');
+ assert(!events.some(e=>typeof e==='string'));
+ assert(!events.some(e=>Array.isArray(e)&&['setPayload','setCaseData','setEpisodeVisible'].includes(e[0])));
 });

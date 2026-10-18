@@ -20,6 +20,10 @@ export interface ViewerVolume {
   tractography?: Array<{id:string;label:string;points:Float32Array;offsets:Uint32Array}>;
   compartments: Array<{
     name: string;
+    kind?: string;
+    sourceIdentity?: string;
+    qa?: AnatomyQuality;
+    surfaceDiagnostics?: import('./surfacePolicy').SurfaceDiagnostics;
     mask: Uint8Array;
     labelSet?: string;
     labelValue?: number;
@@ -29,6 +33,13 @@ export interface ViewerVolume {
     /** Cached indexed display geometry. Masks remain the quantitative source. */
     surface?: {positions: Float32Array; source: Float32Array; normals: Float32Array; sourceNormals: Float32Array; indices: Uint32Array};
   }>;
+}
+
+export interface AnatomyQuality {
+  sourceIdentity:string; voxelCount:number; componentCount:number;
+  largestComponentFraction:number|null; boundaryTouchingVoxels:number;
+  probabilityMismatchVoxels:number|null; reviewStatus:string;
+  issues:string[]; accuracy:'unmeasured';
 }
 
 export interface ViewerRoute {
@@ -62,6 +73,7 @@ export interface ViewerWorkspaceProps {
   publicGoal?: import('./publicGoal').ViewerPublicGoal | null;
   /** Analytic software-fixture intensities; never an acquired MRI. */
   generatedSignal?: boolean;
+  segmentationOnly?: boolean;
   caseData: ViewerVolume | null;
   visibleLayers: Record<string, boolean>;
   overlayOpacity: number;

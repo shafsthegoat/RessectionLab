@@ -1,4 +1,7 @@
 import {TransformControls} from "three/addons/controls/TransformControls.js";
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+import {cachedSurface,retainSurface} from './surfaceCache';
+import type {SurfaceDiagnostics} from './surfacePolicy';
 import {surgicalToolMesh,surgicalEffectGroup} from "./surgicalGeometry";
 import type {SurgicalInteraction} from "../surgical-types";
 import {InteractionSession, InteractionBudget} from './interactionBudget';
@@ -136,6 +139,7 @@ export class VolumeRenderer {
   readonly defaultWindow: [number, number];
   readonly affine: Affine;
   private readonly renderer: THREE.WebGLRenderer;
+  private readonly environmentTarget:THREE.WebGLRenderTarget;
   private readonly scanVolume: ScanVolumeRenderer;
   private volumeModality = 'MRI';
   private interacting = false;
@@ -286,7 +290,11 @@ export class VolumeRenderer {
     this.renderer.localClippingEnabled = true;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.05;
+    this.renderer.toneMappingExposure = .95;
+    const lighting=new RoomEnvironment(),pmrem=new THREE.PMREMGenerator(this.renderer);
+    this.environmentTarget=pmrem.fromScene(lighting,.04);
+    this.scene.environment=this.environmentTarget.texture;this.scene.environmentIntensity=.45;
+    lighting.dispose();pmrem.dispose();
     this.renderer.debug.onShaderError = () =>
       onError(
         "The GPU could not compile the source-image renderer. No image or route geometry has been substituted.",
@@ -413,12 +421,12 @@ export class VolumeRenderer {
       this.recordedTools,
       this.replayGroup,
     );
-    this.scene.add(new THREE.HemisphereLight(0xb7d6df, 0x142738, 2.1));
+    this.scene.add(new THREE.HemisphereLight(0xb7d6df, 0x142738, .65));
     const centre = new THREE.Vector3(...this.cursor);
-    const key = new THREE.DirectionalLight(0xe8f3f3, 3.1);
+    const key = new THREE.DirectionalLight(0xe8f3f3, 2.0);
     key.position.copy(centre).add(new THREE.Vector3(170, -220, 240));
     key.target.position.copy(centre);
-    const rim = new THREE.DirectionalLight(0x77bdb4, 1.6);
+    const rim = new THREE.DirectionalLight(0x77bdb4, .75);
     rim.position.copy(centre).add(new THREE.Vector3(-190, 160, 70));
     rim.target.position.copy(centre);
     this.scene.add(key, key.target, rim, rim.target);
@@ -473,6 +481,7 @@ export class VolumeRenderer {
         smoothPositions?: Float32Array;
         smoothNormals?: Float32Array;
         indices?: Uint32Array;
+        diagnostics?: SurfaceDiagnostics;
         error?: string;
       }>,
     ) => {
@@ -488,10 +497,17 @@ export class VolumeRenderer {
         ),
         positions = event.data.positions,
         normals = event.data.normals;
-      if (!layer || !positions?.length) return;
+      if(!layer||!positions)return;
       if (!normals || normals.length !== positions.length) {
         onError("Source surface normals do not match its unchanged geometry.");
         return;
+      }
+
+      if(event.data.indices)retainSurface(layer.mask,this.affine,layer.kind,{...event.data,positions,normals:normals!,indices:event.data.indices},this.volume.shape);
+      this.canvas.dispatchEvent(new CustomEvent('anatomy-surface',{bubbles:true,detail:{name:layer.name,diagnostics:event.data.diagnostics??layer.surfaceDiagnostics,qa:layer.qa,empty:!positions.length}}));
+      if(!positions.length){
+        if(remaining===0&&this.mode==='anatomy'&&!this.cameraRestored)this.fitCamera('anatomy');
+        this.requestRender();return;
       }
       this.installSurface(layer,{positions,normals,smoothPositions:event.data.smoothPositions,smoothNormals:event.data.smoothNormals,indices:event.data.indices});
       if (remaining === 0 && this.mode === "anatomy" && !this.cameraRestored) this.fitCamera("anatomy");
@@ -502,13 +518,16 @@ export class VolumeRenderer {
         "A source surface could not be prepared. The original MRI and labels remain available in the linked slices.",
       );
     volume.compartments.forEach((layer) => {
-      if (layer.surface) {
+      const cached=!layer.labelSet?cachedSurface(layer.mask,this.affine,layer.kind,this.volume.shape):undefined;
+      if(cached){this.worker.onmessage?.(new MessageEvent('message',{data:{name:layer.name,...cached}}));}
+      else if (layer.surface) {
         const s = layer.surface;
         this.worker.onmessage?.(new MessageEvent('message', {data: {name: layer.name,
           positions: s.source, normals: s.sourceNormals, smoothPositions: s.positions,
-          smoothNormals: s.normals, indices: s.indices}}));
+          smoothNormals: s.normals, indices: s.indices,diagnostics:layer.surfaceDiagnostics}}));
       } else this.worker.postMessage({
         name: layer.name,
+        kind: layer.kind,
         mask: materializeLayerMask(this.volume,layer),
         shape: volume.shape,
         affine: this.affine,
@@ -549,13 +568,13 @@ export class VolumeRenderer {
     smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions, 3));
     smooth.setAttribute("normal", new THREE.BufferAttribute(smoothNormals, 3));
     this.surfaceGeometry.set(layer.name, { source: geometry, smooth });
-    const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings);
+    const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings,layer.kind);
     const mesh = new THREE.Mesh(
       this.surfaceSmoothing ? smooth : geometry,
       new THREE.MeshStandardMaterial({
         color: appearance.color,
-        roughness: 0.34,
-        metalness: 0.08,
+        roughness: layer.kind==='tumor' ? .48 : .38,
+        metalness: 0,
         transparent: appearance.opacity < 1,
         opacity: appearance.opacity,
         clippingPlanes: [...this.extraClipPlanes, ...(this.clipPlane ? [this.clipPlane] : [])],
@@ -688,7 +707,7 @@ export class VolumeRenderer {
       const n=new THREE.Vector3(...oblique.normal);this.extraClipPlanes.push(new THREE.Plane(n,oblique.offset).normalize());
     }
     this.volume.compartments.forEach((layer,index)=>{
-      const appearance=layerAppearance(layer.name,layer.color,settings);
+      const appearance=layerAppearance(layer.name,layer.color,settings,layer.kind);
       const mesh=this.surfaces.get(layer.name);
       if(mesh){
         const material=mesh.material as THREE.MeshStandardMaterial;
@@ -727,7 +746,7 @@ export class VolumeRenderer {
     const material = object.material as THREE.MeshStandardMaterial;
     const layer = this.volume.compartments.find(item => item.name === object.userData.compartment);
     if (layer) {
-      const appearance = layerAppearance(layer.name, layer.color, this.workspaceSettings);
+      const appearance = layerAppearance(layer.name, layer.color, this.workspaceSettings,layer.kind);
       material.color.set(appearance.color);
       material.opacity = appearance.opacity;
       object.visible = this.visible[layer.name] !== false;
@@ -971,9 +990,9 @@ export class VolumeRenderer {
     this.pendingReplayGroup = pending;
     const layers = this.volume.compartments.map((layer, index) => ({
       id: `residual-${index}`,name: layer.name,color: layer.color,removed: false,
-      mask: residualMask(materializeLayerMask(this.volume,layer), removed),
+      kind:layer.kind,mask: residualMask(materializeLayerMask(this.volume,layer), removed),
     }));
-    layers.push(...overlays);
+    layers.push(...overlays.map(layer=>({...layer,kind:undefined})));
     const waiting = new Map(layers.map((layer) => [layer.id, layer]));
     this.onSurfaceStatus(waiting.size);
     const worker = new Worker(new URL("./surface.worker.ts", import.meta.url), {type: "module"});
@@ -1010,7 +1029,7 @@ export class VolumeRenderer {
           if (event.data.indices) smooth.setIndex(new THREE.BufferAttribute(event.data.indices,1));
         }
         const mesh = new THREE.Mesh(this.surfaceSmoothing ? smooth : geometry,new THREE.MeshStandardMaterial({
-          color: layer.color,roughness: 0.34,metalness: 0.08,transparent: true,
+          color: layer.color,roughness: 0.42,metalness: 0,transparent: true,
           opacity: layer.removed ? 0.78 : 0.66,side: THREE.DoubleSide,depthWrite: false,wireframe: layer.removed,
         }));
         placeInSourceFrame(mesh, this.affine);
@@ -1029,7 +1048,7 @@ export class VolumeRenderer {
       }
     };
     for (const layer of layers) worker.postMessage({name:layer.id,mask:layer.mask,shape:this.volume.shape,
-      affine:this.affine,displaySmoothing:!layer.removed});
+      affine:this.affine,kind:layer.kind,displaySmoothing:!layer.removed});
     this.requestRender();
   }
 
@@ -1452,6 +1471,7 @@ export class VolumeRenderer {
   }
 
   private requestRender(slicesChanged=true): void {
+    this.scanVolume?.invalidate?.();
     if(slicesChanged)this.sliceRevision++;
     if(this.disposed)return;
     if(this.gpuSync){this.needsFrame=true;return;}
@@ -1537,6 +1557,7 @@ export class VolumeRenderer {
       const elapsed=performance.now()-frameStarted;
       if(interactive&&status!==gl.WAIT_FAILED)this.budget.sample(elapsed);
       this.canvas.dispatchEvent(new CustomEvent('anatomy-gpu',{bubbles:true,detail:{serial,completed:status!==gl.WAIT_FAILED,milliseconds:elapsed}}));
+      if(!interactive&&!this.replayActive&&!this.passiveActive&&this.scanVolume.needsRefinement)this.needsFrame=true;
       if(refinement&&this.refinementStarted===refinement&&!this.interacting&&!this.needsFrame){
         this.refinementStarted=0;
         this.canvas.dispatchEvent(new CustomEvent('anatomy-refined',{bubbles:true,detail:{completed:status!==gl.WAIT_FAILED,milliseconds:performance.now()-refinement,volume:this.scanVolume.active}}));
@@ -1580,6 +1601,7 @@ export class VolumeRenderer {
     this.slices.forEach((slice) => disposeObject(slice.scene));
     this.mriTexture.dispose();
     this.scanVolume.dispose();
+    this.environmentTarget.dispose();
     this.fusionTexture.dispose();
     this.labelTexture.dispose();
     this.removedTexture.dispose();

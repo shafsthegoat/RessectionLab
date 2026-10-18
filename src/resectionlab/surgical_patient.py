@@ -38,9 +38,13 @@ def _anatomy_metadata(name, row):
         model_name = declared.get('name') if isinstance(declared, dict) else declared
     if not model_name:
         model_name = provenance.get('method') or 'Unreviewed source segmentation estimate'
-    return {'kind': ANATOMY_KINDS[name], 'color': COLORS[name], 'provenance': 'estimated',
-            'review_status': 'unreviewed', 'model': {'name': model_name},
-            'coverage': COVERAGE[name]}
+    source_annotation = provenance.get('kind') == 'observed_source_annotation'
+    return {'kind': ANATOMY_KINDS[name], 'color': COLORS[name],
+            'provenance': 'observed' if source_annotation else 'estimated',
+            'review_status': row.get('review_status', 'unreviewed'), 'model': {'name': model_name},
+            'coverage': (row.get('coverage') or 'Source annotation; completeness unassessed.') if source_annotation
+                        else COVERAGE[name] + ' ' + row.get('coverage', ''),
+            'source_provenance': copy.deepcopy(provenance)}
 
 DEFAULT_PHYSICS = {'schema': 'resectionlab.tissue-physics.v1',
     'provenance': {'kind': 'assumed-research', 'description': 'Explicit research wound-aperture assumptions; radius is NOT inferred vessel diameter. No calibrated patient mechanics.'},
@@ -81,7 +85,7 @@ def _resample(array, source_affine, target_affine, shape, *, label=None, conserv
 
 def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
                              resolution_mm=1., allow_unreviewed_registration=False,
-                             tissue_physics=None):
+                             tissue_physics=None, require_complete=True):
     """Save patient.ressectionlab and report.json; return the auditable report.
 
     layer_ids maps exactly brain/tumor/bone/vessels to existing collection IDs.
@@ -92,8 +96,11 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     All overlapping sampled masks remain annotations; ownership priority is
     brain < tumor < bone < vessels. No attachments are fabricated.
     """
-    if set(layer_ids) != set(ORDER) or len(set(layer_ids.values())) != 4:
+    if require_complete and (set(layer_ids) != set(ORDER) or len(set(layer_ids.values())) != 4):
         raise ValueError('Select exactly four distinct brain/tumor/bone/vessels layers')
+    if not layer_ids or not set(layer_ids) <= set(ORDER) or len(set(layer_ids.values())) != len(layer_ids):
+        raise ValueError('Select distinct existing anatomy layers for the declared roles')
+    selected_order = tuple(name for name in ORDER if name in layer_ids)
     if not np.isfinite(resolution_mm) or not .5 <= resolution_mm <= 2:
         raise ValueError('Research derivative resolution must be between 0.5 and 2 mm')
     root = Path(collection_path)
@@ -113,8 +120,8 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     shape = tuple(np.ceil(np.asarray(reference['data']['shape']) / ratio).astype(int))
     if np.prod(shape) > 80_000_000:
         raise ValueError('Requested derivative exceeds 80 million cells')
-    rows = {name: collection.layer(layer_ids[name]) for name in ORDER}
-    warnings = ['Research derivative of unreviewed source segmentation estimates; not anatomical ground truth.',
+    rows = {name: collection.layer(layer_ids[name]) for name in selected_order}
+    warnings = ['Research derivative of source annotations and segmentation estimates; provenance and review status are retained, not independently validated.',
                 'Bone/vessel any-hit coarse occupancy can enlarge boundaries and still miss structures smaller than 0.5 mm.',
                 'Wound aperture and flow parameters are explicit assumptions, not measured vessel diameter or patient physiology.']
     affines = {}
@@ -149,7 +156,7 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     source_refs.append(SourceRef('source-manifest', manifest_path.resolve().as_uri(), manifest_hash, native_frame='RAS+'))
     mri = _resample(collection.array(reference['data']), reference_affine, target_affine, shape)
     masks, layer_report = {}, {}
-    for name in ORDER:
+    for name in selected_order:
         row = rows[name]
         raw = collection.array(row['data'])
         registered = affines[row['source_series']] @ np.asarray(row['affine'])
@@ -163,10 +170,10 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
             'sourceArray': copy.deepcopy(row['data']), 'sourceAffine': row['affine'],
             'registeredAffine': registered.tolist(), 'provenance': copy.deepcopy(row.get('provenance', {})),
             'reviewStatus': row.get('review_status'), 'sampling': 'any-hit <=0.5mm samples' if name in ('bone', 'vessels') else 'nearest-neighbor center'}
-    overlaps = {a + ':' + b: int(np.count_nonzero(masks[a] & masks[b])) for a, b in itertools.combinations(ORDER, 2)}
+    overlaps = {a + ':' + b: int(np.count_nonzero(masks[a] & masks[b])) for a, b in itertools.combinations(selected_order, 2)}
     ownership = np.zeros(shape, np.uint8)
-    for i, name in enumerate(ORDER, 1): ownership[masks[name]] = i
-    ownership_counts = {name: int(np.count_nonzero(ownership == i)) for i, name in enumerate(ORDER, 1)}
+    for i, name in enumerate(selected_order, 1): ownership[masks[name]] = i
+    ownership_counts = {name: int(np.count_nonzero(ownership == i)) for i, name in enumerate(selected_order, 1)}
     if not all(ownership_counts.values()):
         raise ValueError('Ownership precedence eliminated an entire requested material')
     physics = copy.deepcopy(DEFAULT_PHYSICS if tissue_physics is None else tissue_physics)
@@ -174,14 +181,16 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         'sourcePatient': manifest['patient_id'], 'sourceCollectionHash': collection.identity(),
         'sourceManifestSha256': manifest_hash, 'sourceManifest': manifest,
         'resolutionMm': resolution_mm, 'targetAffine': target_affine.tolist(),
-        'intensityResampling': 'linear interpolation of original reference MRI; outside-source samples zero; no modeled intensity changes',
-        'sourceLayers': layer_report, 'overlapCells': overlaps, 'ownershipPrecedence': list(ORDER),
+        'intensityResampling': 'linear interpolation of original reference image; outside-source samples zero; no modeled intensity changes',
+        'sourceLayers': layer_report, 'overlapCells': overlaps, 'ownershipPrecedence': list(selected_order),
         'ownershipCells': ownership_counts, 'allowUnreviewedRegistration': bool(allow_unreviewed_registration)}
+    physics_key = 'tissuePhysicsV2' if physics.get('schema') == 'resectionlab.tissue-physics.v2' else 'tissuePhysics'
     case = CaseData(case_id=manifest['patient_id'] + '-surgical-research', mri=mri,
         compartments=masks, affine=target_affine, frame='RAS+', source_refs=tuple(source_refs),
-        metadata={'surgical_adapter': adapter, 'surgical_properties': {'tissuePhysics': physics},
-            'anatomy_layers': {name: _anatomy_metadata(name, rows[name]) for name in ORDER},
-            'description': 'Full-head acquired MRI with explicit four-material research annotation estimates; no invented segmentations.'})
+        metadata={'surgical_adapter': adapter, 'surgical_properties': {physics_key: physics},
+            'anatomy_layers': {name: _anatomy_metadata(name, rows[name]) for name in selected_order},
+            'missing_anatomy': [name for name in ORDER if name not in rows],
+            'description': 'Acquired reference image with explicitly selected source annotations and research estimates; missing anatomy remains unknown.'})
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
     path = save_case(case, output / 'patient.ressectionlab')
@@ -193,3 +202,34 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
               'tissuePhysics': physics, **adapter}
     (output / 'report.json').write_text(json.dumps(report, indent=2, allow_nan=False) + '\n')
     return report
+
+
+def prepare_surgical_environment(collection_path, output_dir, *, layer_ids,
+                                 resolution_mm=1., allow_unreviewed_registration=False):
+    """One interoperable export path for desktop preparation, CLI, and RL.
+
+    Missing roles are explicit. Source manifests are never rewritten. The saved
+    scene archive pins the complete physics profile, mapping, and source identity.
+    """
+    from .imaging import load_case
+    from .surgical_scene import from_case
+    from .surgical_engine import SurgicalEngine
+    from .surgical_environment import SCHEMA, standardize
+    from .surgical_physics_v2 import default_profile
+    report = prepare_surgical_patient(collection_path, output_dir, layer_ids=layer_ids,
+        resolution_mm=resolution_mm, allow_unreviewed_registration=allow_unreviewed_registration,
+        tissue_physics=default_profile(), require_complete=False)
+    case = load_case(report['casePath'])
+    scene = standardize(from_case(case))
+    engine = SurgicalEngine(scene)
+    record = {'environmentSchema': SCHEMA, 'physicsProfile': copy.deepcopy(scene.properties['tissuePhysicsV2']),
+              'mapping': scene.regions, 'branches': {'main': engine.snapshot()}, 'branchId': 'main',
+              'position': 0, 'parents': {'main': None}, 'timeline': {'main': []}}
+    save_case(case, report['casePath'], artifacts={'surgical_toolbox': record})
+    environment = {**scene.descriptor()['environment'], 'caseHash': case.semantic_hash,
+                   'sceneId': scene.identity, 'regions': scene.regions,
+                   'physicsProfile': record['physicsProfile'],
+                   'provenanceReport': 'report.json'}
+    destination = Path(output_dir) / 'environment.json'
+    destination.write_text(json.dumps(environment, indent=2, allow_nan=False) + '\n')
+    return {**report, 'environmentPath': str(destination.resolve()), 'environment': environment}

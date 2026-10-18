@@ -1,0 +1,25 @@
+{
+  "version": "physical-windowed-sinc-v2",
+  "window": "Hann",
+  "minimumFaceAreaRatio": 0.1,
+  "profiles": {
+    "context": {
+      "iterations": 20,
+      "passBand": 0.1,
+      "voxelAltitudes": 0.5
+    },
+    "vessel": {
+      "iterations": 20,
+      "passBand": 0.1,
+      "voxelAltitudes": 0.5,
+      "radiusFraction": 0.25
+    },
+    "tumor": {
+      "iterations": 40,
+      "passBand": 0.03,
+      "voxelAltitudes": 1.5,
+      "maximumMm": 1.0
+    }
+  },
+  "maxContextTriangles": 2000000
+}

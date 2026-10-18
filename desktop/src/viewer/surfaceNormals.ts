@@ -74,3 +74,19 @@ export function surfaceNormals(positions: Float32Array): Float32Array {
   }
   return output;
 }
+
+/** Area weighting in millimetres, returned as source-frame normal covectors so
+ * Three's normal matrix still applies the authoritative affine exactly once. */
+export function indexedSurfaceNormals(points:Float32Array,indices:Uint32Array,affine:number[][]):Float32Array {
+  const sums=new Float64Array(points.length),linear=affine.slice(0,3).map(r=>r.slice(0,3));
+  const determinant=linear[0][0]*(linear[1][1]*linear[2][2]-linear[1][2]*linear[2][1])-linear[0][1]*(linear[1][0]*linear[2][2]-linear[1][2]*linear[2][0])+linear[0][2]*(linear[1][0]*linear[2][1]-linear[1][1]*linear[2][0]);
+  for(let f=0;f<indices.length;f+=3){const ids=[indices[f]*3,indices[f+1]*3,indices[f+2]*3];
+    const delta=(id:number)=>linear.map(r=>r.reduce((s,v,k)=>s+v*(points[id+k]-points[ids[0]+k]),0));
+    const a=delta(ids[1]),b=delta(ids[2]),normal=[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+    for(const id of ids)for(let axis=0;axis<3;axis++)sums[id+axis]+=normal[axis]*Math.sign(determinant);
+  }
+  const output=new Float32Array(points.length);
+  for(let i=0;i<points.length;i+=3){const covector=[0,1,2].map(a=>linear.reduce((s,r,k)=>s+r[a]*sums[i+k],0)),length=Math.hypot(...covector);
+    for(let a=0;a<3;a++)output[i+a]=length?covector[a]/length:0;}
+  return output;
+}

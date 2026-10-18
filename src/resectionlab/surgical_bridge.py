@@ -10,12 +10,33 @@ from .core import CaseData, SourceRef, freeze_json, thaw_json, semantic_digest
 from .surgical_scene import from_case, engineering_scene
 from .surgical_engine import SurgicalEngine
 
-OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene'})
+OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene', 'prepareSurgicalEnvironment'})
 ARTIFACT = 'surgical_toolbox'
 
 
 def dispatch(session, operation, args, request, progress):
     from .desktop_bridge import BridgeError, _keys, _require_json_budget
+    if operation == 'prepareSurgicalEnvironment':
+        _keys(args, {'collectionId', 'snapshotId', 'layers', 'allowUnreviewedRegistration'})
+        from .surgical_patient import prepare_surgical_environment
+        from .imaging import load_case, read_case_artifacts
+        collection = getattr(session, 'anatomy_collections', {}).get(args['collectionId'])
+        if collection is None or collection.identity() != args['snapshotId']:
+            raise ValueError('Native anatomy changed; reopen before preparing an environment')
+        if args['collectionId'] in getattr(session, 'anatomy_drafts', {}):
+            raise ValueError('Accept or discard the segmentation draft before preparing an environment')
+        if type(args.get('allowUnreviewedRegistration', False)) is not bool:
+            raise ValueError('Research registration choice must be explicit')
+        progress(0.1, 'Preparing standard 1 mm research environment from selected source masks')
+        with tempfile.TemporaryDirectory(prefix='surgical-environment-') as directory:
+            report = prepare_surgical_environment(collection.root, directory, layer_ids=args['layers'],
+                resolution_mm=1., allow_unreviewed_registration=args.get('allowUnreviewedRegistration', False))
+            if report['sourceCollectionHash'] != args['snapshotId']:
+                raise ValueError('Source collection changed during environment preparation')
+            request.check()
+            case = load_case(report['casePath'])
+            artifacts = read_case_artifacts(report['casePath'])
+        return session._install_case(case, artifacts, request)
     if operation == 'importSurgicalScene':
         _keys(args, {'path', 'frame', 'units', 'material', 'resolution', 'topology', 'thicknessMm'})
         from .surgical_adapters import from_nifti, from_mesh
@@ -50,7 +71,7 @@ def dispatch(session, operation, args, request, progress):
             metadata={'is_synthetic': True, 'generated': True, 'anatomy_layers': {r['name']: {'kind': r['material'], 'color': r['color'],
                        'provenance': 'generated engineering fixture'} for r in s.regions}, 'surgical_properties': s.properties})
         return session._install_case(case, {}, request)
-    _keys(args, {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source'})
+    _keys(args, {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex'})
     _require_json_budget(args, 256 * 1024, 'SURGICAL_REQUEST_LIMIT', 'Instrument request exceeds budget')
     entry = None
     source = args.get('source')
@@ -85,16 +106,34 @@ def dispatch(session, operation, args, request, progress):
         scene_builder = lambda mapping=None: from_case(entry.case, mapping)
         artifacts = thaw_json(entry.artifacts)
     command = args.get('command', 'inspect')
-    if command not in {'create', 'inspect', 'preview', 'step', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset'}:
+    if command not in {'create', 'inspect', 'preview', 'step', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene'}:
         raise ValueError('Unsupported surgical command')
     raw = artifacts.get(ARTIFACT)
+    from .surgical_environment import standardize, default_target_names, SCHEMA as ENVIRONMENT_SCHEMA
+    original_builder = scene_builder
+    scene_builder = lambda mapping=None: standardize(original_builder(mapping), default_target_names(entry.case) if entry is not None and mapping is None else None,
+        raw.get('physicsProfile') if raw and command != 'create' else None) if (
+        command == 'create' or raw and raw.get('environmentSchema') == ENVIRONMENT_SCHEMA) else original_builder(mapping)
+    if command == 'selectScene':
+        index = args.get('sceneIndex')
+        prior = artifacts.get('surgical_prior_scenes', [])
+        if type(index) is not int or not 0 <= index < len(prior):
+            raise ValueError('Previous environment is unavailable')
+        # Exchange complete archives, including their mapping, physics and branches.
+        selected = prior[index]
+        prior[index] = raw
+        raw = selected
+        artifacts[ARTIFACT] = raw
+        scene_builder = lambda mapping=None: standardize(original_builder(mapping), physics_profile=raw.get('physicsProfile')) if raw.get('environmentSchema') == ENVIRONMENT_SCHEMA else original_builder(mapping)
     cache = getattr(session, 'surgical_sessions', {})
     saved_hash = semantic_digest(raw)
     cached = cache.get(identity)
+    if command == 'create' and raw is not None and args.get('mapping') == raw.get('mapping') and raw.get('environmentSchema') == ENVIRONMENT_SCHEMA:
+        command = 'inspect'  # An unchanged mapping must not erase a timeline.
     if command == 'create' or raw is None and command != 'inspect':
         scene = scene_builder(args.get('mapping'))
         engine = SurgicalEngine(scene)
-        record = {'mapping': scene.regions, 'branches': {'main': engine.snapshot()}, 'branchId': 'main', 'position': 0, 'parents': {'main': None}}
+        record = {'environmentSchema': ENVIRONMENT_SCHEMA, 'physicsProfile': copy.deepcopy(scene.properties['tissuePhysicsV2']), 'mapping': scene.regions, 'branches': {'main': engine.snapshot()}, 'branchId': 'main', 'position': 0, 'parents': {'main': None}, 'timeline': {'main': []}}
     elif raw is None:
         return None
     elif cached and cached[0] == saved_hash:
@@ -103,17 +142,21 @@ def dispatch(session, operation, args, request, progress):
         record = copy.deepcopy(raw)
         scene = scene_builder(record['mapping'])
         full = SurgicalEngine.restore(scene, record['branches'][record['branchId']])
+        record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(full.history)
         engine = full.branch(record['position'])
     request.check()
     engine = engine.clone()
-    if command not in ('create', 'inspect') and args.get('expectedStateId') != engine.state_id:
+    if command not in ('create', 'inspect', 'selectScene') and args.get('expectedStateId') != engine.state_id:
         raise BridgeError('SURGICAL_STATE_STALE', 'The scene changed. Refresh before applying this action.')
     outcome = None
+    unchanged_tool = False
     if command == 'preview':
         return {**engine.preview(args['action']), 'caseHash': identity}
     if command == 'step':
-        outcome = engine.step(args['action'])
-        if outcome['status'] != 'rejected':
+        action = args['action']
+        unchanged_tool = action.get('operation') == 'exchange' and engine.state['slots'].get(action.get('slot'), {}).get('instrument') == action.get('instrument')
+        outcome = {'status': 'accepted', 'reason': 'Instrument already selected; state unchanged.', 'completedFraction': 1., 'events': []} if unchanged_tool else engine.step(action)
+        if outcome['status'] != 'rejected' and not unchanged_tool:
             full = record['branches'][record['branchId']]
             if record['position'] != len(full['actions']):
                 parent = {'branchId': record['branchId'], 'position': record['position']}
@@ -121,6 +164,7 @@ def dispatch(session, operation, args, request, progress):
                 record.setdefault('parents', {})[record['branchId']] = parent
             record['branches'][record['branchId']] = engine.snapshot()
             record['position'] = len(engine.actions)
+            record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
     elif command in ('undo', 'redo', 'seek', 'selectBranch'):
         if command == 'selectBranch':
             if args['branchId'] not in record['branches']: raise ValueError('Unknown branch')
@@ -130,6 +174,7 @@ def dispatch(session, operation, args, request, progress):
         n = {'undo': record['position'] - 1, 'redo': record['position'] + 1}.get(command, args.get('position', record['position']))
         if type(n) is not int or not 0 <= n <= len(full.actions): raise ValueError('History position is unavailable')
         engine = full.branch(n); record['position'] = n
+        record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(full.history)
     elif command in ('branch', 'reset'):
         parent = {'branchId': record['branchId'], 'position': record['position'], 'reset': command == 'reset'}
         if command == 'reset': engine = SurgicalEngine(engine.scene)
@@ -137,13 +182,18 @@ def dispatch(session, operation, args, request, progress):
         record.setdefault('parents', {})[record['branchId']] = parent
         record['branches'][record['branchId']] = engine.snapshot()
         record['position'] = len(engine.actions)
+        record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
     result = {'caseHash': identity, 'view': engine.view(), 'outcome': outcome,
+              'changed': command != 'inspect' and not unchanged_tool and (outcome is None or outcome['status'] != 'rejected'),
+              'timeline': record.get('timeline', {}).get(record['branchId'], engine.history),
+              'previousScenes': [{'index': i, 'label': f"Environment {i + 1}", 'branches': len(s.get('branches', {}))} for i, s in enumerate(artifacts.get('surgical_prior_scenes', []))],
               'branchId': record['branchId'], 'position': record['position'],
               'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k, v in record['branches'].items()]}
     _require_json_budget(result, 32 * 1024 * 1024, 'SURGICAL_RESULT_LIMIT', 'Save this sequence before continuing')
     request.begin_commit()
     if command == 'create' and raw is not None:
         artifacts.setdefault('surgical_prior_scenes', []).append(raw)
+        result['previousScenes'] = [{'index': i, 'label': f"Environment {i + 1}", 'branches': len(s.get('branches', {}))} for i, s in enumerate(artifacts['surgical_prior_scenes'])]
     artifacts[ARTIFACT] = record
     if destination:
         artifacts['sourceIdentity'] = identity

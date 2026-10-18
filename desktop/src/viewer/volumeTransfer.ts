@@ -1,22 +1,27 @@
 import type { Affine, Point3 } from './coordinates';
 import { inverseAffine, rasAffine } from './coordinates.ts';
 
-export type VolumePreset = 'auto' | 'ct-bone' | 'ct-tissue' | 'mri';
+export type VolumePreset = 'auto' | 'ct-bone' | 'ct-tissue' | 'ct-angiography' | 'mri';
 export interface VolumeRenderingSettings { enabled?: boolean; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; points?: Array<[number,number,number,number,number]> }
 export function volumeSettings(input: VolumeRenderingSettings = {}, modality = 'MRI') {
-  const preset = input.preset && ['ct-bone','ct-tissue','mri'].includes(input.preset)
-    ? input.preset : /^CT/i.test(modality) ? 'ct-bone' : 'mri';
-  return { enabled: input.enabled !== false, preset: preset as Exclude<VolumePreset,'auto'>,
+  const ct=/^(CT|CTA)(\b|[-\s])/i.test(modality), acquired=!/segmentation only|analytic signal/i.test(modality);
+  const explicit=input.preset && ['ct-bone','ct-tissue','ct-angiography','mri'].includes(input.preset)?input.preset:null;
+  const preset = explicit==='ct-angiography'&&!ct?'mri':explicit??(/^CTA\b/i.test(modality)?'ct-angiography':ct?'ct-bone':'mri');
+  return { enabled: acquired && input.enabled !== false, preset: preset as Exclude<VolumePreset,'auto'>,
     density: Number.isFinite(input.density) ? Math.max(0,Math.min(2,input.density!)) : .45 };
 }
 
 /** Display LUT only. Alpha stores optical extinction per millimetre, not a
  * segmentation probability. Colors are linear RGB for physical compositing. */
-export function volumeTransfer(preset: Exclude<VolumePreset,'auto'>, window: [number,number], custom?: VolumeRenderingSettings) {
+export function volumeTransfer(preset: Exclude<VolumePreset,'auto'>, window: [number,number], custom?: VolumeRenderingSettings,modality='MRI') {
   type Knot = [number, number, number, number, number];
   let knots: Knot[] = preset === 'ct-bone' ? [
     [0, .52,.30,.18,0], [150,.65,.45,.28,0], [230,.75,.57,.38,.04],
     [400,.91,.78,.56,.27], [900,.98,.91,.76,.65], [1800,1,.98,.91,.95], [3000,1,1,.99,1],
+  ] : preset === 'ct-angiography' ? [
+    [-1000,.12,.08,.06,0], [80,.39,.13,.08,0], [140,.58,.20,.11,.01],
+    [220,.78,.32,.18,.12], [360,.91,.49,.28,.38], [600,.96,.67,.42,.5],
+    [900,.98,.90,.76,.52], [1800,1,.98,.92,.8], [3000,1,1,.99,1],
   ] : preset === 'ct-tissue' ? [
     [-1000,.15,.10,.09,0], [-500,.42,.20,.13,0], [-120,.62,.38,.24,.004],
     [20,.73,.43,.28,.045], [90,.81,.55,.37,.07], [180,.84,.60,.42,.045],
@@ -25,6 +30,12 @@ export function volumeTransfer(preset: Exclude<VolumePreset,'auto'>, window: [nu
     [0,.05,.06,.07,0], [.08,.16,.18,.20,0], [.2,.30,.33,.36,.008],
     [.4,.49,.51,.53,.025], [.65,.72,.73,.73,.07], [.85,.91,.90,.87,.16], [1,1,.98,.94,.28],
   ];
+  if(preset==='mri'&&!custom?.points){
+    // MRI has arbitrary intensity units. Sequence changes presentation only;
+    // signal never creates a vessel/tumor label or a missing scan.
+    const fluidSensitive=/T2|FLAIR|TOF|MRA/i.test(modality);
+    if(fluidSensitive)knots=knots.map(([x,r,g,b,a])=>[x,r*.94,g*.98,Math.min(1,b*1.04),a*(x<.65?.7:1)] as Knot);
+  }
   const range: [number,number] = preset === 'mri' ? [Math.min(0,window[0]),Math.max(1,window[1])] : [knots[0][0],3000];
   if(custom?.window && custom.window.every(Number.isFinite) && custom.window[1]>custom.window[0])range.splice(0,2,...custom.window);
   if(custom?.points && custom.points.length>=2 && custom.points.length<=32 && custom.points.every(p=>p.length===5&&p.every(Number.isFinite)&&p.every(v=>v>=0&&v<=1)) && custom.points.every((p,i)=>i===0||p[0]>custom.points![i-1][0]))knots=custom.points.map(p=>[preset==='mri'?p[0]:range[0]+p[0]*(range[1]-range[0]),...p.slice(1)] as Knot);

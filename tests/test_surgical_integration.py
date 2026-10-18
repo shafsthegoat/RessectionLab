@@ -127,8 +127,8 @@ def test_bridge_undo_redo_branch_and_bundle_reopen_in_fresh_process(tmp_path):
                 args['expectedStateId'] = prior['view']['stateId']
             return call(session, 'surgicalRehearsal', args)
         created = command('create')
-        first = command('step', created, action=action('left', 'place', [12, 15, 10], parameters={'radiusMm': .6}))
-        second = command('step', first, action=action('left', 'apply', [12, 15, 21]))
+        first = command('step', created, action=action('right', 'place', [43, 20, 10], parameters={'radiusMm': .6}))
+        second = command('step', first, action=action('right', 'apply', [43, 20, 25]))
         assert second['outcome']['status'] == 'accepted'
         assert second['view']['removed']
         undone = command('undo', second)
@@ -136,7 +136,7 @@ def test_bridge_undo_redo_branch_and_bundle_reopen_in_fresh_process(tmp_path):
         redone = command('redo', undone)
         assert redone['view']['stateId'] == second['view']['stateId']
         undone = command('undo', redone)
-        branch = command('step', undone, action=action('left', 'apply', [12, 15, 20]))
+        branch = command('step', undone, action=action('right', 'apply', [43, 20, 24]))
         assert branch['branchId'] != second['branchId']
         selected = command('selectBranch', branch, branchId=second['branchId'])
         assert selected['view']['stateId'] == second['view']['stateId']
@@ -281,9 +281,14 @@ def test_native_bridge_package_fresh_reopen_preserves_source(tmp_path):
         current = call(session, 'surgicalRehearsal', {**binding, 'command': 'create'})
         current = call(session, 'surgicalRehearsal', {**binding, 'command': 'step', 'expectedStateId': current['view']['stateId'],
                         'action': action('left', 'place', [5, 5, -2], parameters={'radiusMm': .6})})
-        current = call(session, 'surgicalRehearsal', {**binding, 'command': 'step', 'expectedStateId': current['view']['stateId'],
-                        'action': action('left', 'apply', [5, 5, 5])})
-        assert current['outcome']['status'] == 'accepted' and current['view']['removed']
+        # Standard V2 drilling accumulates work before removing bone.
+        for _ in range(8):
+            current = call(session, 'surgicalRehearsal', {**binding, 'command': 'step', 'expectedStateId': current['view']['stateId'],
+                            'action': action('left', 'apply', [5, 5, 5], duration=1.)})
+            assert current['outcome']['status'] in ('accepted', 'partial')
+            if current['view']['removed']:
+                break
+        assert current['view']['removed']
         call(session, 'anatomySavePackage', {**binding['source'], 'path': str(package)})
     finally:
         session.close()

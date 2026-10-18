@@ -36,6 +36,16 @@ test('mapping rejects invalid identities and preserves unknown material choices'
   assert.match(validateMapping([regions[0],regions[0]]),/unique/);
   assert.match(validateMapping([{...regions[0],id:0}]),/positive ID/);
 });
+
+test('unchanged source meshes survive rehearsal and changed ownership/material invalidates only affected geometry',()=>{
+  const s=source();s.compartments[0].mask[1]=0;s.compartments[0].kind=regions[0].material;s.compartments[1].kind=regions[1].material;
+  const surface={positions:new Float32Array(0),source:new Float32Array(0),normals:new Float32Array(0),sourceNormals:new Float32Array(0),indices:new Uint32Array(0)};
+  s.compartments[0].surface=surface;s.compartments[1].surface=surface;
+  const unchanged=modeledVolume(s,view());assert.equal(unchanged.compartments[0].surface,surface);assert.equal(unchanged.compartments[1].surface,surface);
+  assert.equal(unchanged.compartments[0].mask,s.compartments[0].mask);
+  const changed=modeledVolume(s,view({removed:[1]}));assert.equal(changed.compartments[0].surface,surface);assert.equal(changed.compartments[1].surface,undefined);
+  const mapped=modeledVolume(s,view({scene:{...view().scene,regions:[regions[0],{...regions[1],material:'unknown'}]}}));assert.equal(mapped.compartments[1].surface,undefined);
+});
 test('all 15 tools have distinct visible research geometry with exact xyzw pose and ghost transparency',()=>{
   const ids=['cranial_drill','cusa','brain_retractor','scalpel','periosteal_elevator','craniotome','dural_scissors','dissector','frazier_suction','bipolar_forceps','micro_scissors','tumor_forceps','irrigation','cortical_probe','subcortical_probe'];
   const signatures=new Set();
@@ -167,4 +177,14 @@ test('drill event summaries report physical work and removal without summing pen
   const rows=summarizeSurgicalEvents([{kind:'drill_work',inputEnergyJ:2,cuttingWorkJ:1.5,removedVolumeMm3:2,pendingCells:3},{kind:'drill_work',inputEnergyJ:3,cuttingWorkJ:2,removedVolumeMm3:4,pendingCells:2}]);
   assert.equal(rows[0].label,'Bone cutting work');
   assert.deepEqual(rows[0].details,['6 mm³ removed','5 J input','3.5 J cutting work']);
+});
+
+test('reference presentation depends on material, preserves camera and never changes source regions',async()=>{
+ const {rehearsalPresentation}=await import('../src/rehearsal-presentation.ts');
+ const rows=[{id:1,name:'unusual tissue',material:'soft_tissue',color:'#aaaaaa',target:false},{id:2,name:'network',material:'vessel',color:'#bbbbbb',target:false}];
+ const before=JSON.stringify(rows),camera={position:[1,2,3],target:[0,0,0],up:[0,1,0]};
+ const settings=rehearsalPresentation(rows,{camera});
+ assert.equal(settings.layerColor.network,'#e54491');assert.equal(settings.layerOpacity['unusual tissue'],.12);
+ assert.equal(settings.volumeRendering.enabled,false);assert.equal(settings.camera,camera);
+ assert.equal(JSON.stringify(rows),before);
 });

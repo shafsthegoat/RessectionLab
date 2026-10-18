@@ -44,3 +44,15 @@ test('explicit skull modes survive settings validation',()=>{
  for(const skullMode of ['exterior','transparent','cutaway'])assert.equal(checkedViewerSettings(source,{skullMode}).skullMode,skullMode);
  assert.throws(()=>checkedViewerSettings(source,{skullMode:'guess'}));
 });
+
+test('angiography is automatic only for declared CTA, with MRI sequence and segmentation-only behavior',()=>{
+  assert.equal(volumeSettings({},'CT').preset,'ct-bone');assert.equal(volumeSettings({},'CTA').preset,'ct-angiography');
+  assert.equal(volumeSettings({preset:'ct-angiography'},'CT').preset,'ct-angiography');
+  assert.equal(volumeSettings({preset:'ct-angiography'},'T1CE').preset,'mri');
+  assert.equal(volumeSettings({},'segmentation only').enabled,false);assert.equal(volumeSettings({},'analytic signal').enabled,false);
+  assert.notDeepEqual(volumeTransfer('mri',[0,900],{},'T2').data,volumeTransfer('mri',[0,900],{},'T1').data);
+  const custom={points:[[0,0,0,0,0],[1,.8,.5,.2,.4]]};
+  assert.deepEqual(volumeTransfer('mri',[0,900],custom,'T1').data,volumeTransfer('mri',[0,900],custom,'T2').data);
+  const source={compartments:[],brainMask:null,metadata:{}},settings={smoothSurfaces:false,volumeRendering:{preset:'ct-angiography',density:.3}};
+  assert.deepEqual(checkedViewerSettings(source,settings),settings);assert.throws(()=>checkedViewerSettings(source,{smoothSurfaces:1}));
+});

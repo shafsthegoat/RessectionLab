@@ -447,13 +447,14 @@ class BridgeSession:
                 brain_support.update(usableForResearchSimulation=True, reviewStatus=support["review_status"], provenance=support)
             except ValueError as error:
                 brain_support.update(reviewStatus="supplied_unverified", reason=str(error))
+        from .anatomy_qa import mask_quality
         descriptor = {
             "caseId": case.case_id, "caseHash": case.semantic_hash, "planningHash": case.planning_hash,
             "revision": case.revision, "frame": case.frame, "physicalUnits": "mm",
             "affine": case.affine.tolist(), "shape": list(case.mri.shape), "spacingMm": list(case.spacing_mm),
             "mri": self.transfers.array(case.mri, "float32"),
             "intensityRange": [float(case.mri.min()), float(case.mri.max())],
-            "compartments": [{"name": name, "volumeMm3": float(np.count_nonzero(mask) * case.voxel_volume_mm3),
+            "compartments": [{"name": name, "qa": mask_quality(mask, case.semantic_hash+":"+name), "volumeMm3": float(np.count_nonzero(mask) * case.voxel_volume_mm3),
                               "array": self.transfers.array(mask, "uint8"),
                               "sourceArray": self.transfers.array(case.source_compartments.get(name, mask), "uint8")}
                              for name, mask in case.compartments.items()],

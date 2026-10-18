@@ -326,6 +326,38 @@ def test_bridge_reopens_rejects_stale_and_persists_corrections(patient, tmp_path
         b.execute("anatomyView", {**args, "layers": []}, request, progress)
 
 
+def test_cropped_parcellation_cannot_reuse_full_field_cache(patient, tmp_path, monkeypatch):
+    import sys
+    from resectionlab import anatomy_models
+    from resectionlab.patient_anatomy import reconstruction_lock
+    monkeypatch.setattr(anatomy_models, 'reconstruction_lock', lambda: reconstruction_lock(tmp_path / 'locks'))
+    home = tmp_path / 'synthseg'
+    (home / 'models').mkdir(parents=True)
+    (home / 'models/synthseg_1.0.h5').write_bytes(b'test weights')
+    script = home / 'scripts/commands/SynthSeg_predict.py'
+    script.parent.mkdir(parents=True)
+    script.write_text('# test runner identity\n')
+    monkeypatch.setenv('RESECTIONLAB_SYNTHSEG_HOME', str(home))
+    monkeypatch.setenv('RESECTIONLAB_SYNTHSEG_PYTHON', sys.executable)
+    commands = []
+    def predict(command, directory, **kwargs):
+        commands.append(command)
+        nib.save(nib.Nifti1Image(np.full((4, 4, 4), 16, np.int16), np.eye(4)),
+                 directory / 'labels.nii.gz')
+        return {'command': command}
+    monkeypatch.setattr(anatomy_models, 'run_bounded', predict)
+    cropped = anatomy_models.reconstruct(patient, 'mri', 'synthseg', synthseg_version=1, synthseg_crop=192)
+    again = anatomy_models.reconstruct(patient, 'mri', 'synthseg', synthseg_version=1, synthseg_crop=192)
+    full = anatomy_models.reconstruct(patient, 'mri', 'synthseg', synthseg_version=1)
+    assert len(commands) == 2 and cropped == again
+    assert cropped['path'] != full['path']
+    assert commands[0][-2:] == ['--crop', '192'] and '--crop' not in commands[1]
+    assert 'outside this field are unknown' in cropped['coverage_limitation']
+    assert 'coverage_limitation' not in full
+    with pytest.raises(ValueError, match='multiple of 32'):
+        anatomy_models.reconstruct(patient, 'mri', 'synthseg', synthseg_crop=129)
+
+
 def test_shared_parcellation_storage_and_fast_surfer_input_gate(patient, tmp_path):
     from resectionlab.anatomy_models import import_parcellation, reconstruct
 
@@ -563,7 +595,8 @@ def test_empty_segmentation_view_and_invalid_view_preferences(patient, tmp_path)
     opened=call('anatomyOpen',{'path':str(patient.root/'patient-anatomy.json')})
     args={'collectionId':opened['collectionId'],'snapshotId':patient.identity()}
     view=call('anatomyView',{**args,'seriesId':'mri','layers':['empty']})
-    assert view['compartments'][0]['surface']['positions']['byteLength']==0
+    assert view['compartments'][0]['surface']=={'empty':True}
+    assert view['compartments'][0]['qa']['voxelCount']==0
     state=dict(schema='patient-anatomy-view-v1',patientId='patient-a',snapshotId=patient.identity(),seriesId='mri',states={'mri':dict(cursor=None,visible={},settings={'volumeRendering':{'density':999}})})
     with pytest.raises(ValueError,match='volume'):save_view(patient,state)
 

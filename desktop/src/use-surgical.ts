@@ -1,3 +1,4 @@
+import {surfaceKind} from './viewer/surfacePolicy.ts';
 import {useEffect,useMemo,useRef,useState} from 'react';
 import type {ViewerVolume} from './viewer/contracts';
 import type {Point3} from './viewer/coordinates';
@@ -33,11 +34,29 @@ export function modeledVolume(source:ViewerVolume,view:SurgicalView):ViewerVolum
     for(const [a,b] of view.moved){if(!valid(a)||!valid(b))throw Error('Invalid displacement');owner[a]=0;}
     const priority = new Map(regions.map((r,i)=>[r.id,i]));
     for(const [a,b] of view.moved){if(!coupled || (priority.get(original[a])??-1)>=(priority.get(owner[b])??-1))owner[b]=original[a];}
-    compartments=regions.map(r=>{const mask=new Uint8Array(count);for(let i=0;i<count;i++)mask[i]=Number(owner[i]===r.id);return {name:r.name,color:r.color,mask};});
+    compartments=regions.map(r=>{
+      const originalLayer=source.compartments.find(l=>l.name===r.name),labels=source.labelSets?.find(s=>s.id===originalLayer?.labelSet)?.data;
+      const mask=new Uint8Array(count);let unchanged=!!originalLayer;
+      for(let i=0;i<count;i++){mask[i]=Number(owner[i]===r.id);if(originalLayer&&mask[i]!==Number(labels?labels[i]===originalLayer.labelValue:!!originalLayer.mask[i]))unchanged=false;}
+      // Preserve resident source geometry only when every current membership
+      // agrees, including ownership overlap and mapped material changes.
+      const sameKind=surfaceKind(originalLayer?.kind)===surfaceKind(r.material);
+      let residentMask:Uint8Array|undefined;
+      if(!unchanged)for(const previous of cached.values()){
+        const candidate=previous.compartments.find(l=>l.name===r.name&&l.kind===r.material)?.mask;
+        if(candidate&&candidate.length===mask.length){let equal=true;for(let i=0;i<mask.length;i++)if(candidate[i]!==mask[i]){equal=false;break;}
+          if(equal){residentMask=candidate;break;}}
+      }
+      return {...(unchanged?originalLayer:{}),name:r.name,color:r.color,kind:r.material,
+        mask:unchanged&&originalLayer&&!labels?originalLayer.mask:residentMask??mask,labelSet:undefined,labelValue:undefined,
+        surface:unchanged&&sameKind?originalLayer?.surface:undefined,
+        surfaceDiagnostics:unchanged&&sameKind?originalLayer?.surfaceDiagnostics:undefined,
+        sourceIdentity:unchanged?originalLayer?.sourceIdentity:undefined,qa:unchanged?originalLayer?.qa:undefined};
+    });
     // Regions absent from a mapping remain inspectable, with their original source masks.
     for(const layer of source.compartments)if(!regions.some(r=>r.name===layer.name)){
       const labels=source.labelSets?.find(s=>s.id===layer.labelSet)?.data;
-      compartments.push({name:layer.name,color:layer.color,mask:labels?Uint8Array.from(labels,n=>Number(n===layer.labelValue)):layer.mask});
+      compartments.push({...layer,labelSet:undefined,labelValue:undefined,mask:labels?Uint8Array.from(labels,n=>Number(n===layer.labelValue)):layer.mask});
     }
   }
   const volume={...source,displayIdentity:`surgical:${source.caseHash}:${geometryIdentity(key)}`,packedLabels:undefined,labelSets:undefined,compartments};
@@ -52,7 +71,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   const [mode,setMode]=useState<SurgicalInteraction['mode']>('navigate'),[preview,setPreview]=useState<SurgicalView|null>(null);
   const [previewOutcome,setPreviewOutcome]=useState<SurgicalOutcome|null>(null);
   const generation=useRef(0),busy=useRef(false),current=useRef({source,api,result,slot,enabled});current.current={source,api,result,slot,enabled};
-  useEffect(()=>{generation.current++;busy.current=false;setResult(null);setPreview(null);setPreviewOutcome(null);setPath([]);setPending(false);setError(null);},[source?.caseHash]);
+  useEffect(()=>{generation.current++;busy.current=false;setResult(null);setPreview(null);setPreviewOutcome(null);setPath([]);setMode('navigate');setSlot('left');setPending(false);setError(null);},[source?.caseHash]);
   useEffect(()=>()=>{generation.current++;},[]);
   async function run(command:string,extra:Record<string,unknown>={}):Promise<boolean>{
     const c=current.current;if(!c.enabled||!c.source||!c.api?.surgicalRehearsal||busy.current)return false;
@@ -69,19 +88,20 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   const view=enabled&&result?.caseHash===source?.caseHash?result?.view??null:null;
   const volume=useMemo(()=>source&&view?modeledVolume(source,view):null,[source,view]);
   const previewVolume=useMemo(()=>source&&enabled&&preview?modeledVolume(source,preview):null,[source,enabled,preview]);
-  function setPose(p:SurgicalPose){setRawPose(p);setPreview(null);setPreviewOutcome(null);}
+  function clearPreview(){setPreview(null);setPreviewOutcome(null);setError(null);}
+  function setPose(p:SurgicalPose){setRawPose(p);setPath([]);clearPreview();}
   function selectSlot(s:string){setSlot(s);setPreview(null);setPreviewOutcome(null);setPath([]);const t=result?.view.slots[s];if(t){setRawPose({position:[...t.position],quaternion:[...t.quaternion]});setParameters({...t.parameters});}}
   function onStroke(point:Point3,phase:'start'|'move'|'end'){
     if(phase==='start')setPath([{position:point,quaternion:pose.quaternion}]);
     else setPath(p=>p.length<512?[...p,{position:point,quaternion:pose.quaternion}]:p);
-    setPose({...pose,position:point});
+    setRawPose({...pose,position:point});clearPreview();
   }
   function action(operation:string,params:Record<string,number>=parameters,duration=1):SurgicalAction{return {slot,operation,parameters:params,duration,...(['apply','move','hold','grasp','place'].includes(operation)?{path:path.length?path:[pose]}:{})};}
   return {result,view,volume,previewVolume,pending,error,slot,pose,path,mode,preview,previewOutcome,parameters,setPose,setMode,selectSlot,run,action,
-    setParameters:(p:Record<string,number>)=>{setParameters(p);setPreview(null);setPreviewOutcome(null);},
-    clearPreview:()=>{setPreview(null);setPreviewOutcome(null);},
+    setParameters:(p:Record<string,number>)=>{setParameters(p);clearPreview();},
+    clearPreview,
     create:(mapping?:SurgicalRegion[])=>{const issue=mapping?validateMapping(mapping):null;if(issue){setError(issue);return Promise.resolve(false);}return run('create',mapping?{mapping}:{});},
-    cancel:()=>{setPreview(null);setPreviewOutcome(null);setPath([]);const t=result?.view.slots[slot];if(t)setRawPose({position:t.position,quaternion:t.quaternion});},
+    cancel:()=>{clearPreview();setPath([]);const t=result?.view.slots[slot];if(t){setRawPose({position:t.position,quaternion:t.quaternion});setParameters({...t.parameters});}},
     interaction:{view,preview,outcome:preview?previewOutcome:result?.outcome??null,pose,path,parameters,selectedSlot:slot,mode,onPose:setPose,onStroke} as SurgicalInteraction};
 }
 export type SurgicalController=ReturnType<typeof useSurgical>;

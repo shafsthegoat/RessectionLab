@@ -170,12 +170,8 @@ def _source_inputs(case, target_names, support_evidence_id, authority):
         raise ValueError("A supplied or explicitly authorized estimated brain support is required")
     layers = case.metadata.get("anatomy_layers", {})
     if target_names is None:
-        if "monai_tumor_core" in case.compartments:
-            target_names = ("monai_tumor_core",)
-        elif "enhancing_target" in case.compartments:
-            target_names = ("enhancing_target",)
-        else:
-            target_names = tuple(k for k in case.compartments if layers.get(k, {}).get("kind") == "tumor")
+        from .surgical_environment import default_target_names
+        target_names = default_target_names(case)
     target_names = tuple(target_names)
     if not target_names or len(set(target_names)) != len(target_names):
         raise ValueError("Select a nonempty unique list of visible research target layers")

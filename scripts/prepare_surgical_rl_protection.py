@@ -2,8 +2,7 @@
 """Read existing native estimates into source-bound research exclusion masks."""
 import argparse
 import json
-from resectionlab.imaging import load_case
-from resectionlab.surgical_scene import from_case
+from resectionlab.surgical_environment import load_environment
 from resectionlab.surgical_rl_protection import annotation_from_collection, ProtectionSet, save_protection
 
 # Explicit research policy mapping from existing SynthSeg layer IDs, not names.
@@ -22,7 +21,7 @@ def main():
     parser.add_argument('--allow-unreviewed', action='store_true')
     parser.add_argument('--include-hippocampus', action='store_true', help='Additional explicit conservative research policy')
     args = parser.parse_args()
-    scene = from_case(load_case(args.case))
+    scene = load_environment(args.case)
     layers = dict(LAYERS)
     if args.include_hippocampus:
         layers.update(left_hippocampus='synthseg-17', right_hippocampus='synthseg-53')

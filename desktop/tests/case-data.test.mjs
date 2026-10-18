@@ -223,3 +223,12 @@ test("semantic colors do not depend on compartment order", () => {
   assert.equal(anatomyColor("nonenhancing_or_necrotic_core"), "#b894d9");
   assert.equal(anatomyColor("FLAIR_abnormality"), "#55bace");
 });
+
+test('segmentation-only import retains zero source intensities with a usable display window',async()=>{
+ const input=fixture();input.metadata={generated_signal:true};input.intensityRange=[0,0];
+ const image=new Uint8Array(new Float32Array(8).buffer);
+ const data=await hydrateCase(input,api({mri:image}));
+ assert.deepEqual([...data.mri],Array(8).fill(0));assert.deepEqual(data.intensityRange,[-.5,.5]);
+ assert.deepEqual(input.intensityRange,[0,0]);
+ input.metadata={};assert.throws(()=>validateCaseDescriptor(input),/intensity range/);
+});

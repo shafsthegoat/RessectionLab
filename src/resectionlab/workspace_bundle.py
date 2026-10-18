@@ -188,15 +188,16 @@ def _center(case):
 
 def _viewer_state(case,viewer,cases):
     """Bound display preferences without treating them as image registration."""
-    if not isinstance(viewer,dict) or set(viewer)-{'skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip'}:
+    if not isinstance(viewer,dict) or set(viewer)-{'smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip'}:
         raise ValueError('Unknown viewer settings')
     if 'skullMode' in viewer and viewer['skullMode'] not in {'exterior','transparent','cutaway'}:
         raise ValueError('Invalid skull display mode')
+    if 'smoothSurfaces' in viewer and type(viewer['smoothSurfaces']) is not bool:raise ValueError('Invalid surface display flag')
     volume=viewer.get('volumeRendering')
     if 'volumeRendering' in viewer:
         if (not isinstance(volume,dict) or set(volume)-{'enabled','preset','density','window','points','shadows','isolateLabels'} or
                 ('enabled' in volume and type(volume['enabled']) is not bool) or
-                ('preset' in volume and volume['preset'] not in {'auto','ct-bone','ct-tissue','mri'}) or
+                ('preset' in volume and volume['preset'] not in {'auto','ct-bone','ct-tissue','ct-angiography','mri'}) or
                 ('density' in volume and (type(volume['density']) not in (int,float) or
                     not math.isfinite(volume['density']) or not 0<=volume['density']<=2))):
             raise ValueError('Invalid scan volume rendering settings')

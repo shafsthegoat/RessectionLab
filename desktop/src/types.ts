@@ -151,6 +151,7 @@ export interface CasePayload {
     volumeMm3: number;
     array: ArrayDescriptor;
     sourceArray?: ArrayDescriptor;
+    qa?: import('./viewer/contracts').AnatomyQuality;
   }[];
   unknowns: string[];
   metadata: Record<string, unknown>;
@@ -181,6 +182,9 @@ export interface ViewerCase {
     name: string;
     volumeMm3: number;
     mask: Uint8Array;
+    kind?:string;
+    sourceIdentity?:string;
+    qa?:import('./viewer/contracts').AnatomyQuality;
     color: string;
     mesh?: {
       positions: Float32Array;
@@ -460,6 +464,8 @@ export type CaseLibraryFolder = {folder:string|null;error?:string};
 export interface ResectionApi extends TrainingApi {
   importSurgicalScene?(args:{frame:string;units:string;material:string;resolution:number;topology:string;thicknessMm?:number}):Promise<CasePayload|null>;
   surgicalRehearsal?: import("./surgical-types").SurgicalApi["surgicalRehearsal"];
+  workspaceInstalled?(args:{caseHash:string;caseId:string}):Promise<boolean>;
+  prepareSurgicalEnvironment?(args:import('./EnvironmentPreparationPanel').EnvironmentPreparation):Promise<CasePayload|null>;
   createSurgicalFixture?: import("./surgical-types").SurgicalApi["createSurgicalFixture"];
   createRehearsal?: import("./rehearsal-types").RehearsalApi["createRehearsal"];
   inspectRehearsal?: import("./rehearsal-types").RehearsalApi["inspectRehearsal"];

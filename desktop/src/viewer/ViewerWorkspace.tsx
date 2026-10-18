@@ -86,7 +86,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     catch (cause) { return {goal:null,error:cause instanceof Error?cause.message:String(cause)}; }
   },[caseData,props.publicGoal,diagnosticRequested,passiveRequested,rehearsalRequested]);
   const publicGoal = goalSelection.goal;
-  const signalName = props.generatedSignal ? "analytic signal" : (props.sourceLabel ?? "MRI");
+  const signalName = props.segmentationOnly ? 'segmentation only' : props.generatedSignal ? "analytic signal" : (props.sourceLabel ?? "MRI");
   const [localSettings,setLocalSettings] = useState<ViewerWorkspaceSettings>({});
   const settings=props.workspaceSettings ?? localSettings;
   const scanVolume=volumeSettings(settings.volumeRendering,signalName);
@@ -131,7 +131,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const [navigationMode,setNavigationMode]=useState<'orbit'|'pan'>('orbit');
   const [controlPanel,setControlPanel]=useState<'layout'|'appearance'|'clip'|null>(null);
   const [obliqueAngle,setObliqueAngle]=useState(0);
-  const [smoothSurfaces, setSmoothSurfaces] = useState(true);
+  const smoothSurfaces=settings.smoothSurfaces!==false;
+  const setSmoothSurfaces=(smoothSurfaces:boolean)=>changeSettings({...latestSettings.current,smoothSurfaces});
   const [displayedPrior, setDisplayedPrior] = useState<ViewerPriorLayer | null>(
       null,
     ),
@@ -175,6 +176,13 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   ]);
 
   const rendererIdentity=caseData?.displayIdentity??caseData;
+  const [surfaceReports,setSurfaceReports]=useState<Record<string,{diagnostics?:import('./surfacePolicy').SurfaceDiagnostics;empty?:boolean}>>({});
+  useEffect(()=>{
+    setSurfaceReports({});const element=canvas.current;if(!element)return;
+    const receive=(event:Event)=>{const d=(event as CustomEvent).detail;setSurfaceReports(old=>({...old,[d.name]:d}));};
+    element.addEventListener('anatomy-surface',receive);return ()=>element.removeEventListener('anatomy-surface',receive);
+  },[rendererIdentity]);
+
   useEffect(() => {
     if (
       !caseData ||
@@ -559,6 +567,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       onPointerUpCapture={event=>{if((event.target as HTMLInputElement).type==='range')engine.current?.endInteraction();}}
       onPointerCancelCapture={()=>engine.current?.endInteraction()}
       data-layout={layout}
+      data-surfaces-pending={remaining}
       data-expanded={expanded ?? undefined}
       aria-label="Linked patient imaging workspace"
     >
@@ -573,7 +582,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           <button onClick={()=>engine.current?.cameraPreset('oblique')} aria-label="Fit 3D view">Fit</button>
           <span className="viewer-tool-divider"/>
           <button aria-label="Show structures only" aria-pressed={!scanVolume.enabled} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:false}})}>Structures</button>
-          <button aria-label="Show scan volume with structures" aria-pressed={scanVolume.enabled} disabled={Boolean(replay)||passiveRequested||rehearsalRequested} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:true}})}>Volume</button>
+          <button aria-label="Show scan volume with structures" aria-pressed={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:true}})}>Volume</button>
         </div>
         <span className="rl-viewer-expanded-note">{expanded?TITLES[expanded]:layout==='3d-focus'?'3D + slices':'Image review'}</span>
         {controlPanel&&<div className="rl-control-popover" role="region" aria-label={`${controlPanel} controls`}>
@@ -584,13 +593,14 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <label>Left drag<select aria-label="3D drag mode" value={navigationMode} onChange={e=>setNavigationMode(e.target.value as 'orbit'|'pan')}><option value="orbit">Rotate</option><option value="pan">Pan</option></select></label>
           </>}
           {controlPanel==='appearance'&&<>
-            <label><input type="checkbox" aria-label="Scan volume" checked={scanVolume.enabled} disabled={Boolean(replay)||passiveRequested||rehearsalRequested} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:e.target.checked}})}/>Scan volume</label>
-            <label>Preset<select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}><option value="auto">Automatic · {signalName}</option><option value="ct-bone">CT bone</option><option value="ct-tissue">CT tissue</option><option value="mri">MRI tissue</option></select></label>
+            <label><input type="checkbox" aria-label="Scan volume" checked={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:e.target.checked}})}/>Scan volume</label>
+            <label>Preset<select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}><option value="auto">Automatic · {signalName}</option><option value="ct-bone">CT bone</option><option value="ct-tissue">CT tissue</option><option value="ct-angiography" disabled={!/^CT/i.test(signalName)}>CT angiography · contrast scan</option><option value="mri">MRI tissue</option></select></label>
             <label>Scan density<input aria-label="Scan volume density" type="range" min="0" max="2" step=".01" value={scanVolume.density} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,density:+e.target.value}})}/></label>
             <label><input type="checkbox" aria-label="Smooth 3D surfaces" checked={smoothSurfaces} onChange={e=>setSmoothSurfaces(e.target.checked)}/>Smooth surfaces</label>
             <label><input type="checkbox" checked={settings.volumeRendering?.shadows!==false} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,shadows:e.target.checked}})}/>Volume shadows</label>
             <label><input type="checkbox" checked={settings.volumeRendering?.isolateLabels===true} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,isolateLabels:e.target.checked}})}/>Isolate selected tissue</label>
             {diagnosticLayer&&<label><input type="checkbox" checked={diagnosticVisible} onChange={e=>setDiagnosticVisible(e.target.checked)}/>Diagnostic overlay</label>}
+            <details aria-label="Anatomy display quality"><summary>Anatomy quality</summary><p>Source slices and masks remain the basis for review. Anatomical accuracy is unmeasured.</p>{caseData.compartments.map(layer=>{const d=surfaceReports[layer.name]?.diagnostics??layer.surfaceDiagnostics;return <div key={layer.name}><strong>{layer.name}</strong>{layer.qa?.issues.map(issue=><p key={issue}>{issue}</p>)}{d&&<p>{d.fallbackReason?d.fallbackReason:d.restoredComponents?`${d.restoredComponents} components use their original surface after geometry checks.`:'Surface geometry checks passed.'}{d.backedOffVertices?` Smoothing reduced locally at ${d.backedOffVertices.toLocaleString()} vertices.`:''}</p>}{surfaceReports[layer.name]?.empty&&<p>Empty segmentation: anatomy is unavailable.</p>}</div>})}</details>
             <TransferEditor value={settings.volumeRendering??{}} onChange={volumeRendering=>changeSettings({...settings,volumeRendering})}/>
           </>}
           {controlPanel==='clip'&&<>
@@ -655,7 +665,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             if (point && geometry)
               onCursorChange(clampCursor(point, geometry.bounds));
           }}
-          aria-label={`3-D source anatomy. Drag to ${navigationMode==='pan'?'pan':'rotate'}, scroll to zoom, double-click to set linked cursor.`}
+          aria-label={props.surgicalInteraction?.mode==='draw'?'3-D source anatomy. Drag on anatomy to draw a proposed instrument stroke.':`3-D source anatomy. Drag to ${navigationMode==='pan'?'pan':'rotate'}, scroll to zoom, double-click to set linked cursor.`}
         >
           <div className="rl-viewer-annotations">
             <span className="rl-viewer-dot" />{" "}
@@ -745,7 +755,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           </div>
           <div className="rl-viewer-scene-footer">
             <span>
-              Drag to {navigationMode==='pan'?'pan':'rotate'} <i>·</i> Scroll to zoom <i>·</i> Right-drag to pan
+              {props.surgicalInteraction?.mode==='draw'?'Drag on anatomy to draw a proposed stroke':props.surgicalInteraction?.mode==='translate'?'Drag the arrows to translate the proposed tool':props.surgicalInteraction?.mode==='rotate'?'Drag the rings to rotate the proposed tool':`Drag to ${navigationMode==='pan'?'pan':'rotate'} · Scroll to zoom · Right-drag to pan`}
             </span>
             <span>Double-click to link cursor</span>
           </div>
@@ -835,7 +845,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 {scaleMm} mm
               </span>
               <span className="rl-viewer-slice-note">
-                {props.generatedSignal ? "GENERATED ANALYTIC SIGNAL" : `SOURCE ${signalName.toUpperCase()}`}
+                {props.segmentationOnly ? 'SEGMENTATION ONLY · NO ACQUIRED IMAGE' : props.generatedSignal ? "GENERATED ANALYTIC SIGNAL" : `SOURCE ${signalName.toUpperCase()}`}
                 {surgicalView ? (props.surgicalInteraction?.preview?" · MODELED PREVIEW":" · MODELED EFFECT OVERLAY") : rehearsalMode ? " · RESEARCH EFFECT OVERLAY" : inspected
                   ? " · UNEXECUTED TOOL PREVIEW"
                   : proposalReviewLabel
