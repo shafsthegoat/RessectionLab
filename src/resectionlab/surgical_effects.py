@@ -168,6 +168,7 @@ def apply_effect(engine, key, op, cells, p, q, dt):
                         if state[field][k] <= 1e-12: del state[field][k]
                 amounts[field] = total
             state['fluidRemovedMm3'] += amounts['fluid']; state['debrisMm3'] = sum(state['debris'].values())
+            if amounts['debris']: state['debrisRemovedMm3'] = state.get('debrisRemovedMm3', 0.) + amounts['debris']
             return [{'kind': 'aspiration', **amounts}]
         # Directed deposition at the outlet, with explicit out-of-grid escape.
         outlet = p + orientation.apply([0., 0., params['depthMm']])
@@ -250,11 +251,20 @@ def tick_fields(engine, dt):
             nk = str(neighbor)
             transfer = min(excess, max(0., capacity - engine.state['fluid'].get(nk, 0.)))
             if transfer:
+                sediment = engine.state['debris'].get(key, 0.) * min(1., transfer / engine.state['fluid'][key])
+                if sediment:
+                    engine.state['debris'][key] -= sediment
+                    engine.state['debris'][nk] = engine.state['debris'].get(nk, 0.) + sediment
                 engine.state['fluid'][nk] = engine.state['fluid'].get(nk, 0.) + transfer
                 engine.state['fluid'][key] -= transfer; excess -= transfer
         index = np.array(np.unravel_index(cell, engine.scene.shape))
         if excess and (np.any(index == 0) or np.any(index == np.array(engine.scene.shape) - 1)):
+            sediment = engine.state['debris'].get(key, 0.) * min(1., excess / engine.state['fluid'][key])
+            if sediment:
+                engine.state['debris'][key] -= sediment
+                engine.state['debrisEscapedMm3'] = engine.state.get('debrisEscapedMm3', 0.) + sediment
             engine.state['fluid'][key] -= excess; engine.state['fluidEscapedMm3'] += excess
+    engine.state['debrisMm3'] = sum(engine.state['debris'].values())
 
 
 def fixture_properties(labels):

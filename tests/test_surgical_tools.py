@@ -281,3 +281,19 @@ def test_releasing_hold_does_not_restore_cells_removed_by_other_instrument():
     assert e.state['removed']==removed and 'left' not in e.state['holds']
     assert all(e.occupancy()[cell]==0 for cell in removed)
     assert SurgicalEngine.restore(e.scene,e.snapshot()).state_id==e.state_id
+
+
+def test_irrigation_transports_debris_with_conserved_bounded_fluid():
+    from resectionlab.surgical_effects import tick_fields
+    labels = np.zeros((5, 5, 5), np.uint16)
+    e = SurgicalEngine(SurgicalScene(labels, np.eye(4), [], {}, {}))
+    center = int(np.ravel_multi_index((2, 2, 2), labels.shape))
+    e.state['fluid'][str(center)] = 4.
+    e.state['fluidAddedMm3'] = 4.
+    e.state['debris'][str(center)] = 2.
+    e.state['debrisMm3'] = 2.
+    tick_fields(e, .1)
+    assert e.state['debris'][str(center)] < 2.
+    assert len([v for v in e.state['debris'].values() if v > 0]) > 1
+    assert sum(e.state['debris'].values()) + e.state.get('debrisEscapedMm3', 0.) == pytest.approx(2.)
+    assert sum(e.state['fluid'].values()) + e.state['fluidEscapedMm3'] == pytest.approx(4.)

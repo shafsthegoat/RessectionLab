@@ -353,6 +353,7 @@ class SurgicalEngine:
                 'elapsedSeconds': self.state['elapsedSeconds'], 'travelMm': self.state['travelMm'],
                 'contactCellSeconds': sum(self.state['contact'].values()), 'debrisMm3': self.state['debrisMm3'],
                 'fluidAddedMm3': self.state['fluidAddedMm3'], 'fluidRemovedMm3': self.state['fluidRemovedMm3'],
+                'debrisRemovedMm3': self.state.get('debrisRemovedMm3', 0.), 'debrisEscapedMm3': self.state.get('debrisEscapedMm3', 0.),
                 'fluidPresentMm3': sum(self.state['fluid'].values()) + sum(s.get('reservoirMm3', 0.) for s in self.state['sources']),
                 'fluidEscapedMm3': self.state['fluidEscapedMm3'],
                 'thermalExposure': sum(self.state['thermal'].values()),
