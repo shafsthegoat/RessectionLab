@@ -1,0 +1,285 @@
+{
+  "schema": "resectionlab.integrated-telemetry-verification.v1",
+  "reference": {
+    "citation": "Yilmaz R et al. (2022). Continuous monitoring of surgical bimanual expertise using deep neural networks in virtual reality simulation. npj Digital Medicine 5, 54.",
+    "doi": "https://doi.org/10.1038/s41746-022-00596-8",
+    "code": "https://github.com/recaiyilmaz/icems",
+    "sampleData": "https://doi.org/10.6084/m9.figshare.15132507.v1",
+    "adaptation": "Feature selection and 0.2-second reporting inspiration; original implementation, no transferred classifier or reference thresholds."
+  },
+  "observerSourceSha256": "8718352f1b29a84c37221375e81cae1d34f746c39dee2248c2927a654bc340cf",
+  "verificationScriptSha256": "9305762cad1da37b93c5eaedbb762d85c7e1fbbfbfff89c5954720a82dff1fc7",
+  "reportingIntervalSeconds": 0.2,
+  "cases": [
+    {
+      "episodeId": "sub06-integrated-two-tool",
+      "inputs": {
+        "case": {
+          "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/sub06.ressectionlab",
+          "sha256": "90e88d517170dfad687526dd7a2681221e06152656a2dd92ec2a97056911e5d6"
+        },
+        "snapshot": {
+          "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/sub06-snapshot.json",
+          "sha256": "d0b6996ad1e68cb071db549260cc10064e890929298b449cb0275412b3dac28c"
+        },
+        "attempts": {
+          "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/sub06-attempted-actions.json",
+          "sha256": "978c96367588a4de3b7e38bec92d82cb46a6f656384fdba0fd6fee5468468265"
+        }
+      },
+      "originalSource": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/testcases/history/surgical-patient-v2/patient.ressectionlab",
+        "sha256": "17b440a46de4dc4c42f75ac562ee71749856e3c7be1d6854325fe8a07554906f"
+      },
+      "sceneId": "sha256:e292ba41b650b221c90fb582bae49cd069597b119f9635e3f881b951e1138c56",
+      "finalStateId": "sha256:77f7ad45fd57f7e2d3c4fce7384e41428f0bda1f0214303b3a91b95b12cf2cf8",
+      "finalStateVerified": true,
+      "frame": "RAS+",
+      "affine": [
+        [
+          -1.0,
+          0.0,
+          0.0,
+          109.53500366210938
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -123.558837890625
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          -554.25
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sourceArraysUnchanged": true,
+      "sourceFilesUnchanged": true,
+      "labelArrayHash": "sha256:9930330418c439d7d042054d7419c05d3158e2422f62ce69b034044a563ecd76",
+      "intensityArrayHash": "sha256:7005b3fc2ae9c51bbbac3a2384210628e6f9541b7cbf797159d64ffbeee0f4f3",
+      "protectionMode": "strict-research",
+      "protectionContractId": "sha256:c90de8fa14c77f2d2623b4e2e0070cefde8ea29e28189ba18d41865287bd6025",
+      "attempts": 29,
+      "committedActions": 28,
+      "microsteps": 1819,
+      "reportingRows": 286,
+      "summary": {
+        "timeSeconds": 56.849462365592814,
+        "tipSeparationMm": 2.5,
+        "targetRemovedMm3": 57.0,
+        "nonTargetRemovedMm3": 710.0,
+        "woundCount": 0,
+        "activeWoundCount": 0,
+        "modeledWoundEmittedMm3": 0,
+        "fluidPresentMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "debrisMm3": 710.0,
+        "contactCellSeconds": 3.9505734767025196,
+        "exposureByMaterialCellSeconds": {
+          "bone": 293.00386943164153,
+          "tumor": 3.094367899884577
+        },
+        "vesselEncounterCells": 0,
+        "invalidActionsCumulative": 1,
+        "toolExchangesCumulative": 2,
+        "contactStopsCumulative": 2,
+        "pathLengthMm": {
+          "left": 270.6416876030217,
+          "right": 164.66666666666663
+        },
+        "attemptCount": 29,
+        "microstepCount": 1819
+      },
+      "peakObservedDisplacementMm": 0.6671993543674309,
+      "finalBrainMaxDisplacementMm": 0.6671993543674309,
+      "finalHeldCellCounts": {
+        "left": 1
+      },
+      "rightCusaTargetRemovalDuringNonemptyLeftHoldMm3": 3.0,
+      "rightCusaTargetRemovalWithNonemptyLeftHoldAfterMicrostepMm3": 3.0,
+      "bimanualTargetRemovalMicrosteps": [
+        {
+          "timeSeconds": 56.822580645162695,
+          "slot": "right",
+          "operation": "apply",
+          "heldBefore": {
+            "left": 1
+          },
+          "heldAfter": {
+            "left": 1
+          },
+          "targetRemovedMm3": 1.0,
+          "instrument": "cusa",
+          "maxDisplacementMm": 0.6316212888004823
+        },
+        {
+          "timeSeconds": 56.838709677420766,
+          "slot": "right",
+          "operation": "apply",
+          "heldBefore": {
+            "left": 1
+          },
+          "heldAfter": {
+            "left": 1
+          },
+          "targetRemovedMm3": 2.0,
+          "instrument": "cusa",
+          "maxDisplacementMm": 0.6458363608218854
+        }
+      ],
+      "metricAgreement": true,
+      "limitations": [
+        "Model-derived held cells, displacement, wounds, force and fluid; not clinical injury or expertise.",
+        "A hold dictionary key alone does not prove remaining held tissue. Nonempty source-cell counts are checked."
+      ]
+    },
+    {
+      "episodeId": "ucsf0004-integrated-two-tool",
+      "inputs": {
+        "case": {
+          "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/ucsf0004.ressectionlab",
+          "sha256": "c2158fee1d1c07d13ecaca28ef419a24b489400453ebb0d3bbbc3f5d826f5a6a"
+        },
+        "snapshot": {
+          "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/ucsf0004-snapshot.json",
+          "sha256": "5ace99e5b4852411485f40ee24b073d957f94ce9e13dde181b563a262fa27f24"
+        },
+        "attempts": {
+          "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/ucsf0004-attempted-actions.json",
+          "sha256": "2349f324a13261714f7121214e19f2bf7ac998de240b8f5ed4c46deccea2ea59"
+        }
+      },
+      "originalSource": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/testcases/cases/UCSF-PDGM-0004-standard-v2.ressectionlab",
+        "sha256": "6638da3da187599b1094c58d69a84434e881d7ff07a0ca22798be6a8b6115ea3"
+      },
+      "sceneId": "sha256:e32dca89c598eeb2ee4d5b3808ef00e9ed9bee35624d7ce2bcaf6b86edcfb225",
+      "finalStateId": "sha256:b0511eef98b5eb74d26790148fdd8fa4c27e70fb6ba1f5856a00d6d04a5246d7",
+      "finalStateVerified": true,
+      "frame": "RAS+",
+      "affine": [
+        [
+          -1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0,
+          239.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sourceArraysUnchanged": true,
+      "sourceFilesUnchanged": true,
+      "labelArrayHash": "sha256:61055eb9d6a173c7d14c095bf1f892d98a75d624f80e7c7290d43a22d8548757",
+      "intensityArrayHash": "sha256:88666f74a0aa1e7e83b8b555605f2c6408a7ce88b11d49c0705717838d5b5c74",
+      "protectionMode": "strict-research",
+      "protectionContractId": "sha256:2900f709c06ac759fe7666b817edd9133602067e7e6aecd61a75e359f3391b29",
+      "attempts": 6,
+      "committedActions": 6,
+      "microsteps": 259,
+      "reportingRows": 12,
+      "summary": {
+        "timeSeconds": 2.133333333333336,
+        "tipSeparationMm": 27.545921254838778,
+        "targetRemovedMm3": 8.0,
+        "nonTargetRemovedMm3": 16.0,
+        "woundCount": 0,
+        "activeWoundCount": 0,
+        "modeledWoundEmittedMm3": 0,
+        "fluidPresentMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "debrisMm3": 0,
+        "contactCellSeconds": 0,
+        "exposureByMaterialCellSeconds": {
+          "soft_tissue": 0.7939393939393954,
+          "tumor": 0.3030303030303031
+        },
+        "vesselEncounterCells": 0,
+        "invalidActionsCumulative": 0,
+        "toolExchangesCumulative": 2,
+        "contactStopsCumulative": 1,
+        "pathLengthMm": {
+          "left": 55.0,
+          "right": 29.333333333333314
+        },
+        "attemptCount": 6,
+        "microstepCount": 259
+      },
+      "peakObservedDisplacementMm": 0.0,
+      "finalBrainMaxDisplacementMm": 0.0,
+      "finalHeldCellCounts": {},
+      "rightCusaTargetRemovalDuringNonemptyLeftHoldMm3": 0,
+      "rightCusaTargetRemovalWithNonemptyLeftHoldAfterMicrostepMm3": 0,
+      "bimanualTargetRemovalMicrosteps": [],
+      "metricAgreement": true,
+      "limitations": [
+        "Model-derived held cells, displacement, wounds, force and fluid; not clinical injury or expertise.",
+        "A hold dictionary key alone does not prove remaining held tissue. Nonempty source-cell counts are checked."
+      ],
+      "containerSupersessions": [
+        {
+          "schema": "resectionlab.telemetry-container-reconciliation.v1",
+          "episodeId": "ucsf0004-integrated-two-tool",
+          "previousContainerSha256": "2175575df198e7480e13b2c29b469446dc64a52a3fec649421a360cbde46b485",
+          "currentContainerSha256": "c2158fee1d1c07d13ecaca28ef419a24b489400453ebb0d3bbbc3f5d826f5a6a",
+          "cause": "Lead regenerated the native ZIP during the full two-case verifier after the sub06 retained-hold correction. Archive storage bytes changed; current saved source arrays, RAS affine, scene identity, bound contract and exact persisted checkpoint independently match the previously audited episode.",
+          "sourceCaseHash": "sha256:c7c21269b6769f5cb8c723ea32f445c04fd22c88a98c99ce9f904e9dca8357cc",
+          "sceneId": "sha256:e32dca89c598eeb2ee4d5b3808ef00e9ed9bee35624d7ce2bcaf6b86edcfb225",
+          "stateId": "sha256:b0511eef98b5eb74d26790148fdd8fa4c27e70fb6ba1f5856a00d6d04a5246d7",
+          "sourceMriAndAllCompartmentArraysUnchanged": true,
+          "frameAndAffineUnchanged": true,
+          "nativeSnapshotEqualsPreviouslyAuditedSidecar": true,
+          "checkpointStateIdentityVerified": true,
+          "originalEmbeddedFilesChecked": 0,
+          "sourceOriginalFileSha256": "6638da3da187599b1094c58d69a84434e881d7ff07a0ca22798be6a8b6115ea3",
+          "auditScope": "No new transition replay; exact persisted snapshot/action/scene identity and native source arrays checked against prior verified episode."
+        }
+      ]
+    }
+  ],
+  "exports": {
+    "json": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/telemetry/telemetry.json",
+      "sha256": "9e1bdabc385f224981e1d1a873bc247373b8573c8f7daf261dd96d0e031e1d35",
+      "bytes": 7507317
+    },
+    "csv": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/telemetry/telemetry.csv",
+      "sha256": "df82ce5b0b11e5af8c6c9079367df339a142f26b81c4f5e7768263071b2ed0e8",
+      "bytes": 190658
+    },
+    "html": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/telemetry/telemetry.html",
+      "sha256": "8b8b3a28d06aefc96f10b9a3cc1884ad591b6062921e6c2ff30647d055000851",
+      "bytes": 4278769
+    }
+  },
+  "visualInspection": "Not retried: browser policy blocked file URL; exported JSON and JavaScript parsed separately."
+}

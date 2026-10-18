@@ -1,5 +1,14 @@
 # RessectionLab
 
+The [October 18 integrated instrument rehearsal](docs/integrated-rehearsal.md)
+adds source-pinned CT/MRI drilling followed by a retained retractor hold and
+CUSA removal, second-case MRI interoperability, shared persisted protection,
+measured action costs and inspectable bimanual telemetry. We referenced
+[Yilmaz et al. (2022)](https://doi.org/10.1038/s41746-022-00596-8) for the
+behavior-measurement framework. The [bounded learning pilot](docs/surgical-pilot.md)
+keeps its actual optimizer updates, baselines, costs and limitations separate
+from anatomical or clinical validation.
+
 Current work follows the [October 16 first-release gate ledger](docs/poc-first-gate-ledger.md)
 and [patient corpus construction plan](docs/patient-corpus-plan.md): actual
 anatomical reconstruction, then one stateful two-tool rehearsal in Electron,

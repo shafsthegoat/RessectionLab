@@ -1,0 +1,25 @@
+{
+  "schema": "resectionlab.rejected-rehearsal-evidence.v1",
+  "trial": "sub06-first-two-tool-58mm3-empty-hold",
+  "disposition": "Superseded failed retained-tissue assertion; not the accepted main episode.",
+  "failure": "A left hold dictionary entry existed, but its source-cell list was empty after the final right CUSA stroke.",
+  "checkpointIdentityVerified": true,
+  "sceneId": "sha256:e292ba41b650b221c90fb582bae49cd069597b119f9635e3f881b951e1138c56",
+  "stateId": "sha256:bc71ea13f52d6ecad621fc3c8190b9881a315876db2d8c35c83e1c8fd59fc126",
+  "inputSha256": {
+    "sub06.ressectionlab": "a05ed08f8c27f126e43091237981fb9705d03f9914d65eb9d1787de6a5025de3",
+    "sub06-snapshot.json": "54c1729a60504540ed3998ac153a62eda528a673f3cac080f0f7860c1d2fb605",
+    "sub06-attempted-actions.json": "7d53d4190d16b05259f56ecbc77856e6b0345d3ee16dc875c6ecfdc6f83fe61e",
+    "sub06-actions.json": "11c085299ddb3dd3feebcab4d639a5614115b228a33757cbc6fafe4a87d86b6a"
+  },
+  "targetRemovedBeforeFinalCusaMm3": 54.0,
+  "targetRemovedAfterFinalCusaMm3": 58.0,
+  "heldCellCountsAfterFinalCusa": {
+    "left": 0
+  },
+  "formerlyHeldSourceCell": 5441346,
+  "formerlyHeldCellRemoved": true,
+  "finalBrainMaxDisplacementMm": 0.09667802689633603,
+  "peakLoggedActionBoundaryDisplacementMm": 0.4732197840553217,
+  "observationScope": "Saved checkpoint and per-action output independently inspected; no claim that hold-key presence proves nonempty retained tissue."
+}

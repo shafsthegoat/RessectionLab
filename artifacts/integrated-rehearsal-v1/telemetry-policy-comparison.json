@@ -1,0 +1,253 @@
+{
+  "schema": "resectionlab.fixed-pilot-policy-telemetry.v1",
+  "status": "passed",
+  "reference": {
+    "citation": "Yilmaz R et al. (2022). Continuous monitoring of surgical bimanual expertise using deep neural networks in virtual reality simulation. npj Digital Medicine 5, 54.",
+    "doi": "https://doi.org/10.1038/s41746-022-00596-8",
+    "code": "https://github.com/recaiyilmaz/icems",
+    "sampleData": "https://doi.org/10.6084/m9.figshare.15132507.v1",
+    "adaptation": "Feature selection and 0.2-second reporting inspiration; original implementation, no transferred classifier or reference thresholds."
+  },
+  "inputs": {
+    "pilotResult": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/surgical-pilot-v1/result.json",
+      "sha256": "2ad3abd59927198453632bf79208dc8adae2f4d3e085114134970fa16aa6f531"
+    },
+    "preparation": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/surgical-pilot-v1/preparation.json",
+      "sha256": "60e30cd9610cb731f631aa356c9485371204fab198c46ee42418f8cd610b32e7"
+    },
+    "prefixSnapshot": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/surgical-pilot-v1/sub06-prefix.json",
+      "sha256": "4f316295e4275d93e6ad2df005daf31b1b63073cc2b3e64a5f10aa667c26199e"
+    },
+    "sourceCase": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/surgical-patient-v2/patient.ressectionlab",
+      "sha256": "17b440a46de4dc4c42f75ac562ee71749856e3c7be1d6854325fe8a07554906f"
+    },
+    "protectionMetadata": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/surgical-patient-v2/rl-protection.json",
+      "sha256": "f571e98ad6a0a17cbb7eb8469cd5f03b14dbd538130c679a054be138b9cd7801"
+    },
+    "protectionArrays": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/surgical-patient-v2/rl-protection.npz",
+      "sha256": "c186c5fb35aa4f660e2cc2398b73139aa18d9ede8e5f57a6093159703911015e"
+    }
+  },
+  "verificationScriptSha256": "cbe6d338eed290e6db912638a7f8156d431392fce8c8189f18e5e6cdbf6fdd3a",
+  "observerSourceSha256": "8718352f1b29a84c37221375e81cae1d34f746c39dee2248c2927a654bc340cf",
+  "sourceHashesAllMatchFrozenPreparation": true,
+  "fixedSelection": "Fixed seed 17 on sub06, selected by instruction before export; no best-seed selection. Seeds 29 and 43 remain in the complete pilot result.",
+  "searchLabelMeaning": "The search label denotes observed_greedy_local, an observation-only local geometric adaptation; it is not the native search/planner implementation.",
+  "sceneId": "sha256:e292ba41b650b221c90fb582bae49cd069597b119f9635e3f881b951e1138c56",
+  "sourceCaseId": "ZENODO-17486320-meningioma-sub-06-surgical-research",
+  "sourceRole": "already exposed development; acquired MRI with unreviewed model estimates",
+  "frame": "RAS+",
+  "affine": [
+    [
+      -1.0,
+      0.0,
+      0.0,
+      109.53500366210938
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      -123.558837890625
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      -554.25
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "labelArrayHash": "sha256:9930330418c439d7d042054d7419c05d3158e2422f62ce69b034044a563ecd76",
+  "protectionContractId": "sha256:c90de8fa14c77f2d2623b4e2e0070cefde8ea29e28189ba18d41865287bd6025",
+  "prefixEnvironmentId": "sha256:9cc35b884804f7af1907081cbf0f1572a2e61267a473c117dbfffe471ec5b08e",
+  "prefixStateId": "sha256:0886df0ace6881140e781f855f9332226ae21e19e776583ddb85f8dc8e6ce587",
+  "prefixAttemptCount": 16,
+  "prefixSourceAndConfigVerified": true,
+  "reportingIntervalSeconds": 0.2,
+  "methods": [
+    {
+      "sourceMethod": "scripted",
+      "sourceEpisodeRow": 4,
+      "fixedSeed": 17,
+      "selection": "Fixed seed 17 on sub06, selected by instruction before export; no best-seed selection. Seeds 29 and 43 remain in the complete pilot result.",
+      "searchLabelMeaning": "The search label denotes observed_greedy_local, an observation-only local geometric adaptation; it is not the native search/planner implementation.",
+      "sharedPrefixStateId": "sha256:0886df0ace6881140e781f855f9332226ae21e19e776583ddb85f8dc8e6ce587",
+      "sharedPrefixAttemptCount": 16,
+      "localDecisionStartSeconds": 52.10000000000046,
+      "localTargetRemovedMm3": 108.0,
+      "localHealthyRemovedMm3": 0.0,
+      "localElapsedSeconds": 1.1999999999999318,
+      "recordedStopReason": "local_decision_limit",
+      "recordedNativeSuccess": false,
+      "sourcePilotResult": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/outputs/surgical-pilot-v1/result.json",
+        "sha256": "2ad3abd59927198453632bf79208dc8adae2f4d3e085114134970fa16aa6f531"
+      },
+      "telemetryReplayOnly": true,
+      "newPolicyChoices": 0,
+      "newOptimizerUpdates": 0,
+      "comparisonMeaning": "Descriptive development episode; different executed local durations. No held-out, patient outcome or expertise claim.",
+      "label": "scripted",
+      "finalStateId": "sha256:fc1fda31febb180521eafea62c47529582447561a175b2b5fcdf547ea33a835a",
+      "prefixAndDecisionOutcomesMatch": true,
+      "wrapperDurationRejections": 0,
+      "attempts": 22,
+      "decisionAttempts": 6,
+      "committedActions": 22,
+      "rejectedActions": 0,
+      "microsteps": 999,
+      "reportingRows": 268,
+      "summaryTargetRemovedMm3": 135.0,
+      "summaryNonTargetRemovedMm3": 710.0,
+      "verificationReplayWallSeconds": 17.413879125379026
+    },
+    {
+      "sourceMethod": "observed_greedy_local",
+      "sourceEpisodeRow": 6,
+      "fixedSeed": 17,
+      "selection": "Fixed seed 17 on sub06, selected by instruction before export; no best-seed selection. Seeds 29 and 43 remain in the complete pilot result.",
+      "searchLabelMeaning": "The search label denotes observed_greedy_local, an observation-only local geometric adaptation; it is not the native search/planner implementation.",
+      "sharedPrefixStateId": "sha256:0886df0ace6881140e781f855f9332226ae21e19e776583ddb85f8dc8e6ce587",
+      "sharedPrefixAttemptCount": 16,
+      "localDecisionStartSeconds": 52.10000000000046,
+      "localTargetRemovedMm3": 0.0,
+      "localHealthyRemovedMm3": 0.0,
+      "localElapsedSeconds": 0.03333333333333144,
+      "recordedStopReason": "local_decision_limit",
+      "recordedNativeSuccess": false,
+      "sourcePilotResult": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/outputs/surgical-pilot-v1/result.json",
+        "sha256": "2ad3abd59927198453632bf79208dc8adae2f4d3e085114134970fa16aa6f531"
+      },
+      "telemetryReplayOnly": true,
+      "newPolicyChoices": 0,
+      "newOptimizerUpdates": 0,
+      "comparisonMeaning": "Descriptive development episode; different executed local durations. No held-out, patient outcome or expertise claim.",
+      "label": "search",
+      "finalStateId": "sha256:1c096e1a7512ff7872361a92e023c65b2ae92592c7e84192849024e306437089",
+      "prefixAndDecisionOutcomesMatch": true,
+      "wrapperDurationRejections": 0,
+      "attempts": 22,
+      "decisionAttempts": 6,
+      "committedActions": 17,
+      "rejectedActions": 5,
+      "microsteps": 964,
+      "reportingRows": 262,
+      "summaryTargetRemovedMm3": 27.0,
+      "summaryNonTargetRemovedMm3": 710.0,
+      "verificationReplayWallSeconds": 16.916724166832864
+    },
+    {
+      "sourceMethod": "trained",
+      "sourceEpisodeRow": 16,
+      "fixedSeed": 17,
+      "selection": "Fixed seed 17 on sub06, selected by instruction before export; no best-seed selection. Seeds 29 and 43 remain in the complete pilot result.",
+      "searchLabelMeaning": "The search label denotes observed_greedy_local, an observation-only local geometric adaptation; it is not the native search/planner implementation.",
+      "sharedPrefixStateId": "sha256:0886df0ace6881140e781f855f9332226ae21e19e776583ddb85f8dc8e6ce587",
+      "sharedPrefixAttemptCount": 16,
+      "localDecisionStartSeconds": 52.10000000000046,
+      "localTargetRemovedMm3": 0.0,
+      "localHealthyRemovedMm3": 0.0,
+      "localElapsedSeconds": 0.20000000000000284,
+      "recordedStopReason": "policy_stop",
+      "recordedNativeSuccess": false,
+      "sourcePilotResult": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/outputs/surgical-pilot-v1/result.json",
+        "sha256": "2ad3abd59927198453632bf79208dc8adae2f4d3e085114134970fa16aa6f531"
+      },
+      "telemetryReplayOnly": true,
+      "newPolicyChoices": 0,
+      "newOptimizerUpdates": 0,
+      "comparisonMeaning": "Descriptive development episode; different executed local durations. No held-out, patient outcome or expertise claim.",
+      "label": "RL",
+      "finalStateId": "sha256:0104618fc16356d60ad3083d1d1a5a07d7917db3677f7ae0a370973bce332417",
+      "prefixAndDecisionOutcomesMatch": true,
+      "wrapperDurationRejections": 0,
+      "attempts": 17,
+      "decisionAttempts": 1,
+      "committedActions": 17,
+      "rejectedActions": 0,
+      "microsteps": 965,
+      "reportingRows": 263,
+      "summaryTargetRemovedMm3": 27.0,
+      "summaryNonTargetRemovedMm3": 710.0,
+      "verificationReplayWallSeconds": 16.603807791601866
+    }
+  ],
+  "verificationReplayCost": {
+    "attemptedEngineCalls": 61,
+    "wallSeconds": 50.93441108381376,
+    "newPolicyChoices": 0,
+    "newOptimizerUpdates": 0,
+    "accounting": "Additional fixed-action verification only, excluded from original pilot training/assessment/replay and preparation cost. No runner or policy was invoked."
+  },
+  "originalPilotRunCost": {
+    "transition_calls": 350,
+    "transition_wall_seconds_by_phase": {
+      "replay": 88.39707954367623,
+      "untrained": 7.864677414298058,
+      "random": 8.660032292827964,
+      "scripted": 12.885823955759406,
+      "observed_greedy_local": 9.72716628620401,
+      "training": 36.06897920835763,
+      "trained": 5.45724441902712
+    },
+    "wall_seconds": 190.88792712474242,
+    "max_action_wall_seconds": 2.01885529095307,
+    "process_peak_rss_bytes": 736559104
+  },
+  "originalPreparationCost": {
+    "attempts": 4,
+    "transition_calls": 200,
+    "wall_seconds": 222.75031187431887
+  },
+  "originalCumulativeRecordedCost": {
+    "wall_seconds": 413.6382389990613,
+    "transition_calls": 550,
+    "scope": "all recorded runner preparation attempts and this fit/assessment/replay run; earlier manual exploration is separate"
+  },
+  "originalOptimizerUpdates": 12,
+  "allInputFilesUnchanged": true,
+  "exportChecks": {
+    "jsonAndEmbeddedHtmlAgree": true,
+    "csvRowCountMatches": true,
+    "javascriptSyntax": "Passed node --check; not executed or visually rendered."
+  },
+  "visualInspection": "No retry after the earlier file-URL browser policy block.",
+  "limitations": [
+    "Same development anatomy and frozen prefix; not held out and not a clinical comparison.",
+    "Fixed seed 17 only in this timeline; every seed and method remains in the original result.",
+    "The search label denotes observed_greedy_local, an observation-only local geometric adaptation; it is not the native search/planner implementation.",
+    "Forces, wounds, deformation and fluid are simulator quantities; measured force, clinical injury and expertise remain unknown."
+  ],
+  "exports": {
+    "json": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/telemetry-policy-comparison/telemetry.json",
+      "sha256": "9a881df494ae80cd642b138188b99276337036d64a478681c1646ebdbc2f0fc2",
+      "bytes": 12001373
+    },
+    "csv": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/telemetry-policy-comparison/telemetry.csv",
+      "sha256": "4081ca33f13860401125eb3c8e8080ab1ea2aa409eaa465389ce0f897b5ccc0c",
+      "bytes": 516030
+    },
+    "html": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/telemetry-policy-comparison/telemetry.html",
+      "sha256": "de6d141d9f36de6b9e9871924a2d9e86ef59d56cfbd88e28dc5dea745de3d965",
+      "bytes": 6804386
+    }
+  },
+  "totalVerificationAndExportWallSeconds": 52.49044687487185
+}

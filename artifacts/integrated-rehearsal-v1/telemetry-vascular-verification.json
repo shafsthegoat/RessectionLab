@@ -1,0 +1,263 @@
+{
+  "schema": "resectionlab.integrated-vascular-telemetry-verification.v1",
+  "reference": {
+    "citation": "Yilmaz R et al. (2022). Continuous monitoring of surgical bimanual expertise using deep neural networks in virtual reality simulation. npj Digital Medicine 5, 54.",
+    "doi": "https://doi.org/10.1038/s41746-022-00596-8",
+    "code": "https://github.com/recaiyilmaz/icems",
+    "sampleData": "https://doi.org/10.6084/m9.figshare.15132507.v1",
+    "adaptation": "Feature selection and 0.2-second reporting inspiration; original implementation, no transferred classifier or reference thresholds."
+  },
+  "observerSourceSha256": "8718352f1b29a84c37221375e81cae1d34f746c39dee2248c2927a654bc340cf",
+  "verificationScriptSha256": "d6e97911d379855da100fd0e74a9ed5000ff5d49142efa22815c9ba0b3be1cbf",
+  "inputs": {
+    "case": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/sub06-vascular.ressectionlab",
+      "sha256": "ce6f307f3038d7d0aa4f1486c9fc35b75870866770b9387aabfd3a86e8af7355"
+    },
+    "snapshot": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/sub06-vascular-snapshot.json",
+      "sha256": "6a94d4b6e7f634d826111ad8d5f646dd5eff5cd819009a4dd6dc8465f25d80bb"
+    },
+    "attempts": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/sub06-vascular-attempted-actions.json",
+      "sha256": "5817f38bc0e9bbbe11617a9124e083bfd15ba55b49741231df1b0ad14a839ead"
+    },
+    "vascularVerification": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/integrated-rehearsal-v1/vascular-verification.json",
+      "sha256": "2a7655da451cc78256f91493ee0446872cb24a2ed3c798c4666280f223090889"
+    }
+  },
+  "precursor": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/sub06-target58-precursor.ressectionlab",
+    "sha256": "a05ed08f8c27f126e43091237981fb9705d03f9914d65eb9d1787de6a5025de3",
+    "precursorStateId": "sha256:bc71ea13f52d6ecad621fc3c8190b9881a315876db2d8c35c83e1c8fd59fc126",
+    "precursorHeldSourceCells": {
+      "left": 0
+    },
+    "precursorAcceptedActionCount": 27,
+    "continuationAcceptedActionCount": 22,
+    "disposition": "Separate vascular/field branch from the superseded target-58 empty-hold precursor. It is not retained bimanual hold evidence for the corrected target-57 main episode.",
+    "anatomyRemovalPreservedThroughContinuation": true,
+    "strictResearchProtectionContractUnchanged": true
+  },
+  "episodeId": "sub06-vascular-field-from-target58-empty-hold-precursor",
+  "label": "scripted",
+  "sceneId": "sha256:e292ba41b650b221c90fb582bae49cd069597b119f9635e3f881b951e1138c56",
+  "finalStateId": "sha256:1ba8675b9fa1b063854b0d1ebc9893e54c33638d8f303d42741660891323f1b5",
+  "expectedStateVerified": true,
+  "attemptHistory": "provided_attempts",
+  "attempts": 50,
+  "committedActions": 49,
+  "continuationActions": 22,
+  "microsteps": 3790,
+  "reportingRows": 351,
+  "reportingIntervalSeconds": 0.2,
+  "summary": {
+    "timeSeconds": 69.9494623655898,
+    "tipSeparationMm": 138.0,
+    "targetRemovedMm3": 58.0,
+    "nonTargetRemovedMm3": 710.0,
+    "woundCount": 1,
+    "activeWoundCount": 0,
+    "modeledWoundEmittedMm3": 1.722581711058396,
+    "fluidPresentMm3": 21.1242911127678,
+    "fluidAddedMm3": 21.72258171105836,
+    "fluidRemovedMm3": 0.5982905982905984,
+    "fluidEscapedMm3": 0.0,
+    "debrisMm3": 710.0,
+    "contactCellSeconds": 3.41831541218639,
+    "exposureByMaterialCellSeconds": {
+      "bone": 293.00386943164153,
+      "tumor": 2.243744243970593,
+      "vessel": 240.4653216409638
+    },
+    "vesselEncounterCells": 37,
+    "invalidActionsCumulative": 1,
+    "toolExchangesCumulative": 6,
+    "contactStopsCumulative": 2,
+    "pathLengthMm": {
+      "left": 673.4416876030283,
+      "right": 392.66666666666214
+    },
+    "attemptCount": 50,
+    "microstepCount": 3790
+  },
+  "vascularFinalState": {
+    "provenance": "Model-derived under assumed research physics; no patient blood-loss, injury or expertise inference.",
+    "woundCount": 1,
+    "damagedFaces": 5,
+    "nonPatentFaces": 5,
+    "coagulationDose": 10.0,
+    "vesselGeneratedMm3": 1.722581711058396,
+    "fluidPresentMm3": 21.1242911127678,
+    "fluidAddedMm3": 21.72258171105836,
+    "fluidRemovedMm3": 0.5982905982905984,
+    "fluidEscapedMm3": 0.0,
+    "globalPerfusion": "unknown",
+    "patencyMeaning": "Coagulation and fluid removal do not restore cut vessel patency."
+  },
+  "sourceArraysUnchanged": true,
+  "sourceFilesUnchanged": true,
+  "frame": "RAS+",
+  "affine": [
+    [
+      -1.0,
+      0.0,
+      0.0,
+      109.53500366210938
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      -123.558837890625
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      -554.25
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "sourceCaseHash": "sha256:3f3622ae39d4e12f8cbebef5c7cfd0e46e6e01461bae90828301d61da62a057e",
+  "labelArrayHash": "sha256:9930330418c439d7d042054d7419c05d3158e2422f62ce69b034044a563ecd76",
+  "intensityArrayHash": "sha256:7005b3fc2ae9c51bbbac3a2384210628e6f9541b7cbf797159d64ffbeee0f4f3",
+  "originalEmbeddedFilesChecked": 0,
+  "protection": {
+    "status": "declared-masks-only",
+    "missingRequired": [],
+    "clearanceMm": 2.0,
+    "anatomicalCompleteness": "unknown",
+    "clinicalValidation": "none",
+    "unknownStructures": [
+      "motor/language cortex",
+      "corticospinal tract",
+      "optic pathways",
+      "cranial nerves"
+    ],
+    "structures": [
+      {
+        "id": "brainstem",
+        "name": "brain-stem",
+        "sourceCells": 34040,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-16; label=16; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6c13edb715334e0da86d38fb9d50fb016ad6c525b4c85235cc96b558a79f443f; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_thalamus",
+        "name": "left thalamus",
+        "sourceCells": 11463,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-10; label=10; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:8142a1740d958e15e6da581ba760259943a398ed93e11fde686db92ad3001504; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_thalamus",
+        "name": "right thalamus",
+        "sourceCells": 11015,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-49; label=49; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2bc584f4f0b7cd26964a2ac7fb0d4954bdbe4b9e4af87ba26ee91827b3114288; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_caudate",
+        "name": "left caudate",
+        "sourceCells": 8186,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-11; label=11; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:ef69e8990aa0ac3e55356b1d81f28e5f2dbe6f3a4e1cbc61a47b8ab41fc752d9; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_caudate",
+        "name": "right caudate",
+        "sourceCells": 8133,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-50; label=50; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2d2b2062b5cae137800bb1e983236ae65b90b87e99709a45a894ec4e8877e6c1; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_putamen",
+        "name": "left putamen",
+        "sourceCells": 9826,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-12; label=12; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:4e4a09ece21e199770a520c563107c4194b92c32f0efa646f6f0dd7bed4a7dbc; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_putamen",
+        "name": "right putamen",
+        "sourceCells": 9683,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-51; label=51; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:7f82ffa268e72aad25c3dd2d34c5e58bd719fe3c27b1f8e7ed20ef0dfa6cbf69; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_pallidum",
+        "name": "left pallidum",
+        "sourceCells": 3024,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-13; label=13; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:657ecada8e8d66397ed76e05ff65b5ddd4bb53761ad4392e956d8d5cc1218714; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_pallidum",
+        "name": "right pallidum",
+        "sourceCells": 3195,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-52; label=52; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6786d301532c766db3367d570894767817857d4cd861408b9eee86275bd072a3; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_hippocampus",
+        "name": "left hippocampus",
+        "sourceCells": 8789,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-17; label=17; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:b3409109b55b76be00df69e722a12a30895e36c8d5a4eb7b50c661b9c9e3bdf8; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_hippocampus",
+        "name": "right hippocampus",
+        "sourceCells": 9507,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-53; label=53; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:eac6e45c6be78e82808100c71d70e9a80b4de13885df238c64028f4d7bb26535; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      }
+    ],
+    "configured": true,
+    "mode": "strict-research",
+    "contractId": "sha256:c90de8fa14c77f2d2623b4e2e0070cefde8ea29e28189ba18d41865287bd6025",
+    "criticalMaxDisplacementMm": 0.0
+  },
+  "exports": {
+    "json": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/telemetry-vascular/telemetry.json",
+      "sha256": "0835b0ac41d131b6bff4ffec9ca35ac6995e9c2152b2f96750f3ee9e0e4a63cc",
+      "bytes": 13374676
+    },
+    "csv": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/telemetry-vascular/telemetry.csv",
+      "sha256": "6caa96f26ef8d58b7690422c61fbde1bce232fd671e51e21bb0bc7d23ca26d5c",
+      "bytes": 246281
+    },
+    "html": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/telemetry-vascular/telemetry.html",
+      "sha256": "ab14fe00a20e92c95482000e8f26bd4087bc3b6df320621519c3d57c2006924d",
+      "bytes": 7703890
+    }
+  },
+  "visualInspection": "Not retried: previous file-URL visual browser request was policy-blocked. JSON payload, embedded HTML JSON and CSV rows checked; JavaScript extracted for syntax-only check.",
+  "limitations": [
+    "One scripted development branch from the superseded empty-hold precursor; not retained bimanual hold evidence.",
+    "Wound/fluid/force values are model-derived; no patient blood loss, clinical injury, risk or expertise assessment.",
+    "Five vessel faces remain nonpatent after coagulation; global perfusion remains unknown."
+  ],
+  "precursorAttemptHistory": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/sub06-target58-precursor-attempted-actions.json",
+    "sha256": "7d53d4190d16b05259f56ecbc77856e6b0345d3ee16dc875c6ecfdc6f83fe61e",
+    "attemptCount": 28,
+    "exactChronologicalPrefixPreserved": true,
+    "continuationAttemptCount": 22
+  },
+  "postcheck": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/integrated-rehearsal-v1/telemetry-vascular-postcheck.json",
+    "sha256": "b39c9d710fb598b9418673955093d2da511791e8b512aebde97d66bc925b1347"
+  },
+  "javascriptSyntax": "Passed node --check; no JavaScript execution or visual rendering."
+}

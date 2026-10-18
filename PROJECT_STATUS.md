@@ -1,5 +1,27 @@
 # Project status
 
+**Integrated instrument rehearsal and bounded RL attempt, October 18:**
+The [reproducible two-case rehearsal](docs/integrated-rehearsal.md) uses the
+existing Electron workbench and shared engine. On acquired sub-06 anatomy,
+drilling persists through exchanges, and a retained one-cell retractor hold
+survives another hand's CUSA removal. Actual desktop preview/commit and native
+save reproduce the independently checked target-57 state. UCSF0004 opens through
+the same API and visibly rejects a new drill approach with bone unavailable.
+Shared protection persists into subsequent desktop actions, branches and reset.
+The earlier empty-hold candidate remains failed and preserved. Paper-inspired
+bimanual telemetry explicitly references Yilmaz et al. (2022); modeled effects
+and unknown measured force/clinical injury remain distinct.
+
+The [one bounded learning result](artifacts/surgical-pilot-v1/RESULT.md) records
+12 parameter-changing updates, three seeds and six exact final replays. The
+learned assessments remove zero additional target, so no checkpoint is promoted.
+The sub-06 script remains stronger; UCSF's scripted arm exceeds its local healthy
+budget and is retained as a failure. Both Frazier probes have zero useful effect,
+so learned two-instrument control remains unproved. Total recorded runner cost
+is 550 transitions/413.638 seconds, including four preparation attempts. Both
+anatomies participate in training and assessment; generalization, calibrated
+physics, neurological risk and clinical utility remain unvalidated.
+
 **Current packaged Mac research preview, October 16:**
 The [local Apple Silicon build](artifacts/poc-first-local-package-build-v1/RESULT.md)
 now operates with the current bundled engine, without the development Python
