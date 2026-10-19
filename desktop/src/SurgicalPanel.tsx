@@ -4,6 +4,7 @@ import {Euler,Quaternion} from 'three';
 import type {SurgicalController} from './use-surgical';
 import type {SurgicalRegion,SurgicalImportOptions,SurgicalOutcome,SurgicalView} from './surgical-types';
 import './SurgicalPanel.css';
+import {ResearchPlanningPanel} from './ResearchPlanningPanel';
 import {summarizeSurgicalEvents} from './surgical-types.ts';
 const materials=['unknown','bone','soft_tissue','tumor','membrane','vessel','fluid','functional_region'];
 function Numeric({value,onChange,label,min,max,step=.1}:{value:number;onChange:(n:number)=>void;label:string;min?:number;max?:number;step?:number}){
@@ -131,6 +132,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls}:{
       {!v.scene.environment?.standardized&&<button disabled={c.pending} onClick={()=>void c.create(v.scene.regions)}>Create standard V2 environment</button>}
     </section>
     {anatomyControls}
+    <ResearchPlanningPanel c={c} pause={()=>setPlaying(false)}/>
     <details><summary>Source provenance and research assumptions</summary><SceneResearchDetails view={displayed??v} preview={!!c.preview}/></details>
     <div className="surgical-slots">{Object.entries(v.slots).map(([s,t])=><button key={s} disabled={c.pending||playing} aria-pressed={c.slot===s} onClick={()=>c.selectSlot(s)}><strong>{s} hand</strong><span>{v.catalog.find(x=>x.id===t.instrument)?.name}</span><small>{t.inserted?'Inserted':'Withdrawn'} · {t.active?'Active':'Inactive'}</small>{v.holds?.[s]&&<small>{v.holds[s].cells.length?`Holding ${v.holds[s].cells.length} source cell${v.holds[s].cells.length===1?'':'s'}`:'Hold empty · no retained tissue'}</small>}</button>)}</div>
     <details><summary>Exchange instrument</summary><input aria-label="Search instruments" placeholder="Search instruments…" value={search} onChange={e=>setSearch(e.target.value)}/>

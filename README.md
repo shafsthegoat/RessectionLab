@@ -1,5 +1,12 @@
 # RessectionLab
 
+The [Research Planning desktop integration](docs/research-planning.md) now
+compares observation-only greedy and a frozen learned continuation in the
+existing source-bound instrument workbench, with checked native replay and
+save/reopen. The UCSF development result remains negative: greedy hits a shaft
+collision and the learner stops; neither adds target removal. This does not
+close the admitted TRAIN glioma or hybrid/search benchmark gates.
+
 The [bounded two-instrument task](docs/coordinated-burring.md) now learns to
 schedule shallow bone burring and debris aspiration in the unchanged simulator.
 All three Q-learning seeds match the successful script; either instrument alone

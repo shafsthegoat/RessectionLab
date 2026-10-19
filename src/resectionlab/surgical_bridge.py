@@ -80,7 +80,7 @@ def dispatch(session, operation, args, request, progress):
             metadata={'is_synthetic': True, 'generated': True, 'anatomy_layers': {r['name']: {'kind': r['material'], 'color': r['color'],
                        'provenance': 'generated engineering fixture'} for r in s.regions}, 'surgical_properties': s.properties})
         return session._install_case(case, {}, request)
-    _keys(args, {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex'})
+    _keys(args, {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'opponent'})
     _require_json_budget(args, 256 * 1024, 'SURGICAL_REQUEST_LIMIT', 'Instrument request exceeds budget')
     entry = None
     source = args.get('source')
@@ -115,7 +115,7 @@ def dispatch(session, operation, args, request, progress):
         scene_builder = lambda mapping=None: from_case(entry.case, mapping)
         artifacts = thaw_json(entry.artifacts)
     command = args.get('command', 'inspect')
-    if command not in {'create', 'inspect', 'preview', 'step', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene'}:
+    if command not in {'create', 'inspect', 'preview', 'step', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan'}:
         raise ValueError('Unsupported surgical command')
     raw = artifacts.get(ARTIFACT)
     from .surgical_environment import standardize, default_target_names, SCHEMA as ENVIRONMENT_SCHEMA
@@ -162,13 +162,29 @@ def dispatch(session, operation, args, request, progress):
     unchanged_tool = False
     if command == 'preview':
         return {**engine.preview(args['action']), 'caseHash': identity}
-    if command == 'step':
+    if command == 'plan':
+        from .surgical_planning import compare_continuations
+        branches, comparison = compare_continuations(engine,
+            acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
+            opponent=args.get('opponent', 'stop'), check=request.check, progress=progress)
+        # Install only after BOTH complete deterministic replay checks pass.
+        # The original live branch and cursor remain unchanged.
+        for candidate, report in branches:
+            branch_id = 'plan-' + str(len(record['branches'])) + '-' + report['method']
+            report['branchId'] = branch_id
+            record['branches'][branch_id] = candidate.snapshot()
+            record.setdefault('timeline', {})[branch_id] = copy.deepcopy(candidate.history)
+            record.setdefault('parents', {})[branch_id] = {'branchId': record['branchId'], 'position': record['position']}
+        comparison['comparisonSeal'] = semantic_digest(comparison)
+        record['planning'] = comparison
+    elif command == 'step':
         action = args['action']
         unchanged_tool = action.get('operation') == 'exchange' and engine.state['slots'].get(action.get('slot'), {}).get('instrument') == action.get('instrument')
         outcome = {'status': 'accepted', 'reason': 'Instrument already selected; state unchanged.', 'completedFraction': 1., 'events': []} if unchanged_tool else engine.step(action)
         if outcome['status'] != 'rejected' and not unchanged_tool:
             full = record['branches'][record['branchId']]
-            if record['position'] != len(full['actions']):
+            planned_ids = {row['branchId'] for row in (record.get('planning') or {}).get('alternatives', [])}
+            if record['position'] != len(full['actions']) or record['branchId'] in planned_ids:
                 parent = {'branchId': record['branchId'], 'position': record['position']}
                 record['branchId'] = 'branch-' + str(len(record['branches']))
                 record.setdefault('parents', {})[record['branchId']] = parent
@@ -199,6 +215,13 @@ def dispatch(session, operation, args, request, progress):
               'previousScenes': [{'index': i, 'label': f"Environment {i + 1}", 'branches': len(s.get('branches', {}))} for i, s in enumerate(artifacts.get('surgical_prior_scenes', []))],
               'branchId': record['branchId'], 'position': record['position'],
               'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k, v in record['branches'].items()]}
+    from .surgical_planning import availability
+    result['planningAvailability'] = availability(engine)
+    comparison = copy.deepcopy(record.get('planning'))
+    if comparison is not None:
+        from .surgical_planning import validate_saved_comparison
+        validate_saved_comparison(engine.scene, record, comparison)
+    result['planning'] = comparison
     _require_json_budget(result, 32 * 1024 * 1024, 'SURGICAL_RESULT_LIMIT', 'Save this sequence before continuing')
     request.begin_commit()
     if command == 'create' and raw is not None:

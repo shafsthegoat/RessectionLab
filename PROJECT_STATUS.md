@@ -1,5 +1,21 @@
 # Project status
 
+**Source-bound desktop planning comparison, October 19:**
+The [integrated Research Planning workflow](docs/research-planning.md) now
+forks the actual current instrument state into observation-only greedy and
+pinned seed-17 learned alternatives. Both replay from original source anatomy;
+the source branch stays unchanged and edits fork from checked plan branches.
+Source/guard/checkpoint identity checks, exact decisions and endpoint receipts,
+aligned 3D/MPR replay, and native GUI save/reopen operate in the existing app.
+The first UCSF comparison remains negative: greedy `x+` is rejected with
+SHAFT_COLLISION; the learner chooses STOP. Both add zero target removal, retaining
+the checked setup's 8 mm³ target/16 mm³ healthy removal. Native-only high-water
+exposure measurements are null/unassessed. No optimizer updates or new patient
+acquisition occurred. The admitted TRAIN source files and historical PPO
+checkpoint are absent on this Mac; the full TRAIN/SELECT learning/search goal
+is still open. A separately tested [EDEN intake adapter](docs/eden2020-integration.md)
+requires permission evidence and never grants planning/training admission.
+
 **Integrated instrument rehearsal and bounded RL attempt, October 18:**
 The [reproducible two-case rehearsal](docs/integrated-rehearsal.md) uses the
 existing Electron workbench and shared engine. On acquired sub-06 anatomy,
