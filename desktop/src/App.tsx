@@ -1435,11 +1435,11 @@ export default function App() {
           </span>
         </div>
         <div className="header-divider" />
-        <span className="header-purpose">Patient anatomy workspace</span>
+        <span className="header-purpose">Studio</span>
 
         <div className="header-spacer" />
         <span className="research-tag">
-          <FlaskConical size={11} /> Research workspace
+          <span className="status-dot" /> Local research
         </span>
         <button
           className="header-button"
@@ -1469,12 +1469,13 @@ export default function App() {
       </header>
 
       <nav className="navigation-rail" aria-label="Workspace navigation">
-        {([{id:"cases",label:"Cases",icon:FolderOpen},{id:"anatomy",label:"3D",icon:Layers3},{id:"rehearsal",label:"Rehearse",icon:Target}] as const).map(item=><button key={item.id}
+        {([{id:"cases",label:"Cases",icon:FolderOpen},{id:"data",label:"Data",icon:Scan},{id:"anatomy",label:"Anatomy",icon:Layers3},{id:"rehearsal",label:"Rehearse",icon:Target}] as const).map(item=><button key={item.id}
           className={`rail-button ${workbenchTab===item.id?"selected":""}`} aria-label={item.id==='anatomy'?'3D workspace':item.label}
+          aria-current={workbenchTab===item.id?'page':undefined} title={item.id==='anatomy'?'3D workspace':item.label}
           onClick={()=>{if(item.id==='rehearsal'){resetDisplayToPrimary();setEpisodeVisible(false);setCertifiedReplay(null);setCameraMode('instruments')}else rehearsal.hide();setWorkbenchTab(item.id);setCasePanel(true)}}><item.icon size={19}/><span>{item.label}</span></button>)}
         <div className="rail-spacer" />
         <button className={`rail-button ${workbenchTab==='research'?'selected':''}`} aria-label="Advanced research workflows"
-          title="Earlier experimental workflows" onClick={()=>{setWorkbenchTab('research');setCasePanel(true)}}><FlaskConical size={16}/></button>
+          title="Earlier experimental workflows" onClick={()=>{setWorkbenchTab('research');setCasePanel(true)}}><FlaskConical size={18}/><span>Research</span></button>
         <span className="rail-local" title="Processing stays on this Mac"><ShieldCheck size={17}/></span>
       </nav>
 
@@ -1505,7 +1506,7 @@ export default function App() {
           {workbenchTab==='cases' ? <><div className="unified-sidebar"><details className="unified-details"><summary>New patient study</summary><p className="subtle">One patient, one timepoint. Add multiple scans to build the workspace.</p><input aria-label="New patient ID" placeholder="Patient ID" value={newPatient} onChange={e=>setNewPatient(e.target.value)}/><label>Study<select aria-label="New study timepoint" value={newStudyTimepoint} onChange={e=>setNewStudyTimepoint(e.target.value)}><option value="preoperative">Pre-op</option><option value="postoperative">Post-op</option></select></label><button disabled={fileNavigationBlocked||!newPatient.trim()} onClick={async()=>{const b=await native.create(newPatient.trim(),newStudyTimepoint);if(b){setPayload(null);setCaseData(null);setWorkbenchTab('data')}}}>Create study…</button></details></div><CaseLibraryPanel cases={libraryCases} busy={fileNavigationBlocked||choosingLibrary} onBrowse={()=>load('openCase')}
             libraryFolder={libraryFolder} libraryError={libraryError} onChooseLibrary={api?.chooseCaseLibrary?()=>void chooseCaseLibrary():undefined}
             onOpen={id=>void act(async()=>{if(api?.openListedCase){const next=nativeApi?.openListedWorkspace?await nativeApi.openListedWorkspace(id):await api.openListedCase(id);if(isNativeBinding(next)){setPayload(null);setCaseData(null);await native.install(next);await api.workspaceInstalled?.({caseHash:next.collectionId,caseId:next.document.patient_id})}else if(next){await installCase(next,api)}else return;setWorkbenchTab('anatomy')}})}/></> : <>
-            <div className="workspace-tabs"><button className={workbenchTab==='data'?'selected':''} onClick={()=>setWorkbenchTab('data')}>Scans</button><button className={workbenchTab==='anatomy'?'selected':''} onClick={()=>setWorkbenchTab('anatomy')}>Anatomy</button></div><h1>{title}</h1><p className="case-subtitle">{displayedSource ? String(displayedSource.metadata.selected_modality??'Source image') : 'Open a case to begin'}</p>
+            <div className="workspace-tabs"><button className={workbenchTab==='data'?'selected':''} onClick={()=>setWorkbenchTab('data')}>Scans</button><button className={workbenchTab==='anatomy'?'selected':''} onClick={()=>setWorkbenchTab('anatomy')}>Anatomy</button></div><h1 title={title}>{title}</h1><p className="case-subtitle">{displayedSource ? String(displayedSource.metadata.selected_modality??'Source image') : 'Open a case to begin'}</p>
             {workbenchTab==='data' && payload && displayedSource && <WorkbenchDataPanel source={payload} displayed={displayedSource} series={imaging.series} selectedId={imaging.selectedId}
               busy={busy||engineStopped} api={api} onSelect={imaging.select} onImport={request=>void act(()=>imaging.importSeries(request))}
               settings={primaryViewer} onSettingsChange={setPrimaryViewer}/>}
@@ -1746,7 +1747,7 @@ export default function App() {
         <div className="workspace-heading">
           <div>
             <WorkspaceBreadcrumb caseId={native.binding?.document.patient_id??caseData?.caseId ?? null} />
-            <h2>{workbenchTab==='rehearsal'?'Surgical research rehearsal':native.binding?scanLabel(native.binding.document.series.find(s=>s.id===native.series)??{id:'',modality:'Study'}):workbenchTab==='data'?'Source imaging':'Anatomy, in context'}</h2>
+            <h2>{workbenchTab==='rehearsal'?'Surgical research rehearsal':native.binding?scanLabel(native.binding.document.series.find(s=>s.id===native.series)??{id:'',modality:'Study'}):workbenchTab==='data'?'Source imaging':'Anatomy workspace'}</h2>
           </div>
           <div
             className={`view-presets ${workbenchTab==='research'?'':'poc-hidden'}`}
@@ -1857,14 +1858,14 @@ export default function App() {
               <div className="welcome-symbol">
                 <Scan size={34} strokeWidth={1} />
               </div>
-              <span className="eyebrow">YOUR CASE IS THE STARTING POINT</span>
+              <span className="eyebrow">RESSECTIONLAB STUDIO</span>
               <h2>
                 From source imaging
                 <br />
                 to inspectable anatomy.
               </h2>
               <p>
-                Open real imaging to explore linked source slices and cached anatomical layers.
+                Explore your imaging in 3D, inspect linked slices, and work with your anatomical layers.
               </p>
               <button
                 className="primary-button"
@@ -1873,7 +1874,13 @@ export default function App() {
               >
                 <FolderOpen size={16} /> Open a case
               </button>
-
+              <div className="welcome-workflow" aria-label="Workspace workflow">
+                <span><Scan size={15}/> Source imaging</span>
+                <ChevronRight size={12}/>
+                <span><Layers3 size={15}/> Anatomy</span>
+                <ChevronRight size={12}/>
+                <span><Target size={15}/> Rehearsal</span>
+              </div>
             </div>
           )}
           {native.binding&&!displayedCase&&!native.busy&&<div className="welcome-overlay"><h2>{native.binding.document.series.length?'Scan unavailable':'Add your first scan'}</h2><p>{native.message}</p>{native.binding.document.series.length?<button className="primary-button" onClick={()=>native.run(native.refresh)}>Retry</button>:<button className="primary-button" onClick={()=>setWorkbenchTab('data')}>Add data</button>}</div>}

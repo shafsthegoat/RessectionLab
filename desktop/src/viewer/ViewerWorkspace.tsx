@@ -6,6 +6,16 @@ import type {CheckedDiagnosticLayer} from "./diagnosticLayer";
 import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
 import {mprView,mprPoint,mprPixel,sliceFraming,sourceSignalBounds} from './mprFraming';
 import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  Columns2,
+  SlidersHorizontal,
+  ScanLine,
+  Focus,
+  Layers3,
+  Box,
+  Maximize2,
+  Minimize2,
+} from "lucide-react";
 import type { KeyboardEvent, PointerEvent } from "react";
 import { VolumeRenderer } from "./VolumeRenderer";
 import { clippingForBounds } from './workspaceSettings';
@@ -583,11 +593,19 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         aria-label="Imaging layout and 3D controls"
       >
         <div className="rl-primary-tools">
-          {(['layout','appearance','clip'] as const).map(id=><button key={id} aria-expanded={controlPanel===id} onClick={()=>setControlPanel(controlPanel===id?null:id)}>{id[0].toUpperCase()+id.slice(1)}</button>)}
-          <button onClick={()=>engine.current?.cameraPreset('oblique')} aria-label="Fit 3D view">Fit 3D</button>
+          {(['layout', 'appearance', 'clip'] as const).map(id => {
+            const Icon = {layout: Columns2, appearance: SlidersHorizontal, clip: ScanLine}[id];
+            return (
+              <button key={id} aria-expanded={controlPanel === id}
+                onClick={() => setControlPanel(controlPanel === id ? null : id)}>
+                <Icon size={14}/>{id[0].toUpperCase() + id.slice(1)}
+              </button>
+            );
+          })}
+          <button onClick={()=>engine.current?.cameraPreset('oblique')} aria-label="Fit 3D view"><Focus size={14}/>Fit 3D</button>
           <span className="viewer-tool-divider"/>
-          <button aria-label="Show structures only" aria-pressed={!scanVolume.enabled} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:false}})}>Structures</button>
-          <button aria-label="Show scan volume with structures" aria-pressed={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:true}})}>Volume</button>
+          <button aria-label="Show structures only" aria-pressed={!scanVolume.enabled} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:false}})}><Layers3 size={14}/>Structures</button>
+          <button aria-label="Show scan volume with structures" aria-pressed={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:true}})}><Box size={14}/>Volume</button>
         </div>
         <div className="rl-slice-framing" role="group" aria-label="Source slice framing">
           <select aria-label="Source slice fit" title="Display framing only. Full image restores the complete source image." value={framing.fit} onChange={event=>setFraming(event.target.value as 'image'|'anatomy')}>
@@ -820,7 +838,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 }
                 onClick={() => setExpanded(expanded === plane ? null : plane)}
               >
-                {expanded === plane ? "↙" : "⤢"}
+                {expanded === plane ? <Minimize2 size={13}/> : <Maximize2 size={13}/>}
               </button>
             </div>
             <div

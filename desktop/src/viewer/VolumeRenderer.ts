@@ -292,7 +292,7 @@ export class VolumeRenderer {
       );
     }
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    this.renderer.setClearColor(0x05080d, 1);
+    this.renderer.setClearColor(0x000000, 1);
     this.renderer.autoClear = false;
     this.renderer.localClippingEnabled = true;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;

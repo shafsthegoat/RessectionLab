@@ -258,7 +258,7 @@ async function createWindow() {
     ...details.responseHeaders,
     'Content-Security-Policy': ["default-src 'self'; script-src 'self'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'" + (devUrl ? ' ws://127.0.0.1:5173' : '') + "; object-src 'none'; base-uri 'none'; frame-src 'none'"],
   } }));
-  window = new BrowserWindow({ width: 1460, height: 980, minWidth: 1050, minHeight: 720, title: 'RessectionLab', backgroundColor: '#071118', show: false,
+  window = new BrowserWindow({ width: 1460, height: 980, minWidth: 1050, minHeight: 720, title: 'RessectionLab', backgroundColor: '#080909', show: false,
     webPreferences: { preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, nodeIntegration: false, sandbox: true, webSecurity: true, allowRunningInsecureContent: false, devTools: !app.isPackaged },
   });
   window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
