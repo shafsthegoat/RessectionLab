@@ -1,5 +1,21 @@
 # Project status
 
+**Bounded PAT22 TRAIN source recovery, October 19:**
+The [recovery packager](docs/btc-recovery-workspace.md) now reuses the original
+pinned BTC source receipt, exact acquired T1 and fractional tumor annotation.
+An actual cached SynthStrip run supplies a separately labeled unreviewed brain
+estimate. Independent source/native-save checks and actual Electron open/save/
+reopen pass; the full target lies inside the single-component estimate. The
+149 relevant source/workspace tests pass, including nine new output-boundary
+and array-substitution controls. Older structural-evidence suites retain 23
+unchanged lineage-policy failures, reproduced with the pre-change code.
+All local datasets, screenshots and detailed testing records remain under
+ignored `testcases/`; measured recovery growth is below the approved 250 MiB
+exception. No RL fitting occurred. PAT22 remains prospective TRAIN, its old
+scan-only target boundary stays closed, and surgical planning remains refused
+pending a separate observed-domain/post-exposure contract. The historical PPO
+checkpoint is still unavailable; recovering source data does not recreate it.
+
 **Source-bound desktop planning comparison, October 19:**
 The [integrated Research Planning workflow](docs/research-planning.md) now
 forks the actual current instrument state into observation-only greedy and

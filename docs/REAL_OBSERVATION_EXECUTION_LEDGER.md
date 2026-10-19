@@ -1,5 +1,16 @@
 # Real-observation execution ledger
 
+## Bounded PAT22 storage exception, October 19
+
+The user explicitly approved recovery of the one pinned public BTC PAT22 TRAIN
+source under a **250 MiB total disk-growth cap**, despite the historical 50 GiB
+free-space reserve below. This exception covers that bounded local recovery and
+qualification only. Preserve its source hashes and prospective role, keep all
+new app-testing datasets and receipts under ignored `testcases/`, and retain
+distinct versions and failures. It does not authorize other acquisitions,
+restricted data, role reassignment, broader training, paid compute or cleanup
+of unrelated files.
+
 ## Targeted data and storage steering, October 11
 
 The latest human supplement retains the four hybrid packages and requires the
