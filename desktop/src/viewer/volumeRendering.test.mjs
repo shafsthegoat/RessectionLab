@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha} from './volumeTransfer.ts';
+import {isCtModality,volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha} from './volumeTransfer.ts';
 import {checkedViewerSettings} from '../workspace-view-settings.ts';
 const identity=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
 test('volume rays use millimetres on mirrored, anisotropic and oblique grids, including camera inside',()=>{
@@ -45,6 +45,19 @@ test('explicit skull modes survive settings validation',()=>{
  assert.throws(()=>checkedViewerSettings(source,{skullMode:'guess'}));
 });
 
+test('presentation and slice annotations reopen in legacy saves and reject malformed choices',()=>{
+  const source={compartments:[],brainMask:null,metadata:{}};
+  for(const presentation of ['segmentation','vascular'])for(const sliceOverlay of ['contour','fill']){
+    const stored={presentation,sliceOverlay,volumeRendering:{enabled:true,preset:'auto',density:.11}};
+    const reopened=checkedViewerSettings(source,JSON.parse(JSON.stringify(stored)));
+    assert.deepEqual(reopened,stored);
+    reopened.volumeRendering.density=.9;
+    assert.equal(stored.volumeRendering.density,.11);
+  }
+  for(const key of ['presentation','sliceOverlay'])for(const invalid of ['unknown',null,1,[],{}])
+    assert.throws(()=>checkedViewerSettings(source,{[key]:invalid}));
+});
+
 test('angiography is automatic only for declared CTA, with MRI sequence and segmentation-only behavior',()=>{
   assert.equal(volumeSettings({},'CT').preset,'ct-bone');assert.equal(volumeSettings({},'CTA').preset,'ct-angiography');
   assert.equal(volumeSettings({preset:'ct-angiography'},'CT').preset,'ct-angiography');
@@ -55,4 +68,37 @@ test('angiography is automatic only for declared CTA, with MRI sequence and segm
   assert.deepEqual(volumeTransfer('mri',[0,900],custom,'T1').data,volumeTransfer('mri',[0,900],custom,'T2').data);
   const source={compartments:[],brainMask:null,metadata:{}},settings={smoothSurfaces:false,volumeRendering:{preset:'ct-angiography',density:.3}};
   assert.deepEqual(checkedViewerSettings(source,settings),settings);assert.throws(()=>checkedViewerSettings(source,{smoothSurfaces:1}));
+});
+
+test('CT thresholds require an acquired CT modality even when a CT preset was saved',()=>{
+  assert.equal(isCtModality('  CTA'),true);assert.equal(isCtModality('CTAX'),false);assert.equal(isCtModality('T1CE'),false);
+  for(const preset of ['ct-bone','ct-tissue','ct-angiography']){
+    for(const modality of ['MRI','T1CE','T2 FLAIR','3D TOF MRA'])
+      assert.equal(volumeSettings({preset},modality).preset,'mri');
+    for(const modality of ['CT','CTA','CT angiography'])
+      assert.equal(volumeSettings({preset},modality).preset,preset);
+  }
+  assert.equal(volumeSettings({},'CT angiography').preset,'ct-angiography');
+  assert.equal(volumeSettings({},'T1CE post-contrast').preset,'mri');
+  const input={preset:'ct-bone',density:.3},saved=structuredClone(input);
+  volumeSettings(input,'T1CE');assert.deepEqual(input,saved,'presentation must not overwrite persisted choices');
+});
+
+test('declared bright-blood MRI suppresses background and emphasizes acquired high signal without coloring vessels',()=>{
+  const structural=volumeTransfer('mri',[0,900],{},'T1CE');
+  const alpha=(lut,x)=>lut.data[Math.round(x*1023)*4+3];
+  for(const modality of ['MRA','3D TOF','MRI angiography']){
+    assert.equal(volumeSettings({},modality).preset,'mri');
+    const lut=volumeTransfer('mri',[0,900],{},modality);
+    assert.deepEqual(lut.range,structural.range);
+    assert.equal(alpha(lut,0),0);
+    assert.ok(alpha(lut,.4)<alpha(structural,.4),'background tissue must recede');
+    assert.ok(alpha(lut,.9)>alpha(structural,.9),'bright acquired signal must remain detailed');
+    const top=[...lut.data.slice(-4,-1)];
+    assert.ok(Math.max(...top)-Math.min(...top)<30,'signal remains neutral ivory, not an arterial classification');
+  }
+  assert.deepEqual(volumeTransfer('mri',[0,900],{},'T1CE post-contrast').data,structural.data);
+  const points=[[0,0,0,0,0],[1,.8,.5,.2,.4]],custom=structuredClone(points);
+  assert.deepEqual(volumeTransfer('mri',[0,900],{points},'MRA').data,volumeTransfer('mri',[0,900],{points},'T1CE').data);
+  assert.deepEqual(points,custom);
 });

@@ -43,7 +43,7 @@ before(async()=>{
 after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true,force:true,maxRetries:3,retryDelay:50});});
 function renderer(){
   const r=Object.create(VolumeRenderer.prototype),mesh=new THREE.Mesh(new THREE.BoxGeometry(),new THREE.MeshStandardMaterial());
-  const uniforms={uColors:{value:[new THREE.Color()]},uLayerOpacities:{value:new Float32Array(8)},uClipEnabled:{value:0},uClipPlane:{value:new THREE.Vector4()},uFusionOpacity:{value:.5},uFusionActive:{value:0},uFusion:{value:null},uFusionShape:{value:new THREE.Vector3()},uWorldToFusion:{value:new THREE.Matrix4()},uFusionWindow:{value:new THREE.Vector2()}};
+  const uniforms={uColors:{value:[new THREE.Color()]},uSliceContours:{value:0},uLayerOpacities:{value:new Float32Array(8)},uClipEnabled:{value:0},uClipPlane:{value:new THREE.Vector4()},uFusionOpacity:{value:.5},uFusionActive:{value:0},uFusion:{value:null},uFusionShape:{value:new THREE.Vector3()},uWorldToFusion:{value:new THREE.Matrix4()},uFusionWindow:{value:new THREE.Vector2()}};
   Object.assign(r,{beginInteraction(){},endInteraction(){},scanVolume:{configure(){},labels(){}},volume:{...source,compartments:[{name:'brain',color:'#778899',mask:new Uint8Array(60)}]},bounds:[[-20,-30,-40],[80,90,100]],surfaces:new Map([['brain',mesh]]),materials:()=>[{uniforms}],requestRender(){},fusionTexture:{dispose(){}},renderer:{getContext:()=>({MAX_3D_TEXTURE_SIZE:1,getParameter:()=>2048})}});
   return {r,mesh,uniforms};
 }
@@ -133,6 +133,21 @@ test('camera-only settings and cloned toolbar choices do not reapply layer mater
   assert.equal(configured,1);assert.equal(labels,1);assert.equal(rendered,1);assert.equal(mesh.material.clippingPlanes,planes);
   settings.layerOpacity.brain=.8;settings.clipping.value=20;r.setWorkspaceSettings(settings);
   assert.equal(configured,2);assert.equal(mesh.material.opacity,.8);assert.equal(uniforms.uClipPlane.value.w,-20);
+});
+
+test('slice contour changes reach every image material and preserve source data and 3D appearance',()=>{
+  const {r,mesh,uniforms}=renderer(),second={uniforms:THREE.UniformsUtils.clone(uniforms)};
+  r.materials=()=>[{uniforms},second];let rendered=0;r.requestRender=()=>rendered++;
+  const scalar=r.volume.mri.slice(),mask=r.volume.compartments[0].mask.slice();
+  r.setWorkspaceSettings({});const opacity=mesh.material.opacity,layerOpacity=uniforms.uLayerOpacities.value[0];
+  assert.equal(uniforms.uSliceContours.value,0,'existing saved views retain filled overlays');
+  r.setWorkspaceSettings({sliceOverlay:'contour'});
+  assert.equal(uniforms.uSliceContours.value,1);assert.equal(second.uniforms.uSliceContours.value,1);
+  assert.equal(mesh.material.opacity,opacity);assert.equal(uniforms.uLayerOpacities.value[0],layerOpacity);
+  assert.equal(rendered,2,'changing only the overlay must invalidate the image');
+  r.setWorkspaceSettings({sliceOverlay:'fill'});
+  assert.equal(uniforms.uSliceContours.value,0);assert.equal(second.uniforms.uSliceContours.value,0);
+  assert.deepEqual(r.volume.mri,scalar);assert.deepEqual(r.volume.compartments[0].mask,mask);
 });
 
 test('unchanged cursor/layers/routes avoid redraw, and in-place visibility changes reach all views',()=>{

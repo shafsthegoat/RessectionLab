@@ -366,6 +366,7 @@ export class VolumeRenderer {
           uResolution: { value: new THREE.Vector2(1, 1) },
           uWindow: { value: new THREE.Vector2(...this.defaultWindow) },
           uOverlay: { value: this.opacity },
+          uSliceContours: { value: 0 },
           uLayerOpacities: { value: new Float32Array(MAX_ANATOMY_LAYERS).fill(.66) },
           uClipEnabled: { value: 0 },
           uClipPlane: { value: new THREE.Vector4(0,0,1,0) },
@@ -688,7 +689,7 @@ export class VolumeRenderer {
     // materials. Compare values so cloned or in-place edited settings work too.
     const signature = JSON.stringify([settings.layerOpacity, settings.layerColor,
       settings.clipping, settings.clipBox, settings.obliqueClip,
-      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode]);
+      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay]);
     if (signature === this.appearanceSignature) return;
     if(this.appearanceSignature!=null){this.beginInteraction();this.endInteraction();}
     this.appearanceSignature = signature;
@@ -730,6 +731,7 @@ export class VolumeRenderer {
     for (const group of [this.replayGroup, this.pendingReplayGroup])
       group?.children.forEach(mesh => this.applyReplaySurfaceAppearance(mesh));
     this.materials().forEach(shader=>{
+      shader.uniforms.uSliceContours.value=settings.sliceOverlay==='contour'?1:0;
       shader.uniforms.uClipEnabled.value=clipping.enabled ? 1 : 0;
       shader.uniforms.uClipPlane.value.set(normal.x,normal.y,normal.z,clipping.flipped ? clipping.value : -clipping.value);
       shader.uniforms.uFusionOpacity.value=Number.isFinite(settings.fusion?.opacity) ? Math.max(0,Math.min(1,settings.fusion!.opacity)) : .5;

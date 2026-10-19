@@ -9,7 +9,7 @@ import type { KeyboardEvent, PointerEvent } from "react";
 import { VolumeRenderer } from "./VolumeRenderer";
 import { clippingForBounds } from './workspaceSettings';
 import type { ViewerWorkspaceSettings } from './workspaceSettings';
-import { volumeSettings } from './volumeTransfer';
+import { volumeSettings, isCtModality } from './volumeTransfer';
 import type { VolumePreset } from './volumeTransfer';
 import {
   PLANE_AXES,
@@ -549,6 +549,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const modeled = replay && !replayError;
   const passiveMode = passiveReplay && !passiveError;
   const rehearsalMode = rehearsalState && !rehearsalError && !replayError;
+  const volumeDisplayed = scanVolume.enabled && !modeled && !passiveMode && !rehearsalMode;
   const inspected = !diagnosticRequested && !rehearsalRequested && !replay && !passiveRequested && !structuralProposal && !priorLayer &&
     displayedInspection?.caseHash === caseData.caseHash ? displayedInspection : null;
   const clearInspection = () => {
@@ -594,9 +595,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           </>}
           {controlPanel==='appearance'&&<>
             <label><input type="checkbox" aria-label="Scan volume" checked={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:e.target.checked}})}/>Scan volume</label>
-            <label>Preset<select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}><option value="auto">Automatic · {signalName}</option><option value="ct-bone">CT bone</option><option value="ct-tissue">CT tissue</option><option value="ct-angiography" disabled={!/^CT/i.test(signalName)}>CT angiography · contrast scan</option><option value="mri">MRI tissue</option></select></label>
+            <label>Preset<select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}><option value="auto">Automatic · {signalName}</option><option value="ct-bone" disabled={!isCtModality(signalName)}>CT bone</option><option value="ct-tissue" disabled={!isCtModality(signalName)}>CT tissue</option><option value="ct-angiography" disabled={!isCtModality(signalName)}>CT angiography · contrast scan</option><option value="mri">{/MRA|TOF|angiogra/i.test(signalName)?'Bright-blood MR signal':'MRI tissue'}</option></select></label>
             <label>Scan density<input aria-label="Scan volume density" type="range" min="0" max="2" step=".01" value={scanVolume.density} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,density:+e.target.value}})}/></label>
             <label><input type="checkbox" aria-label="Smooth 3D surfaces" checked={smoothSurfaces} onChange={e=>setSmoothSurfaces(e.target.checked)}/>Smooth surfaces</label>
+            <label>Slice annotations<select aria-label="Slice annotation style" value={settings.sliceOverlay??'fill'} onChange={e=>changeSettings({...settings,sliceOverlay:e.target.value as 'contour'|'fill'})}><option value="contour">Contours · source detail</option><option value="fill">Filled labels</option></select></label>
             <label><input type="checkbox" checked={settings.volumeRendering?.shadows!==false} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,shadows:e.target.checked}})}/>Volume shadows</label>
             <label><input type="checkbox" checked={settings.volumeRendering?.isolateLabels===true} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,isolateLabels:e.target.checked}})}/>Isolate selected tissue</label>
             {diagnosticLayer&&<label><input type="checkbox" checked={diagnosticVisible} onChange={e=>setDiagnosticVisible(e.target.checked)}/>Diagnostic overlay</label>}
@@ -651,7 +653,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       <div className="rl-viewer-anatomy rl-viewer-pane">
         <div className="rl-viewer-heading">
           <span className="rl-viewer-tag">3D</span>
-          <span>Spatial workspace</span>
+          <span>{volumeDisplayed?'Volume + structures':'Segmentation surfaces'}</span>
           <span className="rl-viewer-frame">RAS · mm</span>
         </div>
         <div
@@ -675,7 +677,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               ? `Generated passive replay · frame ${passiveReplay.frameIndex}/${passiveReplay.stepCount}`
               : modeled
               ? `Modeled residual annotations · step ${replay.step}/${replay.stepCount}`
-              : "Segmentation surfaces"}
+              : `${signalName} · ${volumeDisplayed?'source volume + labels':'source-derived labels'}`}
             {rehearsalMode && <>
               <span className="rl-viewer-replay-key">Mint: modeled removal · violet: assumed initial exposure · amber: field-management contact</span>
               <span className="rl-viewer-replay-key">Two persistent tools · {rehearsalState.elapsedSeconds.toFixed(1)} simulated s · source {signalName} unchanged · uncalibrated physics</span>

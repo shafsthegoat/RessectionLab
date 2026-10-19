@@ -11,6 +11,8 @@ export interface ViewerWorkspaceSettings {
   activePlane?: 'axial'|'coronal'|'sagittal';
   showPlane?: boolean;
   contrast?: number;
+  sliceOverlay?: 'contour'|'fill';
+  presentation?: 'segmentation'|'vascular';
   layerOpacity?: Record<string, number>;
   layerColor?: Record<string, string>;
   camera?: ViewerCameraState | null;

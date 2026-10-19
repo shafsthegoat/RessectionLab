@@ -3,10 +3,15 @@ import { inverseAffine, rasAffine } from './coordinates.ts';
 
 export type VolumePreset = 'auto' | 'ct-bone' | 'ct-tissue' | 'ct-angiography' | 'mri';
 export interface VolumeRenderingSettings { enabled?: boolean; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; points?: Array<[number,number,number,number,number]> }
+export const isCtModality=(modality:string)=>/^\s*(CT|CTA)(\b|[-_\s])/i.test(modality);
 export function volumeSettings(input: VolumeRenderingSettings = {}, modality = 'MRI') {
-  const ct=/^(CT|CTA)(\b|[-\s])/i.test(modality), acquired=!/segmentation only|analytic signal/i.test(modality);
+  const ct=isCtModality(modality), acquired=!/segmentation only|analytic signal/i.test(modality);
   const explicit=input.preset && ['ct-bone','ct-tissue','ct-angiography','mri'].includes(input.preset)?input.preset:null;
-  const preset = explicit==='ct-angiography'&&!ct?'mri':explicit??(/^CTA\b/i.test(modality)?'ct-angiography':ct?'ct-bone':'mri');
+  // Stored presets stay readable, but HU thresholds must never be applied to
+  // arbitrary MRI signal (including a saved CT preset opened on a T1CE scan).
+  const safeExplicit=explicit?.startsWith('ct-')&&!ct?'mri':explicit;
+  const angiography=/^\s*(?:CTA\b|CT[-_\s]+angiogra(?:phy|m)\b)/i.test(modality);
+  const preset = safeExplicit??(ct?(angiography?'ct-angiography':'ct-bone'):'mri');
   return { enabled: acquired && input.enabled !== false, preset: preset as Exclude<VolumePreset,'auto'>,
     density: Number.isFinite(input.density) ? Math.max(0,Math.min(2,input.density!)) : .45 };
 }
@@ -33,8 +38,17 @@ export function volumeTransfer(preset: Exclude<VolumePreset,'auto'>, window: [nu
   if(preset==='mri'&&!custom?.points){
     // MRI has arbitrary intensity units. Sequence changes presentation only;
     // signal never creates a vessel/tumor label or a missing scan.
-    const fluidSensitive=/T2|FLAIR|TOF|MRA/i.test(modality);
-    if(fluidSensitive)knots=knots.map(([x,r,g,b,a])=>[x,r*.94,g*.98,Math.min(1,b*1.04),a*(x<.65?.7:1)] as Knot);
+    const brightBlood=/\b(?:MRA|TOF)\b|\bMR(?:I)?[-_\s]+angiogra(?:phy|m)\b/i.test(modality);
+    if(brightBlood){
+      // A declared angiographic acquisition supports high-signal emphasis.
+      // Neutral ivory preserves its signal provenance: bright voxels are not
+      // artery/vein classifications, and no vessel geometry is synthesized.
+      knots=[
+        [0,.05,.06,.07,0], [.25,.18,.20,.22,0], [.45,.40,.43,.45,.002],
+        [.60,.69,.71,.72,.016], [.75,.92,.92,.89,.13],
+        [.90,1,.98,.93,.40], [1,1,.99,.96,.65],
+      ];
+    }else if(/T2|FLAIR/i.test(modality))knots=knots.map(([x,r,g,b,a])=>[x,r*.94,g*.98,Math.min(1,b*1.04),a*(x<.65?.7:1)] as Knot);
   }
   const range: [number,number] = preset === 'mri' ? [Math.min(0,window[0]),Math.max(1,window[1])] : [knots[0][0],3000];
   if(custom?.window && custom.window.every(Number.isFinite) && custom.window[1]>custom.window[0])range.splice(0,2,...custom.window);

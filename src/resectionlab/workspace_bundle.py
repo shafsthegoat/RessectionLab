@@ -188,8 +188,12 @@ def _center(case):
 
 def _viewer_state(case,viewer,cases):
     """Bound display preferences without treating them as image registration."""
-    if not isinstance(viewer,dict) or set(viewer)-{'smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip'}:
+    if not isinstance(viewer,dict) or set(viewer)-{'smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation'}:
         raise ValueError('Unknown viewer settings')
+    if 'sliceOverlay' in viewer and viewer['sliceOverlay'] not in ('contour','fill'):
+        raise ValueError('Invalid slice annotation style')
+    if 'presentation' in viewer and viewer['presentation'] not in ('segmentation','vascular'):
+        raise ValueError('Invalid anatomy presentation')
     if 'skullMode' in viewer and viewer['skullMode'] not in {'exterior','transparent','cutaway'}:
         raise ValueError('Invalid skull display mode')
     if 'smoothSurfaces' in viewer and type(viewer['smoothSurfaces']) is not bool:raise ValueError('Invalid surface display flag')

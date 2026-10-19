@@ -25,7 +25,7 @@ function state(index=0){
     recordedEpisodeBounds:{caseHash:'patient',episodeId:'episode',boundsRasMm:[[-2,-2,-3],[8,8,9]]}};
 }
 function renderer(){
-  const shaders=Array.from({length:4},()=>({uniforms:{uColors:{value:[new THREE.Color()]},uLayerOpacities:{value:[.66]},uClipEnabled:{value:0},uClipPlane:{value:new THREE.Vector4()},uFusionOpacity:{value:.5},uVisibleBits:{value:1},uLayerEnabled:{value:[1]},uRemoved:{value:null},uReplayActive:{value:0},uRouteCount:{value:0},uShaftStart:{value:[new THREE.Vector3(),new THREE.Vector3()]},uShaftEnd:{value:[new THREE.Vector3(),new THREE.Vector3()]},uTipEnd:{value:[new THREE.Vector3(),new THREE.Vector3()]},uRadii:{value:[new THREE.Vector2(),new THREE.Vector2()]},uRouteColors:{value:[new THREE.Color(),new THREE.Color()]}}}));
+  const shaders=Array.from({length:4},()=>({uniforms:{uColors:{value:[new THREE.Color()]},uSliceContours:{value:0},uLayerOpacities:{value:[.66]},uClipEnabled:{value:0},uClipPlane:{value:new THREE.Vector4()},uFusionOpacity:{value:.5},uVisibleBits:{value:1},uLayerEnabled:{value:[1]},uRemoved:{value:null},uReplayActive:{value:0},uRouteCount:{value:0},uShaftStart:{value:[new THREE.Vector3(),new THREE.Vector3()]},uShaftEnd:{value:[new THREE.Vector3(),new THREE.Vector3()]},uTipEnd:{value:[new THREE.Vector3(),new THREE.Vector3()]},uRadii:{value:[new THREE.Vector2(),new THREE.Vector2()]},uRouteColors:{value:[new THREE.Color(),new THREE.Color()]}}}));
   const r=Object.create(VolumeRenderer.prototype);
   Object.assign(r,{volume,bounds:[[0,0,0],[7,7,7]],workspaceSettings:{},appearanceSignature:null,
     extraClipPlanes:[],clipPlane:null,surfaces:new Map(),surfaceGeometry:new Map(),surfaceSmoothing:true,

@@ -2,7 +2,7 @@ import {packAnatomyLabels,MAX_ANATOMY_LAYERS} from './labelPacking';
 import * as THREE from 'three';
 import type { ViewerVolume } from './contracts';
 import { inverseAffine, rasAffine } from './coordinates.ts';
-import { volumeSettings, volumeTransfer } from './volumeTransfer.ts';
+import { isCtModality, volumeSettings, volumeTransfer } from './volumeTransfer.ts';
 import {layerAppearance} from './workspaceSettings';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
 import type { VolumeRenderingSettings } from './volumeTransfer';
@@ -85,7 +85,7 @@ export class ScanVolumeRenderer {
       this.material.uniforms.uTransfer.value=this.transfer;
       this.material.uniforms.uRange.value.set(...lut.range);this.preset=signature;
     }
-    this.material.uniforms.uCt.value=/^CT/i.test(modality);
+    this.material.uniforms.uCt.value=isCtModality(modality);
     this.material.uniforms.uShadows.value=input?.shadows!==false;
     this.material.uniforms.uIsolate.value=input?.isolateLabels===true;
     this.material.uniforms.uDensity.value=settings.density;

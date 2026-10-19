@@ -1,4 +1,29 @@
 import type {Binding, NativeScanState, NativeViewState, VesselScope} from './native-anatomy-data';
+import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
+
+export type AnatomyPresentation = 'segmentation'|'vascular';
+/** Presentation derivatives only; all selected structures and source masks stay intact. */
+export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Binding['document']['layers'],mode:AnatomyPresentation,modality:string):ViewerWorkspaceSettings {
+  const vascular=mode==='vascular',ct=/^\s*CT(?:A)?(?:\b|[-_])/i.test(modality);
+  const layerOpacity={...settings.layerOpacity},layerColor={...settings.layerColor};
+  for(const layer of layers){
+    if(['vessels','vessel','artery','vein','sinus'].includes(layer.kind)){
+      layerColor[layer.id]='#b8473d';layerOpacity[layer.id]=vascular?1:.32;
+    }else if(layer.kind==='tumor'){
+      layerColor[layer.id]='#42bbdf';layerOpacity[layer.id]=.96;
+    }else if(['bone','skull'].includes(layer.kind)){
+      layerColor[layer.id]='#ece2ca';layerOpacity[layer.id]=vascular?.13:.035;
+    }else if(['brain','tissue','soft_tissue'].includes(layer.kind)){
+      layerColor[layer.id]='#c8d0d5';layerOpacity[layer.id]=vascular?.035:.055;
+    }else if(layer.kind==='head-envelope')layerOpacity[layer.id]=.035;
+  }
+  return {...settings,presentation:mode,layout:'3d-focus',sliceOverlay:'contour',smoothSurfaces:true,showPlane:false,
+    skullMode:'transparent',layerColor,layerOpacity,
+    volumeRendering:{enabled:true,preset:'auto',density:ct?(vascular?.14:.075):(vascular?.035:.025),shadows:true},
+    clipping:settings.clipping?{...settings.clipping,enabled:false}:undefined,
+    clipBox:settings.clipBox?{...settings.clipBox,enabled:false}:undefined,
+    obliqueClip:settings.obliqueClip?{...settings.obliqueClip,enabled:false}:undefined};
+}
 
 export function studyTimepoint(b:Binding):string {
   return b.document.study_timepoint??b.document.series[0]?.timepoint??'preoperative';
@@ -12,6 +37,7 @@ export function scanLabel(series:{id:string;modality:string;label?:string}):stri
 /** Scan contrast/camera stays per scan; selected anatomy belongs to the study. */
 export function nextScanState(current:NativeScanState, saved:NativeScanState):NativeScanState {
   return {...saved,visible:{...current.visible},settings:{...saved.settings,
+    presentation:current.settings.presentation,sliceOverlay:current.settings.sliceOverlay,
     skullMode:current.settings.skullMode,clipping:current.settings.clipping,clipBox:current.settings.clipBox,obliqueClip:current.settings.obliqueClip,
     layerColor:current.settings.layerColor,layerOpacity:current.settings.layerOpacity}};
 }

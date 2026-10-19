@@ -150,6 +150,33 @@ def test_versioned_vessel_scope_roundtrip_preserves_anatomy(patient, scope):
             save_view(patient, {**state, 'vesselDisplayVersion': invalid})
 
 
+@pytest.mark.parametrize('style,mode', [('contour', 'segmentation'), ('fill', 'vascular')])
+def test_anatomy_presentation_survives_native_and_portable_reopen(patient, tmp_path, style, mode):
+    from resectionlab.anatomy_workspace import save_view, read_view
+    before = deepcopy(patient.document)
+    state = {'schema': 'patient-anatomy-view-v1', 'patientId': patient.document['patient_id'],
+             'snapshotId': patient.identity(), 'seriesId': 'mri', 'vesselScope': 'all',
+             'states': {'mri': {'cursor': [0., 0., 0.], 'visible': {'vessels': True, 'tumor': True},
+                                'settings': {'sliceOverlay': style, 'presentation': mode,
+                                             'volumeRendering': {'preset': 'auto', 'density': .085}}}}}
+    save_view(patient, state)
+    assert read_view(Collection(patient.root)) == state
+    dest = tmp_path/'presentation.rsworkspace'
+    save_package(patient, dest)
+    restored = Collection(open_package(dest, tmp_path/'presentation-open').parent)
+    assert read_view(restored) == state
+    assert restored.document == before == patient.document
+    for row in patient.document['series'] + patient.document['layers']:
+        assert np.array_equal(restored.array(row['data']), patient.array(row['data']))
+    for key in ('sliceOverlay', 'presentation'):
+        for invalid in ('unknown', 1, None, [], {}):
+            broken = deepcopy(state)
+            broken['states']['mri']['settings'][key] = invalid
+            with pytest.raises(ValueError, match='Invalid (slice annotation style|anatomy presentation)'):
+                save_view(patient, broken)
+    assert read_view(patient) == state
+
+
 def test_full_source_preserves_continuous_vessel_across_unknown_skull_slice(tmp_path):
     import nibabel as nib
     from scipy import ndimage as ndi

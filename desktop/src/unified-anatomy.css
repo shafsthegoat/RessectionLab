@@ -18,3 +18,26 @@
 .unified-details{margin-top:18px;padding:16px 0}.unified-details summary{font-size:12px;line-height:1.5}.unified-details label{margin:14px 0}.unified-details .tool-row{gap:8px}.unified-details .tool-row button{flex:1;margin:0}.unified-details>button,.unified-details>select,.wide-button{width:100%;margin:6px 0}.scan-cards{gap:10px}.scan-cards button{padding:13px 12px;gap:8px;border-radius:7px}.scan-cards strong{display:flex;justify-content:space-between;gap:8px;font-weight:500;font-size:12px}.scan-cards small{font-size:10px;color:#7cd9c7;font-weight:400}.scan-cards button.selected{background:#11322f;border-color:#3a8c7d}.scan-cards span{line-height:1.6}
 .unified-correction{gap:10px;padding:10px 14px;flex-wrap:wrap}.workspace-tabs{margin-bottom:18px}.workspace-tabs button{min-height:34px}.unified-sidebar button:focus-visible,.unified-sidebar select:focus-visible{outline:2px solid #6ed1c0;outline-offset:2px}
 @media(max-width:1150px){.native-workspace.poc-workbench.anatomy-only{grid-template-columns:58px 270px minmax(0,1fr)}.native-workspace.poc-workbench.anatomy-only.case-panel-collapsed{grid-template-columns:58px 0 minmax(0,1fr)}.unified-sidebar{padding:0 14px 20px}.workspace-alignment-banner{gap:6px}}
+
+/* Keep anatomy in view; the detailed controls remain one disclosure away. */
+.native-workspace.poc-workbench.anatomy-only{grid-template-columns:58px 272px minmax(0,1fr)}
+.native-workspace.poc-workbench.anatomy-only.case-panel-collapsed{grid-template-columns:58px 0 minmax(0,1fr)}
+.anatomy-presets{display:flex;gap:5px;margin-top:14px;padding:3px;border:1px solid #2a393c;border-radius:7px;background:#0b1115}
+.anatomy-presets button{flex:1;background:#1a292d;border-color:transparent;font-size:11px;min-height:31px;padding:5px}
+.anatomy-presets button:hover:not(:disabled){background:#26423f;color:#c8f2e9;border-color:#477a70}
+.anatomy-presets button[aria-pressed=true]{background:#203e39;color:#bce7dc;border-color:#3e6d62}
+.presentation-source{font-size:10px;line-height:1.5;color:#9eadaf;margin:7px 1px 11px}
+.anatomy-display-tools{display:block;margin:10px 0;border-top:1px solid #283235;border-bottom:1px solid #283235;padding:10px 0}
+.anatomy-display-tools summary{font-size:11px;color:#a9bbbc;cursor:pointer}
+.anatomy-display-tools summary>span{float:right;color:#8cb9ac;font-size:10px}
+.anatomy-display-tools[open]{display:grid;gap:9px}
+.anatomy-display-tools>span{line-height:1.5}
+.anatomy-search{margin:6px 0 6px}
+.compact-layer{min-height:35px;padding:1px 5px}
+.unified-sidebar .layer-name{padding:6px 0}
+.layer-group summary{padding:8px 4px}
+.unified-sidebar h1{font-size:15px;margin:8px 0 13px}
+.native-workspace.poc-workbench .workspace-heading{margin-bottom:10px}
+.native-workspace.poc-workbench .workspace-heading h2{font-size:20px;letter-spacing:-.3px}
+.native-workspace.poc-workbench .anatomy-panel{padding:16px 16px 10px}
+@media(max-width:1150px){.native-workspace.poc-workbench.anatomy-only{grid-template-columns:54px 244px minmax(0,1fr)}.native-workspace.poc-workbench.anatomy-only.case-panel-collapsed{grid-template-columns:54px 0 minmax(0,1fr)}}

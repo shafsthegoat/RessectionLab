@@ -9,7 +9,9 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
   if(!input || typeof input!=='object' || Array.isArray(input))return fail();
   const value=input as ViewerWorkspaceSettings;
   const labels=[...source.compartments.map(layer=>layer.name),...(displayBrainMask(source)?['brain']:[])];
-  if(Object.keys(value).some(key=>!['smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip'].includes(key)))return fail();
+  if(Object.keys(value).some(key=>!['smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation'].includes(key)))return fail();
+  if(value.sliceOverlay!==undefined&&!['contour','fill'].includes(value.sliceOverlay))return fail();
+  if(value.presentation!==undefined&&!['segmentation','vascular'].includes(value.presentation))return fail();
   if(value.smoothSurfaces!==undefined&&typeof value.smoothSurfaces!=='boolean')return fail();
   if(value.skullMode!==undefined&&!['exterior','transparent','cutaway'].includes(value.skullMode))return fail();
   if(value.volumeRendering!==undefined){

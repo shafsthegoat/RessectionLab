@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {nextScanState,scanLabel,studyTimepoint,migrateSkullView} from '../src/native-study-state.ts';
+import {nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation} from '../src/native-study-state.ts';
 
 test('scan switches retain shared anatomy and appearance while restoring scan-specific contrast',()=>{
   const current={cursor:[1,2,3],visible:{brain:true,tumor:true,vessels:false},settings:{contrast:2,layerOpacity:{brain:.15},layerColor:{tumor:'#aa00ff'}}};
@@ -43,4 +43,26 @@ test('legacy vessel filters migrate once; explicit new choices survive save and 
     const saved=JSON.parse(JSON.stringify({...legacy,vesselDisplayVersion:2}));
     assert.equal(vesselScopeForView(saved),vesselScope??'all');
   }
+});
+
+test('presentation choices preserve source identities, selected anatomy, camera and quantitative masks',()=>{
+  const layers=[{id:'vessels',kind:'vessels',source_series:'t1ce',mask:new Uint8Array([1,0,1])},{id:'tumor',kind:'tumor'},{id:'bone',kind:'bone'},{id:'brain',kind:'brain'}];
+  const camera={position:[1,2,3],target:[0,0,0],up:[0,0,1]};
+  const settings={camera,contrast:1.7,layerOpacity:{custom:.4},layerColor:{custom:'#123456'},clipping:{enabled:true,axis:'z',value:2},volumeRendering:{preset:'ct-angiography',points:[[0,0,0,0,0],[1,1,0,0,1]]}};
+  const original=structuredClone({settings,layers});
+  for(const mode of ['segmentation','vascular']){
+    const next=anatomyPresentation(settings,layers,mode,'T1CE');
+    assert.equal(next.camera,camera);
+    assert.equal(next.contrast,1.7);
+    assert.equal(next.sliceOverlay,'contour');
+    assert.equal(next.volumeRendering.preset,'auto');
+    assert.equal(next.volumeRendering.points,undefined);
+    assert.equal(next.clipping.enabled,false);
+    assert.equal(next.layerOpacity.custom,.4);
+    assert.ok(next.layerOpacity.vessels>0);
+    assert.ok(next.layerOpacity.tumor>.9);
+    assert.equal(next.layerColor.custom,'#123456');
+    assert.deepEqual(JSON.parse(JSON.stringify(next)).presentation,mode);
+  }
+  assert.deepEqual({settings,layers},original);
 });

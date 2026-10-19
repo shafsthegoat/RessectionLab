@@ -51,6 +51,7 @@ uniform vec4 uRect;
 uniform vec2 uResolution;
 uniform vec2 uWindow;
 uniform float uOverlay;
+uniform int uSliceContours;
 uniform float uLayerOpacities[128];
 uniform int uClipEnabled;
 uniform vec4 uClipPlane;
@@ -210,12 +211,32 @@ void main() {
   }
   ivec3 nearest=ivec3(floor(voxel+0.5));
   ivec4 packed=labels(nearest);
+  bool contours=uSliceContours==1 && uThreeD==0;
+  ivec4 contourA=packed,contourB=packed,contourC=packed,contourD=packed;
+  if(contours){
+    // Keep the stroke in the displayed RAS slice plane, including oblique
+    // source affines. A screen-space stroke stays thin when the MPR zooms.
+    vec3 stepA=vec3(0.0),stepB=vec3(0.0);
+    stepA[uAxes.x]=(uHigh[uAxes.x]-uLow[uAxes.x])/max(uRect.z*uResolution.x,1.0)*1.25;
+    stepB[uAxes.y]=(uHigh[uAxes.y]-uLow[uAxes.y])/max(uRect.w*uResolution.y,1.0)*1.25;
+    vec3 a=(uWorldToVoxel*vec4(stepA,0.0)).xyz;
+    vec3 b=(uWorldToVoxel*vec4(stepB,0.0)).xyz;
+    contourA=labels(ivec3(floor(voxel+a+0.5)));
+    contourB=labels(ivec3(floor(voxel-a+0.5)));
+    contourC=labels(ivec3(floor(voxel+b+0.5)));
+    contourD=labels(ivec3(floor(voxel-b+0.5)));
+  }
   int effect=uReplayActive==1?int(round(texelFetch(uRemoved,nearest.zyx,0).r*255.0)):0;
   bool removed=effect==1 || effect==2;
   for(int i=0;i<128;i++) { if(i>=uLayerCount)break;
     if(removed || uLayerEnabled[i]<0.5 || !hasLabel(packed,i))continue;
-    bool interior=hasLabel(labels(nearest+ivec3(1,0,0)),i)&&hasLabel(labels(nearest-ivec3(1,0,0)),i)&&hasLabel(labels(nearest+ivec3(0,1,0)),i)&&hasLabel(labels(nearest-ivec3(0,1,0)),i)&&hasLabel(labels(nearest+ivec3(0,0,1)),i)&&hasLabel(labels(nearest-ivec3(0,0,1)),i);
     float layerAlpha=clamp(uOverlay*uLayerOpacities[i]/0.66,0.0,1.0);
+    if(contours){
+      bool interior=hasLabel(contourA,i)&&hasLabel(contourB,i)&&hasLabel(contourC,i)&&hasLabel(contourD,i);
+      if(!interior)color=mix(color,uColors[i],min(0.95,layerAlpha*1.65));
+      continue;
+    }
+    bool interior=hasLabel(labels(nearest+ivec3(1,0,0)),i)&&hasLabel(labels(nearest-ivec3(1,0,0)),i)&&hasLabel(labels(nearest+ivec3(0,1,0)),i)&&hasLabel(labels(nearest-ivec3(0,1,0)),i)&&hasLabel(labels(nearest+ivec3(0,0,1)),i)&&hasLabel(labels(nearest-ivec3(0,0,1)),i);
     float edge=!interior?min(0.9,layerAlpha+0.3*uLayerOpacities[i]/0.66):layerAlpha;
     color=mix(color,uColors[i],edge);
   }
