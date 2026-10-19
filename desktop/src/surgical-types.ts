@@ -38,3 +38,12 @@ export function summarizeSurgicalEvents(events:Array<Record<string,unknown>>):Su
     return {kind,label:names[kind]??kind.replaceAll('_',' '),count:items.length,details};
   });
 }
+
+/** Compact evaluator evidence; policy inputs remain the published RL observation. */
+export interface AnatomyComparisonResult {
+  schema:'resectionlab.surgical-anatomy-comparison.v1';patient:string;
+  controls:Record<string,unknown>;maskChanges:Record<string,{changedCells:number;addedCells:number;removedCells:number}>;
+  before:Record<string,unknown>;after:Record<string,unknown>;
+  delta:{matchedPrefixObservationChangedValues:Record<string,number>;matchedPrefixLocalChannels:Record<string,number>;policyActionsChanged:boolean;targetVolumeMm3:number};
+  limitations:string[];
+}

@@ -9,6 +9,9 @@ import {SliceFrameCache} from './sliceFrameCache';
 import {scanFitPoints} from './scanCameraFit';
 import {mprView,sourceSignalBounds} from './mprFraming';
 import {applySourceContextMaterial} from './sourceContextMaterial';
+import {displaySurfaceNormals} from './displaySurfaceNormals';
+import {applyVesselDepthMaterial} from './anatomySurfaceMaterial';
+import {surfaceKind} from './surfacePolicy';
 import {packAnatomyLabels,materializeLayerMask,MAX_ANATOMY_LAYERS} from './labelPacking';
 import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
 import type {ViewerPublicGoal} from './publicGoal';
@@ -571,14 +574,16 @@ export class VolumeRenderer {
       smooth.setIndex(new THREE.BufferAttribute(buffers.indices, 1));
     }
     smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions, 3));
-    smooth.setAttribute("normal", new THREE.BufferAttribute(smoothNormals, 3));
+    const vessel=surfaceKind(layer.kind)==='vessel';
+    const fairNormals=vessel||['brain','bone','skull','head-envelope'].includes(layer.kind??'');
+    smooth.setAttribute("normal", new THREE.BufferAttribute(fairNormals&&buffers.indices ? displaySurfaceNormals(smoothNormals,buffers.indices,this.affine) : smoothNormals, 3));
     this.surfaceGeometry.set(layer.name, { source: geometry, smooth });
     const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings,layer.kind);
     const mesh = new THREE.Mesh(
       this.surfaceSmoothing ? smooth : geometry,
       new THREE.MeshStandardMaterial({
         color: appearance.color,
-        roughness: layer.kind==='tumor' ? .48 : .38,
+        roughness: vessel ? .32 : layer.kind==='tumor' ? .48 : .52,
         metalness: 0,
         transparent: appearance.opacity < 1,
         opacity: appearance.opacity,
@@ -588,6 +593,7 @@ export class VolumeRenderer {
       }),
     );
     placeInSourceFrame(mesh, this.affine);
+    if(vessel)applyVesselDepthMaterial(mesh.material,this.bounds);
     applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&['brain','head-envelope','bone','skull'].includes(layer.kind??''));
     mesh.visible = this.visible[layer.name] !== false;
     mesh.userData.compartment = layer.name;

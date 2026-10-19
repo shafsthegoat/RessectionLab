@@ -6,6 +6,7 @@ Meshes retain their original topology alongside their declared grid approximatio
 from __future__ import annotations
 
 import hashlib
+import copy
 from pathlib import Path
 import struct
 import numpy as np
@@ -336,7 +337,13 @@ def from_native_collection(collection, mapping=None, *, frame, units=None, prope
         arrays[row['id']] = raw
         provenance.append({'layerId': row['id'], 'arrayHash': array_digest(raw), 'maskHash': array_digest(mask),
                            'originalAffine': row['affine'], 'registeredAffine': native_affine.tolist(),
-                           'sourceSeries': row['source_series'], 'original': series.get('original'), 'labelValue': row['label_value']})
+                           'sourceSeries': row['source_series'], 'original': series.get('original'), 'labelValue': row['label_value'],
+                           'reviewStatus': row.get('review_status', 'unreviewed'),
+                           'revision': row.get('revision', 0), 'originalData': copy.deepcopy(row.get('original_data')),
+                           'edits': copy.deepcopy(row.get('edits', [])),
+                           'provenance': copy.deepcopy(row.get('provenance', {})),
+                           'uncertainty': copy.deepcopy(row.get('uncertainty')),
+                           'scoreMeaning': row.get('score_meaning'), 'probability': copy.deepcopy(row.get('probability'))})
     source = {'type': 'native_collection', 'collectionHash': collection.identity(), 'manifest': 'patient-anatomy.json',
               'frame': frame, 'units': declared_units, 'layers': provenance,
               'referenceSeries': reference['id'], 'originalAffine': reference_affine.tolist(),

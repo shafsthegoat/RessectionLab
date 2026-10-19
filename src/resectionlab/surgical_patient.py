@@ -168,8 +168,12 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         layer_report[name] = {'layerId': row['id'], 'sourceOccupiedCells': original_count,
             'sampledOccupiedCells': int(sampled.sum()), 'sampledMaskHash': array_digest(sampled),
             'sourceArray': copy.deepcopy(row['data']), 'sourceAffine': row['affine'],
+            'revision': row.get('revision', 0), 'originalData': copy.deepcopy(row.get('original_data')),
+            'edits': copy.deepcopy(row.get('edits', [])),
             'registeredAffine': registered.tolist(), 'provenance': copy.deepcopy(row.get('provenance', {})),
-            'reviewStatus': row.get('review_status'), 'sampling': 'any-hit <=0.5mm samples' if name in ('bone', 'vessels') else 'nearest-neighbor center'}
+            'reviewStatus': row.get('review_status'),
+            'uncertainty': copy.deepcopy(row.get('uncertainty')), 'scoreMeaning': row.get('score_meaning'),
+            'probability': copy.deepcopy(row.get('probability')), 'sampling': 'any-hit <=0.5mm samples' if name in ('bone', 'vessels') else 'nearest-neighbor center'}
     overlaps = {a + ':' + b: int(np.count_nonzero(masks[a] & masks[b])) for a, b in itertools.combinations(selected_order, 2)}
     ownership = np.zeros(shape, np.uint8)
     for i, name in enumerate(selected_order, 1): ownership[masks[name]] = i
@@ -178,6 +182,9 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         raise ValueError('Ownership precedence eliminated an entire requested material')
     physics = copy.deepcopy(DEFAULT_PHYSICS if tissue_physics is None else tissue_physics)
     adapter = {'type': 'native-patient-research-derivative', 'warnings': list(dict.fromkeys(warnings)),
+        'representations': {'acquiredImages': 'immutable source original checksums and source reference array',
+            'anatomicalEstimates': 'selected revisioned segmentation masks; review status and uncertainty retained',
+            'displaySurfaces': 'excluded; display smoothing never changes these simulation masks'},
         'sourcePatient': manifest['patient_id'], 'sourceCollectionHash': collection.identity(),
         'sourceManifestSha256': manifest_hash, 'sourceManifest': manifest,
         'resolutionMm': resolution_mm, 'targetAffine': target_affine.tolist(),
@@ -221,7 +228,8 @@ def prepare_surgical_environment(collection_path, output_dir, *, layer_ids,
         tissue_physics=default_profile(), require_complete=False)
     case = load_case(report['casePath'])
     scene = standardize(from_case(case))
-    engine = SurgicalEngine(scene)
+    from .surgical_rl_protection import GuardConfig
+    engine = SurgicalEngine(scene, guard_config=GuardConfig(require_critical_coverage=False))
     record = {'environmentSchema': SCHEMA, 'physicsProfile': copy.deepcopy(scene.properties['tissuePhysicsV2']),
               'mapping': scene.regions, 'branches': {'main': engine.snapshot()}, 'branchId': 'main',
               'position': 0, 'parents': {'main': None}, 'timeline': {'main': []}}

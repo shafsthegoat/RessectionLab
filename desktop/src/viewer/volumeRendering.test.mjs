@@ -124,3 +124,21 @@ test('transparent MRI context retains precise extinction and emphasizes physical
   const full=opticalAlpha(.07*.025,1,200);
   assert.ok(coarse<full*.25,'uniform interior context must recede visibly');
 });
+
+test('unclassified CTA signal is neutral ivory with the original HU extinction and custom transfers intact',()=>{
+  const lut=volumeTransfer('ct-angiography',[-1000,2000],undefined,'CTA');
+  const original=[[-1000,0],[80,0],[140,.01],[220,.12],[360,.38],[600,.5],[900,.52],[1800,.8],[3000,1]];
+  assert.deepEqual(lut.range,[-1000,3000]);
+  for(let i=0;i<1024;i++){
+    const hu=lut.range[0]+i/1023*(lut.range[1]-lut.range[0]);
+    let knot=0;while(knot<original.length-2&&hu>original[knot+1][0])knot++;
+    const [a,alphaA]=original[knot],[b,alphaB]=original[knot+1],t=Math.max(0,Math.min(1,(hu-a)/(b-a)));
+    assert.ok(Math.abs(lut.data[i*4+3]-(alphaA*(1-t)+alphaB*t))<1e-7,'classification-independent extinction must stay unchanged');
+    const rgb=lut.data.slice(i*4,i*4+3);
+    assert.ok(Math.max(...rgb)-Math.min(...rgb)<.1,'unclassified CTA must not acquire the rust arterial hue');
+  }
+  const points=[[0,0,0,0,0],[.5,.8,.2,.1,.2],[1,1,.8,.4,.9]],saved=structuredClone(points);
+  assert.deepEqual(volumeTransfer('ct-angiography',[-1000,2000],{points},'CTA').data,
+    volumeTransfer('ct-bone',[-1000,2000],{points,window:[-1000,3000]},'CTA').data,'explicit saved colors/extinction take precedence over the automatic preset');
+  assert.deepEqual(points,saved);
+});

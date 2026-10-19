@@ -10,12 +10,21 @@ from .core import CaseData, SourceRef, freeze_json, thaw_json, semantic_digest
 from .surgical_scene import from_case, engineering_scene
 from .surgical_engine import SurgicalEngine
 
-OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene', 'prepareSurgicalEnvironment'})
+OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene', 'prepareSurgicalEnvironment', 'compareSurgicalAnatomy'})
 ARTIFACT = 'surgical_toolbox'
 
 
 def dispatch(session, operation, args, request, progress):
     from .desktop_bridge import BridgeError, _keys, _require_json_budget
+    if operation == 'compareSurgicalAnatomy':
+        _keys(args, {'beforeCaseHash', 'afterCaseHash', 'changedLayers', 'prefix', 'decisions'})
+        _require_json_budget(args, 256 * 1024, 'SURGICAL_REQUEST_LIMIT', 'Comparison request exceeds budget')
+        from .surgical_anatomy_comparison import compare_anatomy
+        result = compare_anatomy(session._get_case(args['beforeCaseHash']), session._get_case(args['afterCaseHash']),
+            changed_layers=args.get('changedLayers', ['vessels']), prefix=args.get('prefix', []),
+            decisions=args.get('decisions', 1), check=request.check, progress=progress)
+        _require_json_budget(result, 2 * 1024 * 1024, 'SURGICAL_RESULT_LIMIT', 'Comparison result exceeds budget')
+        return result
     if operation == 'prepareSurgicalEnvironment':
         _keys(args, {'collectionId', 'snapshotId', 'layers', 'allowUnreviewedRegistration'})
         from .surgical_patient import prepare_surgical_environment

@@ -1,0 +1,35 @@
+{
+  "sub06-baseline": {
+    "snapshot_id": "c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5",
+    "graph_id": "2a0adee0d8b43ab0099c0c3781a7be558276be688e32b2eb79316cc8b44d6d2d",
+    "layer_id": "vessels",
+    "nodes": 34236,
+    "edges": 34380,
+    "components": 1167,
+    "endpoints": 2190,
+    "junction_voxels": 2519,
+    "path": "/Users/shaf/coding_projects/RessectionLab/outputs/anatomy-integration-v3/sub06-baseline/graphs/2a0adee0d8b43ab0099c0c3781a7be558276be688e32b2eb79316cc8b44d6d2d.npz",
+    "meaning": "measured voxel skeleton, inscribed radii; no gap bridging or artery/vein assignment",
+    "elapsed_seconds": 15.477733875159174
+  },
+  "sub06-refined": {
+    "snapshot_id": "e01f638f16d2cc4332bef860c79294bcc19dc2dc5b86131d666d6f464e8f1082",
+    "graph_id": "34d6a7caeb02d131bbc9ed7bf97fde4927a54b8cfa8160dee89c8ddadbd1c492",
+    "layer_id": "vessels",
+    "nodes": 35119,
+    "edges": 35478,
+    "components": 1167,
+    "endpoints": 2447,
+    "junction_voxels": 2574,
+    "path": "/Users/shaf/coding_projects/RessectionLab/outputs/anatomy-integration-v3/sub06-refined/graphs/34d6a7caeb02d131bbc9ed7bf97fde4927a54b8cfa8160dee89c8ddadbd1c492.npz",
+    "meaning": "measured voxel skeleton, inscribed radii; no gap bridging or artery/vein assignment",
+    "elapsed_seconds": 16.583708625286818
+  },
+  "source_integrity": {
+    "original_manifest_equal_baseline": true,
+    "acquired_series_unchanged": true,
+    "transforms_unchanged": true,
+    "all_original_and_array_checksums_verified": true,
+    "nonvascular_layers_unchanged": true
+  }
+}

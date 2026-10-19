@@ -371,6 +371,7 @@ def dispatch(session, operation, args, request, progress):
                 draft.apply(
                     c,
                     action,
+                    cancelled=request.cancelled.is_set,
                     points=args.get("points", []),
                     radius_mm=float(args.get("radiusMm", 2)),
                     threshold=float(args.get("threshold", 0.5)),

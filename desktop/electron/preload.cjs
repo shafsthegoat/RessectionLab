@@ -24,6 +24,7 @@ contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   anatomyExport: args => ipcRenderer.invoke('research:anatomyExport', args),
   importSurgicalScene: args => ipcRenderer.invoke('research:importSurgicalScene',args),
   createSurgicalFixture: () => ipcRenderer.invoke('research:createSurgicalFixture'),
+  compareSurgicalAnatomy: args => ipcRenderer.invoke('research:compareSurgicalAnatomy', args),
   surgicalRehearsal: args => ipcRenderer.invoke('research:surgicalRehearsal', args),
   createRehearsal: args => ipcRenderer.invoke('research:createRehearsal', args),
   inspectRehearsal: args => ipcRenderer.invoke('research:inspectRehearsal', args),

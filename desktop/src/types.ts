@@ -463,6 +463,7 @@ export type CaseLibraryFolder = {folder:string|null;error?:string};
 
 export interface ResectionApi extends TrainingApi {
   importSurgicalScene?(args:{frame:string;units:string;material:string;resolution:number;topology:string;thicknessMm?:number}):Promise<CasePayload|null>;
+  compareSurgicalAnatomy?(args:{beforeCaseHash:string;afterCaseHash:string;changedLayers?:string[];prefix?:Record<string,unknown>[];decisions?:number}):Promise<import('./surgical-types').AnatomyComparisonResult>;
   surgicalRehearsal?: import("./surgical-types").SurgicalApi["surgicalRehearsal"];
   workspaceInstalled?(args:{caseHash:string;caseId:string}):Promise<boolean>;
   prepareSurgicalEnvironment?(args:import('./EnvironmentPreparationPanel').EnvironmentPreparation):Promise<CasePayload|null>;

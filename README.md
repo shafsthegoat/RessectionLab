@@ -1,5 +1,11 @@
 # RessectionLab
 
+The [anatomy visual/RL integration check](artifacts/anatomy-integration-v3/RESULT.txt)
+adds topology-preserving vessel-margin previews, clearer source-derived rendering,
+and a fixed-policy Electron comparison with exact shared-engine state matches.
+Launch the prepared local examples with `./scripts/launch_anatomy_fidelity.sh mri`,
+`cta`, or `rehearsal`. No inference or training runs when opening these examples.
+
 The [October 18 integrated instrument rehearsal](docs/integrated-rehearsal.md)
 adds source-pinned CT/MRI drilling followed by a retained retractor hold and
 CUSA removal, second-case MRI interoperability, shared persisted protection,

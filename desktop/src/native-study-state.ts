@@ -8,15 +8,15 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Bind
   const layerOpacity={...settings.layerOpacity},layerColor={...settings.layerColor};
   for(const layer of layers){
     if(['vessels','vessel','artery','vein','sinus'].includes(layer.kind)){
-      layerColor[layer.id]='#ad4730';layerOpacity[layer.id]=vascular?1:.22;
+      layerColor[layer.id]='#ad4730';layerOpacity[layer.id]=vascular?1:.42;
       if(['vein','sinus'].includes(layer.kind)){layerColor[layer.id]='#6188a8';layerOpacity[layer.id]=vascular?.65:.18;}
     }else if(layer.kind==='tumor'){
-      layerColor[layer.id]='#42bbdf';layerOpacity[layer.id]=.96;
+      layerColor[layer.id]='#65bfd3';layerOpacity[layer.id]=1;
     }else if(['bone','skull'].includes(layer.kind)){
       layerColor[layer.id]='#ece2ca';layerOpacity[layer.id]=.035;
     }else if(['brain','tissue','soft_tissue'].includes(layer.kind)){
       const brainRim=!vascular&&layer.kind==='brain';
-      layerColor[layer.id]=brainRim?'#b64bb9':'#c8d0d5';layerOpacity[layer.id]=brainRim?.12:vascular?.035:.055;
+      layerColor[layer.id]=brainRim?'#b8a8b6':'#c8d0d5';layerOpacity[layer.id]=brainRim?.12:vascular?.035:.055;
     }else if(layer.kind==='head-envelope')layerOpacity[layer.id]=.035;
   }
   return {...settings,presentation:mode,layout:'3d-focus',sliceOverlay:'contour',sliceFraming:{fit:'anatomy',zoom:1},contextStyle:'shell',smoothSurfaces:true,showPlane:false,

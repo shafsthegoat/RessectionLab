@@ -163,6 +163,7 @@ function bindOperations() {
     if (!filename) return null;
     const result=await engine.request('importSurgicalScene', {...args,path:filename}, 120000);currentCasePath=null;return result;
   });
+  handle('compareSurgicalAnatomy', args => engine.request('compareSurgicalAnatomy', plainArgs(args,['beforeCaseHash','afterCaseHash','changedLayers','prefix','decisions']),300000));
   handle('surgicalRehearsal', async args => {args=plainArgs(args, ['caseHash','command','expectedStateId','action','mapping','position','branchId','source','sceneIndex']);const result=await engine.request('surgicalRehearsal',args,120000);rehearsalUnsaved.changed(args,result);return result;});
   for (const op of ['createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal']) {
     handle(op, async args => {const result=await engine.request(op, plainArgs(args, op === 'stepRehearsal'

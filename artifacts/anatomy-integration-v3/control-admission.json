@@ -1,0 +1,34 @@
+{
+  "finalControlAdmission": "passed",
+  "completeSceneAssumptionsMatch": true,
+  "scenePropertyHashes": [
+    "sha256:0d13a5d9b2b778f5ca3d12eee2312fd5bd35c774175b3e1cb7b91fd604766914",
+    "sha256:0d13a5d9b2b778f5ca3d12eee2312fd5bd35c774175b3e1cb7b91fd604766914"
+  ],
+  "caseHashes": [
+    "sha256:588a41ad7d2a3b620bba1bfae7322c26d33f223e7ca3b0a1061c3feea6f88981",
+    "sha256:b6eb34f2cbdc36d86df8346ffb07b87db6d54909def52c13581331dab7252c4d"
+  ],
+  "maskChanges": {
+    "bone": {
+      "changedCells": 0,
+      "addedCells": 0,
+      "removedCells": 0
+    },
+    "brain": {
+      "changedCells": 0,
+      "addedCells": 0,
+      "removedCells": 0
+    },
+    "tumor": {
+      "changedCells": 0,
+      "addedCells": 0,
+      "removedCells": 0
+    },
+    "vessels": {
+      "changedCells": 25110,
+      "addedCells": 25110,
+      "removedCells": 0
+    }
+  }
+}

@@ -68,7 +68,7 @@ app.on('browser-window-created',(_event,window)=>{
     const wait=async(expr,seconds=300)=>{for(let i=0;i<seconds*4;i++){if(await js(expr))return;await pause(250)}throw Error('Timed out '+expr)};
     const click=async(label,selector='button')=>{await js(`(()=>{const b=[...document.querySelectorAll(${JSON.stringify(selector)})].find(b=>b.textContent.trim()===${JSON.stringify(label)});if(!b||b.disabled)throw Error('Missing button '+${JSON.stringify(label)});b.click()})()`);await pause(200)};
     const select=async(label,value)=>{await js(`(()=>{const s=[...document.querySelectorAll('select')].find(s=>s.getAttribute('aria-label')===${JSON.stringify(label)});if(!s||s.disabled)throw Error('Missing select '+${JSON.stringify(label)});s.value=${JSON.stringify(value)};s.dispatchEvent(new Event('change',{bubbles:true}))})()`);await pause(300)};
-    const ready=async()=>{await wait(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')&&document.querySelector('.rl-viewer').dataset.surfacesPending==='0'&&document.querySelector('select[aria-label="Source scan"]')?.disabled===false`);await pause(600)};
+    const ready=async()=>{await wait(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')&&document.querySelector('.rl-viewer').dataset.surfacesPending==='0'&&(document.querySelector('select[aria-label="Source scan"]')?.disabled===false||!!document.querySelector('.unified-correction'))`);await pause(600)};
     const capture=async name=>{await ready();const filename=path.join(output,name+'.png');fs.writeFileSync(filename,(await window.webContents.capturePage()).toPNG());report.views.push({name,path:filename,at:Date.now()});console.log('Captured '+filename)};
     try{
       await js(`window.fidelityEvents={surface:[],frames:[],gpu:[],refinement:[]};for(const [event,key]of [['anatomy-surface','surface'],['anatomy-frame','frames'],['anatomy-gpu','gpu'],['anatomy-refined','refinement']])document.addEventListener(event,e=>window.fidelityEvents[key].push({...e.detail,observedAt:performance.now()}));`);
@@ -87,6 +87,28 @@ app.on('browser-window-created',(_event,window)=>{
       report.initialPresentation=await js(`({source:document.querySelector('select[aria-label="Source scan"]').value,scope:document.querySelector('select[aria-label="Vessel display"]')?.value,framing:{fit:document.querySelector('select[aria-label="Source slice fit"]')?.value,zoom:document.querySelector('button[aria-label="Reset source slice zoom"]')?.textContent},layers:[...document.querySelectorAll('.compact-layer input[type="checkbox"]')].map(c=>({label:c.getAttribute('aria-label'),checked:c.checked})),provenance:document.querySelector('.presentation-source')?.textContent,body:document.body.innerText})`);
       fs.writeFileSync(path.join(output,'initial-presentation.json'),JSON.stringify(report.initialPresentation,null,2));
       report.checks.push({name:'initial '+caseKind.toUpperCase()+' '+profile.presentation.toLowerCase()+' captures',passed:true});
+      if(process.env.FIDELITY_MARGIN_CHECK){
+        const layer=sourceDocument.layers.find(l=>l.kind==='vessels'&&l.probability);
+        if(!layer)throw Error('Margin verification requires retained vascular source scores');
+        await js(`(()=>{const b=[...document.querySelectorAll('.layer-name')].find(b=>b.textContent.trim()===${JSON.stringify(layer.label)});if(!b)throw Error('Missing vessel row');b.click()})()`);await pause(200);
+        await click('Edit segmentation');
+        await js(`(()=>{const s=[...document.querySelectorAll('summary')].find(s=>s.textContent==='Recover supported vessel margins');if(!s)throw Error('Missing source-score margin controls');s.parentElement.open=true})()`);
+        await click('Preview supported margins');await ready();await capture('supported-margin-preview');
+        const preview=await js(`document.querySelector('.unified-correction')?.textContent`);
+        if(!preview||preview.includes('Preview · 0 changed voxels'))throw Error('Supported margin preview did not reach the viewer');
+        await js(`(()=>{const e=document.querySelector('input[aria-label="Correction author"]');Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(e,'Electron anatomy integration verification');e.dispatchEvent(new Event('input',{bubbles:true}))})()`);await pause(150);
+        await click('Accept correction');await ready();
+        const revised=JSON.parse(fs.readFileSync(path.join(study,'patient-anatomy.json'),'utf8')),updated=revised.layers.find(l=>l.id===layer.id);
+        if(revised.snapshot_id===sourceDocument.snapshot_id||!updated.review_status.includes('pending'))throw Error('Accepted correction lost its revision or review boundary');
+        if(process.env.FIDELITY_EXPECTED_MASK_SHA&&updated.data.sha256!==process.env.FIDELITY_EXPECTED_MASK_SHA)throw Error('UI mask differs from the controlled backend refinement');
+        await capture('supported-margin-committed');await click('Save');
+        await wait(`document.body.innerText.includes('Workspace saved')`);
+        await js(`(()=>{const b=[...document.querySelectorAll('.app-header button')].find(b=>b.querySelector('span')?.textContent.trim()==='Open'||b.textContent.trim()==='Open');if(!b)throw Error('Missing Open');b.click()})()`);await ready();
+        await wait(`document.body.innerText.includes('Anatomy ready')||document.body.innerText.includes('Alignment preview')`);await capture('supported-margin-reopened');
+        const saved=JSON.parse(fs.readFileSync(path.join(study,'workspace-view.json'),'utf8'));
+        if(saved.snapshotId!==revised.snapshot_id)throw Error('Native save did not retain the revised anatomy');
+        report.checks.push({name:'actual UI margin preview commit save and reopen',passed:true,evidence:{preview,snapshotId:revised.snapshot_id,maskSha256:updated.data.sha256,reviewStatus:updated.review_status,expectedMaskMatches:!!process.env.FIDELITY_EXPECTED_MASK_SHA}});
+      }
       if(!process.env.FIDELITY_INITIAL_ONLY)await runFullVerification({window,js,wait,click,select,ready,capture,pause,report,output,study});
       Object.assign(report,await js('window.fidelityEvents'));
       report.memory=app.getAppMetrics();report.memoryReceipt=memoryReceipt();report.passed=report.errors.length===0&&report.checks.every(c=>c.passed);
