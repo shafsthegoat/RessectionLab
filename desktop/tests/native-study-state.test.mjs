@@ -1,7 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation} from '../src/native-study-state.ts';
+import {nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
 import {checkedViewerSettings} from '../src/workspace-view-settings.ts';
+
+test('structural contrast retains study angiography availability and derived diffusion status',()=>{
+  const series=[{modality:'T1'},{modality:'MRA'},{modality:'DTI FA diagnostic'}];
+  assert.match(sourceEvidenceLabel(series[0],series),/angiography available in Scans/);
+  assert.match(sourceEvidenceLabel(series[1],series),/MR angiography/);
+  assert.match(sourceEvidenceLabel(series[2],series),/derived map; planning use excluded/);
+  assert.match(sourceEvidenceLabel(series[0],[series[0]]),/no acquired angiography in this study/);
+});
 
 test('scan switches retain shared anatomy and appearance while restoring scan-specific contrast',()=>{
   const current={cursor:[1,2,3],visible:{brain:true,tumor:true,vessels:false},settings:{contrast:2,contextStyle:'shell',sliceFraming:{fit:'anatomy',zoom:2},layerOpacity:{brain:.15},layerColor:{tumor:'#aa00ff'}}};

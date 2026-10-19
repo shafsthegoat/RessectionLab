@@ -36,6 +36,15 @@ export function studyLabel(value:string):string {
 export function scanLabel(series:{id:string;modality:string;label?:string}):string {
   return series.label??(/^[a-f\d-]{30,}$/i.test(series.id)?series.modality:series.id.toUpperCase().replaceAll('-',' '));
 }
+/** Describe selected contrast without denying angiography in another study scan. */
+export function sourceEvidenceLabel(source:{modality:string}|undefined,series:ReadonlyArray<{modality:string}>):string {
+  const modality=source?.modality??'Source';
+  if (/^CTA\b|CT.*angiogra/i.test(modality)) return 'CTA signal + sourced structures';
+  if (/MRA|TOF|angiogra/i.test(modality)) return 'MR angiography · bright signal, no CT bone';
+  if (/diagnostic/i.test(modality)) return `${modality} · derived map; planning use excluded`;
+  const angiography=series.some(s=>/^CTA\b|MRA|TOF|angiogra/i.test(s.modality));
+  return `${modality} + estimated structures · ${angiography?'angiography available in Scans':'no acquired angiography in this study'}`;
+}
 /** Scan contrast/camera stays per scan; selected anatomy belongs to the study. */
 export function nextScanState(current:NativeScanState, saved:NativeScanState):NativeScanState {
   return {...saved,visible:{...current.visible},settings:{...saved.settings,

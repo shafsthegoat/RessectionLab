@@ -39,11 +39,14 @@ def _anatomy_metadata(name, row):
     if not model_name:
         model_name = provenance.get('method') or 'Unreviewed source segmentation estimate'
     source_annotation = provenance.get('kind') == 'observed_source_annotation'
+    coverage = COVERAGE[name]
+    if name == 'vessels' and provenance.get('source_modality') in {'MRA', 'TOF', 'TOF-MRA', 'CTA'}:
+        coverage = 'Angiography-derived vessel annotation or estimate; vascular completeness and small branches unvalidated.'
     return {'kind': ANATOMY_KINDS[name], 'color': COLORS[name],
             'provenance': 'observed' if source_annotation else 'estimated',
             'review_status': row.get('review_status', 'unreviewed'), 'model': {'name': model_name},
             'coverage': (row.get('coverage') or 'Source annotation; completeness unassessed.') if source_annotation
-                        else COVERAGE[name] + ' ' + row.get('coverage', ''),
+                        else coverage + ' ' + row.get('coverage', ''),
             'source_provenance': copy.deepcopy(provenance)}
 
 DEFAULT_PHYSICS = {'schema': 'resectionlab.tissue-physics.v1',

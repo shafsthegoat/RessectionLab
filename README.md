@@ -1,5 +1,15 @@
 # RessectionLab
 
+The healthy IXI multimodal workflow preserves acquired T1, MRA and diffusion
+sources, measured rigid registration estimates and diagnostic tensor scalars.
+Use `./scripts/launch_ixi_multimodal.sh anatomy` or `simulator` for the prepared
+local study. The canonical simulator retains partial vessel exclusion and native
+source views; tumor-removal RL refuses this case because it has no tumor target.
+Preparation and verification are in `scripts/prepare_ixi_multimodal.py` and
+`scripts/verify_ixi_multimodal.py`; local source inventories and QC stay in the
+Git-ignored `testcases/` directory. No tract or functional protection is inferred
+from uncorrected diffusion.
+
 The [anatomy visual/RL integration check](artifacts/anatomy-integration-v3/RESULT.txt)
 adds topology-preserving vessel-margin previews, clearer source-derived rendering,
 and a fixed-policy Electron comparison with exact shared-engine state matches.
