@@ -1,0 +1,160 @@
+{
+  "source": "t1ce",
+  "scope": "all",
+  "layers": [
+    {
+      "label": "Show vessels",
+      "checked": true
+    },
+    {
+      "label": "Show brain",
+      "checked": true
+    },
+    {
+      "label": "Show tumor",
+      "checked": true
+    },
+    {
+      "label": "Show bone",
+      "checked": true
+    },
+    {
+      "label": "Show left cerebral white matter",
+      "checked": false
+    },
+    {
+      "label": "Show left cerebral cortex",
+      "checked": false
+    },
+    {
+      "label": "Show left lateral ventricle",
+      "checked": false
+    },
+    {
+      "label": "Show left inferior lateral ventricle",
+      "checked": false
+    },
+    {
+      "label": "Show left cerebellum white matter",
+      "checked": false
+    },
+    {
+      "label": "Show left cerebellum cortex",
+      "checked": false
+    },
+    {
+      "label": "Show left thalamus",
+      "checked": false
+    },
+    {
+      "label": "Show left caudate",
+      "checked": false
+    },
+    {
+      "label": "Show left putamen",
+      "checked": false
+    },
+    {
+      "label": "Show left pallidum",
+      "checked": false
+    },
+    {
+      "label": "Show 3rd ventricle",
+      "checked": false
+    },
+    {
+      "label": "Show 4th ventricle",
+      "checked": false
+    },
+    {
+      "label": "Show brain-stem",
+      "checked": false
+    },
+    {
+      "label": "Show left hippocampus",
+      "checked": false
+    },
+    {
+      "label": "Show left amygdala",
+      "checked": false
+    },
+    {
+      "label": "Show left accumbens area",
+      "checked": false
+    },
+    {
+      "label": "Show left ventral DC",
+      "checked": false
+    },
+    {
+      "label": "Show right cerebral white matter",
+      "checked": false
+    },
+    {
+      "label": "Show right cerebral cortex",
+      "checked": false
+    },
+    {
+      "label": "Show right lateral ventricle",
+      "checked": false
+    },
+    {
+      "label": "Show right inferior lateral ventricle",
+      "checked": false
+    },
+    {
+      "label": "Show right cerebellum white matter",
+      "checked": false
+    },
+    {
+      "label": "Show right cerebellum cortex",
+      "checked": false
+    },
+    {
+      "label": "Show right thalamus",
+      "checked": false
+    },
+    {
+      "label": "Show right caudate",
+      "checked": false
+    },
+    {
+      "label": "Show right putamen",
+      "checked": false
+    },
+    {
+      "label": "Show right pallidum",
+      "checked": false
+    },
+    {
+      "label": "Show right hippocampus",
+      "checked": false
+    },
+    {
+      "label": "Show right amygdala",
+      "checked": false
+    },
+    {
+      "label": "Show right accumbens area",
+      "checked": false
+    },
+    {
+      "label": "Show right ventral DC",
+      "checked": false
+    },
+    {
+      "label": "Show Vessels outside brain proposal",
+      "checked": false
+    },
+    {
+      "label": "Show Vessel / tumor overlap",
+      "checked": false
+    },
+    {
+      "label": "Show Head / scalp envelope proposal",
+      "checked": false
+    }
+  ],
+  "provenance": "T1CE + estimated structures · no acquired angiography",
+  "body": "RessectionLab\nPatient anatomy workspace\nOpen\n⌘O\nAdd data\nSave\nCases\n3D\nRehearse\nPATIENT WORKSPACE\nScans\nAnatomy\nPre-op study\n3 scans\nmeningioma-sub-06\nDisplayed scan\nT1CE\nCT BONE\nCT BRAIN\nSegmentation\nVascular\n\nT1CE + estimated structures · no acquired angiography\n\nDisplay & fragment scope\nFull source\nStructures\n4\nVessels\nBrain\nTumor\nBone\nBrain regions\n31\nReview layers\n3\nCoverage & unavailable anatomy\nWorkspace\nZENODO-17486320-meningioma-sub-06\nT1CE\nEstimated scan alignment\nParent: Higher image similarity rejected because bone conflict increased\nLayout\nAppearance\nClip\nFit\nStructures\nVolume\n3D + slices\n3D\nVolume + structures\nRAS · mm\nT1CE · source volume + labels\nR\nA\nS\nPatient axes\nDrag to rotate · Scroll to zoom · Right-drag to pan\nDouble-click to link cursor\nAxial\n-464.5 mm\n⤢\nL\nR\nA\nP\n20 mm\nSOURCE T1CE\nCoronal\n-14.3 mm\n⤢\nL\nR\nS\nI\n20 mm\nSOURCE T1CE\nSagittal\n0.3 mm\n⤢\nP\nA\nS\nI\n20 mm\nSOURCE T1CE\nLinked views\nRAS\n0.3 / -14.3 / -464.5 mm\nContrast\nNeurological convention\nLinked physical coordinates · RAS+ mm\nLocal imaging · cached anatomy\nAlignment preview · review in Scans\nRAS 0.3 / -14.3 / -464.5 mm"
+}

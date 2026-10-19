@@ -1,0 +1,22 @@
+✔ volume rays use millimetres on mirrored, anisotropic and oblique grids, including camera inside (1.138208ms)
+✔ cutaways retain the declared RAS side and work when the ray parallels the plane (0.127083ms)
+✔ opacity is invariant to ray sample spacing and presets retain transparent air/background (3.959959ms)
+✔ saved volume choices round-trip detached from source arrays and reject malformed settings (0.493084ms)
+✔ explicit skull modes survive settings validation (0.11775ms)
+✔ presentation and slice annotations reopen in legacy saves and reject malformed choices (0.238125ms)
+✔ angiography is automatic only for declared CTA, with MRI sequence and segmentation-only behavior (3.7765ms)
+✔ CT thresholds require an acquired CT modality even when a CT preset was saved (0.146375ms)
+✔ declared bright-blood MRI suppresses background and emphasizes acquired high signal without coloring vessels (2.29275ms)
+✔ scan switches retain shared anatomy and appearance while restoring scan-specific contrast (0.798292ms)
+✔ study labels use scan names and preserve a distinct postoperative study (0.131458ms)
+✔ legacy skull transparency migrates without rewriting explicitly selected modes (0.117375ms)
+✔ legacy vessel filters migrate once; explicit new choices survive save and reopen (0.596208ms)
+✔ presentation choices preserve source identities, selected anatomy, camera and quantitative masks (1.30375ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 123.376291

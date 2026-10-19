@@ -1,0 +1,20 @@
+{
+  "schema": "ixi265-native-bridge-smoke-v1",
+  "manifest": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-ixi265-mra-fidelity-v1/native-mra/patient-anatomy.json",
+  "opened": true,
+  "view_transferred": true,
+  "shape": [
+    512,
+    512,
+    100
+  ],
+  "active_series": "mra",
+  "native_manifest_unchanged": true,
+  "compartments": [
+    {
+      "name": "vessels",
+      "kind": "vessels",
+      "displayFilter": null
+    }
+  ]
+}

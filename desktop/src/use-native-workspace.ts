@@ -30,7 +30,11 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   useEffect(()=>()=>{generation.current++;packing.current?.abort()},[]);
   useEffect(()=>api?.onEvent(e=>{if(e.op?.startsWith('anatomy')){if(e.event==='started')requestId.current=e.id;if(e.event==='progress'&&e.progress)setMessage(e.progress.message);if(['result','error','cancelled'].includes(e.event))requestId.current=null;}}),[api]);
   const args=(b=live.current.binding)=>({collectionId:b!.collectionId,snapshotId:b!.document.snapshot_id});
-  const initial=(b:Binding,s:string):NativeScanState=>({cursor:null,settings:anatomyPresentation(nativeDefaults(),b.document.layers,'segmentation',b.document.series.find(scan=>scan.id===s)?.modality??'MRI'),visible:Object.fromEntries(b.document.layers.map(l=>[l.id,!['brain-region','review-region','head-envelope'].includes(l.kind)]))});
+  const initial=(b:Binding,s:string):NativeScanState=>{
+    const modality=b.document.series.find(scan=>scan.id===s)?.modality??'MRI';
+    const mode=/\b(CTA|MRA|TOF)\b|angiogra/i.test(modality)?'vascular':'segmentation';
+    return {cursor:null,settings:anatomyPresentation(nativeDefaults(),b.document.layers,mode,modality),visible:Object.fromEntries(b.document.layers.map(l=>[l.id,!['brain-region','review-region','head-envelope'].includes(l.kind)]))};
+  };
   const state=states[series]??{cursor:null,visible:{},settings:nativeDefaults()};
   function updateState(next:Partial<NativeScanState>){
     const s=live.current.series,current=live.current.states[s]??state;

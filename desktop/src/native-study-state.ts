@@ -29,7 +29,7 @@ export function studyTimepoint(b:Binding):string {
   return b.document.study_timepoint??b.document.series[0]?.timepoint??'preoperative';
 }
 export function studyLabel(value:string):string {
-  return value==='postoperative'?'Post-op':value==='preoperative'?'Pre-op':value;
+  return value==='postoperative'?'Post-op':value==='preoperative'?'Pre-op':value==='source-session-unknown'?'Unspecified':value;
 }
 export function scanLabel(series:{id:string;modality:string;label?:string}):string {
   return series.label??(/^[a-f\d-]{30,}$/i.test(series.id)?series.modality:series.id.toUpperCase().replaceAll('-',' '));

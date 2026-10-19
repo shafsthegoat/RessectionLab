@@ -1,0 +1,68 @@
+{
+  "schema": "patient-anatomy-view-v1",
+  "patientId": "IXI265-Guys-0845",
+  "snapshotId": "10d376abd61b8d9d3b1002ba1be8ce29b60c69af026a0fd4d3abff6c4ca24d69",
+  "seriesId": "mra",
+  "states": {
+    "mra": {
+      "cursor": [
+        34.76853373646736,
+        69.21406581997871,
+        13.380647838115692
+      ],
+      "settings": {
+        "layout": "3d-focus",
+        "showPlane": false,
+        "sliceOverlay": "contour",
+        "layerOpacity": {
+          "brain": 0.06,
+          "tumor": 1,
+          "vessels": 1,
+          "bone": 1,
+          "scalp-envelope": 0.02,
+          "__fragment_review": 1
+        },
+        "volumeRendering": {
+          "enabled": true,
+          "preset": "auto",
+          "density": 0.035,
+          "shadows": true
+        },
+        "presentation": "vascular",
+        "smoothSurfaces": true,
+        "skullMode": "cutaway",
+        "layerColor": {
+          "vessels": "#b8473d"
+        },
+        "clipping": {
+          "axis": "x",
+          "value": 52.3743077039719,
+          "enabled": true,
+          "flipped": false
+        },
+        "camera": {
+          "position": [
+            -146.95371558611276,
+            -390.78703703347134,
+            190.4829008680471
+          ],
+          "target": [
+            -18.0152715212401,
+            -1.8410312675714944,
+            15.184056124697495
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      "visible": {
+        "vessels": true
+      }
+    }
+  },
+  "vesselScope": "all",
+  "vesselDisplayVersion": 2
+}

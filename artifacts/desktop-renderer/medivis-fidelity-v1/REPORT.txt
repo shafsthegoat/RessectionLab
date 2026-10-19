@@ -1,0 +1,37 @@
+RessectionLab visual fidelity sprint — October 18, 2026 (America/New_York)
+Branch: codex/poc-first-rehearsal. Existing primary checkout; no worktrees.
+All three subagents used GPT-6.1 Sol with high reasoning; no Astra.
+
+Delivered
+Compact Segmentation and Vascular presentations in the existing native Electron workspace. Neutral translucent context, distinct cyan tumor and muted red vessel labels, thin source-preserving MPR contours, modality-safe CT controls and an acquired-MRA bright-signal transfer function. New studies choose a source-appropriate presentation; saved views retain their settings. Display choices preserve source masks, geometry identities, RAS-mm coordinates and surgical state. Rehearsal remains accessible.
+
+Sources actually used
+1. ZENODO-17486320-meningioma-sub-06: existing CE-T1W/T1CE, CT-BONE and CT-BRAIN, supplied 439×439×361 grid at 0.5 mm. Acquisition resolution is not inferred from that supplied grid. Brain/tumor/vessels are unreviewed estimates; vessels are experimental vesselFM inference on T1CE, NOT acquired angiography. CT alignment remains a visibly labeled estimate. Source: /Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/patient-anatomy.json.
+2. IXI265-Guys-0845: acquired MRA 512×512×100, 0.46875×0.46875×0.80000 mm supplied grid, plus published incomplete derived vessel reference (77,377 cells; 199 components). Minimal official range recovery transferred 27.87 MB total, also retaining separate T1 bytes. Historical hashes match. MRA native file: outputs/poc-ixi265-mra-fidelity-v1/native-mra/patient-anatomy.json. T1 is a separate collection; no accepted T1/MRA fusion, new registration or model inference. No patient mixing.
+No genuine suitable CTA was established. MRA cannot supply CT bone contrast or the reference's combined skull-and-contrast-vessel appearance. Source notices and acquisition/hash receipts are in source-qc/.
+
+Visual evidence (full application frames; different patients/modalities labeled)
+comparison-segmentation-before-after.png — same sub-06 source and lateral camera, all four primary structures retained.
+comparison-segmentation-reference.png — closest supplied MRI demo frame versus actual sub-06 lateral view.
+comparison-cta-reference-mra.png — superior CTA reference versus superior IXI265 MRA, explicitly no CT bone.
+sub06-rotation-cutaway.mp4 and ixi265-mra-rotation-cutaway.mp4 — actual Electron content captures, original timing within each segment, joined orbit/cutaway segments. Their capture cadence is not the separately measured interactive FPS.
+final/fragment-review-source.png, fragment-selected-linked.png, fragment-review-restored-source.png — inspect/locate/deselect without accepting a correction.
+final/mra-superior/mra-minimum-1050x720.png — minimum-window layout.
+
+Verification
+698 desktop tests passed (164 main / 391 renderer / 143 viewer), production TypeScript/Vite build passed. 68 focused Python source/case/surface/persistence tests passed; the 17-test save-workflow suite then passed with two new native/portable presentation round trips (15 are repeated from the first suite). Full Electron UI checks plus focused final native Save/Open checks passed, including source selection, both presets, linked cursor, structure toggles, opacity, clipping, orbit/pan/zoom, fragment review, camera and saved settings. Both original manifests and all source arrays are unchanged (sub-06:25 arrays; MRA:2). The two failed verifier attempts were selector/loading-wait mistakes; attempts.json retains them and their successful follow-ups. Consolidated result: verification.json.
+
+Available-Mac performance
+Apple M2 Pro /16 GB, macOS26.5.2,1440×960 window. Intact full-source, no-cutaway, screenshot-free ~2.1-second drags:
+T1CE Segmentation:26.18 median presented FPS;44.38 ms p95 frame interval;559.6 ms post-drag refinement.
+T1CE Vascular:25.37 median FPS;45.19 ms p95;499.6 ms refinement.
+IXI265 MRA Vascular:31.17 median FPS;44.04 ms p95;362.7 ms refinement.
+Each default refinement measurement has N=1. Across all MRA operations,23/23 refinements completed,median372.4/max402.2 ms. Reported Electron working-set + Python-RSS snapshots sum to1.23 GiB (sub-06) and1.33 GiB (MRA); these are process metric sums, not unique physical memory or simultaneous peaks. Raw measurements and timing limits are in verification.json and final/.
+
+Remaining visible limits
+Sub-06 retains1,167 disconnected source vessel components and peripheral/inferior false-positive candidates. Threshold0.5 matches its stored mask exactly; probability gaps do not justify joining. No pieces were silently deleted, bridged or relabeled as arteries/veins. Display filters remain explicit and reversible. The checked full-source network, some tissue haze/mottled tumor and small source images within MPR tiles remain visible. MRA has partial ~80 mm slab coverage and incomplete annotation. Independent review found improved layout/translucency/tumor contrast and no blocking source-preservation issue; it does not establish anatomical accuracy,60 FPS or Medivis fidelity parity. See independent-review.json.
+
+Launch
+The production-built normal Electron app is left open on the real IXI265 MRA with Vascular selected. Both cases use the same current viewer/native pipeline.
+From desktop/: pnpm exec electron . --anatomy /Users/shaf/coding_projects/RessectionLab/outputs/poc-ixi265-mra-fidelity-v1/native-mra/patient-anatomy.json
+For sub-06, use its absolute manifest path above and choose Segmentation.

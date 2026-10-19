@@ -1,0 +1,36 @@
+{
+  "schema": "ixi265-native-mra-fidelity-qc-v1",
+  "native_manifest": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-ixi265-mra-fidelity-v1/native-mra/patient-anatomy.json",
+  "native_manifest_sha256": "9deebf28dec280b775afad9ce98738dda028c377248dba2e3e4b173512fbbaec",
+  "snapshot_id": "10d376abd61b8d9d3b1002ba1be8ce29b60c69af026a0fd4d3abff6c4ca24d69",
+  "structural_t1_manifest": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-ixi265-mra-fidelity-v1/native-t1/patient-anatomy.json",
+  "MRA_shape": [
+    512,
+    512,
+    100
+  ],
+  "MRA_grid_mm": [
+    0.4687500006369269,
+    0.46875001301184277,
+    0.800000138334831
+  ],
+  "label_shape": [
+    512,
+    512,
+    100
+  ],
+  "label_affine_max_abs_difference": 1.862645149230957e-09,
+  "label_positive_voxels": 77377,
+  "label_components_26": 199,
+  "label_largest_component_fraction": 0.6419478656448299,
+  "label_is_acquired": false,
+  "new_model_inference": false,
+  "new_registration": false,
+  "source_hashes": {
+    "IXI265-MRA.nii.gz": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+    "IXI265-derived_vessel_label.nii.gz": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe",
+    "IXI265-T1.nii.gz": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950"
+  },
+  "acquisition_receipt": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-ixi265-mra-fidelity-v1/acquisition.json",
+  "all_native_refs_hash_verified": true
+}

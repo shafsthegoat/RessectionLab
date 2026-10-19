@@ -1,0 +1,1037 @@
+{
+  "startedAt": 1792369040634,
+  "originalSource": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-ixi265-mra-fidelity-v1/native-mra/patient-anatomy.json",
+  "disposableStudy": true,
+  "errors": [],
+  "checks": [
+    {
+      "name": "initial independent MRA vascular captures",
+      "passed": true
+    }
+  ],
+  "views": [
+    {
+      "name": "mra-before-presentation",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v1/final/mra-superior/mra-before-presentation.png",
+      "at": 1792369045254
+    },
+    {
+      "name": "mra-before-left",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v1/final/mra-superior/mra-before-left.png",
+      "at": 1792369046444
+    },
+    {
+      "name": "mra-vascular",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v1/final/mra-superior/mra-vascular.png",
+      "at": 1792369048137
+    },
+    {
+      "name": "mra-vascular-left",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v1/final/mra-superior/mra-vascular-left.png",
+      "at": 1792369049318
+    },
+    {
+      "name": "mra-vascular-superior",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v1/final/mra-superior/mra-vascular-superior.png",
+      "at": 1792369050493
+    },
+    {
+      "name": "mra-minimum-1050x720",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v1/final/mra-superior/mra-minimum-1050x720.png",
+      "at": 1792369051832
+    }
+  ],
+  "surface": [
+    {
+      "name": "vessels",
+      "diagnostics": {
+        "policy": "physical-windowed-sinc-v2",
+        "kind": "vessel",
+        "maxDisplacementMm": 0.23414717257615175,
+        "restoredComponents": 0,
+        "backedOffVertices": 0,
+        "fallbackReason": "",
+        "intersectionCheck": "passed"
+      },
+      "qa": {
+        "sourceIdentity": "a3e88a2665f8adc403ff8590417dfde590a9632e7dd8b42d74c6b56333c95a2e",
+        "voxelCount": 77377,
+        "componentCount": 199,
+        "largestComponentFraction": 0.6419478656448299,
+        "boundaryTouchingVoxels": 633,
+        "probabilityMismatchVoxels": null,
+        "reviewStatus": "unreviewed",
+        "issues": [
+          "199 disconnected source components; inspect before correcting.",
+          "633 foreground cells touch the acquisition boundary; coverage may be truncated."
+        ],
+        "accuracy": "unmeasured"
+      },
+      "empty": false,
+      "observedAt": 1672.1000003814697
+    }
+  ],
+  "frames": [
+    {
+      "serial": 1,
+      "at": 1706.3000001907349,
+      "cpuMs": 159.69999980926514,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 30
+      },
+      "drawCalls": 1,
+      "observedAt": 1866
+    },
+    {
+      "serial": 2,
+      "at": 1926.5,
+      "cpuMs": 1.200000286102295,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 30
+      },
+      "drawCalls": 1,
+      "observedAt": 1927.7000002861023
+    },
+    {
+      "serial": 3,
+      "at": 1984.7000002861023,
+      "cpuMs": 0.5,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 1985.2000002861023
+    },
+    {
+      "serial": 4,
+      "at": 2034.7000002861023,
+      "cpuMs": 0.5999999046325684,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 2035.4000000953674
+    },
+    {
+      "serial": 5,
+      "at": 2096,
+      "cpuMs": 0.9000000953674316,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 2097
+    },
+    {
+      "serial": 6,
+      "at": 3390,
+      "cpuMs": 1.200000286102295,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 360,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 3391.2000002861023
+    },
+    {
+      "serial": 7,
+      "at": 3542.4000000953674,
+      "cpuMs": 2.4000000953674316,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 3544.800000190735
+    },
+    {
+      "serial": 8,
+      "at": 3615.5,
+      "cpuMs": 0.40000009536743164,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 3615.9000000953674
+    },
+    {
+      "serial": 9,
+      "at": 3675.5,
+      "cpuMs": 0.3000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 3675.800000190735
+    },
+    {
+      "serial": 10,
+      "at": 3725.6000003814697,
+      "cpuMs": 0.19999980926513672,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 3725.800000190735
+    },
+    {
+      "serial": 11,
+      "at": 4447.200000286102,
+      "cpuMs": 1.0999999046325684,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 4448.300000190735
+    },
+    {
+      "serial": 12,
+      "at": 4516,
+      "cpuMs": 0.6000003814697266,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 4516.60000038147
+    },
+    {
+      "serial": 13,
+      "at": 4566.10000038147,
+      "cpuMs": 0.5,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 4566.60000038147
+    },
+    {
+      "serial": 14,
+      "at": 4627.10000038147,
+      "cpuMs": 0.5999999046325684,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 4627.700000286102
+    },
+    {
+      "serial": 15,
+      "at": 5424.800000190735,
+      "cpuMs": 10.400000095367432,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 360,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 5435.200000286102
+    },
+    {
+      "serial": 16,
+      "at": 5576.5,
+      "cpuMs": 0.9000000953674316,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 5577.400000095367
+    },
+    {
+      "serial": 17,
+      "at": 5636.700000286102,
+      "cpuMs": 0.40000009536743164,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 5637.10000038147
+    },
+    {
+      "serial": 18,
+      "at": 5696.700000286102,
+      "cpuMs": 0.5,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 5697.200000286102
+    },
+    {
+      "serial": 19,
+      "at": 5746.800000190735,
+      "cpuMs": 0.5999999046325684,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 5747.400000095367
+    },
+    {
+      "serial": 20,
+      "at": 6244.60000038147,
+      "cpuMs": 1.1999998092651367,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 360,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 6245.800000190735
+    },
+    {
+      "serial": 21,
+      "at": 6396.900000095367,
+      "cpuMs": 2,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 6399
+    },
+    {
+      "serial": 22,
+      "at": 6457.300000190735,
+      "cpuMs": 0.9000000953674316,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 6458.200000286102
+    },
+    {
+      "serial": 23,
+      "at": 6507.300000190735,
+      "cpuMs": 0.8000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 6508.10000038147
+    },
+    {
+      "serial": 24,
+      "at": 6566.700000286102,
+      "cpuMs": 0.7999997138977051,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 6567.5
+    },
+    {
+      "serial": 25,
+      "at": 7330.200000286102,
+      "cpuMs": 1.0999999046325684,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 7331.300000190735
+    },
+    {
+      "serial": 26,
+      "at": 7397.60000038147,
+      "cpuMs": 0.6999998092651367,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 7398.300000190735
+    },
+    {
+      "serial": 27,
+      "at": 7448.800000190735,
+      "cpuMs": 1.3000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 7450.200000286102
+    },
+    {
+      "serial": 28,
+      "at": 7508.400000095367,
+      "cpuMs": 0.8000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 7509.200000286102
+    },
+    {
+      "serial": 29,
+      "at": 8504.800000190735,
+      "cpuMs": 0.5999999046325684,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 8505.400000095367
+    },
+    {
+      "serial": 30,
+      "at": 8548.200000286102,
+      "cpuMs": 0.40000009536743164,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 8548.60000038147
+    },
+    {
+      "serial": 31,
+      "at": 8578.800000190735,
+      "cpuMs": 0.19999980926513672,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 8579
+    },
+    {
+      "serial": 32,
+      "at": 8618.200000286102,
+      "cpuMs": 0.2999997138977051,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 8618.5
+    },
+    {
+      "serial": 33,
+      "at": 9478.800000190735,
+      "cpuMs": 9.800000190734863,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 33
+      },
+      "drawCalls": 1,
+      "observedAt": 9488.60000038147
+    },
+    {
+      "serial": 34,
+      "at": 9528.700000286102,
+      "cpuMs": 0.40000009536743164,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 9529.10000038147
+    },
+    {
+      "serial": 35,
+      "at": 9549.400000095367,
+      "cpuMs": 0.09999990463256836,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 9549.5
+    },
+    {
+      "serial": 36,
+      "at": 9578.700000286102,
+      "cpuMs": 0.19999980926513672,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 9578.900000095367
+    }
+  ],
+  "gpu": [
+    {
+      "serial": 1,
+      "completed": true,
+      "milliseconds": 220.09999990463257,
+      "observedAt": 1926.4000000953674
+    },
+    {
+      "serial": 2,
+      "completed": true,
+      "milliseconds": 58.10000038146973,
+      "observedAt": 1984.6000003814697
+    },
+    {
+      "serial": 3,
+      "completed": true,
+      "milliseconds": 50,
+      "observedAt": 2034.7000002861023
+    },
+    {
+      "serial": 4,
+      "completed": true,
+      "milliseconds": 61,
+      "observedAt": 2095.800000190735
+    },
+    {
+      "serial": 5,
+      "completed": true,
+      "milliseconds": 58.700000286102295,
+      "observedAt": 2154.800000190735
+    },
+    {
+      "serial": 6,
+      "completed": true,
+      "milliseconds": 35.40000009536743,
+      "observedAt": 3425.5
+    },
+    {
+      "serial": 7,
+      "completed": true,
+      "milliseconds": 73,
+      "observedAt": 3615.4000000953674
+    },
+    {
+      "serial": 8,
+      "completed": true,
+      "milliseconds": 60,
+      "observedAt": 3675.5
+    },
+    {
+      "serial": 9,
+      "completed": true,
+      "milliseconds": 50,
+      "observedAt": 3725.5
+    },
+    {
+      "serial": 10,
+      "completed": true,
+      "milliseconds": 50,
+      "observedAt": 3775.6000003814697
+    },
+    {
+      "serial": 11,
+      "completed": true,
+      "milliseconds": 68.7999997138977,
+      "observedAt": 4516
+    },
+    {
+      "serial": 12,
+      "completed": true,
+      "milliseconds": 50,
+      "observedAt": 4566
+    },
+    {
+      "serial": 13,
+      "completed": true,
+      "milliseconds": 60.799999713897705,
+      "observedAt": 4627
+    },
+    {
+      "serial": 14,
+      "completed": true,
+      "milliseconds": 69.09999990463257,
+      "observedAt": 4696.300000190735
+    },
+    {
+      "serial": 15,
+      "completed": true,
+      "milliseconds": 21.699999809265137,
+      "observedAt": 5446.5
+    },
+    {
+      "serial": 16,
+      "completed": true,
+      "milliseconds": 60.10000038146973,
+      "observedAt": 5636.60000038147
+    },
+    {
+      "serial": 17,
+      "completed": true,
+      "milliseconds": 59.90000009536743,
+      "observedAt": 5696.60000038147
+    },
+    {
+      "serial": 18,
+      "completed": true,
+      "milliseconds": 50.09999990463257,
+      "observedAt": 5746.800000190735
+    },
+    {
+      "serial": 19,
+      "completed": true,
+      "milliseconds": 60.19999980926514,
+      "observedAt": 5807
+    },
+    {
+      "serial": 20,
+      "completed": true,
+      "milliseconds": 12.399999618530273,
+      "observedAt": 6257.10000038147
+    },
+    {
+      "serial": 21,
+      "completed": true,
+      "milliseconds": 60.30000019073486,
+      "observedAt": 6457.300000190735
+    },
+    {
+      "serial": 22,
+      "completed": true,
+      "milliseconds": 50,
+      "observedAt": 6507.300000190735
+    },
+    {
+      "serial": 23,
+      "completed": true,
+      "milliseconds": 59.19999980926514,
+      "observedAt": 6566.60000038147
+    },
+    {
+      "serial": 24,
+      "completed": true,
+      "milliseconds": 50.5,
+      "observedAt": 6617.300000190735
+    },
+    {
+      "serial": 25,
+      "completed": true,
+      "milliseconds": 67.40000009536743,
+      "observedAt": 7397.60000038147
+    },
+    {
+      "serial": 26,
+      "completed": true,
+      "milliseconds": 51,
+      "observedAt": 7448.700000286102
+    },
+    {
+      "serial": 27,
+      "completed": true,
+      "milliseconds": 59.30000019073486,
+      "observedAt": 7508.200000286102
+    },
+    {
+      "serial": 28,
+      "completed": true,
+      "milliseconds": 59.90000009536743,
+      "observedAt": 7568.5
+    },
+    {
+      "serial": 29,
+      "completed": true,
+      "milliseconds": 43.40000009536743,
+      "observedAt": 8548.200000286102
+    },
+    {
+      "serial": 30,
+      "completed": true,
+      "milliseconds": 30.5,
+      "observedAt": 8578.700000286102
+    },
+    {
+      "serial": 31,
+      "completed": true,
+      "milliseconds": 39.30000019073486,
+      "observedAt": 8618.200000286102
+    },
+    {
+      "serial": 32,
+      "completed": true,
+      "milliseconds": 39.90000009536743,
+      "observedAt": 8658.10000038147
+    },
+    {
+      "serial": 33,
+      "completed": true,
+      "milliseconds": 49.80000019073486,
+      "observedAt": 9528.60000038147
+    },
+    {
+      "serial": 34,
+      "completed": true,
+      "milliseconds": 20.699999809265137,
+      "observedAt": 9549.400000095367
+    },
+    {
+      "serial": 35,
+      "completed": true,
+      "milliseconds": 29.300000190734863,
+      "observedAt": 9578.700000286102
+    },
+    {
+      "serial": 36,
+      "completed": true,
+      "milliseconds": 30,
+      "observedAt": 9608.700000286102
+    }
+  ],
+  "refinement": [
+    {
+      "completed": true,
+      "milliseconds": 386,
+      "volume": true,
+      "observedAt": 3775.6000003814697
+    },
+    {
+      "completed": true,
+      "milliseconds": 382.2999997138977,
+      "volume": true,
+      "observedAt": 5807
+    },
+    {
+      "completed": true,
+      "milliseconds": 373,
+      "volume": true,
+      "observedAt": 6617.300000190735
+    }
+  ],
+  "motion": [],
+  "scans": [
+    {
+      "value": "mra",
+      "label": "MRA"
+    }
+  ],
+  "minimumWindow": {
+    "requested": [
+      1050,
+      720
+    ],
+    "actual": [
+      1050,
+      720
+    ],
+    "content": [
+      1050,
+      688
+    ]
+  },
+  "initialPresentation": {
+    "source": "mra",
+    "scope": "all",
+    "layers": [
+      {
+        "label": "Show Published derived vessel reference · incomplete",
+        "checked": true
+      }
+    ],
+    "provenance": "MR angiography · bright signal, no CT bone",
+    "body": "RessectionLab\nOpen\n⌘O\nAdd data\nSave\nCases\n3D\nRehearse\nPATIENT WORKSPACE\nScans\nAnatomy\nUnspecified study\n1 scans\nIXI265-Guys-0845\nDisplayed scan\nMRA\nSegmentation\nVascular\n\nMR angiography · bright signal, no CT bone\n\nDisplay & fragments\nFull source\nStructures\n1\nPublished Derived Vessel Reference · Incomplete\nCoverage & unavailable anatomy\nWorkspace\nIXI265-Guys-0845\nMRA\nLayout\nAppearance\nClip\nFit\nStructures\nVolume\n3D\nVolume + structures\nMRA · source volume + labels\nR\nA\nS\nPatient axes\nDrag to rotate · Scroll to zoom · Right-drag to pan\nAxial\n15.3 mm\n⤢\nL\nR\nA\nP\n20 mm\nSOURCE MRA\nCoronal\n-8.4 mm\n⤢\nL\nR\nS\nI\n20 mm\nSOURCE MRA\nSagittal\n1.5 mm\n⤢\nP\nA\nS\nI\n20 mm\nSOURCE MRA\nLinked views\nRAS\n1.5 / -8.4 / 15.3 mm\nContrast\nLinked physical coordinates · RAS+ mm\nLocal imaging · cached anatomy\nAnatomy ready\nRAS 1.5 / -8.4 / 15.3 mm"
+  },
+  "memory": [
+    {
+      "cpu": {
+        "cumulativeCPUUsage": 1.409825,
+        "percentCPUUsage": 0,
+        "idleWakeupsPerSecond": 0
+      },
+      "pid": 48925,
+      "type": "Browser",
+      "creationTime": 1792369040191.293,
+      "memory": {
+        "workingSetSize": 280608,
+        "peakWorkingSetSize": 480944
+      },
+      "sandboxed": false
+    },
+    {
+      "cpu": {
+        "cumulativeCPUUsage": 0.973395,
+        "percentCPUUsage": 0,
+        "idleWakeupsPerSecond": 0
+      },
+      "pid": 48928,
+      "type": "GPU",
+      "creationTime": 1792369040756.48,
+      "serviceName": "GPU",
+      "memory": {
+        "workingSetSize": 162528,
+        "peakWorkingSetSize": 351888
+      },
+      "sandboxed": true
+    },
+    {
+      "cpu": {
+        "cumulativeCPUUsage": 0.063511,
+        "percentCPUUsage": 0,
+        "idleWakeupsPerSecond": 0
+      },
+      "pid": 48929,
+      "type": "Utility",
+      "creationTime": 1792369040764.957,
+      "serviceName": "network.mojom.NetworkService",
+      "name": "Network Service",
+      "memory": {
+        "workingSetSize": 47968,
+        "peakWorkingSetSize": 47968
+      },
+      "sandboxed": true
+    },
+    {
+      "cpu": {
+        "cumulativeCPUUsage": 1.003509,
+        "percentCPUUsage": 0,
+        "idleWakeupsPerSecond": 0
+      },
+      "pid": 48931,
+      "type": "Tab",
+      "creationTime": 1792369040876.583,
+      "memory": {
+        "workingSetSize": 442480,
+        "peakWorkingSetSize": 557040
+      },
+      "sandboxed": true
+    }
+  ],
+  "memoryReceipt": {
+    "at": 1792369051867,
+    "units": "KiB as reported by Electron/ps",
+    "electron": [
+      {
+        "cpu": {
+          "cumulativeCPUUsage": 1.410152,
+          "percentCPUUsage": 8.175,
+          "idleWakeupsPerSecond": 0
+        },
+        "pid": 48925,
+        "type": "Browser",
+        "creationTime": 1792369040191.293,
+        "memory": {
+          "workingSetSize": 280624,
+          "peakWorkingSetSize": 480944
+        },
+        "sandboxed": false
+      },
+      {
+        "cpu": {
+          "cumulativeCPUUsage": 0.973395,
+          "percentCPUUsage": 0,
+          "idleWakeupsPerSecond": 0
+        },
+        "pid": 48928,
+        "type": "GPU",
+        "creationTime": 1792369040756.48,
+        "serviceName": "GPU",
+        "memory": {
+          "workingSetSize": 162528,
+          "peakWorkingSetSize": 351888
+        },
+        "sandboxed": true
+      },
+      {
+        "cpu": {
+          "cumulativeCPUUsage": 0.063511,
+          "percentCPUUsage": 0,
+          "idleWakeupsPerSecond": 0
+        },
+        "pid": 48929,
+        "type": "Utility",
+        "creationTime": 1792369040764.957,
+        "serviceName": "network.mojom.NetworkService",
+        "name": "Network Service",
+        "memory": {
+          "workingSetSize": 47968,
+          "peakWorkingSetSize": 47968
+        },
+        "sandboxed": true
+      },
+      {
+        "cpu": {
+          "cumulativeCPUUsage": 1.003509,
+          "percentCPUUsage": 0,
+          "idleWakeupsPerSecond": 0
+        },
+        "pid": 48931,
+        "type": "Tab",
+        "creationTime": 1792369040876.583,
+        "memory": {
+          "workingSetSize": 442480,
+          "peakWorkingSetSize": 557040
+        },
+        "sandboxed": true
+      }
+    ],
+    "totalElectronWorkingSetKB": 933600,
+    "peakAggregation": "sum of individual process peaks, not a simultaneous whole-app peak",
+    "totalElectronPeakWorkingSetKB": 1437840,
+    "pythonSidecars": [
+      {
+        "pid": 48930,
+        "ppid": 48925,
+        "rssKB": 491472,
+        "command": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python"
+      }
+    ],
+    "totalPythonRssKB": 491472
+  },
+  "passed": true,
+  "sourceArrayCount": 2,
+  "sourceUnchanged": true,
+  "finishedAt": 1792369051936
+}
