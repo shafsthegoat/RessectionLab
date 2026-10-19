@@ -1,0 +1,996 @@
+{
+  "schema": "topbrain-cta001-native-source-qc-v2",
+  "native_manifest": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-angio-fidelity-v2/native-cta/patient-anatomy.json",
+  "native_manifest_sha256": "e5b9b0ac25861ad495d09e1593c7bac8b7c687540309730a845a115641c16fb1",
+  "snapshot_id": "692290a77e071d89f4262b1ed56eacf7f1152bbb0c344abe823a1794b5f8b2a2",
+  "source_ct": {
+    "shape": [
+      284,
+      327,
+      243
+    ],
+    "grid_spacing_mm": [
+      0.5078129768371582,
+      0.5078129768371582,
+      0.625
+    ],
+    "grid_extent_mm": [
+      144.21888542175293,
+      166.05484342575073,
+      151.875
+    ],
+    "orientation": [
+      "L",
+      "P",
+      "S"
+    ],
+    "nifti_units": [
+      "mm",
+      "sec"
+    ],
+    "sha256": "9dea5c8138e6884bdd9480d16ac4ed05f6a61ed9cccde658b2052d4d627030b3",
+    "affine": [
+      [
+        -0.5078129768371582,
+        0.0,
+        0.0,
+        45.70304489135742
+      ],
+      [
+        0.0,
+        -0.5078129768371582,
+        0.0,
+        69.99881744384766
+      ],
+      [
+        0.0,
+        0.0,
+        0.625,
+        -197.39801025390625
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "source_labels": {
+    "sha256": "f65ee1b03bf776f33c55ef0db314e8a3d4122ccaea06499f73219995c1bfa5f0",
+    "same_grid": true,
+    "max_abs_affine_difference": 0.0,
+    "positive_voxels": 79177,
+    "components26": 5,
+    "present_classes": 28,
+    "inventory": [
+      {
+        "value": 1,
+        "name": "BA",
+        "voxels": 2975,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            130,
+            119,
+            62
+          ],
+          [
+            153,
+            139,
+            108
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -31.992340564727783,
+            -0.587186336517334,
+            -158.64801025390625
+          ],
+          [
+            -20.312642097473145,
+            9.56907320022583,
+            -129.89801025390625
+          ]
+        ]
+      },
+      {
+        "value": 2,
+        "name": "R-P1P2",
+        "voxels": 1705,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            90,
+            136,
+            91
+          ],
+          [
+            136,
+            192,
+            109
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -23.359519958496094,
+            -27.50127410888672,
+            -140.52301025390625
+          ],
+          [
+            -0.00012302398681640625,
+            0.9362525939941406,
+            -129.27301025390625
+          ]
+        ]
+      },
+      {
+        "value": 3,
+        "name": "L-P1P2",
+        "voxels": 1940,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            140,
+            122,
+            91
+          ],
+          [
+            185,
+            182,
+            111
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -48.242355823516846,
+            -22.423144340515137,
+            -140.52301025390625
+          ],
+          [
+            -25.390771865844727,
+            8.045634269714355,
+            -128.02301025390625
+          ]
+        ]
+      },
+      {
+        "value": 4,
+        "name": "R-ICA",
+        "voxels": 2444,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            91,
+            86,
+            97
+          ],
+          [
+            120,
+            120,
+            111
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -15.234512329101562,
+            9.061260223388672,
+            -136.77301025390625
+          ],
+          [
+            -0.5079360008239746,
+            26.32690143585205,
+            -128.02301025390625
+          ]
+        ]
+      },
+      {
+        "value": 5,
+        "name": "R-M1",
+        "voxels": 1075,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            64,
+            93,
+            101
+          ],
+          [
+            96,
+            116,
+            109
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -3.0470008850097656,
+            11.092512130737305,
+            -134.27301025390625
+          ],
+          [
+            13.203014373779297,
+            22.772210597991943,
+            -129.27301025390625
+          ]
+        ]
+      },
+      {
+        "value": 8,
+        "name": "R-Pcom",
+        "voxels": 218,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            115,
+            112,
+            101
+          ],
+          [
+            128,
+            138,
+            110
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -19.297016143798828,
+            -0.07937335968017578,
+            -134.27301025390625
+          ],
+          [
+            -12.695447444915771,
+            13.123764038085938,
+            -128.64801025390625
+          ]
+        ]
+      },
+      {
+        "value": 11,
+        "name": "R-A1A2",
+        "voxels": 1704,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            98,
+            81,
+            108
+          ],
+          [
+            134,
+            120,
+            142
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -22.343894004821777,
+            9.061260223388672,
+            -129.89801025390625
+          ],
+          [
+            -4.062626838684082,
+            28.865966320037842,
+            -108.64801025390625
+          ]
+        ]
+      },
+      {
+        "value": 12,
+        "name": "L-A1A2",
+        "voxels": 1561,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            120,
+            78,
+            106
+          ],
+          [
+            156,
+            115,
+            142
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -33.51577949523926,
+            11.600325107574463,
+            -131.14801025390625
+          ],
+          [
+            -15.234512329101562,
+            30.389405250549316,
+            -108.64801025390625
+          ]
+        ]
+      },
+      {
+        "value": 13,
+        "name": "R-A3",
+        "voxels": 769,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            116,
+            61,
+            139
+          ],
+          [
+            128,
+            86,
+            169
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -19.297016143798828,
+            26.32690143585205,
+            -110.52301025390625
+          ],
+          [
+            -13.20326042175293,
+            39.022225856781006,
+            -91.77301025390625
+          ]
+        ]
+      },
+      {
+        "value": 14,
+        "name": "L-A3",
+        "voxels": 799,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            118,
+            67,
+            139
+          ],
+          [
+            133,
+            84,
+            174
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -21.83608102798462,
+            27.342527389526367,
+            -110.52301025390625
+          ],
+          [
+            -14.218886375427246,
+            35.97534799575806,
+            -88.64801025390625
+          ]
+        ]
+      },
+      {
+        "value": 17,
+        "name": "R-M2",
+        "voxels": 7515,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            31,
+            84,
+            100
+          ],
+          [
+            75,
+            208,
+            164
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            7.617071628570557,
+            -35.62628173828125,
+            -134.89801025390625
+          ],
+          [
+            29.960842609405518,
+            27.342527389526367,
+            -94.89801025390625
+          ]
+        ]
+      },
+      {
+        "value": 18,
+        "name": "R-M3",
+        "voxels": 3058,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            10,
+            83,
+            118
+          ],
+          [
+            72,
+            224,
+            165
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            9.140510559082031,
+            -43.75128936767578,
+            -123.64801025390625
+          ],
+          [
+            40.62491512298584,
+            27.850340366363525,
+            -94.27301025390625
+          ]
+        ]
+      },
+      {
+        "value": 21,
+        "name": "R-P3P4",
+        "voxels": 985,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            101,
+            189,
+            97
+          ],
+          [
+            128,
+            238,
+            112
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -19.297016143798828,
+            -50.860671043395996,
+            -136.77301025390625
+          ],
+          [
+            -5.586065769195557,
+            -25.977835178375244,
+            -127.39801025390625
+          ]
+        ]
+      },
+      {
+        "value": 22,
+        "name": "L-P3P4",
+        "voxels": 1112,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            160,
+            182,
+            95
+          ],
+          [
+            190,
+            238,
+            110
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -50.78142070770264,
+            -50.860671043395996,
+            -138.02301025390625
+          ],
+          [
+            -35.54703140258789,
+            -22.423144340515137,
+            -128.64801025390625
+          ]
+        ]
+      },
+      {
+        "value": 23,
+        "name": "R-VA",
+        "voxels": 8016,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            75,
+            131,
+            0
+          ],
+          [
+            151,
+            181,
+            63
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -30.976714611053467,
+            -21.91533136367798,
+            -197.39801025390625
+          ],
+          [
+            7.617071628570557,
+            3.4753174781799316,
+            -158.02301025390625
+          ]
+        ]
+      },
+      {
+        "value": 24,
+        "name": "L-VA",
+        "voxels": 6705,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            141,
+            127,
+            0
+          ],
+          [
+            196,
+            173,
+            68
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -53.828298568725586,
+            -17.852827548980713,
+            -197.39801025390625
+          ],
+          [
+            -25.898584842681885,
+            5.5065693855285645,
+            -154.89801025390625
+          ]
+        ]
+      },
+      {
+        "value": 25,
+        "name": "R-SCA",
+        "voxels": 64,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            120,
+            133,
+            100
+          ],
+          [
+            133,
+            138,
+            102
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -21.83608102798462,
+            -0.07937335968017578,
+            -134.89801025390625
+          ],
+          [
+            -15.234512329101562,
+            2.4596915245056152,
+            -133.64801025390625
+          ]
+        ]
+      },
+      {
+        "value": 26,
+        "name": "L-SCA",
+        "voxels": 209,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            140,
+            123,
+            77
+          ],
+          [
+            159,
+            133,
+            103
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -35.03921842575073,
+            2.4596915245056152,
+            -149.27301025390625
+          ],
+          [
+            -25.390771865844727,
+            7.537821292877197,
+            -133.02301025390625
+          ]
+        ]
+      },
+      {
+        "value": 27,
+        "name": "R-AICA",
+        "voxels": 55,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            133,
+            124,
+            65
+          ],
+          [
+            138,
+            131,
+            72
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -24.37514591217041,
+            3.4753174781799316,
+            -156.77301025390625
+          ],
+          [
+            -21.83608102798462,
+            7.030008316040039,
+            -152.39801025390625
+          ]
+        ]
+      },
+      {
+        "value": 29,
+        "name": "R-PICA",
+        "voxels": 818,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            105,
+            150,
+            13
+          ],
+          [
+            131,
+            181,
+            58
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -20.820455074310303,
+            -21.91533136367798,
+            -189.27301025390625
+          ],
+          [
+            -7.6173176765441895,
+            -6.173129081726074,
+            -161.14801025390625
+          ]
+        ]
+      },
+      {
+        "value": 30,
+        "name": "L-PICA",
+        "voxels": 940,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            140,
+            157,
+            9
+          ],
+          [
+            158,
+            184,
+            35
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -34.531405448913574,
+            -23.438770294189453,
+            -191.77301025390625
+          ],
+          [
+            -25.390771865844727,
+            -9.727819919586182,
+            -175.52301025390625
+          ]
+        ]
+      },
+      {
+        "value": 33,
+        "name": "R-OA",
+        "voxels": 284,
+        "category": "artery",
+        "voxel_bbox_inclusive": [
+          [
+            70,
+            49,
+            101
+          ],
+          [
+            100,
+            77,
+            119
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -5.078252792358398,
+            30.897218227386475,
+            -134.27301025390625
+          ],
+          [
+            10.156136512756348,
+            45.115981578826904,
+            -123.02301025390625
+          ]
+        ]
+      },
+      {
+        "value": 35,
+        "name": "VoG",
+        "voxels": 524,
+        "category": "vein-or-sinus",
+        "voxel_bbox_inclusive": [
+          [
+            134,
+            211,
+            114
+          ],
+          [
+            147,
+            222,
+            128
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -28.945462703704834,
+            -42.735663414001465,
+            -126.14801025390625
+          ],
+          [
+            -22.343894004821777,
+            -37.149720668792725,
+            -117.39801025390625
+          ]
+        ]
+      },
+      {
+        "value": 36,
+        "name": "StS",
+        "voxels": 3088,
+        "category": "vein-or-sinus",
+        "voxel_bbox_inclusive": [
+          [
+            138,
+            217,
+            43
+          ],
+          [
+            150,
+            265,
+            135
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -30.46890163421631,
+            -64.57162141799927,
+            -170.52301025390625
+          ],
+          [
+            -24.37514591217041,
+            -40.196598529815674,
+            -113.02301025390625
+          ]
+        ]
+      },
+      {
+        "value": 37,
+        "name": "ICVs",
+        "voxels": 954,
+        "category": "vein-or-sinus",
+        "voxel_bbox_inclusive": [
+          [
+            117,
+            138,
+            111
+          ],
+          [
+            140,
+            213,
+            137
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -25.390771865844727,
+            -38.16534662246704,
+            -128.02301025390625
+          ],
+          [
+            -13.711073398590088,
+            -0.07937335968017578,
+            -111.77301025390625
+          ]
+        ]
+      },
+      {
+        "value": 38,
+        "name": "R-BVR",
+        "voxels": 752,
+        "category": "vein-or-sinus",
+        "voxel_bbox_inclusive": [
+          [
+            96,
+            126,
+            85
+          ],
+          [
+            112,
+            168,
+            113
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -11.172008514404297,
+            -15.313762664794922,
+            -144.27301025390625
+          ],
+          [
+            -3.0470008850097656,
+            6.014382362365723,
+            -126.77301025390625
+          ]
+        ]
+      },
+      {
+        "value": 39,
+        "name": "L-BVR",
+        "voxels": 697,
+        "category": "vein-or-sinus",
+        "voxel_bbox_inclusive": [
+          [
+            144,
+            131,
+            98
+          ],
+          [
+            183,
+            212,
+            118
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -47.22672986984253,
+            -37.65753364562988,
+            -136.14801025390625
+          ],
+          [
+            -27.42202377319336,
+            3.4753174781799316,
+            -123.64801025390625
+          ]
+        ]
+      },
+      {
+        "value": 40,
+        "name": "SSS",
+        "voxels": 28211,
+        "category": "vein-or-sinus",
+        "voxel_bbox_inclusive": [
+          [
+            119,
+            7,
+            43
+          ],
+          [
+            163,
+            320,
+            233
+          ]
+        ],
+        "ras_bbox_mm": [
+          [
+            -37.070470333099365,
+            -92.50133514404297,
+            -170.52301025390625
+          ],
+          [
+            -14.726699352264404,
+            66.44412660598755,
+            -51.77301025390625
+          ]
+        ]
+      }
+    ],
+    "absent_class_values": [
+      6,
+      7,
+      9,
+      10,
+      15,
+      16,
+      19,
+      20,
+      28,
+      31,
+      32,
+      34
+    ]
+  },
+  "new_model_inference": false,
+  "new_registration": false,
+  "source_byte_hashes_preserved": true,
+  "package_hash_checks": {},
+  "layers": {
+    "vessels": {
+      "voxels": 44951,
+      "components26": 2,
+      "largest_component_fraction": 0.9936820092990145,
+      "positive_bbox_extent_mm": [
+        94.45321369171143,
+        95.9766526222229,
+        108.75
+      ],
+      "review_status": "unreviewed",
+      "mesh_vertices": 54038,
+      "mesh_triangles": 107012,
+      "maximum_display_displacement_mm": 0.23777615655899734,
+      "kind": "artery"
+    },
+    "venous-vessels": {
+      "voxels": 34226,
+      "components26": 6,
+      "largest_component_fraction": 0.8242564132530824,
+      "positive_bbox_extent_mm": [
+        44.179728984832764,
+        158.94546175003052,
+        118.75
+      ],
+      "review_status": "unreviewed",
+      "mesh_vertices": 35755,
+      "mesh_triangles": 69260,
+      "maximum_display_displacement_mm": 0.23777906422270256,
+      "kind": "vein"
+    },
+    "bone": {
+      "voxels": 2035833,
+      "components26": 221,
+      "largest_component_fraction": 0.9780473152758601,
+      "positive_bbox_extent_mm": [
+        143.71107244491577,
+        165.54703044891357,
+        151.25
+      ],
+      "review_status": "unreviewed",
+      "mesh_vertices": 1112624,
+      "mesh_triangles": 2184544,
+      "maximum_display_displacement_mm": 0.0,
+      "display_label": "High-attenuation CT context \u00b7 threshold estimate",
+      "context_class": "high attenuation threshold estimate, not verified anatomical bone class",
+      "kind": "bone"
+    }
+  },
+  "limitations": [
+    "Local expert annotation acceptance",
+    "Full head/neck DICOM field of view; published image is braincase crop",
+    "Unannotated arterial and venous branches",
+    "LeftICA/MCA classes missing in supplied label; no cause inferred",
+    "Reviewed skull segmentation",
+    "Brain surface/parcellation; not inferred from this CTA",
+    "Tumor, nerves, functional maps and tractography",
+    "Commercial-use permission from USZ"
+  ],
+  "acquisition_receipt": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-angio-fidelity-v2/acquisition.json",
+  "license": "https://zenodo.org/records/16623496; noncommercial with source attribution; commercial use requires USZ permission",
+  "all_package_data_hashes_verified": true,
+  "metadata_correction": {
+    "change": "vessels.kind artery; venous-vessels.kind vein",
+    "basis": "Publisher categorical class definitions; no inferred anatomical classification",
+    "source_and_binary_arrays_unchanged": true,
+    "prior_manifest_sha256": "b60fc1661e48a12d32adeb9d8b3222023a33e3eb31fc647bef7bce69a95734ef",
+    "prior_snapshot_id": "e162e12cece4e3a53d3ce61e7cf8b7a0761aca45dffc8c865d93b0ca34116fd9"
+  }
+}

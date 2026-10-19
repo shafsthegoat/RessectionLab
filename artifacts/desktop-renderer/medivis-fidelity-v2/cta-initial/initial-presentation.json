@@ -1,0 +1,24 @@
+{
+  "source": "cta",
+  "scope": "all",
+  "framing": {
+    "fit": "anatomy",
+    "zoom": "100%"
+  },
+  "layers": [
+    {
+      "label": "Show TopBrain source arterial labels · partial patient annotation",
+      "checked": true
+    },
+    {
+      "label": "Show TopBrain source cerebral venous labels",
+      "checked": true
+    },
+    {
+      "label": "Show High-attenuation CT context · threshold estimate",
+      "checked": true
+    }
+  ],
+  "provenance": "CTA signal + sourced structures",
+  "body": "RessectionLab\nOpen\n⌘O\nAdd data\nSave\nCases\n3D\nRehearse\nPATIENT WORKSPACE\nScans\nAnatomy\nUnspecified study\n1 scans\nTOPBRAIN-2025-TopCoW-CTA-001\nDisplayed scan\nCTA\nSegmentation\nVascular\n\nCTA signal + sourced structures\n\nDisplay & fragments\nFull source\nStructures\n3\nTopBrain Source Arterial Labels · Partial Patient Annotation\nTopBrain Source Cerebral Venous Labels\nHigh-Attenuation CT Context · Threshold Estimate\nCoverage & unavailable anatomy\nWorkspace\nTOPBRAIN-2025-TopCoW-CTA-001\nCTA\nLayout\nAppearance\nClip\nFit 3D\nStructures\nVolume\nFit scan content\nFit full image\n−\n100%\n+\n3D\nVolume + structures\nCTA · source volume + labels\nR\nA\nS\nPatient axes\nDrag to rotate · Scroll to zoom · Right-drag to pan\nAxial\nContent fit\n-121.8 mm\n⤢\nL\nR\nA\nP\n20 mm\nSOURCE CTA\nCoronal\nContent fit\n-12.8 mm\n⤢\nL\nR\nS\nI\n20 mm\nSOURCE CTA\nSagittal\nContent fit\n-26.2 mm\n⤢\nP\nA\nS\nI\n20 mm\nSOURCE CTA\nLinked views\nRAS\n-26.2 / -12.8 / -121.8 mm\nContrast\nLinked physical coordinates · RAS+ mm\nLocal imaging · cached anatomy\nAnatomy ready\nRAS -26.2 / -12.8 / -121.8 mm"
+}

@@ -1,7 +1,7 @@
 .rl-viewer {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(230px, 29%);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 34%);
   grid-template-rows: auto repeat(3, minmax(0, 1fr)) 32px;
   width: 100%;
   height: 100%;
@@ -97,6 +97,7 @@
   cursor: crosshair;
   touch-action: none;
   outline: none;
+  overflow: hidden;
 }
 .rl-viewer-slice-image:focus-visible {
   box-shadow: inset 0 0 0 1px #7bbaa9;
@@ -343,6 +344,32 @@
   font-size: 9px;
   color: #98adba;
 }
+.rl-slice-fit-badge {
+  color: #8daaa9;
+  font-size: 8px;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.rl-slice-framing {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.rl-slice-framing select,
+.rl-slice-framing button {
+  min-height: 28px;
+  border: 1px solid #29404c;
+  border-radius: 4px;
+  background: #10212b;
+  color: #b7cdd6;
+  font: inherit;
+  font-size: 10px;
+  padding: 4px 6px;
+  cursor: pointer;
+}
+.rl-slice-framing button { min-width: 26px; }
+.rl-slice-framing button:disabled { opacity: .4; cursor: default; }
+.rl-slice-framing .rl-slice-zoom { min-width: 40px; font-variant-numeric: tabular-nums; }
 .rl-viewer-slice-position small {
   font-size: 8px;
   color: #627e8e;

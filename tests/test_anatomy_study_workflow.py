@@ -158,6 +158,7 @@ def test_anatomy_presentation_survives_native_and_portable_reopen(patient, tmp_p
              'snapshotId': patient.identity(), 'seriesId': 'mri', 'vesselScope': 'all',
              'states': {'mri': {'cursor': [0., 0., 0.], 'visible': {'vessels': True, 'tumor': True},
                                 'settings': {'sliceOverlay': style, 'presentation': mode,
+                                             'contextStyle': 'shell', 'sliceFraming': {'fit': 'anatomy', 'zoom': 1.25},
                                              'volumeRendering': {'preset': 'auto', 'density': .085}}}}}
     save_view(patient, state)
     assert read_view(Collection(patient.root)) == state
@@ -175,6 +176,24 @@ def test_anatomy_presentation_survives_native_and_portable_reopen(patient, tmp_p
             with pytest.raises(ValueError, match='Invalid (slice annotation style|anatomy presentation)'):
                 save_view(patient, broken)
     assert read_view(patient) == state
+
+
+@pytest.mark.parametrize('settings', [
+    {'contextStyle': 'unknown'}, {'contextStyle': []},
+    {'sliceFraming': None}, {'sliceFraming': []},
+    {'sliceFraming': {'fit': 'brain', 'zoom': 1}},
+    {'sliceFraming': {'fit': 'image', 'zoom': True}},
+    {'sliceFraming': {'fit': 'image', 'zoom': .49}},
+    {'sliceFraming': {'fit': 'anatomy', 'zoom': 4.01}},
+    {'sliceFraming': {'fit': 'image', 'zoom': 1, 'alterSource': True}},
+])
+def test_view_rejects_invalid_context_and_slice_framing(patient, settings):
+    from resectionlab.anatomy_workspace import save_view
+    state = {'schema': 'patient-anatomy-view-v1', 'patientId': patient.document['patient_id'],
+             'snapshotId': patient.identity(), 'seriesId': 'mri',
+             'states': {'mri': {'cursor': None, 'visible': {}, 'settings': settings}}}
+    with pytest.raises(ValueError, match='Invalid (source context style|slice framing)'):
+        save_view(patient, state)
 
 
 def test_full_source_preserves_continuous_vessel_across_unknown_skull_slice(tmp_path):

@@ -20,7 +20,10 @@ export class SurfaceVolumePass {
     material.depthTest=!tail;material.blending=tail?THREE.NormalBlending:THREE.NoBlending;
     material.premultipliedAlpha=true;material.toneMapped=false;
     material.forceSinglePass=true;
-    material.onBeforeCompile=shader=>{
+    material.onBeforeCompile=(shader,renderer)=>{
+      // Material.clone() omits compile callbacks. Keep the same display-only
+      // source-context appearance in the peels and Structures-only rendering.
+      original.onBeforeCompile.call(material,shader,renderer);
       Object.assign(shader.uniforms,this.uniforms);
       shader.fragmentShader='uniform sampler2D uPreviousSurface;\nuniform sampler2D uOpaqueSurface;\nuniform vec2 uSurfaceSize;\nuniform bool uFirstSurface;\n'+shader.fragmentShader;
       shader.fragmentShader=shader.fragmentShader.replace('#include <clipping_planes_fragment>',`#include <clipping_planes_fragment>
@@ -28,7 +31,7 @@ export class SurfaceVolumePass {
         if(gl_FragCoord.z>=texture2D(uOpaqueSurface,surfaceUv).r-0.0000001)discard;
         if(!uFirstSurface&&gl_FragCoord.z<=texture2D(uPreviousSurface,surfaceUv).r+0.0000001)discard;`);
     };
-    material.customProgramCacheKey=()=>`physical-surface-peeling-v1-${tail}`;
+    material.customProgramCacheKey=()=>`physical-surface-peeling-v2-${tail}-${original.customProgramCacheKey()}`;
     return material;
   }
   render(renderer:THREE.WebGLRenderer,scene:THREE.Scene,camera:THREE.Camera,opaque:THREE.Texture,w:number,h:number,interactive:boolean){

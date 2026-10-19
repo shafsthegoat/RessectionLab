@@ -7,6 +7,8 @@ import type {SurgicalInteraction} from "../surgical-types";
 import {InteractionSession, InteractionBudget} from './interactionBudget';
 import {SliceFrameCache} from './sliceFrameCache';
 import {scanFitPoints} from './scanCameraFit';
+import {mprView,sourceSignalBounds} from './mprFraming';
+import {applySourceContextMaterial} from './sourceContextMaterial';
 import {packAnatomyLabels,materializeLayerMask,MAX_ANATOMY_LAYERS} from './labelPacking';
 import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
 import type {ViewerPublicGoal} from './publicGoal';
@@ -20,7 +22,6 @@ import {
   PLANE_AXES,
   inverseAffine,
   rasAffine,
-  sliceRect,
   transformPoint,
   volumeBounds,
 } from "./coordinates";
@@ -136,6 +137,8 @@ function intensityWindow(values: Float32Array): [number, number] {
 /** One GPU context shares the source textures across the 3-D scene and all MPRs. */
 export class VolumeRenderer {
   readonly bounds: Bounds3;
+  private readonly sliceSupportBounds: Bounds3;
+  private sliceFramingSignature = '';
   readonly defaultWindow: [number, number];
   readonly affine: Affine;
   private readonly renderer: THREE.WebGLRenderer;
@@ -265,6 +268,7 @@ export class VolumeRenderer {
     this.affine = rasAffine(volume.affine, volume.frame);
     const inverse = inverseAffine(this.affine);
     this.bounds = volumeBounds(volume.shape, this.affine);
+    this.sliceSupportBounds = sourceSignalBounds(volume.mri,volume.shape,this.affine);
     this.cursor = this.bounds[0].map(
       (x, i) => (x + this.bounds[1][i]) / 2,
     ) as Point3;
@@ -584,6 +588,7 @@ export class VolumeRenderer {
       }),
     );
     placeInSourceFrame(mesh, this.affine);
+    applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&['brain','head-envelope','bone','skull'].includes(layer.kind??''));
     mesh.visible = this.visible[layer.name] !== false;
     mesh.userData.compartment = layer.name;
     this.surfaces.set(layer.name, mesh);
@@ -685,11 +690,13 @@ export class VolumeRenderer {
 
   setWorkspaceSettings(settings: ViewerWorkspaceSettings): void {
     this.workspaceSettings = settings;
+    const framingSignature=JSON.stringify(settings.sliceFraming);
+    if(framingSignature!==this.sliceFramingSignature){this.sliceFramingSignature=framingSignature;this.requestRender();}
     // Camera persistence and toolbar/layout choices do not change anatomy
     // materials. Compare values so cloned or in-place edited settings work too.
     const signature = JSON.stringify([settings.layerOpacity, settings.layerColor,
       settings.clipping, settings.clipBox, settings.obliqueClip,
-      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay]);
+      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay,settings.contextStyle]);
     if (signature === this.appearanceSignature) return;
     if(this.appearanceSignature!=null){this.beginInteraction();this.endInteraction();}
     this.appearanceSignature = signature;
@@ -713,6 +720,7 @@ export class VolumeRenderer {
       if(mesh){
         const material=mesh.material as THREE.MeshStandardMaterial;
         material.color.set(appearance.color);material.opacity=appearance.opacity;
+        applySourceContextMaterial(material,settings.contextStyle==='shell'&&['brain','head-envelope','bone','skull'].includes(layer.kind??''));
         const transparent = appearance.opacity < 1;
         if (material.transparent !== transparent) {
           material.transparent = transparent;
@@ -1530,7 +1538,10 @@ export class VolumeRenderer {
       const size = viewport(this.panes[plane]);
       if (!size) continue;
       const slice = this.slices.get(plane)!,
-        rect = sliceRect(this.bounds, plane, size.w, size.h);
+        view = mprView(this.bounds,this.sliceSupportBounds,plane,size.w,size.h,this.workspaceSettings.sliceFraming),
+        rect = view.rect;
+      slice.material.uniforms.uLow.value.set(...view.bounds[0]);
+      slice.material.uniforms.uHigh.value.set(...view.bounds[1]);
       slice.material.uniforms.uRect.value.set(
         rect.left / size.w,
         1 - (rect.top + rect.height) / size.h,

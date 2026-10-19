@@ -1,0 +1,1065 @@
+{
+  "startedAt": 1792370165298,
+  "caseKind": "cta",
+  "originalSource": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-angio-fidelity-v2/native-cta/patient-anatomy.json",
+  "sourceSeries": [
+    {
+      "id": "cta",
+      "modality": "CTA",
+      "intensity_units": "Source CT scaled intensities; nominal HU, scanner calibration not independently verified",
+      "provenance": {
+        "source": "https://zenodo.org/records/16623496",
+        "original_shape": [
+          284,
+          327,
+          243
+        ],
+        "source_preprocessing": "Published TopCoW braincase-cropped and LPS-reoriented source; source bytes/affine preserved; this is not an uncropped original DICOM acquisition."
+      }
+    }
+  ],
+  "sourceVesselLabels": [
+    "TopBrain source arterial labels · partial patient annotation",
+    "TopBrain source cerebral venous labels"
+  ],
+  "disposableStudy": true,
+  "errors": [],
+  "checks": [
+    {
+      "name": "initial CTA vascular captures",
+      "passed": true
+    }
+  ],
+  "views": [
+    {
+      "name": "cta-before-presentation",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v2/cta-initial/cta-before-presentation.png",
+      "at": 1792370172934
+    },
+    {
+      "name": "cta-before-left",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v2/cta-initial/cta-before-left.png",
+      "at": 1792370174158
+    },
+    {
+      "name": "cta-vascular",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v2/cta-initial/cta-vascular.png",
+      "at": 1792370175887
+    },
+    {
+      "name": "cta-vascular-left",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v2/cta-initial/cta-vascular-left.png",
+      "at": 1792370177120
+    },
+    {
+      "name": "cta-vascular-superior",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v2/cta-initial/cta-vascular-superior.png",
+      "at": 1792370178354
+    },
+    {
+      "name": "cta-minimum-1050x720",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v2/cta-initial/cta-minimum-1050x720.png",
+      "at": 1792370179707
+    }
+  ],
+  "surface": [
+    {
+      "name": "vessels",
+      "diagnostics": {
+        "policy": "physical-windowed-sinc-v2",
+        "kind": "vessel",
+        "maxDisplacementMm": 0.23777615655899734,
+        "restoredComponents": 0,
+        "backedOffVertices": 0,
+        "fallbackReason": "",
+        "intersectionCheck": "passed"
+      },
+      "qa": {
+        "sourceIdentity": "56644bd15f9c74d2d4a40a6b31c96f08dd6d6c3856dcdc3a2d1a820fd5eff60a",
+        "voxelCount": 44951,
+        "componentCount": 2,
+        "largestComponentFraction": 0.9936820092990145,
+        "boundaryTouchingVoxels": 115,
+        "probabilityMismatchVoxels": null,
+        "reviewStatus": "unreviewed",
+        "issues": [
+          "2 disconnected source components; inspect before correcting.",
+          "115 foreground cells touch the acquisition boundary; coverage may be truncated."
+        ],
+        "accuracy": "unmeasured"
+      },
+      "empty": false,
+      "observedAt": 4831.400000095367
+    },
+    {
+      "name": "venous-vessels",
+      "diagnostics": {
+        "policy": "physical-windowed-sinc-v2",
+        "kind": "vessel",
+        "maxDisplacementMm": 0.23777906422270256,
+        "restoredComponents": 0,
+        "backedOffVertices": 0,
+        "fallbackReason": "",
+        "intersectionCheck": "passed"
+      },
+      "qa": {
+        "sourceIdentity": "ec3f269364882549d86814ff6f978c09d7d486ac4d058457283d431b1fc92e0b",
+        "voxelCount": 34226,
+        "componentCount": 6,
+        "largestComponentFraction": 0.8242564132530824,
+        "boundaryTouchingVoxels": 0,
+        "probabilityMismatchVoxels": null,
+        "reviewStatus": "unreviewed",
+        "issues": [
+          "6 disconnected source components; inspect before correcting."
+        ],
+        "accuracy": "unmeasured"
+      },
+      "empty": false,
+      "observedAt": 4831.699999809265
+    },
+    {
+      "name": "bone",
+      "diagnostics": {
+        "policy": "physical-windowed-sinc-v2",
+        "kind": "context",
+        "maxDisplacementMm": 0,
+        "restoredComponents": 0,
+        "backedOffVertices": 0,
+        "fallbackReason": "high-complexity context; original surface retained",
+        "intersectionCheck": "source-restored"
+      },
+      "qa": {
+        "sourceIdentity": "187f4a334fe980aa0026956fdf9c4139cc956f0a1d24e20a503155ef237b2e9c",
+        "voxelCount": 2035833,
+        "componentCount": 221,
+        "largestComponentFraction": 0.9780473152758601,
+        "boundaryTouchingVoxels": 29099,
+        "probabilityMismatchVoxels": null,
+        "reviewStatus": "unreviewed",
+        "issues": [
+          "221 disconnected source components; inspect before correcting.",
+          "29,099 foreground cells touch the acquisition boundary; coverage may be truncated."
+        ],
+        "accuracy": "unmeasured"
+      },
+      "empty": false,
+      "observedAt": 4831.800000190735
+    }
+  ],
+  "frames": [
+    {
+      "serial": 1,
+      "at": 4918.699999809265,
+      "cpuMs": 378.5,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 30
+      },
+      "drawCalls": 1,
+      "observedAt": 5297.199999809265
+    },
+    {
+      "serial": 2,
+      "at": 5307.5,
+      "cpuMs": 1.0999999046325684,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 30
+      },
+      "drawCalls": 1,
+      "observedAt": 5308.599999904633
+    },
+    {
+      "serial": 3,
+      "at": 5390.699999809265,
+      "cpuMs": 1.1000003814697266,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 30
+      },
+      "drawCalls": 1,
+      "observedAt": 5391.800000190735
+    },
+    {
+      "serial": 4,
+      "at": 5490.599999904633,
+      "cpuMs": 0.5,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 5491.099999904633
+    },
+    {
+      "serial": 5,
+      "at": 5530.699999809265,
+      "cpuMs": 0.5,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 5531.199999809265
+    },
+    {
+      "serial": 6,
+      "at": 5580.800000190735,
+      "cpuMs": 0.2999997138977051,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 5581.099999904633
+    },
+    {
+      "serial": 7,
+      "at": 6327.599999904633,
+      "cpuMs": 0.7000002861022949,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 6328.300000190735
+    },
+    {
+      "serial": 8,
+      "at": 6382,
+      "cpuMs": 0.40000009536743164,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 6382.400000095367
+    },
+    {
+      "serial": 9,
+      "at": 6442.199999809265,
+      "cpuMs": 0.5,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 6442.699999809265
+    },
+    {
+      "serial": 10,
+      "at": 6481.199999809265,
+      "cpuMs": 0.5,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 6481.699999809265
+    },
+    {
+      "serial": 11,
+      "at": 7438,
+      "cpuMs": 1,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 7439
+    },
+    {
+      "serial": 12,
+      "at": 7502.099999904633,
+      "cpuMs": 0.40000009536743164,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 7502.5
+    },
+    {
+      "serial": 13,
+      "at": 7551.900000095367,
+      "cpuMs": 0.40000009536743164,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 7552.300000190735
+    },
+    {
+      "serial": 14,
+      "at": 7611.900000095367,
+      "cpuMs": 0.2999997138977051,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 7612.199999809265
+    },
+    {
+      "serial": 15,
+      "at": 8422.599999904633,
+      "cpuMs": 0.5999999046325684,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 8423.199999809265
+    },
+    {
+      "serial": 16,
+      "at": 8492.300000190735,
+      "cpuMs": 0.39999961853027344,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 8492.699999809265
+    },
+    {
+      "serial": 17,
+      "at": 8542.300000190735,
+      "cpuMs": 0.2999997138977051,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 8542.599999904633
+    },
+    {
+      "serial": 18,
+      "at": 8592.400000095367,
+      "cpuMs": 0.40000009536743164,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 8592.800000190735
+    },
+    {
+      "serial": 19,
+      "at": 9271.5,
+      "cpuMs": 0.8000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 9272.300000190735
+    },
+    {
+      "serial": 20,
+      "at": 9322.699999809265,
+      "cpuMs": 0.6000003814697266,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 9323.300000190735
+    },
+    {
+      "serial": 21,
+      "at": 9362.900000095367,
+      "cpuMs": 0.5999999046325684,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 9363.5
+    },
+    {
+      "serial": 22,
+      "at": 9402.800000190735,
+      "cpuMs": 0.19999980926513672,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 9403
+    },
+    {
+      "serial": 23,
+      "at": 10393.199999809265,
+      "cpuMs": 0.7000002861022949,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 10393.900000095367
+    },
+    {
+      "serial": 24,
+      "at": 10463.400000095367,
+      "cpuMs": 0.2999997138977051,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 10463.699999809265
+    },
+    {
+      "serial": 25,
+      "at": 10513.400000095367,
+      "cpuMs": 0.40000009536743164,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 10513.900000095367
+    },
+    {
+      "serial": 26,
+      "at": 10564.099999904633,
+      "cpuMs": 1.4000000953674316,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 10565.599999904633
+    },
+    {
+      "serial": 27,
+      "at": 11622.699999809265,
+      "cpuMs": 0.7000002861022949,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 11623.400000095367
+    },
+    {
+      "serial": 28,
+      "at": 11694,
+      "cpuMs": 0.40000009536743164,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 11694.400000095367
+    },
+    {
+      "serial": 29,
+      "at": 11744.099999904633,
+      "cpuMs": 0.3000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 11744.5
+    },
+    {
+      "serial": 30,
+      "at": 11794.5,
+      "cpuMs": 1,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 11795.599999904633
+    },
+    {
+      "serial": 31,
+      "at": 12624.5,
+      "cpuMs": 7.900000095367432,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 30
+      },
+      "drawCalls": 1,
+      "observedAt": 12632.400000095367
+    },
+    {
+      "serial": 32,
+      "at": 12674.400000095367,
+      "cpuMs": 0.40000009536743164,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 12674.800000190735
+    },
+    {
+      "serial": 33,
+      "at": 12694.5,
+      "cpuMs": 0.3000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 12694.800000190735
+    },
+    {
+      "serial": 34,
+      "at": 12714.5,
+      "cpuMs": 0.19999980926513672,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 13,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 12714.699999809265
+    }
+  ],
+  "gpu": [
+    {
+      "serial": 1,
+      "completed": true,
+      "milliseconds": 388.7000002861023,
+      "observedAt": 5307.5
+    },
+    {
+      "serial": 2,
+      "completed": true,
+      "milliseconds": 83,
+      "observedAt": 5390.5
+    },
+    {
+      "serial": 3,
+      "completed": true,
+      "milliseconds": 99.90000009536743,
+      "observedAt": 5490.599999904633
+    },
+    {
+      "serial": 4,
+      "completed": true,
+      "milliseconds": 40,
+      "observedAt": 5530.599999904633
+    },
+    {
+      "serial": 5,
+      "completed": true,
+      "milliseconds": 49.90000009536743,
+      "observedAt": 5580.599999904633
+    },
+    {
+      "serial": 6,
+      "completed": true,
+      "milliseconds": 40,
+      "observedAt": 5620.800000190735
+    },
+    {
+      "serial": 7,
+      "completed": true,
+      "milliseconds": 54.40000009536743,
+      "observedAt": 6382
+    },
+    {
+      "serial": 8,
+      "completed": true,
+      "milliseconds": 60.09999990463257,
+      "observedAt": 6442.099999904633
+    },
+    {
+      "serial": 9,
+      "completed": true,
+      "milliseconds": 39,
+      "observedAt": 6481.199999809265
+    },
+    {
+      "serial": 10,
+      "completed": true,
+      "milliseconds": 50,
+      "observedAt": 6531.300000190735
+    },
+    {
+      "serial": 11,
+      "completed": true,
+      "milliseconds": 64,
+      "observedAt": 7502.099999904633
+    },
+    {
+      "serial": 12,
+      "completed": true,
+      "milliseconds": 49.80000019073486,
+      "observedAt": 7551.900000095367
+    },
+    {
+      "serial": 13,
+      "completed": true,
+      "milliseconds": 59.90000009536743,
+      "observedAt": 7611.800000190735
+    },
+    {
+      "serial": 14,
+      "completed": true,
+      "milliseconds": 60,
+      "observedAt": 7671.900000095367
+    },
+    {
+      "serial": 15,
+      "completed": true,
+      "milliseconds": 69.59999990463257,
+      "observedAt": 8492.199999809265
+    },
+    {
+      "serial": 16,
+      "completed": true,
+      "milliseconds": 49.89999961853027,
+      "observedAt": 8542.300000190735
+    },
+    {
+      "serial": 17,
+      "completed": true,
+      "milliseconds": 50,
+      "observedAt": 8592.300000190735
+    },
+    {
+      "serial": 18,
+      "completed": true,
+      "milliseconds": 60.09999990463257,
+      "observedAt": 8652.5
+    },
+    {
+      "serial": 19,
+      "completed": true,
+      "milliseconds": 51.09999990463257,
+      "observedAt": 9322.699999809265
+    },
+    {
+      "serial": 20,
+      "completed": true,
+      "milliseconds": 40.10000038146973,
+      "observedAt": 9362.900000095367
+    },
+    {
+      "serial": 21,
+      "completed": true,
+      "milliseconds": 39.90000009536743,
+      "observedAt": 9402.800000190735
+    },
+    {
+      "serial": 22,
+      "completed": true,
+      "milliseconds": 50.09999990463257,
+      "observedAt": 9453
+    },
+    {
+      "serial": 23,
+      "completed": true,
+      "milliseconds": 70.10000038146973,
+      "observedAt": 10463.300000190735
+    },
+    {
+      "serial": 24,
+      "completed": true,
+      "milliseconds": 49.90000009536743,
+      "observedAt": 10513.300000190735
+    },
+    {
+      "serial": 25,
+      "completed": true,
+      "milliseconds": 50.5,
+      "observedAt": 10563.900000095367
+    },
+    {
+      "serial": 26,
+      "completed": true,
+      "milliseconds": 49.700000286102295,
+      "observedAt": 10613.900000095367
+    },
+    {
+      "serial": 27,
+      "completed": true,
+      "milliseconds": 71.30000019073486,
+      "observedAt": 11694
+    },
+    {
+      "serial": 28,
+      "completed": true,
+      "milliseconds": 50.09999990463257,
+      "observedAt": 11744.099999904633
+    },
+    {
+      "serial": 29,
+      "completed": true,
+      "milliseconds": 50.30000019073486,
+      "observedAt": 11794.400000095367
+    },
+    {
+      "serial": 30,
+      "completed": true,
+      "milliseconds": 39.90000009536743,
+      "observedAt": 11834.5
+    },
+    {
+      "serial": 31,
+      "completed": true,
+      "milliseconds": 49.90000009536743,
+      "observedAt": 12674.400000095367
+    },
+    {
+      "serial": 32,
+      "completed": true,
+      "milliseconds": 20.09999990463257,
+      "observedAt": 12694.5
+    },
+    {
+      "serial": 33,
+      "completed": true,
+      "milliseconds": 20,
+      "observedAt": 12714.5
+    },
+    {
+      "serial": 34,
+      "completed": true,
+      "milliseconds": 30,
+      "observedAt": 12744.5
+    }
+  ],
+  "refinement": [],
+  "motion": [],
+  "scans": [
+    {
+      "value": "cta",
+      "label": "CTA"
+    }
+  ],
+  "selectedSource": "cta",
+  "minimumWindow": {
+    "requested": [
+      1050,
+      720
+    ],
+    "actual": [
+      1050,
+      720
+    ],
+    "content": [
+      1050,
+      688
+    ]
+  },
+  "initialPresentation": {
+    "source": "cta",
+    "scope": "all",
+    "framing": {
+      "fit": "anatomy",
+      "zoom": "100%"
+    },
+    "layers": [
+      {
+        "label": "Show TopBrain source arterial labels · partial patient annotation",
+        "checked": true
+      },
+      {
+        "label": "Show TopBrain source cerebral venous labels",
+        "checked": true
+      },
+      {
+        "label": "Show High-attenuation CT context · threshold estimate",
+        "checked": true
+      }
+    ],
+    "provenance": "CTA signal + sourced structures",
+    "body": "RessectionLab\nOpen\n⌘O\nAdd data\nSave\nCases\n3D\nRehearse\nPATIENT WORKSPACE\nScans\nAnatomy\nUnspecified study\n1 scans\nTOPBRAIN-2025-TopCoW-CTA-001\nDisplayed scan\nCTA\nSegmentation\nVascular\n\nCTA signal + sourced structures\n\nDisplay & fragments\nFull source\nStructures\n3\nTopBrain Source Arterial Labels · Partial Patient Annotation\nTopBrain Source Cerebral Venous Labels\nHigh-Attenuation CT Context · Threshold Estimate\nCoverage & unavailable anatomy\nWorkspace\nTOPBRAIN-2025-TopCoW-CTA-001\nCTA\nLayout\nAppearance\nClip\nFit 3D\nStructures\nVolume\nFit scan content\nFit full image\n−\n100%\n+\n3D\nVolume + structures\nCTA · source volume + labels\nR\nA\nS\nPatient axes\nDrag to rotate · Scroll to zoom · Right-drag to pan\nAxial\nContent fit\n-121.8 mm\n⤢\nL\nR\nA\nP\n20 mm\nSOURCE CTA\nCoronal\nContent fit\n-12.8 mm\n⤢\nL\nR\nS\nI\n20 mm\nSOURCE CTA\nSagittal\nContent fit\n-26.2 mm\n⤢\nP\nA\nS\nI\n20 mm\nSOURCE CTA\nLinked views\nRAS\n-26.2 / -12.8 / -121.8 mm\nContrast\nLinked physical coordinates · RAS+ mm\nLocal imaging · cached anatomy\nAnatomy ready\nRAS -26.2 / -12.8 / -121.8 mm"
+  },
+  "memory": [
+    {
+      "cpu": {
+        "cumulativeCPUUsage": 1.45085,
+        "percentCPUUsage": 0,
+        "idleWakeupsPerSecond": 0
+      },
+      "pid": 51728,
+      "type": "Browser",
+      "creationTime": 1792370164785.458,
+      "memory": {
+        "workingSetSize": 186272,
+        "peakWorkingSetSize": 423840
+      },
+      "sandboxed": false
+    },
+    {
+      "cpu": {
+        "cumulativeCPUUsage": 1.195904,
+        "percentCPUUsage": 0,
+        "idleWakeupsPerSecond": 0
+      },
+      "pid": 51732,
+      "type": "GPU",
+      "creationTime": 1792370165516.828,
+      "serviceName": "GPU",
+      "memory": {
+        "workingSetSize": 211424,
+        "peakWorkingSetSize": 359936
+      },
+      "sandboxed": true
+    },
+    {
+      "cpu": {
+        "cumulativeCPUUsage": 0.062019,
+        "percentCPUUsage": 0,
+        "idleWakeupsPerSecond": 0
+      },
+      "pid": 51733,
+      "type": "Utility",
+      "creationTime": 1792370165519.796,
+      "serviceName": "network.mojom.NetworkService",
+      "name": "Network Service",
+      "memory": {
+        "workingSetSize": 38992,
+        "peakWorkingSetSize": 47936
+      },
+      "sandboxed": true
+    },
+    {
+      "cpu": {
+        "cumulativeCPUUsage": 1.749533,
+        "percentCPUUsage": 0,
+        "idleWakeupsPerSecond": 0
+      },
+      "pid": 51735,
+      "type": "Tab",
+      "creationTime": 1792370165606.455,
+      "memory": {
+        "workingSetSize": 470320,
+        "peakWorkingSetSize": 547408
+      },
+      "sandboxed": true
+    }
+  ],
+  "memoryReceipt": {
+    "at": 1792370179751,
+    "units": "KiB as reported by Electron/ps",
+    "electron": [
+      {
+        "cpu": {
+          "cumulativeCPUUsage": 1.451196,
+          "percentCPUUsage": 10.267062314540059,
+          "idleWakeupsPerSecond": 0
+        },
+        "pid": 51728,
+        "type": "Browser",
+        "creationTime": 1792370164785.458,
+        "memory": {
+          "workingSetSize": 186272,
+          "peakWorkingSetSize": 423840
+        },
+        "sandboxed": false
+      },
+      {
+        "cpu": {
+          "cumulativeCPUUsage": 1.195904,
+          "percentCPUUsage": 0,
+          "idleWakeupsPerSecond": 0
+        },
+        "pid": 51732,
+        "type": "GPU",
+        "creationTime": 1792370165516.828,
+        "serviceName": "GPU",
+        "memory": {
+          "workingSetSize": 211424,
+          "peakWorkingSetSize": 359936
+        },
+        "sandboxed": true
+      },
+      {
+        "cpu": {
+          "cumulativeCPUUsage": 0.062019,
+          "percentCPUUsage": 0,
+          "idleWakeupsPerSecond": 0
+        },
+        "pid": 51733,
+        "type": "Utility",
+        "creationTime": 1792370165519.796,
+        "serviceName": "network.mojom.NetworkService",
+        "name": "Network Service",
+        "memory": {
+          "workingSetSize": 38992,
+          "peakWorkingSetSize": 47936
+        },
+        "sandboxed": true
+      },
+      {
+        "cpu": {
+          "cumulativeCPUUsage": 1.749533,
+          "percentCPUUsage": 0,
+          "idleWakeupsPerSecond": 0
+        },
+        "pid": 51735,
+        "type": "Tab",
+        "creationTime": 1792370165606.455,
+        "memory": {
+          "workingSetSize": 470320,
+          "peakWorkingSetSize": 547408
+        },
+        "sandboxed": true
+      }
+    ],
+    "totalElectronWorkingSetKB": 907008,
+    "peakAggregation": "sum of individual process peaks, not a simultaneous whole-app peak",
+    "totalElectronPeakWorkingSetKB": 1379120,
+    "pythonSidecars": [
+      {
+        "pid": 51734,
+        "ppid": 51728,
+        "rssKB": 84240,
+        "command": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python"
+      }
+    ],
+    "totalPythonRssKB": 84240
+  },
+  "passed": true,
+  "sourceArrayCount": 7,
+  "sourceUnchanged": true,
+  "finishedAt": 1792370179837
+}

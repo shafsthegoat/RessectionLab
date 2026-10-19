@@ -1,0 +1,15 @@
+{
+  "mri": {
+    "sourceBefore": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v1/sub06-rotation-cutaway.mp4",
+    "sourceAfter": "sub06-v2-vascular-rotation-cutaway.mp4",
+    "rawAfterFrames": "mri/motion/frames.json",
+    "presentation": "Both Vascular, same sub-06 source, full source scope",
+    "timing": "Independent actual capture timelines; short endpoint holds; 30fps duplicate frames, no interpolation"
+  },
+  "cta": {
+    "comparisonLocalPath": "/Users/shaf/coding_projects/RessectionLab/outputs/medivis-fidelity-v2/cta-medivis-comparison.mp4",
+    "referenceUserFile": "/Users/shaf/Downloads/example3dviewinmedivis.mov",
+    "appCapture": "topbrain-cta001-v2-rotation-cutaway.mp4",
+    "timing": "Independent original capture timelines; reference final frame held after its end; no interpolation; different source patients"
+  }
+}

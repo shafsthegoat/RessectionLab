@@ -3,7 +3,8 @@ import {SliceScrollAccumulator} from './interactionBudget';
 import {TransferEditor} from './TransferEditor';
 import {sampleDiagnosticLayer} from "./diagnosticLayer";
 import type {CheckedDiagnosticLayer} from "./diagnosticLayer";
-import {checkedPublicGoal,publicGoalSlicePoint,PUBLIC_GOAL_COLOR} from './publicGoal';
+import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
+import {mprView,mprPoint,mprPixel,sliceFraming,sourceSignalBounds} from './mprFraming';
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent, PointerEvent } from "react";
 import { VolumeRenderer } from "./VolumeRenderer";
@@ -17,8 +18,6 @@ import {
   clampCursor,
   inverseAffine,
   rasAffine,
-  slicePoint,
-  sliceRect,
   transformPoint,
   volumeBounds,
 } from "./coordinates";
@@ -118,6 +117,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const setActivePlane=(activePlane:SlicePlane)=>changeSettings({...latestSettings.current,activePlane});
   const setContrast=(contrast:number)=>changeSettings({...latestSettings.current,contrast});
   const setShowPlane=(showPlane:boolean)=>changeSettings({...latestSettings.current,showPlane});
+  const framing=sliceFraming(settings.sliceFraming);
+  const setFraming=(fit:'image'|'anatomy',zoom=1)=>changeSettings({...latestSettings.current,sliceFraming:{fit,zoom}});
+  const zoomSlices=(amount:number)=>{const current=sliceFraming(latestSettings.current.sliceFraming);setFraming(current.fit,Math.min(4,Math.max(.5,Math.round((current.zoom+amount)*100)/100)));};
   const layout=settings.layout??'3d-focus';
   const setLayout=(layout:'3d-focus'|'mri-review')=>changeSettings({...latestSettings.current,layout});
   const [replayError, setReplayError] = useState<string | null>(null),
@@ -148,6 +150,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         affine,
         inverse: inverseAffine(affine),
         bounds: volumeBounds(caseData.shape, affine),
+        support: sourceSignalBounds(caseData.mri,caseData.shape,affine),
       };
     } catch {
       return null;
@@ -489,14 +492,15 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   ): void {
     if (!geometry || (event.button !== 0 && event.buttons !== 1)) return;
     const rect = event.currentTarget.getBoundingClientRect(),
-      image = sliceRect(geometry.bounds, plane, rect.width, rect.height);
-    const point = slicePoint(
-      geometry.bounds,
+      view = mprView(geometry.bounds,geometry.support,plane,rect.width,rect.height,framing);
+    const point = mprPoint(
+      view,
       plane,
       currentCursor,
-      image,
       event.clientX - rect.left,
       event.clientY - rect.top,
+      geometry.inverse,
+      caseData!.shape,
     );
     if (point) {
       event.preventDefault();
@@ -580,10 +584,18 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       >
         <div className="rl-primary-tools">
           {(['layout','appearance','clip'] as const).map(id=><button key={id} aria-expanded={controlPanel===id} onClick={()=>setControlPanel(controlPanel===id?null:id)}>{id[0].toUpperCase()+id.slice(1)}</button>)}
-          <button onClick={()=>engine.current?.cameraPreset('oblique')} aria-label="Fit 3D view">Fit</button>
+          <button onClick={()=>engine.current?.cameraPreset('oblique')} aria-label="Fit 3D view">Fit 3D</button>
           <span className="viewer-tool-divider"/>
           <button aria-label="Show structures only" aria-pressed={!scanVolume.enabled} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:false}})}>Structures</button>
           <button aria-label="Show scan volume with structures" aria-pressed={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:true}})}>Volume</button>
+        </div>
+        <div className="rl-slice-framing" role="group" aria-label="Source slice framing">
+          <select aria-label="Source slice fit" title="Display framing only. Full image restores the complete source image." value={framing.fit} onChange={event=>setFraming(event.target.value as 'image'|'anatomy')}>
+            <option value="anatomy">Fit scan content</option><option value="image">Fit full image</option>
+          </select>
+          <button aria-label="Zoom source slices out" disabled={framing.zoom<=.5} onClick={()=>zoomSlices(-.25)}>−</button>
+          <button className="rl-slice-zoom" aria-label="Reset source slice zoom" title="Reset slice zoom to 100%" onClick={()=>setFraming(framing.fit)}>{Math.round(framing.zoom*100)}%</button>
+          <button aria-label="Zoom source slices in" disabled={framing.zoom>=4} onClick={()=>zoomSlices(.25)}>+</button>
         </div>
         <span className="rl-viewer-expanded-note">{expanded?TITLES[expanded]:layout==='3d-focus'?'3D + slices':'Image review'}</span>
         {controlPanel&&<div className="rl-control-popover" role="region" aria-label={`${controlPanel} controls`}>
@@ -598,6 +610,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <label>Preset<select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}><option value="auto">Automatic · {signalName}</option><option value="ct-bone" disabled={!isCtModality(signalName)}>CT bone</option><option value="ct-tissue" disabled={!isCtModality(signalName)}>CT tissue</option><option value="ct-angiography" disabled={!isCtModality(signalName)}>CT angiography · contrast scan</option><option value="mri">{/MRA|TOF|angiogra/i.test(signalName)?'Bright-blood MR signal':'MRI tissue'}</option></select></label>
             <label>Scan density<input aria-label="Scan volume density" type="range" min="0" max="2" step=".01" value={scanVolume.density} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,density:+e.target.value}})}/></label>
             <label><input type="checkbox" aria-label="Smooth 3D surfaces" checked={smoothSurfaces} onChange={e=>setSmoothSurfaces(e.target.checked)}/>Smooth surfaces</label>
+            <label>Context appearance<select aria-label="Context appearance" value={settings.contextStyle??'uniform'} onChange={e=>changeSettings({...settings,contextStyle:e.target.value as 'shell'|'uniform'})}><option value="shell">Edge shell · structures visible</option><option value="uniform">Uniform transparency</option></select></label>
             <label>Slice annotations<select aria-label="Slice annotation style" value={settings.sliceOverlay??'fill'} onChange={e=>changeSettings({...settings,sliceOverlay:e.target.value as 'contour'|'fill'})}><option value="contour">Contours · source detail</option><option value="fill">Filled labels</option></select></label>
             <label><input type="checkbox" checked={settings.volumeRendering?.shadows!==false} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,shadows:e.target.checked}})}/>Volume shadows</label>
             <label><input type="checkbox" checked={settings.volumeRendering?.isolateLabels===true} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,isolateLabels:e.target.checked}})}/>Isolate selected tissue</label>
@@ -767,19 +780,19 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         const [left, right, top, bottom] = PLANE_LABELS[plane],
           axis = PLANE_AXES[plane][2];
         const [width, height] = paneSizes[plane];
-        const image = geometry
-          ? sliceRect(geometry.bounds, plane, width, height)
+        const view = geometry
+          ? mprView(geometry.bounds,geometry.support,plane,width,height,framing)
           : null;
-        const mmWidth = geometry
-          ? geometry.bounds[1][PLANE_AXES[plane][0]] -
-            geometry.bounds[0][PLANE_AXES[plane][0]]
+        const image=view?.rect??null;
+        const mmWidth = view
+          ? view.bounds[1][PLANE_AXES[plane][0]] -
+            view.bounds[0][PLANE_AXES[plane][0]]
           : 1;
         const pxPerMm = image ? image.width / mmWidth : 1;
         const scaleMm = pxPerMm * 20 < 78 ? 20 : 10;
-        const goalPoint = publicGoal && geometry ? publicGoalSlicePoint(publicGoal,geometry.bounds,plane,currentCursor,width,height) : null;
-        const [horizontal,vertical]=PLANE_AXES[plane];
+        const goalPixel = publicGoal && view && Math.abs(publicGoal.rasMm[axis]-currentCursor[axis])<=1e-6 ? mprPixel(view,plane,publicGoal.rasMm) : null;
         const slab=(surgicalView?Math.max(...surgicalView.scene.resolutionMm):1)*.6;
-        const marks=image&&geometry?clipSurgicalMarkersToSlab(surgicalMarkers,axis as 0|1|2,currentCursor[axis],slab).map(m=>({color:m.color,points:m.points.map(p=>[image.left+(p[horizontal]-geometry.bounds[0][horizontal])*image.width/(geometry.bounds[1][horizontal]-geometry.bounds[0][horizontal]),image.top+(geometry.bounds[1][vertical]-p[vertical])*image.height/(geometry.bounds[1][vertical]-geometry.bounds[0][vertical])])})):[];
+        const marks=view?clipSurgicalMarkersToSlab(surgicalMarkers,axis as 0|1|2,currentCursor[axis],slab).map(m=>({color:m.color,points:m.points.map(p=>mprPixel(view,plane,p))})):[];
         return (
           <div
             key={plane}
@@ -788,6 +801,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <div className="rl-viewer-heading">
               <span className={`rl-viewer-plane-dot ${plane}`} />
               <span>{TITLES[plane]}</span>
+              <span className="rl-slice-fit-badge" title="Display framing only; choose Fit full image to see the complete source extent.">{framing.fit==='image'?'Full image':'Content fit'}{framing.zoom!==1?` · ${Math.round(framing.zoom*100)}%`:''}</span>
               <span className="rl-viewer-slice-position">
                 {currentCursor[axis].toFixed(1)} <small>mm</small>
               </span>
@@ -813,7 +827,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               ref={refs[plane]}
               className="rl-viewer-slice-image"
               tabIndex={0}
-              aria-label={`${TITLES[plane]} source ${signalName}, neurological convention, slice position ${currentCursor[axis].toFixed(1)} millimeters. ${inspected ? "Inspection tool, unexecuted initial preview. No tissue removed. " : ""}${proposalReviewLabel ? `Estimated envelope contour, view only: ${proposalReviewLabel}. ` : ""}${displayedPrior ? "Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. " : ""}Click to set cursor; scroll or arrow keys change slice.`}
+              aria-label={`${TITLES[plane]} source ${signalName}, ${framing.fit==='image'?'full image':'scan content fit'}, zoom ${Math.round(framing.zoom*100)} percent, neurological convention, slice position ${currentCursor[axis].toFixed(1)} millimeters. ${inspected ? "Inspection tool, unexecuted initial preview. No tissue removed. " : ""}${proposalReviewLabel ? `Estimated envelope contour, view only: ${proposalReviewLabel}. ` : ""}${displayedPrior ? "Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. " : ""}Click to set cursor; scroll or arrow keys change slice.`}
               onPointerDown={(event) => {
                 if (event.button === 0) {
                   engine.current?.beginInteraction();
@@ -830,7 +844,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               onKeyDown={(event) => keySlice(event, plane)}
             >
               {surgicalView&&<svg aria-label="Modeled surgical effects" width="100%" height="100%" style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:3}}>{marks.map((m,i)=>m.points.length===1?<circle key={i} cx={m.points[0][0]} cy={m.points[0][1]} r={2.5} fill={m.color}/>:<polyline key={i} points={m.points.map(p=>p.join(',')).join(' ')} stroke={m.color} strokeWidth={2} fill="none"/>)}</svg>}
-              {goalPoint && <span aria-label="Declared public goal" style={{position:'absolute',left:goalPoint.left,top:goalPoint.top,transform:'translate(-50%,-50%)',color:PUBLIC_GOAL_COLOR,fontSize:20,lineHeight:1,pointerEvents:'none',zIndex:4}}>◇</span>}
+              {goalPixel && <span aria-label="Declared public goal" style={{position:'absolute',left:goalPixel[0],top:goalPixel[1],transform:'translate(-50%,-50%)',color:PUBLIC_GOAL_COLOR,fontSize:20,lineHeight:1,pointerEvents:'none',zIndex:4}}>◇</span>}
               <span className="rl-orientation rl-orientation-left">{left}</span>
               <span className="rl-orientation rl-orientation-right">
                 {right}

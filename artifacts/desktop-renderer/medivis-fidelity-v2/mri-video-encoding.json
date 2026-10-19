@@ -1,0 +1,18 @@
+{
+  "source": "mri-final/motion/frames.json",
+  "timing": "Original frame timestamps within each segment; UI transition gaps omitted; no synthetic interpolation. Duplicate holds at 30fps.",
+  "segments": [
+    {
+      "kind": "orbit",
+      "frames": 242,
+      "sourceElapsedSeconds": 10.566532625,
+      "lastFrameHoldSeconds": 0.8
+    },
+    {
+      "kind": "cutaway",
+      "frames": 15,
+      "sourceElapsedSeconds": 3.9336782079999977,
+      "lastFrameHoldSeconds": 0.8
+    }
+  ]
+}

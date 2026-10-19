@@ -24,6 +24,8 @@ export class ScanVolumeRenderer {
   private readonly texture: THREE.Data3DTexture;
   private transfer: THREE.DataTexture | null = null;
   private preset = '';
+  private automaticMriTransfer=false;
+  private shellContext=false;
   private enabled = true;
   private readonly spacing: number;
   private layers: ViewerVolume["compartments"];
@@ -59,12 +61,13 @@ export class ScanVolumeRenderer {
         uDepth:{value:this.sceneTarget.depthTexture},uWorldToVoxel:{value:new THREE.Matrix4().set(...inverse.flat() as Parameters<THREE.Matrix4['set']>)},
         uCameraWorld:{value:new THREE.Matrix4()},uInverseProjection:{value:new THREE.Matrix4()},
         uShape:{value:new THREE.Vector3(...volume.shape)},uRange:{value:new THREE.Vector2()},
-        uSkullMode:{value:0},uCt:{value:false},uDensity:{value:.45},uStep:{value:this.spacing*.7},uLinear:{value:linear},
+        uSkullMode:{value:0},uCt:{value:false},uGradientOpacity:{value:false},uDensity:{value:.45},uStep:{value:this.spacing*.7},uLinear:{value:linear},
         uClipEnabled:{value:false},uClipPlane:{value:new THREE.Vector4()},
         uBackground:{value:this.background},
         uLayerCount:{value:volume.compartments.length},uLayerCodes:{value:(codes??packAnatomyLabels(volume).codes).map(c=>new THREE.Vector2(...c))},uLayerEnabled:{value:new Float32Array(MAX_ANATOMY_LAYERS).fill(1)},
         uLabels:{value:null},uLabelBits:{value:0},uVisibleBits:{value:0},uLayerColor:{value:Array.from({length:MAX_ANATOMY_LAYERS},()=>new THREE.Vector4())},
         uActiveLayerCount:{value:volume.compartments.length},uActiveLayers:{value:Float32Array.from({length:MAX_ANATOMY_LAYERS},(_,i)=>i)},
+        uContextLayerCount:{value:0},uContextLayers:{value:new Float32Array(MAX_ANATOMY_LAYERS)},
         uExtraClipCount:{value:0},uExtraClips:{value:Array.from({length:7},()=>new THREE.Vector4())},
         uShadows:{value:true},uIsolate:{value:false},uInteractive:{value:false},
         uSampleIndex:{value:0},uSurfaceCount:{value:0},
@@ -80,12 +83,14 @@ export class ScanVolumeRenderer {
     const signature=JSON.stringify([settings.preset,input?.window,input?.points,modality]);
     if(signature!==this.preset){
       const lut=volumeTransfer(settings.preset,this.window,input,modality);
-      this.transfer?.dispose();this.transfer=new THREE.DataTexture(lut.data,1024,1,THREE.RGBAFormat,THREE.UnsignedByteType);
-      this.transfer.minFilter=this.transfer.magFilter=THREE.LinearFilter;this.transfer.needsUpdate=true;
+      this.transfer?.dispose();this.transfer=new THREE.DataTexture(lut.data,1024,1,THREE.RGBAFormat,THREE.FloatType);
+      this.transfer.minFilter=this.transfer.magFilter=this.material.uniforms.uLinear.value?THREE.LinearFilter:THREE.NearestFilter;this.transfer.needsUpdate=true;
       this.material.uniforms.uTransfer.value=this.transfer;
+      this.automaticMriTransfer=lut.gradientOpacity;
       this.material.uniforms.uRange.value.set(...lut.range);this.preset=signature;
     }
     this.material.uniforms.uCt.value=isCtModality(modality);
+    this.material.uniforms.uGradientOpacity.value=this.automaticMriTransfer&&this.shellContext;
     this.material.uniforms.uShadows.value=input?.shadows!==false;
     this.material.uniforms.uIsolate.value=input?.isolateLabels===true;
     this.material.uniforms.uDensity.value=settings.density;
@@ -93,14 +98,20 @@ export class ScanVolumeRenderer {
     if(clip)this.material.uniforms.uClipPlane.value.set(clip.normal.x,clip.normal.y,clip.normal.z,clip.constant);
   }
   labels(texture:THREE.Data3DTexture,visible:Record<string,boolean>,settings:ViewerWorkspaceSettings,planes:THREE.Plane[]){
-    const u=this.material.uniforms;u.uLabels.value=texture;u.uSkullMode.value=settings.skullMode==='transparent'?2:settings.skullMode?1:0;let bits=0,all=0,active=0;
+    this.shellContext=settings.contextStyle==='shell';
+    this.material.uniforms.uGradientOpacity.value=this.automaticMriTransfer&&this.shellContext;
+    const u=this.material.uniforms;u.uLabels.value=texture;u.uSkullMode.value=settings.skullMode==='transparent'?2:settings.skullMode?1:0;let bits=0,all=0,active=0,context=0;
     this.layers.forEach((layer,i)=>{const a=layerAppearance(layer.name,layer.color,settings,layer.kind);
+      // Keep declared context even when hidden: the scalar threshold fallback
+      // must not resurrect a hidden source label or classify contrast as bone.
+      if(layer.kind==='bone'||layer.kind==='skull')u.uContextLayers.value[context++]=i;
       u.uLayerEnabled.value[i]=visible[layer.name]!==false?1:0;
       if(visible[layer.name]!==false){all|=1<<i;u.uActiveLayers.value[active++]=i;}
       if(visible[layer.name]!==false && a.opacity<1 && a.opacity>0)bits|=1<<i;
       const color=new THREE.Color(a.color);u.uLayerColor.value[i].set(color.r,color.g,color.b,a.opacity);
     });
     u.uActiveLayerCount.value=active;
+    u.uContextLayerCount.value=context;
     u.uLabelBits.value=bits;u.uVisibleBits.value=all;u.uExtraClipCount.value=Math.min(7,planes.length);
     planes.slice(0,7).forEach((p,i)=>u.uExtraClips.value[i].set(p.normal.x,p.normal.y,p.normal.z,p.constant));
   }

@@ -20,6 +20,7 @@ uniform vec2 uRange;
 uniform float uDensity;
 uniform int uSkullMode;
 uniform bool uCt;
+uniform bool uGradientOpacity;
 uniform float uStep;
 uniform bool uLinear;
 uniform bool uClipEnabled;
@@ -32,6 +33,8 @@ uniform int uVisibleBits;
 uniform vec4 uLayerColor[128];
 uniform int uActiveLayerCount;
 uniform float uActiveLayers[128];
+uniform int uContextLayerCount;
+uniform float uContextLayers[128];
 uniform int uExtraClipCount;
 uniform vec4 uExtraClips[7];
 uniform bool uShadows;
@@ -145,7 +148,7 @@ void main(){
     float value=scalar(p);
     vec4 tissue=texture(uTransfer,vec2(clamp((value-uRange.x)/(uRange.y-uRange.x),0.0,1.0),0.5));
     ivec4 packed=ivec4(0);
-    if(uActiveLayerCount>0)packed=ivec4(round(texture(uLabels,((p+0.5)/uShape).zyx)*255.0));
+    if(uActiveLayerCount>0||uContextLayerCount>0)packed=ivec4(round(texture(uLabels,((p+0.5)/uShape).zyx)*255.0));
     bool selected=previousSelected;
     if(any(notEqual(packed,previousLabels))){
       selected=false;
@@ -156,24 +159,55 @@ void main(){
     previousSelected=selected;previousLabels=packed;
     if(uIsolate && !selected)tissue.a=0.0;
     tissue.a*=uDensity;
-    // Explicit CT skull presentation agrees with the mesh depth pass. Privacy
-    // gaps remain gaps: opacity only changes where acquired bone is present.
-    if(uCt && value>300.0 && (!uIsolate || selected)){
-      if(uSkullMode==1)tissue.a=10000.0;
-      if(uSkullMode==2)tissue.a*=0.08;
+    // CTA contrast and high-attenuation context overlap in intensity. When a
+    // source context label exists, only its exact packed membership receives
+    // skull presentation and its configured color. This includes categorical
+    // labels above index 31; it never relies on a 32-bit layer visibility mask.
+    if(uCt){
+      if(uContextLayerCount>0){
+        bool contextMember=false;
+        vec4 context=vec4(0.0);
+        for(int slot=0;slot<128;slot++){
+          if(slot>=uContextLayerCount)break;
+          int j=int(uContextLayers[slot]);
+          if(!hasLabel(packed,j))continue;
+          contextMember=true;
+          if(uLayerEnabled[j]>0.5&&uLayerColor[j].a>context.a)context=uLayerColor[j];
+        }
+        if(contextMember){
+          tissue.rgb=context.rgb;
+          if(context.a<=0.0)tissue.a=0.0;
+          else if(!uIsolate||selected){
+            if(uSkullMode==1)tissue.a=10000.0;
+            else tissue.a*=context.a;
+          }
+        }
+      }else if(value>300.0&&(!uIsolate||selected)){
+        // Legacy intensity-only CT has no supplied context separation. Retain
+        // its existing threshold behavior rather than inventing a label.
+        if(uSkullMode==1)tissue.a=10000.0;
+        if(uSkullMode==2)tissue.a*=0.08;
+      }
     }
-    float alpha=1.0-exp(-tissue.a*dt);
-    if(alpha>0.0001){
+    if(tissue.a>0.0){
       vec3 gradient=vec3(scalar(p+vec3(1,0,0))-scalar(p-vec3(1,0,0)),
         scalar(p+vec3(0,1,0))-scalar(p-vec3(0,1,0)),scalar(p+vec3(0,0,1))-scalar(p-vec3(0,0,1)));
-      vec3 normal=-transpose(mat3(uWorldToVoxel))*gradient;
+      // Central differences and the affine covector transform give signal/mm,
+      // not signal/voxel. Automatic MRI context emphasizes acquired boundaries
+      // instead of integrating uniform interior signal into a gray veil.
+      vec3 normal=-0.5*transpose(mat3(uWorldToVoxel))*gradient;
+      if(uGradientOpacity){
+        float boundary=smoothstep(0.01,0.075,length(normal)/max(uRange.y-uRange.x,0.000001));
+        tissue.a*=mix(0.06,1.0,boundary);
+      }
+      float alpha=1.0-exp(-tissue.a*dt);
       float lighting=0.8;
       if(length(normal)>0.0001){
         normal=normalize(normal);
         lighting=0.28+0.66*max(dot(normal,light),0.0)+0.15*max(dot(normal,-direction),0.0);
         lighting+=0.12*pow(max(dot(reflect(-light,normal),-direction),0.0),24.0);
         // A short density probe supplies soft local occlusion in bone creases.
-        if(uShadows){
+        if(uShadows && alpha>0.0001){
           vec3 ahead=p+mat3(uWorldToVoxel)*light*2.0;
           float obstruction=0.0;
           if(all(greaterThanEqual(ahead,vec3(-.5)))&&all(lessThan(ahead,uShape-.5)))obstruction=texture(uTransfer,vec2(clamp((scalar(ahead)-uRange.x)/(uRange.y-uRange.x),0.0,1.0),0.5)).a;

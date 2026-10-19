@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {isCtModality,volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha} from './volumeTransfer.ts';
+import {isCtModality,volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha,mriBoundaryExtinction} from './volumeTransfer.ts';
 import {checkedViewerSettings} from '../workspace-view-settings.ts';
 const identity=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
 test('volume rays use millimetres on mirrored, anisotropic and oblique grids, including camera inside',()=>{
@@ -95,10 +95,32 @@ test('declared bright-blood MRI suppresses background and emphasizes acquired hi
     assert.ok(alpha(lut,.4)<alpha(structural,.4),'background tissue must recede');
     assert.ok(alpha(lut,.9)>alpha(structural,.9),'bright acquired signal must remain detailed');
     const top=[...lut.data.slice(-4,-1)];
-    assert.ok(Math.max(...top)-Math.min(...top)<30,'signal remains neutral ivory, not an arterial classification');
+    assert.ok(Math.max(...top)-Math.min(...top)<.15,'signal remains neutral ivory, not an arterial classification');
   }
   assert.deepEqual(volumeTransfer('mri',[0,900],{},'T1CE post-contrast').data,structural.data);
   const points=[[0,0,0,0,0],[1,.8,.5,.2,.4]],custom=structuredClone(points);
   assert.deepEqual(volumeTransfer('mri',[0,900],{points},'MRA').data,volumeTransfer('mri',[0,900],{points},'T1CE').data);
   assert.deepEqual(points,custom);
+});
+
+test('transparent MRI context retains precise extinction and emphasizes physical boundaries only for automatic transfers',()=>{
+  const automatic=volumeTransfer('mri',[0,900],undefined,'T1CE');
+  assert.ok(automatic.data instanceof Float32Array);
+  // This low extinction rounded to zero in the byte LUT. It must contribute
+  // proportionally at low density instead of appearing as a transfer band.
+  const faint=automatic.data[Math.round(.1*1023)*4+3];
+  assert.ok(faint>0&&faint<1/510);
+  assert.equal(automatic.gradientOpacity,true);
+  assert.equal(volumeTransfer('ct-bone',[-1000,1000]).gradientOpacity,false);
+  assert.equal(volumeTransfer('mri',[0,900],{points:[[0,0,0,0,0],[1,1,1,1,.4]]}).gradientOpacity,false);
+  assert.equal(mriBoundaryExtinction(0),.06);
+  assert.equal(mriBoundaryExtinction(.01),.06);
+  assert.equal(mriBoundaryExtinction(.075),1);
+  assert.ok(mriBoundaryExtinction(.025)<.2);
+  // Equivalent physical boundaries on 1mm and 2mm grids have the same
+  // derivative after central difference and the affine covector transform.
+  assert.equal(mriBoundaryExtinction((.1-0)/2),mriBoundaryExtinction((.2-0)/4));
+  const coarse=opticalAlpha(.07*.025*mriBoundaryExtinction(.025),1,200);
+  const full=opticalAlpha(.07*.025,1,200);
+  assert.ok(coarse<full*.25,'uniform interior context must recede visibly');
 });

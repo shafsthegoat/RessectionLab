@@ -1,0 +1,14 @@
+✔ scan switches retain shared anatomy and appearance while restoring scan-specific contrast (1.687334ms)
+✔ study labels use scan names and preserve a distinct postoperative study (0.727917ms)
+✔ legacy skull transparency migrates without rewriting explicitly selected modes (0.120083ms)
+✔ legacy vessel filters migrate once; explicit new choices survive save and reopen (0.867792ms)
+✔ presentation choices preserve source identities, selected anatomy, camera and quantitative masks (0.526167ms)
+✔ saved context and physical slice framing reopen detached and reject malformed extents (0.486167ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 122.949791

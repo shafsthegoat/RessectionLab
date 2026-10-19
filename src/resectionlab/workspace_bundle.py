@@ -188,8 +188,15 @@ def _center(case):
 
 def _viewer_state(case,viewer,cases):
     """Bound display preferences without treating them as image registration."""
-    if not isinstance(viewer,dict) or set(viewer)-{'smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation'}:
+    if not isinstance(viewer,dict) or set(viewer)-{'smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sliceFraming','contextStyle'}:
         raise ValueError('Unknown viewer settings')
+    if 'contextStyle' in viewer and viewer['contextStyle'] not in ('shell','uniform'):
+        raise ValueError('Invalid source context style')
+    if 'sliceFraming' in viewer:
+        framing=viewer['sliceFraming']
+        if (not isinstance(framing,dict) or set(framing)!={'fit','zoom'} or framing['fit'] not in ('image','anatomy') or
+                type(framing['zoom']) not in (int,float) or not math.isfinite(framing['zoom']) or not .5<=framing['zoom']<=4):
+            raise ValueError('Invalid slice framing')
     if 'sliceOverlay' in viewer and viewer['sliceOverlay'] not in ('contour','fill'):
         raise ValueError('Invalid slice annotation style')
     if 'presentation' in viewer and viewer['presentation'] not in ('segmentation','vascular'):

@@ -1,0 +1,215 @@
+{
+  "reviewer": "mpr_fit_v2",
+  "reviewType": "Read-only cross-review of renderer and persistence changes; author review of MPR framing implementation; actual GPU screenshot comparison",
+  "reviewedAt": "2026-10-19T00:56:03.966Z",
+  "codeFindings": [],
+  "verifiedBehavior": [
+    "MPR signal fitting is a display-only source-signal extent, not anatomical segmentation or source cropping. Complete source image fit remains directly selectable and resets zoom to 100%.",
+    "All three MPRs retain equal millimetres per pixel. Pointer, public-goal and surgical overlays use the same physical view bounds as source GLSL sampling.",
+    "Mirrored and oblique source affine tests preserve RAS/native agreement; blank RAS bounding-box corners outside the actual source grid are not selectable.",
+    "MRI gradient extinction uses central-difference source gradients transformed as physical covectors, and is enabled only for automatic MRI transfer with explicit shell style. CT and authored custom transfers bypass it.",
+    "Floating-point LUT retains low extinction values; hosts without float-linear filtering use nearest filtering rather than unsupported GL filtering.",
+    "Source shell material shares its enabling uniform with depth-peel clones. Fully opaque layers retain solid rendering. The depth-peel NoBlending path does not force fragment alpha to one.",
+    "Native scan switching restores saved per-scan slice framing. Shell style is shared with study anatomy appearance. Python and TypeScript settings validators admit both new settings and reject malformed values.",
+    "Corrected complete acquisition tooltip wording to complete source image so published preprocessed CTA is not presented as original uncropped acquisition.",
+    "Final CT skull/context handling uses exact declared packed context membership rather than treating all contrast-enhanced voxels above a scalar threshold as bone; hidden declared contexts cannot be resurrected by the legacy intensity-only fallback."
+  ],
+  "finalVerification": {
+    "typescript": "npx tsc --noEmit passed on the final integration",
+    "focusedTests": "37 passed across mprFraming, coordinates, sourceContextMaterial, native-study-state and volumeRendering",
+    "diffCheck": "git diff --check passed",
+    "fullDesktopSuite": "Parent-reported final suite: 707 passed (164 main, 392 renderer, 151 viewer)"
+  },
+  "tests": [
+    {
+      "command": "npx tsc --noEmit",
+      "result": "passed"
+    },
+    {
+      "command": "node --experimental-strip-types --test src/viewer/mprFraming.test.mjs src/viewer/coordinates.test.mjs src/viewer/sourceContextMaterial.test.mjs tests/native-study-state.test.mjs src/viewer/volumeRendering.test.mjs",
+      "result": "37 passed on the final integration"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "mprVisualReview": {
+    "compared": [
+      "../../../outputs/medivis-fidelity-v2/development-history/mri-initial/failure.png",
+      "mri/segmentation.png",
+      "mri/source-slices-image.png",
+      "mri/source-slices-anatomy.png",
+      "mri/source-slices-anatomy-zoomed.png",
+      "../medivis-fidelity-v1/final/recheck-final/segmentation.png",
+      "../medivis-fidelity-v1/reference/segmentation-15s.png"
+    ],
+    "legacyFrameScope": "The archived mri-initial failure frame was reviewed for MPR framing only; its legacy 3D state is not evidence for the new context style.",
+    "observations": [
+      "Default 100% fit produces visibly larger heads than v1, filling approximately 78–84% of available image height in the reviewed MRI view. Previous duplicate header padding is eliminated.",
+      "Skull/head envelopes remain within the default panes. Explicit 125% zoom brings portions of the envelope to pane edges and clearly displays 125% badges, supporting the choice of default 100%.",
+      "Full image and scan-content fit are visibly distinguished in the toolbar and each slice header. Scale bars and neurological orientation labels remain legible."
+    ]
+  },
+  "limitations": [
+    "The Medivis reference patient, source coverage and lesion differ; shape similarity is not an anatomical accuracy test.",
+    "All-source inferred T1CE vessel estimates remain dense and include conspicuous peripheral/inferior fragments. Rendering polish does not improve source labeling accuracy or establish complete vessels.",
+    "Content fit excludes low signal and very sparse tails for framing. It must not be interpreted as preservation of all signal within the initial viewport; complete source remains available through full image fit.",
+    "Existing viewport rounding can cause subpixel differences between fractional CSS overlays and integer GL viewport pixels. No new discrepancy was introduced by the fit helper.",
+    "CTA high-attenuation context is a threshold estimate, not a verified bone class. It can cover non-bone high-attenuation source voxels.",
+    "The high-complexity context retains the original source surface, so terracing/coarseness is visible. Smoother visual similarity must not be obtained by inventing missing branches or changing source masks.",
+    "The final ivory CTA opening is brighter and more uniform than the neutral grainy Medivis reference; the MRI vessel estimate remains dense and noisy. No visual parity or anatomical accuracy is claimed."
+  ],
+  "status": "Pass with documented visual and source limitations; no new blocking correctness issue identified",
+  "reviewerIndependence": "Reviewer authored MPR framing and tests, and independently cross-reviewed the separate renderer, persistence, native-source integration and captured GPU evidence.",
+  "artifacts": [
+    {
+      "path": "mri-final/segmentation.png",
+      "sha256": "f2983dcfa0581fee52f53be11830c28b7db4504662ed7ef9bf78253bf6744584"
+    },
+    {
+      "path": "mri-final/segmentation-left.png",
+      "sha256": "c238bfb5eb03abf5b96458f8d104e80e3728eadf99c5fdd35702b09223f46f08"
+    },
+    {
+      "path": "mri-final/context-shell.png",
+      "sha256": "f2983dcfa0581fee52f53be11830c28b7db4504662ed7ef9bf78253bf6744584"
+    },
+    {
+      "path": "mri-final/context-uniform.png",
+      "sha256": "3a1c69f50cb5317670c01c60ea24fe402536da317e1546abc1b587762ae4bb80"
+    },
+    {
+      "path": "mri-final/report.json",
+      "sha256": "1e5b3f1f2ca3baf9563425ea24ccf6998718eeb2280fb4d7b0fff42c8d30736a"
+    },
+    {
+      "path": "mri/source-slices-image.png",
+      "sha256": "ae73b97ae2895a9373aa0a8bcab773a6f193a8179483ba3c0f09e346e2dfe65f"
+    },
+    {
+      "path": "mri/source-slices-anatomy.png",
+      "sha256": "b56db41a522710503e3565ee3ea6a2261a6557069b1dde371cec8031dd6d91ee"
+    },
+    {
+      "path": "mri/source-slices-anatomy-zoomed.png",
+      "sha256": "56b887bdf59bca2d37935d8881f0d41c3e519f3f341f4246bca4aa020c155d21"
+    },
+    {
+      "path": "mri/report.json",
+      "sha256": "040f3e7953cae32f335f76a584eb0b84085baa61d671c32f0db0d257fec944e9"
+    },
+    {
+      "path": "cta-final/cta-vascular.png",
+      "sha256": "cb5f945dfcbcdd82c7d606a59ad03f16530e0f304381e4a67291718570d49e4e"
+    },
+    {
+      "path": "cta-final/cta-vascular-left.png",
+      "sha256": "8a60f50bb65ec1644f52db39419733aa479994a62186dc4e3bb9ac18231582aa"
+    },
+    {
+      "path": "cta-final/cta-opaque-high-attenuation-context.png",
+      "sha256": "fc51f7feb66fffc3a9dedacff858112ac8ae71a68e28cca8af75dbe448f471d0"
+    },
+    {
+      "path": "cta-final/cta-axial-bone-cutaway-superior.png",
+      "sha256": "573a663a91ac9776ed468f515fd9a14d4b11f36c4d2bfadf664cb68ba4f92e4b"
+    },
+    {
+      "path": "cta-final/cta-axial-bone-cutaway.png",
+      "sha256": "573a663a91ac9776ed468f515fd9a14d4b11f36c4d2bfadf664cb68ba4f92e4b"
+    },
+    {
+      "path": "cta-final/report.json",
+      "sha256": "f33aac907fb7e7c1e884175a8845acd5f954e7ee1e9be9f54eeac28c133aa127"
+    },
+    {
+      "path": "source-qc/topbrain-cta001-native-qc.json",
+      "sha256": "064300c7952ceba66cb3fb3c3dacebd7d58d1584007ab9e113d5fa95324160f6"
+    },
+    {
+      "path": "source-qc/topbrain-cta001-reproducibility.json",
+      "sha256": "68c492b985b947d35f9450172162c3f0a850ac4fa408a010dc81e1a0a70c5dae"
+    },
+    {
+      "path": "../medivis-fidelity-v1/final/recheck-final/segmentation-left.png",
+      "sha256": "bdacff91c7a69ed1484e788d0eb615f736d08b6f5156868f27e8a745250453a2"
+    },
+    {
+      "path": "../medivis-fidelity-v1/reference/segmentation-15s.png",
+      "sha256": "255f9c7540457e313b401eb4e03b61b9714ea14b77ee6f6b9be472a50c443371"
+    },
+    {
+      "path": "../medivis-fidelity-v1/reference/3d-12s.png",
+      "sha256": "4b7d7c78b6af607c3c3bd8305e6f4139363bc8ece33194d46a373d2e8b1f6388"
+    }
+  ],
+  "gpuReports": [
+    {
+      "path": "mri/report.json",
+      "passed": true,
+      "sourceUnchanged": true,
+      "errors": [],
+      "checks": 15,
+      "failedChecks": []
+    },
+    {
+      "path": "mri-final/report.json",
+      "passed": true,
+      "sourceUnchanged": true,
+      "errors": [],
+      "checks": 7,
+      "failedChecks": []
+    },
+    {
+      "path": "cta-final/report.json",
+      "passed": true,
+      "sourceUnchanged": true,
+      "errors": [],
+      "checks": 15,
+      "failedChecks": []
+    }
+  ],
+  "currentNativeCtaManifestMatchesQc": true,
+  "observedImprovements": [
+    "MRI source heads occupy materially more of each tile than v1, with default 100% content fit preserving a visible envelope. Explicit zoom, full-image recovery and state badges work in captured GPU interaction runs.",
+    "MRI shell mode reduces the previous gray interior and face haze while keeping a source-supported head outline and visible cyan tumor.",
+    "The final segmentation-only muted magenta brain rim distinguishes the estimated brain boundary from the outer neutral head envelope and brings the visual hierarchy closer to the Medivis reference.",
+    "Native CTA now displays sourced arterial labels in rust and venous labels in blue against restrained acquired CT context, with much better branch visibility than the initial ivory veil.",
+    "Final opaque high-attenuation context is ivory rather than the earlier orange transfer. An axial cutaway exposes the published source-supported interior with visible rust/blue labels and a light outer rim."
+  ],
+  "visualAssessment": {
+    "acceptance": "Visibly closer to the supplied Medivis segmentation and CTA compositions, without visual or anatomical parity.",
+    "mri": "Final left view has less haze and a separate magenta source-brain boundary; linked MPR heads are substantially larger than the v1 images.",
+    "cta": "Rust/blue vessel labels and the ivory axial opening are legible in the final native GPU screenshots. The result remains more terraced and has substantially fewer labeled branches than the reference.",
+    "defaultZoom": "100% is appropriate. The 125% screenshots visibly reach pane edges; the default should not silently zoom farther.",
+    "controls": "Framing selection, reset/zoom, orientation and physical scale remain visible in the reviewed desktop captures."
+  },
+  "sourceFaithfulness": {
+    "nativeCtaShape": [
+      284,
+      327,
+      243
+    ],
+    "nativeCtaGridSpacingMm": [
+      0.5078129768371582,
+      0.5078129768371582,
+      0.625
+    ],
+    "arterialLabelVoxels": 44951,
+    "venousLabelVoxels": 34226,
+    "statement": "Published preprocessed braincase-cropped and LPS-reoriented CTA, with source arrays/affine retained in the native pipeline. It is a separate case, not fabricated MRI angiography or an uncropped original DICOM acquisition.",
+    "annotation": "Arterial and venous labels are published partial, unreviewed source annotations. Missing left ICA/MCA source classes and unannotated branches have no inferred cause and are not synthesized.",
+    "highAttenuationContext": "The layer internally named bone is explicitly displayed as high-attenuation CT context, a threshold estimate rather than a reviewed anatomical skull segmentation.",
+    "surfaceFallback": "The context surface has 1,112,624 vertices and 2,184,544 triangles; source-restored fallback retained its original positions with maximum display displacement 0 mm. Vessel display displacements remain bounded near 0.238 mm.",
+    "fixity": "All reviewed full GPU reports preserve source hashes; the current native CTA manifest also independently matches the source-QC manifest hash."
+  },
+  "mprGpuEvidence": {
+    "report": "mri/report.json",
+    "pointerDragPixels": 12,
+    "imageAndContentFitAt100PercentErrorMm": 0.014678899082568364,
+    "imageAndContentFitAt125PercentErrorMm": 0.008256880733943817,
+    "interpretation": "Agreement is with displayed physical scale and cursor readout, supported separately by analytic mirrored/oblique CPU-vs-GLSL mapping tests. This does not establish diagnostic image registration accuracy.",
+    "persistence": "Full-image 125% framing, shell style, source selection, cursor, layers, source scope and camera survive native save/reopen in the reviewed report."
+  }
+}

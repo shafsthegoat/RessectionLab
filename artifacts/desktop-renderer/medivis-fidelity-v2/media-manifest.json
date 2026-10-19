@@ -1,0 +1,98 @@
+[
+  {
+    "path": "cta-before-after.png",
+    "bytes": 1180985,
+    "sha256": "01235567dd2c351cc01bdc555ab83a2a861e3a3ece2f02ac76f3a56a89ee35f4"
+  },
+  {
+    "path": "cta-medivis-reference.png",
+    "bytes": 1814113,
+    "sha256": "d1ea535932e3e6aff6503ebfe927a5b170a00041a4c97d87701e7ebefa7efec0"
+  },
+  {
+    "path": "mri-before-after-rotation.mp4",
+    "bytes": 508604,
+    "sha256": "c6bc2e580773e88c633661252188b0ad39de3b196e01164a68716a8d0c98fffc",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 1440,
+          "height": 508,
+          "avg_frame_rate": "30/1"
+        }
+      ],
+      "format": {
+        "duration": "8.566667"
+      }
+    }
+  },
+  {
+    "path": "mri-before-after.png",
+    "bytes": 1404836,
+    "sha256": "247f0284a326b4fb7b02c0d68a29333dfb01404f07ffbe9c46ef386bbfd7463b"
+  },
+  {
+    "path": "mri-medivis-reference.png",
+    "bytes": 1331111,
+    "sha256": "1d79bbfff8a963b6075ee1ec7f5fa982703f86035fbd1b64f2216da980d0a87e"
+  },
+  {
+    "path": "sub06-v2-rotation-cutaway.mp4",
+    "bytes": 2195912,
+    "sha256": "04110898e999e6bd3dcd86b8452f4fae47e27511c4da4e137d8f1f809fdc1d9f",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 1440,
+          "height": 928,
+          "avg_frame_rate": "30/1"
+        }
+      ],
+      "format": {
+        "duration": "16.933333"
+      }
+    }
+  },
+  {
+    "path": "sub06-v2-vascular-rotation-cutaway.mp4",
+    "bytes": 703679,
+    "sha256": "7ad72886281cbe7f63d59031c1106a6afc79848bdfb3228a4f25b214cb561d7d",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 1440,
+          "height": 928,
+          "avg_frame_rate": "30/1"
+        }
+      ],
+      "format": {
+        "duration": "8.566667"
+      }
+    }
+  },
+  {
+    "path": "topbrain-cta001-v2-rotation-cutaway.mp4",
+    "bytes": 4123805,
+    "sha256": "8e11a44121dffd437f884d6bd30b352bc0bbc342a7b02adc107fd99054cc41a6",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 1440,
+          "height": 928,
+          "avg_frame_rate": "30/1"
+        }
+      ],
+      "format": {
+        "duration": "29.933333"
+      }
+    }
+  }
+]

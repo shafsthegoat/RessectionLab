@@ -1,0 +1,70 @@
+{
+  "source_sha256": "9dea5c8138e6884bdd9480d16ac4ed05f6a61ed9cccde658b2052d4d627030b3",
+  "nifti_scaling": {
+    "slope": 0.09300373494625092,
+    "intercept": 23.54650115966797
+  },
+  "scaled_range": [
+    -3024.0,
+    3071.0
+  ],
+  "scaled_percentiles": {
+    "1": -1015.9562377929688,
+    "10": -999.9595947265625,
+    "50": 25.964597702026367,
+    "90": 575.9887084960938,
+    "95": 1047.982666015625,
+    "99": 1425.019775390625
+  },
+  "source_grid_spot_samples": [
+    {
+      "ijk": [
+        142,
+        163,
+        150
+      ],
+      "scaled_value": 17.966276168823242
+    },
+    {
+      "ijk": [
+        100,
+        150,
+        150
+      ],
+      "scaled_value": 48.00648498535156
+    },
+    {
+      "ijk": [
+        180,
+        150,
+        150
+      ],
+      "scaled_value": 13.037078857421875
+    },
+    {
+      "ijk": [
+        142,
+        100,
+        180
+      ],
+      "scaled_value": 21.035400390625
+    },
+    {
+      "ijk": [
+        0,
+        0,
+        0
+      ],
+      "scaled_value": -999.9595947265625
+    },
+    {
+      "ijk": [
+        142,
+        163,
+        80
+      ],
+      "scaled_value": 65.02616882324219
+    }
+  ],
+  "interpretation": "Source NIfTI scaling is applied. Interior spot values and air are consistent with nominal HU; this is a display/source consistency check, not independent scanner calibration or tissue certification. No new mask or source edit."
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "topbrain-cta001-reproducibility-v1",
+  "scripts": [
+    {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-angio-fidelity-v2/recover_selected.py",
+      "sha256": "915e428a983ff09f4263152a9a7f1a8b6d631c213ffa642d0c319ced55ea9931"
+    },
+    {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-angio-fidelity-v2/package_native.py",
+      "sha256": "c9f79d3387a1fa6962da65952bcc5f543acf78a63e7b067d8d816bddfa0073d9"
+    },
+    {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-angio-fidelity-v2/render_source_qc.py",
+      "sha256": "7e836689a805a887c90c6940cc55084450b110d4d0f186903e296c2465e47e7a"
+    },
+    {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-angio-fidelity-v2/zip-members.json",
+      "sha256": "6716af7cfc9a4371cb6e1a903bcd54e80db67503df786effdb69e5f1b69cc19c"
+    },
+    {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-angio-fidelity-v2/acquisition.json",
+      "sha256": "735e4bcef02266dc6a6dc62938544745d08c63a82f05bc0a25fe426bfa2d248f"
+    },
+    {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-angio-fidelity-v2/native-cta-qc.json",
+      "sha256": "064300c7952ceba66cb3fb3c3dacebd7d58d1584007ab9e113d5fa95324160f6"
+    },
+    {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-angio-fidelity-v2/correct_semantic_kinds.py",
+      "sha256": "efc0304c31605f97ca7b1378efe2595a40885d556d9c1820ff1eda74ec10d947"
+    }
+  ],
+  "source_page_verified_by_browser": "https://zenodo.org/records/16623496",
+  "method": "ZIP directory tail recovered, selected member HTTP byte ranges verified against local headers and central directory; member sizes and CRC32 verified; source SHA256s captured. No entire archive hashing was claimed.",
+  "native_sources_unchanged": true,
+  "one_case_only": true,
+  "model_inference_runs": 0,
+  "new_registrations": 0,
+  "current_manifest": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-angio-fidelity-v2/native-cta/patient-anatomy.json",
+    "sha256": "e5b9b0ac25861ad495d09e1593c7bac8b7c687540309730a845a115641c16fb1",
+    "snapshot_id": "692290a77e071d89f4262b1ed56eacf7f1152bbb0c344abe823a1794b5f8b2a2"
+  },
+  "metadata_correction_receipt": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v2/source-qc/topbrain-cta001-semantic-metadata-correction.json",
+    "sha256": "e2f0024cfaef8cbab9e3012c8182f7eccaa7fd508ff8cf0e2c279e162f8d3eb2"
+  }
+}

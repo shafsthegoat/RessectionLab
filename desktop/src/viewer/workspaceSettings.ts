@@ -12,6 +12,8 @@ export interface ViewerWorkspaceSettings {
   showPlane?: boolean;
   contrast?: number;
   sliceOverlay?: 'contour'|'fill';
+  sliceFraming?: {fit:'image'|'anatomy';zoom:number};
+  contextStyle?: 'shell'|'uniform';
   presentation?: 'segmentation'|'vascular';
   layerOpacity?: Record<string, number>;
   layerColor?: Record<string, string>;

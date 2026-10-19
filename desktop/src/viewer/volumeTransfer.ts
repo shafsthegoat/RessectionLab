@@ -53,7 +53,10 @@ export function volumeTransfer(preset: Exclude<VolumePreset,'auto'>, window: [nu
   const range: [number,number] = preset === 'mri' ? [Math.min(0,window[0]),Math.max(1,window[1])] : [knots[0][0],3000];
   if(custom?.window && custom.window.every(Number.isFinite) && custom.window[1]>custom.window[0])range.splice(0,2,...custom.window);
   if(custom?.points && custom.points.length>=2 && custom.points.length<=32 && custom.points.every(p=>p.length===5&&p.every(Number.isFinite)&&p.every(v=>v>=0&&v<=1)) && custom.points.every((p,i)=>i===0||p[0]>custom.points![i-1][0]))knots=custom.points.map(p=>[preset==='mri'?p[0]:range[0]+p[0]*(range[1]-range[0]),...p.slice(1)] as Knot);
-  const data = new Uint8Array(1024*4);
+  // Extinction values are deliberately small in transparent context views.
+  // Byte quantization erased values below 1/510 and produced visible opacity
+  // bands; retain the actual transfer in floating point through compositing.
+  const data = new Float32Array(1024*4);
   const linear = (n: number) => n <= .04045 ? n/12.92 : ((n+.055)/1.055)**2.4;
   for(let i=0;i<1024;i++) {
     const value = preset === 'mri' ? i/1023 : range[0]+i/1023*(range[1]-range[0]);
@@ -61,10 +64,20 @@ export function volumeTransfer(preset: Exclude<VolumePreset,'auto'>, window: [nu
     const a=knots[k],b=knots[k+1],t=Math.max(0,Math.min(1,(value-a[0])/(b[0]-a[0])));
     for(let channel=0;channel<4;channel++) {
       const v=a[channel+1]*(1-t)+b[channel+1]*t;
-      data[i*4+channel]=Math.round(255*(channel===3?v:linear(v)));
+      data[i*4+channel]=channel===3?v:linear(v);
     }
   }
-  return { data, range };
+  return { data, range, gradientOpacity: preset==='mri'&&!custom?.points };
+}
+
+/** Display-only boundary emphasis for automatic MRI context. A physical
+ * gradient is normalized to the selected signal range, so the same boundary
+ * has the same extinction on mirrored/anisotropic source grids. Uniform
+ * interiors recede while source-supported boundaries retain the chosen LUT.
+ * Custom transfer points and CT presets retain their authored extinction. */
+export function mriBoundaryExtinction(normalizedGradientPerMm: number) {
+  const t=Math.max(0,Math.min(1,(normalizedGradientPerMm-.01)/.065));
+  return .06+.94*t*t*(3-2*t);
 }
 
 /** World-distance ray bounds for the complete voxel-cell field. Used by the
