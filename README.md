@@ -1,5 +1,11 @@
 # RessectionLab
 
+The [bounded two-instrument task](docs/coordinated-burring.md) now learns to
+schedule shallow bone burring and debris aspiration in the unchanged simulator.
+All three Q-learning seeds match the successful script; either instrument alone
+fails. This is fixed-motion scheduling on one development anatomy, with native
+replay and strict safeguards preserved, not clinical or transfer validation.
+
 The healthy IXI multimodal workflow preserves acquired T1, MRA and diffusion
 sources, measured rigid registration estimates and diagnostic tensor scalars.
 Use `./scripts/launch_ixi_multimodal.sh anatomy` or `simulator` for the prepared
