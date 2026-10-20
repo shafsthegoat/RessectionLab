@@ -16,7 +16,7 @@ from .geometry import GeometryScene, capsule_voxel_indices, segment_segment_dist
 from .surgical_tools import TOOLS, catalog
 
 SCHEMA = 'resectionlab.surgical-toolbox.v1'
-MAX_STEPS = 2048
+MAX_STEPS = 8192
 
 
 class _OperationCheckFailed(Exception):
@@ -170,11 +170,11 @@ class SurgicalEngine:
         extra = {'rpm': 40000., 'forceN': 1., 'duty': 1.} if self.scene.properties.get('tissuePhysicsV2') else {}
         return {**extra, 'radiusMm': tool['radiusMm'], 'depthMm': 2., 'flowMm3PerSecond': 20., 'power': 1., 'jawOpeningMm': 2., **slot['parameters']}
 
-    def preview(self, action, *, check=None, include_view=True):
+    def preview(self, action, *, check=None, include_view=True, include_history=True):
         if check is not None: check()
         candidate = self.clone()
         result = candidate.step(action) if check is None else candidate.step(action, check=check)
-        view = candidate.view(_state_id=result['stateId']) if include_view else None
+        view = candidate.view(_state_id=result['stateId'], include_history=include_history) if include_view else None
         if check is not None: check()
         return {**result, 'preview': True, **({'view': view} if include_view else {})}
 

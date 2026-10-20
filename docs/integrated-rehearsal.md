@@ -133,3 +133,36 @@ are `outputs/integrated-rehearsal-v1/desktop-bimanual.ressectionlab` and
 `outputs/integrated-rehearsal-v1/case-two.ressectionlab`. Fresh-process reads of
 both reproduce their expected states; the former is identical to the corrected
 scripted checkpoint, including retained tissue.
+
+## Deterministic full-case rehearsal
+
+The Rehearse workbench now exposes Primary resection and Vascular injury / rescue
+directors. They observe the shared engine, propose bounded continuous actions,
+preview them, and commit only matching public transitions. The current patient
+route uses the supplied sub-06 source grid and matching exclusion evidence.
+Superior skull openings, fine frontiers, interior target pockets, second-hand
+aspiration and checked withdrawal retain complete instrument/shaft collisions.
+The director refuses healthy/unknown tissue removal and revisits joined openings
+only while a bounded previous pass made target progress. Its configured CUSA
+working aperture can reach 6 mm radius in the generic research model; this is
+an uncalibrated model parameter, not evidence of clinical tool feasibility.
+Scalp, dura, attachments and complete functional/vascular anatomy remain UNKNOWN.
+
+Pause computation ends automatic scheduling after the current bounded slice.
+Replay observes actual engine microsteps at the existing 0.2-second cadence;
+intermediate frames are read-only and their final boundary must equal verified
+replay. Return to a recorded boundary before branching or resuming. Save pauses
+both computation and playback and synchronizes the canonical editable state.
+Fluid glyphs show per-cell ledger volumes; outlet reservoirs remain separate.
+
+Long full-case native archives use bounded lossless JSON compression. A disposable
+local authenticated cache is published only after complete canonical replay,
+source/implementation checks and checkpoint equality. Missing or invalid seals
+fall back to full replay. Cold admission is cancellable and has a separate time
+budget from ordinary instrument actions. Patient episodes and acceptance receipts
+belong under ignored `testcases/outputs/`; no patient result is implied by this
+implementation description.
+
+For display-constrained sessions, launch with `--secondary-display`. The app
+selects a nonprimary display before creating its window, refuses launch when
+none exists, and hides the window if that display disconnects or becomes primary.

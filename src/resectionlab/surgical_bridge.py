@@ -13,6 +13,38 @@ from .surgical_replay_cache import SurgicalReplayCache
 
 OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene', 'prepareSurgicalEnvironment', 'compareSurgicalAnatomy'})
 ARTIFACT = 'surgical_toolbox'
+RESULT_BYTES = 32 * 1024**2 - 4096  # Reserve the bounded JSONL envelope.
+
+
+def display_timeline(history):
+    """Bound redundant UI event samples; canonical replay history stays exact."""
+    result = []
+    numeric = {'drill_work': ('inputEnergyJ', 'cuttingWorkJ', 'removedVolumeMm3'),
+               'removal': ('cells', 'volumeMm3'), 'aspiration': ('fluid', 'debris'),
+               'irrigation': ('volumeMm3',)}
+    for entry in history:
+        row = {k: copy.deepcopy(v) for k,v in entry.items() if k != 'events'}
+        path = row.get('action', {}).pop('path', None)
+        if path is not None:
+            # Playback obtains actual poses from the canonical action archive.
+            # The UI timeline needs operation/outcome, not every dense waypoint.
+            row['recordedPathPoseCount'] = len(path)
+            if path: row['recordedPathEndpoints'] = [path[0], path[-1]]
+        events, groups = [], {}
+        for event in entry.get('events', []):
+            kind = event.get('kind')
+            if kind not in numeric:
+                events.append(copy.deepcopy(event)); continue
+            if kind not in groups:
+                summary = {'kind': kind, 'summarySamples': 0}
+                groups[kind] = summary; events.append(summary)
+            summary = groups[kind]; summary['summarySamples'] += 1
+            for key in numeric[kind]: summary[key] = summary.get(key, 0) + event.get(key, 0)
+            if kind == 'drill_work':
+                summary.setdefault('removedCells', []).extend(event.get('removedCells', []))
+                summary['pendingCells'] = event.get('pendingCells', 0)
+        row['events'] = events; result.append(row)
+    return result
 
 
 def dispatch(session, operation, args, request, progress):
@@ -81,7 +113,7 @@ def dispatch(session, operation, args, request, progress):
             metadata={'is_synthetic': True, 'generated': True, 'anatomy_layers': {r['name']: {'kind': r['material'], 'color': r['color'],
                        'provenance': 'generated engineering fixture'} for r in s.regions}, 'surgical_properties': s.properties})
         return session._install_case(case, {}, request)
-    _keys(args, {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'opponent'})
+    _keys(args, {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'opponent', 'scenario', 'maxActions', 'frameIndex'})
     _require_json_budget(args, 256 * 1024, 'SURGICAL_REQUEST_LIMIT', 'Instrument request exceeds budget')
     entry = None
     source = args.get('source')
@@ -116,7 +148,7 @@ def dispatch(session, operation, args, request, progress):
         scene_builder = lambda mapping=None: from_case(entry.case, mapping)
         artifacts = thaw_json(entry.artifacts)
     command = args.get('command', 'inspect')
-    if command not in {'create', 'inspect', 'preview', 'step', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan'}:
+    if command not in {'create', 'inspect', 'preview', 'step', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'seekFrame'}:
         raise ValueError('Unsupported surgical command')
     raw = artifacts.get(ARTIFACT)
     from .surgical_environment import standardize, default_target_names, SCHEMA as ENVIRONMENT_SCHEMA
@@ -138,8 +170,11 @@ def dispatch(session, operation, args, request, progress):
     cache = getattr(session, 'surgical_sessions', {})
     replay_cache = getattr(session, 'surgical_replay_cache', None)
     if replay_cache is None:
-        replay_cache = SurgicalReplayCache()
+        replay_cache = SurgicalReplayCache(verified_cache=bool(raw and raw.get('fullCase')))
         session.surgical_replay_cache = replay_cache
+    elif raw and raw.get('fullCase') and replay_cache.verified_cache is None:
+        from .surgical_verified_cache import VerifiedSurgicalCache
+        replay_cache.verified_cache = VerifiedSurgicalCache()
     cached = cache.get(identity)
     # Bundle artifacts are recursively immutable and privately constructed by
     # freeze_json at this boundary. Only an exact object we installed may reuse
@@ -164,7 +199,7 @@ def dispatch(session, operation, args, request, progress):
     else:
         record = copy.deepcopy(raw)
         scene = scene_builder(record['mapping'])
-        full = SurgicalEngine.restore(scene, record['branches'][record['branchId']], check=request.check)
+        full = SurgicalEngine.restore(scene, record['branches'][record['branchId']], check=request.check, use_cache=bool(record.get('fullCase')))
         engine, timeline = replay_cache.seek(full, record['branches'][record['branchId']], record['position'], check=request.check, include_history=True)
         record.setdefault('timeline', {})[record['branchId']] = timeline
     request.check()
@@ -180,8 +215,49 @@ def dispatch(session, operation, args, request, progress):
     verified_display_state_id = None
     unchanged_tool = False
     if command == 'preview':
-        return {**engine.preview(args['action'], check=request.check), 'caseHash': identity}
-    if command == 'plan':
+        result = {**engine.preview(args['action'], check=request.check, include_history=not bool(record.get('fullCase'))), 'caseHash': identity}
+        _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Preview exceeds the display budget')
+        return result
+    if command == 'seekFrame':
+        from .surgical_frame_replay import SurgicalFrameCache
+        frames = getattr(session, 'surgical_frame_cache', None)
+        if frames is None:
+            frames = session.surgical_frame_cache = SurgicalFrameCache()
+        branch_id = args.get('branchId', record['branchId'])
+        if branch_id not in record['branches']: raise ValueError('Unknown playback branch')
+        displayed, timeline, playback = frames.seek(engine, record['branches'][branch_id], args.get('position'),
+            args.get('frameIndex'), replay_cache, check=request.check)
+        playback['branchId'] = branch_id
+        shown_timeline = display_timeline(timeline)
+        shown_view = displayed.view(include_history=False); shown_view['history'] = shown_timeline[:len(displayed.actions)]
+        result = {'caseHash': identity, 'view': shown_view, 'outcome': None, 'changed': False,
+            'timeline': shown_timeline, 'playback': playback, 'branchId': branch_id, 'position': record['position'],
+            'fullCase': copy.deepcopy(record.get('fullCase', {}).get(branch_id)),
+            'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k,v in record['branches'].items()]}
+        _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Playback frame exceeds the display budget')
+        return result
+    if command == 'fullCase':
+        from .full_case_rehearsal import bind_case_protection, new_director, run_slice, resume_director
+        scenario = args.get('scenario', 'primary')
+        director = record.get('fullCase', {}).get(record['branchId'])
+        if not director or director.get('scenario') != scenario or director.get('lastStateId', director.get('startStateId')) != engine.state_id:
+            parent = {'branchId': record['branchId'], 'position': record['position']}
+            engine = bind_case_protection(engine)
+            annotation = None
+            if entry is not None:
+                names = {r['name'] for r in engine.scene.regions if r.get('target')}
+                annotation = sum(int(np.count_nonzero(entry.case.compartments[name])) for name in names if name in entry.case.compartments) * engine.scene.voxel_mm3
+            director = new_director(engine, scenario, full_annotation_target_mm3=annotation)
+            record['branchId'] = 'full-' + scenario + '-' + str(len(record['branches']))
+            record.setdefault('parents', {})[record['branchId']] = parent
+        director = resume_director(director)
+        engine, director = run_slice(engine, director, max_actions=args.get('maxActions', 2), check=request.check, progress=progress)
+        record.setdefault('fullCase', {})[record['branchId']] = director
+        record['branches'][record['branchId']] = engine.snapshot()
+        record['position'] = len(engine.actions)
+        record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
+        outcome = {'status': 'accepted', 'reason': director.get('stopReason') or director.get('currentPhaseId'), 'completedFraction': 1., 'events': []}
+    elif command == 'plan':
         from .surgical_planning import compare_continuations
         branches, comparison = compare_continuations(engine,
             acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
@@ -218,7 +294,13 @@ def dispatch(session, operation, args, request, progress):
         snapshot = record['branches'][record['branchId']]
         n = {'undo': record['position'] - 1, 'redo': record['position'] + 1}.get(command, args.get('position', record['position']))
         if type(n) is not int or not 0 <= n <= len(snapshot['actions']): raise ValueError('History position is unavailable')
-        engine, timeline = replay_cache.seek(engine, snapshot, n, check=request.check, include_history=True); record['position'] = n
+        frame_cache = getattr(session, 'surgical_frame_cache', None)
+        observed_boundary = frame_cache.boundary(snapshot, n) if frame_cache is not None else None
+        if observed_boundary is not None:
+            engine, timeline = observed_boundary
+        else:
+            engine, timeline = replay_cache.seek(engine, snapshot, n, check=request.check, include_history=True)
+        record['position'] = n
         # Rebuild optional legacy/malformed timelines from admitted history.
         record.setdefault('timeline', {})[record['branchId']] = timeline
         # seek checked the complete reconstructed state against this admitted
@@ -234,11 +316,18 @@ def dispatch(session, operation, args, request, progress):
         record['branches'][record['branchId']] = engine.snapshot()
         record['position'] = len(engine.actions)
         record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
-    result = {'caseHash': identity, 'view': engine.view(_state_id=verified_display_state_id), 'outcome': outcome,
+    full_case = bool(record.get('fullCase'))
+    shown_view = engine.view(_state_id=verified_display_state_id, include_history=not full_case)
+    shown_timeline = record.get('timeline', {}).get(record['branchId'], engine.history)
+    if full_case:
+        shown_timeline = display_timeline(shown_timeline)
+        shown_view['history'] = shown_timeline[:len(engine.actions)]
+    result = {'caseHash': identity, 'view': shown_view, 'outcome': outcome,
               'changed': command != 'inspect' and not unchanged_tool and (outcome is None or outcome['status'] != 'rejected'),
-              'timeline': record.get('timeline', {}).get(record['branchId'], engine.history),
+              'timeline': shown_timeline,
               'previousScenes': [{'index': i, 'label': f"Environment {i + 1}", 'branches': len(s.get('branches', {}))} for i, s in enumerate(artifacts.get('surgical_prior_scenes', []))],
               'branchId': record['branchId'], 'position': record['position'],
+              'fullCase': copy.deepcopy(record.get('fullCase', {}).get(record['branchId'])),
               'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k, v in record['branches'].items()]}
     from .surgical_planning import availability
     result['planningAvailability'] = availability(engine)
@@ -247,12 +336,18 @@ def dispatch(session, operation, args, request, progress):
         from .surgical_planning import validate_saved_comparison
         validate_saved_comparison(engine.scene, record, comparison)
     result['planning'] = comparison
-    _require_json_budget(result, 32 * 1024 * 1024, 'SURGICAL_RESULT_LIMIT', 'Save this sequence before continuing')
+    _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Save this sequence before continuing')
     request.begin_commit()
     if command == 'create' and raw is not None:
         artifacts.setdefault('surgical_prior_scenes', []).append(raw)
         result['previousScenes'] = [{'index': i, 'label': f"Environment {i + 1}", 'branches': len(s.get('branches', {}))} for i, s in enumerate(artifacts['surgical_prior_scenes'])]
-    artifacts[ARTIFACT] = record
+    persisted_record = copy.deepcopy(record)
+    if persisted_record.get('fullCase'):
+        # The timeline is derived from the action log by verified replay. Long
+        # episodes must not serialize its redundant metrics/events in every
+        # native save; keep the complete live timeline in the session/result.
+        persisted_record.pop('timeline', None)
+    artifacts[ARTIFACT] = persisted_record
     if destination:
         artifacts['sourceIdentity'] = identity
         data = json.dumps(artifacts, allow_nan=False, separators=(',', ':'))
@@ -265,7 +360,7 @@ def dispatch(session, operation, args, request, progress):
             Path(name).unlink(missing_ok=True)
     else:
         entry.artifacts = freeze_json(artifacts)
-    cache[identity] = (semantic_digest(record) if destination else None, engine, record,
+    cache[identity] = (semantic_digest(persisted_record) if destination else None, engine, record,
                        entry.artifacts if entry is not None else None)
     session.surgical_sessions = dict(list(cache.items())[-4:])
     return result

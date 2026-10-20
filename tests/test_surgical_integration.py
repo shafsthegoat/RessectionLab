@@ -7,10 +7,60 @@ import sys
 
 import numpy as np
 import pytest
+from dataclasses import replace
 from scipy.spatial.transform import Rotation
 from resectionlab.surgical_scene import SurgicalScene
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.desktop_bridge import BridgeSession, _Request
+
+
+def test_full_case_navigation_payload_keeps_the_native_archive_private(tmp_path):
+    from resectionlab.core import freeze_json, thaw_json
+    session = BridgeSession(tmp_path / 'transfers')
+    try:
+        loaded = session.execute('createSurgicalFixture', {}, _Request('fixture'), lambda *_: None)
+        key = loaded['caseHash']
+        def call(args):
+            return session.execute('surgicalRehearsal', {'caseHash': key, **args}, _Request('rehearsal'), lambda *_: None)
+        created = call({'command': 'create'})
+        entry = session.cases[key]
+        artifacts = thaw_json(entry.artifacts)
+        artifacts['surgical_toolbox']['fullCase'] = {'main': {
+            'schema': 'resectionlab.full-case-rehearsal.v1', 'scenario': 'primary', 'status': 'running',
+            'recordedBookkeeping': 'retained-private;' * 600000,
+        }}
+        session.cases[key] = entry = replace(entry, artifacts=freeze_json(artifacts))
+        display = session._display_artifacts(entry)
+        assert len(json.dumps(display).encode()) < 4096
+        assert display['surgical_toolbox']['requiresReplayVerification']
+        assert 'main' in display['surgical_toolbox']['branches']
+        assert display['surgical_toolbox']['fullCase']['main']['schema'] == 'resectionlab.full-case-rehearsal.v1'
+        assert thaw_json(entry.artifacts) == artifacts
+        # A metadata summary never replaces the private replay input.
+        inspected = call({'command': 'inspect'})
+        assert inspected['view']['stateId'] == created['view']['stateId']
+        preview = call({'command': 'preview', 'expectedStateId': inspected['view']['stateId'],
+                        'action': {'slot': 'left', 'operation': 'inspect', 'duration': .1}})
+        assert preview['view']['history'] == []
+        assert preview['view']['removed'] == inspected['view']['removed']
+    finally:
+        session.close()
+
+
+def test_display_timeline_compacts_waypoints_without_changing_replay_records():
+    from resectionlab.surgical_bridge import display_timeline
+    path = [{'position': [0., 0., i / 20.], 'quaternion': [0., 0., 0., 1.]} for i in range(512)]
+    history = [{'action': {'slot': 'left', 'operation': 'apply', 'path': path},
+                'status': 'accepted', 'events': [
+                    {'kind': 'removal', 'cells': 2, 'volumeMm3': 2.},
+                    {'kind': 'removal', 'cells': 3, 'volumeMm3': 3.}]}]
+    before = copy.deepcopy(history)
+    shown = display_timeline(history)
+    assert history == before
+    assert shown[0]['recordedPathPoseCount'] == 512
+    assert shown[0]['recordedPathEndpoints'] == [path[0], path[-1]]
+    assert 'path' not in shown[0]['action']
+    assert shown[0]['events'][0]['cells'] == 5
 
 
 def scene(affine=None, names=('A', 'B', 'C')):

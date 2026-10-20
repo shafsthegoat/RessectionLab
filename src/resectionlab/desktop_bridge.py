@@ -11,6 +11,7 @@ from .data_policy import DataPolicyError, LEGACY_OPERATION_EXCLUSIONS, historica
 
 import argparse
 from collections import OrderedDict
+from collections.abc import Mapping
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field, replace
 import hashlib
@@ -516,7 +517,25 @@ class BridgeSession:
 
     @staticmethod
     def _display_artifacts(entry: _CaseEntry) -> dict:
-        result = thaw_json(entry.artifacts)
+        toolbox = entry.artifacts.get('surgical_toolbox')
+        if isinstance(toolbox, Mapping) and toolbox.get('fullCase'):
+            # The renderer only needs navigation metadata before admission.
+            # Keep full actions/checkpoints privately for verified replay and
+            # native round-trip, rather than copying them through JSONL twice.
+            result = {key: thaw_json(value) for key,value in entry.artifacts.items()
+                      if key not in ('surgical_toolbox', 'surgical_prior_scenes')}
+            result['surgical_toolbox'] = {
+                'schema': 'resectionlab.surgical-toolbox-display.v1',
+                'requiresReplayVerification': True,
+                'branchId': toolbox.get('branchId'), 'position': toolbox.get('position'),
+                'branches': {key: {} for key in toolbox.get('branches', {})}
+                            if isinstance(toolbox.get('branches'), Mapping) else {},
+                'fullCase': {key: {field: value.get(field) for field in ('schema', 'scenario', 'status')}
+                             for key,value in toolbox['fullCase'].items() if isinstance(value, Mapping)}
+                            if isinstance(toolbox['fullCase'], Mapping) else {},
+            }
+        else:
+            result = thaw_json(entry.artifacts)
         workspace = result.get("workspace", {})
         if workspace and workspace.get("case_hash") != entry.case.semantic_hash:
             result.pop("workspace", None)
@@ -1715,8 +1734,11 @@ class BridgeRuntime:
             if not isinstance(args, dict):
                 raise BridgeError("INVALID_ARGUMENT", "args must be an object")
             timeout = message.get("timeoutMs", 120000)
-            if type(timeout) is not int or not 100 <= timeout <= 300000:
-                raise BridgeError("INVALID_ARGUMENT", "timeoutMs must be an integer between 100 and 300000")
+            replay_admission = (operation == 'surgicalRehearsal' and args.get('command') in
+                                {'inspect', 'seek', 'seekFrame', 'selectBranch', 'undo', 'redo', 'selectScene'})
+            maximum_timeout = 3600000 if replay_admission else 300000
+            if type(timeout) is not int or not 100 <= timeout <= maximum_timeout:
+                raise BridgeError("INVALID_ARGUMENT", f"timeoutMs must be an integer between 100 and {maximum_timeout}")
             if len(json.dumps(message, allow_nan=False).encode()) > MAX_REQUEST_BYTES:
                 raise BridgeError("REQUEST_SIZE_LIMIT", "Request exceeds 1 MiB")
             copied_args = thaw_json(freeze_json(args))
@@ -1726,8 +1748,8 @@ class BridgeRuntime:
                 if request_id in self._seen:
                     self.emit({"id": None, "rejectedRequestId": request_id, "event": "error", "error": {"code": "DUPLICATE_REQUEST_ID", "message": "Request IDs cannot be reused"}})
                     return
-                if len(self._seen) >= 10000:
-                    raise BridgeError("SESSION_LIMIT", "Restart the local bridge after 10000 requests")
+                if len(self._seen) >= 100000:
+                    raise BridgeError("SESSION_LIMIT", "Restart the local bridge after 100000 requests")
                 self._seen.add(request_id)
                 if operation == "ping":
                     _keys(args, set())
