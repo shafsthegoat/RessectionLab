@@ -1,4 +1,7 @@
 'use strict';
+if (process.env.INTERACTION_MODE === 'rehearsal') {
+  require('./benchmark-rehearsal.cjs');
+} else {
 // Production Electron/sidecar benchmark. No corrections, saves or source writes.
 const {app, ipcMain} = require('electron');
 const fs = require('node:fs');
@@ -150,3 +153,4 @@ app.on('browser-window-created', (_event, window) => {
 });
 process.on('uncaughtException',error=>{report.failure=error.stack;if(!finished)fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));console.error(error);app.exit(1)});
 require('./main.cjs');
+}
