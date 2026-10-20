@@ -26,7 +26,12 @@ export function FullCaseRehearsalPanel({c,pause,onFrameField,fieldDisplayControl
     {record&&<>
       <p role="status">{record.scenario==='primary'?'Primary rehearsal':'Vascular injury / rescue'} · {record.status.replaceAll('_',' ')}{phase?` · viewing ${phase.label}`:''}</p>
       {record.stopReason&&<p className="surgical-warning">{record.stopReason.replaceAll('_',' ')}</p>}
-      <div className="full-case-phases" aria-label="Recorded rehearsal phases">{record.phases.map((item,index)=><button key={`${item.id}-${index}`} disabled={c.pending||item.endPosition<1} aria-current={phase===item?'step':undefined} onClick={()=>{pause();void c.run('seek',{position:item.endPosition});}}>{item.label}<small>States {item.startPosition}–{item.endPosition}</small></button>)}</div>
+      <label className="full-case-phase-jump">Recorded phase
+        <select aria-label="Jump to recorded rehearsal phase" disabled={c.pending} value="" onChange={event=>{const item=record.phases[Number(event.target.value)];if(item&&item.endPosition>0){pause();void c.run('seek',{position:item.endPosition});}}}>
+          <option value="" disabled>Jump to a recorded phase…</option>
+          {record.phases.map((item,index)=><option key={`${item.id}-${index}`} value={index} disabled={item.endPosition<1}>{item.label} · states {item.startPosition}–{item.endPosition}</option>)}
+        </select>
+      </label>
       {record.limitations?.length&&<details><summary>Rehearsal limits</summary><ul>{record.limitations.map((limit,i)=><li key={i}>{limit}</li>)}</ul></details>}
     </>}
     <div className="surgical-metrics" aria-label="Recorded source target accounting">

@@ -8,4 +8,4 @@
 .research-plan-alternatives dl>div {display:flex;justify-content:space-between;gap:12px;margin:5px 0;}
 .research-plan-alternatives dd {margin:0;text-align:right;}
 .research-plan-alternatives p {overflow-wrap:anywhere;}
-.full-case-rehearsal{display:flex;flex-direction:column;gap:10px;border:1px solid #609d91;border-radius:8px;background:#152e31;padding:12px}.full-case-rehearsal>strong{font-size:15px;color:#b4e6da}.full-case-phases{display:grid;grid-template-columns:1fr 1fr;gap:5px}.full-case-phases button{display:flex;flex-direction:column;gap:4px}.full-case-phases button[aria-current=step]{border-color:#a1ebd8;background:#285047}.full-case-phases small{color:#9ab0bc}
+.full-case-rehearsal{display:flex;flex-direction:column;gap:10px;border:1px solid #609d91;border-radius:8px;background:#152e31;padding:12px}.full-case-rehearsal>strong{font-size:15px;color:#b4e6da}.surgical-panel .full-case-phase-jump{flex-direction:column;align-items:stretch}.full-case-phase-jump select{width:100%}
