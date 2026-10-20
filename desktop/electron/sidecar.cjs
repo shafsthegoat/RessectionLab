@@ -14,8 +14,10 @@ const { persistentPassiveRequest, validatePersistentPassiveV1Result } = require(
 const { validateWorkspaceResult } = require('./workspace-session.cjs');
 const { AssetRegistry } = require('./assets.cjs');
 const { observedRequest, validateObservedEvent } = require('./observed-landmark-contract.cjs');
+const {surgicalTransportLimitMs}=require('./surgical-timeout.cjs');
 
 const {validateDiagnosticResult,diagnosticRequest}=require('./diagnostic-contract.cjs');
+const MAX_RESPONSE_LINE_BYTES=32*1024*1024;
 const OPERATIONS = new Set(['compareSurgicalAnatomy','prepareSurgicalEnvironment','importSurgicalScene','surgicalRehearsal','createSurgicalFixture','createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal','anatomySavePackage','anatomySaveView','anatomyComponents','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyExport','ping', 'publicContactFamilyAvailability', 'executePublicContactFamilyEpisode', 'executePublicSurfaceContactEpisode', 'inspectDevelopmentEpisodeComparison', 'executeDevelopmentEpisode', 'executePersistentPassiveEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importDiagnosticLayer', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
 
 class Sidecar extends EventEmitter {
@@ -45,7 +47,7 @@ class Sidecar extends EventEmitter {
   }
 
   request(op, args = {}, timeoutMs = 120000) {
-    if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 100 || timeoutMs > 300000) return Promise.reject(new Error('Invalid operation time budget'));
+    if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 100 || timeoutMs > surgicalTransportLimitMs(op,args)) return Promise.reject(new Error('Invalid operation time budget'));
     if (!OPERATIONS.has(op)) return Promise.reject(new Error('Unsupported research operation'));
     if (this.closed) return Promise.reject(new Error('Local research engine is not running'));
     if (!args || typeof args !== 'object' || Array.isArray(args)) return Promise.reject(new Error('Operation arguments must be an object'));
@@ -98,16 +100,19 @@ class Sidecar extends EventEmitter {
   }
 
   consume(chunk) {
+    if(this.closed)return;
     this.buffer += chunk;
-    if (this.buffer.length > 8 * 1024 * 1024) { this.child.kill('SIGTERM'); this.failAll(new Error('Local engine response exceeded its protocol limit')); return; }
+    const exceeded=()=>{this.buffer='';this.child.kill('SIGTERM');this.failAll(new Error('Local engine response exceeded its 32 MiB protocol limit'));};
     let newline;
     while ((newline = this.buffer.indexOf('\n')) >= 0) {
       const line = this.buffer.slice(0, newline); this.buffer = this.buffer.slice(newline + 1);
+      if(Buffer.byteLength(line,'utf8')>MAX_RESPONSE_LINE_BYTES){exceeded();return;}
       if (!line.trim()) continue;
       this.processing = this.processing.then(() => this.handle(JSON.parse(line))).catch(error => {
         this.failAll(error); this.child.kill('SIGTERM');
       });
     }
+    if(Buffer.byteLength(this.buffer,'utf8')>MAX_RESPONSE_LINE_BYTES)exceeded();
   }
 
   async handle(message) {
@@ -159,4 +164,4 @@ class Sidecar extends EventEmitter {
   }
 }
 
-module.exports = { Sidecar, OPERATIONS };
+module.exports = { Sidecar, OPERATIONS, MAX_RESPONSE_LINE_BYTES };

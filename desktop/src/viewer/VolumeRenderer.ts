@@ -1104,7 +1104,9 @@ export class VolumeRenderer {
       this.surgicalEffectsView=view;this.surgicalEffectsOutcome=interaction.outcome;this.surgicalEffectsPreview=!!interaction.preview;
     }
     const retained=new Set<string>();
-    for(const [name,slot] of Object.entries(view.slots)){
+    for(const [name,recordedSlot] of Object.entries(view.slots)){
+      const effective=interaction.effectiveActivation?.[name];
+      const slot=typeof effective==='boolean'?{...recordedSlot,active:effective}:recordedSlot;
       const tool=view.catalog.find(t=>t.id===slot.instrument);if(!tool)continue;
       retained.add(name);const key=surgicalToolGeometryKey(tool,slot),old=this.surgicalSlots.get(name);
       if(old?.key===key)updateSurgicalToolMesh(old.group,slot);
@@ -1123,7 +1125,7 @@ export class VolumeRenderer {
       this.surgicalGizmo.addEventListener('dragging-changed',event=>{this.controls.enabled=!event.value;if(event.value)this.beginInteraction();else this.endInteraction();});
       this.surgicalGizmo.addEventListener('objectChange',()=>{if(this.surgicalGhost&&this.surgicalInteraction){this.surgicalInteraction.onPose({position:this.surgicalGhost.position.toArray(),quaternion:this.surgicalGhost.quaternion.toArray()});this.requestRender();}});
     }
-    this.surgicalGhost.visible=true;
+    this.surgicalGhost.visible=!interaction.readOnly;
     this.surgicalGhost.position.set(...pose.position);this.surgicalGhost.quaternion.set(...pose.quaternion);
     const selected=view.slots[selectedSlot],tool=selected?view.catalog.find(t=>t.id===selected.instrument):undefined;
     const ghostSlot=selected?{...selected,parameters:{...selected.parameters,...interaction.parameters},position:[0,0,0] as Point3,quaternion:[0,0,0,1] as [number,number,number,number]}:null;

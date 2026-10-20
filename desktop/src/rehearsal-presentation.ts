@@ -8,3 +8,9 @@ export function rehearsalPresentation(regions:SurgicalRegion[],settings:ViewerWo
     layerColor:{...settings.layerColor,...Object.fromEntries(regions.map(r=>[r.name,palette[r.material]??r.color]))},
     layerOpacity:{...settings.layerOpacity,...Object.fromEntries(regions.map(r=>[r.name,opacity[r.material]??.3]))}};
 }
+/** Apply defaults while retaining the user's saved display choices on reopen. */
+export function initialRehearsalPresentation(regions:SurgicalRegion[],settings:ViewerWorkspaceSettings={}):ViewerWorkspaceSettings {
+  const defaults=rehearsalPresentation(regions);
+  return {...defaults,...settings,volumeRendering:{...defaults.volumeRendering,...settings.volumeRendering},
+    layerColor:{...defaults.layerColor,...settings.layerColor},layerOpacity:{...defaults.layerOpacity,...settings.layerOpacity}};
+}

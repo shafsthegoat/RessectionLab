@@ -4,7 +4,9 @@ const {contactRequest,validateContactResult}=require('./public-contact.cjs');
 const {comparisonRequest,validateComparisonResult}=require('./episode-comparison.cjs');
 const {vascularRequest,validateVascularResult}=require('./episode-vascular.cjs');
 
-const { app, BrowserWindow, dialog, ipcMain, session, Menu } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain, session, Menu, screen } = require('electron');
+const {secondaryWindowOptions,isSecondaryDisplayConnected}=require('./secondary-display.cjs');
+const {surgicalTimeoutMs}=require('./surgical-timeout.cjs');
 const path = require('node:path');
 const fs = require('node:fs/promises');
 const os = require('node:os');
@@ -39,6 +41,10 @@ const rehearsalUnsaved = new RehearsalUnsaved(async()=>{
 });
 let currentCaseHash;
 let currentCaseName = 'research-case';
+const secondaryDisplayOnly=process.argv.includes('--secondary-display');
+if(secondaryDisplayOnly&&process.platform==='darwin')app.setActivationPolicy('accessory');
+let secondaryDisplayId;
+let secondaryDisplayUnavailable=false;
 const casePaths = new Map();
 const cliValue = name => { const index = process.argv.indexOf(name); return index >= 0 ? process.argv[index + 1] : undefined; };
 
@@ -164,7 +170,7 @@ function bindOperations() {
     const result=await engine.request('importSurgicalScene', {...args,path:filename}, 120000);currentCasePath=null;return result;
   });
   handle('compareSurgicalAnatomy', args => engine.request('compareSurgicalAnatomy', plainArgs(args,['beforeCaseHash','afterCaseHash','changedLayers','prefix','decisions']),300000));
-  handle('surgicalRehearsal', async args => {args=plainArgs(args, ['caseHash','command','expectedStateId','action','mapping','position','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent']);const result=await engine.request('surgicalRehearsal',args,120000);rehearsalUnsaved.changed(args,result);return result;});
+  handle('surgicalRehearsal', async args => {args=plainArgs(args, ['caseHash','command','expectedStateId','action','mapping','position','frameIndex','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','scenario','maxActions']);const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));rehearsalUnsaved.changed(args,result);return result;});
   for (const op of ['createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal']) {
     handle(op, async args => {const result=await engine.request(op, plainArgs(args, op === 'stepRehearsal'
       ? ['caseHash','expectedStateId','action'] : op === 'compareRehearsal'
@@ -249,6 +255,8 @@ function bindOperations() {
 }
 
 async function createWindow() {
+  const secondary=secondaryDisplayOnly?secondaryWindowOptions(screen.getAllDisplays(),screen.getPrimaryDisplay().id):null;
+  secondaryDisplayId=secondary?.displayId;
   const devUrl = !app.isPackaged && process.env.RESSECTIONLAB_DEV_URL;
   if (devUrl && devUrl !== 'http://127.0.0.1:5173/') throw new Error('Development preview must use the configured local address');
   allowedUrl = devUrl || pathToFileURL(path.join(__dirname, '../dist/index.html')).href;
@@ -258,7 +266,7 @@ async function createWindow() {
     ...details.responseHeaders,
     'Content-Security-Policy': ["default-src 'self'; script-src 'self'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'" + (devUrl ? ' ws://127.0.0.1:5173' : '') + "; object-src 'none'; base-uri 'none'; frame-src 'none'"],
   } }));
-  window = new BrowserWindow({ width: 1460, height: 980, minWidth: 1050, minHeight: 720, title: 'RessectionLab', backgroundColor: '#080909', show: false,
+  window = new BrowserWindow({ width: 1460, height: 980, minWidth: 1050, minHeight: 720, ...secondary?.options, title: 'RessectionLab', backgroundColor: '#080909', show: false,
     webPreferences: { preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, nodeIntegration: false, sandbox: true, webSecurity: true, allowRunningInsecureContent: false, devTools: !app.isPackaged },
   });
   window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
@@ -275,11 +283,18 @@ async function createWindow() {
       { type: 'separator' }, { role: 'close' },
     ] }, { role: 'editMenu' }, { role: 'viewMenu' }, { role: 'windowMenu' },
   ]));
-  window.once('ready-to-show', () => window.show());
+  const secondaryAvailable=()=>!secondaryDisplayOnly||isSecondaryDisplayConnected(screen.getAllDisplays(),screen.getPrimaryDisplay().id,secondaryDisplayId);
+  const guardSecondaryDisplay=()=>{
+    if(secondaryDisplayOnly&&!secondaryAvailable()){
+      secondaryDisplayUnavailable=true;window?.hide();log('Secondary display unavailable. Window hidden; restart with a connected secondary display to continue.');
+    }
+  };
+  if(secondaryDisplayOnly){screen.on('display-removed',guardSecondaryDisplay);screen.on('display-metrics-changed',guardSecondaryDisplay);}
+  window.once('ready-to-show', () => {if(secondaryAvailable()&&!secondaryDisplayUnavailable){if(secondaryDisplayOnly)window.showInactive();else window.show();}});
   window.on('close', event=>{
     if(!quitting&&rehearsalUnsaved.dirty){event.preventDefault();void rehearsalUnsaved.allowNavigation().then(allowed=>{if(allowed){rehearsalUnsaved.saved();window?.close();}});}
   });
-  window.on('closed', () => { window = undefined; });
+  window.on('closed', () => {screen.removeListener('display-removed',guardSecondaryDisplay);screen.removeListener('display-metrics-changed',guardSecondaryDisplay);window = undefined;});
   await window.loadURL(allowedUrl);
 }
 
@@ -287,14 +302,16 @@ const ownsAppInstance = app.requestSingleInstanceLock();
 if (!ownsAppInstance) app.quit();
 app.on('open-file',(event,filename)=>{event.preventDefault();pendingOpenPath=filename;if(window&&!window.isDestroyed())window.webContents.send('research:event',{event:'menuAction',action:'openCase'});});
 app.on('second-instance', (_event,argv) => {
+  if(argv.includes('--secondary-display')&&!secondaryDisplayOnly){log('Refused secondary-display request for an existing unrestricted window. Close the existing app and relaunch with --secondary-display.');return;}
+  if(secondaryDisplayOnly&&(secondaryDisplayUnavailable||!isSecondaryDisplayConnected(screen.getAllDisplays(),screen.getPrimaryDisplay().id,secondaryDisplayId))){window?.hide();log('Secondary display unavailable; ignored second-instance request.');return;}
   const index=argv.findIndex(a=>a==='--case'||a==='--anatomy');
   const filename=index>=0?argv[index+1]:argv.find(a=>/\.(ressectionlab|rslab)$/.test(a)||a.endsWith('patient-anatomy.json')||a.endsWith('.rsworkspace'));
   if(filename){pendingOpenPath=path.resolve(filename);if(window&&!window.isDestroyed())window.webContents.send('research:event',{event:'menuAction',action:'openCase'});}
 
-  if (window && !window.isDestroyed()) { if (window.isMinimized()) window.restore(); window.show(); window.focus(); }
+  if (window && !window.isDestroyed()) { if(secondaryDisplayOnly){window.showInactive();}else{if (window.isMinimized()) window.restore(); window.show(); window.focus();} }
 });
 if (ownsAppInstance) app.whenReady().then(async () => { log = createLogger(app.getPath('logs')); log(`Starting ${app.getVersion()} (${app.isPackaged ? 'packaged' : 'development'})`); await startEngine(); bindOperations(); await createWindow(); }).catch(error => {
-  dialog.showErrorBox('RessectionLab could not start', error.message); log(error.stack); app.quit();
+  if(!secondaryDisplayOnly)dialog.showErrorBox('RessectionLab could not start', error.message); log(error.stack); app.quit();
 });
 app.on('window-all-closed', () => app.quit());
 app.on('before-quit', event => {

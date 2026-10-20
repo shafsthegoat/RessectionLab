@@ -1,7 +1,9 @@
 import {useSurgical} from "./use-surgical";
 import {SurgicalPanel} from "./SurgicalPanel";
 import {EnvironmentPreparationPanel} from './EnvironmentPreparationPanel';
-import {rehearsalPresentation} from './rehearsal-presentation';
+import {rehearsalPresentation,initialRehearsalPresentation} from './rehearsal-presentation';
+import {operativeFieldFrame} from './full-case-presentation';
+import {hasSavedFullCaseBranch} from './full-case-workspace';
 import {useRehearsal} from "./use-rehearsal";
 import {RehearsalPanel} from "./RehearsalPanel";
 import type {RehearsalApi} from "./rehearsal-types";
@@ -693,7 +695,7 @@ export default function App() {
   useEffect(()=>{
     if(surgical.view&&presentedScene.current!==surgical.view.scene.sceneId){
       presentedScene.current=surgical.view.scene.sceneId;
-      setPrimaryViewer(settings=>rehearsalPresentation(surgical.view!.scene.regions,settings));
+      setPrimaryViewer(settings=>initialRehearsalPresentation(surgical.view!.scene.regions,settings));
     }
   },[surgical.view?.scene.sceneId]);
   const rehearsal = useRehearsal(!native.binding && !imaging.selected ? viewerCase : null,
@@ -790,6 +792,9 @@ export default function App() {
         resetDisplayToPrimary();
         setPayload(source);
         setCaseData(loaded);
+        const opensFullCase=!!source.artifacts?.surgical_toolbox&&hasSavedFullCaseBranch(source.artifacts);
+        setWorkbenchTab(opensFullCase?'rehearsal':'anatomy');
+        if(opensFullCase)setCameraMode('instruments');
         setCertifiedReplay(null);
         const saved = source.artifacts?.workspace as
           | Record<string, unknown>
@@ -1274,6 +1279,9 @@ export default function App() {
       requirePersistableContact(familyView);
       requirePersistableEpisode(episodeWorkflow==='aspiration'?displayedEpisodeView:null);
       rehearsal.pause();
+      surgical.pauseFullCase();
+      surgical.pausePlayback();
+      if(surgical.view&&!await surgical.run('inspect'))throw new Error('The recorded surgical state could not be synchronized before saving.');
       const result = await api.saveCase({
         caseHash: payload.caseHash,
         workspace: {
@@ -1489,7 +1497,7 @@ export default function App() {
           }}/> : <>
             <label className="rehearsal-model">Rehearsal model<select aria-label="Rehearsal model" value={rehearsalModel} onChange={e=>{rehearsal.pause();surgical.cancel();setRehearsalModel(e.target.value as typeof rehearsalModel)}}><option value="standard">Standard instrument environment</option><option value="legacy">Legacy bounded episode</option></select></label>
             {rehearsalModel==='standard'?<>
-              <SurgicalPanel c={surgical} anatomyControls={!!surgical.view&&<details className="rehearsal-anatomy"><summary>Anatomy visibility and appearance</summary><button onClick={()=>setViewerSettings(rehearsalPresentation(surgical.view!.scene.regions,viewerSettings))}>Reference appearance</button>
+              <SurgicalPanel c={surgical} fieldDisplayControls={<label><input type="checkbox" checked={viewerSettings.smoothSurfaces!==false} onChange={e=>setViewerSettings({...viewerSettings,smoothSurfaces:e.target.checked})}/>Smooth 3D surfaces</label>} onFrameField={()=>{if(surgical.view){const field=operativeFieldFrame(surgical.view,annotationCenterMm,viewerSettings);if(field){setCursor(field.center);setViewerSettings(field.settings);}}}} anatomyControls={!!surgical.view&&<details className="rehearsal-anatomy"><summary>Anatomy visibility and appearance</summary><button onClick={()=>setViewerSettings(rehearsalPresentation(surgical.view!.scene.regions,viewerSettings))}>Reference appearance</button>
                 <AnatomyPanel layers={surgical.view.scene.regions.map(r=>({name:r.name,kind:r.material,color:r.color,provenance:`${r.material} · ${r.target?'declared target':'context anatomy'}`}))} visibleLayers={displayedLayers} onVisibilityChange={setDisplayedLayers} settings={viewerSettings} onSettingsChange={setViewerSettings}/>
               </details>} onImport={async options=>{if(api?.importSurgicalScene){const imported=await api.importSurgicalScene(options);if(imported&&await installCase(imported,api))setWorkbenchTab('rehearsal')}}} available={!!displayedCase} onFixture={()=>void act(async()=>{if(api?.createSurgicalFixture){const fixture=await api.createSurgicalFixture();if(fixture&&await installCase(fixture,api))setWorkbenchTab('rehearsal')}})}/>
 
@@ -1505,7 +1513,7 @@ export default function App() {
             <button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div>
           {workbenchTab==='cases' ? <><div className="unified-sidebar"><details className="unified-details"><summary>New patient study</summary><p className="subtle">One patient, one timepoint. Add multiple scans to build the workspace.</p><input aria-label="New patient ID" placeholder="Patient ID" value={newPatient} onChange={e=>setNewPatient(e.target.value)}/><label>Study<select aria-label="New study timepoint" value={newStudyTimepoint} onChange={e=>setNewStudyTimepoint(e.target.value)}><option value="preoperative">Pre-op</option><option value="postoperative">Post-op</option></select></label><button disabled={fileNavigationBlocked||!newPatient.trim()} onClick={async()=>{const b=await native.create(newPatient.trim(),newStudyTimepoint);if(b){setPayload(null);setCaseData(null);setWorkbenchTab('data')}}}>Create study…</button></details></div><CaseLibraryPanel cases={libraryCases} busy={fileNavigationBlocked||choosingLibrary} onBrowse={()=>load('openCase')}
             libraryFolder={libraryFolder} libraryError={libraryError} onChooseLibrary={api?.chooseCaseLibrary?()=>void chooseCaseLibrary():undefined}
-            onOpen={id=>void act(async()=>{if(api?.openListedCase){const next=nativeApi?.openListedWorkspace?await nativeApi.openListedWorkspace(id):await api.openListedCase(id);if(isNativeBinding(next)){setPayload(null);setCaseData(null);await native.install(next);await api.workspaceInstalled?.({caseHash:next.collectionId,caseId:next.document.patient_id})}else if(next){await installCase(next,api)}else return;setWorkbenchTab('anatomy')}})}/></> : <>
+            onOpen={id=>void act(async()=>{if(api?.openListedCase){const next=nativeApi?.openListedWorkspace?await nativeApi.openListedWorkspace(id):await api.openListedCase(id);if(isNativeBinding(next)){setPayload(null);setCaseData(null);await native.install(next);await api.workspaceInstalled?.({caseHash:next.collectionId,caseId:next.document.patient_id});setWorkbenchTab('anatomy')}else if(next){await installCase(next,api)}else return;}})}/></> : <>
             <div className="workspace-tabs"><button className={workbenchTab==='data'?'selected':''} onClick={()=>setWorkbenchTab('data')}>Scans</button><button className={workbenchTab==='anatomy'?'selected':''} onClick={()=>setWorkbenchTab('anatomy')}>Anatomy</button></div><h1 title={title}>{title}</h1><p className="case-subtitle">{displayedSource ? String(displayedSource.metadata.selected_modality??'Source image') : 'Open a case to begin'}</p>
             {workbenchTab==='data' && payload && displayedSource && <WorkbenchDataPanel source={payload} displayed={displayedSource} series={imaging.series} selectedId={imaging.selectedId}
               busy={busy||engineStopped} api={api} onSelect={imaging.select} onImport={request=>void act(()=>imaging.importSeries(request))}

@@ -188,3 +188,27 @@ test('reference presentation depends on material, preserves camera and never cha
  assert.equal(settings.volumeRendering.enabled,false);assert.equal(settings.camera,camera);
  assert.equal(JSON.stringify(rows),before);
 });
+test('initial rehearsal presentation preserves saved appearance, camera, cutaways and source-plane choices',async()=>{
+  const {initialRehearsalPresentation}=await import('../src/rehearsal-presentation.ts');
+  const rows=[{name:'vessel',material:'vessel',color:'#bb3344'},{name:'target',material:'tumor',color:'#8833bb'}];
+  const saved={layerOpacity:{vessel:.1},layerColor:{target:'#abcdef'},showPlane:true,smoothSurfaces:false,layout:'mri-review',camera:{target:[0,0,0],position:[0,50,0],up:[0,0,1]},clipBox:{enabled:true,min:[-2,-2,-2],max:[2,2,2]}};
+  const before=structuredClone(saved),settings=initialRehearsalPresentation(rows,saved);
+  assert.equal(settings.layerOpacity.vessel,.1);assert.equal(settings.layerOpacity.target,1);assert.equal(settings.layerColor.target,'#abcdef');
+  for(const key of ['showPlane','smoothSurfaces','layout','camera','clipBox'])assert.deepEqual(settings[key],saved[key]);
+  assert.deepEqual(saved,before);
+});
+test('fluid footprint shrinks and grows from the same actual ledger volume in 3D and linked MPR without displaying reservoirs',async()=>{
+  const {surgicalEffectMarkers,surgicalEffectGroup,clipSurgicalMarkersToSlab,surgicalMarkerRadiusPx,fluidMarkerRadiusMm}=await import('../src/viewer/surgicalGeometry.ts');
+  const make=amount=>view({scene:{shape:[4,1,1],regions,resolutionMm:[1,1,1],affine:identity()},contact:[],thermal:{},fluid:amount?{1:amount}:{},sources:[{reservoirMm3:100}],cuts:[]});
+  const v=make(8),before=structuredClone(v),markers=surgicalEffectMarkers(v),marker=markers.find(m=>m.kind==='fluid');
+  assert.equal(markers.length,1,'a reservoir has no invented spatial marker');assert.equal(marker.value,8);
+  assert.ok(Math.abs(fluidMarkerRadiusMm(8)-2*fluidMarkerRadiusMm(1))<1e-10);
+  const projected=clipSurgicalMarkersToSlab(markers,0,1,.5)[0];assert.equal(surgicalMarkerRadiusPx(projected,3),3*marker.radiusMm);
+  const large=surgicalEffectGroup(v),small=surgicalEffectGroup(make(1));
+  const largePoints=large.children.find(c=>c.name==='effect:fluid'),smallPoints=small.children.find(c=>c.name==='effect:fluid');
+  assert.ok(Math.abs(largePoints.geometry.getAttribute('fieldDiameterMm').array[0]-2*smallPoints.geometry.getAttribute('fieldDiameterMm').array[0])<1e-6);
+  const shader={vertexShader:'void main() { gl_PointSize = size; }',fragmentShader:'#include <clipping_planes_fragment>'};
+  largePoints.material.onBeforeCompile(shader,{});assert.match(shader.vertexShader,/gl_PointSize = size \* fieldDiameterMm \* projectionMatrix\[1\]\[1\]/);assert.match(shader.fragmentShader,/gl_PointCoord/);
+  assert.deepEqual(surgicalEffectMarkers(make(0)),[]);assert.deepEqual(v,before);
+  for(const group of [large,small])group.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});
+});

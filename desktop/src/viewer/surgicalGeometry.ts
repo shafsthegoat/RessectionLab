@@ -71,7 +71,10 @@ export function surgicalToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost=false
 export type SurgicalEffectKind='contact'|'thermal'|'fluid'|'debris'|'cut'|'transection'|'obstruction';
 export const SURGICAL_EFFECT_COLORS:Record<SurgicalEffectKind,string>={contact:'#54ded8',thermal:'#ff924f',fluid:'#479dff',debris:'#a99a82',cut:'#f4d16e',transection:'#f4d16e',obstruction:'#ff586a'};
 /** RAS-mm authoritative markers shared by 3-D and MPR; two points denote a segment. */
-export interface SurgicalEffectMarker {kind:SurgicalEffectKind;points:import('./coordinates').Point3[];value:number;color:string;stateId:string;surface?:'grid-cut-face'}
+export interface SurgicalEffectMarker {kind:SurgicalEffectKind;points:import('./coordinates').Point3[];value:number;color:string;stateId:string;radiusMm?:number;surface?:'grid-cut-face'}
+/** Equivalent-volume glyph only, not a reconstructed fluid surface or flow law. */
+export const fluidMarkerRadiusMm=(volumeMm3:number)=>Number.isFinite(volumeMm3)&&volumeMm3>0?Math.cbrt(volumeMm3*(3/(4*Math.PI))):0;
+export const surgicalMarkerRadiusPx=(marker:SurgicalEffectMarker,pixelsPerMm:number)=>marker.radiusMm===undefined?2.5:marker.radiusMm*(Number.isFinite(pixelsPerMm)&&pixelsPerMm>0?pixelsPerMm:0);
 export function surgicalEffectMarkers(view:import('../surgical-types').SurgicalView,outcome?:import('../surgical-types').SurgicalOutcome|null):SurgicalEffectMarker[]{
   const result:SurgicalEffectMarker[]=[],[nx,ny,nz]=view.scene.shape,a=view.scene.affine;
   if(![nx,ny,nz].every(n=>Number.isInteger(n)&&n>0)||a.length!==4||a.some(row=>row.length!==4||row.some(n=>!Number.isFinite(n))))return result;
@@ -82,7 +85,7 @@ export function surgicalEffectMarkers(view:import('../surgical-types').SurgicalV
     const x=Math.floor(id/(ny*nz)),y=Math.floor(id/nz)%ny,z=id%nz;
     return a.slice(0,3).map(row=>row[0]*x+row[1]*y+row[2]*z+row[3]) as import('./coordinates').Point3;
   };
-  const add=(kind:SurgicalEffectKind,points:import('./coordinates').Point3[],value=1,surface?:'grid-cut-face')=>{if(points.length&&points.every(p=>p.length===3&&p.every(Number.isFinite))&&Number.isFinite(value)&&value>0)result.push({kind,points,value,color:SURGICAL_EFFECT_COLORS[kind],stateId:view.stateId,...(surface?{surface}:{})});};
+  const add=(kind:SurgicalEffectKind,points:import('./coordinates').Point3[],value=1,surface?:'grid-cut-face')=>{if(points.length&&points.every(p=>p.length===3&&p.every(Number.isFinite))&&Number.isFinite(value)&&value>0)result.push({kind,points,value,color:SURGICAL_EFFECT_COLORS[kind],stateId:view.stateId,...(kind==='fluid'?{radiusMm:fluidMarkerRadiusMm(value)}:{}),...(surface?{surface}:{})});};
   for(const id of view.contact){const p=point(id,true);if(p)add('contact',[p]);}
   for(const [field,material] of [['thermal',true],['fluid',false],['debris',false]] as const){
     for(const [id,value] of Object.entries(view[field]??{})){const p=point(Number(id),material);if(p)add(field,[p],value);}
@@ -130,16 +133,22 @@ export function surgicalEffectGroup(view:import('../surgical-types').SurgicalVie
   const markers=surgicalEffectMarkers(view,outcome),kinds=Object.keys(SURGICAL_EFFECT_COLORS) as SurgicalEffectKind[];
   const scale=Math.max(.2,Math.min(...view.scene.resolutionMm));
   for(const kind of kinds){
-    const points:number[]=[],segments:number[]=[],faces:number[]=[];
+    const points:number[]=[],diameters:number[]=[],segments:number[]=[],faces:number[]=[];
     for(const marker of markers){if(marker.kind!==kind)continue;
       if(marker.surface==='grid-cut-face'&&marker.points.length===5){for(const index of [0,1,2,0,2,3])faces.push(...marker.points[index]);}
-      if(marker.points.length===1)points.push(...marker.points[0]);
+      if(marker.points.length===1){points.push(...marker.points[0]);if(kind==='fluid')diameters.push(2*marker.radiusMm!);}
       else for(let i=1;i<marker.points.length;i++)segments.push(...marker.points[i-1],...marker.points[i]);
     }
     if(faces.length){const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(faces,3));geometry.computeVertexNormals();
       const object=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({color:SURGICAL_EFFECT_COLORS[kind],side:THREE.DoubleSide,transparent:true,opacity:preview?.16:.28,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1}));object.name='effect:cut-faces';group.add(object);}
     if(points.length){const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(points,3));
-      const object=new THREE.Points(geometry,new THREE.PointsMaterial({color:SURGICAL_EFFECT_COLORS[kind],size:scale*(kind==='fluid'?1.5:1),sizeAttenuation:true,transparent:true,opacity:preview?.45:.8,depthWrite:false}));object.name=`effect:${kind}`;group.add(object);}
+      const material=new THREE.PointsMaterial({color:SURGICAL_EFFECT_COLORS[kind],size:kind==='fluid'?1:scale,sizeAttenuation:true,transparent:true,opacity:preview?.45:.8,depthWrite:false});
+      if(kind==='fluid'){
+        geometry.setAttribute('fieldDiameterMm',new THREE.Float32BufferAttribute(diameters,1));
+        material.onBeforeCompile=shader=>{shader.vertexShader='attribute float fieldDiameterMm;\n'+shader.vertexShader.replace('gl_PointSize = size;','gl_PointSize = size * fieldDiameterMm * projectionMatrix[1][1];');shader.fragmentShader=shader.fragmentShader.replace('#include <clipping_planes_fragment>','#include <clipping_planes_fragment>\nif (length(gl_PointCoord - vec2(0.5)) > 0.5) discard;');};
+        material.customProgramCacheKey=()=> 'fluid-ledger-footprint-v1';
+      }
+      const object=new THREE.Points(geometry,material);object.name=`effect:${kind}`;group.add(object);}
     if(segments.length){const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(segments,3));
       const object=new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:SURGICAL_EFFECT_COLORS[kind],transparent:true,opacity:preview?.5:1,depthWrite:false}));object.name=`effect:${kind}`;group.add(object);}
   }

@@ -3,6 +3,8 @@ import type {ViewerVolume} from './viewer/contracts';
 import type {Point3} from './viewer/coordinates';
 import {SurgicalRequestQueue} from './surgical-request-queue.ts';
 import {SurgicalDisplayAdmission} from './surgical-display-admission.ts';
+import {FullCaseComputation} from './full-case-computation.ts';
+import {checkedSurgicalPlayback,surgicalCursorCommand,updatesEditableSurgicalCursor} from './surgical-playback.ts';
 import {modeledVolume} from './modeled-volume.ts';
 export {modeledVolume} from './modeled-volume.ts';
 import type {SurgicalAction,SurgicalOutcome,SurgicalApi,SurgicalPose,SurgicalRegion,SurgicalResponse,SurgicalView,SurgicalInteraction} from './surgical-types';
@@ -22,35 +24,43 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   const [parameters,setParameters]=useState<Record<string,number>>({});
   const [mode,setMode]=useState<SurgicalInteraction['mode']>('navigate'),[preview,setPreview]=useState<SurgicalView|null>(null);
   const [previewOutcome,setPreviewOutcome]=useState<SurgicalOutcome|null>(null);
+  const [pendingCommand,setPendingCommand]=useState<string|null>(null);
   const backendResult=useRef<SurgicalResponse|null>(null);
   const displayAdmission=useRef(new SurgicalDisplayAdmission<SurgicalView>());
   const pendingPoseView=useRef<SurgicalView|null>(null);
+  const fullCaseComputation=useRef(new FullCaseComputation());
+  const [fullCaseVersion,setFullCaseVersion]=useState(0);
+  const [playbackVersion,setPlaybackVersion]=useState(0);
+  function pauseFullCase(){if(fullCaseComputation.current.scenario){fullCaseComputation.current.pause();setFullCaseVersion(n=>n+1);}}
   const generation=useRef(0),busy=useRef(false),current=useRef({source,api,result,slot,enabled,displayFailed});current.current={source,api,result,slot,enabled,displayFailed};
   const desired=useRef({result:desiredResult,preview:desiredPreview,previewOutcome:desiredPreviewOutcome});desired.current={result:desiredResult,preview:desiredPreview,previewOutcome:desiredPreviewOutcome};
   const requestQueue=useRef<SurgicalRequestQueue<{command:string;extra:Record<string,unknown>;caseHash:string;generation:number}>|null>(null);
-  useEffect(()=>{generation.current++;requestQueue.current?.invalidate();busy.current=false;backendResult.current=null;displayAdmission.current.invalidate();pendingPoseView.current=null;setResult(null);setDesiredResult(null);setDesiredPreview(null);setDesiredPreviewOutcome(null);setDisplayFailed(false);setPreview(null);setPreviewOutcome(null);setPath([]);setMode('navigate');setSlot('left');setPending(false);setError(null);},[source?.caseHash]);
-  useEffect(()=>()=>{generation.current++;requestQueue.current?.invalidate();},[]);
+  useEffect(()=>{pauseFullCase();generation.current++;requestQueue.current?.invalidate();busy.current=false;backendResult.current=null;displayAdmission.current.invalidate();pendingPoseView.current=null;setResult(null);setDesiredResult(null);setDesiredPreview(null);setDesiredPreviewOutcome(null);setDisplayFailed(false);setPreview(null);setPreviewOutcome(null);setPath([]);setMode('navigate');setSlot('left');setPending(false);setError(null);},[source?.caseHash]);
+  useEffect(()=>()=>{fullCaseComputation.current.pause();generation.current++;requestQueue.current?.invalidate();},[]);
   async function execute(command:string,extra:Record<string,unknown>,isCurrent:()=>boolean):Promise<boolean>{
     const c=current.current;if(!c.enabled||!c.source||!c.api?.surgicalRehearsal||busy.current)return false;
-    if(c.displayFailed&&['step','preview','plan'].includes(command)){setError('The accepted anatomy could not be displayed. Seek to a recorded state or reopen the case before applying another instrument action.');return false;}
-    const token=generation.current;busy.current=true;setPending(true);setError(null);
+    if(c.result?.playback?.readOnly&&!surgicalCursorCommand(command)){setError('Return to a recorded action boundary before applying or branching instrument actions.');return false;}
+    if(c.displayFailed&&['step','preview','plan','fullCase'].includes(command)){setError('The accepted anatomy could not be displayed. Seek to a recorded state or reopen the case before applying another instrument action.');return false;}
+    const token=generation.current;busy.current=true;setPending(true);setPendingCommand(command);setError(null);
     try{const next=await c.api.surgicalRehearsal({caseHash:c.source.caseHash,command,expectedStateId:backendResult.current?.view.stateId,...extra});
       if(token!==generation.current||!current.current.enabled||current.current.source?.caseHash!==c.source.caseHash)return false;
       // A superseded seek still moved the backend cursor. Preserve its state
       // identity for the next ordered request while withholding obsolete UI.
-      if(command!=='preview')backendResult.current=next;
+      if(command==='seekFrame'&&next){checkedSurgicalPlayback(next,extra);setMode('navigate');setPath([]);}
+      if(updatesEditableSurgicalCursor(command))backendResult.current=next;
       if(!isCurrent())return false;
       setDisplayFailed(false);
       if(command==='preview'){const response=next as unknown as (SurgicalOutcome&{view:SurgicalView})|null;setDesiredPreview(response?.view??null);setDesiredPreviewOutcome(response?{status:response.status,reason:response.reason,completedFraction:response.completedFraction,events:response.events}:null);return !!response;}
       setDesiredPreview(null);setDesiredPreviewOutcome(null);pendingPoseView.current=next?.view??null;setDesiredResult(next);
       return !!next;
-    }catch(e){if(token===generation.current)setError(String(e));return false;}finally{if(token===generation.current){busy.current=false;setPending(false);}}
+    }catch(e){if(token===generation.current)setError(String(e));return false;}finally{if(token===generation.current){busy.current=false;setPending(false);setPendingCommand(null);}}
   }
   if(!requestQueue.current)requestQueue.current=new SurgicalRequestQueue(async(item,isCurrent)=>{
     if(item.generation!==generation.current||current.current.source?.caseHash!==item.caseHash)return false;
     return execute(item.command,item.extra,isCurrent);
-  },item=>item.command==='seek');
+  },item=>item.command==='seek'||item.command==='seekFrame');
   async function run(command:string,extra:Record<string,unknown>={}):Promise<boolean>{
+    if(command!=='fullCase')pauseFullCase();
     const c=current.current;if(!c.enabled||!c.source||!c.api?.surgicalRehearsal)return false;
     try{return await requestQueue.current!.request({command,extra:structuredClone(extra),caseHash:c.source.caseHash,generation:generation.current});}
     catch(cause){if(current.current.source?.caseHash===c.source.caseHash)setError(String(cause));return false;}
@@ -62,6 +72,13 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   const requestedView=activePreview??desiredView,displayedView=displayedPreview??view;
   const displayPending=!displayFailed&&!!requestedView&&requestedView!==displayedView;
   const pending=requestPending||displayPending;
+  useEffect(()=>{
+    const computation=fullCaseComputation.current,before=computation.scenario;
+    const slice=computation.claim(result,pending,enabled&&!displayFailed&&!result?.playback?.readOnly);
+    if(before!==computation.scenario)setFullCaseVersion(n=>n+1);
+    if(!slice)return;
+    void run('fullCase',{scenario:slice.scenario,maxActions:slice.maxActions}).then(ok=>{computation.settled(slice.epoch,ok);setFullCaseVersion(n=>n+1);});
+  },[fullCaseVersion,result,pending,enabled,displayFailed]);
   const volume=useMemo(()=>source&&desiredView?modeledVolume(source,desiredView):null,[source,desiredView]);
   const previewVolume=useMemo(()=>source&&activePreview?modeledVolume(source,activePreview):null,[source,activePreview]);
   const displayGeneration=generation.current,displaySource=source?.caseHash;
@@ -79,7 +96,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
       pendingPoseView.current=null;setPath([]);
       const t=next.view.slots[current.current.slot];if(t){setRawPose({position:[...t.position],quaternion:[...t.quaternion]});setParameters({...t.parameters});}
     }
-    if(next.outcome?.reason)setError(`${next.outcome.status}: ${next.outcome.reason}`);
+    if(!next.playback&&next.outcome?.reason)setError(`${next.outcome.status}: ${next.outcome.reason}`);
   }
   function onDisplayError(reported:SurgicalView|null,message:string){if(currentDisplay(reported)&&displayAdmission.current.isCurrent(displayTicket,reported)){current.current.displayFailed=true;setDisplayFailed(true);setError(message);}}
   function clearPreview(){setDesiredPreview(null);setDesiredPreviewOutcome(null);if(!current.current.displayFailed)setError(null);}
@@ -91,11 +108,14 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     setRawPose({...pose,position:point});clearPreview();
   }
   function action(operation:string,params:Record<string,number>=parameters,duration=1):SurgicalAction{return {slot,operation,parameters:params,duration,...(['apply','move','hold','grasp','place'].includes(operation)?{path:path.length?path:[pose]}:{})};}
-  return {result,view,volume,previewVolume,pending,simulationPending:requestPending,displayPending,error,slot,pose,path,mode,preview:displayedPreview,previewOutcome,parameters,setPose,setMode,selectSlot,run,action,
+  return {result,view,volume,previewVolume,pending,pendingCommand,simulationPending:requestPending,displayPending,error,slot,pose,path,mode,preview:displayedPreview,previewOutcome,parameters,setPose,setMode,selectSlot,run,action,
+    playbackVersion,pausePlayback:()=>setPlaybackVersion(n=>n+1),
+    computingFullCase:fullCaseComputation.current.scenario,pauseFullCase,
+    startFullCase:(scenario:'primary'|'vascular')=>{if(current.current.enabled&&!busy.current&&!current.current.result?.playback?.readOnly){fullCaseComputation.current.start(scenario);setFullCaseVersion(n=>n+1);}},
     setParameters:(p:Record<string,number>)=>{setParameters(p);clearPreview();},
     clearPreview,
     create:(mapping?:SurgicalRegion[])=>{const issue=mapping?validateMapping(mapping):null;if(issue){setError(issue);return Promise.resolve(false);}return run('create',mapping?{mapping}:{});},
     cancel:()=>{clearPreview();setPath([]);const t=result?.view.slots[slot];if(t){setRawPose({position:t.position,quaternion:t.quaternion});setParameters({...t.parameters});}},
-    interaction:{view:desiredView,preview:activePreview,outcome:activePreview?desiredPreviewOutcome:desiredResult?.outcome??null,pose,path,parameters,selectedSlot:slot,mode,onPose:setPose,onStroke,onDisplayReady,onDisplayError} as SurgicalInteraction};
+    interaction:{view:desiredView,preview:activePreview,outcome:activePreview?desiredPreviewOutcome:desiredResult?.outcome??null,readOnly:!!desiredResult?.playback,effectiveActivation:desiredResult?.playback?.effectiveActivation,pose,path,parameters,selectedSlot:slot,mode:desiredResult?.playback?'navigate':mode,onPose:setPose,onStroke,onDisplayReady,onDisplayError} as SurgicalInteraction};
 }
 export type SurgicalController=ReturnType<typeof useSurgical>;

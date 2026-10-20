@@ -1,4 +1,4 @@
-import {surgicalEffectMarkers,clipSurgicalMarkersToSlab} from './surgicalGeometry';
+import {surgicalEffectMarkers,clipSurgicalMarkersToSlab,surgicalMarkerRadiusPx} from './surgicalGeometry';
 import {modeledSourceIdentity,modeledAnatomy} from './modeledAnatomy';
 import type {SurgicalInteraction} from '../surgical-types';
 import {SliceScrollAccumulator} from './interactionBudget';
@@ -837,7 +837,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         const scaleMm = pxPerMm * 20 < 78 ? 20 : 10;
         const goalPixel = publicGoal && view && Math.abs(publicGoal.rasMm[axis]-currentCursor[axis])<=1e-6 ? mprPixel(view,plane,publicGoal.rasMm) : null;
         const slab=(surgicalView?Math.max(...surgicalView.scene.resolutionMm):1)*.6;
-        const marks=view?clipSurgicalMarkersToSlab(surgicalMarkers,axis as 0|1|2,currentCursor[axis],slab).map(m=>({color:m.color,points:m.points.map(p=>mprPixel(view,plane,p))})):[];
+        const marks=view?clipSurgicalMarkersToSlab(surgicalMarkers,axis as 0|1|2,currentCursor[axis],slab).map(m=>({color:m.color,radius:surgicalMarkerRadiusPx(m,pxPerMm),points:m.points.map(p=>mprPixel(view,plane,p))})):[];
         return (
           <div
             key={plane}
@@ -888,7 +888,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               onPointerCancel={() => {engine.current?.endInteraction();props.onSliceStroke?.(null, 'end');}}
               onKeyDown={(event) => keySlice(event, plane)}
             >
-              {surgicalView&&<svg aria-label="Modeled surgical effects" width="100%" height="100%" style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:3}}>{marks.map((m,i)=>m.points.length===1?<circle key={i} cx={m.points[0][0]} cy={m.points[0][1]} r={2.5} fill={m.color}/>:<polyline key={i} points={m.points.map(p=>p.join(',')).join(' ')} stroke={m.color} strokeWidth={2} fill="none"/>)}</svg>}
+              {surgicalView&&<svg aria-label="Modeled surgical effects" width="100%" height="100%" style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:3}}>{marks.map((m,i)=>m.points.length===1?<circle key={i} cx={m.points[0][0]} cy={m.points[0][1]} r={m.radius} fill={m.color}/>:<polyline key={i} points={m.points.map(p=>p.join(',')).join(' ')} stroke={m.color} strokeWidth={2} fill="none"/>)}</svg>}
               {goalPixel && <span aria-label="Declared public goal" style={{position:'absolute',left:goalPixel[0],top:goalPixel[1],transform:'translate(-50%,-50%)',color:PUBLIC_GOAL_COLOR,fontSize:20,lineHeight:1,pointerEvents:'none',zIndex:4}}>◇</span>}
               <span className="rl-orientation rl-orientation-left">{left}</span>
               <span className="rl-orientation rl-orientation-right">

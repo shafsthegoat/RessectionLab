@@ -45,6 +45,15 @@ test('activation updates material and recorded transform; parameter and tool exc
   r.setSurgical({...input,view,parameters:{radiusMm:3}});assert.notEqual(r.surgicalGhost.children[0],ghost);assert.equal(r.surgicalSlots.get('left').group,left);
   r.setSurgical({...input,view,selectedSlot:'right'});assert.equal(r.surgicalGhost.children[0].name,'instrument:micro_scissors');assert.equal(r.surgicalSlots.get('right').group,right);
 });
+test('observed effective activation colors both tools without mutating latched state and hides the editable ghost',()=>{
+  const r=renderer(),input=interaction(),before=structuredClone(input.view);
+  r.setSurgical({...input,readOnly:true,effectiveActivation:{left:true,right:false}});
+  assert.equal(r.surgicalSlots.get('left').group.userData.surgicalAccent.color.getHexString(),'e0b35d');
+  assert.equal(r.surgicalSlots.get('right').group.userData.surgicalAccent.color.getHexString(),'41677a');
+  assert.equal(r.surgicalGhost.visible,false);assert.deepEqual(input.view,before);
+  r.setSurgical(input);assert.equal(r.surgicalGhost.visible,true);
+  assert.equal(r.surgicalSlots.get('left').group.userData.surgicalAccent.color.getHexString(),'41677a');
+});
 test('draw path grows a reusable bounded-capacity buffer, hides on cancel and releases recorded state on exit',()=>{
   const r=renderer(),input=interaction();r.setSurgical(input);
   const path=Array.from({length:3},(_,i)=>({position:[i,2,3],quaternion:[0,0,0,1]}));r.setSurgical({...input,path});const line=r.surgicalPath,geometry=line.geometry;
