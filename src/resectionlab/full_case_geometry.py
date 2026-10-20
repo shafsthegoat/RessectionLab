@@ -6,6 +6,9 @@ Source labels and memberships are never edited here.
 """
 from __future__ import annotations
 
+import copy
+import operator
+
 import numpy as np
 from scipy import ndimage as ndi
 
@@ -89,6 +92,51 @@ def access_candidates(engine, *, limit=160, max_radius_mm=None, separation_mm=3.
         else:
             ranking[suppress] = 0
     return records
+
+
+def rank_remaining_accesses(engine, accesses, start_index=0):
+    """Copy routes and stably rank their unvisited tail by retained capacity.
+
+    Capacity counts original owned target identities above the original highest
+    incompatible material in each superior column, within the same
+    ``max(1, drillRadiusMm - 1)`` disk used by :func:`access_candidates`.
+    Removed identities are excluded; deformation does not reassign ownership.
+    This is an optimistic source-column score, not a collision-admitted route
+    or a prediction of actual removal. Public preview and guards remain the
+    execution authority. No engine, source, or input route record is changed.
+    """
+    start = operator.index(start_index)
+    if not 0 <= start <= len(accesses):
+        raise ValueError('start_index must identify a boundary in accesses')
+    result = copy.deepcopy(list(accesses))
+    if start == len(result):
+        return result
+    scene = engine.scene
+    target, _, bad_top, _, _ = _superior_grid(engine)
+    eligible = target & (np.arange(scene.shape[2])[None, None, :] > bad_top[:, :, None])
+    # A separate eligibility array preserves source labels and memberships.
+    removed = np.asarray(engine.state['removed'], dtype=np.int64)
+    eligible.ravel()[removed] = False
+    retained_columns = np.sum(eligible, axis=2)
+    xx, yy = np.ogrid[:scene.shape[0], :scene.shape[1]]
+    state_id = engine.state_id
+    for access in result[start:]:
+        index = access.get('targetEntryIndex')
+        if index is None:
+            point = np.asarray(access['entryPose']['position'], dtype=float)
+            index = np.rint(scene.inverse[:3, :3] @ point + scene.inverse[:3, 3])
+        access['remainingGeometricCapacityCells'] = 0
+        access['capacityStateId'] = state_id
+        if not all(np.isfinite(v) and 0 <= v < size for v, size in zip(index, scene.shape)):
+            continue
+        i, j = map(int, index[:2])
+        radius = float(access['drillRadiusMm'])
+        if not np.isfinite(radius) or radius <= 0.:
+            raise ValueError('Access drill radius must be finite and positive')
+        disk = ((xx - i) * scene.spacing[0]) ** 2 + ((yy - j) * scene.spacing[1]) ** 2 <= max(1., radius - 1.) ** 2
+        access['remainingGeometricCapacityCells'] = int(retained_columns[disk].sum())
+    result[start:] = sorted(result[start:], key=lambda access: -access['remainingGeometricCapacityCells'])
+    return result
 
 
 def next_removal_candidates(engine, access, *, slot='left', limit=8, radii=None):

@@ -157,6 +157,15 @@ def _record_rejection(meta, action, outcome, reason=None):
     meta['rejections'] = meta['rejections'][-64:]
 
 
+def _advance_access(engine, meta):
+    from .full_case_geometry import rank_remaining_accesses
+    meta['accessIndex'] += 1
+    # The original candidate set stays fixed. Prefer retained source target
+    # over neighboring columns already cleared by a previous core pocket.
+    meta['accesses'] = rank_remaining_accesses(engine, meta['accesses'], meta['accessIndex'])
+    meta['stage'] = 'access_setup'
+
+
 def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
     """Return a detached engine + resumable director after bounded real actions.
 
@@ -202,6 +211,8 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                 if meta['scenario'] == 'primary' and meta.get('passIndex', 0) < 2 and removed > meta.get('passStartTargetMm3', 0.):
                     meta['passIndex'] = meta.get('passIndex', 0) + 1
                     meta['passStartTargetMm3'] = removed
+                    from .full_case_geometry import rank_remaining_accesses
+                    meta['accesses'] = rank_remaining_accesses(candidate, meta['accesses'], 0)
                     meta['accessIndex'] = 0; meta['stage'] = 'access_setup'; continue
                 meta['stage'] = 'cleanup'; continue
             access = meta['accesses'][meta['accessIndex']]
@@ -252,7 +263,7 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                         # exposed target first, then deepen the SAME opening.
                         meta['stage'] = 'access_setup'
                         continue
-                    meta['accessIndex'] += 1; meta['stage'] = 'access_setup'; continue
+                    _advance_access(candidate, meta); continue
                 next_stage = stage
         elif stage == 'core':
             from .full_case_debulking import local_debulking_candidates
@@ -402,7 +413,7 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                 # A failed withdrawal cannot authorize a placement elsewhere.
                 if action['operation'] in ('withdraw', 'release', 'deactivate'):
                     meta.update(status='stopped', stopReason='Tool cleanup blocked: '+str(preview.get('reason'))); break
-                meta['accessIndex'] += 1; meta['stage'] = 'access_setup'; continue
+                _advance_access(candidate, meta); continue
             meta.update(status='stopped', stopReason='Required action blocked: '+str(preview.get('reason'))); break
         before_removed = set(candidate.state['removed'])
         outcome = candidate.step(action, check=check)
