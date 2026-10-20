@@ -52,6 +52,41 @@ def test_material_memberships_match_original_including_empty_memberships_and_ove
         assert owner.material_ids(indices) == sorted(expected)
 
 
+def test_small_queries_into_long_cleared_history_preserve_moved_and_reassigned_ownership():
+    rng = np.random.default_rng(20261020)
+    labels = rng.integers(0, 4, size=(40, 40, 40), dtype=np.uint16)
+    cleared = set(map(int, rng.choice(labels.size, 20000, replace=False)))
+    owner = MaterialOccupancy(labels, cleared, {17: 91, 21: 0})
+    for shape in ((0,), (), (16,), (8, 32), (1024,), (30000,)):
+        ids = rng.integers(-labels.size, labels.size, size=shape)
+        np.testing.assert_array_equal(owner[ids], _original_values(owner, ids))
+    ids = np.array([[17, 17, 21], [0, 1, -1]])
+    np.testing.assert_array_equal(owner[ids], _original_values(owner, ids))
+    # A caller replacing the public cleared collection must not use a stale
+    # construction-time set, even when the replacement is also immutable.
+    owner.cleared = frozenset({0, 1, 17, 21})
+    np.testing.assert_array_equal(owner[ids], _original_values(owner, ids))
+    owner.cleared = {0, 1}
+    np.testing.assert_array_equal(owner[ids], _original_values(owner, ids))
+    owner.cleared.add(17)
+    np.testing.assert_array_equal(owner[ids], _original_values(owner, ids))
+
+
+def test_noninteger_cleared_representations_retain_legacy_vector_conversion():
+    owner = MaterialOccupancy(np.ones(20, dtype=np.uint16), ['1', 2.7, True, np.int64(3)], {})
+    ids = np.array([0, 1, 2, 3, 4, 4])
+    expected = ids + 1
+    expected[np.isin(ids, np.fromiter(owner.cleared, dtype=np.int64))] = 0
+    np.testing.assert_array_equal(owner[ids], expected)
+
+
+@pytest.mark.parametrize('cell', [-(1 << 80), 1 << 80])
+def test_out_of_int64_cleared_identity_preserves_legacy_conversion_error(cell):
+    owner = MaterialOccupancy(np.ones(20, dtype=np.uint16), [cell], {})
+    with pytest.raises(OverflowError):
+        owner[np.array([0])]
+
+
 def _original_point_intervals(scene, indices, point):
     # Frozen preoptimization segment calculation at exactly zero delta. This
     # retains the original seven intervals and arithmetic for bitwise comparison.

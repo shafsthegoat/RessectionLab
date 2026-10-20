@@ -11,6 +11,8 @@ class MaterialOccupancy:
         self.memberships = memberships or {}
         self.labels = labels.ravel()
         self.cleared = frozenset(cleared)
+        self._integer_cleared = self.cleared if all(
+            type(cell) is int and -(1 << 63) <= cell < (1 << 63) for cell in self.cleared) else None
         self.moved = dict(moved)
 
     def __getitem__(self, indices):
@@ -20,7 +22,15 @@ class MaterialOccupancy:
         ids = np.asarray(indices, dtype=np.int64)
         values = np.where(self.labels[ids] != 0, ids + 1, 0)
         if self.cleared:
-            values[np.isin(ids, np.fromiter(self.cleared, dtype=np.int64))] = 0
+            if self.cleared is self._integer_cleared and ids.size <= len(self.cleared):
+                # Collision covers are small while the cleared ledger grows
+                # throughout an episode. Query its immutable hash set directly
+                # instead of rebuilding/sorting the complete ledger each time.
+                cleared = np.fromiter((cell in self.cleared for cell in ids.flat),
+                                      dtype=np.bool_, count=ids.size).reshape(ids.shape)
+            else:
+                cleared = np.isin(ids, np.fromiter(self.cleared, dtype=np.int64))
+            values[cleared] = 0
         if self.moved:
             # Moved ownership takes precedence over a cleared source location.
             # Rebuild these small sparse arrays so the public mapping remains
