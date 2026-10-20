@@ -188,6 +188,11 @@ budget from ordinary instrument actions. Patient episodes and acceptance receipt
 belong under ignored `testcases/outputs/`; no patient result is implied by this
 implementation description.
 
+Repeated saves reuse compressed source-array payloads only for identical views
+backed by immutable bytes. The bounded cache retains weak references rather
+than source arrays; mutable storage and changed array layouts are re-encoded.
+Each save still rebuilds its artifacts, manifests and workspace identities.
+
 For display-constrained sessions, launch with `--secondary-display`. The app
 selects a nonprimary display before creating its window, refuses launch when
 none exists, and hides the window if that display disconnects or becomes primary.

@@ -17,7 +17,7 @@ import os
 from pathlib import Path
 import tempfile
 from typing import Any
-from zipfile import ZIP_DEFLATED, ZipFile
+from zipfile import ZIP_DEFLATED, ZIP_STORED, ZipFile
 
 import nibabel as nib
 import numpy as np
@@ -429,9 +429,8 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
             functional_keys[name] = None if value is None else "functional_" + name
             if value is not None:
                 arrays[functional_keys[name]] = value
-    buffer = BytesIO()
-    np.savez_compressed(buffer, **arrays)
-    payload = buffer.getvalue()
+    from .case_array_payload import encode_array_payload
+    payload = encode_array_payload(arrays)
     manifest = {
         "schema": BUNDLE_SCHEMA, "case_id": case.case_id, "revision": case.revision,
         "case_semantic_hash": case.semantic_hash, "frame": case.frame,
@@ -458,7 +457,9 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
             temporary = Path(handle.name)
         with ZipFile(temporary, "w", compression=ZIP_DEFLATED) as archive:
             archive.writestr("manifest.json", encoded_manifest)
-            archive.writestr("arrays.npz", payload)
+            # The NPZ members are already compressed. A second deflate pass
+            # delays repeated rehearsal saves without changing source content.
+            archive.writestr("arrays.npz", payload, compress_type=ZIP_STORED)
         os.replace(temporary, destination)
     finally:
         if temporary is not None:
