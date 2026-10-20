@@ -113,7 +113,16 @@ class SurgicalEngine:
         return other
 
     def occupancy(self):
-        key = semantic_digest({'removed': self.state['removed'], 'holds': self.state['holds'], **({'deformation': self.state['deformation']} if 'deformation' in self.state else {})})
+        changes = {'holds': self.state['holds'], **({'deformation': self.state['deformation']} if 'deformation' in self.state else {})}
+        removed_ids = self.state['removed']
+        # Built-in integer sequences have the same exact ordered identity in
+        # tuples and canonical JSON. Avoid freezing/encoding thousands of IDs
+        # at every occupancy lookup; snapshot the contents to detect in-place
+        # edits. Other representations retain the complete legacy JSON key.
+        if isinstance(removed_ids, list) and all(type(cell) is int for cell in removed_ids):
+            key = (tuple(removed_ids), semantic_digest(changes))
+        else:
+            key = semantic_digest({'removed': removed_ids, **changes})
         if self._occupancy_cache is not None and self._occupancy_cache[0] == key:
             return self._occupancy_cache[1]
         from .surgical_occupancy import MaterialOccupancy
