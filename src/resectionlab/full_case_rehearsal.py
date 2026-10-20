@@ -6,6 +6,7 @@ Its resumable bookkeeping is outside the patient engine identity.
 """
 from __future__ import annotations
 import copy
+import itertools
 from pathlib import Path
 import time
 import numpy as np
@@ -92,6 +93,85 @@ def resume_director(director):
     return result
 
 
+def configure_directional_fallback(engine, director, *, axis, limit=8):
+    """Prepare an evidenced source-axis pass only at a withdrawn residual endpoint.
+
+    This changes detached scheduling metadata only. It cannot move a tool,
+    restore tissue, relax a guard or reinterpret a saved superior access.
+    """
+    if director.get('schema') != SCHEMA or director.get('sourceSceneId') != engine.scene.identity:
+        raise ValueError('Directional fallback director source differs')
+    if director.get('lastStateId') != engine.state_id:
+        raise ValueError('Directional fallback action boundary differs')
+    if director.get('scenario') != 'primary' or director.get('status') != 'stopped' or director.get('stage') != 'endpoint':
+        raise ValueError('Directional fallback requires a stopped primary residual endpoint')
+    if engine.state['holds'] or any(state['inserted'] or state['active'] or state['grip'] for state in engine.state['slots'].values()):
+        raise ValueError('Withdraw and release both tools before configuring directional fallback')
+    if type(axis) is not int or axis not in (0, 1) or type(limit) is not int or not 1 <= limit <= 32:
+        raise ValueError('Directional fallback requires native axis 0/1 and 1..32 accesses')
+    if axis in [row['axis'] for row in director.get('directionalPasses', [])]:
+        raise ValueError('This bounded directional pass was already configured')
+    from .full_case_directional import directional_access_candidates, rank_directional_accesses
+    accesses = directional_access_candidates(engine, axis=axis, limit=limit)
+    accesses = rank_directional_accesses(engine, accesses)
+    accesses = [access for access in accesses if access['remainingGeometricCapacityCells'] > 0]
+    if not accesses:
+        raise ValueError('No retained target capacity in the bounded directional candidates')
+    result = resume_director(director)
+    result.setdefault('completedAccessPasses', []).append({
+        'axis': result.get('accessAxis', 2), 'accesses': result['accesses'],
+        'endPosition': len(engine.actions), 'endStateId': engine.state_id,
+        'passIndex': result.get('passIndex', 0), 'stopReason': director.get('stopReason')})
+    result.setdefault('directionalPasses', []).append({'axis': axis, 'startPosition': len(engine.actions),
+        'startStateId': engine.state_id, 'candidateIds': [access['id'] for access in accesses],
+        'qualification': 'Source-column candidates only; every physical action still requires public preview and step.'})
+    if 'fieldCleanup' in result:
+        result.setdefault('priorFieldCleanups', []).append(result.pop('fieldCleanup'))
+    result.update(stage='directional_transition', accesses=accesses, accessAxis=axis, accessIndex=0,
+        passIndex=0, passStartTargetMm3=engine.metrics()['targetRemovedMm3'],
+        drillAttempts=0, coreSearchExhausted=False, fieldCleanupAttempted=False)
+    result['directionalTransition'] = {'poses': _exterior_transition(engine, accesses[0]['outsidePose']),
+        'index': 0, 'results': [], 'status': 'prepared',
+        'qualification': 'Continuous public withdrawal through exterior half-spaces before changing access direction.'}
+    return result
+
+
+def _same_pose(state, pose):
+    return (np.allclose(state['position'], pose['position'], rtol=0., atol=1e-8)
+        and (np.allclose(state['quaternion'], pose['quaternion'], rtol=0., atol=1e-8)
+             or np.allclose(state['quaternion'], -np.asarray(pose['quaternion']), rtol=0., atol=1e-8)))
+
+
+def _exterior_transition(engine, outside):
+    """Propose exterior transit; exact public sweeps remain the authority."""
+    from scipy.spatial.transform import Rotation
+    state = engine.state['slots']['left']
+    old_q, new_q = state['quaternion'], outside['quaternion']
+    old_outward = -Rotation.from_quat(old_q).apply([0., 0., 1.])
+    new_outward = -Rotation.from_quat(new_q).apply([0., 0., 1.])
+    corners = np.asarray(list(itertools.product(*[(0, n - 1) for n in engine.scene.shape])))
+    corners = corners @ engine.scene.affine[:3, :3].T + engine.scene.affine[:3, 3]
+    current = np.asarray(state['position'], float)
+    old_anchor = current + old_outward * max(0., float((corners @ old_outward).max()) + 60. - current @ old_outward)
+    deficit = max(0., float((corners @ new_outward).max()) + 60. - old_anchor @ new_outward)
+    transverse = new_outward - old_outward * (old_outward @ new_outward)
+    projection = float(transverse @ new_outward)
+    if deficit and projection <= 1e-8:
+        raise ValueError('Directional transition requires distinct exterior half-spaces')
+    corner = old_anchor + transverse * (deficit / projection if deficit else 0.)
+    poses = []
+    previous = current
+    for point, quaternion in ((old_anchor, old_q), (corner, old_q), (corner, new_q),
+                              (np.asarray(outside['position'], float), new_q)):
+        # Rotation occurs only at the remote corner. Split long translations
+        # without changing their line, retaining the public 250 mm segment cap.
+        count = max(1, int(np.ceil(np.linalg.norm(point - previous) / 200.)))
+        poses.extend({'position': (previous + (point - previous) * (step / count)).tolist(),
+                      'quaternion': list(quaternion)} for step in range(1, count + 1))
+        previous = point
+    return poses
+
+
 def _phase(meta, name, label, position):
     if not meta['phases'] or meta['phases'][-1]['id'] != name:
         meta['phases'].append({'id': name, 'label': label, 'startPosition': position, 'endPosition': position})
@@ -157,12 +237,29 @@ def _record_rejection(meta, action, outcome, reason=None):
     meta['rejections'] = meta['rejections'][-64:]
 
 
-def _advance_access(engine, meta):
+def _rank_accesses(engine, accesses, start=0):
+    axes = {access.get('nativeAxis', 2) for access in accesses}
+    if len(axes) > 1:
+        raise ValueError('Access passes must retain one native direction')
+    if axes and next(iter(axes)) in (0, 1):
+        from .full_case_directional import rank_directional_accesses
+        return rank_directional_accesses(engine, accesses, start)
     from .full_case_geometry import rank_remaining_accesses
+    return rank_remaining_accesses(engine, accesses, start)
+
+
+def _frontier_candidates(engine, access):
+    if access.get('nativeAxis', 2) in (0, 1):
+        from .full_case_directional import directional_removal_candidates
+        return directional_removal_candidates(engine, access, limit=6)
+    return _batch_frontiers(next_removal_candidates(engine, access, limit=6))
+
+
+def _advance_access(engine, meta):
     meta['accessIndex'] += 1
     # The original candidate set stays fixed. Prefer retained source target
     # over neighboring columns already cleared by a previous core pocket.
-    meta['accesses'] = rank_remaining_accesses(engine, meta['accesses'], meta['accessIndex'])
+    meta['accesses'] = _rank_accesses(engine, meta['accesses'], meta['accessIndex'])
     meta['stage'] = 'access_setup'
 
 
@@ -209,6 +306,19 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
             next_stage = ('inspect' if active_hand else
                           'vascular_setup' if meta['scenario'] == 'vascular' and candidate.metrics()['targetRemovedMm3'] > 0. else
                           'access_setup')
+        elif stage == 'directional_transition':
+            from scipy.spatial.transform import Rotation
+            _phase(meta, 'directional_transition-'+str(meta['accessAxis']),
+                'Checked exterior transit to the next access direction', len(candidate.actions))
+            transition = meta['directionalTransition']
+            if transition['index'] >= len(transition['poses']):
+                transition['status'] = 'complete'; meta['stage'] = 'access_setup'; continue
+            pose = transition['poses'][transition['index']]
+            state = candidate.state['slots']['left']
+            distance = float(np.linalg.norm(np.subtract(pose['position'], state['position'])))
+            angle = (Rotation.from_quat(pose['quaternion']) * Rotation.from_quat(state['quaternion']).inv()).magnitude()
+            action = _admin('left', 'withdraw', pose=copy.deepcopy(pose), duration=max(.2, (distance + 40. * angle) / 20.))
+            next_stage = stage
         elif stage in ('access_setup', 'drill', 'cusa_setup', 'remove'):
             if meta['accessIndex'] >= len(meta['accesses']):
                 # Neighboring openings can join into a wider real corridor.
@@ -217,8 +327,7 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                 if meta['scenario'] == 'primary' and meta.get('passIndex', 0) < 2 and removed > meta.get('passStartTargetMm3', 0.):
                     meta['passIndex'] = meta.get('passIndex', 0) + 1
                     meta['passStartTargetMm3'] = removed
-                    from .full_case_geometry import rank_remaining_accesses
-                    meta['accesses'] = rank_remaining_accesses(candidate, meta['accesses'], 0)
+                    meta['accesses'] = _rank_accesses(candidate, meta['accesses'])
                     meta['accessIndex'] = 0; meta['stage'] = 'access_setup'; continue
                 meta['stage'] = 'cleanup'; continue
             access = meta['accesses'][meta['accessIndex']]
@@ -245,7 +354,7 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                     continue
                 next_stage = stage
             else:
-                actions = _batch_frontiers(next_removal_candidates(candidate, access, limit=6))
+                actions = _frontier_candidates(candidate, access)
                 assistant_conflict = False
                 for proposed in actions:
                     if check: check()
@@ -440,8 +549,9 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                     'Vascular alternative did not establish a bleeding wound followed by persistent source control; inspect the recorded state.')
             else:
                 meta['status'] = 'complete' if remaining <= 1e-9 else 'stopped'
+                direction = {0: 'left', 1: 'anterior'}.get(meta.get('accessAxis'), 'superior')
                 meta['stopReason'] = ('Complete modeled owned-target removal.' if remaining <= 1e-9 else
-                    'Configured superior access/frontier candidates and bounded attempts are exhausted under full tool/shaft collisions, target-only removal and supplied protection. '
+                    'Configured '+direction+' access/frontier candidates and bounded attempts are exhausted under full tool/shaft collisions, target-only removal and supplied protection. '
                     'Further access strategies remain untested; residual target is retained. Missing dura/attachment/functional evidence remains UNKNOWN.')
             _phase(meta, 'endpoint', 'Endpoint and explained residual', len(candidate.actions))
             break
@@ -449,6 +559,14 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
             raise ValueError('Unknown full rehearsal director stage')
         preview = checked_preview if checked_preview is not None else candidate.preview(action, check=check, include_view=False)
         if checked_preview is None: meta['attemptedActions'] += 1
+        if stage == 'directional_transition' and preview['status'] == 'rejected':
+            _record_rejection(meta, action, preview)
+            transition = meta['directionalTransition']
+            transition['status'] = 'blocked'
+            transition['results'].append({'index': transition['index'], 'position': len(candidate.actions),
+                'status': 'rejected', 'reason': preview.get('reason'), 'arrived': False})
+            meta.update(status='stopped', stopReason='Checked exterior directional transition blocked: '+str(preview.get('reason')))
+            break
         if stage == 'field_cleanup' and preview['status'] == 'rejected':
             _record_rejection(meta, action, preview)
             meta['fieldCleanup']['results'].append({'stationIndex': meta['fieldCleanup']['index'],
@@ -484,6 +602,16 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
             raise ValueError('Full rehearsal preview and committed transition differ')
         commits += 1; meta['committedActions'] += 1
         meta['stage'] = next_stage
+        if stage == 'directional_transition':
+            transition = meta['directionalTransition']
+            arrived = outcome['status'] == 'accepted' and _same_pose(candidate.state['slots']['left'], action['pose'])
+            transition['results'].append({'index': transition['index'], 'position': len(candidate.actions),
+                'status': outcome['status'], 'reason': outcome.get('reason'), 'arrived': arrived})
+            if arrived:
+                transition['index'] += 1
+            else:
+                transition['status'] = 'blocked'
+                meta.update(status='stopped', stopReason='Checked exterior directional transition blocked: '+str(outcome.get('reason')))
         if stage == 'field_cleanup':
             cleanup = meta['fieldCleanup']
             mode = cleanup['mode']
@@ -497,9 +625,7 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                 _finish_field_cleanup(meta, 'blocked', outcome.get('reason'))
             elif mode == 'approach':
                 state, pose = candidate.state['slots']['right'], cleanup['stations'][cleanup['index']]['pose']
-                arrived = (state['inserted'] and np.allclose(state['position'], pose['position'], rtol=0., atol=1e-8)
-                    and (np.allclose(state['quaternion'], pose['quaternion'], rtol=0., atol=1e-8)
-                         or np.allclose(state['quaternion'], -np.asarray(pose['quaternion']), rtol=0., atol=1e-8)))
+                arrived = state['inserted'] and _same_pose(state, pose)
                 if arrived: cleanup['mode'] = 'dwell'
                 else: _finish_field_cleanup(meta, 'blocked', 'Checked approach did not reach the proposed station')
             elif mode == 'dwell':
@@ -530,7 +656,7 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
         elif stage == 'remove' and meta['scenario'] == 'primary':
             meta['stage'] = 'core'; meta['coreAttempts'] = 0; meta['corePositioning'] = 0
             meta['coreSearchExhausted'] = False
-            if not meta.get('assistantAttempted'):
+            if not meta.get('assistantAttempted') and meta['accesses'][meta['accessIndex']].get('nativeAxis', 2) == 2:
                 from .full_case_assist import assistant_field_candidate
                 field = assistant_field_candidate(candidate, meta['accesses'][meta['accessIndex']])
                 if field is not None:
@@ -538,12 +664,13 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                     meta['assistantStep'] = 0; meta['stage'] = 'assistant_setup'
         if stage == 'remove' and 'commonPrefixPosition' not in meta:
             meta['commonPrefixPosition'] = len(candidate.actions)
-        if str(outcome.get('reason')).startswith('TOOL_COLLISION:right') and stage not in ('assistant_retract', 'field_cleanup'):
+        if str(outcome.get('reason')).startswith('TOOL_COLLISION:right') and stage not in ('assistant_retract', 'field_cleanup', 'directional_transition'):
             meta['assistantResumeStage'] = meta['stage']; meta['stage'] = 'assistant_retract'
         meta['phases'][-1]['endPosition'] = len(candidate.actions)
         meta['lastOutcome'] = {'position': len(candidate.actions), 'status': outcome['status'], 'reason': outcome.get('reason'),
                                'operation': action['operation'], 'removedCells': len(set(candidate.state['removed']) - before_removed)}
         if progress: progress(commits / max_actions, meta['phases'][-1]['label'])
+        if meta['status'] == 'stopped': break
         if stage not in ('cleanup', 'field_cleanup', 'endpoint') and candidate.metrics()['targetRemovedMm3'] >= accounting(candidate)['originalTargetMm3'] and meta['scenario'] == 'primary':
             meta['stage'] = 'cleanup'
     meta['wallSeconds'] += time.perf_counter() - started

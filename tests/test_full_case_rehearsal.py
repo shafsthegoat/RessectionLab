@@ -219,6 +219,104 @@ def test_blocked_cleanup_approach_never_claims_arrival_and_still_withdraws(monke
     assert not any(slot['inserted'] or slot['active'] or slot['grip'] for slot in result.state['slots'].values())
 
 
+@pytest.mark.parametrize('axis', [0, 1])
+def test_directional_fallback_preserves_endpoint_and_uses_public_access_actions(axis):
+    from resectionlab.surgical_physics_v2 import default_profile
+    labels = np.zeros((48, 48, 48), np.uint16)
+    labels[14:21, 14:21, 14:21] = 2
+    sheet = [slice(12, 23)] * 3
+    sheet[axis] = 25
+    labels[tuple(sheet)] = 3
+    engine = SurgicalEngine(SurgicalScene(labels, np.eye(4), [
+        {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True},
+        {'id': 3, 'name': 'bone', 'material': 'bone'}],
+        {'kind': 'explicit-directional-director-fixture'}, {'tissuePhysicsV2': default_profile()}))
+    meta = director.new_director(engine)
+    meta['stage'] = 'cleanup'
+    engine, meta = director.run_slice(engine, meta, max_actions=8)
+    assert meta['status'] == 'stopped' and meta['stage'] == 'endpoint'
+    before, prior_meta = engine.snapshot(), copy.deepcopy(meta)
+    prepared = director.configure_directional_fallback(engine, meta, axis=axis, limit=2)
+    assert engine.snapshot() == before and meta == prior_meta
+    assert prepared['status'] == 'ready' and prepared['stage'] == 'directional_transition'
+    assert prepared['phases'] == meta['phases']
+    assert prepared['completedAccessPasses'][0]['accesses'] == meta['accesses']
+    assert prepared['priorFieldCleanups'][0] == meta['fieldCleanup']
+    assert all(access['nativeAxis'] == axis for access in prepared['accesses'])
+    assert prepared['directionalPasses'][0]['startStateId'] == engine.state_id
+    candidate, running = engine, prepared
+    for _ in range(16):
+        candidate, running = director.run_slice(candidate, running, max_actions=1)
+        if candidate.metrics()['drillRemovedVolumeMm3'] > 0.: break
+    assert running['accessAxis'] == axis and running['status'] == 'running'
+    assert len(candidate.actions) > len(engine.actions) + 2
+    assert running['directionalTransition']['status'] == 'complete'
+    assert all(row['arrived'] for row in running['directionalTransition']['results'])
+    transit = candidate.actions[len(engine.actions):len(engine.actions) + len(prepared['directionalTransition']['poses'])]
+    assert all(action['operation'] == 'withdraw' and 'pose' in action for action in transit)
+    assert candidate.metrics()['drillRemovedVolumeMm3'] > 0.
+    assert candidate.metrics()['targetRemovedMm3'] == 0.
+    replay = engine.clone()
+    for action in candidate.actions[len(engine.actions):]:
+        preview = replay.preview(action, include_view=False)
+        assert replay.step(action)['stateId'] == preview['stateId']
+    assert replay.snapshot() == candidate.snapshot()
+    assert array_digest(candidate.scene.labels) == array_digest(labels)
+    assert engine.snapshot() == before and meta == prior_meta
+
+
+def test_directional_fallback_refuses_insertion_stale_boundary_and_running_phase():
+    engine = _prepared()
+    assert engine.step({'slot': 'left', 'operation': 'move', 'pose': _pose(5.), 'duration': .2})['status'] == 'accepted'
+    meta = director.new_director(engine)
+    meta.update(status='stopped', stage='endpoint', lastStateId=engine.state_id)
+    before = engine.snapshot()
+    with pytest.raises(ValueError, match='Withdraw|release'):
+        director.configure_directional_fallback(engine, meta, axis=0)
+    assert engine.snapshot() == before
+    meta['lastStateId'] = 'stale'
+    with pytest.raises(ValueError, match='boundary'):
+        director.configure_directional_fallback(engine, meta, axis=0)
+    meta.update(status='running', stage='core', lastStateId=engine.state_id)
+    with pytest.raises(ValueError, match='stopped primary'):
+        director.configure_directional_fallback(engine, meta, axis=0)
+
+
+@pytest.mark.parametrize('initial_z,expected_status', [(50., 'partial'), (41.001, 'rejected')])
+def test_blocked_exterior_transition_retains_actual_pose_and_stops_before_rotation(initial_z, expected_status):
+    labels = np.zeros((96, 96, 96), np.uint16)
+    labels[60:67, 60:67, 60:67] = 2
+    labels[15:20, 15:20, 0] = 1
+    engine = SurgicalEngine(SurgicalScene(labels, np.eye(4), [
+        {'id': 1, 'name': 'healthy wall', 'material': 'soft_tissue'},
+        {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True}],
+        {'kind': 'explicit-blocked-exterior-transit-fixture'}, {}))
+    # This legal outside-material placement has a free 40 mm shaft, but the
+    # subsequent outward extension encounters a real wall beyond that shaft.
+    assert engine.step({'slot': 'left', 'operation': 'place', 'duration': .2,
+        'parameters': {'radiusMm': .5},
+        'pose': {'position': [17., 17., initial_z], 'quaternion': [0., 0., 0., 1.]}})['status'] == 'accepted'
+    meta = director.new_director(engine)
+    meta['stage'] = 'cleanup'
+    engine, meta = director.run_slice(engine, meta, max_actions=8)
+    prepared = director.configure_directional_fallback(engine, meta, axis=0, limit=1)
+    before = engine.snapshot()
+    candidate, stopped = director.run_slice(engine, prepared, max_actions=16)
+    assert stopped['status'] == 'stopped' and stopped['stage'] == 'directional_transition'
+    transition = stopped['directionalTransition']
+    assert transition['status'] == 'blocked' and transition['index'] == 0
+    assert len(transition['results']) == 1 and not transition['results'][0]['arrived']
+    assert transition['results'][0]['status'] == expected_status
+    assert (candidate.state['slots']['left']['position'] != engine.state['slots']['left']['position']) == (expected_status == 'partial')
+    assert not np.allclose(candidate.state['slots']['left']['position'], transition['poses'][0]['position'])
+    assert len(candidate.actions) == len(engine.actions) + (expected_status == 'partial') and not candidate.state['removed']
+    assert engine.snapshot() == before and array_digest(candidate.scene.labels) == array_digest(labels)
+    replay = engine.clone()
+    for action in candidate.actions[len(engine.actions):]:
+        replay.step(action)
+    assert replay.snapshot() == candidate.snapshot()
+
+
 def test_director_rejects_a_stale_action_boundary(monkeypatch):
     engine = _prepared()
     meta, _ = _removal_director(monkeypatch, engine)

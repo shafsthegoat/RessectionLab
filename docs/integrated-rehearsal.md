@@ -156,6 +156,15 @@ fields are freshly measured at the actual tool pose, and recorded aspiration
 uses actual fluid/debris ledger changes. A blocked approach or nonprogressing
 dwell ends this bounded pass; retained field material remains in the ledger.
 
+An explicit directional fallback can be configured at a stopped primary
+residual endpoint after both tools are released and withdrawn. Native axis 0/1
+proposals preserve original cell identities and require the same public guards.
+The director records the preceding access pass, then performs continuous checked
+exterior transit and a remote orientation change before approaching the new
+opening. A rejected or partial transit stops at its actual state. These bounded
+source-column opportunities are uncalibrated engineering candidates; they do
+not establish clinical approach feasibility or global target reachability.
+
 Pause computation ends automatic scheduling after the current bounded slice.
 Replay observes actual engine microsteps at the existing 0.2-second cadence;
 intermediate frames are read-only and their final boundary must equal verified
