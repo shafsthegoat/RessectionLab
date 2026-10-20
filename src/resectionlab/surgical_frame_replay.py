@@ -9,10 +9,11 @@ from __future__ import annotations
 from collections import OrderedDict
 import copy
 import json
+import sys
 import zlib
 from .surgical_engine import SurgicalEngine
 from .core import semantic_digest
-from .surgical_replay_cache import _owned_bytes
+from .surgical_replay_cache import SurgicalReplayCache, _owned_bytes
 
 
 class _ObservedFrames(SurgicalEngine):
@@ -43,21 +44,79 @@ class SurgicalFrameCache:
     def _key(self, snapshot, position):
         return semantic_digest({'snapshot': snapshot, 'position': position})
 
-    def boundary(self, snapshot, position):
+    @property
+    def statistics(self):
+        return {'actions': len(self._actions), 'ownedBytes': self._bytes(),
+                'maxBytes': self.max_bytes,
+                'memoryMeaning': 'Compressed observed states, empty engine shells and canonical action receipts; shared source anatomy/geometry excluded. No branch actions or history retained.'}
+
+    def _bytes(self):
+        return sys.getsizeof(self._actions) + sum(item['bytes'] for item in self._actions.values())
+
+    @staticmethod
+    def _ancestry(snapshot, history):
+        if not isinstance(history, list) or len(history) != len(snapshot['actions']):
+            raise ValueError('Playback history length differs from canonical admission')
+        previous = None
+        for index, row in enumerate(history):
+            if (row.get('action') != snapshot['actions'][index]
+                    or row.get('status') not in ('accepted', 'partial')
+                    or previous is not None and row.get('stateBefore') != previous):
+                raise ValueError('Playback action ancestry differs from canonical admission')
+            previous = row.get('stateAfter')
+        if history and previous != snapshot['stateId']:
+            raise ValueError('Playback archive endpoint differs from canonical admission')
+
+    @staticmethod
+    def _history(snapshot, receipt, history):
+        # This keyword is private bridge data, never an IPC argument. Its
+        # digest must still match the timeline returned by canonical admission
+        # when the action's finalized endpoint was independently checked.
+        if (not isinstance(history, list) or len(history) != len(snapshot['actions'])
+                or semantic_digest(history) != receipt['historyHash']):
+            raise ValueError('Playback history differs from canonical admission')
+        return history
+
+    @staticmethod
+    def _result(item, snapshot, frame_index, history):
+        result = item['shell'].clone()
+        result.state = json.loads(zlib.decompress(item['frames'][frame_index]['state']))
+        result._occupancy_cache = None
+        final = frame_index == len(item['frames']) - 1
+        position = item['receipt']['position'] + int(final)
+        result.actions = copy.deepcopy(snapshot['actions'][:position])
+        result.history = copy.deepcopy(history[:position])
+        if final and result.state_id != item['receipt']['stateAfter']:
+            raise ValueError('Playback boundary identity differs')
+        if frame_index == 0 and result.state_id != item['receipt']['stateBefore']:
+            raise ValueError('Playback initial identity differs')
+        return result
+
+    def boundary(self, snapshot, position, *, verified_history=None):
         if position == 0: return None
         item = self._actions.get(self._key(snapshot, position - 1))
-        return (item['endpoint'].clone(), copy.deepcopy(item['history'])) if item is not None else None
+        if item is None or verified_history is None: return None
+        item['shell'].scene.require_cache_source()
+        history = self._history(snapshot, item['receipt'], verified_history)
+        self._actions.move_to_end(self._key(snapshot, position - 1))
+        return self._result(item, snapshot, len(item['frames']) - 1, history), copy.deepcopy(history)
 
-    def seek(self, current, snapshot, position, frame_index, replay_cache, *, check=lambda:None):
+    def seek(self, current, snapshot, position, frame_index, replay_cache, *, check=lambda:None, verified_history=None):
         if type(position) is not int or not 0 <= position < len(snapshot['actions']):
             raise ValueError('Playback action is unavailable')
         if type(frame_index) is not int or frame_index < 0:
             raise ValueError('Playback frame is unavailable')
         check()
+        current.scene.require_cache_source()
+        if current.scene.identity != snapshot.get('sceneId'):
+            raise ValueError('Playback source differs from saved scene')
         key = self._key(snapshot, position)
         item = self._actions.get(key)
         if item is None:
             baseline, history = replay_cache.seek(current, snapshot, position, check=check, include_history=True)
+            self._ancestry(snapshot, history)
+            if history[position]['stateBefore'] != baseline.state_id:
+                raise ValueError('Playback action ancestry differs from canonical admission')
             observed = _ObservedFrames(baseline.scene, protection=baseline.protection, guard_config=baseline.guard_config)
             observed.__dict__.update(baseline.clone().__dict__)
             observed._frames = []
@@ -66,36 +125,42 @@ class SurgicalFrameCache:
             outcome = observed.step(snapshot['actions'][position], check=check)
             if outcome['status'] == 'rejected' or observed.state_id != history[position]['stateAfter']:
                 raise ValueError('Observed microstep endpoint differs from verified replay')
+            receipt_fields = ('status', 'reason', 'reasonCode', 'completedFraction', 'events', 'deltas')
+            if any(outcome.get(field) != history[position].get(field) for field in receipt_fields):
+                raise ValueError('Observed action outcome differs from verified replay')
             observed._capture('action_boundary', {hand:bool(slot['active']) for hand,slot in observed.state['slots'].items()})
-            endpoint = baseline.clone()
-            endpoint.__dict__.update(observed.__dict__)
-            endpoint.__dict__.pop('_frames', None)
-            endpoint.__dict__.pop('_next_frame_time', None)
-            item = {'frames': observed._frames, 'baseline': baseline, 'endpoint': endpoint, 'history': history}
-            item['bytes'] = _owned_bytes((item['frames'], baseline.state, endpoint.state, endpoint.actions, endpoint.history, history))
+            receipt = {'position': position, 'stateBefore': baseline.state_id,
+                       'stateAfter': observed.state_id, 'historyHash': semantic_digest(history),
+                       'actionHash': semantic_digest(snapshot['actions'][position])}
+            item = {'frames': observed._frames, 'shell': SurgicalReplayCache._shell(baseline), 'receipt': receipt}
+            item['bytes'] = _owned_bytes((item['frames'], item['receipt'], item['shell'].state,
+                                         item['shell'].actions, item['shell'].history)) + sum(map(sys.getsizeof,
+                        (key, item, item['shell'], item['shell'].__dict__)))
             self._actions[key] = item
             # Bound compressed state bytes; account for retained endpoints too.
-            while len(self._actions) > 1 and sum(v['bytes'] for v in self._actions.values()) > self.max_bytes:
+            while len(self._actions) > 1 and self._bytes() > self.max_bytes:
                 self._actions.popitem(last=False)
-            if item['bytes'] > self.max_bytes:
+            if self._bytes() > self.max_bytes:
                 self._actions.pop(key, None)
         else:
+            item['shell'].scene.require_cache_source()
             self._actions.move_to_end(key)
+            if verified_history is None:
+                _, history = replay_cache.seek(current, snapshot, position, check=check, include_history=True)
+            else:
+                history = verified_history
+        if verified_history is not None:
+            history = self._history(snapshot, item['receipt'], verified_history)
+        else:
+            history = self._history(snapshot, item['receipt'], history)
         frames = item['frames']
         if frame_index >= len(frames): raise ValueError('Playback frame is unavailable')
         frame = frames[frame_index]
-        result = item['baseline'].clone()
-        result.state = json.loads(zlib.decompress(frame['state']))
-        result._occupancy_cache = None
-        final = frame_index == len(frames)-1
-        if final:
-            result.actions = copy.deepcopy(item['endpoint'].actions)
-            result.history = copy.deepcopy(item['endpoint'].history)
-            if result.state_id != item['endpoint'].state_id:
-                raise ValueError('Playback boundary identity differs')
+        result = self._result(item, snapshot, frame_index, history)
+        check()
         manifest = [{k:v for k,v in value.items() if k != 'state'} | {'frameIndex':i} for i,value in enumerate(frames)]
         start = frames[0]['observedTimeSeconds']
-        return result, item['history'], {'readOnly': True, 'position': position, 'actionIndex': position,
+        return result, copy.deepcopy(history), {'readOnly': True, 'position': position, 'actionIndex': position,
             'frameIndex':frame_index, 'frameCount':len(frames), 'frames':manifest,
             'observedTimeSeconds':frame['observedTimeSeconds'],
             'actionElapsedSeconds':frame['observedTimeSeconds']-start,

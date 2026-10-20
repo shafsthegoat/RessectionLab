@@ -36,7 +36,7 @@ def test_exact_microstep_frames_have_causal_removal_and_final_boundary():
     assert observed.snapshot()==engine.snapshot()
     assert observed.history==history
     assert engine.snapshot()==original
-    boundary,_=frames.boundary(original,3)
+    boundary,_=frames.boundary(original,3,verified_history=history)
     assert boundary.snapshot()==original
     assert type(boundary) is SurgicalEngine
     assert not hasattr(boundary,'_frames')
@@ -49,3 +49,67 @@ def test_frame_cache_rejects_out_of_range_and_changed_snapshot():
     with pytest.raises(ValueError,match='unavailable'): frames.seek(engine,saved,2,info['frameCount'],replay)
     altered=copy.deepcopy(saved);altered['checkpoint']['state']['travelMm']+=1
     assert frames.boundary(altered,3) is None
+
+
+def test_frame_hits_reject_modified_canonical_history_and_detach_editable_boundaries():
+    engine=episode(); saved=engine.snapshot(); canonical=copy.deepcopy(engine.history)
+    frames=SurgicalFrameCache(); replay=SurgicalReplayCache()
+    _,_,info=frames.seek(engine,saved,2,0,replay,verified_history=canonical)
+    modified=copy.deepcopy(canonical)
+    modified[0]['events'].append({'kind':'unverified-history'})
+    with pytest.raises(ValueError,match='canonical admission'):
+        frames.seek(engine,saved,2,0,replay,verified_history=modified)
+    with pytest.raises(ValueError,match='canonical admission'):
+        frames.boundary(saved,3,verified_history=modified)
+    assert frames.boundary(saved,3) is None
+    boundary,timeline=frames.boundary(saved,3,verified_history=canonical)
+    assert boundary.snapshot()==saved and boundary.history==canonical
+    timeline[0]['events'].append({'kind':'caller-owned'})
+    assert boundary.history==canonical
+    next_action={'slot':'right','operation':'inspect','duration':.2}
+    reference=engine.clone()
+    assert boundary.step(next_action)==reference.step(next_action)
+    assert boundary.snapshot()==reference.snapshot() and boundary.history==reference.history
+    observed,_,_=frames.seek(engine,saved,2,info['frameCount']-1,replay,verified_history=canonical)
+    assert observed.snapshot()==saved and observed.history==canonical
+
+
+def test_caller_endpoint_state_alone_cannot_admit_a_frame_archive():
+    engine=episode()
+    engine.state['travelMm']+=1.
+    altered=engine.snapshot()
+    # Even an internally matching caller checkpoint is insufficient: the
+    # canonical full history still ends at the genuinely executed state.
+    with pytest.raises(ValueError,match='archive endpoint.*canonical admission'):
+        SurgicalFrameCache().seek(engine,altered,2,0,SurgicalReplayCache(),verified_history=engine.history)
+
+
+def test_large_legal_archive_does_not_evict_frames_or_reexecute_on_each_frame_hit(monkeypatch):
+    from resectionlab.surgical_replay_cache import _owned_bytes
+    # The public API accepts finite numeric duration strings. Long insignificant
+    # fractional tails make a large legal archive with cheap actual physics;
+    # no engine state or canonical history is fabricated or mutated.
+    labels=np.zeros((4,4,4),np.uint16)
+    source=SurgicalScene(labels,np.eye(4),[],{'kind':'large-history-engineering-fixture'}, {})
+    engine=SurgicalEngine(source)
+    for index in range(5):
+        duration='.1'+'0'*(14*1024**2)+str(index)
+        assert engine.step({'slot':'left','operation':'inspect','duration':duration})['status']=='accepted'
+    saved=engine.snapshot(); canonical=engine.history
+    assert _owned_bytes((engine.actions,canonical)) > 64*1024**2
+    frames=SurgicalFrameCache(); replay=SurgicalReplayCache(max_bytes=1024)
+    _,_,info=frames.seek(engine,saved,4,0,replay,verified_history=canonical)
+    assert frames.statistics['actions']==1 and frames.statistics['ownedBytes'] < 64*1024**2
+    item=next(iter(frames._actions.values()))
+    assert item['shell'].state=={} and item['shell'].actions==[] and item['shell'].history==[]
+    assert not any(name in item for name in ('baseline','endpoint','history'))
+    def unexpected_step(*_args,**_kwargs):
+        raise AssertionError('A repeated observed frame hit executed physics again')
+    monkeypatch.setattr(SurgicalEngine,'step',unexpected_step)
+    for position in (0,1,info['frameCount']-1):
+        observed,timeline,_=frames.seek(engine,saved,4,position,replay,verified_history=canonical)
+        assert timeline==canonical
+    assert observed.snapshot()==saved and observed.history==canonical
+    boundary,timeline=frames.boundary(saved,5,verified_history=canonical)
+    assert boundary.snapshot()==saved and boundary.history==canonical and timeline==canonical
+    assert frames.statistics['actions']==1 and frames.statistics['ownedBytes'] < 64*1024**2

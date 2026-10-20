@@ -181,6 +181,17 @@ def test_bridge_undo_redo_branch_and_bundle_reopen_in_fresh_process(tmp_path):
         second = command('step', first, action=action('right', 'apply', [43, 20, 25]))
         assert second['outcome']['status'] == 'accepted'
         assert second['view']['removed']
+        installed = session.cases[case_hash].artifacts
+        observed = command('seekFrame', second, position=1, frameIndex=0)
+        assert observed['position'] == second['position'] == 2
+        assert observed['playback']['readOnly']
+        assert observed['view']['stateId'] == first['view']['stateId']
+        endpoint = command('seekFrame', second, position=1, frameIndex=observed['playback']['frameCount'] - 1)
+        assert endpoint['view']['stateId'] == second['view']['stateId']
+        assert session.cases[case_hash].artifacts is installed
+        returned = command('seek', second, position=2)
+        assert returned['view']['stateId'] == second['view']['stateId']
+        assert len(returned['timeline']) == 2
         undone = command('undo', second)
         assert undone['view']['stateId'] == first['view']['stateId']
         redone = command('redo', undone)

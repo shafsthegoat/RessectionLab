@@ -195,7 +195,10 @@ def dispatch(session, operation, args, request, progress):
     elif raw is None:
         return None
     elif admitted_bundle or admitted_native:
-        engine, record = cached[1], copy.deepcopy(cached[2])
+        # Microstep reads return before persistence and never mutate record or
+        # the editable engine. Avoid copying the entire long archive twice.
+        engine = cached[1]
+        record = cached[2] if command == 'seekFrame' else copy.deepcopy(cached[2])
     else:
         record = copy.deepcopy(raw)
         scene = scene_builder(record['mapping'])
@@ -207,7 +210,7 @@ def dispatch(session, operation, args, request, progress):
     # Cursor reconstruction returns a detached engine and never writes its
     # current-engine input. Avoid copying a complete unchanged effect state
     # before immediately replacing it with that reconstructed result.
-    if command not in cursor_commands:
+    if command not in cursor_commands and command != 'seekFrame':
         engine = engine.clone()
     if command not in ('create', 'inspect', 'selectScene') and args.get('expectedStateId') != engine.state_id:
         raise BridgeError('SURGICAL_STATE_STALE', 'The scene changed. Refresh before applying this action.')
@@ -226,7 +229,8 @@ def dispatch(session, operation, args, request, progress):
         branch_id = args.get('branchId', record['branchId'])
         if branch_id not in record['branches']: raise ValueError('Unknown playback branch')
         displayed, timeline, playback = frames.seek(engine, record['branches'][branch_id], args.get('position'),
-            args.get('frameIndex'), replay_cache, check=request.check)
+            args.get('frameIndex'), replay_cache, check=request.check,
+            verified_history=record.get('timeline', {}).get(branch_id))
         playback['branchId'] = branch_id
         shown_timeline = display_timeline(timeline)
         shown_view = displayed.view(include_history=False); shown_view['history'] = shown_timeline[:len(displayed.actions)]
@@ -295,7 +299,7 @@ def dispatch(session, operation, args, request, progress):
         n = {'undo': record['position'] - 1, 'redo': record['position'] + 1}.get(command, args.get('position', record['position']))
         if type(n) is not int or not 0 <= n <= len(snapshot['actions']): raise ValueError('History position is unavailable')
         frame_cache = getattr(session, 'surgical_frame_cache', None)
-        observed_boundary = frame_cache.boundary(snapshot, n) if frame_cache is not None else None
+        observed_boundary = frame_cache.boundary(snapshot, n, verified_history=record.get('timeline', {}).get(record['branchId'])) if frame_cache is not None else None
         if observed_boundary is not None:
             engine, timeline = observed_boundary
         else:
