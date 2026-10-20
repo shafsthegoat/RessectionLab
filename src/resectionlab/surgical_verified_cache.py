@@ -30,7 +30,8 @@ import types
 
 from .core import semantic_digest
 
-SCHEMA = 'resectionlab.verified-surgical-cache.v1'
+SCHEMA = 'resectionlab.verified-surgical-cache.v2'
+STATE_SCHEMA = 'resectionlab.verified-surgical-state-fields.v1'
 MAX_DISK_BYTES = 512 * 1024**2
 MAX_JSON_BYTES = 128 * 1024**2
 DEFAULT_DIRECTORY = Path(__file__).resolve().parents[2] / 'testcases/outputs/.verified-surgical-cache'
@@ -134,20 +135,63 @@ def _check(check):
 
 
 def _encode(value):
+    return _encode_sized(value)[0]
+
+
+def _encode_sized(value):
     raw = json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
     if len(raw) > MAX_JSON_BYTES:
         raise ValueError('Verified cache JSON exceeds transient decode budget')
-    return gzip.compress(raw, compresslevel=1, mtime=0)
+    return gzip.compress(raw, compresslevel=1, mtime=0), len(raw)
 
 
 def _decode(data):
+    return _decode_sized(data)[0]
+
+
+def _decode_sized(data):
     # Bound decompression before parsing even an authenticated obsolete entry.
     import io
     with gzip.GzipFile(fileobj=io.BytesIO(data)) as stream:
         raw = stream.read(MAX_JSON_BYTES + 1)
     if len(raw) > MAX_JSON_BYTES:
         raise ValueError('Verified cache JSON exceeds transient decode budget')
-    return json.loads(raw)
+    return json.loads(raw), len(raw)
+
+
+def _state_overhead(names):
+    return 2 + max(0, len(names) - 1) + sum(
+        len(json.dumps(name, ensure_ascii=True).encode()) + 1 for name in names)
+
+
+def _restore_state(entry, descriptor, limit):
+    """Reassemble only SHA-bound fields from a signed canonical descriptor."""
+    if descriptor.get('schema') != STATE_SCHEMA or set(descriptor) != {'schema', 'fields'}:
+        raise ValueError('Verified cache state encoding differs')
+    fields = descriptor['fields']
+    if not isinstance(fields, dict):
+        raise ValueError('Verified cache state fields differ')
+    result = {}
+    total = _state_overhead(fields)
+    for name, blob in fields.items():
+        digest = blob['sha256']
+        if (not isinstance(digest, str) or len(digest) != 64
+                or any(c not in '0123456789abcdef' for c in digest)
+                or blob['file'] != 'part-' + digest + '.json.gz'
+                or type(blob['uncompressedBytes']) is not int
+                or not 0 <= blob['uncompressedBytes'] <= MAX_JSON_BYTES):
+            raise ValueError('Verified cache state field identity differs')
+        total += blob['uncompressedBytes']
+        if total > MAX_JSON_BYTES:
+            raise ValueError('Verified cache state exceeds transient decode budget')
+        compressed = _read(entry / blob['file'], limit)
+        if hashlib.sha256(compressed).hexdigest() != digest:
+            raise ValueError('Verified cache state field authentication failed')
+        value, size = _decode_sized(compressed)
+        if size != blob['uncompressedBytes']:
+            raise ValueError('Verified cache state field length differs')
+        result[name] = value
+    return result
 
 
 def _read(path, limit):
@@ -262,7 +306,7 @@ class VerifiedSurgicalCache:
             compressed_state = _read(entry / blob['file'], self.max_disk_bytes)
             if hashlib.sha256(compressed_state).hexdigest() != blob['sha256']:
                 raise ValueError('Verified cache state authentication failed')
-            state = _decode(compressed_state)
+            state = _restore_state(entry, _decode(compressed_state), self.max_disk_bytes)
             options = {}
             if 'protectionContract' in record:
                 from .surgical_rl_protection import restore_protection_contract
@@ -340,7 +384,21 @@ class _ReplayWriter:
         if self.closed:
             return
         try:
-            data = _encode(engine.state)
+            fields = {}
+            total = _state_overhead(engine.state)
+            for field, value in engine.state.items():
+                compressed, size = _encode_sized(value)
+                total += size
+                if total > MAX_JSON_BYTES:
+                    raise ValueError('Verified cache state exceeds transient decode budget')
+                digest = hashlib.sha256(compressed).hexdigest()
+                part_name = 'part-' + digest + '.json.gz'
+                # Content addressing stays inside this private, unpublished
+                # entry. Repeated large topology fields consume disk once.
+                if not (self.directory / part_name).exists():
+                    self._write(part_name, compressed)
+                fields[field] = {'file': part_name, 'sha256': digest, 'uncompressedBytes': size}
+            data = _encode({'schema': STATE_SCHEMA, 'fields': fields})
             name = str(len(self.states)) + '.json.gz'
             self._write(name, data)
             self.states.append({'file': name, 'sha256': hashlib.sha256(data).hexdigest(),

@@ -190,6 +190,62 @@ def test_disk_budget_is_bounded_and_oversized_admission_retains_normal_replay(tm
     assert bounded.statistics['ownedMemoryCacheBytes'] == 0
 
 
+def test_content_addressed_field_tampering_and_missing_fields_refuse_admission(tmp_path):
+    from resectionlab.surgical_verified_cache import _decode
+    full = engine()
+    record = full.snapshot()
+    cache = VerifiedSurgicalCache(tmp_path / 'cache')
+    SurgicalEngine.restore(full.scene, record, use_cache=True, verified_cache=cache)
+    entry = next(cache.directory.glob('entry-*'))
+    descriptor = _decode((entry / '2.json.gz').read_bytes())
+    part = entry / descriptor['fields']['slots']['file']
+    original = part.read_bytes()
+    altered = bytearray(original); altered[len(altered) // 2] ^= 1
+    part.write_bytes(altered)
+    assert cache.restore(SurgicalEngine, full.scene, record, position=2) is None
+    part.write_bytes(original)
+    assert cache.restore(SurgicalEngine, full.scene, record, position=2).snapshot() == full.branch(2).snapshot()
+    part.unlink()
+    assert cache.restore(SurgicalEngine, full.scene, record, position=2) is None
+
+
+def test_real_repeated_bone_topology_is_stored_once_and_all_positions_remain_exact(tmp_path):
+    from resectionlab.surgical_verified_cache import _decode, _encode
+    labels = np.zeros((32, 32, 32), np.uint16)
+    labels[4:28, 4:28, 8:24] = 1
+    source = SurgicalScene(labels, np.eye(4), [{'id': 1, 'name': 'bone', 'material': 'bone'}],
+                           {'kind': 'explicit-topology-storage-fixture'}, {})
+    full = SurgicalEngine(source)
+    snapshots = [full.snapshot()]
+    flat_bytes = len(_encode(full.state))
+    actions = [
+        {'operation': 'exchange', 'instrument': 'craniotome'},
+        {'operation': 'place', 'pose': {'position': [16., 16., 4.], 'quaternion': [0., 0., 0., 1.]}},
+        {'operation': 'apply', 'pose': {'position': [16., 16., 7.], 'quaternion': [0., 0., 0., 1.]}},
+        *[{'operation': 'inspect', 'duration': .01} for _ in range(12)],
+    ]
+    for action in actions:
+        assert full.step({'slot': 'left', 'duration': .2, **action})['status'] in ('accepted', 'partial')
+        snapshots.append(full.snapshot())
+        flat_bytes += len(_encode(full.state))
+    assert len(full.state['flapComponents'][0]['cells']) > 9000
+    record = full.snapshot()
+    cache = VerifiedSurgicalCache(tmp_path / 'cache')
+    SurgicalEngine.restore(source, record, use_cache=True, verified_cache=cache)
+    assert cache.publications == 1
+    entry = next(cache.directory.glob('entry-*'))
+    topology_files = set()
+    for position in range(len(actions) + 1):
+        actual = cache.restore(SurgicalEngine, source, record, position=position)
+        assert actual.snapshot() == snapshots[position]
+        if position >= 3:
+            descriptor = _decode((entry / f'{position}.json.gz').read_bytes())
+            topology_files.add(descriptor['fields']['flapComponents']['file'])
+    assert len(topology_files) == 1
+    assert cache.statistics['diskBytes'] < flat_bytes / 2
+    assert cache.statistics['ownedMemoryCacheBytes'] == 0
+
+
 @pytest.mark.parametrize('material,tool,operations', [
     ('bone', 'cranial_drill', [('apply', [8., 8., 10.], .3)]),
     ('vessel', 'micro_scissors', [('apply', [8., 8., 7.], 1.), ('inspect', None, .4)]),
