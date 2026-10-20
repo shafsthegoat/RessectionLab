@@ -559,3 +559,49 @@ def test_frontier_batch_preserves_fine_collar_return_or_declines_when_over_budge
         committed = engine.step(proposed[0])
         assert committed['stateId'] == preview['stateId']
     assert array_digest(engine.scene.labels) == source_hash
+
+
+@pytest.mark.parametrize('reservoir', [100., .01])
+def test_vascular_endpoint_requires_actual_bleeding_then_source_control(reservoir):
+    from resectionlab.surgical_physics_v2 import default_profile
+    labels = np.zeros((24, 24, 24), np.uint16)
+    # Cross the scissors' actual local-Y cut plane; axial contact alone need
+    # not transect a vessel, even when the tip touches it.
+    labels[10, 12:15, 12] = 1
+    labels[18, 18, 18] = 2
+    physics = default_profile()
+    physics['vessel'].update(reservoirMm3=reservoir, refillConductanceMm3PerPaS=0.)
+    engine = SurgicalEngine(SurgicalScene(labels, np.eye(4), [
+        {'id': 1, 'name': 'vessel', 'material': 'vessel'},
+        {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True},
+    ], {'kind': 'explicit-vascular-endpoint-engineering-fixture'}, {'tissuePhysicsV2': physics}))
+    def endpoint(current):
+        meta = director.new_director(current, 'vascular')
+        meta['stage'] = 'endpoint'
+        return director.run_slice(current, meta, max_actions=1)[1]
+    assert endpoint(engine)['status'] == 'stopped'
+    def step(operation, **fields):
+        result = engine.step({'slot': 'left', 'operation': operation, 'duration': .2, **fields})
+        assert result['status'] == 'accepted', result.get('reason')
+    pose = lambda z: {'position': [10., 12., float(z)], 'quaternion': [0., 0., 0., 1.]}
+    step('exchange', instrument='micro_scissors')
+    step('place', pose=pose(8), parameters={'radiusMm': 1.5, 'jawOpeningMm': 0., 'forceN': 0.})
+    step('apply', pose=pose(12), duration=1.)
+    step('inspect', duration=2.)
+    assert engine.metrics()['modeledVesselFluidGeneratedMm3'] > 0.
+    assert endpoint(engine)['status'] == 'stopped'
+    step('withdraw')
+    step('exchange', instrument='bipolar_forceps')
+    step('place', pose=pose(8), parameters={'radiusMm': 2., 'jawOpeningMm': 0., 'forceN': 0., 'power': 1.})
+    step('apply', pose=pose(12), duration=1.)
+    step('apply', duration=3.)
+    step('deactivate')
+    generated_after_energy = engine.state['vesselsV2']['generatedMm3']
+    step('inspect', duration=5.)
+    assert not engine.state['slots']['left']['active']
+    assert engine.state['vesselsV2']['generatedMm3'] == generated_after_energy
+    result = endpoint(engine)
+    assert result['status'] == 'complete'
+    assert 'does not claim target clearance' in result['stopReason']
+    assert engine.metrics()['targetRemovedMm3'] == 0.
+    assert all(not face['patent'] for face in engine.state['vesselsV2']['faces'].values())

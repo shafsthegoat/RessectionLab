@@ -356,10 +356,23 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
         elif stage == 'endpoint':
             metrics = candidate.metrics()
             remaining = accounting(candidate)['originalTargetMm3'] - metrics['targetRemovedMm3']
-            meta['status'] = 'complete' if remaining <= 1e-9 else 'stopped'
-            meta['stopReason'] = ('Complete modeled owned-target removal.' if remaining <= 1e-9 else
-                'Configured superior access/frontier candidates and bounded attempts are exhausted under full tool/shaft collisions, target-only removal and supplied protection. '
-                'Further access strategies remain untested; residual target is retained. Missing dura/attachment/functional evidence remains UNKNOWN.')
+            if meta['scenario'] == 'vascular':
+                sources = [source for source in candidate.state['sources'] if source.get('kind') == 'modeled-vessel-wound']
+                faces = candidate.state.get('vesselsV2', {}).get('faces', {})
+                dose = candidate.scene.properties.get('tissuePhysicsV2', {}).get('vessel', {}).get('coagulationDose', float('inf'))
+                controlled = (bool(sources) and bool(faces) and any(source.get('emittedMm3', 0.) > 0. for source in sources)
+                              and all(source.get('bleedingActive') is False and source.get('patent') is False for source in sources)
+                              and all(face.get('patent') is False and face.get('coagulationDose', 0.) + 1e-9 >= dose
+                                      and face.get('clot', 0.) >= 1. - 1e-9 for face in faces.values()))
+                meta['status'] = 'complete' if controlled else 'stopped'
+                meta['stopReason'] = ('Modeled vessel injury and source control completed; severed faces remain nonpatent. '
+                    'This alternative retains the common-prefix target residual; it does not claim target clearance.' if controlled else
+                    'Vascular alternative did not establish a bleeding wound followed by persistent source control; inspect the recorded state.')
+            else:
+                meta['status'] = 'complete' if remaining <= 1e-9 else 'stopped'
+                meta['stopReason'] = ('Complete modeled owned-target removal.' if remaining <= 1e-9 else
+                    'Configured superior access/frontier candidates and bounded attempts are exhausted under full tool/shaft collisions, target-only removal and supplied protection. '
+                    'Further access strategies remain untested; residual target is retained. Missing dura/attachment/functional evidence remains UNKNOWN.')
             _phase(meta, 'endpoint', 'Endpoint and explained residual', len(candidate.actions))
             break
         else:
