@@ -28,10 +28,12 @@ class ObservedFrameCollector:
     def __init__(self, cache, admission):
         self.cache, self.admission = cache, admission
         self.writer = None; self.position = None; self.matches = False
+        self.last_effective_activation = None
 
     def abort(self):
         if self.writer is not None: self.writer.abort()
         self.writer = None; self.position = None; self.matches = False
+        self.last_effective_activation = None
 
     @staticmethod
     def _activation(engine, acting=None, active=None):
@@ -60,9 +62,13 @@ class ObservedFrameCollector:
             self._capture(engine, 'action_start', self._activation(engine))
 
     def observe(self, engine, acting_slot, effective_active):
-        if self.position is None or self.writer is None: return
+        if self.position is None: return
+        # Successful public microstep observation, even when shorter than the
+        # display cadence. The finalized state retains its own latched switch.
+        self.last_effective_activation = self._activation(engine, acting_slot, effective_active)
+        if self.writer is None: return
         if engine.state['elapsedSeconds'] + 1e-10 >= self.next_time:
-            self._capture(engine, 'microstep', self._activation(engine, acting_slot, effective_active))
+            self._capture(engine, 'microstep', self.last_effective_activation)
             while self.next_time <= engine.state['elapsedSeconds'] + 1e-10:
                 self.next_time += .2
 
@@ -76,7 +82,7 @@ class ObservedFrameCollector:
                 or receipt_hash(outcome) != self.admission.receipt_hashes[position]):
             self.abort()
             raise ValueError('Observed action outcome differs from canonical admission')
-        self._capture(engine, 'action_boundary', self._activation(engine))
+        self._capture(engine, 'action_boundary', self.last_effective_activation or self._activation(engine))
         if self.writer is not None:
             try: self.writer.publish(engine, outcome)
             except (OSError, ValueError, TypeError): self.writer.abort()
@@ -96,12 +102,14 @@ class _ObservedFrames(SurgicalEngine):
 
     def _substep(self, key, op, p, q, active, dt):
         events = super()._substep(key, op, p, q, active, dt)
+        self._last_effective_activation = {hand: bool(active if hand == key else slot['active'])
+                                           for hand, slot in self.state['slots'].items()}
         collector = getattr(self, '_frame_collector', None)
         if collector is not None:
             collector.observe(self, key, active)
             return events
         if self.state['elapsedSeconds'] + 1e-10 >= self._next_frame_time:
-            self._capture('microstep', {hand: bool(active if hand == key else slot['active']) for hand,slot in self.state['slots'].items()})
+            self._capture('microstep', self._last_effective_activation)
             while self._next_frame_time <= self.state['elapsedSeconds'] + 1e-10:
                 self._next_frame_time += .2
         return events
@@ -183,6 +191,7 @@ class SurgicalFrameCache:
             observed = _ObservedFrames(baseline.scene, protection=baseline.protection, guard_config=baseline.guard_config)
             observed.__dict__.update(baseline.clone().__dict__)
             observed._frames = []
+            observed._last_effective_activation = None
             collector = self.collector(admission)
             observed._frame_collector = collector
             action = thaw_json(admission.snapshot['actions'][position])
@@ -297,6 +306,7 @@ class SurgicalFrameCache:
             observed = _ObservedFrames(baseline.scene, protection=baseline.protection, guard_config=baseline.guard_config)
             observed.__dict__.update(baseline.clone().__dict__)
             observed._frames = []
+            observed._last_effective_activation = None
             observed._next_frame_time = baseline.state['elapsedSeconds'] + .2
             observed._capture('action_start', {hand:bool(slot['active']) for hand,slot in baseline.state['slots'].items()})
             outcome = observed.step(snapshot['actions'][position], check=check)
@@ -305,7 +315,8 @@ class SurgicalFrameCache:
             receipt_fields = ('status', 'reason', 'reasonCode', 'completedFraction', 'events', 'deltas')
             if any(outcome.get(field) != history[position].get(field) for field in receipt_fields):
                 raise ValueError('Observed action outcome differs from verified replay')
-            observed._capture('action_boundary', {hand:bool(slot['active']) for hand,slot in observed.state['slots'].items()})
+            observed._capture('action_boundary', getattr(observed, '_last_effective_activation', None)
+                              or {hand:bool(slot['active']) for hand,slot in observed.state['slots'].items()})
             receipt = {'position': position, 'stateBefore': baseline.state_id,
                        'stateAfter': observed.state_id, 'historyHash': semantic_digest(history),
                        'actionHash': semantic_digest(snapshot['actions'][position])}

@@ -7,7 +7,7 @@ from resectionlab.surgical_replay_cache import SurgicalReplayCache
 from resectionlab.surgical_frame_replay import SurgicalFrameCache
 
 
-def episode():
+def episode(duration=1.2):
     labels=np.zeros((24,24,24),np.uint16)
     labels[10:12,10:12,10:13]=1
     scene=SurgicalScene(labels,np.eye(4),[{'id':1,'name':'target','material':'tumor','target':True}],{}, {})
@@ -15,7 +15,7 @@ def episode():
     for action in [
         {'slot':'left','operation':'exchange','instrument':'cusa','duration':.2},
         {'slot':'left','operation':'place','pose':{'position':[10.,10.,5.],'quaternion':[0.,0.,0.,1.]},'parameters':{'radiusMm':.6},'duration':.2},
-        {'slot':'left','operation':'apply','pose':{'position':[10.,10.,12.],'quaternion':[0.,0.,0.,1.]},'duration':1.2},
+        {'slot':'left','operation':'apply','pose':{'position':[10.,10.,12.],'quaternion':[0.,0.,0.,1.]},'duration':duration},
     ]:
         assert engine.step(action)['status']=='accepted'
     return engine
@@ -113,3 +113,63 @@ def test_large_legal_archive_does_not_evict_frames_or_reexecute_on_each_frame_hi
     boundary,timeline=frames.boundary(saved,5,verified_history=canonical)
     assert boundary.snapshot()==saved and boundary.history==canonical and timeline==canonical
     assert frames.statistics['actions']==1 and frames.statistics['ownedBytes'] < 64*1024**2
+
+
+@pytest.mark.parametrize('persistent', [False, True])
+def test_short_apply_boundary_displays_observed_energy_without_latching_switch(tmp_path, persistent):
+    from resectionlab.surgical_telemetry import capture_episode
+    engine=episode(duration=.1)
+    assert engine.state['removed'] and not engine.state['slots']['left']['active']
+    saved=engine.snapshot(); history=copy.deepcopy(engine.history)
+    frames=SurgicalFrameCache(directory=tmp_path); replay=SurgicalReplayCache()
+    if persistent:
+        token=frames.admit(engine,saved,replay,verified_history=history)
+        # The invalid apply occurs at the same canonical position, but must
+        # neither publish a frame nor leak an energized tip into the next start.
+        attempted=copy.deepcopy(engine.actions)
+        attempted.insert(2,{'slot':'left','operation':'apply','duration':0.})
+        report=capture_episode(engine,attempted,frame_collector=frames.collector(token))
+        assert report['summary']['invalidActionsCumulative']==1
+        assert frames.store.publications==len(engine.actions)
+        def seek(index):
+            return frames.seek(engine,token.snapshot,2,index,replay,verified_history=token.history,admission=token)
+    else:
+        def seek(index): return frames.seek(engine,saved,2,index,replay,verified_history=history)
+    initial,_,info=seek(0)
+    assert info['frameCount']==2, 'sub-cadence action has only real start and finalized boundary'
+    assert not info['effectiveActivation']['left']
+    assert not initial.state['removed'] and not initial.state['slots']['left']['active']
+    final,_,info=seek(1)
+    assert info['effectiveActivation']['left'] and not info['effectiveActivation']['right']
+    assert final.snapshot()==saved and not final.state['slots']['left']['active']
+    assert engine.snapshot()==saved and engine.history==history
+
+
+def test_failed_first_microstep_never_observes_or_lights_an_energized_tip(tmp_path):
+    from resectionlab.surgical_frame_replay import _ObservedFrames
+    from resectionlab.surgical_telemetry import capture_episode
+    labels=np.zeros((24,24,24),np.uint16); labels[8,8,8]=1
+    scene=SurgicalScene(labels,np.eye(4),[{'id':1,'name':'bone','material':'bone'}],{}, {})
+    engine=SurgicalEngine(scene)
+    pose=lambda z:{'position':[8.,8.,z],'quaternion':[0.,0.,0.,1.]}
+    actions=[{'slot':'left','operation':'exchange','instrument':'cusa','duration':.1},
+             {'slot':'left','operation':'place','pose':pose(6.5),'parameters':{'radiusMm':.9},'duration':.1}]
+    for action in actions: assert engine.step(action)['status']=='accepted'
+    failed={'slot':'left','operation':'apply','pose':pose(6.9),'duration':.1}
+    legacy=_ObservedFrames(scene); legacy.__dict__.update(engine.clone().__dict__)
+    legacy._frames=[]; legacy._next_frame_time=legacy.state['elapsedSeconds']+.2
+    legacy._last_effective_activation=None
+    outcome=legacy.step(failed)
+    assert outcome['status']=='rejected' and outcome['reason']=='UNSUPPORTED_MATERIAL'
+    assert legacy._frames==[] and legacy._last_effective_activation is None
+    assert legacy.snapshot()==engine.snapshot() and not legacy.state['slots']['left']['active']
+    frames=SurgicalFrameCache(directory=tmp_path); replay=SurgicalReplayCache()
+    token=frames.admit(engine,engine.snapshot(),replay,verified_history=engine.history)
+    collector=frames.collector(token)
+    report=capture_episode(engine,[*actions,failed],frame_collector=collector)
+    assert report['summary']['invalidActionsCumulative']==1 and collector.last_effective_activation is None
+    assert frames.store.publications==2 and frames.store.load(token,2) is None
+    for position in range(2):
+        item=frames.store.load(token,position)
+        assert all(not frame['effectiveActivation']['left'] for frame in item['frames'])
+    assert not list(tmp_path.glob('.pending-*'))
