@@ -93,6 +93,133 @@ def resume_director(director):
     return result
 
 
+_ACCESS_PASS_FIELDS = ('accesses', 'accessIndex', 'accessAxis', 'passIndex', 'passStartTargetMm3',
+    'drillAttempts', 'cycleStartTargetMm3', 'cycleBoneRemovedCells', 'coreSearchExhausted',
+    'coreAttempts', 'corePositioning')
+
+
+def _checked_director_history(engine, director):
+    engine.scene.require_cache_source()
+    if director.get('schema') != SCHEMA or director.get('sourceSceneId') != engine.scene.identity:
+        raise ValueError('Access pass director source differs')
+    if director.get('lastStateId', director.get('startStateId')) != engine.state_id:
+        raise ValueError('Access pass director action boundary differs')
+    if len(engine.actions) != len(engine.history) or any(
+            row.get('action') != action or row.get('status') not in ('accepted', 'partial')
+            or (i and row.get('stateBefore') != engine.history[i - 1].get('stateAfter'))
+            for i, (action, row) in enumerate(zip(engine.actions, engine.history))):
+        raise ValueError('Access pass requires complete matching public action history')
+    if engine.history and engine.history[-1].get('stateAfter') != engine.state_id:
+        raise ValueError('Access pass current history boundary differs')
+
+
+def _access_pass_boundary(engine):
+    return {'position': len(engine.actions), 'stateId': engine.state_id,
+            'actionPrefixHash': semantic_digest(engine.actions)}
+
+
+def _check_access_pass_boundary(engine, boundary):
+    position = boundary.get('position')
+    if type(position) is not int or not 0 <= position <= len(engine.actions):
+        raise ValueError('Deferred access historical boundary position differs')
+    state_id = (engine.state_id if position == len(engine.actions) else
+                engine.history[position - 1]['stateAfter'] if position else engine.history[0]['stateBefore'])
+    if (boundary.get('stateId') != state_id
+            or boundary.get('actionPrefixHash') != semantic_digest(engine.actions[:position])):
+        raise ValueError('Deferred access historical boundary differs from real action history')
+
+
+def _check_deferred_access_pass(engine, director):
+    pending = director.get('deferredAccessPass', {})
+    if pending.get('status') != 'pending':
+        raise ValueError('No pending deferred access pass; it may already be resumed')
+    if pending.get('sourceSceneId') != engine.scene.identity:
+        raise ValueError('Deferred access pass source differs')
+    if pending.get('passHash') != semantic_digest(pending.get('pass')):
+        raise ValueError('Deferred access pass archive differs')
+    if pending.get('archiveHash') != semantic_digest({key: pending.get(key) for key in (
+            'sourceSceneId', 'requestBoundary', 'deferBoundary', 'targetAtDeferMm3', 'pass')}):
+        raise ValueError('Deferred access pass boundary archive differs')
+    for name in ('requestBoundary', 'deferBoundary', 'stoppedBoundary'):
+        if name not in pending:
+            raise ValueError('Deferred access pass has no stopped historical boundary')
+        _check_access_pass_boundary(engine, pending[name])
+    if not (pending['requestBoundary']['position'] <= pending['deferBoundary']['position'] <= pending['stoppedBoundary']['position']):
+        raise ValueError('Deferred access historical boundaries are out of order')
+    for trial in pending.get('trials', []):
+        _check_access_pass_boundary(engine, trial['startBoundary'])
+        if trial['startBoundary']['position'] < pending['stoppedBoundary']['position']:
+            raise ValueError('Deferred trial predates the stopped access boundary')
+    return pending
+
+
+def request_access_pass_deferral(engine, director, *, reason='bounded directional trial'):
+    """Add a detached request; finish the current superior opening normally.
+
+    No stage/status/access/cycle field or engine data changes. Only the existing
+    natural _advance_access boundary can freeze the unfinished pass and enter
+    ordinary cleanup. One request/pass is retained for this director.
+    """
+    _checked_director_history(engine, director)
+    if (director.get('scenario') != 'primary' or director.get('status') not in ('ready', 'running')
+            or director.get('stage') not in ('access_setup', 'drill', 'cusa_setup', 'remove', 'core', 'assistant_setup', 'assistant_retract')
+            or director.get('accessAxis', 2) != 2):
+        raise ValueError('Deferral requires an unfinished primary superior opening')
+    index = director.get('accessIndex')
+    if type(index) is not int or not 0 <= index < len(director.get('accesses', [])):
+        raise ValueError('Deferral requires a current access opening')
+    if director.get('accessPassDeferral') or director.get('deferredAccessPass'):
+        raise ValueError('An access pass deferral was already requested')
+    if type(reason) is not str or not reason.strip() or len(reason) > 500:
+        raise ValueError('Deferral requires a bounded nonempty reason')
+    result = copy.deepcopy(director)
+    result['accessPassDeferral'] = {'status': 'requested', 'sourceSceneId': engine.scene.identity,
+        'boundary': _access_pass_boundary(engine), 'accessAxis': 2, 'accessIndex': index,
+        'accessId': director['accesses'][index]['id'], 'reason': reason}
+    return result
+
+
+def resume_deferred_access_pass(engine, director):
+    """Restore a frozen superior scheduling pass at a real stopped boundary.
+
+    All intervening trial actions and physical state remain. Re-rank only the
+    unvisited tail against current retained source identities, then propose the
+    existing checked exterior transition. Trial removal is excluded from the
+    restored pass-progress baseline. This never withdraws an inserted tool.
+    """
+    _checked_director_history(engine, director)
+    if director.get('scenario') != 'primary' or director.get('status') != 'stopped':
+        raise ValueError('Resume requires a genuinely stopped primary boundary')
+    if engine.state['holds'] or any(slot['inserted'] or slot['active'] or slot['grip'] for slot in engine.state['slots'].values()):
+        raise ValueError('Withdraw, deactivate and release both tools before resuming a deferred pass')
+    pending = _check_deferred_access_pass(engine, director)
+    frozen = pending['pass']; index = frozen['accessIndex']
+    if not frozen['accesses'] or not 0 <= index <= len(frozen['accesses']) or frozen.get('accessAxis') != 2:
+        raise ValueError('Deferred superior access archive has an invalid cursor')
+    result = resume_director(director)
+    result.setdefault('interveningAccessTrials', []).append({
+        **{key: copy.deepcopy(director[key]) for key in _ACCESS_PASS_FIELDS if key in director},
+        'endBoundary': _access_pass_boundary(engine), 'stopReason': director.get('stopReason'),
+        'stoppedStage': director.get('stage'),
+        'directionalTransition': copy.deepcopy(director.get('directionalTransition'))})
+    for key in _ACCESS_PASS_FIELDS:
+        result.pop(key, None)
+    result.update(copy.deepcopy(frozen))
+    current_target = engine.metrics()['targetRemovedMm3']
+    result['passStartTargetMm3'] = frozen['passStartTargetMm3'] + (current_target - pending['targetAtDeferMm3'])
+    result['accesses'] = _rank_accesses(engine, result['accesses'], index)
+    if 'fieldCleanup' in result:
+        result.setdefault('priorFieldCleanups', []).append(result.pop('fieldCleanup'))
+    result.update(stage='directional_transition', fieldCleanupAttempted=False)
+    result['directionalTransition'] = {'poses': _exterior_transition(engine, result['accesses'][index if index < len(result['accesses']) else 0]['outsidePose']),
+        'index': 0, 'results': [], 'status': 'prepared',
+        'qualification': 'Resume deferred superior pass through ordinary checked exterior public actions.'}
+    result['deferredAccessPass'].update(status='resumed', resumedBoundary=_access_pass_boundary(engine),
+        targetAtResumeMm3=current_target, restoredPassStartTargetMm3=result['passStartTargetMm3'])
+    result['accessPassDeferral']['status'] = 'resumed'
+    return result
+
+
 def configure_directional_fallback(engine, director, *, axis, limit=8):
     """Prepare an evidenced source-axis pass only at a withdrawn residual endpoint.
 
@@ -111,6 +238,10 @@ def configure_directional_fallback(engine, director, *, axis, limit=8):
         raise ValueError('Directional fallback requires native axis 0/1 and 1..32 accesses')
     if axis in [row['axis'] for row in director.get('directionalPasses', [])]:
         raise ValueError('This bounded directional pass was already configured')
+    pending = director.get('deferredAccessPass', {})
+    if pending.get('status') == 'pending':
+        _checked_director_history(engine, director)
+        _check_deferred_access_pass(engine, director)
     from .full_case_directional import directional_access_candidates, rank_directional_accesses
     accesses = directional_access_candidates(engine, axis=axis, limit=limit)
     accesses = rank_directional_accesses(engine, accesses)
@@ -118,13 +249,19 @@ def configure_directional_fallback(engine, director, *, axis, limit=8):
     if not accesses:
         raise ValueError('No retained target capacity in the bounded directional candidates')
     result = resume_director(director)
-    result.setdefault('completedAccessPasses', []).append({
-        'axis': result.get('accessAxis', 2), 'accesses': result['accesses'],
-        'endPosition': len(engine.actions), 'endStateId': engine.state_id,
-        'passIndex': result.get('passIndex', 0), 'stopReason': director.get('stopReason')})
+    pending = result.get('deferredAccessPass', {})
+    if pending.get('status') == 'pending' and result.get('accessAxis', 2) == pending['pass']['accessAxis']:
+        result['accessPassDeferral']['status'] = 'trial-configured'
+    else:
+        result.setdefault('completedAccessPasses', []).append({
+            'axis': result.get('accessAxis', 2), 'accesses': result['accesses'],
+            'endPosition': len(engine.actions), 'endStateId': engine.state_id,
+            'passIndex': result.get('passIndex', 0), 'stopReason': director.get('stopReason')})
     result.setdefault('directionalPasses', []).append({'axis': axis, 'startPosition': len(engine.actions),
         'startStateId': engine.state_id, 'candidateIds': [access['id'] for access in accesses],
         'qualification': 'Source-column candidates only; every physical action still requires public preview and step.'})
+    if pending.get('status') == 'pending':
+        pending.setdefault('trials', []).append({'axis': axis, 'startBoundary': _access_pass_boundary(engine)})
     if 'fieldCleanup' in result:
         result.setdefault('priorFieldCleanups', []).append(result.pop('fieldCleanup'))
     result.update(stage='directional_transition', accesses=accesses, accessAxis=axis, accessIndex=0,
@@ -319,7 +456,31 @@ def _frontier_candidates(engine, access):
 
 
 def _advance_access(engine, meta):
+    finished = meta['accessIndex']
     meta['accessIndex'] += 1
+    request = meta.get('accessPassDeferral', {})
+    if request.get('status') == 'requested':
+        if (request.get('sourceSceneId') != engine.scene.identity
+                or request.get('accessAxis') != meta.get('accessAxis', 2)
+                or request.get('accessIndex') != finished
+                or request.get('accessId') != meta['accesses'][finished]['id']):
+            raise ValueError('Deferred opening request differs from the naturally finished access')
+        _check_access_pass_boundary(engine, request['boundary'])
+        frozen = {key: copy.deepcopy(meta[key]) for key in _ACCESS_PASS_FIELDS if key in meta}
+        # Older native directors used these same implicit pass defaults.
+        frozen.update(accessAxis=meta.get('accessAxis', 2), passIndex=meta.get('passIndex', 0),
+                      passStartTargetMm3=meta.get('passStartTargetMm3', 0.))
+        meta['deferredAccessPass'] = {'status': 'pending', 'sourceSceneId': engine.scene.identity,
+            'requestBoundary': copy.deepcopy(request['boundary']), 'deferBoundary': _access_pass_boundary(engine),
+            'targetAtDeferMm3': engine.metrics()['targetRemovedMm3'],
+            'pass': frozen, 'passHash': semantic_digest(frozen),
+            'qualification': 'Current opening finished normally; remaining source-bound access opportunities are retained for resumption.'}
+        pending = meta['deferredAccessPass']
+        pending['archiveHash'] = semantic_digest({key: pending[key] for key in (
+            'sourceSceneId', 'requestBoundary', 'deferBoundary', 'targetAtDeferMm3', 'pass')})
+        request['status'] = 'deferred'
+        meta['stage'] = 'cleanup'
+        return
     # The original candidate set stays fixed. Prefer retained source target
     # over neighboring columns already cleared by a previous core pocket.
     meta['accesses'] = _rank_accesses(engine, meta['accesses'], meta['accessIndex'])
@@ -661,9 +822,24 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
             else:
                 meta['status'] = 'complete' if remaining <= 1e-9 else 'stopped'
                 direction = {0: 'left', 1: 'anterior'}.get(meta.get('accessAxis'), 'superior')
-                meta['stopReason'] = ('Complete modeled owned-target removal.' if remaining <= 1e-9 else
-                    'Configured '+direction+' access/frontier candidates and bounded attempts are exhausted under full tool/shaft collisions, target-only removal and supplied protection. '
-                    'Further access strategies remain untested; residual target is retained. Missing dura/attachment/functional evidence remains UNKNOWN.')
+                pending = meta.get('deferredAccessPass', {})
+                deferred_here = (pending.get('status') == 'pending'
+                    and meta.get('accessPassDeferral', {}).get('status') == 'deferred'
+                    and meta.get('accessAxis', 2) == pending['pass']['accessAxis'])
+                if remaining <= 1e-9:
+                    meta['stopReason'] = 'Complete modeled owned-target removal.'
+                elif deferred_here:
+                    count = len(pending['pass']['accesses']) - pending['pass']['accessIndex']
+                    meta['stopReason'] = ('Superior access pass deferred after the current opening for a bounded directional trial; '
+                        + str(count) + ' unvisited access opportunities and prior pass progress are retained. '
+                        'Residual target and the unfinished superior pass are retained for resumption.')
+                else:
+                    meta['stopReason'] = ('Configured '+direction+' access/frontier candidates and bounded attempts are exhausted under full tool/shaft collisions, target-only removal and supplied protection. '
+                        'Further access strategies remain untested; residual target is retained. Missing dura/attachment/functional evidence remains UNKNOWN.')
+                    if pending.get('status') == 'pending':
+                        meta['stopReason'] += ' The superior access pass remains deferred for later resumption.'
+                if deferred_here and 'stoppedBoundary' not in pending:
+                    pending['stoppedBoundary'] = _access_pass_boundary(candidate)
             _phase(meta, 'endpoint', 'Endpoint and explained residual', len(candidate.actions))
             break
         else:

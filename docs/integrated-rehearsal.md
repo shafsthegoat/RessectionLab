@@ -176,6 +176,14 @@ opening. A rejected or partial transit stops at its actual state. These bounded
 source-column opportunities are uncalibrated engineering candidates; they do
 not establish clinical approach feasibility or global target reachability.
 
+A scheduling request can defer an unfinished superior pass after its current
+opening finishes normally and the public cleanup withdraws both hands. Its
+endpoint explicitly retains the unvisited opportunities. A subsequent stopped
+and withdrawn boundary can resume the saved list, cursor and pass counters,
+re-ranking the remaining tail against current state while preserving all trial
+actions. Source/history checks bind the archived boundaries; intervening target
+removal is excluded from the restored pass-progress comparison.
+
 Pause computation ends automatic scheduling after the current bounded slice.
 Replay observes actual engine microsteps at the existing 0.2-second cadence;
 intermediate frames are read-only and their final boundary must equal verified
