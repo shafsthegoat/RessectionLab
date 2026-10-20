@@ -90,3 +90,61 @@ def test_point_box_distance_preserves_exact_original_floats(basis):
         point = scene.voxel_to_world(voxel)
         np.testing.assert_array_equal(_segment_cell_distances(scene, indices, point, point),
                                       _original_point_intervals(scene, indices, point))
+
+
+def _reference_segment_cell_distances(scene, indices, start, end):
+    """Distances to orthogonal voxel boxes; a lower bound for sheared cells.
+
+    In a box-aligned physical frame the squared segment-to-box distance is a
+    convex piecewise quadratic in segment fraction. Crossing the six box faces
+    partitions [0,1]; minimize each interval's quadratic and keep the minimum.
+    This uses full cells and handles segments, points, and parallel faces alike.
+    """
+    spacing = scene._orthogonal_spacing
+    if spacing is None:
+        return point_segment_distances(scene.voxel_to_world(indices), start, end) - scene._cell_radius_mm
+    count = len(indices)
+    if not count:
+        return np.empty(0)
+    origin = (scene.world_to_voxel(start) - indices) * spacing
+    delta = (scene.world_to_voxel(end) - scene.world_to_voxel(start)) * spacing
+    half = spacing / 2
+    if not np.any(delta):
+        # A point has the same distance in every segment interval. Keep the
+        # existing origin/excess/square/sum arithmetic, without constructing
+        # seven identical copies per cell. Exact zero only; no new tolerance.
+        excess = np.maximum(np.abs(origin) - half, 0)
+        return np.sqrt(np.sum(excess**2, axis=1))
+    crossings = np.zeros((count, 6))
+    for axis in range(3):
+        if abs(delta[axis]) > 1e-9:
+            crossings[:, 2 * axis] = (-half[axis] - origin[:, axis]) / delta[axis]
+            crossings[:, 2 * axis + 1] = (half[axis] - origin[:, axis]) / delta[axis]
+    times = np.sort(np.concatenate([np.zeros((count, 1)), np.clip(crossings, 0, 1), np.ones((count, 1))], axis=1), axis=1)
+    left, right = times[:, :-1], times[:, 1:]
+    midpoint = (left + right) / 2
+    positions = origin[:, None, :] + midpoint[:, :, None] * delta
+    outside = np.abs(positions) > half
+    offsets = origin[:, None, :] - np.where(positions > half, half, -half)
+    numerator = np.sum(np.where(outside, offsets * delta, 0), axis=2)
+    denominator = np.sum(np.where(outside, delta**2, 0), axis=2)
+    optimum = np.divide(-numerator, denominator, out=midpoint.copy(), where=denominator > 1e-9**2)
+    optimum = np.clip(optimum, left, right)
+    positions = origin[:, None, :] + optimum[:, :, None] * delta
+    excess = np.maximum(np.abs(positions) - half, 0)
+    return np.sqrt(np.min(np.sum(excess**2, axis=2), axis=1))
+
+
+@pytest.mark.parametrize('axis', [0,1,2])
+@pytest.mark.parametrize('basis', [np.diag([1.,1.,1.]),np.diag([-1.,2.,.4])])
+def test_axial_capsule_distances_preserve_original_minimizer(axis,basis):
+    affine=np.eye(4); affine[:3,:3]=basis; affine[:3,3]=[-10.464996337890625,30.441162109375,-421.25]
+    scene=GeometryScene(np.zeros((20,20,20),bool),affine)
+    rng=np.random.default_rng(180+axis)
+    indices=rng.integers(0,20,size=(1000,3))
+    for _ in range(100):
+        start=rng.uniform(-3,23,size=3); end=start.copy();end[axis]+=rng.uniform(-40,40)
+        a,b=scene.voxel_to_world(np.array([start,end]))
+        actual=_segment_cell_distances(scene,indices,a,b)
+        expected=_reference_segment_cell_distances(scene,indices,a,b)
+        np.testing.assert_array_equal(actual,expected)

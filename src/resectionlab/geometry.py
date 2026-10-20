@@ -340,6 +340,17 @@ def _segment_cell_distances(scene: GeometryScene, indices: NDArray, start: NDArr
         # seven identical copies per cell. Exact zero only; no new tolerance.
         excess = np.maximum(np.abs(origin) - half, 0)
         return np.sqrt(np.sum(excess**2, axis=1))
+    changing = np.flatnonzero(delta)
+    if len(changing) == 1 and abs(delta[changing[0]]) > _EPS:
+        # With a box-aligned segment, the other two coordinates are constant.
+        # Project zero onto its varying interval; a crossing lies inside the
+        # box and otherwise the nearest endpoint is the exact minimizer. Keep
+        # the same endpoint arithmetic and squared-distance reduction.
+        axis = int(changing[0])
+        positions = origin.copy()
+        positions[:, axis] += np.clip(-origin[:, axis] / delta[axis], 0., 1.) * delta[axis]
+        excess = np.maximum(np.abs(positions) - half, 0)
+        return np.sqrt(np.sum(excess**2, axis=1))
     crossings = np.zeros((count, 6))
     for axis in range(3):
         if abs(delta[axis]) > _EPS:
