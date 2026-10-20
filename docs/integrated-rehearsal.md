@@ -208,8 +208,7 @@ The observed-frame disk allowance defaults to 512 MiB. Long episodes can set
 `RESSECTIONLAB_OBSERVED_CACHE_MAX_DISK_BYTES=8589934592` for an explicit 8 GiB
 ceiling in both frame preparation and the Electron launch environment. Values
 must be integer bytes from 1 through 8 GiB; an explicit constructor allowance
-takes precedence. The canonical replay cache retains its separate 512 MiB cap,
-and frame RAM, transient JSON and per-action staging limits remain unchanged.
+takes precedence. Frame RAM, transient JSON and per-action staging limits remain unchanged.
 Compressed file reads remain capped at 64 MiB and the configured disk allowance,
 so a larger disk budget cannot authorize a larger unauthenticated memory read.
 Reservation protects the current branch's committed frame entry: insufficient
@@ -217,6 +216,26 @@ space skips new cache publication while retaining its earlier authenticated
 frames. Unrelated old entries remain eligible for eviction. Preparation must
 measure actual disk use and verify every action's retained frames; a publication
 counter or a size estimate alone does not establish complete playback coverage.
+
+The canonical replay cache has a separate disk-only allowance, also 512 MiB by
+default. Set `RESSECTIONLAB_VERIFIED_CACHE_MAX_DISK_BYTES=8589934592` to opt into
+an 8 GiB ceiling for long canonical verification and fresh-process reads. It
+accepts integer bytes from 1 through 8 GiB; an explicit `max_disk_bytes` constructor
+argument overrides the environment, even if that variable is invalid. Invalid
+unoverridden settings fail cache construction. Canonical compressed file reads
+remain bounded by 512 MiB and the configured disk allowance; decompression and
+combined state JSON retain their 128 MiB limit. Source, implementation, complete
+action replay, checkpoint equality, authentication and atomic publication checks
+are unchanged. This allowance does not establish that an episode fits; verify
+actual retained entries after preparation.
+
+For a long final-case pipeline, provide both variables consistently to canonical
+verification, observed-frame export and the Electron launch:
+
+```sh
+export RESSECTIONLAB_VERIFIED_CACHE_MAX_DISK_BYTES=8589934592
+export RESSECTIONLAB_OBSERVED_CACHE_MAX_DISK_BYTES=8589934592
+```
 
 Long full-case native archives use bounded lossless JSON compression. A disposable
 local authenticated cache is published only after complete canonical replay,

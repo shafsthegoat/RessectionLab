@@ -156,7 +156,8 @@ def test_budget_unavailable_is_cache_miss_and_fallback_remains_exact(tmp_path):
     assert info['readOnly'] and view.state_id==token.history[0]['stateBefore']
 
 
-def test_observed_budget_configuration_keeps_canonical_limit(tmp_path, monkeypatch):
+def test_observed_budget_configuration_keeps_separate_canonical_policy(tmp_path, monkeypatch):
+    monkeypatch.delenv('RESSECTIONLAB_VERIFIED_CACHE_MAX_DISK_BYTES',raising=False)
     monkeypatch.delenv(DISK_BUDGET_ENV, raising=False)
     assert SurgicalFrameCache(directory=tmp_path).store.owner.max_disk_bytes==512*1024**2
     monkeypatch.setenv(DISK_BUDGET_ENV, str(8*1024**3))
@@ -168,8 +169,11 @@ def test_observed_budget_configuration_keeps_canonical_limit(tmp_path, monkeypat
     assert SurgicalFrameCache(directory=tmp_path,max_disk_bytes=4096).store.owner.max_disk_bytes==4096
     assert ObservedFrameStore(tmp_path,max_disk_bytes=4096).max_file_bytes==4096
     assert VerifiedSurgicalCache(tmp_path).max_disk_bytes==512*1024**2
-    with pytest.raises(ValueError,match='512 MiB'):
-        VerifiedSurgicalCache(tmp_path,max_disk_bytes=512*1024**2+1)
+    assert VerifiedSurgicalCache(tmp_path,max_disk_bytes=8*1024**3).max_disk_bytes==8*1024**3
+    with pytest.raises(ValueError): VerifiedSurgicalCache(tmp_path,max_disk_bytes=8*1024**3+1)
+    monkeypatch.setenv('RESSECTIONLAB_VERIFIED_CACHE_MAX_DISK_BYTES','invalid')
+    assert ObservedFrameStore(tmp_path).owner.max_disk_bytes==8*1024**3
+    assert ObservedFrameStore(tmp_path,max_disk_bytes=4096).owner.max_disk_bytes==4096
     with pytest.raises(ValueError): ObservedFrameStore(tmp_path,max_disk_bytes=8*1024**3+1)
     with pytest.raises(ValueError): ObservedFrameStore(tmp_path,max_disk_bytes=True)
 

@@ -12,7 +12,7 @@ import pytest
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_replay_cache import SurgicalReplayCache
 from resectionlab.surgical_scene import SurgicalScene
-from resectionlab.surgical_verified_cache import VerifiedSurgicalCache
+from resectionlab.surgical_verified_cache import VerifiedSurgicalCache, DISK_BUDGET_ENV
 
 
 def scene():
@@ -188,6 +188,63 @@ def test_disk_budget_is_bounded_and_oversized_admission_retains_normal_replay(tm
         assert SurgicalEngine.restore(full.scene, full.snapshot(), use_cache=True, verified_cache=bounded).state_id == full.state_id
         assert bounded.statistics['diskBytes'] <= bounded.max_disk_bytes
     assert bounded.statistics['ownedMemoryCacheBytes'] == 0
+
+
+def test_canonical_disk_policy_is_opt_in_and_independent_of_file_limit(tmp_path,monkeypatch):
+    monkeypatch.delenv(DISK_BUDGET_ENV,raising=False)
+    default=VerifiedSurgicalCache(tmp_path)
+    assert default.max_disk_bytes==default.max_file_bytes==512*1024**2
+    monkeypatch.setenv(DISK_BUDGET_ENV,str(8*1024**3))
+    expanded=VerifiedSurgicalCache(tmp_path)
+    assert expanded.max_disk_bytes==8*1024**3
+    assert expanded.max_file_bytes==expanded.statistics['maxFileBytes']==512*1024**2
+    assert expanded.statistics['maxTransientJsonBytes']==128*1024**2
+    assert expanded.statistics['ownedMemoryCacheBytes']==0
+    explicit=VerifiedSurgicalCache(tmp_path,max_disk_bytes=4096)
+    assert explicit.max_disk_bytes==explicit.max_file_bytes==4096
+    for invalid in (0,-1,8*1024**3+1,True,1.5):
+        with pytest.raises(ValueError): VerifiedSurgicalCache(tmp_path,max_disk_bytes=invalid)
+    assert not list(tmp_path.iterdir())
+
+
+@pytest.mark.parametrize('value',['invalid','0','-1',str(8*1024**3+1),'1.5'])
+def test_invalid_canonical_budget_environment_fails_early_unless_overridden(tmp_path,monkeypatch,value):
+    monkeypatch.setenv(DISK_BUDGET_ENV,value)
+    with pytest.raises(ValueError,match=DISK_BUDGET_ENV): VerifiedSurgicalCache(tmp_path)
+    assert VerifiedSurgicalCache(tmp_path,max_disk_bytes=4096).max_disk_bytes==4096
+    assert not list(tmp_path.iterdir())
+
+
+@pytest.mark.parametrize('target',['manifest','descriptor','part'])
+def test_expanded_disk_budget_rejects_oversized_files_before_read(tmp_path,monkeypatch,target):
+    from resectionlab.surgical_verified_cache import _decode
+    full=engine(2); record=full.snapshot()
+    cache=VerifiedSurgicalCache(tmp_path,max_disk_bytes=8*1024**3)
+    SurgicalEngine.restore(full.scene,record,use_cache=True,verified_cache=cache)
+    assert cache.publications==1
+    entry=next(tmp_path.glob('entry-*'))
+    descriptor=entry/'1.json.gz'
+    part=entry/_decode(descriptor.read_bytes())['fields']['slots']['file']
+    path={'manifest':entry/'manifest.json.gz','descriptor':descriptor,'part':part}[target]
+    with path.open('wb') as stream: stream.truncate(cache.max_file_bytes+1)
+    original_fdopen=os.fdopen
+    reads=[]
+
+    class CheckedStream:
+        def __init__(self,stream): self.stream=stream
+        def __enter__(self): return self
+        def __exit__(self,*args): return self.stream.__exit__(*args)
+        def __getattr__(self,name): return getattr(self.stream,name)
+        def read(self,*args):
+            size=os.fstat(self.stream.fileno()).st_size
+            assert size<=cache.max_file_bytes, 'Oversized cache file reached stream.read'
+            reads.append(size)
+            return self.stream.read(*args)
+
+    monkeypatch.setattr(os,'fdopen',lambda *args,**kwargs:CheckedStream(original_fdopen(*args,**kwargs)))
+    assert cache.restore(SurgicalEngine,full.scene,record,position=1) is None
+    assert cache.hits==0 and reads
+    if target=='manifest': assert reads==[32]
 
 
 def test_content_addressed_field_tampering_and_missing_fields_refuse_admission(tmp_path):

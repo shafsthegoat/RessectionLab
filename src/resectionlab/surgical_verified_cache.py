@@ -33,6 +33,8 @@ from .core import semantic_digest
 SCHEMA = 'resectionlab.verified-surgical-cache.v2'
 STATE_SCHEMA = 'resectionlab.verified-surgical-state-fields.v1'
 MAX_DISK_BYTES = 512 * 1024**2
+MAX_DISK_ALLOWANCE_BYTES = 8 * 1024**3
+DISK_BUDGET_ENV = 'RESSECTIONLAB_VERIFIED_CACHE_MAX_DISK_BYTES'
 MAX_JSON_BYTES = 128 * 1024**2
 DEFAULT_DIRECTORY = Path(__file__).resolve().parents[2] / 'testcases/outputs/.verified-surgical-cache'
 _MODULES = ('core', 'geometry', 'surgical_scene', 'surgical_engine', 'surgical_tools',
@@ -204,11 +206,20 @@ def _read(path, limit):
 
 
 class VerifiedSurgicalCache:
-    # Storage-policy subclasses may set a separate bounded allowance. The
-    # canonical replay cache itself retains its 512 MiB constructor limit.
-    _disk_budget_limit = MAX_DISK_BYTES
+    _disk_budget_limit = MAX_DISK_ALLOWANCE_BYTES
 
-    def __init__(self, directory=None, *, max_disk_bytes=MAX_DISK_BYTES):
+    def __init__(self, directory=None, *, max_disk_bytes=None):
+        if max_disk_bytes is None:
+            configured = os.environ.get(DISK_BUDGET_ENV)
+            if configured is None:
+                max_disk_bytes = MAX_DISK_BYTES
+            else:
+                try:
+                    max_disk_bytes = int(configured)
+                except ValueError as error:
+                    raise ValueError(f'{DISK_BUDGET_ENV} must be integer bytes in 1..{self._disk_budget_limit}') from error
+                if not 1 <= max_disk_bytes <= self._disk_budget_limit:
+                    raise ValueError(f'{DISK_BUDGET_ENV} must be integer bytes in 1..{self._disk_budget_limit}')
         if type(max_disk_bytes) is not int or not 1 <= max_disk_bytes <= self._disk_budget_limit:
             raise ValueError(f'Verified cache disk budget must be 1..{self._disk_budget_limit // 1024**2} MiB')
         self.directory = Path(directory) if directory is not None else DEFAULT_DIRECTORY
@@ -260,9 +271,15 @@ class VerifiedSurgicalCache:
     @property
     def statistics(self):
         return {'diskBytes': self._bytes() if self.directory.exists() else 0,
-                'maxDiskBytes': self.max_disk_bytes, 'ownedMemoryCacheBytes': 0,
+                'maxDiskBytes': self.max_disk_bytes, 'maxFileBytes': self.max_file_bytes, 'ownedMemoryCacheBytes': 0,
                 'maxMemoryCacheBytes': 128 * 1024**2, 'maxTransientJsonBytes': MAX_JSON_BYTES,
                 'hits': self.hits, 'misses': self.misses, 'publications': self.publications}
+
+    @property
+    def max_file_bytes(self):
+        # Aggregate disk policy must not widen the existing compressed read
+        # allowance or the separate MAX_JSON_BYTES decompression limit.
+        return min(self.max_disk_bytes, MAX_DISK_BYTES)
 
     def _room(self, incoming, keep):
         entries = sorted((path for path in self.directory.iterdir()
@@ -291,7 +308,7 @@ class VerifiedSurgicalCache:
             snapshot_hash = semantic_digest(record)
             key = self._key()
             entry = self.directory / self._entry_name(snapshot_hash, fingerprint)
-            compressed = _read(entry / 'manifest.json.gz', self.max_disk_bytes)
+            compressed = _read(entry / 'manifest.json.gz', self.max_file_bytes)
             signature = _read(entry / 'manifest.mac', 64)
             if not hmac.compare_digest(signature, hmac.digest(key, compressed, 'sha256').hex().encode()):
                 raise ValueError('Verified cache authentication failed')
@@ -307,10 +324,10 @@ class VerifiedSurgicalCache:
             blob = manifest['states'][count]
             if blob['file'] != f'{count}.json.gz':
                 raise ValueError('Verified cache state position differs')
-            compressed_state = _read(entry / blob['file'], self.max_disk_bytes)
+            compressed_state = _read(entry / blob['file'], self.max_file_bytes)
             if hashlib.sha256(compressed_state).hexdigest() != blob['sha256']:
                 raise ValueError('Verified cache state authentication failed')
-            state = _restore_state(entry, _decode(compressed_state), self.max_disk_bytes)
+            state = _restore_state(entry, _decode(compressed_state), self.max_file_bytes)
             options = {}
             if 'protectionContract' in record:
                 from .surgical_rl_protection import restore_protection_contract
