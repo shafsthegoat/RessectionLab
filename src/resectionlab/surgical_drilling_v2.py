@@ -79,13 +79,19 @@ def _thermal(engine, dt, powers):
     capacity = p['heatCapacityJPerMm3K'] * engine.scene.voxel_mm3
     tau = p['coolingTimeSeconds']; ambient = p['ambientTemperatureC']
     decay = math.exp(-dt / tau)
+    one_minus_decay = -math.expm1(-dt / tau)
+    threshold = p['doseThresholdC'] - ambient
+    can_shortcut = dt >= 0. and tau > 0. and threshold >= 0.
     for key in sorted(set(state['temperatureC']) | set(powers), key=int):
         old = state['temperatureC'].get(key, ambient) - ambient
         power = powers.get(key, 0.)
         equilibrium = power * tau / capacity
-        new = old * decay + equilibrium * (-math.expm1(-dt / tau))
+        new = old * decay + equilibrium * one_minus_decay
         state['temperatureC'][key] = ambient + new
-        state['thermalDoseCSeconds'][key] = state['thermalDoseCSeconds'].get(key, 0.) + _dose_integral(old, equilibrium, p['doseThresholdC'] - ambient, tau, dt)
+        # With no power, strictly subthreshold excess cannot cross upward.
+        # Preserve equality's legacy integral and its floating cancellation.
+        dose = 0. if can_shortcut and power == 0. and old < threshold else _dose_integral(old, equilibrium, threshold, tau, dt)
+        state['thermalDoseCSeconds'][key] = state['thermalDoseCSeconds'].get(key, 0.) + dose
         state['coolingLossJ'] += max(0., power * dt - capacity * (new - old))
 
 

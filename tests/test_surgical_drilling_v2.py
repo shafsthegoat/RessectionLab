@@ -1,4 +1,6 @@
 import copy
+import json
+import math
 from types import SimpleNamespace
 import numpy as np
 import pytest
@@ -140,3 +142,93 @@ def test_shared_step_same_cell_adds_power_and_accumulator_not_aliased():
         assert a.state['drillingV2'][field] == pytest.approx(b.state['drillingV2'][field])
     drill.begin_step(a)
     assert a._drill_step_powers == {}
+
+
+def _legacy_thermal(e, dt, powers):
+    """Frozen pre-optimization arithmetic from 5d05ddb3 for replay parity."""
+    p = drill.profile(e); state = e.state['drillingV2']
+    capacity = p['heatCapacityJPerMm3K'] * e.scene.voxel_mm3
+    tau = p['coolingTimeSeconds']; ambient = p['ambientTemperatureC']
+    decay = math.exp(-dt / tau)
+    for key in sorted(set(state['temperatureC']) | set(powers), key=int):
+        old = state['temperatureC'].get(key, ambient) - ambient
+        power = powers.get(key, 0.)
+        equilibrium = power * tau / capacity
+        new = old * decay + equilibrium * (-math.expm1(-dt / tau))
+        state['temperatureC'][key] = ambient + new
+        state['thermalDoseCSeconds'][key] = state['thermalDoseCSeconds'].get(key, 0.) + drill._dose_integral(old, equilibrium, p['doseThresholdC'] - ambient, tau, dt)
+        state['coolingLossJ'] += max(0., power * dt - capacity * (new - old))
+
+
+@pytest.mark.parametrize('dt', [0., math.ulp(0.), 1.e-20, .001, .1, 30.])
+def test_thermal_shortcut_preserves_exact_state_and_float_boundary_arithmetic(dt):
+    for ambient, threshold, tau in [(37., 43., 8.), (-37., -31., 8.),
+                                    (0., 0., 8.), (-0., 6., 1.e100)]:
+        actual = engine()
+        p = actual.scene.properties['tissuePhysicsV2']['bone']
+        p.update(ambientTemperatureC=ambient, doseThresholdC=threshold, coolingTimeSeconds=tau)
+        drill.initialize(actual)
+        thermal = actual.state['drillingV2']
+        thermal['temperatureC'] = {'2': float(np.nextafter(threshold, math.inf)),
+            '0': ambient, '1': threshold, '3': float(np.nextafter(threshold, -math.inf))}
+        thermal['thermalDoseCSeconds'] = {'2': -0., '0': .125, '1': 0.}
+        thermal['coolingLossJ'] = -0.
+        expected = copy.deepcopy(actual)
+        # Cover both zero-power cooling and existing/new powered fields.
+        powers = {'2': .001, '4': .002}
+        _legacy_thermal(expected, dt, powers)
+        drill._thermal(actual, dt, powers)
+        encode = lambda state: json.dumps(state, separators=(',', ':'), allow_nan=False)
+        assert encode(actual.state) == encode(expected.state)
+        assert list(actual.state['drillingV2']['temperatureC']) == list(expected.state['drillingV2']['temperatureC'])
+
+
+def test_threshold_equality_retains_original_dose_integral(monkeypatch):
+    e = engine(); drill.initialize(e)
+    e.state['drillingV2']['temperatureC'] = {'0': 37., '1': 43.}
+    original = drill._dose_integral
+    calls = []
+    def observed(*args):
+        calls.append(args)
+        return original(*args)
+    monkeypatch.setattr(drill, '_dose_integral', observed)
+    drill._thermal(e, 1.e-20, {})
+    assert len(calls) == 1 and calls[0][0] == 6.
+
+
+def test_public_drill_preview_partial_rejection_and_cooling_match_legacy(monkeypatch):
+    from resectionlab.surgical_engine import SurgicalEngine
+    from resectionlab.surgical_scene import SurgicalScene
+    from resectionlab.surgical_physics_v2 import default_profile
+    labels = np.zeros((16, 16, 16), np.uint16)
+    labels[4:7, 4:7, 8] = 1; labels[5, 5, 6] = 2
+    scene = SurgicalScene(labels, np.eye(4), [
+        {'id': 1, 'name': 'bone', 'material': 'bone'},
+        {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True}],
+        {'kind': 'explicit-thermal-parity-fixture'}, {'tissuePhysicsV2': default_profile()})
+    pose = lambda z: {'position': [5., 5., z], 'quaternion': [1., 0., 0., 0.]}
+    actions = [
+        {'slot': 'left', 'operation': 'place', 'pose': pose(15.), 'duration': .2,
+         'parameters': {'radiusMm': 1., 'forceN': 0., 'rpm': 0.}},
+        {'slot': 'left', 'operation': 'apply', 'pose': pose(7.), 'duration': .1},
+        {'slot': 'left', 'operation': 'apply', 'pose': pose(7.), 'duration': 5.,
+         'parameters': {'forceN': 20., 'rpm': 80000.}},
+        {'slot': 'left', 'operation': 'exchange', 'instrument': 'cusa', 'duration': .2},
+        {'slot': 'left', 'operation': 'withdraw', 'pose': pose(15.), 'duration': .7},
+        {'slot': 'right', 'operation': 'inspect', 'duration': 2.5},
+    ]
+    current = drill._thermal
+    runs = []
+    for implementation in (_legacy_thermal, current):
+        monkeypatch.setattr(drill, '_thermal', implementation)
+        actual = SurgicalEngine(scene)
+        outcomes = []
+        for action in actions:
+            preview = actual.preview(action, include_view=False)
+            outcome = actual.step(action)
+            assert outcome['stateId'] == preview['stateId']
+            outcomes.append(outcome)
+        assert actual.metrics()['drillRemovedVolumeMm3'] > 0.
+        assert {'accepted', 'partial', 'rejected'} <= {row['status'] for row in outcomes}
+        runs.append((actual.snapshot(), outcomes, actual.history))
+    assert runs[0] == runs[1]
