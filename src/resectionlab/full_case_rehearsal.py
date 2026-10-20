@@ -222,7 +222,10 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                 action = _prepare(candidate, 'cranial_drill', access['outsidePose'],
                     {'radiusMm': access['drillRadiusMm'], 'forceN': 20., 'rpm': 80000., 'duty': 1.})
                 if action is None:
-                    meta['stage'] = 'drill'; meta['drillAttempts'] = 0; continue
+                    meta['stage'] = 'drill'; meta['drillAttempts'] = 0
+                    meta['cycleBoneRemovedCells'] = 0
+                    meta['coreSearchExhausted'] = False
+                    continue
                 next_stage = stage
             elif stage == 'drill':
                 action = {'slot': 'left', 'operation': 'apply', 'duration': 10., 'pose': copy.deepcopy(access['entryPose'])}
@@ -261,7 +264,16 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                         # A broad burr can stop at a sloped target margin while
                         # bone remains above neighboring target. Clear the
                         # exposed target first, then deepen the SAME opening.
-                        meta['stage'] = 'access_setup'
+                        # Once both bounded searches exhaust without new bone
+                        # access, defer this opening to a later progressing
+                        # pass. Repeating identical dry drilling can otherwise
+                        # delay fresh target-bearing routes for tiny gains.
+                        # A capped productive core is not search exhaustion;
+                        # old saved metadata first gets a measured drill cycle.
+                        if meta.get('cycleBoneRemovedCells', 1) or meta.get('coreSearchExhausted') is not True:
+                            meta['stage'] = 'access_setup'
+                        else:
+                            _advance_access(candidate, meta)
                         continue
                     _advance_access(candidate, meta); continue
                 next_stage = stage
@@ -272,6 +284,7 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
             # local effects. Returning to access after only six effects caused
             # repeated withdrawal/exchange/drill cycles despite an open pocket.
             if meta.get('coreAttempts', 0) >= 32:
+                meta['coreSearchExhausted'] = False
                 meta['stage'] = 'remove'; continue
             for proposal in local_debulking_candidates(candidate, limit=4, radius_mm=6.):
                 if proposal['kind'] == 'core-positioning' and meta.get('corePositioning', 0) >= 2: continue
@@ -284,6 +297,7 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                 meta['corePositioning'] = meta.get('corePositioning', 0) + (proposal['kind'] == 'core-positioning')
                 break
             if action is None:
+                meta['coreSearchExhausted'] = True
                 meta['stage'] = 'remove'; continue
             next_stage = stage
         elif stage == 'assistant_setup':
@@ -422,11 +436,18 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
         commits += 1; meta['committedActions'] += 1
         meta['stage'] = next_stage
         if stage == 'drill':
+            if 'cycleBoneRemovedCells' in meta:
+                bone_labels = {r['id'] for r in candidate.scene.regions if r['material'] == 'bone'}
+                labels = candidate.scene.labels.ravel()
+                meta['cycleBoneRemovedCells'] += sum(
+                    int(labels[cell]) in bone_labels for cell in outcome.get('deltas', {}).get('removedCells', []))
             meta['drillAttempts'] += 1
             if outcome.get('reason') != 'BONE_CUTTING_IN_PROGRESS' or meta['drillAttempts'] >= 30:
                 meta['stage'] = 'cusa_setup'
         if stage == 'vascular': meta['vascularIndex'] += 1
-        if stage == 'core': meta['coreAttempts'] += 1
+        if stage == 'core':
+            meta['coreAttempts'] += 1
+            meta['coreSearchExhausted'] = False
         if stage == 'assistant_setup':
             if meta['assistantStep'] == 1 and action['operation'] == 'apply': meta['assistantStep'] = 2
             elif action['operation'] == 'activate': meta['stage'] = 'core'; meta['assistantParked'] = False
@@ -436,6 +457,7 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
             meta['stage'] = 'vascular_setup'
         elif stage == 'remove' and meta['scenario'] == 'primary':
             meta['stage'] = 'core'; meta['coreAttempts'] = 0; meta['corePositioning'] = 0
+            meta['coreSearchExhausted'] = False
             if not meta.get('assistantAttempted'):
                 from .full_case_assist import assistant_field_candidate
                 field = assistant_field_candidate(candidate, meta['accesses'][meta['accessIndex']])

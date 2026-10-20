@@ -158,6 +158,89 @@ def test_cancelled_slice_never_changes_the_input_engine_or_director(monkeypatch)
     assert engine.snapshot() == before and meta == before_meta
 
 
+@pytest.mark.parametrize('bone_cells,exhausted,expected_index', [
+    (0, True, 1), (1, True, 0), (0, False, 0), (None, True, 0), (0, None, 0),
+])
+def test_exhausted_dry_opening_defers_to_remaining_routes_but_keeps_revisits(
+        monkeypatch, bone_cells, exhausted, expected_index):
+    base = _engine()
+    labels = base.scene.labels.copy()
+    labels[14, 14, 8] = 2  # Retain a real target outside the removed pocket.
+    engine = SurgicalEngine(SurgicalScene(labels, np.eye(4), base.scene.regions,
+                                         {'kind': 'explicit-deferral-fixture'}, {}))
+    for action in _prepared().actions:
+        assert engine.step(action)['status'] == 'accepted'
+    assert engine.step({'slot': 'left', 'operation': 'apply', 'pose': _pose(7.),
+                        'duration': 1.})['status'] == 'accepted'
+    assert engine.metrics()['targetRemovedMm3'] == 9.
+    meta, _ = _removal_director(monkeypatch, engine)
+    access = meta['accesses'][0]
+    meta['accesses'].append({**copy.deepcopy(access), 'id': 'next-fixture'})
+    if bone_cells is not None:
+        meta['cycleBoneRemovedCells'] = bone_cells
+    if exhausted is not None:
+        meta['coreSearchExhausted'] = exhausted
+    monkeypatch.setattr(director, 'next_removal_candidates', lambda *_a, **_k: [])
+    before, old_meta = engine.snapshot(), copy.deepcopy(meta)
+    candidate, result = director.run_slice(engine, meta, max_actions=1)
+    assert result['accessIndex'] == expected_index
+    assert result['passIndex'] == 0 and len(result['accesses']) == 2
+    assert result['status'] == 'running'
+    # The scheduling change still uses ordinary checked instrument preparation.
+    assert len(candidate.actions) == len(engine.actions) + 1
+    assert candidate.metrics()['targetRemovedMm3'] == 9.
+    assert director.accounting(candidate)['originalTargetMm3'] == 10.
+    assert director.accounting(candidate)['healthyRemovedMm3'] == 0.
+    assert engine.snapshot() == before and meta == old_meta
+
+
+@pytest.mark.parametrize('attempts,expected', [(0, True), (32, False)])
+def test_core_search_failure_is_distinct_from_its_action_budget(monkeypatch, attempts, expected):
+    engine = _prepared()
+    meta, _ = _removal_director(monkeypatch, engine)
+    meta.update(stage='core', coreAttempts=attempts, coreSearchExhausted=not expected,
+                accesses=[])
+    monkeypatch.setattr(director, 'next_removal_candidates', lambda *_a, **_k: [])
+    candidate, result = director.run_slice(engine, meta, max_actions=1)
+    assert result['coreSearchExhausted'] is expected
+    assert candidate.metrics()['targetRemovedMm3'] == 0.
+    assert candidate.actions[-1]['operation'] == 'inspect'
+
+
+@pytest.mark.parametrize('legacy_mid_drill', [False, True])
+def test_new_drill_cycle_resets_and_counts_only_actual_owned_bone(monkeypatch, legacy_mid_drill):
+    from resectionlab.surgical_physics_v2 import default_profile
+    base = _engine()
+    labels = base.scene.labels.copy()
+    labels[7:10, 7:10, 11] = 3
+    engine = SurgicalEngine(SurgicalScene(labels, np.eye(4), [*base.scene.regions,
+        {'id': 3, 'name': 'skull estimate', 'material': 'bone'}],
+        {'kind': 'explicit-cycle-drill-fixture'}, {'tissuePhysicsV2': default_profile()}))
+    access = {'id': 'drill-fixture', 'drillRadiusMm': 3.,
+              'outsidePose': {'position': [8., 8., 27.], 'quaternion': [1., 0., 0., 0.]},
+              'entryPose': {'position': [8., 8., 8.], 'quaternion': [1., 0., 0., 0.]}}
+    monkeypatch.setattr(director, 'access_candidates', lambda *_a, **_k: [access])
+    meta = director.new_director(engine)
+    meta.update(stage='access_setup', cycleBoneRemovedCells=999, coreSearchExhausted=True)
+    prepared, meta = director.run_slice(engine, meta, max_actions=1)
+    assert prepared.actions[-1]['operation'] == 'place'
+    if legacy_mid_drill:
+        # An old save may start after earlier drill work that was not counted.
+        # Keep that cycle unknown until preparation starts a complete new one.
+        meta.update(stage='drill', drillAttempts=0)
+        del meta['cycleBoneRemovedCells']
+    drilled, result = director.run_slice(prepared, meta, max_actions=1)
+    actual = sum(labels.ravel()[cell] == 3 for cell in drilled.state['removed'])
+    assert actual == 9
+    if legacy_mid_drill:
+        assert 'cycleBoneRemovedCells' not in result
+    else:
+        assert result['cycleBoneRemovedCells'] == actual
+        assert result['coreSearchExhausted'] is False
+    assert drilled.metrics()['targetRemovedMm3'] == 0.
+    assert engine.state['removed'] == []
+
+
 def test_matching_strict_protection_replaces_only_an_intact_relaxed_engine(monkeypatch):
     from resectionlab import surgical_rl_protection as protection
     scene = _engine().scene
