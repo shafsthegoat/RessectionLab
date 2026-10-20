@@ -181,6 +181,14 @@ tool pose when the existing complete tip/shaft and other-hand geometry checks
 permit it. The checked outside route remains a fallback. Both proposals still
 require the public preview and matching committed step, including protection.
 
+For new CUSA core and frontier proposals, the director can first try coalescing
+strictly monotone axis-aligned runs with an unchanged quaternion. It preserves
+the path's endpoints, bends, reversals and duplicate poses, then retains the
+original fine path as a fallback. The coarse proposal must complete its own
+public preview and remove only owned target cells before its matching step.
+Its duration is unchanged, but engine sampling and physical outcomes can differ;
+recorded actions and their replay are never rewritten.
+
 A scheduling request can defer an unfinished superior pass after its current
 opening finishes normally and the public cleanup withdraws both hands. Its
 endpoint explicitly retains the unvisited opportunities. A subsequent stopped

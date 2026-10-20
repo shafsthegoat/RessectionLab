@@ -522,6 +522,7 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
     A preview is never promoted into committed state. Every admitted action is
     executed through step and must match its preview identity exactly.
     """
+    from .full_case_path_variants import cusa_path_variants
     if type(max_actions) is not int or not 1 <= max_actions <= 64:
         raise ValueError('Full rehearsal slice requires 1..64 actions')
     meta = copy.deepcopy(director)
@@ -610,10 +611,17 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
             else:
                 actions = _frontier_candidates(candidate, access)
                 assistant_conflict = False
-                for proposed in actions:
+                variants = ((original, proposed) for original in actions
+                            for proposed in (cusa_path_variants(original)
+                                if candidate.state['slots'][original['slot']]['instrument'] == 'cusa' else [original]))
+                for original, proposed in variants:
                     if check: check()
                     preview = candidate.preview(proposed, check=check, include_view=False)
                     meta['attemptedActions'] += 1
+                    # A coarser conservative stop must leave the original fine
+                    # route available before changing the hand/access plan.
+                    if proposed is not original and preview['status'] != 'accepted':
+                        _record_rejection(meta, proposed, preview); continue
                     if str(preview.get('reason')).startswith('TOOL_COLLISION:right') and candidate.state['slots']['right']['inserted'] and not preview.get('deltas', {}).get('removedCells'):
                         _record_rejection(meta, proposed, preview)
                         meta['assistantResumeStage'] = 'remove'; meta['stage'] = 'assistant_retract'; assistant_conflict = True; break
@@ -657,14 +665,21 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                 meta['stage'] = 'remove'; continue
             for proposal in local_debulking_candidates(candidate, limit=4, radius_mm=6.):
                 if proposal['kind'] == 'core-positioning' and meta.get('corePositioning', 0) >= 2: continue
-                preview = candidate.preview(proposal['action'], check=check, include_view=False)
-                meta['attemptedActions'] += 1
-                if preview['status'] == 'rejected':
-                    _record_rejection(meta, proposal['action'], preview); continue
-                if not preview.get('deltas', {}).get('removedCells') and proposal['kind'] != 'core-positioning': continue
-                action = proposal['action']; checked_preview = preview
-                meta['corePositioning'] = meta.get('corePositioning', 0) + (proposal['kind'] == 'core-positioning')
-                break
+                for proposed in cusa_path_variants(proposal['action']):
+                    coarse = proposed is not proposal['action']
+                    preview = candidate.preview(proposed, check=check, include_view=False)
+                    meta['attemptedActions'] += 1
+                    if preview['status'] == 'rejected' or coarse and preview['status'] != 'accepted':
+                        _record_rejection(meta, proposed, preview); continue
+                    delta = preview.get('deltas', {}).get('removedCells', [])
+                    target_labels = {r['id'] for r in candidate.scene.regions if r.get('target') and r['material'] == 'tumor'}
+                    if any(int(candidate.scene.labels.ravel()[i]) not in target_labels for i in delta):
+                        _record_rejection(meta, proposed, preview, 'HEALTHY_OR_UNKNOWN_REMOVAL_REFUSED'); continue
+                    if not delta and (coarse or proposal['kind'] != 'core-positioning'): continue
+                    action = proposed; checked_preview = preview
+                    meta['corePositioning'] = meta.get('corePositioning', 0) + (proposal['kind'] == 'core-positioning')
+                    break
+                if action is not None: break
             if action is None:
                 meta['coreSearchExhausted'] = True
                 meta['stage'] = 'remove'; continue
