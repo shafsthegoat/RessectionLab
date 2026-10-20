@@ -166,7 +166,7 @@ def call(session, operation, args):
     return session.execute(operation, args, _Request(operation), lambda *_: None)
 
 
-def test_bridge_undo_redo_branch_and_bundle_reopen_in_fresh_process(tmp_path):
+def test_bridge_undo_redo_branch_and_bundle_reopen_in_fresh_process(tmp_path, monkeypatch):
     session = BridgeSession(tmp_path / 'transfers')
     try:
         fixture = call(session, 'createSurgicalFixture', {})
@@ -182,13 +182,22 @@ def test_bridge_undo_redo_branch_and_bundle_reopen_in_fresh_process(tmp_path):
         assert second['outcome']['status'] == 'accepted'
         assert second['view']['removed']
         installed = session.cases[case_hash].artifacts
-        observed = command('seekFrame', second, position=1, frameIndex=0)
+        import resectionlab.surgical_bridge as bridge
+        original_thaw = bridge.thaw_json
+        def no_archive_copy(value):
+            assert value is not installed, 'An admitted frame must not recopy the complete native archive'
+            return original_thaw(value)
+        with monkeypatch.context() as patch:
+            patch.setattr(bridge, 'thaw_json', no_archive_copy)
+            observed = command('seekFrame', second, position=1, frameIndex=0)
         assert observed['position'] == second['position'] == 2
         assert observed['playback']['readOnly']
         assert observed['view']['stateId'] == first['view']['stateId']
         assert observed['view']['stateId'] == observed['playback']['frameStateId']
         admission = session.surgical_frame_admissions[(case_hash, second['branchId'])][3]
-        endpoint = command('seekFrame', second, position=1, frameIndex=observed['playback']['frameCount'] - 1)
+        with monkeypatch.context() as patch:
+            patch.setattr(bridge, 'thaw_json', no_archive_copy)
+            endpoint = command('seekFrame', second, position=1, frameIndex=observed['playback']['frameCount'] - 1)
         assert endpoint['view']['stateId'] == second['view']['stateId']
         assert session.surgical_frame_admissions[(case_hash, second['branchId'])][3] is admission
         with pytest.raises(TypeError):

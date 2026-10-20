@@ -165,7 +165,14 @@ def dispatch(session, operation, args, request, progress):
         entry = session._get_case(args['caseHash'])
         identity = entry.case.semantic_hash
         scene_builder = lambda mapping=None: from_case(entry.case, mapping)
-        artifacts = thaw_json(entry.artifacts)
+        prior_admission = getattr(session, 'surgical_sessions', {}).get(identity)
+        hot_frame = (args.get('command') == 'seekFrame' and prior_admission and len(prior_admission) > 3
+                     and prior_admission[3] is entry.artifacts)
+        # A frame is a read-only request over the exact immutable artifact we
+        # already admitted. It returns before persistence. Borrow this object
+        # rather than thawing every saved branch/path/checkpoint on each frame.
+        # Replacement archives and all editable commands retain full admission.
+        artifacts = entry.artifacts if hot_frame else thaw_json(entry.artifacts)
     command = args.get('command', 'inspect')
     if command not in {'create', 'inspect', 'preview', 'step', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'seekFrame'}:
         raise ValueError('Unsupported surgical command')
