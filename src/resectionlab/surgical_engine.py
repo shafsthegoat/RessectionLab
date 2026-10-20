@@ -19,6 +19,19 @@ SCHEMA = 'resectionlab.surgical-toolbox.v1'
 MAX_STEPS = 2048
 
 
+class _OperationCheckFailed(Exception):
+    """Keep cancellation callbacks out of surgical domain-error handlers."""
+    def __init__(self, cause):
+        self.cause = cause
+
+
+def _checked_operation(check):
+    try:
+        check()
+    except BaseException as cause:
+        raise _OperationCheckFailed(cause) from None
+
+
 def finite(value, size=None):
     a = np.asarray(value, float)
     if not np.isfinite(a).all() or size is not None and a.shape != (size,):
@@ -51,6 +64,8 @@ class SurgicalEngine:
             self._protected_ids = frozenset(map(int, self.protection.cells))
             self._protection_contract = protection_contract(self.protection, self.guard_config)
         self.grid = GeometryScene(np.zeros(scene.shape, bool), scene.affine)
+        from .surgical_geometry_cache import SurgicalCellCoverCache
+        self._cell_cover_cache = SurgicalCellCoverCache(self.grid, scene.identity)
         self.by_label = {r['id']: r for r in scene.regions}
         corners = np.array(list(itertools.product(*[(0, n - 1) for n in scene.shape]))) @ scene.affine[:3, :3].T + scene.affine[:3, 3]
         center = corners.mean(axis=0)
@@ -144,9 +159,7 @@ class SurgicalEngine:
         return owner
 
     def cells(self, a, b, radius):
-        indices = capsule_voxel_indices(self.grid, np.asarray(a), np.asarray(b), radius)
-        if not len(indices): return np.empty(0, np.int64)
-        return np.ravel_multi_index(indices.T, self.scene.shape)
+        return self._cell_cover_cache.query(self.grid, a, b, radius, kernel=capsule_voxel_indices)
 
     def touched(self, a, b, radius):
         cells = self.cells(a, b, radius)
@@ -157,10 +170,13 @@ class SurgicalEngine:
         extra = {'rpm': 40000., 'forceN': 1., 'duty': 1.} if self.scene.properties.get('tissuePhysicsV2') else {}
         return {**extra, 'radiusMm': tool['radiusMm'], 'depthMm': 2., 'flowMm3PerSecond': 20., 'power': 1., 'jawOpeningMm': 2., **slot['parameters']}
 
-    def preview(self, action):
+    def preview(self, action, *, check=None):
+        if check is not None: check()
         candidate = self.clone()
-        result = candidate.step(action)
-        return {**result, 'preview': True, 'view': candidate.view(_state_id=result['stateId'])}
+        result = candidate.step(action) if check is None else candidate.step(action, check=check)
+        view = candidate.view(_state_id=result['stateId'])
+        if check is not None: check()
+        return {**result, 'preview': True, 'view': view}
 
     def reset(self, scene=None):
         if scene is not None and scene.identity != self.scene.identity:
@@ -214,7 +230,8 @@ class SurgicalEngine:
                     raise ValueError('DRILL_RADIUS_EXCEEDS_PROFILE: geometry and cutting radius must agree')
         return duration, points
 
-    def step(self, action):
+    def step(self, action, *, check=None):
+        if check is not None: check()
         before = self.state_id
         after = before
         before_time = self.state['elapsedSeconds']
@@ -222,14 +239,19 @@ class SurgicalEngine:
         candidate = self.clone()
         try:
             duration, points = candidate._validate(action)
-            result = candidate._execute(copy.deepcopy(action), duration, points)
+            result = candidate._execute(copy.deepcopy(action), duration, points, check=check)
+        except _OperationCheckFailed as interrupted:
+            raise interrupted.cause from None
         except (ValueError, KeyError, TypeError, OverflowError) as error:
+            if check is not None: check()
             return {'status': 'rejected', 'reason': str(error), 'reasonCode': str(error).split(':')[0] if str(error).split(':')[0].isupper() else 'INVALID_ACTION', 'completedFraction': 0., 'elapsedSeconds': 0., 'stateId': before, 'events': [], 'deltas': {}, 'metrics': self.metrics()}
+        if check is not None: check()
         result['reasonCode'] = result['reason'].split(':')[0] if result.get('reason') else None
         result.setdefault('elapsedSeconds', candidate.state['elapsedSeconds'] - before_time if result['status'] != 'rejected' else 0.)
         if result['status'] != 'rejected':
             from .surgical_effects import finalize_action
             finalize_action(candidate)
+            if check is not None: check()
             result['elapsedSeconds'] = candidate.state['elapsedSeconds'] - before_time
             # Finalization is the last state mutation. Reuse this exact digest
             # for result/history instead of serializing the large state three times.
@@ -239,10 +261,11 @@ class SurgicalEngine:
             candidate.actions.append(copy.deepcopy(action))
             candidate.history.append({'action': copy.deepcopy(action), 'stateBefore': before,
                                       'stateAfter': after, **result})
+            if check is not None: check()
             self.__dict__.update(candidate.__dict__)
         return {**result, 'stateId': after, 'metrics': self.metrics()}
 
-    def _execute(self, action, duration, points):
+    def _execute(self, action, duration, points, *, check=None):
         key, op = action['slot'], action['operation']
         slot = self.state['slots'][key]
         events = []
@@ -299,6 +322,7 @@ class SurgicalEngine:
         for start, end, n in segments:
             interpolation = Slerp([0, 1], Rotation.from_quat([start['quaternion'], end['quaternion']]))
             for j in range(n):
+                if check is not None: _checked_operation(check)
                 t = (j + 1) / n
                 p = ((1 - t) * finite(start['position'], 3) + t * finite(end['position'], 3))
                 quat = interpolation(t).as_quat()
@@ -311,6 +335,7 @@ class SurgicalEngine:
                 try:
                     delta_events = self._substep(key, op, p, quat, active, duration / total)
                 except ValueError as error:
+                    if check is not None: _checked_operation(check)
                     self.state = old
                     reason = str(error)
                     contact_position = p.tolist()
@@ -594,7 +619,8 @@ class SurgicalEngine:
                 'checkpoint': {'position': len(self.actions), 'stateId': self.state_id, 'state': copy.deepcopy(self.state)}}
 
     @classmethod
-    def restore(cls, scene, record):
+    def restore(cls, scene, record, *, check=None):
+        if check is not None: check()
         if record['schema'] != SCHEMA or record['sceneId'] != scene.identity: raise ValueError('Saved scene or engine version differs')
         options = {}
         if 'protectionContract' in record:
@@ -603,15 +629,23 @@ class SurgicalEngine:
             options = {'protection': protection, 'guard_config': config}
         result = cls(scene, **options)
         for action in record['actions']:
-            if result.step(action)['status'] == 'rejected': raise ValueError('Saved action no longer replays')
+            if check is not None: check()
+            outcome = result.step(action) if check is None else result.step(action, check=check)
+            if outcome['status'] == 'rejected': raise ValueError('Saved action no longer replays')
+            if check is not None: check()
         if result.state_id != record['stateId']: raise ValueError('Replay state identity differs')
         checkpoint = record.get('checkpoint')
         if checkpoint is not None and (checkpoint.get('position') != len(result.actions) or checkpoint.get('stateId') != result.state_id or semantic_digest(checkpoint.get('state')) != semantic_digest(result.state)):
             raise ValueError('Checkpoint differs from verified replay')
+        if check is not None: check()
         return result
 
-    def branch(self, position):
+    def branch(self, position, *, check=None):
         if type(position) is not int or not 0 <= position <= len(self.actions): raise ValueError('Invalid history position')
         result = self.fresh()
-        for action in self.actions[:position]: result.step(action)
+        for action in self.actions[:position]:
+            if check is not None: check()
+            if check is None: result.step(action)
+            else: result.step(action, check=check)
+        if check is not None: check()
         return result

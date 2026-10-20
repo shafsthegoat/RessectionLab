@@ -88,6 +88,23 @@ def test_cancellation_cannot_mutate_live_state(exposed):
     assert exposed.snapshot() == before
 
 
+def test_planning_forwards_cancellation_inside_a_long_generated_action(exposed, monkeypatch):
+    from resectionlab.desktop_bridge import BridgeError, _Request
+    import resectionlab.surgical_planning as planning
+    before = exposed.snapshot(); request = _Request('cancel-planning-microstep'); calls = 0
+    original = SurgicalEngine._substep
+    def substep(self, *args):
+        nonlocal calls
+        result = original(self, *args); calls += 1
+        if calls == 2: request.cancel()
+        return result
+    monkeypatch.setattr(SurgicalEngine, '_substep', substep)
+    monkeypatch.setattr(planning, 'select_observed', lambda *_: (8, dict(slot='left', operation='deactivate', duration=.6), []))
+    with pytest.raises(BridgeError) as exc:
+        compare_continuations(exposed, acknowledge_unknowns=True, check=request.check)
+    assert exc.value.code == 'CANCELLED' and calls == 2 and exposed.snapshot() == before
+
+
 def test_saved_receipts_bind_source_branches_decisions_and_endpoint(exposed):
     branches, report = compare_continuations(exposed, acknowledge_unknowns=True)
     record = {'branches': {}}

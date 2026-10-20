@@ -8,7 +8,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import copy
 import numpy as np
-from .core import array_digest, semantic_digest, thaw_json
+from .core import array_digest, immutable_array, semantic_digest, thaw_json
 
 MATERIALS = ('unknown', 'bone', 'soft_tissue', 'tumor', 'membrane', 'vessel', 'fluid', 'functional_region')
 KINDS = {'skull': 'bone', 'brain': 'soft_tissue', 'tissue': 'soft_tissue', 'tumor': 'tumor',
@@ -39,18 +39,31 @@ class SurgicalScene:
             raise ValueError('Region IDs must be distinct positive uint16 values')
         if any(r['material'] not in MATERIALS for r in self.regions) or not set(np.unique(labels)) <= {0, *ids}:
             raise ValueError('Every occupied label requires a declared material, including unknown')
-        self.labels = np.array(labels, dtype=np.uint16, copy=True)
-        self.labels.flags.writeable = False
-        self.affine = a.copy()
-        self.affine.flags.writeable = False
-        self.inverse = np.linalg.inv(a)
-        self.spacing = np.linalg.norm(a[:3, :3], axis=0)
+        self.labels = immutable_array(labels, np.uint16)
+        self.affine = immutable_array(a, np.float64)
+        self.inverse = immutable_array(np.linalg.inv(a))
+        self.spacing = immutable_array(np.linalg.norm(a[:3, :3], axis=0))
         self.voxel_mm3 = abs(float(np.linalg.det(a[:3, :3])))
         self.source = copy.deepcopy(self.source)
         self.properties = copy.deepcopy(self.properties)
         self._validate_properties()
         self.identity = semantic_digest({'labels': array_digest(self.labels), 'affine': a.tolist(),
                                          'regions': self.regions, 'source': self.source, 'properties': self.properties})
+        # Prototyping code may still edit metadata explicitly. Disposable
+        # performance caches must refuse such an unversioned source edit.
+        self._cache_arrays = tuple((v, v.shape, v.dtype.str, v.strides)
+                                   for v in (self.labels, self.affine, self.inverse, self.spacing))
+        self._cache_metadata = semantic_digest([self.regions, self.source, self.properties])
+        self._cache_identity = self.identity
+        self._cache_voxel_mm3 = self.voxel_mm3
+
+    def require_cache_source(self):
+        arrays = (self.labels, self.affine, self.inverse, self.spacing)
+        if (self.identity != self._cache_identity or self.voxel_mm3 != self._cache_voxel_mm3 or any(
+                current is not original or current.shape != shape or current.dtype.str != dtype or current.strides != strides
+                for current, (original, shape, dtype, strides) in zip(arrays, self._cache_arrays))
+                or semantic_digest([self.regions, self.source, self.properties]) != self._cache_metadata):
+            raise ValueError('Source scene changed; construct a newly versioned scene before cached replay')
 
     def _validate_properties(self):
         """Reject invalid explicit physics before any transition can run."""

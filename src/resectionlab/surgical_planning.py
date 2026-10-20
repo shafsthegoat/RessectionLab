@@ -200,7 +200,7 @@ def _run(base, method, scorer, check):
         selected, action, scores = select_observed(observation, method, scorer)
         observation_hash = semantic_digest({key: array_digest(value) for key, value in observation.items()})
         before = tracker.measure(engine, _protection_measurements(engine))
-        outcome = engine.step(action)
+        outcome = engine.step(action, check=check)
         observation, after = _observer(engine, tracker)
         reward, terms = compute_reward(before, after, outcome, reward_config)
         total_reward += reward
@@ -223,14 +223,14 @@ def _run(base, method, scorer, check):
     replay = base.fresh()
     replay_calls = 0
     for action in base.actions:
-        check(); result = replay.step(action); replay_calls += 1
+        check(); result = replay.step(action, check=check); replay_calls += 1
         if result['status'] == 'rejected': raise ValueError('Source prefix replay rejected')
     if replay.state_id != base.state_id:
         raise ValueError('Source prefix replay identity differs')
     replay_tracker = RewardTracker(replay, replay._protected_ids)
     replay_tracker.measure(replay, _protection_measurements(replay))
     for row in rows:
-        check(); result = replay.step(row['action']); replay_calls += 1
+        check(); result = replay.step(row['action'], check=check); replay_calls += 1
         if result['status'] != row['status'] or result.get('reason') != row['reason'] or replay.state_id != row['stateId']:
             raise ValueError('Sealed continuation replay differs')
         replay_tracker.measure(replay, _protection_measurements(replay))

@@ -201,14 +201,22 @@ class SurgicalRLEnv(gym.Env):
             return self._transition(None,str(error))
         return self.step_action(action)
 
-    def step_action(self,action):
+    def step_action(self,action,*,check=None):
+        if check is not None: check()
         try:
             # JSON roundtrip detaches caller state and rejects nonserializable actions.
             action=json.loads(json.dumps(action,allow_nan=False))
-        except (ValueError,TypeError) as error: return self._transition(None,str(error))
-        return self._transition(action)
+        except (ValueError,TypeError) as error: return self._transition(None,str(error),check=check)
+        return self._transition(action,check=check)
 
-    def _transition(self,action,error=None):
+    def _transition(self,action,error=None,*,check=None):
+        if check is not None: check()
+        check_failed = []
+        def operation_check():
+            try: check()
+            except BaseException:
+                check_failed.append(True)
+                raise
         if self.engine is None: raise RuntimeError('Call reset before step')
         if self._done: raise RuntimeError('Episode finished; call reset')
         before=self.measurements.copy(); outcome=None
@@ -226,8 +234,10 @@ class SurgicalRLEnv(gym.Env):
                     raise ValueError('EXTERIOR_PLACEMENT_REQUIRED: use checked movement to enter anatomy')
             remaining=self.config.max_seconds-self.engine.state['elapsedSeconds']
             if duration>remaining+1e-9: raise ValueError('EPISODE_TIME_REMAINING: action duration exceeds remaining simulated time')
-            outcome=self.engine.step(action)
+            outcome=self.engine.step(action) if check is None else self.engine.step(action,check=operation_check)
         except (ValueError,TypeError,KeyError,OverflowError) as exc:
+            if check_failed: raise
+            if check is not None: check()
             outcome={'status':'rejected','reason':str(exc),'reasonCode':str(exc).split(':')[0],'completedFraction':0.,'elapsedSeconds':0.,'stateId':self.engine.state_id,'events':[]}
         if outcome['status']=='rejected':self.invalid_actions+=1
         self.measurements=self._measure()

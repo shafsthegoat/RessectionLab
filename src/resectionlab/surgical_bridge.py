@@ -9,6 +9,7 @@ import numpy as np
 from .core import CaseData, SourceRef, freeze_json, thaw_json, semantic_digest
 from .surgical_scene import from_case, engineering_scene
 from .surgical_engine import SurgicalEngine
+from .surgical_replay_cache import SurgicalReplayCache
 
 OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene', 'prepareSurgicalEnvironment', 'compareSurgicalAnatomy'})
 ARTIFACT = 'surgical_toolbox'
@@ -135,8 +136,20 @@ def dispatch(session, operation, args, request, progress):
         artifacts[ARTIFACT] = raw
         scene_builder = lambda mapping=None: standardize(original_builder(mapping), physics_profile=raw.get('physicsProfile')) if raw.get('environmentSchema') == ENVIRONMENT_SCHEMA else original_builder(mapping)
     cache = getattr(session, 'surgical_sessions', {})
-    saved_hash = semantic_digest(raw)
+    replay_cache = getattr(session, 'surgical_replay_cache', None)
+    if replay_cache is None:
+        replay_cache = SurgicalReplayCache()
+        session.surgical_replay_cache = replay_cache
     cached = cache.get(identity)
+    # Bundle artifacts are recursively immutable and privately constructed by
+    # freeze_json at this boundary. Only an exact object we installed may reuse
+    # hot admission. Replacement (even equal bytes) and scene exchange require
+    # fresh replay. Native JSON remains externally writable and is always hashed.
+    saved_hash = semantic_digest(raw) if destination else None
+    admitted_bundle = (entry is not None and cached and len(cached) > 3
+                       and cached[3] is entry.artifacts and command != 'selectScene')
+    admitted_native = (destination is not None and cached and cached[0] == saved_hash
+                       and command != 'selectScene')
     if command == 'create' and raw is not None and args.get('mapping') == raw.get('mapping') and raw.get('environmentSchema') == ENVIRONMENT_SCHEMA:
         command = 'inspect'  # An unchanged mapping must not erase a timeline.
     if command == 'create' or raw is None and command != 'inspect':
@@ -146,22 +159,28 @@ def dispatch(session, operation, args, request, progress):
         record = {'environmentSchema': ENVIRONMENT_SCHEMA, 'physicsProfile': copy.deepcopy(scene.properties['tissuePhysicsV2']), 'mapping': scene.regions, 'branches': {'main': engine.snapshot()}, 'branchId': 'main', 'position': 0, 'parents': {'main': None}, 'timeline': {'main': []}}
     elif raw is None:
         return None
-    elif cached and cached[0] == saved_hash:
+    elif admitted_bundle or admitted_native:
         engine, record = cached[1], copy.deepcopy(cached[2])
     else:
         record = copy.deepcopy(raw)
         scene = scene_builder(record['mapping'])
-        full = SurgicalEngine.restore(scene, record['branches'][record['branchId']])
-        record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(full.history)
-        engine = full.branch(record['position'])
+        full = SurgicalEngine.restore(scene, record['branches'][record['branchId']], check=request.check)
+        engine, timeline = replay_cache.seek(full, record['branches'][record['branchId']], record['position'], check=request.check, include_history=True)
+        record.setdefault('timeline', {})[record['branchId']] = timeline
     request.check()
-    engine = engine.clone()
+    cursor_commands = {'undo', 'redo', 'seek', 'selectBranch'}
+    # Cursor reconstruction returns a detached engine and never writes its
+    # current-engine input. Avoid copying a complete unchanged effect state
+    # before immediately replacing it with that reconstructed result.
+    if command not in cursor_commands:
+        engine = engine.clone()
     if command not in ('create', 'inspect', 'selectScene') and args.get('expectedStateId') != engine.state_id:
         raise BridgeError('SURGICAL_STATE_STALE', 'The scene changed. Refresh before applying this action.')
     outcome = None
+    verified_display_state_id = None
     unchanged_tool = False
     if command == 'preview':
-        return {**engine.preview(args['action']), 'caseHash': identity}
+        return {**engine.preview(args['action'], check=request.check), 'caseHash': identity}
     if command == 'plan':
         from .surgical_planning import compare_continuations
         branches, comparison = compare_continuations(engine,
@@ -180,7 +199,7 @@ def dispatch(session, operation, args, request, progress):
     elif command == 'step':
         action = args['action']
         unchanged_tool = action.get('operation') == 'exchange' and engine.state['slots'].get(action.get('slot'), {}).get('instrument') == action.get('instrument')
-        outcome = {'status': 'accepted', 'reason': 'Instrument already selected; state unchanged.', 'completedFraction': 1., 'events': []} if unchanged_tool else engine.step(action)
+        outcome = {'status': 'accepted', 'reason': 'Instrument already selected; state unchanged.', 'completedFraction': 1., 'events': []} if unchanged_tool else engine.step(action, check=request.check)
         if outcome['status'] != 'rejected' and not unchanged_tool:
             full = record['branches'][record['branchId']]
             planned_ids = {row['branchId'] for row in (record.get('planning') or {}).get('alternatives', [])}
@@ -196,11 +215,17 @@ def dispatch(session, operation, args, request, progress):
             if args['branchId'] not in record['branches']: raise ValueError('Unknown branch')
             record['branchId'] = args['branchId']
             record['position'] = len(record['branches'][record['branchId']]['actions'])
-        full = SurgicalEngine.restore(engine.scene, record['branches'][record['branchId']])
+        snapshot = record['branches'][record['branchId']]
         n = {'undo': record['position'] - 1, 'redo': record['position'] + 1}.get(command, args.get('position', record['position']))
-        if type(n) is not int or not 0 <= n <= len(full.actions): raise ValueError('History position is unavailable')
-        engine = full.branch(n); record['position'] = n
-        record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(full.history)
+        if type(n) is not int or not 0 <= n <= len(snapshot['actions']): raise ValueError('History position is unavailable')
+        engine, timeline = replay_cache.seek(engine, snapshot, n, check=request.check, include_history=True); record['position'] = n
+        # Rebuild optional legacy/malformed timelines from admitted history.
+        record.setdefault('timeline', {})[record['branchId']] = timeline
+        # seek checked the complete reconstructed state against this admitted
+        # ancestry hash. No state mutation occurs between that check and view.
+        # This identity never comes from the request's expectedStateId field.
+        verified_display_state_id = timeline[n - 1]['stateAfter'] if n else (
+            timeline[0]['stateBefore'] if timeline else snapshot['stateId'])
     elif command in ('branch', 'reset'):
         parent = {'branchId': record['branchId'], 'position': record['position'], 'reset': command == 'reset'}
         if command == 'reset': engine = engine.fresh()
@@ -209,7 +234,7 @@ def dispatch(session, operation, args, request, progress):
         record['branches'][record['branchId']] = engine.snapshot()
         record['position'] = len(engine.actions)
         record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
-    result = {'caseHash': identity, 'view': engine.view(), 'outcome': outcome,
+    result = {'caseHash': identity, 'view': engine.view(_state_id=verified_display_state_id), 'outcome': outcome,
               'changed': command != 'inspect' and not unchanged_tool and (outcome is None or outcome['status'] != 'rejected'),
               'timeline': record.get('timeline', {}).get(record['branchId'], engine.history),
               'previousScenes': [{'index': i, 'label': f"Environment {i + 1}", 'branches': len(s.get('branches', {}))} for i, s in enumerate(artifacts.get('surgical_prior_scenes', []))],
@@ -240,6 +265,7 @@ def dispatch(session, operation, args, request, progress):
             Path(name).unlink(missing_ok=True)
     else:
         entry.artifacts = freeze_json(artifacts)
-    cache[identity] = (semantic_digest(record), engine, record)
+    cache[identity] = (semantic_digest(record) if destination else None, engine, record,
+                       entry.artifacts if entry is not None else None)
     session.surgical_sessions = dict(list(cache.items())[-4:])
     return result

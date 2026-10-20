@@ -118,7 +118,7 @@ def compare_anatomy(before, after, *, changed_layers=('vessels',), prefix=(), de
         prefix_outcomes = []
         for action in prefix:
             check()
-            observation, _, terminated, truncated, info = env.step_action(action)
+            observation, _, terminated, truncated, info = env.step_action(action, check=check)
             prefix_outcomes.append(_compact_outcome(info['outcome']))
             if terminated or truncated:
                 raise ValueError('Fixed setup prefix terminates the episode; select a bounded task')
@@ -138,12 +138,12 @@ def compare_anatomy(before, after, *, changed_layers=('vessels',), prefix=(), de
             for action_id, action in zip(ACTION_IDS, actions):
                 check()
                 candidate_engine = env.engine.clone()
-                outcome = candidate_engine.step(action)
+                outcome = candidate_engine.step(action, check=check)
                 feasibility.append({'id': action_id, **_compact_outcome(outcome),
                     'vesselEncounters': len(candidate_engine.state['vesselEncounters']),
                     'targetRemovedMm3': candidate_engine.metrics()['targetRemovedMm3']})
             before_hashes = _observation_hashes(observation)
-            observation, reward, terminated, truncated, info = env.step_action(actions[selected])
+            observation, reward, terminated, truncated, info = env.step_action(actions[selected], check=check)
             policy_rows.append({'selected': ACTION_IDS[selected], 'action': actions[selected], 'scores': scores,
                 'observationHashes': before_hashes, 'candidateOutcomes': feasibility,
                 'outcome': _compact_outcome(info['outcome']), 'reward': reward, 'stateId': env.engine.state_id})

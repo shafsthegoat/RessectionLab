@@ -269,6 +269,41 @@ def native_binding(session, manifest):
     return {'caseHash': identity, 'source': source}
 
 
+def test_native_hot_admission_hashes_disk_content_and_rejects_replacement_corruption(tmp_path, monkeypatch):
+    import resectionlab.surgical_bridge as bridge
+    collection = native_fixture(tmp_path)
+    session = BridgeSession(tmp_path / 'transfers')
+    try:
+        binding = native_binding(session, collection.root / 'patient-anatomy.json')
+        initial = call(session, 'surgicalRehearsal', {**binding, 'command': 'create'})
+        destination = collection.root / 'surgical-toolbox.json'
+        original = destination.read_text()
+        hashes, restored = [], []
+        digest = bridge.semantic_digest
+        restore = SurgicalEngine.restore.__func__
+        monkeypatch.setattr(bridge, 'semantic_digest', lambda value: hashes.append(value) or digest(value))
+        monkeypatch.setattr(SurgicalEngine, 'restore', classmethod(lambda cls, *a, **kw: restored.append(a[1]) or restore(cls, *a, **kw)))
+        same = call(session, 'surgicalRehearsal', {**binding, 'command': 'inspect'})
+        assert same['view'] == initial['view'] and restored == []
+        assert len(hashes) == 2, 'native input and committed output remain fully hashed'
+        authority = session.surgical_sessions[binding['caseHash']][1]
+        corrupt = json.loads(original)
+        corrupt['surgical_toolbox']['branches']['main']['checkpoint']['state']['fluidEscapedMm3'] = 999
+        destination.write_text(json.dumps(corrupt))
+        with pytest.raises(ValueError, match='Checkpoint differs'):
+            call(session, 'surgicalRehearsal', {**binding, 'command': 'inspect'})
+        assert len(restored) == 1
+        assert session.surgical_sessions[binding['caseHash']][1] is authority
+        # Even an identical prior archive must be admitted afresh on exchange.
+        equivalent = json.loads(original)
+        equivalent['surgical_prior_scenes'] = [copy.deepcopy(equivalent['surgical_toolbox'])]
+        destination.write_text(json.dumps(equivalent))
+        selected = call(session, 'surgicalRehearsal', {**binding, 'command': 'selectScene', 'sceneIndex': 0})
+        assert len(restored) == 2 and selected['view'] == initial['view']
+    finally:
+        session.close()
+
+
 def test_native_bridge_package_fresh_reopen_preserves_source(tmp_path):
     collection = native_fixture(tmp_path)
     manifest = collection.root / 'patient-anatomy.json'

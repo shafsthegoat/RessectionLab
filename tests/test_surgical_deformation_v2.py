@@ -103,3 +103,38 @@ def test_obstacle_stop_preserves_neighbor_strain_bound():
     e.scene.labels.flat[bone] = 3
     begin_hold(e, 'left', [c], [6, 6, 6]); set_target(e, 'left', [9, 6, 6]); tick(e, .5)
     assert e.state['deformationModel']['maxNeighborDisplacementRatio'] <= profile()['maxEdgeStrain'] + 1e-12
+
+
+def _scalar_obstacle_collision(e, vox, inside, removed, blocking_labels):
+    # Preserved per-node decision, independent of the vectorized implementation.
+    removed = set(map(int, removed))
+    for point, valid in zip(vox, inside):
+        if not valid: return True
+        c = int(np.ravel_multi_index(tuple(point), e.scene.shape))
+        material = e.by_label.get(int(e.scene.labels.flat[c]), {}).get('material')
+        if c not in removed and material in ('bone', 'vessel', 'unknown'): return True
+    return False
+
+
+def test_vectorized_obstacle_decisions_match_scalar_with_removed_and_outside_cells():
+    from resectionlab.surgical_deformation_v2 import _obstacle_collision
+    e = engine(); e.by_label[5] = {'material': 'unknown'}
+    e.scene.labels[0, 0, :5] = [1, 2, 3, 4, 5]
+    samples = np.array([[0, 0, i] for i in range(6)])
+    blocking = np.array([3, 4, 5], dtype=e.scene.labels.dtype)
+    for removed in ([], [2, 3, 4], [0, 1, 2, 3, 4, 5]):
+        for points in (samples, samples + [0, 0, -1], samples + [0, 0, 12]):
+            inside = np.all((points >= 0) & (points < e.scene.shape), axis=1)
+            assert _obstacle_collision(e, points, inside, removed, blocking) == _scalar_obstacle_collision(e, points, inside, removed, blocking)
+
+
+def test_solver_state_is_bit_identical_to_scalar_obstacle_reference(monkeypatch):
+    import resectionlab.surgical_deformation_v2 as brain
+    a, c = held(); a.scene.labels.flat[cell(a, (7, 6, 6))] = 3
+    b = copy.deepcopy(a)
+    for dt in (.008, .009, .014): tick(a, dt)
+    release(a, 'left'); tick(a, .01)
+    monkeypatch.setattr(brain, '_obstacle_collision', _scalar_obstacle_collision)
+    for dt in (.008, .009, .014): tick(b, dt)
+    release(b, 'left'); tick(b, .01)
+    assert a.state == b.state

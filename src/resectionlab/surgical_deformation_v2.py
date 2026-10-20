@@ -151,6 +151,15 @@ def _system(engine, p, ids, anchors, bonds):
     return cached[1:]
 
 
+def _obstacle_collision(engine, vox, inside, removed, blocking_labels):
+    """Same whole-increment obstacle decision, using only sampled grid cells."""
+    if not np.all(inside):
+        return True
+    cells = np.ravel_multi_index(vox.T, engine.scene.shape)
+    blocked = np.isin(engine.scene.labels.ravel()[cells], blocking_labels)
+    return bool(np.any(blocked & ~np.isin(cells, removed)))
+
+
 def tick(engine, dt):
     initialize(engine)
     if not np.isfinite(dt) or dt < 0: raise ValueError('INVALID_DEFORMATION_TIME')
@@ -182,6 +191,9 @@ def tick(engine, dt):
     forcing = targets * np.array([p['holdStiffnessNPerMm'] if c in held else 0 for c in ids])[:, None]
     forcing *= np.minimum(1., p['maxForceN'] / np.maximum(np.linalg.norm(forcing, axis=1), 1e-15))[:, None]
     rest = np.column_stack(np.unravel_index(ids, engine.scene.shape)) @ engine.scene.affine[:3, :3].T + engine.scene.affine[:3, 3]
+    removed_array = np.fromiter(removed, dtype=np.int64)
+    blocking_labels = np.array([label for label, region in engine.by_label.items()
+        if region.get('material') in ('bone', 'vessel', 'unknown')], dtype=engine.scene.labels.dtype)
     velocity = np.zeros_like(u)
     for _ in range(steps):
         old = u.copy(); rhs = (p['dragNsPerMm'] / h * u + forcing).ravel()
@@ -197,10 +209,7 @@ def tick(engine, dt):
             world = rest + old + alpha * (u - old)
             vox = np.rint(world @ engine.scene.inverse[:3, :3].T + engine.scene.inverse[:3, 3]).astype(int)
             inside = np.all((vox >= 0) & (vox < np.array(engine.scene.shape)), axis=1)
-            for i in range(len(ids)):
-                if not inside[i]: collision = True; continue
-                c = int(np.ravel_multi_index(tuple(vox[i]), engine.scene.shape))
-                if c not in removed and _material(engine, c) in ('bone', 'vessel', 'unknown'): collision = True
+            collision |= _obstacle_collision(engine, vox, inside, removed_array, blocking_labels)
         # Reject the coupled increment as a whole: clamping single nodes would
         # introduce fresh strain discontinuities after the strain projection.
         if collision: u = old

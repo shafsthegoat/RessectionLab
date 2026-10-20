@@ -73,6 +73,24 @@ def test_comparison_uses_observation_only_policy_and_shared_geometry(tmp_path, m
     json.dumps(report, allow_nan=False)
 
 
+def test_anatomy_comparison_forwards_cancellation_inside_prefix_action(tmp_path, monkeypatch):
+    from resectionlab.desktop_bridge import BridgeError
+    from resectionlab.surgical_engine import SurgicalEngine
+    _, before, after = make_pair(tmp_path)
+    originals = [thaw_json(entry.artifacts) for entry in (before, after)]
+    request = _Request('cancel-anatomy-prefix'); calls = 0; original = SurgicalEngine._substep
+    def substep(self, *args):
+        nonlocal calls
+        result = original(self, *args); calls += 1
+        if calls == 2: request.cancel()
+        return result
+    monkeypatch.setattr(SurgicalEngine, '_substep', substep)
+    with pytest.raises(BridgeError) as exc:
+        compare_anatomy(before, after, prefix=[dict(slot='left', operation='inspect', duration=.6)], check=request.check)
+    assert exc.value.code == 'CANCELLED' and calls == 2
+    assert [thaw_json(entry.artifacts) for entry in (before, after)] == originals
+
+
 def test_ipc_comparison_does_not_mutate_saved_desktop_timeline(tmp_path):
     _, before, after = make_pair(tmp_path)
     session = BridgeSession(tmp_path / 'transfers')
