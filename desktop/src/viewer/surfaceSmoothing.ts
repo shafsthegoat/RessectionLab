@@ -5,10 +5,18 @@ import type {SurfaceDiagnostics} from './surfacePolicy';
 import {intersectionVertices} from './surfaceSafety.ts';
 
 /** Exact-coordinate indexing only; no tolerance welds nearby branches. */
-export function indexSurface(positions:Float32Array){
+export function indexSurface(positions:Float32Array,shape?:Shape3){
   if(positions.length%9||!positions.every(Number.isFinite))throw Error('Display smoothing requires finite complete triangles.');
-  const points:number[]=[],lookup=new Map<string,number>(),indices=new Uint32Array(positions.length/3);
-  for(let i=0;i<positions.length;i+=3){const key=`${positions[i]},${positions[i+1]},${positions[i+2]}`;let id=lookup.get(key);
+  const span=shape?.map(n=>2*n+1),grid=span&&span.every(n=>Number.isSafeInteger(n)&&n>0)&&Number.isSafeInteger(span[0]*span[1]*span[2]);
+  const points:number[]=[],lookup=new Map<string|number,number>(),indices=new Uint32Array(positions.length/3);
+  for(let i=0;i<positions.length;i+=3){
+    const x=positions[i]*2+1,y=positions[i+1]*2+1,z=positions[i+2]*2+1;
+    // Marching-tetrahedra vertices occupy the exact half-cell lattice. This
+    // injective integer key welds exactly the same coordinates as the generic
+    // string path; arbitrary/non-grid geometry keeps that retained fallback.
+    const key=grid&&Number.isSafeInteger(x)&&Number.isSafeInteger(y)&&Number.isSafeInteger(z)&&
+      x>=0&&y>=0&&z>=0&&x<span![0]&&y<span![1]&&z<span![2]?(x*span![1]+y)*span![2]+z:`${positions[i]},${positions[i+1]},${positions[i+2]}`;
+    let id=lookup.get(key);
     if(id===undefined){id=points.length/3;lookup.set(key,id);points.push(positions[i],positions[i+1],positions[i+2]);}indices[i/3]=id;}
   return {positions:new Float32Array(points),indices};
 }

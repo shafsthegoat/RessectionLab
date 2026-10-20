@@ -1,107 +1,101 @@
-import {surfaceKind} from './viewer/surfacePolicy.ts';
 import {useEffect,useMemo,useRef,useState} from 'react';
 import type {ViewerVolume} from './viewer/contracts';
 import type {Point3} from './viewer/coordinates';
-import {rasAffine} from './viewer/coordinates.ts';
+import {SurgicalRequestQueue} from './surgical-request-queue.ts';
+import {SurgicalDisplayAdmission} from './surgical-display-admission.ts';
+import {modeledVolume} from './modeled-volume.ts';
+export {modeledVolume} from './modeled-volume.ts';
 import type {SurgicalAction,SurgicalOutcome,SurgicalApi,SurgicalPose,SurgicalRegion,SurgicalResponse,SurgicalView,SurgicalInteraction} from './surgical-types';
 
-const geometryCache=new WeakMap<ViewerVolume,Map<string,ViewerVolume>>();
-function geometryIdentity(key:string){let a=2166136261,b=5381;for(let i=0;i<key.length;i++){a=Math.imul(a^key.charCodeAt(i),16777619);b=Math.imul(b,33)^key.charCodeAt(i);}return `${key.length}:${a>>>0}:${b>>>0}`;}
 export function validateMapping(regions:SurgicalRegion[]):string|null {
   if(!regions.length)return 'Map at least one source region.';
   if(new Set(regions.map(r=>r.id)).size!==regions.length||new Set(regions.map(r=>r.name)).size!==regions.length)return 'Region IDs and names must be unique.';
   if(regions.some(r=>!Number.isInteger(r.id)||r.id<1||r.id>65535||!r.name||!r.material||typeof r.target!=='boolean'))return 'Each region needs a positive ID, name, material, and target choice.';
   return null;
 }
-export function modeledVolume(source:ViewerVolume,view:SurgicalView):ViewerVolume {
-  if(view.scene.shape.some((n,i)=>n!==source.shape[i]))throw Error('Simulation/source grid mismatch');
-  const sourceRas=rasAffine(source.affine,source.frame),sceneRas=rasAffine(view.scene.affine,'RAS+');
-  if(sourceRas.some((row,i)=>row.some((value,j)=>Math.abs(value-sceneRas[i][j])>1e-6)))throw Error('Simulation/source affine mismatch');
-  const count=source.shape.reduce((a,b)=>a*b,1),regions=view.scene.regions;
-  const coupled = view.physics?.profile?.schema === 'resectionlab.tissue-physics.v2';
-  const key=JSON.stringify([regions,view.removed,view.moved,...(coupled?['coupled-v2']:[])]);
-  const cached=geometryCache.get(source)??new Map<string,ViewerVolume>();
-  const existing=cached.get(key);
-  if(existing)return existing;
-  let compartments:ViewerVolume['compartments'];
-  {
-    const owner=new Uint16Array(count);
-    for(const r of regions){const layer=source.compartments.find(l=>l.name===r.name);if(!layer)continue;
-      const labels=source.labelSets?.find(s=>s.id===layer.labelSet)?.data;
-      for(let i=0;i<count;i++)if(labels?labels[i]===layer.labelValue:layer.mask[i])owner[i]=r.id;}
-    const original=owner.slice(),valid=(i:number)=>Number.isInteger(i)&&i>=0&&i<count;
-    for(const i of view.removed){if(!valid(i))throw Error('Invalid removed cell');owner[i]=0;}
-    for(const [a,b] of view.moved){if(!valid(a)||!valid(b))throw Error('Invalid displacement');owner[a]=0;}
-    const priority = new Map(regions.map((r,i)=>[r.id,i]));
-    for(const [a,b] of view.moved){if(!coupled || (priority.get(original[a])??-1)>=(priority.get(owner[b])??-1))owner[b]=original[a];}
-    compartments=regions.map(r=>{
-      const originalLayer=source.compartments.find(l=>l.name===r.name),labels=source.labelSets?.find(s=>s.id===originalLayer?.labelSet)?.data;
-      const mask=new Uint8Array(count);let unchanged=!!originalLayer;
-      for(let i=0;i<count;i++){mask[i]=Number(owner[i]===r.id);if(originalLayer&&mask[i]!==Number(labels?labels[i]===originalLayer.labelValue:!!originalLayer.mask[i]))unchanged=false;}
-      // Preserve resident source geometry only when every current membership
-      // agrees, including ownership overlap and mapped material changes.
-      const sameKind=surfaceKind(originalLayer?.kind)===surfaceKind(r.material);
-      let residentMask:Uint8Array|undefined;
-      if(!unchanged)for(const previous of cached.values()){
-        const candidate=previous.compartments.find(l=>l.name===r.name&&l.kind===r.material)?.mask;
-        if(candidate&&candidate.length===mask.length){let equal=true;for(let i=0;i<mask.length;i++)if(candidate[i]!==mask[i]){equal=false;break;}
-          if(equal){residentMask=candidate;break;}}
-      }
-      return {...(unchanged?originalLayer:{}),name:r.name,color:r.color,kind:r.material,
-        mask:unchanged&&originalLayer&&!labels?originalLayer.mask:residentMask??mask,labelSet:undefined,labelValue:undefined,
-        surface:unchanged&&sameKind?originalLayer?.surface:undefined,
-        surfaceDiagnostics:unchanged&&sameKind?originalLayer?.surfaceDiagnostics:undefined,
-        sourceIdentity:unchanged?originalLayer?.sourceIdentity:undefined,qa:unchanged?originalLayer?.qa:undefined};
-    });
-    // Regions absent from a mapping remain inspectable, with their original source masks.
-    for(const layer of source.compartments)if(!regions.some(r=>r.name===layer.name)){
-      const labels=source.labelSets?.find(s=>s.id===layer.labelSet)?.data;
-      compartments.push({...layer,labelSet:undefined,labelValue:undefined,mask:labels?Uint8Array.from(labels,n=>Number(n===layer.labelValue)):layer.mask});
-    }
-  }
-  const volume={...source,displayIdentity:`surgical:${source.caseHash}:${geometryIdentity(key)}`,packedLabels:undefined,labelSets:undefined,compartments};
-  cached.set(key,volume);if(cached.size>3)cached.delete(cached.keys().next().value!);geometryCache.set(source,cached);
-  return volume;
-}
 
 export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|null,enabled:boolean){
-  const [result,setResult]=useState<SurgicalResponse|null>(null),[pending,setPending]=useState(false),[error,setError]=useState<string|null>(null);
+  const [result,setResult]=useState<SurgicalResponse|null>(null),[requestPending,setPending]=useState(false),[error,setError]=useState<string|null>(null);
+  const [desiredResult,setDesiredResult]=useState<SurgicalResponse|null>(null),[desiredPreview,setDesiredPreview]=useState<SurgicalView|null>(null);
+  const [desiredPreviewOutcome,setDesiredPreviewOutcome]=useState<SurgicalOutcome|null>(null),[displayFailed,setDisplayFailed]=useState(false);
   const [slot,setSlot]=useState('left'),[pose,setRawPose]=useState<SurgicalPose>({position:[0,0,0],quaternion:[0,0,0,1]}),[path,setPath]=useState<SurgicalPose[]>([]);
   const [parameters,setParameters]=useState<Record<string,number>>({});
   const [mode,setMode]=useState<SurgicalInteraction['mode']>('navigate'),[preview,setPreview]=useState<SurgicalView|null>(null);
   const [previewOutcome,setPreviewOutcome]=useState<SurgicalOutcome|null>(null);
-  const generation=useRef(0),busy=useRef(false),current=useRef({source,api,result,slot,enabled});current.current={source,api,result,slot,enabled};
-  useEffect(()=>{generation.current++;busy.current=false;setResult(null);setPreview(null);setPreviewOutcome(null);setPath([]);setMode('navigate');setSlot('left');setPending(false);setError(null);},[source?.caseHash]);
-  useEffect(()=>()=>{generation.current++;},[]);
-  async function run(command:string,extra:Record<string,unknown>={}):Promise<boolean>{
+  const backendResult=useRef<SurgicalResponse|null>(null);
+  const displayAdmission=useRef(new SurgicalDisplayAdmission<SurgicalView>());
+  const pendingPoseView=useRef<SurgicalView|null>(null);
+  const generation=useRef(0),busy=useRef(false),current=useRef({source,api,result,slot,enabled,displayFailed});current.current={source,api,result,slot,enabled,displayFailed};
+  const desired=useRef({result:desiredResult,preview:desiredPreview,previewOutcome:desiredPreviewOutcome});desired.current={result:desiredResult,preview:desiredPreview,previewOutcome:desiredPreviewOutcome};
+  const requestQueue=useRef<SurgicalRequestQueue<{command:string;extra:Record<string,unknown>;caseHash:string;generation:number}>|null>(null);
+  useEffect(()=>{generation.current++;requestQueue.current?.invalidate();busy.current=false;backendResult.current=null;displayAdmission.current.invalidate();pendingPoseView.current=null;setResult(null);setDesiredResult(null);setDesiredPreview(null);setDesiredPreviewOutcome(null);setDisplayFailed(false);setPreview(null);setPreviewOutcome(null);setPath([]);setMode('navigate');setSlot('left');setPending(false);setError(null);},[source?.caseHash]);
+  useEffect(()=>()=>{generation.current++;requestQueue.current?.invalidate();},[]);
+  async function execute(command:string,extra:Record<string,unknown>,isCurrent:()=>boolean):Promise<boolean>{
     const c=current.current;if(!c.enabled||!c.source||!c.api?.surgicalRehearsal||busy.current)return false;
-    const token=++generation.current;busy.current=true;setPending(true);setError(null);
-    try{const next=await c.api.surgicalRehearsal({caseHash:c.source.caseHash,command,expectedStateId:c.result?.view.stateId,...extra});
+    if(c.displayFailed&&['step','preview','plan'].includes(command)){setError('The accepted anatomy could not be displayed. Seek to a recorded state or reopen the case before applying another instrument action.');return false;}
+    const token=generation.current;busy.current=true;setPending(true);setError(null);
+    try{const next=await c.api.surgicalRehearsal({caseHash:c.source.caseHash,command,expectedStateId:backendResult.current?.view.stateId,...extra});
       if(token!==generation.current||!current.current.enabled||current.current.source?.caseHash!==c.source.caseHash)return false;
-      if(command==='preview'){const response=next as unknown as (SurgicalOutcome&{view:SurgicalView})|null;setPreview(response?.view??null);setPreviewOutcome(response?{status:response.status,reason:response.reason,completedFraction:response.completedFraction,events:response.events}:null);if(response?.reason)setError(response.reason);return !!response;}
-      setPreview(null);setPreviewOutcome(null);setResult(next);setPath([]);
-      if(next){const t=next.view.slots[current.current.slot];if(t){setRawPose({position:[...t.position],quaternion:[...t.quaternion]});setParameters({...t.parameters});}if(next.outcome?.reason)setError(`${next.outcome.status}: ${next.outcome.reason}`);}
+      // A superseded seek still moved the backend cursor. Preserve its state
+      // identity for the next ordered request while withholding obsolete UI.
+      if(command!=='preview')backendResult.current=next;
+      if(!isCurrent())return false;
+      setDisplayFailed(false);
+      if(command==='preview'){const response=next as unknown as (SurgicalOutcome&{view:SurgicalView})|null;setDesiredPreview(response?.view??null);setDesiredPreviewOutcome(response?{status:response.status,reason:response.reason,completedFraction:response.completedFraction,events:response.events}:null);return !!response;}
+      setDesiredPreview(null);setDesiredPreviewOutcome(null);pendingPoseView.current=next?.view??null;setDesiredResult(next);
       return !!next;
     }catch(e){if(token===generation.current)setError(String(e));return false;}finally{if(token===generation.current){busy.current=false;setPending(false);}}
   }
-  useEffect(()=>{if(enabled&&source&&api?.surgicalRehearsal)void run('inspect');else {generation.current++;busy.current=false;setPending(false);setPreview(null);setPreviewOutcome(null);}},[source?.caseHash,enabled,api?.surgicalRehearsal]);
+  if(!requestQueue.current)requestQueue.current=new SurgicalRequestQueue(async(item,isCurrent)=>{
+    if(item.generation!==generation.current||current.current.source?.caseHash!==item.caseHash)return false;
+    return execute(item.command,item.extra,isCurrent);
+  },item=>item.command==='seek');
+  async function run(command:string,extra:Record<string,unknown>={}):Promise<boolean>{
+    const c=current.current;if(!c.enabled||!c.source||!c.api?.surgicalRehearsal)return false;
+    try{return await requestQueue.current!.request({command,extra:structuredClone(extra),caseHash:c.source.caseHash,generation:generation.current});}
+    catch(cause){if(current.current.source?.caseHash===c.source.caseHash)setError(String(cause));return false;}
+  }
+  useEffect(()=>{if(enabled&&source&&api?.surgicalRehearsal)void run('inspect');else {generation.current++;requestQueue.current?.invalidate();busy.current=false;displayAdmission.current.invalidate();setResult(null);setPending(false);setDesiredPreview(null);setDesiredPreviewOutcome(null);setPreview(null);setPreviewOutcome(null);}},[source?.caseHash,enabled,api?.surgicalRehearsal]);
   const view=enabled&&result?.caseHash===source?.caseHash?result?.view??null:null;
-  const volume=useMemo(()=>source&&view?modeledVolume(source,view):null,[source,view]);
-  const previewVolume=useMemo(()=>source&&enabled&&preview?modeledVolume(source,preview):null,[source,enabled,preview]);
-  function clearPreview(){setPreview(null);setPreviewOutcome(null);setError(null);}
+  const desiredView=enabled&&desiredResult&&desiredResult.caseHash===source?.caseHash?desiredResult.view:null;
+  const activePreview=desiredView?desiredPreview:null,displayedPreview=view?preview:null;
+  const requestedView=activePreview??desiredView,displayedView=displayedPreview??view;
+  const displayPending=!displayFailed&&!!requestedView&&requestedView!==displayedView;
+  const pending=requestPending||displayPending;
+  const volume=useMemo(()=>source&&desiredView?modeledVolume(source,desiredView):null,[source,desiredView]);
+  const previewVolume=useMemo(()=>source&&activePreview?modeledVolume(source,activePreview):null,[source,activePreview]);
+  const displayGeneration=generation.current,displaySource=source?.caseHash;
+  const displayTicket=displayAdmission.current.expect(displaySource??'',displayGeneration,requestedView);
+  const currentDisplay=(reported:SurgicalView|null)=>enabled&&generation.current===displayGeneration&&current.current.source?.caseHash===displaySource&&
+    desired.current.result?.caseHash===displaySource&&reported===(desired.current.preview??desired.current.result?.view);
+  function onDisplayReady(reported:SurgicalView|null){
+    if(!reported||!currentDisplay(reported))return;
+    if(!displayAdmission.current.isCurrent(displayTicket,reported))return;
+    current.current.displayFailed=false;setDisplayFailed(false);
+    if(!displayAdmission.current.commit(displayTicket,reported))return;
+    if(reported===desired.current.preview){setPreview(reported);setPreviewOutcome(desired.current.previewOutcome);if(desired.current.previewOutcome?.reason)setError(desired.current.previewOutcome.reason);return;}
+    const next=desired.current.result!;setResult(next);setPreview(null);setPreviewOutcome(null);
+    if(pendingPoseView.current===reported){
+      pendingPoseView.current=null;setPath([]);
+      const t=next.view.slots[current.current.slot];if(t){setRawPose({position:[...t.position],quaternion:[...t.quaternion]});setParameters({...t.parameters});}
+    }
+    if(next.outcome?.reason)setError(`${next.outcome.status}: ${next.outcome.reason}`);
+  }
+  function onDisplayError(reported:SurgicalView|null,message:string){if(currentDisplay(reported)&&displayAdmission.current.isCurrent(displayTicket,reported)){current.current.displayFailed=true;setDisplayFailed(true);setError(message);}}
+  function clearPreview(){setDesiredPreview(null);setDesiredPreviewOutcome(null);if(!current.current.displayFailed)setError(null);}
   function setPose(p:SurgicalPose){setRawPose(p);setPath([]);clearPreview();}
-  function selectSlot(s:string){setSlot(s);setPreview(null);setPreviewOutcome(null);setPath([]);const t=result?.view.slots[s];if(t){setRawPose({position:[...t.position],quaternion:[...t.quaternion]});setParameters({...t.parameters});}}
+  function selectSlot(s:string){setSlot(s);clearPreview();setPath([]);const t=result?.view.slots[s];if(t){setRawPose({position:[...t.position],quaternion:[...t.quaternion]});setParameters({...t.parameters});}}
   function onStroke(point:Point3,phase:'start'|'move'|'end'){
     if(phase==='start')setPath([{position:point,quaternion:pose.quaternion}]);
     else setPath(p=>p.length<512?[...p,{position:point,quaternion:pose.quaternion}]:p);
     setRawPose({...pose,position:point});clearPreview();
   }
   function action(operation:string,params:Record<string,number>=parameters,duration=1):SurgicalAction{return {slot,operation,parameters:params,duration,...(['apply','move','hold','grasp','place'].includes(operation)?{path:path.length?path:[pose]}:{})};}
-  return {result,view,volume,previewVolume,pending,error,slot,pose,path,mode,preview,previewOutcome,parameters,setPose,setMode,selectSlot,run,action,
+  return {result,view,volume,previewVolume,pending,simulationPending:requestPending,displayPending,error,slot,pose,path,mode,preview:displayedPreview,previewOutcome,parameters,setPose,setMode,selectSlot,run,action,
     setParameters:(p:Record<string,number>)=>{setParameters(p);clearPreview();},
     clearPreview,
     create:(mapping?:SurgicalRegion[])=>{const issue=mapping?validateMapping(mapping):null;if(issue){setError(issue);return Promise.resolve(false);}return run('create',mapping?{mapping}:{});},
     cancel:()=>{clearPreview();setPath([]);const t=result?.view.slots[slot];if(t){setRawPose({position:t.position,quaternion:t.quaternion});setParameters({...t.parameters});}},
-    interaction:{view,preview,outcome:preview?previewOutcome:result?.outcome??null,pose,path,parameters,selectedSlot:slot,mode,onPose:setPose,onStroke} as SurgicalInteraction};
+    interaction:{view:desiredView,preview:activePreview,outcome:activePreview?desiredPreviewOutcome:desiredResult?.outcome??null,pose,path,parameters,selectedSlot:slot,mode,onPose:setPose,onStroke,onDisplayReady,onDisplayError} as SurgicalInteraction};
 }
 export type SurgicalController=ReturnType<typeof useSurgical>;

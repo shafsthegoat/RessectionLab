@@ -183,10 +183,10 @@ test('interaction never resizes the shared drawing buffer',()=>{
   try {
     const {r}=renderer();let pixelRatio=2;const changes=[];
     const empty={getBoundingClientRect:()=>({left:0,top:0,width:0,height:0})};
-    Object.assign(r,{disposed:false,width:100,height:100,interacting:false,refinementStarted:0,budget:{longEdge:360},
+    Object.assign(r,{disposed:false,width:100,height:100,renderSerial:0,interacting:false,refinementStarted:0,budget:{longEdge:360},estimateAllocation:()=>({}),retiredSurfaces:[],
       container:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})},
       panes:{anatomy:empty,axial:empty,coronal:empty,sagittal:empty},canvas:{dispatchEvent(){}},scanVolume:{active:false},
-      renderer:{info:{memory:{},render:{calls:0}},getContext:()=>({fenceSync:()=>null}),getPixelRatio:()=>pixelRatio,setPixelRatio(value){pixelRatio=value;changes.push(value)},setScissorTest(){},clear(){}}});
+      renderer:{info:{reset(){},memory:{},render:{calls:0}},getContext:()=>({fenceSync:()=>null}),getPixelRatio:()=>pixelRatio,setPixelRatio(value){pixelRatio=value;changes.push(value)},setScissorTest(){},clear(){}}});
     r.render();r.render();assert.deepEqual(changes,[]);
     r.interacting=true;r.render();r.render();assert.deepEqual(changes,[]);
     r.interacting=false;r.render();r.render();assert.deepEqual(changes,[]);
@@ -234,17 +234,17 @@ test('shared scalar texture is not disposed by the volume pass',()=>{
 
 test('GPU backpressure coalesces input and submits the latest pending frame only after completion',()=>{
   const previousWindow=globalThis.window,previousRaf=globalThis.requestAnimationFrame;
-  const callbacks=new Map();let id=0,ready=false,deleted=0;
+  const callbacks=new Map();let id=0,ready=false,deleted=0,resets=0;
   globalThis.window={devicePixelRatio:1};globalThis.requestAnimationFrame=callback=>{callbacks.set(++id,callback);return id};
   try{
     const {r}=renderer(),empty={getBoundingClientRect:()=>({left:0,top:0,width:0,height:0})};
     const gl={SYNC_GPU_COMMANDS_COMPLETE:1,TIMEOUT_EXPIRED:2,WAIT_FAILED:3,fenceSync:()=>({}),flush(){},clientWaitSync:()=>ready?4:2,deleteSync(){deleted++}};
-    Object.assign(r,{requestRender:VolumeRenderer.prototype.requestRender,disposed:false,frame:0,renderSerial:0,width:100,height:100,sliceRevision:0,interacting:false,refinementStarted:0,budget:{longEdge:360},gpuSync:null,
+    Object.assign(r,{requestRender:VolumeRenderer.prototype.requestRender,disposed:false,frame:0,renderSerial:0,width:100,height:100,sliceRevision:0,interacting:false,refinementStarted:0,budget:{longEdge:360},gpuSync:null,estimateAllocation:()=>({}),retiredSurfaces:[],
       container:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})},panes:{anatomy:empty,axial:empty,coronal:empty,sagittal:empty},canvas:{dispatchEvent(){}},scanVolume:{active:false},controls:{update(){}},
-      renderer:{info:{memory:{},render:{calls:0}},getContext:()=>gl,getPixelRatio:()=>1,setScissorTest(){},clear(){}}});
+      renderer:{info:{reset(){resets++},memory:{},render:{calls:0}},getContext:()=>gl,getPixelRatio:()=>1,setScissorTest(){},clear(){}}});
     r.render();for(let i=0;i<100;i++)r.requestRender(false);assert.equal(r.renderSerial,1);assert.equal(callbacks.size,1);
     const tick=()=>{const [key,callback]=callbacks.entries().next().value;callbacks.delete(key);callback()};
     tick();assert.equal(r.renderSerial,1);ready=true;tick();assert.equal(r.renderSerial,2);assert.equal(deleted,1);
-    tick();assert.equal(r.gpuSync,null);assert.equal(callbacks.size,0);
+    tick();assert.equal(r.gpuSync,null);assert.equal(callbacks.size,0);assert.equal(resets,2,'statistics reset once per complete frame');
   }finally{globalThis.window=previousWindow;globalThis.requestAnimationFrame=previousRaf;}
 });

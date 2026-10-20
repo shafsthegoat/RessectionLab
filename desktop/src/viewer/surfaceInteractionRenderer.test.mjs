@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import {before,after,test} from 'node:test';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {createServer} from 'vite';
+import * as THREE from 'three';
+let server,cache,SurfaceInteractionRenderer;
+before(async()=>{
+  cache=await fs.mkdtemp(path.join(os.tmpdir(),'surface-interaction-'));
+  server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
+  SurfaceInteractionRenderer=(await server.ssrLoadModule('/src/viewer/surfaceInteractionRenderer.ts')).SurfaceInteractionRenderer;
+});
+after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true,force:true});});
+test('surface interaction changes pixel workload, retains every source mesh and returns to exact direct rendering on settle',()=>{
+  const pass=new SurfaceInteractionRenderer(),scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(),plane=new THREE.Plane(new THREE.Vector3(1,0,0),-2);
+  const geometry=new THREE.SphereGeometry(.1,8,8),material=new THREE.MeshBasicMaterial({opacity:.3,transparent:true,clippingPlanes:[plane]}),mesh=new THREE.Mesh(geometry,material);scene.add(mesh);
+  const calls=[],targets=[],viewports=[];let restores=0;
+  const renderer={getPixelRatio:()=>2,setRenderTarget:t=>targets.push(t),setScissorTest(){},setViewport:(...args)=>viewports.push(args),clear(){},render:(...args)=>calls.push(args)};
+  const before=geometry.attributes.position.array.slice(),result=pass.render(renderer,scene,camera,800,600,true,360,()=>restores++);
+  assert.deepEqual(result,{adaptive:true,width:360,height:270});assert.equal(calls[0][0],scene);assert.equal(calls[0][1],camera);
+  assert.equal(mesh.visible,true);assert.equal(mesh.material,material);assert.equal(mesh.geometry,geometry);assert.equal(material.clippingPlanes[0],plane);assert.equal(material.opacity,.3);assert.deepEqual(geometry.attributes.position.array,before);
+  assert.deepEqual(viewports[0],[0,0,180,135]);assert.equal(restores,1);const target=targets[0];
+  pass.render(renderer,scene,camera,800,600,true,360,()=>{});assert.equal(targets[2],target,'target stays resident across interaction frames');
+  calls.length=0;targets.length=0;
+  assert.deepEqual(pass.render(renderer,scene,camera,800,600,false,360,()=>{}),{adaptive:false,width:1600,height:1200});
+  assert.equal(calls.length,1);assert.deepEqual(calls[0],[scene,camera]);assert.equal(targets.length,0,'settled scene uses the original direct render path');
+  pass.dispose();geometry.dispose();material.dispose();
+});

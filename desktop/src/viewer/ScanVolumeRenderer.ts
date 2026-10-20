@@ -8,6 +8,7 @@ import type {ViewerWorkspaceSettings} from './workspaceSettings';
 import type { VolumeRenderingSettings } from './volumeTransfer';
 import { volumeVertexShader, volumeFragmentShader } from './volumeRaycastShaders';
 import {SurfaceVolumePass} from './SurfaceVolumePass';
+import {renderTargetBytes} from './renderResourceEstimate';
 
 /** Continuous scalar-volume compositing, in the original RAS physical frame.
  * Offscreen targets bound ray workload; source data is never downsampled or
@@ -120,6 +121,11 @@ export class ScanVolumeRenderer {
     codes.forEach((code,i)=>this.material.uniforms.uLayerCodes.value[i].set(...code));
   }
   get active(){return this.enabled;}
+  get estimatedTargetBytes(){
+    const targets=[this.sceneTarget,this.volumeTarget,...this.accumulation,...this.surfacePass.targets,this.surfacePass.tail];
+    if(this.interactionTargets)targets.push(this.interactionTargets.scene,this.interactionTargets.volume);
+    return targets.reduce((sum,target)=>sum+renderTargetBytes(target),0)+(this.transfer?.image.data?.byteLength??0);
+  }
   render(scene: THREE.Scene, camera: THREE.PerspectiveCamera, width: number, height: number,
     interactive: boolean, restoreViewport: ()=>void, longEdge=360) {
     if(!this.enabled){this.renderer.render(scene,camera);return;}

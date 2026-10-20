@@ -107,3 +107,30 @@ test('residual smoothing toggles cached bounded worker buffers before and after 
   let sourceDisposed=0,smoothDisposed=0;pair.source.addEventListener('dispose',()=>sourceDisposed++);pair.smooth.addEventListener('dispose',()=>smoothDisposed++);
   r.setRehearsal(null);assert.equal(sourceDisposed,1);assert.equal(smoothDisposed,1);assert.deepEqual(volume.compartments[0].mask,source);
 });
+test('completed rehearsal seeks reuse the idle worker with one transferable derived-mask request in flight',()=>{
+  const {r}=renderer(),input=state(1),source=volume.compartments[0].mask.slice();r.setRehearsal(input);const worker=r.replayWorker;
+  assert.equal(worker.messages.length,1);
+  for(const name of ['residual-0','assumed-exposure','rehearsal-removal','rehearsal-field-contact'])deliver(worker,name,{smooth:name==='residual-0'});
+  assert.equal(r.pendingReplayGroup,null);assert.equal(worker.terminated,undefined);
+  r.setRehearsal(state(2));assert.equal(r.replayWorker,worker);assert.equal(worker.messages.length,5);
+  const oldGeneration=r.replayGeneration-1;
+  worker.onmessage({data:{name:'unexpected-old',requestGeneration:oldGeneration,error:'stale'}});
+  assert.equal(r.replayWorker,worker);assert(r.pendingReplayGroup);
+  r.setRehearsal(state(1));assert.equal(worker.terminated,true,'superseded busy worker is safely replaced');
+  assert.notEqual(r.replayWorker,worker);assert.deepEqual(input.removedMask,state(1).removedMask);assert.deepEqual(volume.compartments[0].mask,source);
+  r.setRehearsal(null);assert.equal(r.replayWorker,null);
+});
+test('real transferable semantics never detach a legacy effect texture sharing its removal-overlay mask',()=>{
+  const previous=globalThis.Worker;
+  globalThis.Worker=class{messages=[];postMessage(value,transfer){this.messages.push(structuredClone(value,{transfer}));}terminate(){}};
+  try{
+    const {r}=renderer(),removed=new Uint8Array(512);removed[2]=1;
+    const source=volume.compartments[0].mask.slice();
+    r.installRemovalDisplay(removed,removed,[],null,'executed-generated-episode',[{id:'modeled-removal',name:'Modeled removal',color:'#b7f0d8',mask:removed,removed:true}]);
+    const worker=r.replayWorker;assert.equal(worker.messages.length,1);deliver(worker,'residual-0');
+    assert.equal(worker.messages.length,2);assert.equal(worker.messages[1].mask[2],1);
+    assert.equal(r.removedTexture.image.data,removed);assert.equal(removed.byteLength,512);assert.equal(removed[2],1);
+    assert.deepEqual(volume.compartments[0].mask,source);assert.equal(volume.mri.byteLength,512*4);
+    deliver(worker,'modeled-removal',{smooth:false});r.setReplay(null);
+  }finally{globalThis.Worker=previous;}
+});

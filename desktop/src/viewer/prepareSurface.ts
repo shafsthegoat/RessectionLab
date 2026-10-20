@@ -6,7 +6,11 @@ import type {Affine,Shape3} from './coordinates';
 import type {SurfaceDiagnostics} from './surfacePolicy';
 export interface PreparedSurface {positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices:Uint32Array;diagnostics?:SurfaceDiagnostics}
 export function prepareSurface(mask:Uint8Array,shape:Shape3,affine:Affine,kind?:string,smooth=true):PreparedSurface {
-  const started=performance.now(),indexed=indexSurface(maskSurface(mask,shape)),positions=indexed.positions,indices=indexed.indices;
+  const started=performance.now(),result=prepareSurfaceSoup(maskSurface(mask,shape),mask,shape,affine,kind,smooth);
+  if(result.diagnostics)result.diagnostics.preparationMs=performance.now()-started;return result;
+}
+export function prepareSurfaceSoup(soup:Float32Array,mask:Uint8Array,shape:Shape3,affine:Affine,kind?:string,smooth=true):PreparedSurface {
+  const started=performance.now(),indexed=indexSurface(soup,shape),positions=indexed.positions,indices=indexed.indices;
   const normals=indexedSurfaceNormals(positions,indices,affine);
   if(!smooth)return {positions,indices,normals};
   const limits=surfaceKind(kind)==='vessel'?vesselLimits(positions,affine,mask,shape):undefined;

@@ -1829,7 +1829,7 @@ export default function App() {
           {displayedCase && (
             <ViewerWorkspace
               surgicalInteraction={workbenchTab==="rehearsal"?surgical.interaction:undefined}
-              rehearsalState={surgical.view?null:rehearsal.viewerState}
+              rehearsalState={surgical.interaction.view?null:rehearsal.viewerState}
               workspaceSettings={viewerSettings}
               onWorkspaceSettingsChange={setViewerSettings}
               sourceLabel={native.binding?native.binding.document.series.find(s=>s.id===native.series)?.modality:String(displayedSource?.metadata.selected_modality??'Image')}

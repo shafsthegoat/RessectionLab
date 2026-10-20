@@ -1,4 +1,6 @@
 import {surgicalEffectMarkers,clipSurgicalMarkersToSlab} from './surgicalGeometry';
+import {modeledSourceIdentity,modeledAnatomy} from './modeledAnatomy';
+import type {SurgicalInteraction} from '../surgical-types';
 import {SliceScrollAccumulator} from './interactionBudget';
 import {TransferEditor} from './TransferEditor';
 import {sampleDiagnosticLayer} from "./diagnosticLayer";
@@ -77,6 +79,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     diagnosticLayer,
     diagnosticSourceSha256,
   } = props;
+  const rendererIdentity=caseData?modeledSourceIdentity(caseData):caseData;
+  const geometrySource=caseData?(modeledAnatomy(caseData)?.source??caseData):null;
   // This independent image layer cannot share planning/replay overlays.
   const diagnosticRequested = Boolean(diagnosticLayer);
   const rehearsalState = diagnosticRequested ? null : requestedRehearsal;
@@ -121,9 +125,14 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     [remaining, setRemaining] = useState(0),
     [ready, setReady] = useState(false);
   const [fusionError,setFusionError]=useState<string|null>(null);
+  const [graphicsLost,setGraphicsLost]=useState(false),[graphicsGeneration,setGraphicsGeneration]=useState(0);
+  const [committedSurgical,setCommittedSurgical]=useState<{identity:typeof rendererIdentity;interaction:SurgicalInteraction|null}|null>(null);
+  const [modelDisplayPending,setModelDisplayPending]=useState(false);
+  const [modelDisplayError,setModelDisplayError]=useState<string|null>(null);
   const activePlane=settings.activePlane??'axial',contrast=settings.contrast??1,showPlane=settings.showPlane??false;
-  const surgicalView=props.surgicalInteraction?.preview??props.surgicalInteraction?.view;
-  const surgicalMarkers=useMemo(()=>surgicalView?surgicalEffectMarkers(surgicalView,props.surgicalInteraction?.outcome):[],[surgicalView,props.surgicalInteraction?.outcome]);
+  const displayedSurgical=committedSurgical?.identity===rendererIdentity?committedSurgical.interaction:null;
+  const surgicalView=displayedSurgical?.preview??displayedSurgical?.view;
+  const surgicalMarkers=useMemo(()=>surgicalView?surgicalEffectMarkers(surgicalView,displayedSurgical?.outcome):[],[surgicalView,displayedSurgical?.outcome]);
   const setActivePlane=(activePlane:SlicePlane)=>changeSettings({...latestSettings.current,activePlane});
   const setContrast=(contrast:number)=>changeSettings({...latestSettings.current,contrast});
   const setShowPlane=(showPlane:boolean)=>changeSettings({...latestSettings.current,showPlane});
@@ -153,19 +162,19 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     Record<SlicePlane, [number, number]>
   >({ axial: [1, 1], coronal: [1, 1], sagittal: [1, 1] });
   const geometry = useMemo(() => {
-    if (!caseData) return null;
+    if (!geometrySource) return null;
     try {
-      const affine = rasAffine(caseData.affine, caseData.frame);
+      const affine = rasAffine(geometrySource.affine, geometrySource.frame);
       return {
         affine,
         inverse: inverseAffine(affine),
-        bounds: volumeBounds(caseData.shape, affine),
-        support: sourceSignalBounds(caseData.mri,caseData.shape,affine),
+        bounds: volumeBounds(geometrySource.shape, affine),
+        support: sourceSignalBounds(geometrySource.mri,geometrySource.shape,affine),
       };
     } catch {
       return null;
     }
-  }, [caseData]);
+  }, [geometrySource]);
   const currentCursor =
     cursor ??
     (geometry
@@ -188,13 +197,12 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     currentCursor[2],
   ]);
 
-  const rendererIdentity=caseData?.displayIdentity??caseData;
   const [surfaceReports,setSurfaceReports]=useState<Record<string,{diagnostics?:import('./surfacePolicy').SurfaceDiagnostics;empty?:boolean}>>({});
   useEffect(()=>{
     setSurfaceReports({});const element=canvas.current;if(!element)return;
     const receive=(event:Event)=>{const d=(event as CustomEvent).detail;setSurfaceReports(old=>({...old,[d.name]:d}));};
     element.addEventListener('anatomy-surface',receive);return ()=>element.removeEventListener('anatomy-surface',receive);
-  },[rendererIdentity]);
+  },[rendererIdentity,graphicsGeneration]);
 
   useEffect(() => {
     if (
@@ -207,7 +215,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       !sagittal.current
     )
       return;
-    setError(null);
+    setError(null);setModelDisplayError(null);
     setReady(false);
     try {
       const renderer = new VolumeRenderer(
@@ -224,11 +232,17 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         setRemaining,
         setReplayError,
         camera=>{
-          if((latestProps.current.caseData?.displayIdentity??latestProps.current.caseData)===rendererIdentity)
+          if(latestProps.current.caseData&&modeledSourceIdentity(latestProps.current.caseData)===rendererIdentity)
             changeSettings({...latestSettings.current,camera});
+        },
+        status=>{
+          if(engine.current!==renderer)return;
+          if(status==='lost')setGraphicsLost(true);
+          else setGraphicsGeneration(generation=>generation+1);
         },
       );
       engine.current = renderer;
+      setGraphicsLost(false);
       setReady(true);
       return () => {
         renderer.dispose();
@@ -237,28 +251,36 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : String(cause));
     }
-  }, [rendererIdentity]);
+  }, [rendererIdentity,graphicsGeneration]);
 
   useEffect(()=>{
-    if(caseData?.displayIdentity&&engine.current){
+    if(caseData?.displayIdentity&&!modeledAnatomy(caseData)&&engine.current){
       try{engine.current.setAnatomyLayers(caseData);}catch(cause){setError(cause instanceof Error?cause.message:String(cause));}
     }
-  },[caseData,ready]);
+  },[caseData,ready,graphicsGeneration]);
 
-  useEffect(()=>{engine.current?.setWorkspaceSettings(settings);},[ready,caseData,settings]);
-  useEffect(()=>{engine.current?.restoreCamera(settings.camera);},[ready,caseData,settings.camera]);
-  useEffect(()=>{engine.current?.setSurgical(props.surgicalInteraction??null);},[ready,caseData,props.surgicalInteraction]);
-  useEffect(()=>{engine.current?.setNavigationMode(navigationMode);},[ready,caseData,navigationMode]);
-  useEffect(()=>{engine.current?.setSurfaceSmoothing(smoothSurfaces);},[ready,caseData,smoothSurfaces]);
-  useEffect(()=>{engine.current?.setVolumeRendering(settings.volumeRendering,signalName);},[ready,caseData,settings.volumeRendering,signalName]);
+  useEffect(()=>{engine.current?.setWorkspaceSettings(settings);},[ready,graphicsGeneration,caseData,settings]);
+  useEffect(()=>{engine.current?.restoreCamera(settings.camera);},[ready,graphicsGeneration,caseData,settings.camera]);
+  useEffect(()=>{
+    const renderer=engine.current,requested=props.surgicalInteraction??null;if(!renderer||!caseData)return;
+    if(!requested?.view){setCommittedSurgical({identity:rendererIdentity,interaction:null});setModelDisplayPending(false);setModelDisplayError(null);}
+    else setModelDisplayPending(true);
+    const admitted=renderer.installSurgicalState(caseData,requested?{...requested,onDisplayReady:view=>{
+      if(engine.current!==renderer)return;setCommittedSurgical({identity:rendererIdentity,interaction:requested});setModelDisplayPending(false);setModelDisplayError(null);requested.onDisplayReady?.(view);
+    },onDisplayError:(view,message)=>{if(engine.current!==renderer)return;setModelDisplayPending(false);setModelDisplayError(message);requested.onDisplayError?.(view,message);}}:null);
+    if(!admitted)setModelDisplayPending(false);
+  },[ready,graphicsGeneration,caseData,props.surgicalInteraction]);
+  useEffect(()=>{engine.current?.setNavigationMode(navigationMode);},[ready,graphicsGeneration,caseData,navigationMode]);
+  useEffect(()=>{engine.current?.setSurfaceSmoothing(smoothSurfaces);},[ready,graphicsGeneration,caseData,smoothSurfaces]);
+  useEffect(()=>{engine.current?.setVolumeRendering(settings.volumeRendering,signalName);},[ready,graphicsGeneration,caseData,settings.volumeRendering,signalName]);
   useEffect(()=>{
     if(!engine.current)return;
     setFusionError(null);
     try{engine.current.setRegisteredFusion(props.registeredFusion??null);}
     catch(cause){setFusionError(cause instanceof Error?cause.message:String(cause));}
-  },[ready,caseData,props.registeredFusion]);
+  },[ready,graphicsGeneration,caseData,props.registeredFusion]);
 
-  useEffect(() => {if(engine.current)engine.current.setPublicGoal(publicGoal);},[ready,caseData,publicGoal]);
+  useEffect(() => {if(engine.current)engine.current.setPublicGoal(publicGoal);},[ready,graphicsGeneration,caseData,publicGoal]);
 
   useEffect(() => {
     if (!engine.current) return;
@@ -271,6 +293,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     );
   }, [
     ready,
+    graphicsGeneration,
     caseData,
     currentCursor[0],
     currentCursor[1],
@@ -283,7 +306,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
 
   useEffect(() => {
     engine.current?.setSourcePlane(showPlane ? activePlane : null);
-  }, [activePlane, showPlane, ready, caseData]);
+  }, [activePlane, showPlane, ready, graphicsGeneration, caseData]);
 
   useEffect(() => {
     if (!engine.current) return;
@@ -297,6 +320,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     // mask and certificate inputs, rather than that wrapper, define a new step.
   }, [
     ready,
+    graphicsGeneration,
     caseData,
     replay?.recordedTool,
     replay?.recordedEpisodeBounds,
@@ -321,7 +345,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     } catch (cause) {
       setPassiveError(cause instanceof Error ? cause.message : String(cause));
     }
-  }, [ready, caseData, passiveReplay?.episodeId, passiveReplay?.frameIndex,
+  }, [ready, graphicsGeneration, caseData, passiveReplay?.episodeId, passiveReplay?.frameIndex,
     passiveReplay?.recordedTools, passiveReplay?.recordedEpisodeBounds,
     passiveReplay?.primaryPairClearanceChecked, passiveReplay?.independentTissueMotionChecked,
     passiveReplay?.shape, passiveReplay?.affine, passiveReplay?.phase,
@@ -333,7 +357,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     setRehearsalError(null);
     try { engine.current.setRehearsal(rehearsalState ?? null); }
     catch (cause) { setRehearsalError(cause instanceof Error ? cause.message : String(cause)); }
-  }, [ready, caseData, rehearsalState]);
+  }, [ready, graphicsGeneration, caseData, rehearsalState]);
 
   useEffect(() => {
     const renderer = engine.current;
@@ -353,7 +377,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       setInspectionError(cause instanceof Error ? cause.message : String(cause));
       latestProps.current.onClearInspection?.();
     }
-  }, [ready, caseData, inspectionTool, Boolean(replay), passiveRequested, Boolean(structuralProposal), Boolean(priorLayer), diagnosticRequested, rehearsalRequested]);
+  }, [ready, graphicsGeneration, caseData, inspectionTool, Boolean(replay), passiveRequested, Boolean(structuralProposal), Boolean(priorLayer), diagnosticRequested, rehearsalRequested]);
 
   useEffect(() => {
     const renderer = engine.current;
@@ -362,7 +386,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       centre = (low + high) / 2,
       width = (high - low) * contrast;
     renderer.setWindow(centre - width / 2, centre + width / 2);
-  }, [contrast, ready, caseData]);
+  }, [contrast, ready, graphicsGeneration, caseData]);
 
   useEffect(() => {
     if (!engine.current) return;
@@ -380,6 +404,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     }
   }, [
     ready,
+    graphicsGeneration,
     caseData,
     Boolean(replay),
     structuralProposal?.caseHash,
@@ -451,6 +476,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     }
   }, [
     ready,
+    graphicsGeneration,
     caseData,
     Boolean(replay),
     passiveRequested,
@@ -490,7 +516,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     } catch (cause) {
       setDiagnosticError(cause instanceof Error ? cause.message : String(cause));
     }
-  }, [ready, caseData, diagnosticLayer, diagnosticSourceSha256, diagnosticVisible]);
+  }, [ready, graphicsGeneration, caseData, diagnosticLayer, diagnosticSourceSha256, diagnosticVisible]);
   const diagnosticSample = displayedDiagnostic && diagnosticVisible &&
     displayedDiagnostic.layer.descriptor.source_sha256.t1c === diagnosticSourceSha256
       ? sampleDiagnosticLayer(displayedDiagnostic, currentCursor) : null;
@@ -767,6 +793,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 …
               </span>
             )}
+            {modelDisplayPending&&<span className="rl-viewer-preparing" role="status">Preparing requested tissue state · previous accepted display retained</span>}
             {proposalReviewLabel && (
               <span
                 className="rl-viewer-proposal-key"
@@ -880,7 +907,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               </span>
               <span className="rl-viewer-slice-note">
                 {props.segmentationOnly ? 'SEGMENTATION ONLY · NO ACQUIRED IMAGE' : props.generatedSignal ? "GENERATED ANALYTIC SIGNAL" : `SOURCE ${signalName.toUpperCase()}`}
-                {surgicalView ? (props.surgicalInteraction?.preview?" · MODELED PREVIEW":" · MODELED EFFECT OVERLAY") : rehearsalMode ? " · RESEARCH EFFECT OVERLAY" : inspected
+                {surgicalView ? (displayedSurgical?.preview?" · MODELED PREVIEW":" · MODELED EFFECT OVERLAY") : rehearsalMode ? " · RESEARCH EFFECT OVERLAY" : inspected
                   ? " · UNEXECUTED TOOL PREVIEW"
                   : proposalReviewLabel
                   ? " · ESTIMATE"
@@ -916,10 +943,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         </label>
         <span>Neurological convention</span>
       </div>
-      {(error || replayError || passiveError || rehearsalError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error || fusionError) && (
+      {(error || modelDisplayError || replayError || passiveError || rehearsalError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error || fusionError) && (
         <div className="rl-viewer-error" role="alert">
           <strong>Imaging view needs attention</strong>
-          <p>{error || replayError || passiveError || rehearsalError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error || fusionError}</p>
+          <p>{error || modelDisplayError || replayError || passiveError || rehearsalError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error || fusionError}</p>
+          {graphicsLost&&<button onClick={()=>engine.current?.retryGraphics()}>Retry graphics</button>}
         </div>
       )}
     </div>

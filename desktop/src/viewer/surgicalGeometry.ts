@@ -1,11 +1,23 @@
 import * as THREE from 'three';
 import type {SurgicalTool,SurgicalSlot} from '../surgical-types';
+/** Only the parameters consumed by this display geometry belong in its key.
+ * Position, orientation and activation are updated without allocating meshes. */
+export function surgicalToolGeometryKey(tool:SurgicalTool,slot:SurgicalSlot,ghost=false):string {
+  return JSON.stringify([tool.id,tool.radiusMm,tool.shaftRadiusMm,tool.workingLengthMm,
+    slot.parameters.radiusMm??tool.radiusMm,slot.parameters.jawOpeningMm??2,ghost]);
+}
+export function updateSurgicalToolMesh(group:THREE.Group,slot:SurgicalSlot,ghost=false):void {
+  group.position.set(...slot.position);group.quaternion.set(...slot.quaternion);
+  const accent=group.userData.surgicalAccent as THREE.MeshStandardMaterial|undefined;
+  accent?.color.set(ghost?'#95f4ce':slot.active?'#e0b35d':'#41677a');
+}
 /** Generic research geometry, tip at local origin and working axis along +Z. */
 export function surgicalToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost=false){
   const group=new THREE.Group(),radius=slot.parameters.radiusMm??tool.radiusMm;
   group.name=`instrument:${tool.id}`;
   const metal=new THREE.MeshStandardMaterial({color:ghost?'#95f4ce':'#a6c9d1',metalness:.5,roughness:.35,transparent:ghost,opacity:ghost?.35:1,depthWrite:!ghost});
   const accent=metal.clone();accent.color.set(ghost?'#95f4ce':slot.active?'#e0b35d':'#41677a');
+  group.userData.surgicalAccent=accent;
   const add=(geometry:THREE.BufferGeometry,x=0,y=0,z=0,material=metal)=>{const mesh=new THREE.Mesh(geometry,material);mesh.position.set(x,y,z);group.add(mesh);return mesh;};
   const cylinder=(r:number,length:number,x=0,y=0,z=0,material=metal)=>{const mesh=add(new THREE.CylinderGeometry(r,r,length,12),x,y,z,material);mesh.rotation.x=Math.PI/2;return mesh;};
   const box=(w:number,h:number,d:number,x=0,y=0,z=0,material=metal)=>add(new THREE.BoxGeometry(w,h,d),x,y,z,material);
@@ -53,7 +65,7 @@ export function surgicalToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost=false
     default:
       sphere(radius);break;
   }
-  group.position.set(...slot.position);group.quaternion.set(...slot.quaternion);return group;
+  updateSurgicalToolMesh(group,slot,ghost);return group;
 }
 
 export type SurgicalEffectKind='contact'|'thermal'|'fluid'|'debris'|'cut'|'transection'|'obstruction';
