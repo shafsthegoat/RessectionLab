@@ -1,6 +1,7 @@
 """Cheap engineering fixtures for persistent real-substep playback; no patient data."""
 import copy
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -13,7 +14,8 @@ from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_replay_cache import SurgicalReplayCache
 from resectionlab.surgical_frame_replay import SurgicalFrameCache
 from resectionlab.surgical_observed_cache import (observed_implementation_fingerprint,
-    ImplementationChanged)
+    ImplementationChanged, ObservedFrameStore, DISK_BUDGET_ENV)
+from resectionlab.surgical_verified_cache import VerifiedSurgicalCache
 from resectionlab.surgical_telemetry import capture_episode
 
 
@@ -152,3 +154,116 @@ def test_budget_unavailable_is_cache_miss_and_fallback_remains_exact(tmp_path):
     assert cache.store.publications==0 and cache.store.owner.statistics['diskBytes']<=1024
     view,_,info=seek(cache,replay,token,engine)
     assert info['readOnly'] and view.state_id==token.history[0]['stateBefore']
+
+
+def test_observed_budget_configuration_keeps_canonical_limit(tmp_path, monkeypatch):
+    monkeypatch.delenv(DISK_BUDGET_ENV, raising=False)
+    assert SurgicalFrameCache(directory=tmp_path).store.owner.max_disk_bytes==512*1024**2
+    monkeypatch.setenv(DISK_BUDGET_ENV, str(8*1024**3))
+    cache=SurgicalFrameCache(directory=tmp_path)
+    assert cache.store.owner.max_disk_bytes==8*1024**3
+    assert cache.store.max_file_bytes==64*1024**2
+    assert cache.max_bytes==64*1024**2
+    assert cache.store.statistics['maxTransientJsonBytes']==128*1024**2
+    assert SurgicalFrameCache(directory=tmp_path,max_disk_bytes=4096).store.owner.max_disk_bytes==4096
+    assert ObservedFrameStore(tmp_path,max_disk_bytes=4096).max_file_bytes==4096
+    assert VerifiedSurgicalCache(tmp_path).max_disk_bytes==512*1024**2
+    with pytest.raises(ValueError,match='512 MiB'):
+        VerifiedSurgicalCache(tmp_path,max_disk_bytes=512*1024**2+1)
+    with pytest.raises(ValueError): ObservedFrameStore(tmp_path,max_disk_bytes=8*1024**3+1)
+    with pytest.raises(ValueError): ObservedFrameStore(tmp_path,max_disk_bytes=True)
+
+
+@pytest.mark.parametrize('value',['invalid','0','-1',str(8*1024**3+1),'1.5'])
+def test_invalid_observed_budget_environment_fails_at_construction(tmp_path,monkeypatch,value):
+    monkeypatch.setenv(DISK_BUDGET_ENV,value)
+    with pytest.raises(ValueError,match=DISK_BUDGET_ENV): SurgicalFrameCache(directory=tmp_path)
+    # Explicit configuration remains usable even with a bad inherited value.
+    assert ObservedFrameStore(tmp_path,max_disk_bytes=4096).owner.max_disk_bytes==4096
+    assert not list(tmp_path.iterdir())
+
+
+def _entry_bytes(entry):
+    return {path.name:path.read_bytes() for path in entry.iterdir()}
+
+
+def test_reservation_pressure_preserves_authenticated_current_prefix(tmp_path):
+    engine=episode(); cache,replay,token=admitted(engine,tmp_path)
+    capture_episode(engine,frame_collector=cache.collector(token))
+    entry=cache.store.entry(token); original=_entry_bytes(entry)
+    # The 64 MiB reservation is logical/sparse; this test stores only a tiny
+    # engineering episode and declines before creating that reservation.
+    budget=cache.store.owner.statistics['diskBytes']+64*1024**2-1
+    limited=SurgicalFrameCache(directory=tmp_path,max_disk_bytes=budget)
+    assert limited.store.begin(token,1) is None
+    assert _entry_bytes(entry)==original
+    assert not list(tmp_path.glob('.pending-*'))
+    for position in range(len(engine.actions)):
+        item=limited.store.load(token,position)
+        assert item is not None
+        assert limited.store.state(item,-1)==cache.store.state(cache.store.load(token,position),-1)
+    assert limited.store.statistics['diskBytes']<=budget
+
+
+def test_reservation_evicts_only_unrelated_entries_and_abort_retains_prefix(tmp_path):
+    engine=episode(); cache,replay,token=admitted(engine,tmp_path)
+    capture_episode(engine,frame_collector=cache.collector(token))
+    entry=cache.store.entry(token); original=_entry_bytes(entry)
+    budget=cache.store.owner.statistics['diskBytes']+64*1024**2+128
+    unrelated=tmp_path/'entry-unrelated'; unrelated.mkdir()
+    (unrelated/'old').write_bytes(b'x'*512)
+    # Current entry is older, so the old keep=pending bug would delete it first.
+    os.utime(entry,(1,1)); os.utime(unrelated,(2,2))
+    limited=SurgicalFrameCache(directory=tmp_path,max_disk_bytes=budget)
+    writer=limited.store.begin(token,1)
+    assert writer is not None and not unrelated.exists()
+    assert _entry_bytes(entry)==original
+    assert limited.store.statistics['diskBytes']<=budget
+    writer.abort()
+    assert not list(tmp_path.glob('.pending-*'))
+    assert _entry_bytes(entry)==original
+    assert limited.store.load(token,0) is not None
+    assert limited.store.load(token,1) is not None
+
+
+def test_large_disk_budget_rejects_oversized_files_before_reading(tmp_path,monkeypatch):
+    engine=episode(); cache,replay,token=admitted(engine,tmp_path)
+    capture_episode(engine,frame_collector=cache.collector(token))
+    store=ObservedFrameStore(tmp_path,max_disk_bytes=8*1024**3)
+    entry=store.entry(token); item=store.load(token,0)
+    assert item is not None
+    original_fdopen=os.fdopen
+    reads=[]
+
+    class CheckedStream:
+        def __init__(self,stream): self.stream=stream
+        def __enter__(self): return self
+        def __exit__(self,*args): return self.stream.__exit__(*args)
+        def __getattr__(self,name): return getattr(self.stream,name)
+        def read(self,*args):
+            size=os.fstat(self.stream.fileno()).st_size
+            assert size<=store.max_file_bytes, 'Oversized cache file reached stream.read'
+            reads.append(size)
+            return self.stream.read(*args)
+
+    monkeypatch.setattr(os,'fdopen',lambda *args,**kwargs:CheckedStream(original_fdopen(*args,**kwargs)))
+    manifest=entry/'action-0.json.gz'; original=manifest.read_bytes()
+    with manifest.open('wb') as stream: stream.truncate(store.max_file_bytes+1)
+    assert store.load(token,0) is None
+    assert reads==[32]  # Private key only; the oversized manifest was not read.
+    reads.clear()
+    manifest.write_bytes(original)
+    fields=item['frames'][0]['fields']['fields']
+    part=entry/next(iter(fields.values()))['file']
+    with part.open('wb') as stream: stream.truncate(store.max_file_bytes+1)
+    with pytest.raises(ValueError,match='Invalid verified cache file'): store.state(item,0)
+    assert not reads
+    # Corrupt oversized reused parts are rejected before reading, then staged
+    # again from the small actual engineering state rather than being trusted.
+    writer=store.begin(token,0)
+    assert writer is not None
+    try:
+        writer.capture(engine.fresh(),'action_start',{})
+        assert (writer.directory/part.name).is_file()
+    finally: writer.abort()
+    assert not list(tmp_path.glob('.pending-*'))

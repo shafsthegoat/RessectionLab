@@ -204,9 +204,13 @@ def _read(path, limit):
 
 
 class VerifiedSurgicalCache:
+    # Storage-policy subclasses may set a separate bounded allowance. The
+    # canonical replay cache itself retains its 512 MiB constructor limit.
+    _disk_budget_limit = MAX_DISK_BYTES
+
     def __init__(self, directory=None, *, max_disk_bytes=MAX_DISK_BYTES):
-        if type(max_disk_bytes) is not int or not 1 <= max_disk_bytes <= MAX_DISK_BYTES:
-            raise ValueError('Verified cache disk budget must be 1..512 MiB')
+        if type(max_disk_bytes) is not int or not 1 <= max_disk_bytes <= self._disk_budget_limit:
+            raise ValueError(f'Verified cache disk budget must be 1..{self._disk_budget_limit // 1024**2} MiB')
         self.directory = Path(directory) if directory is not None else DEFAULT_DIRECTORY
         self.max_disk_bytes = max_disk_bytes
         self.hits = self.misses = self.publications = 0

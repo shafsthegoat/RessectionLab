@@ -199,6 +199,20 @@ obsolete entries fall back to actual observed replay. Fresh-process frame reads
 can therefore avoid recomputing dense tool paths during playback. This cache is
 disposable and does not replace the native action log or independent verification.
 
+The observed-frame disk allowance defaults to 512 MiB. Long episodes can set
+`RESSECTIONLAB_OBSERVED_CACHE_MAX_DISK_BYTES=8589934592` for an explicit 8 GiB
+ceiling in both frame preparation and the Electron launch environment. Values
+must be integer bytes from 1 through 8 GiB; an explicit constructor allowance
+takes precedence. The canonical replay cache retains its separate 512 MiB cap,
+and frame RAM, transient JSON and per-action staging limits remain unchanged.
+Compressed file reads remain capped at 64 MiB and the configured disk allowance,
+so a larger disk budget cannot authorize a larger unauthenticated memory read.
+Reservation protects the current branch's committed frame entry: insufficient
+space skips new cache publication while retaining its earlier authenticated
+frames. Unrelated old entries remain eligible for eviction. Preparation must
+measure actual disk use and verify every action's retained frames; a publication
+counter or a size estimate alone does not establish complete playback coverage.
+
 Long full-case native archives use bounded lossless JSON compression. A disposable
 local authenticated cache is published only after complete canonical replay,
 source/implementation checks and checkpoint equality. Missing or invalid seals

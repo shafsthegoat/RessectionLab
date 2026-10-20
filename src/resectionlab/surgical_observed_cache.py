@@ -148,15 +148,46 @@ class FrameAdmission:
             self.history[0]['stateBefore'] if self.history else self.snapshot['stateId'])
 
 
+DEFAULT_DISK_BYTES = 512 * 1024**2
+MAX_DISK_BYTES = 8 * 1024**3
+MAX_ACTION_BYTES = 64 * 1024**2
+DISK_BUDGET_ENV = 'RESSECTIONLAB_OBSERVED_CACHE_MAX_DISK_BYTES'
+
+
+class _ObservedDiskOwner(VerifiedSurgicalCache):
+    _disk_budget_limit = MAX_DISK_BYTES
+
+
+def _disk_budget(max_disk_bytes):
+    if max_disk_bytes is not None:
+        return max_disk_bytes
+    configured = os.environ.get(DISK_BUDGET_ENV)
+    if configured is None:
+        return DEFAULT_DISK_BYTES
+    try:
+        budget = int(configured)
+    except ValueError as error:
+        raise ValueError(f'{DISK_BUDGET_ENV} must be integer bytes in 1..{MAX_DISK_BYTES}') from error
+    if not 1 <= budget <= MAX_DISK_BYTES:
+        raise ValueError(f'{DISK_BUDGET_ENV} must be integer bytes in 1..{MAX_DISK_BYTES}')
+    return budget
+
+
 class ObservedFrameStore:
-    def __init__(self, directory=None, *, max_disk_bytes=512 * 1024**2):
-        self.owner = VerifiedSurgicalCache(directory or DEFAULT_DIRECTORY, max_disk_bytes=max_disk_bytes)
+    def __init__(self, directory=None, *, max_disk_bytes=None):
+        self.owner = _ObservedDiskOwner(directory or DEFAULT_DIRECTORY, max_disk_bytes=_disk_budget(max_disk_bytes))
         self.hits = self.misses = self.publications = 0
 
     @property
     def statistics(self):
         return {**self.owner.statistics, 'hits': self.hits, 'misses': self.misses,
-                'publications': self.publications}
+                'publications': self.publications, 'maxFileBytes': self.max_file_bytes}
+
+    @property
+    def max_file_bytes(self):
+        # Disk capacity must not widen the transient compressed-file allowance.
+        # Every legitimate observed file fits inside one action reservation.
+        return min(self.owner.max_disk_bytes, MAX_ACTION_BYTES)
 
     def entry(self, admission):
         return self.owner.directory / self.owner._entry_name(admission.snapshot_hash, admission.fingerprint or 'unavailable')
@@ -169,9 +200,12 @@ class ObservedFrameStore:
         # Reserve once per action, not one recursive disk scan per state field.
         # The bounded reservation includes descriptors and rejects unusually
         # large actions rather than allowing unbounded temporary disk growth.
-        reserve = min(64 * 1024**2, max(1, self.owner.max_disk_bytes - 4096))
+        reserve = min(MAX_ACTION_BYTES, max(1, self.owner.max_disk_bytes - 4096))
         with self.owner._locked():
-            if not self.owner._room(reserve, path):
+            # The pending directory is not an eviction candidate (only entry-*
+            # directories are). Keep the committed branch whose stable blobs
+            # this writer reuses, including when a new reservation cannot fit.
+            if not self.owner._room(reserve, self.entry(admission)):
                 path.rmdir(); return None
             with (path / '.reservation').open('xb') as stream: stream.truncate(reserve)
         return ObservedFrameWriter(self, admission, position, path, reserve)
@@ -182,7 +216,7 @@ class ObservedFrameStore:
             if admission.fingerprint is None: raise ValueError('Unavailable implementation')
             key = self.owner._key(); entry = self.entry(admission)
             if entry.is_symlink(): raise ValueError('Observed entry cannot be redirected')
-            raw = _read(entry / f'action-{position}.json.gz', self.owner.max_disk_bytes)
+            raw = _read(entry / f'action-{position}.json.gz', self.max_file_bytes)
             signature = _read(entry / f'action-{position}.mac', 64)
             if not hmac.compare_digest(signature, hmac.digest(key, raw, 'sha256').hex().encode()):
                 raise ValueError('Observed manifest authentication differs')
@@ -208,7 +242,7 @@ class ObservedFrameStore:
             return None
 
     def state(self, item, frame_index):
-        return _restore_state(item['entry'], item['frames'][frame_index]['fields'], self.owner.max_disk_bytes)
+        return _restore_state(item['entry'], item['frames'][frame_index]['fields'], self.max_file_bytes)
 
 
 class ObservedFrameWriter:
@@ -243,7 +277,7 @@ class ObservedFrameWriter:
             # Deduplicate stable large topology fields within and across actions.
             existing = self.store.entry(self.admission) / filename
             try:
-                valid_existing = hashlib.sha256(_read(existing, self.store.owner.max_disk_bytes)).hexdigest() == digest
+                valid_existing = hashlib.sha256(_read(existing, self.store.max_file_bytes)).hexdigest() == digest
             except (OSError, ValueError): valid_existing = False
             if not valid_existing: self._write(filename, data)
             fields[name] = {'file': filename, 'sha256': digest, 'uncompressedBytes': size}

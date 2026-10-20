@@ -116,7 +116,7 @@ class _ObservedFrames(SurgicalEngine):
 
 
 class SurgicalFrameCache:
-    def __init__(self, max_bytes=64 * 1024**2, *, directory=None, max_disk_bytes=512 * 1024**2):
+    def __init__(self, max_bytes=64 * 1024**2, *, directory=None, max_disk_bytes=None):
         if type(max_bytes) is not int or not 1 <= max_bytes <= 64 * 1024**2:
             raise ValueError('Observed frame RAM budget must be 1..64 MiB')
         self.max_bytes = max_bytes
