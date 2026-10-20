@@ -158,6 +158,15 @@ fields are freshly measured at the actual tool pose, and recorded aspiration
 uses actual fluid/debris ledger changes. A blocked approach or nonprogressing
 dwell ends this bounded pass; retained field material remains in the ledger.
 
+At a withdrawn primary endpoint, `configure_recorded_field_cleanup` can prepare
+an additional bounded pass on drill rays established by matching public action
+receipts. It selects up to 48 positive current fields by default (maximum 64),
+with overlap-aware ranking and fresh dwell measurements. Changing rays requires
+actual withdrawal, checked exterior translation and any remote rotation before
+the next approach. Partial or rejected transit retains its actual pose and ends
+the pass. This configuration changes scheduling metadata; it does not aspirate
+material or admit a trajectory itself.
+
 An explicit directional fallback can be configured at a stopped primary
 residual endpoint after both tools are released and withdrawn. Native axis 0/1
 proposals preserve original cell identities and require the same public guards.

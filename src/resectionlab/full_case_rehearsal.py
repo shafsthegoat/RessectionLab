@@ -142,10 +142,61 @@ def _same_pose(state, pose):
              or np.allclose(state['quaternion'], -np.asarray(pose['quaternion']), rtol=0., atol=1e-8)))
 
 
-def _exterior_transition(engine, outside):
+def configure_recorded_field_cleanup(engine, director, *, max_stations=48):
+    """Prepare positive fields on recorded drill rays at a withdrawn endpoint.
+
+    Only detached scheduling metadata changes. Field membership is a proposal;
+    every withdrawal, exterior transit, approach and aspiration remains an
+    ordinary guarded public action. Existing cleanup and stops are preserved.
+    """
+    if director.get('schema') != SCHEMA or director.get('sourceSceneId') != engine.scene.identity:
+        raise ValueError('Recorded field cleanup director source differs')
+    if director.get('lastStateId') != engine.state_id:
+        raise ValueError('Recorded field cleanup action boundary differs')
+    if (director.get('scenario') != 'primary' or director.get('status') not in ('stopped', 'complete')
+            or director.get('stage') != 'endpoint'):
+        raise ValueError('Recorded field cleanup requires a finished primary endpoint')
+    if engine.state['holds'] or any(state['inserted'] or state['active'] or state['grip'] for state in engine.state['slots'].values()):
+        raise ValueError('Withdraw and release both tools before configuring field cleanup')
+    from .full_case_cleanup import recorded_drill_cleanup_stations
+    stations = recorded_drill_cleanup_stations(engine, max_stations=max_stations)
+    if not stations:
+        raise ValueError('No positive accessible fields on the recorded drill rays')
+    # Keep selected fields, but visit a ray together to avoid unnecessary
+    # exterior exchanges. Each actual dwell remeasures overlapping fields.
+    groups = {}
+    for station in stations:
+        outside = station['outsidePose']
+        key = (tuple(outside['position']), tuple(outside['quaternion']))
+        groups.setdefault(key, []).append(station)
+    stations = [station for group in groups.values() for station in group]
+    result = copy.deepcopy(director)
+    result.setdefault('priorStops', []).append({'position': len(engine.actions), 'reason': director.get('stopReason')})
+    result['priorStops'] = result['priorStops'][-8:]
+    if 'fieldCleanup' in result:
+        result.setdefault('priorFieldCleanups', []).append(result['fieldCleanup'])
+    result.setdefault('recordedFieldCleanupPasses', []).append({
+        'startPosition': len(engine.actions), 'startStateId': engine.state_id, 'stationCount': len(stations),
+        'maxStations': max_stations})
+    result.update(status='ready', stopReason=None, stage='field_cleanup', fieldCleanupAttempted=True)
+    result['fieldCleanup'] = {'stations': stations, 'index': 0, 'mode': 'setup',
+        'results': [], 'status': 'prepared', 'recordedDrillRays': True, 'transits': [],
+        'qualification': 'Bounded aspiration on recorded drill rays; checked exterior relocation between rays. Residual field material is retained.'}
+    return result
+
+
+def _next_cleanup_mode(cleanup):
+    if not cleanup.get('recordedDrillRays') or cleanup['index'] >= len(cleanup['stations']):
+        return 'approach'
+    previous = cleanup['stations'][cleanup['index'] - 1]['outsidePose']
+    following = cleanup['stations'][cleanup['index']]['outsidePose']
+    return 'approach' if _same_pose(previous, following) else 'setup'
+
+
+def _exterior_transition(engine, outside, *, slot='left'):
     """Propose exterior transit; exact public sweeps remain the authority."""
     from scipy.spatial.transform import Rotation
-    state = engine.state['slots']['left']
+    state = engine.state['slots'][slot]
     old_q, new_q = state['quaternion'], outside['quaternion']
     old_outward = -Rotation.from_quat(old_q).apply([0., 0., 1.])
     new_outward = -Rotation.from_quat(new_q).apply([0., 0., 1.])
@@ -156,13 +207,25 @@ def _exterior_transition(engine, outside):
     deficit = max(0., float((corners @ new_outward).max()) + 60. - old_anchor @ new_outward)
     transverse = new_outward - old_outward * (old_outward @ new_outward)
     projection = float(transverse @ new_outward)
+    extra_corner = None
     if deficit and projection <= 1e-8:
-        raise ValueError('Directional transition requires distinct exterior half-spaces')
-    corner = old_anchor + transverse * (deficit / projection if deficit else 0.)
+        # Opposite shaft directions have disjoint exterior half-spaces. Move
+        # around a third remote side before crossing to the new one; never
+        # rotate or cross through the source between opposing outside poses.
+        side = np.eye(3)[int(np.argmin(np.abs(old_outward)))]
+        side = side - old_outward * (old_outward @ side)
+        side /= np.linalg.norm(side)
+        extra_corner = old_anchor + side * max(0., float((corners @ side).max()) + 60. - old_anchor @ side)
+        corner = extra_corner + new_outward * max(0., float((corners @ new_outward).max()) + 60. - extra_corner @ new_outward)
+    else:
+        corner = old_anchor + transverse * (deficit / projection if deficit else 0.)
     poses = []
     previous = current
-    for point, quaternion in ((old_anchor, old_q), (corner, old_q), (corner, new_q),
-                              (np.asarray(outside['position'], float), new_q)):
+    route = [(old_anchor, old_q)]
+    if extra_corner is not None:
+        route.append((extra_corner, old_q))
+    route.extend(((corner, old_q), (corner, new_q), (np.asarray(outside['position'], float), new_q)))
+    for point, quaternion in route:
         # Rotation occurs only at the remote corner. Split long translations
         # without changing their line, retaining the public 250 mm segment cap.
         count = max(1, int(np.ceil(np.linalg.norm(point - previous) / 200.)))
@@ -544,9 +607,27 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                 _finish_field_cleanup(meta, 'bounded-pass-finished'); continue
             station = cleanup['stations'][cleanup['index']]
             if cleanup['mode'] == 'setup':
+                state = candidate.state['slots']['right']
+                if (cleanup.get('recordedDrillRays') and not state['active'] and not state['inserted']
+                        and not state['grip'] and 'right' not in candidate.state['holds']
+                        and state['instrument'] == 'frazier_suction'
+                        and not _same_pose(state, station['outsidePose'])):
+                    cleanup['transits'].append({'poses': _exterior_transition(candidate, station['outsidePose'], slot='right'),
+                        'index': 0, 'stationIndex': cleanup['index'], 'status': 'prepared', 'results': []})
+                    cleanup['mode'] = 'relocate'; continue
                 action = _prepare(candidate, 'frazier_suction', station['outsidePose'], station['parameters'], slot='right')
                 if action is None:
                     cleanup['mode'] = 'approach'; continue
+            elif cleanup['mode'] == 'relocate':
+                from scipy.spatial.transform import Rotation
+                transit = cleanup['transits'][-1]
+                if transit['index'] >= len(transit['poses']):
+                    transit['status'] = 'complete'; cleanup['mode'] = 'setup'; continue
+                pose = transit['poses'][transit['index']]
+                state = candidate.state['slots']['right']
+                distance = float(np.linalg.norm(np.subtract(pose['position'], state['position'])))
+                angle = (Rotation.from_quat(pose['quaternion']) * Rotation.from_quat(state['quaternion']).inv()).magnitude()
+                action = _admin('right', 'withdraw', pose=copy.deepcopy(pose), duration=max(.2, (distance + 40. * angle) / 20.))
             elif cleanup['mode'] == 'approach':
                 distance = float(np.linalg.norm(np.subtract(station['pose']['position'], candidate.state['slots']['right']['position'])))
                 action = _admin('right', 'apply', pose=copy.deepcopy(station['pose']),
@@ -556,7 +637,7 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                 if measured is None:
                     cleanup['results'].append({'stationIndex': cleanup['index'], 'mode': 'dwell',
                         'position': len(candidate.actions), 'status': 'empty-field-at-actual-pose'})
-                    cleanup['index'] += 1; cleanup['mode'] = 'approach'; continue
+                    cleanup['index'] += 1; cleanup['mode'] = _next_cleanup_mode(cleanup); continue
                 action = measured['action']
                 cleanup['freshMeasurement'] = {key: value for key, value in measured.items() if key != 'action'}
             else:
@@ -602,6 +683,11 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
             meta['fieldCleanup']['results'].append({'stationIndex': meta['fieldCleanup']['index'],
                 'mode': meta['fieldCleanup']['mode'], 'position': len(candidate.actions),
                 'status': 'rejected', 'reason': preview.get('reason')})
+            if meta['fieldCleanup']['mode'] == 'relocate':
+                transit = meta['fieldCleanup']['transits'][-1]
+                transit['status'] = 'blocked'
+                transit['results'].append({'index': transit['index'], 'position': len(candidate.actions),
+                    'status': 'rejected', 'reason': preview.get('reason'), 'arrived': False})
             _finish_field_cleanup(meta, 'blocked', preview.get('reason')); continue
         if preview['status'] != 'rejected' and str(preview.get('reason')).startswith('TOOL_COLLISION:right') and candidate.state['slots']['right']['inserted'] and stage not in ('assistant_retract', 'field_cleanup') and not preview.get('deltas', {}).get('removedCells'):
             _record_rejection(meta, action, preview)
@@ -651,7 +737,19 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                 **deltas, 'retainedDebrisMm3': candidate.state['debrisMm3'],
                 'retainedFluidMm3': candidate.metrics()['fluidPresentMm3'],
                 **({'freshMeasurement': cleanup.pop('freshMeasurement')} if 'freshMeasurement' in cleanup else {})})
-            if outcome['status'] != 'accepted':
+            if mode == 'relocate':
+                transit = cleanup['transits'][-1]
+                pose = transit['poses'][transit['index']]
+                arrived = (outcome['status'] == 'accepted' and not candidate.state['slots']['right']['inserted']
+                    and _same_pose(candidate.state['slots']['right'], pose))
+                transit['results'].append({'index': transit['index'], 'position': len(candidate.actions),
+                    'status': outcome['status'], 'reason': outcome.get('reason'), 'arrived': arrived})
+                if arrived:
+                    transit['index'] += 1
+                else:
+                    transit['status'] = 'blocked'
+                    _finish_field_cleanup(meta, 'blocked', 'Checked exterior relocation did not reach its proposed pose')
+            elif outcome['status'] != 'accepted':
                 _finish_field_cleanup(meta, 'blocked', outcome.get('reason'))
             elif mode == 'approach':
                 state, pose = candidate.state['slots']['right'], cleanup['stations'][cleanup['index']]['pose']
@@ -662,7 +760,7 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                 if sum(deltas.values()) <= 1e-9:
                     _finish_field_cleanup(meta, 'no-aspiration-progress')
                 else:
-                    cleanup['index'] += 1; cleanup['mode'] = 'approach'
+                    cleanup['index'] += 1; cleanup['mode'] = _next_cleanup_mode(cleanup)
         if stage == 'drill':
             if 'cycleBoneRemovedCells' in meta:
                 bone_labels = {r['id'] for r in candidate.scene.regions if r['material'] == 'bone'}
