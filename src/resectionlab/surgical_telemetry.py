@@ -139,6 +139,9 @@ class _ObservedEngine(SurgicalEngine):
     def _substep(self, key, op, p, q, active, dt):
         before = {hand: {'position': slot['position'][:]} for hand, slot in self.state['slots'].items()}
         events = super()._substep(key, op, p, q, active, dt)
+        collector = getattr(self, '_frame_collector', None)
+        if collector is not None:
+            collector.observe(self, key, bool(active))
         self._telemetry.append(self._sample('microstep', key, active, before, dt))
         self._events.extend({'timeSeconds': self.state['elapsedSeconds'], 'actionIndex': len(self._attempts),
                              'timing': 'committed_microstep', 'event': copy.deepcopy(event)} for event in events)
@@ -146,7 +149,17 @@ class _ObservedEngine(SurgicalEngine):
 
     def step(self, action):
         start = self.state['elapsedSeconds']
-        result = super().step(action)
+        collector = getattr(self, '_frame_collector', None)
+        try:
+            if collector is not None:
+                collector.begin(self, action)
+            result = super().step(action)
+            if collector is not None:
+                collector.end(self, action, result)
+        except BaseException:
+            if collector is not None:
+                collector.abort()
+            raise
         end = self.state['elapsedSeconds']
         self._invalid += result['status'] == 'rejected'
         self._exchanges += result['status'] != 'rejected' and action.get('operation') == 'exchange'
@@ -168,12 +181,16 @@ class _ObservedEngine(SurgicalEngine):
 
 
 def capture_episode(scene_or_engine, actions=None, *, label='scripted', episode_id='episode',
-                    interval_seconds=.2, expected_state_id=None, snapshot=None, protection=None, guard_config=None):
+                    interval_seconds=.2, expected_state_id=None, snapshot=None, protection=None, guard_config=None,
+                    frame_collector=None):
     """Replay attempted actions, preserving an existing engine/snapshot guard contract.
 
     Pass a final engine or ``snapshot=...`` to verify the replay against its final
     state. If actions is omitted, accepted history is used; rejected attempts
     cannot be recovered from that history and are explicitly marked unknown.
+    An optional collector observes the same replay through begin/observe/end
+    hooks outside engine state; it must discard rejected actions and verify
+    finalized outcomes before publishing any staged frames. Exceptions abort it.
     """
     if label not in LABELS:
         raise ValueError('label must be one of: ' + ', '.join(LABELS))
@@ -200,6 +217,10 @@ def capture_episode(scene_or_engine, actions=None, *, label='scripted', episode_
     if guard_config is not None:
         kwargs['guard_config'] = guard_config
     engine = _ObservedEngine(scene, **kwargs)
+    if frame_collector is not None:
+        # The collector is shared by transactional clones via copy.copy;
+        # staged observations never become patient state or engine identity.
+        engine._frame_collector = frame_collector
     initial_id = engine.state_id
     for action in actions:
         if not isinstance(action, dict):
