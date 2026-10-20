@@ -142,6 +142,8 @@ preview them, and commit only matching public transitions. The current patient
 route uses the supplied sub-06 source grid and matching exclusion evidence.
 Superior skull openings, fine frontiers, interior target pockets, second-hand
 aspiration and checked withdrawal retain complete instrument/shaft collisions.
+The assisting suction hand is withdrawn and parked before the left hand or its
+next access comes within the declared 10 mm lateral research coordination margin.
 The director refuses healthy/unknown tissue removal and revisits joined openings
 only while a bounded previous pass made target progress. Its configured CUSA
 working aperture can reach 6 mm radius in the generic research model; this is

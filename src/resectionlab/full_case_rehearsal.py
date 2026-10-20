@@ -269,6 +269,29 @@ def _finish_field_cleanup(meta, status, reason=None):
     meta['stage'] = 'cleanup'
 
 
+def _assistant_clearance(engine, meta):
+    """Observe the existing research hand-separation rule before nearby work."""
+    state = engine.state['slots']['right']
+    if not meta.get('assistantField') or state['instrument'] != 'frazier_suction' or not state['inserted']:
+        return None
+    from scipy.spatial.transform import Rotation
+    axis = Rotation.from_quat(state['quaternion']).apply([0., 0., 1.])
+    points = [engine.state['slots']['left']['position']]
+    if 0 <= meta['accessIndex'] < len(meta['accesses']):
+        points.append(meta['accesses'][meta['accessIndex']]['entryPose']['position'])
+    distances = []
+    for point in points:
+        delta = np.subtract(point, state['position'])
+        distances.append(float(np.linalg.norm(delta - axis * (delta @ axis))))
+    # This is the already-declared generic coordination margin, not a
+    # calibrated clinical clearance. Public sweeps still admit every action.
+    if min(distances) >= 10.:
+        return None
+    return {'position': len(engine.actions), 'reason': 'DECLARED_ASSISTANT_CLEARANCE',
+        'minimumLateralSeparationMm': 10., 'observedLateralDistancesMm': distances,
+        'resumeStage': meta['stage'], 'sourceSceneId': engine.scene.identity}
+
+
 def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
     """Return a detached engine + resumable director after bounded real actions.
 
@@ -299,6 +322,13 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
         action = None
         checked_preview = None
         assistant_parking = False
+        if meta['scenario'] == 'primary' and stage in ('access_setup', 'drill', 'cusa_setup', 'remove', 'core'):
+            clearance = _assistant_clearance(candidate, meta)
+            if clearance is not None:
+                meta.setdefault('coordinationEvents', []).append(clearance)
+                meta['assistantResumeStage'] = stage
+                meta['assistantParked'] = False
+                meta['stage'] = 'assistant_retract'; continue
         if stage == 'inspect':
             _phase(meta, 'inspect', 'Inspect supplied anatomy and unknowns', len(candidate.actions))
             active_hand = next((hand for hand,state in candidate.state['slots'].items() if state['active']), None)

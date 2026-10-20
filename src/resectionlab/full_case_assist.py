@@ -63,6 +63,7 @@ def assistant_field_candidate(engine, current_access):
                 'checkedInsertionCapsuleRadiusMm':.67,
                 'distanceFromCurrentLeftXYMm':left_distance,
                 'distanceFromCurrentAccessXYMm':access_distance,
+                'minimumAccessSeparationMm':10.,
                 'nearbyDebrisMm3':debris,'nearbyFluidMm3':fluid,
                 'removedTargetColumn':[i,j], 'highestRemovedTargetIndexZ':k,
                 'sourceSceneId':scene.identity,'requiresPublicPreview':True,

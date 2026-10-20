@@ -694,6 +694,42 @@ def test_assistant_retraction_parks_outside_following_full_instrument_envelope(m
     assert director.accounting(result)['healthyRemovedMm3'] == 0.
 
 
+@pytest.mark.parametrize('stage,active', [('access_setup', True), ('core', True), ('remove', False)])
+def test_nearby_access_retires_inserted_assistant_before_proposal_search(monkeypatch, stage, active):
+    from resectionlab import full_case_debulking
+    engine, previous, pose = _active_assistant()
+    if not active:
+        assert engine.step({'slot': 'right', 'operation': 'deactivate', 'duration': .2})['status'] == 'accepted'
+    meta = director.new_director(engine)
+    meta.update(stage=stage, coreAttempts=0, corePositioning=0,
+        assistantField=previous['assistantField'], assistantAttempted=True,
+        accesses=[{'id': 'nearby-retained-target', 'entryPose': pose(42, 15),
+                   'outsidePose': pose(42, 47), 'drillRadiusMm': 3.}], accessIndex=0)
+    before, source_hash = engine.snapshot(), array_digest(engine.scene.labels)
+    def forbidden_search(*_args, **_kwargs):
+        raise AssertionError('Nearby work must retire the inserted assistant before searching')
+    with monkeypatch.context() as patches:
+        patches.setattr(director, 'next_removal_candidates', forbidden_search)
+        patches.setattr(full_case_debulking, 'local_debulking_candidates', forbidden_search)
+        candidate, resumed = director.run_slice(engine, meta, max_actions=1)
+        assert resumed['stage'] == 'assistant_retract' and resumed['assistantResumeStage'] == stage
+        assert candidate.actions[-1]['slot'] == 'right'
+        assert candidate.actions[-1]['operation'] == ('deactivate' if active else 'inspect')
+        event = resumed['coordinationEvents'][-1]
+        assert event['reason'] == 'DECLARED_ASSISTANT_CLEARANCE'
+        assert min(event['observedLateralDistancesMm']) < event['minimumLateralSeparationMm']
+        for _ in range(8):
+            if resumed.get('assistantParked'): break
+            candidate, resumed = director.run_slice(candidate, resumed, max_actions=1)
+        assert resumed['assistantParked']
+    assert not candidate.state['slots']['right']['inserted'] and not candidate.state['slots']['right']['active']
+    assert candidate.state['removed'] == engine.state['removed']
+    assert not candidate.state['holds'] and director.accounting(candidate)['healthyRemovedMm3'] == 0.
+    preview = candidate.preview(_conflicting_assistant_stroke(pose), include_view=False)
+    assert preview['status'] == 'accepted' and preview['deltas']['removedCells']
+    assert engine.snapshot() == before and array_digest(candidate.scene.labels) == source_hash
+
+
 def test_checked_core_pocket_shrinks_before_checked_withdrawal():
     from resectionlab.surgical_physics_v2 import default_profile
     labels = np.zeros((24, 24, 24), np.uint16)
