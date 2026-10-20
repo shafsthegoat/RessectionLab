@@ -159,6 +159,10 @@ def directional_removal_candidates(engine, access, *, limit=6):
     effects. Protection and all other stateful laws remain public-preview
     responsibilities. Radius applies to the entire action, including retreat.
     At most six source columns and a small subvoxel fallback are searched.
+    Nearby endpoints additionally get a <=15 mm direct path sampled at .05 mm,
+    checked from the actual current pose by the SAME whole-tool filter. The
+    independently checked outside route remains available; with limit>=2 one
+    such fallback is retained when a short path occupies the bounded shortlist.
     """
     limit = operator.index(limit)
     if limit < 0:
@@ -271,11 +275,26 @@ def directional_removal_candidates(engine, access, *, limit=6):
     columns.sort(key=lambda row: (-row[2], row[3], row[0]))
     columns = columns[:6]
     records = []
+
+    def add_candidate(path, radius, kind):
+        if not path:
+            return False
+        travel = sum(float(np.linalg.norm(np.subtract(b['position'], a['position'])))
+                     for a, b in zip([_pose(current, q), *path[:-1]], path))
+        duration = max(.1, min(30., travel/20.))
+        predicted = checked(path, radius, duration)
+        if not predicted:
+            return False
+        action = {'slot': slot, 'operation': 'apply', 'path': path,
+                  'parameters': {'radiusMm': float(radius)}, 'duration': duration}
+        records.append((len(predicted), travel, kind, action))
+        return True
+
     for fallback in (False, True):
         specs = [(ij, bottom, (0., 0.)) for ij, bottom, _, _ in columns] if not fallback else [
             (ij, bottom, offset) for ij, bottom, _, _ in columns[:2]
             for offset in ((-.25, 0.), (.25, 0.), (0., -.25), (0., .25))]
-        if fallback and records: break
+        if fallback and any(row[2] == 'outside' for row in records): break
         for ij, bottom, offset in specs:
             lateral_index = np.asarray(ij, dtype=float) + offset
             ray = _world(scene, _native(axis, lateral_index, bottom))
@@ -295,15 +314,24 @@ def directional_removal_candidates(engine, access, *, limit=6):
                     end_w = max(float(endpoint @ outward), float(np.max(points @ outward+scene.spacing[axis]/2.+height))+1e-4)
                     if end_w >= outside_w: continue
                     endpoint = at_w(endpoint, end_w)
-                path = path_to(endpoint, entry_w, radius)
-                if not path: continue
-                travel = sum(float(np.linalg.norm(np.subtract(b['position'], a['position']))) for a, b in zip([_pose(current, q), *path[:-1]], path))
-                duration = max(.1, min(30., travel/20.))
-                predicted = checked(path, radius, duration)
-                if not predicted: continue
-                action = {'slot': slot, 'operation': 'apply', 'path': path,
-                          'parameters': {'radiusMm': float(radius)}, 'duration': duration}
-                records.append((len(predicted), -float(np.linalg.norm(lateral)), action))
-                break
-    records.sort(key=lambda row: (-row[0], -row[1]))
-    return [row[2] for row in records[:limit]]
+                distance = float(np.linalg.norm(endpoint-current))
+                if distance <= 15.:
+                    count = max(1, int(np.ceil(distance/.05)))
+                    # Include the real start explicitly; no outside-plane pose
+                    # or new placement is substituted for the inserted tool.
+                    short = [_pose(current*(1.-f)+endpoint*f, q)
+                             for f in np.linspace(0., 1., count+1)]
+                    if len(short) <= 512:
+                        add_candidate(short, radius, 'short')
+                # Preserve the old checked route even when the direct trial
+                # succeeds, and still try narrower old routes if it fails.
+                if add_candidate(path_to(endpoint, entry_w, radius), radius, 'outside'):
+                    break
+    records.sort(key=lambda row: (-row[0], row[1]))
+    selected = records[:limit]
+    if limit >= 2 and any(row[2] == 'short' for row in selected) and not any(row[2] == 'outside' for row in selected):
+        outside = next((row for row in records if row[2] == 'outside'), None)
+        if outside is not None:
+            selected[-1] = outside
+            selected.sort(key=lambda row: (-row[0], row[1]))
+    return [row[3] for row in selected]

@@ -192,3 +192,151 @@ def test_signed_anisotropic_affine_capacity_is_in_native_transverse_millimeters(
         assert np.dot(displacement, row['outwardRAS']) > 8.
     assert engine.snapshot() == before
     np.testing.assert_array_equal(engine.scene.labels, source)
+
+
+def _nearby_frontier(axis, blocker=None):
+    """Source-labeled free cavity and target rim, never a patient checkpoint."""
+    labels = np.zeros((24, 24, 24), dtype=np.uint16)
+    view = np.moveaxis(labels, axis, -1)
+    if blocker is None:
+        view[9:12, 9:12, 5] = 7
+    else:
+        view[10, 10, 5] = 7
+        if blocker == 'material': view[8, 10, 7] = 1
+        elif blocker == 'shaft': view[8, 10, 14] = 9
+        elif blocker == 'subvoxel-collar': view[9, 10, 14] = 9
+    affine = np.diag([-1., 1., 1., 1.]); affine[:3, 3] = [40., -10., -20.]
+    if blocker == 'subvoxel-collar':
+        # Integer ray clears the real .5mm shaft with .05mm fine steps, but
+        # the existing coarse outside sweep inflates to ~.667mm at this collar.
+        transverse = [a for a in range(3) if a != axis]
+        affine[transverse[0], transverse[0]] *= 1.2
+    engine = SurgicalEngine(SurgicalScene(labels, affine, [
+        {'id': 1, 'name': 'brain', 'material': 'soft_tissue'},
+        {'id': 7, 'name': 'target', 'material': 'tumor', 'target': True},
+        {'id': 9, 'name': 'bone', 'material': 'bone'},
+    ], {'kind': 'explicit-short-directional-fixture'}, {}))
+    def point(depth, first=10, second=10):
+        index = [first, second]; index.insert(axis, depth)
+        return (affine[:3, :3] @ index + affine[:3, 3]).tolist()
+    q = ([0., np.sqrt(.5), 0., np.sqrt(.5)] if axis == 0
+         else [np.sqrt(.5), 0., 0., np.sqrt(.5)])
+    def pose(depth, first=10):
+        return {'position': point(depth, first), 'quaternion': list(q)}
+    index = [10, 10]; index.insert(axis, 5)
+    access = {'id': 'explicit-nearby-rim', 'nativeAxis': axis, 'outwardIndexSign': 1,
+              'sourceSceneId': engine.scene.identity, 'targetEntryIndex': index,
+              'entryPose': pose(5), 'outsidePose': pose(31), 'drillRadiusMm': 3.}
+    first = 10.25 if blocker == 'subvoxel-collar' else (10 if blocker is None else 6)
+    approach = {'operation': 'move', 'pose': pose(8, first)}
+    if blocker == 'subvoxel-collar':
+        start = np.asarray(point(31, first)); end = np.asarray(point(8, first))
+        approach = {'operation': 'move', 'path': [
+            {'position': (start*(1.-f)+end*f).tolist(), 'quaternion': list(q)}
+            for f in np.linspace(0., 1., 461)[1:]]}
+    for action in [
+        {'operation': 'exchange', 'instrument': 'cusa'},
+        {'operation': 'place', 'pose': pose(31, first), 'parameters': {'radiusMm': .3}},
+        approach,
+    ]:
+        result = engine.step({'slot': 'left', 'duration': .2, **action})
+        assert result['status'] == 'accepted', result
+    if blocker == 'other-hand':
+        assert axis == 0
+        result = engine.step({'slot': 'right', 'operation': 'place',
+                              'pose': {'position': point(14, 8), 'quaternion': [1., 0., 0., 0.]},
+                              'parameters': {'radiusMm': .3}, 'duration': .2})
+        assert result['status'] == 'accepted', result
+    return engine, access
+
+
+def _travel(engine, action):
+    positions = [engine.state['slots'][action['slot']]['position'],
+                 *[p['position'] for p in action['path']]]
+    return float(np.linalg.norm(np.diff(positions, axis=0), axis=1).sum())
+
+
+def _visits_outside(access, action):
+    outward = -Rotation.from_quat(access['outsidePose']['quaternion']).apply([0., 0., 1.])
+    plane = np.asarray(access['outsidePose']['position']) @ outward
+    return any(np.asarray(p['position']) @ outward >= plane-1e-8 for p in action['path'])
+
+
+@pytest.mark.parametrize('axis', [0, 1])
+def test_short_candidate_starts_at_actual_pose_and_retains_checked_outside_alternative(axis):
+    engine, access = _nearby_frontier(axis)
+    before, source = engine.snapshot(), engine.scene.labels.copy()
+    actions = directional_removal_candidates(engine, access, limit=2)
+    assert len(actions) == 2
+    assert engine.snapshot() == before
+    direct, outside = actions
+    assert not _visits_outside(access, direct) and _visits_outside(access, outside)
+    np.testing.assert_array_equal(direct['path'][0]['position'], engine.state['slots']['left']['position'])
+    assert len(direct['path']) <= 512
+    points = np.asarray([p['position'] for p in direct['path']])
+    assert np.max(np.linalg.norm(np.diff(points, axis=0), axis=1)) <= .05+1e-9
+    assert np.linalg.norm(points[-1]-points[0]) <= 15.
+    assert all(p['quaternion'] == direct['path'][0]['quaternion'] for p in direct['path'])
+    assert _travel(engine, direct) < _travel(engine, outside)/10.
+    short_preview = engine.preview(direct, include_view=False)
+    outside_preview = engine.preview(outside, include_view=False)
+    assert short_preview['status'] == outside_preview['status'] == 'accepted'
+    assert len(short_preview['deltas']['removedCells']) > 1
+    # Tied actual target effect is ordered by travel, with the checked outside
+    # route still present if the caller's public preview refuses the first.
+    assert set(short_preview['deltas']['removedCells']) == set(outside_preview['deltas']['removedCells'])
+    assert engine.snapshot() == before
+    result = engine.step(direct)
+    assert result['stateId'] == short_preview['stateId']
+    assert engine.actions[:-1] == before['actions']
+    assert all(source.ravel()[cell] == 7 for cell in result['deltas']['removedCells'])
+    np.testing.assert_array_equal(engine.scene.labels, source)
+
+
+@pytest.mark.parametrize('blocker', ['material', 'shaft', 'other-hand'])
+def test_short_blocking_material_shaft_or_other_hand_preserves_legal_outside_fallback(blocker):
+    engine, access = _nearby_frontier(0, blocker)
+    before = engine.snapshot(); source = engine.scene.labels.copy()
+    actions = directional_removal_candidates(engine, access, limit=3)
+    assert actions and all(_visits_outside(access, action) for action in actions)
+    preview = engine.preview(actions[0], include_view=False)
+    assert preview['status'] == 'accepted', preview
+    assert preview['deltas']['removedCells']
+    assert all(source.ravel()[cell] == 7 for cell in preview['deltas']['removedCells'])
+    assert engine.snapshot() == before
+    np.testing.assert_array_equal(engine.scene.labels, source)
+
+
+def test_outside_start_does_not_create_a_short_path_that_teleports_to_the_cavity():
+    engine, access = _nearby_frontier(0)
+    assert engine.step({'slot': 'left', 'operation': 'withdraw', 'pose': access['outsidePose'],
+                        'duration': .2})['status'] == 'accepted'
+    assert engine.step({'slot': 'left', 'operation': 'place', 'pose': access['outsidePose'],
+                        'parameters': {'radiusMm': .3}, 'duration': .2})['status'] == 'accepted'
+    before = engine.snapshot()
+    actions = directional_removal_candidates(engine, access, limit=3)
+    assert actions
+    np.testing.assert_array_equal(engine.state['slots']['left']['position'], access['outsidePose']['position'])
+    for action in actions:
+        assert _travel(engine, action) > 15.
+        assert engine.preview(action, include_view=False)['status'] == 'accepted'
+    assert engine.snapshot() == before
+
+
+def test_integer_short_does_not_suppress_a_subvoxel_outside_fallback():
+    engine, access = _nearby_frontier(0, 'subvoxel-collar')
+    before = engine.snapshot(); source = engine.scene.labels.copy()
+    actions = directional_removal_candidates(engine, access, limit=2)
+    assert len(actions) == 2
+    assert not _visits_outside(access, actions[0]) and _visits_outside(access, actions[1])
+    endpoint = np.asarray(actions[1]['path'][-1]['position'])
+    native = engine.scene.inverse[:3, :3] @ endpoint + engine.scene.inverse[:3, 3]
+    # Integer outside rays cannot pass the collar; the saved outside alternative
+    # is an actually checked quarter-voxel ray away from that bone face.
+    assert native[1] == pytest.approx(10.25)
+    for action in actions:
+        preview = engine.preview(action, include_view=False)
+        assert preview['status'] == 'accepted', preview
+        assert preview['deltas']['removedCells']
+    assert engine.snapshot() == before
+    np.testing.assert_array_equal(engine.scene.labels, source)

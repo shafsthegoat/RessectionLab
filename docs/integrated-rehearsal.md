@@ -176,6 +176,11 @@ opening. A rejected or partial transit stops at its actual state. These bounded
 source-column opportunities are uncalibrated engineering candidates; they do
 not establish clinical approach feasibility or global target reachability.
 
+Nearby directional frontiers can use a short continuous path from the actual
+tool pose when the existing complete tip/shaft and other-hand geometry checks
+permit it. The checked outside route remains a fallback. Both proposals still
+require the public preview and matching committed step, including protection.
+
 A scheduling request can defer an unfinished superior pass after its current
 opening finishes normally and the public cleanup withdraws both hands. Its
 endpoint explicitly retains the unvisited opportunities. A subsequent stopped
