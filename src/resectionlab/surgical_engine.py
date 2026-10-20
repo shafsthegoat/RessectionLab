@@ -170,13 +170,13 @@ class SurgicalEngine:
         extra = {'rpm': 40000., 'forceN': 1., 'duty': 1.} if self.scene.properties.get('tissuePhysicsV2') else {}
         return {**extra, 'radiusMm': tool['radiusMm'], 'depthMm': 2., 'flowMm3PerSecond': 20., 'power': 1., 'jawOpeningMm': 2., **slot['parameters']}
 
-    def preview(self, action, *, check=None):
+    def preview(self, action, *, check=None, include_view=True):
         if check is not None: check()
         candidate = self.clone()
         result = candidate.step(action) if check is None else candidate.step(action, check=check)
-        view = candidate.view(_state_id=result['stateId'])
+        view = candidate.view(_state_id=result['stateId']) if include_view else None
         if check is not None: check()
-        return {**result, 'preview': True, 'view': view}
+        return {**result, 'preview': True, **({'view': view} if include_view else {})}
 
     def reset(self, scene=None):
         if scene is not None and scene.identity != self.scene.identity:
@@ -591,7 +591,7 @@ class SurgicalEngine:
                 'metrics': self.metrics(), 'observations': copy.deepcopy(self.state['observations']),
                 'unknowns': ['unmapped anatomy', 'uncalibrated mechanics', 'clinical outcomes unknown']}
 
-    def view(self, *, _state_id=None):
+    def view(self, *, _state_id=None, include_history=True):
         identity = self.state_id if _state_id is None else _state_id
         moved = []
         removed = set(self.state['removed'])
@@ -608,7 +608,7 @@ class SurgicalEngine:
                 'geometryRevision': identity, 'removed': self.state['removed'][:], 'moved': moved, 'cuts': copy.deepcopy(self.state['cuts']),
                 'holds': copy.deepcopy(self.state['holds']),
                 'contact': list(map(int, self.state['contact'])), 'thermal': copy.deepcopy(self.state['thermal']),
-                'fluid': copy.deepcopy(self.state['fluid']), 'history': copy.deepcopy(self.history),
+                'fluid': copy.deepcopy(self.state['fluid']), 'history': copy.deepcopy(self.history) if include_history else [],
                 **{name: copy.deepcopy(self.state.get(name)) for name in ('cutEdges', 'separatedAttachments',
                     'transectedEdges', 'flapComponents', 'debris', 'sources', 'meshCutEdges', 'meshSeams',
                     'vesselConnections', 'vesselWounds', 'deformation', 'deformationModel', 'drillingV2', 'vesselsV2')}}
@@ -619,25 +619,45 @@ class SurgicalEngine:
                 'checkpoint': {'position': len(self.actions), 'stateId': self.state_id, 'state': copy.deepcopy(self.state)}}
 
     @classmethod
-    def restore(cls, scene, record, *, check=None):
+    def restore(cls, scene, record, *, check=None, use_cache=False, force_verify=False, verified_cache=None):
         if check is not None: check()
         if record['schema'] != SCHEMA or record['sceneId'] != scene.identity: raise ValueError('Saved scene or engine version differs')
+        cache = None
+        if use_cache:
+            from .surgical_verified_cache import VerifiedSurgicalCache
+            scene.require_cache_source()
+            cache = verified_cache if verified_cache is not None else VerifiedSurgicalCache()
+            if not force_verify:
+                cached = cache.restore(cls, scene, record, check=check)
+                if cached is not None:
+                    return cached
         options = {}
         if 'protectionContract' in record:
             from .surgical_rl_protection import restore_protection_contract
             protection, config = restore_protection_contract(scene, record['protectionContract'])
             options = {'protection': protection, 'guard_config': config}
         result = cls(scene, **options)
-        for action in record['actions']:
+        writer = cache._begin_replay(result, record) if cache is not None else None
+        try:
+            if writer is not None:
+                writer.capture(result, check)
+            for action in record['actions']:
+                if check is not None: check()
+                outcome = result.step(action) if check is None else result.step(action, check=check)
+                if outcome['status'] == 'rejected': raise ValueError('Saved action no longer replays')
+                if check is not None: check()
+                if writer is not None:
+                    writer.capture(result, check)
+            if result.state_id != record['stateId']: raise ValueError('Replay state identity differs')
+            checkpoint = record.get('checkpoint')
+            if checkpoint is not None and (checkpoint.get('position') != len(result.actions) or checkpoint.get('stateId') != result.state_id or semantic_digest(checkpoint.get('state')) != semantic_digest(result.state)):
+                raise ValueError('Checkpoint differs from verified replay')
             if check is not None: check()
-            outcome = result.step(action) if check is None else result.step(action, check=check)
-            if outcome['status'] == 'rejected': raise ValueError('Saved action no longer replays')
-            if check is not None: check()
-        if result.state_id != record['stateId']: raise ValueError('Replay state identity differs')
-        checkpoint = record.get('checkpoint')
-        if checkpoint is not None and (checkpoint.get('position') != len(result.actions) or checkpoint.get('stateId') != result.state_id or semantic_digest(checkpoint.get('state')) != semantic_digest(result.state)):
-            raise ValueError('Checkpoint differs from verified replay')
-        if check is not None: check()
+            if writer is not None:
+                writer.publish(result, record, check)
+        finally:
+            if writer is not None:
+                writer.abort()
         return result
 
     def branch(self, position, *, check=None):

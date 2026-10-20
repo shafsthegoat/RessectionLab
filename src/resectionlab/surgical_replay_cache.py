@@ -35,7 +35,7 @@ class SurgicalReplayCache:
     receives detached writable copies. Source arrays and the exact-cover cache
     may be shared; occupancy and deformation solver caches are discarded.
     """
-    def __init__(self, *, max_bytes=16 * 1024**2, max_checkpoints=8, max_archives=4):
+    def __init__(self, *, max_bytes=16 * 1024**2, max_checkpoints=8, max_archives=4, verified_cache=False):
         if min(max_bytes, max_checkpoints, max_archives) < 1:
             raise ValueError('Replay cache budgets must be positive')
         self.max_bytes = max_bytes
@@ -43,6 +43,10 @@ class SurgicalReplayCache:
         self.max_archives = max_archives
         self._archives = OrderedDict()
         self._serial = 0
+        if verified_cache is True:
+            from .surgical_verified_cache import VerifiedSurgicalCache
+            verified_cache = VerifiedSurgicalCache()
+        self.verified_cache = verified_cache or None
 
     @property
     def statistics(self):
@@ -129,6 +133,11 @@ class SurgicalReplayCache:
             self._archives.clear()
         if type(position) is not int or not 0 <= position <= len(snapshot['actions']):
             raise ValueError('Invalid history position')
+        if self.verified_cache is not None:
+            persisted = self.verified_cache.restore(type(current), current.scene, snapshot,
+                position=position, check=check, include_history=include_history)
+            if persisted is not None:
+                return persisted
         found = next(((key, a) for key, a in self._archives.items()
                       if a['template'].scene is current.scene and a['snapshot'] == snapshot), None)
         if found is None:

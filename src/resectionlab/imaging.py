@@ -390,6 +390,11 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
     """Atomically save a self-contained ZIP with JSON and non-pickled numeric arrays."""
     destination = Path(path).expanduser().resolve()
     destination.parent.mkdir(parents=True, exist_ok=True)
+    from .surgical_archive_codec import encode_artifacts
+    try:
+        stored_artifacts = encode_artifacts(_jsonable(artifacts or {}))
+    except (ValueError, TypeError) as error:
+        raise ImagingError('INVALID_SURGICAL_ARCHIVE', str(error)) from error
     arrays: dict[str, np.ndarray] = {"mri": case.mri, "affine": case.affine}
     index: dict[str, dict[str, str]] = {"compartments": {}, "source_compartments": {}}
     for group in index:
@@ -432,7 +437,7 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
         "case_semantic_hash": case.semantic_hash, "frame": case.frame,
         "source_refs": _jsonable(case.source_refs), "context": None if case.context is None else case.context.to_dict(),
         "metadata": _jsonable(case.metadata), "unknowns": list(case.unknowns), "array_index": index,
-        "array_sha256": sha256(payload).hexdigest(), "artifacts": _jsonable(artifacts or {}),
+        "array_sha256": sha256(payload).hexdigest(), "artifacts": stored_artifacts,
     }
     if structural_records:
         manifest["structural_evidence"] = structural_records
@@ -544,7 +549,11 @@ def load_case(path: str | Path) -> CaseData:
 
 def read_case_artifacts(path: str | Path) -> dict[str, Any]:
     """Read saved plan/settings JSON; callers must verify each plan's case hash."""
-    return _read_bundle(path)[0]["artifacts"]
+    from .surgical_archive_codec import decode_artifacts
+    try:
+        return decode_artifacts(_read_bundle(path)[0]["artifacts"])
+    except (ValueError, TypeError) as error:
+        raise ImagingError('INVALID_SURGICAL_ARCHIVE', str(error)) from error
 
 
 @historical_only("SYNTHETIC_MODEL_INELIGIBLE")
