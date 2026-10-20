@@ -257,7 +257,10 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
         elif stage == 'core':
             from .full_case_debulking import local_debulking_candidates
             _phase(meta, 'core-'+str(meta['accessIndex']), 'Controlled debulking within the checked target passage', len(candidate.actions))
-            if meta.get('coreAttempts', 0) >= 6:
+            # Retain a productive checked passage through a bounded run of
+            # local effects. Returning to access after only six effects caused
+            # repeated withdrawal/exchange/drill cycles despite an open pocket.
+            if meta.get('coreAttempts', 0) >= 32:
                 meta['stage'] = 'remove'; continue
             for proposal in local_debulking_candidates(candidate, limit=4, radius_mm=6.):
                 if proposal['kind'] == 'core-positioning' and meta.get('corePositioning', 0) >= 2: continue
