@@ -204,6 +204,15 @@ backed by immutable bytes. The bounded cache retains weak references rather
 than source arrays; mutable storage and changed array layouts are re-encoded.
 Each save still rebuilds its artifacts, manifests and workspace identities.
 
+Microstep rollback checkpoints copy exact built-in flat removal lists and debris
+maps into independently owned containers before copying the remaining state.
+Fresh type guards preserve ordinary deepcopy for nested or subclass values;
+memo entries preserve aliases and the existing component-summary exemption.
+This preserves the supported JSON state graph, including numeric types, order
+and float bits. Arbitrary custom deepcopy methods that inspect memo timing are
+outside that contract. Integration, cancellation and public-action checks remain
+unchanged.
+
 For display-constrained sessions, launch with `--secondary-display`. The app
 selects a nonprimary display before creating its window, refuses launch when
 none exists, and hides the window if that display disconnects or becomes primary.

@@ -45,6 +45,36 @@ def rotation(q):
     return Rotation.from_quat(q)
 
 
+def _microstep_checkpoint(state):
+    """Copy rollback state, preserving aliases and independently owned fields.
+
+    Surgical state is a JSON data graph with built-in scalar leaves. Exact
+    flat removed/debris containers can be copied in C and seeded into the
+    deepcopy memo; all other data, including unusual nested/subclass values,
+    still uses ordinary deepcopy. Fresh guards also handle public state edits.
+    This preserves data-graph semantics, not adversarial custom __deepcopy__
+    methods whose behavior depends on when another object enters the memo.
+
+    Component summaries retain their existing exemption: microsteps never
+    mutate them; finalize_action replaces them. Existing memo entries take
+    precedence even if unusual public state aliases one of these fields.
+    """
+    components = state.get('flapComponents')
+    memo = {id(components): components} if components is not None else {}
+    for name in ('removed', 'debris'):
+        value = state.get(name)
+        if id(value) in memo:
+            continue
+        if name == 'removed':
+            flat = type(value) is list and all(type(cell) is int for cell in value)
+        else:
+            flat = type(value) is dict and all(type(key) is str and type(amount) in (int, float)
+                                               for key, amount in value.items())
+        if flat:
+            memo[id(value)] = value.copy()
+    return copy.deepcopy(state, memo)
+
+
 class SurgicalEngine:
     def __init__(self, scene, *, protection=None, guard_config=None):
         self.scene = scene
@@ -335,12 +365,7 @@ class SurgicalEngine:
                 t = (j + 1) / n
                 p = ((1 - t) * finite(start['position'], 3) + t * finite(end['position'], 3))
                 quat = interpolation(t).as_quat()
-                # Bone component summaries are replaced only by finalize_action,
-                # never mutated by a microstep. Share them within this action's
-                # rollback checkpoints rather than copying thousands of source
-                # components for every fraction of a millimeter.
-                components = self.state.get('flapComponents')
-                old = copy.deepcopy(self.state, {id(components): components} if components is not None else None)
+                old = _microstep_checkpoint(self.state)
                 try:
                     delta_events = self._substep(key, op, p, quat, active, duration / total)
                 except ValueError as error:
