@@ -33,11 +33,22 @@ export function fullCaseStateSummary(view:SurgicalView) {
   const spatialFluid=Object.values(view.fluid).reduce((a,b)=>a+b,0);
   const reservoirs=view.sources?.reduce((total,source)=>total+(finite(source.reservoirMm3)??0),0)??null;
   const byLabel=view.metrics.removedByLabelMm3;
-  const boneRegions=view.scene.regions.filter(region=>region.material==='bone');
+  const normalMaterials=new Set(['soft_tissue','membrane','functional_region']);
+  const sumLabels=(regions:SurgicalView['scene']['regions'])=>regions.length&&byLabel&&typeof byLabel==='object'?regions.reduce((total,region)=>total+(finite(byLabel[region.name])??0),0):null;
+  const exposure=view.metrics.exposureByMaterialCellSeconds;
+  const sumExposure=(materials:string[])=>materials.length&&exposure&&typeof exposure==='object'?materials.reduce((total,material)=>total+(finite(exposure[material])??0),0):null;
+  const normalRegions=view.scene.regions.filter(region=>normalMaterials.has(region.material));
+  const unknownRegions=view.scene.regions.filter(region=>region.material==='unknown');
+  const vesselMetrics=view.metrics.vesselPhysicsV2;
   return {initialTargetMm3:initial,targetRemovedMm3:removed,
     targetRemainingMm3:initial!==null&&removed!==null?Math.max(0,initial-removed):null,
     targetRemovedPercent:initial!==null&&initial>0&&removed!==null?100*removed/initial:null,
-    boneRemovedMm3:byLabel&&typeof byLabel==='object'?boneRegions.reduce((total,region)=>total+(finite(byLabel[region.name])??0),0):null,
+    boneRemovedMm3:sumLabels(view.scene.regions.filter(region=>region.material==='bone')),
+    normalRemovedMm3:sumLabels(normalRegions.filter(region=>!region.target)),unknownRemovedMm3:sumLabels(unknownRegions),
+    normalExposureCellSeconds:sumExposure([...new Set(normalRegions.map(region=>region.material))]),
+    unknownExposureCellSeconds:sumExposure(unknownRegions.length?['unknown']:[]),
+    modeledBloodGeneratedMm3:finite(view.metrics.modeledVesselFluidGeneratedMm3)??(vesselMetrics&&typeof vesselMetrics==='object'?finite(vesselMetrics.generatedMm3):null),
+    fluidSuctionedMm3:finite(view.metrics.fluidRemovedMm3),elapsedSeconds:finite(view.metrics.elapsedSeconds),
     woundCount:wounds?Object.keys(wounds).length:null,
     activeWounds:sources&&(wounds||sources.length>0)?sources.filter(source=>source.bleedingActive===true).length:null,
     nonpatentFaces:faces?Object.values(faces).filter(face=>face.patent===false).length:null,

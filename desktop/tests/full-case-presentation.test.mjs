@@ -4,7 +4,7 @@ import {fullCaseStateSummary,recordedFullCasePhase,operativeFieldFrame} from '..
 const view=()=>({scene:{environment:{target:{initialVolumeMm3:100}},regions:[{name:'declared skull',material:'bone'},{name:'target',material:'tumor'}]},metrics:{targetRemovedMm3:20,removedByLabelMm3:{'declared skull':7,target:20}},fluid:{10:2,12:3},sources:[{kind:'modeled-vessel-wound',bleedingActive:false,reservoirMm3:1},{kind:'modeled-vessel-wound',bleedingActive:true,reservoirMm3:2}],vesselsV2:{wounds:{one:{},two:{}},faces:{a:{patent:false},b:{patent:false},c:{patent:true}}}});
 test('replay accounting uses selected source grid and label ownership, and separates spatial fluid from reservoirs and patency',()=>{
   const v=view(),before=structuredClone(v);
-  assert.deepEqual(fullCaseStateSummary(v),{initialTargetMm3:100,targetRemovedMm3:20,targetRemainingMm3:80,targetRemovedPercent:20,boneRemovedMm3:7,woundCount:2,activeWounds:1,nonpatentFaces:2,spatialFluidMm3:5,reservoirFluidMm3:3});
+  assert.deepEqual(fullCaseStateSummary(v),{initialTargetMm3:100,targetRemovedMm3:20,targetRemainingMm3:80,targetRemovedPercent:20,boneRemovedMm3:7,normalRemovedMm3:null,unknownRemovedMm3:null,normalExposureCellSeconds:null,unknownExposureCellSeconds:null,modeledBloodGeneratedMm3:null,fluidSuctionedMm3:null,elapsedSeconds:null,woundCount:2,activeWounds:1,nonpatentFaces:2,spatialFluidMm3:5,reservoirFluidMm3:3});
   const cleared=view();cleared.fluid={};cleared.sources.forEach(source=>source.bleedingActive=false);
   const summary=fullCaseStateSummary(cleared);
   assert.equal(summary.spatialFluidMm3,0);assert.equal(summary.activeWounds,0);assert.equal(summary.nonpatentFaces,2);
@@ -13,7 +13,18 @@ test('replay accounting uses selected source grid and label ownership, and separ
 test('missing anatomy and vessel evidence remain unknown instead of becoming zero',()=>{
   const v={scene:{regions:[]},metrics:{},fluid:{}};
   const summary=fullCaseStateSummary(v);
-  for(const key of ['initialTargetMm3','targetRemainingMm3','targetRemovedPercent','boneRemovedMm3','woundCount','activeWounds','nonpatentFaces','reservoirFluidMm3'])assert.equal(summary[key],null,key);
+  for(const key of ['initialTargetMm3','targetRemainingMm3','targetRemovedPercent','boneRemovedMm3','normalRemovedMm3','unknownRemovedMm3','normalExposureCellSeconds','unknownExposureCellSeconds','modeledBloodGeneratedMm3','fluidSuctionedMm3','elapsedSeconds','woundCount','activeWounds','nonpatentFaces','reservoirFluidMm3'])assert.equal(summary[key],null,key);
+});
+test('live mapped-material removal excludes targets and bone while exposure and fluid use their distinct recorded ledgers',()=>{
+  const v=view();
+  v.scene.regions.push({name:'normal brain',material:'soft_tissue',target:false},{name:'dura',material:'membrane',target:false},{name:'functional label',material:'functional_region',target:false},{name:'unmapped source',material:'unknown',target:false},{name:'target soft label',material:'soft_tissue',target:true});
+  Object.assign(v.metrics,{removedByLabelMm3:{'declared skull':7,target:20,'normal brain':3.5,dura:1.25,'functional label':2,'unmapped source':4.75,'target soft label':8},exposureByMaterialCellSeconds:{bone:99,tumor:500,soft_tissue:10,membrane:5,functional_region:7,unknown:2},modeledVesselFluidGeneratedMm3:12.5,fluidRemovedMm3:6.25,fluidAddedMm3:999,elapsedSeconds:8.4});
+  const before=structuredClone(v),summary=fullCaseStateSummary(v);
+  assert.equal(summary.normalRemovedMm3,6.75);assert.equal(summary.unknownRemovedMm3,4.75);assert.equal(summary.boneRemovedMm3,7);
+  assert.equal(summary.normalExposureCellSeconds,22);assert.equal(summary.unknownExposureCellSeconds,2);
+  assert.equal(summary.modeledBloodGeneratedMm3,12.5);assert.equal(summary.fluidSuctionedMm3,6.25);assert.equal(summary.elapsedSeconds,8.4);assert.deepEqual(v,before);
+  delete v.metrics.modeledVesselFluidGeneratedMm3;v.metrics.vesselPhysicsV2={generatedMm3:13};assert.equal(fullCaseStateSummary(v).modeledBloodGeneratedMm3,13);
+  delete v.metrics.exposureByMaterialCellSeconds;assert.equal(fullCaseStateSummary(v).normalExposureCellSeconds,null);
 });
 test('phase labels follow recorded snapshot ranges and retain the completed phase at shared boundaries',()=>{
   const record={phases:[{id:'access',startPosition:0,endPosition:5},{id:'resection',startPosition:5,endPosition:10}]};
