@@ -49,9 +49,10 @@ def _microstep_checkpoint(state):
     """Copy rollback state, preserving aliases and independently owned fields.
 
     Surgical state is a JSON data graph with built-in scalar leaves. Exact
-    flat removed/debris containers can be copied in C and seeded into the
-    deepcopy memo; all other data, including unusual nested/subclass values,
-    still uses ordinary deepcopy. Fresh guards also handle public state edits.
+    flat removed/debris containers and three scalar drilling maps can be copied
+    in C and seeded into the deepcopy memo; all other data, including unusual
+    nested/subclass values, still uses ordinary deepcopy. Fresh guards also
+    handle public state edits.
     This preserves data-graph semantics, not adversarial custom __deepcopy__
     methods whose behavior depends on when another object enters the memo.
 
@@ -72,6 +73,15 @@ def _microstep_checkpoint(state):
                                                for key, amount in value.items())
         if flat:
             memo[id(value)] = value.copy()
+    drilling = state.get('drillingV2')
+    if type(drilling) is dict:
+        for name in ('workJ', 'temperatureC', 'thermalDoseCSeconds'):
+            value = drilling.get(name)
+            if id(value) in memo:
+                continue
+            if type(value) is dict and all(type(key) is str and type(amount) in (int, float)
+                                           for key, amount in value.items()):
+                memo[id(value)] = value.copy()
     return copy.deepcopy(state, memo)
 
 

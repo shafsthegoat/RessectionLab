@@ -7,6 +7,7 @@ outside that contract; flat guards do not prove arbitrary Python-object parity.
 import copy
 import json
 import math
+import struct
 
 import numpy as np
 import pytest
@@ -118,6 +119,104 @@ def test_fresh_guards_detect_public_in_place_changes():
     assert first == {'removed': [1], 'debris': {'1': 1.}}
 
 
+def graph_signature(value):
+    """Compare exact types, order, float bits and mutable alias topology."""
+    seen = {}; result = []
+    def visit(item, path):
+        result.append((path, type(item)))
+        if isinstance(item, (dict, list)):
+            if id(item) in seen:
+                result.append((path, 'alias', seen[id(item)])); return
+            seen[id(item)] = path
+            if isinstance(item, dict):
+                for key, child in item.items():
+                    result.append((path, 'key', type(key), key))
+                    visit(child, path + (key,))
+            else:
+                for index, child in enumerate(item): visit(child, path + (index,))
+        elif type(item) is float: result.append((path, struct.pack('!d', item)))
+        else: result.append((path, repr(item)))
+    visit(value, ())
+    return result
+
+
+def test_drilling_maps_copy_order_bits_aliases_and_ownership():
+    work = {'9': -0., '2': math.nextafter(0., 1.), '1': 3}
+    temperature = {'2': math.nextafter(37., 38.), '1': 38.}
+    state = {'aliases': [work, temperature], 'removed': [2], 'debris': work,
+             'flapComponents': [], 'drillingV2': {'workJ': work, 'temperatureC': temperature,
+                 'thermalDoseCSeconds': temperature, 'other': {'mutable': [1]}}}
+    before = encoded(state)
+    saved = _microstep_checkpoint(state)
+    assert encoded(saved) == before == encoded(legacy_checkpoint(state))
+    assert graph_signature(saved) == graph_signature(legacy_checkpoint(state))
+    drilling = saved['drillingV2']
+    assert drilling is not state['drillingV2']
+    assert drilling['workJ'] is saved['debris'] is saved['aliases'][0]
+    assert drilling['temperatureC'] is drilling['thermalDoseCSeconds'] is saved['aliases'][1]
+    assert drilling['workJ'] is not work and drilling['temperatureC'] is not temperature
+    saved['drillingV2']['workJ']['9'] = 2.
+    saved['drillingV2']['temperatureC'].clear()
+    saved['drillingV2']['other']['mutable'].append(2)
+    assert encoded(state) == before
+    work['new'] = 4.; temperature['new'] = 40.
+    assert 'new' not in drilling['workJ'] and 'new' not in drilling['temperatureC']
+
+
+def test_drilling_map_component_memo_precedence_and_removed_alias():
+    shared = {'1': -0.}; removed = [1, 2]
+    state = {'removed': removed, 'debris': {}, 'flapComponents': shared,
+             'drillingV2': {'workJ': removed, 'temperatureC': shared, 'thermalDoseCSeconds': shared}}
+    saved = _microstep_checkpoint(state)
+    assert graph_signature(saved) == graph_signature(legacy_checkpoint(state))
+    assert saved['drillingV2']['temperatureC'] is saved['drillingV2']['thermalDoseCSeconds'] is shared
+    assert saved['drillingV2']['workJ'] is saved['removed'] and saved['removed'] is not removed
+    # A publicly replaced removed field may itself alias a recognized map.
+    # Its list fast path declines, while the shared dict still copies once.
+    state = {'removed': shared, 'debris': {}, 'flapComponents': [],
+             'drillingV2': {'workJ': shared, 'temperatureC': {}, 'thermalDoseCSeconds': {}}}
+    saved = _microstep_checkpoint(state)
+    assert graph_signature(saved) == graph_signature(legacy_checkpoint(state))
+    assert saved['removed'] is saved['drillingV2']['workJ'] and saved['removed'] is not shared
+
+
+@pytest.mark.parametrize('value', [
+    {'1': [1.]}, {'1': np.float64(.5)}, {'1': FloatWithData(.5)},
+    {'1': IntWithData(2)}, DictWithData({'1': .5}), {'1': True}, {1: .5},
+])
+def test_drilling_map_unusual_values_fall_back_to_deepcopy(value):
+    if type(value) is DictWithData: value.data = [2]
+    state = {'removed': [], 'debris': {}, 'drillingV2': {'workJ': {},
+             'temperatureC': value, 'thermalDoseCSeconds': {}}}
+    saved, reference = _microstep_checkpoint(state), legacy_checkpoint(state)
+    assert graph_signature(saved) == graph_signature(reference)
+    actual = saved['drillingV2']['temperatureC']
+    assert actual is not value
+    original_leaf = next(iter(value.values())); actual_leaf = next(iter(actual.values()))
+    if isinstance(original_leaf, list): assert actual_leaf is not original_leaf
+    if hasattr(original_leaf, 'data'): assert actual_leaf.data is not original_leaf.data
+    if hasattr(value, 'data'): assert actual.data == value.data and actual.data is not value.data
+
+
+def test_outer_drilling_subclass_and_same_size_public_mutation_use_fresh_guards():
+    outer = DictWithData({'workJ': {'1': 1.}, 'temperatureC': {}, 'thermalDoseCSeconds': {}})
+    outer.data = [1]
+    state = {'removed': [], 'debris': {}, 'drillingV2': outer}
+    saved = _microstep_checkpoint(state)
+    assert type(saved['drillingV2']) is DictWithData
+    assert saved['drillingV2'].data is not outer.data
+    state['drillingV2'] = dict(outer)
+    first = _microstep_checkpoint(state)
+    state['drillingV2']['workJ']['1'] = FloatWithData(.5)
+    second = _microstep_checkpoint(state)
+    assert graph_signature(second) == graph_signature(legacy_checkpoint(state))
+    assert second['drillingV2']['workJ']['1'].data is not state['drillingV2']['workJ']['1'].data
+    state['drillingV2']['workJ']['1'] = [1.]
+    third = _microstep_checkpoint(state)
+    assert third['drillingV2']['workJ']['1'] is not state['drillingV2']['workJ']['1']
+    assert first['drillingV2']['workJ'] == {'1': 1.}
+
+
 def source(v2=False):
     labels = np.zeros((24, 24, 24), np.uint16); labels[8, 8, 8] = 1
     return SurgicalScene(labels, np.eye(4), [{'id': 1, 'name': 'bone', 'material': 'bone'}],
@@ -135,6 +234,37 @@ def public_sequence():
         {'operation': 'apply', 'pose': pose(9.), 'duration': 2.},
         {'operation': 'inspect', 'duration': .2},
     )]
+
+
+def test_actual_partial_drilling_work_checkpoint_is_independent_and_matches_legacy(monkeypatch):
+    current = SurgicalEngine(source(True)); reference = SurgicalEngine(current.scene)
+    actions = [
+        {'slot': 'left', 'operation': 'place', 'duration': .2,
+         'pose': {'position': [8., 8., 4.], 'quaternion': [0., 0., 0., 1.]},
+         'parameters': {'radiusMm': 1.5}},
+        {'slot': 'left', 'operation': 'apply', 'duration': .3,
+         'pose': {'position': [8., 8., 10.], 'quaternion': [0., 0., 0., 1.]},
+         'parameters': {'rpm': 1000., 'forceN': .1, 'duty': 1.}},
+    ]
+    for action in actions:
+        preview = current.preview(action, include_view=False)
+        actual = current.step(action)
+        with monkeypatch.context() as patch:
+            patch.setattr(module, '_microstep_checkpoint', legacy_checkpoint)
+            expected_preview = reference.preview(action, include_view=False)
+            expected = reference.step(action)
+        assert encoded(preview) == encoded(expected_preview)
+        assert encoded(actual) == encoded(expected)
+        assert encoded(current.snapshot()) == encoded(reference.snapshot())
+    assert actual['status'] == 'partial' and actual['reason'] == 'BONE_CUTTING_IN_PROGRESS'
+    assert current.state['drillingV2']['workJ'] and not current.state['removed']
+    before = encoded(current.snapshot())
+    saved = _microstep_checkpoint(current.state)
+    assert graph_signature(saved) == graph_signature(legacy_checkpoint(current.state))
+    saved['drillingV2']['workJ'].clear()
+    saved['drillingV2']['temperatureC'].clear()
+    saved['drillingV2']['thermalDoseCSeconds'].clear()
+    assert encoded(current.snapshot()) == before
 
 
 @pytest.mark.parametrize('v2,guarded', [(False, False), (True, False), (True, True)])
@@ -179,7 +309,8 @@ class LateDomainFailure(SurgicalEngine):
         if (self.fail_at is not None and self.state['elapsedSeconds'] >= self.fail_at
                 or self.fail_removal and len(self.state['removed']) > before):
             self.failed_evidence.append({'removed': self.state['removed'][:],
-                'debris': self.state['debris'].copy(), 'debrisRemovedMm3': self.state.get('debrisRemovedMm3', 0.)})
+                'debris': self.state['debris'].copy(), 'debrisRemovedMm3': self.state.get('debrisRemovedMm3', 0.),
+                'drillingV2': copy.deepcopy(self.state['drillingV2'])})
             raise ValueError('TEST_LATE_DOMAIN_FAILURE')
         return events
 
@@ -228,6 +359,9 @@ def test_failed_microsteps_restore_real_shared_clock_fields_and_removal(monkeypa
     assert encoded(actual) == encoded(expected)
     assert encoded(current.snapshot()) == encoded(reference.snapshot())
     assert current.failed_evidence and current.failed_evidence == reference.failed_evidence
+    failed_drilling = current.failed_evidence[-1]['drillingV2']
+    assert failed_drilling['coolingLossJ'] > current.state['drillingV2']['coolingLossJ']
+    assert failed_drilling['temperatureC'] != current.state['drillingV2']['temperatureC']
     if failure == 'first':
         assert actual['status'] == 'rejected' and current.snapshot() == before
     else:
