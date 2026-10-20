@@ -128,6 +128,97 @@ def test_cleanup_endpoint_reports_real_owned_residual_and_preserves_source(monke
     assert engine.snapshot() == before
 
 
+def _cleanup_engine(*, residual):
+    from resectionlab.surgical_physics_v2 import default_profile
+    labels = np.zeros((64, 40, 40), np.uint16)
+    labels[41:44, 19:22, 18] = 3
+    labels[41:44, 19:22, 15] = 2
+    labels[41:44, 19:22, 12] = 1
+    if residual:
+        labels[19:22, 19:22, 15] = 2
+    engine = SurgicalEngine(SurgicalScene(labels, np.eye(4), [
+        {'id': 1, 'name': 'healthy', 'material': 'soft_tissue'},
+        {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True},
+        {'id': 3, 'name': 'bone', 'material': 'bone'}],
+        {'kind': 'explicit-director-cleanup-fixture'}, {'tissuePhysicsV2': default_profile()}))
+    pose = lambda z: {'position': [42., 20., float(z)], 'quaternion': [1., 0., 0., 0.]}
+    actions = [
+        {'operation': 'place', 'pose': pose(45.), 'parameters': {'radiusMm': 1.5, 'forceN': 20., 'rpm': 80000.}},
+        {'operation': 'apply', 'pose': pose(17.), 'duration': 5.},
+        {'operation': 'withdraw'},
+        {'operation': 'exchange', 'instrument': 'cusa'},
+        {'operation': 'place', 'pose': pose(45.), 'parameters': {'radiusMm': 1.8, 'forceN': 0.}},
+        {'operation': 'apply', 'pose': pose(16.), 'duration': 2.},
+        {'operation': 'inspect', 'parameters': {'radiusMm': .5}},
+        {'operation': 'withdraw'},
+        {'operation': 'place', 'pose': {'position': [10., 10., 45.], 'quaternion': [1., 0., 0., 0.]}},
+    ]
+    for action in actions:
+        outcome = engine.step({'slot': 'left', 'duration': .2, **action})
+        if action['operation'] == 'apply' and engine.state['slots']['left']['instrument'] == 'cranial_drill':
+            # The drill stops at the unsupported target below the cut sheet.
+            assert outcome['status'] == 'partial' and outcome['reason'] == 'UNSUPPORTED_MATERIAL'
+            assert len(engine.state['removed']) == 9 and engine.metrics()['targetRemovedMm3'] == 0.
+        else:
+            assert outcome['status'] == 'accepted', (action, outcome.get('reason'))
+    assert engine.metrics()['targetRemovedMm3'] == 9.
+    assert engine.state['debrisMm3'] == 9.
+    meta = director.new_director(engine)
+    meta.update(stage='cleanup', assistantField={'slot': 'right', 'instrument': 'frazier_suction',
+        'sourceSceneId': engine.scene.identity, 'fieldPose': pose(17.), 'outsidePose': pose(45.),
+        'parameters': {'radiusMm': 3., 'depthMm': 2., 'flowMm3PerSecond': 20., 'forceN': 0.}})
+    return engine, meta
+
+
+@pytest.mark.parametrize('residual', [False, True])
+def test_field_cleanup_runs_after_complete_or_partial_resection_and_withdraws(residual):
+    engine, meta = _cleanup_engine(residual=residual)
+    before, before_meta, source_hash = engine.snapshot(), copy.deepcopy(meta), array_digest(engine.scene.labels)
+    result, report = director.run_slice(engine, meta, max_actions=32)
+    assert report['stage'] == 'endpoint'
+    assert report['status'] == ('stopped' if residual else 'complete')
+    assert report['fieldCleanupAttempted']
+    assert report['fieldCleanup']['status'] == 'bounded-pass-finished'
+    records = report['fieldCleanup']['results']
+    assert sum(row.get('debrisRemovedMm3', 0.) for row in records) == pytest.approx(9.)
+    assert result.state['debrisRemovedMm3'] == pytest.approx(9.)
+    assert result.state['debrisMm3'] == pytest.approx(0.)
+    assert result.state['drillingV2']['removedVolumeMm3'] == pytest.approx(
+        result.state['debrisMm3'] + result.state['debrisRemovedMm3'] + result.state.get('debrisEscapedMm3', 0.))
+    assert result.state['fluidAddedMm3'] == result.metrics()['fluidPresentMm3'] == 0.
+    assert director.accounting(result)['healthyRemovedMm3'] == 0.
+    assert result.metrics()['targetRemovedMm3'] == 9.
+    assert director.accounting(result)['originalTargetMm3'] == (18. if residual else 9.)
+    assert not any(slot['inserted'] or slot['active'] or slot['grip'] for slot in result.state['slots'].values())
+    assert not result.state['holds']
+    assert engine.snapshot() == before and meta == before_meta
+    assert array_digest(result.scene.labels) == source_hash
+    replay = engine.clone()
+    for action in result.actions[len(engine.actions):]:
+        preview = replay.preview(action, include_view=False)
+        assert replay.step(action)['stateId'] == preview['stateId']
+    assert replay.snapshot() == result.snapshot()
+
+
+def test_blocked_cleanup_approach_never_claims_arrival_and_still_withdraws(monkeypatch):
+    from resectionlab import full_case_cleanup
+    engine, meta = _cleanup_engine(residual=False)
+    original_proposals = full_case_cleanup.cleanup_stations
+    def blocked_proposals(current, field):
+        stations = original_proposals(current, field)
+        stations[0]['pose']['position'][2] = 11.  # Beyond the intact healthy plane.
+        return stations[:1]
+    monkeypatch.setattr(full_case_cleanup, 'cleanup_stations', blocked_proposals)
+    result, report = director.run_slice(engine, meta, max_actions=32)
+    cleanup = report['fieldCleanup']
+    assert report['stage'] == 'endpoint' and report['status'] == 'complete'
+    assert cleanup['status'] == 'blocked' and cleanup['reason']
+    assert not any(row['mode'] == 'dwell' for row in cleanup['results'])
+    assert director.accounting(result)['healthyRemovedMm3'] == 0.
+    assert result.state['debrisRemovedMm3'] <= result.state['drillingV2']['removedVolumeMm3']
+    assert not any(slot['inserted'] or slot['active'] or slot['grip'] for slot in result.state['slots'].values())
+
+
 def test_director_rejects_a_stale_action_boundary(monkeypatch):
     engine = _prepared()
     meta, _ = _removal_director(monkeypatch, engine)

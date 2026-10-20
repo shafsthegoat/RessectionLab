@@ -166,6 +166,12 @@ def _advance_access(engine, meta):
     meta['stage'] = 'access_setup'
 
 
+def _finish_field_cleanup(meta, status, reason=None):
+    cleanup = meta['fieldCleanup']
+    cleanup.update(status=status, reason=reason)
+    meta['stage'] = 'cleanup'
+
+
 def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
     """Return a detached engine + resumable director after bounded real actions.
 
@@ -379,8 +385,44 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                     from .full_case_withdrawal import withdrawal_candidate
                     action = withdrawal_candidate(candidate, slot=hand) or _admin(hand, 'withdraw'); break
             if action is None:
+                if meta['scenario'] == 'primary' and not meta.get('fieldCleanupAttempted'):
+                    from .full_case_cleanup import cleanup_stations
+                    meta['fieldCleanupAttempted'] = True
+                    field = meta.get('assistantField')
+                    stations = cleanup_stations(candidate, field) if field else []
+                    meta['fieldCleanup'] = {'stations': stations, 'index': 0, 'mode': 'setup',
+                        'results': [], 'status': 'prepared' if stations else 'no-accessible-field',
+                        'qualification': 'Bounded aspiration along the established field ray; residual field material is retained.'}
+                    if stations:
+                        meta['stage'] = 'field_cleanup'; continue
                 action = _admin('right', 'inspect'); next_stage = 'endpoint'
             else: next_stage = stage
+        elif stage == 'field_cleanup':
+            from .full_case_cleanup import cleanup_dwell_action
+            _phase(meta, 'field_cleanup', 'Aspiration of accessible field material', len(candidate.actions))
+            cleanup = meta['fieldCleanup']
+            if cleanup['index'] >= len(cleanup['stations']):
+                _finish_field_cleanup(meta, 'bounded-pass-finished'); continue
+            station = cleanup['stations'][cleanup['index']]
+            if cleanup['mode'] == 'setup':
+                action = _prepare(candidate, 'frazier_suction', station['outsidePose'], station['parameters'], slot='right')
+                if action is None:
+                    cleanup['mode'] = 'approach'; continue
+            elif cleanup['mode'] == 'approach':
+                distance = float(np.linalg.norm(np.subtract(station['pose']['position'], candidate.state['slots']['right']['position'])))
+                action = _admin('right', 'apply', pose=copy.deepcopy(station['pose']),
+                    parameters=copy.deepcopy(station['parameters']), duration=max(.2, min(30., distance / 10.)))
+            elif cleanup['mode'] == 'dwell':
+                measured = cleanup_dwell_action(candidate, station)
+                if measured is None:
+                    cleanup['results'].append({'stationIndex': cleanup['index'], 'mode': 'dwell',
+                        'position': len(candidate.actions), 'status': 'empty-field-at-actual-pose'})
+                    cleanup['index'] += 1; cleanup['mode'] = 'approach'; continue
+                action = measured['action']
+                cleanup['freshMeasurement'] = {key: value for key, value in measured.items() if key != 'action'}
+            else:
+                raise ValueError('Unknown bounded field cleanup mode')
+            next_stage = stage
         elif stage == 'endpoint':
             metrics = candidate.metrics()
             remaining = accounting(candidate)['originalTargetMm3'] - metrics['targetRemovedMm3']
@@ -407,7 +449,13 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
             raise ValueError('Unknown full rehearsal director stage')
         preview = checked_preview if checked_preview is not None else candidate.preview(action, check=check, include_view=False)
         if checked_preview is None: meta['attemptedActions'] += 1
-        if preview['status'] != 'rejected' and str(preview.get('reason')).startswith('TOOL_COLLISION:right') and candidate.state['slots']['right']['inserted'] and stage != 'assistant_retract' and not preview.get('deltas', {}).get('removedCells'):
+        if stage == 'field_cleanup' and preview['status'] == 'rejected':
+            _record_rejection(meta, action, preview)
+            meta['fieldCleanup']['results'].append({'stationIndex': meta['fieldCleanup']['index'],
+                'mode': meta['fieldCleanup']['mode'], 'position': len(candidate.actions),
+                'status': 'rejected', 'reason': preview.get('reason')})
+            _finish_field_cleanup(meta, 'blocked', preview.get('reason')); continue
+        if preview['status'] != 'rejected' and str(preview.get('reason')).startswith('TOOL_COLLISION:right') and candidate.state['slots']['right']['inserted'] and stage not in ('assistant_retract', 'field_cleanup') and not preview.get('deltas', {}).get('removedCells'):
             _record_rejection(meta, action, preview)
             meta['assistantResumeStage'] = stage; meta['stage'] = 'assistant_retract'; continue
         healthy_labels = {r['id'] for r in candidate.scene.regions if r['material'] in ('soft_tissue', 'unknown', 'functional_region', 'membrane') and not r.get('target')}
@@ -430,11 +478,35 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                 _advance_access(candidate, meta); continue
             meta.update(status='stopped', stopReason='Required action blocked: '+str(preview.get('reason'))); break
         before_removed = set(candidate.state['removed'])
+        before_aspirated = {key: float(candidate.state.get(key, 0.)) for key in ('fluidRemovedMm3', 'debrisRemovedMm3')}
         outcome = candidate.step(action, check=check)
         if outcome['stateId'] != preview['stateId']:
             raise ValueError('Full rehearsal preview and committed transition differ')
         commits += 1; meta['committedActions'] += 1
         meta['stage'] = next_stage
+        if stage == 'field_cleanup':
+            cleanup = meta['fieldCleanup']
+            mode = cleanup['mode']
+            deltas = {key: float(candidate.state.get(key, 0.)) - before_aspirated[key] for key in before_aspirated}
+            cleanup['results'].append({'stationIndex': cleanup['index'], 'mode': mode,
+                'position': len(candidate.actions), 'status': outcome['status'], 'reason': outcome.get('reason'),
+                **deltas, 'retainedDebrisMm3': candidate.state['debrisMm3'],
+                'retainedFluidMm3': candidate.metrics()['fluidPresentMm3'],
+                **({'freshMeasurement': cleanup.pop('freshMeasurement')} if 'freshMeasurement' in cleanup else {})})
+            if outcome['status'] != 'accepted':
+                _finish_field_cleanup(meta, 'blocked', outcome.get('reason'))
+            elif mode == 'approach':
+                state, pose = candidate.state['slots']['right'], cleanup['stations'][cleanup['index']]['pose']
+                arrived = (state['inserted'] and np.allclose(state['position'], pose['position'], rtol=0., atol=1e-8)
+                    and (np.allclose(state['quaternion'], pose['quaternion'], rtol=0., atol=1e-8)
+                         or np.allclose(state['quaternion'], -np.asarray(pose['quaternion']), rtol=0., atol=1e-8)))
+                if arrived: cleanup['mode'] = 'dwell'
+                else: _finish_field_cleanup(meta, 'blocked', 'Checked approach did not reach the proposed station')
+            elif mode == 'dwell':
+                if sum(deltas.values()) <= 1e-9:
+                    _finish_field_cleanup(meta, 'no-aspiration-progress')
+                else:
+                    cleanup['index'] += 1; cleanup['mode'] = 'approach'
         if stage == 'drill':
             if 'cycleBoneRemovedCells' in meta:
                 bone_labels = {r['id'] for r in candidate.scene.regions if r['material'] == 'bone'}
@@ -466,13 +538,13 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                     meta['assistantStep'] = 0; meta['stage'] = 'assistant_setup'
         if stage == 'remove' and 'commonPrefixPosition' not in meta:
             meta['commonPrefixPosition'] = len(candidate.actions)
-        if str(outcome.get('reason')).startswith('TOOL_COLLISION:right') and stage != 'assistant_retract':
+        if str(outcome.get('reason')).startswith('TOOL_COLLISION:right') and stage not in ('assistant_retract', 'field_cleanup'):
             meta['assistantResumeStage'] = meta['stage']; meta['stage'] = 'assistant_retract'
         meta['phases'][-1]['endPosition'] = len(candidate.actions)
         meta['lastOutcome'] = {'position': len(candidate.actions), 'status': outcome['status'], 'reason': outcome.get('reason'),
                                'operation': action['operation'], 'removedCells': len(set(candidate.state['removed']) - before_removed)}
         if progress: progress(commits / max_actions, meta['phases'][-1]['label'])
-        if stage not in ('cleanup', 'endpoint') and candidate.metrics()['targetRemovedMm3'] >= accounting(candidate)['originalTargetMm3'] and meta['scenario'] == 'primary':
+        if stage not in ('cleanup', 'field_cleanup', 'endpoint') and candidate.metrics()['targetRemovedMm3'] >= accounting(candidate)['originalTargetMm3'] and meta['scenario'] == 'primary':
             meta['stage'] = 'cleanup'
     meta['wallSeconds'] += time.perf_counter() - started
     meta.update(accounting(candidate))

@@ -148,6 +148,14 @@ working aperture can reach 6 mm radius in the generic research model; this is
 an uncalibrated model parameter, not evidence of clinical tool feasibility.
 Scalp, dura, attachments and complete functional/vascular anatomy remain UNKNOWN.
 
+Before its endpoint, the primary director can revisit the established assisting
+Frazier ray for at most three positive field stations and ten seconds of dwell
+per station. Both hands first deactivate, release and withdraw; preparation,
+approach, aspiration and final withdrawal use the public action API. Overlapping
+fields are freshly measured at the actual tool pose, and recorded aspiration
+uses actual fluid/debris ledger changes. A blocked approach or nonprogressing
+dwell ends this bounded pass; retained field material remains in the ledger.
+
 Pause computation ends automatic scheduling after the current bounded slice.
 Replay observes actual engine microsteps at the existing 0.2-second cadence;
 intermediate frames are read-only and their final boundary must equal verified
