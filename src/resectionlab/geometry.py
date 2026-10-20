@@ -334,6 +334,12 @@ def _segment_cell_distances(scene: GeometryScene, indices: NDArray, start: NDArr
     origin = (scene.world_to_voxel(start) - indices) * spacing
     delta = (scene.world_to_voxel(end) - scene.world_to_voxel(start)) * spacing
     half = spacing / 2
+    if not np.any(delta):
+        # A point has the same distance in every segment interval. Keep the
+        # existing origin/excess/square/sum arithmetic, without constructing
+        # seven identical copies per cell. Exact zero only; no new tolerance.
+        excess = np.maximum(np.abs(origin) - half, 0)
+        return np.sqrt(np.sum(excess**2, axis=1))
     crossings = np.zeros((count, 6))
     for axis in range(3):
         if abs(delta[axis]) > _EPS:

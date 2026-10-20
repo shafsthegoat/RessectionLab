@@ -19,16 +19,30 @@ class MaterialOccupancy:
             return self.moved.get(i, 0 if i in self.cleared or not self.labels[i] else i + 1)
         ids = np.asarray(indices, dtype=np.int64)
         values = np.where(self.labels[ids] != 0, ids + 1, 0)
-        for at, i in np.ndenumerate(ids):
-            if int(i) in self.moved: values[at] = self.moved[int(i)]
-            elif int(i) in self.cleared: values[at] = 0
+        if self.cleared:
+            values[np.isin(ids, np.fromiter(self.cleared, dtype=np.int64))] = 0
+        if self.moved:
+            # Moved ownership takes precedence over a cleared source location.
+            # Rebuild these small sparse arrays so the public mapping remains
+            # authoritative even if a caller updates it between queries.
+            keys = np.array(sorted(self.moved), dtype=np.int64)
+            positions = np.searchsorted(keys, ids)
+            positions = np.minimum(positions, len(keys) - 1)
+            matched = keys[positions] == ids
+            owners = np.array([self.moved[int(k)] for k in keys], dtype=np.int64)
+            values[matched] = owners[positions[matched]]
         return values
 
     def material_ids(self, indices):
-        result = set()
-        for cell, value in zip(indices, self[indices]):
-            if int(cell) in self.memberships: result.update(self.memberships[int(cell)])
-            elif value: result.add(int(value) - 1)
+        ids = np.asarray(indices, dtype=np.int64)
+        values = self[ids]
+        if self.memberships:
+            shared = np.isin(ids, np.fromiter(self.memberships, dtype=np.int64))
+            result = set((values[(values != 0) & ~shared] - 1).tolist())
+            for cell in np.unique(ids[shared]):
+                result.update(self.memberships[int(cell)])
+        else:
+            result = set((values[values != 0] - 1).tolist())
         return sorted(result)
 
     def __array__(self, dtype=None, copy=None):
