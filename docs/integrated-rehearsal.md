@@ -155,6 +155,14 @@ replay. Return to a recorded boundary before branching or resuming. Save pauses
 both computation and playback and synchronizes the canonical editable state.
 Fluid glyphs show per-cell ledger volumes; outlet reservoirs remain separate.
 
+Observed frames can be prepared during the same descriptive telemetry replay.
+Each action's exact outcome and endpoint must match canonical admission before
+its frames receive an authenticated local cache entry. The cache binds source,
+complete branch, history and loaded producer implementation; corrupt, missing or
+obsolete entries fall back to actual observed replay. Fresh-process frame reads
+can therefore avoid recomputing dense tool paths during playback. This cache is
+disposable and does not replace the native action log or independent verification.
+
 Long full-case native archives use bounded lossless JSON compression. A disposable
 local authenticated cache is published only after complete canonical replay,
 source/implementation checks and checkpoint equality. Missing or invalid seals

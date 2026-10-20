@@ -98,7 +98,30 @@ An empty attachment list explicitly declares no bonds; a missing required list p
 
 Fluid conservation includes present spatial fluid and enclosed source reservoirs, aspirated fluid, and explicitly escaped/spilled volume. Bipolar treatment changes bleeding activity independently of vessel patency.
 
-`snapshot()` stores schema, scene identity, action sequence, state identity, and `checkpoint: {position, stateId, state}`. The checkpoint contains the full current state at the recorded action count. `SurgicalEngine.restore(scene, record)` replays and verifies identity, then checks the checkpoint position, identity, and full state against that replay; it rejects a mismatched checkpoint instead of trusting it as an unchecked shortcut. `branch(position)` replays a prefix; `replay(actions)` constructs a fresh result. The desktop bridge additionally binds state changes to `caseHash` and `expectedStateId`, rejecting stale edits. Its rehearsal commands are create, inspect, preview, step, undo, redo, seek, branch, selectBranch, and reset.
+`snapshot()` stores schema, scene identity, action sequence, state identity, and `checkpoint: {position, stateId, state}`. The checkpoint contains the full current state at the recorded action count. `SurgicalEngine.restore(scene, record)` replays and verifies identity, then checks the checkpoint position, identity, and full state against that replay; it rejects a mismatched checkpoint instead of trusting it as an unchecked shortcut. `branch(position)` replays a prefix; `replay(actions)` constructs a fresh result. The desktop bridge additionally binds state changes to `caseHash` and `expectedStateId`, rejecting stale edits. Its rehearsal commands include create, inspect, preview, step, undo, redo, seek, branch, selectBranch, reset, fullCase, and seekFrame.
+
+`fullCase` takes `scenario: 'primary' | 'vascular'` and `maxActions` in 1–64
+(default 2). It advances a resumable deterministic director through checked public
+actions. Each committed transition must equal its preview. The source-bound
+director records phases, attempts and specific stop reasons outside engine state;
+it does not change source labels or bypass tool, shaft or protection checks.
+The engine permits at most 8,192 accepted/partial actions per branch.
+
+`seekFrame` takes a recorded action `position`, `frameIndex`, and optional
+`branchId`. Frames observe successful engine microsteps at 0.2-second intervals
+plus action start/final boundaries; no pose or tissue interpolation is used.
+The observed finalized outcome and state must equal canonical replay before
+frames are returned. The response's `playback` identifies the read-only frame,
+effective tool activation and observed time. Its top-level `position` remains the
+editable action cursor. Return to a recorded action boundary before editing,
+branching or resuming. Disposable replay caches preserve this distinction;
+native saves retain the complete canonical action log and endpoint checkpoint.
+
+Removal metrics use material ownership in the supplied simulation grid.
+Overlapping raw source masks are separate evidence: zero removed owned
+`soft_tissue` cells does not establish zero raw brain-mask membership or clinical
+healthy-tissue injury. Full source annotation and owned target denominators must
+be reported separately.
 
 ## Current limits
 

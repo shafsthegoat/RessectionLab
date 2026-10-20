@@ -13,7 +13,74 @@ import sys
 import zlib
 from .surgical_engine import SurgicalEngine
 from .core import semantic_digest
+from .core import thaw_json
 from .surgical_replay_cache import SurgicalReplayCache, _owned_bytes
+from .surgical_observed_cache import (FrameAdmission, ObservedFrameStore, receipt_hash, ImplementationChanged)
+
+
+class ObservedFrameCollector:
+    """Transactional observer shared by candidate clones, outside engine state.
+
+    Only finalized public outcomes matching the immutable canonical admission
+    publish. Rejected candidates and failed microsteps leave no readable cache.
+    Cache I/O/budget failures do not change the public operation's outcome.
+    """
+    def __init__(self, cache, admission):
+        self.cache, self.admission = cache, admission
+        self.writer = None; self.position = None; self.matches = False
+
+    def abort(self):
+        if self.writer is not None: self.writer.abort()
+        self.writer = None; self.position = None; self.matches = False
+
+    @staticmethod
+    def _activation(engine, acting=None, active=None):
+        return {key: bool(active if key == acting else slot['active'])
+                for key, slot in engine.state['slots'].items()}
+
+    def _capture(self, engine, kind, activation):
+        if self.writer is None: return
+        try: self.writer.capture(engine, kind, activation)
+        except (OSError, ValueError, TypeError):
+            self.writer.abort(); self.writer = None
+
+    def begin(self, engine, action):
+        self.abort(); self.admission.check(engine)
+        self.position = len(engine.actions)
+        if not 0 <= self.position <= len(self.admission.history):
+            raise ValueError('Observed collector action position differs')
+        if engine.state_id != self.admission.boundary_id(self.position):
+            raise ValueError('Observed collector initial state differs from canonical admission')
+        self.matches = (self.position < len(self.admission.history)
+                        and semantic_digest(action) == self.admission.action_hashes[self.position])
+        self.next_time = float(engine.state['elapsedSeconds']) + .2
+        if self.matches:
+            try: self.writer = self.cache.store.begin(self.admission, self.position)
+            except (OSError, ValueError): self.writer = None
+            self._capture(engine, 'action_start', self._activation(engine))
+
+    def observe(self, engine, acting_slot, effective_active):
+        if self.position is None or self.writer is None: return
+        if engine.state['elapsedSeconds'] + 1e-10 >= self.next_time:
+            self._capture(engine, 'microstep', self._activation(engine, acting_slot, effective_active))
+            while self.next_time <= engine.state['elapsedSeconds'] + 1e-10:
+                self.next_time += .2
+
+    def end(self, engine, action, outcome):
+        if outcome.get('status') == 'rejected':
+            self.abort(); return
+        position = self.position
+        if (position is None or not self.matches or len(engine.actions) != position + 1
+                or semantic_digest(action) != self.admission.action_hashes[position]
+                or engine.state_id != self.admission.boundary_id(position + 1)
+                or receipt_hash(outcome) != self.admission.receipt_hashes[position]):
+            self.abort()
+            raise ValueError('Observed action outcome differs from canonical admission')
+        self._capture(engine, 'action_boundary', self._activation(engine))
+        if self.writer is not None:
+            try: self.writer.publish(engine, outcome)
+            except (OSError, ValueError, TypeError): self.writer.abort()
+        self.abort()
 
 
 class _ObservedFrames(SurgicalEngine):
@@ -29,6 +96,10 @@ class _ObservedFrames(SurgicalEngine):
 
     def _substep(self, key, op, p, q, active, dt):
         events = super()._substep(key, op, p, q, active, dt)
+        collector = getattr(self, '_frame_collector', None)
+        if collector is not None:
+            collector.observe(self, key, active)
+            return events
         if self.state['elapsedSeconds'] + 1e-10 >= self._next_frame_time:
             self._capture('microstep', {hand: bool(active if hand == key else slot['active']) for hand,slot in self.state['slots'].items()})
             while self._next_frame_time <= self.state['elapsedSeconds'] + 1e-10:
@@ -37,9 +108,100 @@ class _ObservedFrames(SurgicalEngine):
 
 
 class SurgicalFrameCache:
-    def __init__(self, max_bytes=64 * 1024**2):
+    def __init__(self, max_bytes=64 * 1024**2, *, directory=None, max_disk_bytes=512 * 1024**2):
+        if type(max_bytes) is not int or not 1 <= max_bytes <= 64 * 1024**2:
+            raise ValueError('Observed frame RAM budget must be 1..64 MiB')
         self.max_bytes = max_bytes
         self._actions = OrderedDict()
+        self.store = ObservedFrameStore(directory, max_disk_bytes=max_disk_bytes)
+
+    def admit(self, current, snapshot, replay_cache, *, verified_history=None, check=lambda:None):
+        """Once per private bridge generation, detach and freeze canonical data."""
+        endpoint, history = replay_cache.seek(current, snapshot, len(snapshot['actions']), check=check, include_history=True)
+        if verified_history is not None and semantic_digest(verified_history) != semantic_digest(history):
+            raise ValueError('Frame admission history differs from canonical replay')
+        check()
+        return FrameAdmission.canonical(endpoint, snapshot, history)
+
+    def collector(self, admission):
+        return ObservedFrameCollector(self, admission)
+
+    def _persistent_result(self, admission, item, index, *, display_only):
+        result = admission.shell.clone()
+        result.state = self.store.state(item, index)
+        result._occupancy_cache = None
+        frame = item['frames'][index]
+        if result.state_id != frame['stateId']:
+            raise ValueError('Observed frame state authentication differs')
+        count = item['position'] + int(index == len(item['frames']) - 1)
+        if display_only:
+            # These recursively frozen prefixes are private, read-only display
+            # ancestry. Editable boundaries always take the detached path.
+            result.actions = admission.snapshot['actions'][:count]
+            result.history = admission.history[:count]
+            history = admission.history
+        else:
+            result.actions = thaw_json(admission.snapshot['actions'][:count])
+            result.history = thaw_json(admission.history[:count])
+            history = thaw_json(admission.history)
+        return result, history
+
+    @staticmethod
+    def _playback(item, index):
+        frames = item['frames']; frame = frames[index]
+        manifest = [{k:v for k,v in row.items() if k not in ('state', 'fields', 'stateId')} | {'frameIndex':i} for i,row in enumerate(frames)]
+        start = frames[0]['observedTimeSeconds']
+        return {'readOnly': True, 'position': item['position'], 'actionIndex': item['position'],
+            'frameIndex': index, 'frameCount': len(frames), 'frames': manifest,
+            'observedTimeSeconds': frame['observedTimeSeconds'],
+            'actionElapsedSeconds': frame['observedTimeSeconds'] - start,
+            'actionDurationSeconds': frames[-1]['observedTimeSeconds'] - start,
+            'isActionBoundary': index in (0, len(frames)-1),
+            'frameStateId': frame['stateId'],
+            'effectiveActivation': dict(frame['effectiveActivation'])}
+
+    def _seek_admitted(self, current, admission, position, index, replay_cache, check, display_only):
+        admission.check(current, admission.snapshot, admission.history)
+        if type(position) is not int or not 0 <= position < len(admission.history) or type(index) is not int or index < 0:
+            raise ValueError('Playback frame is unavailable')
+        item = self.store.load(admission, position)
+        if item is not None:
+            item['position'] = position
+            if index >= len(item['frames']): raise ValueError('Playback frame is unavailable')
+            try:
+                result, history = self._persistent_result(admission, item, index, display_only=display_only)
+                check()
+                return result, history, self._playback(item, index)
+            except (OSError, ValueError, TypeError, KeyError, EOFError):
+                item = None
+        if item is None:
+            # Derive exactly one missing action through public step; receipt
+            # comparison precedes publication. Cold portable archives retain
+            # the existing observed replay fallback when caching is unavailable.
+            snapshot = thaw_json(admission.snapshot)
+            baseline, _ = replay_cache.seek(current, snapshot, position, check=check, include_history=True)
+            observed = _ObservedFrames(baseline.scene, protection=baseline.protection, guard_config=baseline.guard_config)
+            observed.__dict__.update(baseline.clone().__dict__)
+            observed._frames = []
+            collector = self.collector(admission)
+            observed._frame_collector = collector
+            action = thaw_json(admission.snapshot['actions'][position])
+            try:
+                collector.begin(observed, action)
+                outcome = observed.step(action, check=check)
+                collector.end(observed, action, outcome)
+            except BaseException:
+                collector.abort(); raise
+            item = self.store.load(admission, position)
+            if item is not None:
+                item['position'] = position
+                if index >= len(item['frames']): raise ValueError('Playback frame is unavailable')
+                try:
+                    result, history = self._persistent_result(admission, item, index, display_only=display_only)
+                    return result, history, self._playback(item, index)
+                except (OSError, ValueError, TypeError, KeyError, EOFError): pass
+            return self.seek(current, snapshot, position, index, replay_cache, check=check,
+                verified_history=thaw_json(admission.history))
 
     def _key(self, snapshot, position):
         return semantic_digest({'snapshot': snapshot, 'position': position})
@@ -92,7 +254,16 @@ class SurgicalFrameCache:
             raise ValueError('Playback initial identity differs')
         return result
 
-    def boundary(self, snapshot, position, *, verified_history=None):
+    def boundary(self, snapshot, position, *, verified_history=None, admission=None):
+        if admission is not None:
+            try: admission.check(snapshot=snapshot, history=verified_history)
+            except ImplementationChanged: return None
+            if position == 0: return None
+            item = self.store.load(admission, position - 1)
+            if item is None: return None
+            item['position'] = position - 1
+            try: return self._persistent_result(admission, item, len(item['frames']) - 1, display_only=False)
+            except (OSError, ValueError, TypeError, KeyError, EOFError): return None
         if position == 0: return None
         item = self._actions.get(self._key(snapshot, position - 1))
         if item is None or verified_history is None: return None
@@ -101,7 +272,13 @@ class SurgicalFrameCache:
         self._actions.move_to_end(self._key(snapshot, position - 1))
         return self._result(item, snapshot, len(item['frames']) - 1, history), copy.deepcopy(history)
 
-    def seek(self, current, snapshot, position, frame_index, replay_cache, *, check=lambda:None, verified_history=None):
+    def seek(self, current, snapshot, position, frame_index, replay_cache, *, check=lambda:None, verified_history=None, admission=None, display_only=False):
+        if admission is not None:
+            try: admission.check(current, snapshot, verified_history)
+            except ImplementationChanged:
+                return self.seek(current, thaw_json(snapshot), position, frame_index, replay_cache,
+                    check=check, verified_history=thaw_json(verified_history))
+            return self._seek_admitted(current, admission, position, frame_index, replay_cache, check, display_only)
         if type(position) is not int or not 0 <= position < len(snapshot['actions']):
             raise ValueError('Playback action is unavailable')
         if type(frame_index) is not int or frame_index < 0:
@@ -165,4 +342,5 @@ class SurgicalFrameCache:
             'observedTimeSeconds':frame['observedTimeSeconds'],
             'actionElapsedSeconds':frame['observedTimeSeconds']-start,
             'actionDurationSeconds':frames[-1]['observedTimeSeconds']-start,
-            'isActionBoundary':frame_index in (0,len(frames)-1), 'effectiveActivation':frame['effectiveActivation']}
+            'isActionBoundary':frame_index in (0,len(frames)-1), 'effectiveActivation':frame['effectiveActivation'],
+            'frameStateId':result.state_id}

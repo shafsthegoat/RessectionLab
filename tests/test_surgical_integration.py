@@ -186,8 +186,13 @@ def test_bridge_undo_redo_branch_and_bundle_reopen_in_fresh_process(tmp_path):
         assert observed['position'] == second['position'] == 2
         assert observed['playback']['readOnly']
         assert observed['view']['stateId'] == first['view']['stateId']
+        assert observed['view']['stateId'] == observed['playback']['frameStateId']
+        admission = session.surgical_frame_admissions[(case_hash, second['branchId'])][3]
         endpoint = command('seekFrame', second, position=1, frameIndex=observed['playback']['frameCount'] - 1)
         assert endpoint['view']['stateId'] == second['view']['stateId']
+        assert session.surgical_frame_admissions[(case_hash, second['branchId'])][3] is admission
+        with pytest.raises(TypeError):
+            admission.snapshot['actions'][0]['operation'] = 'inspect'
         assert session.cases[case_hash].artifacts is installed
         returned = command('seek', second, position=2)
         assert returned['view']['stateId'] == second['view']['stateId']

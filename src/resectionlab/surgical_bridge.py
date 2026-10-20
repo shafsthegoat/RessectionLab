@@ -47,6 +47,25 @@ def display_timeline(history):
     return result
 
 
+def _frame_admission(session, frames, engine, snapshot, history, replay_cache,
+                     identity, branch_id, check):
+    """Private immutable playback input for one admitted branch generation."""
+    admissions = getattr(session, 'surgical_frame_admissions', {})
+    key = (identity, branch_id)
+    item = admissions.get(key)
+    # Both references belong to the canonical private session record, never
+    # request JSON. Workspace replacement and cursor reconstruction replace
+    # those objects and require a new admission.
+    if item is None or item[0] is not snapshot or item[1] is not history or item[2] is not engine.scene:
+        token = frames.admit(engine, snapshot, replay_cache, verified_history=history, check=check)
+        shown = display_timeline(thaw_json(token.history))
+        item = (snapshot, history, engine.scene, token, shown)
+        admissions.pop(key, None)
+        admissions[key] = item
+        session.surgical_frame_admissions = dict(list(admissions.items())[-4:])
+    return item[3], item[4]
+
+
 def dispatch(session, operation, args, request, progress):
     from .desktop_bridge import BridgeError, _keys, _require_json_budget
     if operation == 'compareSurgicalAnatomy':
@@ -228,12 +247,17 @@ def dispatch(session, operation, args, request, progress):
             frames = session.surgical_frame_cache = SurgicalFrameCache()
         branch_id = args.get('branchId', record['branchId'])
         if branch_id not in record['branches']: raise ValueError('Unknown playback branch')
-        displayed, timeline, playback = frames.seek(engine, record['branches'][branch_id], args.get('position'),
+        token, shown_timeline = _frame_admission(session, frames, engine,
+            record['branches'][branch_id], record.get('timeline', {}).get(branch_id), replay_cache,
+            identity, branch_id, request.check)
+        displayed, _, playback = frames.seek(engine, token.snapshot, args.get('position'),
             args.get('frameIndex'), replay_cache, check=request.check,
-            verified_history=record.get('timeline', {}).get(branch_id))
+            verified_history=token.history, admission=token, display_only=True)
         playback['branchId'] = branch_id
-        shown_timeline = display_timeline(timeline)
-        shown_view = displayed.view(include_history=False); shown_view['history'] = shown_timeline[:len(displayed.actions)]
+        # The frame cache just verified this complete state identity. Reuse it
+        # for display instead of hashing the large effect state a second time.
+        shown_view = displayed.view(_state_id=playback['frameStateId'], include_history=False)
+        shown_view['history'] = shown_timeline[:len(displayed.actions)]
         result = {'caseHash': identity, 'view': shown_view, 'outcome': None, 'changed': False,
             'timeline': shown_timeline, 'playback': playback, 'branchId': branch_id, 'position': record['position'],
             'fullCase': copy.deepcopy(record.get('fullCase', {}).get(branch_id)),
