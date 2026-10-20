@@ -26,6 +26,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   const [previewOutcome,setPreviewOutcome]=useState<SurgicalOutcome|null>(null);
   const [pendingCommand,setPendingCommand]=useState<string|null>(null);
   const backendResult=useRef<SurgicalResponse|null>(null);
+  const responseSource=useRef<ViewerVolume|null>(null);
   const displayAdmission=useRef(new SurgicalDisplayAdmission<SurgicalView>());
   const pendingPoseView=useRef<SurgicalView|null>(null);
   const fullCaseComputation=useRef(new FullCaseComputation());
@@ -34,8 +35,8 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   function pauseFullCase(){if(fullCaseComputation.current.scenario){fullCaseComputation.current.pause();setFullCaseVersion(n=>n+1);}}
   const generation=useRef(0),busy=useRef(false),current=useRef({source,api,result,slot,enabled,displayFailed});current.current={source,api,result,slot,enabled,displayFailed};
   const desired=useRef({result:desiredResult,preview:desiredPreview,previewOutcome:desiredPreviewOutcome});desired.current={result:desiredResult,preview:desiredPreview,previewOutcome:desiredPreviewOutcome};
-  const requestQueue=useRef<SurgicalRequestQueue<{command:string;extra:Record<string,unknown>;caseHash:string;generation:number}>|null>(null);
-  useEffect(()=>{pauseFullCase();generation.current++;requestQueue.current?.invalidate();busy.current=false;backendResult.current=null;displayAdmission.current.invalidate();pendingPoseView.current=null;setResult(null);setDesiredResult(null);setDesiredPreview(null);setDesiredPreviewOutcome(null);setDisplayFailed(false);setPreview(null);setPreviewOutcome(null);setPath([]);setMode('navigate');setSlot('left');setPending(false);setError(null);},[source?.caseHash]);
+  const requestQueue=useRef<SurgicalRequestQueue<{command:string;extra:Record<string,unknown>;caseHash:string;source:ViewerVolume;generation:number}>|null>(null);
+  useEffect(()=>{pauseFullCase();generation.current++;requestQueue.current?.invalidate();busy.current=false;backendResult.current=null;displayAdmission.current.invalidate();pendingPoseView.current=null;setResult(null);setDesiredResult(null);setDesiredPreview(null);setDesiredPreviewOutcome(null);setDisplayFailed(false);setPreview(null);setPreviewOutcome(null);setPath([]);setMode('navigate');setSlot('left');setPending(false);setError(null);},[source]);
   useEffect(()=>()=>{fullCaseComputation.current.pause();generation.current++;requestQueue.current?.invalidate();},[]);
   async function execute(command:string,extra:Record<string,unknown>,isCurrent:()=>boolean):Promise<boolean>{
     const c=current.current;if(!c.enabled||!c.source||!c.api?.surgicalRehearsal||busy.current)return false;
@@ -43,7 +44,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     if(c.displayFailed&&['step','preview','plan','fullCase'].includes(command)){setError('The accepted anatomy could not be displayed. Seek to a recorded state or reopen the case before applying another instrument action.');return false;}
     const token=generation.current;busy.current=true;setPending(true);setPendingCommand(command);setError(null);
     try{const next=await c.api.surgicalRehearsal({caseHash:c.source.caseHash,command,expectedStateId:backendResult.current?.view.stateId,...extra});
-      if(token!==generation.current||!current.current.enabled||current.current.source?.caseHash!==c.source.caseHash)return false;
+      if(token!==generation.current||!current.current.enabled||current.current.source!==c.source)return false;
       // A superseded seek still moved the backend cursor. Preserve its state
       // identity for the next ordered request while withholding obsolete UI.
       if(command==='seekFrame'&&next){checkedSurgicalPlayback(next,extra);setMode('navigate');setPath([]);}
@@ -51,23 +52,23 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
       if(!isCurrent())return false;
       setDisplayFailed(false);
       if(command==='preview'){const response=next as unknown as (SurgicalOutcome&{view:SurgicalView})|null;setDesiredPreview(response?.view??null);setDesiredPreviewOutcome(response?{status:response.status,reason:response.reason,completedFraction:response.completedFraction,events:response.events}:null);return !!response;}
-      setDesiredPreview(null);setDesiredPreviewOutcome(null);pendingPoseView.current=next?.view??null;setDesiredResult(next);
+      setDesiredPreview(null);setDesiredPreviewOutcome(null);pendingPoseView.current=next?.view??null;responseSource.current=c.source;setDesiredResult(next);
       return !!next;
     }catch(e){if(token===generation.current)setError(String(e));return false;}finally{if(token===generation.current){busy.current=false;setPending(false);setPendingCommand(null);}}
   }
   if(!requestQueue.current)requestQueue.current=new SurgicalRequestQueue(async(item,isCurrent)=>{
-    if(item.generation!==generation.current||current.current.source?.caseHash!==item.caseHash)return false;
+    if(item.generation!==generation.current||current.current.source!==item.source)return false;
     return execute(item.command,item.extra,isCurrent);
   },item=>item.command==='seek'||item.command==='seekFrame');
   async function run(command:string,extra:Record<string,unknown>={}):Promise<boolean>{
     if(command!=='fullCase')pauseFullCase();
     const c=current.current;if(!c.enabled||!c.source||!c.api?.surgicalRehearsal)return false;
-    try{return await requestQueue.current!.request({command,extra:structuredClone(extra),caseHash:c.source.caseHash,generation:generation.current});}
-    catch(cause){if(current.current.source?.caseHash===c.source.caseHash)setError(String(cause));return false;}
+    try{return await requestQueue.current!.request({command,extra:structuredClone(extra),caseHash:c.source.caseHash,source:c.source,generation:generation.current});}
+    catch(cause){if(current.current.source===c.source)setError(String(cause));return false;}
   }
-  useEffect(()=>{if(enabled&&source&&api?.surgicalRehearsal)void run('inspect');else {generation.current++;requestQueue.current?.invalidate();busy.current=false;displayAdmission.current.invalidate();setResult(null);setPending(false);setDesiredPreview(null);setDesiredPreviewOutcome(null);setPreview(null);setPreviewOutcome(null);}},[source?.caseHash,enabled,api?.surgicalRehearsal]);
-  const view=enabled&&result?.caseHash===source?.caseHash?result?.view??null:null;
-  const desiredView=enabled&&desiredResult&&desiredResult.caseHash===source?.caseHash?desiredResult.view:null;
+  useEffect(()=>{if(enabled&&source&&api?.surgicalRehearsal)void run('inspect');else {generation.current++;requestQueue.current?.invalidate();busy.current=false;displayAdmission.current.invalidate();setResult(null);setPending(false);setDesiredPreview(null);setDesiredPreviewOutcome(null);setPreview(null);setPreviewOutcome(null);}},[source,enabled,api?.surgicalRehearsal]);
+  const view=enabled&&responseSource.current===source&&result?.caseHash===source?.caseHash?result?.view??null:null;
+  const desiredView=enabled&&responseSource.current===source&&desiredResult&&desiredResult.caseHash===source?.caseHash?desiredResult.view:null;
   const activePreview=desiredView?desiredPreview:null,displayedPreview=view?preview:null;
   const requestedView=activePreview??desiredView,displayedView=displayedPreview??view;
   const displayPending=!displayFailed&&!!requestedView&&requestedView!==displayedView;
@@ -81,9 +82,9 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   },[fullCaseVersion,result,pending,enabled,displayFailed]);
   const volume=useMemo(()=>source&&desiredView?modeledVolume(source,desiredView):null,[source,desiredView]);
   const previewVolume=useMemo(()=>source&&activePreview?modeledVolume(source,activePreview):null,[source,activePreview]);
-  const displayGeneration=generation.current,displaySource=source?.caseHash;
+  const displayGeneration=generation.current,displaySource=source?.caseHash,displaySourceObject=source;
   const displayTicket=displayAdmission.current.expect(displaySource??'',displayGeneration,requestedView);
-  const currentDisplay=(reported:SurgicalView|null)=>enabled&&generation.current===displayGeneration&&current.current.source?.caseHash===displaySource&&
+  const currentDisplay=(reported:SurgicalView|null)=>enabled&&generation.current===displayGeneration&&current.current.source===displaySourceObject&&
     desired.current.result?.caseHash===displaySource&&reported===(desired.current.preview??desired.current.result?.view);
   function onDisplayReady(reported:SurgicalView|null){
     if(!reported||!currentDisplay(reported))return;
