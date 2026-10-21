@@ -6,19 +6,26 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createServer} from 'vite';
 import * as THREE from 'three';
-let server,cache,VolumeRenderer,registerModeledAnatomy,prepareSurface,packAnatomyLabels,IncrementalSurfaceEngine,LabelTextureUpdates,retainSurface;
+let server,cache,VolumeRenderer,registerModeledAnatomy,prepareSurface,packAnatomyLabels,IncrementalSurfaceEngine,LabelTextureUpdates,retainSurface,cachedSurface;
 before(async()=>{
   cache=await fs.mkdtemp(path.join(os.tmpdir(),'surgical-renderer-'));
-  server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
+  server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom',plugins:[{
+    name:'test-conditioning-calls',enforce:'pre',transform(code,id){
+      if(!id.endsWith('/surfaceSmoothing.ts'))return;
+      const signature='export function fairIndexedSurface(points:Float32Array,indices:Uint32Array,affine:Affine,kind?:string,limits?:Float64Array){';
+      assert(code.includes(signature),'conditioning call instrumentation must match the actual implementation');
+      return code.replace(signature,signature+'\nglobalThis.__resectionLabConditioningCalls=(globalThis.__resectionLabConditioningCalls??0)+1;');
+    }
+  }]});
   VolumeRenderer=(await server.ssrLoadModule('/src/viewer/VolumeRenderer.ts')).VolumeRenderer;
   ({registerModeledAnatomy}=await server.ssrLoadModule('/src/viewer/modeledAnatomy.ts'));
   ({prepareSurface}=await server.ssrLoadModule('/src/viewer/prepareSurface.ts'));
   ({packAnatomyLabels}=await server.ssrLoadModule('/src/viewer/labelPacking.ts'));
   ({IncrementalSurfaceEngine}=await server.ssrLoadModule('/src/viewer/incrementalSurface.ts'));
   ({LabelTextureUpdates}=await server.ssrLoadModule('/src/viewer/labelTextureUpdates.ts'));
-  ({retainSurface}=await server.ssrLoadModule('/src/viewer/surfaceCache.ts'));
+  ({retainSurface,cachedSurface}=await server.ssrLoadModule('/src/viewer/surfaceCache.ts'));
 });
-after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true,force:true});});
+after(async()=>{await server?.close();delete globalThis.__resectionLabConditioningCalls;if(cache)await fs.rm(cache,{recursive:true,force:true});});
 const tool=id=>({id,radiusMm:2,shaftRadiusMm:.5,workingLengthMm:40});
 const slot=id=>({instrument:id,active:false,parameters:{jawOpeningMm:3},position:[1,2,3],quaternion:[0,0,0,1]});
 function interaction(){return {view:{stateId:'accepted',scene:{shape:[3,3,3],resolutionMm:[1,1,1],affine:[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]},
@@ -227,5 +234,46 @@ test('mapping reorder rebinds hidden-layer visibility and exact label codes at t
     const next={...source,compartments:[source.compartments[1],source.compartments[0]],displayIdentity:'reordered'};registerModeledAnatomy(source,next,'reordered',[]);
     r.installSurgicalState(next,{view:{stateId:'reorder'}});const worker=r.modelWorker;while(worker.queue.length)worker.flush();submitPreparedState(r);
     assert.equal(uniforms.uVisibleBits.value,2);assert.deepEqual([...uniforms.uLayerEnabled.value.slice(0,2)],[0,1]);assert.deepEqual(r.labelTexture.image.data,packAnatomyLabels(next).data);
+  }finally{mock.restore();}
+});
+test('OFF admits exact raw source geometry; ON lazily conditions that same tissue without changing cells or effects',()=>{
+  const mock=modelWorkerMock();try{
+    const {r,source,derive}=modeledFixture(),next=derive([22]),before=source.compartments[0].mask.slice(),ready=[];
+    const view={stateId:'raw',slots:{left:{active:true},right:{active:false}},fluid:{23:1},debris:{22:2}},request={view,readOnly:true,effectiveActivation:{left:true,right:false},onDisplayReady:v=>ready.push(v)};
+    const conditionedBefore=globalThis.__resectionLabConditioningCalls;
+    r.setSurfaceSmoothing(false);r.installSurgicalState(next,request);const worker=r.modelWorker;
+    assert.equal(worker.messages[0].smooth,false);while(worker.queue.length)worker.flush();submitPreparedState(r);
+    assert.equal(globalThis.__resectionLabConditioningCalls,conditionedBefore,'OFF never invokes the actual fairing/diagnostic implementation');
+    const raw=r.surfaceGeometry.get('brain'),reference=prepareSurface(next.compartments[0].mask,next.shape,next.affine,'brain',true),labels=r.labelTexture.image.data.slice();
+    assert.equal(raw.smoothingPrepared,false);assert.equal(raw.source,raw.smooth);assert.equal(r.surfaces.get('brain').geometry,raw.source);
+    assert.deepEqual(raw.source.attributes.position.array,reference.positions);assert.deepEqual(raw.source.attributes.normal.array,reference.normals);assert.deepEqual(raw.source.index.array,reference.indices);
+    assert.equal(cachedSurface(next.compartments[0].mask,r.affine,'brain',next.shape),undefined,'raw buffers never satisfy conditioned cache requests');
+    assert.equal(cachedSurface(next.compartments[0].mask,r.affine,'brain',next.shape,false).smoothingPrepared,false);
+    assert.deepEqual(ready,[view]);assert.equal(r.installedInteraction,request);
+    r.setSurfaceSmoothing(true);assert.equal(r.volume,next);assert.equal(r.modelStage.next,next);assert.equal(worker.messages.at(-1).smooth,true);
+    assert.equal(worker.messages.at(-1).mask,undefined,'preference does not discard the resident source-cell cache');assert.equal(worker.messages.at(-1).indices.length,0);
+    assert.equal(r.surfaces.get('brain').geometry,raw.source,'current raw tissue stays visible while its smoothing prepares');
+    const conditionedOn=globalThis.__resectionLabConditioningCalls;
+    while(worker.queue.length)worker.flush();submitPreparedState(r);
+    assert.equal(globalThis.__resectionLabConditioningCalls,conditionedOn+1,'ON conditions only the raw displayed layer');
+    const smooth=r.surfaceGeometry.get('brain');assert.equal(smooth.smoothingPrepared,true);assert.notEqual(smooth.smooth,smooth.source);
+    assert.deepEqual(smooth.source.attributes.position.array,reference.positions);assert.deepEqual(smooth.smooth.attributes.position.array,reference.smoothPositions);
+    assert.deepEqual(r.labelTexture.image.data,labels);assert.equal(r.installedInteraction,request);assert.equal(r.volume,next);assert.deepEqual(source.compartments[0].mask,before);
+    r.setSurfaceSmoothing(false);const delta=derive([22,23]);r.installSurgicalState(delta,{view:{...view,stateId:'delta'}});
+    assert.equal(worker.messages.at(-1).smooth,false);assert.equal(worker.messages.at(-1).mask,undefined);assert.deepEqual([...worker.messages.at(-1).indices],[23]);
+    while(worker.queue.length)worker.flush();submitPreparedState(r);assert.equal(r.volume,delta);assert.equal(r.surfaceGeometry.get('brain').smoothingPrepared,false);
+  }finally{mock.restore();}
+});
+test('mid-flight preference changes cancel the old quality and cannot publish stale target buffers',()=>{
+  const mock=modelWorkerMock();try{
+    const {r,source,derive}=modeledFixture(),a=derive([22]),b=derive([22,23]),ready=[];
+    const viewA={stateId:'a'},viewB={stateId:'b'},request=view=>({view,onDisplayReady:v=>ready.push(v)});
+    r.installSurgicalState(a,request(viewA));const staleSmooth=r.modelWorker;r.setSurfaceSmoothing(false);
+    const rawWorker=r.modelWorker;assert.notEqual(rawWorker,staleSmooth);assert.equal(staleSmooth.terminated,true);assert.equal(rawWorker.messages[0].smooth,false);
+    staleSmooth.flush();assert.equal(r.volume,source);assert.deepEqual(ready,[]);
+    r.setSurfaceSmoothing(true);const staleRaw=rawWorker,active=r.modelWorker;assert.equal(staleRaw.terminated,true);assert.equal(active.messages[0].smooth,true);
+    staleRaw.flush();assert.equal(r.volume,source);assert.deepEqual(ready,[]);
+    r.installSurgicalState(b,request(viewB));const latest=r.modelWorker;assert.equal(active.terminated,true);active.flush();assert.deepEqual(ready,[]);
+    while(latest.queue.length)latest.flush();submitPreparedState(r);assert.equal(r.volume,b);assert.deepEqual(ready,[viewB]);assert.equal(r.surfaceGeometry.get('brain').smoothingPrepared,true);
   }finally{mock.restore();}
 });

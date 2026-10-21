@@ -50,3 +50,26 @@ test('half-grid numeric indexing is byte-identical to generic exact keys, with a
   assert.deepEqual(indexSurface(arbitrary,shape),indexSurface(arbitrary));
   assert.deepEqual(indexSurface(soup,[2**40,2**40,2**40]),indexSurface(soup),'unsafe numeric spans retain exact generic indexing');
 });
+test('raw preparation retains exact source buffers and omits conditioning, including initial mapping',()=>{
+  const mask=source(),before=mask.slice(),reference=prepareSurface(mask,shape,affine,'vessel',true);
+  for(const retainChunks of [true,false]){
+    const result=new IncrementalSurfaceEngine().prepare({jobId:1,layerId:'vessel',previousIdentity:'',identity:'raw',shape,affine,kind:'vessel',mask:mask.slice(),smooth:false,retainChunks});
+    for(const key of ['positions','indices','normals'])assert.deepEqual(result[key],reference[key],key);
+    assert.equal(result.smoothingPrepared,false);assert.equal(result.work.smoothingPrepared,false);
+    assert.equal(result.smoothPositions,undefined);assert.equal(result.smoothNormals,undefined);assert.equal(result.diagnostics,undefined);
+  }
+  assert.deepEqual(mask,before);
+});
+test('resident cell identity survives raw/full preference changes and later incremental cuts',()=>{
+  const mask=source(),engine=new IncrementalSurfaceEngine(),base={layerId:'vessel',shape,affine,kind:'vessel'};
+  engine.prepare({...base,jobId:1,previousIdentity:'',identity:'a',mask:mask.slice(),smooth:false});
+  let result=engine.prepare({...base,jobId:2,previousIdentity:'a',identity:'a',indices:new Uint32Array(),values:new Uint8Array(),smooth:true});
+  const full=prepareSurface(mask,shape,affine,'vessel',true);
+  for(const key of ['positions','indices','normals','smoothPositions','smoothNormals'])assert.deepEqual(result[key],full[key],key);
+  assert.equal(result.work.incremental,true);assert.equal(result.work.remeshedChunks,0);
+  const index=at(3,3,3);mask[index]=0;
+  result=engine.prepare({...base,jobId:3,previousIdentity:'a',identity:'b',indices:Uint32Array.of(index),values:Uint8Array.of(0),smooth:false});
+  const cut=prepareSurface(mask,shape,affine,'vessel',true);
+  for(const key of ['positions','indices','normals'])assert.deepEqual(result[key],cut[key],key);
+  assert.equal(result.work.incremental,true);assert.equal(result.smoothPositions,undefined);
+});

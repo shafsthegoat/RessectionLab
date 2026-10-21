@@ -79,11 +79,11 @@ import {
 } from "./routeAppearance";
 
 type Panes = { anatomy: HTMLElement } & Record<SlicePlane, HTMLElement>;
-type SurfacePair={mesh:THREE.Mesh;source:THREE.BufferGeometry;smooth:THREE.BufferGeometry};
+type SurfacePair={mesh:THREE.Mesh;source:THREE.BufferGeometry;smooth:THREE.BufferGeometry;smoothingPrepared?:boolean};
 type ModelStage={generation:number;next:ViewerVolume;interaction:SurgicalInteraction|null;
   prepared:Map<string,SurfacePair|null>;jobs:Array<{layer:ViewerVolume['compartments'][number];indices?:Uint32Array;values?:Uint8Array}>;
   pack:boolean;packed?:{data:Uint8Array;codes:Array<[number,number]>};patch?:{indices:Uint32Array;values:Uint8Array};
-  waiting?:ViewerVolume['compartments'][number]|'pack';ready?:boolean;changedLayers:number;changedIndices:number;initialMapping:boolean};
+  waiting?:ViewerVolume['compartments'][number]|'pack';ready?:boolean;changedLayers:number;changedIndices:number;initialMapping:boolean;smoothing:boolean};
 const SLICE_PLANES: SlicePlane[] = ["axial", "coronal", "sagittal"];
 const RETIRED_SURFACE_BUDGET_BYTES=256*1024*1024;
 
@@ -205,7 +205,7 @@ export class VolumeRenderer {
   private priorTexture: THREE.Data3DTexture;
   private priorCoverageTexture: THREE.Data3DTexture;
   private readonly surfaces = new Map<string, THREE.Mesh>();
-  private readonly surfaceGeometry = new Map<string, { source: THREE.BufferGeometry; smooth: THREE.BufferGeometry }>();
+  private readonly surfaceGeometry = new Map<string, { source: THREE.BufferGeometry; smooth: THREE.BufferGeometry; smoothingPrepared?:boolean }>();
   private surfaceSmoothing = true;
   private scanFramingPoints:Float32Array=new Float32Array();
   private readonly mriTexture: THREE.Data3DTexture;
@@ -627,7 +627,7 @@ export class VolumeRenderer {
     this.requestRender();
   }
 
-  private makeSurface(layer:ViewerVolume['compartments'][number],buffers:{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array}):SurfacePair|null {
+  private makeSurface(layer:ViewerVolume['compartments'][number],buffers:{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array;smoothingPrepared?:boolean}):SurfacePair|null {
     const {positions,normals}=buffers;
     const onError=this.onError;
     const geometry = new THREE.BufferGeometry();
@@ -637,20 +637,23 @@ export class VolumeRenderer {
     );
     geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
     const { smoothPositions, smoothNormals } = buffers;
-    if (!smoothPositions || !smoothNormals || smoothPositions.length !== positions.length || smoothNormals.length !== positions.length) {
+    const smoothingPrepared=buffers.smoothingPrepared!==false;
+    if (smoothingPrepared&&(!smoothPositions || !smoothNormals || smoothPositions.length !== positions.length || smoothNormals.length !== positions.length)) {
       geometry.dispose();
       onError("Display surface buffers do not match the source triangles.");
       return null;
     }
-    const smooth = new THREE.BufferGeometry();
+    // Raw display uses the exact source geometry, without fairing or derived
+    // lighting normals, and does not allocate a duplicate GPU geometry.
+    const smooth = smoothingPrepared?new THREE.BufferGeometry():geometry;
     if (buffers.indices) {
       geometry.setIndex(new THREE.BufferAttribute(buffers.indices, 1));
       smooth.setIndex(new THREE.BufferAttribute(buffers.indices, 1));
     }
-    smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions, 3));
+    if(smoothingPrepared)smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions!, 3));
     const vessel=surfaceKind(layer.kind)==='vessel';
     const fairNormals=vessel||['brain','bone','skull','head-envelope'].includes(layer.kind??'');
-    smooth.setAttribute("normal", new THREE.BufferAttribute(fairNormals&&buffers.indices ? displaySurfaceNormals(smoothNormals,buffers.indices,this.affine) : smoothNormals, 3));
+    if(smoothingPrepared)smooth.setAttribute("normal", new THREE.BufferAttribute(fairNormals&&buffers.indices ? displaySurfaceNormals(smoothNormals!,buffers.indices,this.affine) : smoothNormals!, 3));
     const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings,layer.kind);
     const mesh = new THREE.Mesh(
       this.surfaceSmoothing ? smooth : geometry,
@@ -671,11 +674,11 @@ export class VolumeRenderer {
     mesh.visible = this.visible[layer.name] !== false;
     mesh.userData.compartment = layer.name;
     this.picking?.install(mesh,geometry);
-    return {mesh,source:geometry,smooth};
+    return {mesh,source:geometry,smooth,smoothingPrepared};
   }
   private installSurface(layer:ViewerVolume['compartments'][number],buffers:PreparedSurface|{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array}) {
     const pair=this.makeSurface(layer,buffers);if(!pair)return;
-    this.surfaceGeometry.set(layer.name,{source:pair.source,smooth:pair.smooth});this.surfaces.set(layer.name,pair.mesh);this.anatomy.add(pair.mesh);
+    this.surfaceGeometry.set(layer.name,{source:pair.source,smooth:pair.smooth,smoothingPrepared:pair.smoothingPrepared});this.surfaces.set(layer.name,pair.mesh);this.anatomy.add(pair.mesh);
   }
 
   /** Append only, within an unchanged native source generation. */
@@ -751,8 +754,9 @@ export class VolumeRenderer {
       const a=modeledAnatomy(this.volume),b=modeledAnatomy(next),owner=a?.source??this.volume,nextOwner=b?.source??next;
       if(owner!==nextOwner||next.mri!==this.volume.mri||next.caseHash!==this.volume.caseHash||
         JSON.stringify([next.shape,next.affine,next.frame])!==JSON.stringify([this.volume.shape,this.volume.affine,this.volume.frame]))throw Error('Modeled display source changed without a new renderer');
-      if(this.modelStage?.next===next){this.modelStage.interaction=interaction;return true;}
-      if(next===this.volume&&!this.modelStage){
+      const smoothing=this.surfaceSmoothing!==false;
+      if(this.modelStage?.next===next&&this.modelStage.smoothing===smoothing){this.modelStage.interaction=interaction;return true;}
+      if(next===this.volume&&!this.modelStage&&!(smoothing&&[...this.surfaceGeometry.values()].some(pair=>pair.smoothingPrepared===false))){
         if(this.sourceFailed&&interaction?.view)throw Error('source surfaces are unavailable');
         if(this.sourceRemaining>0&&interaction?.view){this.initialSurgicalInteraction=interaction;return true;}
         this.setSurgical(interaction);this.queueSurgicalPublication(interaction);return true;
@@ -768,19 +772,20 @@ export class VolumeRenderer {
         next.compartments.length===this.volume.compartments.length&&next.compartments.every((l,i)=>l.name===this.volume.compartments[i].name&&l.kind===this.volume.compartments[i].kind);
       const candidates=sameLayout?[...new Set([...a!.modifiedIndices,...b!.modifiedIndices])].sort((x,y)=>x-y):null;
       const stage:ModelStage={generation:++this.modelGeneration,next,interaction,prepared:new Map(),jobs:[],pack:!sameLayout,changedLayers:0,changedIndices:0,
-        initialMapping:!a&&!!b&&!b.modifiedIndices.length};
+        initialMapping:!a&&!!b&&!b.modifiedIndices.length,smoothing};
       this.modelStage=stage;
       for(const layer of next.compartments){
         const old=this.volume.compartments.find(l=>l.name===layer.name);
+        const needsSmoothing=smoothing&&this.surfaceGeometry.get(layer.name)?.smoothingPrepared===false;
         let indices:Uint32Array|undefined,values:Uint8Array|undefined;
         if(old&&old.kind===layer.kind&&this.preparedSourceLayers.has(layer.name)){
-          if(old.mask===layer.mask&&!old.labelSet&&!layer.labelSet)continue;
-          if(candidates){const changed=candidates.filter(i=>old.mask[i]!==layer.mask[i]);if(!changed.length)continue;indices=Uint32Array.from(changed);values=Uint8Array.from(changed,i=>layer.mask[i]);stage.changedIndices+=changed.length;}
+          if(old.mask===layer.mask&&!old.labelSet&&!layer.labelSet&&!needsSmoothing)continue;
+          if(candidates){const changed=candidates.filter(i=>old.mask[i]!==layer.mask[i]);if(!changed.length&&!needsSmoothing)continue;indices=Uint32Array.from(changed);values=Uint8Array.from(changed,i=>layer.mask[i]);stage.changedIndices+=changed.length;}
         }
         stage.changedLayers++;
-        const retired=this.retiredSurfaces.findIndex(e=>e.layer.name===layer.name&&e.layer.kind===layer.kind&&e.layer.mask===layer.mask);
+        const retired=this.retiredSurfaces.findIndex(e=>e.layer.name===layer.name&&e.layer.kind===layer.kind&&e.layer.mask===layer.mask&&(!smoothing||e.pair.smoothingPrepared!==false));
         if(retired>=0){stage.prepared.set(layer.name,this.retiredSurfaces.splice(retired,1)[0].pair);continue;}
-        const cached=!layer.labelSet?cachedSurface(layer.mask,this.affine,layer.kind,next.shape):undefined,s=layer.surface;
+        const cached=!layer.labelSet?cachedSurface(layer.mask,this.affine,layer.kind,next.shape,smoothing):undefined,s=layer.surface;
         const buffers=cached??(s?{positions:s.source,normals:s.sourceNormals,smoothPositions:s.positions,smoothNormals:s.normals,indices:s.indices}:undefined);
         if(buffers){const pair=buffers.positions.length?this.makeSurface(layer,buffers):null;if(buffers.positions.length&&!pair)throw Error('Invalid prepared modeled surface');stage.prepared.set(layer.name,pair);}
         else stage.jobs.push({layer,indices,values});
@@ -827,7 +832,9 @@ export class VolumeRenderer {
         const packed=event.data.packed;if(!packed||packed.data.length!==stage.next.mri.length*4){this.failModelStage('invalid modeled label buffers');return;}stage.packed=packed;
       }else{
         const layer=stage.waiting;if(!layer||layer==='pack'||layer.name!==event.data.layerId){this.failModelStage('unexpected modeled surface');return;}
-        const buffers=event.data;if(!buffers.positions||!buffers.normals||!buffers.smoothPositions||!buffers.smoothNormals||buffers.positions.length!==buffers.normals.length||buffers.smoothPositions.length!==buffers.positions.length||buffers.smoothNormals.length!==buffers.positions.length){this.failModelStage('inconsistent modeled surface buffers');return;}
+        const buffers=event.data;if(!buffers.positions||!buffers.normals||buffers.positions.length!==buffers.normals.length||
+          (buffers.smoothingPrepared!==false)!==stage.smoothing||
+          (stage.smoothing&&(!buffers.smoothPositions||!buffers.smoothNormals||buffers.smoothPositions.length!==buffers.positions.length||buffers.smoothNormals.length!==buffers.positions.length))){this.failModelStage('inconsistent modeled surface buffers');return;}
         retainSurface(layer.mask,this.affine,layer.kind,buffers,stage.next.shape);
         const pair=buffers.positions.length?this.makeSurface(layer,buffers):null;if(buffers.positions.length&&!pair){this.failModelStage('invalid modeled surface');return;}
         stage.prepared.set(layer.name,pair);this.modelWorkerStates=new Map((event.data.resident??[]).map(e=>[e.layerId,e.identity]));
@@ -838,7 +845,7 @@ export class VolumeRenderer {
     };
     if(job){
       stage.waiting=job.layer;const oldLayer=this.volume.compartments.find(l=>l.name===job.layer.name),previousIdentity=oldLayer?this.modelIdentity(oldLayer.mask):'',identity=this.modelIdentity(job.layer.mask),incremental=job.indices&&this.modelWorkerStates.get(job.layer.name)===previousIdentity;
-      const request:IncrementalSurfaceRequest={jobId:stage.generation,layerId:job.layer.name,previousIdentity,identity,shape:stage.next.shape,affine:this.affine,kind:job.layer.kind,retainChunks:!stage.initialMapping};
+      const request:IncrementalSurfaceRequest={jobId:stage.generation,layerId:job.layer.name,previousIdentity,identity,shape:stage.next.shape,affine:this.affine,kind:job.layer.kind,retainChunks:!stage.initialMapping,smooth:stage.smoothing};
       if(incremental){request.indices=job.indices;request.values=job.values;this.displayWork.workerInputTransferBytes+=job.indices!.byteLength+job.values!.byteLength;worker.postMessage(request,[job.indices!.buffer,job.values!.buffer]);}
       else {request.mask=materializeLayerMask(stage.next,job.layer);this.displayWork.workerInputCloneBytes+=request.mask.byteLength;worker.postMessage(request);}
     }else{
@@ -853,7 +860,7 @@ export class VolumeRenderer {
     // Native pre-mapping pairs do not match modeled baseline/undo masks. Keep
     // their CPU surface cache for source restoration, but release GPU/BVH here.
     for(const [name,pair]of stage.prepared){const old=oldVolume.compartments.find(l=>l.name===name);if(old)this.retireSurface(old,!stage.initialMapping);
-      this.preparedSourceLayers.add(name);if(pair){pair.mesh.geometry=this.surfaceSmoothing?pair.smooth:pair.source;pair.mesh.visible=this.visible[name]!==false;this.surfaceGeometry.set(name,{source:pair.source,smooth:pair.smooth});this.surfaces.set(name,pair.mesh);this.anatomy.add(pair.mesh);}}
+      this.preparedSourceLayers.add(name);if(pair){pair.mesh.geometry=this.surfaceSmoothing?pair.smooth:pair.source;pair.mesh.visible=this.visible[name]!==false;this.surfaceGeometry.set(name,{source:pair.source,smooth:pair.smooth,smoothingPrepared:pair.smoothingPrepared});this.surfaces.set(name,pair.mesh);this.anatomy.add(pair.mesh);}}
     this.volume=stage.next;
     if(stage.packed){this.labelTexture.image.data=stage.packed.data;this.labelCodes=stage.packed.codes;}
     if(stage.patch){const data=this.labelTexture.image.data as Uint8Array;stage.patch.indices.forEach((index,i)=>data.set(stage.patch!.values.subarray(i*4,i*4+4),index*4));}
@@ -1026,6 +1033,7 @@ export class VolumeRenderer {
 
   /** Reversible mesh-only display; masks, slice textures and metrics are untouched. */
   setSurfaceSmoothing(enabled: boolean): void {
+    const changed=this.surfaceSmoothing!==enabled;
     this.surfaceSmoothing = enabled;
     this.surfaces.forEach((mesh, name) => {
       const pair = this.surfaceGeometry.get(name);
@@ -1036,6 +1044,16 @@ export class VolumeRenderer {
         const pair = mesh.userData.replayGeometry as {source:THREE.BufferGeometry;smooth:THREE.BufferGeometry}|undefined;
         if (mesh instanceof THREE.Mesh && pair) mesh.geometry = enabled ? pair.smooth : pair.source;
       });
+    if(changed){
+      // A preference change cannot reuse an in-flight result of the other
+      // quality. Re-admit its exact target through the ordinary cancellation
+      // path; otherwise condition only the currently installed raw tissue.
+      const pending=this.modelStage;
+      this.failedModelState=null;
+      if(pending)this.installSurgicalState(pending.next,pending.interaction);
+      else if(enabled&&[...this.surfaceGeometry.values()].some(pair=>pair.smoothingPrepared===false))
+        this.installSurgicalState(this.volume,this.surgicalInteraction??null);
+    }
     this.requestRender();
   }
 

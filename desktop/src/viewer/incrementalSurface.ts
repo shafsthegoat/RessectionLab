@@ -2,7 +2,7 @@ import {ChunkedMaskSurface} from './chunkedSurface.ts';
 import {prepareSurfaceSoup} from './prepareSurface.ts';
 import {maskSurface} from './surface.ts';
 import type {Affine,Shape3} from './coordinates';
-export interface IncrementalSurfaceRequest {jobId:number;layerId:string;previousIdentity:string;identity:string;shape:Shape3;affine:Affine;kind?:string;mask?:Uint8Array;indices?:Uint32Array;values?:Uint8Array;retainChunks?:boolean}
+export interface IncrementalSurfaceRequest {jobId:number;layerId:string;previousIdentity:string;identity:string;shape:Shape3;affine:Affine;kind?:string;mask?:Uint8Array;indices?:Uint32Array;values?:Uint8Array;retainChunks?:boolean;smooth?:boolean}
 /** One worker owns these cloned source cells. Cache budget covers masks and
  * chunk soups; returned indexed/fair buffers are transferred, never retained. */
 export class IncrementalSurfaceEngine {
@@ -17,13 +17,13 @@ export class IncrementalSurfaceEngine {
     if(request.retainChunks===false){
       if(!request.mask||request.mask.some(n=>n>1))throw Error('Missing immutable source-mask admission for surface preparation');
       const soup=maskSurface(request.mask,request.shape),extractionMs=performance.now()-started,fairStarted=performance.now();
-      const result=prepareSurfaceSoup(soup,request.mask,request.shape,request.affine,request.kind,true);
+      const result=prepareSurfaceSoup(soup,request.mask,request.shape,request.affine,request.kind,request.smooth!==false);
       this.cache.delete(request.layerId);
       return {...result,jobId:request.jobId,layerId:request.layerId,identity:request.identity,
         resident:[...this.cache].map(([layerId,state])=>({layerId,identity:state.identity})),
         work:{incremental:false,fullReference:true,remeshedChunks:0,totalChunks:request.shape.reduce((n,s)=>n*Math.ceil((s+1)/32),1),
           retainedBytes:[...this.cache.values()].reduce((sum,c)=>sum+c.surface.retainedBytes,0),extractionMs,
-          globalFairingMs:performance.now()-fairStarted,preparationMs:performance.now()-started}};
+          smoothingPrepared:result.smoothingPrepared!==false,globalFairingMs:performance.now()-fairStarted,preparationMs:performance.now()-started}};
     }
     const incremental=!!old&&old.identity===request.previousIdentity&&old.signature===signature&&!request.mask;
     let surface:ChunkedMaskSurface;
@@ -35,7 +35,7 @@ export class IncrementalSurfaceEngine {
       surface=new ChunkedMaskSurface(request.mask,request.shape);
     }
     const extractionMs=performance.now()-started,soup=surface.positions(),fairStarted=performance.now();
-    const result=prepareSurfaceSoup(soup,surface.mask,request.shape,request.affine,request.kind,true);
+    const result=prepareSurfaceSoup(soup,surface.mask,request.shape,request.affine,request.kind,request.smooth!==false);
     this.cache.delete(request.layerId);
     if(surface.retainedBytes<=this.maxBytes)this.cache.set(request.layerId,{identity:request.identity,signature,surface});
     let retainedBytes=[...this.cache.values()].reduce((sum,c)=>sum+c.surface.retainedBytes,0);
@@ -43,6 +43,6 @@ export class IncrementalSurfaceEngine {
     return {...result,jobId:request.jobId,layerId:request.layerId,identity:request.identity,
       resident:[...this.cache].map(([layerId,state])=>({layerId,identity:state.identity})),
       work:{incremental,remeshedChunks:surface.lastRemeshedChunks,totalChunks:surface.totalChunks,retainedBytes,extractionMs,
-        globalFairingMs:performance.now()-fairStarted,preparationMs:performance.now()-started}};
+        smoothingPrepared:result.smoothingPrepared!==false,globalFairingMs:performance.now()-fairStarted,preparationMs:performance.now()-started}};
   }
 }

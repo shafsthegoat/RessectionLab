@@ -204,6 +204,12 @@ replay. Return to a recorded boundary before branching or resuming. Save pauses
 both computation and playback and synchronizes the canonical editable state.
 Fluid glyphs show per-cell ledger volumes; outlet reservoirs remain separate.
 
+For modeled tissue frames, disabling **Smooth 3D surfaces** skips derived
+conditioning and displays the exact source surface. Re-enabling it prepares
+smoothing for the current admitted tissue through the same staged display path.
+Raw and smoothed preparations use distinct cache entries; source labels, picking,
+tool poses and fluid records are unchanged.
+
 Observed frames can be prepared during the same descriptive telemetry replay.
 Each action's exact outcome and endpoint must match canonical admission before
 its frames receive an authenticated local cache entry. The cache binds source,
