@@ -219,6 +219,60 @@ def test_blocked_cleanup_approach_never_claims_arrival_and_still_withdraws(monke
     assert not any(slot['inserted'] or slot['active'] or slot['grip'] for slot in result.state['slots'].values())
 
 
+def test_budget_endpoint_preserves_unfinished_routes_and_only_runs_public_cleanup(monkeypatch):
+    engine, meta = _cleanup_engine(residual=True)
+    meta.update(stage='core', accessIndex=1, accesses=[{'id': 'past'}, {'id': 'partial'}, {'id': 'untested'}])
+    before, original_meta = engine.snapshot(), copy.deepcopy(meta)
+    requested = director.request_budget_limited_endpoint(engine, meta)
+    assert engine.snapshot() == before and meta == original_meta
+    assert requested['budgetLimitedEndpoint']['pausedStage'] == 'core'
+    assert requested['budgetLimitedEndpoint']['pausedAccessPass']['accesses'] == meta['accesses']
+    def no_resection(*args, **kwargs):
+        raise AssertionError('Budget-limited cleanup must not schedule further resection or access')
+    monkeypatch.setattr(director, '_advance_access', no_resection)
+    monkeypatch.setattr(director, 'next_removal_candidates', no_resection)
+    monkeypatch.setattr(director, 'access_candidates', no_resection)
+    result, report = director.run_slice(engine, requested, max_actions=32)
+    assert report['stage'] == 'endpoint' and report['status'] == 'stopped'
+    assert report['stopReason'].startswith('Budget-limited engineering rehearsal with residual target.')
+    assert 'exhausted' not in report['stopReason']
+    assert report['accesses'] == meta['accesses'] and report['accessIndex'] == 1
+    assert result.actions[:len(engine.actions)] == engine.actions
+    assert result.metrics()['targetRemovedMm3'] == engine.metrics()['targetRemovedMm3'] == 9.
+    assert result.state['debrisRemovedMm3'] == pytest.approx(9.)
+    assert not any(slot['inserted'] or slot['active'] or slot['grip'] for slot in result.state['slots'].values())
+    assert not result.state['holds']
+    assert director.resume_director(report) == report
+    resumed, unchanged = director.run_slice(result, director.resume_director(report), max_actions=32)
+    assert resumed is result and unchanged == report
+    replay = engine.clone()
+    for action in result.actions[len(engine.actions):]:
+        expected = replay.preview(action, include_view=False)
+        assert replay.step(action)['stateId'] == expected['stateId']
+    assert replay.snapshot() == result.snapshot()
+
+
+def test_budget_endpoint_refuses_stale_source_or_cleared_target(monkeypatch):
+    engine, meta = _cleanup_engine(residual=True)
+    with pytest.raises(ValueError, match='source differs'):
+        director.request_budget_limited_endpoint(engine, {**meta, 'sourceSceneId': 'another-scene'})
+    with pytest.raises(ValueError, match='action boundary differs'):
+        director.request_budget_limited_endpoint(engine, {**meta, 'lastStateId': 'stale'})
+    with pytest.raises(ValueError, match='primary rehearsal'):
+        director.request_budget_limited_endpoint(engine, {**meta, 'scenario': 'vascular'})
+    requested = director.request_budget_limited_endpoint(engine, meta)
+    with pytest.raises(ValueError, match='already requested'):
+        director.request_budget_limited_endpoint(engine, requested)
+    metrics = engine.metrics()
+    with monkeypatch.context() as context:
+        context.setattr(engine, 'metrics', lambda: {**metrics, 'activeVesselWounds': 1})
+        with pytest.raises(ValueError, match='Control active modeled bleeding'):
+            director.request_budget_limited_endpoint(engine, meta)
+    cleared, complete_meta = _cleanup_engine(residual=False)
+    with pytest.raises(ValueError, match='residual target'):
+        director.request_budget_limited_endpoint(cleared, complete_meta)
+
+
 @pytest.mark.parametrize('axis', [0, 1])
 def test_directional_fallback_preserves_endpoint_and_uses_public_access_actions(axis):
     from resectionlab.surgical_physics_v2 import default_profile

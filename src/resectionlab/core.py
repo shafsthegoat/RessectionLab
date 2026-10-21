@@ -84,9 +84,53 @@ def thaw_json(value: Any) -> Any:
     return value
 
 
+_JSON_COPY_FALLBACK = object()
+
+
+def _copy_builtin_json(value: Any, depth: int = 0) -> Any:
+    """Detach ordinary JSON graphs once; leave unusual metadata to freeze/thaw.
+
+    Exact types avoid invoking subclass callbacks during speculative traversal.
+    The depth bound also sends cyclic graphs to the original validation path.
+    Encoding always uses the completed copy, never the mutable caller graph.
+    """
+    if depth >= 32:
+        return _JSON_COPY_FALLBACK
+    kind = type(value)
+    if kind is int or kind is str or kind is bool or value is None:
+        return value
+    if kind is float:
+        return value if math.isfinite(value) else _JSON_COPY_FALLBACK
+    if kind is list:
+        result = []
+        for item in value:
+            copied = _copy_builtin_json(item, depth + 1)
+            if copied is _JSON_COPY_FALLBACK:
+                return _JSON_COPY_FALLBACK
+            result.append(copied)
+        return result
+    if kind is dict:
+        result = {}
+        for key, item in value.items():
+            if type(key) is not str:
+                return _JSON_COPY_FALLBACK
+            copied = _copy_builtin_json(item, depth + 1)
+            if copied is _JSON_COPY_FALLBACK:
+                return _JSON_COPY_FALLBACK
+            result[key] = copied
+        return result
+    return _JSON_COPY_FALLBACK
+
+
 def semantic_digest(value: Any) -> str:
     """Content digest for JSON metadata; mapping insertion order is irrelevant."""
-    payload = json.dumps(thaw_json(freeze_json(value)), sort_keys=True, separators=(",", ":"), allow_nan=False)
+    try:
+        copied = _copy_builtin_json(value)
+    except RecursionError:
+        copied = _JSON_COPY_FALLBACK
+    if copied is _JSON_COPY_FALLBACK:
+        copied = thaw_json(freeze_json(value))
+    payload = json.dumps(copied, sort_keys=True, separators=(",", ":"), allow_nan=False)
     return "sha256:" + hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 

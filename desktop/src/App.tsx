@@ -590,6 +590,7 @@ export default function App() {
   const [cameraMode, setCameraMode] = useState<"anatomy" | "instruments">(
     "anatomy",
   );
+  const [cameraFitRequest,setCameraFitRequest]=useState(0);
   const [routes, setRoutes] = useState<RouteCandidate[]>([]);
   const [episodeView, setEpisodeView] = useState<EpisodeView | null>(null);
   const [passiveView,setPassiveView] = useState<PersistentPassiveView|null>(null);
@@ -1764,14 +1765,14 @@ export default function App() {
           >
             <button
               className={cameraMode === "anatomy" ? "active" : ""}
-              onClick={() => setCameraMode("anatomy")}
+              onClick={() => {setCameraMode("anatomy");setCameraFitRequest(value=>value+1);}}
               aria-pressed={cameraMode === "anatomy"}
             >
               <Focus size={14} /> Focus anatomy
             </button>
             <button
               className={cameraMode === "instruments" ? "active" : ""}
-              onClick={() => setCameraMode("instruments")}
+              onClick={() => {setCameraMode("instruments");setCameraFitRequest(value=>value+1);}}
               aria-pressed={cameraMode === "instruments"}
             >
               <Expand size={14} /> Fit instruments
@@ -1855,6 +1856,7 @@ export default function App() {
               onCursorChange={native.binding ? native.setCursor : imaging.selected ? imaging.setCursor : setCursor}
               routes={!native.binding && display.primaryOverlaysPermitted ? viewerRoutes : []}
               cameraMode={cameraMode}
+              cameraFitRequest={cameraFitRequest}
               replay={!native.binding && display.primaryOverlaysPermitted ? viewerReplay : null}
               passiveReplay={display.primaryOverlaysPermitted&&episodeVisible&&episodeWorkflow==='passive'&&passiveView&&caseData&&passiveView.source.caseHash===caseData.caseHash?passiveView.frames[passiveStep]:null}
               structuralProposal={!native.binding && display.primaryOverlaysPermitted ? proposalView : null}

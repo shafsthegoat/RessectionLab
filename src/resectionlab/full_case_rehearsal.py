@@ -86,6 +86,8 @@ def new_director(engine, scenario='primary', *, full_annotation_target_mm3=None)
 
 def resume_director(director):
     result = copy.deepcopy(director)
+    if result.get('budgetLimitedEndpoint') and result.get('stage') == 'endpoint':
+        return result
     if result.get('status') == 'stopped':
         result.setdefault('priorStops', []).append({'position': result.get('lastPosition'), 'reason': result.get('stopReason')})
         result['priorStops'] = result['priorStops'][-8:]
@@ -116,6 +118,36 @@ def _checked_director_history(engine, director):
 def _access_pass_boundary(engine):
     return {'position': len(engine.actions), 'stateId': engine.state_id,
             'actionPrefixHash': semantic_digest(engine.actions)}
+
+
+def request_budget_limited_endpoint(engine, director):
+    """Retain unfinished search and request ordinary cleanup at this boundary.
+
+    Only director bookkeeping changes here. The existing cleanup stages still
+    preview and commit each release, exchange, field action and withdrawal.
+    """
+    _checked_director_history(engine, director)
+    if director.get('scenario') != 'primary':
+        raise ValueError('Budget endpoint requires the primary rehearsal')
+    if director.get('budgetLimitedEndpoint'):
+        raise ValueError('Budget endpoint was already requested')
+    metrics = engine.metrics()
+    if metrics.get('activeVesselWounds', 0):
+        raise ValueError('Control active modeled bleeding before requesting endpoint cleanup')
+    if accounting(engine)['originalTargetMm3'] - metrics['targetRemovedMm3'] <= 1e-9:
+        raise ValueError('Budget endpoint requires residual target')
+    result = copy.deepcopy(director)
+    result['budgetLimitedEndpoint'] = {
+        'kind': 'budget-limited-engineering-rehearsal',
+        'requestedBoundary': _access_pass_boundary(engine),
+        'pausedStage': director['stage'],
+        'pausedAccessPass': {key: copy.deepcopy(director[key])
+                             for key in _ACCESS_PASS_FIELDS if key in director},
+        'qualification': 'Unfinished routes and residual target are retained. '
+            'This work budget does not establish maximal removal or residual unresectability.',
+    }
+    result.update(stage='cleanup', status='ready', stopReason=None)
+    return result
 
 
 def _check_access_pass_boundary(engine, boundary):
@@ -841,7 +873,13 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                 deferred_here = (pending.get('status') == 'pending'
                     and meta.get('accessPassDeferral', {}).get('status') == 'deferred'
                     and meta.get('accessAxis', 2) == pending['pass']['accessAxis'])
-                if remaining <= 1e-9:
+                if meta.get('budgetLimitedEndpoint'):
+                    meta['status'] = 'stopped'
+                    meta['stopReason'] = ('Budget-limited engineering rehearsal with residual target. '
+                        'Further resection was stopped by the work budget; unfinished and untested routes are retained. '
+                        'This is not maximal feasible removal or evidence that residual target is unresectable. '
+                        'Missing dura, attachment and functional evidence remains UNKNOWN.')
+                elif remaining <= 1e-9:
                     meta['stopReason'] = 'Complete modeled owned-target removal.'
                 elif deferred_here:
                     count = len(pending['pass']['accesses']) - pending['pass']['accessIndex']
@@ -853,7 +891,7 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
                         'Further access strategies remain untested; residual target is retained. Missing dura/attachment/functional evidence remains UNKNOWN.')
                     if pending.get('status') == 'pending':
                         meta['stopReason'] += ' The superior access pass remains deferred for later resumption.'
-                if deferred_here and 'stoppedBoundary' not in pending:
+                if deferred_here and not meta.get('budgetLimitedEndpoint') and 'stoppedBoundary' not in pending:
                     pending['stoppedBoundary'] = _access_pass_boundary(candidate)
             _phase(meta, 'endpoint', 'Endpoint and explained residual', len(candidate.actions))
             break

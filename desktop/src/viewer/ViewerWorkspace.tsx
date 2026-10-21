@@ -129,6 +129,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const [committedSurgical,setCommittedSurgical]=useState<{identity:typeof rendererIdentity;interaction:SurgicalInteraction|null}|null>(null);
   const [modelDisplayPending,setModelDisplayPending]=useState(false);
   const [modelDisplayError,setModelDisplayError]=useState<string|null>(null);
+  const lastCameraFitRequest=useRef(props.cameraFitRequest??0);
   const activePlane=settings.activePlane??'axial',contrast=settings.contrast??1,showPlane=settings.showPlane??false;
   const displayedSurgical=committedSurgical?.identity===rendererIdentity?committedSurgical.interaction:null;
   const surgicalView=displayedSurgical?.preview??displayedSurgical?.view;
@@ -307,6 +308,13 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   useEffect(() => {
     engine.current?.setSourcePlane(showPlane ? activePlane : null);
   }, [activePlane, showPlane, ready, graphicsGeneration, caseData]);
+
+  useEffect(()=>{
+    const request=props.cameraFitRequest??0;
+    if(!engine.current||request===lastCameraFitRequest.current)return;
+    lastCameraFitRequest.current=request;
+    engine.current.frameCamera(cameraMode);
+  },[ready,graphicsGeneration,props.cameraFitRequest,cameraMode]);
 
   useEffect(() => {
     if (!engine.current) return;

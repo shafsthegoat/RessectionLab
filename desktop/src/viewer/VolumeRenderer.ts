@@ -927,7 +927,7 @@ export class VolumeRenderer {
     const modeChanged = cameraMode !== this.mode;
     if (modeChanged) {
       this.mode = cameraMode;
-      this.fitCamera(cameraMode);
+      if(!this.cameraRestored)this.fitCamera(cameraMode);
     }
     if (cursorChanged || visibilityChanged || opacityChanged || routesChanged || modeChanged) this.requestRender();
   }
@@ -1206,6 +1206,12 @@ export class VolumeRenderer {
   cameraPreset(preset: 'oblique'|'anterior'|'left'|'superior'): void {
     this.fitCamera(this.mode,preset);
     this.cameraRestored=true;
+    this.onCameraChange?.(this.getCameraState());
+  }
+
+  /** Explicit fit is independent of implicit workbench/mode/route updates. */
+  frameCamera(mode: 'anatomy'|'instruments'=this.mode):void {
+    this.mode=mode;this.fitCamera(mode);this.cameraRestored=true;
     this.onCameraChange?.(this.getCameraState());
   }
 
@@ -1678,7 +1684,7 @@ export class VolumeRenderer {
     });
     this.instrumentDisplay.setRoutes(capsules);
     this.syncInstrumentDisplay();
-    if (this.mode === "instruments") this.fitCamera("instruments");
+    if (this.mode === "instruments"&&!this.cameraRestored) this.fitCamera("instruments");
   }
 
   /** Canonical RAS initial pose only; no route conversion, motion or tissue effect. */
@@ -1743,6 +1749,15 @@ export class VolumeRenderer {
       this.fittedReplayId = this.replayBounds.episodeId;
     } else if (mode === "instruments" && visibleTools.visible && !new THREE.Box3().setFromObject(visibleTools).isEmpty())
       box.union(new THREE.Box3().setFromObject(visibleTools)).expandByScalar(8);
+    if(mode==='instruments'&&this.surgicalGroup?.visible){
+      // Standard rehearsal slots are separate from legacy route/replay tools.
+      // Include both complete bodies, even when a recorded slot is withdrawn;
+      // the edit ghost and effect markers are not framing evidence.
+      for(const {group} of this.surgicalSlots.values())if(group.visible){
+        const toolBounds=physicalBounds(group);
+        if(!toolBounds.isEmpty())box.union(toolBounds.expandByScalar(8));
+      }
+    }
     const centre = box.getCenter(new THREE.Vector3()),
       size = box.getSize(new THREE.Vector3());
     const aspect = Math.max(0.2, pane.width / Math.max(pane.height, 1));

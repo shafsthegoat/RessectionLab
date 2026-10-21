@@ -81,6 +81,8 @@ export interface ViewerWorkspaceProps {
   onCursorChange: (point: Point3) => void;
   routes: ViewerRoute[];
   cameraMode: "anatomy" | "instruments";
+  /** Explicit framing command; mode changes alone preserve a restored camera. */
+  cameraFitRequest?:number;
   replay?: ViewerReplay | null;
   /** Separate source-bound patient research state; never legacy replay acceptance. */
   rehearsalState?: ViewerRehearsalState | null;

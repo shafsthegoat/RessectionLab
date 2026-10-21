@@ -204,6 +204,20 @@ replay. Return to a recorded boundary before branching or resuming. Save pauses
 both computation and playback and synchronizes the canonical editable state.
 Fluid glyphs show per-cell ledger volumes; outlet reservoirs remain separate.
 
+For a budget-limited primary endpoint, checkpoint the saved boundary and call
+`request_budget_limited_endpoint(engine, director)`. It retains the unfinished
+access pass and enters the existing public-action cleanup sequence. Active
+modeled bleeding must be controlled first. The endpoint is explicitly stopped
+with residual target; resuming that terminal director does not schedule another
+access pass. A work budget does not establish maximal removal, exhausted routes
+or unresectable residual. Accessible fluid/debris cleanup, release and withdrawal
+remain checked tool actions, and inaccessible material is retained.
+
+Restored display cameras survive implicit Rehearse mode and route updates.
+Explicit framing still fits the requested view, including both complete visible
+standard surgical tool bodies when fitting instruments, and persists that camera.
+Playback does not refit the camera at each observed frame.
+
 For modeled tissue frames, disabling **Smooth 3D surfaces** skips derived
 conditioning and displays the exact source surface. Re-enabling it prepares
 smoothing for the current admitted tissue through the same staged display path.
@@ -272,6 +286,13 @@ This preserves the supported JSON state graph, including numeric types, order
 and float bits. Arbitrary custom deepcopy methods that inspect memo timing are
 outside that contract. Integration, cancellation and public-action checks remain
 unchanged.
+
+Canonical JSON hashing detaches exact built-in JSON graphs in one traversal
+before the same sorted JSON encoding and full SHA-256. NumPy, custom containers,
+subclasses, nonfinite values and deep/cyclic graphs retain the original
+freeze/thaw validation path. Every call hashes its current input; no state ID is
+trusted or memoized. This removes redundant allocation during large replay
+state checks without weakening source, history or cache authentication.
 
 For display-constrained sessions, launch with `--secondary-display`. The app
 selects a nonprimary display before creating its window, refuses launch when
